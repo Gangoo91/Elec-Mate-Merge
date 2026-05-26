@@ -44,12 +44,12 @@ const checks = [
     question:
       'You have just installed a new shower circuit on a 2.5 mm² + CPC cable from the existing CU, with a new 32 A Type A RCBO. Which certificate is required?',
     options: [
-      'MEIWC — it is a single circuit on an existing CU.',
+      'A calibration check box (e.g. resistance check unit, test box) at intervals — and at each suspected damage event — to confirm continued accuracy between calibrations',
+      'High criticality (A) because its failure during a mains outage could have life-safety consequences — the low running hours do not reduce its criticality because the consequence of failure when needed is extreme',
       'EIC + Schedule of Inspections + Schedule of Test Results — the work provides a new circuit, and BS 7671 reserves the MEIWC for minor works that do NOT include a new circuit.',
-      'EICR — because the rest of the installation is existing.',
-      'No certificate at all on a single-circuit addition.',
+      'Escalate above the supervisor (your own employer, the principal contractor, your scheme provider) and record the conversation in writing',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The MEIWC is defined for minor works that do NOT include the provision of a new circuit. Adding a brand-new shower circuit, even off an existing CU, is a new circuit — so the EIC + Schedule of Inspections + Schedule of Test Results pack is required. The classic confusion: people think "small job = MEIWC". The test is not size, it is whether a new circuit was created. New circuit always means EIC, regardless of how few extra metres of cable were involved.',
   },
@@ -58,12 +58,12 @@ const checks = [
     question:
       'Reg 644.1.1 covers what happens when a defect is revealed during inspection and testing of a NEW installation:',
     options: [
-      'You note the defect on the EIC and issue the certificate anyway.',
       'For a new installation, any defect or omission revealed during inspection and testing shall be corrected before the Certificate is issued — fix first, retest, then certify.',
-      'You skip the EIC and issue an EICR instead.',
-      'You issue the EIC with a comment and the client deals with the defect later.',
+      'Where use involves a specific risk, use is restricted to designated persons and maintenance is carried out by specifically designated persons',
+      'Withdraw, tell your site manager and the school\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s Designated Safeguarding Lead — they decide next steps including any police involvement',
+      'Calculation from supply transformer impedance and cable parameters; OR use of DNO declared values (e.g. 16kA at typical urban supply origin)',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 644.1.1 is the regulatory backbone of "test then certify". The EIC certifies the installation is safe and compliant at the moment of issue. You cannot legitimately certify an installation with a known IR fault, a non-compliant Zs, a missing CPC continuity, or any other identified defect. The corrective work is part of the original installation — no separate certificate required for the fix itself.',
   },
@@ -72,12 +72,12 @@ const checks = [
     question:
       'On a small domestic CU swap-out done by a single self-employed electrician, the EIC requires signatures for:',
     options: [
-      'Just one signature — the electrician.',
+      'Continuity of CPCs (including bonding) → continuity of ring final → insulation resistance → polarity → earth electrode resistance (TT only). Then live tests.',
+      'Phase rotation/sequence (L1-L2-L3 = positive/clockwise rotation) using a phase-rotation indicator, especially before energising motors and rotating machinery',
       'Three signatures — designer, constructor and inspector — even where one competent person did all three roles, each role-holder declaration is signed separately on the EIC.',
-      'No signatures — only the customer signs.',
-      'Two signatures — installer and customer.',
+      'The equipment must be made dead and isolated wherever possible; if live work is unavoidable, a specific risk assessment and method statement for live working must be produced',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The EIC has three signed declarations: designer (responsible for the design), constructor (responsible for the installation work), inspector (responsible for the inspection and testing). The same competent person can hold all three on a small job — and most domestic CU swaps are exactly that. Each role declaration is signed individually on the form. Forging a signature, leaving a role blank, or signing a role you did not perform invalidates the certificate and exposes you to professional and insurance consequences.',
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 Section 644 sets out which three certification forms?',
     options: [
-      'EIC, EICR, RAMS.',
+      'Death that occurs after rescue from suspension, caused by the sudden redistribution of pooled blood overwhelming the heart — prevented by adopting a semi-seated recovery position rather than laying the casualty flat',
       'Electrical Installation Certificate (EIC) for new work or major alterations; Minor Electrical Installation Works Certificate (MEIWC) for minor alterations not creating a new circuit; Electrical Installation Condition Report (EICR) for periodic inspection of an existing installation.',
-      'EIC, EAWR, EICR.',
-      'EIC, MWC, RAM.',
+      'Because energising equipment without verifying correct installation, connections, and settings could result in immediate damage to equipment, injury to personnel, or fire — pre-commissioning checks identify and correct deficiencies while the system is safe (de-energised)',
+      'Wearing appropriate PPE correctly, maintaining clean and presentable work clothing, keeping work areas tidy, and presenting yourself in a way that represents both yourself and your employer positively',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: 'A circuit on the new domestic CU swap-out fails IR — reads 0.6 MΩ on a 500 V test (below the 1 MΩ minimum). The customer is keen to move in. What does Reg 644.1.1 require?',
     options: [
-      'Issue the EIC with a note about the IR reading.',
+      'Recommended for final circuits in dwellings, with mandatory installation in higher-risk residential buildings (HRRBs) under the Building Safety Act 2022',
+      'They must be taken into account by designers when preparing or modifying a design, and by all duty holders when planning and managing construction work',
       'Correct the defect, retest, then issue the EIC. Reg 644.1.1 makes certificate issue conditional on correction of defects revealed during inspection and testing for new installations.',
-      'Issue an EICR instead of an EIC.',
-      'Issue the EIC and book a follow-up visit to fix the IR fault.',
+      'Adjusting the timing or level of electricity consumption in response to price signals, grid conditions, or other incentives, to reduce peak demand and support grid stability',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Reg 644.1.1 is unconditional — for a new installation, any defect or omission revealed during inspection and testing shall be corrected before the Certificate is issued. The customer's pressure to move in does not override the regulation. Find the IR fault (likely a back-box pinch or damaged cable section), fix it, retest the circuit, then issue the EIC with all readings clean.",
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'On an addition or alteration (not a new installation), the defect-correction rule changes how?',
     options: [
-      'It does not apply at all to alterations.',
       'For an addition or alteration to an existing installation, any defect or omission that will affect the SAFETY of the addition or alteration revealed during inspection and testing shall be corrected before the Certificate is issued. The duty is limited to safety-affecting defects on the new or altered work — pre-existing defects elsewhere are recorded as observations rather than blockers to certification of the new work.',
-      'All defects in the entire installation must be fixed before the alteration certificate issues.',
-      'No defect rule applies to alterations.',
+      'Ze source (Form 1 cited or BS 7671 assumed maximum cited); cable type, line CSA and cpc CSA; route length; OSG Table I1 mΩ/m at 20 degrees C cited; temperature factor applied (1.20 for 70-deg PVC, 1.28 for 90-deg thermosetting) cited; calculated cold (R1 + R2); calculated hot (R1 + R2); Ze + hot (R1 + R2) = design Zs; Table 41.3 max Zs cited (A4:2026 edition) for the device fitted; calculated margin; verification target (0.8 × Table 41.3 max for measured cold Zs).',
+      'CDM 2015 Reg 13(1)(a) requires the principal contractor to plan, manage and monitor the construction phase. In practice this includes site sign-in / sign-out registers, attendance at toolbox talks, RAMS sign-on records, and any permit records. These records combine with the apprentice\\\'s own records to form a full picture of who was on site doing what when. The records are commonly required after any incident or in any later dispute.',
+      'Section 7(a) — to take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work. Section 7(b) — to co-operate with their employer (and any other person under a duty) so far as is necessary to enable that duty to be performed. These are personal statutory duties that apply to every operative on site, including apprentices.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The wording for additions and alterations is narrower than for new work. The defect-correction obligation applies only to defects that will affect the safety of the addition or alteration itself. Pre-existing defects in unaltered parts of the installation are recorded in the Comments on existing installation section of the EIC, but do not block certification of the new portion. The customer can then choose to deal with those pre-existing items separately, typically by commissioning an EICR.',
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'The MEIWC may be used for:',
     options: [
-      'Any work the installer thinks is small.',
+      'AC systems as additional protection in the event of failure of the provision for basic protection and/or the provision for fault protection or carelessness by users.',
       'Individual items of minor works that do NOT include the provision of a new circuit — for example, adding a socket-outlet or lighting point to an existing circuit, or replacing a damaged accessory like for like.',
-      'A consumer unit replacement.',
-      'A new shower circuit.',
+      'Identify key activities in advance, brief potential witnesses beforehand, and collect statements progressively after each significant activity throughout the apprenticeship',
+      'They must not tamper with, remove, or bypass the meter without authority from the energy supplier — the meter is the property of the metering company, and interference is a criminal offence under the Theft Act 1968 and Electricity Act 1989',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 defines MEIWC scope precisely — it is for minor works that do NOT include a new circuit. Permitted examples: extra socket-outlet on an existing ring, extra lighting point on an existing lighting circuit, like-for-like accessory replacement. Not permitted: any new circuit (even a single-circuit addition), CU replacement, replacement of a non-like-for-like protective device. Use the EIC trio for those.',
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'The EIC has separate signed declarations for designer, constructor and inspector. On a domestic CU swap by a single self-employed electrician:',
     options: [
-      'Only one signature is required — the electrician.',
+      'Circuits supplying emergency lighting, fire detection and other safety services on escape routes — fire-resistant cable + non-combustible supports for the rated duration.',
       'All three roles are signed separately by the same competent person, who declares responsibility for each role individually. The signatures are not interchangeable — each is a separate declaration with its own legal weight.',
-      'The customer signs as designer.',
-      'No signatures are required.',
+      'Continuity (low-resistance ohmmeter), insulation resistance, loop impedance (Zs), RCD testing, and often earth electrode resistance — all the tests required for BS 7671 initial verification and periodic inspection',
+      'Secure the scene to preserve evidence, contact emergency services, report to the HSE without delay, and do not disturb the scene unless necessary to save life',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     id: 6,
     question: 'The Departures from BS 7671 box on the EIC is for:',
     options: [
-      'Departures of the customer from the property.',
+      'Compare RAMS to actual site conditions; check controls are in place; observe operatives; ask &quot;could anyone reading this assessment understand the hazards and controls?&quot;; verify any HSE / industry guidance has been considered.',
+      'Empathy involves understanding and sharing another person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s feelings from their perspective, while sympathy involves feeling pity or sorrow for someone\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s situation from your own perspective — empathy says "I feel with you," sympathy says "I feel for you"',
       'Any deliberate deviation from a BS 7671 requirement that the designer judges acceptable for the specific installation, with justification — for example, omitting an RCD on a non-dwelling socket-outlet under the Reg 411.3.3 risk-assessment exception. Each departure must be documented with reasoning and accepted by the duty-holder.',
-      'Departures from the test schedule.',
-      'A list of items the customer wants removed from the install.',
+      'Under CDM 2015 Reg 6 a project is notifiable when the construction work is scheduled to last longer than 30 working days AND have more than 20 workers working simultaneously at any point, OR exceed 500 person-days. The Client must notify the HSE in writing as soon as practicable before construction starts using F10 notification.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 recognises that not every numerical requirement can or should apply to every installation. The Departures section is the formal record of any deliberate deviation. Common examples include: socket-outlet without RCD under the Reg 411.3.3 risk-assessment exception; overlong cable run accepted with reduced disconnection time; equipment fitted in a special location with mitigating measures. Each departure must be accepted by the designer and the duty-holder, and recorded so any future inspector understands the reasoning.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'An EICR is issued at the end of:',
     options: [
-      'A new installation.',
+      'Connected load, diversity factor with source citation, category Ib, sub-main coincidence with source, sub-main Ib, origin coincidence with source, origin Ib, per-phase distribution, phase imbalance percent, and supply rating with margin.',
+      '30 mA RCD at the pitch — TT installations require RCD protection because Ra x I-delta-n must satisfy the 50 V touch-voltage limit, and the high electrode resistance means an overcurrent device alone cannot achieve disconnection in the required time',
+      'BS 7671 Regulation 712.522 requires that DC cables within a building that cannot be isolated from the PV array in a fire are either fire-resistant (to BS 8434/BS 8519) or enclosed in fire-resistant conduit, because they will remain energised as long as daylight is present',
       'A periodic inspection of an EXISTING installation — assessing whether the installation remains safe for continued use, identifying observations and classifying them C1/C2/C3/FI, and recommending a next inspection date. Distinct from the EIC, which certifies new work or major alterations.',
-      'A minor works job.',
-      'A risk assessment.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'EIC = certifies new work or major alteration as safe and compliant on the day of issue. EICR = reports on the condition of an existing installation, telling the duty-holder whether it remains safe for continued use. Different purposes, different forms, different signer relationships. Mixing them up — issuing an EICR for new work, or an EIC for a periodic inspection — is a fundamental coding error that invalidates the document.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: "After issuing the EIC for a domestic CU swap, the contractor's minimum copy retention period (per common UK industry practice tied to the Limitation Act) is:",
     options: [
-      'One year.',
       'At least six years for civil liability under the Limitation Act, with most professional indemnity insurers and Competent Person Schemes requiring 10 to 25 years. Cloud storage of PDFs is standard contractor practice now.',
-      'No retention required after handover.',
-      'One month.',
+      'It builds collective knowledge — other technicians can learn from the investigation, apply the findings to similar equipment, and diagnose similar faults more quickly in future',
+      'An electricity meter, a gas meter (if applicable), a communications hub (connecting to the DCC network), and an in-home display (IHD) showing real-time energy usage and cost information',
+      'Take the feedback as the whole point of the supervised apprenticeship; understand what the defect was, why it&rsquo;s a non-conformance, fix it properly, learn so it does not happen on the next install.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Six years is the Limitation Act minimum for civil claims arising from contract or tort. PI insurers and Competent Person Schemes typically require longer — 10 to 25 years is common. Customer keeps the original for the lifetime of the installation. CPS holds its own copy via the upload portal. Cloud storage on the contractor side has made indefinite retention trivially cheap and is now standard practice.',
   },

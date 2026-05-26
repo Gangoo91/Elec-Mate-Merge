@@ -32,12 +32,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary advantage of combined heat and power over separate heat and power generation?',
     options: [
-      'Lower capital cost',
       'Higher overall efficiency by utilising waste heat',
-      'Simpler maintenance requirements',
-      'Reduced electrical output',
+      'Credit for relevant previous learning and experience',
+      'Addition, subtraction, multiplication, division',
+      'Electronic equipment and surge protective devices',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'CHP achieves overall efficiencies of 70-90% by recovering waste heat that would otherwise be rejected to atmosphere in conventional power generation, where typical electrical efficiency is only 35-45%.',
   },
@@ -45,8 +45,13 @@ const quickCheckQuestions = [
     id: 'heat-to-power',
     question:
       'A CHP unit with a heat-to-power ratio of 1.5:1 produces 200 kWe. What is the thermal output?',
-    options: ['133 kW', '200 kW', '300 kW', '500 kW'],
-    correctIndex: 2,
+    options: [
+      '133 kW',
+      '200 kW',
+      '500 kW',
+      '300 kW',
+    ],
+    correctIndex: 3,
     explanation:
       'Heat-to-power ratio = Heat output / Electrical output. With ratio 1.5:1 and 200 kWe electrical: Heat = 1.5 × 200 = 300 kWth.',
   },
@@ -55,12 +60,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary function of a heat interface unit (HIU) in a district heating system?',
     options: [
-      'Generate electricity from heat',
       "Transfer heat from the district network to the building's heating system",
-      'Pump water through the network',
-      'Store thermal energy',
+      "Into the outer mid-thigh through clothing if necessary",
+      "Circuit has adequate capacity and existing protection is suitable",
+      "Review every wrong answer, understand the mistake, and revise that topic before trying again",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "A heat interface unit (HIU) acts as the interface between the district heating primary network and the building's secondary heating and hot water systems, typically using plate heat exchangers for hydraulic separation.",
   },
@@ -68,12 +73,12 @@ const quickCheckQuestions = [
     id: 'baseload-operation',
     question: 'Why is CHP typically sized for baseload operation rather than peak demand?',
     options: [
-      'It cannot generate enough power for peak loads',
       'To maximise running hours and economic return',
+      'It cannot generate enough power for peak loads',
       'Regulations prohibit peak operation',
       'It requires constant fuel supply',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Sizing CHP for baseload (continuous minimum demand) maximises annual running hours, typically 4,000-6,000+ hours, which is essential for economic viability. Peak-sized units would have excessive idle time and poor payback.',
   },
@@ -84,8 +89,13 @@ const quizQuestions = [
     id: 1,
     question:
       'A gas engine CHP unit has an electrical efficiency of 38% and thermal efficiency of 50%. What is the overall efficiency?',
-    options: ['38%', '50%', '88%', '44%'],
-    correctAnswer: 2,
+    options: [
+      '38%',
+      '88%',
+      '50%',
+      '44%',
+    ],
+    correctAnswer: 1,
     explanation:
       'Overall CHP efficiency = Electrical efficiency + Thermal efficiency = 38% + 50% = 88%. This demonstrates the significant efficiency gain compared to separate generation.',
   },
@@ -93,7 +103,12 @@ const quizQuestions = [
     id: 2,
     question:
       'Which prime mover technology is most suitable for a CHP system requiring frequent start-stop operation?',
-    options: ['Steam turbine', 'Gas turbine', 'Reciprocating gas engine', 'Combined cycle'],
+    options: [
+      'Combined cycle',
+      'Steam turbine',
+      'Reciprocating gas engine',
+      'Gas turbine',
+    ],
     correctAnswer: 2,
     explanation:
       'Reciprocating gas engines have excellent part-load efficiency and can handle frequent start-stop cycles, typically reaching full output within 2-5 minutes. Gas turbines prefer continuous operation and take longer to reach operating temperature.',
@@ -102,16 +117,26 @@ const quizQuestions = [
     id: 3,
     question:
       'A district heating network operates at 90°C flow and 60°C return. What is the temperature differential (ΔT)?',
-    options: ['30 K', '60°C', '90°C', '150 K'],
-    correctAnswer: 0,
+    options: [
+      '90°C',
+      '60°C',
+      '150 K',
+      '30 K',
+    ],
+    correctAnswer: 3,
     explanation:
       'Temperature differential (ΔT) = Flow temperature - Return temperature = 90°C - 60°C = 30 K (or 30°C). A higher ΔT allows more heat to be transferred per unit of water flow.',
   },
   {
     id: 4,
     question: 'What is the typical heat-to-power ratio for a gas engine CHP unit?',
-    options: ['0.5:1', '1.0-1.5:1', '3:1', '5:1'],
-    correctAnswer: 1,
+    options: [
+      '1.0-1.5:1',
+      '0.5:1',
+      '3:1',
+      '5:1',
+    ],
+    correctAnswer: 0,
     explanation:
       'Gas engine CHP units typically have heat-to-power ratios of 1.0-1.5:1, meaning they produce slightly more heat than electricity. This suits buildings with moderate heating demands relative to electrical loads.',
   },
@@ -119,7 +144,12 @@ const quizQuestions = [
     id: 5,
     question:
       'A CHP unit consumes 500 kW of gas and produces 180 kWe. Calculate the electrical efficiency.',
-    options: ['28%', '36%', '45%', '64%'],
+    options: [
+      '28%',
+      '36%',
+      '64%',
+      '45%',
+    ],
     correctAnswer: 1,
     explanation:
       'Electrical efficiency = (Electrical output / Fuel input) × 100 = (180 / 500) × 100 = 36%. This is typical for a medium-sized gas engine CHP.',
@@ -128,12 +158,12 @@ const quizQuestions = [
     id: 6,
     question: 'In a district heating system, what is the purpose of expansion vessels?',
     options: [
-      'To increase system pressure',
+      'Plate heat exchangers, control valves, and energy meters',
+      'To decouple heat production from demand, enabling longer CHP running hours',
       'To accommodate thermal expansion of water and maintain system pressure',
-      'To filter impurities from the water',
-      'To generate additional heat',
+      'Reduced pumping energy while maintaining heat delivery',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Expansion vessels accommodate the increased volume of water as it heats up (thermal expansion) and help maintain stable system pressure. Without them, pressure would rise dangerously or relief valves would discharge.',
   },
@@ -142,12 +172,12 @@ const quizQuestions = [
     question:
       'What advantage does a gas turbine CHP have over a reciprocating engine for large-scale applications?',
     options: [
-      'Better part-load efficiency',
+      'Plate heat exchangers, control valves, and energy meters',
+      'Reduced pumping energy while maintaining heat delivery',
+      'The number of poles and rotational speed',
       'Higher grade exhaust heat (typically 450-550°C)',
-      'Lower maintenance costs',
-      'Faster start-up times',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Gas turbines produce higher grade exhaust heat (450-550°C vs 80-120°C jacket water), making them suitable for steam generation and absorption chillers. However, they have poorer part-load efficiency than gas engines.',
   },
@@ -155,12 +185,12 @@ const quizQuestions = [
     id: 8,
     question: 'A heat interface unit typically includes which components?',
     options: [
-      'Boiler and pump only',
       'Plate heat exchangers, control valves, and energy meters',
-      'CHP engine and alternator',
-      'Cooling tower and condenser',
+      'Reduced pumping energy while maintaining heat delivery',
+      'To accommodate thermal expansion of water and maintain system pressure',
+      'The number of poles and rotational speed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A typical HIU contains plate heat exchangers (for space heating and DHW), motorised control valves, circulation pumps, differential pressure control, heat meters for billing, and safety devices.',
   },
@@ -168,8 +198,13 @@ const quizQuestions = [
     id: 9,
     question:
       'For economic viability, what minimum annual running hours are typically required for CHP?',
-    options: ['1,000-2,000 hours', '2,000-3,000 hours', '4,000-5,000+ hours', '8,000+ hours'],
-    correctAnswer: 2,
+    options: [
+      '1,000-2,000 hours',
+      '4,000-5,000+ hours',
+      '2,000-3,000 hours',
+      '8,000+ hours',
+    ],
+    correctAnswer: 1,
     explanation:
       'CHP typically requires 4,000-5,000+ annual running hours for economic viability. This represents approximately 45-60% capacity factor. Hospitals and hotels often exceed this; schools may struggle to achieve it.',
   },
@@ -177,12 +212,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of a thermal store in a CHP installation?',
     options: [
-      'To generate additional electricity',
+      'To accommodate thermal expansion of water and maintain system pressure',
+      'Plate heat exchangers, control valves, and energy meters',
       'To decouple heat production from demand, enabling longer CHP running hours',
-      'To cool the CHP engine',
-      'To supply fuel to the engine',
+      'Reduced pumping energy while maintaining heat delivery',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Thermal stores buffer between CHP heat production and building demand. This allows CHP to run continuously at optimal load while the store absorbs excess heat, which is later used when demand exceeds CHP output.',
   },
@@ -190,12 +225,12 @@ const quizQuestions = [
     id: 11,
     question: 'In a three-phase synchronous generator, what determines the output frequency?',
     options: [
-      'The voltage level',
+      'Physiological and safety needs (levels 1 and 2)',
+      'You are significantly more likely to achieve them',
+      '1 lux on the centre line of travel',
       'The number of poles and rotational speed',
-      'The load connected',
-      'The fuel consumption rate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Output frequency f = (n × p) / 120, where n is speed in RPM and p is number of poles. For 50 Hz output, a 4-pole generator runs at 1,500 RPM, or a 2-pole at 3,000 RPM.',
   },
@@ -203,12 +238,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the primary benefit of variable flow in district heating networks?',
     options: [
-      'Higher flow rates',
       'Reduced pumping energy while maintaining heat delivery',
-      'Constant pressure throughout the system',
-      'Simpler control systems',
+      'To accommodate thermal expansion of water and maintain system pressure',
+      'Higher grade exhaust heat (typically 450-550°C)',
+      'Plate heat exchangers, control valves, and energy meters',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Variable flow systems modulate pump speed to match demand, significantly reducing pumping energy (pump power varies with cube of flow). This can reduce pumping costs by 50-70% compared to constant flow systems.',
   },

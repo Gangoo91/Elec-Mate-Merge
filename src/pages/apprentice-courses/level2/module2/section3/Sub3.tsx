@@ -36,8 +36,13 @@ const checks = [
   {
     id: 'rho-symbol-check',
     question: 'Which Greek letter is the symbol for resistivity?',
-    options: ['σ (sigma)', 'ρ (rho)', 'Ω (omega)', 'α (alpha)'],
-    correctIndex: 1,
+    options: [
+      'σ (sigma)',
+      'Ω (omega)',
+      'ρ (rho)',
+      'α (alpha)',
+    ],
+    correctIndex: 2,
     explanation:
       "Resistivity is rho (ρ). Sigma is conductivity (the inverse of ρ). Omega is the unit of resistance. Alpha is the temperature coefficient.",
   },
@@ -45,16 +50,26 @@ const checks = [
     id: 'length-doubles-check',
     question:
       'You double the length of a conductor (same metal, same CSA, same temperature). What happens to its resistance?',
-    options: ['Halves', 'Stays the same', 'Doubles', 'Quadruples'],
-    correctIndex: 2,
+    options: [
+      'Stays the same',
+      'Halves',
+      'Quadruples',
+      'Doubles',
+    ],
+    correctIndex: 3,
     explanation:
       "R is directly proportional to L. Twice the length = twice the obstacles for the drifting electrons = twice the resistance. Picture two equal resistors in series.",
   },
   {
     id: 'csa-doubles-check',
     question: 'You double the CSA (same metal, same length, same temperature). Resistance:',
-    options: ['Doubles', 'Halves', 'Quadruples', 'Stays the same'],
-    correctIndex: 1,
+    options: [
+      'Halves',
+      'Quadruples',
+      'Doubles',
+      'Stays the same',
+    ],
+    correctIndex: 0,
     explanation:
       "R is inversely proportional to area. Twice the CSA gives the electrons twice the parallel path width = half the resistance. Like two equal resistors in parallel.",
   },
@@ -64,7 +79,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'The formula for the resistance of a uniform conductor is:',
-    options: ['R = V/I', 'R = ρL/A', 'R = I²t', 'R = mV/A/m'],
+    options: [
+      'R = V/I',
+      'R = ρL/A',
+      'R = I²t',
+      'R = mV/A/m',
+    ],
     correctAnswer: 1,
     explanation:
       "R = ρL/A. Resistivity times length, divided by cross-sectional area. V/I is Ohm's law (true but separate). The mV/A/m formula is for voltage drop.",
@@ -72,7 +92,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'The SI unit of resistivity is:',
-    options: ['Ω', 'Ω/m', 'Ω·m', 'S/m'],
+    options: [
+      'S/m',
+      'Ω',
+      'Ω·m',
+      'Ω/m',
+    ],
     correctAnswer: 2,
     explanation:
       "Ohm-metre (Ω·m). The units fall out of R = ρL/A: Ω = (Ω·m × m) / m² = Ω. We often quote in nano-ohm-metres (nΩ·m) because the values are tiny.",
@@ -80,16 +105,26 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Approximate resistivity of copper at 20°C:',
-    options: ['1.72 nΩ·m', '17.2 nΩ·m', '172 nΩ·m', '1.72 mΩ·m'],
-    correctAnswer: 1,
+    options: [
+      '172 nΩ·m',
+      '1.72 nΩ·m',
+      '1.72 mΩ·m',
+      '17.2 nΩ·m',
+    ],
+    correctAnswer: 3,
     explanation:
       "Copper ρ ≈ 17.2 nΩ·m at 20°C. Aluminium is around 28.2 nΩ·m. These are the two values worth remembering — most exam questions hand you these as a constant anyway.",
   },
   {
     id: 4,
     question: 'A 30 m run of 2.5 mm² copper at 20°C has approximately what resistance?',
-    options: ['0.021 Ω', '0.21 Ω', '2.1 Ω', '21 Ω'],
-    correctAnswer: 1,
+    options: [
+      '0.21 Ω',
+      '0.021 Ω',
+      '2.1 Ω',
+      '21 Ω',
+    ],
+    correctAnswer: 0,
     explanation:
       "R = ρL/A = (17.2 × 10⁻⁹ × 30) / (2.5 × 10⁻⁶) ≈ 0.21 Ω. Or use the shortcut R ≈ 0.0172 × L ÷ A for copper in metres and mm² → 0.0172 × 30 ÷ 2.5 = 0.206 Ω.",
   },
@@ -99,8 +134,8 @@ const quizQuestions = [
     options: [
       'Decreases resistance',
       'Increases resistance',
-      'Has no effect',
       'Reverses the polarity',
+      'Has no effect',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,20 +159,25 @@ const quizQuestions = [
     question:
       'A loose terminal in a junction box — what changes about the local resistance?',
     options: [
-      'It drops to zero',
-      'Stays the same as the rest of the cable',
+      'Industrial and commercial applications with multiple cables',
+      'Visual inspection, testing, documentation',
+      'Maintaining three points of contact at all times',
       'Rises significantly, causing local heating (I²R)',
-      'Becomes negative',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "A loose joint has high contact resistance. The same current squared times that local R = a lot of heat in one tiny spot. Burns the insulation, melts the terminal — start of an electrical fire.",
   },
   {
     id: 8,
     question: 'Which BS 7671 appendix gives conductor resistance and voltage drop data?',
-    options: ['Appendix 1', 'Appendix 3', 'Appendix 4', 'Appendix 7'],
-    correctAnswer: 2,
+    options: [
+      'Appendix 4',
+      'Appendix 7',
+      'Appendix 1',
+      'Appendix 3',
+    ],
+    correctAnswer: 0,
     explanation:
       "Appendix 4 covers current-carrying capacity and voltage drop. Includes mV/A/m tables (voltage drop) and the resistance figures for cables at their rated operating temperatures.",
   },

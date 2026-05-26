@@ -188,6 +188,146 @@ async function buildCombinedRAMSDoc(
   yPos = (doc as any).lastAutoTable.finalY + 15;
   checkPageBreak(40);
 
+  // v2 per-hazard detail — only when v2 fields are present on any risk.
+  const v2Risks = sortedRisks.filter(
+    (r: any) =>
+      r.rationale ||
+      (Array.isArray(r.controlsStructured) && r.controlsStructured.length) ||
+      (Array.isArray(r.bs7671_cites) && r.bs7671_cites.length) ||
+      (Array.isArray(r.who_at_risk) && r.who_at_risk.length)
+  );
+  if (v2Risks.length > 0) {
+    checkPageBreak(40);
+    doc.setFillColor(240, 240, 240);
+    doc.rect(margin, yPos, pageWidth - 2 * margin, 8, 'F');
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(20, 20, 20);
+    doc.text('PER-HAZARD DETAIL', margin + 3, yPos + 5.5);
+    yPos += 12;
+
+    const tierLabel: Record<string, string> = {
+      eliminate: 'Eliminate',
+      substitute: 'Substitute',
+      engineer: 'Engineer',
+      admin: 'Administrative',
+      ppe: 'PPE',
+    };
+
+    v2Risks.forEach((r: any, idx) => {
+      checkPageBreak(60);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(20, 20, 20);
+      doc.text(`H${String(idx + 1).padStart(2, '0')}  ${safeText(r.hazard)}`, margin, yPos);
+      yPos += 6;
+
+      if (r.rationale) {
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'italic');
+        const lines = doc.splitTextToSize(safeText(r.rationale), pageWidth - 2 * margin);
+        doc.text(lines, margin, yPos);
+        yPos += lines.length * 4 + 2;
+      }
+
+      if (Array.isArray(r.who_at_risk) && r.who_at_risk.length) {
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Who at risk:', margin, yPos);
+        doc.setFont('helvetica', 'normal');
+        doc.text(r.who_at_risk.join(', '), margin + 22, yPos);
+        yPos += 5;
+      }
+
+      if (Array.isArray(r.controlsStructured) && r.controlsStructured.length) {
+        const byTier: Record<string, any[]> = {};
+        for (const c of r.controlsStructured) {
+          const t = String(c.tier ?? 'admin').toLowerCase();
+          (byTier[t] = byTier[t] ?? []).push(c);
+        }
+        for (const t of ['eliminate', 'substitute', 'engineer', 'admin', 'ppe']) {
+          if (!byTier[t]?.length) continue;
+          checkPageBreak(20);
+          doc.setFontSize(8);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(80, 80, 80);
+          doc.text(tierLabel[t], margin, yPos);
+          yPos += 4;
+          for (const c of byTier[t]) {
+            checkPageBreak(12);
+            doc.setFont('helvetica', 'bold');
+            doc.setTextColor(20, 20, 20);
+            const titleLines = doc.splitTextToSize(`• ${c.control}`, pageWidth - 2 * margin - 4);
+            doc.text(titleLines, margin + 4, yPos);
+            yPos += titleLines.length * 4;
+            if (c.detail) {
+              doc.setFont('helvetica', 'normal');
+              const dl = doc.splitTextToSize(c.detail, pageWidth - 2 * margin - 6);
+              doc.text(dl, margin + 6, yPos);
+              yPos += dl.length * 4;
+            }
+            if (c.responsible_role) {
+              doc.setFont('helvetica', 'italic');
+              doc.setTextColor(120, 120, 120);
+              doc.text(`Owner · ${c.responsible_role}`, margin + 6, yPos);
+              yPos += 4;
+            }
+            yPos += 1;
+          }
+        }
+      }
+
+      if (Array.isArray(r.bs7671_cites) && r.bs7671_cites.length) {
+        checkPageBreak(8);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(20, 20, 20);
+        doc.text('BS 7671:', margin, yPos);
+        doc.setFont('helvetica', 'normal');
+        doc.text(r.bs7671_cites.join(', '), margin + 18, yPos);
+        yPos += 4;
+      }
+      if (Array.isArray(r.safety_cites) && r.safety_cites.length) {
+        checkPageBreak(8);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'bold');
+        doc.text('HSE / CDM:', margin, yPos);
+        doc.setFont('helvetica', 'normal');
+        doc.text(r.safety_cites.join(', '), margin + 22, yPos);
+        yPos += 4;
+      }
+      if (Array.isArray(r.evidence_required) && r.evidence_required.length) {
+        checkPageBreak(8);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Evidence:', margin, yPos);
+        doc.setFont('helvetica', 'normal');
+        doc.text(r.evidence_required.join('; '), margin + 20, yPos);
+        yPos += 4;
+      }
+      if (Array.isArray(r.stop_work_triggers) && r.stop_work_triggers.length) {
+        checkPageBreak(8);
+        doc.setFontSize(8);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(180, 30, 30);
+        doc.text('Stop work:', margin, yPos);
+        doc.setFont('helvetica', 'normal');
+        const sw = doc.splitTextToSize(
+          r.stop_work_triggers.join('; '),
+          pageWidth - 2 * margin - 22
+        );
+        doc.text(sw, margin + 20, yPos);
+        yPos += sw.length * 4;
+        doc.setTextColor(20, 20, 20);
+      }
+
+      yPos += 4;
+    });
+    yPos += 4;
+  }
+
+  checkPageBreak(40);
+
   // Risk Rating Key
   doc.setFontSize(8);
   doc.setFont('helvetica', 'bold');
@@ -401,6 +541,140 @@ async function buildCombinedRAMSDoc(
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   yPos = (doc as any).lastAutoTable.finalY + 15;
+  checkPageBreak(40);
+
+  // v2 per-step detail
+  const v2Steps = methodData.steps.filter(
+    (s: any) =>
+      s.named_values?.length ||
+      s.acceptance_criteria?.length ||
+      s.hold_points?.length ||
+      s.named_instruments?.length ||
+      s.bs7671_cites?.length ||
+      s.linked_hazard_titles?.length
+  );
+  if (v2Steps.length > 0) {
+    checkPageBreak(40);
+    doc.setFillColor(240, 240, 240);
+    doc.rect(margin, yPos, pageWidth - 2 * margin, 8, 'F');
+    doc.setFontSize(11);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(20, 20, 20);
+    doc.text('PER-STEP DETAIL', margin + 3, yPos + 5.5);
+    yPos += 12;
+
+    v2Steps.forEach((s: any, idx) => {
+      checkPageBreak(60);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(20, 20, 20);
+      doc.text(`${String(s.stepNumber ?? idx + 1).padStart(2, '0')}  ${safeText(s.title)}`, margin, yPos);
+      yPos += 5;
+
+      if (s.phase || s.objective) {
+        doc.setFontSize(8);
+        if (s.phase) {
+          doc.setFont('helvetica', 'bold');
+          doc.text('Phase:', margin, yPos);
+          doc.setFont('helvetica', 'normal');
+          doc.text(safeText(s.phase), margin + 14, yPos);
+          yPos += 4;
+        }
+        if (s.objective) {
+          doc.setFont('helvetica', 'bold');
+          doc.text('Objective:', margin, yPos);
+          doc.setFont('helvetica', 'normal');
+          const ol = doc.splitTextToSize(safeText(s.objective), pageWidth - 2 * margin - 20);
+          doc.text(ol, margin + 20, yPos);
+          yPos += ol.length * 4;
+        }
+      }
+
+      if (Array.isArray(s.named_instruments) && s.named_instruments.length) {
+        checkPageBreak(8);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Instruments:', margin, yPos);
+        doc.setFont('helvetica', 'normal');
+        const il = doc.splitTextToSize(
+          s.named_instruments.join(', '),
+          pageWidth - 2 * margin - 24
+        );
+        doc.text(il, margin + 24, yPos);
+        yPos += il.length * 4;
+      }
+
+      if (Array.isArray(s.named_values) && s.named_values.length) {
+        checkPageBreak(s.named_values.length * 5 + 6);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Target values', margin, yPos);
+        yPos += 4;
+        s.named_values.forEach((nv: any) => {
+          doc.setFont('helvetica', 'bold');
+          doc.text(`• ${safeText(nv.parameter)}:`, margin + 4, yPos);
+          doc.setFont('helvetica', 'normal');
+          doc.text(safeText(nv.value), margin + 70, yPos);
+          yPos += 4;
+          if (nv.method) {
+            doc.setFont('helvetica', 'italic');
+            doc.setTextColor(100, 100, 100);
+            const ml = doc.splitTextToSize(safeText(nv.method), pageWidth - 2 * margin - 8);
+            doc.text(ml, margin + 8, yPos);
+            yPos += ml.length * 4;
+            doc.setTextColor(20, 20, 20);
+          }
+        });
+      }
+
+      if (Array.isArray(s.acceptance_criteria) && s.acceptance_criteria.length) {
+        checkPageBreak(s.acceptance_criteria.length * 4 + 6);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(20, 120, 50);
+        doc.text('Acceptance criteria', margin, yPos);
+        doc.setTextColor(20, 20, 20);
+        yPos += 4;
+        s.acceptance_criteria.forEach((c: string) => {
+          doc.setFont('helvetica', 'normal');
+          const cl = doc.splitTextToSize(`• ${c}`, pageWidth - 2 * margin - 4);
+          doc.text(cl, margin + 4, yPos);
+          yPos += cl.length * 4;
+        });
+      }
+
+      if (Array.isArray(s.hold_points) && s.hold_points.length) {
+        checkPageBreak(8);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Hold points:', margin, yPos);
+        doc.setFont('helvetica', 'normal');
+        const hp = doc.splitTextToSize(s.hold_points.join('; '), pageWidth - 2 * margin - 22);
+        doc.text(hp, margin + 22, yPos);
+        yPos += hp.length * 4;
+      }
+
+      if (Array.isArray(s.bs7671_cites) && s.bs7671_cites.length) {
+        checkPageBreak(6);
+        doc.setFont('helvetica', 'bold');
+        doc.text('BS 7671:', margin, yPos);
+        doc.setFont('helvetica', 'normal');
+        doc.text(s.bs7671_cites.join(', '), margin + 18, yPos);
+        yPos += 4;
+      }
+      if (Array.isArray(s.linked_hazard_titles) && s.linked_hazard_titles.length) {
+        checkPageBreak(6);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Linked hazards:', margin, yPos);
+        doc.setFont('helvetica', 'normal');
+        const lh = doc.splitTextToSize(
+          s.linked_hazard_titles.join('; '),
+          pageWidth - 2 * margin - 28
+        );
+        doc.text(lh, margin + 28, yPos);
+        yPos += lh.length * 4;
+      }
+
+      yPos += 4;
+    });
+  }
+
   checkPageBreak(40);
 
   // SECTION 3: SIGNATURES AND APPROVALS

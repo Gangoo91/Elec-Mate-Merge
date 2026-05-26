@@ -23,16 +23,26 @@ const quizQuestions = [
     id: 1,
     question:
       'Which regulation edition introduced the requirement for non-combustible cable supports in escape routes?',
-    options: ['16th Edition', '17th Edition', '18th Edition', 'BS 6004'],
-    correctAnswer: 2,
+    options: [
+      '16th Edition',
+      '18th Edition',
+      '17th Edition',
+      'BS 6004',
+    ],
+    correctAnswer: 1,
     explanation:
       'The 18th Edition of BS 7671 introduced the requirement for non-combustible cable supports in escape routes to prevent premature collapse during fires.',
   },
   {
     id: 2,
     question: 'Which fixing is best suited for SWA cables?',
-    options: ['Flat twin clip', 'Cable cleat', 'Plastic cable tie', 'Adhesive pad'],
-    correctAnswer: 1,
+    options: [
+      'Plastic cable tie',
+      'Flat twin clip',
+      'Cable cleat',
+      'Adhesive pad',
+    ],
+    correctAnswer: 2,
     explanation:
       'Cable cleats are heavy-duty fixings specifically designed for SWA cables, providing adequate support for their weight and mechanical protection.',
   },
@@ -61,7 +71,12 @@ const quizQuestions = [
   {
     id: 5,
     question: 'How often should horizontal T&E runs be clipped?',
-    options: ['Every 100 mm', 'Every 300-400 mm', 'Every 1 m', 'Every 2 m'],
+    options: [
+      'Every 100 mm',
+      'Every 300-400 mm',
+      'Every 2 m',
+      'Every 1 m',
+    ],
     correctAnswer: 1,
     explanation:
       'Horizontal T&E runs should typically be clipped every 300-400 mm according to BS 7671 and manufacturer recommendations.',
@@ -71,19 +86,24 @@ const quizQuestions = [
     question: 'Why should clips not be over-tightened?',
     options: [
       'It wastes materials',
-      'It may damage cable insulation',
       'It makes the job look untidy',
+      'It may damage cable insulation',
       'It increases electrical resistance in the conductor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Over-tightening clips can damage cable insulation, potentially leading to insulation failure and safety hazards.',
   },
   {
     id: 7,
     question: 'Give one fire-resistant fixing option.',
-    options: ['Plastic cable tie', 'Stainless steel tie', 'Adhesive clip', 'Rubber grommet'],
-    correctAnswer: 1,
+    options: [
+      'Plastic cable tie',
+      'Rubber grommet',
+      'Adhesive clip',
+      'Stainless steel tie',
+    ],
+    correctAnswer: 3,
     explanation:
       'Stainless steel ties, metal P-clips, and steel fixings are all acceptable fire-resistant fixing options for escape routes.',
   },
@@ -91,12 +111,12 @@ const quizQuestions = [
     id: 8,
     question: 'Give one method of protecting cables from sharp edges.',
     options: [
-      'Use thicker cables',
       'Fit grommets or bushes',
       'Increase cable spacing',
+      'Use thicker cables',
       'Use lower voltages',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Grommets or bushes should be fitted at cable entry/exit points to protect cables from damage by sharp edges.',
   },
@@ -109,19 +129,24 @@ const quickCheckQuestions = [
     question: 'Why must cables in escape routes be supported with non-combustible fixings?',
     options: [
       'To reduce installation costs',
-      'To prevent premature collapse during fires',
-      'To improve electrical performance',
       'To meet manufacturer warranties',
+      'To improve electrical performance',
+      'To prevent premature collapse during fires',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Non-combustible fixings prevent cables from collapsing into escape routes during fires, maintaining safe evacuation paths.',
   },
   {
     id: 'swa-fixing',
     question: 'What type of fixing is commonly used for heavy SWA cables?',
-    options: ['Plastic clips', 'Cable cleats', 'Adhesive pads', 'Cable ties only'],
-    correctIndex: 1,
+    options: [
+      'Cable cleats',
+      'Plastic clips',
+      'Adhesive pads',
+      'Cable ties only',
+    ],
+    correctIndex: 0,
     explanation:
       'Cable cleats are specifically designed heavy-duty fixings that can adequately support the weight and provide mechanical protection for SWA cables.',
   },
@@ -129,12 +154,12 @@ const quickCheckQuestions = [
     id: 'over-tightening',
     question: 'Give one consequence of over-tightening a cable clip.',
     options: [
-      'Improved cable performance',
       'Better weather resistance',
-      'Damage to cable insulation',
       'Reduced installation time',
+      'Improved cable performance',
+      'Damage to cable insulation',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Over-tightening can compress and damage the cable insulation, potentially leading to insulation failure and safety hazards.',
   },

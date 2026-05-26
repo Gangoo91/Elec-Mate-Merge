@@ -35,10 +35,10 @@ const checks = [
     id: 'primary-vs-secondary-check',
     question: 'What is the key difference between a primary cell and a secondary cell?',
     options: [
-      'Primary cells are larger',
+      'Both options above are partly correct.',
       'Secondary cells can be recharged; primary cells cannot',
-      'Primary cells produce DC, secondary cells produce AC',
-      'There is no difference',
+      'A spike upward followed by the normal trace',
+      'Ratio of two power levels (logarithmic)',
     ],
     correctIndex: 1,
     explanation:
@@ -48,12 +48,12 @@ const checks = [
     id: 'electrolysis-direction-check',
     question: 'In electrolysis, positive ions in the electrolyte move towards the:',
     options: [
-      'Anode (positive electrode)',
       'Cathode (negative electrode)',
-      'Centre of the cell',
-      'They don’t move',
+      'Yes, normal position preferred',
+      'Cross-connect termination',
+      'The construction phase plan',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Opposites attract. Positive ions (cations) head for the negative electrode (cathode). Negative ions (anions) head for the positive electrode (anode). That's the basis of electroplating, refining, and how a lead-acid battery charges and discharges.",
   },
@@ -62,12 +62,12 @@ const checks = [
     question:
       'Why does bolting a copper bonding conductor straight onto an aluminium pipe cause problems over time?',
     options: [
-      'The colours clash',
+      'Only if the casualty\\\\\\\\\\\\\\\'s airway is compromised or they are in immediate life-threatening danger',
+      'To make sure the conductors you’re working on can’t shock or burn you',
       'Copper and aluminium form a galvanic cell in the presence of moisture, corroding the joint',
-      'Aluminium has higher resistance',
-      'Copper expands more than aluminium',
+      'Patch panel arrangement allowing flexible connections between systems',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Two dissimilar metals + an electrolyte (rain, condensation) = a small cell. Tiny current flows between them, eating the more reactive metal (aluminium in this case). Over time the joint corrodes, R rises, and the bond fails. Use bimetallic connectors.",
   },
@@ -78,10 +78,10 @@ const quizQuestions = [
     id: 1,
     question: 'A simple cell consists of:',
     options: [
-      'Two electrodes of the same metal in pure water',
+      'Affects economics of electricity supply',
       'Two electrodes of different metals in an electrolyte',
-      'A coil of wire in a magnetic field',
-      'A capacitor and a resistor',
+      'Ensure equipment is functioning correctly',
+      'Sending consumption data to BMS or external counters',
     ],
     correctAnswer: 1,
     explanation:
@@ -91,20 +91,25 @@ const quizQuestions = [
     id: 2,
     question: "An everyday AA alkaline battery is an example of a:",
     options: [
-      'Primary cell',
-      'Secondary cell',
       'Fuel cell',
       'Photovoltaic cell',
+      'Primary cell',
+      'Secondary cell',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       "Alkaline AAs are primary cells — chemistry is one-way, you bin them after use. NiMH and lithium-ion AAs exist (rechargeable) — those are secondary.",
   },
   {
     id: 3,
     question: 'The standard EMF of a single fully-charged lead-acid cell is approximately:',
-    options: ['1.2 V', '2.0 V', '3.7 V', '6.0 V'],
-    correctAnswer: 1,
+    options: [
+      '3.7 V',
+      '1.2 V',
+      '6.0 V',
+      '2.0 V',
+    ],
+    correctAnswer: 3,
     explanation:
       "About 2.0 V per cell. A 12 V car battery is 6 cells in series; a 24 V truck battery is 12. Lithium-ion is ~3.7 V/cell; NiMH is ~1.2 V/cell.",
   },
@@ -112,12 +117,12 @@ const quizQuestions = [
     id: 4,
     question: 'Battery capacity is usually quoted in:',
     options: [
-      'Volts (V)',
-      'Watts (W)',
       'Ampere-hours (Ah)',
+      'Watts (W)',
+      'Volts (V)',
       'Coulombs (C)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Ampere-hours = how much charge the battery can deliver. A 100 Ah battery can theoretically supply 100 A for 1 hour, or 10 A for 10 hours. Q = I × t — same coulomb maths from 3.1.",
   },
@@ -125,12 +130,12 @@ const quizQuestions = [
     id: 5,
     question: 'Electrolysis is used industrially for:',
     options: [
-      'Generating heat',
-      'Generating magnetic fields',
+      'Biological agents including fungi and bacteria',
       'Refining metals (e.g. copper) and electroplating',
-      'Generating AC supply',
+      'Over-tightening terminals damaging insulation',
+      'Happiness, sadness, anger, fear, surprise, and disgust',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Push DC through an electrolyte and you can deposit metal from solution onto the cathode. Used to refine copper, electroplate steel with zinc/chrome/nickel, anodise aluminium, and produce hydrogen.",
   },
@@ -138,12 +143,12 @@ const quizQuestions = [
     id: 6,
     question: 'Galvanic (bimetallic) corrosion needs three things:',
     options: [
+      'Automated scheduling, searchable databases, error checking, and audit trails',
+      'Form a hypothesis based on evidence, test the hypothesis, and revise if necessary',
       'Two dissimilar metals, an electrolyte, and an electrical contact between them',
-      'Two metals of the same type, dry conditions, and air',
-      'Heat, pressure, and a magnet',
-      'Just one metal in pure water',
+      'Protect the casualty from injury by clearing the area around them, but do NOT restrain them',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       "All three. Take any one away — same metal both sides, no moisture, or break the electrical path — and the corrosion mechanism stops. That's why bimetallic lugs and dielectric grease work.",
   },
@@ -152,12 +157,12 @@ const quizQuestions = [
     question:
       'A copper bonding conductor needs to be terminated to a galvanised steel pipe. Best practice is to:',
     options: [
-      "Bolt them straight together — it's only earth",
+      "Clearly identified, accessible, and capable of being secured in the OFF position",
+      "Prevention, reuse, recycling, recovery, then disposal as last resort",
+      "Accumulated snow adds significant weight to platforms, can block access, and creates slip hazards",
       "Use a bimetallic clamp/lug rated for the dissimilar metals, with a corrosion-inhibiting compound",
-      'Wrap the joint in PVC tape',
-      'Solder the copper to the pipe',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Direct copper-on-steel will corrode given time and moisture, raising the bonding R and eventually breaking continuity. Bimetallic clamps (BS 951 etc.) plus jointing compound stop the cell forming.",
   },
@@ -166,9 +171,9 @@ const quizQuestions = [
     question: 'A lead-acid battery being charged gives off:',
     options: [
       'Hydrogen and oxygen gas — explosive',
-      'Just steam',
-      'Carbon dioxide',
-      'Nothing',
+      'Adjusts the output pressure at minimum input',
+      'No handover notes left for the night shift',
+      'Both contribute to the fault loop impedance',
     ],
     correctAnswer: 0,
     explanation:

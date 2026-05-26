@@ -48,12 +48,12 @@ const checks = [
     question:
       "What is the actual technical line that splits G98 from G99 for a UK domestic install?",
     options: [
-      "G98 is for solar, G99 is for wind. Different technologies, different documents.",
       "G98 (fast-track) covers grid-connected generation up to and including 16 A per phase per inverter — single-phase 230 V that means 3.68 kW. G99 (pre-application) applies above that limit, on three-phase, on multi-inverter systems whose total exceeds the G98 cap, and on any second generator at a site that already has G98-connected generation. Mode of generation does not decide the document — capacity does. A 4 kWp PV array with a 3.68 kW inverter sits in G98; a 5 kWp array driving a 5 kW single-phase inverter sits in G99. The DNO needs the full G99 connection-application before commissioning, which adds typically 4-12 weeks of paperwork.",
-      "G98 is for new-build, G99 is for retrofit.",
-      "G98 is voluntary, G99 is mandatory.",
+      "(1) COLLECT SYMPTOMS — customer interview + visual inspection. (2) FORMULATE HYPOTHESIS — what fault types match the symptoms? Narrow to 2–3 candidates. (3) PLAN TESTS — which tests will distinguish the candidates? Order them safely (dead before live). (4) EXECUTE TESTS — using the right instruments per Sub 2.x. (5) ANALYSE RESULTS — do the readings confirm or refute each hypothesis? Update hypothesis based on findings. (6) FORMULATE FIX — what action corrects the confirmed fault? Consider repair vs replace. (7) EXECUTE FIX — make safe, repair / replace, verify with retest, document. The stages turn diagnosis into a structured process; skipping a stage almost always returns to bite you.",
+      "Both theories share autonomy as a core element. SDT\\\\\\\\\\\\'s \\\"competence\\\" maps closely to Pink\\\\\\\\\\\\'s \\\"mastery\\\" (both involve developing skills and feeling effective). The integration comes through recognising that Pink\\\\\\\\\\\\'s \\\"purpose\\\" and SDT\\\\\\\\\\\\'s \\\"relatedness\\\" both address connection to something beyond the self — purpose through meaning, relatedness through people. Together they form a five-factor model: autonomy, mastery/competence, purpose, relatedness, and intrinsic engagement",
+      "The ECA is a trade body — voluntary membership organisation representing contractors' commercial interests, providing technical / commercial / legal support, lobbying, training and standard-form contracts. The JIB is the joint employer/union body that sets pay, conditions and grading on JIB-affiliated jobs. ECA members typically apply JIB rules but the bodies are separate. SELECT plays a similar (but distinct) role for the contracting industry in Scotland.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "16 A per phase per inverter is the bright line. The MCS-certified designer specifies the inverter to keep the system under the cap where possible — a 4 kWp PV array oversized to a 3.68 kW inverter is a deliberate cost-saving choice (slightly clips peak summer output, keeps the install in G98 fast-track). Above the cap, the customer pays for the G99 process and waits.",
   },
@@ -62,12 +62,12 @@ const checks = [
     question:
       "What is anti-islanding (loss-of-mains protection) and why does the DNO insist on it?",
     options: [
-      "Anti-islanding stops the inverter from generating at night.",
       "Anti-islanding is the inverter loss-of-mains (LoM) protection. The inverter constantly monitors voltage and frequency on the AC terminals; if the grid trips, the inverter detects the loss and shuts down within tens of milliseconds. Without it, an islanded inverter keeps energising the local network — a deadly hazard for DNO line workers who think the line is dead. ENA G98 / G99 mandates type-tested LoM protection (ROCOF — rate-of-change-of-frequency, vector shift, or hybrid algorithms). A4:2026 BS 7671 work and the parallel ENA EREC G98 Issue 6 update have aligned UK requirements with EU EN 50549. The L3 electrician does not configure these algorithms; the inverter ships with a type-test certificate that the MCS designer files with the DNO.",
-      "Anti-islanding is a marketing feature, not a regulation.",
-      "Anti-islanding stops the customer charging an EV from PV.",
+      "The EPC should be re-issued to reflect the new performance — heat pump, PV, MVHR, insulation upgrades all change the SAP rating. The MCS-certified installer normally arranges the EPC update. An updated EPC matters for: (a) future house sale (the buyer's solicitor sees current performance); (b) mortgage applications (lenders increasingly weight EPC ratings); (c) insurance (some insurers now adjust premium for low-EPC properties); (d) BUS grant requires a valid EPC at the time of install. EPCs are valid for 10 years from issue.",
+      "Modern crystalline silicon modules typically have a Voc (open-circuit voltage) of 40-50 V per module. A residential string of 8-12 modules in series produces a string Voc of 350-600 V DC under standard conditions, with voltages running higher in cold conditions (Voc rises as temperature falls — the temperature-corrected maximum is what determines the inverter input rating). String inverters operate at these voltages; microinverters convert DC to AC at module level so the cable run between modules and the rest of the system is at AC; module-level DC optimisers raise or lower module voltage to keep the string at MPPT regardless of shading on individual modules. The architecture choice affects the cable type, the protective measures and the rapid-shutdown options.",
+      "Live working is permitted under EAWR Reg 14 only when (a) it's unreasonable for the conductor to be dead, (b) it's reasonable for work to be carried out live, and (c) suitable precautions are taken — ALL three. Choosing live work to avoid customer inconvenience does NOT pass test (a) — convenience isn't 'unreasonable for the conductor to be dead'. The L3 apprentice doesn't get to make that trade-off; the firm's risk assessment makes it, with documented justification, and the supervisor authorises it. The 'I'll just do it live, the customer doesn't want the power off' is the exact failure mode the HSE prosecutes after the inevitable shock.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "LoM is the single most safety-critical inverter function from the DNO point of view. A linesman approaching what looks like a dead pole-mounted transformer should not find a 4 kWp array still pumping 230 V back at them. The inverter type-test certificate is the proof that LoM works to the standard the DNO will accept. As an apprentice you should recognise the certificate when you see it on the install pack.",
   },
@@ -76,12 +76,12 @@ const checks = [
     question:
       "A customer with an existing G98-registered 3.68 kW PV array now wants a battery storage system that can export to grid. What document applies and why?",
     options: [
-      "G98 still applies — the battery is just storage, not a generator.",
+      "Three categories. (1) Lampholder terminals — for incandescent / halogen, the spring contacts oxidise / fatigue; for compact GU10 fittings, the spring clip arcs under poor contact. (2) Driver / control gear failure — LED drivers, fluorescent ballasts have finite life (5–10 years typically), fail open or short, often take the lamp with them. (3) Internal wiring degradation — flex inside fittings degrades from heat over years, especially in enclosed pendant fittings. Brand patterns: cheap GU10 downlighters (£5 unbranded) fail at 2–3 years; LED downlighters from established brands (Aurora, Ansell, JCC) typically last 10+ years; fluorescent fittings from Thorlux / Crompton last 20+ years before driver replacement.",
+      "On TN-C-S, the neutral and protective earth share the PEN conductor between transformer and cut-out. If the PEN breaks anywhere upstream, the customer's neutral floats relative to the transformer star point. Customer's bonded metalwork (kitchen taps, sinks, radiators, EV charger chassis, all bonded to the customer earth terminal) rises toward phase voltage relative to true earth. RCD doesn't see it (no residual current — the lifted-neutral voltage flows through bonding network as L–E volt-drop, not as imbalance). First sign: tingle on metal taps or 30+ V N–E reading at cut-out. A4:2026 added explicit Open PEN protection requirements (Reg 411.3.3, especially for EV chargers).",
       "G99 applies. ENA G98 only allows ONE inverter (or one inverter with a single MPPT) at a site under the fast-track route. Adding a second exporting device — including a battery inverter capable of grid export — converts the site to a multi-generator configuration that requires G99 pre-application. The DNO needs to model the cumulative export against the local network capacity. The customer pays for G99 paperwork and waits for connection approval before commissioning. This often surprises customers who thought adding a battery to existing PV was a quick upgrade. The MCS-certified installer files the G99 application; the L3 apprentice should recognise the trigger and not mis-quote the customer on timing.",
-      "Neither — battery storage is exempt from ENA recommendations.",
-      "G98 with a top-up form to the DNO.",
+      "Five-step. (1) DEMONSTRATE the fix — show the customer that the original symptom is no longer present (e.g. 'the breaker's not tripping any more — try plugging in your kettle'). (2) WALK THROUGH the work done — what was found, what was fixed, what tests confirmed. (3) PROVIDE documentation — job sheet copy, any certificates, customer-friendly summary. (4) EDUCATE on prevention — what behaviours / conditions might cause recurrence, what to watch for. (5) AGREE next steps — any further work recommended, follow-up visit if needed, payment terms. The hand-back is what turns a job from 'work done' to 'customer satisfied'. Skipping it leaves customer feeling unfinished.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The 'one G98 per site' rule trips up a lot of upgrade projects. AC-coupled batteries that can export to grid count as additional generators. DC-coupled batteries inside the existing PV inverter (where the inverter has battery support built in) sometimes stay within the original G98 envelope — but only if the inverter export rating did not change. The MCS designer reads the inverter data sheet and confirms the boundary.",
   },
@@ -93,10 +93,10 @@ const quizQuestions = [
     question:
       "Who notifies the DNO under G98, and when?",
     options: [
-      "The customer directly, before the install starts.",
+      "SYMPTOM-LEVEL — addresses the visible / immediate problem (replace the burnt socket, reset the tripped breaker, replace the failed bulb). Quick, low-cost, but doesn't prevent recurrence if the root cause persists. ROOT-CAUSE — addresses the design / installation / maintenance failure that produced the symptom (redesign the ring final to handle the actual load, re-train the customer to avoid overload, replace the undersized cable to current spec). Slower, higher-cost, but prevents recurrence. Engineering decision: do BOTH where possible; fix the symptom AND the root cause; quote both in the customer brief.",
       "The MCS-certified installer notifies the DNO under G98 within 28 days of commissioning. G98 is post-notification — the installer commissions the system, then notifies. The DNO accepts the notification on the basis that the inverter is type-tested to G98 and the install is MCS-certified. The form contains site address, MPAN, inverter make and model, type-test certificate reference, capacity and commissioning date. The L3 electrician does not file the G98 form — that sits with the MCS-certified installer or designer — but you should recognise it as part of the install pack handed to the customer.",
-      "Anyone on site can submit G98.",
-      "The DNO does not need notifying for domestic systems.",
+      "Face him directly so he can see your mouth and expression, speak at normal pace and volume (not exaggerated), use written notes for technical details, provide the permit-to-work document in advance for him to read, confirm understanding by asking specific questions ('what's the agreed comms signal if I see something wrong?'). Don't cover your mouth, don't turn away mid-sentence, don't have him facing into bright light behind you. If the work involves shared comms (radio), agree visual hand signals as the primary channel for him.",
+      "Half-split = at each step you eliminate half the remaining circuit. Step 1: open the ring at a socket roughly half-way around the ring; test continuity from the DB to that point on each leg; if both legs read continuity, the break is between this socket and the OTHER end of the ring; if one leg reads OL, the break is between this socket and the DB on that leg. Step 2: pick the half that contains the break, repeat at its mid-point. With a 12-socket ring you locate the break in 4 measurements (log&#8322;12 &asymp; 3.6, rounded up). Random walking would take 6 measurements on average. The technique is from logarithmic search algorithms — formalised diagnostic discipline beats random.",
     ],
     correctAnswer: 1,
     explanation:
@@ -107,12 +107,12 @@ const quizQuestions = [
     question:
       "What is the practical timeline for a G99 connection compared with a G98?",
     options: [
-      "Both are same-day approvals.",
+      "MCS MIS 3002 is the installer-competence and installation-quality standard for solar PV. BS 7671 Section 712 is the electrical-design standard for the wiring, protection, isolation and labelling. Both apply on every install. MIS 3002 references BS 7671 explicitly for the electrical detail; BS 7671 applies regardless of whether the install is MCS-certified. MCS certification is required if the customer wants Smart Export Guarantee payments; BS 7671 compliance is required because it's the electrical regulation.",
+      "Fracture (other than to fingers, thumbs and toes); amputation; permanent loss of sight or reduction of sight; crush injuries leading to internal organ damage; serious burns covering more than 10% of the body or causing significant damage to eyes, respiratory system or other vital organs; scalpings requiring hospital treatment; loss of consciousness from head injury or asphyxia; any other injury arising from work in an enclosed space leading to hypothermia, heat-induced illness or requiring resuscitation or admittance to hospital for more than 24 hours.",
       "G98 is post-notification — install, commission, notify within 28 days. The whole transaction completes inside 28 days from commissioning. G99 is pre-application — submit the application before commissioning, wait for the DNO to model the network, receive a Connection Offer, accept the Offer (which may contain export limits or fault-level conditions), then commission. Typical G99 timeline is 4-12 weeks for a domestic system; longer for commercial. On a fast-moving install programme the G99 paperwork is usually the long pole — start it early.",
-      "G98 takes weeks, G99 is instant.",
-      "Both take six months minimum.",
+      "3 percent for lighting circuits, 5 percent for other circuits (sockets, fixed loads). Measured from the origin of the installation to the load. Verified by calculation during design (cable size + length + load) and confirmed by measurement under load during commissioning if there\\\\\\\\'s any doubt. On long runs (above 30-40 m), voltage drop becomes the limiting factor in cable size selection — often requiring a larger cable than overcurrent protection alone would dictate.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Customers who hear 'add a battery' often expect a one-day visit. If the addition pushes the site into G99 territory the DNO timeline is the gating factor, not the installer diary. The MCS designer should warn the customer up front. The L3 apprentice should not commit the firm to commissioning dates before the G99 process is confirmed.",
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       "Why does the inverter have a type-test certificate and what is it for?",
     options: [
-      "It proves the inverter is energy-efficient.",
+      "CAT III 600 V minimum (CAT IV 600 V preferred). The DB is a fixed-installation distribution location, which is CAT III by definition. The Fluke 376FC is CAT IV 600 V / CAT III 1000 V — adequate. The Megger DCM340 is CAT IV 300 V / CAT III 600 V — adequate for 230/400 V three-phase. Cheap clamp meters with only CAT II rating are not safe at this location — they can fail catastrophically on a transient. Always check the CAT rating before using a borrowed or new clamp meter at a DB.",
+      "Three locations. (1) SWA gland terminations — the brass gland's earth path through the armour to the gland body is critical and often poorly made (insufficient compression on the armour, missing earth tag, paint between gland and box). Causes intermittent earth faults. (2) Compound seal at gland — over years the seal hardens / shrinks, water ingress to the cable cores. (3) The cable run itself only when physically damaged (forklift impact, settlement, vermin). Brand patterns: CMP industrial glands and Pratley sealing compound are the trade standard; cheap gland kits (Vinco, generic OEM) often fail at the earth-tag connection.",
+      "Rented domestic properties in England — including most assured shorthold tenancies, licences to occupy, and HMOs. Excludes social housing tenancies under separate regulation, lodger arrangements where the landlord shares the dwelling, long leases (7+ years), student halls of residence under separate regimes, and accommodation provided to family members. Wales has its own equivalent (Renting Homes Wales Act 2016 plus the Renting Homes — Fitness for Human Habitation Regulations 2022); Scotland has the Housing (Scotland) Act 2006 plus tolerable standard / repairing standard guidance; Northern Ireland follows similar requirements via the Housing (Northern Ireland) Order 2003.",
       "The type-test certificate is the manufacturer's evidence — issued by an accredited test lab — that the inverter model has been tested to the EREC G98 / G99 / EN 50549 protection requirements. It records the LoM detection method (ROCOF, vector shift, hybrid), the trip thresholds for over-voltage / under-voltage / over-frequency / under-frequency, the disconnection time, and the recovery delay. The DNO accepts the type-test certificate at face value — they do not retest each inverter on each install. Without a current type-test certificate, the DNO will refuse to accept G98 / G99 notification and the install cannot legally export.",
-      "It is just a marketing claim.",
-      "It records when the inverter was made.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Type-test certificates are the technical foundation of the whole fast-track scheme. They are typically valid for the inverter model life and you can download them from the manufacturer site. Beware: counterfeit / out-of-date certificates do circulate. The MCS-certified designer is responsible for verifying the certificate is current and matches the inverter installed.",
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       "What does export limitation mean on a G99 connection offer and why does the DNO sometimes require it?",
     options: [
-      "It limits the customer electricity bill.",
       "Export limitation caps the maximum kW the system is allowed to send back to the grid, regardless of how much the array can produce. Implemented by a current transformer (CT) clamp at the supply head, feeding a smart meter or export controller that throttles the inverter when export approaches the limit. The DNO requires it where adding the customer full inverter output to the local network would push voltage outside statutory limits or exceed substation thermal capacity. A 5 kWp array might be limited to 3.68 kW export with the rest used on site (charge a battery, run a heat pump, charge an EV). The MCS designer specifies the limiter; the L3 electrician fits the CT and routes the data cable to the inverter.",
-      "It limits how much the system can import from the grid.",
-      "It is a feed-in-tariff thing only.",
+      "Because Future Homes Standard requires very low fabric U-values, very low air permeability, and Part F controlled ventilation. At those airtightness levels the building cannot rely on infiltration for air change — it needs deliberate mechanical ventilation. MVHR provides that mechanical ventilation while recovering 80-90% of the heat. SAP credits MVHR with significant carbon savings in airtight new-build, contributing materially to the Part L target rate. Fitting MEV (mechanical extract ventilation only, no recovery) instead loses the recovery benefit and harms the SAP score.",
+      "A published document that confirms the supplier commitment to achieving net-zero by 2050, sets out the current annual emissions broken down by scope (with scope 3 covering at least the categories identified in the PPN 06/21 guidance), describes the environmental management measures in place, and is signed off by a director of the supplier organisation. The CRP must be published on the supplier website, updated at least annually, and provided as part of any in-scope tender submission. The format follows a standard template provided in the PPN 06/21 guidance.",
+      "Section 722 'Electric vehicle charging installations' is the special-installations chapter of BS 7671 covering electrical requirements for EV charging points. Topics include circuit design for the charging point, RCD selection (Type B or RDC-DD with DC fault detection), protection against the PEN-fault risk on PME supplies, isolation, and EV-specific inspection and test. Section 722 was significantly amended in BS 7671:2018+A4:2026 to reflect updated requirements for modern charging hardware and the smart-charging regulatory landscape.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Export limitation is the DNO way of saying 'yes, you can install — but you cannot push more than X kW into our network'. The G99 Connection Offer states the limit. Failure to enforce it is a breach of the connection agreement and exposes the customer to disconnection. The CT and limiter wiring is the apprentice territory; verifying the configured limit matches the offer is the designer's.",
   },
@@ -149,10 +149,10 @@ const quizQuestions = [
     question:
       "Who is the DNO and how does the L3 apprentice know which DNO covers the install?",
     options: [
-      "The DNO is the energy supplier — same as the customer tariff company.",
+      "Three-part brief in plain English. (1) WHAT WAS HAPPENING — 'Your kitchen RCBO was tripping because there was a small earth leak from a damaged terminal in the ceiling rose'. (2) WHAT WE DID — 'We replaced the damaged terminal, re-tested the circuit, and confirmed the leak is gone'. (3) WHAT TO WATCH FOR — 'If the breaker trips again in the next month, give us a call straight away — that would suggest a related issue we should investigate'. Plus a written summary on the job sheet / certificate. The customer leaves understanding the fault, the fix, and what to do if it returns.",
       "The DNO (Distribution Network Operator) is the company that owns and maintains the local low-voltage and medium-voltage distribution network — the poles, cables and substations between the National Grid and the customer meter. There are six DNO regions in Great Britain (UK Power Networks, Northern Powergrid, SP Energy Networks, Electricity North West, National Grid Electricity Distribution, SSEN). The DNO is NOT the supplier — the supplier sends the customer bill but does not own wires. You find the DNO from the postcode (the ENA Distribution map) or from the MPAN supply number at the customer meter (digit 1 of the bottom-line MPAN identifies the supply area). G98 / G99 notifications go to the relevant DNO, not to OFGEM, not to the supplier.",
-      "All UK installs go to the same national DNO.",
-      "The customer solicitor is the DNO.",
+      "FAIL — well above the BS 7671 Table 41.3 maximum of 1.37 Ω for B32 at 0.4 s disconnection. The protective device cannot guarantee disconnection within the required time. Action: (1) Verify the reading. (2) Check supply Ze first — is the high Zs caused by high origin Ze (possible PEN issue) or by added impedance on the circuit (HRJ, undersized cable)? (3) Make safe — isolate the affected circuit. (4) Investigate and rectify. (5) Document as Code 1 if safety is at imminent risk; Code 2 if safety is compromised but not immediately dangerous.",
+      "Direct correlation but not identical. BS 7671 thresholds tell you whether something meets the standard. EICR codes (C1 / C2 / C3 / FI) tell you the safety implication: C1 (Danger Present — immediate action), C2 (Potentially Dangerous — urgent action), C3 (Improvement Recommended — further work advised), FI (Further Investigation needed). A FAIL on Zs gives a C1 or C2 depending on actual safety implication. A borderline pass gives a C3. The MFT measurement is the data; the EICR coding is the safety judgment based on the data + context.",
     ],
     correctAnswer: 1,
     explanation:
@@ -163,12 +163,12 @@ const quizQuestions = [
     question:
       "When does an installer need to apply for G100 instead of G98 / G99?",
     options: [
-      "Never — G100 has been withdrawn.",
+      "Adding a battery changes the maximum potential export from the property and changes the inverter behaviour as seen from the network. ENA G98 (single-phase up to 16 A per phase) and G99 (above 16 A or three-phase) require the combined system to be notified. For a connect-and-notify install (G98) the installer notifies the DNO within 28 days of energising. For G99 the installer applies in advance and the DNO returns connection conditions before energising. The MCS-certified installer handles the paperwork; the apprentice should understand that the existing PV notification does not cover the added storage.",
+      "The training-provider tutor first — they have responsibility for the quality of the apprentice's training experience and the authority to intervene with the employer. The apprenticeship agreement is a tripartite document (apprentice, employer, training provider) and the training provider can hold the employer to account on training delivery. If that doesn't resolve it, the apprentice can raise a formal grievance with the employer under the ACAS Code, escalate to ACAS conciliation, and ultimately to an employment tribunal.",
       "G100 (active export limitation scheme) applies where the customer wants to install a system bigger than the DNO would otherwise accept, on the basis that an active limiter will cap exported power to a level the network can accommodate. It is a way to install (say) a 12 kWp PV array on a network that cannot accept 12 kW export, by limiting export to 3.68 kW with self-consumption and battery storage soaking up the rest. G100 sits within the broader G99 process — the DNO Connection Offer will include the G100 export limit and the limiter type-test requirement. The L3 apprentice will not run the G100 application but should recognise it as the technical mechanism behind 'oversized array, limited export' designs.",
-      "G100 is for caravans only.",
-      "G100 is the document for refrigerator installs.",
+      "PAS 2035 (Publicly Available Specification — Retrofitting dwellings for improved energy efficiency) is the standard that governs domestic energy efficiency retrofit projects. It requires a 'whole-house' approach — fabric assessment, ventilation strategy, moisture risk management, and any retrofit measures (including heat pump installation) must be coordinated by a Retrofit Coordinator and designed by a Retrofit Designer. Required for grant-funded retrofits (ECO4, Boiler Upgrade Scheme in some cases, local authority schemes). Helps avoid the failure mode where a heat pump is fitted to an uninsulated leaky house and posts a poor SCOP. The MCS-certified heat pump installer works within the PAS 2035 framework on grant-funded projects.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "G100 is the 'how to limit export' technical specification that supports G99. Modern oversized PV-with-battery installs in suburban areas frequently rely on G100 because the local network cannot accept full inverter output. The customer gets the bigger system; the DNO gets the comfort that exports are capped.",
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     question:
       "What is the practical commissioning sequence for a G98 PV install?",
     options: [
-      "Energise everything at once and call it done.",
+      "Five categories. (1) FLUORESCENT BALLAST FAILURE — magnetic ballasts hum, electronic ballasts go silent and the lamp flashes; replacement standard. (2) STARTER FAILURE (older fluorescent) — the lamp tries to start repeatedly, eventually fails. (3) LED DRIVER FAILURE — fitting goes dark or starts flickering; many drivers are specific to the fitting (Aurora, Ansell, Bell, Forest Lighting); replacement requires matching driver to fitting. (4) LAMPHOLDER OXIDATION (especially GU10) — spring contacts arc, lamp fails to start; clean and re-seat or replace lampholder. (5) OVERLOADED CIRCUIT — too many LED drivers on a circuit designed for fluorescent; LED inrush causes nuisance trips.",
+      "A boiler drives a wet heating system — pumps hot water around radiators / underfloor circuits and a hot-water cylinder. Typical output 10-50 kW, located in a utility room or outhouse, automatic fuel feed (auger from a hopper), automatic ignition, automatic ash handling. A stove is a room heater — radiates heat directly into the room it sits in, plus optional back-boiler for some hot water. Lower output (5-15 kW typical), manual loading (logs or pellets), no automatic ash removal. Different installation regulations, different MCS standards, different customer expectations.",
+      "Three. (1) Field exposure limits — ICNIRP / HSE guidance on RF field strength; standby fields can couple to your body even when you're not in direct contact. (2) Pacemaker / metal implant warning — RF fields interfere with cardiac pacemakers and can heat metallic implants; warn anyone with implants to stay clear (signage at the equipment). (3) Capacitive discharge — RF tank circuits store significant energy in capacitor banks; isolation procedure includes wait period (manufacturer-specified, typically 5–15 minutes) for capacitor bleed before working near. The L3 apprentice doesn't typically commission RF equipment but does meet it on workshop sites; the precautions need to be respected.",
       "Standard sequence: (1) verify the AC isolator is OFF; (2) DC-side test the strings (Voc, Isc, polarity, insulation resistance to MCS MGD 003 / IEC 62446 method); (3) close the DC isolator and verify inverter starts up but does not export (AC still off); (4) close the AC isolator and verify the inverter synchronises and exports; (5) record kWh meter reading at handover; (6) MCS-certified installer files the G98 form with the DNO within 28 days; (7) provide the customer with the install pack including type-test certificate, MCS commissioning certificate and the EIC. The L3 apprentice contributes to steps 1-5 and learns the documentation pack from steps 6-7. Skipping the DC-side IR test is a common defect pickup on later EICRs.",
-      "Skip DC testing — just power up and check it works.",
-      "Test only after 12 months in service.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Commissioning sequence matters because the DC side stays live as long as light hits the array. The discipline of testing strings before closing the inverter is what protects the apprentice and the inverter. MCS MGD 003 codifies the method; IEC 62446 is the international equivalent that the test instruments are calibrated against.",
   },
@@ -191,12 +191,12 @@ const quizQuestions = [
     question:
       "What goes in the G98 install pack the customer should keep for life?",
     options: [
-      "Just the receipt.",
       "MCS commissioning certificate (the MCS-certified installer sign-off — required to claim Smart Export Guarantee tariff), the inverter type-test certificate, the array layout drawing, the single-line electrical schematic, the DC and AC isolator location plan, the BS 7671 EIC for the electrical work, the manufacturer manuals for inverter and panels, and the G98 notification copy filed with the DNO. The pack lives with the property — when the customer sells, the next owner needs it for their EICR and to maintain SEG eligibility. Lost packs cost real money to replace, especially the MCS commissioning certificate. Hand the pack over physically and email a digital copy.",
-      "The customer lottery numbers.",
-      "Only the EIC.",
+      "Near-miss = an unsafe condition or unsafe action that could have caused harm but didn't, by chance or by intervention. Examples in fault diagnosis — apprentice cuts a cable they thought was dead and it sparks (lucky there was no harm); a tool drops from a ladder onto an empty workspace; a meter is touched to a live conductor through poor probe technique. Near-miss reporting is the early-warning system — the same condition will eventually cause harm if not addressed. Most major incidents have a trail of near-misses preceding them (the 'Heinrich pyramid' or similar safety models). Reporting near-misses is normalised in safety-mature organisations; suppressing them (because of fear of blame) is the cultural pattern that precedes major incidents. The L3 apprentice's job is to report their near-misses honestly and to learn from others' reports.",
+      "Trip-time test injects a calibrated residual current and measures how long the RCD takes to disconnect. BS 7671 643.7 / Table 643.7 maximums: at I∆n (rated trip current, e.g. 30 mA): ≤ 300 ms (general type, ≤ 40 ms for type S); at 1×IΔn: ≤ 40 ms (general type). Modern RCDs typically trip at I∆n in 10–30 ms — well under the limit. Slow tripping (&gt;50 ms at I∆n) indicates a failing RCD. The MFT (Megger MFT1741+) tests at multiple injection levels and at 0° / 180° phase angles — the slowest of the four readings is the recorded trip time.",
+      "Two possibilities. (1) Active arc fault on the circuit — there's a real arc happening that the AFDD is correctly detecting and refusing to ignore. Investigate as a real fault: visual inspection, IR test, thermal imaging. (2) AFDD itself has failed in the 'trip' state — internal electronics fault. Test by removing the AFDD from the busbar (load disconnected) and trying to latch it; if it still won't latch, the AFDD is faulty and needs replacement. The L3 apprentice's protocol: investigate as real fault first; only if no fault is found, consider AFDD failure and substitute with known-good unit.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The install pack is the customer evidence of a compliant install. They will need it on house sale, on EICR every five years, and on any SEG dispute with their supplier. The MCS commissioning certificate is the master document; everything else hangs off it. As an apprentice, treat the handover pack with the same care as you would the EIC itself.",
   },

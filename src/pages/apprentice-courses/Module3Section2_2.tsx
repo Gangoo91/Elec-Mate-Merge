@@ -80,8 +80,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which type of conduit is more suitable for heavy industrial environments?',
-    options: ['PVC conduit', 'Steel conduit', 'Flexible PVC conduit', 'Aluminium conduit'],
-    correctAnswer: 1,
+    options: [
+      'Flexible PVC conduit',
+      'PVC conduit',
+      'Steel conduit',
+      'Aluminium conduit',
+    ],
+    correctAnswer: 2,
     explanation:
       'Steel conduit provides superior mechanical protection against the impacts and harsh conditions typically found in heavy industrial environments.',
   },
@@ -97,20 +102,25 @@ const quizQuestions = [
     id: 4,
     question: 'Give one disadvantage of recessed conduit installation.',
     options: [
-      'Higher material costs',
       'More labour-intensive and harder to modify later',
-      'Poor mechanical protection',
-      'Limited cable capacity',
+      '230V single phase, 400V three phase',
+      'Carry out a suitable and sufficient fire risk assessment',
+      'Inspected for damage, cleaned if necessary and stored safely',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Recessed installation requires chasing walls, is more time-consuming, and makes future modifications or repairs much more difficult and disruptive.',
   },
   {
     id: 5,
     question: 'What is used at conduit ends to prevent damage to cable insulation?',
-    options: ['Cable ties', 'Insulation tape', 'Bushes or grommets', 'Plastic sleeves'],
-    correctAnswer: 2,
+    options: [
+      'Insulation tape',
+      'Bushes or grommets',
+      'Plastic sleeves',
+      'Cable ties',
+    ],
+    correctAnswer: 1,
     explanation:
       'Bushes or grommets are fitted at conduit entry points to prevent sharp edges from cutting cable insulation during installation or thermal movement.',
   },
@@ -119,11 +129,11 @@ const quizQuestions = [
     question: 'Why is electrical continuity important in metal conduit systems?',
     options: [
       'To prevent rust',
-      'To ensure safe earthing',
       'To make installation easier',
+      'To ensure safe earthing',
       'To improve appearance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Electrical continuity ensures the metal conduit can safely carry fault current to earth, providing protection against electric shock and fire.',
   },
@@ -131,20 +141,25 @@ const quizQuestions = [
     id: 7,
     question: 'Name one situation where surface-mounted conduit is preferred.',
     options: [
-      'Domestic living rooms',
+      'Power exchanged between source and reactive components',
+      'Work in special locations or involving new circuits',
+      'Reference Method B (enclosed in conduit on a wall)',
       'Industrial settings or retrofit installations',
-      'Hotel bedrooms',
-      'Office reception areas',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Surface mounting is preferred in industrial settings for durability and accessibility, and in retrofit situations where chasing walls would be disruptive.',
   },
   {
     id: 8,
     question: 'Which regulation covers conduit installation in the UK?',
-    options: ['BS 7909', 'BS 7671 (IET Wiring Regulations)', 'BS 5839', 'BS 6701'],
-    correctAnswer: 1,
+    options: [
+      'BS 7671 (IET Wiring Regulations)',
+      'SCOP of 2.5 (for wet heating systems)',
+      'In Schedule 2 of CDM 2015',
+      'Longer length increases resistance',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 7671 (IET Wiring Regulations) sets the requirements for electrical installations including conduit systems, support spacing, and earthing requirements.',
   },

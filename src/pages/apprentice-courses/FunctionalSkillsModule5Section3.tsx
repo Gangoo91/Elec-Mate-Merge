@@ -42,10 +42,10 @@ const FunctionalSkillsModule5Section3 = () => {
       id: 2,
       question: 'Which breathing technique can help reduce exam anxiety quickly?',
       options: [
-        'Breathing as fast as possible to increase oxygen',
-        'Holding your breath for 60 seconds',
-        '4-7-8 breathing: inhale for 4, hold for 7, exhale for 8 counts',
         'Only breathing through your mouth throughout the exam',
+        'Breathing as fast as possible to increase oxygen',
+        '4-7-8 breathing: inhale for 4, hold for 7, exhale for 8 counts',
+        'Holding your breath for 60 seconds',
       ],
       correctAnswer: 2,
       explanation:
@@ -54,8 +54,13 @@ const FunctionalSkillsModule5Section3 = () => {
     {
       id: 3,
       question: 'What is the recommended length of a single Pomodoro study session?',
-      options: ['10 minutes', '25 minutes', '45 minutes', '60 minutes'],
-      correctAnswer: 1,
+      options: [
+        '45 minutes',
+        '10 minutes',
+        '60 minutes',
+        '25 minutes',
+      ],
+      correctAnswer: 3,
       explanation:
         'A standard Pomodoro session is 25 minutes of focused study followed by a 5-minute break. After four Pomodoros, you take a longer 15-30 minute break. This technique prevents mental fatigue and maintains concentration.',
     },
@@ -64,12 +69,12 @@ const FunctionalSkillsModule5Section3 = () => {
       question:
         'When using past papers for revision, what should you do after marking your answers?',
       options: [
-        'Throw the paper away and start a new one',
         'Review every wrong answer, understand the mistake, and revise that topic before trying again',
-        'Only look at the questions you got right to boost confidence',
-        'Memorise the exact answers in case the same questions appear',
+        'By choosing which specialisms to pursue, which clients to work with, and how to structure their working week',
+        'Outcome goals provide direction while process goals provide daily actionable steps',
+        'Cycles of binge eating followed by compensatory behaviours such as purging',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'The real learning happens when you review your mistakes. Understand why you got each answer wrong, revise that specific topic, and then try similar questions again to confirm you have improved. This feedback loop is what transforms past papers from a test into a learning tool.',
     },
@@ -79,8 +84,8 @@ const FunctionalSkillsModule5Section3 = () => {
       options: [
         'The order of cable colours',
         "Ohm's Law formula: V = I x R",
-        'The sequence of testing procedures',
         'The hierarchy of PPE requirements',
+        'The sequence of testing procedures',
       ],
       correctAnswer: 1,
       explanation:
@@ -90,12 +95,12 @@ const FunctionalSkillsModule5Section3 = () => {
       id: 6,
       question: "What is 'active recall' as a study technique?",
       options: [
-        'Reading your notes while exercising',
+        'They provide guidance based on real experience, helping you avoid common mistakes',
+        'To ensure secure mechanical grip and good electrical contact',
         'Testing yourself by trying to remember information without looking at your notes',
-        'Recalling what you did at work that day',
-        'Recording yourself reading your notes and playing it back',
+        'Consulting, training, inspection, or reduced-hours roles',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Active recall involves deliberately trying to retrieve information from memory without looking at your notes. This strengthens neural pathways and is far more effective than passive re-reading. Flashcards, practice questions, and covering your notes while reciting key points are all forms of active recall.',
     },
@@ -103,12 +108,12 @@ const FunctionalSkillsModule5Section3 = () => {
       id: 7,
       question: 'Why should you create a study timetable that includes rest days?',
       options: [
-        'Because your employer requires it',
-        'To have time to buy more stationery',
+        'The spacing and resolution of illuminance calculations across a surface',
+        'Pre-functional tests basic wiring and power; functional tests complete sequences',
+        '110% of the largest container or 25% of the total capacity, whichever is greater',
         'Because your brain consolidates memories during rest, preventing burnout and maintaining motivation',
-        'Rest days are not important for effective revision',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Rest is essential for memory consolidation — your brain processes and stores information during downtime and sleep. Without rest days, you risk burnout, reduced concentration, and diminishing returns on your study time. A sustainable plan with built-in rest will always outperform unsustainable cramming.',
     },
@@ -116,12 +121,12 @@ const FunctionalSkillsModule5Section3 = () => {
       id: 8,
       question: 'What is the most effective way to use the last 10 minutes of an exam?',
       options: [
-        'Start a new question you have not attempted',
-        'Sit quietly and wait for the exam to end',
         'Check your answers, correct obvious errors, and ensure you have not left any questions blank',
-        'Rewrite your longest answer more neatly',
+        'Ensuring the intended message is received, understood, and acted upon correctly',
+        'Each connection must be fully engaged, secure and locked in its correct position',
+        'A step-by-step procedure describing how a task will be carried out safely',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'The final 10 minutes should be used for checking. Go back to skipped questions, verify calculations, check units and decimal points, proofread writing for SPaG errors, and ensure every question has been attempted. These quick checks can easily recover 5-10 marks.',
     },

@@ -35,7 +35,12 @@ const checks = [
     id: 'efficiency-formula-check',
     question:
       'A motor draws 1000 W of electrical power and delivers 850 W of mechanical power at the shaft. What is its efficiency?',
-    options: ['8.5%', '15%', '85%', '117%'],
+    options: [
+      '8.5%',
+      '15%',
+      '85%',
+      '117%',
+    ],
     correctIndex: 2,
     explanation:
       'Efficiency = useful out ÷ total in × 100% = 850 ÷ 1000 × 100 = 85%. The other 150 W comes out as heat in the motor windings and friction in the bearings.',
@@ -44,8 +49,13 @@ const checks = [
     id: 'energy-in-out-check',
     question:
       'A pulley hoist lifts a 100 kg load 2 m. You put 2400 J of work into the rope. What is the efficiency (g = 9.81)?',
-    options: ['About 60%', 'About 82%', 'About 95%', 'About 122%'],
-    correctIndex: 1,
+    options: [
+      'About 60%',
+      'About 122%',
+      'About 95%',
+      'About 82%',
+    ],
+    correctIndex: 3,
     explanation:
       'Useful work out = mgh = 100 × 9.81 × 2 ≈ 1962 J. Efficiency = 1962 ÷ 2400 × 100 ≈ 82%. The missing 18% went into friction in the pulleys and rope stretching.',
   },
@@ -53,8 +63,13 @@ const checks = [
     id: 'power-from-energy-check',
     question:
       'A pump lifts 600 litres of water (600 kg) from a basement up 8 m to ground level in 2 minutes (120 s). Find the useful mechanical power delivered (g = 9.81).',
-    options: ['About 49 W', 'About 196 W', 'About 392 W', 'About 4 kW'],
-    correctIndex: 2,
+    options: [
+      'About 4 kW',
+      'About 392 W',
+      'About 49 W',
+      'About 196 W',
+    ],
+    correctIndex: 1,
     explanation:
       'Work = mgh = 600 × 9.81 × 8 = 47,088 J. Power = 47,088 ÷ 120 ≈ 392 W. That’s the USEFUL output — the actual electrical input to the pump will be more, divided by its efficiency.',
   },
@@ -67,10 +82,10 @@ const quizQuestions = [
     id: 1,
     question: 'How is efficiency calculated?',
     options: [
-      'Efficiency = total energy in ÷ useful energy out',
+      'Twisting under load places shear forces on the spine, increasing injury risk',
       'Efficiency = useful energy out ÷ total energy in (× 100 for percentage)',
-      'Efficiency = power × time',
-      'Efficiency = force × distance',
+      'Write the email, save as draft, re-read it the next day before deciding to send',
+      'To provide an earth reference for unearthed systems',
     ],
     correctAnswer: 1,
     explanation:
@@ -80,12 +95,12 @@ const quizQuestions = [
     id: 2,
     question: 'Why can no real machine ever be 100% efficient?',
     options: [
-      'Because the laws of physics forbid energy out from equalling energy in',
+      'After any event likely to have affected its stability, such as adverse weather',
+      'To provide a sealed entry point for cables entering the enclosure, maintaining the IP rating',
       'Because some energy always converts into "less useful" forms like heat, sound and friction',
-      'Because manufacturers cap efficiency for safety',
-      'Because energy decays with time',
+      'To control the transition speed between current and new lighting states',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Energy is conserved (it’s not created or destroyed) — but in real systems some always ends up as heat, sound or other low-grade forms that you can’t use for the intended job.',
   },
@@ -93,7 +108,12 @@ const quizQuestions = [
     id: 3,
     question:
       'A 2 kW heater is used in a small bedroom and converts essentially all of its electrical input into heat. What is its efficiency?',
-    options: ['~25%', '~50%', '~85%', '~100%'],
+    options: [
+      '~85%',
+      '~25%',
+      '~50%',
+      '~100%',
+    ],
     correctAnswer: 3,
     explanation:
       'Heating elements are essentially 100% efficient — every joule of electrical input becomes heat (sound and light from the indicator are negligible). That’s why electric heating is hard to beat for raw efficiency.',
@@ -101,7 +121,12 @@ const quizQuestions = [
   {
     id: 4,
     question: 'A motor draws 500 W and outputs 425 W of mechanical power. What is its efficiency?',
-    options: ['85%', '15%', '925%', '50%'],
+    options: [
+      '85%',
+      '15%',
+      '925%',
+      '50%',
+    ],
     correctAnswer: 0,
     explanation: 'η = (425 ÷ 500) × 100 = 85%. The other 75 W comes out as heat in the motor.',
   },
@@ -109,15 +134,25 @@ const quizQuestions = [
     id: 5,
     question:
       'You lift a 50 kg load 4 m using a hoist that consumes 2500 J of electrical energy. What is the efficiency (g = 9.81)?',
-    options: ['About 78%', 'About 65%', 'About 51%', 'About 39%'],
-    correctAnswer: 0,
+    options: [
+      'About 65%',
+      'About 78%',
+      'About 39%',
+      'About 51%',
+    ],
+    correctAnswer: 1,
     explanation: 'Useful work = mgh = 50 × 9.81 × 4 = 1962 J. η = 1962 ÷ 2500 × 100 ≈ 78%.',
   },
   {
     id: 6,
     question: 'Roughly, what is the efficiency of a typical petrol car engine?',
-    options: ['About 10%', 'About 25%', 'About 60%', 'About 95%'],
-    correctAnswer: 1,
+    options: [
+      'About 10%',
+      'About 60%',
+      'About 25%',
+      'About 95%',
+    ],
+    correctAnswer: 2,
     explanation:
       'Petrol engines are around 20-30% efficient — most of the chemical energy in the fuel comes out as heat in the exhaust and the cooling system. Diesel does a bit better (~35%). Electric motors blow them away at 85-95%.',
   },
@@ -125,8 +160,13 @@ const quizQuestions = [
     id: 7,
     question:
       'An old filament bulb is rated 60 W and converts about 5% of its input to light. What does the rest become?',
-    options: ['Sound', 'Heat', 'Magnetic field', 'It’s lost — energy isn’t conserved here'],
-    correctAnswer: 1,
+    options: [
+      'Sound',
+      'It’s lost — energy isn’t conserved here',
+      'Magnetic field',
+      'Heat',
+    ],
+    correctAnswer: 3,
     explanation:
       'About 95% becomes heat. That’s why old bulbs got so hot. LEDs, by contrast, push something like 30-40% of their input into useful light, the rest into a much smaller amount of heat.',
   },
@@ -134,8 +174,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A motor delivers 80% efficiency. To get 800 W of mechanical output, how much electrical input does it need?',
-    options: ['640 W', '800 W', '880 W', '1000 W'],
-    correctAnswer: 3,
+    options: [
+      '1000 W',
+      '880 W',
+      '640 W',
+      '800 W',
+    ],
+    correctAnswer: 0,
     explanation:
       'Input = output ÷ efficiency = 800 ÷ 0.80 = 1000 W. That’s why oversizing motors slightly helps — you need headroom in the electrical supply for the losses.',
   },

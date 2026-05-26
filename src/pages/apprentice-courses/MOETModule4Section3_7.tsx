@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'fault-report-purpose',
     question: 'The primary purpose of completing a detailed fault report after every repair is to:',
     options: [
-      'Satisfy the paperwork requirements of the health and safety department',
+      'DCS provides tightly integrated, high-speed control for a single plant; SCADA provides supervisory monitoring and control over geographically dispersed assets',
+      'To coordinate work safely, understand interfaces between systems and communicate effectively across disciplines',
+      'Prevents the door from being opened while the main switch is in the ON position, and prevents the switch from being turned ON while the door is open',
       'Create a historical record that aids future fault diagnosis, identifies recurring problems, demonstrates compliance and supports continuous improvement',
-      'Give the technician something to do after the repair is complete',
-      'Prove that the technician was working during their shift',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Fault reports serve multiple purposes beyond the immediate repair. They create a searchable maintenance history that helps future technicians diagnose similar faults more quickly. They identify recurring problems that may indicate a design weakness or environmental issue. They demonstrate regulatory compliance and due diligence. They provide data for reliability analysis and continuous improvement programmes.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'root-cause-analysis',
     question: 'A root cause analysis (RCA) differs from a standard fault report because it:',
     options: [
-      'Is shorter and simpler than a fault report',
-      'Only records what was replaced',
       'Investigates why the fault occurred in the first place and identifies actions to prevent recurrence, not just what failed',
-      'Is only required for electrical faults, not mechanical ones',
+      'Barriers must prevent anyone from stepping off the tower platform onto the fragile surface, and warning signs must be displayed',
+      'Insurance may be invalid, enforcement notices issued, and Responsible Person may face prosecution',
+      'The original F10 should be updated and the HSE notified of the changes as soon as practicable',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "A standard fault report records what happened, what was found and what was done to repair it. A root cause analysis goes further — it asks why the fault occurred and keeps asking 'why' until the underlying cause is identified. For example, a motor bearing failure (symptom) may be caused by misalignment (immediate cause), which was caused by inadequate foundation maintenance (root cause). The RCA then recommends corrective actions to address the root cause and prevent recurrence.",
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'When completing a CMMS (Computerised Maintenance Management System) entry for a fault repair, the most important information to record accurately is:',
     options: [
-      'Only the time taken so the job can be costed',
       'The fault symptoms, diagnostic steps taken, root cause identified, repair actions completed, parts used, and any recommendations for preventing recurrence',
-      'Only the parts used for stock control purposes',
-      'Only the asset number and a one-word description',
+      'It has a special legal status — failure to follow it is not an offence in itself, but it can be used as evidence of failing to comply with the regulations',
+      'Briefly connecting a known resistance between line and earth to draw a fault current, measuring the resulting voltage drop, and calculating the impedance from V/I',
+      'Ib = P / (V x cos φ) — real power divided by the product of voltage and power factor. The motor or inductive load draws apparent power = P / cos φ, and line current carries apparent power.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A complete CMMS entry should capture the full story of the fault: what was reported, what was found during investigation, what tests were performed, what the root cause was determined to be, what repair actions were taken, what parts were used, what the outcome was, and what recommendations were made. This comprehensive record supports future diagnosis, reliability analysis, spare parts planning and compliance requirements.',
   },
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'photographic-evidence',
     question: 'Photographic evidence taken during fault diagnosis is valuable because it:',
     options: [
-      'Makes the fault report look more professional',
+      'Report the fault to their supervisor with full diagnostic findings and a recommendation, then await authorisation before ordering',
       'Provides an objective, visual record of conditions found that can be reviewed later, shared with colleagues, used for training, and supports any subsequent investigation or claim',
-      'Is only useful if the technician cannot write clearly',
-      'Is required by BS 7671 for every fault repair',
+      'Check that the interlock switch is making contact when the guard is closed — verify with a multimeter at the switch terminals',
+      'Up to 50 kW; the connection is governed by the same generation rules as PV — BS 7671 Section 551 (low voltage generating sets) and the ENA G98/G99 framework.',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A fault report should be completed:',
     options: [
-      'Only for faults that took more than two hours to repair',
+      'A transformer providing simple separation between the AC and DC sides, OR an RCD type B on the AC side',
       'For every fault repair, regardless of complexity, as soon as practicable after the work is completed',
-      'Only when the supervisor specifically requests it',
-      'At the end of the month as a batch',
+      'One or more competent persons to assist with health and safety compliance',
+      'The cable outer diameter, armour type (wire or tape), the environment (indoor/outdoor) and whether the armour is used as a CPC',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: "The '5 Whys' technique in root cause analysis involves:",
     options: [
-      'Asking five different people what they think the cause was',
+      "All work carried out, modifications made, test results, faults found, operational changes, and any relevant observations about the condition of the installation",
+      "Providing a searchable database of maintenance history, enabling trend analysis, scheduling preventive maintenance, tracking spare parts and supporting compliance evidence",
       "Asking 'why' repeatedly (typically about five times) to drill down from the symptom through immediate causes to the underlying root cause",
-      'Checking five different possible causes in parallel',
-      'Writing the report in five paragraphs',
+      "Enable stock replenishment, track component reliability, support warranty claims, and ensure the correct replacement part is used if the same fault recurs",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The 5 Whys is a simple but effective root cause analysis technique. Starting from the symptom, you ask 'why did this happen?' and then ask 'why?' about each successive answer. For example: Motor tripped on overload (Why?) — Drawing excessive current (Why?) — Bearing seized (Why?) — Lubrication had failed (Why?) — Preventive maintenance schedule was not followed (Why?) — No PM system in place. The root cause is the lack of a preventive maintenance system, not the bearing failure.",
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'A CMMS (Computerised Maintenance Management System) provides value to an organisation by:',
     options: [
-      'Eliminating the need for skilled technicians',
+      'Electrical systems must be maintained so as to prevent danger, and while records are not explicitly mandated, they are the only practical way to demonstrate compliance',
+      'The written permit provides a formal record that hazards have been identified, precautions specified, and authorisation given — protecting both the workers and the organisation',
+      'The observable symptoms exactly as reported by the operator and as found during your investigation, without jumping to conclusions about the cause',
       'Providing a searchable database of maintenance history, enabling trend analysis, scheduling preventive maintenance, tracking spare parts and supporting compliance evidence',
-      'Only generating printed work orders',
-      'Replacing the need for fault diagnosis skills',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A CMMS is a central repository for all maintenance data. It records the complete maintenance history of every asset, enables analysis of failure patterns and trends, schedules and tracks preventive maintenance, manages spare parts inventory, calculates maintenance costs, and provides the documented evidence needed for regulatory compliance, insurance and audits. It transforms raw maintenance data into actionable information for reliability improvement.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'When recording fault symptoms in a report, you should describe:',
     options: [
-      'Only your conclusion about what caused the fault',
       'The observable symptoms exactly as reported by the operator and as found during your investigation, without jumping to conclusions about the cause',
-      'Only what you could measure with instruments',
-      'Only what was visible to the naked eye',
+      'Asking \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' repeatedly (typically about five times) to drill down from the symptom through immediate causes to the underlying root cause',
+      'Verbally explain what was found and repaired, confirm the equipment is safe to operate, demonstrate correct operation, document the handover, and note any recommendations or limitations',
+      'Providing a searchable database of maintenance history, enabling trend analysis, scheduling preventive maintenance, tracking spare parts and supporting compliance evidence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Recording symptoms accurately and separately from the diagnosis is essential. The operator's report of what they observed, and your own observations on arrival, are primary evidence. Recording them without interpretation preserves this evidence for future analysis. If your diagnosis later proves incorrect, the accurately recorded symptoms can be re-analysed. Mixing symptoms with conclusions confuses the record and may bias future investigators.",
   },
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'A maintenance log book kept in an electrical switchroom should record:',
     options: [
-      'Only the names of people who enter the room',
+      'The exact nature of the modification, why it was necessary, who authorised it, what was changed, and ensure that drawings and documentation are updated to reflect the as-built condition',
       'All work carried out, modifications made, test results, faults found, operational changes, and any relevant observations about the condition of the installation',
-      'Only major breakdowns and replacements',
-      'Only planned maintenance activities',
+      'Providing a searchable database of maintenance history, enabling trend analysis, scheduling preventive maintenance, tracking spare parts and supporting compliance evidence',
+      'Asking \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' repeatedly (typically about five times) to drill down from the symptom through immediate causes to the underlying root cause',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'The Electricity at Work Regulations 1989 require that:',
     options: [
-      'All electrical work must be done by an apprentice',
+      'Building a comprehensive asset history that enables trend analysis, supports capital replacement decisions, provides compliance evidence, and continuously improves maintenance effectiveness',
+      'All work carried out, modifications made, test results, faults found, operational changes, and any relevant observations about the condition of the installation',
       'Electrical systems must be maintained so as to prevent danger, and while records are not explicitly mandated, they are the only practical way to demonstrate compliance',
-      'Only new installations need maintenance records',
-      'Records are only required for systems over 415 V',
+      'The observable symptoms exactly as reported by the operator and as found during your investigation, without jumping to conclusions about the cause',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Regulation 4(2) of the Electricity at Work Regulations 1989 requires that electrical systems be maintained so as to prevent danger. While the regulations do not explicitly require written records, HSE Guidance Note HSR25 makes clear that records are the only practical way to demonstrate that a maintenance programme exists and is being followed. In the event of an incident, the absence of records would make it very difficult to demonstrate compliance.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 7,
     question: 'When documenting a modification made during a fault repair, you should record:',
     options: [
-      'Nothing — modifications during repairs are normal and do not need recording',
+      'The observable symptoms exactly as reported by the operator and as found during your investigation, without jumping to conclusions about the cause',
+      'The written permit provides a formal record that hazards have been identified, precautions specified, and authorisation given — protecting both the workers and the organisation',
+      'Enable stock replenishment, track component reliability, support warranty claims, and ensure the correct replacement part is used if the same fault recurs',
       'The exact nature of the modification, why it was necessary, who authorised it, what was changed, and ensure that drawings and documentation are updated to reflect the as-built condition',
-      'Only the parts that were changed',
-      'Only the cost of the modification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Any modification to an electrical installation must be fully documented. The record should include what was changed and why, who authorised the change, the technical justification, the components used, and any test results confirming the modification is safe and effective. Critically, all affected drawings, schematics and documentation must be updated to show the as-built condition. Undocumented modifications are a significant safety risk and a frequent source of confusion during future maintenance.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     question:
       'Spare parts used during a fault repair should be recorded in the fault report primarily to:',
     options: [
-      'Make the report longer',
       'Enable stock replenishment, track component reliability, support warranty claims, and ensure the correct replacement part is used if the same fault recurs',
-      'Only for accounting purposes',
-      'Only if the parts cost more than fifty pounds',
+      'The written permit provides a formal record that hazards have been identified, precautions specified, and authorisation given — protecting both the workers and the organisation',
+      'All work carried out, modifications made, test results, faults found, operational changes, and any relevant observations about the condition of the installation',
+      'A progressive deterioration that requires investigation — possibly bearing wear, insulation degradation, ventilation blockage, or increasing load — before the motor fails catastrophically',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Recording parts used serves multiple purposes: it triggers stock replenishment to ensure parts availability for future faults; it tracks which components fail most frequently, supporting reliability improvement and bulk purchasing decisions; it provides evidence for warranty claims against manufacturers; and it ensures that if the same fault recurs, the next technician knows exactly what part to use. Part numbers, manufacturers and batch numbers should all be recorded.',
   },
@@ -177,10 +177,10 @@ const quizQuestions = [
     question:
       'A trend analysis of maintenance records showing increasing frequency of overheating faults on a motor would indicate:',
     options: [
-      'The maintenance records are wrong',
+      'All work carried out, modifications made, test results, faults found, operational changes, and any relevant observations about the condition of the installation',
       'A progressive deterioration that requires investigation — possibly bearing wear, insulation degradation, ventilation blockage, or increasing load — before the motor fails catastrophically',
-      'The motor is getting better at handling heat',
-      'No action is required until the motor actually fails',
+      'Asking \\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\' repeatedly (typically about five times) to drill down from the symptom through immediate causes to the underlying root cause',
+      'Enable stock replenishment, track component reliability, support warranty claims, and ensure the correct replacement part is used if the same fault recurs',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,12 +190,12 @@ const quizQuestions = [
     id: 10,
     question: 'A permit to work system is documented because:',
     options: [
-      'It creates unnecessary paperwork',
+      'Enable stock replenishment, track component reliability, support warranty claims, and ensure the correct replacement part is used if the same fault recurs',
+      'Asking \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' repeatedly (typically about five times) to drill down from the symptom through immediate causes to the underlying root cause',
       'The written permit provides a formal record that hazards have been identified, precautions specified, and authorisation given — protecting both the workers and the organisation',
-      'It is only needed for work on gas installations',
-      'Verbal permissions are always sufficient for electrical work',
+      'Building a comprehensive asset history that enables trend analysis, supports capital replacement decisions, provides compliance evidence, and continuously improves maintenance effectiveness',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A permit to work is a formal, documented safety system used for work that involves significant risk, including electrical work on or near live or recently de-energised systems. The written permit records the hazards identified, the precautions required, the isolation arrangements, the authorisation chain, the time limitations, and the handback procedure. It is a legal document that demonstrates due diligence and provides evidence that proper safety procedures were followed.',
   },
@@ -203,12 +203,12 @@ const quizQuestions = [
     id: 11,
     question: 'When handing over a completed fault repair to the operator, you should:',
     options: [
-      'Simply leave the area without speaking to anyone',
+      'Providing a searchable database of maintenance history, enabling trend analysis, scheduling preventive maintenance, tracking spare parts and supporting compliance evidence',
+      'The written permit provides a formal record that hazards have been identified, precautions specified, and authorisation given — protecting both the workers and the organisation',
+      'All work carried out, modifications made, test results, faults found, operational changes, and any relevant observations about the condition of the installation',
       'Verbally explain what was found and repaired, confirm the equipment is safe to operate, demonstrate correct operation, document the handover, and note any recommendations or limitations',
-      'Send an email the following week',
-      'Only inform the supervisor and not the operator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A proper handover is the final step in the fault repair process. The operator needs to know what was found, what was done, whether there are any limitations or temporary measures in place, and whether any follow-up work is needed. A verbal explanation supplemented by written documentation (job card, CMMS entry, log book entry) ensures clear communication. The operator should confirm they are satisfied and that the equipment is operating correctly before you leave.',
   },
@@ -217,12 +217,12 @@ const quizQuestions = [
     question:
       'The primary benefit of maintaining accurate, detailed maintenance records over several years is:',
     options: [
-      'Creating a large filing system',
       'Building a comprehensive asset history that enables trend analysis, supports capital replacement decisions, provides compliance evidence, and continuously improves maintenance effectiveness',
-      'Keeping the administration department busy',
-      'Only satisfying insurance requirements',
+      'The observable symptoms exactly as reported by the operator and as found during your investigation, without jumping to conclusions about the cause',
+      'Asking \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' repeatedly (typically about five times) to drill down from the symptom through immediate causes to the underlying root cause',
+      'Providing a searchable database of maintenance history, enabling trend analysis, scheduling preventive maintenance, tracking spare parts and supporting compliance evidence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Long-term maintenance records are a strategic asset. They reveal patterns invisible in short-term data — seasonal variations, gradual deterioration, the true reliability of different equipment brands, the effectiveness of maintenance strategies, and the optimal replacement interval for assets. This data supports evidence-based decisions about capital expenditure, maintenance strategy, spare parts stocking, and workforce planning. Organisations with good maintenance data consistently achieve higher equipment availability at lower cost.',
   },

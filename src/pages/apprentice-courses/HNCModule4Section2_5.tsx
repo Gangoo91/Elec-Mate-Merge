@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'xlpe-advantage',
     question: 'What is the main advantage of XLPE insulation over PVC?',
     options: [
-      'Lower cost',
+      'Bathrooms, swimming pools, and hot tub areas',
+      'To convert millivolts (mV) into volts (V).',
       'Higher operating temperature (90°C vs 70°C)',
-      'Better flexibility',
-      'Easier to terminate',
+      'A tool for prioritising tasks by urgency and importance',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "XLPE (cross-linked polyethylene) can operate at 90°C compared to PVC's 70°C limit. This gives XLPE higher current-carrying capacity and better fault withstand capability.",
   },
@@ -48,8 +48,8 @@ const quickCheckQuestions = [
     options: [
       'Low Smoke and Fume / Low Smoke Zero Halogen',
       'Large Single Flex / Low Signal Zero Harmonic',
-      'Limited Service Factor / Low Speed Zero Hertz',
       'Light Sheath Flexible / Low Static Zone High',
+      'Limited Service Factor / Low Speed Zero Hertz',
     ],
     correctIndex: 0,
     explanation:
@@ -59,10 +59,10 @@ const quickCheckQuestions = [
     id: 'swa-purpose',
     question: 'What is the primary purpose of SWA (Steel Wire Armoured) cable?',
     options: [
-      'To increase current capacity',
+      'Between the knees and the shoulders, close to the body',
       'To provide mechanical protection and can act as CPC',
-      'To reduce electromagnetic interference',
-      'To improve flexibility',
+      'XL increases proportionally with frequency',
+      'Higher efficiency and better temperature coefficient',
     ],
     correctIndex: 1,
     explanation:
@@ -72,10 +72,10 @@ const quickCheckQuestions = [
     id: 'fp-cable-use',
     question: 'Where are FP (Fire Performance) cables typically required?',
     options: [
-      'In wet locations',
+      'To allow light in one direction only, blocking reflections',
       'For circuits that must continue operating during a fire',
-      'In high ambient temperatures only',
-      'For underground installations',
+      'Attending an accredited BS 7671 amendment course',
+      'Record actual values with deviation noted',
     ],
     correctIndex: 1,
     explanation:
@@ -87,7 +87,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'PVC insulated cables are limited to what maximum conductor operating temperature?',
-    options: ['60°C', '70°C', '90°C', '105°C'],
+    options: [
+      '60°C',
+      '70°C',
+      '90°C',
+      '105°C',
+    ],
     correctAnswer: 1,
     explanation:
       'PVC (polyvinyl chloride) insulated cables have a maximum continuous operating temperature of 70°C. Exceeding this causes degradation of the insulation.',
@@ -96,20 +101,25 @@ const quizQuestions = [
     id: 2,
     question: 'What is the main disadvantage of standard PVC cables in a fire?',
     options: [
-      'They are expensive',
+      'Avoid resonance with supply harmonics that would amplify them',
+      'Electronics, motors, battery-powered devices',
       'They emit dense black smoke containing toxic halogens',
-      'They conduct electricity when hot',
-      'They expand excessively',
+      'Ensure RCD operates within required time (typically Ra×IΔn ≤ 50V)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'PVC contains chlorine (a halogen) which produces hydrogen chloride gas when burned. This is highly toxic and corrosive, obscuring escape routes and damaging equipment.',
   },
   {
     id: 3,
     question: 'XLPE cables can withstand short-circuit temperatures up to:',
-    options: ['160°C', '200°C', '250°C', '300°C'],
-    correctAnswer: 2,
+    options: [
+      '200°C',
+      '160°C',
+      '300°C',
+      '250°C',
+    ],
+    correctAnswer: 3,
     explanation:
       'XLPE insulation can withstand 250°C during short-circuit conditions (vs 160°C for PVC). This gives XLPE cables superior fault withstand capability (k = 143 vs 115).',
   },
@@ -117,15 +127,25 @@ const quizQuestions = [
     id: 4,
     question:
       'Which cable type is most suitable for a circuit feeding emergency lighting in a hospital corridor?',
-    options: ['Standard PVC/PVC', 'XLPE/SWA', 'FP (fire performance) cable', 'Flexible cord'],
-    correctAnswer: 2,
+    options: [
+      'FP (fire performance) cable',
+      'Over-tightening gland nuts',
+      'The supervisor or site manager',
+      'Localised overheating and damage',
+    ],
+    correctAnswer: 0,
     explanation:
       'Fire performance cables maintain circuit integrity during fire, essential for emergency lighting that must operate during evacuation. BS 5266 requires enhanced fire performance for emergency lighting.',
   },
   {
     id: 5,
     question: 'MI (Mineral Insulated) cable uses what material for insulation?',
-    options: ['Silicon rubber', 'Magnesium oxide powder', 'Glass fibre', 'Ceramic tape'],
+    options: [
+      'Silicon rubber',
+      'Magnesium oxide powder',
+      'Ceramic tape',
+      'Glass fibre',
+    ],
     correctAnswer: 1,
     explanation:
       'MI cables use compressed magnesium oxide (MgO) powder as insulation, contained within a seamless copper or steel sheath. MgO is completely fireproof and non-combustible.',
@@ -134,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is a key consideration when selecting LSF cables for a data centre?',
     options: [
-      'They are cheaper than PVC',
+      'Still energised at 11 kV unless separately isolated',
+      'Luminaires, distribution boards, and test points',
       'Reduced smoke protects sensitive equipment and personnel',
-      'They have higher current ratings',
-      'They are more flexible',
+      'Before each use and regularly during use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Data centres contain expensive equipment and personnel. LSF cables reduce toxic smoke during fire, protecting both. Standard PVC smoke can damage electronics and hinder evacuation.',
   },
@@ -147,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'The armour on SWA cables can be used as the CPC provided:',
     options: [
-      'The cable is installed underground',
+      'Triggering multiple actions with single voice commands',
+      'The CPC has a smaller CSA than the live conductors',
+      'All major water uses including WCs, kitchens, and any process uses',
       'The armour is properly terminated with suitable glands and earthed',
-      'The cable is less than 50m long',
-      'Only in domestic installations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SWA armour can serve as CPC when terminated with proper glands that make low-resistance contact with the armour and connect it to the earthing system at both ends.',
   },
@@ -160,8 +180,13 @@ const quizQuestions = [
     id: 8,
     question:
       'Which cable construction provides both mechanical protection AND enhanced fire resistance?',
-    options: ['PVC/SWA', 'XLPE/SWA', 'FP200 Gold', 'H07RN-F'],
-    correctAnswer: 2,
+    options: [
+      'FP200 Gold',
+      'H07RN-F',
+      'PVC/SWA',
+      'XLPE/SWA',
+    ],
+    correctAnswer: 0,
     explanation:
       'FP200 Gold cables have both fire-resistant mica-glass tape insulation AND metallic armouring, providing mechanical protection and circuit integrity in fire conditions.',
   },
@@ -169,7 +194,12 @@ const quizQuestions = [
     id: 9,
     question:
       'For external underground installation to an outbuilding, which cable type is most appropriate?',
-    options: ['Twin and earth', 'SWA (Steel Wire Armoured)', 'Flexible cord', 'FP cable'],
+    options: [
+      '5 g/year for F-gas systems',
+      'SWA (Steel Wire Armoured)',
+      'FP (fire performance) cable',
+      'Multiple electrical measurements',
+    ],
     correctAnswer: 1,
     explanation:
       'SWA cables provide the mechanical protection needed for burial and outdoor exposure. The armour protects against ground movement, digging damage and environmental conditions.',
@@ -179,12 +209,12 @@ const quizQuestions = [
     question:
       'What standard governs fire performance requirements for cables supporting emergency systems?',
     options: [
-      'BS 7671 only',
+      'Reduce emotional intensity so productive conversation can occur',
+      'Continuity, polarity, insulation resistance, earth fault loop impedance',
       'BS 5839 (fire detection) and BS 5266 (emergency lighting)',
-      'BS 8519',
-      'BS EN 50575',
+      'Public commitment to develop science-based targets within 24 months',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 5839 specifies cable requirements for fire alarm systems, and BS 5266 for emergency lighting. Both require cables that maintain circuit integrity in fire conditions.',
   },

@@ -44,12 +44,12 @@ const AM2Module4Section6 = () => {
       question:
         "Which is better if time runs out — leaving blanks or writing 'perfect' textbook results?",
       options: [
-        'Write perfect textbook results',
         'Leave blanks rather than fake answers',
         'Guess realistic values',
         'Copy from previous tests',
+        'Write perfect textbook results',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Leave blanks. Fake/book answers = fail. Assessors can spot unrealistic perfect results.',
     },
@@ -58,20 +58,25 @@ const AM2Module4Section6 = () => {
       question:
         'What do assessors do if you fail to record RCD results because you ran out of time?',
       options: [
-        'Give partial marks',
-        'Allow extra time',
+        'Safety Extra Low Voltage - separated from earth',
         'Mark as incomplete → lose marks, likely fail paperwork section',
-        'Accept verbal explanation',
+        'Problem-focused coping — taking practical steps to improve time management',
+        'Controlling fresh air intake in HVAC systems',
       ],
-      correctIndex: 2,
+      correctIndex: 1,
       explanation:
         'Incomplete RCD results mean lost marks and likely failure of the paperwork section.',
     },
     {
       id: 'continuity-first',
       question: 'Which test must be carried out before insulation resistance?',
-      options: ['Polarity test', 'RCD test', 'Continuity test', 'Earth fault loop test'],
-      correctIndex: 2,
+      options: [
+        'Continuity test',
+        'RCD test',
+        'Polarity test',
+        'Earth fault loop test',
+      ],
+      correctIndex: 0,
       explanation:
         'Continuity tests must be completed before insulation resistance to ensure circuit integrity.',
     },
@@ -81,7 +86,12 @@ const AM2Module4Section6 = () => {
     {
       id: 1,
       question: 'Roughly how long is allocated for AM2 testing and certification?',
-      options: ['2.5 hours', '3.5 hours', '4.5 hours', '5 hours'],
+      options: [
+        '2.5 hours',
+        '3.5 hours',
+        '4.5 hours',
+        '5 hours',
+      ],
       correctAnswer: 1,
       explanation: 'AM2 testing and certification is allocated approximately 3.5 hours total.',
     },
@@ -89,20 +99,25 @@ const AM2Module4Section6 = () => {
       id: 2,
       question: 'Which is worse: incomplete results or fake/book answers?',
       options: [
+        'Both are equally bad',
         'Incomplete results',
         'Fake/book answers',
-        'Both are equally bad',
         'Neither affects the result',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Fake or book answers will result in failure. Incomplete but honest results are better than fabricated perfect answers.',
     },
     {
       id: 3,
       question: 'How much time should be set aside for paperwork?',
-      options: ['10-20 minutes', '30-40 minutes', '50-60 minutes', 'No specific time needed'],
-      correctAnswer: 1,
+      options: [
+        '50-60 minutes',
+        '10-20 minutes',
+        'No specific time needed',
+        '30-40 minutes',
+      ],
+      correctAnswer: 3,
       explanation:
         '30-40 minutes should be allocated for completing all certification paperwork properly.',
     },
@@ -110,12 +125,12 @@ const AM2Module4Section6 = () => {
       id: 4,
       question: "What's the risk of leaving results until the end?",
       options: [
-        'Better organization',
-        'More accurate results',
         'Running out of time and rushed/illegible entries',
-        'No risk at all',
+        'Linking physical I/O signals to software representations',
+        'Site-specific and proportionate to the risks',
+        'Cable size and installation surface',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Leaving all recording until the end risks running out of time and producing rushed, illegible paperwork.',
     },
@@ -125,8 +140,8 @@ const AM2Module4Section6 = () => {
       options: [
         'RCD testing',
         'Continuity testing',
-        'Polarity testing',
         'Earth fault loop testing',
+        'Polarity testing',
       ],
       correctAnswer: 1,
       explanation:
@@ -136,12 +151,12 @@ const AM2Module4Section6 = () => {
       id: 6,
       question: "What's a common mistake with RCD testing under time pressure (A4:2026)?",
       options: [
-        'Testing too slowly',
+        'Circuit protective conductor connection integrity',
+        'Reactive effects may need to be considered',
         'Skipping the manual test button after the 1×IΔn trip test',
-        'Using wrong instruments',
-        'Testing at wrong current',
+        'Presence, size, condition, and connections',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Under A4:2026 the 5×IΔn test was deleted. Candidates often forget to press the manual test button after completing the 1×IΔn trip test.',
     },
@@ -150,11 +165,11 @@ const AM2Module4Section6 = () => {
       question: 'Why is it better to record results circuit-by-circuit?',
       options: [
         'Easier to check later',
-        'Prevents rushed recording at the end',
-        'Required by regulations',
         'Looks more professional',
+        'Required by regulations',
+        'Prevents rushed recording at the end',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Recording results as you go prevents the risk of running out of time and having to rush all paperwork at the end.',
     },
@@ -162,12 +177,12 @@ const AM2Module4Section6 = () => {
       id: 8,
       question: 'True or false: You can pass AM2 if you skip functional testing.',
       options: [
-        'True - electrical tests are sufficient',
         'False - functional tests are mandatory',
         'True - if time runs out',
+        'True - electrical tests are sufficient',
         'False - unless approved by assessor',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Functional testing is mandatory and cannot be skipped. All required tests must be completed.',
     },
@@ -175,12 +190,12 @@ const AM2Module4Section6 = () => {
       id: 9,
       question: "What's the golden rule if running out of time?",
       options: [
-        'Work faster',
-        'Skip less important tests',
+        'Have a private, direct conversation to understand the cause and set clear expectations',
         'Keep work safe - incomplete but safe is better than rushed and unsafe',
-        'Ask for extension',
+        'Through the visitor sign-in register, which should be taken to the assembly point',
+        'Earth for correct equipment operation, not primarily for safety',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Safety must never be compromised. Incomplete but safe work is always better than rushed, unsafe shortcuts.',
     },
@@ -188,12 +203,12 @@ const AM2Module4Section6 = () => {
       id: 10,
       question: 'Give one strategy to manage time during AM2 testing.',
       options: [
-        'Work as fast as possible',
+        'Insulation degradation beginning',
+        'In appropriate conditions to prevent damage',
         'Record results circuit-by-circuit as you go',
-        'Skip detailed checks',
-        'Focus only on major tests',
+        'Recording historical data values over time for analysis',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Recording results immediately as you test each circuit prevents time-consuming paperwork sessions at the end.',
     },

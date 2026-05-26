@@ -16,10 +16,10 @@ const quickCheckQuestions = [
     id: 'voltage-definition',
     question: 'What is voltage often compared to in water flow analogies?',
     options: [
-      'The amount of water flowing',
-      'The pressure pushing the water',
-      'The size of the pipe',
       'The resistance to flow',
+      'The pressure pushing the water',
+      'The amount of water flowing',
+      'The size of the pipe',
     ],
     correctIndex: 1,
     explanation:
@@ -28,16 +28,26 @@ const quickCheckQuestions = [
   {
     id: 'uk-voltage',
     question: 'In the UK, what is the standard single-phase supply voltage?',
-    options: ['110V', '230V', '240V', '415V'],
-    correctIndex: 1,
+    options: [
+      '240V',
+      '415V',
+      '230V',
+      '110V',
+    ],
+    correctIndex: 2,
     explanation:
       'The UK standard single-phase supply voltage is 230V (±10%), harmonised across Europe since the 1990s.',
   },
   {
     id: 'resistance-temperature',
     question: 'What happens to resistance when a conductor gets hotter?',
-    options: ['It decreases', 'It stays the same', 'It increases', 'It becomes zero'],
-    correctIndex: 2,
+    options: [
+      'It stays the same',
+      'It becomes zero',
+      'It decreases',
+      'It increases',
+    ],
+    correctIndex: 3,
     explanation:
       'For most conductors (like copper), resistance increases with temperature. This is why cable ratings must account for ambient temperature.',
   },
@@ -48,10 +58,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does voltage do in a circuit?',
     options: [
-      'Measures the resistance',
+      'Flexible connections and vibration-resistant supports',
       'Provides the electrical pressure or force that pushes current',
-      'Controls the temperature',
-      'Prevents current flow',
+      'Showing electrical connections and circuit operation',
+      'They may give false readings and cannot verify absence of voltage',
     ],
     correctAnswer: 1,
     explanation:
@@ -60,7 +70,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What unit is current measured in?',
-    options: ['Volts (V)', 'Ohms (Ω)', 'Amperes or Amps (A)', 'Watts (W)'],
+    options: [
+      'Watts (W)',
+      'Volts (V)',
+      'Amperes or Amps (A)',
+      'Ohms (Ω)',
+    ],
     correctAnswer: 2,
     explanation: 'Current is measured in Amperes or Amps, with the symbol A.',
   },
@@ -68,12 +83,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is resistance?',
     options: [
-      'The flow of electric charge',
-      'The electrical pressure in a circuit',
+      'Connecting full load instantly causing frequency/voltage disturbance',
+      'To provide strain relief, earth continuity, and environmental sealing',
+      'Metal part not part of installation but liable to introduce potential',
       'How much a material resists or slows down the flow of current',
-      'The power consumed by a device',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Resistance is how much a material resists or slows down the flow of current, measured in Ohms (Ω).',
   },
@@ -81,12 +96,12 @@ const quizQuestions = [
     id: 4,
     question: 'If resistance increases, what happens to current (if voltage stays the same)?',
     options: [
-      'Current increases',
       'Current decreases',
+      'Current increases',
       'Current stays the same',
       'Voltage increases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "According to Ohm's Law, if resistance increases and voltage stays the same, current decreases.",
   },
@@ -101,8 +116,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the UK standard single-phase mains voltage?',
-    options: ['110V', '230V', '240V', '415V'],
-    correctAnswer: 1,
+    options: [
+      '110V',
+      '240V',
+      '230V',
+      '415V',
+    ],
+    correctAnswer: 2,
     explanation:
       'The UK standard single-phase mains voltage is 230V (±10%), harmonised across Europe.',
   },
@@ -112,10 +132,10 @@ const quizQuestions = [
     options: [
       'It decreases significantly',
       'It stays exactly the same',
-      'It increases',
       'It becomes zero',
+      'It increases',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'For copper and most metals, resistance increases with temperature. This is why cable current ratings must be reduced in hot environments.',
   },
@@ -124,20 +144,25 @@ const quizQuestions = [
     question:
       "According to Ohm's Law, if you double the voltage and keep resistance the same, what happens to current?",
     options: [
-      'Current halves',
-      'Current stays the same',
       'Current doubles',
       'Current becomes zero',
+      'Current halves',
+      'Current stays the same',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Using V = I × R, if voltage doubles and resistance stays the same, current must double to maintain the relationship.',
   },
   {
     id: 9,
     question: 'Which material would make the best electrical conductor?',
-    options: ['PVC plastic', 'Rubber', 'Copper', 'Glass'],
-    correctAnswer: 2,
+    options: [
+      'PVC plastic',
+      'Copper',
+      'Rubber',
+      'Glass',
+    ],
+    correctAnswer: 1,
     explanation:
       'Copper has very low resistance and is the most common material for electrical cables and conductors.',
   },
@@ -145,12 +170,12 @@ const quizQuestions = [
     id: 10,
     question: 'Why is understanding V, I, and R important for apprentice electricians?',
     options: [
-      "It's only needed for exams",
+      'A trade association for electrical contractors',
+      'Continuity test along the conductor length',
       'It helps with fault finding, safety, and circuit design',
-      "It's not important for practical work",
-      'Only supervisors need to know this',
+      'To prevent premature failure due to environmental conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Understanding voltage, current, and resistance is fundamental for all electrical work - from basic testing to complex fault finding and ensuring safe installations.',
   },

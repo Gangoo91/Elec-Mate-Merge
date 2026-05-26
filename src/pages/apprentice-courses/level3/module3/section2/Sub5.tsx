@@ -41,7 +41,12 @@ const checks = [
     id: 'l3-m3-2-5-xl',
     question:
       'Inductive reactance of a 0.05 H inductor at 50 Hz:',
-    options: ['7.85 Ω', '15.7 Ω', '157 Ω', '0.785 Ω'],
+    options: [
+      '7.85 Ω',
+      '15.7 Ω',
+      '157 Ω',
+      '0.785 Ω',
+    ],
     correctIndex: 1,
     explanation:
       'X_L = 2πfL = 2 × π × 50 × 0.05 = 15.7 Ω. Reactance rises with frequency — at 60 Hz it would be 18.85 Ω.',
@@ -50,8 +55,13 @@ const checks = [
     id: 'l3-m3-2-5-xc',
     question:
       'Capacitive reactance of a 100 μF capacitor at 50 Hz:',
-    options: ['3.18 Ω', '31.8 Ω', '318 Ω', '0.318 Ω'],
-    correctIndex: 1,
+    options: [
+      '31.8 Ω',
+      '3.18 Ω',
+      '318 Ω',
+      '0.318 Ω',
+    ],
+    correctIndex: 0,
     explanation:
       'X_C = 1/(2πfC) = 1/(2 × π × 50 × 100 × 10⁻⁶) = 1/0.0314 = 31.83 Ω. Reactance falls as frequency rises — opposite to inductors.',
   },
@@ -59,7 +69,12 @@ const checks = [
     id: 'l3-m3-2-5-z',
     question:
       'A series RL circuit: R = 6 Ω, X_L = 8 Ω. Impedance Z =',
-    options: ['2 Ω', '10 Ω', '14 Ω', '48 Ω'],
+    options: [
+      '14 Ω',
+      '10 Ω',
+      '2 Ω',
+      '48 Ω',
+    ],
     correctIndex: 1,
     explanation:
       'Z = √(R² + X_L²) = √(36 + 64) = √100 = 10 Ω. Pythagoras applied to the impedance triangle.',
@@ -70,29 +85,49 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Inductance is measured in:',
-    options: ['Farad', 'Henry', 'Tesla', 'Coulomb'],
+    options: [
+      'Farad',
+      'Henry',
+      'Tesla',
+      'Coulomb',
+    ],
     correctAnswer: 1,
     explanation: 'Henry (H). 1 H = 1 V across the inductor when current changes at 1 A/s.',
   },
   {
     id: 2,
     question: 'Capacitance is measured in:',
-    options: ['Henry', 'Farad', 'Tesla', 'Joule'],
-    correctAnswer: 1,
+    options: [
+      'Tesla',
+      'Henry',
+      'Farad',
+      'Joule',
+    ],
+    correctAnswer: 2,
     explanation: 'Farad (F). 1 F = 1 C of charge stored per volt across the capacitor.',
   },
   {
     id: 3,
     question: 'Inductive reactance X_L equals:',
-    options: ['1/(2πfC)', '2πfL', '2πfC', 'L/C'],
-    correctAnswer: 1,
+    options: [
+      '2πfC',
+      '1/(2πfC)',
+      'L/C',
+      '2πfL',
+    ],
+    correctAnswer: 3,
     explanation: 'X_L = 2πfL = ωL. Higher frequency → higher reactance → less current.',
   },
   {
     id: 4,
     question: 'Capacitive reactance X_C equals:',
-    options: ['2πfC', '1/(2πfC)', '2πfL', 'C × f'],
-    correctAnswer: 1,
+    options: [
+      '1/(2πfC)',
+      '2πfC',
+      '2πfL',
+      'C × f',
+    ],
+    correctAnswer: 0,
     explanation: 'X_C = 1/(2πfC). Higher frequency → lower reactance → more current.',
   },
   {
@@ -101,8 +136,8 @@ const quizQuestions = [
     options: [
       'Leads voltage by 90°',
       'Lags voltage by 90°',
-      'Is in phase with voltage',
       'Lags by 180°',
+      'Is in phase with voltage',
     ],
     correctAnswer: 1,
     explanation:
@@ -112,12 +147,12 @@ const quizQuestions = [
     id: 6,
     question: 'In a pure capacitor, the current:',
     options: [
-      'Leads voltage by 90°',
-      'Lags voltage by 90°',
       'Is in phase with voltage',
+      'Lags voltage by 90°',
+      'Leads voltage by 90°',
       'Leads by 180°',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Current leads voltage by 90° in a capacitor. The cap charges up to follow voltage. Mnemonic: ICE (I leads E in C).',
   },
@@ -125,8 +160,13 @@ const quizQuestions = [
     id: 7,
     question:
       'Series R-L-C: R = 8, X_L = 6, X_C = 0. Impedance:',
-    options: ['8 Ω', '10 Ω', '14 Ω', '6 Ω'],
-    correctAnswer: 1,
+    options: [
+      '8 Ω',
+      '6 Ω',
+      '14 Ω',
+      '10 Ω',
+    ],
+    correctAnswer: 3,
     explanation:
       'Net reactance X = X_L − X_C = 6 − 0 = 6 Ω. Z = √(R² + X²) = √(64 + 36) = √100 = 10 Ω.',
   },
@@ -135,9 +175,9 @@ const quizQuestions = [
     question: 'Resonance occurs when:',
     options: [
       'X_L = X_C, so net reactance is zero',
-      'R = X_L',
-      'X_L = 2 × X_C',
-      'Frequency is 50 Hz',
+      'A skills card confirming competence level',
+      'Mechanical Ventilation with Heat Recovery',
+      'Magnetomotive force (mmf)',
     ],
     correctAnswer: 0,
     explanation:

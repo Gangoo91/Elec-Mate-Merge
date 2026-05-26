@@ -123,34 +123,70 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
       }
     : undefined;
 
+  const v2StepsById: Record<string, any> = {};
+  if (Array.isArray((initialMethodData as any)?.method_steps)) {
+    for (const ms of (initialMethodData as any).method_steps) {
+      if (ms?.id) v2StepsById[ms.id] = ms;
+    }
+  }
+
   const normalizedMethodData: Partial<MethodStatementData> = initialMethodData
     ? {
         ...initialMethodData,
-        steps: (initialMethodData.steps || []).map((step, idx) => ({
-          ...step,
-          id: step.id || `step-${idx + 1}`,
-          equipmentNeeded: Array.isArray(step.equipmentNeeded)
-            ? step.equipmentNeeded
-            : typeof step.equipmentNeeded === 'string'
-              ? [step.equipmentNeeded]
-              : [],
-          qualifications: Array.isArray(step.qualifications)
-            ? step.qualifications
-            : typeof step.qualifications === 'string'
-              ? [step.qualifications]
-              : [],
-          estimatedDuration: step.estimatedDuration || '15 minutes',
-          safetyRequirements: Array.isArray(step.safetyRequirements)
-            ? step.safetyRequirements
-            : typeof step.safetyRequirements === 'string'
-              ? [step.safetyRequirements]
-              : [],
-          assignedPersonnel: Array.isArray(step.assignedPersonnel)
-            ? step.assignedPersonnel
-            : typeof step.assignedPersonnel === 'string'
-              ? [step.assignedPersonnel]
-              : [],
-        })),
+        steps: (initialMethodData.steps || []).map((step, idx) => {
+          const id = step.id || `step-${idx + 1}`;
+          const v2 = v2StepsById[id];
+          return {
+            ...step,
+            id,
+            equipmentNeeded: Array.isArray(step.equipmentNeeded)
+              ? step.equipmentNeeded
+              : typeof step.equipmentNeeded === 'string'
+                ? [step.equipmentNeeded]
+                : [],
+            qualifications: Array.isArray(step.qualifications)
+              ? step.qualifications
+              : typeof step.qualifications === 'string'
+                ? [step.qualifications]
+                : [],
+            estimatedDuration: step.estimatedDuration || '15 minutes',
+            safetyRequirements: Array.isArray(step.safetyRequirements)
+              ? step.safetyRequirements
+              : typeof step.safetyRequirements === 'string'
+                ? [step.safetyRequirements]
+                : [],
+            assignedPersonnel: Array.isArray(step.assignedPersonnel)
+              ? step.assignedPersonnel
+              : typeof step.assignedPersonnel === 'string'
+                ? [step.assignedPersonnel]
+                : [],
+            // v2 mirror — flat-spread the rich fields onto the v1 step so cards
+            // can render them without a second lookup. Optional + ignored by v1 paths.
+            ...(v2
+              ? {
+                  phase: v2.phase,
+                  objective: v2.objective,
+                  linked_hazard_titles: v2.linked_hazard_titles,
+                  linked_hazard_ids: v2.linked_hazard_ids,
+                  inputs: v2.inputs,
+                  outputs: v2.outputs,
+                  named_instruments: v2.named_instruments,
+                  named_values: v2.named_values,
+                  hold_points: v2.hold_points,
+                  witness_points: v2.witness_points,
+                  quality_checks: v2.quality_checks,
+                  acceptance_criteria: v2.acceptance_criteria,
+                  materials_consumed: v2.materials_consumed,
+                  ppe_required: v2.ppe_required,
+                  bs7671_cites: v2.bs7671_cites,
+                  safety_cites: v2.safety_cites,
+                  documentation_produced: v2.documentation_produced,
+                  sign_off_required: v2.sign_off_required,
+                  stop_work_triggers: v2.stop_work_triggers,
+                }
+              : {}),
+          };
+        }),
         // Normalize document-level array fields to ensure they're always arrays
         toolsRequired: Array.isArray(initialMethodData.toolsRequired)
           ? initialMethodData.toolsRequired
@@ -799,157 +835,141 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
   };
 
   return (
-    <div className={cn('px-2 py-3 space-y-3 bg-elec-dark min-h-screen', isMobile && 'pb-20')}>
-      <div className="bg-white/5 rounded-xl overflow-hidden border border-white/[0.08]">
-        <div className="p-3 border-b border-white/[0.08]">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <h2 className="text-base font-semibold text-white">Review & Edit</h2>
-              <Badge className="bg-green-500/10 text-green-400 border border-green-500/20 text-[10px] font-medium px-1.5 py-0.5">
-                AI Generated
-              </Badge>
-            </div>
-            {!isMobile && (
-              <div className="flex items-center gap-2">
-                {lastSaved && (
-                  <span className="text-[10px] text-white mr-2">
-                    {isSaving ? 'Saving...' : `Saved ${lastSaved.toLocaleTimeString()}`}
-                  </span>
-                )}
-                {onRegenerate && (
-                  <Button
-                    onClick={onRegenerate}
-                    size="sm"
-                    variant="ghost"
-                    className="h-9 px-2 text-xs text-white hover:text-orange-400 hover:bg-orange-500/10 touch-manipulation"
-                  >
-                    <Sparkles className="h-3 w-3 mr-1" />
-                    Regenerate
-                  </Button>
-                )}
-              </div>
-            )}
-          </div>
-          {lastSaved && isMobile && (
-            <span className="text-[10px] text-white mt-1">
-              {isSaving ? 'Saving...' : `Saved ${lastSaved.toLocaleTimeString()}`}
-            </span>
-          )}
-        </div>
+    <div className={cn('space-y-7 sm:space-y-10 pb-12', isMobile && 'pb-24')}>
+      {/* Sub-toolbar — orchestrator's editorial header already carries the
+          status, project name and "New" button, so this strip just shows
+          save state and the regenerate action. */}
+      <div className="flex items-center justify-between gap-3 text-[11.5px]">
+        <span className="text-white/55 tabular-nums">
+          {lastSaved
+            ? isSaving
+              ? 'Saving…'
+              : `Saved ${lastSaved.toLocaleTimeString()}`
+            : 'Unsaved draft'}
+        </span>
+        {onRegenerate && (
+          <button
+            type="button"
+            onClick={onRegenerate}
+            className="inline-flex items-center gap-1.5 text-[12px] font-medium text-white/65 hover:text-elec-yellow transition-colors touch-manipulation"
+          >
+            <Sparkles className="h-3.5 w-3.5" />
+            <span>Regenerate</span>
+          </button>
+        )}
+      </div>
 
-        {/* PHASE 4: Partial Completion Warning Banner */}
+      <div className="space-y-7 sm:space-y-10">
+
+        {/* Partial completion banner — editorial style */}
         {isPartial && (
-          <div className="p-3 bg-yellow-500/10 border-b border-yellow-500/20">
-            <Alert className="border-yellow-500/30 bg-yellow-500/5">
-              <AlertCircle className="h-4 w-4 text-yellow-500" />
-              <AlertTitle className="text-yellow-500 font-semibold text-sm">
-                Partial Generation
-              </AlertTitle>
-              <AlertDescription className="text-xs text-white mt-1.5 space-y-1.5">
-                <p>
-                  {!ramsData && '⚠️ Risk assessment generation failed. '}
-                  {!methodData && '⚠️ Method statement generation failed. '}
-                  You can proceed with what's available or retry the failed section below.
+          <section className="bg-[hsl(0_0%_10%)] border border-amber-500/30 rounded-2xl p-5">
+            <div className="flex items-baseline gap-3">
+              <span className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-amber-400 shrink-0">
+                Partial
+              </span>
+              <div className="flex-1 min-w-0">
+                <div className="text-[14.5px] font-semibold text-white">
+                  RAMS generated with gaps
+                </div>
+                <p className="mt-1 text-[12.5px] leading-relaxed text-white/75">
+                  {!ramsData && 'Risk assessment generation failed. '}
+                  {!methodData && 'Method statement generation failed. '}
+                  Proceed with what's available, or retry the failed section.
                 </p>
                 {onRetry && (
-                  <Button
+                  <button
+                    type="button"
                     onClick={onRetry}
-                    variant="outline"
-                    size="sm"
-                    className="mt-1.5 h-9 text-xs border-yellow-500/30 hover:border-yellow-500 hover:bg-yellow-500/10 touch-manipulation"
+                    className="mt-4 inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation"
                   >
-                    <Sparkles className="h-3 w-3 mr-1.5" />
-                    Retry Failed Section
-                  </Button>
+                    <Sparkles className="h-3.5 w-3.5" />
+                    Retry failed section
+                  </button>
                 )}
-              </AlertDescription>
-            </Alert>
-          </div>
+              </div>
+            </div>
+          </section>
         )}
 
         <div>
           <Tabs defaultValue="rams" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 h-12 bg-transparent rounded-none p-1.5 gap-1.5 border-b border-white/[0.08]">
+            <TabsList className="grid w-full grid-cols-2 h-auto bg-transparent rounded-none p-0 gap-0 border-b border-white/[0.08]">
               <TabsTrigger
                 value="rams"
                 className={cn(
-                  'h-full min-h-[40px] rounded-lg text-xs font-medium transition-all duration-200',
-                  'flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]',
-                  'bg-white/[0.03] border border-transparent',
-                  'data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow',
-                  'data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm',
-                  'data-[state=inactive]:text-white data-[state=inactive]:hover:text-white',
-                  'data-[state=inactive]:hover:bg-white/[0.05]'
+                  'h-12 rounded-none border-0 border-b-2 border-transparent bg-transparent shadow-none px-0 py-3',
+                  'text-[12px] font-semibold uppercase tracking-[0.18em] transition-colors touch-manipulation',
+                  'data-[state=active]:bg-transparent data-[state=active]:border-elec-yellow data-[state=active]:text-elec-yellow',
+                  'data-[state=inactive]:text-white/55 data-[state=inactive]:hover:text-white'
                 )}
               >
-                <Shield className="h-3.5 w-3.5" />
-                <span>Risk Assessment</span>
+                Risk Assessment
               </TabsTrigger>
               <TabsTrigger
                 value="method"
                 className={cn(
-                  'h-full min-h-[40px] rounded-lg text-xs font-medium transition-all duration-200',
-                  'flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]',
-                  'bg-white/[0.03] border border-transparent',
-                  'data-[state=active]:bg-elec-yellow/10 data-[state=active]:text-elec-yellow',
-                  'data-[state=active]:border-elec-yellow/20 data-[state=active]:shadow-sm',
-                  'data-[state=inactive]:text-white data-[state=inactive]:hover:text-white',
-                  'data-[state=inactive]:hover:bg-white/[0.05]'
+                  'h-12 rounded-none border-0 border-b-2 border-transparent bg-transparent shadow-none px-0 py-3',
+                  'text-[12px] font-semibold uppercase tracking-[0.18em] transition-colors touch-manipulation',
+                  'data-[state=active]:bg-transparent data-[state=active]:border-elec-yellow data-[state=active]:text-elec-yellow',
+                  'data-[state=inactive]:text-white/55 data-[state=inactive]:hover:text-white'
                 )}
               >
-                <FileText className="h-3.5 w-3.5" />
-                <span>Method Statement</span>
+                Method Statement
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="rams" className="space-y-4 mt-0 p-3">
+            <TabsContent value="rams" className="space-y-7 sm:space-y-10 mt-7 sm:mt-10 p-0">
               {ramsData ? (
                 <>
                   {/* Summary Stats Card */}
                   <SummaryStatsCard risks={ramsData.risks || []} />
 
-                  {/* Enhanced Risks Section */}
-                  <div className="space-y-3">
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-bold text-elec-light flex items-center gap-2">
-                        <AlertTriangle className="h-4 w-4 text-elec-yellow" />
-                        <span>Identified Hazards</span>
-                      </h4>
-                      <Button
+                  {/* Identified Hazards — editorial section */}
+                  <section className="space-y-4">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <div className="space-y-1">
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                          Identified hazards
+                        </div>
+                        <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
+                          Risks and controls.
+                        </h3>
+                      </div>
+                      <button
+                        type="button"
                         onClick={addRisk}
-                        size="sm"
-                        className="w-full sm:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[40px] px-3 py-1.5 text-xs touch-manipulation"
+                        className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl text-[12.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.99] touch-manipulation whitespace-nowrap"
                       >
-                        <Plus className="h-3.5 w-3.5 mr-1.5" />
-                        Add Hazard
-                      </Button>
+                        <Plus className="h-3.5 w-3.5" />
+                        Add hazard
+                      </button>
                     </div>
 
-                    {/* Empty state when no risks */}
+                    {/* Empty state — editorial banner */}
                     {(!ramsData.risks || ramsData.risks.length === 0) && (
-                      <Card className="border-dashed border-elec-yellow/30">
-                        <CardContent className="p-8 text-center">
-                          <AlertTriangle className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
-                          <h3 className="text-lg font-semibold text-elec-light mb-2">
-                            No Hazards Identified Yet
-                          </h3>
-                          <p className="text-sm text-white mb-4">
-                            Add hazards manually using the button above or regenerate to identify
-                            potential risks for this installation.
-                          </p>
-                          {onRegenerate && (
-                            <Button
-                              onClick={onRegenerate}
-                              variant="outline"
-                              size="sm"
-                              className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10"
-                            >
-                              <Sparkles className="h-4 w-4 mr-2" />
-                              Try Again
-                            </Button>
-                          )}
-                        </CardContent>
-                      </Card>
+                      <div className="bg-[hsl(0_0%_10%)] border border-dashed border-white/[0.12] rounded-2xl p-6 sm:p-8 text-center">
+                        <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white/45 mb-2">
+                          Nothing here yet
+                        </div>
+                        <h4 className="text-[17px] font-semibold text-white mb-2">
+                          No hazards identified
+                        </h4>
+                        <p className="text-[13px] leading-relaxed text-white/65 max-w-md mx-auto mb-4">
+                          Add a hazard manually with the button above, or regenerate to let the AI
+                          re-read your brief.
+                        </p>
+                        {onRegenerate && (
+                          <button
+                            type="button"
+                            onClick={onRegenerate}
+                            className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+                          >
+                            <Sparkles className="h-3.5 w-3.5" />
+                            Try again
+                          </button>
+                        )}
+                      </div>
                     )}
 
                     {/* Risk Cards - Sorted by Risk Rating */}
@@ -969,7 +989,7 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                           ))}
                       </div>
                     )}
-                  </div>
+                  </section>
 
                   {/* PPE Section */}
                   <PPEGridView
@@ -983,35 +1003,33 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   <EmergencyProceduresCards procedures={ramsData.emergencyProcedures} />
                 </>
               ) : (
-                <div className="p-8 text-center">
-                  <Card className="border-dashed border-yellow-500/30">
-                    <CardContent className="pt-6">
-                      <AlertCircle className="h-16 w-16 text-yellow-500/40 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold mb-2">Risk Assessment Not Available</h3>
-                      <p className="text-sm text-white mb-4">
-                        The risk assessment generation failed. Please retry to generate this
-                        section.
-                      </p>
-                      {onRetry && (
-                        <Button
-                          onClick={onRetry}
-                          variant="outline"
-                          size="sm"
-                          className="border-yellow-500/40 hover:border-yellow-500 hover:bg-yellow-500/10"
-                        >
-                          <Sparkles className="h-4 w-4 mr-2" />
-                          Retry Generation
-                        </Button>
-                      )}
-                    </CardContent>
-                  </Card>
+                <div className="bg-[hsl(0_0%_10%)] border border-dashed border-amber-500/30 rounded-2xl p-6 sm:p-8 text-center">
+                  <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-amber-400 mb-2">
+                    Section unavailable
+                  </div>
+                  <h3 className="text-[17px] font-semibold text-white mb-2">
+                    Risk assessment not generated
+                  </h3>
+                  <p className="text-[13px] leading-relaxed text-white/65 max-w-md mx-auto mb-4">
+                    The risk assessment didn't generate. Retry to have the AI read the brief again.
+                  </p>
+                  {onRetry && (
+                    <button
+                      type="button"
+                      onClick={onRetry}
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      Retry generation
+                    </button>
+                  )}
                 </div>
               )}
             </TabsContent>
 
-            <TabsContent value="method" className="space-y-0 mt-0 pb-16">
+            <TabsContent value="method" className="space-y-7 sm:space-y-10 mt-7 sm:mt-10 pb-16">
               {methodData && Object.keys(methodData).length > 0 ? (
-                <div className="p-3 space-y-3">
+                <div className="space-y-7 sm:space-y-10">
                   {/* Project Info Header */}
                   <ProjectInfoHeader
                     methodData={methodData}
@@ -1049,30 +1067,33 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                     <ProgressSummary steps={methodData.steps} />
                   )}
 
-                  {/* Installation Steps */}
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between mb-3">
-                      <h4 className="text-lg font-bold text-elec-light flex items-center gap-2">
-                        <FileText className="h-5 w-5 text-elec-yellow" />
-                        Installation Steps
-                      </h4>
-                      <div className="flex flex-col md:flex-row items-stretch md:items-center gap-2">
-                        <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40 font-bold text-center">
-                          {methodData.steps?.length || 0} Steps
-                        </Badge>
-                        <Button
-                          onClick={addStep}
-                          size="sm"
-                          className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-card min-h-[44px] px-3 py-2 text-sm touch-manipulation"
-                        >
-                          <Plus className="h-4 w-4 mr-1" />
-                          Add Step
-                        </Button>
+                  {/* Installation Steps — editorial section */}
+                  <section className="space-y-4">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <div className="space-y-1">
+                        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+                          Installation steps
+                        </div>
+                        <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
+                          The method, step by step.
+                        </h3>
+                        <p className="text-[12.5px] text-white/60 tabular-nums">
+                          {methodData.steps?.length || 0}{' '}
+                          {(methodData.steps?.length || 0) === 1 ? 'step' : 'steps'}
+                        </p>
                       </div>
+                      <button
+                        type="button"
+                        onClick={addStep}
+                        className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl text-[12.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.99] touch-manipulation whitespace-nowrap"
+                      >
+                        <Plus className="h-3.5 w-3.5" />
+                        Add step
+                      </button>
                     </div>
 
                     {methodData.steps && methodData.steps.length > 0 ? (
-                      <>
+                      <div className="space-y-3">
                         {methodData.steps.map((step, index) => (
                           <EnhancedStepCard
                             key={step.id}
@@ -1083,33 +1104,32 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                             onRemove={removeStep}
                           />
                         ))}
-                      </>
+                      </div>
                     ) : (
-                      <Card className="border-dashed border-elec-yellow/30">
-                        <CardContent className="p-8 text-center">
-                          <FileText className="h-16 w-16 text-elec-yellow/40 mx-auto mb-4" />
-                          <h3 className="text-lg font-semibold text-elec-light mb-2">
-                            No Installation Steps Yet
-                          </h3>
-                          <p className="text-sm text-white mb-4">
-                            Add installation steps manually using the button above or regenerate to
-                            create method statement.
-                          </p>
-                          {onRegenerate && (
-                            <Button
-                              onClick={onRegenerate}
-                              variant="outline"
-                              size="sm"
-                              className="border-orange-500/40 text-orange-500 hover:bg-orange-500/10"
-                            >
-                              <Sparkles className="h-4 w-4 mr-2" />
-                              Try Again
-                            </Button>
-                          )}
-                        </CardContent>
-                      </Card>
+                      <div className="bg-[hsl(0_0%_10%)] border border-dashed border-white/[0.12] rounded-2xl p-6 sm:p-8 text-center">
+                        <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-white/45 mb-2">
+                          Nothing here yet
+                        </div>
+                        <h4 className="text-[17px] font-semibold text-white mb-2">
+                          No installation steps
+                        </h4>
+                        <p className="text-[13px] leading-relaxed text-white/65 max-w-md mx-auto mb-4">
+                          Add a step manually with the button above, or regenerate to have the AI
+                          build the method statement.
+                        </p>
+                        {onRegenerate && (
+                          <button
+                            type="button"
+                            onClick={onRegenerate}
+                            className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+                          >
+                            <Sparkles className="h-3.5 w-3.5" />
+                            Try again
+                          </button>
+                        )}
+                      </div>
                     )}
-                  </div>
+                  </section>
 
                   {/* Risk Assessment Summary */}
                   <RiskAssessmentSummary ramsData={ramsData} />
@@ -1118,74 +1138,71 @@ export const RAMSReviewEditor: React.FC<RAMSReviewEditorProps> = ({
                   <ComplianceReferencesCard methodData={methodData as MethodStatementData} />
                 </div>
               ) : (
-                <div className="p-6 bg-muted/30 rounded-lg border border-dashed border-orange-500/30 m-4">
-                  <div className="flex items-start gap-4">
-                    <AlertCircle className="h-8 w-8 text-orange-400 shrink-0 mt-1" />
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-orange-400 mb-2">
-                        Method Statement Not Available
-                      </h3>
-                      <p className="text-sm text-white mb-4">
-                        The method statement generation timed out or failed. You can still use the
-                        risk assessment data, or retry to generate the full document with the method
-                        statement included.
-                      </p>
-                      {onRegenerate && (
-                        <Button
-                          onClick={onRegenerate}
-                          variant="outline"
-                          size="sm"
-                          className="border-orange-500/40 hover:border-orange-500 hover:bg-orange-500/10 text-orange-400"
-                        >
-                          <Sparkles className="h-4 w-4 mr-2" />
-                          Regenerate Full Document
-                        </Button>
-                      )}
-                    </div>
+                <div className="bg-[hsl(0_0%_10%)] border border-dashed border-amber-500/30 rounded-2xl p-6 sm:p-8 text-center">
+                  <div className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-amber-400 mb-2">
+                    Section unavailable
                   </div>
+                  <h3 className="text-[17px] font-semibold text-white mb-2">
+                    Method statement not generated
+                  </h3>
+                  <p className="text-[13px] leading-relaxed text-white/65 max-w-md mx-auto mb-4">
+                    The method statement timed out or failed. You can still use the risk
+                    assessment, or regenerate the full document.
+                  </p>
+                  {onRegenerate && (
+                    <button
+                      type="button"
+                      onClick={onRegenerate}
+                      className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation"
+                    >
+                      <Sparkles className="h-3.5 w-3.5" />
+                      Regenerate full document
+                    </button>
+                  )}
                 </div>
               )}
             </TabsContent>
           </Tabs>
 
-          {/* Export Section - Desktop */}
-          <div className="hidden sm:block p-4 sm:p-6 border-t border-white/[0.08] bg-white/[0.02]">
-            <div className="flex gap-3">
-              <Button
+          {/* Sticky export footer — editorial CTA pair */}
+          <div className="hidden sm:block pt-4 mt-4 border-t border-white/[0.08]">
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
                 onClick={handleSaveToLibrary}
                 disabled={isGenerating || localIsSaving}
-                className="gap-2 flex-1 h-14 min-h-[48px] bg-white/[0.03] hover:bg-white/[0.06] text-white border border-white/[0.08] hover:border-white/[0.12] rounded-xl font-medium transition-all touch-manipulation active:scale-[0.98]"
-                variant="outline"
+                className="inline-flex items-center justify-center gap-2 h-12 rounded-xl text-[13.5px] font-medium bg-white/[0.05] border border-white/[0.10] text-white hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation active:scale-[0.99] disabled:opacity-50"
               >
                 {localIsSaving ? (
                   <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    Saving...
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Saving…
                   </>
                 ) : (
                   <>
-                    <FolderOpen className="h-5 w-5" />
-                    Save to Library
+                    <FolderOpen className="h-4 w-4" />
+                    Save to library
                   </>
                 )}
-              </Button>
-              <Button
+              </button>
+              <button
+                type="button"
                 onClick={handleGenerateCombinedRAMS}
                 disabled={isGenerating}
-                className="gap-2 flex-1 h-14 min-h-[48px] bg-gradient-to-r from-elec-yellow to-amber-500 text-black hover:from-elec-yellow/90 hover:to-amber-500/90 rounded-xl font-semibold shadow-lg shadow-elec-yellow/20 transition-all touch-manipulation active:scale-[0.98]"
+                className="inline-flex items-center justify-center gap-2 h-12 rounded-xl text-[13.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors touch-manipulation active:scale-[0.99] disabled:opacity-50"
               >
                 {isGenerating ? (
                   <>
-                    <Loader2 className="h-5 w-5 animate-spin" />
-                    Generating...
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Generating…
                   </>
                 ) : (
                   <>
-                    <Download className="h-5 w-5" />
+                    <Download className="h-4 w-4" />
                     Download PDF
                   </>
                 )}
-              </Button>
+              </button>
             </div>
           </div>
         </div>

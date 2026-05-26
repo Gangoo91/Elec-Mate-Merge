@@ -16,7 +16,12 @@ const Module3Section4_4 = () => {
     {
       id: 1,
       question: 'Which type of gland is designed for outdoor SWA cable use?',
-      options: ['BW gland', 'CW gland', 'E1W gland', 'Plastic gland'],
+      options: [
+        'BW gland',
+        'CW gland',
+        'E1W gland',
+        'Plastic gland',
+      ],
       correctAnswer: 1,
       explanation:
         'CW glands are designed for outdoor use with SWA cable, providing weatherproof sealing and protection.',
@@ -25,12 +30,12 @@ const Module3Section4_4 = () => {
       id: 2,
       question: 'What is the main purpose of glanding SWA cable?',
       options: [
-        'Improve aesthetics',
+        'Strain relief and ingress protection',
+        'Visual inspection and insulation resistance',
         'Provide mechanical retention and earth continuity',
-        'Reduce cable weight',
-        'Increase voltage capacity',
+        'High-speed storage networking protocol commonly using fibre',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Glanding secures the cable mechanically and, for SWA, ensures the armour is bonded for earth continuity.',
     },
@@ -45,7 +50,12 @@ const Module3Section4_4 = () => {
     {
       id: 4,
       question: 'Name one tool required for installing a cable gland.',
-      options: ['Adjustable spanner', 'Hammer', 'Drill', 'Screwdriver only'],
+      options: [
+        'Adjustable spanner',
+        'Hammer',
+        'Drill',
+        'Screwdriver only',
+      ],
       correctAnswer: 0,
       explanation:
         'Use appropriate spanners or a torque wrench to tighten gland components to manufacturer specifications.',
@@ -54,10 +64,10 @@ const Module3Section4_4 = () => {
       id: 5,
       question: 'Why is it important to fan out armour strands before fitting a gland?',
       options: [
-        'To make the cable look neat',
+        'CIBSE LG7 (SLL Lighting Guide 7)',
         'To ensure even clamping and earth connection',
-        'To reduce cable diameter',
-        'To prevent moisture ingress',
+        'Cannot be inadvertently re-energised by others',
+        'Lights not working despite live being present',
       ],
       correctAnswer: 1,
       explanation:
@@ -66,16 +76,26 @@ const Module3Section4_4 = () => {
     {
       id: 6,
       question: 'Which jointing method is commonly used in external environments?',
-      options: ['Resin-filled joint', 'Screw terminal', 'Ferrule', 'Solder'],
-      correctAnswer: 0,
+      options: [
+        'Ferrule',
+        'Screw terminal',
+        'Resin-filled joint',
+        'Solder',
+      ],
+      correctAnswer: 2,
       explanation:
         'Resin-filled joints provide environmental sealing and are widely used outdoors/underground.',
     },
     {
       id: 7,
       question: 'What must be tested after installing an SWA gland?',
-      options: ['Voltage rating', 'Earth continuity', 'Cable colour', 'Installation time'],
-      correctAnswer: 1,
+      options: [
+        'Voltage rating',
+        'Installation time',
+        'Cable colour',
+        'Earth continuity',
+      ],
+      correctAnswer: 3,
       explanation:
         'Verify continuity between the SWA armour and the earthing system to confirm effective bonding.',
     },
@@ -84,9 +104,9 @@ const Module3Section4_4 = () => {
       question: 'Give one example of a common mistake when fitting a cable gland.',
       options: [
         'Over-tightening gland nuts',
-        'Using correct torque settings',
         'Following manufacturer instructions',
         'Testing earth continuity',
+        'Using correct torque settings',
       ],
       correctAnswer: 0,
       explanation:

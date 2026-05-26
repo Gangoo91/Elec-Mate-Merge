@@ -39,8 +39,13 @@ const checks = [
     id: 'l3-m3-4-1-flux',
     question:
       'A coil produces a total magnetic flux of 0.005 Wb through a core of cross-sectional area 25 cm². Flux density B is:',
-    options: ['0.2 T', '2 T', '5 T', '50 T'],
-    correctIndex: 1,
+    options: [
+      '2 T',
+      '50 T',
+      '0.2 T',
+      '5 T',
+    ],
+    correctIndex: 0,
     explanation:
       'B = Φ / A. A = 25 cm² = 25 × 10⁻⁴ m² = 0.0025 m². B = 0.005 / 0.0025 = 2 T. Bordering core saturation.',
   },
@@ -48,16 +53,26 @@ const checks = [
     id: 'l3-m3-4-1-mmf',
     question:
       'A coil of 500 turns carries 2 A. The magnetomotive force (mmf) is:',
-    options: ['250 At', '500 At', '1000 At', '5000 At'],
-    correctIndex: 2,
+    options: [
+      '500 At',
+      '1000 At',
+      '5000 At',
+      '250 At',
+    ],
+    correctIndex: 1,
     explanation: 'mmf = N × I = 500 × 2 = 1000 ampere-turns (At).',
   },
   {
     id: 'l3-m3-4-1-mu',
     question:
       'The relative permeability μ_r of a typical transformer steel core is approximately:',
-    options: ['1', '100', '5000', '5 000 000'],
-    correctIndex: 2,
+    options: [
+      '1',
+      '5000',
+      '100',
+      '5 000 000',
+    ],
+    correctIndex: 1,
     explanation:
       'Grain-oriented silicon steel: μ_r ≈ 1000-10 000 below saturation. Air is μ_r = 1. The huge difference is what makes a magnetic core concentrate flux thousands of times more than air.',
   },
@@ -67,28 +82,48 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Magnetic flux Φ is measured in:',
-    options: ['Tesla', 'Weber', 'Henry', 'Coulomb'],
+    options: [
+      'Tesla',
+      'Weber',
+      'Henry',
+      'Coulomb',
+    ],
     correctAnswer: 1,
     explanation: 'Weber (Wb) is total magnetic flux. Tesla (T) is flux density (Wb/m²).',
   },
   {
     id: 2,
     question: 'Flux density B equals:',
-    options: ['Φ × A', 'Φ / A', 'Φ + A', 'Φ × μ'],
-    correctAnswer: 1,
+    options: [
+      'Φ + A',
+      'Φ × A',
+      'Φ / A',
+      'Φ × μ',
+    ],
+    correctAnswer: 2,
     explanation: 'B = Φ / A — total flux divided by the area it passes through.',
   },
   {
     id: 3,
     question: 'The magnetic equivalent of EMF in a magnetic circuit is:',
-    options: ['Reluctance', 'Magnetomotive force (mmf)', 'Permeability', 'Flux density'],
-    correctAnswer: 1,
+    options: [
+      'Meets European safety standards',
+      'Calculate performance ratio',
+      'Cg improves to a higher value',
+      'Magnetomotive force (mmf)',
+    ],
+    correctAnswer: 3,
     explanation: 'mmf (in ampere-turns) drives flux around a magnetic circuit, just as EMF drives current around an electric circuit.',
   },
   {
     id: 4,
     question: 'The magnetic equivalent of resistance is:',
-    options: ['Reluctance (R_m)', 'Permeability', 'Flux', 'Hysteresis'],
+    options: [
+      'Reluctance (R_m)',
+      'Permeability',
+      'Flux',
+      'Hysteresis',
+    ],
     correctAnswer: 0,
     explanation:
       "Reluctance R_m = L / (μ × A). Opposes flux. Magnetic Ohm's Law: Φ = mmf / R_m, or mmf = Φ × R_m.",
@@ -97,10 +132,10 @@ const quizQuestions = [
     id: 5,
     question: 'Saturation in a transformer core means:',
     options: [
-      'The cores are wet',
+      'Overloading, loose connections, or high resistance contacts',
       'Adding more current produces little extra flux',
-      'The core has reached maximum efficiency',
-      'No current is flowing',
+      'Identifying what was learned and how to apply it',
+      'To confirm safety interlocks prevent dangerous situations',
     ],
     correctAnswer: 1,
     explanation:
@@ -110,12 +145,12 @@ const quizQuestions = [
     id: 6,
     question: 'Hysteresis loss in an AC magnetic core is caused by:',
     options: [
-      'Resistance of the windings',
+      'Provides valuable supporting evidence',
+      'Responding to changing technology and market conditions',
       'Energy lost reorienting magnetic domains each cycle',
-      'Air gap in the core',
-      'High-voltage corona',
+      'Communication protocols, sensor calibration and system response',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Domains have to be 'pushed' back and forth each cycle. The area of the B-H loop = energy per cycle. Silicon steel has a narrow loop = low hysteresis loss.",
   },
@@ -123,12 +158,12 @@ const quizQuestions = [
     id: 7,
     question: 'Eddy currents in a solid iron core can be reduced by:',
     options: [
-      'Painting the core',
+      'Photocell, time scheduling, and dimming after hours',
+      'To simulate mains failure for testing',
+      'Mathematical compensation for non-linear sensor response',
       'Laminating the core into thin insulated sheets',
-      'Increasing the air gap',
-      'Reducing the frequency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Laminations break the eddy-current path into many tiny loops. Each lamination has high resistance to eddies but conducts magnetic flux normally.',
   },
@@ -136,12 +171,12 @@ const quizQuestions = [
     id: 8,
     question: 'Permeability μ describes:',
     options: [
-      "How well a material conducts current",
       'How easily a material allows magnetic flux to pass',
-      'The speed of magnetic propagation',
-      'The colour of the iron',
+      'Trips on AC sinusoidal, pulsating DC and smooth DC',
+      'Lower magnitude 5th and 7th harmonics',
+      'Specific areas or circuits inspected and tested',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'High μ = magnetic flux passes easily. Iron has μ_r ≈ 5000; air = 1. That\'s why we use iron cores for transformers and motors.',
   },

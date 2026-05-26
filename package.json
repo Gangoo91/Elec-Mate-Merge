@@ -8,6 +8,7 @@
     "build": "NODE_OPTIONS='--max-old-space-size=16384' vite build && node scripts/generate-seo-html.mjs",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
+    "lint:bias": "node scripts/check-answer-bias.mjs",
     "preview": "vite preview",
     "test": "playwright test",
     "test:ui": "playwright test --ui",

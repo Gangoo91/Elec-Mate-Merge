@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'fishbone-purpose',
     question: 'The primary purpose of a fishbone (Ishikawa) diagram in root cause analysis is to:',
     options: [
-      'Record the repair actions taken',
+      'The device can continue normal operation after interrupting at its ultimate breaking capacity',
+      '"What specifically doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t look right to you? Talk me through what you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve done so far."',
       'Visually organise and categorise all potential causes of a problem to ensure no possible cause is overlooked during investigation',
-      'Calculate the cost of the repair',
-      'Determine which technician should carry out the repair',
+      'Unlimited fines and/or imprisonment for individuals; unlimited fines for organisations, with additional sentencing guidelines for fatalities',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "A fishbone diagram provides a structured visual framework that organises potential causes into categories. By systematically working through each category, the investigation team ensures that all possible cause areas are considered, reducing the risk of overlooking the actual root cause. The diagram becomes a visual record of the team's thinking process.",
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       "The standard '6M' categories used in a fishbone diagram for manufacturing and maintenance are:",
     options: [
-      'Monday, March, May, Metric, Manual, Method',
+      '"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re feeling overwhelmed by the amount of work that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s been added to your schedule."',
+      'Electric shock, fire, thermal effects, overcurrent, and voltage disturbances',
       'Man (People), Machine (Equipment), Method (Process), Material, Measurement, Mother Nature (Environment)',
-      'Motor, Meter, Mechanical, Magnetic, Modular, Maintenance',
-      'Management, Money, Marketing, Manufacturing, Monitoring, Morale',
+      'From the FFL (floor finish level) — the top of the finished floor as it will be when the customer walks in.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The 6M categories provide a comprehensive framework: Man (human factors such as skills, training, fatigue), Machine (equipment condition, design, age), Method (procedures, work instructions, maintenance strategy), Material (component quality, specification, storage), Measurement (instrumentation, calibration, data accuracy), and Mother Nature (environmental factors such as temperature, humidity, contamination). These categories ensure all potential cause areas are explored.',
   },
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'fishbone-team',
     question: 'A fishbone diagram analysis is most effective when conducted:',
     options: [
-      'By the most senior manager alone',
+      'Enhanced DBS for staff, named safeguarding officer, training, and a clear route for reporting concerns about children/vulnerable adults',
       'By a small team that includes people with different perspectives and knowledge of the system — operators, technicians, engineers and supervisors',
-      'Only by the person who discovered the fault',
-      'Only by external consultants',
+      'To plan, schedule, track and record all maintenance activities and asset information in a centralised database',
+      'Achieve appropriate resolution and accuracy for the value being measured, AND avoid false trip/damage to RCD-protected circuits',
     ],
     correctIndex: 1,
     explanation:
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'After completing a fishbone diagram with all potential causes identified, the next step is to:',
     options: [
-      'File the diagram and close the investigation',
+      'Implied consent applies — a first aider may treat an unconscious minor in their best interests under the principle of necessity',
+      'Creates a searchable knowledge repository that enables technicians to find relevant diagnostic information, solutions and preventive measures from past investigations',
       'Systematically evaluate each potential cause using evidence (test data, inspection findings, maintenance records) to identify the most probable root cause or causes',
-      'Implement corrective actions for every listed cause',
-      'Repeat the exercise with a different team',
+      'When more than one contractor is, or is reasonably foreseeable to be, working on the project at the same time — the client must appoint one in writing',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The fishbone diagram identifies potential causes — it does not confirm which one is the actual root cause. The next step is to evaluate each potential cause against the available evidence: test results, inspection findings, maintenance records, operating data and witness statements. Causes that are contradicted by evidence are eliminated, and those supported by evidence are investigated further until the root cause is confirmed.',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The fishbone diagram was developed by:',
     options: [
-      'Henry Ford in the 1920s',
+      'In the site accident book and reported to the supervisor or safety officer',
       'Kaoru Ishikawa in the 1960s as part of quality management in Japanese manufacturing',
-      'The Health and Safety Executive in 1989',
-      'The Institution of Engineering and Technology in 2000',
+      'EI and IQ are separate constructs that both contribute to overall effectiveness and success',
+      'Adaptive comfort model allowing higher temperatures in summer',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: "In a fishbone diagram, the 'effect' (problem being investigated) is placed at:",
     options: [
-      'The top of the diagram',
+      'A material property indicating resistance per unit length and area',
+      'To maintain a strong grip and prevent slipping',
       'The head of the fish — at the right-hand end of the central spine',
-      'The centre of the diagram',
-      'The bottom left corner',
+      'The next 1–4 weeks of activity in detail, used at the weekly site meeting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The effect (the problem or fault being investigated) is written at the head of the fish, at the right-hand end of the central horizontal line (the spine). The main category branches extend from the spine like ribs, and individual potential causes are written as sub-branches off each category branch. The diagram reads from left to right, with causes leading to the effect.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       "Under the 'Man' (People) category of a fishbone diagram for a motor failure, potential causes might include:",
     options: [
-      "Only the motor manufacturer's design errors",
+      'Temperature, humidity, dust, vibration, chemical exposure, electromagnetic interference and any other environmental factors at the equipment location',
+      'Component wear, inadequate cooling capacity, undersized drive rating for the application, manufacturing defect, or previous repair using non-genuine parts',
+      'Document the analysis, identify corrective and preventive actions, assign responsibilities and timescales, and verify that the actions address the root cause effectively',
       'Inadequate training on motor maintenance, failure to follow lubrication procedures, incorrect torque applied during installation, or fatigue causing errors during commissioning',
-      'Only the cost of labour',
-      'Only the number of staff on shift',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Man (People) category covers all human factors that could contribute to the fault: inadequate training or competence, failure to follow procedures, errors during maintenance or operation, fatigue, communication failures, and inadequate supervision. It is important to explore these factors without assigning blame — the goal is to identify systemic issues (training gaps, unclear procedures) rather than individual failings.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       "Under the 'Machine' (Equipment) category, potential causes for a VSD failure might include:",
     options: [
-      'Only the age of the drive',
       'Component wear, inadequate cooling capacity, undersized drive rating for the application, manufacturing defect, or previous repair using non-genuine parts',
-      'Only the supply voltage',
-      'Only the motor connected to the drive',
+      'Inadequate training on motor maintenance, failure to follow lubrication procedures, incorrect torque applied during installation, or fatigue causing errors during commissioning',
+      'Apply structured analytical thinking to fault investigation, work collaboratively in a team, and identify systemic causes that lead to meaningful preventive actions',
+      'Document the analysis, identify corrective and preventive actions, assign responsibilities and timescales, and verify that the actions address the root cause effectively',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Machine category covers all equipment-related factors: design limitations, component wear or degradation, inadequate specification or rating, manufacturing defects, previous repairs or modifications, condition of associated components (cooling fans, filters), and the interaction between the equipment and its connected systems.',
   },
@@ -125,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: "Under the 'Method' (Process) category, potential causes might include:",
     options: [
-      'Only the maintenance budget',
+      'Document the analysis, identify corrective and preventive actions, assign responsibilities and timescales, and verify that the actions address the root cause effectively',
       'Incorrect or outdated maintenance procedures, inadequate PM frequency, no written work instructions, incorrect operating parameters, or failure to follow lock-out/tag-out procedures',
-      'Only the cost of spare parts',
-      'Only the shift pattern',
+      'Component quality, correct specification of replacement parts, storage conditions, counterfeit or substandard components, and material degradation over time',
+      'Apply structured analytical thinking to fault investigation, work collaboratively in a team, and identify systemic causes that lead to meaningful preventive actions',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,12 +138,12 @@ const quizQuestions = [
     id: 6,
     question: "The 'Material' category in a fishbone diagram for electrical maintenance covers:",
     options: [
-      'Only the type of cable used',
+      'Apply structured analytical thinking to fault investigation, work collaboratively in a team, and identify systemic causes that lead to meaningful preventive actions',
+      'Inadequate training on motor maintenance, failure to follow lubrication procedures, incorrect torque applied during installation, or fatigue causing errors during commissioning',
       'Component quality, correct specification of replacement parts, storage conditions, counterfeit or substandard components, and material degradation over time',
-      'Only the cost of materials',
-      'Only the stock level in the stores',
+      'It provides a structured visual overview of all potential cause categories simultaneously, making it harder to overlook an entire area of investigation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Material factors include the quality and specification of replacement components, whether the correct part was used, storage conditions that may have degraded the part before use, the possibility of counterfeit or substandard components, lubricant quality and suitability, and material degradation due to age, temperature or chemical exposure. Using the wrong specification of fuse, contactor or cable is a material-related root cause.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 7,
     question: "The 'Measurement' category examines:",
     options: [
-      'Only the physical dimensions of the equipment',
+      'Document the analysis, identify corrective and preventive actions, assign responsibilities and timescales, and verify that the actions address the root cause effectively',
+      'Component quality, correct specification of replacement parts, storage conditions, counterfeit or substandard components, and material degradation over time',
+      'It provides a structured visual overview of all potential cause categories simultaneously, making it harder to overlook an entire area of investigation',
       'Whether instruments were calibrated, correct test methods were used, results were interpreted accurately, and monitoring systems were functioning correctly',
-      'Only the voltage level',
-      'Only the reading on the energy meter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Measurement factors include instrument calibration (was the insulation tester calibrated?), correct test method (was the right test voltage applied?), data interpretation (were the results correctly compared to acceptable limits?), sensor accuracy (was the temperature sensor reading correctly?), and monitoring system reliability (was the condition monitoring data being collected and analysed?).',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 8,
     question: "The 'Mother Nature' (Environment) category covers:",
     options: [
-      'Only weather conditions outside the building',
       'Temperature, humidity, dust, vibration, chemical exposure, electromagnetic interference and any other environmental factors at the equipment location',
-      'Only natural disasters',
-      'Only the time of year',
+      'Apply structured analytical thinking to fault investigation, work collaboratively in a team, and identify systemic causes that lead to meaningful preventive actions',
+      'Inadequate training on motor maintenance, failure to follow lubrication procedures, incorrect torque applied during installation, or fatigue causing errors during commissioning',
+      'Whether instruments were calibrated, correct test methods were used, results were interpreted accurately, and monitoring systems were functioning correctly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Environmental factors include ambient temperature (too high or too low), humidity and moisture (condensation, water ingress), dust and contamination, vibration from nearby equipment, chemical exposure (corrosive atmospheres), electromagnetic interference (from VSDs, welding, radio transmitters), altitude, and any other aspect of the operating environment that differs from the equipment's designed operating conditions.",
   },
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: 'A key advantage of the fishbone diagram over the 5 Whys technique is:',
     options: [
-      'It is faster to complete',
+      'Component quality, correct specification of replacement parts, storage conditions, counterfeit or substandard components, and material degradation over time',
       'It provides a structured visual overview of all potential cause categories simultaneously, making it harder to overlook an entire area of investigation',
-      'It always identifies the root cause directly',
-      'It does not require any technical knowledge',
+      'Temperature, humidity, dust, vibration, chemical exposure, electromagnetic interference and any other environmental factors at the equipment location',
+      'Apply structured analytical thinking to fault investigation, work collaboratively in a team, and identify systemic causes that lead to meaningful preventive actions',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,12 +190,12 @@ const quizQuestions = [
     id: 10,
     question: 'When brainstorming potential causes on a fishbone diagram, you should:',
     options: [
-      'Only list causes that you are certain about',
+      'Your competence in performing the task safely, correctly and with understanding',
+      'Parent-to-Child, with the manager adopting a Nurturing (or Controlling) Parent role',
       'List all possible causes without judgement initially, then evaluate each one against evidence afterwards',
-      'Only list the most expensive causes',
-      'Only list causes that have occurred before',
+      'Deactivate all independent sources and find resistance looking into the terminals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The brainstorming phase should be open and non-judgemental — all potential causes are listed without evaluation. Dismissing ideas too early risks missing the actual root cause. Once the brainstorming is complete, each potential cause is then systematically evaluated against the available evidence. This two-phase approach (divergent thinking followed by convergent evaluation) is fundamental to effective root cause analysis.',
   },
@@ -204,12 +204,12 @@ const quizQuestions = [
     question:
       'After identifying the root cause using a fishbone diagram, the investigation should:',
     options: [
-      'Stop immediately',
+      'Incorrect or outdated maintenance procedures, inadequate PM frequency, no written work instructions, incorrect operating parameters, or failure to follow lock-out/tag-out procedures',
+      'Whether instruments were calibrated, correct test methods were used, results were interpreted accurately, and monitoring systems were functioning correctly',
+      'Temperature, humidity, dust, vibration, chemical exposure, electromagnetic interference and any other environmental factors at the equipment location',
       'Document the analysis, identify corrective and preventive actions, assign responsibilities and timescales, and verify that the actions address the root cause effectively',
-      'Blame the person responsible',
-      'Only replace the failed component',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Identifying the root cause is not the end of the process — it is the starting point for corrective action. The investigation should document the complete analysis (the fishbone diagram itself becomes part of the record), identify specific corrective actions to fix the immediate problem and preventive actions to prevent recurrence, assign clear responsibilities and timescales, and include a verification step to confirm the actions are effective.',
   },
@@ -218,12 +218,12 @@ const quizQuestions = [
     question:
       "In the context of ST1426, fishbone diagram analysis demonstrates the apprentice's ability to:",
     options: [
-      'Draw neat diagrams',
       'Apply structured analytical thinking to fault investigation, work collaboratively in a team, and identify systemic causes that lead to meaningful preventive actions',
-      'Only identify the most obvious cause',
-      'Only follow written instructions',
+      'Component wear, inadequate cooling capacity, undersized drive rating for the application, manufacturing defect, or previous repair using non-genuine parts',
+      'Document the analysis, identify corrective and preventive actions, assign responsibilities and timescales, and verify that the actions address the root cause effectively',
+      'Inadequate training on motor maintenance, failure to follow lubrication procedures, incorrect torque applied during installation, or fatigue causing errors during commissioning',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 values structured, systematic approaches to problem-solving. The fishbone diagram demonstrates analytical thinking (breaking a complex problem into manageable categories), teamwork (collaborative investigation), communication (presenting analysis to stakeholders), and continuous improvement (identifying systemic actions that prevent recurrence). These are core knowledge, skills and behaviours assessed in the End Point Assessment.',
   },

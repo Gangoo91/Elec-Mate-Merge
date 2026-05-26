@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 'ssow-definition',
     question: 'What is the primary purpose of a safe system of work?',
     options: [
-      'To speed up work activities',
+      'Manual Handling Operations Regulations 1992',
       'To identify hazards and implement controls to prevent harm',
-      'To satisfy insurance requirements',
-      'To reduce the number of workers needed',
+      'Stopping at the first answer instead of drilling deeper to the root cause',
+      'It is highly alkaline and toxic to aquatic life, and can block fish gills',
     ],
     correctIndex: 1,
     explanation:
@@ -49,12 +49,12 @@ const quickCheckQuestions = [
     question:
       'According to the hierarchy of controls, what should be considered first when managing risks?',
     options: [
+      'Engineering controls',
+      'Elimination of the hazard',
       'Personal protective equipment',
       'Administrative controls',
-      'Elimination of the hazard',
-      'Engineering controls',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The hierarchy of controls prioritises elimination first, followed by substitution, engineering controls, administrative controls, and finally PPE as the last resort.',
   },
@@ -62,12 +62,12 @@ const quickCheckQuestions = [
     id: 'permit-work',
     question: 'When is a permit-to-work system typically required?',
     options: [
-      'For all routine maintenance tasks',
       'For high-risk activities like live working or confined space entry',
-      'Only when working in office environments',
-      'Whenever more than two people are working together',
+      'Before any person enters or works in a confined space',
+      'RCD tripping because current returns via the wrong RCD group',
+      'To ensure safe working environments including emergency lighting',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Permit-to-work systems are formal documented procedures required for high-risk activities including live electrical work, confined space entry, hot work, and work at height.',
   },
@@ -76,11 +76,11 @@ const quickCheckQuestions = [
     question: 'What is the correct sequence for safe isolation of electrical supplies?',
     options: [
       'Isolate - Lock off - Test - Post warning notices',
-      'Test - Isolate - Lock off - Post warning notices',
       'Identify - Isolate - Lock off - Prove dead - Post warning notices',
       'Post warning notices - Isolate - Test',
+      'Test - Isolate - Lock off - Post warning notices',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The correct safe isolation procedure is: Identify the circuit, Isolate at the point of supply, Lock off with personal lock, Prove dead using approved voltage indicator (tested before and after), then Post warning notices.',
   },
@@ -104,10 +104,10 @@ const quizQuestions = [
     id: 2,
     question: 'What does the acronym SSOW stand for?',
     options: [
-      'Safe Standard Operating Work',
-      'Safety Systems of Work',
-      'Safe System of Work',
       'Systematic Safety Operating Workflow',
+      'Safe Standard Operating Work',
+      'Safe System of Work',
+      'Safety Systems of Work',
     ],
     correctAnswer: 2,
     explanation:
@@ -117,12 +117,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is NOT typically part of developing a safe system of work?',
     options: [
-      'Task analysis and hazard identification',
       'Risk assessment and control selection',
-      'Setting productivity targets',
+      'Task analysis and hazard identification',
       'Communication and training requirements',
+      'Setting productivity targets',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Setting productivity targets is not part of developing a SSOW. The focus is on task analysis, hazard identification, risk assessment, selecting controls, and ensuring effective communication and training.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     id: 4,
     question: 'In the hierarchy of controls, where does PPE (Personal Protective Equipment) sit?',
     options: [
-      'First priority - always use PPE',
-      'Second priority after elimination',
-      'Equal priority with engineering controls',
       'Last resort when other controls are not reasonably practicable',
+      'Proved on a known live source before AND after use',
+      'To communicate specific safety information before work begins',
+      'Stop work, report the issue and review/revise the system',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'PPE is the last resort in the hierarchy of controls. More effective measures (elimination, substitution, engineering controls, administrative controls) should be considered first as PPE only protects the individual wearer.',
   },
@@ -143,12 +143,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the main purpose of a permit-to-work system?',
     options: [
-      'To satisfy regulatory paperwork requirements',
-      'To record time spent on tasks',
+      'Working on circuits that have been safely isolated and proved dead',
       'To provide formal control for high-risk activities and ensure all precautions are taken',
-      'To allocate work to contractors',
+      'To communicate specific safety information before work begins',
+      'Last resort when other controls are not reasonably practicable',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A permit-to-work system provides formal documented control for high-risk activities, ensuring all necessary precautions are identified, implemented and verified before work begins, with clear handover and sign-off procedures.',
   },
@@ -157,11 +157,11 @@ const quizQuestions = [
     question: 'Before testing a circuit dead, the voltage indicator must be:',
     options: [
       'Calibrated within the last 6 months',
-      'Proved on a known live source before AND after use',
       'Of the same make as the installation',
+      'Proved on a known live source before AND after use',
       'Used only by a qualified electrician',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GS38 requires voltage indicators to be proved on a known live source immediately before and immediately after testing the circuit to confirm the instrument is working correctly throughout the test procedure.',
   },
@@ -170,11 +170,11 @@ const quizQuestions = [
     question: 'Who should hold the key to a personal safety lock during safe isolation?',
     options: [
       'The site supervisor',
-      'The person who applied the lock',
-      'The client or building owner',
       "The electrical contractor's office",
+      'The client or building owner',
+      'The person who applied the lock',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The person working on the isolated circuit must retain the key to their personal safety lock. This ensures only they can remove it when their work is complete and it's safe to re-energise.",
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which standard provides guidance on safe isolation procedures in the UK?',
     options: [
-      'BS 7671 only',
       'HSE Guidance Note GS38',
       'Building Regulations Part P',
+      'BS 7671 only',
       'CIBSE Guide A',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "HSE Guidance Note GS38 'Electrical test equipment for use on low voltage electrical systems' provides detailed guidance on safe isolation procedures and the equipment required.",
   },
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'What should happen when a SSOW is found to be ineffective?',
     options: [
-      'Continue working and report at the end of the day',
+      'Regularly, after incidents, and when circumstances change',
       'Stop work, report the issue and review/revise the system',
-      'Increase supervision levels',
-      'Reduce the scope of work',
+      'Proved on a known live source before AND after use',
+      'Working on circuits that have been safely isolated and proved dead',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,12 +208,12 @@ const quizQuestions = [
     id: 10,
     question: "For electrical work, what does 'dead working' refer to?",
     options: [
+      'Stop work, report the issue and review/revise the system',
+      'To communicate specific safety information before work begins',
       'Working on circuits that have been safely isolated and proved dead',
-      'Working in areas with no electrical supply',
-      'Emergency work following an incident',
-      'Working outside normal hours',
+      'Regularly, after incidents, and when circumstances change',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Dead working means working on electrical systems that have been safely isolated and proved dead using approved test equipment. It is the preferred method as it eliminates the risk of electric shock.',
   },
@@ -221,12 +221,12 @@ const quizQuestions = [
     id: 11,
     question: 'How often should safe systems of work be reviewed?',
     options: [
-      'Only when an accident occurs',
-      'Annually as a minimum',
+      'Last resort when other controls are not reasonably practicable',
+      'Stop work, report the issue and review/revise the system',
+      'Proved on a known live source before AND after use',
       'Regularly, after incidents, and when circumstances change',
-      'Every five years',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'SSOW should be reviewed regularly as part of a planned schedule, after any incidents or near misses, when work methods or equipment change, and when new hazards are identified.',
   },
@@ -234,12 +234,12 @@ const quizQuestions = [
     id: 12,
     question: "What is the purpose of a 'toolbox talk' in relation to safe systems of work?",
     options: [
-      'To check that workers have the correct tools',
       'To communicate specific safety information before work begins',
-      'To issue new PPE',
-      'To record attendance on site',
+      'Proved on a known live source before AND after use',
+      'Stop work, report the issue and review/revise the system',
+      'Last resort when other controls are not reasonably practicable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Toolbox talks are short, focused safety briefings used to communicate specific hazards, control measures and safe working procedures to the workforce before they start a particular task or shift.',
   },

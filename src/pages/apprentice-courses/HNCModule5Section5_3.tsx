@@ -31,9 +31,9 @@ const quickCheckQuestions = [
     id: 'cibse-code-w',
     question: 'What does CIBSE Code W primarily cover?',
     options: [
-      'Air distribution systems',
-      'Water distribution systems',
       'Refrigeration systems',
+      'Water distribution systems',
+      'Air distribution systems',
       'Electrical distribution systems',
     ],
     correctIndex: 1,
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'proportional-balancing',
     question: 'In proportional balancing, what is the first step?',
     options: [
-      'Set all valves fully open',
+      'Identify the index circuit',
       'Close the index circuit valve',
       'Measure total system flow',
-      'Identify the index circuit',
+      'Set all valves fully open',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'The first step in proportional balancing is to identify the index circuit - the circuit with the greatest resistance to flow. All other circuits are then balanced relative to this reference.',
   },
@@ -57,8 +57,13 @@ const quickCheckQuestions = [
     id: 'air-flow-tolerance',
     question:
       'What is the typical acceptable tolerance for air flow rates at terminals under CIBSE Code A?',
-    options: ['+/- 5%', '+/- 10%', '+/- 15%', '+/- 20%'],
-    correctIndex: 1,
+    options: [
+      '+/- 10%',
+      '+/- 5%',
+      '+/- 15%',
+      '+/- 20%',
+    ],
+    correctIndex: 0,
     explanation:
       'CIBSE Code A specifies +/- 10% as the typical acceptable tolerance for air flow rates at terminals. This ensures adequate air distribution whilst acknowledging practical measurement limitations.',
   },
@@ -66,8 +71,13 @@ const quickCheckQuestions = [
     id: 'pressure-test-duration',
     question:
       'What is the minimum duration for a hydronic system pressure test under BSRIA guidance?',
-    options: ['30 minutes', '1 hour', '2 hours', '24 hours'],
-    correctIndex: 2,
+    options: [
+      '2 hours',
+      '1 hour',
+      '30 minutes',
+      '24 hours',
+    ],
+    correctIndex: 0,
     explanation:
       'BSRIA guidance recommends a minimum 2-hour pressure test at 1.5 times the working pressure for hydronic systems, allowing sufficient time to identify slow leaks and stabilise temperature effects.',
   },
@@ -77,8 +87,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which CIBSE Commissioning Code covers refrigeration systems?',
-    options: ['CIBSE Code A', 'CIBSE Code W', 'CIBSE Code R', 'CIBSE Code M'],
-    correctAnswer: 2,
+    options: [
+      'CIBSE Code A',
+      'CIBSE Code R',
+      'CIBSE Code W',
+      'CIBSE Code M',
+    ],
+    correctAnswer: 1,
     explanation:
       'CIBSE Commissioning Code R covers refrigeration systems including chillers, heat pumps, VRF/VRV systems, and direct expansion equipment.',
   },
@@ -86,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: "What does the term 'index circuit' refer to in water system balancing?",
     options: [
+      'The first circuit off the main header',
       'The circuit with the smallest flow rate',
       'The circuit with the greatest resistance to flow',
-      'The first circuit off the main header',
       'The circuit closest to the pump',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The index circuit is the circuit with the greatest resistance to flow (longest run, most fittings, or smallest pipework). It determines the system head requirements and serves as the reference for proportional balancing.',
   },
@@ -99,8 +114,13 @@ const quizQuestions = [
     id: 3,
     question:
       'When commissioning a variable air volume (VAV) system, terminals should first be tested at:',
-    options: ['Minimum air flow', 'Design air flow', 'Maximum air flow', '50% of design flow'],
-    correctAnswer: 2,
+    options: [
+      'Design air flow',
+      'Minimum air flow',
+      '50% of design flow',
+      'Maximum air flow',
+    ],
+    correctAnswer: 3,
     explanation:
       'VAV terminals are first commissioned at maximum air flow to verify the system can deliver peak capacity. Minimum flow settings are then checked to ensure adequate ventilation at low load conditions.',
   },
@@ -109,12 +129,12 @@ const quizQuestions = [
     question:
       'What is the purpose of a differential pressure regulating valve (DPRV) in a water system?',
     options: [
-      'To regulate water temperature',
       'To maintain constant flow through terminal units',
-      'To isolate sections for maintenance',
-      'To prevent water hammer',
+      'Pre-commissioning cleaning of water systems',
+      'The circuit with the greatest resistance to flow',
+      'Filters, fans, ductwork, coils, controls',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'DPRVs maintain constant differential pressure across terminal branches regardless of system loading. This ensures consistent flow through two-port control valves and improves control stability.',
   },
@@ -122,12 +142,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the correct sequence for commissioning an air handling unit?',
     options: [
-      'Ductwork, coils, fans, filters, controls',
       'Fans, ductwork, coils, filters, controls',
       'Filters, fans, ductwork, coils, controls',
       'Controls, fans, coils, ductwork, filters',
+      'Ductwork, coils, fans, filters, controls',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The correct sequence is: install clean filters, check fan rotation and motor currents, verify ductwork integrity, test coil performance, then commission controls. Clean filters protect components during commissioning.',
   },
@@ -135,8 +155,13 @@ const quizQuestions = [
     id: 6,
     question:
       'A chilled water system shows design flow of 4.5 l/s. Measured flow is 4.2 l/s. What is the percentage deviation?',
-    options: ['-6.7%', '-7.1%', '+6.7%', '+7.1%'],
-    correctAnswer: 0,
+    options: [
+      '+6.7%',
+      '-7.1%',
+      '-6.7%',
+      '+7.1%',
+    ],
+    correctAnswer: 2,
     explanation:
       'Percentage deviation = ((Measured - Design) / Design) x 100 = ((4.2 - 4.5) / 4.5) x 100 = -6.7%. This is within the typical +/- 10% tolerance for water systems.',
   },
@@ -144,16 +169,26 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the minimum superheat reading expected at a properly charged DX evaporator coil?',
-    options: ['2-4K', '5-8K', '10-12K', '15-20K'],
-    correctAnswer: 1,
+    options: [
+      '2-4K',
+      '15-20K',
+      '10-12K',
+      '5-8K',
+    ],
+    correctAnswer: 3,
     explanation:
       'A properly charged DX system should show 5-8K superheat at the evaporator outlet. Lower values indicate overcharge or liquid floodback risk; higher values suggest undercharge or restricted flow.',
   },
   {
     id: 8,
     question: 'When pressure testing a refrigeration system, what gas should be used?',
-    options: ['Air', 'Oxygen-free nitrogen (OFN)', 'Carbon dioxide', 'The working refrigerant'],
-    correctAnswer: 1,
+    options: [
+      'Oxygen-free nitrogen (OFN)',
+      'RS-485 twisted-pair cable',
+      'Hole saw or knockout punch',
+      'Gateway or protocol converter',
+    ],
+    correctAnswer: 0,
     explanation:
       'Oxygen-free nitrogen (OFN) must be used for pressure testing refrigeration systems. Air contains moisture and oxygen which can cause corrosion and contamination. Never use oxygen or the working refrigerant for testing.',
   },
@@ -161,10 +196,10 @@ const quizQuestions = [
     id: 9,
     question: 'What does BSRIA BG 29 cover?',
     options: [
-      'Electrical installation testing',
+      'To maintain constant flow through terminal units',
       'Pre-commissioning cleaning of water systems',
-      'Fire alarm commissioning',
-      'Lift commissioning',
+      'The circuit with the greatest resistance to flow',
+      'Filters, fans, ductwork, coils, controls',
     ],
     correctAnswer: 1,
     explanation:
@@ -173,8 +208,13 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What instrument is used to measure air flow at a grille or diffuser?',
-    options: ['Manometer', 'Balometer (capture hood)', 'Thermometer', 'Hygrometer'],
-    correctAnswer: 1,
+    options: [
+      'Manometer',
+      'Hygrometer',
+      'Balometer (capture hood)',
+      'Thermometer',
+    ],
+    correctAnswer: 2,
     explanation:
       'A balometer (flow capture hood) is placed over the grille or diffuser to directly measure air volume flow rate (l/s or m³/h). It provides accurate readings without complex calculations or traverse measurements.',
   },
@@ -182,8 +222,13 @@ const quizQuestions = [
     id: 11,
     question:
       'In a constant volume air system, what is the typical design velocity in main ductwork?',
-    options: ['1-2 m/s', '4-6 m/s', '8-10 m/s', '12-15 m/s'],
-    correctAnswer: 1,
+    options: [
+      '1-2 m/s',
+      '12-15 m/s',
+      '8-10 m/s',
+      '4-6 m/s',
+    ],
+    correctAnswer: 3,
     explanation:
       'Main ductwork in constant volume systems is typically designed for 4-6 m/s velocity. This balances pressure drop (energy cost) against duct size (capital cost). Higher velocities increase noise and running costs.',
   },
@@ -191,12 +236,12 @@ const quizQuestions = [
     id: 12,
     question: 'What documentation must be provided upon completion of mechanical commissioning?',
     options: [
-      'Only test certificates',
       'Commissioning records, O&M manuals, and as-built drawings',
-      'Manufacturer warranties only',
-      'Training records only',
+      'Filters, fans, ductwork, coils, controls',
+      'The circuit with the greatest resistance to flow',
+      'To maintain constant flow through terminal units',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Complete commissioning handover documentation includes: commissioning records showing all test results, O&M manuals for all equipment, as-built drawings, training records, and equipment warranties.',
   },

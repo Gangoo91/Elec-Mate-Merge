@@ -26,8 +26,13 @@ const quickCheckQuestions = [
   {
     id: 'uniformity-ratio',
     question: 'What is the uniformity ratio (Uo) formula?',
-    options: ['Emax / Emin', 'Emin / Eav', 'Eav / Emax', 'Emin / Emax'],
-    correctIndex: 1,
+    options: [
+      'Eav / Emax',
+      'Emax / Emin',
+      'Emin / Emax',
+      'Emin / Eav',
+    ],
+    correctIndex: 3,
     explanation:
       'Uniformity ratio (Uo) is calculated as Emin / Eav (minimum illuminance divided by average illuminance). This ratio indicates how evenly light is distributed across a task area.',
   },
@@ -35,28 +40,38 @@ const quickCheckQuestions = [
     id: 'cylindrical-illuminance',
     question: 'What does cylindrical illuminance (Ez) primarily assess?',
     options: [
-      'Task visibility on horizontal surfaces',
+      'Missing or incorrectly fitted bracing',
+      'By mentally tracing the current path and testing each stage',
+      '5-10 seconds (after motor reaches speed)',
       'The ability to recognise faces and expressions',
-      'Emergency lighting levels',
-      'Energy efficiency of luminaires',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Cylindrical illuminance (Ez) measures the mean illuminance on the curved surface of a vertical cylinder, which correlates with our ability to recognise faces and perceive three-dimensional objects in a space.',
   },
   {
     id: 'modelling-ratio',
     question: 'What is the recommended modelling ratio range for good facial recognition?',
-    options: ['0.1 to 0.2', '0.3 to 0.6', '0.7 to 0.9', '1.0 to 1.5'],
-    correctIndex: 1,
+    options: [
+      '0.3 to 0.6',
+      '0.7 to 0.9',
+      '1.0 to 1.5',
+      '0.1 to 0.2',
+    ],
+    correctIndex: 0,
     explanation:
       'A modelling ratio between 0.3 and 0.6 provides good three-dimensional perception and facial recognition. Values below 0.3 create flat, shadowless lighting; values above 0.6 can create harsh shadows.',
   },
   {
     id: 'ugr-limit',
     question: 'What is the typical UGR limit for office work per CIBSE recommendations?',
-    options: ['UGR ≤ 13', 'UGR ≤ 16', 'UGR ≤ 19', 'UGR ≤ 25'],
-    correctIndex: 2,
+    options: [
+      'UGR ≤ 13',
+      'UGR ≤ 16',
+      'UGR ≤ 25',
+      'UGR ≤ 19',
+    ],
+    correctIndex: 3,
     explanation:
       'For typical office work, CIBSE recommends a Unified Glare Rating (UGR) of 19 or less. More demanding visual tasks may require UGR ≤ 16, whilst industrial spaces may permit UGR ≤ 25.',
   },
@@ -67,7 +82,12 @@ const quizQuestions = [
     id: 1,
     question:
       'If the minimum illuminance in an office is 320 lux and the average is 500 lux, what is the uniformity ratio?',
-    options: ['Uo = 0.50', 'Uo = 0.64', 'Uo = 1.56', 'Uo = 0.36'],
+    options: [
+      'Uo = 0.50',
+      'Uo = 0.64',
+      'Uo = 1.56',
+      'Uo = 0.36',
+    ],
     correctAnswer: 1,
     explanation:
       'Uo = Emin / Eav = 320 / 500 = 0.64. This meets the CIBSE minimum requirement of Uo ≥ 0.6 for office task areas.',
@@ -75,7 +95,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the CIBSE LG7 minimum uniformity ratio for office task areas?',
-    options: ['Uo ≥ 0.4', 'Uo ≥ 0.5', 'Uo ≥ 0.6', 'Uo ≥ 0.8'],
+    options: [
+      'Uo ≥ 0.8',
+      'Uo ≥ 0.4',
+      'Uo ≥ 0.6',
+      'Uo ≥ 0.5',
+    ],
     correctAnswer: 2,
     explanation:
       'CIBSE LG7 specifies a minimum uniformity ratio of Uo ≥ 0.6 for office task areas. The immediate surrounding area should have Uo ≥ 0.4.',
@@ -84,8 +109,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Diversity ratio is the inverse of uniformity ratio. If Uo = 0.5, what is the diversity ratio?',
-    options: ['0.5', '1.5', '2.0', '0.25'],
-    correctAnswer: 2,
+    options: [
+      '1.5',
+      '0.5',
+      '0.25',
+      '2.0',
+    ],
+    correctAnswer: 3,
     explanation:
       'Diversity ratio = 1 / Uo = 1 / 0.5 = 2.0. This means the maximum illuminance is twice the minimum. Lower diversity (closer to 1.0) indicates more uniform lighting.',
   },
@@ -93,20 +123,25 @@ const quizQuestions = [
     id: 4,
     question: 'Which factor does NOT directly affect the Unified Glare Rating (UGR)?',
     options: [
-      'Luminaire luminance',
+      'Colour temperature of light',
       'Background luminance',
       'Solid angle of luminaires',
-      'Colour temperature of light',
+      'Luminaire luminance',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'UGR is calculated from luminaire luminance, background luminance, solid angle subtended by luminaires, and their position relative to the line of sight. Colour temperature does not feature in the UGR formula.',
   },
   {
     id: 5,
     question: 'What is the recommended cylindrical illuminance (Ez) for general office areas?',
-    options: ['50 lux', '100 lux', '150 lux', '200 lux'],
-    correctAnswer: 2,
+    options: [
+      '100 lux',
+      '150 lux',
+      '200 lux',
+      '50 lux',
+    ],
+    correctAnswer: 1,
     explanation:
       'CIBSE recommends a cylindrical illuminance of 150 lux at 1.2m height for general office areas to ensure good facial recognition and visual communication between occupants.',
   },
@@ -115,19 +150,24 @@ const quizQuestions = [
     question: 'The modelling ratio is defined as:',
     options: [
       'Horizontal illuminance / Vertical illuminance',
-      'Cylindrical illuminance / Horizontal illuminance',
       'Vertical illuminance / Horizontal illuminance',
+      'Cylindrical illuminance / Horizontal illuminance',
       'Minimum illuminance / Maximum illuminance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Modelling ratio = Ez / Eh (cylindrical illuminance divided by horizontal illuminance). This ratio indicates how well the lighting reveals three-dimensional form and facial features.',
   },
   {
     id: 7,
     question: 'For a circulation area, what is the minimum uniformity ratio (Uo) requirement?',
-    options: ['Uo ≥ 0.2', 'Uo ≥ 0.4', 'Uo ≥ 0.6', 'Uo ≥ 0.8'],
-    correctAnswer: 1,
+    options: [
+      'Uo ≥ 0.2',
+      'Uo ≥ 0.8',
+      'Uo ≥ 0.6',
+      'Uo ≥ 0.4',
+    ],
+    correctAnswer: 3,
     explanation:
       'Circulation areas and corridors require a minimum Uo ≥ 0.4. This lower requirement reflects that precise visual tasks are not typically performed in these spaces.',
   },
@@ -135,8 +175,13 @@ const quizQuestions = [
     id: 8,
     question:
       'What spacing-to-height ratio (SHR) typically produces uniform lighting from recessed luminaires?',
-    options: ['SHR ≤ 1.0', 'SHR = 1.0 to 1.5', 'SHR = 2.0 to 2.5', 'SHR &gt; 3.0'],
-    correctAnswer: 1,
+    options: [
+      'SHR = 1.0 to 1.5',
+      'SHR = 2.0 to 2.5',
+      'SHR ≤ 1.0',
+      'SHR &gt; 3.0',
+    ],
+    correctAnswer: 0,
     explanation:
       "A spacing-to-height ratio of 1.0 to 1.5 typically provides good uniformity. The exact SHR depends on the luminaire's light distribution and the manufacturer's recommendations.",
   },
@@ -144,7 +189,12 @@ const quizQuestions = [
     id: 9,
     question:
       'Which visual comfort issue is caused by excessive luminance contrast in the field of view?',
-    options: ['Flicker', 'Glare', 'Colour distortion', 'Shadow banding'],
+    options: [
+      'Flicker',
+      'Glare',
+      'Colour distortion',
+      'Shadow banding',
+    ],
     correctAnswer: 1,
     explanation:
       'Glare is caused by excessive luminance contrast in the visual field. This can be from bright luminaires (direct glare) or reflections from surfaces (reflected/veiling glare).',
@@ -152,7 +202,12 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What is the minimum reflectance recommendation for office ceilings per CIBSE?',
-    options: ['30-50%', '50-70%', '70-90%', '90-95%'],
+    options: [
+      '30-50%',
+      '50-70%',
+      '70-90%',
+      '90-95%',
+    ],
     correctAnswer: 2,
     explanation:
       'CIBSE recommends ceiling reflectance of 70-90% for offices. This high reflectance improves uniformity by increasing the inter-reflected component of light and reduces contrast with luminaires.',
@@ -161,12 +216,12 @@ const quizQuestions = [
     id: 11,
     question: 'Veiling reflections primarily affect:',
     options: [
-      'Walking in corridors',
+      '0.30 - at the lower acceptable limit',
+      'Colour temperature of light',
+      'Cylindrical illuminance / Horizontal illuminance',
       'Reading from glossy or screen surfaces',
-      'General ambient perception',
-      'Emergency escape routes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Veiling reflections occur when light reflects from glossy surfaces (paper, screens) into the viewer's eyes, reducing contrast and legibility. Luminaire positioning and screen orientation can mitigate this.",
   },
@@ -175,9 +230,9 @@ const quizQuestions = [
     question: 'If Ez = 120 lux and Eh = 400 lux, what is the modelling ratio and is it acceptable?',
     options: [
       '0.30 - at the lower acceptable limit',
-      '0.30 - below acceptable levels',
-      '3.33 - above acceptable levels',
       '0.30 - ideal for most applications',
+      '3.33 - above acceptable levels',
+      '0.30 - below acceptable levels',
     ],
     correctAnswer: 0,
     explanation:

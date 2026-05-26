@@ -262,9 +262,6 @@ export const generateMinorWorksPdf = async (formData: MinorWorksFormData): Promi
   if (formData.insulationLiveEarth) {
     addSection('  Live-Earth:', '', `${formData.insulationLiveEarth} MΩ`);
   }
-  if (formData.insulationNeutralEarth) {
-    addSection('  Neutral-Earth:', '', `${formData.insulationNeutralEarth} MΩ`);
-  }
 
   addSection('Polarity:', '', formData.polarity || formData.polarityResult || '');
   addSection(

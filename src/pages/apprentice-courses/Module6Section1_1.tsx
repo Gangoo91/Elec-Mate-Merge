@@ -16,10 +16,10 @@ const Module6Section1_1 = () => {
       id: 1,
       question: 'What regulation requires electrical systems to be safe to use?',
       options: [
-        'BS 7671',
+        'The easiest to access components (fuses, contactors)',
         'Electricity at Work Regulations (EAWR 1989)',
-        'Building Regulations',
-        'IET Code of Practice',
+        'Structured cabling and network infrastructure',
+        'Review the assessment and update if necessary',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,12 +29,12 @@ const Module6Section1_1 = () => {
       id: 2,
       question: 'What is the main purpose of inspection?',
       options: [
-        'To check cable sizes',
+        'The highest risk of work-related stress and associated illness',
+        'Before each day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s use, or in accordance with the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions',
         'To verify safety, compliance and workmanship through visual checks',
-        'To test circuit operation',
-        'To measure voltage',
+        'To physically prevent an isolator being switched back on while work is in progress',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Inspection involves visual checks to verify safety, compliance with BS 7671, and workmanship quality.',
     },
@@ -42,12 +42,12 @@ const Module6Section1_1 = () => {
       id: 3,
       question: 'What does testing confirm about polarity?',
       options: [
-        'That cables are the correct size',
+        'Because resistance changes with temperature in many components',
+        'Identify PPE type, performance standards, limitations, expiry dates',
+        'Whenever there is a risk of a person falling from the edge, regardless of height',
         'That live, neutral, and earth conductors are correctly connected',
-        'That voltage is correct',
-        'That insulation is adequate',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Polarity testing confirms that live, neutral, and earth conductors are correctly connected and not reversed.',
     },
@@ -63,10 +63,10 @@ const Module6Section1_1 = () => {
       id: 5,
       question: 'Give one hidden fault that testing can reveal.',
       options: [
-        'Damaged cable sheath',
+        'Replace the RCD as it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s over-sensitive',
         'Insulation breakdown or poor earth connections',
-        'Missing cable clips',
-        'Untidy wiring',
+        'Large UK companies and LLPs meeting size thresholds',
+        'Requirements for electrical test equipment',
       ],
       correctAnswer: 1,
       explanation:
@@ -75,8 +75,13 @@ const Module6Section1_1 = () => {
     {
       id: 6,
       question: 'Which standard defines inspection and testing as part of compliance?',
-      options: ['EAWR 1989', 'BS 7671 Wiring Regulations', 'Building Regulations', 'HSE Guidance'],
-      correctAnswer: 1,
+      options: [
+        'Clipped direct to surface',
+        'A burning smell from the socket',
+        'BS 7671 Wiring Regulations',
+        'Type 5 disposable coveralls',
+      ],
+      correctAnswer: 2,
       explanation:
         'BS 7671 Wiring Regulations establishes inspection and testing as a key part of compliance.',
     },
@@ -84,12 +89,12 @@ const Module6Section1_1 = () => {
       id: 7,
       question: 'Why should all tests be recorded on paperwork?',
       options: [
-        'For filing purposes',
+        'Inside the bath or shower basin',
+        'The safe use and operation of mobile access towers',
+        'Swimming pools with zone requirements',
         'To provide evidence of compliance and safety',
-        "Because it's tradition",
-        'To calculate costs',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Recording test results provides documented evidence of compliance and safety for clients and regulators.',
     },
@@ -97,12 +102,12 @@ const Module6Section1_1 = () => {
       id: 8,
       question: 'What is the consequence of not inspecting and testing?',
       options: [
-        'Nothing happens',
         'Increased risk of shock, fire, injury, or legal action',
-        'Faster completion',
-        'Lower costs',
+        'Danger, Response, Airway, Breathing, Circulation',
+        'Potential danger to users and breach of regulations',
+        'It introduced new load classes and updated stability requirements',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Not inspecting and testing increases the risk of electric shock, fire, injury, and potential legal action.',
     },
@@ -110,10 +115,10 @@ const Module6Section1_1 = () => {
       id: 9,
       question: 'Who is responsible for ensuring installations are safe before energising?',
       options: [
-        'The client',
+        'Work in special locations or involving new circuits',
         'The installer or responsible person signing the certificate',
-        'The supply company',
-        'The building owner',
+        'Knowledge questions and behavioural case studies',
+        'Combined PEN in supply, separated in installation',
       ],
       correctAnswer: 1,
       explanation:
@@ -123,12 +128,12 @@ const Module6Section1_1 = () => {
       id: 10,
       question: 'Why is inspection and testing important for professional reputation?',
       options: [
-        "It's not important",
+        'Load calculations, equipment selection, exclusion zones, and certified operators',
+        'Pressure reaches its maximum (stagnation pressure)',
         'It demonstrates competence, compliance and builds client trust',
-        'It increases costs',
-        'It delays completion',
+        'To determine overall supply requirements for a building or site',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Proper inspection and testing demonstrates competence, ensures compliance, and builds client trust and professional reputation.',
     },

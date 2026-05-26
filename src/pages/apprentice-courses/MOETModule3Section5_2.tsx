@@ -15,11 +15,11 @@ const quickCheckQuestions = [
     question: 'What are the two main types of VRLA (Valve Regulated Lead Acid) battery?',
     options: [
       'Wet cell and dry cell',
-      'AGM (Absorbed Glass Mat) and Gel',
       'Flooded and sealed',
+      'AGM (Absorbed Glass Mat) and Gel',
       'Primary and secondary',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The two main types of VRLA battery are AGM (Absorbed Glass Mat), where the electrolyte is absorbed into a fibreglass mat separator, and Gel, where the electrolyte is immobilised in a silica gel. Both are sealed and maintenance-free (no electrolyte topping up). AGM is the more common type in UPS and standby power applications due to lower cost and better high-rate discharge performance.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'c-rate',
     question: 'What does a battery C-rate of C/10 mean?',
     options: [
-      'The battery is 10% charged',
+      'Basic protection, fault protection, and additional protection',
+      'Inherent fire resistance — the copper sheath and mineral insulation maintain circuit integrity in a fire',
+      'Installation errors, environmental factors, and component failures',
       'The battery will discharge at a rate that depletes its full capacity in 10 hours',
-      'The battery has 10 cells',
-      'The battery is rated for 10 cycles',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A C-rate of C/10 means the battery will discharge at a rate that depletes its full rated capacity in 10 hours. For a 100 Ah battery, C/10 = 10 A discharge current. C/1 would be 100 A (full discharge in 1 hour), and C/20 would be 5 A (full discharge in 20 hours). Higher C-rates (faster discharge) reduce the usable capacity due to the Peukert effect in lead-acid batteries.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'impedance-testing',
     question: 'What does an increasing trend in battery impedance readings indicate?',
     options: [
-      'The battery is improving with age',
+      'At least quarterly, though more frequently is often beneficial',
+      'The competent person who carried out the inspection and testing',
       'The battery is degrading internally and approaching end of life',
-      'The battery charger is faulty',
-      'The ambient temperature is too low',
+      'Average efficiency of a heat pump over an entire heating season',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'An increasing trend in battery impedance readings indicates internal degradation — drying out of the electrolyte, corrosion of the plates, sulphation, or physical damage. By trending impedance values over time, maintenance technicians can predict battery failure and schedule replacement before a critical outage occurs. A single impedance reading is less useful than the trend.',
   },
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'thermal-runaway',
     question: 'What is thermal runaway in a battery?',
     options: [
-      'The battery overheating during normal charging',
+      'It moves information from the Blind Spot (known to others but not to self) into the Open area',
+      'Text messages tend to be interpreted more negatively than intended because tone is stripped from written words',
       'An uncontrolled exothermic reaction where increasing temperature causes increasing current, which causes further temperature rise',
-      'The battery running out of charge faster than expected',
-      'Heat loss from the battery to the environment',
+      'System overviews, operational procedures, maintenance requirements, and emergency responses',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Thermal runaway is a dangerous condition where an increase in battery temperature causes an increase in charging current, which generates more heat, causing further temperature rise in a positive feedback loop. This can lead to battery swelling, venting of gases, melting and potentially fire or explosion. Thermal runaway can occur in both lead-acid and lithium-ion batteries, though the mechanisms differ.',
   },
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'A flooded lead-acid battery differs from a VRLA battery primarily because:',
     options: [
-      'It uses a different electrolyte chemical',
+      'Cut-resistant gloves, chemical-resistant gloves, thermal gloves, electrical gloves',
       'It has liquid electrolyte that requires periodic topping up with distilled water',
-      'It has a shorter lifespan',
-      'It cannot be used in standby applications',
+      'Move the casualty into fresh air, ensuring it is safe for you to approach',
+      'To get input from those who understand the work and risks',
     ],
     correctAnswer: 1,
     explanation:
@@ -81,8 +81,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'The nominal voltage of a single lead-acid cell is approximately:',
-    options: ['1.2 V', '2.0 V', '3.6 V', '12 V'],
-    correctAnswer: 1,
+    options: [
+      '3.6 V',
+      '1.2 V',
+      '2.0 V',
+      '12 V',
+    ],
+    correctAnswer: 2,
     explanation:
       'A single lead-acid cell has a nominal voltage of approximately 2.0 V (float voltage typically 2.25-2.30 V per cell). A 12 V battery contains 6 cells in series. A 48 V battery string contains 24 cells. Understanding cell voltages is essential for monitoring battery health — individual cell voltages that deviate significantly from the average indicate a problem.',
   },
@@ -91,12 +96,12 @@ const quizQuestions = [
     question:
       'Lithium iron phosphate (LiFePO4) batteries are preferred for many stationary applications because:',
     options: [
-      'They are the cheapest lithium-ion chemistry',
+      'Prolonged storage in a discharged state or chronic undercharging',
+      'Verify the battery can deliver its rated capacity under load conditions',
+      'Monitors and balances individual cell voltages, temperatures and currents to prevent unsafe conditions',
       'They offer excellent thermal stability and safety compared to other lithium-ion chemistries',
-      'They have the highest energy density of all lithium-ion types',
-      'They do not require a Battery Management System',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'LiFePO4 (Lithium Iron Phosphate) is considered the safest lithium-ion chemistry for stationary applications. It has a very stable crystal structure that is resistant to thermal runaway, does not release oxygen during thermal decomposition (unlike NMC or NCA), and has a lower energy density — which is actually a safety advantage in stationary applications where weight and size are less critical.',
   },
@@ -104,12 +109,12 @@ const quizQuestions = [
     id: 4,
     question: 'The Peukert effect describes the phenomenon where:',
     options: [
-      'Batteries charge faster at higher temperatures',
       'The usable capacity of a lead-acid battery decreases at higher discharge rates',
+      'Batteries charge faster at higher temperatures',
       'Battery voltage increases as the battery ages',
       'Lithium-ion batteries perform better in cold conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Peukert effect states that the usable capacity of a lead-acid battery decreases as the discharge rate increases. A battery rated at 100 Ah at C/20 (5 A for 20 hours) may deliver only 60-70 Ah at C/1 (100 A for less than 1 hour). This is because at higher discharge rates, the chemical reaction cannot penetrate the full depth of the lead plates. The Peukert effect is much less pronounced in lithium-ion batteries.',
   },
@@ -117,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'What gas is produced during the charging of flooded lead-acid batteries?',
     options: [
-      'Carbon dioxide',
+      'Earth fault loop impedance, RCD testing, and functional tests',
       'Hydrogen and oxygen (potentially explosive mixture)',
-      'Nitrogen',
-      'Methane',
+      'Calculate and record where significant',
+      'Off-peak default charging (smart functionality)',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,12 +135,12 @@ const quizQuestions = [
     id: 6,
     question: 'Sulphation in a lead-acid battery is caused by:',
     options: [
-      'Overcharging',
+      'Collected separately and recycled through an approved compliance scheme',
+      'Verify the battery can deliver its rated capacity under load conditions',
       'Prolonged storage in a discharged state or chronic undercharging',
-      'Operating at too low a temperature',
-      'Using the wrong electrolyte',
+      'The usable capacity of a lead-acid battery decreases at higher discharge rates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Sulphation occurs when lead sulphate crystals form on the battery plates and harden over time. This happens when a battery is left in a discharged state for prolonged periods or is chronically undercharged. The hardened sulphate crystals reduce the active plate area, increasing internal resistance and reducing capacity. In severe cases, sulphation is irreversible and the battery must be replaced.',
   },
@@ -144,12 +149,12 @@ const quizQuestions = [
     question:
       'A Battery Management System (BMS) in a lithium-ion battery performs which critical function?',
     options: [
-      'Increases the battery capacity',
+      'They offer excellent thermal stability and safety compared to other lithium-ion chemistries',
+      'The usable capacity of a lead-acid battery decreases at higher discharge rates',
+      'Flush the affected area with copious amounts of clean water for at least 20 minutes',
       'Monitors and balances individual cell voltages, temperatures and currents to prevent unsafe conditions',
-      'Converts DC to AC',
-      'Provides emergency lighting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A BMS monitors each cell's voltage, temperature and current in a lithium-ion battery. It prevents overcharge, over-discharge, overcurrent and over-temperature conditions that could lead to thermal runaway. It also balances cell voltages to ensure equal ageing across the string. A BMS failure can lead to dangerous conditions — which is why BMS health is a key maintenance check.",
   },
@@ -157,19 +162,24 @@ const quizQuestions = [
     id: 8,
     question: 'During a battery load test, the purpose is to:',
     options: [
-      'Charge the battery to maximum capacity',
       'Verify the battery can deliver its rated capacity under load conditions',
-      'Measure the float voltage of each cell',
-      'Test the battery charger output',
+      'They offer excellent thermal stability and safety compared to other lithium-ion chemistries',
+      'Collected separately and recycled through an approved compliance scheme',
+      'Flush the affected area with copious amounts of clean water for at least 20 minutes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A load test (discharge test) verifies that the battery can deliver its rated capacity under real or simulated load conditions. The battery is discharged at a defined rate (typically the same rate used in the UPS application) and the time to reach the end-of-discharge voltage is measured. If the battery delivers less than 80% of its rated capacity, replacement should be planned.',
   },
   {
     id: 9,
     question: 'The float charge voltage for a VRLA battery is typically set at:',
-    options: ['1.8 V per cell', '2.25-2.30 V per cell', '3.6 V per cell', '12.0 V per cell'],
+    options: [
+      '1.8 V per cell',
+      '2.25-2.30 V per cell',
+      '3.6 V per cell',
+      '12.0 V per cell',
+    ],
     correctAnswer: 1,
     explanation:
       'The float charge voltage for VRLA batteries is typically 2.25-2.30 V per cell at 20°C. This voltage maintains the battery in a fully charged state without overcharging. Higher float voltages cause excessive gassing, water loss and shortened life. Lower float voltages allow the battery to gradually self-discharge. Temperature compensation should be applied — typically -3 mV/°C per cell above 20°C.',
@@ -178,10 +188,10 @@ const quizQuestions = [
     id: 10,
     question: 'Under the WEEE Regulations, batteries must be:',
     options: [
-      'Disposed of in general waste',
-      'Returned to the original manufacturer only',
+      'The usable capacity of a lead-acid battery decreases at higher discharge rates',
+      'They offer excellent thermal stability and safety compared to other lithium-ion chemistries',
       'Collected separately and recycled through an approved compliance scheme',
-      'Buried in landfill',
+      'Flush the affected area with copious amounts of clean water for at least 20 minutes',
     ],
     correctAnswer: 2,
     explanation:
@@ -190,8 +200,13 @@ const quizQuestions = [
   {
     id: 11,
     question: 'A nickel-cadmium (NiCd) battery cell has a nominal voltage of approximately:',
-    options: ['1.2 V', '2.0 V', '3.2 V', '3.7 V'],
-    correctAnswer: 0,
+    options: [
+      '3.7 V',
+      '2.0 V',
+      '3.2 V',
+      '1.2 V',
+    ],
+    correctAnswer: 3,
     explanation:
       'A single NiCd cell has a nominal voltage of approximately 1.2 V. NiCd batteries are extremely robust with excellent temperature tolerance (-40°C to +60°C), very long cycle life (up to 2,000+ cycles) and a design life of 15-25 years. However, their use is being restricted due to the toxicity of cadmium, and they are being replaced by NiMH and lithium-ion alternatives.',
   },
@@ -200,12 +215,12 @@ const quizQuestions = [
     question:
       'What first-aid action should be taken if battery acid (sulphuric acid) contacts the skin?',
     options: [
-      'Apply a dry bandage immediately',
       'Flush the affected area with copious amounts of clean water for at least 20 minutes',
-      'Apply a neutralising agent (sodium bicarbonate) directly',
-      'No action needed — it will evaporate',
+      'Prolonged storage in a discharged state or chronic undercharging',
+      'Collected separately and recycled through an approved compliance scheme',
+      'Monitors and balances individual cell voltages, temperatures and currents to prevent unsafe conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'If battery acid contacts the skin, the affected area should be flushed immediately with copious amounts of clean water for at least 20 minutes. Do not attempt to neutralise the acid with sodium bicarbonate on the skin as the reaction generates heat. Remove contaminated clothing carefully. If acid contacts the eyes, irrigate with clean water for at least 20 minutes and seek immediate medical attention. Report all acid exposure incidents.',
   },

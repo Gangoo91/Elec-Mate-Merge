@@ -15,20 +15,75 @@ const TITLE = 'BSA 2022 - HRRBs and dutyholders | Level 3 Module 1.6.1 | Elec-Ma
 const DESCRIPTION = 'L3 deeper on BSA 2022 - HRRB definition, in-occupation duty holders (PAP / AP / RP), Building Safety Regulator gateways, and the operational impact on electrical contractors.';
 
 const checks = [
-  { id: 'l3-m1-s6-sub1-hrrb', question: 'HRRB definition?', options: ['Anything tall.', '18m+ in height OR 7+ storeys, AND containing 2+ residential units. Per Higher-Risk Buildings (Descriptions and Supplementary Provisions) Regulations 2023.', 'Above 50m only.', 'Any block.'], correctIndex: 1, explanation: 'Memorise: 18m / 7 storeys + 2 residential. Hospitals and care homes also covered for design / construction phase.' },
-  { id: 'l3-m1-s6-sub1-pap', question: 'Who\'s the Principal Accountable Person?', options: ['Architect.', 'Single person per HRRB responsible for the structure and exterior. Registers the building, prepares safety case, engages residents, holds golden thread. Reg 4 of BSA 2022 Part 4.', 'Resident.', 'Council.'], correctIndex: 1, explanation: 'PAP is THE in-occupation dutyholder. Single per building.' },
-  { id: 'l3-m1-s6-sub1-gateways', question: 'Three BSA 2022 gateways?', options: ['Random.', 'Gateway 1 at planning (fire safety + access). Gateway 2 pre-construction (BSR design review; no construction without approval). Gateway 3 pre-occupation (BSR sign-off against design and golden thread; no occupation without approval).', 'Just one.', 'Five.'], correctIndex: 1, explanation: '1 planning, 2 pre-construction, 3 pre-occupation. Fail any = stop.' },
+  { id: 'l3-m1-s6-sub1-hrrb', question: 'HRRB definition?', options: [
+    'The extent to which a design facilitates safe and efficient construction, minimising foreseeable risks to workers during the build process',
+    'Accumulation of combustible waste, blocked escape routes, obstructed fire exits, and stored materials near heat sources all increase fire risk',
+    '18m+ in height OR 7+ storeys, AND containing 2+ residential units. Per Higher-Risk Buildings (Descriptions and Supplementary Provisions) Regulations 2023.',
+    'Using the CMMS effectively for day-to-day maintenance tasks, understanding how your data contributes to maintenance planning, and producing accurate records',
+  ], correctIndex: 2, explanation: 'Memorise: 18m / 7 storeys + 2 residential. Hospitals and care homes also covered for design / construction phase.' },
+  { id: 'l3-m1-s6-sub1-pap', question: 'Who\'s the Principal Accountable Person?', options: [
+    'Prepare thoroughly (reduces uncertainty), practise relaxation techniques, maintain normal routines before the assessment, visualise successful outcomes, and remind yourself that you have been signed off because you are ready',
+    'Single person per HRRB responsible for the structure and exterior. Registers the building, prepares safety case, engages residents, holds golden thread. Reg 4 of BSA 2022 Part 4.',
+    'Implement the contingency rescue procedure immediately — the 5-15 minute critical window for suspension trauma means an alternative rescue method must be used without delay',
+    'Systematic monitoring of workers\\\\\\\' health through questionnaires, physical checks, or clinical examinations to detect early signs of MSDs, required where the risk assessment identifies a residual risk of MSDs',
+  ], correctIndex: 1, explanation: 'PAP is THE in-occupation dutyholder. Single per building.' },
+  { id: 'l3-m1-s6-sub1-gateways', question: 'Three BSA 2022 gateways?', options: [
+    'The initial neurochemical response of an emotion surges and then dissipates within approximately 90 seconds — any emotional experience lasting longer is being sustained by our own thoughts and self-talk',
+    'Identify and document all the ways an asset can fail, the causes of each failure mode, and the effects and consequences of each failure on operations, safety and the environment',
+    'Reject — measured exceeds 0.8 × table max, which means the hot Zs in service will probably exceed Table 41.3 max. Investigate: confirm the device, recalculate the design Zs, and either upsize the cable or accept the device must be downrated.',
+    'Gateway 1 at planning (fire safety + access). Gateway 2 pre-construction (BSR design review; no construction without approval). Gateway 3 pre-occupation (BSR sign-off against design and golden thread; no occupation without approval).',
+  ], correctIndex: 3, explanation: '1 planning, 2 pre-construction, 3 pre-occupation. Fail any = stop.' },
 ];
 
 const quizQuestions = [
-  { id: 1, question: 'Why was BSA 2022 enacted?', options: ['Random reform.', 'Response to Grenfell (2017) and Hackitt Review (2018). Addresses fragmented regulation, weak competence, unclear accountability.', 'For sport.', 'Random.'], correctAnswer: 1, explanation: 'Grenfell + Hackitt are the policy origins.' },
-  { id: 2, question: 'What\'s the Building Safety Regulator?', options: ['Private firm.', 'Function within HSE. Three statutory functions: oversee building safety; facilitate competence improvement; lead implementation of HRRB regulatory regime including gateway approvals.', 'Council body.', 'NGO.'], correctAnswer: 1, explanation: 'BSR sits within HSE. Three functions cover broad and HRRB-specific.' },
-  { id: 3, question: 'What\'s the golden thread?', options: ['Cable.', 'Digital, accurate, accessible, secure information set covering design, construction and ongoing management of an HRRB. Held by Accountable Person.', 'Mortgage.', 'Brand.'], correctAnswer: 1, explanation: 'Golden thread is THE information system for HRRBs. Records persist for life of building.' },
-  { id: 4, question: 'How many in-occupation dutyholder types are defined?', options: ['One.', 'Three: Principal Accountable Person (PAP - one per HRRB), Accountable Persons (AP - multiple possible), Responsible Person (RP under RRFSO 2005). Building Safety Manager (BSM) role optional.', 'Five.', 'Ten.'], correctAnswer: 1, explanation: 'PAP / AP / RP. BSM is optional appointment.' },
-  { id: 5, question: 'What\'s the safety case?', options: ['Briefcase.', 'Document setting out how building safety risks are identified, mitigated and managed for the HRRB. Includes fire and structural risks, mitigation strategies, residents engagement, golden-thread links.', 'Insurance.', 'Blueprint.'], correctAnswer: 1, explanation: 'Safety case is the PAP\'s comprehensive evidence that the building is being safely managed.' },
-  { id: 6, question: 'What\'s the Defective Premises Act change?', options: ['No change.', 'BSA 2022 s.135 extended limitation: 30 years retrospective for residential defect claims; 15 years prospective. Significant impact on contractor liability and document retention.', 'Reduced.', 'Random.'], correctAnswer: 1, explanation: '30 years retrospective is the headline. Long-tail liability for residential work.' },
-  { id: 7, question: 'How does BSA 2022 affect electrical contractors not working on HRRBs?', options: ['Not at all.', 'Indirectly - 30-year DPA liability, competence framework changes, Building Regs amendments (Approved Doc B fire safety especially), regulatory direction-of-travel emphasising traceability and certified competence.', 'Only on HRRBs.', 'Random.'], correctAnswer: 1, explanation: 'BSA 2022\'s indirect effects reach all residential work.' },
-  { id: 8, question: 'What\'s the L3 contribution to BSA 2022 awareness?', options: ['None.', 'Recognise HRRB sites; understand the gateway regime and PAP role; verify CPP integrates with golden thread; produce digital cert records (not paper-only); cooperate with PAP / AP requests for information.', 'Customer service.', 'Random.'], correctAnswer: 1, explanation: 'L3 contribution operationalises BSA 2022 awareness on site.' },
+  { id: 1, question: 'Why was BSA 2022 enacted?', options: [
+    'Review the grading descriptors, understand what each grade requires, practise to the distinction standard, and seek feedback from your training provider',
+    'Response to Grenfell (2017) and Hackitt Review (2018). Addresses fragmented regulation, weak competence, unclear accountability.',
+    'Using AI to identify individual appliance consumption from whole-building smart meter data',
+    'From the load side of the RCD between L and PE — at the furthest practicable point on each circuit it protects, with both 0° and 180° starting phase',
+  ], correctAnswer: 1, explanation: 'Grenfell + Hackitt are the policy origins.' },
+  { id: 2, question: 'What\'s the Building Safety Regulator?', options: [
+    'Visually inspect for storage damage, check the coil resistance, verify the contacts are not corroded or contaminated, ensure the operating mechanism moves freely, and confirm the component is within its shelf-life (if applicable)',
+    'It is doing its job — the freezer likely has earth leakage; explain we will investigate, and recommend repair/replacement of the appliance',
+    'Function within HSE. Three statutory functions: oversee building safety; facilitate competence improvement; lead implementation of HRRB regulatory regime including gateway approvals.',
+    'Employees must make full and proper use of systems of work provided, cooperate with their employer on health and safety, and report any hazards or concerns',
+  ], correctAnswer: 2, explanation: 'BSR sits within HSE. Three functions cover broad and HRRB-specific.' },
+  { id: 3, question: 'What\'s the golden thread?', options: [
+    'The excess materials must be removed immediately and the scaffold checked for damage before resuming use',
+    'A bulk purchase of components before the manufacturer discontinues them, providing a strategic buffer stock to support equipment maintenance during the transition to an alternative',
+    'The first time someone experiences psychotic symptoms; early intervention leads to significantly better long-term outcomes',
+    'Digital, accurate, accessible, secure information set covering design, construction and ongoing management of an HRRB. Held by Accountable Person.',
+  ], correctAnswer: 3, explanation: 'Golden thread is THE information system for HRRBs. Records persist for life of building.' },
+  { id: 4, question: 'How many in-occupation dutyholder types are defined?', options: [
+    'Three: Principal Accountable Person (PAP - one per HRRB), Accountable Persons (AP - multiple possible), Responsible Person (RP under RRFSO 2005). Building Safety Manager (BSM) role optional.',
+    'Restricting system access based on the user\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s role, ensuring each person has only the minimum permissions needed for their job function',
+    'Send everything — drawings, calcs, schedules, device specs — and explain that BS 7671 Reg 132.13 requires complete documentation and you keep the master copy on file for at least the design life of the installation.',
+    'Be labelled with captions explaining what the image shows, the date, location and asset reference, and placed in context within the report near the relevant text',
+  ], correctAnswer: 0, explanation: 'PAP / AP / RP. BSM is optional appointment.' },
+  { id: 5, question: 'What\'s the safety case?', options: [
+    'Installers of standard domestic and small commercial installations — it pulls the most-used BS 7671 tables (cable sizing, diversity, ratings) into a pocket-sized reference and explains the standard install methods.',
+    'Document setting out how building safety risks are identified, mitigated and managed for the HRRB. Includes fire and structural risks, mitigation strategies, residents engagement, golden-thread links.',
+    'RASA provides the structural process (receive, appreciate, summarise, ask) while Covey\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s empathetic listening adds the depth of emotional understanding and perspective-taking within each step',
+    'The advance guardrail system must be lowered in the correct sequence before each frame section is removed, following the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specific AGR dismantling procedure',
+  ], correctAnswer: 1, explanation: 'Safety case is the PAP\'s comprehensive evidence that the building is being safely managed.' },
+  { id: 6, question: 'What\'s the Defective Premises Act change?', options: [
+    'Generally discouraged for power circuits due to solder creep under load, but acceptable for specific signal and electronic applications where mechanical stress is minimal',
+    'Have a maximum of 4 mm exposed metal tip, finger guards, fused leads where appropriate, and be CAT III/IV rated for the system voltage',
+    'BSA 2022 s.135 extended limitation: 30 years retrospective for residential defect claims; 15 years prospective. Significant impact on contractor liability and document retention.',
+    'Function within HSE. Three statutory functions: oversee building safety; facilitate competence improvement; lead implementation of HRRB regulatory regime including gateway approvals.',
+  ], correctAnswer: 2, explanation: '30 years retrospective is the headline. Long-tail liability for residential work.' },
+  { id: 7, question: 'How does BSA 2022 affect electrical contractors not working on HRRBs?', options: [
+    'The highest average power demand recorded over any half-hour period since the MDI was last reset, which is used by the DNO for billing and supply capacity planning',
+    'A cognitive bias where people with limited knowledge or competence in a domain significantly overestimate their ability, while experts tend to underestimate theirs',
+    'Every person who is or may be affected by the risk and who needs the information to manage it — this typically includes the principal designer, principal contractor, other designers, contractors, and ultimately the end users via the health and safety file',
+    'Indirectly - 30-year DPA liability, competence framework changes, Building Regs amendments (Approved Doc B fire safety especially), regulatory direction-of-travel emphasising traceability and certified competence.',
+  ], correctAnswer: 3, explanation: 'BSA 2022\'s indirect effects reach all residential work.' },
+  { id: 8, question: 'What\'s the L3 contribution to BSA 2022 awareness?', options: [
+    'Recognise HRRB sites; understand the gateway regime and PAP role; verify CPP integrates with golden thread; produce digital cert records (not paper-only); cooperate with PAP / AP requests for information.',
+    'The names of all persons who have been briefed on the method statement, confirming they understand the hazards, controls and their responsibilities',
+    'The operative should immediately cease work and descend to ground level — metal towers attract lightning and the elevated position increases strike risk',
+    'Immediately prohibit use of the scaffold, tag it as unsafe, investigate who made the modifications and why, have the scaffold redesigned or returned to its approved configuration by a competent scaffolder, and re-inspect before permitting reuse',
+  ], correctAnswer: 0, explanation: 'L3 contribution operationalises BSA 2022 awareness on site.' },
 ];
 
 const faqs = [

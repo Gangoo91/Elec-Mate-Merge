@@ -13,16 +13,26 @@ const quickCheckQuestions = [
   {
     id: 'si-base-units',
     question: 'Which of the following is an SI base unit (not a derived unit)?',
-    options: ['Volt', 'Ohm', 'Ampere', 'Watt'],
-    correctIndex: 2,
+    options: [
+      'Ohm',
+      'Watt',
+      'Volt',
+      'Ampere',
+    ],
+    correctIndex: 3,
     explanation:
       'The ampere is one of the seven SI base units. Volts, ohms, and watts are all derived units — they are defined in terms of base units. The volt = kg.m².s-3.A-1, the ohm = kg.m².s-3.A-2, and the watt = kg.m².s-3. The ampere is the base unit from which all other electrical units are derived.',
   },
   {
     id: 'prefix-conversion',
     question: 'Convert 4700 ohms to kilohms:',
-    options: ['0.47 kilohms', '4.7 kilohms', '47 kilohms', '470 kilohms'],
-    correctIndex: 1,
+    options: [
+      '4.7 kilohms',
+      '0.47 kilohms',
+      '470 kilohms',
+      '47 kilohms',
+    ],
+    correctIndex: 0,
     explanation:
       "To convert from base units to kilounits, divide by 1000 (or 10^3). So 4700 ohms / 1000 = 4.7 kilohms (4.7 k-ohms). This is a common value for a resistor. On a multimeter, the display might show '4.70 k' on the kilohms range.",
   },
@@ -43,8 +53,13 @@ const quickCheckQuestions = [
   {
     id: 'calibration',
     question: 'How often should portable electrical test instruments typically be calibrated?',
-    options: ['Every month', 'Every 6 months', 'Annually (every 12 months)', 'Every 5 years'],
-    correctIndex: 2,
+    options: [
+      'The opposition to current flow',
+      'To prevent electric shock',
+      'Daylight harvesting sensors',
+      'Annually (every 12 months)',
+    ],
+    correctIndex: 3,
     explanation:
       'The general industry recommendation is annual calibration for portable electrical test instruments. However, the actual interval depends on the frequency of use, the environment, and the criticality of the measurements. GS38 requires that voltage indicators are proved against a known source before and after each use — this is an additional check, not a replacement for formal calibration.',
   },
@@ -54,8 +69,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'The seven SI base units include all of the following EXCEPT:',
-    options: ['Metre (length)', 'Kilogram (mass)', 'Volt (voltage)', 'Kelvin (temperature)'],
-    correctAnswer: 2,
+    options: [
+      'Metre (length)',
+      'Volt (voltage)',
+      'Kilogram (mass)',
+      'Kelvin (temperature)',
+    ],
+    correctAnswer: 1,
     explanation:
       'The seven SI base units are: metre (length), kilogram (mass), second (time), ampere (electric current), kelvin (thermodynamic temperature), mole (amount of substance), and candela (luminous intensity). The volt is a derived unit, defined as kg.m².s-3.A-1.',
   },
@@ -63,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: 'The SI derived unit for electrical resistance (ohm) is equivalent to:',
     options: [
-      'Volt per ampere (V/A)',
-      'Ampere per volt (A/V)',
       'Watt per ampere (W/A)',
       'Joule per coulomb (J/C)',
+      'Volt per ampere (V/A)',
+      'Ampere per volt (A/V)',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'One ohm is defined as the resistance across which one volt produces a current of one ampere. Therefore ohm = V/A. The siemens (unit of conductance) is the reciprocal: S = A/V. The joule per coulomb is the definition of the volt, and the watt per ampere is also the volt (since W = VA, then W/A = V).',
   },
@@ -76,20 +96,25 @@ const quizQuestions = [
     id: 3,
     question: "The prefix 'mega' (M) represents a factor of:",
     options: [
-      'One thousand (10^3)',
-      'One million (10^6)',
       'One billion (10^9)',
+      'One thousand (10^3)',
       'One thousandth (10^-3)',
+      'One million (10^6)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mega (M) = 10^6 = 1,000,000 (one million). In electrical maintenance, megaohms (M-ohm) are used for insulation resistance measurements. A typical healthy circuit should have an insulation resistance of at least 1 M-ohm (1,000,000 ohms) per BS 7671.',
   },
   {
     id: 4,
     question: 'An insulation resistance reading of 0.5 M-ohms is equivalent to:',
-    options: ['500 ohms', '5000 ohms', '50,000 ohms', '500,000 ohms'],
-    correctAnswer: 3,
+    options: [
+      '500,000 ohms',
+      '5000 ohms',
+      '50,000 ohms',
+      '500 ohms',
+    ],
+    correctAnswer: 0,
     explanation:
       '0.5 M-ohms = 0.5 x 1,000,000 = 500,000 ohms (500 k-ohms). This reading is below the minimum 1 M-ohm required by BS 7671 for a 230 V circuit, indicating insulation deterioration that requires investigation. The circuit should be coded C1 (danger present) or C2 (potentially dangerous) on an EICR.',
   },
@@ -97,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'A multimeter has a resolution of 0.1 V on its 600 V range. This means:',
     options: [
-      'It is accurate to 0.1 V',
+      'By pressing the test button to see that it trips',
       'The smallest change in voltage it can detect and display is 0.1 V',
-      'It can measure a maximum of 0.1 V',
-      'It has an accuracy of 0.1%',
+      'They cause signal reflections and communication errors',
+      'Hands-free device control for mobility-limited users',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,8 +134,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'The correct SI unit for electrical charge is the:',
-    options: ['Ampere', 'Coulomb', 'Electron-volt', 'Farad'],
-    correctAnswer: 1,
+    options: [
+      'Ampere',
+      'Electron-volt',
+      'Coulomb',
+      'Farad',
+    ],
+    correctAnswer: 2,
     explanation:
       'The coulomb (C) is the SI unit of electric charge. One coulomb is the charge transferred when one ampere flows for one second (Q = It). The ampere is the unit of current (rate of charge flow), the electron-volt is a unit of energy used in particle physics, and the farad is the unit of capacitance.',
   },
@@ -118,8 +148,13 @@ const quizQuestions = [
     id: 7,
     question:
       'When recording test results on a BS 7671 schedule of test results, the earth fault loop impedance (Zs) should be recorded in:',
-    options: ['Milliohms', 'Ohms', 'Kilohms', 'Megaohms'],
-    correctAnswer: 1,
+    options: [
+      'Milliohms',
+      'Megaohms',
+      'Kilohms',
+      'Ohms',
+    ],
+    correctAnswer: 3,
     explanation:
       "Earth fault loop impedance (Zs) is recorded in ohms on the schedule of test results. Typical values range from 0.1 ohm to several ohms depending on the circuit. Using the wrong unit (e.g., recording 0.8 ohms as 800 milliohms without stating 'milliohms') could cause confusion and may invalidate the test record.",
   },
@@ -127,19 +162,24 @@ const quizQuestions = [
     id: 8,
     question: 'What is the difference between accuracy and precision in measurement?',
     options: [
-      'They mean the same thing',
       'Accuracy is how close to the true value; precision is how repeatable the readings are',
       'Precision is how close to the true value; accuracy is how repeatable the readings are',
+      'They mean the same thing',
       'Accuracy relates to digital instruments; precision relates to analogue instruments',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Accuracy describes how close a measurement is to the true (actual) value. Precision describes how repeatable or consistent the measurements are — how close repeated readings are to each other. An instrument can be precise (consistent readings) but inaccurate (consistently wrong), or accurate on average but imprecise (scattered readings that average near the true value).',
   },
   {
     id: 9,
     question: 'A continuity reading of 0.15 ohms would more appropriately be expressed as:',
-    options: ['15 milliohms', '150 milliohms', '1500 milliohms', '0.15 kilohms'],
+    options: [
+      '15 milliohms',
+      '150 milliohms',
+      '1500 milliohms',
+      '0.15 kilohms',
+    ],
     correctAnswer: 1,
     explanation:
       '0.15 ohms = 150 milliohms (0.15 x 1000 = 150 m-ohms). Using milliohms for small resistance values provides better clarity and avoids confusion with decimal points. Many modern test instruments display continuity readings in milliohms automatically when the value is below 1 ohm.',
@@ -148,12 +188,12 @@ const quizQuestions = [
     id: 10,
     question: 'Calibration traceability means that:',
     options: [
-      'The instrument has a serial number',
+      'Monitors the E-stop circuit, provides force-guided contacts, and prevents restart if a fault is detected',
+      'Recovery over evenings and weekends — the daily and weekly recovery periods between work shifts',
       'Each calibration is traceable through an unbroken chain of comparisons to a national standard',
-      "The calibration certificate includes the technician's name",
-      'The instrument was calibrated by the manufacturer',
+      'That the SWL plate, warning labels, and control markings are legible and undamaged',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Calibration traceability means that the reference standard used to calibrate your instrument has itself been calibrated against a higher-level standard, which in turn has been calibrated against a national standard (maintained by NPL in the UK). This unbroken chain of comparisons ensures that all measurements can be related back to the fundamental SI definitions with known uncertainty.',
   },
@@ -174,8 +214,13 @@ const quizQuestions = [
     id: 12,
     question:
       "A test instrument specification states accuracy as '± 1.5% rdg + 3 digits'. When measuring 200.0 V, the measurement uncertainty is approximately:",
-    options: ['± 1.5 V', '± 3.0 V', '± 3.3 V', '± 6.0 V'],
-    correctAnswer: 2,
+    options: [
+      '± 3.3 V',
+      '± 6.0 V',
+      '± 1.5 V',
+      '± 3.0 V',
+    ],
+    correctAnswer: 0,
     explanation:
       "The '± 1.5% rdg' part: 1.5% of 200.0 = 3.0 V. The '+ 3 digits' part: 3 x the smallest digit (0.1 V resolution) = 0.3 V. Total uncertainty: ± (3.0 + 0.3) = ± 3.3 V. This means the true voltage lies between 196.7 V and 203.3 V. Understanding instrument specifications is essential for interpreting whether test results meet BS 7671 requirements.",
   },

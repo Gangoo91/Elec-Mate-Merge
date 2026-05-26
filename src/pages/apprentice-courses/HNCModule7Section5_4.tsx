@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'ct-burden',
     question: 'What happens if a CT circuit is operated with an open secondary?',
     options: [
-      'The meter reads zero',
+      'The reason and limitation in the report',
       'Dangerous high voltages develop across the secondary',
-      'The CT demagnetises safely',
-      'Current flows through an internal bypass',
+      'Moisture content stays same, RH decreases',
+      'In breathing zones, 1-2m above floor level in occupied spaces',
     ],
     correctIndex: 1,
     explanation:
@@ -52,7 +52,12 @@ const quickCheckQuestions = [
   {
     id: 'modbus-protocol',
     question: 'In Modbus RTU communication, what is the maximum cable length for RS-485?',
-    options: ['100 metres', '500 metres', '1,200 metres', '2,400 metres'],
+    options: [
+      '500 metres',
+      '100 metres',
+      '1,200 metres',
+      '2,400 metres',
+    ],
     correctIndex: 2,
     explanation:
       'RS-485, commonly used for Modbus RTU, supports cable lengths up to 1,200 metres (4,000 feet) at standard baud rates. However, at higher baud rates the practical distance reduces. For longer distances, repeaters or fibre-optic converters are required.',
@@ -61,8 +66,13 @@ const quickCheckQuestions = [
     id: 'sub-metering-strategy',
     question:
       'According to CIBSE TM39, what percentage of total building energy should be sub-metered?',
-    options: ['At least 50%', 'At least 70%', 'At least 90%', '100% mandatory'],
-    correctIndex: 2,
+    options: [
+      'At least 50%',
+      'At least 70%',
+      '100% mandatory',
+      'At least 90%',
+    ],
+    correctIndex: 3,
     explanation:
       'CIBSE TM39 recommends that sub-metering should capture at least 90% of the anticipated energy consumption to enable effective monitoring and targeting. This typically requires metering of all major loads and end-uses.',
   },
@@ -87,8 +97,13 @@ const quizQuestions = [
     id: 2,
     question:
       'Under IEC 62053-21, what is the accuracy class designation for active energy meters with 1% error at rated current?',
-    options: ['Class 0.5', 'Class 1.0', 'Class 2.0', 'Class 0.2'],
-    correctAnswer: 1,
+    options: [
+      'Class 2.0',
+      'Class 0.5',
+      'Class 1.0',
+      'Class 0.2',
+    ],
+    correctAnswer: 2,
     explanation:
       'Class 1.0 indicates the meter has a maximum permissible error of ±1% at rated current (In) and rated voltage. The class number directly corresponds to the percentage error limit at reference conditions.',
   },
@@ -96,16 +111,26 @@ const quizQuestions = [
     id: 3,
     question:
       'When installing CTs for energy metering, the primary current rating should be selected such that normal operating current is approximately:',
-    options: ['25% of CT rating', '50-60% of CT rating', '100% of CT rating', '120% of CT rating'],
-    correctAnswer: 1,
+    options: [
+      '100% of CT rating',
+      '25% of CT rating',
+      '120% of CT rating',
+      '50-60% of CT rating',
+    ],
+    correctAnswer: 3,
     explanation:
       'CTs should be selected so normal operating current is 50-60% of the rated primary current. This ensures good accuracy (CTs are most accurate around 50-120% of rating) whilst allowing headroom for load growth and peak demands.',
   },
   {
     id: 4,
     question: 'What is the standard secondary current output for measurement CTs in the UK?',
-    options: ['1A', '5A', 'Both 1A and 5A are standard', '10A'],
-    correctAnswer: 2,
+    options: [
+      'Both 1A and 5A are standard',
+      'Only the person who applied it',
+      'Part 6 — Inspection and Testing',
+      'BS EN 361 — Full body harnesses',
+    ],
+    correctAnswer: 0,
     explanation:
       'Both 1A and 5A secondary outputs are standard for measurement CTs. 1A secondaries are preferred for longer cable runs as they reduce VA burden and voltage drop. 5A is more common in legacy installations and where meters are close to CTs.',
   },
@@ -115,8 +140,8 @@ const quizQuestions = [
     options: [
       'A specific end-of-frame character',
       'A silence period of 3.5 character times',
-      'A CRC checksum verification',
       'A fixed message length',
+      'A CRC checksum verification',
     ],
     correctAnswer: 1,
     explanation:
@@ -125,8 +150,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'BACnet MS/TP communication operates over which physical layer?',
-    options: ['RS-232', 'RS-485', 'Ethernet', 'Fibre optic'],
-    correctAnswer: 1,
+    options: [
+      'RS-232',
+      'Ethernet',
+      'RS-485',
+      'Fibre optic',
+    ],
+    correctAnswer: 2,
     explanation:
       'BACnet MS/TP (Master-Slave/Token-Passing) operates over RS-485. It uses a token-passing protocol where devices take turns to communicate, supporting up to 127 devices on a single network segment with cable lengths up to 1,200m.',
   },
@@ -134,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'An AMR (Automatic Meter Reading) system typically transmits data using:',
     options: [
-      'Manual reading only',
+      'Simplicity and universal compatibility',
+      'A silence period of 3.5 character times',
+      'Tenants, HVAC, lighting, small power, and specialist loads',
       'Fixed communication networks (wired or wireless)',
-      'Postal services',
-      'Verbal communication',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'AMR systems use fixed communication networks to automatically collect meter data. These include wired solutions (power line carrier, dedicated cables) and wireless technologies (radio frequency, cellular, WiFi) to transmit readings to central systems.',
   },
@@ -148,20 +178,25 @@ const quizQuestions = [
     question:
       'According to CIBSE TM39, which loads should have dedicated sub-meters in a commercial building?',
     options: [
-      'Only HVAC systems',
-      'Only lighting systems',
       'Tenants, HVAC, lighting, small power, and specialist loads',
-      'Only loads greater than 100 kW',
+      'As close as practicable to the point of entry to the building',
+      'It contributes to professional knowledge and is documented',
+      'Weather-resistant and corrosion-resistant',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'CIBSE TM39 recommends sub-metering tenant areas, HVAC (heating, cooling, ventilation), lighting, small power, lifts, and specialist loads (data centres, kitchens). This enables accurate allocation of energy use and identification of waste.',
   },
   {
     id: 9,
     question: 'What CT accuracy class is typically required for revenue metering applications?',
-    options: ['Class 3', 'Class 1', 'Class 0.5 or Class 0.2S', 'Class 5'],
-    correctAnswer: 2,
+    options: [
+      'Class 3',
+      'Class 0.5 or Class 0.2S',
+      'Class 1',
+      'Class 5',
+    ],
+    correctAnswer: 1,
     explanation:
       'Revenue metering at utility interfaces typically requires CT accuracy of Class 0.5 or better (often Class 0.2S for high-value metering points). This minimises measurement errors that would affect billing accuracy over large energy volumes.',
   },
@@ -170,11 +205,11 @@ const quizQuestions = [
     question: 'The VA burden of a CT refers to:',
     options: [
       'The maximum voltage the CT can withstand',
+      'The short-circuit rating of the CT',
       'The load capacity of the secondary circuit',
       'The power rating of the primary conductor',
-      'The short-circuit rating of the CT',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'VA burden is the maximum apparent power (in volt-amperes) that can be connected to the CT secondary whilst maintaining stated accuracy. It includes meter burden, cable losses, and connection resistances. Exceeding the rated burden causes measurement errors.',
   },
@@ -182,8 +217,13 @@ const quizQuestions = [
     id: 11,
     question:
       'In a 3-phase, 4-wire system, how many CTs are required for accurate energy metering?',
-    options: ['One CT', 'Two CTs', 'Three CTs', 'Four CTs'],
-    correctAnswer: 2,
+    options: [
+      'One CT',
+      'Two CTs',
+      'Four CTs',
+      'Three CTs',
+    ],
+    correctAnswer: 3,
     explanation:
       'A 3-phase, 4-wire system requires three CTs (one per phase) to measure all line currents accurately. In a balanced 3-phase, 3-wire system, two CTs can be used (Aron connection), but 4-wire systems with neutral loads need all three phases metered.',
   },
@@ -191,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the primary advantage of pulse output metering over Modbus communication?',
     options: [
-      'Higher accuracy',
-      'More detailed data',
       'Simplicity and universal compatibility',
-      'Faster data transmission',
+      'Fixed communication networks (wired or wireless)',
+      'Both 1A and 5A are standard',
+      'The load capacity of the secondary circuit',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Pulse output metering is simple and universally compatible with BMS and energy management systems. Each pulse represents a fixed energy increment (e.g., 1 pulse = 0.1 kWh). However, it only provides cumulative energy data, not instantaneous power or power quality parameters.',
   },

@@ -5,10 +5,10 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
     id: 1,
     question: 'Why are BMS analog signals more sensitive to interference than digital signals?',
     options: [
-      'Analog signals use higher voltages than digital signals',
+      'Installing sensor cables in the same containment as HVAC fan power cables',
       'Analog signal values are directly affected by any noise, while digital signals have switching thresholds',
-      'Analog cables are longer than digital cables',
-      'Analog signals require more power to operate',
+      'For easy identification, troubleshooting, and future system modifications',
+      'To prevent electromagnetic fields from power cables inducing interference in control cables',
     ],
     correctAnswer: 1,
     explanation:
@@ -19,11 +19,11 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
     question: 'Name two common sources of electrical interference.',
     options: [
       'Thermostats and door sensors',
-      'Motors and variable speed drives (VSDs)',
       'Fire alarms and security systems',
+      'Motors and variable speed drives (VSDs)',
       'LED strips and dimmer switches',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Motors and variable speed drives (VSDs) are major sources of electrical interference due to their switching currents and electromagnetic fields. They can significantly affect nearby signal cables.',
   },
@@ -31,12 +31,12 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
     id: 3,
     question: 'Why should power and control cables be kept separate?',
     options: [
-      'To comply with fire safety regulations',
+      'Installing sensor cables in the same containment as HVAC fan power cables',
+      'For easy identification, troubleshooting, and future system modifications',
+      'Analog signal values are directly affected by any noise, while digital signals have switching thresholds',
       'To prevent electromagnetic fields from power cables inducing interference in control cables',
-      'To make installation easier and faster',
-      'To reduce the total cost of cable installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Power cables carrying large currents generate electromagnetic fields that can induce interference in control cables. Keeping them separate prevents this electromagnetic coupling and maintains signal integrity.',
   },
@@ -44,12 +44,12 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
     id: 4,
     question: 'What type of cabling reduces interference for analog signals?',
     options: [
-      'Single core solid copper cable',
       'Twisted-pair cabling',
       'Flat ribbon cable',
+      'Single core solid copper cable',
       'Coaxial cable with single conductor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Twisted-pair cabling reduces interference through balanced impedance - the twisting cancels out electromagnetic interference that affects both conductors equally, providing better signal integrity for analog signals.',
   },
@@ -70,12 +70,12 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
     id: 6,
     question: 'Why should cable shields usually be earthed at one end only?',
     options: [
+      'To reduce the total resistance of the shielding system',
       'To save on earth cable and installation costs',
       'To prevent ground loop currents that can make interference worse',
       'To comply with electrical safety regulations',
-      'To reduce the total resistance of the shielding system',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Earthing shields at both ends can create ground loop currents if earth potentials differ between the two points. These circulating currents can actually make interference worse and should be avoided by earthing at one end only.',
   },
@@ -83,12 +83,12 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
     id: 7,
     question: 'What type of cable might be needed in noisy environments near VSDs?',
     options: [
-      'Single-shielded twisted pair cable',
-      'Double-shielded or armoured cables',
       'Standard PVC insulated cable',
+      'Single-shielded twisted pair cable',
       'Flat unshielded multi-core cable',
+      'Double-shielded or armoured cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In high-noise environments near VSDs, double-shielded or armoured cables provide maximum protection against electromagnetic interference through multiple layers of shielding.',
   },
@@ -96,12 +96,12 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
     id: 8,
     question: 'What tool can be used to check signal stability during commissioning?',
     options: [
-      'Insulation resistance tester',
       'Multimeter with data logging capability',
+      'Insulation resistance tester',
       'Earth loop impedance tester',
       'Phase rotation indicator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A multimeter with data logging capability can monitor analog signal levels over time to confirm stability and detect fluctuations that may indicate interference problems during commissioning.',
   },
@@ -109,10 +109,10 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
     id: 9,
     question: 'Why is cable labelling important for maintenance?',
     options: [
-      'To meet fire safety regulations only',
+      'When a conductor is broken or disconnected, stopping current flow',
       'For easy identification, troubleshooting, and future system modifications',
-      "To improve the system's energy efficiency",
-      'To reduce electromagnetic interference',
+      'Record all test results with locations and conditions',
+      'Identify what a worker should or should not do in a described workplace scenario',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,11 +123,11 @@ export const bmsModule2Section6QuizData: QuizQuestion[] = [
     question: 'In the real-world example, what mistake caused unstable temperature readings?',
     options: [
       'Using the wrong type of temperature sensors',
-      'Installing sensor cables in the same containment as HVAC fan power cables',
       'Setting incorrect temperature ranges in the BMS software',
+      'Installing sensor cables in the same containment as HVAC fan power cables',
       'Using cables that were too long for the application',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The temperature sensor cables were installed in the same containment as power supply cables for HVAC fans. The electromagnetic interference from the high switching currents caused unstable analog signals.',
   },

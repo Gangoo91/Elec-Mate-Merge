@@ -15,7 +15,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the typical tolerance for socket outlet heights?',
-    options: ['±1 mm', '±3 mm', '±5 mm', '±10 mm'],
+    options: [
+      '±1 mm',
+      '±3 mm',
+      '±5 mm',
+      '±10 mm',
+    ],
     correctAnswer: 1,
     explanation:
       'The typical tolerance for socket outlet heights is ±3 mm from the specified dimension.',
@@ -25,12 +30,12 @@ const quizQuestions = [
     question:
       "Can you measure from any convenient point, even if it's not the specified reference point?",
     options: [
-      'True - convenience is important',
+      'Trip the circuit when voltage falls below set level',
+      'The physical key transfer sequence between locks',
       'False - always use correct reference point',
-      'Only for rough measurements',
-      'Only if approved by supervisor',
+      '11.04 kW three-phase or 3.68 kW single-phase',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'False - you must always measure from the correct specified reference point to maintain accuracy and consistency.',
   },
@@ -38,12 +43,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which tools can help maintain accurate levels?',
     options: [
-      'Hammer and screwdriver',
+      'Separated Extra Low Voltage',
+      'Electrical boxes and conduits',
+      'Phase conductor cross-sectional area',
       'Spirit level and laser level',
-      'Tape measure and pencil',
-      'Drill and bits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Spirit levels and laser levels are the primary tools for maintaining accurate horizontal and vertical alignment.',
   },
@@ -51,19 +56,24 @@ const quizQuestions = [
     id: 4,
     question: 'Why should you recheck measurements on long runs?',
     options: [
-      "It's not necessary",
       'To ensure accuracy and avoid cumulative errors',
-      "Only if you're unsure",
-      'To waste time',
+      'Powered air-purifying respirator with loose-fitting hood',
+      'A clear line of sight with no obstructions',
+      'The fibre core being off-centre from the cladding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Rechecking measurements on long runs ensures accuracy and prevents drift caused by cumulative errors over distance.',
   },
   {
     id: 5,
     question: 'Which regulation covers correct positioning and support of installations?',
-    options: ['BS 5839', 'BS 7671', 'BS EN 50200', 'BS 5266'],
+    options: [
+      'BS 5839',
+      'BS 7671',
+      'BS 5266',
+      'BS EN 50200',
+    ],
     correctAnswer: 1,
     explanation:
       "BS 7671 (IET Wiring Regulations) requires installations to be 'adequately supported and correctly positioned'.",
@@ -71,8 +81,13 @@ const quizQuestions = [
   {
     id: 6,
     question: "What does 'plumb' mean in relation to vertical installations?",
-    options: ['Slightly angled', 'Perfectly vertical', 'Horizontally level', 'Randomly positioned'],
-    correctAnswer: 1,
+    options: [
+      'Slightly angled',
+      'Horizontally level',
+      'Perfectly vertical',
+      'Randomly positioned',
+    ],
+    correctAnswer: 2,
     explanation:
       "'Plumb' means perfectly vertical, ensuring vertical runs are straight up and down.",
   },
@@ -80,12 +95,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is one consequence of exceeding project tolerances?',
     options: [
-      'Better appearance',
+      'Mechanical stress and vibration',
+      'Elimination of the hazard',
+      'Very low resistance between windings',
       'Misalignment requiring rework',
-      'Faster installation',
-      'Lower costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Exceeding tolerances can cause misalignment requiring rework, safety breaches, and failed inspections.',
   },
@@ -93,12 +108,12 @@ const quizQuestions = [
     id: 8,
     question: 'In high-end projects, what might be different about tolerances?',
     options: [
-      "They don't matter",
       'They may be tighter than standard',
-      "They're always looser",
-      "They're the same everywhere",
+      'Current‑carrying capacity',
+      'As close as possible to the inductive load',
+      'Thermal storage in building fabric',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'High-end projects may require much tighter tolerances than standard builds, requiring more precision.',
   },
@@ -110,10 +125,10 @@ const quickCheckQuestions = [
     id: 1,
     question: "What is meant by 'tolerance' in installation work?",
     options: [
-      'Working slowly',
+      'Allow capacitive discharge before touching conductors',
       'Allowable deviation from specified dimension',
-      'Using any measurement',
-      'Ignoring specifications',
+      'The time of tourniquet application',
+      'They can damage cable insulation',
     ],
     correctIndex: 1,
     explanation:
@@ -122,8 +137,13 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'Name one tool that ensures vertical alignment.',
-    options: ['Tape measure', 'Spirit level', 'Hammer', 'Screwdriver'],
-    correctIndex: 1,
+    options: [
+      'Screwdriver',
+      'Hammer',
+      'Spirit level',
+      'Tape measure',
+    ],
+    correctIndex: 2,
     explanation:
       'A spirit level (or plumb line/laser level) ensures vertical alignment by indicating when something is perfectly plumb.',
   },
@@ -131,12 +151,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why is it important to use consistent reference points when measuring?',
     options: [
-      "It's faster",
+      'When hazardous manual handling cannot be avoided',
+      'Directing light downward and using appropriate timing',
+      'Finding the utilisation factor from tables',
       'Prevents cumulative errors and maintains accuracy',
-      "It's easier",
-      'Saves materials',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Using consistent reference points prevents cumulative errors and maintains accuracy throughout the installation.',
   },

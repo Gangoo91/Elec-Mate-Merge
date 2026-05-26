@@ -33,8 +33,8 @@ const quickCheckQuestions = [
     options: [
       'The building generates no carbon emissions',
       'Carbon emissions are balanced by verified offsets or removals',
-      'The building uses only renewable energy',
       'The building has zero operational energy consumption',
+      'The building uses only renewable energy',
     ],
     correctIndex: 1,
     explanation:
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'carbon-hierarchy',
     question: 'In the carbon reduction hierarchy, which approach should be prioritised first?',
     options: [
-      'Offset remaining emissions',
-      'Switch to low-carbon energy sources',
-      'Reduce energy demand through efficiency',
+      'Clean, dry place away from contamination and damage',
+      'Ultrasonic (clamp-on transit time) flow meter',
       'Avoid carbon-intensive activities where possible',
+      'Identify the correct circuit using drawings/spec',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'The carbon hierarchy follows: Avoid, Reduce, Replace, Offset. Avoiding carbon-intensive activities (such as eliminating fossil fuel systems) should always be the first priority before pursuing efficiency improvements, fuel switching, or offsetting.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'interim-targets',
     question: 'Why are interim targets important in a net-zero pathway?',
     options: [
-      'They are legally required by building regulations',
       'They provide measurable milestones to track progress and maintain momentum',
-      'They reduce the overall cost of decarbonisation',
+      'They are legally required by building regulations',
       'They are only needed for public sector buildings',
+      'They reduce the overall cost of decarbonisation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Interim targets (such as 2030 milestones) provide measurable checkpoints that help organisations track progress, maintain momentum, identify if actions are having the desired effect, and make course corrections if needed.',
   },
@@ -71,11 +71,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of third-party verification in net-zero claims?',
     options: [
       'To reduce the cost of carbon offsets',
-      'To provide credibility and prevent greenwashing',
       'To satisfy planning requirements',
+      'To provide credibility and prevent greenwashing',
       'To qualify for government grants',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Third-party verification provides independent assurance that net-zero claims are credible, based on robust methodology, and not greenwashing. This builds trust with stakeholders and ensures claims can withstand scrutiny.',
   },
@@ -86,8 +86,13 @@ const quizQuestions = [
     id: 1,
     question:
       'The UK legally binding net-zero target requires reaching net-zero greenhouse gas emissions by which year?',
-    options: ['2030', '2040', '2050', '2060'],
-    correctAnswer: 2,
+    options: [
+      '2030',
+      '2050',
+      '2040',
+      '2060',
+    ],
+    correctAnswer: 1,
     explanation:
       'The UK Climate Change Act was amended in 2019 to set a legally binding target of net-zero greenhouse gas emissions by 2050, making the UK the first major economy to pass such legislation.',
   },
@@ -96,10 +101,10 @@ const quizQuestions = [
     question:
       "According to the UKGBC framework, 'net-zero carbon in operation' for a building requires:",
     options: [
-      'Zero energy consumption',
-      'All energy from on-site renewables',
+      'UKGBC Net Zero Carbon Buildings Framework',
+      'Be used only for genuinely unavoidable residual emissions',
       'Reduced operational energy with residual emissions offset',
-      'Demolition and rebuild with low-carbon materials',
+      'Switching to low or zero-carbon energy sources',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: "In the carbon hierarchy, 'Replace' refers to:",
     options: [
-      'Replacing old buildings with new efficient ones',
-      'Switching to low or zero-carbon energy sources',
       'Replacing offset credits with better alternatives',
+      'Replacing old buildings with new efficient ones',
       'Replacing energy meters with smart meters',
+      'Switching to low or zero-carbon energy sources',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "In the Avoid-Reduce-Replace-Offset hierarchy, 'Replace' means switching from high-carbon to low or zero-carbon energy sources, such as replacing gas boilers with heat pumps or fossil fuel electricity with renewables.",
   },
@@ -123,12 +128,12 @@ const quizQuestions = [
     question:
       'What is the typical first step in developing a net-zero pathway for an existing building?',
     options: [
-      'Install solar panels',
       'Conduct a detailed baseline carbon assessment',
-      'Purchase carbon offsets',
-      'Replace all lighting with LEDs',
+      'UKGBC Net Zero Carbon Buildings Framework',
+      'Switching to low or zero-carbon energy sources',
+      'Be used only for genuinely unavoidable residual emissions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A detailed baseline carbon assessment is essential as the first step to understand current emissions, identify major sources, and establish the starting point against which progress will be measured.',
   },
@@ -137,12 +142,12 @@ const quizQuestions = [
     question:
       'Which technology option typically offers the greatest carbon reduction potential for space heating in UK buildings?',
     options: [
-      'High-efficiency gas condensing boilers',
       'Biomass boilers',
       'Air source heat pumps',
       'Direct electric heating',
+      'High-efficiency gas condensing boilers',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Air source heat pumps typically achieve 300-400% efficiency (COP 3-4), meaning they produce 3-4 units of heat for every unit of electricity consumed. Combined with the decarbonising grid, they offer the greatest long-term carbon reduction for heating.',
   },
@@ -151,12 +156,12 @@ const quizQuestions = [
     question:
       'The Science Based Targets initiative (SBTi) requires corporate targets to be aligned with:',
     options: [
-      'National building regulations',
+      'Switching to low or zero-carbon energy sources',
+      'The cumulative amount of carbon that can be emitted while meeting a target',
       'Paris Agreement temperature goals (1.5degC or well-below 2degC)',
-      'Industry sector averages',
-      'BREEAM Outstanding ratings',
+      'Reduced operational energy with residual emissions offset',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SBTi validates corporate emissions reduction targets that are aligned with the Paris Agreement goals of limiting global warming to 1.5degC or well-below 2degC, ensuring targets represent a fair share of required global reductions.',
   },
@@ -164,8 +169,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What percentage of UK carbon emissions typically come from buildings (operational and embodied)?',
-    options: ['Around 10%', 'Around 25%', 'Around 40%', 'Around 60%'],
-    correctAnswer: 2,
+    options: [
+      'Around 10%',
+      'Around 25%',
+      'Around 60%',
+      'Around 40%',
+    ],
+    correctAnswer: 3,
     explanation:
       'Buildings account for approximately 40% of UK carbon emissions when including both operational emissions (heating, cooling, lighting, equipment) and embodied emissions from construction materials and processes.',
   },
@@ -173,12 +183,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which of these is NOT typically considered a Scope 1 emission for a building?',
     options: [
-      'On-site gas combustion for heating',
-      'Diesel generator operation',
       'Grid electricity consumption',
       'Fugitive refrigerant leaks',
+      'On-site gas combustion for heating',
+      'Diesel generator operation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Grid electricity consumption is a Scope 2 emission (indirect from purchased energy), not Scope 1. Scope 1 covers direct emissions from owned or controlled sources: on-site combustion, generators, and refrigerant leaks.',
   },
@@ -186,10 +196,10 @@ const quizQuestions = [
     id: 9,
     question: "A 'carbon budget' in pathway planning refers to:",
     options: [
-      'The financial budget allocated for carbon reduction projects',
+      'Reduced operational energy with residual emissions offset',
       'The cumulative amount of carbon that can be emitted while meeting a target',
-      'The cost of carbon offsets over the pathway period',
-      "The building's annual energy budget",
+      'Designing and specifying low-carbon MEP systems that minimise operational emissions',
+      'Be used only for genuinely unavoidable residual emissions',
     ],
     correctAnswer: 1,
     explanation:
@@ -200,12 +210,12 @@ const quizQuestions = [
     question:
       'What is the primary role of building services engineers in achieving net-zero buildings?',
     options: [
-      'Purchasing carbon offsets',
+      'Tracing a relay coil to its associated contacts by matching designation numbers shown on the drawing',
+      'All parties who sign accept responsibility for their respective roles',
       'Designing and specifying low-carbon MEP systems that minimise operational emissions',
-      'Certifying buildings as net-zero',
-      'Manufacturing renewable energy equipment',
+      'Quality, suitability, compliance with standards, and environmental conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Building services engineers play a critical role by designing and specifying MEP systems (HVAC, lighting, controls) that minimise operational energy consumption and carbon emissions through efficient, low-carbon technology selection.',
   },
@@ -214,12 +224,12 @@ const quizQuestions = [
     question:
       'Which verification standard specifically addresses net-zero carbon buildings in the UK?',
     options: [
-      'ISO 9001',
-      'PAS 2080',
+      'Chilled water for cooling systems',
+      'Identify goals and actions for career advancement',
+      'Equivalent resistance of parallel combinations',
       'UKGBC Net Zero Carbon Buildings Framework',
-      'BREEAM Excellent',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The UKGBC Net Zero Carbon Buildings Framework Definition provides the UK industry-standard methodology for defining, calculating, and verifying net-zero carbon claims for buildings in both construction and operation.',
   },
@@ -227,12 +237,12 @@ const quizQuestions = [
     id: 12,
     question: 'For a credible net-zero pathway, offsets should:',
     options: [
-      'Be the primary strategy for carbon reduction',
-      'Come from the cheapest available source',
       'Be used only for genuinely unavoidable residual emissions',
       'Replace the need for energy efficiency measures',
+      'Be the primary strategy for carbon reduction',
+      'Come from the cheapest available source',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Credible net-zero pathways use offsets only for genuinely residual emissions that cannot be eliminated through efficiency, fuel switching, or on-site renewables. Offsets should be additional, permanent, and verified - never a substitute for direct action.',
   },

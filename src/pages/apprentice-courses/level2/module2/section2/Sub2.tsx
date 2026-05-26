@@ -33,7 +33,12 @@ const checks = [
   {
     id: 'force-units-check',
     question: 'A 4 kg drill is accelerated at 2 m/s². What force is needed?',
-    options: ['2 N', '4 N', '6 N', '8 N'],
+    options: [
+      '2 N',
+      '4 N',
+      '6 N',
+      '8 N',
+    ],
     correctIndex: 3,
     explanation: 'F = m × a = 4 × 2 = 8 N. That’s Newton’s second law in one line.',
   },
@@ -42,12 +47,12 @@ const checks = [
     question:
       'You pull hard on a stuck cable in a conduit. The cable doesn’t move. Why does Newton’s third law still apply?',
     options: [
-      'It doesn’t — nothing’s moving so no forces are involved',
-      'The cable is pulling back on you with an equal and opposite force',
       'Forces only matter when something accelerates',
       'Friction cancels gravity, so the third law switches off',
+      'The cable is pulling back on you with an equal and opposite force',
+      'It doesn’t — nothing’s moving so no forces are involved',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Every action force has an equal and opposite reaction. The cable pulls on you just as hard as you pull on it — that’s why your hands ache after fighting one for ten minutes.',
   },
@@ -56,10 +61,10 @@ const checks = [
     question:
       'A consumer unit is bolted to a wall. Gravity pulls it down at 200 N. The bolts hold it up at 200 N. What does Newton’s first law say?',
     options: [
-      'It must be accelerating',
+      'Fire-resistant, LSZH, or MICC cable where required',
       'It will stay at rest because the forces are balanced',
-      'The bolts will fail because gravity always wins',
-      'The unit will start to slide sideways',
+      'To prevent parallel paths affecting readings',
+      'Without delay (immediately) and followed up within 10 days',
     ],
     correctIndex: 1,
     explanation:
@@ -86,7 +91,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the SI unit of force?',
-    options: ['Kilogram (kg)', 'Joule (J)', 'Newton (N)', 'Watt (W)'],
+    options: [
+      'Watt (W)',
+      'Kilogram (kg)',
+      'Newton (N)',
+      'Joule (J)',
+    ],
     correctAnswer: 2,
     explanation:
       '1 N is the force needed to give a 1 kg mass an acceleration of 1 m/s². Named after Sir Isaac Newton, who worked it all out in the 1680s.',
@@ -95,12 +105,12 @@ const quizQuestions = [
     id: 3,
     question: 'Newton’s first law (the law of inertia) says…',
     options: [
-      'F = m × a',
-      'Every action has an equal and opposite reaction',
+      'Rapid deterioration requiring urgent attention — the machine may be approaching catastrophic failure',
+      'Observe, take notes for their own learning, and contribute when asked — not negotiate with the client',
+      'The cable insulation is rated to function safely within this temperature range',
       'An object stays at rest, or moves at constant speed in a straight line, unless a force acts on it',
-      'Heavy objects fall faster than light ones',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Things don’t change motion on their own. They need a net (unbalanced) force. That’s why your van keeps going if you take your foot off the brake but the road’s wet.',
   },
@@ -121,7 +131,12 @@ const quizQuestions = [
     id: 5,
     question:
       'You push a 10 kg cable drum with a force of 30 N (no friction). What’s its acceleration?',
-    options: ['0.33 m/s²', '3 m/s²', '30 m/s²', '300 m/s²'],
+    options: [
+      '0.33 m/s²',
+      '3 m/s²',
+      '300 m/s²',
+      '30 m/s²',
+    ],
     correctAnswer: 1,
     explanation: 'Rearrange F = m × a → a = F ÷ m = 30 ÷ 10 = 3 m/s².',
   },
@@ -129,12 +144,12 @@ const quizQuestions = [
     id: 6,
     question: 'Newton’s third law says…',
     options: [
-      'Forces always cancel out',
+      'Higher temperatures typically result in lower readings',
+      'A spike upward followed by the normal trace',
       'For every action there is an equal and opposite reaction',
-      'Heavier things have more inertia',
-      'Force and mass are the same',
+      'Provides earthing for equipment operation rather than safety',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When you push a wall, the wall pushes back on you with the same force. It’s why your drill kicks back, why a recoiling cable hurts, and why nail guns punch.',
   },
@@ -142,12 +157,12 @@ const quizQuestions = [
     id: 7,
     question: 'Forces on an object are balanced. What can you say?',
     options: [
-      'It must be at rest',
-      'It must be moving',
+      'A competent person or supervisor with appropriate qualifications',
+      'A formal inspection must be carried out by a competent person and recorded',
+      'Are naturally motivated and can exercise self-direction when committed to objectives',
       'It is either at rest or moving at constant velocity in a straight line',
-      'It is accelerating',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Net force = 0 means no change in motion — that includes already-moving things. A van at 30 mph on a flat motorway with cruise control on has balanced forces too.',
   },
@@ -155,12 +170,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why does a 5 kg drill kick back when you pull the trigger hard?',
     options: [
-      'Newton’s first law — the drill resists starting',
-      'Newton’s second law — the bit accelerates and a force is felt',
       'Newton’s third law — the drill pushes the bit one way and the bit pushes the drill the other',
-      'Friction in the chuck',
+      'It allows operators to monitor and respond to building issues from anywhere',
+      'Avoid the need for hazardous manual handling operations so far as is reasonably practicable',
+      'Ensure clear vision of the steps, use handrails where possible, and take one step at a time',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The motor pushes the bit one way; the bit (and the wood) pushes the drill body the other. Equal and opposite. Hold it properly or it twists out of your hand.',
   },

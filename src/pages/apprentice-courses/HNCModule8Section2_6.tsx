@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'In the proportional balancing method, what is the first step after measuring all terminal air flow rates?',
     options: [
-      'Adjust all dampers equally',
       'Identify the terminal with the lowest percentage of design flow',
-      'Close all dampers fully',
-      'Increase fan speed to maximum',
+      'Excessive internal temperature due to inadequate thermal management',
+      'Ratio of 10-minute to 1-minute resistance readings',
+      'Operators become overwhelmed and may miss critical safety issues',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The proportional balancing method starts by identifying the index terminal - the one with the lowest percentage of design flow. This becomes the reference against which all other terminals are balanced.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'According to BSRIA guidelines, when should air balancing be carried out in relation to water system commissioning?',
     options: [
-      'Before water systems are commissioned',
-      'After water systems are commissioned',
       'Simultaneously with water systems',
       'Only after the building is occupied',
+      'After water systems are commissioned',
+      'Before water systems are commissioned',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Air balancing should be carried out after water systems (heating and cooling coils) are commissioned. This ensures that coil capacities are proven before air volumes are finalised, as coil performance affects air-side heat transfer.',
   },
@@ -55,8 +55,13 @@ const quickCheckQuestions = [
     id: 'measurement-tolerance',
     question:
       'What is the typical acceptable tolerance for measured air flow rates compared to design values in commissioning?',
-    options: ['+/- 1%', '+/- 5%', '+/- 10%', '+/- 20%'],
-    correctIndex: 2,
+    options: [
+      '+/- 1%',
+      '+/- 10%',
+      '+/- 5%',
+      '+/- 20%',
+    ],
+    correctIndex: 1,
     explanation:
       'The industry standard tolerance for air flow measurement during commissioning is typically +/- 10% of design values for individual terminals, with +/- 5% acceptable for main branches and total system air flow.',
   },
@@ -65,8 +70,8 @@ const quickCheckQuestions = [
     question:
       'Which document provides a permanent record of the as-commissioned system performance?',
     options: [
-      'The design specification',
       'The commissioning certificate',
+      'The design specification',
       'The O&M manual',
       'The tender documents',
     ],
@@ -81,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of air balancing in a ventilation system?',
     options: [
-      'To reduce the cost of the installation',
+      'A fire that is limited by the amount of fuel available',
       'To ensure design air flow rates are achieved at all terminals',
-      'To maximise fan energy consumption',
-      'To eliminate the need for dampers',
+      'Clean, dry place away from contamination and damage',
+      '230 V IS the RMS value — it represents the equivalent DC heating effect',
     ],
     correctAnswer: 1,
     explanation:
@@ -94,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which BSRIA guide specifically covers air distribution system commissioning?',
     options: [
-      'BSRIA BG 49 - Commissioning Water Systems',
-      'BSRIA BG 29 - Pre-commission Cleaning',
-      'BSRIA BG 35/2021 - Commissioning Air Systems',
       'BSRIA BG 2 - Commissioning of Building Services',
+      'BSRIA BG 49 - Commissioning Water Systems',
+      'BSRIA BG 35/2021 - Commissioning Air Systems',
+      'BSRIA BG 29 - Pre-commission Cleaning',
     ],
     correctAnswer: 2,
     explanation:
@@ -106,8 +111,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What instrument is most commonly used to measure air velocity in ductwork?',
-    options: ['Manometer', 'Pitot tube with manometer', 'Thermometer', 'Hygrometer'],
-    correctAnswer: 1,
+    options: [
+      'A semantic or language barrier',
+      'Adapting to technical progress',
+      'Polychlorinated biphenyls (PCBs)',
+      'Pitot tube with manometer',
+    ],
+    correctAnswer: 3,
     explanation:
       'A pitot tube connected to a manometer (or digital differential pressure gauge) is the standard method for measuring air velocity in ductwork. It measures the difference between total and static pressure to derive velocity pressure.',
   },
@@ -115,8 +125,13 @@ const quizQuestions = [
     id: 4,
     question:
       'In proportional balancing, what percentage of design flow should the index terminal achieve before balancing begins?',
-    options: ['50%', '75%', '90%', '100%'],
-    correctAnswer: 3,
+    options: [
+      '100%',
+      '75%',
+      '90%',
+      '50%',
+    ],
+    correctAnswer: 0,
     explanation:
       'The index terminal (lowest percentage of design) should achieve as close to 100% of design flow as possible before balancing other terminals. If it cannot reach 100%, fan speed may need adjustment or system issues investigated.',
   },
@@ -124,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'What type of damper is specifically designed for air balancing purposes?',
     options: [
-      'Fire damper',
+      'BSRIA BG 35/2021 - Commissioning Air Systems',
       'Volume control damper (VCD) or balancing damper',
-      'Non-return damper',
-      'Smoke damper',
+      'Commissioning certificate or witness record',
+      'Damper position/setting and measured air flow rate',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of a traverse measurement in ductwork?',
     options: [
-      'To measure duct surface temperature',
+      'Hand digging using non-metallic tools (hand tools or vacuum excavation)',
+      'To provide a detailed plan of how work will be carried out safely',
       'To obtain an accurate average air velocity across the duct cross-section',
-      'To check duct insulation thickness',
-      'To measure noise levels',
+      'The steady current producing the same heating effect as the intermittent load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A traverse measurement involves taking multiple velocity readings across the duct cross-section in a grid pattern. This accounts for the velocity profile (faster in centre, slower near walls) to calculate an accurate average velocity.',
   },
@@ -152,11 +167,11 @@ const quizQuestions = [
       'According to good practice, what minimum straight duct length should precede a measurement point?',
     options: [
       '1-2 duct diameters',
-      '5-10 duct diameters',
-      '15-20 duct diameters',
       '30 duct diameters',
+      '15-20 duct diameters',
+      '5-10 duct diameters',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A minimum of 5-10 duct diameters of straight duct should precede the measurement point to allow flow to develop a stable profile. Turbulence from bends, transitions, or dampers can significantly affect accuracy.',
   },
@@ -164,8 +179,13 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the commissioning tolerance typically specified for total system supply air volume?',
-    options: ['+/- 2%', '+/- 5%', '+/- 10%', '+/- 15%'],
-    correctAnswer: 1,
+    options: [
+      '+/- 5%',
+      '+/- 10%',
+      '+/- 2%',
+      '+/- 15%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Total system supply air volume typically has a tighter tolerance of +/- 5% compared to individual terminals (+/- 10%). This ensures overall system performance meets design intent while allowing some flexibility at branch level.',
   },
@@ -174,10 +194,10 @@ const quizQuestions = [
     question:
       'Which document should be completed to formally record that commissioning has been satisfactorily completed?',
     options: [
-      'Design calculation sheet',
+      'Volume control damper (VCD) or balancing damper',
       'Commissioning certificate or witness record',
-      'Purchase order',
-      'Site instruction',
+      'BSRIA BG 35/2021 - Commissioning Air Systems',
+      'Damper position/setting and measured air flow rate',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,12 +208,12 @@ const quizQuestions = [
     question:
       'What information must be recorded for each balancing damper in the commissioning records?',
     options: [
-      'Only the damper manufacturer',
+      'To ensure the system is complete, clean, and ready for balancing',
+      'Volume control damper (VCD) or balancing damper',
       'Damper position/setting and measured air flow rate',
-      'Only the damper cost',
-      'Only the installation date',
+      'BSRIA BG 35/2021 - Commissioning Air Systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Commissioning records must include damper identification, its final position or setting (blade angle, turns open), and the measured air flow rate. This allows settings to be restored if dampers are disturbed during maintenance.',
   },
@@ -201,12 +221,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the purpose of pre-commissioning checks before air balancing?',
     options: [
-      'To delay the project',
+      'To obtain an accurate average air velocity across the duct cross-section',
+      'Volume control damper (VCD) or balancing damper',
+      'Damper position/setting and measured air flow rate',
       'To ensure the system is complete, clean, and ready for balancing',
-      'To increase costs',
-      'To avoid using test equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Pre-commissioning checks verify that ductwork is complete and sealed, access doors are fitted, filters are installed, dampers operate freely, and the system is clean. Attempting to balance an incomplete system wastes time and produces invalid results.',
   },
@@ -214,12 +234,12 @@ const quizQuestions = [
     id: 12,
     question: 'In the O&M manual, what should be included regarding the ventilation system?',
     options: [
-      'Only the original tender price',
       'As-installed drawings, commissioning results, maintenance schedules, and operating procedures',
-      "Only the architect's contact details",
-      'Only the paint specification',
+      'Stand with feet apart, bend at the knees and hips, keep the back straight, and grip the load firmly',
+      'A short, focused safety briefing on a specific topic relevant to the work',
+      'The cables mutually heat each other and cannot dissipate heat as effectively as a single cable in free air',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The O&M manual should include as-installed drawings, commissioning data and certificates, equipment schedules with nameplate data, maintenance requirements, operating procedures, and spare parts lists. This provides a complete reference for ongoing operation.',
   },

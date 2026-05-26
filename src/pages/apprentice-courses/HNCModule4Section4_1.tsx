@@ -32,32 +32,52 @@ const quickCheckQuestions = [
   {
     id: 'office-illuminance',
     question: 'What is the recommended maintained illuminance for a general office to CIBSE SLL?',
-    options: ['150 lux', '300 lux', '500 lux', '750 lux'],
-    correctIndex: 2,
+    options: [
+      '150 lux',
+      '500 lux',
+      '300 lux',
+      '750 lux',
+    ],
+    correctIndex: 1,
     explanation:
       'CIBSE SLL recommends 500 lux maintained illuminance for general office work. This provides adequate light for tasks including reading, writing and computer work whilst maintaining visual comfort.',
   },
   {
     id: 'ugr-limit',
     question: 'What is the maximum Unified Glare Rating (UGR) permitted for an office environment?',
-    options: ['16', '19', '22', '25'],
-    correctIndex: 1,
+    options: [
+      '16',
+      '25',
+      '22',
+      '19',
+    ],
+    correctIndex: 3,
     explanation:
       'UGR 19 is the maximum permitted for office environments. Lower values indicate better glare control. UGR 16 is required for technical drawing offices where visual tasks are more demanding.',
   },
   {
     id: 'colour-rendering',
     question: 'What minimum Colour Rendering Index (CRI or Ra) is required for office lighting?',
-    options: ['Ra 60', 'Ra 70', 'Ra 80', 'Ra 90'],
-    correctIndex: 2,
+    options: [
+      'Ra 80',
+      'Ra 70',
+      'Ra 60',
+      'Ra 90',
+    ],
+    correctIndex: 0,
     explanation:
       'A minimum CRI of Ra 80 is required for offices to ensure accurate colour perception. Higher values (Ra 90+) are needed for colour-critical tasks such as art studios or medical examination rooms.',
   },
   {
     id: 'uniformity-ratio',
     question: 'What is the minimum uniformity ratio (Uo) required for task area lighting?',
-    options: ['0.4', '0.6', '0.7', '0.8'],
-    correctIndex: 2,
+    options: [
+      '0.8',
+      '0.4',
+      '0.6',
+      '0.7',
+    ],
+    correctIndex: 3,
     explanation:
       'A minimum uniformity ratio of 0.7 (Emin/Eav) is required for the task area. The immediate surrounding area requires Uo of 0.5 minimum. This prevents excessive contrast that causes visual fatigue.',
   },
@@ -80,8 +100,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which illuminance level is recommended for a corridor in a commercial building?',
-    options: ['50 lux', '100 lux', '200 lux', '300 lux'],
-    correctAnswer: 1,
+    options: [
+      '200 lux',
+      '50 lux',
+      '100 lux',
+      '300 lux',
+    ],
+    correctAnswer: 2,
     explanation:
       'CIBSE SLL recommends 100 lux for corridors. This provides adequate light for safe movement whilst being significantly lower than task areas to reduce energy consumption.',
   },
@@ -90,9 +115,9 @@ const quizQuestions = [
     question:
       'What is the relationship between the task area and immediate surrounding area illuminance?',
     options: [
+      'Surrounding can be any value below task area',
       'Surrounding must be at least equal to task area',
       'Surrounding must be at least 50% of task area',
-      'Surrounding can be any value below task area',
       'Surrounding must be at least 30% of task area',
     ],
     correctAnswer: 3,
@@ -103,20 +128,25 @@ const quizQuestions = [
     id: 4,
     question: 'What does the Unified Glare Rating (UGR) measure?',
     options: [
-      'The total light output of luminaires',
       'The psychological discomfort caused by bright luminaires in the field of view',
-      'The colour temperature of light sources',
-      'The energy efficiency of the lighting installation',
+      'To adjust the output voltage by altering the number of turns in use',
+      'Date of test, type of test, person conducting test, pass/fail results, defects and remedial action',
+      'Record results accurately and legibly at the time of testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'UGR quantifies the psychological discomfort glare from luminaires. It considers luminaire luminance, position, background luminance and solid angle. Lower UGR values indicate better glare control.',
   },
   {
     id: 5,
     question: 'What is the recommended illuminance for a hospital operating theatre?',
-    options: ['500 lux', '1000 lux', '10,000-100,000 lux', '300 lux'],
-    correctAnswer: 2,
+    options: [
+      '1000 lux',
+      '10,000-100,000 lux',
+      '300 lux',
+      '500 lux',
+    ],
+    correctAnswer: 1,
     explanation:
       'Operating theatres require very high illuminance levels of 10,000-100,000 lux at the surgical site. This is provided by specialist surgical luminaires with adjustable positioning and intensity.',
   },
@@ -125,12 +155,12 @@ const quizQuestions = [
     question:
       'What correlated colour temperature (CCT) range is typically recommended for office environments?',
     options: [
-      '2700K-3000K (warm white)',
+      'Excessive ambient temperature',
+      'Constructed and maintained to prevent danger',
       '4000K-5000K (neutral to cool white)',
-      '6000K-6500K (daylight)',
-      'Any CCT is acceptable',
+      'A measure of the sharpness of resonance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '4000K-5000K is typically recommended for offices. This neutral to cool white appearance promotes alertness and productivity. Warmer temperatures (2700K-3000K) are preferred for relaxation areas.',
   },
@@ -140,10 +170,10 @@ const quizQuestions = [
     options: [
       'The illuminance when luminaires are new',
       'The illuminance required during maintenance',
-      'The minimum illuminance throughout the maintenance period',
       'The average illuminance during peak hours',
+      'The minimum illuminance throughout the maintenance period',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Maintained illuminance (Em) is the minimum value to which illuminance should not fall. Initial illuminance must be higher to account for lamp lumen depreciation, luminaire dirt accumulation and room surface degradation.',
   },
@@ -151,8 +181,13 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the minimum CRI required for areas where accurate colour matching is essential?',
-    options: ['Ra 70', 'Ra 80', 'Ra 90', 'Ra 95'],
-    correctAnswer: 2,
+    options: [
+      'Ra 90',
+      'Ra 95',
+      'Ra 70',
+      'Ra 80',
+    ],
+    correctAnswer: 0,
     explanation:
       'Ra 90 or above is required for colour-critical applications such as art studios, textile inspection, printing facilities and medical examination rooms where accurate colour perception is essential.',
   },
@@ -160,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'How does room surface reflectance affect lighting design?',
     options: [
-      'It has no effect on lighting calculations',
+      'Protect the casualty from injury by clearing the area around them, but do NOT restrain them',
       'Higher reflectances increase utilisation factor and reduce luminaire quantity',
-      'Lower reflectances always improve visual comfort',
-      'Reflectance only affects emergency lighting',
+      'Income shows significant volatility and seasonal variation',
+      'Clear description, safety implications, recommended actions, and timeframes',
     ],
     correctAnswer: 1,
     explanation:
@@ -172,8 +207,13 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What illuminance level is recommended for a retail sales area?',
-    options: ['150 lux', '300 lux', '500 lux', '750 lux'],
-    correctAnswer: 1,
+    options: [
+      '150 lux',
+      '750 lux',
+      '300 lux',
+      '500 lux',
+    ],
+    correctAnswer: 2,
     explanation:
       '300 lux is recommended for general retail sales areas. However, accent lighting at much higher levels (up to 5000 lux) may be used on feature displays to attract attention and create visual hierarchy.',
   },

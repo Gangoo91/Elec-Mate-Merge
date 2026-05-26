@@ -11,10 +11,10 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     id: 1,
     question: 'What is remote monitoring in a BMS?',
     options: [
-      'Only viewing data from the control room',
+      'Missed alerts due to system misconfiguration',
       'Authorised staff can view and control BMS functions off-site',
-      'Automatic system shutdown procedures',
-      'Local sensor calibration',
+      'An instant notification when problems occur',
+      'Staff can respond instantly from any location',
     ],
     correctAnswer: 1,
     explanation:
@@ -25,11 +25,11 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     question: 'Give one example of a remote monitoring method.',
     options: [
       'Manual meter readings',
-      'Web portals with secure login',
       'Paper-based logs',
+      'Web portals with secure login',
       'Visual inspections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Web portals provide secure login access to cloud-hosted dashboards, allowing remote viewing and control of BMS functions.',
   },
@@ -38,11 +38,11 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     question: 'Why does remote monitoring improve fault response?',
     options: [
       'It eliminates all system faults',
-      'Staff can respond instantly from any location',
-      'It prevents equipment from failing',
       'It only works during business hours',
+      'It prevents equipment from failing',
+      'Staff can respond instantly from any location',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Remote monitoring allows staff to receive notifications and respond to faults immediately, regardless of their location, significantly reducing response times.',
   },
@@ -50,19 +50,24 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     id: 4,
     question: 'What is a fault alert?',
     options: [
-      'A planned maintenance schedule',
       'An instant notification when problems occur',
-      'A daily status report',
-      'A manual inspection checklist',
+      'To ensure alerts reach staff if one method fails',
+      'Missed alerts due to system misconfiguration',
+      'Staff can respond instantly from any location',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fault alerts are instant notifications sent to staff when system problems are detected, ensuring rapid response to critical issues.',
   },
   {
     id: 5,
     question: 'Give one example of a fault alert delivery method.',
-    options: ['Written reports', 'SMS via GSM modules', 'Weekly meetings', 'Annual reviews'],
+    options: [
+      'Written reports',
+      'SMS via GSM modules',
+      'Weekly meetings',
+      'Annual reviews',
+    ],
     correctAnswer: 1,
     explanation:
       'SMS messages sent through GSM modules provide immediate notification delivery, even when internet connectivity is unavailable.',
@@ -71,12 +76,12 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     id: 6,
     question: 'Why is escalation important in fault alerts?',
     options: [
-      'It reduces the number of alerts sent',
+      'Missed alerts due to system misconfiguration',
+      'Staff can respond instantly from any location',
       'It ensures critical issues reach appropriate staff levels',
-      'It eliminates false alarms',
-      'It saves on communication costs',
+      'To ensure alerts reach staff if one method fails',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Escalation ensures that if initial recipients don't acknowledge alerts, notifications are sent to higher levels of management to prevent critical issues being missed.",
   },
@@ -84,12 +89,12 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     id: 7,
     question: 'What is one risk of relying only on remote monitoring?',
     options: [
-      'Increased energy consumption',
+      'To ensure alerts reach staff if one method fails',
+      'It ensures critical issues reach appropriate staff levels',
+      'Testing notifications with trial alerts to all recipients',
       'Missed alerts due to system misconfiguration',
-      'Higher maintenance costs',
-      'Slower response times',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'If remote monitoring systems are misconfigured, critical alerts may not be delivered, leading to undetected faults and potential system failures.',
   },
@@ -97,12 +102,12 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     id: 8,
     question: 'Why should redundancy (e.g., SMS + email) be built into alerting systems?',
     options: [
-      'To increase the number of alerts',
       'To ensure alerts reach staff if one method fails',
+      'To increase the number of alerts',
       'To test different communication technologies',
       'To comply with manufacturer warranties',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Multiple communication paths ensure that if one method fails (like email servers being offline), alerts can still reach staff through alternative methods like SMS.',
   },
@@ -110,10 +115,10 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     id: 9,
     question: 'What commissioning step ensures alerts are received by staff?',
     options: [
-      'Installing the latest software',
+      'To ensure alerts reach staff if one method fails',
       'Testing notifications with trial alerts to all recipients',
-      'Checking equipment warranties',
-      'Reading the user manual',
+      'Authorised staff can view and control BMS functions off-site',
+      'An instant notification when problems occur',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,11 +129,11 @@ export const bmsModule6Section6Quiz: QuizQuestion[] = [
     question: 'In the real-world example, why were staff unaware of the freezer failure?',
     options: [
       'The freezer had no monitoring system',
-      'The email server was offline and no backup alerts existed',
       'Staff were not trained to read alerts',
+      'The email server was offline and no backup alerts existed',
       'The fault occurred during holidays',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The email server had been offline for weeks, and there were no backup alert methods configured, so staff never received notification of the critical freezer failure.',
   },

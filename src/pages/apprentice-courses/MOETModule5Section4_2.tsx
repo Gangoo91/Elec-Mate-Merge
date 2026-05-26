@@ -15,11 +15,11 @@ const quickCheckQuestions = [
     question: 'What does the proportional (P) term in a PID controller do?',
     options: [
       'Eliminates steady-state offset completely',
-      'Produces an output proportional to the current error signal',
-      'Predicts the future error based on rate of change',
       'Resets the controller output to zero when the error is zero',
+      'Predicts the future error based on rate of change',
+      'Produces an output proportional to the current error signal',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The proportional term produces a controller output that is directly proportional to the current error. If the error doubles, the proportional output doubles. The proportional band (or gain) determines the sensitivity — a narrow proportional band (high gain) gives a large output for a small error. However, proportional action alone always leaves a residual offset from setpoint.',
   },
@@ -28,9 +28,9 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of the integral (I) term in a PID controller?',
     options: [
       'To speed up the initial response to a step change',
-      'To predict future errors and act in advance',
-      'To eliminate steady-state offset by accumulating the error over time',
       'To reduce controller output when the error is large',
+      'To eliminate steady-state offset by accumulating the error over time',
+      'To predict future errors and act in advance',
     ],
     correctIndex: 2,
     explanation:
@@ -42,8 +42,8 @@ const quickCheckQuestions = [
     options: [
       'When the process variable is constant and not changing',
       'When the error is changing rapidly and the controller needs to anticipate the trend',
-      'When the sensor has failed and no feedback is available',
       'When the final control element is fully saturated',
+      'When the sensor has failed and no feedback is available',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     question:
       'If a control loop is oscillating with increasing amplitude, what is the most likely cause?',
     options: [
-      'The controller gain is too low',
-      'The integral time is too long',
+      'It must match system response requirements for proper control',
+      'Live earth loop impedance testing or calculation from Ze and R1+R2',
       'The controller gain is too high, causing the loop to become unstable',
-      'The derivative time is too long',
+      'Electrical insulation properties and arc flash protection',
     ],
     correctIndex: 2,
     explanation:
@@ -70,7 +70,12 @@ const quizQuestions = [
     id: 1,
     question:
       'A proportional controller with a gain of 2 receives an error signal of 5%. What is the controller output change?',
-    options: ['2.5%', '10%', '5%', '7%'],
+    options: [
+      '2.5%',
+      '10%',
+      '5%',
+      '7%',
+    ],
     correctAnswer: 1,
     explanation:
       'Output change = Gain x Error = 2 x 5% = 10%. Proportional action multiplies the error by the gain to determine the output. A higher gain gives a more aggressive response to errors.',
@@ -79,8 +84,13 @@ const quizQuestions = [
     id: 2,
     question:
       "The 'proportional band' of a controller is set to 50%. This is equivalent to a gain of:",
-    options: ['0.5', '2', '50', '5'],
-    correctAnswer: 1,
+    options: [
+      '50',
+      '0.5',
+      '2',
+      '5',
+    ],
+    correctAnswer: 2,
     explanation:
       'Gain = 100 / Proportional Band = 100 / 50 = 2. Proportional band and gain are inversely related. A narrow proportional band gives a high gain (more aggressive), while a wide proportional band gives a low gain (less aggressive). Different controller manufacturers use different conventions, so always check the documentation.',
   },
@@ -89,12 +99,12 @@ const quizQuestions = [
     question:
       'A PI controller is controlling temperature. The process variable has been stable at 1.5 degrees C below setpoint for several minutes. What will the integral action do?',
     options: [
-      'Nothing — it only acts on large errors',
+      'The current intended to flow under normal conditions',
+      'Cutting consistent corner notches in trunking so right-angle and tee joints fit cleanly',
+      'To prevent damage to cables and maintain proper cable pulling',
       'Gradually increase the controller output until the offset is eliminated',
-      'Reduce the controller output to prevent overshoot',
-      'Switch the controller to manual mode',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The integral action accumulates error over time. Even though the error is small and constant at 1.5 degrees C, the integral is continuously adding to the output. Over time, the output increases enough to bring the process variable up to setpoint, eliminating the offset. This is precisely what proportional action alone cannot achieve.',
   },
@@ -102,12 +112,12 @@ const quizQuestions = [
     id: 4,
     question: 'Integral wind-up occurs when:',
     options: [
-      'The integral time is set too short',
       'The controller output saturates at its limit while the integral term continues to accumulate',
-      'The derivative term becomes too large',
-      'The sensor provides a noisy signal',
+      'Recognise PID control behaviour, perform basic tuning adjustments and diagnose common loop faults',
+      'Gradually increase the controller output until the offset is eliminated',
+      'The integral action becomes too aggressive, causing oscillation and overshoot',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Integral wind-up happens when the controller output has reached its maximum (or minimum) limit but the error persists — for example, during a large setpoint change or if the final control element is stuck. The integral term keeps accumulating even though the output cannot increase further. When the error eventually reverses, there is a large delay before the wound-up integral unwinds, causing overshoot. Anti-wind-up measures are built into modern controllers to prevent this.',
   },
@@ -115,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: 'The Ziegler-Nichols tuning method involves:',
     options: [
-      'Setting all three PID parameters to zero and increasing them simultaneously',
+      'Set P first to achieve acceptable response, then add I to eliminate offset, then add D if needed for faster response',
       'Increasing the proportional gain until the loop oscillates continuously, then calculating P, I and D from the ultimate gain and period',
-      'Using a computer simulation to optimise the parameters',
-      'Copying the parameters from a similar loop on another plant',
+      'Recognise PID control behaviour, perform basic tuning adjustments and diagnose common loop faults',
+      'The controller runs a test sequence and calculates optimised PID parameters based on the process response',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,8 +137,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Derivative action is generally NOT used on which type of process variable?',
-    options: ['Temperature', 'Flow', 'Level in a large vessel', 'Pressure in a gas system'],
-    correctAnswer: 1,
+    options: [
+      'Temperature',
+      'Level in a large vessel',
+      'Flow',
+      'Pressure in a gas system',
+    ],
+    correctAnswer: 2,
     explanation:
       'Flow measurement is typically noisy due to turbulence and pulsation. Since derivative action responds to the rate of change, it amplifies this noise, causing erratic controller output and valve wear. PI control (without D) is the standard choice for flow loops. Derivative is more useful on slow, smooth processes like temperature control in large thermal masses.',
   },
@@ -136,12 +151,12 @@ const quizQuestions = [
     id: 7,
     question: 'In a PID controller, what happens if the integral time (Ti) is set too short?',
     options: [
-      'The controller becomes very slow to respond',
+      'The controller output increases when the process variable increases above setpoint',
+      'Gradually increase the controller output until the offset is eliminated',
+      'Recognise PID control behaviour, perform basic tuning adjustments and diagnose common loop faults',
       'The integral action becomes too aggressive, causing oscillation and overshoot',
-      'The controller loses its proportional action',
-      'The derivative term is disabled',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A short integral time means the integral action accumulates rapidly. This makes the controller aggressive in eliminating offset, but if it is too aggressive, it causes the output to overshoot and oscillate. The process variable swings above and below setpoint with each cycle being driven by the integral winding up and unwinding. Increasing the integral time reduces this aggression.',
   },
@@ -150,9 +165,9 @@ const quizQuestions = [
     question: "A controller is described as having 'direct action'. This means:",
     options: [
       'The controller output increases when the process variable increases above setpoint',
-      'The controller output decreases when the process variable increases above setpoint',
       'The controller acts directly without any integral or derivative action',
       'The controller sends the output signal directly to the valve without conversion',
+      'The controller output decreases when the process variable increases above setpoint',
     ],
     correctAnswer: 0,
     explanation:
@@ -162,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: "The 'controller output' in a PID loop is typically expressed as:",
     options: [
-      'Degrees Celsius',
+      'Testing insulation effectiveness',
       'A percentage from 0% to 100%',
-      'Revolutions per minute',
-      'Litres per second',
+      'It doesn\\\\\\\\\\\\\\\'t cause supply interruption',
+      '8 m³/(h·m²) @ 50 Pa or better',
     ],
     correctAnswer: 1,
     explanation:
@@ -175,12 +190,12 @@ const quizQuestions = [
     id: 10,
     question: 'When manually tuning a PID loop, the recommended sequence is:',
     options: [
-      'Set D first, then I, then P',
+      'The controller output increases when the process variable increases above setpoint',
+      'Recognise PID control behaviour, perform basic tuning adjustments and diagnose common loop faults',
       'Set P first to achieve acceptable response, then add I to eliminate offset, then add D if needed for faster response',
-      'Set all three simultaneously to factory defaults',
-      'Set I first to eliminate offset, then adjust P',
+      'Increasing the proportional gain until the loop oscillates continuously, then calculating P, I and D from the ultimate gain and period',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The standard manual tuning approach is: first set I and D to their minimum (off or very slow), then adjust P to get the fastest response without excessive oscillation. Next, introduce integral action to eliminate offset — start with a long Ti and reduce until offset is corrected without causing oscillation. Finally, if needed, add small amounts of derivative to improve response to rapid changes. Always make one change at a time and observe the effect.',
   },
@@ -188,12 +203,12 @@ const quizQuestions = [
     id: 11,
     question: "What does 'auto-tuning' mean in the context of a PID controller?",
     options: [
-      'The controller automatically switches between manual and automatic mode',
+      'Recognise PID control behaviour, perform basic tuning adjustments and diagnose common loop faults',
+      'Increasing the proportional gain until the loop oscillates continuously, then calculating P, I and D from the ultimate gain and period',
+      'The integral action becomes too aggressive, causing oscillation and overshoot',
       'The controller runs a test sequence and calculates optimised PID parameters based on the process response',
-      'The controller automatically adjusts the setpoint based on time of day',
-      'The controller tunes the sensor calibration automatically',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Auto-tuning is a built-in feature of many modern controllers. When initiated, the controller applies a test disturbance (often a relay oscillation or step change), analyses the process response, and calculates appropriate P, I and D values. This provides a good starting point but often requires manual fine-tuning to optimise performance for the specific application.',
   },
@@ -201,12 +216,12 @@ const quizQuestions = [
     id: 12,
     question: 'Under ST1426, an electrical maintenance technician should be able to:',
     options: [
-      'Design new control systems from scratch',
       'Recognise PID control behaviour, perform basic tuning adjustments and diagnose common loop faults',
-      'Write PLC programs for complex batch control',
-      'Carry out only mechanical maintenance tasks',
+      'The integral action becomes too aggressive, causing oscillation and overshoot',
+      'Gradually increase the controller output until the offset is eliminated',
+      'The controller output increases when the process variable increases above setpoint',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 expects maintenance technicians to understand PID control principles sufficiently to recognise normal and abnormal loop behaviour, make basic tuning adjustments, diagnose common faults (sensor failure, valve stuck, poor tuning) and communicate effectively with specialist instrumentation engineers. The technician is not expected to design control systems but must be competent in maintaining them.',
   },

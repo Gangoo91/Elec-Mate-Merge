@@ -15,8 +15,13 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'Which regulation sets the standard for electrical safety in the UK?',
-    options: ['BS 5266', 'BS 5839', 'BS 7671', 'BS EN 50200'],
-    correctIndex: 2,
+    options: [
+      'BS 5839',
+      'BS 7671',
+      'BS EN 50200',
+      'BS 5266',
+    ],
+    correctIndex: 1,
     explanation:
       'BS 7671 is the UK Wiring Regulations that sets the standard for electrical safety.',
   },
@@ -32,12 +37,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What are the three core safety principles in electrical design?',
     options: [
-      'Cost, speed, appearance',
+      'Before each use and regularly during use',
+      'The landlord or appointed agent/responsible person',
+      'Excellent corrosion resistance and high temperature capability',
       'Shock protection, overcurrent protection, fire prevention',
-      'Materials, labour, time',
-      'Planning, installing, testing',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The three core safety principles are shock protection, overcurrent protection, and fire prevention.',
   },
@@ -51,8 +56,13 @@ const Module5Section2_1 = () => {
     {
       id: 1,
       question: 'Which regulation sets the standard for electrical safety in the UK?',
-      options: ['BS 5266', 'BS 5839', 'BS 7671', 'BS EN 50200'],
-      correctAnswer: 2,
+      options: [
+        'BS 5266',
+        'BS 7671',
+        'BS 5839',
+        'BS EN 50200',
+      ],
+      correctAnswer: 1,
       explanation:
         'BS 7671 is the UK Wiring Regulations that sets the standard for electrical safety.',
     },
@@ -67,8 +77,13 @@ const Module5Section2_1 = () => {
     {
       id: 3,
       question: 'Name two types of overcurrent protection devices.',
-      options: ['Fuse and MCB', 'RCD and RCBO', 'Cable and Conduit', 'Socket and Switch'],
-      correctAnswer: 0,
+      options: [
+        'Cable and Conduit',
+        'RCD and RCBO',
+        'Socket and Switch',
+        'Fuse and MCB',
+      ],
+      correctAnswer: 3,
       explanation:
         'Fuses and MCBs (Miniature Circuit Breakers) are overcurrent protection devices.',
     },
@@ -76,12 +91,12 @@ const Module5Section2_1 = () => {
       id: 4,
       question: 'What is one risk of undersized cables?',
       options: [
-        'Too expensive',
         'Overheating and fire hazard',
-        'Too difficult to install',
-        'Poor appearance',
+        '5 MΩ or below on new installations',
+        '70% of the load is sensible',
+        'Total resistance increases',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Undersized cables can overheat due to excessive current, creating a fire hazard.',
     },
@@ -89,10 +104,10 @@ const Module5Section2_1 = () => {
       id: 5,
       question: 'Why should socket outlet numbers be carefully planned?',
       options: [
-        'To save money',
+        'Hydrogen produced using renewable electricity through electrolysis of water',
         'To avoid overloading circuits and reliance on extension leads',
-        'To look neat',
-        'To meet colour requirements',
+        'Ensure control measures are followed and remain effective',
+        'An "if-then" plan linking a situation to a specific action',
       ],
       correctAnswer: 1,
       explanation:
@@ -101,8 +116,13 @@ const Module5Section2_1 = () => {
     {
       id: 6,
       question: 'Which regulation covers accessibility of switches and sockets?',
-      options: ['Part P', 'Part M', 'Part L', 'Part B'],
-      correctAnswer: 1,
+      options: [
+        'Part P',
+        'Part L',
+        'Part M',
+        'Part B',
+      ],
+      correctAnswer: 2,
       explanation:
         'Building Regulations Part M covers accessibility requirements for switches and sockets.',
     },
@@ -110,12 +130,12 @@ const Module5Section2_1 = () => {
       id: 7,
       question: 'Give one consequence of ignoring manufacturer installation instructions.',
       options: [
-        'Better performance',
+        '50mm minimum insulation with perimeter strip',
+        'Check condition and correct fuse wire',
+        'Hard hat and safety glasses',
         'Non-compliance or unsafe installation',
-        'Faster installation',
-        'Lower costs',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Ignoring manufacturer instructions can lead to non-compliance, voided warranties, or unsafe installations.',
     },
@@ -123,22 +143,22 @@ const Module5Section2_1 = () => {
       id: 8,
       question: 'What is the main role of RCDs?',
       options: [
-        'Control lighting',
         'Protect against electric shock',
-        'Measure voltage',
-        'Switch circuits',
+        'RCD protection not exceeding 30mA',
+        'Certsure / NICEIC Certification Portal',
+        'Straight Tip bayonet-style connector',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation: 'RCDs protect against electric shock by detecting earth leakage currents.',
     },
     {
       id: 9,
       question: 'Why should future expansion be considered in design?',
       options: [
-        'To meet regulations',
+        'Initial verification including inspection and testing',
         'To avoid costly alterations and meet future needs',
-        'To use more materials',
-        'To increase profits',
+        'They identify isolations and hazards for the next team',
+        'Above the bath/shower to 2.25m from floor level',
       ],
       correctAnswer: 1,
       explanation:
@@ -148,10 +168,10 @@ const Module5Section2_1 = () => {
       id: 10,
       question: "In terms of design, what does 'functional' mean?",
       options: [
-        'Looks good',
-        'Costs less',
+        'Checking batteries and fuses',
+        'Provide evidence of electrical compliance',
         'Meets user needs and is practical',
-        'Uses fewer materials',
+        'Emergency relays and contactors',
       ],
       correctAnswer: 2,
       explanation:

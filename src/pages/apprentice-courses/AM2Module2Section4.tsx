@@ -35,10 +35,10 @@ const AM2Module2Section4 = () => {
       id: 'book-answers-fail',
       question: "Why are 'book answer' test results not acceptable in AM2?",
       options: [
-        'They take too long to write',
+        "Assuming that negative events are specifically directed at you when they may not be",
         "They don't reflect measured values - assessors check consistency with actual installation",
-        'They use the wrong units',
-        "They're not detailed enough",
+        "Digital Addressable Lighting Interface - individual luminaire control",
+        "Making good of plaster, decoration and disposal of old materials",
       ],
       correctIndex: 1,
       explanation:
@@ -48,12 +48,12 @@ const AM2Module2Section4 = () => {
       id: 'earth-fault-loop',
       question: "What's wrong with writing '0.00 Ω' for earth fault loop impedance?",
       options: [
-        'Wrong units used',
-        'Too many decimal places',
+        'The client or their appointed representative (engineer/architect)',
+        'The metalwork becomes live and dangerous',
+        'Higher operating frequency eliminates flicker and improves efficacy',
         'Unrealistic value - indicates copying, not measuring',
-        'Should be written in milliohms',
       ],
-      correctIndex: 2,
+      correctIndex: 3,
       explanation:
         '0.00 Ω is physically impossible for Zs measurements. Real circuits always have some impedance, even if very low.',
     },
@@ -62,10 +62,10 @@ const AM2Module2Section4 = () => {
       question:
         "If you can't finish all test results, what's better: leaving blanks or writing book answers?",
       options: [
-        'Write book answers to show knowledge',
+        'Vertical cables between floors',
         'Leave blanks safe - false values = fail',
-        'Copy from regulations',
-        'Estimate realistic values',
+        'Start with parallel sections first',
+        'Identification and organization',
       ],
       correctIndex: 1,
       explanation:
@@ -75,10 +75,10 @@ const AM2Module2Section4 = () => {
       id: 'time-allocation',
       question: 'How much time is allocated for testing and paperwork together in AM2?',
       options: [
-        '2 hours',
+        'A single insulated conductor in conduit in a thermally insulated wall.',
         'About 3.5 hours for testing and documentation combined',
-        '5 hours',
-        'As long as needed',
+        'Prevent unauthorised access and clearly indicate hazards',
+        'Physiological and safety needs (levels 1 and 2)',
       ],
       correctIndex: 1,
       explanation:
@@ -89,12 +89,12 @@ const AM2Module2Section4 = () => {
       question:
         "In real industry work, what's the consequence of incomplete electrical certificates?",
       options: [
-        'Just administrative inconvenience',
+        'Enclosing small-scale asbestos removal tasks such as removing lagging from pipes',
+        'Prospective fault current, earth fault loop impedance, cable sizing, voltage drop',
+        'Close the door immediately, remove the wedge, and report the issue',
         'Liability issues, invalid certificates, and potential disciplinary action',
-        'Nothing if the work is good',
-        'Only affects insurance',
       ],
-      correctIndex: 1,
+      correctIndex: 3,
       explanation:
         'Incomplete or inaccurate certificates create legal liability, invalidate the work certification, and can lead to serious disciplinary consequences.',
     },
@@ -105,10 +105,10 @@ const AM2Module2Section4 = () => {
       id: 1,
       question: "Name two types of paperwork you'll complete in AM2:",
       options: [
-        'Only test certificates',
+        'Automatic lighting activation during security events for deterrence',
         'Risk Assessments and Method Statements (RAMS), Electrical Installation Certificate (EIC)',
-        'Only inspection sheets',
-        'Building control forms',
+        'Correct type, properly tightened, and providing earth continuity where required',
+        'That the ground is firm, level and capable of supporting the tower',
       ],
       correctAnswer: 1,
       explanation:
@@ -118,12 +118,12 @@ const AM2Module2Section4 = () => {
       id: 2,
       question: "Why are 'book answers' a fail in AM2 paperwork?",
       options: [
-        'They look unprofessional',
+        "Single-point grounding, typically at the patch panel end",
+        "Emergency code that silently alerts authorities while appearing to disarm",
         "They don't reflect actual measured values - assessors check consistency",
-        'They take too long to write',
-        'They use wrong terminology',
+        "Supply leading reactive current to offset lagging current",
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "Assessors compare your documented results with the actual installation. Book answers show you haven't actually measured anything.",
     },
@@ -131,12 +131,12 @@ const AM2Module2Section4 = () => {
       id: 3,
       question: 'How much time is allocated for testing and paperwork together?',
       options: [
-        '2 hours',
+        'Air removes heat faster than mass can store it',
+        'To ensure accuracy and compliance with standards',
+        'Distinguishing between honest errors and reckless behaviour',
         'About 3.5 hours for testing and documentation combined',
-        '5 hours',
-        'As long as needed',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'The inspection, testing and documentation phase has approximately 3.5 hours total - requiring careful time management.',
     },
@@ -144,12 +144,12 @@ const AM2Module2Section4 = () => {
       id: 4,
       question: "What's wrong with writing '0.00 Ω' for Zs?",
       options: [
-        'Wrong units used',
-        'Too many decimal places',
         'Unrealistic value - indicates copying, not measuring',
-        'Should be negative',
+        'Cross-connection method for confirming ring continuity',
+        'Internal components (plug, seat, cage) that control flow',
+        'Watching someone similar to you succeed at a task',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         '0.00 Ω is physically impossible for earth fault loop impedance. Real measurements always show some impedance value.',
     },
@@ -159,8 +159,8 @@ const AM2Module2Section4 = () => {
       options: [
         'False - complete everything',
         'True - false values can cause section failure',
-        'False - estimates are acceptable',
         'True - blanks show honesty',
+        'False - estimates are acceptable',
       ],
       correctAnswer: 1,
       explanation:
@@ -170,12 +170,12 @@ const AM2Module2Section4 = () => {
       id: 6,
       question: "What's the consequence of illegible handwriting in AM2?",
       options: [
-        'No consequence if content is correct',
+        "A splice using alignment fixtures and index-matching gel",
+        "Cannot be functionally tested in the field",
         "Lost marks - assessors can't mark what they can't read",
-        'Minor point deduction only',
-        'Assessors will ask for clarification',
+        "When live conductors make contact with earth or earthed metalwork",
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'If assessors cannot read your entries clearly, they cannot award marks regardless of whether the content might be correct.',
     },
@@ -183,20 +183,25 @@ const AM2Module2Section4 = () => {
       id: 7,
       question: 'When should you record test results - at the end or as you go?',
       options: [
-        'All at the end to save time',
+        'RCD and MCB in a single device',
+        'Burn gel sachets and trauma dressings',
+        'Individual panel optimization',
         'As you go - prevents rushing and mistakes',
-        "Doesn't matter when",
-        'Only record final values',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Recording results as you test prevents rushing at the end, reduces errors, and ensures nothing is forgotten.',
     },
     {
       id: 8,
       question: 'Which unit would you record insulation resistance in?',
-      options: ['Ω (ohms)', 'MΩ (megohms)', 'kΩ (kilohms)', 'mΩ (milliohms)'],
-      correctAnswer: 1,
+      options: [
+        'MΩ (megohms)',
+        'kΩ (kilohms)',
+        'Ω (ohms)',
+        'mΩ (milliohms)',
+      ],
+      correctAnswer: 0,
       explanation:
         'Insulation resistance values are typically very high and are measured and recorded in megohms (MΩ).',
     },
@@ -204,10 +209,10 @@ const AM2Module2Section4 = () => {
       id: 9,
       question: 'What happens if you omit polarity test results?',
       options: [
-        'Minor mark deduction',
+        'Earthing and automatic disconnection',
         'Section can fail - polarity is a mandatory test',
-        'No consequence',
-        'Can be estimated later',
+        '70-95% depending on size and type',
+        'Permit to work details and compliance with site procedures',
       ],
       correctAnswer: 1,
       explanation:
@@ -217,12 +222,12 @@ const AM2Module2Section4 = () => {
       id: 10,
       question: 'Why is completing paperwork correctly critical in industry as well as AM2?',
       options: [
-        'Company policy only',
+        'The current intended to flow under normal conditions',
+        'May to September (the active season), with surveys typically starting at dusk',
         'Legal liability, insurance validity, and regulatory compliance',
-        'Customer satisfaction',
-        'Just good practice',
+        'Maximum 50% fill for cable management and future additions',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Proper documentation is legally required, affects insurance validity, ensures regulatory compliance, and provides legal protection.',
     },

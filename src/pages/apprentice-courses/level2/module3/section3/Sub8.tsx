@@ -45,12 +45,12 @@ const checks = [
     question:
       'A retail floor of ~80 m² needs general 13 A socket coverage. The intended layout has six twin sockets around the perimeter. Best circuit shape?',
     options: [
-      'Single 32 A radial in 4 mm² T&E.',
+      'According to branch resistance (inversely proportional)',
+      'False - apprentices must always work under supervision and cannot sign off certifications',
       '32 A ring final circuit in 2.5 mm² T&E with 1.5 mm² CPC, served by an RCBO.',
-      'Six 13 A radial spurs each on its own MCB.',
-      'Lighting loop-in.',
+      'Risk assessment, competency management and performance monitoring',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A 32 A ring final in 2.5 mm² is the standard shape for general-purpose 13 A sockets up to 100 m² floor area (BS 7671 Appendix 15 / OSG). Two paths share the load, the 2.5 mm² CSA is comfortable, and you cover six twins on a single RCBO. A radial would force 4 mm² (or larger) for the same coverage at higher cost.',
   },
@@ -59,12 +59,12 @@ const checks = [
     question:
       'You are picking the protective device for the 7 kW EV charger circuit. Which RCD type is required?',
     options: [
-      'Type AC — sinusoidal AC only.',
-      'Type A — covers most modern domestic loads.',
+      'The probability of a safety-related system satisfactorily performing the required safety function under all stated conditions within a stated period of time',
       'Type B — required because the EV charger&rsquo;s onboard charger can produce smooth DC fault current that would blind a Type A or AC.',
-      'No RCD — the charger has its own protection.',
+      'Its safe working load (SWL) — and where the SWL depends on the configuration, the SWL for each configuration',
+      'For every significant fault investigation, with the level of detail proportionate to the severity and complexity of the fault',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'BS 7671 Section 722 (electric vehicles) requires Type B RCD protection on EV charge points unless the charger itself includes integrated DC fault current protection (in which case a Type A RCD upstream is acceptable). Onboard chargers can produce smooth DC fault current — a Type AC or Type A RCD would magnetically saturate and miss it.',
   },
@@ -73,10 +73,10 @@ const checks = [
     question:
       'Single-phase 100 A intake into a small commercial unit, no exposed location, no overhead supply. What SPD do you fit at the origin?',
     options: [
-      'Type 1 SPD — required because there is an external supply.',
+      'Growth mindset individuals showed greater brain activity when receiving corrective feedback, indicating deeper processing of errors',
       'Type 2 SPD — appropriate for a sub-board / consumer-unit-equivalent origin where a Type 1 lightning current SPD is not justified by the BS 7671 risk assessment.',
-      'No SPD — only required on industrial sites.',
-      'Type 3 SPD — fitted at the origin.',
+      'To identify hazardous substances, assess the risks of exposure, and determine the control measures needed to protect workers\\\\\\\\\\\\\\\' health',
+      'What category of electrical environment the meter is rated to use safely on, and the max voltage in that category',
     ],
     correctIndex: 1,
     explanation:
@@ -90,12 +90,12 @@ const quizQuestions = [
     question:
       'A small commercial unit has a single-phase 100 A intake. The summed maximum demand of all final circuits before diversity is 142 A. After applying BS 7671 Appendix 1 / OSG diversity, the design demand comes in at ~78 A. The unit is:',
     options: [
-      'Inside the supply rating — install proceeds.',
       'Over the supply rating — apply for a 3-phase upgrade.',
+      'Inside the supply rating — install proceeds.',
       'Inside the rating but only because diversity is fictional — install does not proceed.',
       'Cannot proceed without a load test.',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Diversity is exactly how BS 7671 expects you to size the supply against connected load — not every circuit will be at full demand at the same time. 78 A on a 100 A intake is comfortable. The full 142 A figure is the worst-case if every circuit ran flat-out simultaneously, which in a small commercial unit will not happen.',
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       'You are choosing a wiring system for the run from the CU into the rear yard, then into a wall-mounted EV charger. Best choice for the buried section?',
     options: [
-      'T&E in conduit, buried.',
+      '50 Hz is close to the frequency range that most effectively causes ventricular fibrillation',
+      'To confirm installation matches design, identify faults, and form the basis of certification',
       'SWA (steel wire armoured) at the appropriate CSA, buried at the BS 7671 minimum depth and marked with warning tape.',
-      'MICC clipped to the wall.',
-      'Singles in PVC trunking.',
+      'Measures affecting health and safety, including arrangements for competent assistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 Reg 522.8.10 requires buried cables to be either of an appropriate type (SWA, mineral-insulated) OR provided with mechanical protection. SWA is the default for buried sub-mains and outdoor circuits — armour gives mechanical protection and provides a CPC. T&E in conduit underground is not standard practice and brings water-ingress and termination problems.',
   },
@@ -117,8 +117,13 @@ const quizQuestions = [
     id: 3,
     question:
       'The HVAC condenser circuit feeds a 4 kW unit with an inrush of around 6× FLC at start-up. The right MCB type is:',
-    options: ['Type B', 'Type C', 'Type D', 'No MCB — fuse only'],
-    correctAnswer: 1,
+    options: [
+      'Type D',
+      'Type B',
+      'No MCB — fuse only',
+      'Type C',
+    ],
+    correctAnswer: 3,
     explanation:
       'Type C (5–10× In magnetic trip) handles the routine inrush of an HVAC compressor without nuisance-tripping. Type B (3–5× In) would trip on every start. Type D (10–20× In) is overkill for a 4 kW unit and brings a tighter Zs requirement that may not be achievable on the route length.',
   },
@@ -127,12 +132,12 @@ const quizQuestions = [
     question:
       'Reg 411.3.4 mandates 30 mA RCD protection for AC final circuits supplying luminaires in:',
     options: [
-      'All installations, all locations.',
       'Domestic (household) premises only.',
+      'All installations, all locations.',
       'Commercial premises only.',
       'No installations — it is a recommendation only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 411.3.4 specifically applies to domestic (household) premises. In our small commercial unit it does not bite — but BS 7671 still requires 30 mA RCD additional protection for socket outlets up to 32 A (Reg 411.3.3) and for mobile equipment used outdoors. Lighting RCDs on commercial sites are a design choice, not a regs mandate.',
   },
@@ -141,10 +146,10 @@ const quizQuestions = [
     question:
       'You are running 6 × 2.5 mm² T&E circuits in a single 50×50 mm metal trunking above the ceiling. The OSG Appendix H 45 % fill rule means you must:',
     options: [
-      'Pack them in tightly because the trunking is metal.',
+      'FAIL — contactor showing signs of distress (worn contacts, coil insulation degrading); investigate and rectify before energising in service',
       'Calculate the total cable factor sum, divide by the trunking factor, ensure the result keeps the fill ≤ 45 % AND apply the matching Cg grouping derate to the cable sizing.',
-      'Only check fill, not derating.',
-      'Only check derating, not fill.',
+      'Design out or reduce the need for work at height where reasonably practicable, and where it cannot be eliminated, provide information about remaining risks in the health and safety file for future duty holders',
+      'The failure mode has a detectable deterioration period (P-F interval) long enough to allow a planned response before functional failure occurs',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,8 +159,13 @@ const quizQuestions = [
     id: 6,
     question:
       'The architect&rsquo;s drawing puts the EV charger 80 m from the CU. At 30 A design current on 6 mm² SWA (mV/A/m ≈ 7.3), the voltage drop is about:',
-    options: ['~1.75 V', '~17.5 V', '~52.6 V', '~175 V'],
-    correctAnswer: 1,
+    options: [
+      '~1.75 V',
+      '~52.6 V',
+      '~17.5 V',
+      '~175 V',
+    ],
+    correctAnswer: 2,
     explanation:
       'Vd = (7.3 × 30 × 80) / 1000 = 17.52 V. As a percentage of 230 V that is 7.6 % — well over the 5 % non-lighting limit. You either size up to 16 mm² SWA, re-route to shorten the run, or relocate the CU sub-board closer to the charger. This is exactly the kind of issue an apprentice catches by running the Vd gate on the drawing before the cable goes in.',
   },
@@ -164,12 +174,12 @@ const quizQuestions = [
     question:
       'AFDDs (Reg 421.1.7) on this small commercial install (no sleeping accommodation):',
     options: [
-      'Are mandatory on every final circuit.',
+      'Neither — they conflict. The conflict must be resolved before any document issues. Trace back to the calc sheet (cable CCC and design Ib) to see which rating the calc supports, fix the wrong document, log the change in the revision history, and re-issue. A pack with internal conflict cannot be issued for construction.',
+      'Dynamically distributing the available electrical supply capacity across multiple chargers — reducing individual charge rates when total demand approaches the site supply limit, ensuring the electrical infrastructure is not overloaded while maximising the total energy delivered to all connected vehicles',
+      'A dutyholder is a person on whom statute imposes a duty regardless of contract. Employer, self-employed person, employee, occupier, manufacturer, designer, importer — each has statute-imposed duties under HASAWA or its associated regulations. Contractual reallocation of the risk doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t transfer the statutory duty. You can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'contract out\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' of HASAWA.',
       'Are recommended by Reg 421.1.7 for AC final circuits supplying socket-outlets ≤ 32 A in dwellings — strengthened to a requirement in HRRBs under the Building Safety Act 2022, and treated as effectively required in HMOs / sleeping accommodation / care homes by fire-safety guidance. Not strictly required on this small commercial install, but a sensible fit on the IT rack and EV circuits.',
-      'Are prohibited.',
-      'Are required only on the EV circuit.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'AFDDs are recommended for AC final circuits supplying socket-outlets ≤ 32 A in dwellings (per BS 7671 Reg 421.1.7). The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care homes, supporting fire-safety guidance treats them as effectively required practice. A retail unit with no sleeping accommodation is not in that scope, but fitting AFDDs on the IT rack and EV circuits is good practice — both are arc-fault-prone loads.',
   },
@@ -178,12 +188,12 @@ const quizQuestions = [
     question:
       'You finish the design schedule. The total maximum demand after diversity is 78 A on a 100 A supply, every circuit clears CCC / Vd / I²R / Zs, the trunking comes in at 38 % fill, and the SPD is Type 2 at the origin. The next step is:',
     options: [
-      'Order materials and start the install.',
       'Hand the schedule to the supervisor for sign-off, then lift it into the formal design pack (cable schedule, single-line, EIC issue draft) before procurement starts.',
-      'Skip sign-off — the calc passes.',
-      'Send it directly to the customer.',
+      'Code C2 (potentially dangerous) on EICR, isolate, plan replacement of affected components, investigate water ingress and moisture source as the root cause',
+      'A pre-use check is a quick visual assessment before each use; a formal inspection is a detailed, documented inspection by a competent person at specified intervals',
+      'The premises must be equipped with appropriate fire-fighting equipment and fire detectors and alarms, and any non-automatic equipment must be easily accessible and indicated by signs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A passing calc is not the same as a signed-off design. Real installs go through a sign-off step where a senior electrician or designer checks every column of the schedule, verifies the assumptions match the actual site survey, and authorises procurement. The calc is the input; the signed schedule is the output that drives the install and the eventual EIC.',
   },

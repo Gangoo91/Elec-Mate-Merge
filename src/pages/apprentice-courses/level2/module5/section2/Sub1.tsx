@@ -44,12 +44,12 @@ const checks = [
     question:
       "A customer asks you, 'is BS 7671 the law?' What's the most accurate plain-English answer at Level 2?",
     options: [
-      "Yes, BS 7671 is an Act of Parliament so it's the law.",
       "Not directly. BS 7671 is a British Standard published by BSI and the IET — it's not an Act of Parliament. But for a domestic install in England, the Building Regulations 2010 Approved Document P treats compliance with BS 7671 as the way to meet the statutory requirement for electrical safety, so in practice the courts will expect the standard to have been followed. It's voluntary in name and effectively mandatory in court.",
-      'No, BS 7671 has nothing to do with the law.',
-      "Yes, but only when the customer agrees to it in the contract.",
+      "Torque tools drift over time — the spring inside that gives the click loses tension with use and temperature cycles. A 3.5 Nm preset tool that drifts to 4.5 Nm will over-torque every terminal it touches, deforming the conductor and the screw, and a tool that drifts to 2.5 Nm will under-torque every terminal, leaving high-resistance joints that fail R1+R2 on test and run hot in service. Annual calibration with a certificate is the standard requirement; some firms shorten that to 6-monthly for daily-use tools.",
+      "Personally bound under s.110 (helping someone else commit an unlawful act, e.g. participating in harassment) and as a witness who is duty-bound to co-operate with internal investigations. The apprentice's reputational and legal exposure grows if they participate in or condone discriminatory or harassing behaviour. The apprentice also has a route to RAISE concerns — internal complaints procedure, ACAS conciliation, Employment Tribunal claim — and is protected against victimisation under s.27 for raising them in good faith.",
+      "An accredited assessor (employed or contracted by NICEIC / NAPIT etc.) visits your premises annually. They review your QS qualification (must be current and someone in the firm must hold it), inspect a sample of recent jobs (typically 1-2 jobs visited and certificates reviewed), check your test equipment is calibrated, review your insurance, and audit your record-keeping. Pass = scheme registration continues; fail = re-visit required and registration may be suspended.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "This is the single most common public misunderstanding about BS 7671. The Wiring Regulations are not statutory in their own right — Parliament did not pass them. But the statutory Building Regulations 2010 (in England) cite Approved Document P, which in turn names BS 7671 as a route to compliance. So a domestic installation that breaches BS 7671 is also evidence of a breach of the Building Regulations, which IS statutory. Outside of dwellings, BS 7671 is also widely cited in insurance contracts, scheme membership rules and HSE guidance, all of which give it legal teeth indirectly.",
   },
@@ -58,10 +58,10 @@ const checks = [
     question:
       "What's the difference between a statutory regulation (e.g. EAWR 1989) and an Approved Code of Practice (ACoP) issued by the HSE?",
     options: [
-      'There is no difference — both are equally binding.',
+      "Buildings of 18 m or more in height (typically 7 storeys or more) containing two or more residential units. The HRRB regime came in after the Grenfell Tower fire and brings additional fire-safety requirements including (depending on the specific building regulations) recommended AFDDs (Reg 421.1.7) on socket circuits, mandatory linked smoke detection, and enhanced fire compartmentation. The regime is administered by the Health and Safety Executive (Building Safety Regulator) for the highest-risk buildings.",
       "A statutory regulation is law — breach is a criminal offence with fines and imprisonment available. An ACoP is HSE guidance with special legal status under HASAWA s.16 — it isn't a criminal offence to depart from an ACoP, but if you're prosecuted for the underlying regulation, the ACoP is treated as evidence of what 'reasonably practicable' looks like. To defend a departure you have to show your alternative was at least as good.",
-      'ACoPs are stronger than regulations.',
-      'Regulations only apply to companies, ACoPs only apply to individuals.',
+      "SEG is a regulated payment scheme requiring electricity suppliers to pay domestic generators for electricity exported to the grid. Replaced the Feed-in Tariff (FiT) which closed to new entrants in 2019. SEG tariffs vary by supplier (typically 5-15p/kWh in 2026); customers shop around for the best rate. To qualify, the install must be MCS-certified and the meter must be capable of recording export (most modern smart meters are). The customer signs up for SEG with their chosen supplier; it isn't automatic.",
+      "PASS. BS 7671 643.7 maximum at I∆n for general-type RCD = 300 ms. A reading of 28 ms is well within limits and matches expected for a healthy modern RCD (typical 10–30 ms). The 1×IΔn test is also typically &lt;20 ms on a healthy device. If the trip-time was 250 ms (still passing) or 290 ms (still passing), it would be borderline and worth flagging. If 350 ms — fail.",
     ],
     correctIndex: 1,
     explanation:
@@ -72,12 +72,12 @@ const checks = [
     question:
       "You're on a domestic CU change and you want to check the actual wording of a regulation you remember being relevant. Where do you go for the authoritative current text?",
     options: [
-      "Wikipedia.",
+      "An MFT (Multifunction Tester) is the dedicated installation-test instrument that combines continuity (R1+R2 / R2), insulation resistance, loop impedance (Zs / Ze / PFC), RCD operating time and trip current, and (on most models) earth-electrode resistance into a single unit. Standard apprentice-grade kit: Megger MFT1741+, Fluke 1664FC, Kewtech KT64+, Martindale ET4500. All do the BS 7671 Chapter 61–62 sequence; brand choice depends on the firm's preference.",
+      "Cable lubricant (for pulling into containment), contact cleaner / electronic cleaner (typically isopropyl-based), masonry sealant (for chase repairs), two-pack epoxy resin (for fixings and panel repairs), brick acid (for cleaning chased surfaces), dust suppressant. All have hazard ratings and all need an SDS in the firm's COSHH register.",
       "legislation.gov.uk for the statutory text (Acts and Statutory Instruments), HSE.gov.uk for the official guidance and ACoPs, the IET 'Wiring Regulations' (BS 7671:2018+A2:2022, with A4:2026 changes coming in) for the standard, and the Building Regulations Approved Documents on GOV.UK for the building-control angle. Each source publishes the current consolidated text — that's what a court will be reading.",
-      'A copy of the regs from a college library shelf without a date stamp.',
-      'A trade-forum thread.',
+      "AutoCAD is primarily a 2D drafting tool with 3D extensions; it is the lingua franca for drawings and works well for SLDs, layouts and schedules. Revit is a 3D BIM authoring tool — every object carries metadata and is part of a coordinated model with structural, mechanical and architectural disciplines.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Knowing where the authoritative text lives is half of being competent under the regs. legislation.gov.uk hosts the consolidated current versions of Acts and SIs — the same text a court would refer to. HSE.gov.uk hosts the ACoPs and the HSG / INDG / GS guidance. The IET publishes BS 7671 (you need a current copy on the van or in the office). Building Regulations Approved Documents (Part P, Part L, Part M and so on) are on GOV.UK. Forum chat, old training notes and Wikipedia are not authoritative — fine for orientation, useless in front of an inspector or a judge.",
   },
@@ -91,10 +91,10 @@ const quizQuestions = [
     question:
       "Which of the following is the headline 'umbrella' Act of Parliament that all UK workplace health and safety law sits under?",
     options: [
-      'Building Regulations 2010.',
+      "A non-compliance with BS 7671 because when the switch is open the line conductor remains live to the load — anyone working on the load thinks it is dead but the line is still energised. Reg 643.6(a) requires single-pole switches in the line.",
       "Health and Safety at Work etc Act 1974 (HASAWA). It's the framework Act — most modern H&S Regulations (EAWR, CDM, RIDDOR, COSHH, MHSWR, PUWER, Manual Handling, PPE, WAHR) are Statutory Instruments made under HASAWA's enabling powers, which means a breach of any of them also feeds back into a HASAWA breach.",
-      'Equality Act 2010.',
-      'Companies Act 2006.',
+      "The apprenticeship contract (a formal indenture under the Apprenticeships, Skills, Children and Learning Act 2009), the wages, the off-the-job training declaration (a minimum 20% of paid working hours under the Apprenticeship Standard), the provision of suitable work and supervision, and HASAWA s.2 duties to provide a safe place of work and adequate training.",
+      "Yes — IET subscriptions are tax-deductible against income tax under HMRC's List 3 of approved professional bodies. Effectively reduces the cost by your marginal tax rate. For a higher-rate taxpayer (40%) the £200/year MIET subscription costs £120 net. List 3 covers most major UK professional bodies including IET, RICS, IMechE, IChemE etc.",
     ],
     correctAnswer: 1,
     explanation:
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       "What's the single biggest legal difference between a Statutory Instrument (e.g. EAWR 1989, SI 1989/635) and a British Standard (e.g. BS 7671)?",
     options: [
-      'There is none — both are law.',
+      "A dedicated radial circuit, typically 32 A or 40 A (Type C MCB to handle the inrush from the compressor and fan), in 6 mm² or 10 mm² T&E or SWA depending on length and method. RCD protection per BS 7671 Section 411.3.3 / 415.1. A local rotary or DP isolator outdoors at the unit. Smart controls integration via dedicated low-voltage cable. Cyclic-rated cable selection — heat pumps run for hours, not minutes. Bonding to the unit chassis if it forms an extraneous-conductive part.",
+      "Section 702 of BS 7671 — extensive supplementary bonding inside Zone 0, 1 and 2 around the pool (between the pool liner reinforcement, surrounding metalwork, ladders, lighting frames etc.) and tighter restrictions on equipment in each zone. Supplementary bonding generally cannot be omitted in pool zones — the wet skin / immersed body risk is far higher than a domestic bathroom.",
       "A Statutory Instrument is secondary legislation — passed under the authority of an Act of Parliament. Breach is a criminal offence and the HSE can prosecute. A British Standard is a voluntary technical document published by the British Standards Institution. Breach is not in itself a criminal offence — but where another statute (e.g. Approved Document P, which references BS 7671) effectively requires compliance, departure becomes evidence of a statutory breach.",
-      'Statutory Instruments only apply to construction sites.',
-      'British Standards are stronger than Statutory Instruments.',
+      "Ze source (Form 1 cited or BS 7671 assumed maximum cited); cable type, line CSA and cpc CSA; route length; OSG Table I1 mΩ/m at 20 degrees C cited; temperature factor applied (1.20 for 70-deg PVC, 1.28 for 90-deg thermosetting) cited; calculated cold (R1 + R2); calculated hot (R1 + R2); Ze + hot (R1 + R2) = design Zs; Table 41.3 max Zs cited (A4:2026 edition) for the device fitted; calculated margin; verification target (0.8 × Table 41.3 max for measured cold Zs).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Statute = law, prosecutable. Standard = voluntary technical guidance, but often cited by statute and therefore de facto required. Knowing which side of the line a document sits on tells you what happens after a breach. EAWR Reg 14 breach = HSE prosecution. BS 7671 Reg 411.3.3 'breach' = no direct prosecution, but a strong evidential problem if it leads to an injury or a Building Regulations failure on a notifiable installation.",
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       "Which set of regulations specifically governs electrical work in the UK — covering the design, construction, operation and maintenance of electrical systems?",
     options: [
-      'Building Regulations Part L (energy efficiency).',
+      "PPE Regs Reg 7 places a duty on the employer to maintain (and replace) PPE. The corresponding duty on the employee under Reg 10 is to use the PPE in accordance with training and to report any loss of, or obvious defect in, the PPE. Damaged PPE doesn't provide the rated protection — a cracked safety glass lens, a dust mask with a broken strap, a hi-vis with the reflective material peeling off — all need to be taken out of service and replaced before use.",
+      "Several practical benefits: BS 7671 included with subscription; Wiring Matters magazine and IET Online for ongoing technical learning; IET Academy CPD content; networking with other electrical practitioners through regional events; access to professional registration (EngTech) for salary signal and credibility; eligibility for IET-affiliated insurance products. Tax-deductible. Most career-focused electrical practitioners find membership pays for itself.",
+      "Because in a broken-PEN fault on PME, the entire installation's neutral return current can flow back to ground via the bonding to extraneous-conductive-parts (gas, water, structural steel). Sizing against the PEN ensures the bonding conductor doesn't melt before it is reset.",
       "Electricity at Work Regulations 1989 (EAWR), Statutory Instrument 1989/635. EAWR applies to ALL work activities involving electricity, in nearly all workplaces. It covers design, construction, operation and maintenance of electrical systems, and the competence of those carrying out the work. Reg 14 (live working) and Reg 16 (competence) are the two an apprentice meets first.",
-      'CDM 2015 (covers design and construction of buildings, not electrical specifically).',
-      'PUWER 1998 (covers work equipment generally).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "EAWR 1989 is the electrical-specific Statutory Instrument. It's deliberately broad — written in the language of duties rather than design specifics, so it stays current as technology changes. The technical detail of HOW to comply with EAWR is found in BS 7671 (for fixed installations), in HSR25 (HSE guidance on EAWR), and in industry codes — but the legal duty itself sits in EAWR.",
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       "Approved Document P (Electrical Safety — Dwellings) is part of the statutory Building Regulations regime in England. What does it actually require?",
     options: [
-      'It bans all electrical work in dwellings.',
       "Schedule 1 Part P of the Building Regulations 2010 sets the legal requirement that 'reasonable provision shall be made in the design and installation of electrical installations in order to protect persons operating, maintaining or altering the installations from fire or injury'. The Approved Document P guidance then names BS 7671 as the recognised way to meet that requirement. So in a dwelling in England, BS 7671 compliance is the practical route to legal compliance.",
-      'It only applies to commercial buildings.',
-      'It is voluntary.',
+      "CDM 2015 Reg 13(1)(a) requires the principal contractor to plan, manage and monitor the construction phase. In practice this includes site sign-in / sign-out registers, attendance at toolbox talks, RAMS sign-on records, and any permit records. These records combine with the apprentice's own records to form a full picture of who was on site doing what when. The records are commonly required after any incident or in any later dispute.",
+      "Most electricians take a 1-day refresher course within 3-6 months of an amendment, then sit the updated 2382 within 12 months. CPS schemes typically expect QS-named individuals to be current within 12 months. Working without updated knowledge means signing certificates against outdated standards — both a competence concern and a scheme compliance risk.",
+      "Because the principal contractor (or main installer) carries practical and often legal responsibility for what happens on their site, including the conduct, safety and quality of sub-contractor work. CDM 2015 places duties on the PC for site coordination. The firm's policies typically require sub-contractors to be vetted, briefed, given clear scope, paid promptly and held to the same conduct standards as employees.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Approved Document P is the bridge that turns BS 7671 from a voluntary standard into something a court will treat as effectively required for domestic work in England. The legal hook is in Schedule 1 Part P of the Building Regulations 2010 (a Statutory Instrument). The how-to-comply text is in the Approved Document, which the courts treat under s.7 of the Building Act 1984 as evidence of what reasonable provision looks like. Wales has equivalent provisions; Scotland has its own Building Standards system.",
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     question:
       "Which HSE guidance document is the standard reference for live-line test instruments and probes used by electricians?",
     options: [
-      'HSG107.',
+      "Provide site induction (covering the construction phase plan, site rules, welfare, emergency procedures and specific hazards), provide access to relevant pre-construction information, and ensure each worker has the information they need to do their work safely. Reg 14 makes it a duty on the principal contractor to ensure workers receive any relevant H&S training. Reg 15 puts a corresponding duty on the worker to co-operate.",
       "GS38 — 'Electrical test equipment for use by electricians'. It's HSE guidance, not statute, but the courts treat it as the reference for what 'safe' test probes, leads and instruments look like in practice. It specifies probe finger barriers, exposed metal length (no more than 4 mm), insulated leads, fused leads where appropriate, and the use of voltage indicators rather than meters where possible.",
-      'BS 7671.',
-      'PUWER 1998.',
+      "Part P does NOT apply (Part P is dwellings-only). EAWR applies to the workplace electrical safety. The work needs an EIC or MEIWC for BS 7671 compliance and the contractor discharges EAWR duties through competent design and installation. No CPS upload required because Part P does not apply, but the contractor may still notify Building Control if other Building Regulations Parts are triggered (e.g. Part B fire safety, Part L energy efficiency).",
+      "Lux level (typically 300 lux task), uniformity (greater than 0.6 across the desk area), glare control (UGR less than 19), colour temperature (3500-4000K typical), colour rendering (Ra greater than 80), AND accessibility — high contrast trim around switches, audible feedback on counter call-buttons, induction loop interface for hearing-aid users.",
     ],
     correctAnswer: 1,
     explanation:
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       "What is RIDDOR 2013 and what does it require an electrical contractor to do?",
     options: [
-      'A trade union.',
+      "Set the meter to INRUSH mode. Clamp around one phase (or the L of a single-phase motor). Press start to arm the capture. Operate the load (start the motor). The meter captures the peak current in the first 100 ms after the rising edge of current — typically 6–10× the running current for an induction motor, higher for HVAC compressors. Useful for diagnosing nuisance trips on an undersized breaker (the inrush exceeds the magnetic trip threshold on a Type B breaker; replace with Type C or D for high-inrush loads).",
+      "Pregnancy and maternity (s.18). The Act prohibits unfavourable treatment of women because of pregnancy or maternity leave during the 'protected period' (broadly, from the start of pregnancy to the end of maternity leave). This is a separate category to sex discrimination — pregnancy / maternity claims don't need a male comparator. It's one of the most enforced parts of the Act and a leading source of Employment Tribunal awards.",
       "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471). It places a statutory duty on the employer (and certain self-employed people) to report specified workplace injuries, occupational diseases, dangerous occurrences and fatalities to the HSE. Reportable items include fatalities, specified injuries (amputation, fracture other than fingers/toes/thumbs, loss of sight, scalping, etc.), over-7-day absences, and a defined list of dangerous occurrences. Reporting is via the F2508 form on hse.gov.uk.",
-      'A British Standard for cable colours.',
-      'A type of consumer unit.',
+      "An earth-loop tester is a dedicated instrument (Megger LRCD-M, Kewtech KT200) that measures earth fault loop impedance ONLY — typically faster, more accurate at low impedance values, and with higher injected test current than the EFLI function on a general MFT. Used by 2391 / 2394 testers and by commissioning engineers who need to verify many EFLI values quickly. The MFT's EFLI function is fine for L3 fault-diagnosis use; dedicated loop testers are improver-level kit.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "RIDDOR 2013 is the statutory reporting regime — without it, the HSE wouldn't know workplace harm was happening. The duty falls on the 'responsible person' (usually the employer). For an apprentice that means: tell your supervisor immediately if anything reportable happens. The supervisor / employer makes the F2508 report. Failure to report when required is itself a criminal offence under the Regulations.",
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       "Which set of regulations governs construction projects — including the duties of clients, designers, principal contractors and workers from the planning stage to handover?",
     options: [
-      'PUWER 1998.',
+      "Shorter cycles than the standard for the parent property type because the elevated risk in special locations justifies more frequent inspection. EV charge points are commonly inspected annually by the EV-charging-equipment manufacturer's recommendation; swimming pools annually for plant room; agricultural premises every 3 years given the harsh environment; caravans and marinas have their own GN3 Chapter 66 frequencies.",
+      "MCB / RCBO thermal element — overload (sustained excess current). MCB / RCBO magnetic element — short circuit and high-current fault. RCD / RCBO residual element — earth fault through CPC (residual current). AFDD — series and parallel arc faults (degraded contacts, arc tracking). SPD — transient over-voltage. Fuse (BS 88 HRC) — short circuit and overload (slower than MCB but higher breaking capacity, used at supply origins). Each device is designed for a specific fault type; using the wrong device leaves the corresponding fault uncovered.",
+      "Revision letters (Rev A, B, C, D) or numbers (Rev 1, 2, 3) shown in the title block, with a revision history table listing each revision with date, drafter, reason for change and what changed. Superseded revisions are marked VOID and either physically destroyed or filed separately as historical record. The current revision is the only one in active use.",
       "Construction (Design and Management) Regulations 2015 (CDM 2015), Statutory Instrument 2015/51. CDM 2015 covers ALL construction work, with extra duties triggered when the project is 'notifiable' (longer than 30 working days with more than 20 workers simultaneously, or exceeding 500 person-days). It sets duties for clients, principal designers, principal contractors, contractors and workers — including the apprentice's duty under Reg 8 to co-operate, take reasonable care and report defects.",
-      'BS 7671.',
-      'COSHH 2002.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "CDM 2015 is the construction-specific umbrella. It applies to any construction work, but the heavier paperwork (notification to HSE, construction phase plan, principal contractor and principal designer roles) only kicks in on notifiable projects. As an apprentice you'll mostly meet CDM through the site induction (Reg 13) and your personal duty under Reg 8 to co-operate with safety arrangements and report defects.",
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       "You're working in a 1960s factory unit and you notice a chemical drum leaking near where you're terminating a sub-main. Which set of regulations governs the response?",
     options: [
-      'EAWR 1989.',
       "Control of Substances Hazardous to Health Regulations 2002 (COSHH), SI 2002/2677. COSHH places a statutory duty on the employer to assess and control exposure to hazardous substances — solvents, paints, cleaning products, dust, fumes — and on workers to use the controls provided and report defects. A leaking chemical drum is a COSHH issue: stop work, evacuate the immediate area, report to the supervisor and the site responsible person, and don't try to clean it up yourself unless trained.",
-      'BS 7671.',
-      'Building Regulations Part P.',
+      "A rotary cable stripper (Jokari Quadro, Knipex 16 95 02, BAHCO 4490) — sized to the SWA outer diameter, runs around the sheath cleanly and removes a length to expose the armour without scoring the inner cores. Stanley knives can do it but the risk of scoring the inner is high; rotary strippers are the standard. For the armour itself — separate tool (armour shears for smaller, angle grinder for bigger) covered in Sub 1.2.",
+      "Danger (check the scene is safe to approach), Response (is the casualty conscious and responding?), Airway (open the airway with head-tilt-chin-lift), Breathing (look, listen, feel for normal breathing for up to 10 seconds), Circulation (look for signs of normal life — colour, movement, response). If breathing absent or abnormal: 999, CPR, defibrillator.",
+      "Five years from issue. Renewal requires a current ECS Health & Safety Assessment pass (which itself is only valid for 3 years) plus current employment / qualification evidence. Card renewal is initiated through the JIB ECS portal — your employer typically handles renewals for employed staff; self-employed apprentices and electricians manage their own.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "COSHH 2002 is the substance-hazard regime. It requires risk assessment, control measures, monitoring, health surveillance where relevant, and emergency procedures. The apprentice meets COSHH through the substances they use directly (solvents, contact cleaners, lubricants — all should have safety data sheets) and through site-wide hazards like the leaking drum. The default response is stop, withdraw, report — the same response as for a serious electrical hazard.",
   },

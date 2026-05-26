@@ -27,7 +27,12 @@ const quickCheckQuestions = [
     id: 'flushing-velocity',
     question:
       'What minimum flushing velocity is recommended by BSRIA for effective debris removal?',
-    options: ['0.5 m/s', '1.0 m/s', '1.5 m/s', '2.0 m/s'],
+    options: [
+      '0.5 m/s',
+      '1.0 m/s',
+      '2.0 m/s',
+      '1.5 m/s',
+    ],
     correctIndex: 1,
     explanation:
       'BSRIA recommends a minimum flushing velocity of 1.0 m/s to ensure effective removal of debris, flux residues and installation contaminants from heating systems.',
@@ -36,8 +41,13 @@ const quickCheckQuestions = [
     id: 'pressure-test-duration',
     question:
       'For a standard hydraulic pressure test on a sealed heating system, what is the minimum test duration?',
-    options: ['10 minutes', '30 minutes', '1 hour', '2 hours'],
-    correctIndex: 2,
+    options: [
+      '1 hour',
+      '30 minutes',
+      '10 minutes',
+      '2 hours',
+    ],
+    correctIndex: 0,
     explanation:
       'A hydraulic pressure test should be maintained for a minimum of 1 hour (some standards specify 2 hours) to allow detection of slow leaks and joint failures under sustained pressure.',
   },
@@ -45,8 +55,13 @@ const quickCheckQuestions = [
     id: 'balancing-tolerance',
     question:
       'What is the typical acceptable tolerance when balancing flow rates to design values?',
-    options: ['+/- 5%', '+/- 10%', '+/- 15%', '+/- 20%'],
-    correctIndex: 1,
+    options: [
+      '+/- 20%',
+      '+/- 5%',
+      '+/- 10%',
+      '+/- 15%',
+    ],
+    correctIndex: 2,
     explanation:
       'Flow rates should be balanced to within +/- 10% of design values. This tolerance ensures adequate heat output while accounting for practical measurement limitations on site.',
   },
@@ -55,12 +70,12 @@ const quickCheckQuestions = [
     question:
       'Under Building Regulations Part L, which document must be provided at handover for new heating installations?',
     options: [
-      'Manufacturer warranty only',
       'Building log book with commissioning records',
-      'Visual inspection certificate',
-      'Energy bill estimate',
+      'Monthly function tests and annual full-duration tests',
+      'Assess the risks and decide on necessary precautions',
+      'Inhalation, skin absorption, ingestion, and injection',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Building Regulations Part L requires a building log book containing commissioning records, operating instructions and maintenance schedules to be provided at handover for compliance.',
   },
@@ -72,10 +87,10 @@ const quizQuestions = [
     question:
       'According to BSRIA guidance, what is the primary purpose of system flushing before commissioning?',
     options: [
-      'To check for leaks in the pipework',
+      'Being struck by falling objects (tools, materials or components)',
       'To remove debris, flux residues and installation contaminants',
-      'To test the pump performance',
-      'To fill the system with inhibitor',
+      'To confirm the supply has correct phase and neutral identification',
+      'LED lighting systems powered and controlled through Ethernet cables',
     ],
     correctAnswer: 1,
     explanation:
@@ -86,10 +101,10 @@ const quizQuestions = [
     question:
       'What is the recommended test pressure for a sealed heating system hydraulic pressure test?',
     options: [
-      'System working pressure',
-      '1.1 times working pressure',
+      'The index radiator (furthest from pump/highest resistance)',
+      'Corrosion inhibitor and biocide treatment',
       '1.5 times working pressure or 3 bar (whichever is greater)',
-      'Double the working pressure',
+      'Manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended concentration verified by test',
     ],
     correctAnswer: 2,
     explanation:
@@ -100,12 +115,12 @@ const quizQuestions = [
     question:
       'When filling a heating system, why should the fill point be at the lowest point of the system?',
     options: [
-      'To reduce filling time',
+      'Manufacturer\\\\\\\\\\\\\\\'s recommended concentration verified by test',
+      'The index radiator (furthest from pump/highest resistance)',
+      '1.5 times working pressure or 3 bar (whichever is greater)',
       'To allow air to rise and escape through vents as water enters',
-      'To minimise water pressure',
-      'To protect the pump from dry running',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Filling from the lowest point allows air to rise naturally and escape through automatic air vents or manual bleed points as water progressively fills the system from bottom to top.',
   },
@@ -113,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the purpose of proportional balancing when commissioning a heating system?',
     options: [
-      'To set all valves to the same position',
       'To achieve design flow rates through each circuit relative to the index circuit',
-      'To maximise system pressure',
-      'To test the boiler efficiency',
+      'To allow air to rise and escape through vents as water enters',
+      '1.5 times working pressure or 3 bar (whichever is greater)',
+      'The index radiator (furthest from pump/highest resistance)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Proportional balancing adjusts regulating valves so each circuit receives its design flow rate proportional to the index circuit (longest/highest resistance path), ensuring even heat distribution.',
   },
@@ -126,12 +141,12 @@ const quizQuestions = [
     id: 5,
     question: 'During commissioning, what indicates that a system has been adequately flushed?',
     options: [
-      'Water temperature reaches 60 degrees C',
-      'Pump pressure gauge reads correctly',
+      'Manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended concentration verified by test',
       'Discharge water runs clear with no visible debris',
-      'All radiators feel warm',
+      '1.5 times working pressure or 3 bar (whichever is greater)',
+      'The index radiator (furthest from pump/highest resistance)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Flushing is complete when discharge water runs clear with no visible debris, sediment or discolouration. Some specifications also require turbidity testing for critical applications.',
   },
@@ -139,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'What water treatment is typically required after flushing and before final filling?',
     options: [
-      'Chlorination only',
+      'Multi-factor authentication (biometrics + PIN/card)',
+      'Normal and emergency lighting from separate lamps',
       'Corrosion inhibitor and biocide treatment',
-      'Softened water only',
-      'No treatment required',
+      'Public Interest Disclosure Act 1998 (PIDA)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Corrosion inhibitor protects system metals from corrosion while biocide prevents bacterial growth. These treatments are essential for long-term system health and should be added at correct concentrations.',
   },
@@ -153,12 +168,12 @@ const quizQuestions = [
     question:
       'What document provides the benchmark commissioning procedures for HVAC systems in the UK?',
     options: [
-      'BS 7593 only',
-      'Manufacturer instructions only',
+      'Minimum to maximum flow range',
+      'One-third of DOL starting torque',
+      'Insulation resistance between conductors',
       'BSRIA commissioning guides (BG series)',
-      'Building Regulations Part F',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'BSRIA commissioning guides (particularly BG 29 for water systems) provide comprehensive, industry-standard commissioning procedures. BS 7593 covers water treatment specifically.',
   },
@@ -166,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'When balancing radiator circuits, which radiator should be balanced first?',
     options: [
-      'The largest radiator',
-      'The radiator nearest the boiler',
       'The index radiator (furthest from pump/highest resistance)',
-      "Any radiator - order doesn't matter",
+      'Manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended concentration verified by test',
+      'Corrosion inhibitor and biocide treatment',
+      'To allow air to rise and escape through vents as water enters',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The index radiator (highest resistance circuit) is set first with its lockshield fully open. All other radiators are then throttled back proportionally to achieve their design flow rates.',
   },
@@ -180,10 +195,10 @@ const quizQuestions = [
     question:
       'What is the minimum information required on a commissioning certificate for Building Regulations compliance?',
     options: [
-      'Installer name and date only',
+      'When withdrawable functionality and high breaking capacity are required',
       'Design flow rates, achieved flow rates, test pressures and commissioning engineer details',
-      'Boiler serial number only',
-      'Customer signature only',
+      'A downstream device is protected by an upstream device with higher breaking capacity',
+      'Calmly repeating your position without getting drawn into arguments',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,12 +208,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of the witnessed performance test during commissioning?',
     options: [
-      'To train the building owner',
+      'Manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended concentration verified by test',
+      'To achieve design flow rates through each circuit relative to the index circuit',
       'To verify system achieves design performance under realistic operating conditions',
-      'To check the warranty is valid',
-      'To test the BMS graphics',
+      'To allow air to rise and escape through vents as water enters',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Witnessed performance testing verifies the complete system achieves its design intent under realistic conditions, with the client or their representative observing and signing off the results.',
   },
@@ -207,12 +222,12 @@ const quizQuestions = [
     question:
       'Under BS 7593, what concentration of corrosion inhibitor is typically required for sealed heating systems?',
     options: [
-      'No specific concentration required',
+      "To allow air to rise and escape through vents as water enters",
+      "1.5 times working pressure or 3 bar (whichever is greater)",
+      "The index radiator (furthest from pump/highest resistance)",
       "Manufacturer's recommended concentration verified by test",
-      'Maximum possible concentration',
-      'Same as domestic hot water systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "BS 7593 requires inhibitor at the manufacturer's recommended concentration, verified by on-site testing (litmus test, conductivity or specific test kit). Records must be kept.",
   },
@@ -221,12 +236,12 @@ const quizQuestions = [
     question:
       'What handover documentation must be provided to comply with Building Regulations Part L for a new commercial heating installation?',
     options: [
-      'Invoice and warranty card',
       'Building log book with O&M manuals, commissioning records and energy metering data',
-      'Boiler manual only',
-      'Planning permission documents',
+      '1.5 times working pressure or 3 bar (whichever is greater)',
+      'To achieve design flow rates through each circuit relative to the index circuit',
+      'To verify system achieves design performance under realistic operating conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Part L requires a building log book containing: O&M manuals, as-built drawings, commissioning records, control system operating instructions, maintenance schedules and sub-metering details.',
   },

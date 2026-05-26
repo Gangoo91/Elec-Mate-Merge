@@ -29,8 +29,8 @@ const quickCheckQuestions = [
     options: [
       'E = n × F × UF × MF × A',
       'E = (n × F × UF × MF) / A',
-      'n = E × A / (F × UF × MF)',
       'E = F / (n × UF × MF × A)',
+      'n = E × A / (F × UF × MF)',
     ],
     correctIndex: 1,
     explanation:
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'room-index-definition',
     question: 'What does the room index (K) represent in lighting design?',
     options: [
-      'The total floor area of the room',
+      'To induce voltage and current in the rotor conductors',
+      'Latest clash reports, updated drawings, and outstanding RFI responses',
+      'A single chain — one cable in, one cable out at each component, no branching',
       'A ratio describing room proportions relative to mounting height',
-      'The number of luminaires required',
-      'The reflectance of room surfaces',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The room index (K) is a dimensionless ratio that describes room proportions relative to luminaire mounting height above the working plane. It determines how effectively light is utilised in the space.',
   },
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'utilisation-factor',
     question: 'Which factors determine the utilisation factor (UF)?',
     options: [
-      'Only lamp type and wattage',
-      'Room index and surface reflectances',
       'Maintenance schedule only',
       'Ceiling height and floor area only',
+      'Room index and surface reflectances',
+      'Only lamp type and wattage',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The utilisation factor depends on the room index (K) and the reflectances of ceiling, walls, and floor surfaces. These determine what proportion of lamp lumens reaches the working plane.',
   },
@@ -66,12 +66,12 @@ const quickCheckQuestions = [
     id: 'maintenance-factor',
     question: 'A maintenance factor of 0.8 means:',
     options: [
-      '80% of luminaires will fail',
       'Light output will reduce to 80% over the maintenance period',
-      '20% more luminaires are needed',
-      'The room reflectance is 80%',
+      'Based on operating characteristics and time-current curves',
+      'To accommodate final positioning and thermal movement',
+      'Translating between different communication protocols',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A maintenance factor of 0.8 indicates that average illuminance will reduce to 80% of initial values over the maintenance period due to lamp lumen depreciation, luminaire dirt accumulation, and room surface degradation.',
   },
@@ -82,7 +82,12 @@ const quizQuestions = [
     id: 1,
     question:
       'A room measures 12m × 8m with a mounting height (Hm) of 2.4m. What is the room index?',
-    options: ['K = 1.5', 'K = 2.0', 'K = 2.5', 'K = 3.0'],
+    options: [
+      'K = 1.5',
+      'K = 2.0',
+      'K = 2.5',
+      'K = 3.0',
+    ],
     correctAnswer: 1,
     explanation:
       'K = (L × W) / [Hm × (L + W)] = (12 × 8) / [2.4 × (12 + 8)] = 96 / (2.4 × 20) = 96 / 48 = 2.0',
@@ -91,8 +96,13 @@ const quizQuestions = [
     id: 2,
     question:
       'If a room requires 500 lux, has an area of 80m², UF = 0.52, and MF = 0.8, what total lamp flux is needed?',
-    options: ['83,333 lumens', '96,154 lumens', '104,167 lumens', '120,000 lumens'],
-    correctAnswer: 1,
+    options: [
+      '104,167 lumens',
+      '83,333 lumens',
+      '96,154 lumens',
+      '120,000 lumens',
+    ],
+    correctAnswer: 2,
     explanation:
       'Total flux = (E × A) / (UF × MF) = (500 × 80) / (0.52 × 0.8) = 40,000 / 0.416 = 96,154 lumens',
   },
@@ -100,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which surface reflectance has the greatest impact on utilisation factor?',
     options: [
-      'Floor reflectance',
-      'Ceiling reflectance',
       'Wall reflectance',
+      'Floor reflectance',
       'Desk surface reflectance',
+      'Ceiling reflectance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Ceiling reflectance has the greatest impact on UF because most luminaires direct light upward and downward. A highly reflective ceiling redirects upward light back to the working plane, significantly improving utilisation.',
   },
@@ -113,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'The mounting height (Hm) in room index calculations is measured from:',
     options: [
-      'Floor to ceiling',
-      'Floor to luminaire',
       'Working plane to luminaire',
+      'Floor to luminaire',
+      'Floor to ceiling',
       'Floor to working plane',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Mounting height (Hm) is the vertical distance from the working plane (typically 0.85m above floor for offices) to the luminaire. This affects how light spreads across the room.',
   },
@@ -128,8 +138,8 @@ const quizQuestions = [
     options: [
       'Lamp survival factor only',
       'LLMF, LMF, and RSMF',
-      'Room index and reflectances',
       'Utilisation factor and lamp flux',
+      'Room index and reflectances',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,8 +149,13 @@ const quizQuestions = [
     id: 6,
     question:
       'For a room with K = 1.25, the utilisation factor from tables shows UF = 0.48 at K = 1.0 and UF = 0.55 at K = 1.5. Using interpolation, what is UF at K = 1.25?',
-    options: ['0.50', '0.515', '0.52', '0.53'],
-    correctAnswer: 1,
+    options: [
+      '0.50',
+      '0.52',
+      '0.515',
+      '0.53',
+    ],
+    correctAnswer: 2,
     explanation:
       'Linear interpolation: UF = 0.48 + [(1.25 - 1.0) / (1.5 - 1.0)] × (0.55 - 0.48) = 0.48 + 0.5 × 0.07 = 0.48 + 0.035 = 0.515',
   },
@@ -148,8 +163,13 @@ const quizQuestions = [
     id: 7,
     question:
       'If 20 luminaires each with 3,200 lumens are installed in a 100m² room with UF = 0.6 and MF = 0.75, what is the maintained illuminance?',
-    options: ['288 lux', '384 lux', '432 lux', '480 lux'],
-    correctAnswer: 0,
+    options: [
+      '480 lux',
+      '384 lux',
+      '432 lux',
+      '288 lux',
+    ],
+    correctAnswer: 3,
     explanation:
       'E = (n × F × UF × MF) / A = (20 × 3,200 × 0.6 × 0.75) / 100 = 28,800 / 100 = 288 lux',
   },
@@ -158,12 +178,12 @@ const quizQuestions = [
     question:
       'Why does a narrow room (high length-to-width ratio) have a lower room index than a square room of equal area?',
     options: [
-      'The ceiling is lower',
-      'Light is absorbed by the longer walls',
       'The perimeter increases, reducing the L×W / Hm(L+W) ratio',
-      'More luminaires are required',
+      'Person responsible for electrical safety',
+      'Performed with a low reading ohmmeter to verify integrity',
+      'Additional or modified requirements beyond standard rules',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'For the same area, a narrow room has a larger perimeter (L + W), which increases the denominator in K = L×W / [Hm(L+W)], reducing the room index. A square room maximises K for a given area.',
   },
@@ -171,8 +191,13 @@ const quizQuestions = [
     id: 9,
     question:
       'A lighting scheme is designed for 400 lux maintained illuminance. If the maintenance factor is 0.8, what is the initial illuminance?',
-    options: ['320 lux', '400 lux', '480 lux', '500 lux'],
-    correctAnswer: 3,
+    options: [
+      '320 lux',
+      '500 lux',
+      '480 lux',
+      '400 lux',
+    ],
+    correctAnswer: 1,
     explanation:
       'Initial illuminance = Maintained illuminance / MF = 400 / 0.8 = 500 lux. The lighting starts brighter and reduces to the maintained level over the maintenance period.',
   },
@@ -180,8 +205,13 @@ const quizQuestions = [
     id: 10,
     question:
       'Typical ceiling reflectance values for a white ceiling, light walls, and dark floor would be:',
-    options: ['0.9, 0.7, 0.3', '0.7, 0.5, 0.2', '0.5, 0.3, 0.1', '0.3, 0.2, 0.1'],
-    correctAnswer: 1,
+    options: [
+      '0.9, 0.7, 0.3',
+      '0.3, 0.2, 0.1',
+      '0.7, 0.5, 0.2',
+      '0.5, 0.3, 0.1',
+    ],
+    correctAnswer: 2,
     explanation:
       'Typical reflectance values: white ceiling 0.7-0.8, light coloured walls 0.5-0.7, and dark floor 0.1-0.3. These values are used to select the appropriate UF from manufacturer tables.',
   },
@@ -189,12 +219,12 @@ const quizQuestions = [
     id: 11,
     question: 'When would you NOT use the lumen method for lighting design?',
     options: [
-      'Large open-plan offices',
-      'Sports halls',
+      'Replacing suspect components with known good ones',
+      'Scorch marks, melted insulation, or visible damage',
+      'Apply appropriate safety margins',
       'Task lighting for specific workstations',
-      'Retail sales floors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The lumen method calculates average illuminance across a whole room. For task lighting at specific locations, point-by-point calculations are more appropriate as they account for the distance and angle from luminaire to task.',
   },
@@ -203,12 +233,12 @@ const quizQuestions = [
     question:
       'A design requires 24 luminaires but the preferred arrangement is 5 rows of 5. What should be done?',
     options: [
+      'Either B or C - recalculate to confirm compliance',
+      'Use higher output luminaires to achieve required lux with fewer fittings',
       'Use 24 luminaires in irregular rows',
       'Install 25 luminaires and accept higher illuminance',
-      'Use higher output luminaires to achieve required lux with fewer fittings',
-      'Either B or C - recalculate to confirm compliance',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Both options are valid. Installing 25 luminaires gives slightly higher illuminance (acceptable if within limits). Alternatively, specifying higher output luminaires allows the preferred 25-fitting arrangement while meeting the design illuminance.',
   },

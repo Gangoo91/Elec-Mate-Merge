@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'load-calculation',
     question: 'What does CIBSE TM54 provide guidance on for cooling load calculations?',
     options: [
-      'Equipment selection only',
+      'To convert messages from one protocol to another',
       'Evaluating operational energy use and closing the performance gap',
-      'Refrigerant selection criteria',
-      'Ductwork sizing methods',
+      'To translate between different protocols enabling interoperability',
+      'To ensure quality, reliability and compliance standards',
     ],
     correctIndex: 1,
     explanation:
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'seer-rating',
     question: 'What does SEER stand for and why is it important for system selection?',
     options: [
-      'Standard Energy Efficiency Rating - measures compressor efficiency',
       'Seasonal Energy Efficiency Ratio - indicates annual cooling efficiency',
       'System Electrical Efficiency Requirement - regulatory compliance',
       'Sensible Energy Exchange Rate - heat transfer coefficient',
+      'Standard Energy Efficiency Rating - measures compressor efficiency',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'SEER (Seasonal Energy Efficiency Ratio) measures the cooling efficiency over a typical cooling season, accounting for varying load conditions. Higher SEER values indicate better seasonal performance and lower operating costs.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     question:
       'For a building requiring precise temperature control across multiple zones, which system type is generally more suitable?',
     options: [
-      'Single-split DX systems',
-      'Multi-split systems',
+      'Conduit, trunking, tray, basket',
       'Chilled water systems with fan coil units',
-      'Window-mounted air conditioning units',
+      'Tax, insurance, and business legal requirements',
+      'It displaces oxygen and can cause asphyxiation',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Chilled water systems with fan coil units offer superior zone control, easier balancing, and more stable temperature control across multiple zones. They also provide better central plant redundancy for critical applications.',
   },
@@ -68,10 +68,10 @@ const quickCheckQuestions = [
     question:
       'Which factor typically represents the largest component of life cycle costs for air conditioning systems?',
     options: [
-      'Initial capital cost',
-      'Installation labour',
+      'It has many free electrons that can move easily',
+      'PVC or polypropylene film or splash fill',
       'Energy consumption over the system lifetime',
-      'Annual maintenance costs',
+      'Ensure all RCDs are reset and circuits are energised',
     ],
     correctIndex: 2,
     explanation:
@@ -86,11 +86,11 @@ const quizQuestions = [
       'When calculating cooling loads, which method accounts for thermal mass effects and time lag?',
     options: [
       'Steady-state calculation',
-      'Peak load method',
       'Dynamic thermal simulation',
+      'Peak load method',
       'Rule of thumb estimation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Dynamic thermal simulation accounts for thermal mass, time lag, and varying internal and external conditions throughout the day and year, providing more accurate load predictions than steady-state methods.',
   },
@@ -99,20 +99,25 @@ const quizQuestions = [
     question:
       'According to Part L of the Building Regulations, what efficiency requirement applies to comfort cooling systems?',
     options: [
-      'Minimum COP of 2.0',
+      'Chilled water systems have no refrigerant in the building',
+      'Seasonal commissioning with post-occupancy verification',
       'Systems must meet minimum seasonal efficiency standards (SEER/SCOP)',
-      'No specific requirements for cooling',
-      'Maximum power consumption of 50 W/m²',
+      'Higher efficiency, especially at peak ambient temperatures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Part L requires comfort cooling systems to achieve minimum seasonal efficiency ratings. The Non-Domestic Building Services Compliance Guide specifies minimum SEER values depending on system type and cooling capacity.',
   },
   {
     id: 3,
     question: 'What is the typical SEER value for a modern VRF system?',
-    options: ['2.0 - 3.0', '3.5 - 4.5', '5.0 - 8.0', '10.0 - 12.0'],
-    correctAnswer: 2,
+    options: [
+      '3.5 - 4.5',
+      '2.0 - 3.0',
+      '10.0 - 12.0',
+      '5.0 - 8.0',
+    ],
+    correctAnswer: 3,
     explanation:
       'Modern VRF systems typically achieve SEER values between 5.0 and 8.0, with premium systems exceeding 7.0. This represents significant improvement over traditional split systems which typically achieve 3.5-5.0.',
   },
@@ -120,8 +125,13 @@ const quizQuestions = [
     id: 4,
     question:
       'For Net Present Value (NPV) analysis of air conditioning options, which discount rate is typically used for commercial projects?',
-    options: ['0-2%', '3.5-6%', '10-15%', '20-25%'],
-    correctAnswer: 1,
+    options: [
+      '3.5-6%',
+      '0-2%',
+      '10-15%',
+      '20-25%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Commercial projects typically use discount rates of 3.5-6%, aligned with HM Treasury Green Book guidance. Public sector projects often use 3.5%, while private sector projects may use higher rates reflecting their cost of capital.',
   },
@@ -129,8 +139,13 @@ const quizQuestions = [
     id: 5,
     question:
       'Which refrigerant has the lowest GWP (Global Warming Potential) among common air conditioning refrigerants?',
-    options: ['R-410A (GWP 2088)', 'R-32 (GWP 675)', 'R-290 (GWP 3)', 'R-134a (GWP 1430)'],
-    correctAnswer: 2,
+    options: [
+      'R-32 (GWP 675)',
+      'R-290 (GWP 3)',
+      'R-134a (GWP 1430)',
+      'R-410A (GWP 2088)',
+    ],
+    correctAnswer: 1,
     explanation:
       'R-290 (propane) has a GWP of only 3, making it among the lowest of practical refrigerants. However, its flammability (A3 classification) limits charge sizes and applications. R-32 offers a good balance with GWP of 675.',
   },
@@ -140,11 +155,11 @@ const quizQuestions = [
       'When comparing DX and chilled water systems, which statement is correct regarding refrigerant charge?',
     options: [
       'DX systems always have lower total refrigerant charge',
-      'Chilled water systems have no refrigerant in the building',
       'VRF systems have lower charge than equivalent chillers',
+      'Chilled water systems have no refrigerant in the building',
       'Refrigerant charge is the same regardless of system type',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Chilled water systems confine refrigerant to the chiller plant room, meaning no refrigerant is distributed throughout the building. This reduces leak risk and simplifies compliance with F-gas regulations for occupied spaces.',
   },
@@ -153,12 +168,12 @@ const quizQuestions = [
     question:
       'What is the primary advantage of selecting water-cooled chillers over air-cooled chillers?',
     options: [
-      'Lower capital cost',
-      'No external plant required',
+      'Reliability and redundancy (N+1 or greater)',
+      'Chilled water systems have no refrigerant in the building',
+      'Systems must meet minimum seasonal efficiency standards (SEER/SCOP)',
       'Higher efficiency, especially at peak ambient temperatures',
-      'Simpler maintenance requirements',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Water-cooled chillers maintain higher efficiency at peak ambient temperatures because cooling tower water temperature is lower than peak air temperature. This can improve COP by 20-30% compared to air-cooled alternatives.',
   },
@@ -166,8 +181,13 @@ const quizQuestions = [
     id: 8,
     question:
       'According to the F-gas Regulation phase-down schedule, what is the GWP limit for single split systems under 3 kg charge from 2025?',
-    options: ['No limit applies', 'GWP &lt; 2500', 'GWP &lt; 750', 'GWP &lt; 150'],
-    correctAnswer: 2,
+    options: [
+      'GWP &lt; 750',
+      'GWP &lt; 150',
+      'No limit applies',
+      'GWP &lt; 2500',
+    ],
+    correctAnswer: 0,
     explanation:
       'From 2025, single split systems containing less than 3 kg of fluorinated greenhouse gases must use refrigerants with GWP below 750. This effectively prohibits R-410A (GWP 2088) for most split system applications.',
   },
@@ -175,8 +195,13 @@ const quizQuestions = [
     id: 9,
     question:
       'What cooling load factor should typically be applied for equipment diversity in office buildings?',
-    options: ['1.0 (no diversity)', '0.9 - 0.95', '0.7 - 0.85', '0.5 - 0.6'],
-    correctAnswer: 2,
+    options: [
+      '1.0 (no diversity)',
+      '0.7 - 0.85',
+      '0.9 - 0.95',
+      '0.5 - 0.6',
+    ],
+    correctAnswer: 1,
     explanation:
       'Office equipment diversity factors of 0.7-0.85 are typical, reflecting that not all equipment operates simultaneously at maximum load. This reduces oversizing whilst maintaining adequate capacity for realistic operating conditions.',
   },
@@ -185,12 +210,12 @@ const quizQuestions = [
     question:
       'For BREEAM Excellent rating, what enhanced commissioning requirement typically applies to air conditioning systems?',
     options: [
-      'Standard commissioning only',
+      'Reliability and redundancy (N+1 or greater)',
+      'Systems must meet minimum seasonal efficiency standards (SEER/SCOP)',
       'Seasonal commissioning with post-occupancy verification',
-      'No specific commissioning requirements',
-      'Self-certification by the installer',
+      'Chilled water systems have no refrigerant in the building',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BREEAM Excellent typically requires seasonal commissioning to verify performance under varying conditions, plus post-occupancy evaluation to confirm systems meet design intent and actual operational requirements.',
   },
@@ -198,8 +223,13 @@ const quizQuestions = [
     id: 11,
     question:
       'What is the typical payback period for upgrading from SEER 4.0 to SEER 6.0 equipment?',
-    options: ['Less than 1 year', '2-4 years', '5-7 years', 'Over 10 years'],
-    correctAnswer: 1,
+    options: [
+      'Less than 1 year',
+      'Over 10 years',
+      '5-7 years',
+      '2-4 years',
+    ],
+    correctAnswer: 3,
     explanation:
       'Upgrading from SEER 4.0 to SEER 6.0 typically achieves 2-4 year payback depending on operating hours and energy costs. The 33% reduction in energy consumption provides substantial ongoing savings.',
   },
@@ -208,12 +238,12 @@ const quizQuestions = [
     question:
       'When selecting air conditioning for a data centre, which parameter is most critical?',
     options: [
-      'Initial capital cost',
-      'Aesthetic appearance',
       'Reliability and redundancy (N+1 or greater)',
-      'Quiet operation',
+      'Systematic analysis of how and why people make mistakes',
+      'L_total = L₁ + L₂ + L₃ (arithmetic sum)',
+      'Launch condition exciting all modes uniformly',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Data centres require continuous cooling with high reliability. N+1 redundancy (or greater) ensures cooling continues if one unit fails. System availability typically must exceed 99.99% for critical facilities.',
   },

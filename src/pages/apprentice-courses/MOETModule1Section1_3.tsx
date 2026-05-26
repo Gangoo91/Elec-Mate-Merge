@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'loto-purpose',
     question: 'What is the PRIMARY purpose of a Lock-Out / Tag-Out (LOTO) procedure?',
     options: [
-      'To comply with insurance requirements',
+      'The maximum current that could flow at a given point under fault conditions',
+      'When both the project developer and offset buyer claim the same emission reduction',
       'To prevent the unexpected release of hazardous energy during maintenance or servicing',
-      'To indicate that equipment is out of service for production scheduling',
-      'To provide a record of maintenance work completed',
+      'Analysing the feedback, identifying weak areas, creating a revision plan, and rebooking the assessment',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The primary purpose of LOTO is to prevent the unexpected energisation, start-up, or release of stored energy that could cause injury or death during maintenance, servicing, or repair activities. It is a life-critical control measure, not merely a paperwork exercise.',
   },
@@ -29,11 +29,11 @@ const quickCheckQuestions = [
       'Which of the following is an example of stored energy that must be addressed during LOTO?',
     options: [
       'Ambient lighting in the work area',
-      'A compressed spring in a circuit breaker mechanism',
       'The colour of warning labels on equipment',
+      'A compressed spring in a circuit breaker mechanism',
       'The temperature of the surrounding air',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A compressed spring — such as the closing mechanism in a circuit breaker — stores mechanical energy that can be released unexpectedly. During LOTO, all forms of stored energy must be identified and controlled, including springs, elevated components (gravitational), charged capacitors (electrical), pressurised systems (hydraulic/pneumatic), and thermal energy.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'Under a LOTO system, who is permitted to remove a personal safety lock from an energy isolating device?',
     options: [
-      'Any competent person on site',
-      'The shift supervisor at the end of the shift',
       'Only the person who applied the lock',
+      'The shift supervisor at the end of the shift',
+      'Any competent person on site',
       'The equipment owner or manufacturer',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "A fundamental principle of LOTO is that only the person who applied a lock may remove it. This 'one person, one lock, one key' rule ensures that no individual can be exposed to hazardous energy by another person's actions. Emergency removal procedures exist but require senior management authorisation and strict safeguards.",
   },
@@ -56,12 +56,12 @@ const quickCheckQuestions = [
     question:
       'In a group lockout situation, what device allows multiple workers to secure the same energy isolating point?',
     options: [
-      'A cable tie',
       'A multi-lock hasp (scissor hasp)',
-      'A single master padlock',
-      'An electronic access control card',
+      'Materials to be used (e.g., cable type)',
+      'Level 3 - System or end-use level',
+      'Total path length (out and back)',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A multi-lock hasp (also called a scissor hasp or lockout hasp) is a device that accepts multiple padlocks. Each worker attaches their own personal lock to the hasp, preventing the isolating device from being operated until every individual has removed their lock. The hasp ensures that the isolation cannot be defeated while any worker remains at risk.',
   },
@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'Lock-Out / Tag-Out procedures are required to protect workers from:',
     options: [
-      'Noise exposure during routine operations',
+      'Between line, neutral and earth at the point of test',
       'The unexpected release of hazardous energy during maintenance or servicing',
-      'Slips, trips and falls in the workplace',
-      'Manual handling injuries',
+      'Return water temperature too close to supply, reducing system capacity',
+      'Readings increase progressively around the ring then drop',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following energy sources must be considered during a LOTO procedure?',
     options: [
-      'Only electrical energy',
-      'Electrical and mechanical energy only',
+      'Tags are supplementary warnings — they must be used with locks, not instead of them',
+      'The DC bus capacitors may retain lethal voltage and must be verified as discharged',
       'Electrical, mechanical, hydraulic, pneumatic, thermal, chemical and gravitational energy',
-      'Only the energy source most recently used',
+      'Incoming supply, control voltages, capacitor banks, and spring-charged mechanisms',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is NOT an approved energy isolating device for LOTO?',
     options: [
-      'A switch-disconnector with lockable handle',
-      'A push-button start/stop station',
       'A circuit breaker with a lock-off facility',
+      'A switch-disconnector with lockable handle',
       'A manual valve with a lockable handle',
+      'A push-button start/stop station',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A push-button start/stop station is a control device, not an energy isolating device. It does not provide a physical break in the energy supply and can be bypassed by control system faults. LOTO must always use true isolating devices that provide a positive, physical disconnection of the energy source — such as switch-disconnectors, circuit breakers, or lockable valves.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 4,
     question: 'The correct sequence for the six-step LOTO procedure is:',
     options: [
-      'Lock out, tag out, isolate, prepare, verify, notify',
       'Prepare, shut down, isolate, lock out/tag out, verify isolation, perform work',
-      'Notify, isolate, test, lock, tag, work',
-      'Risk assess, isolate, lock, verify, tag, notify',
+      'Provide adequate LOTO equipment, procedures, training and supervision free of charge',
+      'Electrical, mechanical, hydraulic, pneumatic, thermal, chemical and gravitational energy',
+      'Incoming supply, control voltages, capacitor banks, and spring-charged mechanisms',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The six-step LOTO procedure follows a logical sequence: (1) Prepare — identify all energy sources; (2) Shut down — stop the equipment using normal procedures; (3) Isolate — operate energy isolating devices; (4) Lock out/Tag out — apply personal locks and tags; (5) Verify isolation — prove energy sources are de-energised; (6) Perform the work safely.',
   },
@@ -126,8 +126,8 @@ const quizQuestions = [
     options: [
       'Replace a padlock when one is not available',
       'Provide a written warning identifying who applied the lockout, why, and when',
-      'Indicate that equipment has passed its annual inspection',
       'Authorise the equipment to be returned to service',
+      'Indicate that equipment has passed its annual inspection',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'When performing LOTO on a motor control centre (MCC), which of the following stored energy sources must be specifically addressed?',
     options: [
-      'Only the incoming mains supply',
+      'At least annually, by an authorised person not involved in the procedure being inspected',
+      'Provide a written warning identifying who applied the lockout, why, and when',
       'Incoming supply, control voltages, capacitor banks, and spring-charged mechanisms',
-      'Only the motor circuit',
-      "The building's main incoming supply",
+      'Tags are supplementary warnings — they must be used with locks, not instead of them',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An MCC presents multiple energy sources: the main incoming supply, separate control voltage supplies (often from a different source), power factor correction capacitor banks (which retain charge after isolation), and spring-charged circuit breaker mechanisms. Each must be individually identified, isolated, and verified as de-energised.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 7,
     question: 'During a shift changeover, the correct LOTO procedure requires:',
     options: [
-      'The outgoing shift simply tells the incoming shift which locks are theirs',
+      'Failure to identify and isolate all energy sources, particularly stored energy and alternative supplies',
+      'Electrical, mechanical, hydraulic, pneumatic, thermal, chemical and gravitational energy',
+      'At least annually, by an authorised person not involved in the procedure being inspected',
       'The outgoing worker removes their lock and the incoming worker immediately applies theirs, maintaining continuous lockout',
-      'All locks are removed at shift end and the incoming shift starts a new LOTO from scratch',
-      'The supervisor holds a single master lock that covers all shifts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Shift changeover is a critical period for LOTO safety. The correct procedure requires the incoming worker to apply their personal lock BEFORE the outgoing worker removes theirs. This ensures continuous lockout protection with no gap in isolation. The equipment is never in an unlocked state during the transition.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 8,
     question: 'How often should LOTO procedures be formally inspected and reviewed?',
     options: [
-      'Only after an incident occurs',
       'At least annually, by an authorised person not involved in the procedure being inspected',
-      'Every five years as part of a general safety review',
-      'Only when new equipment is installed',
+      'Provide adequate LOTO equipment, procedures, training and supervision free of charge',
+      'Failure to identify and isolate all energy sources, particularly stored energy and alternative supplies',
+      'Electrical, mechanical, hydraulic, pneumatic, thermal, chemical and gravitational energy',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'LOTO procedures must be formally inspected at least annually. The inspection should be carried out by an authorised person who is not involved in the procedure being reviewed. The inspection verifies that workers understand and correctly follow the procedure, that equipment is adequate, and that the written procedure matches actual practice.',
   },
@@ -178,10 +178,10 @@ const quizQuestions = [
     question:
       'A variable speed drive (VSD) has been isolated at its incoming supply. What additional LOTO consideration is essential?',
     options: [
-      'No additional considerations — isolating the supply is sufficient',
+      'Electrical, mechanical, hydraulic, pneumatic, thermal, chemical and gravitational energy',
       'The DC bus capacitors may retain lethal voltage and must be verified as discharged',
-      "The drive's programming must be backed up",
-      'The motor must be disconnected from the load',
+      'Provide adequate LOTO equipment, procedures, training and supervision free of charge',
+      'Tags are supplementary warnings — they must be used with locks, not instead of them',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,12 +191,12 @@ const quizQuestions = [
     id: 10,
     question: 'Under the Health and Safety at Work Act 1974, employers must:',
     options: [
-      'Provide LOTO equipment only when requested by employees',
+      'Prepare, shut down, isolate, lock out/tag out, verify isolation, perform work',
+      'At least annually, by an authorised person not involved in the procedure being inspected',
       'Provide adequate LOTO equipment, procedures, training and supervision free of charge',
-      'Allow employees to supply their own padlocks from home',
-      'Only implement LOTO for high voltage systems',
+      'Failure to identify and isolate all energy sources, particularly stored energy and alternative supplies',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The HSWA 1974 (Sections 2 and 3) places a general duty on employers to ensure, so far as is reasonably practicable, the health, safety and welfare of employees. This includes providing adequate LOTO equipment (locks, hasps, tags, lockout devices), written procedures, competence-based training, and effective supervision — all provided free of charge.',
   },
@@ -206,10 +206,10 @@ const quizQuestions = [
     options: [
       'Tags provide the same level of protection as padlocks',
       'Tags should be used alone when padlocks are not available',
-      'Tags are supplementary warnings — they must be used with locks, not instead of them',
       'Tags are only required for electrical isolation',
+      'Tags are supplementary warnings — they must be used with locks, not instead of them',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'LOTO tags are supplementary warning devices. They do not provide physical restraint and can be removed by anyone. They must always be used in conjunction with padlocks, not as a substitute. Tags provide critical information (who, what, when, why) but only a padlock provides the physical barrier that prevents operation of the energy isolating device.',
   },
@@ -217,12 +217,12 @@ const quizQuestions = [
     id: 12,
     question: 'A common cause of LOTO-related fatalities is:',
     options: [
-      'Using too many padlocks on a single hasp',
       'Failure to identify and isolate all energy sources, particularly stored energy and alternative supplies',
-      'Applying locks and tags too quickly',
-      'Conducting the annual LOTO inspection too frequently',
+      'Provide a written warning identifying who applied the lockout, why, and when',
+      'Electrical, mechanical, hydraulic, pneumatic, thermal, chemical and gravitational energy',
+      'Prepare, shut down, isolate, lock out/tag out, verify isolation, perform work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The most common cause of LOTO fatalities is incomplete energy isolation — typically failing to identify all sources of energy. Stored energy (capacitors, springs, elevated loads), alternative supplies (UPS, generators, solar PV), and interconnected systems are frequently overlooked. A thorough energy survey during the preparation step is essential to preventing these deaths.',
   },

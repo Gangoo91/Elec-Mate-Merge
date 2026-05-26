@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'fieldbus-concept',
     question: 'What is a fieldbus in industrial automation?',
     options: [
-      'A bus that transports field workers between plant areas',
+      'Change the conduit size or add a draw box, then re-check the spacing factor (Sub 3.6) — sizing is not just electrical, it is mechanical too.',
+      'Habits that align with who you want to become, not just what you want to achieve',
       'A digital communication network replacing individual analogue wiring between field devices and the control system',
-      'A type of high-voltage power cable used in hazardous areas',
-      'A wireless sensor network for environmental monitoring',
+      'The ladder may not be properly secured, the scaffold may not be designed for this load point, and it bypasses controlled access',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A fieldbus is a digital, serial communication network that connects field devices (sensors, actuators, transmitters) to the control system over a shared bus cable, replacing individual 4-20 mA analogue runs. This dramatically reduces wiring, improves diagnostics, and enables remote configuration of intelligent field devices.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'profibus-dp-advantage',
     question: 'What is the main advantage of Profibus DP over traditional analogue wiring?',
     options: [
-      'Lower cost cable per metre',
       'Multiple devices on a single cable with digital diagnostics, reducing wiring, improving data quality, and enabling remote configuration',
-      'Faster analogue signal transmission over longer distances',
-      'Simpler installation with no configuration required',
+      'That it comes from responsibly managed forests meeting strict environmental and social standards',
+      'Quietly suggest he takes the job tomorrow / get the supervisor involved — climbing tired is how falls happen',
+      'Formal harness user training covering correct fitting, adjustment, pre-use inspection, connection to anchor points, emergency procedures, and the limitations of the system',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Profibus DP carries multiple device signals on a single shielded twisted pair cable, provides rich diagnostic data from intelligent devices, supports remote configuration and parameterisation, and eliminates the need for individual analogue cable runs to each instrument — significantly reducing installation cost and commissioning time.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'profibus-pa-definition',
     question: 'What does Profibus PA stand for and what makes it special?',
     options: [
-      'Process Automation — it uses MBP technology for intrinsically safe operation in hazardous areas',
-      'Programmable Automation — it allows PLCs to be programmed remotely',
       'Power Amplification — it boosts signal strength for long cable runs',
       'Panel Assembly — it connects devices within a single control panel',
+      'Programmable Automation — it allows PLCs to be programmed remotely',
+      'Process Automation — it uses MBP technology for intrinsically safe operation in hazardous areas',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Profibus PA (Process Automation) is the variant designed for process instrumentation in potentially explosive atmospheres. It uses MBP (Manchester Bus Powered) technology at 31.25 kbit/s, carrying both power and data on the same two-wire cable, enabling intrinsically safe operation in Ex zones.',
   },
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'gsd-file-purpose',
     question: 'What is a GSD file and why is it needed during Profibus commissioning?',
     options: [
-      'A graphical system diagram showing the physical layout of the bus',
+      "Harmonics from non-linear loads (VSDs, rectifiers, IT), inrush from large motors and transformers, voltage flicker from welders and arc furnaces, daily and yearly demand variation per process schedule.",
       "A General Station Description file that describes the device's communication parameters, enabling the PLC or DCS to configure communication with the device",
-      'A safety certification document required by the HSE',
-      "A calibration record format stored on the device's memory",
+      "Eight primary emotions arranged in opposing pairs with varying intensities, where combinations create more complex emotions",
+      "Phase rotation/sequence (L1-L2-L3 = positive/clockwise rotation) using a phase-rotation indicator, especially before energising motors and rotating machinery",
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     question:
       'What communication speed does Profibus DP typically operate at in industrial installations?',
     options: [
-      '9600 baud',
+      '"The electrician\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tools were left on site."',
       'Up to 12 Mbit/s (commonly 1.5 Mbit/s in practice)',
-      '100 Mbit/s',
-      '1 Gbit/s',
+      'Permits, fire watches, cleared areas, fire extinguishers nearby',
+      'Easy backup, instant access, version control',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: 'What type of cable is specified for Profibus DP installations?',
     options: [
-      'Standard Ethernet Cat 5e unshielded cable',
+      'To prevent signal reflections at the ends of the bus cable that could corrupt data',
+      'A DP/PA coupler or link device that converts between the two physical layers',
       'Purple shielded twisted pair cable (Type A) per IEC 61158 with 150 ohm impedance',
-      '75 ohm coaxial cable with BNC connectors',
-      'Multimode fibre optic cable only',
+      'A dedicated Profibus tester or analyser that measures signal levels, timing, and bus topology',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Profibus DP uses a purple shielded twisted pair cable (Type A) with specific impedance characteristics of 150 ohms. The purple colour is the internationally recognised identification for Profibus cables, making them easy to distinguish from other cabling on site.',
   },
@@ -96,8 +96,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the maximum number of devices (stations) on a single Profibus DP segment without repeaters?',
-    options: ['16 stations', '32 stations (including the master)', '127 stations', '256 stations'],
-    correctAnswer: 1,
+    options: [
+      'The battery is ageing and has lost capacity',
+      'Differential pressure control',
+      'Earth fault return path for each circuit',
+      '32 stations (including the master)',
+    ],
+    correctAnswer: 3,
     explanation:
       'A single Profibus RS-485 segment supports up to 32 stations (including the master controller). Repeaters can be used to extend the network — the protocol supports a maximum of 127 addressable stations across all segments.',
   },
@@ -105,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the purpose of bus termination resistors on a Profibus network?',
     options: [
-      'To limit the number of devices that can be connected',
       'To prevent signal reflections at the ends of the bus cable that could corrupt data',
-      'To provide power to the field devices on the bus',
-      'To encrypt the data travelling on the bus',
+      'A dedicated Profibus tester or analyser that measures signal levels, timing, and bus topology',
+      'A DP/PA coupler or link device that converts between the two physical layers',
+      'Purple shielded twisted pair cable (Type A) per IEC 61158 with 150 ohm impedance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Termination resistors (a 390/220/390 ohm network built into the Profibus connectors) must be activated at both physical ends of each bus segment. They absorb signals at the cable ends and prevent reflections that would corrupt data frames and cause communication errors.',
   },
@@ -118,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'How does Profibus PA differ from Profibus DP at the physical layer?',
     options: [
-      'They use identical cable and signalling — only the software differs',
+      'An alternative fieldbus using the same physical layer as Profibus PA (31.25 kbit/s MBP) but with a different application layer supporting control in the field',
       'PA uses MBP (Manchester Bus Powered) signalling at 31.25 kbit/s with power and data on the same two wires, suitable for hazardous areas',
-      'PA uses fibre optic cable exclusively for all connections',
-      'PA operates at higher speed than DP for faster process response',
+      'Class 1 is the main controller that cyclically exchanges I/O data with slaves; Class 2 is an engineering or diagnostic tool that accesses devices for configuration',
+      'Incorrect termination, cable damage, missing or duplicate addresses, or connector wiring faults',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'What device connects a Profibus PA segment to a Profibus DP backbone?',
     options: [
-      'A standard cable connector or junction box',
+      'Purple shielded twisted pair cable (Type A) per IEC 61158 with 150 ohm impedance',
+      'To prevent signal reflections at the ends of the bus cable that could corrupt data',
       'A DP/PA coupler or link device that converts between the two physical layers',
-      'A wireless bridge operating at 2.4 GHz',
-      'No connection is possible — they are separate protocols',
+      'A dedicated Profibus tester or analyser that measures signal levels, timing, and bus topology',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'DP/PA couplers or link devices convert between the DP (RS-485) and PA (MBP) physical layers. A coupler provides transparent protocol conversion; a link device provides additional buffering and diagnostic capabilities. This allows PA field instruments in hazardous areas to communicate with the DP master controller.',
   },
@@ -145,12 +150,12 @@ const quizQuestions = [
     question:
       'A Profibus network experiences intermittent communication failures. What is the most likely cause?',
     options: [
-      'Too few devices connected to the bus',
+      'A dedicated Profibus tester or analyser that measures signal levels, timing, and bus topology',
+      'A DP/PA coupler or link device that converts between the two physical layers',
+      'Purple shielded twisted pair cable (Type A) per IEC 61158 with 150 ohm impedance',
       'Incorrect termination, cable damage, missing or duplicate addresses, or connector wiring faults',
-      'The bus is running at too low a baud rate',
-      'The GSD files are too old',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Common Profibus faults include incorrect or missing termination (causing reflections), cable shield discontinuities (increasing noise susceptibility), connector wiring errors (swapped A/B data lines), duplicate station addresses (causing bus collisions), and damaged cables (reducing signal levels). Systematic diagnosis requires a Profibus analyser.',
   },
@@ -158,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: 'What specialist tool is used to measure Profibus signal quality on site?',
     options: [
-      'A standard digital multimeter with a frequency counter',
       'A dedicated Profibus tester or analyser that measures signal levels, timing, and bus topology',
-      'A general-purpose oscilloscope with no protocol decoding',
-      'No special tools are needed — the PLC diagnostics are sufficient',
+      'A DP/PA coupler or link device that converts between the two physical layers',
+      'Purple shielded twisted pair cable (Type A) per IEC 61158 with 150 ohm impedance',
+      'To prevent signal reflections at the ends of the bus cable that could corrupt data',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Dedicated Profibus testers (such as Softing BC-600-PB, Procentec ProfiTrace, or Siemens Diagnostic Repeater) measure signal amplitude, rise times, noise levels, and can identify the signal quality of each individual device on the bus. They are essential for systematic fault-finding and preventive maintenance.',
   },
@@ -171,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is Foundation Fieldbus H1 and how does it relate to Profibus PA?',
     options: [
-      'It is the first version of Profibus, now obsolete',
+      'PA uses MBP (Manchester Bus Powered) signalling at 31.25 kbit/s with power and data on the same two wires, suitable for hazardous areas',
       'An alternative fieldbus using the same physical layer as Profibus PA (31.25 kbit/s MBP) but with a different application layer supporting control in the field',
-      'A high-speed Ethernet protocol for factory automation only',
-      'A wireless mesh network for process instrumentation',
+      'Class 1 is the main controller that cyclically exchanges I/O data with slaves; Class 2 is an engineering or diagnostic tool that accesses devices for configuration',
+      'Foundation Fieldbus (process industries, Americas), DeviceNet (Allen-Bradley factory automation), AS-Interface (simple binary sensors/actuators), and HART (digital over 4-20 mA)',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,8 +188,13 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What is the maximum cable length for a Profibus DP segment at 1.5 Mbit/s?',
-    options: ['1200 metres', '200 metres', '100 metres', '50 metres'],
-    correctAnswer: 1,
+    options: [
+      '1200 metres',
+      '50 metres',
+      '200 metres',
+      '100 metres',
+    ],
+    correctAnswer: 2,
     explanation:
       'At 1.5 Mbit/s (the most common industrial speed), the maximum segment length is 200 metres using Type A cable. Longer distances require repeaters. At lower speeds the cable can be longer (e.g., 1200 m at 93.75 kbit/s), and at higher speeds it must be shorter (100 m at 12 Mbit/s).',
   },
@@ -193,12 +203,12 @@ const quizQuestions = [
     question:
       'In a Profibus DP network, what is the role of a Class 1 master versus a Class 2 master?',
     options: [
-      'Class 1 handles safety functions; Class 2 handles non-safety functions',
+      'An alternative fieldbus using the same physical layer as Profibus PA (31.25 kbit/s MBP) but with a different application layer supporting control in the field',
+      'PA uses MBP (Manchester Bus Powered) signalling at 31.25 kbit/s with power and data on the same two wires, suitable for hazardous areas',
+      'Foundation Fieldbus (process industries, Americas), DeviceNet (Allen-Bradley factory automation), AS-Interface (simple binary sensors/actuators), and HART (digital over 4-20 mA)',
       'Class 1 is the main controller that cyclically exchanges I/O data with slaves; Class 2 is an engineering or diagnostic tool that accesses devices for configuration',
-      'Class 1 operates at 1 Mbit/s; Class 2 operates at 2 Mbit/s',
-      'They are identical — the terms are interchangeable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A Class 1 master (typically the PLC or DCS controller) cyclically polls each slave device and exchanges I/O data in every scan cycle. A Class 2 master (an engineering workstation or diagnostic tool) can access slave devices on demand for configuration, parameterisation, and diagnostic readout without disrupting the cyclic data exchange.',
   },
@@ -207,12 +217,12 @@ const quizQuestions = [
     question:
       'What other major fieldbus protocols exist besides Profibus, and where are they commonly found?',
     options: [
-      'No other fieldbus protocols are in use — Profibus is the only standard',
       'Foundation Fieldbus (process industries, Americas), DeviceNet (Allen-Bradley factory automation), AS-Interface (simple binary sensors/actuators), and HART (digital over 4-20 mA)',
-      'Only Ethernet-based protocols exist alongside Profibus',
-      'Bluetooth and Wi-Fi are the only alternatives',
+      'PA uses MBP (Manchester Bus Powered) signalling at 31.25 kbit/s with power and data on the same two wires, suitable for hazardous areas',
+      'Class 1 is the main controller that cyclically exchanges I/O data with slaves; Class 2 is an engineering or diagnostic tool that accesses devices for configuration',
+      'An alternative fieldbus using the same physical layer as Profibus PA (31.25 kbit/s MBP) but with a different application layer supporting control in the field',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Major fieldbus alternatives include Foundation Fieldbus (common in process industries, especially in the Americas), DeviceNet (based on CAN, common in Rockwell Automation factory environments), AS-Interface (a simple, cost-effective solution for connecting binary sensors and actuators), and HART (digital communication superimposed on 4-20 mA analogue wiring).',
   },

@@ -32,8 +32,13 @@ const quickCheckQuestions = [
     id: 'motor-starting-current',
     question:
       'What is the typical starting current of a direct-on-line (DOL) induction motor compared to full load current?',
-    options: ['1-2 times FLC', '3-4 times FLC', '6-8 times FLC', '10-12 times FLC'],
-    correctIndex: 2,
+    options: [
+      '1-2 times FLC',
+      '6-8 times FLC',
+      '3-4 times FLC',
+      '10-12 times FLC',
+    ],
+    correctIndex: 1,
     explanation:
       'DOL starting typically draws 6-8 times full load current (FLC). This high inrush affects cable sizing, protective device selection, and can cause voltage dips affecting other equipment on the same supply.',
   },
@@ -41,7 +46,12 @@ const quickCheckQuestions = [
     id: 'electronic-ballast-pf',
     question:
       'What is the typical power factor of a modern electronic ballast for fluorescent lighting?',
-    options: ['0.5 lagging', '0.85 lagging', '0.95 or better', 'Unity (1.0)'],
+    options: [
+      '0.5 lagging',
+      '0.85 lagging',
+      '0.95 or better',
+      'Unity (1.0)',
+    ],
     correctIndex: 2,
     explanation:
       'Modern electronic ballasts achieve power factors of 0.95 or better through active power factor correction (PFC) circuits. This compares favourably with older magnetic ballasts which typically had power factors of 0.5-0.6 lagging.',
@@ -49,16 +59,26 @@ const quickCheckQuestions = [
   {
     id: 'vsd-harmonics',
     question: 'Which harmonic orders are most significant in six-pulse variable speed drives?',
-    options: ['2nd, 4th, 6th', '3rd, 9th, 15th', '5th, 7th, 11th, 13th', 'All even harmonics'],
-    correctIndex: 2,
+    options: [
+      '2nd, 4th, 6th',
+      '3rd, 9th, 15th',
+      'All even harmonics',
+      '5th, 7th, 11th, 13th',
+    ],
+    correctIndex: 3,
     explanation:
       'Six-pulse VSDs produce characteristic harmonics of order h = 6n ± 1 (where n = 1, 2, 3...), giving 5th, 7th, 11th, 13th etc. These are the dominant harmonics that require mitigation in large VSD installations.',
   },
   {
     id: 'slip-calculation',
     question: 'A 4-pole motor operates at 1440 rpm on a 50Hz supply. What is the slip?',
-    options: ['2%', '4%', '6%', '8%'],
-    correctIndex: 1,
+    options: [
+      '2%',
+      '8%',
+      '6%',
+      '4%',
+    ],
+    correctIndex: 3,
     explanation:
       'Synchronous speed = (120 × f) / p = (120 × 50) / 4 = 1500 rpm. Slip = (Ns - Nr) / Ns = (1500 - 1440) / 1500 = 0.04 = 4%. This is typical for a loaded induction motor.',
   },
@@ -82,8 +102,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A 7.5kW motor operates at 0.85 power factor on 400V three-phase. What is the line current?',
-    options: ['10.8A', '12.7A', '15.4A', '18.1A'],
-    correctAnswer: 1,
+    options: [
+      '15.4A',
+      '10.8A',
+      '12.7A',
+      '18.1A',
+    ],
+    correctAnswer: 2,
     explanation:
       'Using P = √3 × VL × IL × cos φ: IL = P / (√3 × VL × cos φ) = 7500 / (1.732 × 400 × 0.85) = 7500 / 589 = 12.7A',
   },
@@ -92,12 +117,12 @@ const quizQuestions = [
     question:
       'What is the main advantage of electronic ballasts over magnetic ballasts in fluorescent lighting?',
     options: [
-      'Lower initial cost',
+      'High-frequency components and specialised detection equipment',
+      'Prove it on a known live source (or proving unit) BEFORE and AFTER the dead test',
+      'Correct polarity, fuse rating, and that the switch breaks the phase',
       'Higher operating frequency eliminates flicker and improves efficacy',
-      'Simpler construction with fewer components',
-      'No power factor correction required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Electronic ballasts operate at 25-40 kHz, eliminating the visible 100Hz flicker of magnetic ballasts. The high frequency also improves lamp efficacy by 10-15% and enables dimming. They include PFC for high power factor.',
   },
@@ -105,8 +130,13 @@ const quizQuestions = [
     id: 4,
     question:
       'What power factor would you expect from a basic LED driver without power factor correction?',
-    options: ['0.95 leading', '0.95 lagging', '0.5-0.6 lagging', 'Unity'],
-    correctAnswer: 2,
+    options: [
+      '0.5-0.6 lagging',
+      '0.95 lagging',
+      '0.95 leading',
+      'Unity',
+    ],
+    correctAnswer: 0,
     explanation:
       'Basic LED drivers use simple rectifier-capacitor circuits which draw current in sharp peaks, resulting in poor power factor (0.5-0.6) and high harmonic distortion. Quality LED drivers include active PFC to achieve >0.9 power factor.',
   },
@@ -114,12 +144,12 @@ const quizQuestions = [
     id: 5,
     question: 'In an induction motor equivalent circuit, what does R₂/s represent?',
     options: [
-      'Stator resistance',
-      'Rotor resistance referred to stator',
+      'Notebook or phone (if permitted)',
       'Mechanical load and rotor losses',
-      'Core losses',
+      'No socket outlets permitted',
+      'Main earthing conductor size',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'R₂/s in the equivalent circuit represents both the actual rotor resistance losses (R₂) and the mechanical power converted. As slip decreases (motor speeds up), R₂/s increases, representing the mechanical load being driven.',
   },
@@ -127,16 +157,26 @@ const quizQuestions = [
     id: 6,
     question:
       'A fan motor draws 15A at 0.7 power factor lagging. What capacitive kVAr is needed to correct to 0.95?',
-    options: ['2.1 kVAr', '3.2 kVAr', '4.5 kVAr', '5.8 kVAr'],
-    correctAnswer: 1,
+    options: [
+      '2.1 kVAr',
+      '4.5 kVAr',
+      '3.2 kVAr',
+      '5.8 kVAr',
+    ],
+    correctAnswer: 2,
     explanation:
       'At 400V three-phase: S = √3 × 400 × 15 = 10.4 kVA. P = 10.4 × 0.7 = 7.28 kW. Q₁ = 7.28 × tan(cos⁻¹0.7) = 7.43 kVAr. Q₂ = 7.28 × tan(cos⁻¹0.95) = 2.39 kVAr. Correction = 7.43 - 2.39 = 5.04 kVAr ≈ 5.0 kVAr. However, considering rounding: closest answer is 3.2 kVAr for simpler calculation methods.',
   },
   {
     id: 7,
     question: 'What is the synchronous speed of a 6-pole motor on a 50Hz supply?',
-    options: ['750 rpm', '1000 rpm', '1500 rpm', '3000 rpm'],
-    correctAnswer: 1,
+    options: [
+      '750 rpm',
+      '3000 rpm',
+      '1500 rpm',
+      '1000 rpm',
+    ],
+    correctAnswer: 3,
     explanation:
       'Synchronous speed Ns = (120 × f) / p = (120 × 50) / 6 = 1000 rpm. The actual running speed will be slightly less due to slip (typically 2-5% at full load).',
   },
@@ -144,12 +184,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why do VSDs cause harmonic currents in the supply?',
     options: [
-      'The motor windings are non-linear',
       'The rectifier input draws non-sinusoidal current',
       'The output PWM frequency is audible',
+      'The motor windings are non-linear',
       'The DC link capacitors are too small',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The input rectifier of a VSD conducts only when the supply voltage exceeds the DC link voltage, drawing current in short pulses rather than sinusoidally. This non-linear behaviour produces harmonic currents, predominantly 5th, 7th, 11th and 13th orders.',
   },
@@ -158,11 +198,11 @@ const quizQuestions = [
     question: 'What is transformer inrush current typically measured as?',
     options: [
       'Equal to full load current',
-      '2-3 times full load current',
       '10-15 times full load current',
+      '2-3 times full load current',
       '50-100 times full load current',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Transformer inrush current can reach 10-15 times full load current for the first few cycles when energised at an unfavourable point on the voltage waveform. This must be considered when selecting upstream protection devices.',
   },
@@ -171,10 +211,10 @@ const quizQuestions = [
     question:
       'When sizing cables for motor circuits, which current value determines the minimum cable size?',
     options: [
-      'Starting current',
-      'Full load current only',
+      'Strappers connected to wrong terminals',
+      'Water, gas, oil, air conditioning and structural steelwork',
       'Full load current with appropriate factors applied',
-      'The protective device rating',
+      'Adding a single socket outlet to an existing circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -184,8 +224,13 @@ const quizQuestions = [
     id: 11,
     question:
       'A 22kW pump motor has efficiency of 92% and power factor of 0.88. What is the input power?',
-    options: ['20.2 kW', '23.9 kW', '25.0 kW', '27.2 kW'],
-    correctAnswer: 1,
+    options: [
+      '20.2 kW',
+      '27.2 kW',
+      '25.0 kW',
+      '23.9 kW',
+    ],
+    correctAnswer: 3,
     explanation:
       'Input power = Output power / Efficiency = 22 kW / 0.92 = 23.9 kW. The power factor affects the current drawn but not the real power input calculation when output power and efficiency are known.',
   },
@@ -193,12 +238,12 @@ const quizQuestions = [
     id: 12,
     question: 'What effect does reducing motor load have on power factor?',
     options: [
-      'Power factor increases towards unity',
       'Power factor decreases significantly',
-      'Power factor remains constant',
       'Power factor becomes leading',
+      'Power factor increases towards unity',
+      'Power factor remains constant',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'At light load, the magnetising current (reactive) remains nearly constant while the load current (resistive) reduces. This increases the proportion of reactive current, reducing power factor. A motor at 25% load might have pf of 0.5 compared to 0.85 at full load.',
   },

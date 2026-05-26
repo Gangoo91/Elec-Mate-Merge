@@ -5,12 +5,12 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What does BMS stand for?',
     options: [
+      'Business Management Software',
       'Building Management System',
       'Basic Monitoring Service',
       'Building Maintenance Schedule',
-      'Business Management Software',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       "BMS stands for Building Management System, which is the central control system for building services. It's sometimes also called a Building Automation System (BAS).",
   },
@@ -19,11 +19,11 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     question: 'Which two systems can commonly be controlled by a BMS?',
     options: [
       'Windows and doors',
-      'HVAC and lighting',
       'Furniture and carpets',
+      'HVAC and lighting',
       'Phones and computers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A BMS typically controls HVAC (heating, ventilation, air conditioning) and lighting systems, along with other building services like access control and energy management.',
   },
@@ -32,11 +32,11 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     question: 'What is the main purpose of a BMS?',
     options: [
       'To replace all electrical systems',
-      'To control efficiency, safety, compliance, and comfort',
-      'To eliminate the need for maintenance',
       'To increase building construction costs',
+      'To eliminate the need for maintenance',
+      'To control efficiency, safety, compliance, and comfort',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The main purpose of a BMS is to improve efficiency, enhance safety, ensure compliance with regulations, and maintain occupant comfort through centralised control and monitoring.',
   },
@@ -44,12 +44,12 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     id: 4,
     question: 'How does a BMS improve building efficiency?',
     options: [
-      'It makes buildings taller',
       'It reduces energy waste through automated control',
-      "It changes the building's appearance",
-      'It increases the number of occupants',
+      'Predictive analytics and AI capabilities',
+      'Ensures emergency systems work to required standards',
+      'BMS provides centralised control vs manual individual controls',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A BMS improves efficiency by reducing energy waste through automated control of systems, optimising performance based on occupancy and usage patterns, and monitoring energy consumption.',
   },
@@ -70,12 +70,12 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     id: 6,
     question: 'How does a BMS help reduce environmental impact?',
     options: [
+      'Eliminates the need for renewable energy',
       "Changes the building's exterior colour",
       'Helps buildings meet net-zero and sustainability targets',
       "Reduces the building's physical footprint",
-      'Eliminates the need for renewable energy',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A BMS helps reduce environmental impact by optimising energy use, reducing waste, and helping buildings meet net-zero and sustainability targets through intelligent control and monitoring.',
   },
@@ -83,12 +83,12 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     id: 7,
     question: 'How do modern BMS differ from early building control systems?',
     options: [
-      'Modern systems are smaller in size',
-      'Modern systems are fully integrated and IoT-connected',
       'Modern systems cost less to install',
+      'Modern systems are smaller in size',
       'Modern systems require no maintenance',
+      'Modern systems are fully integrated and IoT-connected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Modern BMS are fully integrated systems connected to the Internet of Things (IoT), while early systems were standalone units controlling single elements like heating.',
   },
@@ -96,12 +96,12 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     id: 8,
     question: 'Which technological advancement has significantly improved modern BMS?',
     options: [
-      'Faster internet speeds only',
       'Predictive analytics and AI capabilities',
+      'Faster internet speeds only',
       'Better building materials',
       'More efficient light bulbs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Predictive analytics and AI capabilities have revolutionised BMS by enabling systems to 'learn' usage patterns and optimise performance automatically, making them much smarter than traditional controls.",
   },
@@ -109,10 +109,10 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     id: 9,
     question: 'What is a key difference between BMS and traditional controls?',
     options: [
-      'BMS systems are always wireless',
+      'To control efficiency, safety, compliance, and comfort',
       'BMS provides centralised control vs manual individual controls',
-      'BMS systems are only for large buildings',
-      "BMS systems don't require electricity",
+      'Helps buildings meet net-zero and sustainability targets',
+      'It reduces energy waste through automated control',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,12 +123,12 @@ export const bmsModule1Section1QuizData: QuizQuestion[] = [
     question:
       "Why should electricians understand BMS even if they aren't directly installing them?",
     options: [
-      "It's required by law in all countries",
+      'BMS provides centralised control vs manual individual controls',
+      'Modern systems are fully integrated and IoT-connected',
       'Clients increasingly ask for systems that integrate with BMS',
-      'It makes electrical work faster',
-      'It reduces the cost of electrical installations',
+      'Helps buildings meet net-zero and sustainability targets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Electricians need to understand BMS because clients increasingly rely on them for energy savings and compliance, and may ask electricians to install or maintain systems that integrate into the BMS.',
   },

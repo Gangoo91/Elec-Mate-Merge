@@ -49,11 +49,11 @@ const checks = [
     question: 'What is the primary purpose of an accident investigation?',
     options: [
       'To identify who to blame and discipline',
-      'To establish root cause and prevent it happening again',
-      'To complete the insurance paperwork',
       'To satisfy the HSE inspector visiting next week',
+      'To complete the insurance paperwork',
+      'To establish root cause and prevent it happening again',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'HSE HSG245 is explicit — the purpose of investigation is LEARNING, not blame. Blame-driven investigations push people to lie and hide near-misses, which destroys the data the company needs to actually improve. Find the cause, fix the system, share the lesson.',
   },
@@ -62,12 +62,12 @@ const checks = [
     question:
       'An electrician gets a shock from a CU because the supply wasn’t locked off. What is the immediate cause vs the root cause?',
     options: [
-      'Immediate cause = the shock; root cause = the electrician’s carelessness',
       'Immediate cause = supply was live during work; root cause = no lock-off culture / no enforcement / no kit issued',
-      'Immediate cause = the CU; root cause = the customer',
-      'Immediate cause = bad luck; root cause = it was Friday',
+      'To prevent individual strands from splaying, ensure all strands make contact with the terminal, and provide a consistent, repeatable connection',
+      'A pollution prevention guide for works and maintenance near water, published by the Environment Agency and partners',
+      'Faintness, nausea, breathlessness, paleness, sweating, and eventually loss of consciousness',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Immediate cause = what physically did the damage (live supply during work). Underlying cause = why it was live (no lock-off used). Root cause = WHY no lock-off — kit not issued, no enforcement, supervisor never checks, no consequence for skipping it. Fix the root cause and the immediate cause stops happening.',
   },
@@ -75,12 +75,12 @@ const checks = [
     id: 'five-whys-check',
     question: 'When using the 5 Whys, when do you stop asking?',
     options: [
-      'After exactly 5 questions, no more, no fewer',
+      'The manufacturer declares conformity with applicable directives including essential health and safety requirements',
+      'It should be allocated to specific goals (extra debt payment, savings, business investment)',
       'When you reach a cause you can actually fix at a system level (not just blame an individual)',
-      'When you reach the first reasonable answer',
-      'When the casualty gets bored',
+      'Temptation bundling pairs the habit with a simultaneous pleasure, not a delayed reward',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The 5 in 5 Whys is a guideline — sometimes you need 3, sometimes 7. Stop when you reach a cause that points to a SYSTEM fix (process, training, kit, supervision) rather than just "Dave wasn’t paying attention". If your last answer is a person’s name, you haven’t finished — keep asking why that person was put in that position.',
   },
@@ -93,10 +93,10 @@ const quizQuestions = [
     id: 1,
     question: 'According to HSE HSG245, the goal of accident investigation is:',
     options: [
-      'Punishment of the responsible person',
+      'The responsible person (usually the employer or building owner)',
       'Learning — identifying root cause and preventing recurrence',
-      'Justifying compensation claims',
-      'Proving the company was not at fault',
+      'Persons not in their employment (e.g. members of the public)',
+      'It narrows down choices and improves accuracy',
     ],
     correctAnswer: 1,
     explanation:
@@ -107,10 +107,10 @@ const quizQuestions = [
     question:
       'Which of the following is an example of an UNDERLYING cause of an accident?',
     options: [
-      'Worker tripped on a trailing cable',
-      'Worker fell and broke their wrist',
+      'It provides a numerical fit factor, giving a more precise and objective measure of the seal',
+      'Record the specific symptoms, time, date, conditions and any operator observations in detail',
       'No site rule about cable management; supervisors don’t enforce; nowhere to coil cables off the floor',
-      'It was raining outside',
+      'To verify that the contractor&rsquo;s work continues to comply with BS 7671 and other relevant standards',
     ],
     correctAnswer: 2,
     explanation:
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       'How many "whys" should you typically ask in a 5 Whys analysis?',
     options: [
-      'Exactly 5, regardless of where it leads',
-      'Until you reach a system-level cause that can be fixed',
       'As few as possible to close the case',
+      'Exactly 5, regardless of where it leads',
       'Until the casualty admits fault',
+      'Until you reach a system-level cause that can be fixed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '5 is a guideline. Stop when you reach a cause you can act on at a system level (process, training, kit, supervision). If your final answer is just a person’s name, you haven’t got there yet — ask why that person was in that position with that information and that kit.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of these is the FIRST stage of a workplace accident investigation?',
     options: [
-      'Decide on disciplinary action',
       'Gather information — facts, photos, statements, equipment state',
-      'Submit the F2508 RIDDOR form',
-      'Brief the rest of the workforce',
+      'Supporting team working and project success at all levels',
+      'The time an activity can be delayed without affecting project completion',
+      'Replacing equipment under warranty or for traceability',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Stage 1 is information gathering. Photos before anything moves, witness statements while memory is fresh, equipment as found. Without good evidence the analysis is guesswork. RIDDOR, briefings and any actions come later — once you actually know what happened.',
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'What is the "Swiss cheese" model of accident causation?',
     options: [
-      'A bad sandwich',
+      'Type (rod / plate / mat), accessibility for measurement (test link), corrosion, label per Reg 514.13.1, and a measured Ra giving compliant Zs at the furthest point',
       'A model showing that accidents happen when holes in multiple layers of defence (procedures, equipment, supervision, training) line up',
-      'A tool for measuring fatigue',
-      'A way of rating cheese quality at the canteen',
+      'To detect faults (short circuits, mis-wiring, low IR, missing CPC) BEFORE applying voltage that could cause shock, fire, or equipment damage',
+      'Personal exposure records for at least 40 years and health surveillance records, with workers having access to their own records',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,10 +162,10 @@ const quizQuestions = [
     question:
       'After an investigation, the action plan identifies a need for new lock-off kit and revised site induction. Who owns the implementation?',
     options: [
-      'The casualty',
-      'The HSE inspector',
+      'To verify the sensors respond to a known concentration of test gas',
+      'Through facial expressions, tone of voice, body language, and behavioural patterns — often unconsciously',
       'Named persons within the company, with target completion dates and follow-up checks',
-      'Whoever happens to be in the office that day',
+      'Trustworthiness — maintaining standards of honesty and integrity',
     ],
     correctAnswer: 2,
     explanation:
@@ -176,12 +176,12 @@ const quizQuestions = [
     question:
       'You investigated a near-miss, identified the root cause, and the company implemented a fix. Six months later a similar near-miss happens. What does this tell you?',
     options: [
-      'The investigation was a waste of time',
+      'To provide a sealed entry point for cables entering the enclosure, maintaining the IP rating',
+      'Evaluating environmental impacts throughout a product\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life from raw materials to disposal',
+      'The risk of serious injury from hazardous substances or conditions within the space',
       'The fix didn’t address the actual root cause, OR the lesson hasn’t reached everyone yet',
-      'Near-misses are unavoidable',
-      'It’s the casualty’s fault again',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A repeat near-miss is a flag that either the original analysis missed the real root cause, or the fix didn’t propagate (toolbox talk skipped on the night shift, RAMS not updated for that crew, new starter induction missed it). Re-investigate. Lessons-learned only count if they reach everyone.',
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'The HSE accident-causation iceberg suggests that for every fatal accident, there are roughly:',
     options: [
-      'Just the fatal accident',
-      'Several similar minor injuries',
       'Around 3,000 unsafe acts and conditions, hundreds of near-misses, and dozens of minor injuries',
-      'One major and one minor injury',
+      'Make a phone call to discuss the situation, check for any dispute about the work, and attempt to agree a payment plan',
+      'They reduce grip on loads and underfoot surfaces, increasing the risk of slips and dropped loads',
+      'The longest sequence of dependent tasks determining minimum project duration',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The Heinrich / Bird ratio (roughly 1 : 30 : 300 : 3000 for fatal : major : minor : near-miss / unsafe act) is the foundation of why the HSE pushes near-miss reporting so hard. Every fatality sits on top of a much larger pyramid of warnings that were missed. Catch the warnings, the fatality never happens.',
   },

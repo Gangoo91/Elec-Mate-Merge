@@ -16,10 +16,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why is it important to allow for 5–10% wastage when estimating?',
     options: [
-      'To make more profit',
+      'All earthing and bonding conductors to the means of earthing',
       'To account for cutting waste and unexpected needs',
-      'To impress clients',
-      "It's not necessary",
+      'Leptospirosis bacteria from rat urine in contaminated water',
+      'By visually checking core colours at terminations',
     ],
     correctIndex: 1,
     explanation:
@@ -28,8 +28,13 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'Name one tool used to measure distances accurately from drawings.',
-    options: ['Ruler', 'Scale rule', 'Calculator', 'Computer'],
-    correctIndex: 1,
+    options: [
+      'Computer',
+      'Calculator',
+      'Scale rule',
+      'Ruler',
+    ],
+    correctIndex: 2,
     explanation:
       'A scale rule is specifically designed to measure scaled distances on technical drawings accurately.',
   },
@@ -37,12 +42,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What is the benefit of a site walkthrough compared to drawings alone?',
     options: [
-      "It's faster",
-      "It's cheaper",
+      'Travelling cable with enhanced flexibility',
+      'Efficiency = useful energy out ÷ total energy in (× 100 for percentage)',
+      'Low-level power and data distribution in offices',
       'Confirms actual site conditions and identifies obstacles',
-      "It's not beneficial",
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Site walkthroughs reveal physical conditions, obstacles, and additional requirements not shown on drawings.',
   },
@@ -53,10 +58,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main risk of under-estimating materials?',
     options: [
-      'Higher profits',
+      'Torque reduces (field weakening)',
       'Delays and project stoppages',
-      'Better quality work',
-      'Easier installation',
+      'A loss of contact with reality',
+      'Three phases and a neutral',
     ],
     correctAnswer: 1,
     explanation:
@@ -74,16 +79,26 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What percentage should typically be added for wastage?',
-    options: ['1–2%', '5–10%', '15–20%', '25–30%'],
-    correctAnswer: 1,
+    options: [
+      '15–20%',
+      '1–2%',
+      '25–30%',
+      '5–10%',
+    ],
+    correctAnswer: 3,
     explanation:
       '5–10% wastage allowance covers cutting waste, terminations, and minor unforeseen requirements.',
   },
   {
     id: 4,
     question: 'Which tool is used to measure scaled distances on drawings?',
-    options: ['Tape measure', 'Scale rule', 'Calculator', 'Spirit level'],
-    correctAnswer: 1,
+    options: [
+      'Scale rule',
+      'Tape measure',
+      'Calculator',
+      'Spirit level',
+    ],
+    correctAnswer: 0,
     explanation:
       'A scale rule is designed specifically for measuring scaled distances on technical drawings.',
   },
@@ -91,10 +106,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why is it important to check site conditions during estimation?',
     options: [
-      'To meet clients',
+      '90 minutes focused work followed by 15-20 minute break',
       'To identify obstacles and additional material needs',
-      'To take photos',
-      'To check weather',
+      'Criminal prosecution — potentially imprisonment',
+      'Apprentice \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2192 Core \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2192 Approved \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2192 Technician',
     ],
     correctAnswer: 1,
     explanation:
@@ -104,12 +119,12 @@ const quizQuestions = [
     id: 6,
     question: 'Name one common error in estimating cable lengths.',
     options: [
-      'Using the wrong cable type',
+      'Two conductors at line terminal',
+      'An open circuit or break in the conductor',
       'Forgetting vertical drops or rises',
-      'Ordering too much',
-      'Using wrong colours',
+      'Test on a known live source',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Vertical drops, rises, and routing around obstacles are commonly forgotten when measuring from plan views.',
   },
@@ -117,20 +132,25 @@ const quizQuestions = [
     id: 7,
     question: 'What should you always include besides cables and containment?',
     options: [
-      'Tools',
+      'Means for cutting off supply and isolation',
+      'Risk assessment, method statement, and emergency procedures',
+      'Fire stopping is present and appropriate',
       'Fixings, clips, grommets, and small consumables',
-      'Spare parts',
-      'Test equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Small items like fixings, clips, and grommets are essential but easily forgotten in estimates.',
   },
   {
     id: 8,
     question: 'Who should verify the materials estimate for accuracy?',
-    options: ['The client', 'Team members or supervisors', 'The supplier', 'Nobody'],
-    correctAnswer: 1,
+    options: [
+      'Team members or supervisors',
+      'I_line = sqrt(3) x I_phase',
+      'Store safely for future reference',
+      'To convert three-phase to two-phase',
+    ],
+    correctAnswer: 0,
     explanation:
       'Peer review by team members or supervisors helps catch errors and improve accuracy.',
   },
@@ -138,10 +158,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is a benefit of using digital estimating software?',
     options: [
-      "It's free",
+      'It\\\\\\\\\\\\\\\'s not safe for isolation work',
       'Faster calculations and fewer manual errors',
-      'It works offline',
-      "It's easier to learn",
+      'Typically 5 years depending on type and use',
+      'Supervisory Control And Data Acquisition',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +171,12 @@ const quizQuestions = [
     id: 10,
     question: 'Give one example of a consequence of poor estimating.',
     options: [
-      'Better quality work',
+      'Missed alerts due to system misconfiguration',
+      'Not all loads operate simultaneously at full load',
       'Cost overruns, wasted materials, or delayed project completion',
-      'Improved efficiency',
-      'Higher customer satisfaction',
+      'Corresponding adjustments to national inventories',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Poor estimating leads to shortages, excess materials, cost overruns, and project delays.',
   },

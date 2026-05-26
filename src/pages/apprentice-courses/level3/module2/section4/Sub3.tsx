@@ -42,12 +42,12 @@ const checks = [
     question:
       "An installer presents you with a 12-string commercial PV array. Each string short-circuit current (Isc) is 11 A. They have not fitted string overcurrent protective devices and have run 16 mm² cable from each string to the combiner. Should you accept this on a Section 712 inspection?",
     options: [
-      "Reject straight away — string fuses are mandatory on every PV array regardless of string count.",
+      "BS 7671 643.3 specifies 500 V DC for SELV/PELV at 250 V; 500 V DC for LV up to 500 V; 1000 V DC for LV &gt;500 V. BUT — modern installations have electronic devices (LED drivers, dimmers, AFDDs, RCBOs with electronic detection, surge protection devices, smart meters) that 500 V will damage. Standard L3 practice: disconnect or shunt-out electronic devices before IR test, OR test at 250 V (lower, less damaging) and apply manufacturer's compliance criterion. Megger MFT1741+ supports 250 V / 500 V / 1000 V. The risk of damage is high; the cost of a customer-replaced LED driver wall is real.",
+      "Notices must be 'clearly and durably marked' (Reg 514.13.1) and 'shall be securely fixed in a visible position'. The practical interpretation: typed/printed labels on durable substrate (BS 951 plates for earthing, laminated card for inside-CU notices), securely fixed (screwed, riveted, or industrial adhesive), readable from a normal stand-back distance. Hand-written sticky labels degrade fast and aren't compliant.",
+      "Structured cabling is the standardised installation of data cabling (typically Cat 6/Cat 6A copper, plus single-mode and multi-mode fibre) supporting IT and telephony in commercial buildings. Key standards: BS EN 50173 series, TIA-568. Specific competence in cable termination (RJ45, fibre splicing), patch panels, cabinet installation and certification testing (Fluke DTX-CableAnalyzer or similar). BICSI training is the international standard route.",
       "Check the cable continuous current-carrying capacity (Iz) against the calculated reverse current. Regulation 712.433.102(b) gives two compliance routes for arrays with more than two parallel sub-arrays — either no OCPD with Iz at least equal to (N − 1) times Isc max, or fit OCPDs with rated current between 1.1 times Isc max and Iz. With N=12 and Isc=11 A, the no-OCPD route demands Iz of at least 11 times 11 = 121 A. A 16 mm² cable does not meet that, so as installed it is non-compliant. Either upsize the cable or fit per-string OCPDs sized between 1.1 times 11 = 12.1 A and the cable Iz.",
-      "Accept the install because string fuses are only required for arrays over 100 kW.",
-      "Accept because the inverter has built-in DC overcurrent detection.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Section 712.433.101 and 712.433.102 set the rules for PV string protection. The rationale is reverse-current fault protection — under a string short-circuit fault the surrounding strings can backfeed current into the faulty string, and that current must either be safely carried by the cable or interrupted by a per-string OCPD. The 1.1 coefficient in route (b) reflects the worst-case Isc multiplier; A4:2026 notes the coefficient is to be adapted upward for special module technologies or reflective conditions. Practitioners should never accept an array of N greater than two parallel sub-arrays without checking one of the two routes.",
   },
@@ -56,12 +56,12 @@ const checks = [
     question:
       "A customer wants a 5 kWp single-phase PV array on a domestic install. The inverter is rated 16 A nominal output. Which DNO connection regime applies, and who notifies the DNO?",
     options: [
-      "G99 — every PV array goes through G99 application.",
+      "Ensure the earthing conductor is RECONNECTED BEFORE the supply is re-energised. The temporary disconnection during the test must be undone or the installation will operate without its protective earth path on first energisation — exposed-conductive-parts would have no defined potential relative to earth and a downstream fault could not disconnect.",
+      "Deeper discharge cycles cause greater mechanical stress on the electrode materials (lithium intercalation/de-intercalation), leading to faster capacity degradation — operating at 80% DoD instead of 100% DoD can double the cycle life",
+      "Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s \\\\\\\\\\\\\\\"somatic marker hypothesis\\\\\\\\\\\\\\\") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness",
       "G98 — single-phase PV up to and including 16 A per phase falls under ENA Engineering Recommendation G98 'Connect and Notify'. The MCS-certified installer notifies the DNO within 28 days of commissioning using the standard G98 form. No prior approval is required for G98 connections.",
-      "Neither — domestic PV under 4 kWp does not need DNO notification.",
-      "G83 — that is still the current document for domestic PV.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "ENA Engineering Recommendation G98 governs grid connection of small-scale embedded generators up to and including 16 A per phase per inverter (for single-phase, that is roughly 3.68 kW per inverter at 230 V; for three-phase, around 11 kW). G99 governs everything above that threshold and requires prior DNO approval before energising. G83 is the legacy document G98 replaced — you may still see it cited on older paperwork but new installs reference G98 / G99. Notification is the MCS installer's duty; on a non-MCS install (rare) the customer would need to pursue this themselves.",
   },
@@ -70,10 +70,10 @@ const checks = [
     question:
       "Why does a grid-connected PV inverter shut down within 0.5 seconds when the mains supply fails, even though the array is still producing DC?",
     options: [
-      "The inverter is broken — it should keep running through a power cut.",
+      "Five steps. (1) Initial visual inspection — device fitted correctly, terminations torqued per manufacturer, label visible. (2) Continuity tests (R1+R2) on the dead circuit per the standard MWC test set. (3) IR test at 500 V — disconnect or use 250 V if the AFDD-RCBO\\\\\\\\\\\\\\\\\\\\\\\\'s electronics can\\\\\\\\\\\\\\\\\\\\\\\\'t withstand 500 V (most modern devices tolerate 500 V on the line side but check the manufacturer manual). (4) Energise, single AC test at 1 x I delta n on the RCBO portion (the RCD half is verified normally). (5) Functional test of the AFDD portion via the manufacturer test button — press T, device trips, reset. Document the AFDD test on the Schedule of Test Results.",
       "Anti-islanding — the inverter detects loss of grid reference and shuts down within the time limits of G98 / G99 (typically loss-of-mains protection per ENA EREC G98 / G99). This protects DNO engineers who may be working on what they believe is a dead supply, prevents asynchronous reclosure damage, and stops a small generator trying to support a much larger network it cannot stabilise. To run through a power cut you need a hybrid inverter with explicit islanded-mode capability and a transfer arrangement that isolates the property from the grid first.",
-      "The inverter only works in daylight.",
-      "DC current cannot flow without an AC sine wave to follow.",
+      "Section 722 applies to circuits intended to supply electric vehicles for charging purposes — both Mode 3 (AC charging through a dedicated charge point) and Mode 4 (DC fast / rapid charging) are within scope. The section adds requirements on top of the general BS 7671 framework for PEN-fault protection on TN-C-S (PNB) supplies, RCD requirements for AC and DC fault detection, additional protection arrangements, cable rating and labelling. A4:2026 has refined Section 722 alongside the broader updates around PNB terminology and AFDD coverage.",
+      "The IET CoP is the practical implementation guide that walks through how to apply Section 722 on a real install — supply assessment, earthing arrangement choice, protective device selection, cable sizing, isolation, labelling, commissioning. Currently in its 5th edition with regular updates to track BS 7671 amendments and OZEV regulation changes. Not legally mandatory in itself but referenced by reasonable-installer expectations and by MCS / OZEV scheme requirements. The apprentice should recognise it as a practical companion to Section 722 — Section 722 is the legal floor; the IET CoP is the practical playbook.",
     ],
     correctIndex: 1,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       "What is the scope of BS 7671:2018+A4:2026 Section 712, and how was it changed in the A4:2026 amendment?",
     options: [
-      "Only off-grid PV — grid-connected systems are outside BS 7671.",
+      "A UK charity providing emotional, physical and financial wellbeing support specifically to the construction community and their families. Headline services include a 24/7 confidential helpline (0345 605 1956), a Helpline app, financial assistance grants for trade workers in difficulty, mental health and wellbeing training (Mental Health First Aid, Wellbeing Training), and signposting to appropriate professional services. The helpline is staffed by trained advisers and is free. Anyone in the construction industry — apprentices, qualified tradespeople, family members — can call.",
       "Section 712 covers PV installations not connected to the public distribution network, in parallel with it, and as an alternative to it. The scope was reaffirmed in A4:2026 with the section extensively revised — new and amended clauses cover string OCPD selection (712.433), maximum DC voltage calculation (712.433.101.1), measures to prevent DC on-load interruption (712.537.2.2.104), remote operation in combiner boxes (712.537.2.2.105), Insulation Monitoring Device selection (712.538.101 referencing BS EN 61557-8), equipotential bonding of PV metal structures (712.542.101), DC functional bonding ratings (712.2 table), enclosure standards for outdoor installation (712.512.102 IP44 plus IK07), and PV module conformity to relevant electrical equipment standards (712.511.101 referencing BS EN 61215 series).",
-      "Section 712 only applies to industrial PV over 100 kW.",
-      "Section 712 was deleted in A4:2026 and its content moved to a separate IET Code of Practice.",
+      "When you need to see the SHAPE of the voltage / current waveform over time — not just its RMS value. Typical L3 use cases: (1) Diagnosing harmonic distortion on a circuit where TRMS multimeter readings look fine but the load is mis-behaving. (2) Spotting voltage transients (spikes, sags, swells) that are too brief for a multimeter to capture but trip protective devices. (3) Diagnosing intermittent faults that show up as glitches. (4) Verifying VFD output waveforms. Modern handheld scopes (Fluke 125B, Megger Power Quality analysers, Hantek HT06) are battery-powered and field-usable. L3 apprentices don't usually own one but should know when to ask for one.",
+      "Heat pumps deliver heat at a lower flow temperature than a gas boiler — typically 35 to 50 °C versus 65 to 75 °C for a boiler. The lower the flow temperature the higher the SCOP. Underfloor heating runs at 35 to 40 °C and gives the highest SCOP. Oversized radiators (larger surface area than the original boiler-sized radiators) deliver the same heat output at the lower flow temperature, keeping SCOP high. Original boiler radiators sized for 70 °C flow forced to run at 50 °C will deliver too little heat output — the room never reaches setpoint, the heat pump runs constantly, the customer is cold and the SCOP is poor. The MCS heat-loss survey identifies which rooms need radiator upgrades; the customer often has to budget for new emitters as part of the install.",
     ],
     correctAnswer: 1,
     explanation:
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       "What does Regulation 712.512.102 require for the enclosure of PV electrical equipment installed outdoors?",
     options: [
-      "Any enclosure marked IP rating is acceptable.",
+      "All construction work in Great Britain, with proportionate duties based on project type and size. Notifiable projects (more than 30 working days with 20+ workers simultaneously, or exceeding 500 person-days) trigger additional duties including HSE notification (F10) and the appointment of Principal Designer and Principal Contractor for multi-contractor projects.",
+      "A RAMS that uses the same generic wording for every job ('standard electrical install — usual precautions') without reflecting the specific hazards and conditions of THIS site. The inspector spots it instantly because the wording doesn't match what's actually present on the job. It's evidence that the assessment wasn't 'suitable and sufficient' under MHSWR 1999 Reg 3 even though the document exists.",
       "Outdoor PV electrical equipment shall have a degree of protection not less than IP44 to BS EN 60529 and an impact rating not less than IK07 to BS EN 62262. On a Section 712 acceptance the enclosure shall be labelled accordingly or be accompanied by manufacturer documentation evidencing compliance — absence of evidence is non-compliance.",
-      "IP55 is the minimum but only on roof-mounted equipment.",
-      "There is no IP requirement for PV equipment.",
+      "Per HSE GS38 — prove the voltage indicator on a known live source BEFORE the test, confirm absence of voltage on the test point, then prove on a known live source AFTER. Three-step prove-test-prove sequence ensures the indicator was working at the moment of test.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "IP44 is splash protection plus protection against tools and small objects 1 mm and over. IK07 is a 2 J impact rating. The combination is appropriate for typical UK outdoor weather and incidental contact, including hail and minor mechanical knocks. The acceptance rule is direct — labelling or documentation is required, and a verifier confronted with neither must record non-compliance.",
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       "What does Regulation 712.538.101 require for an Insulation Monitoring Device on a PV installation, and how is compliance evidenced?",
     options: [
-      "Any IMD will do, no standard reference applies.",
+      "A toolbox talk is short (5-10 min), focused on a single topic, delivered on site by a supervisor or senior operative, often at the start of a shift. It's a refresh / awareness tool, not initial training. Formal training (e.g. PASMA, IPAF, asbestos awareness) is longer, structured, certificated and provides the underlying competence. Toolbox talks reinforce that competence in the day-to-day work.",
+      "Significant career achievement and contribution to engineering practice — typically 10+ years senior engineering experience, evidence of leadership, technical contribution to the profession (publications, mentoring, committee work, etc.), and a Fellow's nomination process. CEng registration is typical alongside FIET. Annual subscription higher (£200-300/year). Fellowship is recognition of senior career standing.",
+      "Minimum £5 million cover (most policies are written at £10m as standard). The certificate must be displayed at each place of business — historically a printed certificate on the wall; the 2008 amendment regulations allow electronic display provided employees can readily access it. Failure to insure is a criminal offence with daily-rate fines up to £2,500 for each day uninsured.",
       "Where an IMD is provided, it shall be selected in accordance with BS EN 61557-8. Compliance is evidenced by documentation, marking or a declaration of conformity to the standard. Where no such evidence exists, the installation does not meet the requirement and must be treated as non-compliant until evidence is produced.",
-      "IMDs are only required on three-phase PV systems.",
-      "IMDs must be calibrated by the installer on site, no standard applies.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "BS EN 61557-8 is the product standard for Insulation Monitoring Devices used in IT systems and selected DC applications. The acceptance rule is precise — absence of conformity evidence is non-compliance, and the verifier should not accept verbal assurance. IMDs detect insulation degradation on the DC side before the fault becomes a hazard. Section 712 requires their use in defined configurations.",
   },
@@ -129,12 +129,12 @@ const quizQuestions = [
     question:
       "What is the Regulation 712.2 functional bonding conductor automatic disconnecting device requirement for a PV array peak rating in the 50 to 100 kW band?",
     options: [
-      "1 A irrespective of array size.",
       "The maximum rated current of the automatic disconnecting device in the functional bonding conductor shall be 3 A for arrays over 50 kW up to 100 kW. The full table of the same regulation specifies 1 A for arrays under 25 kW, 2 A for 25 to 50 kW, 3 A for 50 to 100 kW, 4 A for 100 to 250 kW and 5 A above 250 kW.",
-      "10 A regardless of array power.",
-      "The bonding conductor never has an automatic disconnecting device.",
+      "As a social skill, active listening builds trust, reduces misunderstanding, and creates the psychological safety needed for effective collaboration — the speaker feels genuinely heard, which strengthens the working relationship and increases the quality of information shared",
+      "Firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s contracts manager / director - that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s their decision. The L3 supervisor escalates to them with the facts; they decide commercial response. The L3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s personal duty is to refuse the unsafe instruction; the commercial decision is above that.",
+      "A poor or loose termination at one end (most often the MET) or at the BS 951 clamp itself — oxidised contact face, screw not torqued, ferrule damaged. The cable resistance alone should be ~7 mOhm; 0.85 ohm means about 0.84 ohm of contact resistance somewhere.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Reg 712.2 table is short but very specific — a stepped scale of permitted device ratings in the functional bonding conductor based on PV array peak power. The complete five-row table is published in BS 7671. This functional bonding handles transient and induced currents, not fault clearance, so the device ratings are deliberately small and ascend slowly with array size.",
   },
@@ -143,10 +143,10 @@ const quizQuestions = [
     question:
       "An MCS-certified installer commissions a 4 kWp domestic PV array with a single-phase 16 A inverter. What is the DNO notification regime, and what is the timing requirement?",
     options: [
-      "G99, application required before any work begins.",
+      "COP = useful heat output (kW) / electrical input (kW). It tells you how much heat each kWh of electricity moves. A COP of 3 means 1 kWh in produces 3 kWh of heat out. COP varies with outdoor temperature, flow temperature and load — manufacturers also quote SCOP (seasonal COP) which averages performance across the heating season. The MCS standard for heat pump installation requires SCOP to be calculated and disclosed to the customer.",
       "G98 'Connect and Notify' applies because the inverter output is up to and including 16 A per phase. The MCS installer notifies the DNO within 28 days of commissioning using the standard G98 notification form. No prior DNO approval is required for G98 connections — the installer connects, then notifies. The DNO is required to update its network records and confirm receipt.",
-      "No notification is required for any domestic PV.",
-      "G83 — the document used by the previous regime.",
+      "Self-Awareness: recognise the emotional response (possibly frustration or anxiety about change). Self-Regulation: manage the resistance impulse and reappraise the change as professional development. Motivation: connect the update to professional purpose and mastery. Empathy: understand that colleagues may be at different stages of acceptance. Social Skills: communicate the change constructively, help the team adapt, and create a learning environment for the new requirements",
+      "Culpability (very high / high / medium / low) × harm category (level A — life-threatening / fatal, level B — serious, level C — minor) — then mapped against the company's turnover band (large / medium / small / micro). The starting point and range are then adjusted for aggravating and mitigating factors.",
     ],
     correctAnswer: 1,
     explanation:
@@ -157,12 +157,12 @@ const quizQuestions = [
     question:
       "Why does a grid-connected PV inverter shut down within sub-second timing when the public distribution supply fails, and what is the engineering term for this protective function?",
     options: [
-      "Inverter overheating cut-out.",
+      "SEG is a regulated payment scheme requiring electricity suppliers to pay domestic generators for electricity exported to the grid. Replaced the Feed-in Tariff (FiT) which closed to new entrants in 2019. SEG tariffs vary by supplier (typically 5-15p/kWh in 2026); customers shop around for the best rate. To qualify, the install must be MCS-certified and the meter must be capable of recording export (most modern smart meters are). The customer signs up for SEG with their chosen supplier; it isn't automatic.",
+      "Wide investigative powers — enter any premises (without warrant) at any reasonable time, take measurements / photographs / samples, inspect documents, require people to answer questions, take statements, take possession of articles or substances they think pose a risk, and seek a magistrate's warrant if entry is refused. Failure to co-operate is itself a separate criminal offence under s.33.",
       "Loss-of-mains (LoM) protection, commonly called anti-islanding. The inverter monitors voltage, frequency, vector shift and rate of change of frequency on the AC side. When the grid reference is lost or moves outside the permitted window defined in ENA G98 / G99, the inverter ceases to export within the specified timing. The intent is to protect DNO engineers, prevent asynchronous reclosure damage and stop a small generator attempting to support a much larger network it cannot stabilise.",
-      "An undocumented manufacturer feature.",
-      "DC starvation when the panels darken.",
+      "Domestic Installer firms are scheme-registered to self-certify Building Regulations Part P notifiable work in dwellings only (single-family homes, flats). Approved Contractor firms are assessed to a higher standard covering commercial, industrial and dwellings — they can self-certify Part P plus issue compliance certificates against BS 7671 across the full scope. The Approved Contractor assessment is more rigorous and carries higher annual fees.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Loss-of-mains protection is one of the most important grid-connection safety features. The rationale is straightforward — anyone working on a network they believe to be dead must remain safe even if a domestic inverter is still trying to push power. Modern inverters combine vector-shift, RoCoF, voltage and frequency window detection. The G99 type-test regime checks each method.",
   },
@@ -171,12 +171,12 @@ const quizQuestions = [
     question:
       "A customer wants their PV system to keep running during a power cut. Why won't a standard grid-tied inverter do this, and what is the alternative?",
     options: [
-      "It will, the customer just needs to flick a switch.",
+      "Sole trader: 5 years from the 31 January Self Assessment deadline for that tax year — so effectively 5 years and 10 months from the end of the tax year. Ltd company: 6 years from the end of the company's accounting period. VAT registered: 6 years for VAT records. Practical advice: keep all records 7+ years. Cloud accounting (Xero, QuickBooks, FreeAgent) makes this easier — records stored indefinitely.",
+      "First, the customer cannot register the system for the Smart Export Guarantee (SEG), so they get no payment from the supplier for any electricity they export. Second, the install is still notifiable to the DNO under G98 / G99 and to building control under Part P — those obligations do not go away just because MCS is skipped.",
+      "The Contracts Manager owns the commercial relationship with the main contractor (or client direct) — the programme, the variations, the labour resourcing, the invoicing. They sit above the Project Engineer and the Site Supervisor, often running several jobs in parallel. They're rarely on any one site full-time but they're the senior decision-maker for that contract.",
       "A standard grid-tied inverter is required to shut down on loss of mains because of anti-islanding rules. Continuous operation through a power cut needs a hybrid inverter with explicit islanded-mode capability, paired with a battery and a changeover arrangement that first electrically isolates the property from the failed grid before re-energising selected circuits. The MCS designer specifies which loads stay alive, the battery sizing, and the transfer time.",
-      "The inverter has a software bug.",
-      "Power cuts permanently damage PV panels.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Anti-islanding makes a standard grid-tied inverter useless during a power cut by design. Hybrid inverters get around it by separating the home from the grid first — a contactor or relay opens, the home becomes its own micro-grid, and the inverter then provides the voltage and frequency reference itself. This is governed by Section 712 plus the manufacturer's installation manual, and on larger systems by G99 and the DNO connection agreement.",
   },
@@ -185,12 +185,12 @@ const quizQuestions = [
     question:
       "What does Regulation 712.542.101 require for the equipotential bonding of PV metal structures?",
     options: [
-      "Bonding is optional for PV metalwork.",
       "Continuity of the bonding conductor from the metallic PV structures to the chosen suitable earthing terminal shall be demonstrable. The acceptance criterion is a continuity test showing low resistance and a secure, permanent connection to the earthing terminal. Where continuity cannot be demonstrated, the installation is non-compliant.",
-      "Bonding is only required where the modules are at over 1500 V DC.",
-      "Bonding is required only on flat-roof installations.",
+      "As a social skill, active listening builds trust, reduces misunderstanding, and creates the psychological safety needed for effective collaboration — the speaker feels genuinely heard, which strengthens the working relationship and increases the quality of information shared",
+      "Inspect the complete system including: module condition (cracking, delamination, snail trails), mounting frame integrity and corrosion, DC cable condition and connections, isolator switch operation, inverter performance data, and earthing continuity",
+      "It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Regulation 712.542.101 covers the electrical bonding of the structural metalwork that holds the PV modules in place. The intent is to ensure that any fault current finding its way onto the array frames, rails or fixings has a low-impedance return to earth. The acceptance rule is direct — continuity must be measurable and the connection must be permanent and secure.",
   },

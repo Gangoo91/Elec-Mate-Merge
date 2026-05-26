@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'In a loop-in lighting circuit, where are the connections between the supply, switch and luminaire made?',
     options: [
-      'At the light switch only',
+      'Optimised for SWDM (multiple wavelengths 850-953nm)',
+      'It remains constant during sensible heating/cooling',
       'At the ceiling rose or luminaire terminal',
-      'At a separate junction box on the wall',
-      'At the consumer unit',
+      'Both operation and evacuation',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'In loop-in wiring, the supply, switch wire and luminaire connections are all made at the ceiling rose or luminaire terminal. This eliminates the need for separate junction boxes, reducing material costs and the number of connection points that could develop faults over time.',
   },
@@ -28,8 +28,13 @@ const quickCheckQuestions = [
     id: 'two-way-switching',
     question:
       'How many conductors (excluding earth) are required between the two switches in a two-way switching arrangement?',
-    options: ['Two conductors', 'Three conductors', 'Four conductors', 'Five conductors'],
-    correctIndex: 1,
+    options: [
+      'Two conductors',
+      'Four conductors',
+      'Three conductors',
+      'Five conductors',
+    ],
+    correctIndex: 2,
     explanation:
       'A two-way switching arrangement requires three conductors between the two switches: one common terminal wire and two strappers (travellers). The common terminal on one switch receives the supply, and the common terminal on the other connects to the luminaire. The two strappers connect L1 to L1 and L2 to L2 between the switches.',
   },
@@ -37,10 +42,10 @@ const quickCheckQuestions = [
     id: 'pir-sensor',
     question: 'What does a PIR sensor detect in order to trigger a lighting circuit?',
     options: [
-      'Changes in visible light levels',
+      'Walk them through it in person, explaining scope, timeline and price',
       'Changes in infrared radiation caused by movement of warm bodies',
-      'Sound and vibration',
-      'Changes in air pressure',
+      'Date, time, and GPS location data (if enabled)',
+      'The client or their representative observing key tests and signing off results',
     ],
     correctIndex: 1,
     explanation:
@@ -50,8 +55,13 @@ const quickCheckQuestions = [
     id: 'lux-levels',
     question:
       'According to CIBSE guidelines, what is the recommended maintained illuminance for a general office area?',
-    options: ['100 lux', '200 lux', '300 lux', '500 lux'],
-    correctIndex: 3,
+    options: [
+      '300 lux',
+      '100 lux',
+      '500 lux',
+      '200 lux',
+    ],
+    correctIndex: 2,
     explanation:
       'CIBSE (Chartered Institution of Building Services Engineers) recommends a maintained illuminance of 500 lux for general office areas. This is the minimum illuminance on the working plane that should be maintained throughout the life of the installation, accounting for lamp depreciation and luminaire dirt accumulation.',
   },
@@ -76,7 +86,12 @@ const quizQuestions = [
     id: 2,
     question:
       'What is the maximum number of points typically recommended on a single domestic lighting circuit protected by a 6 A MCB?',
-    options: ['6 points', '8 points', '10 points', '12 points'],
+    options: [
+      '12 points',
+      '6 points',
+      '10 points',
+      '8 points',
+    ],
     correctAnswer: 2,
     explanation:
       'BS 7671 Guidance Note 1 and the IET On-Site Guide recommend a maximum of approximately 10-12 lighting points per circuit, assuming each point draws around 100 W. However, with modern LED luminaires drawing much less power, the limitation is more often the cable volt drop or the number of connections rather than the total load.',
@@ -86,9 +101,9 @@ const quizQuestions = [
     question:
       'In a three-plate ceiling rose using loop-in wiring, what is connected to the middle terminal block?',
     options: [
-      'The earth conductors',
-      'The neutral conductors',
-      'The switched live conductors',
+      'That the circuit is isolated and confirmed dead',
+      'Digital Addressable Lighting Interface',
+      'To maintain the designed lux levels on the working plane',
       'The permanent live conductors (loop terminals)',
     ],
     correctAnswer: 3,
@@ -99,12 +114,12 @@ const quizQuestions = [
     id: 4,
     question: 'An intermediate switch is required when controlling a light from:',
     options: [
-      'Two locations',
       'Three or more locations',
+      'Two locations',
       'A single location with a dimmer',
       'An external location only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An intermediate switch is used when a light needs to be controlled from three or more locations. Two two-way switches are used at the first and last positions, and intermediate switches are placed at each position in between. The intermediate switch has four terminals and effectively cross-connects the two strappers.',
   },
@@ -114,8 +129,8 @@ const quizQuestions = [
     options: [
       'Leading-edge (triac) dimmer',
       'Trailing-edge dimmer',
-      'Rheostat dimmer',
       'Autotransformer dimmer',
+      'Rheostat dimmer',
     ],
     correctAnswer: 1,
     explanation:
@@ -125,12 +140,12 @@ const quizQuestions = [
     id: 6,
     question: 'What does the DALI protocol stand for in lighting control?',
     options: [
-      'Digital Addressable Lighting Interface',
-      'Distributed Automated Lighting Integration',
       'Direct Analogue Lighting Interconnect',
+      'Distributed Automated Lighting Integration',
+      'Digital Addressable Lighting Interface',
       'Dynamic Adaptive Luminaire Intelligence',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'DALI stands for Digital Addressable Lighting Interface (IEC 62386). It is an international standard for digital lighting control that allows individual luminaires to be addressed, grouped and controlled independently. DALI uses a two-wire control bus that can run alongside the mains supply cabling.',
   },
@@ -138,8 +153,13 @@ const quizQuestions = [
     id: 7,
     question:
       'According to CIBSE SLL Code for Lighting, what is the recommended maintained illuminance for a corridor or circulation area?',
-    options: ['50 lux', '100 lux', '200 lux', '300 lux'],
-    correctAnswer: 1,
+    options: [
+      '50 lux',
+      '300 lux',
+      '200 lux',
+      '100 lux',
+    ],
+    correctAnswer: 3,
     explanation:
       'CIBSE recommends 100 lux as the maintained illuminance for corridors and circulation areas. This provides adequate light for safe movement without the higher levels required for detailed task work. Stairwells and escape routes may require different levels, and emergency lighting must provide a minimum of 1 lux on the centre line of escape routes.',
   },
@@ -148,20 +168,25 @@ const quizQuestions = [
     question:
       'When replacing a fluorescent lamp, what should a maintenance technician check FIRST?',
     options: [
-      'The colour temperature of the replacement lamp',
       'That the circuit is isolated and confirmed dead',
       'The wattage rating of the replacement',
+      'The colour temperature of the replacement lamp',
       'Whether the ballast is electronic or magnetic',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The first action must always be to isolate the circuit and confirm it is dead using an approved voltage indicator, tested before and after use on a known live source (proving unit). This is a fundamental safe isolation procedure required by the EAWR 1989 Regulation 12. Only after confirming the circuit is dead should the technician proceed with lamp replacement.',
   },
   {
     id: 9,
     question: 'A daylight-linked lighting control system uses which type of sensor?',
-    options: ['PIR sensor', 'Microwave sensor', 'Photocell (lux sensor)', 'Ultrasonic sensor'],
-    correctAnswer: 2,
+    options: [
+      'PIR sensor',
+      'Photocell (lux sensor)',
+      'Microwave sensor',
+      'Ultrasonic sensor',
+    ],
+    correctAnswer: 1,
     explanation:
       'Daylight-linked systems use a photocell (lux sensor) to measure the ambient light level and adjust the artificial lighting output accordingly. As natural daylight increases, the artificial lighting dims or switches off; as daylight decreases, the lighting increases. This can reduce lighting energy consumption by 30-60% in areas with good daylight.',
   },
@@ -170,11 +195,11 @@ const quizQuestions = [
     question: 'What is the typical cable size used for a domestic lighting circuit in the UK?',
     options: [
       '1.0 mm² twin and earth',
+      '4.0 mm² twin and earth',
       '1.5 mm² twin and earth',
       '2.5 mm² twin and earth',
-      '4.0 mm² twin and earth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Domestic lighting circuits in the UK typically use 1.5 mm² twin and earth cable (or 1.0 mm² in some installations). The choice depends on the circuit length, volt drop, and the protective device rating. BS 7671 requires that the cable is adequately rated for the design current and that volt drop limits are not exceeded.',
   },
@@ -185,10 +210,10 @@ const quizQuestions = [
     options: [
       'Reduced energy consumption in infrequently used areas',
       'Extended lamp life through reduced operating hours',
-      'Increased light output from luminaires',
       'Compliance with Building Regulations Part L',
+      'Increased light output from luminaires',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Occupancy sensors reduce energy consumption by switching off or dimming lights in unoccupied areas. They extend lamp life by reducing operating hours, and help achieve compliance with Building Regulations Part L (conservation of fuel and power). They do not increase light output — this is determined by the luminaire and lamp specifications.',
   },
@@ -197,12 +222,12 @@ const quizQuestions = [
     question:
       'When maintaining luminaires, what is the primary reason for regular cleaning of reflectors and diffusers?',
     options: [
-      'To prevent overheating of the luminaire',
       'To maintain the designed lux levels on the working plane',
-      'To prevent the growth of bacteria',
       'To comply with PAT testing requirements',
+      'To prevent overheating of the luminaire',
+      'To prevent the growth of bacteria',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regular cleaning of reflectors and diffusers is essential to maintain the designed lux levels on the working plane. Dirt accumulation on luminaire surfaces reduces light output — this is accounted for in lighting design as the Luminaire Maintenance Factor (LMF). Without regular cleaning, actual lux levels will fall below the maintained illuminance required by CIBSE guidelines.',
   },

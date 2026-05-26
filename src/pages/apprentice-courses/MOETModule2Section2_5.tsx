@@ -13,7 +13,12 @@ const quickCheckQuestions = [
   {
     id: 'inductive-reactance',
     question: 'A 0.1 H inductor is connected to a 50 Hz supply. What is its inductive reactance?',
-    options: ['5 Ω', '31.4 Ω', '50 Ω', '314 Ω'],
+    options: [
+      '5 Ω',
+      '31.4 Ω',
+      '50 Ω',
+      '314 Ω',
+    ],
     correctIndex: 1,
     explanation:
       'Inductive reactance XL = 2πfL = 2π x 50 x 0.1 = 31.4 Ω. The reactance is directly proportional to both frequency and inductance — doubling either would double the reactance. At DC (f = 0), the inductive reactance is zero, meaning an inductor appears as a short circuit to DC (only its winding resistance limits current).',
@@ -22,7 +27,12 @@ const quickCheckQuestions = [
     id: 'power-triangle',
     question:
       'A motor draws 10 kVA from the supply at a power factor of 0.8 lagging. What is the real power consumed?',
-    options: ['6 kW', '8 kW', '10 kW', '12.5 kW'],
+    options: [
+      '12.5 kW',
+      '8 kW',
+      '10 kW',
+      '6 kW',
+    ],
     correctIndex: 1,
     explanation:
       "Real power P = S x cos φ = 10 x 0.8 = 8 kW. The remaining 6 kVAr (Q = S x sin φ = 10 x 0.6 = 6 kVAr) is reactive power — it flows back and forth between the supply and the motor's magnetic field without doing useful work but still causes current to flow in the supply conductors.",
@@ -31,12 +41,12 @@ const quickCheckQuestions = [
     id: 'pfc-purpose',
     question: 'The primary purpose of power factor correction is to:',
     options: [
-      'Increase the supply voltage',
+      'A device that changes the size, direction or speed of a force to do useful work',
+      'You systematically underestimate job duration despite past experience',
+      'A lightweight, low-level portable working platform, usually around 500mm high',
       'Reduce the reactive current drawn from the supply, allowing more real power to be delivered',
-      'Convert AC to DC',
-      'Increase the supply frequency',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Power factor correction reduces the reactive current component drawn from the supply by providing the reactive power locally (typically via capacitors) rather than drawing it from the supply transformer and cables. This frees up capacity in the supply infrastructure for real power, reduces I²R losses in cables, and improves voltage regulation. It does not change the actual power consumed by the load.',
   },
@@ -44,8 +54,13 @@ const quickCheckQuestions = [
     id: 'impedance-calc',
     question:
       'A series circuit has a resistance of 30 Ω and an inductive reactance of 40 Ω. What is the impedance?',
-    options: ['10 Ω', '50 Ω', '70 Ω', '1200 Ω'],
-    correctIndex: 1,
+    options: [
+      '1200 Ω',
+      '70 Ω',
+      '10 Ω',
+      '50 Ω',
+    ],
+    correctIndex: 3,
     explanation:
       "In a series R-L circuit, impedance Z = √(R² + XL²) = √(30² + 40²) = √(900 + 1600) = √2500 = 50 Ω. Note that impedance is NOT the arithmetic sum of R and X (which would give 70 Ω) — it is the vector sum, calculated using Pythagoras' theorem because R and X are at 90 degrees to each other on the impedance triangle.",
   },
@@ -55,7 +70,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Inductive reactance (XL) is calculated using the formula:',
-    options: ['XL = 1/(2πfL)', 'XL = 2πfL', 'XL = 2πfC', 'XL = R x L'],
+    options: [
+      'XL = 1/(2πfL)',
+      'XL = 2πfL',
+      'XL = 2πfC',
+      'XL = R x L',
+    ],
     correctAnswer: 1,
     explanation:
       'Inductive reactance XL = 2πfL, where f is the frequency in hertz and L is the inductance in henries. XL is measured in ohms and increases with both frequency and inductance. At 50 Hz, a 100 mH inductor has XL = 2π x 50 x 0.1 = 31.4 Ω.',
@@ -63,8 +83,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Capacitive reactance (XC) is calculated using the formula:',
-    options: ['XC = 2πfC', 'XC = 1/(2πfC)', 'XC = 2πfL', 'XC = R / C'],
-    correctAnswer: 1,
+    options: [
+      'XC = 2πfL',
+      'XC = 2πfC',
+      'XC = 1/(2πfC)',
+      'XC = R / C',
+    ],
+    correctAnswer: 2,
     explanation:
       'Capacitive reactance XC = 1/(2πfC), where f is the frequency in hertz and C is the capacitance in farads. Unlike inductive reactance, XC decreases with increasing frequency and capacitance. At DC (f = 0), XC is infinite — a capacitor blocks DC completely. At high frequencies, XC approaches zero — a capacitor passes high frequencies easily.',
   },
@@ -72,12 +97,12 @@ const quizQuestions = [
     id: 3,
     question: 'In an AC circuit, impedance (Z) is defined as:',
     options: [
-      'The sum of resistance and reactance',
-      'The opposition to current flow in a DC circuit',
+      'An entry wound where current entered and an exit wound where it left the body',
+      'Assessment against UK standards and possible bridging requirements',
+      'Report it immediately, stop work in that area, and ensure the guardrails are reinstated before work continues',
       'The total opposition to current flow, combining resistance and reactance vectorially',
-      'The power consumed by the circuit',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Impedance is the total opposition to current flow in an AC circuit, combining resistance (R) and reactance (X) as a vector sum: Z = √(R² + X²) for a series circuit. It is measured in ohms but unlike pure resistance, impedance has both magnitude and phase angle. The current in the circuit is determined by V/Z (Ohm's law for AC).",
   },
@@ -85,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'The power factor of a circuit is defined as:',
     options: [
-      'The ratio of voltage to current',
       'The cosine of the phase angle between voltage and current (cos φ)',
-      'The frequency of the supply divided by 50',
-      'The ratio of reactive power to apparent power',
+      'Inductive loads (motors, transformers, solenoids)',
+      'A power quality analyser or power factor meter',
+      'Real power (kW), reactive power (kVAr) and apparent power (kVA)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Power factor = cos φ, where φ is the phase angle between the voltage and current waveforms. It can also be expressed as the ratio of real power to apparent power: PF = P/S = kW/kVA. A power factor of 1.0 (unity) means all current is doing useful work. A power factor of 0.5 means only half the current is doing useful work — the rest is reactive.',
   },
@@ -98,12 +123,12 @@ const quizQuestions = [
     id: 5,
     question: "A 'lagging' power factor is caused by:",
     options: [
-      'Resistive loads (heaters, incandescent lamps)',
       'Capacitive loads (PFC capacitors, long cable runs)',
       'Inductive loads (motors, transformers, solenoids)',
       'Non-linear loads (VSDs, LED drivers)',
+      'Resistive loads (heaters, incandescent lamps)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A lagging power factor occurs when the current lags behind the voltage — this is caused by inductive loads. Motors, transformers, solenoids, fluorescent lighting with magnetic ballasts and induction heaters all have lagging power factors. The majority of industrial loads are inductive, which is why most industrial installations have a lagging power factor and require power factor correction.',
   },
@@ -111,8 +136,13 @@ const quizQuestions = [
     id: 6,
     question:
       'An installation draws 100 kVA at a power factor of 0.7 lagging. After PFC is installed, the power factor improves to 0.95. The new apparent power demand is approximately:',
-    options: ['70 kVA', '73.7 kVA', '95 kVA', '100 kVA'],
-    correctAnswer: 1,
+    options: [
+      '70 kVA',
+      '95 kVA',
+      '73.7 kVA',
+      '100 kVA',
+    ],
+    correctAnswer: 2,
     explanation:
       'The real power remains the same: P = 100 x 0.7 = 70 kW. With the improved power factor: S = P / cos φ = 70 / 0.95 = 73.7 kVA. The apparent power demand has been reduced from 100 kVA to 73.7 kVA — a 26.3% reduction. This means 26.3% less current flowing through the supply cables and transformer, reducing losses and freeing up capacity.',
   },
@@ -120,12 +150,12 @@ const quizQuestions = [
     id: 7,
     question: 'The three components of the power triangle are:',
     options: [
-      'Voltage, current and resistance',
+      'A power quality analyser or power factor meter',
+      'Impedance equals the resistance only (XL and XC cancel)',
+      'Inductive loads (motors, transformers, solenoids)',
       'Real power (kW), reactive power (kVAr) and apparent power (kVA)',
-      'Frequency, period and wavelength',
-      'Inductance, capacitance and resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The power triangle represents the relationship between real power P (kW — the power that does useful work), reactive power Q (kVAr — the power that flows back and forth supporting magnetic and electric fields), and apparent power S (kVA — the total power delivered by the supply). They are related by: S² = P² + Q², and the power factor = P/S = cos φ.',
   },
@@ -133,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: 'Power factor correction capacitors are connected in:',
     options: [
-      'Series with the load',
       'Parallel with the load',
       'Series with the neutral conductor',
+      'Series with the load',
       'Between the line and earth conductors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PFC capacitors are always connected in parallel with the load (or the supply bus). This allows the capacitor to supply the reactive current locally, reducing the reactive current drawn from the supply. The capacitor current leads the voltage by 90 degrees, opposing the lagging current drawn by inductive loads. Connecting capacitors in series would reduce the voltage to the load and is not used for power factor correction.',
   },
@@ -146,8 +176,13 @@ const quizQuestions = [
     id: 9,
     question:
       'A UK electricity supplier typically applies financial penalties when the power factor falls below:',
-    options: ['1.0', '0.95', '0.90 or 0.85 (varies by supplier)', '0.70'],
-    correctAnswer: 2,
+    options: [
+      'Follow drawings and specifications exactly',
+      '0.90 or 0.85 (varies by supplier)',
+      'Work in potentially explosive atmospheres',
+      'Safety monitoring and control',
+    ],
+    correctAnswer: 1,
     explanation:
       'Most UK electricity suppliers apply reactive power charges when the power factor falls below a threshold, typically 0.90 or 0.85 (the exact value varies by supplier and tariff). The charge is based on the amount of reactive energy consumed (measured in kVArh by a reactive energy meter). The penalty can be substantial for large industrial consumers with poor power factor.',
   },
@@ -155,12 +190,12 @@ const quizQuestions = [
     id: 10,
     question: 'At resonance in a series RLC circuit, what happens to the impedance?',
     options: [
-      'Impedance becomes infinite',
+      'A power quality analyser or power factor meter',
+      'Inductive loads (motors, transformers, solenoids)',
       'Impedance equals the resistance only (XL and XC cancel)',
-      'Impedance equals zero',
-      'Impedance doubles',
+      'The cosine of the phase angle between voltage and current (cos φ)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'At the resonant frequency, the inductive reactance (XL) equals the capacitive reactance (XC), and they cancel each other out. The impedance of the series circuit reduces to the resistance alone: Z = R. This means maximum current flows at resonance. In power systems, series resonance between PFC capacitors and transformer inductance can amplify harmonic currents to dangerous levels — a critical design consideration.',
   },
@@ -168,20 +203,25 @@ const quizQuestions = [
     id: 11,
     question: 'Which instrument is used to measure power factor on site?',
     options: [
-      'An insulation resistance tester',
+      'Inductive loads (motors, transformers, solenoids)',
+      'Impedance equals the resistance only (XL and XC cancel)',
+      '0.90 or 0.85 (varies by supplier)',
       'A power quality analyser or power factor meter',
-      'A continuity tester',
-      'An earth loop impedance tester',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Power factor is measured using a power quality analyser (which measures voltage, current and their phase relationship simultaneously) or a dedicated power factor meter. Clamp-on power meters that measure voltage and current can also calculate power factor. For accurate results, the meter must be a true-RMS type, as average-responding meters give incorrect power factor readings on non-sinusoidal waveforms.',
   },
   {
     id: 12,
     question: 'The reactive power (Q) in an AC circuit is measured in:',
-    options: ['Watts (W)', 'Volt-amperes (VA)', 'Volt-amperes reactive (VAr)', 'Ohms (Ω)'],
-    correctAnswer: 2,
+    options: [
+      'Volt-amperes reactive (VAr)',
+      'Running cables diagonally',
+      'Two phases have been transposed',
+      'Set time targets for each stage',
+    ],
+    correctAnswer: 0,
     explanation:
       'Reactive power is measured in volt-amperes reactive (VAr), or more commonly kVAr (kilovolt-amperes reactive). Real power is measured in watts (W or kW), and apparent power is measured in volt-amperes (VA or kVA). The distinction is important: reactive power does no useful work but still causes current to flow, contributing to I²R losses in the supply infrastructure.',
   },

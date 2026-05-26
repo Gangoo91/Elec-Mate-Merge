@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Which regulation requires test results to be recorded?',
     options: [
-      'BS 7671 Regulation 521.5',
-      'BS 7671 Regulation 631.3',
       'BS 7671 Regulation 411.4',
+      'BS 7671 Regulation 631.3',
       'BS 7671 Regulation 110.1',
+      'BS 7671 Regulation 521.5',
     ],
     correctIndex: 1,
     explanation:
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 2,
     question: "Why should numerical values always be recorded instead of 'OK'?",
     options: [
-      'It looks more professional',
+      'To help operators respond appropriately by categorising alarms by severity',
+      'According to legal and company requirements, typically several years',
       'Numerical values provide specific evidence of compliance and allow future comparison',
-      "It's easier to read",
-      'Clients prefer numbers',
+      '470mm above the platform (approximately halfway between platform and guardrail)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Numerical values provide specific evidence that the installation meets requirements and allow future electricians to compare readings during maintenance or fault-finding.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Name two documents used to record inspection and test results.',
     options: [
-      'Invoice and Receipt',
+      'A symptom indicating an underlying problem that requires further investigation',
+      'Swapping the start-winding terminals OR the main-winding terminals (not both)',
+      'To provide spoken evacuation instructions instead of or alongside tonal alarms',
       'Electrical Installation Certificate (EIC) and Minor Electrical Installation Works Certificate (MEIWC)',
-      'Building Regulations and Part P',
-      'Safety Certificate and Warranty',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The EIC is used for new installations and major alterations, while the MEIWC is used for minor works such as adding sockets to existing circuits.',
   },
@@ -59,7 +59,12 @@ const Module4Section6_6 = () => {
     {
       id: 1,
       question: 'Which BS 7671 regulation specifically requires test results to be recorded?',
-      options: ['521.5', '631.3', '411.4', '110.1'],
+      options: [
+        '521.5',
+        '631.3',
+        '411.4',
+        '110.1',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 Regulation 631.3 specifically requires that the results of verification, including inspection and testing, shall be recorded.',
@@ -68,8 +73,13 @@ const Module4Section6_6 = () => {
       id: 2,
       question:
         "True or False: Writing 'OK' on a test certificate is acceptable if the reading looks fine.",
-      options: ['True', 'False', 'Only for minor works', 'Only if the client agrees'],
-      correctAnswer: 1,
+      options: [
+        'Only for minor works',
+        'True',
+        'False',
+        'Only if the client agrees',
+      ],
+      correctAnswer: 2,
       explanation:
         'False - numerical values must always be recorded to provide specific evidence of compliance and to allow future comparison during maintenance.',
     },
@@ -77,12 +87,12 @@ const Module4Section6_6 = () => {
       id: 3,
       question: 'Name two items that must be recorded during electrical testing.',
       options: [
-        'Weather conditions and time of day',
+        'Voltage drop due to overloading or poor connections',
+        'Accurate measurement of low resistances',
+        'Installation earth electrode separate from supply earth',
         'Insulation resistance and earth fault loop impedance',
-        'Client preferences and cost',
-        'Tool serial numbers and battery levels',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Insulation resistance and earth fault loop impedance are critical safety measurements that must be recorded to demonstrate compliance with BS 7671.',
     },
@@ -90,12 +100,12 @@ const Module4Section6_6 = () => {
       id: 4,
       question: 'What does EIC stand for?',
       options: [
-        'Electrical Inspection Certificate',
         'Electrical Installation Certificate',
+        'Electrical Inspection Certificate',
         'Electrical Information Card',
         'Electrical Installation Checklist',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'EIC stands for Electrical Installation Certificate, which is used to certify new electrical installations and major alterations.',
     },
@@ -103,10 +113,10 @@ const Module4Section6_6 = () => {
       id: 5,
       question: 'Which regulation requires employers to maintain safe systems of work?',
       options: [
-        'BS 7671',
+        'To ensure continued safety over time',
         'Electricity at Work Regulations 1989',
-        'Part P Building Regulations',
-        'BS EN 61439',
+        'Insulation degradation beginning',
+        'Oxygen-free nitrogen (OFN)',
       ],
       correctAnswer: 1,
       explanation:
@@ -116,20 +126,25 @@ const Module4Section6_6 = () => {
       id: 6,
       question: 'Why should each circuit be recorded separately?',
       options: [
-        'To increase paperwork',
+        'Using AI and data to predict and optimise future energy consumption patterns',
+        'The fuses cannot protect against high fault currents',
         'To provide detailed evidence of compliance and fault-tracing',
-        'To satisfy the client',
-        'To justify higher charges',
+        'Dust-tight and protected against continuous immersion',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Recording each circuit separately provides detailed evidence of individual circuit compliance and enables precise fault location during future maintenance.',
     },
     {
       id: 7,
       question: 'What unit is insulation resistance measured in?',
-      options: ['Ohms (Ω)', 'Megohms (MΩ)', 'Volts (V)', 'Amps (A)'],
-      correctAnswer: 1,
+      options: [
+        'Ohms (Ω)',
+        'Amps (A)',
+        'Volts (V)',
+        'Megohms (MΩ)',
+      ],
+      correctAnswer: 3,
       explanation:
         'Insulation resistance is measured in megohms (MΩ) because the resistance values are typically very high, often in the millions of ohms.',
     },
@@ -137,12 +152,12 @@ const Module4Section6_6 = () => {
       id: 8,
       question: 'Give one reason why photographs of test meters should be taken.',
       options: [
-        'For social media posting',
         'For backup evidence in case results are disputed',
-        'To show off expensive equipment',
-        'To fill up the phone storage',
+        'Disconnect ballasts and test circuit wiring only',
+        'Construction Industry Training Board',
+        'Current, duration, path through body, frequency',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Photographs provide backup evidence of actual meter readings, which can be crucial if test results are later questioned or disputed.',
     },
@@ -165,12 +180,12 @@ const Module4Section6_6 = () => {
       question:
         'True or False: Digital copies of test results are acceptable if they are secure and signed off.',
       options: [
-        'False - only paper copies are valid',
+        'Investigate and rectify before energising',
+        'HMRC refunds the £5,000 overpayment after filing the tax return',
         'True - digital copies are acceptable with proper security',
-        'Only for commercial installations',
-        'Only with client permission',
+        'Shoulder-width apart with one foot slightly forward',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'True - digital copies are acceptable provided they are secure, cannot be easily altered, and are properly signed off by the responsible person.',
     },

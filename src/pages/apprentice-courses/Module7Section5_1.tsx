@@ -16,10 +16,10 @@ const Module7Section5_1 = () => {
       id: 1,
       question: 'Why is selecting the correct test equipment important?',
       options: [
-        'It looks professional',
+        'Specialist earth electrode tester with auxiliary electrodes',
         'It prevents inaccurate results, wasted time, and safety risks',
-        "It's required by law",
-        'It saves money',
+        'Appropriate mechanical protection such as conduit or trunking',
+        'Replacing equipment under warranty or for traceability',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,12 +29,12 @@ const Module7Section5_1 = () => {
       id: 2,
       question: 'What does a continuity tester confirm?',
       options: [
-        'Voltage levels',
+        'At tender stage with confirmed lead times',
+        'All four outriggers must be fully extended and set on firm level ground',
         'Whether conductors are continuous and properly connected',
-        'Insulation quality',
-        'Earth fault impedance',
+        'To join two tubes at any angle other than 90 degrees',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Continuity testers check whether conductors are unbroken and properly connected, particularly important for ring final circuits.',
     },
@@ -42,12 +42,12 @@ const Module7Section5_1 = () => {
       id: 3,
       question: 'What type of tester measures insulation quality?',
       options: [
-        'Continuity tester',
+        'Moisture ingress and excessive heat',
+        'Type, severity, and urgency',
+        '1 lux along the centre line',
         'Insulation resistance tester',
-        'Socket tester',
-        'Voltage indicator',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Insulation resistance testers measure the quality of insulation between conductors and earth, identifying potential breakdowns.',
     },
@@ -55,12 +55,12 @@ const Module7Section5_1 = () => {
       id: 4,
       question: 'What advantage does a multifunction tester offer?',
       options: [
-        "It's cheaper",
         'It combines several essential tests in one instrument',
-        "It's smaller",
-        "It's more accurate",
+        'Delays, poor workmanship, or failed inspections',
+        'Designers, manufacturers, importers, and suppliers',
+        'Reassess escape route lighting coverage',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Multifunction testers (MFTs) combine several tests including insulation resistance, continuity, loop impedance, and RCD testing in one unit.',
     },
@@ -68,10 +68,10 @@ const Module7Section5_1 = () => {
       id: 5,
       question: "Why can't socket testers replace proper calibrated testing?",
       options: [
-        "They're too expensive",
+        'Pairing a behaviour you need to do with a behaviour you want to do',
         'They can only provide basic fault indication, not detailed measurements',
-        "They're illegal to use",
-        "They're too slow",
+        'Inhalation, ingestion, skin/eye contact, injection',
+        'To capture knowledge from project experiences for future benefit',
       ],
       correctAnswer: 1,
       explanation:
@@ -81,20 +81,25 @@ const Module7Section5_1 = () => {
       id: 6,
       question: 'What must always be checked before using a test instrument?',
       options: [
-        'The colour',
+        "Learning user patterns and predictive automation",
+        "A fracture, other than to fingers, thumbs, or toes",
         "The manufacturer's instructions and suitability for the job",
-        'The price',
-        'The weight',
+        "Due to hydrostatic pressure from the water column above",
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "Always check manufacturer's instructions and confirm the instrument is suitable for the voltage and category of circuit under test.",
     },
     {
       id: 7,
       question: 'Which standard applies to installation test equipment?',
-      options: ['BS 7671', 'BS EN 61557', 'BS 5839', 'BS 6423'],
-      correctAnswer: 1,
+      options: [
+        'BS 7671',
+        'BS 6423',
+        'BS 5839',
+        'BS EN 61557',
+      ],
+      correctAnswer: 3,
       explanation:
         'BS EN 61557 is the standard that applies to electrical safety in low voltage distribution systems - equipment for testing, measuring or monitoring.',
     },
@@ -111,10 +116,10 @@ const Module7Section5_1 = () => {
       question:
         'In the real-world example, why did the plug-in tester fail to identify the lighting fault?',
       options: [
-        'It was broken',
+        'Measured data from similar buildings',
         'It could not detect a broken neutral conductor',
-        'It was the wrong brand',
-        'The batteries were flat',
+        'They ensure safe, efficient, and future-proof installations',
+        'That there is no breakdown between conductors or to earth',
       ],
       correctAnswer: 1,
       explanation:
@@ -125,12 +130,12 @@ const Module7Section5_1 = () => {
       question:
         'What fault was identified once the correct RCD testing instrument was used in the second example?',
       options: [
-        'Faulty RCD',
+        'To predict and plan for income and expense patterns',
+        'Thermocouples can measure much higher temperatures',
         'Insulation breakdown in a damp junction box',
-        'Overloaded circuit',
-        'Wrong cable type',
+        'Both ceiling height and furniture layout',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "Using the correct MFT with RCD testing capability revealed insulation breakdown in a damp junction box, something the old multimeter couldn't detect.",
     },

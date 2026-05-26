@@ -12,8 +12,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which formula estimates voltage drop in a circuit leg?',
-    options: ['Vd = I × R', 'Vd = V/I', 'Vd = P × I', 'Vd = R/A'],
-    correctAnswer: 0,
+    options: [
+      'Vd = V/I',
+      'Vd = I × R',
+      'Vd = P × I',
+      'Vd = R/A',
+    ],
+    correctAnswer: 1,
     explanation:
       'Voltage drop is current multiplied by the circuit resistance along the path: Vd = I × R.',
   },
@@ -21,24 +26,24 @@ const quizQuestions = [
     id: 2,
     question: 'For the same load current, increasing cable CSA will…',
     options: [
+      'Not change voltage drop',
       'Increase voltage drop',
       'Reduce voltage drop',
-      'Not change voltage drop',
       'Always trip the MCB',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'Larger CSA lowers resistance, so Vd = I × R becomes smaller.',
   },
   {
     id: 3,
     question: 'Typical design limits for voltage drop (BS 7671 Appendix 4 guidance) are:',
     options: [
-      '10% lighting, 10% others',
-      '3% lighting, 5% others',
       '1% lighting, 1% others',
+      '10% lighting, 10% others',
       'No guidance provided',
+      '3% lighting, 5% others',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Commonly used values are 3% for lighting and 5% for other final circuits – always verify with Appendix 4.',
   },
@@ -46,19 +51,24 @@ const quizQuestions = [
     id: 4,
     question: 'When estimating voltage drop, the length used should be:',
     options: [
-      'One‑way length only',
       'The total path length (out and back)',
-      'Length of CPC only',
-      "It doesn't matter",
+      'At least 1 MΩ per volt of range selected',
+      'Pressure drop causing liquid to vapourise',
+      'So they can be corrected before commissioning',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Use the full current path. For a radial, that's out and back; for rings, use the effective current path length.",
   },
   {
     id: 5,
     question: 'Using mV/A/m from Appendix 4, the method is:',
-    options: ['Vd = I × L / 1000', 'Vd = (mV/A/m × I × L) / 1000', 'Vd = mV × R', 'Vd = L / A'],
+    options: [
+      'Sensible heat / Total heat',
+      'Vd = (mV/A/m × I × L) / 1000',
+      '15th January the following year',
+      'Oscillation and overshoot',
+    ],
     correctAnswer: 1,
     explanation:
       'Multiply the tabulated mV per amp per metre by current and length, then divide by 1000 to convert to volts.',
@@ -66,16 +76,26 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Higher temperature generally affects cable resistance by:',
-    options: ['Decreasing it', 'Increasing it', 'No effect', 'Making it unstable'],
-    correctAnswer: 1,
+    options: [
+      'Decreasing it',
+      'No effect',
+      'Increasing it',
+      'Making it unstable',
+    ],
+    correctAnswer: 2,
     explanation:
       'Most cable materials have positive temperature coefficients, meaning resistance increases with temperature.',
   },
   {
     id: 7,
     question: 'For a 100A load over 80m, which factor most reduces voltage drop?',
-    options: ['Shorter route', 'Larger CSA', 'Lower current', 'All equally effective'],
-    correctAnswer: 1,
+    options: [
+      'Shorter route',
+      'All equally effective',
+      'Lower current',
+      'Larger CSA',
+    ],
+    correctAnswer: 3,
     explanation:
       'Doubling CSA halves resistance and voltage drop. Route and current changes may be less practical.',
   },
@@ -83,18 +103,23 @@ const quizQuestions = [
     id: 8,
     question: 'BS 7671 Appendix 4 mV/A/m values assume:',
     options: [
-      'Any temperature',
-      '70°C conductor',
       '20°C conductor',
       'Maximum operating temperature',
+      'Any temperature',
+      '70°C conductor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation: 'Appendix 4 tabulated values are at 20°C reference temperature.',
   },
   {
     id: 9,
     question: 'Ring final circuits for voltage drop calculations use:',
-    options: ['Total ring length', 'Half ring length', 'Longest path', 'Average path length'],
+    options: [
+      'Total ring length',
+      'Half ring length',
+      'Longest path',
+      'Average path length',
+    ],
     correctAnswer: 1,
     explanation: 'For rings, use effective length which is typically half the total ring length.',
   },
@@ -104,10 +129,10 @@ const quizQuestions = [
     options: [
       'Equipment underperformance',
       'Motor starting problems',
-      'Inefficient heating',
       'All of the above',
+      'Inefficient heating',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Excessive voltage drop affects all electrical equipment performance, efficiency, and starting characteristics.',
   },

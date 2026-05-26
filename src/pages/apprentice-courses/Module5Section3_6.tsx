@@ -14,7 +14,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'What regulation governs electrical safety at work?',
-    options: ['HASAWA 1974', 'Electricity at Work Regulations 1989', 'WAHR 2005', 'BS 7671'],
+    options: [
+      'Clamp meter to measure load current',
+      'Electricity at Work Regulations 1989',
+      'Above 50 V AC up to 1000 V AC',
+      'Clear fluid leaking from the ear or nose',
+    ],
     correctIndex: 1,
     explanation:
       'The Electricity at Work Regulations 1989 specifically govern electrical safety at work in the UK.',
@@ -23,20 +28,25 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What does a method statement describe?',
     options: [
-      'Material requirements',
+      'Two parallel lines with S2',
+      'Final settlement of all financial matters',
       'The safe way of carrying out a task',
-      'Project costs',
-      'Time schedules',
+      'C2 - Potentially dangerous',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A method statement describes the safe way of carrying out a specific task or activity.',
   },
   {
     id: 3,
     question: 'Give one consequence of poor safety planning.',
-    options: ['Better efficiency', 'Accidents and injuries', 'Lower costs', 'Faster completion'],
-    correctIndex: 1,
+    options: [
+      'Faster completion',
+      'Lower costs',
+      'Better efficiency',
+      'Accidents and injuries',
+    ],
+    correctIndex: 3,
     explanation:
       'Poor safety planning can lead to accidents, injuries, HSE investigations, fines, and project delays.',
   },
@@ -49,7 +59,12 @@ const Module5Section3_6 = () => {
     {
       id: 1,
       question: 'What law sets out the general duties for health and safety at work in the UK?',
-      options: ['EAWR 1989', 'Health and Safety at Work etc. Act 1974', 'WAHR 2005', 'BS 7671'],
+      options: [
+        '1 lux on the centre line of travel',
+        'Health and Safety at Work etc. Act 1974',
+        'Misleadingly low insulation resistance readings',
+        'Safety, capacity, and protection requirements',
+      ],
       correctAnswer: 1,
       explanation:
         'The Health and Safety at Work etc. Act 1974 establishes the fundamental framework for health and safety law in the UK.',
@@ -58,12 +73,12 @@ const Module5Section3_6 = () => {
       id: 2,
       question: 'Which regulation covers electrical safety at work?',
       options: [
+        'To simulate mains failure for testing',
+        'Regulatory Reform (Fire Safety) Order 2005',
         'Electricity at Work Regulations 1989',
-        'HASAWA 1974',
-        'WAHR 2005',
-        'CDM Regulations',
+        'Fixed equipment with exposed metalwork',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'The Electricity at Work Regulations 1989 specifically address electrical safety in the workplace.',
     },
@@ -71,12 +86,12 @@ const Module5Section3_6 = () => {
       id: 3,
       question: 'What does WAHR 2005 stand for?',
       options: [
-        'Work and Health Regulations',
-        'Work at Height Regulations 2005',
         'Workplace Access and Health Requirements',
+        'Work and Health Regulations',
         'Working Area Health Rules',
+        'Work at Height Regulations 2005',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'WAHR 2005 stands for Work at Height Regulations 2005, covering safe working practices when working above ground level.',
     },
@@ -92,10 +107,10 @@ const Module5Section3_6 = () => {
       id: 5,
       question: 'What does a method statement describe?',
       options: [
-        'Project timeline',
+        'High frequencies (kHz and above)',
         'The safe way of carrying out a task',
-        'Material specifications',
-        'Cost breakdown',
+        'Apply direct pressure over the wound',
+        'Sensible heat / Total heat',
       ],
       correctAnswer: 1,
       explanation:
@@ -104,8 +119,13 @@ const Module5Section3_6 = () => {
     {
       id: 6,
       question: 'Name one common hazard in electrical installation.',
-      options: ['Good lighting', 'Working at height', 'Proper tools', 'Clear documentation'],
-      correctAnswer: 1,
+      options: [
+        'Good lighting',
+        'Proper tools',
+        'Working at height',
+        'Clear documentation',
+      ],
+      correctAnswer: 2,
       explanation:
         'Working at height is a major hazard in electrical installation, along with manual handling, live working, and fire risks.',
     },
@@ -113,12 +133,12 @@ const Module5Section3_6 = () => {
       id: 7,
       question: 'What should always be done before working on circuits?',
       options: [
-        'Check the weather',
+        'An impulse line filled with fill fluid',
+        'Earth fault return path for each circuit',
+        'Cumulative Sum (CUSUM) analysis',
         'Isolate and lock off the supply',
-        'Order materials',
-        'Schedule inspections',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Circuits must always be isolated and locked off before work begins to prevent accidental energisation.',
     },
@@ -126,12 +146,12 @@ const Module5Section3_6 = () => {
       id: 8,
       question: 'What is the role of PPE?',
       options: [
-        'To look professional',
         'To protect workers from residual risks',
-        'To identify trades',
-        'To carry tools',
+        'Red: 34.8A, Yellow: 26.1A, Blue: 43.5A',
+        'External earth fault loop impedance',
+        'Electricity at Work Regulations 1989',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Personal Protective Equipment (PPE) protects workers from residual risks that cannot be eliminated through other means.',
     },
@@ -139,10 +159,10 @@ const Module5Section3_6 = () => {
       id: 9,
       question: 'What could happen if poor safety planning leads to an accident?',
       options: [
-        'Nothing serious',
+        'Appropriate derating or cable positioning',
         'HSE investigation, fines, or legal action',
-        'Just paperwork',
-        'Minor delays',
+        'Secure mounting and labelling',
+        'Immediately isolate the supply and investigate safely',
       ],
       correctAnswer: 1,
       explanation:
@@ -152,12 +172,12 @@ const Module5Section3_6 = () => {
       id: 10,
       question: 'Who is responsible for health and safety on site?',
       options: [
-        'Only the safety officer',
+        'An RCD and an MCB in a single device',
+        'The garment has been washed more than 10 times',
         'Everyone, with site manager leading enforcement',
-        'Just supervisors',
-        'Only the client',
+        'The battery is degrading and may need replacement',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "Health and safety is everyone's responsibility, though site managers lead the enforcement of safety policies.",
     },

@@ -458,12 +458,14 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     syncNow,
   ]);
 
-  // Pre-fill customer details from navigation
+  // Pre-fill customer details from navigation — parity with EICR (incl phone + email).
   useEffect(() => {
     if (customerDataFromNav && !initialReportId) {
       setFormData((prev) => ({
         ...prev,
         clientName: customerDataFromNav.name || '',
+        clientPhone: customerDataFromNav.phone || '',
+        clientEmail: customerDataFromNav.email || '',
         clientAddress: customerDataFromNav.address || '',
         installationAddress: customerDataFromNav.address || '',
       }));

@@ -14,9 +14,9 @@ const quickCheckQuestions = [
     id: 'circular-economy',
     question: 'What is the fundamental principle of the circular economy?',
     options: [
-      'Maximise production and consumption to drive economic growth',
-      'Design out waste and pollution, keep products and materials in use, and regenerate natural systems',
       'Replace all manufactured products with natural alternatives',
+      'Design out waste and pollution, keep products and materials in use, and regenerate natural systems',
+      'Maximise production and consumption to drive economic growth',
       'Export waste to countries with lower environmental standards',
     ],
     correctIndex: 1,
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'When deciding whether to repair or replace a piece of electrical equipment, what factors should you consider?',
     options: [
-      'Only the purchase price of a replacement',
+      'Yes, if it demonstrates a KSB not yet covered, or you can describe improvements in your approach, efficiency or quality compared to earlier attempts',
       'The remaining useful life, repair cost, energy efficiency of old vs new, availability of spare parts, embodied carbon of replacement, and whole-life cost',
-      'Whether the manufacturer still exists',
-      'Only the colour and appearance of the equipment',
+      'Specifically to periodic inspection and testing intervals — it is intended for use during periodic verification rather than initial verification.',
+      'A wiring diagram shows physical connections with terminal numbers and wire references; a circuit diagram shows the logical function and operation of the circuit',
     ],
     correctIndex: 1,
     explanation:
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       "What percentage of a typical maintenance company's carbon footprint comes from vehicle travel?",
     options: [
-      'Less than 5%',
-      'About 10%',
       'Typically 30-50% or more, making it one of the largest emission sources',
-      'Exactly 75%',
+      'Third harmonic content exceeds 15-33% depending on cable type',
+      'Materials with zero electrical resistance at low temperatures',
+      'It receives signals from detection devices and controls the alarm outputs',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'For maintenance and service companies, vehicle travel is often the single largest source of carbon emissions, typically accounting for 30-50% or more of the total footprint. This is because maintenance technicians travel extensively between sites, often in diesel vans. Reducing travel emissions through route optimisation, remote diagnostics, electric vehicles, and consolidating site visits is one of the highest-impact sustainability actions a maintenance company can take.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     id: 'net-zero',
     question: "What does 'net zero' mean in the context of a maintenance company's operations?",
     options: [
-      'The company makes zero profit',
-      'The company produces no waste at all',
+      "A schematic shows the logical function of a circuit; a wiring diagram shows the physical connections and routing",
       "The company's greenhouse gas emissions are balanced by an equivalent amount of carbon removal, resulting in no net addition to the atmosphere",
-      'The company uses no electricity',
+      "The connection between the input terminal and the coil has a fault — possibly a broken wire, loose connection, or failed terminal",
+      "The current intended to be carried by the circuit in normal service, after diversity has been applied — the demand the circuit has to deliver.",
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Net zero means that the total greenhouse gas emissions produced by the organisation are balanced by an equivalent amount of carbon removal — either through natural processes (e.g., tree planting) or technological solutions (e.g., carbon capture). The priority is to reduce emissions as far as possible first, with offsetting used only for residual emissions that cannot be eliminated. Many maintenance companies are now setting net zero targets aligned with the Science Based Targets initiative (SBTi).',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The circular economy differs from the linear economy in that:',
     options: [
-      'It focuses only on recycling end-of-life products',
+      'Turn off the heat source, hold the blanket as a shield, and gently place it over the pan from front to back',
       'It aims to keep materials and products at their highest value for as long as possible, designing out waste from the start',
-      'It requires all products to be made from recycled materials',
-      'It applies only to consumer electronics',
+      'Whether there are underground voids, buried services, slopes, or soft ground that could cause instability',
+      'Prove dead with a GS38-compliant voltage indicator that has itself been proved on a known source',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: 'A life cycle assessment (LCA) of electrical equipment considers:',
     options: [
-      'Only the purchase price and installation cost',
+      'A core requirement — maintenance technicians must demonstrate environmental awareness, sustainable working practices and continuous improvement in their professional behaviour',
+      'The embodied carbon of the material (emissions from extraction, processing and transport), recyclability, durability and suitability for the application',
       'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
-      'Only the energy consumed during operation',
-      'Only the cost of disposal at end of life',
+      'Reducing unnecessary site visits through remote monitoring, enabling predictive maintenance, and allowing fault diagnosis before travelling to site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A life cycle assessment examines the total environmental impact of a product from 'cradle to grave' (or 'cradle to cradle' in circular economy thinking). This includes raw material extraction, manufacturing energy and emissions, transport, energy consumed during the use phase, maintenance requirements, and end-of-life disposal or recycling. LCA helps make informed decisions about product selection and repair vs replace choices.",
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'When selecting low-carbon materials for electrical maintenance, you should consider:',
     options: [
-      'Only the colour of the material',
+      'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
+      'Travel emissions, energy used during the work, materials consumed, waste generated, and the embodied carbon of replacement parts',
+      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
       'The embodied carbon of the material (emissions from extraction, processing and transport), recyclability, durability and suitability for the application',
-      'Only whether the material is manufactured in the UK',
-      'Only the weight of the material',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Low-carbon material selection considers the embodied carbon (the total greenhouse gas emissions from raw material extraction through to delivery on site), the material's recyclability at end of life, its durability (longer-lasting materials reduce replacement frequency), and its fitness for purpose. For example, choosing aluminium cable tray with high recycled content over virgin steel, or selecting LED luminaires designed for component-level repair.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 4,
     question: 'Remote diagnostics technology can improve maintenance sustainability by:',
     options: [
-      'Eliminating the need for maintenance technicians entirely',
       'Reducing unnecessary site visits through remote monitoring, enabling predictive maintenance, and allowing fault diagnosis before travelling to site',
-      'Increasing the number of maintenance visits required',
-      'Only being useful for IT equipment',
+      'Selecting suppliers and products based on environmental criteria (embodied carbon, recyclability, ethical sourcing, packaging) alongside price, quality and availability',
+      'A core requirement — maintenance technicians must demonstrate environmental awareness, sustainable working practices and continuous improvement in their professional behaviour',
+      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Remote diagnostics — using IoT sensors, BEMS data, and remote access to equipment controllers — allows maintenance teams to monitor equipment condition remotely, diagnose faults before travelling, determine parts requirements in advance, and avoid unnecessary routine visits when condition monitoring shows equipment is performing well. This reduces travel emissions, improves first-fix rates, and enables a shift from time-based to condition-based maintenance.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Sustainable procurement for maintenance means:',
     options: [
-      'Always buying the cheapest option available',
+      'Technical competencies needed to support the transition to a low-carbon economy, including energy efficiency, renewable technologies, electric vehicle infrastructure, heat pump systems and environmental compliance',
       'Selecting suppliers and products based on environmental criteria (embodied carbon, recyclability, ethical sourcing, packaging) alongside price, quality and availability',
-      'Only buying products with green labels',
-      'Refusing to use any products from overseas',
+      'A core requirement — maintenance technicians must demonstrate environmental awareness, sustainable working practices and continuous improvement in their professional behaviour',
+      'Travel emissions, energy used during the work, materials consumed, waste generated, and the embodied carbon of replacement parts',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 6,
     question: 'The carbon footprint of a maintenance activity includes:',
     options: [
-      'Only the electricity used by the equipment being maintained',
+      'The embodied carbon of the material (emissions from extraction, processing and transport), recyclability, durability and suitability for the application',
+      'Reducing unnecessary site visits through remote monitoring, enabling predictive maintenance, and allowing fault diagnosis before travelling to site',
       'Travel emissions, energy used during the work, materials consumed, waste generated, and the embodied carbon of replacement parts',
-      'Only the fuel used by the maintenance van',
-      "Only emissions from the company's office building",
+      'The manufacturing process and raw material extraction for metals (copper busbars, steel enclosure) and plastics',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The carbon footprint of a maintenance activity encompasses all greenhouse gas emissions associated with the work: travel to and from site (fuel combustion), energy used during the maintenance process (power tools, testing equipment), materials consumed (including the embodied carbon of replacement parts and consumables), waste generated (transport and processing emissions), and any direct emissions (e.g., SF6 releases). Understanding the full footprint helps identify reduction opportunities.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 7,
     question: 'Route planning and journey consolidation for maintenance technicians can reduce:',
     options: [
-      'Only the time spent driving',
+      'IT systems, equipotential bonding, and power supply reliability',
+      'Simultaneous two-way transmission over a single fibre using different wavelengths',
+      'A record of defects identified at handover that must be put right before final sign-off',
       'Fuel consumption, CO2 emissions, vehicle wear, driver fatigue and operational costs',
-      'Only the cost of fuel',
-      'Only the number of customer complaints',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Efficient route planning and journey consolidation deliver multiple benefits: reduced fuel consumption (lower cost and emissions), fewer miles driven (less vehicle wear and tyre use), reduced driver fatigue (safer driving), lower carbon emissions (contributing to net zero targets), and better customer service (more time on site, less time driving). Modern route optimisation software and dynamic scheduling can reduce maintenance travel by 15-25%.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: "What are 'green skills' in the context of maintenance engineering?",
     options: [
-      'Skills related to painting equipment green for environmental branding',
       'Technical competencies needed to support the transition to a low-carbon economy, including energy efficiency, renewable technologies, electric vehicle infrastructure, heat pump systems and environmental compliance',
-      'Only skills related to installing solar panels',
-      'Skills that will become obsolete as AI replaces maintenance technicians',
+      'A core requirement — maintenance technicians must demonstrate environmental awareness, sustainable working practices and continuous improvement in their professional behaviour',
+      'The embodied carbon of the material (emissions from extraction, processing and transport), recyclability, durability and suitability for the application',
+      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Green skills encompass the technical knowledge and practical competencies needed to deliver the low-carbon transition. For maintenance technicians, this includes energy efficiency assessment and improvement, renewable energy system maintenance (solar PV, wind, battery storage), electric vehicle charging infrastructure, heat pump installation and maintenance, smart building controls, environmental compliance, and carbon literacy. These skills are in rapidly growing demand.',
   },
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'Continuous improvement in sustainability for a maintenance team involves:',
     options: [
-      'Making one major change and then stopping',
+      'Reducing unnecessary site visits through remote monitoring, enabling predictive maintenance, and allowing fault diagnosis before travelling to site',
       'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
-      'Only attending annual environmental awareness training',
-      'Waiting for new regulations before making any changes',
+      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
+      'Demonstrating environmental performance to clients, supporting tender bids, identifying cost savings, meeting regulatory requirements and driving internal improvement',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,12 +189,12 @@ const quizQuestions = [
     id: 10,
     question: 'Reporting sustainability metrics helps a maintenance company by:',
     options: [
-      'Creating more paperwork with no practical benefit',
+      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
+      'The embodied carbon of the material (emissions from extraction, processing and transport), recyclability, durability and suitability for the application',
       'Demonstrating environmental performance to clients, supporting tender bids, identifying cost savings, meeting regulatory requirements and driving internal improvement',
-      'Only satisfying the requirements of ISO 14001',
-      'Replacing the need for actual environmental improvements',
+      'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Sustainability reporting serves multiple purposes: demonstrating environmental credentials to clients (increasingly required in tender evaluation), identifying cost-saving opportunities (waste reduction, energy efficiency, fuel savings), meeting regulatory requirements (SECR, ESOS), benchmarking performance against industry peers, engaging staff in sustainability goals, and providing data for continuous improvement. What gets measured gets managed.',
   },
@@ -203,12 +203,12 @@ const quizQuestions = [
     question:
       'When considering the embodied carbon of a replacement distribution board, the largest contribution typically comes from:',
     options: [
-      'The cardboard packaging',
+      'Travel emissions, energy used during the work, materials consumed, waste generated, and the embodied carbon of replacement parts',
+      'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
+      'Fuel consumption, CO2 emissions, vehicle wear, driver fatigue and operational costs',
       'The manufacturing process and raw material extraction for metals (copper busbars, steel enclosure) and plastics',
-      'The installation labour',
-      "The delivery vehicle's fuel consumption",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The largest embodied carbon contribution for a distribution board comes from the raw material extraction and manufacturing of its metal components — particularly copper (high energy intensity to mine and refine) and steel (energy-intensive smelting process). Plastics (derived from petrochemicals) also contribute significantly. Understanding this helps justify repair over replacement where possible, and selecting products with recycled content when replacement is necessary.',
   },
@@ -216,12 +216,12 @@ const quizQuestions = [
     id: 12,
     question: 'Under the ST1426 standard, sustainable work practices are:',
     options: [
-      'An optional extra that only applies to large companies',
       'A core requirement — maintenance technicians must demonstrate environmental awareness, sustainable working practices and continuous improvement in their professional behaviour',
-      'Only assessed if the apprentice chooses an environmental pathway',
-      'Not mentioned in the standard',
+      'Setting measurable targets, tracking performance, identifying improvements, implementing changes and reviewing progress in a repeating cycle',
+      'Demonstrating environmental performance to clients, supporting tender bids, identifying cost savings, meeting regulatory requirements and driving internal improvement',
+      'The environmental impact at every stage: raw material extraction, manufacturing, transport, use (energy consumption), maintenance and end-of-life disposal or recycling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 explicitly requires maintenance technicians to work in an environmentally responsible manner and contribute to sustainability. This includes understanding environmental legislation, applying the waste hierarchy, supporting energy efficiency, and adopting sustainable working practices. These requirements are assessed through the end-point assessment and reflect the growing importance of environmental competence in the maintenance engineering profession.',
   },

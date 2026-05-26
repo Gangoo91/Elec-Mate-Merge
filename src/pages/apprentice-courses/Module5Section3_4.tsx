@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why is minimising disruption to other trades important?',
     options: [
-      'To finish work faster',
+      'Absorption of current by the insulation (polarisation)',
       'To keep projects on schedule and reduce conflict',
-      'To use fewer materials',
-      'To work alone',
+      'The difference between predicted and actual energy consumption',
+      'The driven turns 3× slower with 3× the torque',
     ],
     correctIndex: 1,
     explanation:
@@ -28,20 +28,25 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Give one example of a common clash between electrical and another trade.',
     options: [
-      'Working in different areas',
+      'Strong encryption, regular updates, and network segmentation',
+      'Using multiple sensors or methods to confirm actual intrusions',
       'Electricians running cables while plastering is ongoing',
-      'Using different tools',
-      'Working different hours',
+      'Higher ceilings require more sensitivity',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Common clashes include electricians running cables while plastering is ongoing, which can damage both trades' work.",
   },
   {
     id: 3,
     question: 'How can electricians protect socket boxes during plastering?',
-    options: ['Remove them', 'Use temporary covers', 'Paint them', 'Move them'],
-    correctIndex: 1,
+    options: [
+      'Move them',
+      'Paint them',
+      'Remove them',
+      'Use temporary covers',
+    ],
+    correctIndex: 3,
     explanation:
       'Temporary covers protect socket boxes from being filled with plaster or other materials during wet trades.',
   },
@@ -55,10 +60,10 @@ const Module5Section3_4 = () => {
       id: 1,
       question: 'Why is minimising disruption to other trades important?',
       options: [
-        'To finish work faster',
+        'Verified against designer\\\\\\\'s specification',
         'To keep projects on schedule and reduce conflict',
-        'To use fewer materials',
-        'To work independently',
+        'Responsible, Accountable, Consulted, Informed',
+        'It\\\\\\\'s converted to heat, sound, or other forms',
       ],
       correctAnswer: 1,
       explanation:
@@ -67,8 +72,13 @@ const Module5Section3_4 = () => {
     {
       id: 2,
       question: 'Name one trade that often clashes with electricians during first fix.',
-      options: ['Landscapers', 'Plasterers', 'Roofers', 'Security guards'],
-      correctAnswer: 1,
+      options: [
+        'Roofers',
+        'Landscapers',
+        'Plasterers',
+        'Security guards',
+      ],
+      correctAnswer: 2,
       explanation:
         'Plasterers often work in the same areas as electricians during first fix, creating potential for clashes and damage.',
     },
@@ -76,12 +86,12 @@ const Module5Section3_4 = () => {
       id: 3,
       question: 'What site document shows when each trade is scheduled to work?',
       options: [
-        'Health and safety file',
-        'The site programme',
         'Material delivery notes',
+        'Health and safety file',
         'Tool inventory',
+        'The site programme',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'The site programme shows the scheduled timing for all trades and activities on the construction project.',
     },
@@ -97,7 +107,12 @@ const Module5Section3_4 = () => {
     {
       id: 5,
       question: 'What can be used to protect socket boxes during plastering?',
-      options: ['Plastic bags', 'Temporary covers', 'Newspaper', 'Nothing needed'],
+      options: [
+        'Plastic bags',
+        'Temporary covers',
+        'Nothing needed',
+        'Newspaper',
+      ],
       correctAnswer: 1,
       explanation:
         'Temporary covers specifically designed for electrical boxes protect them from plaster and other materials.',
@@ -105,8 +120,13 @@ const Module5Section3_4 = () => {
     {
       id: 6,
       question: 'Who leads coordination between trades on site?',
-      options: ['The electrician', 'The site manager', 'The client', 'The delivery driver'],
-      correctAnswer: 1,
+      options: [
+        'The electrician',
+        'The client',
+        'The site manager',
+        'The delivery driver',
+      ],
+      correctAnswer: 2,
       explanation:
         'The site manager oversees coordination between trades, though each trade must take responsibility for communication.',
     },
@@ -114,12 +134,12 @@ const Module5Section3_4 = () => {
       id: 7,
       question: 'What is a consequence of poor coordination?',
       options: [
-        'Better quality work',
+        'A unit of solid angle in three-dimensional space',
+        'Protective devices operate immediately',
+        'Current cannot complete its path',
         'Rework, delays, or damaged installations',
-        'Lower costs',
-        'Faster completion',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Poor coordination leads to rework, delays, damaged installations, and conflicts between trades.',
     },
@@ -127,12 +147,12 @@ const Module5Section3_4 = () => {
       id: 8,
       question: 'Why should electricians attend site meetings?',
       options: [
-        'To get paid',
         'To plan work alongside other trades',
-        'To take breaks',
-        'To avoid work',
+        'Easily scalable without rewiring',
+        'Neatly in line with agreed grid systems',
+        'Switching a fan on or off',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Site meetings enable electricians to coordinate their work with other trades and avoid clashes.',
     },
@@ -140,10 +160,10 @@ const Module5Section3_4 = () => {
       id: 9,
       question: 'What should you do if another trade damages your installation?',
       options: [
-        'Ignore it',
+        'Loud machinery on a building site',
         'Report it to the supervisor immediately',
-        'Fix it yourself quietly',
-        'Blame the other trade',
+        'The permanent live conductors (loop terminals)',
+        '4:1 (standard 4x more accurate)',
       ],
       correctAnswer: 1,
       explanation:
@@ -153,12 +173,12 @@ const Module5Section3_4 = () => {
       id: 10,
       question: 'Give one way to reduce disruption during multi-trade work in confined spaces.',
       options: [
-        'Work faster',
+        'False - written records provide important backup',
+        'Testing insulation effectiveness',
         'Agree work times/areas with other trades',
-        'Use more workers',
-        'Work overtime',
+        'In individual rooms or zones for localised control',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Coordinating work times and areas with other trades prevents conflicts and safety issues in confined spaces.',
     },

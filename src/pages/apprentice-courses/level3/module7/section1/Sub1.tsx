@@ -40,10 +40,10 @@ const checks = [
     question:
       "What's the practical difference between a main contractor and an electrical sub-contractor on a commercial project?",
     options: [
-      "There's no difference — they're the same thing.",
+      "Reg 14(2) requires every employee to inform their employer (or any other employee with specific responsibility for safety) of any work situation which they reasonably consider represented a serious and immediate danger to health and safety, AND any matter which they reasonably consider represented a shortcoming in the employer's protection arrangements for health and safety. The duty extends to near-misses, defective safe systems of work, and any condition the employee believes presents danger.",
       "The main contractor holds the contract with the client (often the building developer or end-user) and is responsible for the whole project — programme, cost, safety, all trades. The electrical sub-contractor (sometimes 'M&E sub-contractor') holds a sub-contract with the main contractor and is responsible for the electrical package only — design (if D&B), install, test, commission, hand over. Most UK electrical apprentices work for sub-contractors.",
-      "Main contractors only do design; sub-contractors only do install.",
-      "Sub-contractors are always smaller than main contractors.",
+      "Three things: (1) proves your identity on site, (2) records your competence — JIB grade, qualifications, H&S assessment, specialist endorsements, (3) is required for entry on most CDM-regulated sites because main contractors use ECS as their proof-of-competence check. Without an ECS card you're typically refused entry to commercial and infrastructure sites.",
+      "Report it via your own chain (your Foreman in the first instance, escalating to the main contractor's Site Manager if it's site-wide). You don't approach the HSE inspector direct — that's not your seat — but you have a duty under CDM 2015 Reg 15(1)(b) and HASAWA s.7(a) to report hazards you become aware of. Your Foreman handles the conversation upward.",
     ],
     correctIndex: 1,
     explanation:
@@ -54,12 +54,12 @@ const checks = [
     question:
       "Who's normally responsible for the design of the electrical installation on a 'design and build' (D&B) project?",
     options: [
-      "The customer, working alone.",
-      "The Building Inspector.",
+      "C&G 2382 is the BS 7671 Wiring Regulations qualification — open-book exam testing knowledge of the current edition. Each major edition triggers a new 2382 variant: 2382-15 was 17th Edition; 2382-18 was 17th Edition + A3; 2382-22 is 18th Edition; 2382-26 will cover A4:2026. Holding the latest 2382 is the standard CPD evidence for keeping current with BS 7671.",
+      "Fail the device. Issue a Code C2 (potentially dangerous) on the EICR if applicable, document on the Schedule of Test Results, replace the RCD or RCBO. A trip time exceeding the 300 ms manufacturer\\\\\\\\\\\\'s declared limit means the device cannot be relied upon to disconnect within the Table 41.1 system requirement. The RCD is approaching end of life and may fail to operate at all on the next fault. Replace, retest, document the remediation. Do not leave the installation in service relying on a failed RCD.",
+      "Modern EV chargers can leak smooth DC current under fault conditions — and a Type AC RCD won't trip on smooth DC. So Section 722 requires either a Type B RCD (which detects AC, pulsating DC and smooth DC) OR a Type A RCD plus an RDC-DD (a separate device that adds smooth-DC detection to a Type A RCD). The RDC-DD route is often cheaper than fitting a Type B RCD because Type A RCDs are widely available and inexpensive. The certified installer chooses the architecture; the customer doesn't see the difference but the regulatory compliance requires one or the other.",
       "The electrical sub-contractor's design team (typically a Design Engineer or external Consulting Engineer working to the sub-contractor's brief). On D&B the main contractor passes the design responsibility down to the sub-contractor, who designs to a performance spec rather than a fully-detailed drawing pack. On 'traditional' procurement the design is done up-front by an external M&E Consultant and the sub-contractor installs to those drawings.",
-      "The Site Labourer.",
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Procurement route shapes who designs. Traditional contracts (employer's design, contractor builds) keep design with an M&E Consultant retained by the client. Design and Build (D&B) shifts design to the contractor, who either retains an in-house Design Engineer or sub-lets to a Consulting Engineer. Most large UK projects in the last decade have been D&B — so the sub-contractor's design team is increasingly important. Apprentices considering a design career should look at firms with in-house design teams.",
   },
@@ -68,12 +68,12 @@ const checks = [
     question:
       "Which of these are the main 'building services engineering' (BSE) disciplines you'll work alongside?",
     options: [
-      "Only electrical and plumbing.",
-      "Only electrical.",
       "Electrical (the 'E' in M&E), Mechanical (heating, ventilation, air-conditioning, drainage — the 'M'), Public Health (water and drainage), Fire Detection and Alarm, Security and Access Control, Building Management Systems (BMS), Lifts and Escalators, and renewables (solar PV, EV charging, heat pumps). All of these together are 'building services engineering' — the systems that make a building habitable.",
-      "Only the structural trades — bricklayers and steelwork.",
+      "A structured plan that includes: self-assessment (identifying current EI strengths and gaps), specific goals (which competencies to develop), practice opportunities (real situations to apply new skills), feedback mechanisms (trusted people who will give honest observations), reflection practices (regular review of progress), and accountability (commitments to specific actions with review dates)",
+      "Companies House is the UK's Government registrar of companies. It receives and publishes company information — incorporation, registered office, directors, shareholders, annual accounts, annual confirmation statement. All UK Ltd companies and LLPs must register with Companies House and file annual returns. Public information is searchable free at companies-house.gov.uk.",
+      "Smart charging enables the charge rate, timing and duration to be managed dynamically in response to grid conditions, electricity tariffs, local network constraints and user preferences — it is essential to prevent network overloading as millions of EVs connect to a grid that was not designed for their combined demand",
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Building services engineering covers all the systems that go inside the structural shell of a building. The C&G 2365 syllabus and Unit 308 specifically use the term 'building services engineering' rather than 'electrical' because the broader BSE workforce is increasingly cross-discipline. Knowing what the other trades do (and what depends on what) is essential for sequencing on site and for career mobility — e.g. an electrician with EV-charging and BMS endorsements can work across electrical and controls.",
   },
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 1,
     question: "What does 'M&E' stand for in UK construction?",
     options: [
-      "'Maintenance and Engineering'.",
+      "ISOLATE the supply first. If immediate isolation isn't possible, use a non-conductive item (dry wood, plastic) to break contact. Do NOT touch the casualty until they're separated from the source. Then DR ABC casualty assessment and 999.",
       "'Mechanical and Electrical' — the two big building services disciplines covering everything from heating, ventilation and water through to power, lighting, fire and data. The M&E sub-contractor (sometimes a single firm covering both, sometimes two specialist firms) delivers the building's working systems.",
-      "'Mains and Earthing'.",
-      "'Materials and Equipment'.",
+      "Three years from the date of the incident under RIDDOR Reg 12. Records held in any format that allows retrieval. The HSE may request retrospective access during investigations or sector reviews. Many firms retain longer for PI insurance / Defective Premises Act purposes.",
+      "Self-employed NI calculated as a percentage of profits over a threshold; paid alongside income tax via Self Assessment. Currently 9% on profits between the lower and upper limits, 2% above. (Rates and thresholds adjust annually — check current HMRC figures.)",
     ],
     correctAnswer: 1,
     explanation:
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: "Who is the 'Project Engineer' in an electrical sub-contractor?",
     options: [
-      "The apprentice.",
+      "Written communication carries emotional tone even without non-verbal cues. EI in writing means: considering how the reader will feel when they read it, choosing words that are clear and respectful, avoiding language that could be interpreted as blame or aggression, and re-reading messages before sending to check for unintended emotional impact — especially important when conveying criticism or bad news",
+      "Some MFTs have multiple Zs measurement ranges (e.g. low range 0-2 Omega, high range 0-200 Omega). If you\\\\\\\\'re testing a TT installation with expected Zs of 80-200 Omega and the meter is set to the low range, the reading will saturate or read inaccurately. GN3 wants you to consciously check the range matches the expected reading before pressing TEST — a failed test or wildly wrong reading wastes time and may damage the instrument if test current exceeds the range capacity.",
       "The technical lead for a project on the sub-contractor's side. The Project Engineer coordinates design (where applicable), procurement, programme, technical queries (RFIs), QA and the eventual handover. They are the sub-contractor's technical face to the main contractor and the M&E Consultant. Typically a Technician-grade or HNC-qualified electrician with several years on site, or a graduate engineer who has crossed in from design.",
-      "The site labourer.",
-      "The customer's representative.",
+      "Common triggers: profits exceed £40-50k/year (where Ltd's lower-cost dividend tax structure starts to outweigh the extra admin); contracts increasingly require Ltd-only counterparties (some commercial clients refuse to engage sole traders); risk profile grows (more employees, larger contracts, higher liability exposure); raising external investment (impossible as sole trader); planning succession or sale of the business (Ltd is sellable, sole trader isn't).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Project Engineer is one of the main career destinations for an apprentice who progresses through the JIB grades and adds technical qualifications (HNC, HND, or degree). The role is part-office, part-site — they sit with the main contractor's team in technical meetings, raise RFIs, work with the design team, and translate between the spec and the install. It's a high-leverage role and a common stepping-stone to Senior Project Engineer, Contracts Manager or Operations Director.",
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: "What does a 'Commissioning Engineer' actually do?",
     options: [
-      "Sells new commissions.",
+      "To indicate that a device (e.g. a fuse, switch or MCB) only interrupts the line conductor, not the neutral. Important for any future electrician working on the circuit — the neutral may still be live relative to earth even with the device open, so isolation procedures (lock-off, prove dead) must take account of the single-pole nature.",
+      "A dedicated polarity column on the per-circuit row of the STR, usually a tick or a P/F. The Schedule of Inspections also records polarity verification at a higher level. If polarity fails at sign-off the EIC cannot be issued — Reg 644.1.1 requires defects to be corrected before certification.",
+      "A Statutory Instrument is secondary legislation — passed under the authority of an Act of Parliament. Breach is a criminal offence and the HSE can prosecute. A British Standard is a voluntary technical document published by the British Standards Institution. Breach is not in itself a criminal offence — but where another statute (e.g. Approved Document P, which references BS 7671) effectively requires compliance, departure becomes evidence of a statutory breach.",
       "Brings the installed systems to life — energising, testing, setting parameters, demonstrating compliance, and signing the system over to the client. On a commercial project commissioning is a distinct phase after the install: the Commissioning Engineer runs the test sequence, configures the BMS, programmes the panels, sets the protection settings and produces the commissioning records that go in the O&M manual.",
-      "Only handles paperwork.",
-      "Only deals with marketing.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Commissioning is a specialist role that sits between install and handover. On a school the Commissioning Engineer might programme the lighting controls, configure the fire alarm, test the EV chargers, balance the standby supply and produce the witness test certificates the client signs off. AM2S and the C&G 2399 commissioning routes feed into commissioning careers; many commissioning engineers come from an installation background.",
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: "What's the difference between a 'Domestic Installer' firm and an 'Approved Contractor' firm under NICEIC?",
     options: [
-      "There's no difference.",
       "Domestic Installer firms are scheme-registered to self-certify Building Regulations Part P notifiable work in dwellings only (single-family homes, flats). Approved Contractor firms are assessed to a higher standard covering commercial, industrial and dwellings — they can self-certify Part P plus issue compliance certificates against BS 7671 across the full scope. The Approved Contractor assessment is more rigorous and carries higher annual fees.",
-      "Domestic Installers are bigger firms.",
-      "Approved Contractors only do EV charging.",
+      "UK-SPEC (UK Standard for Professional Engineering Competence) is the published competence standard against which Engineering Council professional registrations (EngTech, IEng, CEng) are assessed. It defines five competence areas (knowledge and understanding, design, leadership and management, communication, professional commitment) and the level of evidence required at each tier. Available free at engc.org.uk.",
+      "EAWR 'electrical systems' includes portable equipment supplied from those systems. A faulty 110 V SDS on a 110 V site supply is part of the electrical system in EAWR terms. The maintenance duty under Reg 4(2) covers the supply (transformer, leads, sockets) AND the equipment plugged into it. Visual checks, PAT, and competent-person inspection all sit under this duty — EAWR is the second statutory hook alongside PUWER.",
+      "HMRC is His Majesty's Revenue and Customs — the UK tax authority. For a sole trader: register for Self Assessment within 3 months of starting trading; file a Self Assessment tax return each January; pay income tax and Class 2/4 National Insurance on profits; potentially register for VAT if turnover exceeds £85,000/year. HMRC also handles PAYE if you have employees.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "NICEIC and the other competent person schemes operate two main categories: Domestic Installer (dwellings only, Part P focus) and Approved Contractor (full BS 7671 scope, all building types). The category dictates what work the firm can self-certify and what work needs Building Control notification. Most established commercial sub-contractors are Approved Contractors; many small one-person electrical firms working on houses are Domestic Installers. Both pay annual scheme fees of roughly £600 to £1,200 plus the assessor's day rate.",
   },
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: "What's the JIB Apprentice grade and how does it differ from the colloquial term 'Improver'?",
     options: [
-      "There's no difference.",
+      "(a) Don't carry out construction work unless you have the skills, knowledge, training and experience to do it safely (or are in the process of obtaining them); (b) report to the person in control anything you're aware of that's likely to endanger H&S; (c) co-operate with any other person working on or in connection with the project to enable that person to comply with their duties.",
       "Apprentice is a formal JIB grade for someone in a registered apprenticeship — typically a learner working towards the C&G 2365 (or NVQ Level 3) and the AM2. 'Improver' is not a formal JIB grade — it's a colloquial industry term sometimes used for the post-college, pre-AM2 stage where the learner has completed the technical qualifications but not yet sat the AM2. Once AM2 is passed and JIB processes the upgrade, the worker becomes an Electrician on the JIB scale.",
-      "'Improver' is a higher grade than Approved Electrician.",
-      "Apprentice is for over-30s only.",
+      "Witnesses fade fast — by the next day they've reconstructed events differently, by the next week they've forgotten details, by the next month their memory has merged with what they later read or heard. Asking each witness to write down what they saw, in their own words, on the day of the incident, captures evidence at its strongest. The HSE / insurer / firm's defence team will all want this evidence later.",
+      "They share components — both depend on R1+R2 (the cable line + CPC resistance for Zs, line + neutral resistance for voltage drop). A high-Zs reading often correlates with a high voltage drop reading because both are dominated by the cable\\\\\\\\'s R1 contribution. If you find one is borderline, check the other. The two tests are complementary — Zs verifies fault-clearance (ADS), voltage drop verifies normal-operation quality. Both use cable resistance as a key input.",
     ],
     correctAnswer: 1,
     explanation:
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: "What does a 'Site Foreman' do on an electrical sub-contractor's gang?",
     options: [
-      "Only sweeps the floor.",
+      "A larger consumer unit (often 16-24 way) with dedicated RCBOs / AFDDs for the PV inverter AC connection, the battery inverter AC connection, the EV charger circuit, the heat pump circuit, plus the existing house circuits. Sometimes a separate sub-board for the PV / battery / heat pump cluster and a CT clamp on the main supply tail back to the EV charger or HEMS. Cable management at the CU becomes a real consideration — main tails plus PV export plus battery in/out plus heat pump and EV feeds is a lot of cable in one box.",
+      "G98 is post-notification — install, commission, notify within 28 days. The whole transaction completes inside 28 days from commissioning. G99 is pre-application — submit the application before commissioning, wait for the DNO to model the network, receive a Connection Offer, accept the Offer (which may contain export limits or fault-level conditions), then commission. Typical G99 timeline is 4-12 weeks for a domestic system; longer for commercial. On a fast-moving install programme the G99 paperwork is usually the long pole — start it early.",
       "Runs the day-to-day site operation for the sub-contractor — daily briefings, allocating work to gangs, ordering materials, liaising with the main contractor's site team, signing off install milestones, managing the apprentice's day-job tasks. Typically an Approved Electrician or Technician with several years on site. The Foreman is the apprentice's most immediate supervisor and often the person who calibrates the apprentice's portfolio with the workplace Mentor.",
-      "Only deals with HR.",
-      "Only attends safety meetings.",
+      "Reg 14(2) requires every employee to inform their employer (or any other employee with specific responsibility for safety) of any work situation which they reasonably consider represented a serious and immediate danger to health and safety, AND any matter which they reasonably consider represented a shortcoming in the employer's protection arrangements for health and safety. The duty extends to near-misses, defective safe systems of work, and any condition the employee believes presents danger.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Site Foreman is the operational lead on site. They report up to the Site Manager (main contractor) and the Project Engineer (sub-contractor) and run the gang day-to-day. For an apprentice the Foreman sets the daily work, signs off completion of tasks, and is one of the people who shapes the apprentice's experience. A good Foreman is one of the strongest signals of a good apprenticeship placement.",
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: "Which of these roles typically requires an HNC, HND or degree in electrical engineering?",
     options: [
-      "Apprentice and entry-level Electrician.",
-      "Site Labourer.",
+      "A standard grid-tied inverter is required to shut down on loss of mains because of anti-islanding rules. Continuous operation through a power cut needs a hybrid inverter with explicit islanded-mode capability, paired with a battery and a changeover arrangement that first electrically isolates the property from the failed grid before re-energising selected circuits. The MCS designer specifies which loads stay alive, the battery sizing, and the transfer time.",
+      "Day-rate: customer pays an agreed daily (or hourly) rate for time spent plus materials at agreed markup. Risk on time-overrun sits with the customer. Fixed-price: you quote a single all-in price for the defined scope. Risk on time-overrun sits with you. Customers typically prefer fixed-price (predictable budget); contractors typically prefer day-rate (no overrun risk). Practical compromise: fixed-price for well-defined scopes, day-rate for variable or fault-finding work.",
+      "At minimum: power topology (cables, breakers, DBs); annotations (ratings, calc results); revision clouds and notes; legend and title block. Some designers add layers for fault current, voltage drop, disconnection time and sub-discipline (e.g. emergency lighting circuits, fire alarm circuits, IT critical) so layers can be turned on or off for clarity.",
       "Design Engineer (M&E Consultant or sub-contractor design team), Senior Project Engineer, and Chartered Engineer roles. The degree-level qualification gives the design knowledge (load calcs, voltage drop, discrimination, protection coordination) and the management knowledge needed for the more senior roles. Many apprentices add an HNC or HND part-time once they've passed AM2 to open these routes.",
-      "Tea boy.",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Design and senior engineering roles typically require additional formal qualifications above the C&G 2365 / NVQ Level 3 / AM2 stack. HNC (Higher National Certificate) is one year part-time after AM2; HND is two years; full BEng or BSc takes three to four years. Many contractors will fund part of the cost for an apprentice who progresses well — it's worth asking your training lead about the firm's CPD policy.",
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: "What does 'BMS' stand for and why does it matter for an electrician's career?",
     options: [
-      "'Building Mortgage Service'.",
       "'Building Management System' — the central control system that orchestrates a building's heating, ventilation, lighting, security and energy use. BMS work is one of the fastest-growing specialisms in building services because every modern commercial building has one. Electricians who learn BMS programming and commissioning (often via Trend, Tridium, Siemens or Schneider training) are in high demand and can move into BMS specialist roles paying significantly above standard electrician rates.",
-      "'Bigger Material Stock'.",
-      "'Building Maintenance Schedule'.",
+      "A discrimination annotation against each upstream/downstream device pair, citing the test (current discrimination by ratio, time discrimination by curve overlap, energy discrimination by I²t for current-limiting devices). For full discrimination across the whole SLD, manufacturer coordination tables are referenced. Where discrimination is not achievable (very common at the origin with high PSCC), the SLD notes the design choice and the regs basis.",
+      "MCS now covers battery storage as a separate technology category (alongside PV, solar thermal, heat pumps, biomass, wind). Battery installation typically pairs with PV (combined PV+battery system) or as a standalone retrofit. MCS battery certification follows MIS 3012 install standard and requires installer competence in DC battery systems, BMS commissioning, and grid-tie inverter integration.",
+      "Yes, but only after preparing — switch off any sensitive loads on the same RCD, brief any occupants the supply may briefly trip, and be ready to reset the RCBO. Full trip-current mode is more accurate (typically plus or minus 5 percent vs plus or minus 10 percent for no-trip), and on a borderline result it can confirm whether the no-trip reading was accurate or whether you have a margin you can rely on. If the full mode confirms the reading you can document with higher confidence; if it differs significantly, investigate further.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "BMS is increasingly central to commercial building services. The cabling and the field devices (sensors, valves, dampers, relays) sit in the electrician's installation scope; the head-end programming and commissioning is a distinct specialism. Vendors like Trend, Tridium, Siemens and Schneider run training and certification programmes. BMS specialists often command premium rates — a route worth knowing about if controls and integration interest you.",
   },

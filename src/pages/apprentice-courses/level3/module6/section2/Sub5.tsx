@@ -40,12 +40,12 @@ const checks = [
     question:
       "A 22 kW three-phase induction motor with full-load current 41 A direct-on-line starting. Approximate starting current and duration?",
     options: [
-      "41 A continuous — DOL motors do not have a starting transient.",
+      "The ability to resist or delay an immediate emotional urge in order to consider consequences and choose a more constructive response",
+      "High criticality (A) because its failure would stop production, there is no redundancy, and the consequences include significant lost production and potential supply chain impacts",
+      "To coordinate matters relating to health and safety and ensure designers cooperate, share information and apply the general principles of prevention",
       "Around 6-8 x FLC = 250-330 A peak for ~1-3 seconds (motor-dependent), decaying as the motor accelerates. Heavy enough to dim other circuits and to overload protection if not coordinated.",
-      "10 x FLC indefinitely.",
-      "Half FLC at start.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Direct-on-line (DOL) starting draws 6-8 times the full-load current as the motor accelerates from rest. The duration is short (typically 1-5 seconds for fan and pump loads, longer for high-inertia loads like centrifuges and conveyors) but the magnitude is enough to cause voltage dips on the supply, dim lighting on the same line and require coordinated protection (typically a contactor + thermal overload set above starting current). For motors over 5-7 kW DOL, consider soft-start or VSD to reduce starting transient and harmonic impact.",
   },
@@ -54,12 +54,12 @@ const checks = [
     question:
       "An industrial workshop has five 11 kW motors (FLC 21 A each). Running diversity and starting coordination assumption?",
     options: [
-      "All five at 100 percent demand simultaneously.",
       "Largest motor at 100 percent + 50-75 percent of remaining motors running, plus check that the supply can handle the largest motor starting on top of the others running. Sequence starts to avoid concurrent transients.",
-      "Apply 30 percent to all motors.",
-      "Motors do not need diversity.",
+      "At 1667 Ω, the leakage current from 230 V to earth is 230 ÷ 1667 ≈ 0.14 mA — well below the safe limit and below the 30 mA RCD threshold. Below 1667 Ω the part can leak more than this and is treated as extraneous; above 1667 Ω it cannot introduce a dangerous potential.",
+      "Energise the install in a controlled manner — main switch on, RCBOs on one at a time — then proceed to live testing (Ze, Zs, RCD operation, prospective fault current).",
+      "Shadowing commercial electricians (vicarious experience), completing small commercial tasks under supervision (mastery experience), and managing anxiety about the transition (emotional regulation)",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Industrial motor diversity considers two things: running diversity (which motors run simultaneously?) and starting coordination (the largest starting transient on top of the running others). Typical: largest motor at 100 percent + 50-75 percent of others (running), plus check that the supply can handle the largest motor DOL transient added to the others running. For larger workshops use sequence starting (motors start one at a time with a delay) to avoid concurrent starts, or specify soft-starts / VSDs.",
   },
@@ -68,12 +68,12 @@ const checks = [
     question:
       "A 30 kW motor on a six-pulse VSD. Impact on the supply that the diversity calc must account for?",
     options: [
-      "No impact — VSD is just a controller.",
+      "For some lower-risk asbestos work that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s above non-licensed threshold but below licensed - e.g. limited AIB removal, certain encapsulation work. Trained operatives + written plan + 14-day HSE notification + medical surveillance + records.",
+      "Every employee, including an apprentice, has two personal duties under HASAWA s.7. (a) take reasonable care for their own H&S and that of anyone affected by their acts or omissions, AND (b) co-operate with the employer's arrangements (RAMS, toolbox talks, permits, PPE rules). Breach is a criminal offence personally — the apprentice can be prosecuted, not just the firm.",
+      "A standard AC rotary switch has no DC breaking capacity. Opening it under load on a high-voltage DC string draws an arc that does not self-extinguish at zero crossing (DC has no zero crossing) and can sustain inside the switch — starting a fire. Reg 712.537 and the broader Section 462 require a switch suitable for DC isolation, normally a purpose-built PV DC isolator.",
       "Harmonic injection (5th, 7th, 11th, 13th orders) raises supply RMS current above the calc figure; reduces the soft-start benefit at the supply level. Specify 12-pulse VSD, line reactor, or active filter for sites with multiple VSDs to keep total harmonic distortion within ENA EREC G5/5 limits.",
-      "VSD doubles the supply demand.",
-      "VSD eliminates power factor correction need.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Six-pulse VSDs (most economy units) inject significant harmonics back into the supply — 5th, 7th, 11th, 13th orders predominantly. On a single small VSD this is manageable; on multiple VSDs in one site the cumulative harmonic distortion can exceed ENA EREC G5/5 limits and require mitigation: 12-pulse VSDs (much lower harmonics), line reactors (reduces harmonic by 40-50 percent), passive harmonic filters (tuned to specific orders), or active filters (broad-spectrum suppression). The diversity calc page on a VSD-heavy site needs a harmonic loading row.",
   },
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 1,
     question: 'Industrial load assessment differs from commercial primarily because of:',
     options: [
-      'Different lighting requirements.',
+      'To independently assess the apprentice against the standard, ensuring impartiality and consistency of assessment decisions',
       'Motor starting transients, process load coincidence, harmonic loading from VSDs and rectifiers, and welder / cyclic load profile.',
-      'Higher voltage.',
-      'No diversity allowed.',
+      'Each phase to neutral, each phase to earth, AND between each pair of phases (L1-L2, L2-L3, L1-L3)',
+      'Because a charged capacitor can hold a dangerous voltage long after the supply is removed — a hidden shock hazard for whoever opens the unit next.',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: 'Direct-on-line starting current for a typical induction motor is:',
     options: [
-      '0.5-1 x FLC',
+      'Load resistance in the circuit',
+      'Silicosis and lung cancer',
       '6-8 x FLC for 1-5 seconds',
-      'Same as full load',
-      '20 x FLC continuous',
+      'March to August (inclusive)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "DOL starting: 6-8 times full-load current. Duration depends on load inertia — fans and pumps 1-3 seconds, conveyors 3-10 seconds, centrifuges and presses up to 30+ seconds. The motor protection (contactor + thermal overload) must allow starting current to pass for the starting duration without tripping; this is set per motor data sheet.",
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'Soft-start vs DOL starting current reduction is typically:',
     options: [
-      'No reduction.',
+      'To demonstrate commitment and engage with workers on safety',
+      'The ratio of light output at end of life to initial output',
+      'A free 24/7 crisis text service — text SHOUT to 85258',
       '50 percent reduction (3-4 x FLC instead of 6-8 x).',
-      '99 percent reduction.',
-      'Same as DOL.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Soft-starters typically reduce starting current to 3-4 x FLC instead of 6-8 x DOL. Full VSD soft-start can reduce further to 1.5-2 x FLC. The trade-off: soft-starters cost more, can have shorter motor life if mis-tuned, and (for VSDs) inject harmonics. For motors over 5-7 kW the soft-start is usually justified by the supply impact reduction.",
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'A welding circuit with 80 A peak transient lasting 0.5-2 seconds per weld, intermittent 30 percent duty cycle. Diversity for the welder on the design pack:',
     options: [
-      '100 percent of peak.',
       '50-75 percent of peak nameplate (intermittent duty cycle reduces RMS demand) but ensure cable and protection coordinate with the peak transient.',
-      '0 percent (welders have no diversity).',
-      '10 percent of peak.',
+      'Related information is contained on the referenced drawing and both should be read together for complete understanding',
+      'Formal authorisation to do high-risk work (e.g. hot work, confined space, live work) under defined conditions for a defined time',
+      'Without delay — the responsible person must notify the HSE by the quickest practicable means, and follow up with a written report within 10 days',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Welder diversity reflects intermittent duty cycle. RMS demand at typical 30 percent duty is roughly 0.55 x peak (since I_RMS for intermittent load = I_peak × √duty_cycle). Sub-main and supply sizing typically uses 50-75 percent of peak as the design current. But the cable and protection on the welder circuit must accept the peak transient — fast-acting protection set above peak, cable sized for thermal capacity over the duty cycle.",
   },
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'ENA EREC G5/5 (current edition) addresses:',
     options: [
-      'Cable colour coding.',
+      'Coordinate the work, plan the sequencing, and ensure that the agreed sequence allows all trades to work safely and efficiently',
       'Harmonic distortion limits at the point of common coupling — limits on individual harmonic orders and total harmonic distortion (THD) for connections to the public network.',
-      'Motor speed control.',
-      'Welding arc safety.',
+      'Auto has a single tapped winding (input and output share copper, no isolation); isolation has two galvanically-separated windings (full isolation, four terminals).',
+      'Is passive and repetitive, focusing on "why" and "what if" without generating actionable steps, whereas problem-solving is active and goal-directed',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'Compressor with on-off cycling typical diversity for sub-main calc:',
     options: [
-      '100 percent always.',
+      'Systematically directing attention through different parts of the body to notice physical sensations, tension, and areas of discomfort that may indicate emotional states',
+      'Standard or Enhanced fire-resistant cable (e.g. FP200 / Firetuf), separation from other circuits, and fire-rated supports/clips that survive collapse temperatures',
       'Per duty cycle — typical industrial air compressor on a 50 percent duty cycle gives RMS current ~0.7 x peak. Sub-main typically sized at 70-100 percent of FLC; protection coordinated with starting transient if DOL.',
-      '0 percent.',
-      '30 percent of nameplate.',
+      'To ensure that the documentation accurately reflects the actual installation, so that future maintenance and fault finding can be carried out safely and efficiently',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Compressor cyclic load: when the air receiver is below set pressure the compressor runs at FLC; when at pressure it stops. Duty cycle depends on demand. RMS current for cyclic load ~ I_peak × √duty. For 50 percent duty, RMS ~0.7 x FLC. Sub-main sizing at 70-100 percent of FLC is typical (depending on duty cycle and number of compressors). Starting transient coordination per DOL motor rules.",
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'Reg 132.3 special conditions for industrial typically include:',
     options: [
-      'Just the main connected load.',
+      'A legitimate complaint identifies a genuine failure to meet agreed standards; an unreasonable complaint seeks outcomes beyond what was agreed or what is fair',
+      'A failure in the management system — inadequate supervision, lack of ongoing ground assessment procedures, and insufficient pre-use checks allowing multiple safety barriers to be breached simultaneously',
+      'Implementing corrective actions, updating the risk assessment and safe system of work, and sharing the lessons learned across the organisation',
       'Harmonics from non-linear loads (VSDs, rectifiers, IT), inrush from large motors and transformers, voltage flicker from welders and arc furnaces, daily and yearly demand variation per process schedule.',
-      'No special conditions for industrial.',
-      'Only lighting.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Industrial sites have multiple Reg 132.3 special conditions: harmonics (VSDs, rectifiers, IT load), inrush (large motors, transformers, capacitor banks), voltage flicker (arc welders, large motor starts), daily and yearly variation (shift patterns, seasonal product mix). Document each on the design pack and reference the mitigation (PFC, harmonic filters, sequence starting, supply pre-energisation).",
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'A small industrial site with multiple motors, welders, compressors and VSDs needs:',
     options: [
-      'Same diversity calc as a domestic dwelling.',
       'A multi-row diversity calc with motor running diversity, motor starting coordination check, welder peak vs RMS, harmonic loading allowance, and PFC / supply transient assumptions documented per source.',
-      'Just the largest motor at 100 percent.',
-      'No calc needed.',
+      'The likelihood that harm from a specific hazard will occur, combined with the severity of the harm. Risk = function of likelihood × severity. Modified by the population exposed and the controls in place.',
+      'Suspect hydrogen sulphide (H2S) exposure; do NOT enter the confined space without appropriate breathing apparatus; call 999 and the site confined space rescue team',
+      'Make the relevant information available to anyone who is liable to disturb the asbestos-containing materials, including contractors and maintenance workers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Industrial diversity calc has more rows than domestic or small commercial: per-motor running diversity, starting coordination matrix (which motor on top of which others), welder duty cycle, compressor cycle, harmonic loading at the supply, PFC pre/post calculation, sequence-start delays. The page is a small spreadsheet but it is what the supply rating depends on. The L3 designer who specs an industrial site without this calc is guessing.",
   },

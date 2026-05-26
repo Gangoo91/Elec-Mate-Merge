@@ -28,8 +28,8 @@ const quickCheckQuestions = [
     options: [
       'Resistance halves',
       'Resistance doubles',
-      'Resistance stays the same',
       'Resistance quadruples',
+      'Resistance stays the same',
     ],
     correctIndex: 1,
     explanation:
@@ -40,11 +40,11 @@ const quickCheckQuestions = [
     question: 'What happens to resistance if you double the cross-sectional area of a cable?',
     options: [
       'Resistance doubles',
-      'Resistance halves',
       'Resistance quadruples',
+      'Resistance halves',
       'No change to resistance',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Resistance is inversely proportional to area. Double the area = half the resistance (R = ρL/A).',
   },
@@ -52,12 +52,12 @@ const quickCheckQuestions = [
     id: 'temp-effect',
     question: 'How does increasing temperature typically affect metal conductor resistance?',
     options: [
+      'Resistance becomes zero',
+      'No effect on resistance',
       'Resistance decreases significantly',
       'Resistance increases',
-      'No effect on resistance',
-      'Resistance becomes zero',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Metal conductors have a positive temperature coefficient - resistance increases with temperature (typically ~0.4% per °C for copper).',
   },
@@ -67,7 +67,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which formula links resistance to length and cross‑sectional area?',
-    options: ['R = V/I', 'R = ρL/A', 'P = VI', 'Z = √(R² + X²)'],
+    options: [
+      'R = V/I',
+      'R = ρL/A',
+      'P = VI',
+      'Z = √(R² + X²)',
+    ],
     correctAnswer: 1,
     explanation:
       'Conductor resistance depends on resistivity (ρ), length (L) and cross‑sectional area (A): R = ρL/A.',
@@ -76,39 +81,49 @@ const quizQuestions = [
     id: 2,
     question: 'Doubling the length of a uniform conductor will:',
     options: [
+      'Quarter the resistance',
       'Halve the resistance',
       'Double the resistance',
-      'Quarter the resistance',
       'Not change resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'R is directly proportional to L; doubling L doubles R (same ρ and A).',
   },
   {
     id: 3,
     question:
       'If the cross‑sectional area is doubled (same material and length), resistance will approximately:',
-    options: ['Double', 'Halve', 'Remain the same', 'Increase slightly'],
-    correctAnswer: 1,
+    options: [
+      'Remain the same',
+      'Double',
+      'Increase slightly',
+      'Halve',
+    ],
+    correctAnswer: 3,
     explanation: 'R is inversely proportional to A; increasing A reduces R.',
   },
   {
     id: 4,
     question: 'Compared with copper, aluminium has:',
     options: [
-      'Lower resistivity (ρ)',
-      'Similar resistivity (ρ)',
       'Higher resistivity (ρ)',
+      'Similar resistivity (ρ)',
+      'Lower resistivity (ρ)',
       'Zero resistivity',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Aluminium's higher ρ gives higher R for the same L and A, so a larger CSA is needed for equal performance.",
   },
   {
     id: 5,
     question: 'For most metallic conductors, as temperature rises, resistance tends to:',
-    options: ['Decrease', 'Increase', 'Remain constant', 'Become zero'],
+    options: [
+      'Decrease',
+      'Increase',
+      'Become zero',
+      'Remain constant',
+    ],
     correctAnswer: 1,
     explanation:
       'Metals usually have a positive temperature coefficient; R increases with temperature.',
@@ -117,24 +132,24 @@ const quizQuestions = [
     id: 6,
     question: 'The temperature coefficient of resistance (α) is used to:',
     options: [
-      'Adjust voltage drop for frequency',
+      'Loose connections, overloaded circuits, or supply problems',
+      'Combined PEN from supply, separate in installation',
       'Correct resistance from 20°C to operating temperature',
-      'Size protective devices',
-      'Measure insulation resistance',
+      'Connecting metalwork to earth potential for safety',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'R_T = R_20 × [1 + α(T − 20°C)] is a simple correction often used for metals.',
   },
   {
     id: 7,
     question: 'Poor or loose connections typically cause:',
     options: [
-      'Lower resistance and less heat',
+      'A point where two or more components connect',
+      'Complete electrical path between two points',
+      'Two-pole voltage tester (GS38 compliant)',
       'Higher local resistance and heating',
-      'No change',
-      'Short‑circuit instantly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Contact resistance rises; this can overheat and damage insulation – a safety risk.',
   },
@@ -144,9 +159,9 @@ const quizQuestions = [
       'Which BS 7671 resources are most useful when considering conductor resistance and voltage drop?',
     options: [
       'Appendix 4 tables',
-      'Part 7 special locations only',
       'Inspection schedules only',
       'Earthing arrangements only',
+      'Part 7 special locations only',
     ],
     correctAnswer: 0,
     explanation:
@@ -157,11 +172,11 @@ const quizQuestions = [
     question: 'Which combination gives the LOWEST resistance (same material)?',
     options: [
       'Short length, small CSA',
-      'Long length, small CSA',
       'Short length, large CSA',
+      'Long length, small CSA',
       'Long length, large CSA',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation: 'Lower L and higher A minimises R for a given ρ.',
   },
   {
@@ -169,11 +184,11 @@ const quizQuestions = [
     question: 'Why might a long feeder be upsized in CSA?',
     options: [
       'To increase resistance and warm the cable',
+      'To reduce fault current',
       'To reduce voltage drop and heating',
       'To change colour codes',
-      'To reduce fault current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Larger CSA reduces R, helping keep voltage drop and temperature rise within limits.',
   },

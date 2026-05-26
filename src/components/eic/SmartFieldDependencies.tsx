@@ -37,6 +37,15 @@ const SmartFieldDependencies: React.FC<SmartFieldDependenciesProps> = ({ formDat
     }
   }, [formData.supplyVoltage, formData.phases, onUpdate]);
 
+  // Default earthing arrangement to TN-C-S (most common UK domestic supply — PME).
+  // Runs once on mount and only if the field is empty, so existing certs are untouched.
+  useEffect(() => {
+    if (!formData.earthingArrangement) {
+      onUpdate('earthingArrangement', 'TN-C-S');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return null; // This component doesn't render anything
 };
 

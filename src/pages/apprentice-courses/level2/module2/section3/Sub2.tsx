@@ -33,8 +33,13 @@ const checks = [
   {
     id: 'conductor-best-check',
     question: 'Which of these is the most common conductor in domestic UK cables?',
-    options: ['Aluminium', 'Copper', 'Steel', 'Carbon'],
-    correctIndex: 1,
+    options: [
+      'Steel',
+      'Aluminium',
+      'Copper',
+      'Carbon',
+    ],
+    correctIndex: 2,
     explanation:
       "Copper is the standard for domestic and most commercial cabling — low resistivity, easy to terminate, stable connections. Aluminium turns up on big feeders and overhead lines but you don't see it in T&E.",
   },
@@ -42,20 +47,25 @@ const checks = [
     id: 'insulator-purpose-check',
     question: "Why does a cable need insulation around the conductor?",
     options: [
-      'To make it look tidier',
-      'To increase the current it can carry',
       'To stop current leaking out and to prevent shock',
-      'To raise the voltage',
+      'A = cut-out, B = electricity meter',
+      'Fibre with gradually changing refractive index across the core',
+      'Stable modal power distribution after long fibre length',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Insulation is the safety layer. It stops current leaking from the live core to anything (or anyone) else, and it stops one core touching another. Without it, every cable would be a fault waiting to happen.",
   },
   {
     id: 'pvc-temp-check',
     question: 'What is the maximum continuous operating temperature of standard PVC insulation?',
-    options: ['40°C', '70°C', '90°C', '120°C'],
-    correctIndex: 1,
+    options: [
+      '70°C',
+      '40°C',
+      '90°C',
+      '120°C',
+    ],
+    correctIndex: 0,
     explanation:
       "PVC tops out at 70°C continuous. XLPE goes to 90°C. Run a cable beyond its insulation rating and the insulation softens, embrittles, and eventually fails — that's a fire and shock risk.",
   },
@@ -63,8 +73,13 @@ const checks = [
     id: 'aluminium-csa-check',
     question:
       'You need to replace a copper sub-main with aluminium for weight reasons. The original was 70 mm² copper. Roughly what aluminium CSA do you need to carry the same current?',
-    options: ['25 mm²', '50 mm²', '95 mm²', '300 mm²'],
-    correctIndex: 2,
+    options: [
+      '300 mm²',
+      '25 mm²',
+      '50 mm²',
+      '95 mm²',
+    ],
+    correctIndex: 3,
     explanation:
       'Aluminium has roughly 1.6× the resistivity of copper, so you need about 1.6× the CSA. 70 × 1.6 = 112 mm² — round up to the next standard size, 95 mm² or 120 mm² depending on the design. 50 mm² would undersize and overheat; 300 mm² is overkill and a waste of money.',
   },
@@ -75,20 +90,25 @@ const quizQuestions = [
     id: 1,
     question: 'A material is classed as a conductor because it:',
     options: [
-      'Has very low resistivity and lots of free electrons',
       'Is shiny and metallic looking',
+      'Has very low resistivity and lots of free electrons',
       'Has high resistance to current',
       'Is rated for high temperature',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       "Low resistivity = current passes easily. The reason is the sea of free electrons covered in 3.1. Looks have nothing to do with it — graphite is a non-metallic conductor; mercury is a liquid one.",
   },
   {
     id: 2,
     question: 'Which has the lower resistivity?',
-    options: ['Aluminium', 'Copper', 'Steel', 'Carbon'],
-    correctAnswer: 1,
+    options: [
+      'Steel',
+      'Aluminium',
+      'Copper',
+      'Carbon',
+    ],
+    correctAnswer: 2,
     explanation:
       "Copper ρ ≈ 17.2 nΩ·m at 20°C. Aluminium ≈ 28.2 nΩ·m. So copper carries more current for the same CSA — that's why it's standard for domestic wiring.",
   },
@@ -96,20 +116,25 @@ const quizQuestions = [
     id: 3,
     question: 'For the same current and run length, an aluminium conductor needs:',
     options: [
-      'A smaller CSA than copper',
       'Roughly the same CSA as copper',
-      'A larger CSA than copper',
+      'A smaller CSA than copper',
       'No conductor at all',
+      'A larger CSA than copper',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Aluminium has higher resistivity, so to carry the same current safely you need more cross-sectional area — typically about 1.6× the copper CSA for the same job.",
   },
   {
     id: 4,
     question: 'Which insulating material is rated to 90°C continuous?',
-    options: ['PVC', 'Rubber', 'XLPE', 'Cotton'],
-    correctAnswer: 2,
+    options: [
+      'XLPE',
+      'Rubber',
+      'PVC',
+      'Cotton',
+    ],
+    correctAnswer: 0,
     explanation:
       "XLPE (cross-linked polyethylene) handles 90°C — common on SWA and larger feeders. PVC is 70°C. The higher temp rating lets the cable carry more current without breakdown.",
   },
@@ -117,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: "What's the main advantage of LSF/LSZH cable in escape routes?",
     options: [
-      'It carries more current',
+      'Ensures switches and fuses interrupt the line conductor',
       'It produces less smoke and no halogen gases when burned',
-      'It costs less',
-      "It doesn't need terminating",
+      'An interconnection point in the horizontal pathway for flexibility',
+      'Continuity, insulation resistance, and polarity',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'A conductor is described as "extraneous-conductive-part". This means:',
     options: [
-      'Part of the electrical circuit',
+      'Selected the correct answer but your reasoning was flawed or based on a guess',
+      'The total heat content per unit mass of dry air, typically kJ/kg dry air',
       'Conductive metalwork not part of the circuit, capable of introducing a potential',
-      'A switch contact',
-      'A type of fuse',
+      'Metal part of electrical equipment that can become live under fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Things like gas pipes, water pipes, structural steel — they're conductive but not in the circuit. They get bonded to the MET so they sit at the same potential as the earthing system in a fault.",
   },
@@ -143,20 +168,25 @@ const quizQuestions = [
     id: 7,
     question: 'Damaged insulation on a fixed cable should be:',
     options: [
-      'Wrapped in PVC tape',
-      'Painted over',
+      'Immediate isolation and urgent investigation',
+      'Cables run close to or parallel with live conductors',
+      'To control motor speed and reduce energy consumption',
       'Reported and the cable replaced or properly repaired',
-      'Left if the customer is happy',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Tape is not a permanent repair on fixed wiring. Damaged insulation is a C2 (potentially dangerous) at best — replace the cable or follow the manufacturer's joint kit instructions.",
   },
   {
     id: 8,
     question: 'Which BS 7671 part covers selection and erection of equipment and wiring systems?',
-    options: ['Part 1', 'Part 2', 'Part 4', 'Part 5'],
-    correctAnswer: 3,
+    options: [
+      'Part 5',
+      'Part 4',
+      'Part 1',
+      'Part 2',
+    ],
+    correctAnswer: 0,
     explanation:
       "Part 5 (Sections 510 onwards) covers selection and erection — including how to choose conductors, insulation systems and wiring systems for the environment.",
   },

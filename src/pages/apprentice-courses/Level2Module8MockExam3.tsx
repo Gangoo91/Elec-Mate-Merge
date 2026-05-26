@@ -23,6 +23,7 @@ import useSEO from '@/hooks/useSEO';
 import { getRandomQuestions } from '@/data/apprentice-courses/level2/module3/questionBank';
 import { ExamDesktopSidebar } from '@/components/apprentice-courses/ExamDesktopSidebar';
 import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayout';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 
 const Level2Module8MockExam3 = () => {
   useSEO(
@@ -47,7 +48,10 @@ const Level2Module8MockExam3 = () => {
 
   // Initialize exam
   const startExam = () => {
-    const questions = getRandomQuestions(60, { basic: 40, intermediate: 45, advanced: 15 });
+    const questions = shuffleAllQuestionOptions(
+      getRandomQuestions(60, { basic: 40, intermediate: 45, advanced: 15 }),
+      createShuffleSalt()
+    );
     setExamQuestions(questions);
     setSelectedAnswers({});
     setCurrentQuestion(0);

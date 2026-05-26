@@ -13,7 +13,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'What is the first step in systematic fault diagnosis?',
-    options: ['Test the circuit', 'Question the user', 'Replace components', 'Check voltage'],
+    options: [
+      'Replace components',
+      'Question the user',
+      'Check voltage',
+      'Test the circuit',
+    ],
     correctIndex: 1,
     explanation:
       'Always begin by questioning the user to understand what happened, when the fault occurred, and any relevant circumstances.',
@@ -22,12 +27,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why is isolation essential before fault finding?',
     options: [
-      'To save electricity',
-      'To ensure safety during testing',
-      'To reset protective devices',
       'To improve test accuracy',
+      'To reset protective devices',
+      'To ensure safety during testing',
+      'To save electricity',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Isolation ensures safety by preventing electric shock and allows accurate testing without interference from other circuits.',
   },
@@ -35,12 +40,12 @@ const quickCheckQuestions = [
     id: 3,
     question: "What should you do if initial tests don't reveal the fault?",
     options: [
-      'Replace all components',
+      'On all circuits before energising',
+      'May have additional requirements',
+      'A pump starter or fan relay',
       'Apply systematic subdivision',
-      'Give up',
-      'Guess the problem',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Use systematic subdivision to break the circuit into smaller sections and test each part methodically.',
   },
@@ -48,12 +53,12 @@ const quickCheckQuestions = [
     id: 4,
     question: 'When should you verify repairs are effective?',
     options: [
-      'Next week',
       'Before re-energising the circuit',
-      'After the customer pays',
-      'Only if problems persist',
+      'Short circuit causing flashover and burns',
+      'Too many devices on a single bus segment',
+      'Installation type, environment, and usage',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Always verify repairs through appropriate testing before re-energising circuits to ensure safety and effectiveness.',
   },
@@ -80,12 +85,12 @@ const Module7Section4_1 = () => {
       id: 2,
       question: 'Why must circuits be isolated before fault finding?',
       options: [
+        'To reset protective devices',
         'To save electricity costs',
         'To ensure safety and accurate testing',
-        'To reset protective devices',
         'To comply with manufacturer instructions',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Isolation ensures safety from electric shock and allows accurate testing without interference from parallel paths or live conductors.',
     },
@@ -93,20 +98,25 @@ const Module7Section4_1 = () => {
       id: 3,
       question: 'What is systematic subdivision in fault finding?',
       options: [
-        'Testing everything at once',
+        'The number of complete cycles per second',
+        'ATEX or IECEx certification for equipment and installation methods',
+        'Equivalent resistance of parallel combinations',
         'Breaking the circuit into smaller testable sections',
-        'Replacing components one by one',
-        'Using multiple test instruments',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Systematic subdivision involves breaking the circuit into smaller sections and testing each part methodically to locate the fault.',
     },
     {
       id: 4,
       question: 'Which test instrument is most appropriate for checking continuity?',
-      options: ['Voltmeter', 'Low resistance ohmmeter', 'Clamp meter', 'Insulation tester'],
-      correctAnswer: 1,
+      options: [
+        'Low resistance ohmmeter',
+        'Voltmeter',
+        'Clamp meter',
+        'Insulation tester',
+      ],
+      correctAnswer: 0,
       explanation:
         'A low resistance ohmmeter provides accurate continuity measurements and can detect high resistance joints that other instruments might miss.',
     },
@@ -114,10 +124,10 @@ const Module7Section4_1 = () => {
       id: 5,
       question: 'What should you verify before re-energising after repair?',
       options: [
-        'Only that the repair looks good',
+        'Replaced with a short circuit',
         'Test results confirm the fault is cleared',
-        'The customer is satisfied',
-        'All tools are packed away',
+        '25% reduction in HVAC energy costs',
+        'Free personal protective equipment for all visitors',
       ],
       correctAnswer: 1,
       explanation:
@@ -127,12 +137,12 @@ const Module7Section4_1 = () => {
       id: 6,
       question: 'Why is documentation important in fault finding?',
       options: [
-        "It's required by law",
+        'A serious criminal offence where an organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s failure causes death',
+        'The next 1–4 weeks of activity in detail, used at the weekly site meeting',
         'Provides evidence of work done and aids future maintenance',
-        'Customers always request it',
-        'Insurance companies demand it',
+        'They extract renewable heat from the environment (air, ground, or water)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Documentation provides evidence of professional work, helps with future maintenance, and demonstrates compliance with safety standards.',
     },
@@ -140,12 +150,12 @@ const Module7Section4_1 = () => {
       id: 7,
       question: "What is the danger of 'shotgun' fault finding?",
       options: [
-        'It takes too long',
+        'Power loss due to current flowing through resistance',
+        'Mineral Insulated Copper Cable (MICC)',
+        'SAFETY ELECTRICAL CONNECTION — DO NOT REMOVE',
         'May cause additional faults and safety risks',
-        "It's too expensive",
-        "Customers don't like it",
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Random testing and component replacement can introduce new faults, create safety hazards, and waste time and money.',
     },
@@ -153,12 +163,12 @@ const Module7Section4_1 = () => {
       id: 8,
       question: 'How should you handle a fault you cannot identify?',
       options: [
-        'Keep trying different approaches',
         'Seek help from experienced colleagues or specialists',
         "Tell the customer it's unfixable",
+        'Keep trying different approaches',
         'Replace everything until it works',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Professional practice involves recognising your limitations and seeking appropriate help rather than continuing with unsuccessful methods.',
     },
@@ -166,10 +176,10 @@ const Module7Section4_1 = () => {
       id: 9,
       question: 'What should be checked if a circuit worked before but fails after modification?',
       options: [
-        'The original installation only',
+        'Acting honestly, fairly, and transparently in professional relationships',
         'The modification work and its effect on existing circuits',
-        'Just the new components',
-        'The consumer unit',
+        'Adjusting artificial lighting based on available natural light',
+        'Start a new email with a new subject line reflecting the current topic',
       ],
       correctAnswer: 1,
       explanation:
@@ -180,11 +190,11 @@ const Module7Section4_1 = () => {
       question: "Why is the 'half-split' method effective for fault finding?",
       options: [
         "It's the fastest method",
+        "It's easier to explain to customers",
         'Eliminates half the circuit with each test',
         'It requires fewer test instruments',
-        "It's easier to explain to customers",
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The half-split method efficiently narrows down the fault location by eliminating half the remaining circuit with each test.',
     },

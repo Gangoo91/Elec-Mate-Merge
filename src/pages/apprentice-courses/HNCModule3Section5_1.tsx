@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'faraday-law',
     question: "According to Faraday's law, what determines the magnitude of induced EMF?",
     options: [
-      'The strength of the magnetic field',
       'The rate of change of magnetic flux',
+      'The strength of the magnetic field',
       'The resistance of the conductor',
       'The area of the coil',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Faraday's law states that the induced EMF is proportional to the rate of change of magnetic flux linkage: e = -N(dΦ/dt). Faster changes produce larger EMFs.",
   },
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'lenz-law',
     question: "Lenz's law states that the induced current will:",
     options: [
-      'Flow in the same direction as the applied field',
-      'Create a field that opposes the change causing it',
       'Always be alternating current',
+      'Flow in the same direction as the applied field',
       'Be proportional to the conductor length',
+      'Create a field that opposes the change causing it',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Lenz's law states that the direction of induced current is such that it opposes the change in flux that caused it. This is why there is a negative sign in e = -N(dΦ/dt).",
   },
@@ -59,8 +59,13 @@ const quickCheckQuestions = [
     id: 'motional-emf',
     question:
       'A 0.5m conductor moves at 10 m/s through a 0.8T magnetic field. What is the induced EMF?',
-    options: ['0.4V', '4V', '8V', '40V'],
-    correctIndex: 1,
+    options: [
+      '0.4V',
+      '40V',
+      '8V',
+      '4V',
+    ],
+    correctIndex: 3,
     explanation:
       'Using e = Blv: e = 0.8T × 0.5m × 10m/s = 4V. This is the motional EMF equation for a conductor cutting magnetic field lines.',
   },
@@ -68,8 +73,13 @@ const quickCheckQuestions = [
     id: 'transformer-emf',
     question:
       'A transformer primary has 500 turns. If the flux changes by 0.02Wb in 0.01s, what is the induced EMF?',
-    options: ['10V', '100V', '500V', '1000V'],
-    correctIndex: 3,
+    options: [
+      '10V',
+      '1000V',
+      '500V',
+      '100V',
+    ],
+    correctIndex: 1,
     explanation:
       "Using e = -N(dΦ/dt): e = 500 × (0.02/0.01) = 500 × 2 = 1000V. The negative sign indicates direction per Lenz's law.",
   },
@@ -93,20 +103,25 @@ const quizQuestions = [
     id: 2,
     question:
       'A conductor of length 0.4m moves at 15 m/s perpendicular to a magnetic field of 1.2T. What EMF is induced?',
-    options: ['4.8V', '7.2V', '12V', '18V'],
-    correctAnswer: 1,
+    options: [
+      '12V',
+      '4.8V',
+      '7.2V',
+      '18V',
+    ],
+    correctAnswer: 2,
     explanation: 'Using motional EMF formula: e = Blv = 1.2 × 0.4 × 15 = 7.2V',
   },
   {
     id: 3,
     question: 'Why does a transformer core use laminations rather than solid iron?',
     options: [
-      'To reduce weight',
-      'To reduce eddy current losses',
       'To increase magnetic flux',
+      'To reduce weight',
       'To improve cooling',
+      'To reduce eddy current losses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Laminations break up the paths for eddy currents, dramatically reducing I²R losses. Solid cores would allow large circulating currents that waste energy as heat.',
   },
@@ -114,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: "The negative sign in Faraday's law (e = -N dΦ/dt) represents:",
     options: [
-      'Power loss in the circuit',
       "Lenz's law - opposition to change",
+      'Power loss in the circuit',
       'The phase angle of AC',
       'Magnetic reluctance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The negative sign represents Lenz's law: the induced EMF acts in a direction to oppose the change in flux that caused it. This is a consequence of energy conservation.",
   },
@@ -127,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is flux linkage?',
     options: [
-      'The magnetic field strength times area',
+      'Regulations, science, safety, and scenario-based questions',
       'The total flux through a coil multiplied by number of turns',
-      'The rate of change of flux',
-      'The permeability of the core material',
+      'The transformer star point and supply neutral/combined neutral-earth',
+      'Much higher speed (10–25 krpm vs 1500–3000)',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,16 +155,26 @@ const quizQuestions = [
     id: 6,
     question:
       'A 200-turn coil has its flux changed from 0.05Wb to 0.02Wb in 0.1s. What is the average induced EMF?',
-    options: ['6V', '60V', '100V', '600V'],
-    correctAnswer: 1,
+    options: [
+      '6V',
+      '100V',
+      '60V',
+      '600V',
+    ],
+    correctAnswer: 2,
     explanation:
       'e = -N(dΦ/dt) = -200 × (0.02 - 0.05)/0.1 = -200 × (-0.03)/0.1 = -200 × (-0.3) = 60V (magnitude)',
   },
   {
     id: 7,
     question: 'Self-inductance is measured in:',
-    options: ['Ohms', 'Farads', 'Henrys', 'Webers'],
-    correctAnswer: 2,
+    options: [
+      'Ohms',
+      'Farads',
+      'Webers',
+      'Henrys',
+    ],
+    correctAnswer: 3,
     explanation:
       'Self-inductance is measured in Henrys (H). 1 Henry means that a current change of 1A/s induces an EMF of 1V in the coil.',
   },
@@ -157,8 +182,13 @@ const quizQuestions = [
     id: 8,
     question:
       'In a building services installation, which equipment relies on electromagnetic induction?',
-    options: ['LED lighting', 'Transformers and motors', 'Socket outlets', 'Earth electrodes'],
-    correctAnswer: 1,
+    options: [
+      'Transformers and motors',
+      'Socket outlets',
+      'LED lighting',
+      'Earth electrodes',
+    ],
+    correctAnswer: 0,
     explanation:
       'Transformers (voltage conversion), motors (mechanical work from electricity), and generators (electricity from mechanical work) all operate on electromagnetic induction principles.',
   },
@@ -179,10 +209,10 @@ const quizQuestions = [
     id: 10,
     question: 'Mutual inductance between two coils depends on:',
     options: [
-      'Only the number of turns in the primary',
-      'Only the current flowing',
+      'Pressure reaches its maximum (stagnation pressure)',
+      'How bandwidth decreases with increasing fibre length',
       'The coupling between the coils and their turns',
-      'The resistance of the windings',
+      'The type of hazard posed by the substance',
     ],
     correctAnswer: 2,
     explanation:

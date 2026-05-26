@@ -39,10 +39,10 @@ const checks = [
     question:
       'You’re terminating a 70 mm² SWA tail onto a copper crimp lug. The right tool is:',
     options: [
-      'Standard ratchet pliers',
-      'Hand-operated crimp tool for up to 25 mm²',
+      'Daylight control should only operate when occupancy is detected',
+      'Total loss from transmitter to receiver including all components',
       'Hydraulic crimp tool with the matching die for 70 mm²',
-      'Pipe wrench with PVC tape',
+      'Protect themselves and deliver what\\\\\\\'s agreed',
     ],
     correctIndex: 2,
     explanation:
@@ -53,12 +53,12 @@ const checks = [
     question:
       'Rod-and-draw kit is used for:',
     options: [
-      'Bending steel conduit',
+      'Areas of higher thermal conductivity creating heat flow paths',
+      'Labels, handover notes, and record books/logs',
       'Drawing cable through long runs of conduit or trunking',
-      'Crimping cable lugs',
-      'Cutting trunking to length',
+      'Approved Authorised Treatment Facility',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Rod-and-draw is a set of stiff fibreglass rods that screw together end-to-end. You push the leading rod through the conduit/trunking until it reaches the next access, attach a cable to the rear rod, and pull the cable through. Bread-and-butter for any commercial install.',
   },
@@ -67,10 +67,10 @@ const checks = [
     question:
       'A clean 90° bend in 25 mm steel conduit is best made using:',
     options: [
-      'A vice and brute force',
+      'By scheduling operation based on occupancy and weather conditions',
       'A hand-operated conduit bender (Hickey or stand bender) sized for 25 mm conduit',
-      'Heating the conduit with a blowtorch and bending by hand',
-      'Cutting the conduit and using two short pieces with an elbow',
+      'At standstill, there is no back-EMF to oppose supply, so only winding resistance limits current',
+      'Enabling enterprise-level monitoring whilst maintaining detailed luminaire control',
     ],
     correctIndex: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'A "draw rope" or "draw line" left in a conduit during first fix is for:',
     options: [
-      'Decorative purposes',
+      'Without delay — by the quickest practicable means',
       'Pulling cables through later when the second fix begins',
-      'Earthing the conduit',
-      'Carrying the data cable separately',
+      'A large university campus with 850 luminaires across multiple buildings',
+      'Every 250-500 hours or annually, whichever comes first',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'Cable rollers (mounted at intervals along a long route) are used to:',
     options: [
-      'Cool the cable during the pull',
+      'Making changes to the learning or assessment process to remove barriers, without lowering the competence standard',
+      'No — training must include assessment of competence to ensure workers can actually apply the techniques in their real workplace tasks',
       'Reduce friction so the cable can be pulled without scuffing the sheath or exceeding the maximum permitted pulling tension',
-      'Crimp the cable as it passes',
-      'Identify the cable colour',
+      'Allowing silences, reflecting back what they have said, and using minimal encouragers such as nodding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Big SWA or singles pulled over a tray edge can scuff their sheath. Rollers spread the cable’s weight over a freely-rotating surface so the cable slides smoothly. Manufacturers spec a maximum pulling tension — exceed it and the conductor strands stretch / break inside the insulation.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'Cable lubrication (specialist water-based gel) is applied:',
     options: [
-      'To the inside of the cable to insulate the cores',
+      'Pass — within 300ms maximum for general-purpose 30mA RCD per BS EN 61008/61009 (and Reg 643.7.3 verification)',
+      'Do a brief review of key topics, prepare materials for the morning, then get a full night\\\\\\\\\\\\\\\'s sleep',
+      'Specified injuries, over-7-day absences, occupational diseases and dangerous occurrences to the HSE',
       'To the outside of the cable to reduce friction during pulling through conduit or duct, especially on long bends',
-      'To the lugs before crimping',
-      'To the trunking edges to prevent rust',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cable lubricant — typically a water-based gel — coats the cable jacket to reduce sliding friction by 30 to 70%. Essential on long conduit pulls, multiple bend pulls and underground duct pulls. Doesn’t damage PVC or XLPE jackets.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'A trunking "fish tape" (steel coiled tape) is preferred over rod-and-draw for:',
     options: [
-      'Long straight conduit runs over 30 m',
       'Stiff cable through wall cavities, voids and short trunking sections where rods don’t fit',
-      'Underground duct pulls',
-      'Bending conduit at site',
+      'Avoid the need for hazardous manual handling operations so far as is reasonably practicable',
+      'A reference dwelling with the same shape but meeting minimum standards, used for comparison',
+      'When there are significant changes, after incidents, or if it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s no longer valid',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fish tape is a coiled spring-steel tape — it pushes through tight voids and around small obstructions where stiff rods can’t go. Used for short runs, wall cavities and panel-to-panel chases inside switchgear cabinets. Rod-and-draw wins for long straight conduit; fish tape wins for tight irregular spaces.',
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'Hydraulic crimping tools are typically used for cable CSAs:',
     options: [
-      '1.0 to 2.5 mm²',
-      '2.5 to 16 mm²',
+      'MCS-specific qualifications and general electrical competence',
       'Above 25 mm² — anything where hand crimps cannot deliver the required compression',
-      'Only on aluminium cables',
+      'Locations with specific risks requiring additional protection measures',
+      'Consistency in capturing everything and reviewing regularly',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Above 25 mm² (and especially at 35, 50, 70, 95, 120, 150 mm²) hand crimps physically can’t generate the pressure needed for a reliable joint. Hydraulic crimpers (hand-pumped, battery or mains powered) with matched dies deliver consistent crimps at hundreds of psi.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'The "manufacturer’s instructions" for a crimp lug typically specify:',
     options: [
-      'Only the conductor CSA',
+      'The Network and Information Systems Regulations 2018 requiring operators of essential services to manage cybersecurity risks to their OT systems and report significant incidents',
+      'To collect a physical sample of material for laboratory identification of asbestos type and content',
       'The die index, the crimp position and the number of crimps per joint — and these must be followed for the joint to be compliant with 526.1',
-      'Just the colour code',
-      'Whether to use insulating tape afterwards',
+      'It’s a general-purpose silicon rectifier diode rated 1000 V reverse, 1 A forward — common in mains-side circuits.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Lug manufacturers spec the die (matched to the lug barrel size), where the crimp goes (one or multiple positions along the barrel), and how many crimps. Reg 526.1 requires the joint to provide durable electrical continuity — and the only way to evidence that is to follow the MIs exactly.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'A "saddle" or "pipe vice" set up on a tripod is used by an electrician to:',
     options: [
+      'Duration of the installation plus reasonable period',
+      'Section 443 (with installation rules in 534)',
+      'At the start of work and when conditions change',
       'Hold conduit firmly while threading or bending',
-      'Power-test cables',
-      'Solder cores together',
-      'Heat-shrink terminations',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'A pipe vice on a tripod holds steel conduit steady while you cut, ream, thread or bend it. Essential for any decent volume of metal conduit work — trying to do the same job in a workshop vice is slow and inaccurate.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'A "trunking notcher" or trunking jig speeds up:',
     options: [
-      'Crimping copper lugs',
-      'Bending steel conduit',
       'Cutting consistent corner notches in trunking so right-angle and tee joints fit cleanly',
-      'Drawing cables through ducts',
+      'Poor connections, oxidation, incorrect termination, or mechanical damage',
+      'Risk assessment names the hazards and controls; method statement says how the work will be done in safe order',
+      'Cross-sectional area, insulation type, installation method, ambient temperature',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Trunking corners need cut-outs in the side and lid for the bend to close cleanly. A notching jig stamps the right shape every time — much faster and tidier than hand-cutting with a hacksaw. Standard kit on any decent commercial install.',
   },

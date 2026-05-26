@@ -125,8 +125,8 @@ export const useFormValidation = (formData: any) => {
       }
     }
 
-    // Insulation resistance on all conductors (Reg 643.3)
-    ['insulationLiveEarth', 'insulationNeutralEarth'].forEach((field) => {
+    // Insulation resistance (Reg 643.3) — A4:2026 model form records L-E only here.
+    ['insulationLiveEarth'].forEach((field) => {
       if (formData[field]) {
         const val = formData[field].toString().trim();
         // Skip infinite readings (always pass)

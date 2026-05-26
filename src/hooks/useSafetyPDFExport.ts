@@ -20,7 +20,8 @@ type PDFType =
   | 'riddor-report'
   | 'method-statement'
   | 'briefing'
-  | 'safety-document';
+  | 'safety-document'
+  | 'rams';
 
 const EDGE_FUNCTION_MAP: Record<PDFType, string> = {
   permit: 'generate-permit-pdf',
@@ -38,6 +39,7 @@ const EDGE_FUNCTION_MAP: Record<PDFType, string> = {
   'method-statement': 'generate-method-statement-pdf',
   briefing: 'generate-pdf-monkey',
   'safety-document': 'generate-safety-document-pdf',
+  rams: 'generate-combined-rams-pdf',
 };
 
 /**
@@ -133,8 +135,72 @@ export function useSafetyPDFExport() {
       const functionName = EDGE_FUNCTION_MAP[type];
       console.log('[PDF Export] Calling edge function:', functionName);
 
+      // RAMS pdf fn doesn't take a recordId — it takes the full ramsData +
+      // methodData. Fetch them from rams_documents + method_statements
+      // and shape the body the fn expects.
+      let body: Record<string, unknown> = { recordId, ...data };
+      if (type === 'rams') {
+        const { data: doc, error: docErr } = await supabase
+          .from('rams_documents')
+          .select('*')
+          .eq('id', recordId)
+          .single();
+        if (docErr || !doc) throw docErr || new Error('RAMS document not found');
+
+        const { data: methodRow } = await supabase
+          .from('method_statements')
+          .select('*')
+          .eq('rams_document_id', recordId)
+          .maybeSingle();
+
+        const meta = (doc.ai_generation_metadata as Record<string, unknown>) || {};
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const contacts: any = (meta as any).emergencyContacts || {};
+
+        body = {
+          ramsData: {
+            projectName: doc.project_name,
+            location: doc.location,
+            date: doc.date,
+            assessor: doc.assessor,
+            activities: doc.activities || [],
+            risks: doc.risks || [],
+            contractor: doc.contractor || '',
+            supervisor: doc.supervisor || '',
+            requiredPPE: doc.required_ppe || [],
+            ppeDetails: doc.ppe_details || [],
+            emergencyProcedures: doc.emergency_procedures || [],
+            siteManagerName: contacts.siteManagerName || doc.site_manager_name || '',
+            siteManagerPhone: contacts.siteManagerPhone || doc.site_manager_phone || '',
+            firstAiderName: contacts.firstAiderName || doc.first_aider_name || '',
+            firstAiderPhone: contacts.firstAiderPhone || doc.first_aider_phone || '',
+            safetyOfficerName: contacts.safetyOfficerName || doc.safety_officer_name || '',
+            safetyOfficerPhone: contacts.safetyOfficerPhone || doc.safety_officer_phone || '',
+            assemblyPoint: contacts.assemblyPoint || doc.assembly_point || '',
+          },
+          methodData: methodRow
+            ? {
+                jobTitle: methodRow.job_title || doc.project_name,
+                location: methodRow.location || doc.location,
+                contractor: methodRow.contractor || doc.contractor || '',
+                supervisor: methodRow.supervisor || doc.supervisor || '',
+                workType: methodRow.work_type || 'Electrical Installation',
+                duration: methodRow.duration || undefined,
+                teamSize: methodRow.team_size || undefined,
+                description: methodRow.description || undefined,
+                overallRiskLevel: methodRow.overall_risk_level || 'medium',
+                steps: methodRow.steps || [],
+                toolsRequired: methodRow.tools_required || [],
+                materialsRequired: methodRow.materials_required || [],
+                practicalTips: methodRow.practical_tips || [],
+                commonMistakes: methodRow.common_mistakes || [],
+              }
+            : {},
+        };
+      }
+
       const { data: result, error } = await supabase.functions.invoke(functionName, {
-        body: { recordId, ...data },
+        body,
       });
 
       console.log('[PDF Export] Response:', { result, error });

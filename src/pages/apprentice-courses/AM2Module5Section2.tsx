@@ -54,12 +54,12 @@ const AM2Module5Section2 = () => {
       id: 'first-action',
       question: "What's the first action before testing a faulted circuit?",
       options: [
-        'Check test equipment calibration',
+        'Series-connected airfield runway lighting',
+        'Grandiose thinking and inflated self-esteem',
         'Apply safe isolation to prove the circuit is dead',
-        'Read the circuit documentation',
-        'Observe the symptoms',
+        'Ratio of optical power in \\\\\\\\\\\\\\\'1\\\\\\\\\\\\\\\' state to power in \\\\\\\\\\\\\\\'0\\\\\\\\\\\\\\\' state',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'Safe isolation must always be the first step before any fault-finding work to ensure personal safety and demonstrate proper procedure to the assessor.',
     },
@@ -67,12 +67,12 @@ const AM2Module5Section2 = () => {
       id: 'mcb-trips',
       question: "If an MCB trips immediately when energised, what's your first test?",
       options: [
-        'Continuity test',
-        'Polarity test',
         'Insulation resistance to check for a short or earth fault',
-        'RCD test',
+        'Commissioning engineers and controls specialists',
+        'Pushing a loaded trolley along a corridor',
+        'Rated voltage, current, frequency, and IP rating',
       ],
-      correctIndex: 2,
+      correctIndex: 0,
       explanation:
         'Immediate MCB tripping indicates excessive current flow, suggesting a short circuit or earth fault. Insulation resistance testing will identify this.',
     },
@@ -80,12 +80,12 @@ const AM2Module5Section2 = () => {
       id: 'fault-recording',
       question: "Why is it not enough to just say 'ring final fault'?",
       options: [
-        'You need to specify the cable size',
-        'You need to include the test results',
+        'Appropriate protection or location for the reduced conductor',
         'Because you must give type, location, and rectification - assessor needs detail',
-        'You need to measure the exact resistance',
+        'Bi-directional communication, status feedback, and coordinated sequences',
+        'Stiles for cracks/bends, rungs for damage/security, feet for wear/grip, and overall condition',
       ],
-      correctIndex: 2,
+      correctIndex: 1,
       explanation:
         'Assessors require complete fault diagnosis including fault type, exact location, and how it would be rectified to demonstrate thorough understanding.',
     },
@@ -95,7 +95,12 @@ const AM2Module5Section2 = () => {
     {
       id: 1,
       question: "What's the first step in fault finding?",
-      options: ['Visual inspection', 'Safe isolation', 'Reading symptoms', 'Testing continuity'],
+      options: [
+        'Visual inspection',
+        'Safe isolation',
+        'Reading symptoms',
+        'Testing continuity',
+      ],
       correctAnswer: 1,
       explanation:
         'Safe isolation must always be the first step to ensure personal safety and demonstrate proper electrical procedure.',
@@ -104,20 +109,25 @@ const AM2Module5Section2 = () => {
       id: 2,
       question: 'Why must you observe symptoms before testing?',
       options: [
-        'To save time',
+        'Flow-down clauses in the subcontract',
+        'Correct indication of equipment status',
         'Symptoms guide which test to perform first',
-        "It's required by regulations",
-        'To impress the assessor',
+        'Recorded in the log book and as-built drawings updated',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Symptoms provide vital clues about the fault type, allowing you to select the most appropriate test and work systematically.',
     },
     {
       id: 3,
       question: 'Which test is best for suspected short circuits?',
-      options: ['Continuity test', 'Polarity test', 'Insulation resistance test', 'RCD test'],
-      correctAnswer: 2,
+      options: [
+        'Up to 1000V AC or 1500V DC',
+        'RCD protection not exceeding 30mA',
+        '3-phase star with neutral',
+        'Insulation resistance test',
+      ],
+      correctAnswer: 3,
       explanation:
         'Insulation resistance testing at 500V DC will reveal short circuits as very low or zero resistance readings between conductors.',
     },
@@ -125,12 +135,12 @@ const AM2Module5Section2 = () => {
       id: 4,
       question: 'If a socket is dead, what test should you carry out first?',
       options: [
-        'Insulation resistance',
-        'Polarity test',
         'Continuity test',
+        'Polarity test',
+        'Insulation resistance',
         'Earth fault loop impedance',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         "A dead socket suggests an open circuit, so continuity testing will reveal if there's a break in the circuit path.",
     },
@@ -138,10 +148,10 @@ const AM2Module5Section2 = () => {
       id: 5,
       question: 'Why must you start fault-finding at the CU?',
       options: [
-        "It's the safest place",
+        'Accumulated earth leakage from multiple sources',
         'To work systematically from origin outward',
-        'Regulations require it',
-        'Test equipment works better there',
+        'Review it to understand the installation history',
+        'All batteries are in one location for servicing',
       ],
       correctAnswer: 1,
       explanation:
@@ -150,7 +160,12 @@ const AM2Module5Section2 = () => {
     {
       id: 6,
       question: 'What does a very high Zs reading usually suggest?',
-      options: ['Short circuit', 'Earth fault', 'High resistance joint', 'Polarity error'],
+      options: [
+        'Short circuit',
+        'Earth fault',
+        'High resistance joint',
+        'Polarity error',
+      ],
       correctAnswer: 2,
       explanation:
         'High earth fault loop impedance (Zs) typically indicates a high resistance connection in the earth path or circuit conductors.',
@@ -167,12 +182,12 @@ const AM2Module5Section2 = () => {
       id: 8,
       question: 'What three things must you record when diagnosing a fault?',
       options: [
-        'Type, test results, time taken',
-        'Location, cost, difficulty',
         'Type, location, rectification',
         'Cause, effect, prevention',
+        'Type, test results, time taken',
+        'Location, cost, difficulty',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Complete fault diagnosis requires fault type, exact location, and how the fault would be rectified.',
     },
@@ -180,10 +195,10 @@ const AM2Module5Section2 = () => {
       id: 9,
       question: 'Why should you explain your process out loud to the assessor?',
       options: [
-        'To fill time',
+        'Red to line conductor, black to earth/CPC',
         'Assessors mark reasoning and methodology',
-        "It's required by regulations",
-        'To show confidence',
+        'Make the reading artificially lower',
+        'Appropriate mechanical protection is provided',
       ],
       correctAnswer: 1,
       explanation:
@@ -193,10 +208,10 @@ const AM2Module5Section2 = () => {
       id: 10,
       question: "After diagnosing a fault, what's the final step before handing back?",
       options: [
-        'Clean up tools',
-        'Complete paperwork',
+        'High loop resistance or partial short circuit',
+        'An impulse line filled with fill fluid',
         'Prove the circuit would be safe after rectification',
-        'Pack test equipment',
+        'Multiple meters had the same default address causing conflicts',
       ],
       correctAnswer: 2,
       explanation:

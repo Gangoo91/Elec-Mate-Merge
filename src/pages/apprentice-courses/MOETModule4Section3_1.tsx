@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'symptom-first-step',
     question: 'What should be the first action when an operator reports an electrical fault?',
     options: [
-      'Immediately open the enclosure and begin testing',
       'Gather information from the operator about what happened and any changes observed',
-      'Replace the most commonly failing component',
-      'Reset the circuit breaker and see if the fault recurs',
+      'Cracked insulation, damaged probes, or intermittent readings',
+      'Both employees and "limb (b)" workers (workers who are not employees but provide personal services)',
+      'To ensure no one accidentally restores supply to a faulty circuit',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The first step is always to gather information. Asking the operator about the symptoms, when they started, what was happening at the time, and whether anything changed provides critical context that guides your diagnostic approach and prevents wasted effort.',
   },
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'Which visual indicator most reliably suggests overheating at an electrical termination?',
     options: [
-      'Slight dust accumulation on the conductor',
+      'Checking is arithmetic review; verification confirms methodology and compliance',
       'Discolouration, browning or charring of insulation near the connection',
-      'A loose cable tie on the incoming cable',
-      'Condensation on the enclosure door',
+      '5-10% depending on material type and job complexity',
+      'A freestanding, moveable scaffold on wheels or castors used for short-duration tasks',
     ],
     correctIndex: 1,
     explanation:
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'During an initial assessment, an unusual smell near a motor starter is detected. What does a pungent, acrid smell typically indicate?',
     options: [
-      'The motor bearings need lubrication',
+      'Access controls, regular backups, audit trails and compliance with data protection regulations',
+      'A circuit containing both series and parallel combinations',
+      'Slip rings give an AC output; a commutator rectifies the output to DC',
       'Overheated or burnt insulation, possibly from an overloaded coil or cable',
-      'Normal operation of the contactor',
-      'Moisture ingress into the enclosure',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A pungent, acrid smell near electrical equipment almost always indicates overheated or burnt insulation. This could be from an overloaded contactor coil, overheated cable insulation, or a failed component. The source must be identified and the circuit isolated before further investigation.',
   },
@@ -56,12 +56,12 @@ const quickCheckQuestions = [
     question:
       'Before opening an electrical enclosure to investigate a reported fault, which check is essential?',
     options: [
-      'Checking the maintenance logbook for the last service date',
       'Verifying the circuit is isolated, locked off, and proved dead using a GS38-compliant voltage indicator',
-      'Telephoning the equipment manufacturer for advice',
-      'Waiting for the equipment to cool down for 24 hours',
+      'DURING erection where appropriate, AND on completion BEFORE the installation is put into service',
+      'To analyse the heart\\\'s rhythm and deliver a shock to correct certain abnormal rhythms',
+      'Carbon emissions balanced by offsets or removals over the building lifecycle',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Before opening any electrical enclosure, safe isolation must be carried out. This means isolating the circuit, locking off the isolator, and proving dead with an approved voltage indicator that has been tested before and after use, in accordance with GS38. This is a non-negotiable safety requirement under the Electricity at Work Regulations 1989.',
   },
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is NOT typically classified as a fault symptom?',
     options: [
-      'Equipment running but producing abnormal noise',
-      'Circuit breaker tripping repeatedly on overload',
-      'The scheduled maintenance date being overdue',
       'Motor running hot with reduced output',
+      'Equipment running but producing abnormal noise',
+      'The scheduled maintenance date being overdue',
+      'Circuit breaker tripping repeatedly on overload',
     ],
     correctAnswer: 2,
     explanation:
@@ -99,12 +99,12 @@ const quizQuestions = [
     question:
       "An operator reports that a motor 'just stopped'. Which question would be MOST useful to ask first?",
     options: [
-      'How old is the motor?',
+      'All possible causes including connected loads, wiring faults, moisture ingress and the RCD itself',
+      'Testing at the midpoint of a circuit to determine which half contains the fault',
+      'Tingling sensation when touching earthed metalwork near the equipment',
       'Did anything unusual happen immediately before it stopped — any noise, smell, flickering or alarm?',
-      'What colour is the motor?',
-      'Is the motor under warranty?',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Asking about events immediately before the failure provides the most diagnostic value. Unusual noises, smells, flickering or alarms can indicate the type of fault — for example, a burning smell suggests overheating, a bang suggests a short circuit, and flickering suggests a loose connection.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 4,
     question: 'Discolouration around a cable termination in a distribution board indicates:',
     options: [
-      'The cable was manufactured with coloured insulation',
       'Possible overheating due to a loose connection or excessive current',
+      'The cable was manufactured with coloured insulation',
       'Normal ageing with no cause for concern',
       'The termination was recently replaced',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Discolouration, especially browning or blackening, around a cable termination is a strong indicator of overheating. Common causes include loose connections creating high-resistance joints, undersized conductors, or sustained overcurrent. This requires immediate investigation.',
   },
@@ -127,8 +127,8 @@ const quizQuestions = [
     options: [
       'A high-pitched whine from a transformer',
       'Tingling sensation when touching earthed metalwork near the equipment',
-      'Vibration felt through the floor near a motor',
       'The equipment running quieter than normal',
+      'Vibration felt through the floor near a motor',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,11 +139,11 @@ const quizQuestions = [
     question: "The 'half-split' technique in fault finding involves:",
     options: [
       'Splitting the maintenance team into two groups',
-      'Testing at the midpoint of a circuit to determine which half contains the fault',
       'Cutting the faulty cable in half to inspect it',
+      'Testing at the midpoint of a circuit to determine which half contains the fault',
       'Working on half the system while the other half remains live',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The half-split technique is a systematic diagnostic method where you test at the midpoint of a circuit or system. The result tells you which half the fault lies in, and you then repeat the process on that half. This binary approach rapidly narrows down the fault location.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       "During initial assessment, checking the trip indicators on an MCCB reveals it has tripped on 'short circuit'. This tells you:",
     options: [
-      'The MCCB is faulty and needs replacing',
+      'All possible causes including connected loads, wiring faults, moisture ingress and the RCD itself',
+      'Did anything unusual happen immediately before it stopped — any noise, smell, flickering or alarm?',
+      'Tingling sensation when touching earthed metalwork near the equipment',
       'A high-magnitude fault current has flowed, indicating a direct short circuit downstream',
-      'The motor connected to the circuit has an open-circuit winding',
-      'The supply voltage is too high',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "An MCCB trip indicator showing 'short circuit' confirms that a high-magnitude fault current flowed through the device. This indicates a direct short circuit — conductor to conductor or conductor to earth — somewhere downstream. The fault must be located before re-energising.",
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       "What does a 'burning' or 'fishy' smell near electrical equipment typically indicate?",
     options: [
-      'Normal ozone production from contactors',
       'Overheated thermoplastic insulation or a failing electronic component',
-      'The equipment has been recently cleaned',
-      'Moisture in the enclosure',
+      'A high-magnitude fault current has flowed, indicating a direct short circuit downstream',
+      'Temperature, humidity, dust levels, vibration and any recent environmental changes',
+      'Testing at the midpoint of a circuit to determine which half contains the fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A burning or 'fishy' smell is characteristic of overheated thermoplastic (PVC) insulation or failing electronic components such as capacitors or resistors. The 'fishy' smell specifically comes from thermal decomposition of certain plastics and is a warning sign that should not be ignored.",
   },
@@ -179,10 +179,10 @@ const quizQuestions = [
     id: 9,
     question: 'When recording fault symptoms during initial assessment, which approach is correct?',
     options: [
-      "Write a brief note such as 'motor broken' on a sticky note",
+      'Overheated thermoplastic insulation or a failing electronic component',
       'Record the specific symptoms, time, date, conditions and any operator observations in detail',
-      'Wait until the fault is repaired, then write up the report from memory',
-      'Only record the fault if the repair takes more than one hour',
+      'All possible causes including connected loads, wiring faults, moisture ingress and the RCD itself',
+      'Temperature, humidity, dust levels, vibration and any recent environmental changes',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,12 +193,12 @@ const quizQuestions = [
     question:
       'An RCD protecting a socket circuit trips immediately when reset. The initial assessment should consider:',
     options: [
-      'Only the most recently connected appliance',
+      'Did anything unusual happen immediately before it stopped — any noise, smell, flickering or alarm?',
+      'Tingling sensation when touching earthed metalwork near the equipment',
       'All possible causes including connected loads, wiring faults, moisture ingress and the RCD itself',
-      'Replacing the RCD without further investigation',
-      'Bypassing the RCD to restore supply',
+      'A high-magnitude fault current has flowed, indicating a direct short circuit downstream',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When an RCD trips immediately on reset, all possible causes should be considered systematically. These include faulty connected loads, wiring faults (especially in damp conditions), moisture ingress into accessories, and the RCD itself. Disconnecting loads methodically helps identify the source.',
   },
@@ -209,10 +209,10 @@ const quizQuestions = [
     options: [
       'Regulation 610 — Initial verification',
       'Regulation 621 — Periodic inspection and testing requirements',
-      'Regulation 134.1.1 — Good workmanship by competent persons',
       'Regulation 411 — Automatic disconnection of supply',
+      'Regulation 134.1.1 — Good workmanship by competent persons',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Regulation 134.1.1 of BS 7671 requires that all electrical work, including diagnostic testing and fault finding, is carried out by competent persons or under appropriate supervision. Competence requires adequate training, knowledge and experience for the specific task.',
   },
@@ -221,12 +221,12 @@ const quizQuestions = [
     question:
       'Which of the following environmental factors should be noted during an initial fault assessment?',
     options: [
-      'The colour of the walls in the plant room',
       'Temperature, humidity, dust levels, vibration and any recent environmental changes',
-      'The brand of toolbox used by the maintenance team',
-      'The distance to the nearest car park',
+      'Tingling sensation when touching earthed metalwork near the equipment',
+      'All possible causes including connected loads, wiring faults, moisture ingress and the RCD itself',
+      'Did anything unusual happen immediately before it stopped — any noise, smell, flickering or alarm?',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Environmental factors such as temperature, humidity, dust accumulation, vibration levels and any recent changes (e.g., new equipment installed nearby, building works creating dust) can directly cause or contribute to electrical faults. Recording these during the initial assessment helps identify environmental root causes.',
   },

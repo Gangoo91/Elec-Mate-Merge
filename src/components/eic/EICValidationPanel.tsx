@@ -1,197 +1,207 @@
-import React from 'react';
-import { Badge } from '@/components/ui/badge';
-import { AlertTriangle, AlertCircle, CheckCircle, Shield, FileText, XCircle } from 'lucide-react';
-import { useEICValidation, ValidationRule } from '@/hooks/useEICValidation';
-import { useIsMobile } from '@/hooks/use-mobile';
+import React, { useState } from 'react';
+import { CheckCircle, AlertTriangle, ChevronDown, Info } from 'lucide-react';
+import { useEICValidation, type ValidationRule, TAB_LABEL, type EICTabId } from '@/hooks/useEICValidation';
 import { cn } from '@/lib/utils';
 
 interface EICValidationPanelProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
   className?: string;
+  /** Optional jump-to-tab handler. Each missing item becomes tappable when provided. */
+  onJumpToTab?: (tab: EICTabId) => void;
 }
 
-const EICValidationPanel: React.FC<EICValidationPanelProps> = ({ formData, className = '' }) => {
-  const validation = useEICValidation(formData);
-  const isMobile = useIsMobile();
+const groupByTab = (rules: ValidationRule[]): Map<EICTabId, ValidationRule[]> => {
+  const groups = new Map<EICTabId, ValidationRule[]>();
+  for (const rule of rules) {
+    const tab = rule.tab || 'certificate';
+    const arr = groups.get(tab) || [];
+    arr.push(rule);
+    groups.set(tab, arr);
+  }
+  return groups;
+};
 
-  return (
-    <div
-      className={cn(
-        className,
-        isMobile ? '-mx-4' : 'rounded-xl border border-white/10 bg-white/[0.02]'
-      )}
-    >
-      {/* Header */}
+const EICValidationPanel: React.FC<EICValidationPanelProps> = ({
+  formData,
+  className = '',
+  onJumpToTab,
+}) => {
+  const validation = useEICValidation(formData);
+  const [showWarnings, setShowWarnings] = useState(false);
+
+  const handleJump = (tab?: EICTabId) => {
+    if (!tab || !onJumpToTab) return;
+    onJumpToTab(tab);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const errorGroups = groupByTab(validation.errors);
+  const warningGroups = groupByTab(validation.warnings);
+  const totalErrors = validation.errors.length;
+  const totalWarnings = validation.warnings.length;
+  const ready = validation.isValid;
+
+  // Empty state — full ready pill, nothing else.
+  if (ready && totalWarnings === 0) {
+    return (
       <div
         className={cn(
-          'flex items-center justify-between gap-3',
-          isMobile
-            ? 'px-4 py-4 bg-white/[0.03] border-y border-white/[0.06]'
-            : 'p-4 border-b border-white/10'
+          'rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2',
+          'flex items-center gap-2',
+          className
         )}
       >
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0">
-            <Shield className="h-5 w-5 text-elec-yellow" />
-          </div>
-          <h3 className="font-semibold text-white">Validation & Compliance</h3>
-        </div>
-        <Badge
-          className={cn(
-            'gap-1.5 shrink-0 border',
-            validation.isValid
-              ? 'bg-green-500/15 text-green-400 border-green-500/30'
-              : 'bg-red-500/15 text-red-400 border-red-500/30'
-          )}
-        >
-          {validation.isValid ? (
-            <>
-              <CheckCircle className="h-3 w-3" />
-              Valid
-            </>
-          ) : (
-            <>
-              <AlertTriangle className="h-3 w-3" />
-              Issues Found
-            </>
-          )}
-        </Badge>
+        <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
+        <span className="text-sm font-medium text-green-300">Ready to generate</span>
+        <span className="ml-auto text-[10px] text-green-400/70">
+          {validation.completionPercentage}%
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className={cn('rounded-lg border border-white/[0.06] bg-white/[0.03] overflow-hidden', className)}>
+      {/* Header — single line: status + count + % */}
+      <div className="flex items-center gap-2 px-3 py-2 border-b border-white/[0.06]">
+        {ready ? (
+          <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
+        ) : (
+          <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
+        )}
+        <span className="text-sm font-medium text-white">
+          {ready
+            ? 'Ready to generate'
+            : `${totalErrors} item${totalErrors === 1 ? '' : 's'} to complete`}
+        </span>
+        <span className="ml-auto text-[10px] text-white/60">
+          {validation.completionPercentage}%
+        </span>
       </div>
 
-      {/* Content */}
-      <div className={cn('space-y-5', isMobile ? 'px-4 py-5' : 'p-5')}>
-        {/* Progress Bar */}
-        <div className="space-y-2.5">
-          <div className="flex justify-between items-baseline">
-            <span className="text-sm font-medium text-white">Completion Progress</span>
-            <span className="text-sm font-semibold text-elec-yellow">
-              {validation.completionPercentage}%
-            </span>
-          </div>
-          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
-            <div
-              className={cn(
-                'h-full rounded-full transition-all duration-500 ease-out',
-                validation.completionPercentage >= 90
-                  ? 'bg-green-500'
-                  : validation.completionPercentage >= 50
-                    ? 'bg-elec-yellow'
-                    : 'bg-amber-500'
-              )}
-              style={{ width: `${validation.completionPercentage}%` }}
-            />
-          </div>
+      {/* Errors — grouped by tab. One row per item, regulation tag inline. */}
+      {totalErrors > 0 && (
+        <div className="divide-y divide-white/[0.04]">
+          {Array.from(errorGroups.entries()).map(([tab, rules]) => (
+            <div key={tab} className="px-3 py-2">
+              <div className="flex items-baseline justify-between mb-1.5">
+                <p className="text-[10px] uppercase tracking-wider text-white/50">
+                  {TAB_LABEL[tab]} — {rules.length} missing
+                </p>
+                {onJumpToTab && (
+                  <button
+                    type="button"
+                    onClick={() => handleJump(tab)}
+                    className="text-[10px] text-elec-yellow hover:underline touch-manipulation"
+                  >
+                    Go →
+                  </button>
+                )}
+              </div>
+              <div className="space-y-1">
+                {rules.map((rule) => {
+                  const RowContent = (
+                    <>
+                      <span className="w-1 h-1 rounded-full bg-red-400 shrink-0 mt-1.5" />
+                      <span className="text-white flex-1 text-left">{rule.message}</span>
+                      {rule.regulation && (
+                        <span className="text-[10px] text-white/40 shrink-0">
+                          {rule.regulation}
+                        </span>
+                      )}
+                    </>
+                  );
+                  return onJumpToTab ? (
+                    <button
+                      key={rule.field}
+                      type="button"
+                      onClick={() => handleJump(rule.tab)}
+                      className="w-full flex items-baseline gap-2 text-xs rounded-md px-1 py-0.5 hover:bg-white/[0.04] touch-manipulation transition-colors"
+                    >
+                      {RowContent}
+                    </button>
+                  ) : (
+                    <div
+                      key={rule.field}
+                      className="flex items-baseline gap-2 text-xs"
+                    >
+                      {RowContent}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
+      )}
 
-        {/* Stats Row */}
-        <div className="grid grid-cols-3 gap-3">
-          <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-3 text-center">
-            <div className="text-2xl font-bold text-red-400">{validation.errors.length}</div>
-            <div className="text-xs text-white mt-0.5">Errors</div>
-          </div>
-          <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3 text-center">
-            <div className="text-2xl font-bold text-amber-400">{validation.warnings.length}</div>
-            <div className="text-xs text-white mt-0.5">Warnings</div>
-          </div>
-          <div
-            className={cn(
-              'rounded-xl border p-3 text-center',
-              validation.isValid
-                ? 'bg-green-500/10 border-green-500/20'
-                : 'bg-white/[0.03] border-white/10'
-            )}
+      {/* Warnings — collapsed by default. Only show toggle if there are warnings. */}
+      {totalWarnings > 0 && (
+        <div className="border-t border-white/[0.06]">
+          <button
+            type="button"
+            onClick={() => setShowWarnings((v) => !v)}
+            className="w-full flex items-center gap-2 px-3 py-2 text-left touch-manipulation"
           >
-            <div className={cn('text-2xl font-bold', validation.isValid ? 'text-green-400' : 'text-white')}>
-              {validation.isValid ? (
-                <CheckCircle className="h-6 w-6 mx-auto" />
-              ) : (
-                <XCircle className="h-6 w-6 mx-auto" />
+            <Info className="h-3.5 w-3.5 text-amber-400 shrink-0" />
+            <span className="text-xs text-white">
+              {totalWarnings} recommendation{totalWarnings === 1 ? '' : 's'}
+            </span>
+            <ChevronDown
+              className={cn(
+                'h-3.5 w-3.5 text-white/40 ml-auto transition-transform',
+                showWarnings && 'rotate-180'
               )}
-            </div>
-            <div className="text-xs text-white mt-0.5">Status</div>
-          </div>
-        </div>
-
-        {/* Critical Issues */}
-        {validation.errors.length > 0 && (
-          <div className="space-y-2.5">
-            <h4 className="text-sm font-semibold text-red-400 flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4" />
-              Critical Issues (Must Fix)
-            </h4>
-            <div className="space-y-2">
-              {validation.errors.map((error, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-3 p-3 rounded-xl bg-red-500/8 border-l-2 border-red-500"
-                >
-                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
-                  <div className="min-w-0">
-                    <p className="text-sm text-white font-medium">{error.message}</p>
-                    {error.regulation && (
-                      <p className="text-xs text-amber-400 mt-1">Reference: {error.regulation}</p>
-                    )}
+            />
+          </button>
+          {showWarnings && (
+            <div className="divide-y divide-white/[0.04]">
+              {Array.from(warningGroups.entries()).map(([tab, rules]) => (
+                <div key={tab} className="px-3 py-2">
+                  <p className="text-[10px] uppercase tracking-wider text-white/50 mb-1.5">
+                    {TAB_LABEL[tab]}
+                  </p>
+                  <div className="space-y-1">
+                    {rules.map((rule) => {
+                      const RowContent = (
+                        <>
+                          <span className="w-1 h-1 rounded-full bg-amber-400 shrink-0 mt-1.5" />
+                          <span className="text-white/80 flex-1 text-left">{rule.message}</span>
+                          {rule.regulation && (
+                            <span className="text-[10px] text-white/40 shrink-0">
+                              {rule.regulation}
+                            </span>
+                          )}
+                        </>
+                      );
+                      return onJumpToTab ? (
+                        <button
+                          key={rule.field}
+                          type="button"
+                          onClick={() => handleJump(rule.tab)}
+                          className="w-full flex items-baseline gap-2 text-xs rounded-md px-1 py-0.5 hover:bg-white/[0.04] touch-manipulation transition-colors"
+                        >
+                          {RowContent}
+                        </button>
+                      ) : (
+                        <div
+                          key={rule.field}
+                          className="flex items-baseline gap-2 text-xs"
+                        >
+                          {RowContent}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               ))}
             </div>
-          </div>
-        )}
-
-        {/* Recommendations */}
-        {validation.warnings.length > 0 && (
-          <div className="space-y-2.5">
-            <h4 className="text-sm font-semibold text-amber-400 flex items-center gap-2">
-              <AlertCircle className="h-4 w-4" />
-              Recommendations
-            </h4>
-            <div className="space-y-2">
-              {validation.warnings.map((warning, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-3 p-3 rounded-xl bg-amber-500/5 border-l-2 border-amber-500/50"
-                >
-                  <AlertCircle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
-                  <div className="min-w-0">
-                    <p className="text-sm text-white">{warning.message}</p>
-                    {warning.regulation && (
-                      <p className="text-xs text-amber-400 mt-1">Reference: {warning.regulation}</p>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Success State */}
-        {validation.isValid && validation.completionPercentage >= 90 && (
-          <div className="flex items-start gap-3 p-4 rounded-xl bg-green-500/10 border border-green-500/20">
-            <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 shrink-0" />
-            <div>
-              <p className="text-sm font-semibold text-green-400">EIC Ready for Generation!</p>
-              <p className="text-xs text-white mt-1 leading-relaxed">
-                All required fields are complete and validation checks have passed. You can now
-                generate the official certificate.
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* Legal Note */}
-        <div className="pt-4 border-t border-white/10">
-          <div className="flex items-start gap-2.5">
-            <FileText className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
-            <div>
-              <p className="text-xs font-medium text-white mb-1">Legal Requirements:</p>
-              <p className="text-xs text-white leading-relaxed">
-                This EIC must comply with BS 7671:2018 and Building Regulations. All declarations
-                require competent person signatures. Keep records for minimum 6 years.
-              </p>
-            </div>
-          </div>
+          )}
         </div>
-      </div>
+      )}
     </div>
   );
 };

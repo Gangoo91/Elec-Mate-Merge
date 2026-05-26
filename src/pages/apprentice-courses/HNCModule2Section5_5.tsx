@@ -32,8 +32,13 @@ const quickCheckQuestions = [
   {
     id: 'pmv-range',
     question: 'What PMV range is typically considered acceptable for thermal comfort?',
-    options: ['-3 to +3', '-1 to +1', '-0.5 to +0.5', '0 only'],
-    correctIndex: 2,
+    options: [
+      '-0.5 to +0.5',
+      '-1 to +1',
+      '-3 to +3',
+      '0 only',
+    ],
+    correctIndex: 0,
     explanation:
       "PMV (Predicted Mean Vote) of -0.5 to +0.5 is considered 'optimal' comfort, with -1 to +1 being acceptable. PPD (Predicted Percentage Dissatisfied) is less than 10% within ±0.5 PMV.",
   },
@@ -41,20 +46,25 @@ const quickCheckQuestions = [
     id: 'operative-temp',
     question: 'Operative temperature combines which two factors?',
     options: [
-      'Air temperature and humidity',
-      'Air temperature and mean radiant temperature',
       'Mean radiant temperature and air velocity',
       'Air temperature and air velocity',
+      'Air temperature and humidity',
+      'Air temperature and mean radiant temperature',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Operative temperature (Top) combines air temperature (Ta) and mean radiant temperature (Tr). For low air velocities, Top ≈ (Ta + Tr)/2. It represents what occupants 'feel'.",
   },
   {
     id: 'cibse-summer',
     question: 'What is the CIBSE recommended summer comfort temperature for offices?',
-    options: ['18-20°C', '21-23°C', '23-25°C', '25-28°C'],
-    correctIndex: 2,
+    options: [
+      '18-20°C',
+      '23-25°C',
+      '21-23°C',
+      '25-28°C',
+    ],
+    correctIndex: 1,
     explanation:
       'CIBSE Guide A recommends 23-25°C operative temperature for summer office conditions. Winter recommendation is 21-23°C. These are for Category II (normal level of expectation).',
   },
@@ -63,9 +73,9 @@ const quickCheckQuestions = [
     question:
       'Under TM52, what is the threshold temperature above which hours are counted for overheating?',
     options: [
-      '25°C fixed',
-      '26°C fixed',
-      '28°C fixed',
+      'Personal protection against electric shock',
+      'Output saturation with continued error accumulation',
+      'All entrants must immediately evacuate the confined space',
       'Varies with running mean outdoor temperature',
     ],
     correctIndex: 3,
@@ -91,7 +101,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What does a PMV of +2 indicate?',
-    options: ['Thermally neutral', 'Slightly warm', 'Warm', 'Hot'],
+    options: [
+      'Hot',
+      'Thermally neutral',
+      'Warm',
+      'Slightly warm',
+    ],
     correctAnswer: 2,
     explanation:
       "PMV scale: -3 cold, -2 cool, -1 slightly cool, 0 neutral, +1 slightly warm, +2 warm, +3 hot. PMV +2 indicates occupants would vote 'warm' on average.",
@@ -99,16 +114,26 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What unit is used to measure clothing insulation?',
-    options: ['Watts', 'Clo', 'Met', 'W/m²K'],
-    correctAnswer: 1,
+    options: [
+      'Met',
+      'Watts',
+      'W/m²K',
+      'Clo',
+    ],
+    correctAnswer: 3,
     explanation:
       "Clothing insulation is measured in 'clo'. 1 clo = 0.155 m²K/W. Typical summer clothing is 0.5 clo, winter business attire 1.0 clo.",
   },
   {
     id: 4,
     question: 'What metabolic rate (Met) is assumed for sedentary office work?',
-    options: ['0.8 Met', '1.0 Met', '1.2 Met', '1.5 Met'],
-    correctAnswer: 2,
+    options: [
+      '1.2 Met',
+      '1.0 Met',
+      '0.8 Met',
+      '1.5 Met',
+    ],
+    correctAnswer: 0,
     explanation:
       'Sedentary office work is typically 1.2 Met (1 Met = 58.2 W/m² body area = ~105W for average person). Sleeping is 0.8 Met, walking slowly is 2.0 Met.',
   },
@@ -116,20 +141,25 @@ const quizQuestions = [
     id: 5,
     question: 'What is the adaptive comfort principle based on?',
     options: [
-      'Laboratory experiments only',
-      'Mechanical system performance',
+      'In the direction of escape (outwards)',
       'Occupants adapting to seasonal and local conditions',
-      'Fixed temperature standards',
+      'Test equipment failure or incorrect connections',
+      'Reduced false triggering - both technologies must detect movement',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Adaptive comfort recognises that occupants in naturally ventilated buildings adapt to local conditions - adjusting clothing, opening windows, accepting wider temperature ranges than PMV/PPD predicts.',
   },
   {
     id: 6,
     question: 'For CIBSE Category II comfort, what is the maximum acceptable PPD?',
-    options: ['5%', '10%', '15%', '20%'],
-    correctAnswer: 1,
+    options: [
+      '5%',
+      '15%',
+      '10%',
+      '20%',
+    ],
+    correctAnswer: 2,
     explanation:
       'Category II (normal expectation) allows max 10% PPD, corresponding to PMV ±0.5. Category I (high expectation) allows max 6% PPD. Category III allows 15%.',
   },
@@ -138,12 +168,12 @@ const quizQuestions = [
     question:
       'What is the effect of increasing air velocity on thermal sensation in warm conditions?',
     options: [
-      'No effect',
-      'Feels warmer due to convection',
+      'Temperature difference between different directions from occupant',
+      'Occupants adapting to seasonal and local conditions',
+      'Hours of exceedance, daily weighted exceedance, maximum temperature',
       'Feels cooler due to increased convective and evaporative heat loss',
-      'Increases humidity sensation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Increased air velocity enhances convective and evaporative heat loss from skin, providing a cooling effect. This is why fans can extend comfortable temperature range upward by 2-3°C.',
   },
@@ -151,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'In TM52 overheating assessment, what are the three criteria?',
     options: [
-      'Peak temperature, hours over 25°C, humidity',
       'Hours of exceedance, daily weighted exceedance, maximum temperature',
-      'Mean temperature, max temperature, ventilation rate',
-      'PMV, PPD, air velocity',
+      'Occupants adapting to seasonal and local conditions',
+      'Temperature difference between different directions from occupant',
+      'Feels cooler due to increased convective and evaporative heat loss',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TM52 Criterion 1: Hours where ΔT > 1K (max 3% occupied hours). Criterion 2: Daily weighted exceedance (max 6). Criterion 3: Absolute maximum ΔT ≤ 4K. Fail any = overheating.',
   },
@@ -164,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: "What is 'asymmetric radiant temperature' and why does it matter?",
     options: [
-      'Temperature difference between room centre and walls',
+      'Hours of exceedance, daily weighted exceedance, maximum temperature',
       'Temperature difference between different directions from occupant',
-      'Air temperature variation with height',
-      'Surface temperature of glazing',
+      'Feels cooler due to increased convective and evaporative heat loss',
+      'Occupants adapting to seasonal and local conditions',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,12 +221,12 @@ const quizQuestions = [
     id: 11,
     question: 'What running mean outdoor temperature is used in adaptive comfort calculations?',
     options: [
-      'Mean of last 24 hours',
-      'Mean of last 7 days',
+      'To ensure only vapour enters the compressor',
+      '50% more energy than a typical building',
+      'RCD test gives inconsistent results',
       'Exponentially weighted running mean',
-      'Monthly average',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The running mean outdoor temperature (θrm) uses exponentially weighted average where recent days have more influence. This reflects gradual adaptation to changing seasonal conditions.',
   },
@@ -205,12 +235,12 @@ const quizQuestions = [
     question:
       'What is the recommended maximum vertical air temperature difference to avoid discomfort?',
     options: [
-      '1°C between ankle and head',
       '3°C between ankle and head',
-      '5°C between floor and ceiling',
       'No limit if mean is comfortable',
+      '1°C between ankle and head',
+      '5°C between floor and ceiling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'CIBSE recommends maximum 3°C difference between 0.1m (ankle) and 1.1m (head height) for seated occupants. Larger gradients cause cold feet/warm head discomfort.',
   },

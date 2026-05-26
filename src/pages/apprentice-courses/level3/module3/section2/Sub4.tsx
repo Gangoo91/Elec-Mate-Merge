@@ -42,8 +42,13 @@ const checks = [
     id: 'l3-m3-2-4-peak',
     question:
       'UK mains is 230 V RMS. Peak voltage is approximately:',
-    options: ['115 V', '230 V', '325 V', '400 V'],
-    correctIndex: 2,
+    options: [
+      '400 V',
+      '115 V',
+      '230 V',
+      '325 V',
+    ],
+    correctIndex: 3,
     explanation:
       'V_peak = V_RMS × √2 = 230 × 1.414 = 325 V. RMS is the value that delivers the same heating effect as a DC of the same number — peak is what insulation has to withstand.',
   },
@@ -51,7 +56,12 @@ const checks = [
     id: 'l3-m3-2-4-period',
     question:
       'Period of a 50 Hz sine wave:',
-    options: ['10 ms', '20 ms', '50 ms', '100 ms'],
+    options: [
+      '50 ms',
+      '20 ms',
+      '10 ms',
+      '100 ms',
+    ],
     correctIndex: 1,
     explanation: 'T = 1/f = 1/50 = 0.02 s = 20 ms. One full cycle every 20 ms.',
   },
@@ -59,7 +69,12 @@ const checks = [
     id: 'l3-m3-2-4-rms',
     question:
       "An average-responding meter reads 9 A on a square-wave load. The actual RMS current is:",
-    options: ['6.4 A', '9 A', '10 A', '12.7 A'],
+    options: [
+      '12.7 A',
+      '9 A',
+      '10 A',
+      '6.4 A',
+    ],
     correctIndex: 2,
     explanation:
       'For a perfect square wave, V_avg = V_peak (over half cycle). Average meter assumes sine and applies form factor 1.11 — it reads V_avg × 1.11. Square wave: V_RMS = V_peak. So actual RMS = reading × (1.0 / 1.11) × correction... For a typical chopped/square-ish PSU current the simple answer is the meter reads low; corrected RMS is roughly 10 A. (True-RMS meters give the right answer directly.)',
@@ -70,37 +85,62 @@ const quizQuestions = [
   {
     id: 1,
     question: 'The RMS value of a sine wave equals the peak divided by:',
-    options: ['π', '2', '√2', '√3'],
-    correctAnswer: 2,
+    options: [
+      'π',
+      '√2',
+      '2',
+      '√3',
+    ],
+    correctAnswer: 1,
     explanation: 'V_RMS = V_peak / √2 ≈ V_peak × 0.707. Or V_peak = V_RMS × √2.',
   },
   {
     id: 2,
     question: 'Average value of a full sine wave (over one full cycle):',
-    options: ['Zero', 'V_peak / 2', 'V_peak × 0.637', 'V_peak / √2'],
-    correctAnswer: 0,
+    options: [
+      'V_peak × 0.637',
+      'V_peak / √2',
+      'Zero',
+      'V_peak / 2',
+    ],
+    correctAnswer: 2,
     explanation:
       'Over a full cycle the positive and negative halves cancel exactly. The non-zero "average" you sometimes see (0.637 × V_peak) is the average over HALF a cycle.',
   },
   {
     id: 3,
     question: 'Form factor for a sine wave (RMS / average) is:',
-    options: ['1.0', '1.11', '1.414', '√3'],
-    correctAnswer: 1,
+    options: [
+      '1.414',
+      '1.0',
+      '√3',
+      '1.11',
+    ],
+    correctAnswer: 3,
     explanation:
       'Form factor = RMS / |average over half cycle| = (V_p/√2) / (0.637 × V_p) = 1.11. Average-responding meters multiply by this to display RMS — assuming sine.',
   },
   {
     id: 4,
     question: 'Angular frequency ω equals:',
-    options: ['2πf', 'f / 2π', '√2 × f', 'π × f'],
+    options: [
+      '2πf',
+      'f / 2π',
+      '√2 × f',
+      'π × f',
+    ],
     correctAnswer: 0,
     explanation: 'ω = 2πf, in radians per second. For 50 Hz: ω = 2π × 50 = 314.16 rad/s.',
   },
   {
     id: 5,
     question: 'A 50 Hz waveform completes one full cycle in:',
-    options: ['10 ms', '20 ms', '50 ms', '1 s'],
+    options: [
+      '10 ms',
+      '20 ms',
+      '1 s',
+      '50 ms',
+    ],
     correctAnswer: 1,
     explanation: 'Period T = 1/f = 1/50 = 20 ms.',
   },
@@ -108,8 +148,13 @@ const quizQuestions = [
     id: 6,
     question:
       'Two sine waves of the same frequency, where one peaks 90° before the other, are said to be:',
-    options: ['In phase', '90° out of phase', 'Anti-phase', 'Different frequencies'],
-    correctAnswer: 1,
+    options: [
+      'In phase',
+      'Anti-phase',
+      '90° out of phase',
+      'Different frequencies',
+    ],
+    correctAnswer: 2,
     explanation:
       'A 90° (π/2 radian) difference. In an inductor, voltage leads current by 90°. In a capacitor, current leads voltage by 90°. Both come from the maths of the sine wave.',
   },
@@ -117,16 +162,26 @@ const quizQuestions = [
     id: 7,
     question:
       'A 230 V supply across a pure 23 Ω resistance: the peak current is:',
-    options: ['10 A', '14.1 A', '20 A', '23 A'],
-    correctAnswer: 1,
+    options: [
+      '10 A',
+      '23 A',
+      '20 A',
+      '14.1 A',
+    ],
+    correctAnswer: 3,
     explanation:
       'I_RMS = 230 / 23 = 10 A. I_peak = I_RMS × √2 = 10 × 1.414 = 14.1 A. Insulation and protective devices see peak; the meter reads RMS.',
   },
   {
     id: 8,
     question: 'Peak-to-peak voltage of UK mains:',
-    options: ['230 V', '325 V', '460 V', '650 V'],
-    correctAnswer: 3,
+    options: [
+      '650 V',
+      '460 V',
+      '230 V',
+      '325 V',
+    ],
+    correctAnswer: 0,
     explanation:
       'V_peak = 325 V; V_pk-pk = 2 × 325 = 650 V. That\'s the swing the insulation has to take.',
   },

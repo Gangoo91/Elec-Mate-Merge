@@ -42,11 +42,11 @@ const checks = [
       'You are inspecting a finished CU and notice the BS 951 bonding clamp on the gas pipe is missing its "Safety Electrical Connection — Do Not Remove" label. Which section of the Schedule of Inspections catches this?',
     options: [
       'Section 4 — routing of cables.',
-      'Section 9 — identification and warning notices.',
       'Section 5 — selection of conductors.',
+      'Section 9 — identification and warning notices.',
       'Section 11 — earthing arrangements.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The BS 951 bonding label is a warning notice required by Reg 514.13. The Schedule of Inspections groups all warning notices, danger labels and identification labels in Section 9. The bonding clamp itself is in Section 12 (bonding); the label requirement is in Section 9.',
   },
@@ -55,12 +55,12 @@ const checks = [
     question:
       'On a TN-C-S domestic install, the Schedule of Inspections item "presence of earth electrode" should be recorded as:',
     options: [
-      '✓ — compliant.',
+      '7 days, 14 days, or 30 days depending on client type',
+      'To protect conductor ends and provide neat terminations',
+      'Working space, access, and lighting',
       'N/A — not applicable to this earthing arrangement.',
-      'LIM — limitation, could not access.',
-      '✗ — non-compliant.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A TN-C-S supply uses the supply&rsquo;s combined neutral-earth conductor — no earth electrode is required at the consumer&rsquo;s installation. The item is N/A. LIM would mean the item applies but you could not access it; ✗ would mean it applies and is non-compliant. N/A is the right code when the item simply does not apply to the system in front of you.',
   },
@@ -69,12 +69,12 @@ const checks = [
     question:
       'You complete an inspection and find one terminal at the consumer unit with copper showing past the brass — clearly the conductor was overstripped. Where do you record it?',
     options: [
-      'On the Schedule of Test Results.',
       'On the Schedule of Inspections, item 6 (connection of conductors), as ✗ with a brief description; flag the supervisor and fix before energising.',
-      'On the EIC declaration of compliance.',
-      'You do not record it — just fix it quietly.',
+      'They indicate the maximum prospective fault current at key points, which determines the required breaking capacity of protective devices',
+      'Horizontal forces applied to the side of the tower (e.g. from pulling cables, using power tools against walls) can cause overturning',
+      'Take the report seriously, challenge the exclusionary behaviour, ensure equitable task allocation, and escalate if necessary',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Inspection findings go on the Schedule of Inspections. Item 6 is the connection of conductors check. ✗ records the non-compliance, with enough description that the supervisor (and any future inspector reading the EIC pack) knows exactly what was wrong. Fixing without recording leaves no audit trail and breaks the inspection-to-EIC traceability.',
   },
@@ -85,8 +85,13 @@ const quizQuestions = [
     id: 1,
     question:
       'The IET model Schedule of Inspections is set out in which BS 7671 appendix?',
-    options: ['Appendix 3', 'Appendix 4', 'Appendix 6', 'Appendix 15'],
-    correctAnswer: 2,
+    options: [
+      'Appendix 3',
+      'Appendix 6',
+      'Appendix 4',
+      'Appendix 15',
+    ],
+    correctAnswer: 1,
     explanation:
       'Appendix 6 in BS 7671 contains the model forms — EIC, EICR, Minor Works Certificate, Schedule of Inspections and Schedule of Test Results. The Schedule of Inspections is the form you use to evidence the Section 642 inspection.',
   },
@@ -95,12 +100,12 @@ const quizQuestions = [
     question:
       'On the IET model Schedule of Inspections, the four codes you can use to mark each item are:',
     options: [
+      'Pass / Fail',
       'C1 / C2 / C3 / FI',
       '✓ / N/A / LIM / ✗',
-      'Pass / Fail',
       'Yes / No / Maybe',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Schedule of Inspections uses ✓ (compliant), N/A (not applicable), LIM (limitation in scope) and ✗ (non-compliant). C1/C2/C3/FI are the EICR observation codes used on the Electrical Installation Condition Report — different form, different purpose.',
   },
@@ -108,8 +113,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Which Schedule of Inspections section covers "single-pole devices in line conductors only"?',
-    options: ['Section 3', 'Section 8', 'Section 11', 'Section 14'],
-    correctAnswer: 1,
+    options: [
+      'Section 11',
+      'Section 3',
+      'Section 14',
+      'Section 8',
+    ],
+    correctAnswer: 3,
     explanation:
       'Section 8 of the Schedule of Inspections covers single-pole switches and protective devices being in the line conductor only — the verification of Reg 514.16 / 537.2.2. A fuse, MCB or single-pole switch in the neutral is a fail and gets a ✗ here.',
   },
@@ -118,12 +128,12 @@ const quizQuestions = [
     question:
       'Section 11 of the Schedule of Inspections covers earthing arrangements. The presence of an earth electrode and its resistance is verified there. On a TN-S install (separate earth from supplier), this item should be:',
     options: [
-      '✓ — compliant.',
       'N/A — not applicable; earthing is provided by the supplier.',
-      'LIM — limitation.',
-      '✗ — non-compliant.',
+      'Serial communication for industrial devices',
+      'A possible parallel earth path or cross-connection',
+      'Create and document consistent organisational standards and processes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TN-S earthing is provided by the supplier (typically the cable armour on the cut-out). No installation earth electrode is required, so the "earth electrode" item is N/A on TN-S and TN-C-S installs. The earth electrode item is only ✓ on TT installs (and on TT portions of dual systems).',
   },
@@ -132,10 +142,10 @@ const quizQuestions = [
     question:
       'You are inspecting a finished CU and the busbar shroud has been screwed in place such that you cannot see the line side of any RCBO. You should record items relating to those terminations as:',
     options: [
-      '✓ — assume compliant since the install is finished.',
+      'Match standard switchboard ammeters and protective relays designed for 1 A or 5 A inputs',
       'LIM — limitation; could not access without disturbing the install. Note clearly what was limited and flag the supervisor.',
-      '✗ — automatic fail.',
-      'N/A — not applicable.',
+      'The tower location, date, details of the inspection, any defects found, actions taken, and the name of the competent person',
+      'The area that has been changed since the previous revision — making it easy to spot what is new',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,10 +158,10 @@ const quizQuestions = [
     options: [
       'CU way labels.',
       'BS 951 "Safety Electrical Connection" label on bonding clamps.',
-      'RCD test notice.',
       'All of the above.',
+      'RCD test notice.',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Section 9 covers all identification and warning notices — the CU way labels (so you know which way feeds which circuit), the BS 951 bonding clamp labels, the RCD test notice ("This installation, or part of it, is protected by a device which automatically switches off the supply if an earth fault develops..."), the periodic inspection notice, mixed-cable-colours notice if applicable. All checked here.',
   },
@@ -160,12 +170,12 @@ const quizQuestions = [
     question:
       'The Schedule of Inspections is signed by:',
     options: [
-      'The customer only.',
+      'Electrical Installation Certificate (EIC)',
+      'Dividing the system into independently controllable areas',
+      'Provides evidence of work done and aids future maintenance',
       'The competent person who carried out the inspection.',
-      'Anyone on site.',
-      'No one — it is just a checklist.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Schedule of Inspections is signed by the competent person responsible for the inspection. At Level 2 that is normally your supervisor, with you noted as having assisted. As you move through the apprenticeship and become a competent person yourself, you start signing your own Schedule of Inspections — typically post-qualification.',
   },
@@ -174,12 +184,12 @@ const quizQuestions = [
     question:
       'You finish a Schedule of Inspections — every item is ✓ except two LIM (cable runs in finished plaster, you could not see them) and zero ✗. The next step is:',
     options: [
-      'Energise immediately.',
       'Hand to the supervisor for review, agree how the LIM items are recorded on the EIC, then proceed to dead testing (Sub 5.3 / Section 6).',
-      'Skip dead testing — the inspection passed.',
-      'Issue the EIC immediately.',
+      'Pair colour with shape and text — red circle with slash for prohibition, blue circle for mandatory, yellow triangle for warning',
+      'It provides legal evidence that the system was designed, installed, tested, and maintained correctly',
+      'Any person who is or may be lawfully on the premises, and any person in the immediate vicinity who is at risk from a fire on the premises',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A clean inspection (no ✗) means the install is ready for testing. The two LIM items get either revisited if practical, or recorded as limitations on the EIC. Dead testing (Section 643) follows the inspection. Live testing follows dead testing. Only when both are complete and clean does the EIC get issued and the install energised.',
   },

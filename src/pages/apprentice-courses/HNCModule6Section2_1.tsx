@@ -33,9 +33,9 @@ const quickCheckQuestions = [
       'Which PV cell technology typically offers the highest efficiency in standard test conditions?',
     options: [
       'Thin film amorphous silicon',
-      'Polycrystalline silicon',
-      'Monocrystalline silicon',
       'Cadmium telluride',
+      'Monocrystalline silicon',
+      'Polycrystalline silicon',
     ],
     correctIndex: 2,
     explanation:
@@ -45,8 +45,13 @@ const quickCheckQuestions = [
     id: 'g98-limit',
     question:
       'What is the maximum single-phase export capacity permitted under G98 without requiring DNO application approval?',
-    options: ['3.68 kW per phase', '6 kW per phase', '16 A per phase', '50 kW total'],
-    correctIndex: 0,
+    options: [
+      '6 kW per phase',
+      '3.68 kW per phase',
+      '16 A per phase',
+      '50 kW total',
+    ],
+    correctIndex: 1,
     explanation:
       'G98 permits up to 3.68 kW per phase (16 A × 230 V = 3.68 kW) for single-phase connections without requiring formal DNO application - only notification is required within 28 days of commissioning.',
   },
@@ -54,10 +59,10 @@ const quickCheckQuestions = [
     id: 'inverter-function',
     question: 'What is the primary function of a grid-tied inverter in a PV system?',
     options: [
-      'Store excess energy for later use',
+      'Persons not in their employment (e.g. members of the public)',
       'Convert DC from panels to AC synchronised with grid frequency',
-      'Increase the voltage output from panels',
-      'Provide battery charging capability',
+      'A building that generates more energy than it consumes over a year',
+      'The required working height and load capacity',
     ],
     correctIndex: 1,
     explanation:
@@ -68,12 +73,12 @@ const quickCheckQuestions = [
     question:
       'In the UK, typical annual solar irradiation for system sizing calculations is approximately:',
     options: [
+      '2,000-2,500 kWh/m² per year',
       '500-700 kWh/m² per year',
       '850-1,100 kWh/m² per year',
       '1,500-1,800 kWh/m² per year',
-      '2,000-2,500 kWh/m² per year',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The UK receives approximately 850-1,100 kWh/m² of solar irradiation annually, varying by location (higher in the south). This equates to roughly 800-1,000 kWh annual yield per kWp of installed capacity.',
   },
@@ -84,8 +89,13 @@ const quizQuestions = [
     id: 1,
     question:
       'A monocrystalline PV panel is rated at 400 Wp under Standard Test Conditions (STC). What irradiance level does STC specify?',
-    options: ['500 W/m²', '800 W/m²', '1,000 W/m²', '1,200 W/m²'],
-    correctAnswer: 2,
+    options: [
+      '500 W/m²',
+      '1,000 W/m²',
+      '800 W/m²',
+      '1,200 W/m²',
+    ],
+    correctAnswer: 1,
     explanation:
       'Standard Test Conditions (STC) specify 1,000 W/m² irradiance, 25°C cell temperature, and AM 1.5 spectrum. The Wp rating indicates peak power output under these specific conditions.',
   },
@@ -93,8 +103,13 @@ const quizQuestions = [
     id: 2,
     question:
       'What is the typical temperature coefficient of power for crystalline silicon PV modules?',
-    options: ['-0.1% per °C', '-0.35% to -0.45% per °C', '-1.0% per °C', '+0.5% per °C'],
-    correctAnswer: 1,
+    options: [
+      '-1.0% per °C',
+      '-0.1% per °C',
+      '-0.35% to -0.45% per °C',
+      '+0.5% per °C',
+    ],
+    correctAnswer: 2,
     explanation:
       'Crystalline silicon modules typically lose 0.35-0.45% of rated power for each degree Celsius above 25°C (STC). This means a 400 Wp panel at 45°C would produce approximately 368-372 W under 1,000 W/m².',
   },
@@ -102,12 +117,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which inverter topology allows individual panel-level MPPT optimisation?',
     options: [
-      'Central string inverter',
       'Multi-string inverter',
-      'Microinverter',
+      'Central string inverter',
       'Transformer-coupled inverter',
+      'Microinverter',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Microinverters are fitted to individual panels, providing panel-level maximum power point tracking (MPPT). This optimises energy harvest from each panel independently, beneficial where shading or panel mismatch occurs.',
   },
@@ -116,12 +131,12 @@ const quizQuestions = [
     question:
       'When calculating PV system annual yield, which factor accounts for losses from dust, wiring, and inverter inefficiency?',
     options: [
-      'Shading factor',
-      'Temperature derating',
       'Performance ratio (PR)',
+      'Temperature derating',
+      'Shading factor',
       'Orientation factor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Performance ratio (PR) typically ranges from 0.75-0.85 and accounts for all system losses including soiling, wiring resistance, inverter efficiency, temperature effects, and mismatch losses.',
   },
@@ -129,8 +144,13 @@ const quizQuestions = [
     id: 5,
     question:
       'For a south-facing roof in central England with 35° pitch, what is the approximate orientation factor for annual yield calculation?',
-    options: ['0.70-0.75', '0.85-0.90', '0.95-1.00', '1.05-1.10'],
-    correctAnswer: 2,
+    options: [
+      '0.85-0.90',
+      '0.95-1.00',
+      '1.05-1.10',
+      '0.70-0.75',
+    ],
+    correctAnswer: 1,
     explanation:
       'A south-facing array at 30-40° pitch in the UK achieves near-optimal orientation with an orientation factor of 0.95-1.00. The optimal pitch angle approximately equals the latitude (51-54° for most of England).',
   },
@@ -138,10 +158,10 @@ const quizQuestions = [
     id: 6,
     question: 'G99 application to the DNO is required for installations exceeding:',
     options: [
-      '3.68 kW single-phase',
-      '6 kW three-phase',
+      'Zigbee and Z-Wave mesh networks',
+      'FIA or equivalent qualifications plus BS 5839 competence',
       '11.04 kW three-phase or 3.68 kW single-phase',
-      '16 kW total capacity',
+      'Test conditions, environment, and standards',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,16 +171,26 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the maximum permitted DC voltage for PV string design in a domestic installation under BS 7671?',
-    options: ['120 V DC', '600 V DC', '1,000 V DC', '1,500 V DC'],
-    correctAnswer: 2,
+    options: [
+      '120 V DC',
+      '600 V DC',
+      '1,500 V DC',
+      '1,000 V DC',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS 7671 and product standards typically limit DC voltage to 1,000 V for standard PV installations. String voltage must remain below this at all temperatures - typically calculated at minimum expected temperature when Voc is highest.',
   },
   {
     id: 8,
     question: 'Which MCS standard covers the installation of solar PV systems in the UK?',
-    options: ['MCS 001', 'MCS 012', 'MCS 020', 'MCS 025'],
-    correctAnswer: 1,
+    options: [
+      'MCS 012',
+      'MCS 020',
+      'MCS 001',
+      'MCS 025',
+    ],
+    correctAnswer: 0,
     explanation:
       "MCS 012 covers 'Installation Standard Requirements for contractors undertaking the supply, design, installation, set to work, commissioning and handover of Solar Photovoltaic Systems'.",
   },
@@ -168,12 +198,12 @@ const quizQuestions = [
     id: 9,
     question: 'Anti-islanding protection in a grid-tied inverter ensures that:',
     options: [
-      'The system maximises energy export',
-      'Power factor remains above 0.95',
+      'Diversity factors based on simultaneous use probability',
       'The inverter disconnects within 0.5 seconds of grid failure',
-      'DC voltage remains stable',
+      'Confirm with the supervisor or project manager',
+      'Alarm activation sequences and communication backup systems',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Anti-islanding protection detects grid failure (loss of mains) and disconnects the inverter within 0.5 seconds. This prevents back-feeding into a dead network, which could endanger workers and equipment.',
   },
@@ -181,8 +211,13 @@ const quizQuestions = [
     id: 10,
     question:
       'A 4 kWp PV system in the South of England typically generates approximately how much energy annually?',
-    options: ['1,500-2,000 kWh', '3,200-4,000 kWh', '5,000-6,000 kWh', '7,000-8,000 kWh'],
-    correctAnswer: 1,
+    options: [
+      '1,500-2,000 kWh',
+      '7,000-8,000 kWh',
+      '3,200-4,000 kWh',
+      '5,000-6,000 kWh',
+    ],
+    correctAnswer: 2,
     explanation:
       'In Southern England, expect approximately 800-1,000 kWh per kWp annually. A 4 kWp system would generate 3,200-4,000 kWh per year, assuming good orientation and minimal shading.',
   },
@@ -191,19 +226,24 @@ const quizQuestions = [
     question: 'When connecting PV panels in series, which parameter is additive?',
     options: [
       'Current (Isc and Imp)',
-      'Voltage (Voc and Vmp)',
-      'Power output only',
       'Neither voltage nor current',
+      'Power output only',
+      'Voltage (Voc and Vmp)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Connecting panels in series adds voltages (Voc values and Vmp values sum), while current remains equal to a single panel. This is why string voltage calculations are critical for inverter compatibility.',
   },
   {
     id: 12,
     question: 'For MCS certification, how long must generation meter data be retained?',
-    options: ['1 year', '5 years', '10 years', '20 years'],
-    correctAnswer: 2,
+    options: [
+      '10 years',
+      '20 years',
+      '1 year',
+      '5 years',
+    ],
+    correctAnswer: 0,
     explanation:
       'MCS requires installers to retain records including commissioning data and generation meter readings for a minimum of 10 years. This supports performance monitoring and warranty claims throughout the system lifetime.',
   },

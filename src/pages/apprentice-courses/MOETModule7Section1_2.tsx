@@ -14,8 +14,13 @@ const quickCheckQuestions = [
     id: 'time-per-question',
     question:
       'In a 40-question, 60-minute EPA knowledge test, approximately how long do you have per question?',
-    options: ['30 seconds', '60 seconds', '90 seconds', '120 seconds'],
-    correctIndex: 2,
+    options: [
+      '120 seconds',
+      '90 seconds',
+      '30 seconds',
+      '60 seconds',
+    ],
+    correctIndex: 1,
     explanation:
       'With 40 questions in 60 minutes, you have approximately 90 seconds (1.5 minutes) per question. However, some questions will take less time and others more, so flexible pacing is important.',
   },
@@ -24,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'What is the best approach when you encounter a question you cannot answer immediately?',
     options: [
-      'Spend as long as needed until you work out the answer',
-      'Skip it permanently and accept the lost mark',
       'Flag it, make your best guess, move on, and return if time allows',
       'Choose the first option and move on without thinking',
+      'Spend as long as needed until you work out the answer',
+      'Skip it permanently and accept the lost mark',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The flag-and-return strategy ensures you do not waste valuable time on one difficult question at the expense of easier ones. Make your best educated guess (never leave it blank), flag it, and return with any remaining time.',
   },
@@ -37,12 +42,12 @@ const quickCheckQuestions = [
     id: 'mock-conditions',
     question: 'Why is it important to practise mock tests under realistic exam conditions?',
     options: [
-      'To make the practice more stressful',
       'To build familiarity with time pressure and reduce anxiety on the actual day',
-      'Mock tests are only useful for memorising answers',
-      'Exam conditions do not affect performance',
+      'Demand-controlled ventilation based on occupancy and air quality',
+      'Efficacy limits, controls and upward light restrictions',
+      'To ensure an adequate seal between the facepiece and the wearer\\\\\\\\\\\\\\\'s face',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Practising under realistic conditions — timed, without notes, in a quiet environment — builds familiarity with the exam experience. This reduces anxiety on the day because the format and pressure feel familiar rather than novel.',
   },
@@ -67,12 +72,12 @@ const quizQuestions = [
     question:
       'During a timed mock test, you realise you have spent 3 minutes on a single question. What should you do?',
     options: [
-      'Continue until you are certain of the answer',
+      'Basic arithmetic using Ohm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s law, power formulae, or simple unit conversions',
+      'At least 3-5 full timed tests spread over several weeks',
       'Flag the question, select your best answer, and move on immediately',
-      'Skip the question and leave it blank',
-      'Start the test again from the beginning',
+      'To verify you are on pace — e.g., 20 questions done by the 30-minute mark',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Spending 3 minutes on one question means you are taking time away from other questions. Select your best answer based on elimination, flag it for review, and move on. You can return to it if time permits.',
   },
@@ -80,12 +85,12 @@ const quizQuestions = [
     id: 3,
     question: "What is the purpose of a 'time checkpoint' during the exam?",
     options: [
-      'To count how many questions you have answered correctly',
+      'Flag the question, select your best answer, and move on immediately',
+      'Only change an answer if you have a clear reason to believe a different option is correct',
+      'Basic arithmetic using Ohm\\\\\\\\\\\\\\\'s law, power formulae, or simple unit conversions',
       'To verify you are on pace — e.g., 20 questions done by the 30-minute mark',
-      'To decide whether to give up on the test',
-      'To signal the invigilator that you need help',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Time checkpoints help you monitor your pacing. At the halfway point (30 minutes), you should have completed approximately 20 questions. If you are behind, you need to increase your pace; if ahead, you have time for careful review.',
   },
@@ -93,12 +98,12 @@ const quizQuestions = [
     id: 4,
     question: 'When reviewing flagged questions at the end of the test, you should:',
     options: [
-      'Change every answer you were unsure about',
       'Only change an answer if you have a clear reason to believe a different option is correct',
-      'Leave all answers as they are regardless',
-      'Choose the opposite of your original selection',
+      'Flag the question, select your best answer, and move on immediately',
+      'A quiet space with no notes, no phone, and a visible timer — simulating actual exam conditions',
+      'Review every question — both correct and incorrect — reading all explanations and noting weak areas',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When reviewing, only change an answer if you have identified a specific reason — such as misreading the question or recalling a relevant fact. Random changes driven by anxiety tend to reduce your score rather than improve it.',
   },
@@ -106,12 +111,12 @@ const quizQuestions = [
     id: 5,
     question: 'How many full timed mock tests should you aim to complete before the actual EPA?',
     options: [
-      'None — reading the material is sufficient',
       'One test the night before is enough',
       'At least 3-5 full timed tests spread over several weeks',
       'One test per day for the entire month before the EPA',
+      'None — reading the material is sufficient',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Three to five full timed mock tests, spread over your preparation period, provide enough practice to build comfort with the format and timing without causing fatigue. Each test should be followed by a thorough review of all answers.',
   },
@@ -132,12 +137,12 @@ const quizQuestions = [
     id: 7,
     question: "The 'two-pass' strategy for a timed exam involves:",
     options: [
-      'Taking the exam twice on the same day',
-      'Reading every question twice before answering any',
+      'Pause briefly, take slow deep breaths, read the current question slowly, and focus on one question at a time',
+      'Review flagged questions, ensure every question has an answer, and check for obvious errors',
+      'Basic arithmetic using Ohm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s law, power formulae, or simple unit conversions',
       'First pass: answer all questions you are confident about; second pass: tackle flagged/difficult questions',
-      'Completing half the test, then starting again from question one',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The two-pass strategy maximises your score by securing marks from questions you know first, then using remaining time on uncertain questions. This prevents time wasted on difficult early questions at the expense of easy later ones.',
   },
@@ -145,12 +150,12 @@ const quizQuestions = [
     id: 8,
     question: 'What should you do in the final 5 minutes of the exam?',
     options: [
-      'Start answering questions you have not yet attempted',
-      'Close the test immediately',
       'Review flagged questions, ensure every question has an answer, and check for obvious errors',
-      'Change all answers you are unsure about',
+      'Basic arithmetic using Ohm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s law, power formulae, or simple unit conversions',
+      'First pass: answer all questions you are confident about; second pass: tackle flagged/difficult questions',
+      'Only change an answer if you have a clear reason to believe a different option is correct',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The final 5 minutes should be used to: (1) ensure every question has been answered (no blanks), (2) revisit flagged questions, and (3) check for obvious errors like misreading. Do not make random changes — only change answers with clear justification.',
   },
@@ -158,12 +163,12 @@ const quizQuestions = [
     id: 9,
     question: 'After completing a timed mock test, the most productive next step is to:',
     options: [
-      'Celebrate and move on without looking at results',
-      'Focus only on your percentage score',
+      'To verify you are on pace — e.g., 20 questions done by the 30-minute mark',
       'Review every question — both correct and incorrect — reading all explanations and noting weak areas',
-      'Immediately take another mock test',
+      'Basic arithmetic using Ohm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s law, power formulae, or simple unit conversions',
+      'First pass: answer all questions you are confident about; second pass: tackle flagged/difficult questions',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Thorough review is where the real learning happens. Review every question, read explanations, note which topics caused difficulty, and plan targeted revision before your next mock test. The test itself is a diagnostic tool, not just a score.',
   },
@@ -172,10 +177,10 @@ const quizQuestions = [
     question:
       "If anxiety causes you to 'freeze' during a timed test, the recommended technique is to:",
     options: [
-      'Leave the exam room immediately',
-      'Skip to the last question and work backwards',
+      'Only change an answer if you have a clear reason to believe a different option is correct',
+      'First pass: answer all questions you are confident about; second pass: tackle flagged/difficult questions',
       'Pause briefly, take slow deep breaths, read the current question slowly, and focus on one question at a time',
-      'Answer all remaining questions with option A',
+      'Review flagged questions, ensure every question has an answer, and check for obvious errors',
     ],
     correctAnswer: 2,
     explanation:
@@ -185,12 +190,12 @@ const quizQuestions = [
     id: 11,
     question: 'Calculation questions in the EPA test typically require:',
     options: [
-      'Complex algebra and calculus',
+      "A quiet space with no notes, no phone, and a visible timer — simulating actual exam conditions",
+      "To verify you are on pace — e.g., 20 questions done by the 30-minute mark",
+      "At least 3-5 full timed tests spread over several weeks",
       "Basic arithmetic using Ohm's law, power formulae, or simple unit conversions",
-      'No calculations at all — everything is conceptual',
-      'Use of specialist engineering software',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Calculation questions in the ST1426 EPA test involve basic electrical formulae — Ohm's law (V = IR), power (P = IV), and simple conversions. Practise these under timed conditions so you can solve them quickly and accurately.",
   },
@@ -198,12 +203,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the ideal environment for completing a timed mock test?',
     options: [
-      'A noisy room with distractions to simulate worst-case conditions',
       'A quiet space with no notes, no phone, and a visible timer — simulating actual exam conditions',
-      'In bed with music playing',
-      'With friends so you can discuss answers as you go',
+      'Review flagged questions, ensure every question has an answer, and check for obvious errors',
+      'First pass: answer all questions you are confident about; second pass: tackle flagged/difficult questions',
+      'Flag the question, select your best answer, and move on immediately',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Simulating actual exam conditions builds realistic familiarity. This means a quiet space, no notes or references, no phone, a visible countdown timer, and completing the full test in one sitting without breaks.',
   },

@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'Under the Work at Height Regulations 2005, what is the FIRST step in the hierarchy of controls for working at height?',
     options: [
-      'Use a safety harness to prevent falls',
-      'Erect scaffolding around the work area',
+      'ATEX or IECEx certification for equipment and installation methods',
       'Avoid working at height altogether where it is reasonably practicable to do so',
-      'Place crash mats below the work area to mitigate falls',
+      'A luminaire containing its own battery, lamp, control gear, and test facility',
+      'To make the wearer visible in poor light or near moving vehicles',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The Work at Height Regulations 2005 establish a clear hierarchy: (1) Avoid working at height where reasonably practicable; (2) Prevent falls using guardrails, platforms, or scaffolds; (3) Mitigate the consequences of falls using nets, airbags, or harnesses. You must always start at the top of the hierarchy and only move to the next level when the higher level is not reasonably practicable.',
   },
@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'Under the Work at Height Regulations 2005, when is it acceptable to use a ladder for maintenance work?',
     options: [
-      'At any time, as ladders are always the safest option',
+      'It provides higher energy savings by requiring manual switch-on',
+      'A more thorough overhaul carried out at intervals of 5 or 10 years depending on extinguisher type',
+      'Use the time to review all answers, checking for misread questions and unanswered items',
       'Only when the task is of short duration, low risk, and the site conditions are suitable',
-      'Only when the maintenance manager gives verbal approval',
-      'Whenever scaffolding is not available on site',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The Regulations permit ladder use only where a risk assessment shows the task is of short duration (minutes, not hours), the risk is low, and conditions at the site are suitable (firm, level base, protection from vehicle impact, weather conditions acceptable). Ladders must never be the default choice — they are a last resort when higher-level controls are not reasonably practicable.',
   },
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     id: 'fragile-surface',
     question: "What is a 'fragile surface' in the context of work at height?",
     options: [
-      'Any surface that is wet or slippery',
+      "Increased risk-taking and poor concentration leading to safety errors",
       "A surface that would be liable to fail if a person's weight were to be applied to it",
-      'A surface that has been damaged by weather',
-      'Any surface above 2 metres from ground level',
+      "Hydrogen produced using renewable electricity through electrolysis of water",
+      "A test to verify equipment operates as intended when energised",
     ],
     correctIndex: 1,
     explanation:
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     id: 'rescue-plan',
     question: 'When must a rescue plan be in place for work at height?',
     options: [
-      'Only when working above 10 metres',
-      'Only when using rope access systems',
       'Before any work at height begins, as required by the Work at Height Regulations',
-      'Only when the HSE is expected to inspect the site',
+      'To measure the level of a substance or its metabolite in a worker\\\\\\\\\\\\\\\'s body (e.g., blood, urine)',
+      'Testing devices and verifying that field changes appear correctly on dashboards',
+      'Medium complexity projects with nominated subcontractors',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Regulation 4 of the Work at Height Regulations 2005 requires that emergency rescue procedures are in place before any work at height begins. This applies regardless of the height, equipment used, or duration of the task. A person suspended in a harness after a fall can suffer suspension trauma (harness hang syndrome) within minutes — rescue must be rapid.',
   },
@@ -73,11 +73,11 @@ const quizQuestions = [
       'Falls from height are consistently one of the leading causes of workplace fatalities in the UK. On average, how many workers die from falls each year?',
     options: [
       'Around 5 per year',
-      'Around 20-30 per year',
       'Around 35-40 per year',
+      'Around 20-30 per year',
       'Over 100 per year',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'HSE statistics consistently show that falls from height account for approximately 35-40 workplace fatalities per year in the UK, making it one of the top causes of death at work. Many hundreds more suffer life-changing injuries. The Work at Height Regulations 2005 were introduced specifically to address this unacceptable toll.',
   },
@@ -85,12 +85,12 @@ const quizQuestions = [
     id: 2,
     question: "The Work at Height Regulations 2005 define 'work at height' as:",
     options: [
-      'Any work carried out above 2 metres from ground level',
+      'A person who holds a current IPAF or equivalent operator licence for the specific MEWP category',
+      'Approximately 17 mph (force 4 on the Beaufort scale) for standard lightweight towers',
       'Any work where a person could fall a distance liable to cause personal injury, regardless of height',
-      'Only work on roofs and scaffolds',
-      'Work on ladders above 3 metres',
+      'It provides a stable, guarded platform allowing two-handed working at height',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Regulations define work at height as work in any place where a person could fall a distance liable to cause personal injury. This includes working on a ladder, on a flat roof with no edge protection, on a scaffold, near an open edge, or even at ground level near an excavation. There is no minimum height threshold — a fall from a stepladder can be fatal.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is the correct hierarchy of controls for work at height?',
     options: [
-      'Mitigate falls, prevent falls, avoid working at height',
       'Avoid working at height, mitigate falls, prevent falls',
-      'Avoid working at height, prevent falls, mitigate falls',
+      'Mitigate falls, prevent falls, avoid working at height',
       'Prevent falls, avoid working at height, mitigate falls',
+      'Avoid working at height, prevent falls, mitigate falls',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The hierarchy is: (1) AVOID working at height where reasonably practicable; (2) PREVENT falls using guardrails, scaffolds, or platforms when height work cannot be avoided; (3) MITIGATE the consequences of falls using nets, airbags, or personal fall protection when falls cannot be prevented. This follows the general principles of prevention in Schedule 1 of the Management of Health and Safety at Work Regulations 1999.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 4,
     question: 'A podium step is preferable to a stepladder for electrical maintenance because:',
     options: [
-      'It is lighter and easier to carry',
       'It provides a stable, guarded platform allowing two-handed working at height',
-      'It does not count as work at height',
-      'It is cheaper to hire',
+      'Protect people below from falling objects, tools, and materials',
+      'Avoid working at height, prevent falls, mitigate falls',
+      'Stiles for cracks/bends, rungs for damage/security, feet for wear/grip, and overall condition',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A podium step provides a full platform with guardrails on all sides, allowing the worker to stand comfortably and work with both hands free. This is critical for electrical maintenance tasks such as installing cable tray, terminating luminaires, or working in ceiling voids — tasks that require two hands and sustained time at height. A stepladder provides no guardrails and limits the worker to short-duration, one-handed tasks.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Before using a ladder on site, the pre-use inspection must check for:',
     options: [
-      "The manufacturer's logo only",
+      'A person who holds a current IPAF or equivalent operator licence for the specific MEWP category',
       'Stiles for cracks/bends, rungs for damage/security, feet for wear/grip, and overall condition',
-      "The ladder's colour and age",
-      'Only that it reaches the required height',
+      'Proximity to live conductors — which could cause electrocution or arc flash even without direct contact',
+      'It provides a stable, guarded platform allowing two-handed working at height',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 6,
     question: 'A Mobile Elevating Work Platform (MEWP) must be operated by:',
     options: [
-      'Any worker who has read the user manual',
+      'Before first use, at intervals not exceeding 7 days, and after any event that could affect stability',
+      'A life-threatening condition caused by prolonged suspension in a safety harness after a fall',
       'A person who holds a current IPAF or equivalent operator licence for the specific MEWP category',
-      'Only the site manager',
-      'Anyone over the age of 18',
+      'A scaffold, tower scaffold, or MEWP that provides a stable working platform with edge protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'MEWPs must be operated by persons who have received appropriate training and hold a current operator licence — typically IPAF (International Powered Access Federation) certification for the specific category of MEWP being used (e.g., Category 3a for scissor lifts, 3b for boom lifts). Operating a MEWP without proper training is both dangerous and a breach of the Work at Height Regulations.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 7,
     question: 'When installing cable tray at height, what is the preferred access equipment?',
     options: [
-      'A ladder leaned against the wall',
+      'Before first use, at intervals not exceeding 7 days, and after any event that could affect stability',
+      'A person who holds a current IPAF or equivalent operator licence for the specific MEWP category',
+      'A life-threatening condition caused by prolonged suspension in a safety harness after a fall',
       'A scaffold, tower scaffold, or MEWP that provides a stable working platform with edge protection',
-      'Standing on a table or desk',
-      "A colleague's shoulders",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cable tray installation requires sustained work at height with both hands, often carrying heavy materials. This demands a stable working platform with edge protection — a scaffold, tower scaffold, or MEWP. Ladders are not suitable because the task is not short duration, requires two-handed working, and involves carrying materials.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: "What is 'suspension trauma' (harness hang syndrome)?",
     options: [
-      'Damage to the harness caused by UV exposure',
       'A life-threatening condition caused by prolonged suspension in a safety harness after a fall',
-      'The discomfort of wearing a harness for an extended period',
-      'A psychological fear of heights',
+      'Any work where a person could fall a distance liable to cause personal injury, regardless of height',
+      'A scaffold, tower scaffold, or MEWP that provides a stable working platform with edge protection',
+      'Approximately 17 mph (force 4 on the Beaufort scale) for standard lightweight towers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Suspension trauma (harness hang syndrome) occurs when a person is suspended motionless in a harness after a fall. The leg straps restrict blood flow, causing blood to pool in the legs. This can lead to renal failure, cardiac arrest, and death — potentially within 15-30 minutes. This is why rapid rescue is essential, and every harness user must have a rescue plan in place before starting work.',
   },
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'An exclusion zone below work at height is required to:',
     options: [
-      'Prevent unauthorised access to the building',
+      'Above 25 mm² — anything where hand crimps cannot deliver the required compression',
       'Protect people below from falling objects, tools, and materials',
-      'Keep the work area tidy',
-      'Prevent noise disturbance to nearby offices',
+      'Oval conduit or suitable protection against nails',
+      'Pale, cold clammy skin, rapid weak pulse, nausea, confusion, and anxiety',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'How often must scaffolding be formally inspected under the Work at Height Regulations?',
     options: [
-      'Only when first erected',
+      'Approximately 17 mph (force 4 on the Beaufort scale) for standard lightweight towers',
+      'A life-threatening condition caused by prolonged suspension in a safety harness after a fall',
       'Before first use, at intervals not exceeding 7 days, and after any event that could affect stability',
-      'Monthly by the scaffold contractor',
-      'Annually by an independent inspector',
+      'Proximity to live conductors — which could cause electrocution or arc flash even without direct contact',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Work at Height Regulations 2005 (Schedule 7) require scaffolding to be inspected: before first use; at intervals not exceeding 7 days thereafter; and after any event liable to affect stability (such as high winds, collision, or modification). Each inspection must be recorded, and the scaffold must not be used if any defects are found.',
   },
@@ -204,12 +204,12 @@ const quizQuestions = [
     question:
       'When working near overhead busbars or busbar trunking at height, what additional electrical hazard must be considered?',
     options: [
-      'The colour of the busbar insulation',
+      'It provides a stable, guarded platform allowing two-handed working at height',
+      'A life-threatening condition caused by prolonged suspension in a safety harness after a fall',
+      'Approximately 17 mph (force 4 on the Beaufort scale) for standard lightweight towers',
       'Proximity to live conductors — which could cause electrocution or arc flash even without direct contact',
-      'The weight of the busbars',
-      'The temperature of the room',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Overhead busbars may be energised and present a risk of electrocution through direct contact or arc flash from proximity. At high voltages, flashover can occur across an air gap without physical contact. Before working near busbars at height, the busbars must be confirmed as isolated and proved dead, or suitable barriers and exclusion distances must be established and maintained.',
   },
@@ -217,12 +217,12 @@ const quizQuestions = [
     id: 12,
     question: 'A tower scaffold must not be used outdoors in wind speeds exceeding:',
     options: [
-      'Any wind at all',
       'Approximately 17 mph (force 4 on the Beaufort scale) for standard lightweight towers',
-      '50 mph',
-      'There is no wind speed limit for scaffolding',
+      'It provides a stable, guarded platform allowing two-handed working at height',
+      'Any work where a person could fall a distance liable to cause personal injury, regardless of height',
+      'Proximity to live conductors — which could cause electrocution or arc flash even without direct contact',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Standard lightweight aluminium tower scaffolds should not be used in wind speeds exceeding approximately 17 mph (force 4 — moderate breeze). At higher wind speeds, the tower becomes unstable and could overturn. Sheeted or enclosed scaffolds have even lower wind speed limits. Always check the manufacturer's guidance and monitor weather conditions throughout the work.",
   },

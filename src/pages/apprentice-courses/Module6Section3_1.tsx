@@ -15,16 +15,26 @@ const Module6Section3_1 = () => {
     {
       id: 1,
       question: 'Which instrument measures AC and DC voltage?',
-      options: ['Continuity tester', 'IR tester', 'Multimeter', 'Insulation tester'],
-      correctAnswer: 2,
+      options: [
+        'Continuity tester',
+        'Multimeter',
+        'IR tester',
+        'Insulation tester',
+      ],
+      correctAnswer: 1,
       explanation:
         'A multimeter is designed to measure AC and DC voltage, along with current and resistance.',
     },
     {
       id: 2,
       question: 'What unit is insulation resistance measured in?',
-      options: ['Ohms', 'Megaohms', 'Volts', 'Amperes'],
-      correctAnswer: 1,
+      options: [
+        'Volts',
+        'Ohms',
+        'Megaohms',
+        'Amperes',
+      ],
+      correctAnswer: 2,
       explanation:
         'Insulation resistance is measured in megaohms (MΩ) due to the high resistance values involved.',
     },
@@ -32,12 +42,12 @@ const Module6Section3_1 = () => {
       id: 3,
       question: 'Before using an IR tester, what must you do?',
       options: [
-        'Switch circuit on',
-        'Disconnect and isolate circuit',
         'Reduce test voltage',
+        'Switch circuit on',
         'Connect all equipment',
+        'Disconnect and isolate circuit',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'The circuit must be disconnected and isolated before IR testing to prevent damage to equipment and ensure safety.',
     },
@@ -45,12 +55,12 @@ const Module6Section3_1 = () => {
       id: 4,
       question: 'A continuity test shows 0 Ω. What does this mean?',
       options: [
-        'Circuit is broken',
         'Good continuity',
+        'Circuit is broken',
         'High resistance fault',
         'Insulation failure',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'A reading of 0 Ω (or very close to 0) indicates good continuity with no breaks in the circuit.',
     },
@@ -58,7 +68,12 @@ const Module6Section3_1 = () => {
       id: 5,
       question:
         'What is the typical insulation resistance value required by BS 7671 for new installations?',
-      options: ['0.5 MΩ', '1 MΩ', '10 MΩ', '100 MΩ'],
+      options: [
+        '0.5 MΩ',
+        '1 MΩ',
+        '100 MΩ',
+        '10 MΩ',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 requires a minimum insulation resistance of 1 MΩ for new installations.',
@@ -68,39 +83,49 @@ const Module6Section3_1 = () => {
       question: 'Why should instruments comply with GS38?',
       options: [
         'To save battery life',
-        'To ensure safety',
         'To improve insulation resistance',
+        'To ensure safety',
         'To reduce testing time',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'GS38 compliance ensures safety through requirements like shrouded probes and fused leads.',
     },
     {
       id: 7,
       question: 'Which instrument is used to verify polarity at a socket outlet?',
-      options: ['Multimeter', 'Continuity tester', 'IR tester', 'Earth loop tester'],
-      correctAnswer: 0,
+      options: [
+        'Earth loop tester',
+        'Continuity tester',
+        'IR tester',
+        'Multimeter',
+      ],
+      correctAnswer: 3,
       explanation: 'A multimeter can measure voltage and verify polarity at socket outlets.',
     },
     {
       id: 8,
       question: 'What happens if you fail to zero a continuity tester?',
       options: [
-        'Nothing changes',
         'Results will include lead resistance',
-        'The tester will not work',
-        'Battery life is reduced',
+        'Disconnect and isolate circuit',
+        'Insulation resistance tester',
+        'To protect the meter and get accurate readings',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Failing to zero the continuity tester means the lead resistance will be included in the results, affecting accuracy.',
     },
     {
       id: 9,
       question: 'Which test instrument applies high DC voltage to a circuit?',
-      options: ['Continuity tester', 'Multimeter', 'Insulation resistance tester', 'Current clamp'],
-      correctAnswer: 2,
+      options: [
+        'External Device Monitoring',
+        'Insulation resistance tester',
+        'Hot spots indicating problems',
+        'High resistance connections',
+      ],
+      correctAnswer: 1,
       explanation:
         'The insulation resistance tester applies high DC voltage (250V, 500V, or 1000V) to test insulation quality.',
     },
@@ -108,12 +133,12 @@ const Module6Section3_1 = () => {
       id: 10,
       question: 'Why is it important to use the correct range on a multimeter?',
       options: [
-        'To make the numbers look smaller',
+        'Smooth operation throughout range',
+        'Maximum 50% fill for cable management and future additions',
         'To protect the meter and get accurate readings',
-        'To avoid checking resistance',
-        'To save battery power',
+        'Common and can provide different benefits',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Using the correct range protects the meter from damage and ensures accurate, readable measurements.',
     },

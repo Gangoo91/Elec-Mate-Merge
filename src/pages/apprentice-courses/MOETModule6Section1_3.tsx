@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'ortho-purpose',
     question: 'What is the primary purpose of orthographic projection in engineering drawings?',
     options: [
-      'To create artistic representations of equipment',
+      'A silicone rubber insulation that forms a ceramic barrier when exposed to fire, plus a mica tape wrap',
+      'Answers that blame a specific individual without examining the systemic factors that allowed the error to occur',
       'To represent a three-dimensional object accurately using two or more two-dimensional views projected at right angles to each other',
-      'To show only the front face of an object',
-      'To calculate the weight of a component',
+      'Green-and-yellow combination, exclusive to protective conductors. One colour at least 30% and at most 70% of the surface, the other colour the remainder.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Orthographic projection uses two or more 2D views, each projected at right angles, to fully describe a 3D object. By viewing the object from the front, side and top (plan), every feature can be accurately represented with precise dimensions — essential for manufacture, installation and maintenance.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'first-vs-third',
     question: 'How do first angle and third angle projection differ in view arrangement?',
     options: [
-      'They produce different shaped views',
+      'Disturbing existing terminations may have loosened them; the cpc integrity of the whole circuit (origin to all accessories) must be re-confirmed before energising',
+      '"I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m sorry to hear that. I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ll come back at the earliest opportunity to investigate and resolve the issue for you."',
+      'The HSE-published guidance memorandum to the Electricity at Work Regulations 1989 — explains how HSE interprets and enforces the EAWR.',
       'In first angle projection each view shows what you would see looking through the object; in third angle each view is positioned on the same side as the direction of viewing',
-      'First angle is used only in the USA, third angle only in the UK',
-      'There is no practical difference between them',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'In first angle (BS 8888, widely used in the UK and Europe), views are placed opposite to the direction of viewing — the right side view appears on the left of the front view. In third angle (ASME Y14.5, common in North America), views are placed on the same side as the viewing direction. Both convey identical information; you must check the projection symbol to know which convention is used.',
   },
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'hidden-detail',
     question: 'Hidden detail lines on an orthographic drawing are represented by:',
     options: [
-      'Thick continuous lines',
+      'Outdoor temperature below which supplementary heating is needed',
       'Thin dashed lines showing features that exist but cannot be seen in that particular view',
-      'Red coloured lines',
-      'Wavy lines',
+      'Listen empathically to understand the client\\\\\\\'s full concern before responding',
+      'Worker’s name, date applied, brief description of work, contact phone number',
     ],
     correctIndex: 1,
     explanation:
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'auxiliary-view',
     question: 'An auxiliary view is used when:',
     options: [
-      'The drawing needs to be made larger',
+      '"Let me take some time to walk you through it. Understanding these diagrams is an important skill we can develop together."',
+      'A full inspection by a competent person, as relocation is treated the same as re-erection',
+      'When the COSHH assessment identifies it as necessary to maintain adequate control or protect health',
       'A feature lies on an inclined surface that cannot be shown in true shape in any of the standard orthographic views',
-      'The draughtsman runs out of space on the drawing',
-      'Colour coding is required',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Auxiliary views project a view onto a plane that is parallel to an inclined surface, showing that surface in its true shape and size. This is necessary when features on angled surfaces (such as cable entry plates on angled enclosure faces) would appear distorted in standard front, side or plan views.',
   },
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'Orthographic projection is defined as:',
     options: [
-      'A method of drawing objects in 3D perspective',
+      'The 7-day inspection cycle continues regardless of use; at least one inspection at the 7-day point, and another before any resumed use',
       'A method of representing a 3D object by projecting its features onto two or more mutually perpendicular planes',
-      'A free-hand sketching technique',
-      'A method of drawing circuits',
+      'Once someone makes a small commitment, they are more likely to follow through with a larger related one',
+      'Keep it available for inspection by anyone who may need it for future construction work on the structure',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     id: 2,
     question: 'The projection symbol showing a truncated cone viewed from the side distinguishes:',
     options: [
+      'Isometric from oblique drawings',
       'Metric from imperial drawings',
       'First angle from third angle projection',
-      'Isometric from oblique drawings',
       'Assembly from detail drawings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The standard projection symbol (a truncated cone shown in two views) indicates which projection convention is used. In first angle, the circle (end view) appears on the opposite side to the direction of viewing. In third angle, the circle appears on the same side. This symbol is placed in the title block and must be checked before reading any drawing.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 3,
     question: 'In first angle projection, the plan view is positioned:',
     options: [
-      'Above the front view',
+      'Technical product documentation and specification, including engineering drawing conventions in the UK',
+      'Every 1 mm on the drawing represents 5 mm on the real object — the drawing is one fifth of full size',
+      'A cutting plane line with arrows showing the direction of viewing and a reference letter at each end',
       'Below the front view, because you look down onto the object and the view falls below',
-      'To the right of the front view',
-      'On a separate sheet',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In first angle projection, the plan (top view) is placed below the front elevation. This follows the principle that the view is projected through the object — looking down from above, the view lands on the plane below. In third angle, the plan would be above the front view.',
   },
@@ -108,12 +108,12 @@ const quizQuestions = [
     id: 4,
     question: 'Centre lines on orthographic drawings indicate:',
     options: [
-      'Cutting planes for sections',
       'The axes of symmetry, centres of holes, and centre lines of cylindrical features',
-      'The edges of the object',
-      'Hidden features',
+      'Below the front view, because you look down onto the object and the view falls below',
+      'Technical product documentation and specification, including engineering drawing conventions in the UK',
+      'Extend from the feature with a small gap between the outline and the start of the projection line',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Centre lines (thin chain lines — long dash, short dash, long dash) indicate axes of symmetry, centres of circular features (holes, shafts, bosses), and the central axis of cylindrical components. They are essential reference lines for dimensioning and are used to locate features such as bolt hole patterns on motor mounting plates.',
   },
@@ -121,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'A section view is indicated on the parent view by:',
     options: [
-      'A thick red line',
+      'Below the front view, because you look down onto the object and the view falls below',
       'A cutting plane line with arrows showing the direction of viewing and a reference letter at each end',
-      'A dotted circle',
-      'Shading across the entire view',
+      'Technical product documentation and specification, including engineering drawing conventions in the UK',
+      'The axes of symmetry, centres of holes, and centre lines of cylindrical features',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,12 +134,12 @@ const quizQuestions = [
     id: 6,
     question: 'BS 8888 is the standard that governs:',
     options: [
-      'Electrical installation practices',
+      'Every 1 mm on the drawing represents 5 mm on the real object — the drawing is one fifth of full size',
+      'Extend from the feature with a small gap between the outline and the start of the projection line',
       'Technical product documentation and specification, including engineering drawing conventions in the UK',
-      'Building regulations',
-      'Health and safety at work',
+      'The axes of symmetry, centres of holes, and centre lines of cylindrical features',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "BS 8888 'Technical product documentation and specification' is the UK standard for engineering drawing practice. It defines line types, dimensioning methods, tolerancing, projection conventions, and all other aspects of technical drawing preparation. It aligns with the international ISO 128 series.",
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     question:
       'A dimension line that terminates with arrowheads at each end, with the dimension value placed above or on the line, is called:',
     options: [
-      'A leader line',
+      'Input module, central processing unit (CPU), and output module',
+      'For additional insulation and environmental protection',
+      'To formally transfer the completed installation to the client with documentation',
       'A linear dimension showing the distance between two points or features',
-      'A centre line',
-      'A cutting plane line',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Linear dimensions use thin lines with arrowheads or oblique strokes at each end, with the value (in millimetres, without unit symbol) placed above or breaking the line. Projection lines extend from the features being measured to the dimension line. This is the standard BS 8888 dimensioning method.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     question:
       'When reading an orthographic drawing of a motor terminal box, the front elevation typically shows:',
     options: [
-      "Only the manufacturer's logo",
       'The face of the terminal box viewed from the front, including cable entry positions, gland plate, terminal layout and external dimensions',
-      'Only the motor nameplate data',
-      'The circuit diagram of the motor',
+      'Extend from the feature with a small gap between the outline and the start of the projection line',
+      'An isometric view shows three faces of the object simultaneously in a single pictorial view, while orthographic views show one face per view',
+      'Technical product documentation and specification, including engineering drawing conventions in the UK',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The front elevation of a terminal box shows features visible from the front: cable entry knockouts or gland plate, terminal arrangement, fixing screws, and overall height and width dimensions. The side view shows depth, and the plan view shows the top profile and any top-entry cable positions.',
   },
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'Projection lines used with dimensions must:',
     options: [
-      'Touch the object outline',
+      'A cutting plane line with arrows showing the direction of viewing and a reference letter at each end',
       'Extend from the feature with a small gap between the outline and the start of the projection line',
-      'Be drawn freehand',
-      'Be thicker than the object outline',
+      'Below the front view, because you look down onto the object and the view falls below',
+      'A linear dimension showing the distance between two points or features',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,12 +188,12 @@ const quizQuestions = [
     id: 10,
     question: 'An isometric view differs from an orthographic view because:',
     options: [
-      'Isometric views are less accurate',
+      'Understanding the physical dimensions, mounting arrangements, cable entry positions and internal layout of electrical equipment and enclosures',
+      'Every 1 mm on the drawing represents 5 mm on the real object — the drawing is one fifth of full size',
       'An isometric view shows three faces of the object simultaneously in a single pictorial view, while orthographic views show one face per view',
-      'Isometric views use hidden detail lines',
-      'Orthographic views show all three dimensions in one view',
+      'Technical product documentation and specification, including engineering drawing conventions in the UK',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Isometric drawing shows three faces simultaneously using axes at 30 degrees to the horizontal, providing a pictorial 3D appearance. Orthographic projection shows only one face per view but provides accurate, dimensioned representations. Isometric views are useful for visualisation; orthographic views are used for precise manufacture and maintenance information.',
   },
@@ -202,12 +202,12 @@ const quizQuestions = [
     question:
       'For an electrical maintenance technician, orthographic drawings are most useful for:',
     options: [
-      'Calculating electricity consumption',
+      'A cutting plane line with arrows showing the direction of viewing and a reference letter at each end',
+      'An isometric view shows three faces of the object simultaneously in a single pictorial view, while orthographic views show one face per view',
+      'Every 1 mm on the drawing represents 5 mm on the real object — the drawing is one fifth of full size',
       'Understanding the physical dimensions, mounting arrangements, cable entry positions and internal layout of electrical equipment and enclosures',
-      'Designing new circuits',
-      'Ordering stationery supplies',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Orthographic drawings give maintenance technicians precise information about equipment dimensions (for replacement compatibility), mounting bolt patterns, cable entry positions and sizes, internal component layout, and access space requirements. This information is essential for planning equipment replacement, cable routing and maintenance access.',
   },
@@ -215,12 +215,12 @@ const quizQuestions = [
     id: 12,
     question: 'The scale of a drawing (e.g., 1:5) means:',
     options: [
-      'The drawing is 5 times larger than the real object',
       'Every 1 mm on the drawing represents 5 mm on the real object — the drawing is one fifth of full size',
-      'The drawing uses 5 different views',
-      'The drawing was created by 5 people',
+      'Technical product documentation and specification, including engineering drawing conventions in the UK',
+      'Extend from the feature with a small gap between the outline and the start of the projection line',
+      'The axes of symmetry, centres of holes, and centre lines of cylindrical features',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A scale of 1:5 means the drawing is one fifth of the actual size — 1 unit on the drawing equals 5 units in reality. Common scales include 1:1 (full size), 1:2 (half size), 2:1 (twice full size for small components). The scale is stated in the title block. Never scale dimensions from a drawing — always use the stated dimension values.',
   },

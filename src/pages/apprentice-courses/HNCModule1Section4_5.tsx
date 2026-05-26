@@ -35,12 +35,12 @@ const quickCheckQuestions = [
     id: 'cpd-requirement',
     question: 'Why is CPD particularly important for health and safety competence?',
     options: [
-      'It is only important for career progression',
       'Legislation, standards, and best practice evolve continuously, requiring updated knowledge',
-      'CPD is only relevant for those seeking promotion',
-      'It is optional for qualified professionals',
+      'The colour temperature (CCT) to be adjusted, for example from warm white to cool white',
+      'They clear faults before the current reaches its prospective peak',
+      'Replacing gas heating with electric heat pumps significantly increases electricity demand',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Health and safety legislation, regulations, standards, and best practice are constantly evolving. CPD ensures professionals maintain current knowledge and competence. Without ongoing development, knowledge becomes outdated and practice may become non-compliant.',
   },
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     id: 'nebosh-certificate',
     question: 'What is the NEBOSH National General Certificate designed to provide?',
     options: [
-      'Expert-level knowledge for health and safety professionals only',
+      'Surveying a building with no physical intervention',
+      'Specific training in fire alarm systems to BS 5839',
       'A broad understanding of health and safety for managers and supervisors',
-      'Specialist electrical safety knowledge',
-      'First aid at work certification',
+      'Ensure control measures are followed and remain effective',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The NEBOSH National General Certificate provides a broad understanding of health and safety principles and management for people with H&S responsibilities, such as managers, supervisors, and safety representatives. It is a widely recognised qualification.',
   },
@@ -61,10 +61,10 @@ const quickCheckQuestions = [
     id: 'iosh-membership',
     question: 'What is IOSH Managing Safely designed for?',
     options: [
-      'Health and safety professionals only',
+      'Higher overall efficiency by utilising waste heat',
       'Managers and supervisors in any sector who need practical H&S skills',
-      'Senior executives only',
-      'Those with no workplace responsibilities',
+      'Having both a mental health condition and a substance use disorder simultaneously',
+      'They sag more between fixings due to construction',
     ],
     correctIndex: 1,
     explanation:
@@ -74,10 +74,10 @@ const quickCheckQuestions = [
     id: 'iet-cpd',
     question: 'What are the CPD requirements for IET membership?',
     options: [
-      'No CPD is required for IET membership',
+      'It significantly increases the wind loading and therefore more ties are required',
       '35 hours per year is recommended, with demonstrable commitment to ongoing learning',
-      'Exactly 100 hours per year mandatory',
-      'CPD is only required for Chartered members',
+      'Equipment must be suitable for adverse or hazardous environments or adequately protected',
+      'EIC is for new installations, EICR is for existing installations',
     ],
     correctIndex: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 2,
     question: "What does 'CPD' stand for?",
     options: [
+      'Comprehensive Project Delivery',
       'Certificate of Professional Distinction',
       'Continuing Professional Development',
-      'Comprehensive Project Delivery',
       'Company Policy Document',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CPD stands for Continuing Professional Development - the ongoing process of maintaining and developing professional knowledge and skills throughout a career.',
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       'Which qualification would be most appropriate for someone wanting to specialise as a health and safety professional?',
     options: [
-      'IOSH Working Safely',
       'NEBOSH National General Certificate',
-      'NEBOSH Diploma or NVQ Level 6 in H&S',
+      'IOSH Working Safely',
       'Fire Marshal certificate',
+      'NEBOSH Diploma or NVQ Level 6 in H&S',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The NEBOSH Diploma and NVQ Level 6 in Occupational Health and Safety are professional-level qualifications for those wanting to work as H&S specialists. The NEBOSH Certificate is intermediate, while IOSH Working Safely is introductory.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     id: 4,
     question: 'What types of activities count towards CPD?',
     options: [
-      'Only formal classroom training courses',
-      'Only professional body meetings',
       'A variety including formal training, self-study, mentoring, technical reading, conferences',
-      'Only activities that result in new qualifications',
+      'Thermal energy passed through the protective device during fault clearance',
+      'Isolate the supply, lock-off, evacuate if heavy smoke, then investigate',
+      'It is the most potent greenhouse gas known, with a global warming potential 23,500 times that of CO2',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'CPD encompasses many activities: formal courses, conferences, seminars, professional body meetings, technical reading, online learning, mentoring, work-based learning, project work, and self-directed study. The key is that learning is taking place.',
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       'What is the role of professional registration with bodies like the IET or Engineering Council?',
     options: [
-      'It is purely optional with no practical benefit',
+      'An unlimited fine and/or up to 2 years imprisonment',
       'It demonstrates competence, commitment to standards, and ethical conduct',
-      'It is only relevant for academic engineers',
-      'It replaces the need for CPD',
+      'At the origin of the installation (main switchboard)',
+      'Stop the source, contain the spill, report to the Environment Agency',
     ],
     correctAnswer: 1,
     explanation:
@@ -157,10 +157,10 @@ const quizQuestions = [
     id: 6,
     question: "The IOSH qualification 'Working Safely' is designed for:",
     options: [
-      'Health and safety managers only',
-      'Directors and senior executives',
+      'Test results demonstrating the system meets design intent',
+      'Sharp bends and potential damage points',
       'All workers to provide essential H&S awareness',
-      'Safety inspectors',
+      'The Hazardous Waste (England and Wales) Regulations 2005',
     ],
     correctAnswer: 2,
     explanation:
@@ -170,12 +170,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why should building services engineers maintain CPD records?',
     options: [
-      'Only because their employer requires it',
+      'It provides a numerical fit factor, giving a more precise and objective measure of the seal',
+      'Insist they attend hospital for assessment, as internal injuries may not be immediately apparent',
+      'To improve contact resistance at joints and protect against oxidation',
       'To demonstrate ongoing competence, support professional registration, and evidence compliance',
-      'Records are not necessary if you attend training',
-      'Only Chartered Engineers need records',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'CPD records demonstrate ongoing commitment to professional development, support professional registration applications and reviews, provide evidence of competence for employers and clients, and may be required for regulatory compliance.',
   },
@@ -184,12 +184,12 @@ const quizQuestions = [
     question:
       'What changed in BS 7671 that required all qualified electricians to update their knowledge?',
     options: [
-      'Nothing has changed - BS 7671 has remained the same',
       'BS 7671 is updated every 3-4 years with amendments, requiring ongoing CPD to stay current',
-      'Only the cover colour changed',
-      'BS 7671 updates are optional to follow',
+      'Sitting upright, ideally in a comfortable \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'W\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' position with knees bent',
+      'Overloading, short circuits, earth faults, or protective device problems',
+      'Refuse and advise them to contact the platform provider to reset their own credentials',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 is regularly updated (typically every 3-4 years with interim amendments). Changes affect installation requirements, testing procedures, and documentation. Electricians must undertake CPD to understand and correctly apply current requirements.',
   },
@@ -197,12 +197,12 @@ const quizQuestions = [
     id: 9,
     question: "Which organisation provides 'Chartered Engineer' (CEng) registration in the UK?",
     options: [
-      'NICEIC',
-      'JIB',
+      'Three-phase currents displaced by 120 degrees in the stator windings',
       'The Engineering Council through licensed bodies like the IET',
-      'HSE',
+      'Electrical work in homes and residential properties',
+      'The Regulatory Reform (Fire Safety) Order 2005',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The Engineering Council is the regulatory body for the engineering profession in the UK. It awards CEng through licensed professional bodies like the IET. CEng demonstrates high-level engineering competence and commitment to professional standards.',
   },
@@ -210,12 +210,12 @@ const quizQuestions = [
     id: 10,
     question: "What is 'reflective practice' in the context of CPD?",
     options: [
-      'Working in front of a mirror',
+      'Socket outlets rated up to 20A in domestic installations',
+      'The Principal Contractor (who co-ordinates all trades)',
       'Analysing your experiences to identify learning and areas for improvement',
-      'Only counting formal course attendance',
-      "Copying other professionals' approaches",
+      'Re-prove dead independently using their own GS38 voltage indicator and known live proving unit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reflective practice involves thinking critically about your experiences, analysing what went well and what could improve, identifying learning from both successes and failures, and using insights to develop practice. It is a key component of effective CPD.',
   },

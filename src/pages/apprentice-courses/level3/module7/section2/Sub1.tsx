@@ -42,12 +42,12 @@ const checks = [
     question:
       "What does the 2391-52 cover and why is it important for career progression?",
     options: [
-      "It's not important.",
+      "Yes — JIB Approved (Electrician with 2391-52 + experience) typically meets the academic anchor for EngTech. The application requires academic evidence (qualifications), experience evidence (portfolio of projects), and the professional review. Most Approved Electricians could qualify with the right portfolio organisation. The IET specifically promotes EngTech as accessible to vocational-route practitioners.",
+      "The element has gone to earth — most likely a pinhole through the metal sheath into the water, OR moisture has tracked along the brass terminal head from a leaking cylinder. 0.12 MΩ at 500 V is well below the BS 7671 Table 64 minimum of 1 MΩ for a 230 V circuit, and the leakage current calculates to ≈ 1.9 mA — enough to trip a 30 mA RCD on switch-on transient. Replace the element (a brass-flanged Backer / Heatrae Sadia element on most UK cylinders), check the cylinder for leaks, re-test IR after replacement (should read &gt; 200 MΩ on a healthy element), recommission and confirm no trip.",
       "C&G 2391-52 is the combined Initial Verification and Periodic Inspection qualification — covers the full inspection and testing curriculum for new installations (initial verification, EICs) and existing installations (periodic inspection, EICRs). It's the most common single I&T qualification in the UK trade. Holding 2391-52 is the typical entry condition for Approved Electrician JIB grade, for QS roles in CPS-registered firms, and for taking on testing-led contract work.",
-      "Only for solar installers.",
-      "Just an exam fee.",
+      "A manufacturer-specific EPD reports the actual life-cycle impacts of a specific product manufactured at a specific factory by a specific producer. An industry-average EPD reports the average impacts across all members of an industry association making a similar product. Manufacturer-specific EPDs allow real comparison between competing products; industry-average EPDs only allow comparison between product categories. BREEAM gives more weight to manufacturer-specific EPDs because they reward producers that genuinely outperform their peers, not those that simply benefit from a category average.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "2391-52 is the dominant I&T qualification post-AM2. It combines the older 2391-50 (Initial Verification) and 2391-51 (Periodic Inspection) into a single combined unit. Most courses run 5-10 days plus exam and practical assessment. Cost is typically £1,200-1,800. The qualification opens the door to Approved Electrician grading, scheme QS roles, and significantly higher day rates on testing-led work.",
   },
@@ -56,10 +56,10 @@ const checks = [
     question:
       "What's the difference between 2394 and 2395?",
     options: [
-      "Same thing.",
+      "Every employee, including an apprentice, has two personal duties under HASAWA s.7. (a) take reasonable care for their own H&S and that of anyone affected by their acts or omissions, AND (b) co-operate with the employer's arrangements (RAMS, toolbox talks, permits, PPE rules). Breach is a criminal offence personally — the apprentice can be prosecuted, not just the firm.",
       "2394 is the Initial Verification qualification (testing new installations and producing EICs); 2395 is the Periodic Inspection qualification (inspecting existing installations and producing EICRs). They're separate qualifications in the modern C&G structure. 2391-52 combines both. Some employers prefer the split because it allows staged learning; others prefer the combined route for efficiency.",
-      "2394 is for Scotland.",
-      "Only one exists.",
+      "Our site uses a balanced approach combining planned preventive maintenance for critical assets, condition-based monitoring using thermography and vibration analysis, and run-to-failure for non-critical items, all managed through a CMMS with KPIs including MTBF, MTTR, and maintenance backlog",
+      "AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series. Acceptance of the exemption requires verification that the EV charging equipment conforms to the BS EN 61851 series (manufacturer declaration, marking, datasheet or test report) and that any socket-outlet or vehicle connector incorporated in the EV charging equipment conforms to BS EN IEC 62196-2.",
     ],
     correctIndex: 1,
     explanation:
@@ -70,12 +70,12 @@ const checks = [
     question:
       "What does the 2396 cover?",
     options: [
-      "Same as 2391-52.",
+      "Two reasons. (1) Auditability — readings are stored against a circuit ID and timestamp, providing tamper-evident evidence at scheme audit and dispute. (2) Cert generation — test results download directly into certificate software (NICEIC PartnerNet, NAPIT, custom firm software, Elec-Mate) and auto-populate the EIC / EICR test schedule, eliminating transcription errors. The combination saves the time previously spent hand-writing and double-checking test schedules.",
+      "Because it covers the whole work activity (not just the install), it covers operation, use AND maintenance, AND it covers work NEAR a system as well as on it. So it's the legal hook for safe-isolation procedures, lock-off, voltage-proving, and the way you organise the work around live equipment that you're not directly working on. Reg 4(3) is what the HSE charges most often after an electrical incident.",
+      "Your employment contract and the JIB Working Rules. The JIB Handbook sets the industry-standard overtime, travel-time, lodging and grading rules for electricians in England and Wales. Your contract should reference it (most reputable firms apply the JIB rates as a baseline). The HR docs — contract, JIB rules, holiday and grievance procedures — are how you get paid correctly and how you keep your rights if a dispute arises.",
       "C&G 2396 is the Electrical Installation Design and Verification qualification — covers electrical installation design (cable sizing, protection coordination, fault levels) plus verification. It's the design-focused upgrade beyond 2391-52 and is typically the academic route into design-engineer roles. Often combined with the IET DipBSE or HNC for senior design positions.",
-      "Just for managers.",
-      "Solar PV only.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "2396 is the design-tier qualification. Where 2391-52 covers inspection and testing of installations someone else has designed, 2396 covers the design itself — calculating cable sizes from first principles, protection coordination studies, fault-level analysis, BS 7671 design compliance. Typical course around 8-12 days plus assessment. Cost £1,500-2,500. Often the bridge between site work and design office.",
   },
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: "Roughly when after AM2 should an electrician start the 2391-52?",
     options: [
-      "Wait at least 5 years.",
+      "Provide site induction (covering the construction phase plan, site rules, welfare, emergency procedures and specific hazards), provide access to relevant pre-construction information, and ensure each worker has the information they need to do their work safely. Reg 14 makes it a duty on the principal contractor to ensure workers receive any relevant H&S training. Reg 15 puts a corresponding duty on the worker to co-operate.",
       "Most career-focused electricians start the 2391-52 within 12-18 months of AM2 — long enough to consolidate site experience but soon enough to keep momentum on qualifications. Earlier than that is technically possible but the practical content is easier to absorb after some installation experience. Later than that risks losing study habit and falling behind peers in pay and progression.",
-      "Before AM2.",
-      "Never.",
+      "Stage 1: try to discuss and resolve — most disputes resolve through conversation. Stage 2: if unresolved, follow your written complaints procedure. Stage 3: if still unresolved, signpost ADR (RECC for MCS work, NICEIC/NAPIT for scheme work, generic ADR providers like Centre for Effective Dispute Resolution). Stage 4: as last resort, small claims court (under £10k, online process). Document everything in writing throughout.",
+      "Understand the strategic context of maintenance (why different strategies exist for different assets), apply structured analytical techniques (RCA, FMEA, criticality analysis), contribute to continuous improvement, and articulate how maintenance effectiveness is measured and improved — demonstrating the knowledge, skills and behaviours expected of a competent maintenance technician",
     ],
     correctAnswer: 1,
     explanation:
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: "How long does the 2391-52 course typically take?",
     options: [
-      "One day.",
+      "That the installation incorporates an RCD, that the user should test it quarterly (or six-monthly per the older guidance) by pressing the test button, that the RCD should trip when tested, and that if it doesn't trip the user should call a competent electrician immediately. Maintains the protection by catching RCD failure before it matters.",
+      "On the metal consumer-side pipe, within 600 mm of the meter outlet union per Reg 544.1.2. The plastic supply pipe is not an extraneous-conductive-part (it can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t introduce a potential) so doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need bonding — but the metal consumer pipework downstream of the meter does.",
       "Most providers run 5-10 days of taught content (often a mix of classroom and practical lab) plus the exam and practical assessment at the end. Some intensive 5-day courses; some part-time evening or weekend formats over 10-12 weeks. Self-study is possible but rare because the practical assessment requires specific equipment and witness-by-assessor.",
-      "5 years.",
-      "10 years.",
+      "Pre-construction information (PC info from client/principal designer) → construction phase plan (principal contractor) → RAMS for each work package (contractor) → toolbox talks each shift (supervisor) → permit-to-work for specific high-risk activities (issued before, closed after). Each layer references the one above it. After an incident the inspector traces backwards from the incident to find the gap.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Course length varies by provider format. Intensive 5-day course suits employed electricians who can take a week off; part-time suits those balancing CPD with full-time work. The taught content covers the test sequence, certificate completion, BS 7671 cross-references and the regulatory framework. Practical assessment is a witness-by-assessor in a lab environment.",
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: "What does 2391-52 typically cost?",
     options: [
-      "Free.",
+      "They share components — both depend on R1+R2 (the cable line + CPC resistance for Zs, line + neutral resistance for voltage drop). A high-Zs reading often correlates with a high voltage drop reading because both are dominated by the cable\\\\\\\\\\\\\\\\'s R1 contribution. If you find one is borderline, check the other. The two tests are complementary — Zs verifies fault-clearance (ADS), voltage drop verifies normal-operation quality. Both use cable resistance as a key input.",
+      "Plain language for what was found and what to do, with technical references in brackets where they add precision (e.g. \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Main protective bonding to incoming gas service is missing — the wire that connects the gas pipe to the main earth is not present. Reg 411.3.1.2 requires this bonding to prevent dangerous touch voltages on a fault.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\").",
+      "Match symptoms to Schedule 1 categories: visible fracture (excl finger/thumb/toe), amputation, sight loss reported, crush with internal symptoms, burn &gt;10% / vital organ, scalping, LOC, enclosed-space asphyxia / heat. When in doubt, treat as specified and escalate.",
       "Typically £1,200-1,800 for the course, exam fees and practical assessment combined. Premium providers (SECTT in Scotland, JIB-approved providers, NICEIC training arm) sometimes charge £2,000+. Lower-cost providers around £900-1,200 with smaller class sizes or basic practical facilities. Always check exam and assessment fees are included in the headline price.",
-      "£100.",
-      "£10,000.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Cost varies widely. Some employers part-fund or fully fund 2391-52 as CPD investment, particularly if the firm is moving you toward Approved Electrician grading or QS responsibility. Self-funded electricians can offset the cost against tax (CPD spend is tax-deductible if you're self-employed; HMRC professional fees list applies if you're a member of certain bodies). Worth shopping around — quality varies, but cost difference matters too.",
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: "Does 2391-52 require AM2 first?",
     options: [
-      "No formal pre-requisite.",
       "Strictly there's no formal pre-requisite — anyone can sit 2391-52 if they can pass the exam and practical. In practice most providers expect candidates to hold C&G 2365-03 (or equivalent NVQ Level 3) and to have meaningful site experience. AM2 isn't formally required but is the strong norm because the practical content assumes installation competence.",
-      "Yes, AM2 is mandatory.",
-      "Only Approved Electricians can sit it.",
+      "A defined subset — most non-trivial work in special locations (bathroom Zone 0/1, swimming pool, sauna, etc.); installation of a new circuit; replacement of a consumer unit. Like-for-like accessory replacement, repairs, additions to an existing circuit OUTSIDE special locations are NOT notifiable.",
+      "BS 7671 Regulation 712.522 requires that DC cables within a building that cannot be isolated from the PV array in a fire are either fire-resistant (to BS 8434/BS 8519) or enclosed in fire-resistant conduit, because they will remain energised as long as daylight is present",
+      "Verify the bond clamp is still on consumer-side metal pipework (post-meter, before any branch). If yes, no change needed. The PE supply doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need bonding (not extraneous-conductive); the consumer steel pipework still does and gets bonded as before.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Formally open access; practically a post-AM2 qualification because the exam and practical assume installation competence as background. Some apprentices study 2391-52 in their final apprenticeship year, sit the exam after AM2, and emerge with both qualifications close together. Most wait 12-18 months post-AM2 for site experience to consolidate.",
   },
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: "What roles does 2391-52 typically open up?",
     options: [
-      "None.",
+      "CDM 2015 Reg 13(1)(a) requires the principal contractor to plan, manage and monitor the construction phase. In practice this includes site sign-in / sign-out registers, attendance at toolbox talks, RAMS sign-on records, and any permit records. These records combine with the apprentice's own records to form a full picture of who was on site doing what when. The records are commonly required after any incident or in any later dispute.",
       "Several. (1) Approved Electrician JIB grading. (2) QS (Qualified Supervisor) role in a CPS-registered firm — required for Part P self-certification. (3) Periodic inspection contract work (EICR work pays well, particularly in commercial estate and rental property maintenance). (4) Standalone testing-led roles in M&E, FM and consultancy. (5) Bridge to 2396 design qualification.",
-      "Only retail.",
-      "Only solar.",
+      "Roughly 60-100 GBP per AFDD-RCBO device times 10 circuits = 600-1000 GBP additional cost over standard RCBO-only protection. Labour is similar (each AFDD-RCBO replaces an RCBO, same install effort). Total upgrade premium for AFDD-protected CU vs RCBO-only typically 600-1200 GBP. Worth quoting on every domestic CU change as a \\\\\\\"premium fire-protection option\\\\\\\" — many customers will pay the premium when the value is explained.",
+      "Section 49 of the Consumer Rights Act 2015 implies a term in every contract for the supply of a service to a consumer that the trader must perform the service with reasonable care and skill. Failure to do so is a breach of contract and the consumer has remedies including the right to require repeat performance and the right to a price reduction. Poor communication that leads to defective work, missed scope items or a non-compliant installation can be a breach of s.49.",
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: "What's the practical assessment in 2391-52 like?",
     options: [
-      "Just paperwork.",
+      "Three things — battery life vs run time (a hard day on an SDS will drain a 5 Ah pack faster than you can charge spares), tool weight (cordless SDS with a 9 Ah pack on the back is noticeably heavier than a corded equivalent), and what supply is actually on site (no 110 V on site = corded 230 V is awkward, cordless wins). Most apprentices end up with a mixed loadout — cordless drill/driver + cordless impact for general work, corded SDS / grinder / recip on site supply for the heavy-duty jobs.",
+      "Yes — UK FE colleges and training providers consistently report difficulty recruiting industry-experienced electrical lecturers and assessors. The pay is below skilled-trade rates but the lifestyle (term-time hours, holidays, pension) appeals to mid-career and later-career electricians. Apprenticeship Standards expansion has increased demand for assessors. Many regions have unfilled posts at any given time.",
       "A witness-by-assessor practical in a controlled environment (lab or training centre with realistic installation rigs). Candidate completes a full test sequence on a sample installation: continuity of protective conductors, insulation resistance, polarity, earth fault loop impedance, RCD operation, prospective fault current. Then completes the relevant certificate (EIC or EICR) accurately. Time-pressured but realistic.",
-      "Online quiz.",
-      "Just the theory exam.",
+      "Establish a full exclusion zone with barriers minimum 6 metres from the base, deploy adequate task and area lighting, station banksmen at all access points, display warning signs, ensure all personnel wear enhanced high-visibility clothing, have a traffic management plan approved by the local authority, and confirm the rescue plan accounts for reduced visibility",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Practical assessment mirrors real-world testing — assessor wants to see safe isolation, correct test sequence, accurate readings, sensible interpretation of results, and accurate certificate completion. Common failure points: rushed safe isolation, incorrect test sequence, sloppy certificate completion, misinterpreting borderline test results. Practice the test sequence to muscle-memory level before the assessment.",
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: "How does 2391-52 differ from 2382 (BS 7671 18th Edition)?",
     options: [
-      "Same thing.",
+      "Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\\\\\\\\\\'s \\\\\\\"somatic marker hypothesis\\\\\\\") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness",
+      "A rotary cable stripper (Jokari Quadro, Knipex 16 95 02, BAHCO 4490) — sized to the SWA outer diameter, runs around the sheath cleanly and removes a length to expose the armour without scoring the inner cores. Stanley knives can do it but the risk of scoring the inner is high; rotary strippers are the standard. For the armour itself — separate tool (armour shears for smaller, angle grinder for bigger) covered in Sub 1.2.",
+      "Initially, work quality may be high, but over time: team members feel overwhelmed and inadequate, initiative decreases (people fear not meeting the standard), morale drops, burnout increases, and the leader becomes a bottleneck because they end up doing everything themselves rather than trusting others — ultimately reducing both performance and wellbeing",
       "2382 is the BS 7671 18th Edition Wiring Regulations qualification — a knowledge qualification on the regs themselves (no practical). 2391-52 is the inspection and testing qualification — practical assessment of installation testing. They're complementary: 2382 establishes regs knowledge; 2391-52 applies it to testing. Most electricians hold both — typically 2382 first (often during apprenticeship), then 2391-52 post-AM2.",
-      "2382 is just for management.",
-      "2382 doesn't exist.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "2382 is the regs exam (knowledge); 2391-52 is the testing qualification (practical). Different things, both useful, both common. 2382 is often taken during the apprenticeship as part of the 2365-03 framework. 2391-52 is the post-AM2 specialist add-on. Holding both is the standard combination for an electrician moving toward Approved status.",
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: "Is there a CPD requirement to keep 2391-52 current?",
     options: [
-      "No CPD required.",
       "C&G qualifications themselves don't expire — once awarded, the certificate remains valid. But CPS schemes (NICEIC, NAPIT) typically require ongoing CPD for QS-named individuals to evidence current competence. The most important CPD is keeping up with BS 7671 amendments — currently A4:2026 introduces AFDD requirements, TN-C-S handling and revised schedule columns. Out-of-date QS competence risks scheme registration.",
-      "Annual exam.",
-      "Daily exam.",
+      "Phase 1 (Days 1-30): Foundation — self-assessment, identify target competency, establish baseline, begin daily reflection practice, and find an accountability partner. Phase 2 (Days 31-60): Practice — apply new skills in specific situations, gather feedback, adjust approach based on results. Phase 3 (Days 61-90): Integration — embed new behaviours into routine, measure progress against baseline, plan for ongoing development",
+      "A standard grid-tied inverter is required to shut down on loss of mains because of anti-islanding rules. Continuous operation through a power cut needs a hybrid inverter with explicit islanded-mode capability, paired with a battery and a changeover arrangement that first electrically isolates the property from the failed grid before re-energising selected circuits. The MCS designer specifies which loads stay alive, the battery sizing, and the transfer time.",
+      "The incongruence between calm words and stressed body language suggests the client is suppressing significant frustration or anxiety. The project manager should: acknowledge the difficulty of the situation empathically (\\\\\\\"I can see this is a stressful situation, and I understand why\\\\\\\"), address the emotional undercurrent rather than just the facts, and create space for the client to express genuine concerns — because unaddressed suppressed emotions often escalate",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The qualification doesn't lapse but the underlying knowledge does — particularly because BS 7671 is periodically amended (A1, A2, A3, A4 in 2026). CPS schemes require QS-named individuals to evidence ongoing CPD. Sub 4.1 covers the BS 7671 amendment cycle in detail. Plan a refresher every 3-5 years and at every major BS 7671 amendment.",
   },

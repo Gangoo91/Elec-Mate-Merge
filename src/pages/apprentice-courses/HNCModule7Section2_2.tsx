@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'bs5839-l1',
     question: 'What level of protection does a Category L1 system provide?',
     options: [
-      'Protection of escape routes only',
-      'Protection of property only',
+      'The zero or minimum value of the measured range',
       'Protection of the entire building including all areas',
-      'Manual call point protection only',
+      'Varies with cable size and construction - from tables',
+      'To ensure equipment receives adequate voltage for proper operation',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Category L1 provides the highest level of life protection, with automatic fire detection installed throughout all areas of the building, including roof spaces, voids, and storage areas.',
   },
@@ -40,20 +40,25 @@ const quickCheckQuestions = [
     id: 'detector-selection',
     question: 'Which detector type is most suitable for a kitchen environment?',
     options: [
-      'Ionisation smoke detector',
-      'Optical smoke detector',
-      'Heat detector (rate of rise)',
       'Multi-sensor detector in heat-only mode',
+      'Heat detector (rate of rise)',
+      'Optical smoke detector',
+      'Ionisation smoke detector',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'A multi-sensor detector configured for heat-only mode or a dedicated heat detector is most suitable for kitchens, as smoke and optical detectors would cause frequent false alarms from cooking activities.',
   },
   {
     id: 'zone-limit',
     question: 'What is the maximum floor area for a single fire alarm zone under BS 5839-1?',
-    options: ['1,000 m²', '1,600 m²', '2,000 m²', 'No limit specified'],
-    correctIndex: 2,
+    options: [
+      '1,000 m²',
+      '2,000 m²',
+      'No limit specified',
+      '1,600 m²',
+    ],
+    correctIndex: 1,
     explanation:
       'BS 5839-1 specifies that no single zone should exceed 2,000 m² floor area. This ensures that the fire brigade can locate the fire within a reasonable search area when responding to an alarm.',
   },
@@ -61,12 +66,12 @@ const quickCheckQuestions = [
     id: 'cause-effect',
     question: 'What is the primary purpose of a cause and effect matrix in fire alarm design?',
     options: [
-      'To calculate cable sizes',
+      'To provide safety and visibility while awaiting rescue',
+      'Line conductor, protective conductor, and neutral',
       'To define system responses to alarm conditions in different zones',
-      'To select detector types',
-      'To determine battery backup requirements',
+      'All personnel clear, guards replaced, system ready',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A cause and effect matrix defines what outputs are activated (effects) when specific inputs occur (causes). It maps alarm conditions in zones to actions such as sounders, door releases, lift recall, HVAC shutdown, and voice alarm messages.',
   },
@@ -77,8 +82,13 @@ const quizQuestions = [
     id: 1,
     question:
       'Which BS 5839-1 category provides automatic fire detection to protect a specific high-risk area only?',
-    options: ['Category L1', 'Category L3', 'Category L5', 'Category P1'],
-    correctAnswer: 2,
+    options: [
+      'Category L1',
+      'Category L5',
+      'Category L3',
+      'Category P1',
+    ],
+    correctAnswer: 1,
     explanation:
       "Category L5 is designed to protect specific areas where there is a high fire risk, a high risk to occupants, or other specific circumstances requiring localised automatic detection. It's a bespoke category for targeted protection.",
   },
@@ -86,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the key difference between Category P1 and P2 systems?',
     options: [
+      'P1 uses smoke detectors, P2 uses heat detectors',
       'P1 is for life safety, P2 is for property protection',
       'P1 covers all areas, P2 covers high-risk areas only',
-      'P1 uses smoke detectors, P2 uses heat detectors',
       'P1 is addressable, P2 is conventional',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Category P1 provides automatic fire detection throughout the building for property protection, whilst P2 only protects defined areas of high fire risk. Both are property protection categories, not life safety.',
   },
@@ -99,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'An ionisation smoke detector is most sensitive to:',
     options: [
-      'Large visible smoke particles from smouldering fires',
-      'Small invisible particles from fast-flaming fires',
       'Heat from any fire type',
+      'Large visible smoke particles from smouldering fires',
       'Carbon monoxide from incomplete combustion',
+      'Small invisible particles from fast-flaming fires',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Ionisation detectors respond fastest to small, invisible particles produced by fast-flaming fires with little visible smoke. They use a radioactive source to ionise air and detect disruption to the current flow.',
   },
@@ -112,8 +122,13 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the maximum number of devices permitted on a single conventional fire alarm zone?',
-    options: ['10 devices', '20 devices', '32 devices', 'No specific limit'],
-    correctAnswer: 2,
+    options: [
+      '32 devices',
+      '20 devices',
+      '10 devices',
+      'No specific limit',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 5839-1 recommends a maximum of 32 devices per zone for conventional systems. This limitation ensures that the fire can be located within an acceptable search time when the brigade arrives.',
   },
@@ -124,8 +139,8 @@ const quizQuestions = [
     options: [
       'Higher sensitivity detection only',
       'Individual device identification and status',
-      'Automatic sensitivity adjustment only',
       'Wireless communication capability',
+      'Automatic sensitivity adjustment only',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,12 +164,12 @@ const quizQuestions = [
     question:
       'What is the minimum standby battery capacity required for a fire alarm system under BS 5839-1?',
     options: [
-      '24 hours standby plus 30 minutes alarm',
+      '72 hours standby plus 30 minutes alarm',
       '24 hours standby plus 1 hour alarm',
       '48 hours standby plus 30 minutes alarm',
-      '72 hours standby plus 30 minutes alarm',
+      '24 hours standby plus 30 minutes alarm',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'BS 5839-1 requires batteries to provide at least 24 hours standby capacity followed by 30 minutes in the alarm condition. This ensures the system remains operational during mains failure until the fault can be rectified.',
   },
@@ -162,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which detector type uses a light beam scattered by smoke particles?',
     options: [
-      'Ionisation detector',
       'Optical (photoelectric) detector',
       'Aspirating detector',
+      'Ionisation detector',
       'Linear heat detector',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Optical smoke detectors work on the light-scattering principle. When smoke enters the chamber, particles scatter an LED light beam onto a photodiode, triggering the alarm. They are particularly effective for smouldering fires.',
   },
@@ -177,19 +192,24 @@ const quizQuestions = [
       "In cause and effect programming, what would typically be an 'effect' of a fire alarm activation in a lift lobby zone?",
     options: [
       'Detector goes into alarm',
-      'Manual call point activated',
       'Lift recalled to ground floor',
+      'Manual call point activated',
       'Smoke detected in zone',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Lift recall is an 'effect' - an output action triggered by the alarm condition. Causes are inputs (detector activation, MCP operation), whilst effects are outputs (sounders, door releases, lift control, HVAC shutdown).",
   },
   {
     id: 10,
     question: 'What is the maximum cable resistance permitted for a fire alarm sounder circuit?',
-    options: ['26 ohms', '40 ohms', '50 ohms', 'Depends on system design and voltage'],
-    correctAnswer: 3,
+    options: [
+      'Individual device identification and status',
+      'Optical (photoelectric) detector',
+      'Depends on system design and voltage',
+      'Lift recalled to ground floor',
+    ],
+    correctAnswer: 2,
     explanation:
       'Maximum cable resistance depends on the system design voltage, sounder current requirements, and minimum operating voltage. Manufacturers specify maximum loop resistance based on these factors - there is no universal fixed value.',
   },
@@ -198,11 +218,11 @@ const quizQuestions = [
     question: 'A multi-sensor detector typically combines which detection methods?',
     options: [
       'Ionisation and heat only',
-      'Optical smoke and heat detection',
-      'Heat and carbon monoxide only',
       'Aspirating and optical only',
+      'Heat and carbon monoxide only',
+      'Optical smoke and heat detection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multi-sensor detectors typically combine optical smoke detection with heat sensing. Advanced algorithms analyse both inputs to distinguish between fire signatures and false alarm sources, significantly reducing unwanted alarms.',
   },
@@ -210,12 +230,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the required minimum sound level for fire alarm sounders in BS 5839-1?',
     options: [
-      '60 dB(A) or 5 dB(A) above background, whichever is greater',
       '65 dB(A) or 5 dB(A) above background, whichever is greater',
-      '75 dB(A) in all areas',
-      '85 dB(A) minimum everywhere',
+      'Individual device identification and status',
+      'Small invisible particles from fast-flaming fires',
+      'P1 covers all areas, P2 covers high-risk areas only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 5839-1 requires a minimum of 65 dB(A) or 5 dB(A) above any background noise likely to persist for more than 30 seconds, whichever is greater. In sleeping areas, 75 dB(A) at bed-head is required.',
   },

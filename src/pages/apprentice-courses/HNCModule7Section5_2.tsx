@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'reactive-power',
     question: 'What is reactive power (kVAr)?',
     options: [
-      'Power consumed by resistive loads',
+      'Ask for simpler terms or request to see a drawing',
+      'Most-used tools accessible; everything with a designated place; regular cleaning',
       'Power oscillating between source and inductive/capacitive loads',
-      'Power lost as heat in cables',
-      'The total power supplied by the utility',
+      'Rockwell Studio 5000 Logix Designer (formerly RSLogix 5000)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reactive power (kVAr) represents energy that oscillates between the source and reactive components (inductors and capacitors). It does no useful work but is essential for establishing magnetic and electric fields in AC circuits.',
   },
@@ -40,7 +40,12 @@ const quickCheckQuestions = [
     id: 'pf-calculation',
     question:
       'An installation draws 150 kW at 0.75 power factor lagging. What is the apparent power (kVA)?',
-    options: ['112.5 kVA', '150 kVA', '175 kVA', '200 kVA'],
+    options: [
+      '112.5 kVA',
+      '150 kVA',
+      '175 kVA',
+      '200 kVA',
+    ],
     correctIndex: 3,
     explanation:
       'Apparent power S = P / pf = 150 / 0.75 = 200 kVA. This demonstrates why poor power factor increases the apparent power demand on the supply system.',
@@ -49,8 +54,13 @@ const quickCheckQuestions = [
     id: 'capacitor-sizing',
     question:
       'To correct power factor from 0.8 to 0.95 for a 100 kW load, which value is closest to the required kVAr?',
-    options: ['25 kVAr', '42 kVAr', '55 kVAr', '75 kVAr'],
-    correctIndex: 1,
+    options: [
+      '42 kVAr',
+      '25 kVAr',
+      '55 kVAr',
+      '75 kVAr',
+    ],
+    correctIndex: 0,
     explanation:
       'kVAr = P × (tan φ₁ - tan φ₂) = 100 × (tan 36.87° - tan 18.19°) = 100 × (0.75 - 0.329) = 42.1 kVAr. This calculation is fundamental to capacitor bank sizing.',
   },
@@ -58,12 +68,12 @@ const quickCheckQuestions = [
     id: 'detuned-reactor',
     question: 'Why are detuned reactors used with capacitor banks in harmonic-rich environments?',
     options: [
-      'To increase the capacitor voltage rating',
-      'To prevent harmonic resonance and capacitor damage',
       'To reduce the physical size of capacitors',
+      'To increase the capacitor voltage rating',
       'To eliminate the need for protection devices',
+      'To prevent harmonic resonance and capacitor damage',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Detuned reactors shift the resonant frequency of the capacitor bank below the lowest significant harmonic (typically 189 Hz for 7% detuning), preventing dangerous harmonic amplification and protecting capacitors from overload.',
   },
@@ -74,7 +84,12 @@ const quizQuestions = [
     id: 1,
     question:
       'What is the relationship between power factor (pf), real power (P), and apparent power (S)?',
-    options: ['pf = S / P', 'pf = P / S', 'pf = P × S', 'pf = P - S'],
+    options: [
+      'pf = S / P',
+      'pf = P / S',
+      'pf = P × S',
+      'pf = P - S',
+    ],
     correctAnswer: 1,
     explanation:
       'Power factor is the ratio of real power (kW) to apparent power (kVA): pf = P / S = cos φ. This dimensionless ratio ranges from 0 to 1, with 1 being unity power factor.',
@@ -83,7 +98,12 @@ const quizQuestions = [
     id: 2,
     question:
       'A factory has a maximum demand of 500 kVA at 0.7 pf lagging. What is the reactive power demand?',
-    options: ['250 kVAr', '350 kVAr', '357 kVAr', '500 kVAr'],
+    options: [
+      '500 kVAr',
+      '250 kVAr',
+      '357 kVAr',
+      '350 kVAr',
+    ],
     correctAnswer: 2,
     explanation:
       'Q = S × sin φ. First find φ from cos φ = 0.7, so φ = 45.57°, sin φ = 0.714. Therefore Q = 500 × 0.714 = 357 kVAr.',
@@ -93,12 +113,12 @@ const quizQuestions = [
     question:
       'What is the main financial benefit of power factor correction for industrial consumers?',
     options: [
-      'Reduced lighting costs',
+      'Results, test conditions, and equipment details',
+      'Energy let-through during fault clearance',
+      'Separate neutral and earth conductors from source',
       'Lower reactive power charges and maximum demand penalties',
-      'Cheaper electricity unit rates',
-      'Reduced maintenance costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Electricity suppliers charge penalties for poor power factor (typically below 0.95) through reactive power charges (kVAr) and increased maximum demand charges (kVA). PFC reduces both.',
   },
@@ -107,20 +127,25 @@ const quizQuestions = [
     question:
       'An installation requires 80 kVAr of correction. Which capacitor bank configuration would be most suitable for varying loads?',
     options: [
-      'Single 80 kVAr fixed capacitor',
-      'Two 40 kVAr fixed capacitors',
       'Automatic PFC with 8 × 10 kVAr stages',
+      'Two 40 kVAr fixed capacitors',
+      'Single 80 kVAr fixed capacitor',
       'One 100 kVAr capacitor with reduced voltage',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Automatic PFC with multiple stages (8 × 10 kVAr = 80 kVAr) provides stepped correction matching the varying reactive power demand, preventing over-correction which would cause leading power factor.',
   },
   {
     id: 5,
     question: 'What is the typical target power factor for UK industrial installations?',
-    options: ['0.85 lagging', '0.90 lagging', '0.95 lagging or better', 'Unity (1.0)'],
-    correctAnswer: 2,
+    options: [
+      '0.90 lagging',
+      '0.95 lagging or better',
+      'Unity (1.0)',
+      '0.85 lagging',
+    ],
+    correctAnswer: 1,
     explanation:
       'UK electricity suppliers typically require 0.95 lagging or better to avoid reactive power charges. Correcting beyond 0.98 is often not cost-effective and risks leading power factor at light loads.',
   },
@@ -128,7 +153,12 @@ const quizQuestions = [
     id: 6,
     question:
       'A 7% detuned reactor is used with a PFC capacitor bank. At what frequency is the system tuned?',
-    options: ['50 Hz', '150 Hz', '189 Hz', '250 Hz'],
+    options: [
+      '50 Hz',
+      '150 Hz',
+      '189 Hz',
+      '250 Hz',
+    ],
     correctAnswer: 2,
     explanation:
       '7% detuning means the resonant frequency fr = 50 / √0.07 = 50 / 0.265 = 189 Hz. This is below the 5th harmonic (250 Hz), preventing resonance with common harmonics.',
@@ -137,7 +167,12 @@ const quizQuestions = [
     id: 7,
     question:
       'Which BS standard specifically covers capacitor installations for power factor correction?',
-    options: ['BS 7671', 'BS EN 61921', 'BS EN 60831', 'Both BS EN 61921 and BS EN 60831'],
+    options: [
+      'Automatic PFC with 8 × 10 kVAr stages',
+      'Current and power factor',
+      '3 minutes (or 5 minutes per BS 7671)',
+      'Both BS EN 61921 and BS EN 60831',
+    ],
     correctAnswer: 3,
     explanation:
       'BS EN 61921 covers capacitor installation design and application, while BS EN 60831 specifies capacitor construction and testing. Both are essential references for PFC installations.',
@@ -146,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'What protection device is essential for capacitor bank installations?',
     options: [
-      'RCD only',
       'HRC fuses or MCCBs rated for capacitor switching duty',
-      'Standard MCBs',
-      'Earth leakage relay only',
+      'Cleaning and maintaining heat exchanger surfaces on HVAC equipment',
+      'Organisational — the commissioning procedure was incomplete',
+      'Up to 70,000 Pa with forces exceeding 200 kg/m²',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'HRC fuses or MCCBs with adequate breaking capacity and rated for capacitor switching duty are essential. Standard MCBs may not handle capacitor inrush currents (up to 200× rated current) safely.',
   },
@@ -159,7 +194,12 @@ const quizQuestions = [
     id: 9,
     question:
       'An automatic PFC controller measures which parameters to determine capacitor switching?',
-    options: ['Voltage only', 'Current and power factor', 'Temperature only', 'Frequency only'],
+    options: [
+      'Voltage only',
+      'Current and power factor',
+      'Temperature only',
+      'Frequency only',
+    ],
     correctAnswer: 1,
     explanation:
       'Automatic PFC controllers measure load current via CT and system voltage to calculate the power factor continuously. They then switch capacitor stages in/out to maintain the target power factor.',
@@ -167,7 +207,12 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What is the minimum safe discharge time for capacitors before maintenance work?',
-    options: ['30 seconds', '1 minute', '3 minutes (or 5 minutes per BS 7671)', '10 minutes'],
+    options: [
+      'Stop work and report immediately',
+      'Correct operation between supply sources',
+      '3 minutes (or 5 minutes per BS 7671)',
+      'To subtract lead resistance from readings',
+    ],
     correctAnswer: 2,
     explanation:
       'BS 7671 requires capacitors to discharge to 50V or less within 5 minutes (3 minutes per some manufacturer specifications). Discharge resistors are mandatory to ensure safe voltage decay.',
@@ -176,12 +221,12 @@ const quizQuestions = [
     id: 11,
     question: 'What happens if capacitors are switched in when not required (over-correction)?',
     options: [
-      'Nothing, excess capacitance is beneficial',
+      'Benefits greatly from hands-on electrical experience',
+      'Workers must be consulted on health and safety matters including risk assessment',
+      '50-65 percent of the socket-circuit nameplate aggregate, depending on equipment mix.',
       'Leading power factor causing voltage rise and potential utility penalties',
-      'Capacitors automatically disconnect',
-      'Power factor improves further',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Over-correction causes leading power factor, which raises system voltage and can attract utility penalties. It may also cause resonance issues. Automatic PFC prevents this by matching correction to demand.',
   },
@@ -189,8 +234,13 @@ const quizQuestions = [
     id: 12,
     question:
       'Calculate the kVAr required to correct a 200 kW load from 0.75 to 0.95 power factor.',
-    options: ['85 kVAr', '111 kVAr', '132 kVAr', '150 kVAr'],
-    correctAnswer: 1,
+    options: [
+      '111 kVAr',
+      '150 kVAr',
+      '85 kVAr',
+      '132 kVAr',
+    ],
+    correctAnswer: 0,
     explanation:
       'kVAr = P × (tan φ₁ - tan φ₂). At pf 0.75: φ₁ = 41.41°, tan φ₁ = 0.882. At pf 0.95: φ₂ = 18.19°, tan φ₂ = 0.329. kVAr = 200 × (0.882 - 0.329) = 200 × 0.553 = 110.6 kVAr ≈ 111 kVAr.',
   },

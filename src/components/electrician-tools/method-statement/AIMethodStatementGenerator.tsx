@@ -130,8 +130,8 @@ export const AIMethodStatementGenerator: React.FC = () => {
     setShowCelebration(false);
     setCelebrationShown(false);
 
-    const { data, error } = await supabase.functions.invoke('create-rams-job', {
-      body: { jobDescription, projectInfo, jobScale },
+    const { data, error } = await supabase.functions.invoke('rams-generator', {
+      body: { action: 'create', jobDescription, projectInfo, jobScale },
     });
 
     if (error || !data?.jobId) {
@@ -149,8 +149,8 @@ export const AIMethodStatementGenerator: React.FC = () => {
     setIsCancelling(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('cancel-rams-job', {
-        body: { jobId: currentJobId },
+      const { data, error } = await supabase.functions.invoke('rams-generator', {
+        body: { action: 'cancel', jobId: currentJobId },
       });
 
       if (error || !data?.success) {

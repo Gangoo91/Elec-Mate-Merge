@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary purpose of a standardised labelling system in an electrical installation?',
     options: [
-      'To make the installation look tidy for inspections',
+      'Confirm in writing (email) before starting, capturing scope, price impact and time impact — and only proceed once acknowledged',
+      'No removal from service, calibration under actual operating conditions, includes installation effects, and reduced downtime costs',
+      'A systematic approach to designing, implementing, and maintaining process alarms to ensure they are useful and actionable',
       'To enable any competent technician to identify components, circuits and connections unambiguously, reducing error risk during maintenance',
-      "To satisfy the client's branding requirements",
-      'To reduce the cost of installation materials',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Standardised labelling ensures that any competent technician can positively identify components, circuits, wires and terminals without ambiguity. This is critical for safety — incorrect identification during maintenance could mean working on the wrong circuit, leading to electric shock or equipment damage.',
   },
@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'In a control panel, wire 24 is found at terminal strip TS3 terminal 7. Another end of the same wire connects to contactor KM1 terminal A1. What stays constant along the entire wire length?',
     options: [
-      'The terminal number',
+      'A description of the fault, the investigation process, findings, and recommended actions',
+      'False - many can operate locally but lose remote features without internet',
+      'People follow the behaviour of others, especially in uncertainty',
       'The wire number (24) — it is the same at both ends and everywhere along the wire',
-      'The component designation',
-      'The cable colour',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A wire number identifies a unique electrical point (node) in the circuit. The same wire number appears at every termination point of that wire. This allows technicians to trace continuity through the installation — if wire 24 is disconnected from terminal A1 of KM1, you know it must be reconnected to the same terminal, not elsewhere.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     id: 'bs-en-81346-check',
     question: "Under BS EN 81346, the prefix letter 'Q' designates which type of component?",
     options: [
-      'A resistor',
       'A switching device for power circuits, such as a circuit breaker or isolator',
-      'A relay or contactor',
-      'A measuring instrument',
+      'By job/client with subfolders for before, during, after, certificates',
+      'To verify the sensors respond to a known concentration of test gas',
+      'A minimum of three to four persons, depending on the rescue plan',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "BS EN 81346 (replacing the older BS 3939 letter codes) assigns 'Q' to switching devices in power circuits — circuit breakers, isolators, disconnectors and similar devices. 'K' is used for relays and contactors, 'R' for resistors, and 'P' for measuring instruments.",
   },
@@ -56,10 +56,10 @@ const quickCheckQuestions = [
     question:
       'Which standard governs cable identification and marking in UK electrical installations?',
     options: [
-      'BS 7671 only',
+      'Because you must give type, location, and rectification - assessor needs detail',
       'BS EN 62491 (Cable and core identification) together with BS 7671 requirements for conductor identification',
-      'There is no standard — each installer uses their own system',
-      'ISO 9001',
+      'Your attention remains partially on a previous task when switching to a new one',
+      'Ensuring all covers, gaskets, cable glands and entries are correctly refitted to restore the original ingress protection',
     ],
     correctIndex: 1,
     explanation:
@@ -72,7 +72,12 @@ const quizQuestions = [
     id: 1,
     question:
       'Which BS EN standard provides the reference designation system for industrial components (replacing the older letter code systems)?',
-    options: ['BS EN 60617', 'BS EN 81346', 'BS EN 62491', 'BS EN 61082'],
+    options: [
+      'BS EN 60617',
+      'BS EN 81346',
+      'BS EN 62491',
+      'BS EN 61082',
+    ],
     correctAnswer: 1,
     explanation:
       "BS EN 81346 'Industrial systems, installations and equipment and industrial products — Structuring principles and reference designations' provides the standardised system for designating components. It replaced the older DIN 40719 and BS 3939 letter code systems.",
@@ -80,8 +85,13 @@ const quizQuestions = [
   {
     id: 2,
     question: "In the designation KM3, what does the 'K' represent?",
-    options: ['A circuit breaker', 'A contactor or relay', 'A motor', 'A transformer'],
-    correctAnswer: 1,
+    options: [
+      'A motor',
+      'A circuit breaker',
+      'A contactor or relay',
+      'A transformer',
+    ],
+    correctAnswer: 2,
     explanation:
       "Under BS EN 81346, the letter 'K' designates contactors and relays. 'M' stands for motor, 'Q' for switching device (circuit breaker/isolator), and 'T' for transformer. KM3 therefore identifies the third contactor in the system.",
   },
@@ -90,12 +100,12 @@ const quizQuestions = [
     question:
       "A wire numbered '415' appears on a wiring diagram at four different terminal points. This means:",
     options: [
-      'There are four separate wires, each numbered 415',
+      'Unique labels identifying specific input and output points, linking the field device wiring to the PLC programme',
+      'Report it, arrange for a replacement label to be fitted, and update the records',
+      'They are durable, heat-resistant, and will not fall off or become illegible over the life of the installation',
       'All four termination points are at the same electrical potential — they are all on the same node in the circuit',
-      'The wire carries 415 volts',
-      'The wire is 415 mm long',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A wire number identifies an electrical node. Every termination point sharing the same wire number is at the same electrical potential in the circuit. This is fundamental to wire numbering systems — the number follows the electrical potential, not the physical wire.',
   },
@@ -103,12 +113,12 @@ const quizQuestions = [
     id: 4,
     question: 'Terminal strips in a control panel are typically labelled with:',
     options: [
-      'Random numbers chosen by the installer',
       'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
-      "The contractor's company name",
-      'The date of installation',
+      'At each end of every wire or conductor, close to the termination point',
+      'Unique labels identifying specific input and output points, linking the field device wiring to the PLC programme',
+      'The main switching device (e.g., MCCB or isolator) for that motor feeder',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Terminal strips use a designator (commonly X1, X2, X3, etc.) followed by sequential terminal numbers. For example, X1:7 means terminal strip X1, terminal number 7. This unambiguous identification is essential for maintenance and fault-finding.',
   },
@@ -117,10 +127,10 @@ const quizQuestions = [
     question:
       'According to BS 7671 Regulation 514.8, every circuit at the distribution board must be provided with:',
     options: [
-      'A spare fuse',
+      'Pre-energisation inspection and testing',
       'A durable label or marking identifying its purpose',
-      'A copy of the test certificate',
-      'An isolation switch',
+      'Adaptive response to changing load conditions',
+      'Weekly or fortnightly to prevent backlog',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,12 +140,12 @@ const quizQuestions = [
     id: 6,
     question: 'Cable identification ferrules are typically fitted:',
     options: [
-      'Only at the midpoint of each cable run',
+      'Report it, arrange for a replacement label to be fitted, and update the records',
+      'The main switching device (e.g., MCCB or isolator) for that motor feeder',
       'At each end of every wire or conductor, close to the termination point',
-      'Only on three-phase cables',
-      'Only on cables longer than 10 metres',
+      'A durable label or marking identifying its purpose',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cable ferrules (also called wire markers or end sleeves) are fitted at both ends of each conductor, close to the termination. This allows a technician to identify the wire at either end without needing to trace the full length — essential in complex panels with hundreds of wires.',
   },
@@ -143,12 +153,12 @@ const quizQuestions = [
     id: 7,
     question: "In a motor control centre, the designation '-Q1' on a device indicates:",
     options: [
-      'The first motor in the system',
+      'Report it, arrange for a replacement label to be fitted, and update the records',
+      'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
+      'At each end of every wire or conductor, close to the termination point',
       'The main switching device (e.g., MCCB or isolator) for that motor feeder',
-      'A power factor correction capacitor',
-      'An emergency stop button',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The 'Q' prefix designates a switching device for power circuits. '-Q1' typically refers to the main circuit breaker or isolator in a motor feeder. This standardised naming means maintenance technicians across different sites can immediately identify the device function.",
   },
@@ -156,12 +166,12 @@ const quizQuestions = [
     id: 8,
     question: "What is the purpose of a 'cable schedule' in an electrical installation?",
     options: [
-      'To record the delivery dates of cable orders',
       'To provide a comprehensive list linking cable references to their routes, sizes, types, origins and destinations',
-      'To calculate the total weight of cables installed',
-      'To record cable test results only',
+      'Report it, arrange for a replacement label to be fitted, and update the records',
+      'All four termination points are at the same electrical potential — they are all on the same node in the circuit',
+      'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A cable schedule is a document that lists every cable in the installation with its unique reference, type, size, number of cores, origin, destination, route, and sometimes length. It is an essential maintenance document that links the physical cable to the drawings.',
   },
@@ -170,10 +180,10 @@ const quizQuestions = [
     question:
       'When a maintenance technician discovers that a label is missing or illegible, the correct action is to:',
     options: [
-      'Ignore it and continue working',
+      'The main switching device (e.g., MCCB or isolator) for that motor feeder',
       'Report it, arrange for a replacement label to be fitted, and update the records',
-      'Remove all other labels to match',
-      'Write the information on the wall with a marker pen',
+      'At each end of every wire or conductor, close to the termination point',
+      'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,12 +193,12 @@ const quizQuestions = [
     id: 10,
     question: 'The colour coding of three-phase conductors in the UK under BS 7671 is:',
     options: [
-      'Red, yellow, blue',
+      'Network analyzer with Zigbee capabilities',
+      'Record actual values with deviation noted',
       'Brown (L1), black (L2), grey (L3)',
-      'Brown, blue, green/yellow',
-      'Black, red, blue',
+      'To calculate Zs when added to Ze',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Since the harmonisation to IEC standards adopted in BS 7671:2008 onwards, UK three-phase conductor colours are brown (L1), black (L2) and grey (L3). The older red, yellow, blue system may still be found in existing installations and must be identified accordingly.',
   },
@@ -196,12 +206,12 @@ const quizQuestions = [
     id: 11,
     question: 'In a PLC-based control system, I/O addresses such as I0.3 and Q2.1 serve as:',
     options: [
-      'The physical size of the PLC module',
+      'To provide a comprehensive list linking cable references to their routes, sizes, types, origins and destinations',
+      'All four termination points are at the same electrical potential — they are all on the same node in the circuit',
+      'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
       'Unique labels identifying specific input and output points, linking the field device wiring to the PLC programme',
-      'The serial number of the PLC',
-      'The cost code for the PLC module',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PLC I/O addresses are the labelling system that connects physical wiring to the control programme. I0.3 identifies input byte 0, bit 3; Q2.1 identifies output byte 2, bit 1. These addresses appear on wiring diagrams, the PLC programme, and the field device labels, providing full traceability.',
   },
@@ -209,12 +219,12 @@ const quizQuestions = [
     id: 12,
     question: 'Engraved phenolic labels are preferred over adhesive labels in switchgear because:',
     options: [
-      'They are cheaper to produce',
       'They are durable, heat-resistant, and will not fall off or become illegible over the life of the installation',
-      'They are easier to remove',
-      'They come in more colours',
+      'To provide a comprehensive list linking cable references to their routes, sizes, types, origins and destinations',
+      'A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers',
+      'Unique labels identifying specific input and output points, linking the field device wiring to the PLC programme',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Engraved phenolic (Traffolyte) labels are the industry standard for switchgear identification because they withstand heat, cleaning chemicals, UV light and mechanical wear without becoming illegible. Adhesive labels may peel, fade, or melt in the environment around switchgear, making them unreliable for long-term identification.',
   },

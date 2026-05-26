@@ -44,11 +44,11 @@ const AM2Module3Section2 = () => {
       question: 'What happens if a ring final circuit is left open (one leg disconnected)?',
       options: [
         'It still works safely as designed',
-        'It becomes an unprotected radial circuit',
         'The MCB will trip immediately',
+        'It becomes an unprotected radial circuit',
         'Only half the sockets will work',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'An open ring becomes a radial circuit but is still protected by a 32A MCB, which exceeds the safe rating for 2.5mm² cable (20A max). This is a major safety issue and automatic fail.',
     },
@@ -56,10 +56,10 @@ const AM2Module3Section2 = () => {
       id: 'cooker-workmanship',
       question: 'Why do many candidates lose marks on cooker circuits?',
       options: [
-        'Using wrong cable size',
-        'Incorrect MCB rating',
+        'Add EV charger load with appropriate diversity',
+        'Use a plumb line or laser pointer to check alignment',
         'Over-stripping cable sheath leaving bare conductors visible',
-        'Poor earth connections',
+        'The highest average power drawn over a defined period',
       ],
       correctIndex: 2,
       explanation:
@@ -69,10 +69,10 @@ const AM2Module3Section2 = () => {
       id: 'swa-gland-check',
       question: 'What does the assessor specifically check at an SWA gland?',
       options: [
-        'Cable entry angle only',
-        'Gland tightness only',
+        'Perfecting one detail while neglecting others',
+        'Reduce step-by-step, maintaining circuit behaviour',
         'Mechanical strength and earth continuity',
-        'Cable identification',
+        'Added head (positive pump term)',
       ],
       correctIndex: 2,
       explanation:
@@ -82,12 +82,12 @@ const AM2Module3Section2 = () => {
       id: 'safety-vs-neatness',
       question: 'In AM2 assessment, which is worse - messy work or unsafe work?',
       options: [
-        'Both are equally bad',
-        'Messy work - it shows poor professionalism',
+        'Date, time, and GPS location data (if enabled)',
+        'To ensure only the device nearest the fault operates',
+        'Prevents mistakes and improves safety',
         'Unsafe work - messy loses marks, unsafe means fail',
-        'Neither affects the result',
       ],
-      correctIndex: 2,
+      correctIndex: 3,
       explanation:
         "Unsafe work results in immediate failure regardless of other factors. Messy work loses marks but doesn't automatically fail the assessment. Safety is always the priority.",
     },
@@ -96,11 +96,11 @@ const AM2Module3Section2 = () => {
       question: 'Can you energise a power circuit before completing all required tests?',
       options: [
         'Yes, if continuity is confirmed',
-        'Yes, for basic function testing',
         "No - that's unsafe and results in failure",
         'Only with assessor permission',
+        'Yes, for basic function testing',
       ],
-      correctIndex: 2,
+      correctIndex: 1,
       explanation:
         'All required tests (continuity, polarity, insulation resistance, loop impedance) must be completed before energisation. Energising untested circuits is unsafe practice and results in immediate failure.',
     },
@@ -110,7 +110,12 @@ const AM2Module3Section2 = () => {
     {
       id: 1,
       question: 'What cable size is typically specified for a ring final circuit in AM2?',
-      options: ['1.5mm²', '2.5mm²', '4mm²', '6mm²'],
+      options: [
+        '1.5mm²',
+        '2.5mm²',
+        '4mm²',
+        '6mm²',
+      ],
       correctAnswer: 1,
       explanation:
         'Ring final circuits typically use 2.5mm² twin & earth cable with a 32A MCB protection.',
@@ -119,10 +124,10 @@ const AM2Module3Section2 = () => {
       id: 2,
       question: "What's the consequence of leaving one leg disconnected in a ring final?",
       options: [
-        'Circuit works normally',
-        'Half the sockets stop working',
+        'Sleeved and properly connected',
+        'End-to-end continuity of all conductors',
         'It becomes an unprotected radial circuit',
-        'The RCD will trip',
+        'To protect bare conductors from damage',
       ],
       correctAnswer: 2,
       explanation:
@@ -131,8 +136,13 @@ const AM2Module3Section2 = () => {
     {
       id: 3,
       question: 'Which protective device rating is typically used for a cooker circuit?',
-      options: ['20A MCB', '32A MCB', '32-40A MCB', '50A MCB'],
-      correctAnswer: 2,
+      options: [
+        '32A MCB',
+        '20A MCB',
+        '50A MCB',
+        '32-40A MCB',
+      ],
+      correctAnswer: 3,
       explanation:
         'Cooker circuits typically use 32-40A MCB depending on the cooker load and cable size specified.',
     },
@@ -140,20 +150,25 @@ const AM2Module3Section2 = () => {
       id: 4,
       question: 'Why must the cable sheath enter the cooker outlet plate?',
       options: [
-        'For better appearance',
-        'To prevent moisture entry',
         'To protect bare conductors from damage',
+        'To prevent moisture entry',
+        'For better appearance',
         'To meet cable bend radius requirements',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'The sheath must enter the outlet plate to ensure no bare conductors are visible and maintain mechanical protection.',
     },
     {
       id: 5,
       question: 'What device must be correctly set in a motor circuit?',
-      options: ['Timer relay', 'Contactor', 'Overload protection', 'Phase monitor'],
-      correctAnswer: 2,
+      options: [
+        'Contactor',
+        'Overload protection',
+        'Phase monitor',
+        'Timer relay',
+      ],
+      correctAnswer: 1,
       explanation:
         "The overload protection device must be set correctly for the motor's full load current to provide proper protection.",
     },
@@ -182,12 +197,12 @@ const AM2Module3Section2 = () => {
       id: 8,
       question: "What's the difference between a radial and a broken ring?",
       options: [
-        'No difference in function',
         'Radial is designed as one-way feed, broken ring is faulty two-way feed',
-        'Radial uses smaller cable',
-        'Broken ring has lower impedance',
+        'Maintaining skilled workforce current with developments',
+        'Distribute loads so each phase carries approximately equal current',
+        'Immediately advise the person ordering the report',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'A radial is designed as a one-way feed with appropriate protection. A broken ring is a fault condition where a two-way circuit becomes one-way but retains inappropriate protection.',
     },
@@ -195,10 +210,10 @@ const AM2Module3Section2 = () => {
       id: 9,
       question: 'Give an example of poor workmanship in power circuits.',
       options: [
-        'Using correct cable size',
+        'It becomes an unprotected radial circuit',
         'Over-tightening terminals damaging insulation',
-        'Following the specification exactly',
-        'Completing all required tests',
+        'Immediate failure for unsafe practice',
+        'To protect bare conductors from damage',
       ],
       correctAnswer: 1,
       explanation:
@@ -208,10 +223,10 @@ const AM2Module3Section2 = () => {
       id: 10,
       question: 'What happens if you energise before completing all required tests?',
       options: [
-        'Minor marks deduction',
-        'Warning from assessor',
+        'To protect bare conductors from damage',
+        'End-to-end continuity of all conductors',
         'Immediate failure for unsafe practice',
-        'No consequence if circuit works',
+        'Sleeved and properly connected',
       ],
       correctAnswer: 2,
       explanation:
@@ -221,12 +236,12 @@ const AM2Module3Section2 = () => {
       id: 11,
       question: 'Which test confirms ring circuit integrity?',
       options: [
-        'Insulation resistance only',
+        'Sleeved and properly connected',
+        'Immediate failure for unsafe practice',
+        'Over-tightening terminals damaging insulation',
         'End-to-end continuity of all conductors',
-        'Loop impedance only',
-        'Polarity check only',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'End-to-end continuity testing of line, neutral, and CPC conductors confirms the ring is complete and unbroken.',
     },
@@ -234,12 +249,12 @@ const AM2Module3Section2 = () => {
       id: 12,
       question: 'What must be done to CPCs in all power circuits?',
       options: [
-        'Twisted together',
-        'Left bare',
         'Sleeved and properly connected',
-        'Painted for identification',
+        'End-to-end continuity of all conductors',
+        'Earth continuity connection',
+        'To protect bare conductors from damage',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'All CPCs must be sleeved with green/yellow sleeving and properly connected to maintain earth continuity and meet standards.',
     },

@@ -38,12 +38,12 @@ const checks = [
     question:
       'A customer says she’s “going solar” — what is the first question you should ask before quoting electrical work?',
     options: [
-      'Whether she wants single or three-phase.',
+      'Intrinsic motivation, engagement, wellbeing, and performance quality all increase — because the fundamental psychological nutrients for self-motivated behaviour are present',
+      'Temperature, humidity, dust, vibration, chemical exposure, electromagnetic interference and any other environmental factors at the equipment location',
+      'A method statement, risk assessment, switching schedule, permit to work system, LOTO procedures, proof of competence for all personnel, and a communication plan including handover procedures',
       'Whether the panels are solar PV (electrical, generates power) or solar thermal (plumbing, heats water) — the two get the same name on the high street but only PV is in your scope.',
-      'Whether she has a south-facing roof.',
-      'Whether the panels are MCS-listed.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Solar PV uses photovoltaic cells to make DC electricity, which an inverter turns into 230 V AC for the house. Solar thermal uses a fluid loop on the roof to heat hot water and is plumbed into the cylinder — there’s an electrical pump and a controller, but it’s not generation. PV falls under BS 7671 Section 712. Solar thermal does not.',
   },
@@ -52,10 +52,10 @@ const checks = [
     question:
       'Which BS 7671 Part 7 section governs the electrical installation of a solar PV system in a UK home?',
     options: [
-      'Section 701 (bathrooms).',
+      'Provides evidence of due diligence and compliance',
       'Section 712 (Solar photovoltaic (PV) power supply systems).',
-      'Section 717 (mobile or transportable units).',
-      'Section 753 (heating and de-icing systems).',
+      'The total earth fault loop impedance at the furthest point',
+      '450mm from floor level (accessibility guidance)',
     ],
     correctIndex: 1,
     explanation:
@@ -66,12 +66,12 @@ const checks = [
     question:
       'A heat pump (air-source or ground-source) is a “micro-renewable” — but in what sense? It uses electricity, doesn’t it?',
     options: [
-      'It generates electricity from a refrigerant cycle.',
       'It uses electricity, but a small input drives a much larger heat output by moving heat from outside air or the ground into the house — typically 3 kW of heat for every 1 kW of electricity (a Coefficient of Performance around 3).',
-      'It only counts as renewable if it has solar panels on it.',
-      'It’s not really micro-renewable, it’s just an electric heater.',
+      'Standard or Enhanced fire-resistant cable (e.g. FP200 / Firetuf), separation from other circuits, and fire-rated supports/clips that survive collapse temperatures',
+      '10% of accessories with all DBs and CUs fully inspected, all final-circuit dead and live tests on a sampled basis where the inspection cannot be 100% without disruption — sampling rate must be agreed in writing with the customer in advance and recorded in the limitations on the report.',
+      'The pelvis contains major blood vessels; a pelvic fracture can cause massive internal haemorrhage — call 999 immediately, keep the casualty still, treat for shock, and do not attempt to bind the pelvis unless trained',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A heat pump doesn’t generate electricity — it consumes it. But it’s classed as renewable because the bulk of the heat it delivers comes from a renewable source (the air or ground), not from the electricity itself. A typical CoP of 3 means 1 kW of electrical input gives roughly 3 kW of heat output. That heat-amplification ratio is what puts it in the renewable bracket.',
   },
@@ -82,7 +82,12 @@ const quizQuestions = [
     id: 1,
     question:
       'A typical UK domestic solar PV install on a 3–4 bedroom house is roughly what peak power?',
-    options: ['400 W', '4 kW', '40 kW', '400 kW'],
+    options: [
+      '400 W',
+      '4 kW',
+      '40 kW',
+      '400 kW',
+    ],
     correctAnswer: 1,
     explanation:
       '4 kW (sometimes 3.68 kW to keep it under the G98 ≤ 16 A per phase notification threshold) is the standard UK domestic install — typically 10–12 panels at 400 W each. A 40 kW install is a small commercial array; 400 W is one panel. Knowing the typical scale stops you guessing wildly when a customer asks about cost.',
@@ -92,12 +97,12 @@ const quizQuestions = [
     question:
       'A customer wants an air-source heat pump. From the electrician’s point of view, what new electrical work is normally involved?',
     options: [
-      'Nothing — it plugs into a 13 A socket.',
+      'An Electrical Installation Certificate (EIC), accompanied by a Schedule of Inspections AND a Schedule of Test Results — the three-document set required by Section 644 for full initial verification.',
+      'Because unrecognised stress impairs concentration, judgement, and reaction time, increasing the risk of accidents in a high-hazard environment',
       'A dedicated 32 A radial circuit (often 6 mm² T&E, sometimes 4 mm² depending on the heat pump rating) from the consumer unit, with its own MCB/RCBO and a local rotary isolator beside the outdoor unit.',
-      'A 100 A supply upgrade is always required.',
-      'It’s plumbing work only — no electrical work needed.',
+      'Implement regular safety inspections, formal audits of the CPP and risk controls, near-miss reporting, toolbox talks, lessons-learned reviews, worker consultation forums, trend analysis of incidents, and regular CPP updates based on findings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A typical 5–8 kW domestic ASHP draws 8–15 A continuous when the compressor is running, with brief inrush above that. A dedicated 32 A radial in 6 mm² T&E with its own MCB/RCBO and a weatherproof rotary isolator at the outdoor unit is the standard install. A supply upgrade is sometimes needed — but only if the existing main fuse and consumer unit can’t take the additional load on top of the showers, ovens and (eventually) the EV charger.',
   },
@@ -106,12 +111,12 @@ const quizQuestions = [
     question:
       'Solar PV and solar thermal both sit on the roof and both run on sunlight. What’s the practical difference for an apprentice electrician?',
     options: [
-      'Nothing — they’re the same job.',
+      'Salovey-Mayer focuses on cognitive emotional abilities, Bar-On on emotional-social personality traits, and Goleman on workplace performance competencies — each offering a different but complementary lens',
+      'Per CAR 2012 Reg 6 (assessment) + Reg 8 (licensed work) + HSE guidance L143. Considers: type of asbestos (chrysotile/amosite/crocidolite); friability; quantity; nature of work (removal vs encapsulation vs observation); duration; exposure level.',
+      'Natural England is the government\\\\\\\\\\\\\\\'s statutory adviser on the natural environment, responsible for issuing species licences, designating protected sites, and advising on ecological matters',
       'Solar PV generates DC electricity (your job) and feeds an inverter; solar thermal heats a glycol fluid loop that pre-heats the hot water cylinder (a plumber’s job, with only minor electrical work for the pump and controller).',
-      'PV is for hot water, thermal is for power.',
-      'Thermal is just an old-fashioned name for PV.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'They look similar from the road but the trades are completely different. PV panels are sealed laminates of silicon cells generating DC volts. Thermal panels are flat plates or evacuated tubes carrying a heat-transfer fluid. PV is electrical and falls under BS 7671 Section 712. Thermal is plumbing — the electrician only gets involved with the small pump circuit and the cylinder thermostat.',
   },
@@ -121,9 +126,9 @@ const quizQuestions = [
       'A “domestic” wind turbine — say, on a farmhouse with a tall mast — is typically what power range, and what BS 7671 territory governs the connection?',
     options: [
       'Up to 50 kW; the connection is governed by the same generation rules as PV — BS 7671 Section 551 (low voltage generating sets) and the ENA G98/G99 framework.',
-      'Always exactly 100 kW.',
-      'There is no domestic wind turbine — they’re all commercial.',
-      'It’s covered by Section 712 like solar PV.',
+      'To take reasonable care of their own health and safety and that of others affected by their acts or omissions, and cooperate with the employer',
+      'Wet surfaces increase the risk of slipping during climbing, and waterlogged ground may not support the tower adequately',
+      'EAWR (almost always Reg 4, sometimes Reg 14 or 16) — brought by the Health and Safety Executive (HSE), or in a domestic context the Local Authority. HASAWA s.7 may be charged in parallel.',
     ],
     correctAnswer: 0,
     explanation:
@@ -134,10 +139,10 @@ const quizQuestions = [
     question:
       'Battery storage (lithium-ion) tied into a domestic PV system — what additional regulation territory does it bring with it?',
     options: [
-      'None — it’s just a big battery.',
+      'No — Reg 701.415.2 allows supplementary bonding to be omitted when all three conditions are met (ADS compliance, all final circuits in the location have 30 mA RCD additional protection, main bonding on extraneous-conductive-parts is in place per Reg 411.3.1.2). Modern fully-RCD-protected new-builds typically meet all three.',
       'It brings DC isolation requirements, additional DC overcurrent protection, fire-segregation considerations and (for grid-tied operation) the same G98/G99 anti-islanding requirements that apply to the PV inverter — typically all wrapped up by a hybrid inverter that handles PV plus battery.',
-      'It only needs a 13 A plug.',
-      'It can’t be installed in a UK home.',
+      'The gateway is formally opened with the EPAO, who will then schedule the EPA components within the timeframe specified in the assessment plan — there is typically a period between gateway and EPA for final preparation',
+      'Carry out a more extensive visual survey to establish the installation arrangement (reverse engineering from observation), document the limitation on the report front sheet under Section D, agree the scope of inspection with the duty holder, and note "no documentation available" as a limitation against affected items on the schedule.',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +153,12 @@ const quizQuestions = [
     question:
       'Micro-CHP (Combined Heat and Power) at domestic scale — what’s the principle?',
     options: [
+      'The TN type — TN-S, TN-C-S (PME), TT — because earthing arrangement, main earthing conductor sizing, main bonding sizing, EV protection method, and Zs at every final circuit all depend on it.',
+      'Treat as hazardous waste, store in suitable rigid containers protected from breakage, transfer to a permitted facility under a Hazardous Waste Consignment Note, retain records for 3 years',
       'A small generator (often a Stirling engine or fuel cell) burns gas to make heat AND electricity at the same time, with the heat captured for hot water and the electricity used in the house or exported.',
-      'A wind turbine attached to a boiler.',
-      'A solar panel that doubles as a radiator.',
-      'A battery that produces hot water.',
+      'Team members will increasingly respond from the Adapted Child ego state, becoming compliant but disengaged, or from the Rebellious Child state, creating conflict',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Micro-CHP burns gas (natural gas or LPG) in a Stirling engine or, increasingly, a fuel cell, capturing both the heat (for the central heating and DHW) and the small amount of electricity generated (typically 1–3 kW). Total fuel-to-useful-energy efficiency lands around 90% versus 35–40% for a power station. Common in care homes, hospitals and some larger domestic installs.',
   },
@@ -162,12 +167,12 @@ const quizQuestions = [
     question:
       'A small stream runs through a customer’s land. They ask about micro-hydro. What’s the realistic scale for a private install?',
     options: [
+      'A source of electrical energy that must be treated as live whenever daylight is present, requiring safe systems of work, competent persons, and appropriate isolation procedures — the duty holder has the same obligations as for any other electrical system',
+      'From notification of pregnancy onwards — the risk assessment should be carried out as soon as the employer is notified and reviewed as the pregnancy progresses',
+      'PM work orders are pre-planned, recurring tasks aimed at preventing failure, while corrective work orders respond to failures that have already occurred',
       '1–100 kW depending on the head (vertical drop) and the flow rate — at the small end, the same kind of single-phase grid-connected system as a PV install; at the larger end, three-phase and a full G99 application.',
-      'There is no such thing as micro-hydro.',
-      'Only 1 W or less.',
-      'Always over 1 MW.',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Micro-hydro at private/farm scale typically sits in the 1–100 kW range. Below ~3.68 kW (16 A per phase) it goes through G98; above that it’s a G99 application to the DNO. It’s niche — most UK sites don’t have the head and flow to make it economic — but it does exist, and where it does it generates 24/7 (unlike PV).',
   },
@@ -176,12 +181,12 @@ const quizQuestions = [
     question:
       'Why do we lump heat pumps in with “micro-renewables” when they consume electricity rather than producing it?',
     options: [
-      'Because they’re fashionable.',
       'Because they extract a much larger quantity of heat from a renewable source (the outside air or ground) than the electricity input would deliver if used for direct resistive heating — typically 3:1, so they massively reduce the carbon footprint of heating.',
-      'Because they have a generator inside.',
-      'Because the regulations say so.',
+      'Default credentials must be changed, firmware kept up to date, internet-facing components segregated where possible, and data shared with third-party platforms reviewed for privacy and security implications',
+      'Theft, accidental damage, fire and loss of tools across various circumstances — on site, in transit, from vehicles. Check policy exclusions carefully: many exclude \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'theft from unattended vehicle overnight\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' unless specifically extended; many limit cover per item.',
+      'The instrument has been verified against traceable reference standards within a defined period, and a calibration certificate has been issued confirming its accuracy is within acceptable limits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A 1 kW direct electric heater gives you 1 kW of heat. A heat pump given that same 1 kW of electricity gives you 3+ kW of heat by pumping additional thermal energy from outside. The “renewable” part is the heat scavenged from the air or ground, not the electricity. That’s why they appear in the LO6 list of micro-renewable kit even though they’re technically loads.',
   },

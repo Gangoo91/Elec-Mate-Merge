@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What regulation governs working at height?',
     options: [
-      'Work at Height Regulations 2005',
-      'Health and Safety at Work Act',
       'PUWER 1998',
+      'Work at Height Regulations 2005',
       'Manual Handling Operations Regulations',
+      'Health and Safety at Work Act',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The Work at Height Regulations 2005 specifically govern all work carried out above floor level, including ceiling and riser access.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why is a dust mask important in ceiling voids?',
     options: [
+      'Providing professional counselling for mental health conditions',
+      'The tester is qualified and uses calibrated equipment to recognised standards',
       'To prevent respiratory irritation from insulation fibres and dust',
-      'To improve visibility',
-      'To reduce noise',
-      'To prevent electric shock',
+      'Follow confined space entry procedures including atmosphere testing',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Ceiling voids often contain insulation materials and accumulated dust that can cause respiratory irritation and health problems if inhaled.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What should always be checked before entering a riser or void?',
     options: [
+      'Dangerous overvoltage on lightly loaded phases',
+      '1000V DC, minimum acceptable IR 1.0 MΩ',
+      'Basic operation verification',
       'Hidden services and safe access routes',
-      'Lighting levels',
-      'Temperature',
-      'Noise levels',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Hidden services (cables, pipes, gas lines) and safe access/egress routes must be checked to prevent accidental contact and ensure emergency evacuation capability.',
   },
@@ -59,7 +59,12 @@ const Module4Section7_4 = () => {
     {
       id: 1,
       question: 'Which regulation covers work carried out above floor level?',
-      options: ['PUWER 1998', 'Work at Height Regulations 2005', 'EAWR 1989', 'CDM 2015'],
+      options: [
+        'Like-for-like socket replacement',
+        'Work at Height Regulations 2005',
+        'Reduce strain and leverage on the spine',
+        'Need additional security measures',
+      ],
       correctAnswer: 1,
       explanation:
         'The Work at Height Regulations 2005 specifically cover all work carried out above floor level, including access to ceiling voids and elevated areas.',
@@ -68,8 +73,13 @@ const Module4Section7_4 = () => {
       id: 2,
       question:
         'True or False: You can step directly onto plasterboard when working in a ceiling void.',
-      options: ['True', 'False', "Only if it's thick plasterboard", 'Only for short periods'],
-      correctAnswer: 1,
+      options: [
+        "Only if it's thick plasterboard",
+        'True',
+        'False',
+        'Only for short periods',
+      ],
+      correctAnswer: 2,
       explanation:
         'False - plasterboard cannot support human weight and will give way, causing falls and injury. Always use crawl boards to distribute weight safely.',
     },
@@ -77,20 +87,25 @@ const Module4Section7_4 = () => {
       id: 3,
       question: 'Name two hazards that may be present in risers.',
       options: [
-        'Good ventilation and lighting',
-        'Hidden services and restricted access',
         'Wide access and clear visibility',
+        'Good ventilation and lighting',
         'Low noise and clean environment',
+        'Hidden services and restricted access',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Risers commonly contain hidden electrical cables, gas pipes, water services, and have restricted access that can create emergency egress problems.',
     },
     {
       id: 4,
       question: 'What PPE item is essential for visibility in ceiling voids?',
-      options: ['High-vis vest', 'Head torch', 'Safety harness', 'Safety glasses'],
-      correctAnswer: 1,
+      options: [
+        'Head torch',
+        'High-vis vest',
+        'Safety harness',
+        'Safety glasses',
+      ],
+      correctAnswer: 0,
       explanation:
         'A head torch provides hands-free illumination essential for safe navigation and work in poorly lit ceiling voids and confined spaces.',
     },
@@ -98,10 +113,10 @@ const Module4Section7_4 = () => {
       id: 5,
       question: 'Why is it important to use a cable/pipe detector before drilling?',
       options: [
-        'To reduce drilling speed',
+        'Get them checked at hospital, even if they say they’re fine',
         'To prevent accidental contact with hidden services',
-        'To improve drill bit life',
-        'To reduce noise levels',
+        'V_rms = V_pk / root(2), approximately 0.707 x V_pk',
+        'To verify the RCD trips within the required time',
       ],
       correctAnswer: 1,
       explanation:
@@ -111,28 +126,38 @@ const Module4Section7_4 = () => {
       id: 6,
       question: 'What is the main risk of not replacing fire-stopping after working in risers?',
       options: [
-        'Loss of lighting',
+        'Scheduled off‑peak charging',
+        'White cross on a green background',
         'Increased fire spread risk',
-        'Trip hazard',
-        'Poor ventilation',
+        'BS 7671 Regulation 521.10.202',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Fire-stopping materials prevent fire and smoke spread between floors and compartments. Failure to replace them properly compromises building fire safety systems.',
     },
     {
       id: 7,
       question: 'True or False: Permits to work are sometimes required for riser access.',
-      options: ['True', 'False', 'Only in hospitals', 'Only for electrical work'],
-      correctAnswer: 0,
+      options: [
+        'Only for electrical work',
+        'False',
+        'Only in hospitals',
+        'True',
+      ],
+      correctAnswer: 3,
       explanation:
         'True - permits to work are commonly required for riser access due to the risks involved, including confined space hazards and critical building services.',
     },
     {
       id: 8,
       question: 'What type of board should be used in ceiling spaces to distribute weight?',
-      options: ['Plywood sheets', 'Crawl boards', 'Scaffold boards', 'Plasterboard'],
-      correctAnswer: 1,
+      options: [
+        'Crawl boards',
+        'Scaffold boards',
+        'Plywood sheets',
+        'Plasterboard',
+      ],
+      correctAnswer: 0,
       explanation:
         'Crawl boards are specifically designed to distribute weight safely across ceiling joists and prevent damage to ceiling materials or falls through voids.',
     },
@@ -140,10 +165,10 @@ const Module4Section7_4 = () => {
       id: 9,
       question: 'Give one practical reason to secure tools when working in risers.',
       options: [
-        'To improve tool organisation',
+        'Installation type, environment, and usage',
         'To prevent tools falling and creating hazards below',
-        'To reduce tool wear',
-        'To comply with manufacturer instructions',
+        'False - homemade or modified test equipment must never be used',
+        'Identify, isolate, secure, prove dead, prove tester',
       ],
       correctAnswer: 1,
       explanation:
@@ -153,12 +178,12 @@ const Module4Section7_4 = () => {
       id: 10,
       question: 'What should always be maintained when entering voids or risers?',
       options: [
-        'An escape route and communication',
-        'A backup power supply',
-        'A secondary PPE kit',
         'A site induction card',
+        'A backup power supply',
+        'An escape route and communication',
+        'A secondary PPE kit',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'Maintaining a clear escape route and communication with team members outside ensures emergency evacuation capability and assistance if problems occur.',
     },

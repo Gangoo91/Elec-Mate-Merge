@@ -46,11 +46,11 @@ const checks = [
       'You open a fresh drawing pack for a job you have never seen before. Which sheet do you read FIRST?',
     options: [
       'The cable schedule — so you can start ordering materials',
-      'The wiring diagram for the busiest circuit — that tells you the most',
       'The front sheet (drawing register, revision history, scale legend, title block)',
+      'The wiring diagram for the busiest circuit — that tells you the most',
       'The schedule of accessories — so you know what to buy',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Front sheet first, every time. It tells you the project name, the revision you are looking at, what every sheet in the pack is for, the scale used and any general notes. Skip it and you risk working from a superseded revision or the wrong scale — both classic apprentice traps.',
   },
@@ -59,10 +59,10 @@ const checks = [
     question:
       'On the 1:50 ground-floor plan you measure the run from the consumer unit to the kitchen ring "first socket" with a scale rule on the 1:50 face. The rule reads 4.6 m direct. The actual cable will follow the skirting and drop into a back-box. What do you write on the take-off?',
     options: [
-      '4.6 m — exactly what the rule reads',
-      '4.6 m × 50 = 230 m — multiply by the scale',
+      'Significant findings including hazards identified, who is at risk, control measures, and review date',
+      'Rewarm them gradually using blankets, dry clothing, and warm (not hot) drinks if conscious',
       'Around 5.5 m — add a sensible allowance for skirting follow, the back-box drop and a bit of slack at each end',
-      '4.6 cm — drawings are in cm',
+      'Distributed ledger technology enabling transparent, secure energy transactions and trading',
     ],
     correctIndex: 2,
     explanation:
@@ -73,10 +73,10 @@ const checks = [
     question:
       'The floor plan shows six sockets along the kitchen wall. The schedule of accessories lists eight sockets for the same kitchen, one of them an FCU for the boiler. What do you do?',
     options: [
-      'Install six — trust the floor plan, it is the visual one',
-      'Install eight — trust the schedule, it is the detailed list',
+      'Each device rated for full prospective fault current at its location',
+      'The tower can collapse or become unstable, causing falls and crushing injuries',
       'Stop, raise an RFI in writing to the designer, work with whatever they confirm in writing',
-      'Install seven — split the difference',
+      'Automatic ventilation adjustment based on occupancy or air quality sensors',
     ],
     correctIndex: 2,
     explanation:
@@ -106,12 +106,12 @@ const quizQuestions = [
     question:
       'A floor plan shows a circle with a horizontal line through it and "FCU 13A" written next to it, positioned on the kitchen wall above worktop height. What is it and what does it feed?',
     options: [
-      'A 13 A socket-outlet feeding general kitchen appliances',
+      'A short, focused, informal training session delivered at the workplace covering a specific manual handling topic relevant to current work',
+      'The exact nature of the modification, why it was necessary, who authorised it, what was changed, and ensure that drawings and documentation are updated to reflect the as-built condition',
       'A Fused Connection Unit, 13 A fuse — typically feeding a fixed appliance like a boiler, towel rail or extractor from the ring final or a radial',
-      'A 13 A MCB on the consumer unit',
-      'A 13 A indicator lamp',
+      'The area directly below the working area plus a margin for falling objects, typically established with barriers and warning signs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'FCU = Fused Connection Unit, holding a BS 1362 fuse (commonly 13 A, sometimes 3 A or 5 A). Switched and unswitched variants exist. It spurs off a ring final or radial to feed a fixed appliance and gives that appliance its own local fuse and (if switched) local isolation point.',
   },
@@ -119,8 +119,13 @@ const quizQuestions = [
     id: 3,
     question:
       'On the 1:100 first-floor plan you measure a 38 mm distance from the landing light position to the airing-cupboard wall. Real distance?',
-    options: ['0.38 m', '3.8 m', '38 m', '380 mm'],
-    correctAnswer: 1,
+    options: [
+      '38 m',
+      '0.38 m',
+      '380 mm',
+      '3.8 m',
+    ],
+    correctAnswer: 3,
     explanation:
       'At 1:100, paper × 100 = real. 38 mm × 100 = 3800 mm = 3.8 m. The mental shortcut for 1:100 is "1 cm paper = 1 m real" — 3.8 cm on paper, 3.8 m real, same answer.',
   },
@@ -129,12 +134,12 @@ const quizQuestions = [
     question:
       'The cable schedule says "Cct 4 — 2.5 mm² T&E, 32 A Type B RCBO, 30 mA". The board layout drawing shows Cct 4 protected by a "B20" device. Which do you trust?',
     options: [
-      'Cable schedule — it is the more detailed document',
-      'Board layout — the drawing wins',
       'Neither — raise an RFI, two designer documents disagreeing is an unresolved item',
-      'Whichever was issued more recently',
+      'Record tests performed and recommend further investigation',
+      'By scheduling operation based on occupancy and weather conditions',
+      'According to tables in BS 7671 based on line conductor size',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Two designer-issued documents disagreeing is an RFI every time. You do not pick. The mismatch could be a typo on one document — but it could also signal the designer changed their mind and only updated one of the two. Get it confirmed in writing before anyone wires anything.',
   },
@@ -143,10 +148,10 @@ const quizQuestions = [
     question:
       'You are about to drill into a stud wall to fix a back-box. The original layout drawing was issued three years ago, before the kitchen was extended. There is no as-built drawing for the extension. What is the safe course of action?',
     options: [
-      'Drill anyway — the drawing is the only reference you have',
+      'Consider the reading in context — compare it against the expected value based on cable size, length, and conductor material to determine if it is within acceptable limits',
       'Stop, ask the supervisor, do not drill into a wall the drawing pack does not cover until you have either an as-built or a cable detector confirms the area is clear',
-      'Drill but use a smaller bit',
-      'Drill at a different height — that always works',
+      'Tell the appointed person or first-aider so the kit is restocked, and note it in the accident book if the use was for an injury',
+      'To provide short, focused briefings on specific health and safety topics relevant to the current work activities, reinforcing safe practices and raising awareness of specific hazards',
     ],
     correctAnswer: 1,
     explanation:
@@ -157,12 +162,12 @@ const quizQuestions = [
     question:
       'The drawing pack symbol legend is incomplete — there is a symbol on the kitchen layout that is not in the legend, and it does not match anything in BS EN 60617 / IEC 60617. What does Reg 514.9.2 (A4:2026) say about this?',
     options: [
-      'Nothing — symbols are advisory',
+      'A description of the project, management structure, site rules, arrangements for monitoring compliance, emergency procedures, and specific measures for high-risk activities',
+      'A competent person must carry out a thorough inspection, all suspect components must be withdrawn, and the tower must be fully re-inspected before reuse',
       'Diagrams, charts and information notices shall comply with the applicable standards specified — non-standard symbols are a non-conformance the designer needs to fix',
-      'It only applies to consumer-unit labelling',
-      'It only applies to commercial drawings',
+      'Activities that may pollute the environment, such as waste operations, water discharges, or certain industrial processes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '514.9.2 (introduced in A4:2026) requires diagrams, charts and notices to comply with the applicable standards — and IEC 60617 is the applicable standard for graphical symbols on UK electrical drawings. A non-standard symbol on an installation drawing is a regulation non-conformance, and the right response is an RFI to the designer.',
   },
@@ -171,12 +176,12 @@ const quizQuestions = [
     question:
       'The schedule of accessories specifies "MK Logic Plus white moulded, switched, 2-gang" for every socket. The merchant has only delivered Crabtree equivalents. What do you do?',
     options: [
-      'Fit the Crabtree — they are equivalent',
+      'Assertive communication respects both your own rights and the rights of others; aggressive communication disregards others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' rights',
+      'That the label is present, legible, and the tower configuration matches the label\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s stated maximum platform height and load class',
+      'Recommended (the regulation uses "recommending" wording); mandatory in HRRBs via Building Safety Act 2022',
       'Stop, raise an RFI / Technical Query in writing, install nothing until the designer or specifier confirms the substitution in writing',
-      'Email the customer directly and ask',
-      'Fit a mix — half MK, half Crabtree',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The spec is contractually binding. "Equivalent" is not a decision you take on site — that decision belongs to the designer, the specifier or the client. Raise an RFI, get a written variation, then fit. Verbal "yeah it is fine" from a foreman is worth nothing if the snag list rejects the substitution six weeks later.',
   },
@@ -185,12 +190,12 @@ const quizQuestions = [
     question:
       'You have walked the install with the drawing pack open, ticked off every accessory location, cross-checked the schedule of accessories against the layout, and checked the cable schedule against the board configuration. The pack is consistent. What is the LAST thing to check before you start lifting tools?',
     options: [
-      'Nothing — the pack is consistent, you are good',
       "Confirm safe isolation procedure for the supply, check the RAMS for any site-specific hazards, and confirm with your supervisor what the day's priorities are",
-      'Order all the materials',
-      'Take photos for the as-built',
+      "The material assessment scores the condition and type of the ACM itself, while the priority assessment considers the likelihood of disturbance based on location and human activity",
+      "Written report including symptoms found, tests performed, results (with numerical values), root cause, repair carried out, retest results and recommendations — all dated and signed",
+      "Below-minimum or above-maximum values indicate a fault that prevents the protective measure from operating as designed — risking shock, fire, or equipment damage",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The drawing pack tells you WHAT goes where; the RAMS tells you HOW to do it safely on this specific site, and safe isolation is non-negotiable before any work on an existing supply. Confirming the day's priorities with your supervisor stops you starting on something the gang has already moved past. Drawing prep is one job; site prep is the next.",
   },

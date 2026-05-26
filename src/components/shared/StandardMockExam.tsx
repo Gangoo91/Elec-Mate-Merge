@@ -35,6 +35,7 @@ import { ExamDesktopSidebar } from '@/components/apprentice-courses/ExamDesktopS
 import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayout';
 import { toast } from 'sonner';
 import { useQuizCompletion } from '@/hooks/useQuizCompletion';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 import {
   StandardMockQuestion,
   MockExamConfig,
@@ -71,7 +72,11 @@ export const StandardMockExam = ({
 
   // Start exam
   const startExam = useCallback(() => {
-    const questions = getRandomQuestions(config.totalQuestions);
+    const picked = getRandomQuestions(config.totalQuestions);
+    // Shuffle option order per question so the correct answer isn't pinned
+    // to a single letter (banks were AI-generated B-heavy). Fresh salt per
+    // attempt → different order on retake.
+    const questions = shuffleAllQuestionOptions(picked, createShuffleSalt());
     setExamQuestions(questions);
     setSelectedAnswers(new Array(config.totalQuestions).fill(-1));
     setCurrentQuestion(0);

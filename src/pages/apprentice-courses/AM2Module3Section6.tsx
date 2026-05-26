@@ -50,12 +50,12 @@ const AM2Module3Section6 = () => {
       question:
         "What's worse in AM2 - leaving a section incomplete but safe, or rushing and leaving unsafe work?",
       options: [
-        'Incomplete work is worse',
         'Unsafe work is worse - unsafe = fail',
+        'Incomplete work is worse',
         'Both are equally bad',
         'Neither affects the assessment',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Incomplete but safe work is better than unsafe work. Unsafe work results in automatic failure, while incomplete work loses marks but may still allow a pass.',
     },
@@ -64,12 +64,12 @@ const AM2Module3Section6 = () => {
       question:
         'What does the assessor do if you run out of time and leave circuits half-finished?',
       options: [
-        'Give extra time to complete',
         "Mark only what's complete - incomplete = lost marks",
-        'Automatically fail the candidate',
-        'Allow completion the next day',
+        "Discrete components or modular equipment",
+        "Ensure clean, tight connections with proper contact area",
+        "Testing in the presence of the design team or client",
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         "Assessors mark only what's complete. Unfinished work automatically loses marks, often resulting in failure to meet pass requirements.",
     },
@@ -78,11 +78,11 @@ const AM2Module3Section6 = () => {
       question: "Can you ask for extra time if you're running behind schedule?",
       options: [
         'Yes, if you explain the reason',
-        'Yes, but only 30 minutes maximum',
         'No - the schedule is fixed',
         'Only for technical difficulties',
+        'Yes, but only 30 minutes maximum',
       ],
-      correctIndex: 2,
+      correctIndex: 1,
       explanation:
         'No extra time is available. The AM2 schedule is fixed and candidates must complete all work within the allocated timeframe.',
     },
@@ -92,7 +92,12 @@ const AM2Module3Section6 = () => {
     {
       id: 1,
       question: 'Roughly how long is allocated for the composite installation in AM2?',
-      options: ['6 hours', '8.5 hours', '10 hours', '12 hours'],
+      options: [
+        '6 hours',
+        '8.5 hours',
+        '10 hours',
+        '12 hours',
+      ],
       correctAnswer: 1,
       explanation:
         'The AM2 composite installation is allocated around 8.5 hours, requiring careful time management to complete all requirements.',
@@ -100,8 +105,13 @@ const AM2Module3Section6 = () => {
     {
       id: 2,
       question: 'Which is better if time is running out - incomplete or unsafe work?',
-      options: ['Incomplete work', 'Unsafe work', 'Both are equally bad', 'Neither matters'],
-      correctAnswer: 0,
+      options: [
+        'Both are equally bad',
+        'Neither matters',
+        'Incomplete work',
+        'Unsafe work',
+      ],
+      correctAnswer: 2,
       explanation:
         'Incomplete but safe work is always better than unsafe work. Unsafe work results in automatic failure.',
     },
@@ -109,12 +119,12 @@ const AM2Module3Section6 = () => {
       id: 3,
       question: "What's the danger of spending too long on one bend?",
       options: [
-        'Nothing - perfection matters',
+        'Anticipate future error and reduce overshoot',
+        'Lower breaking capacity, slower operation, less precise',
+        'Gather information, analyse, hypothesise, test, rectify',
         'Running out of time for critical terminations',
-        'Using too much material',
-        'Assessor gets impatient',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Spending excessive time on details like conduit bends can leave insufficient time for critical tasks like terminations.',
     },
@@ -122,12 +132,12 @@ const AM2Module3Section6 = () => {
       id: 4,
       question: 'What happens if circuits are left incomplete at the end?',
       options: [
-        'Automatic failure',
         'Marks lost for incomplete work',
-        'Given extra time',
-        'Marked as if complete',
+        'SWA (Steel Wire Armoured)',
+        'Legal and financial penalties',
+        '0.68Ω (Zs = 0.95 × 230 / 320 = 0.683Ω)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Incomplete circuits lose marks automatically. Only completed work can be assessed and credited.',
     },
@@ -135,10 +145,10 @@ const AM2Module3Section6 = () => {
       id: 5,
       question: 'Name one way to set milestones for installation:',
       options: [
-        'Work randomly',
+        'Three-phase 400V, 32A typical',
         'Set time targets for each stage',
-        'Focus on speed only',
-        'Wait until the end',
+        'Equipment that could be damaged',
+        'Electricity at Work Regulations',
       ],
       correctAnswer: 1,
       explanation:
@@ -148,12 +158,12 @@ const AM2Module3Section6 = () => {
       id: 6,
       question: 'Why should test results be recorded as you go?',
       options: [
-        'Legal requirement',
+        'Approved voltage indicator (AVI)',
+        'Easy backup, instant access, version control',
         'Prevents rushed paperwork at the end',
-        'Assessor prefers it',
-        'Saves materials',
+        'Can significantly affect some measurements',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Recording results as you progress prevents rushed, incomplete paperwork that can fail the documentation section.',
     },
@@ -161,12 +171,12 @@ const AM2Module3Section6 = () => {
       id: 7,
       question: "What do assessors expect if you're running behind schedule?",
       options: [
-        'Rush to catch up',
+        'Maintained mode for constant visibility',
+        'Gather information about the fault symptoms',
+        'Dwellings (domestic premises)',
         'Continue working methodically and safely',
-        'Ask for help',
-        'Skip safety checks',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Assessors expect continued methodical, safe work. Rushing leads to mistakes and unsafe conditions.',
     },
@@ -182,10 +192,10 @@ const AM2Module3Section6 = () => {
       id: 9,
       question: 'Give one example of a time-related mistake candidates make:',
       options: [
-        'Working too slowly',
+        'WBS defines what; schedule defines when',
         'Perfecting one detail while neglecting others',
-        'Finishing too early',
-        'Taking breaks',
+        'Only long enough to confirm operation (short duration)',
+        'Temperature sensors were miswired',
       ],
       correctAnswer: 1,
       explanation:
@@ -195,12 +205,12 @@ const AM2Module3Section6 = () => {
       id: 10,
       question: "What's the golden rule of time management in AM2?",
       options: [
-        'Speed over quality',
+        'High voltage competency certification',
+        'Optimise accuracy and safety',
         'Plan, pace, and deliver methodically',
-        'Rush everything',
-        'Focus on one circuit',
+        'Increases Re (more turbulent tendency)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Plan your approach, pace yourself appropriately, and deliver professional standards across all work methodically.',
     },

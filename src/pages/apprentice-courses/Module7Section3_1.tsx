@@ -13,7 +13,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'What does an MCB protect against?',
-    options: ['Earth leakage', 'Overcurrent conditions', 'Voltage drop', 'Power factor'],
+    options: [
+      'Voltage drop',
+      'Overcurrent conditions',
+      'Power factor',
+      'Earth leakage',
+    ],
     correctIndex: 1,
     explanation:
       'MCBs protect against overcurrent, which may result from overload or short circuit conditions, protecting conductors and equipment from overheating.',
@@ -22,20 +27,25 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What does an RCD protect against?',
     options: [
-      'Overload conditions',
+      'Pre-Construction Information',
+      'Provide detailed test data',
       'Earth leakage and electric shock',
-      'Short circuits',
-      'Voltage fluctuations',
+      'To confirm the design meets BS EN 61439',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'RCDs protect against earth leakage and electric shock by monitoring current balance between line and neutral conductors.',
   },
   {
     id: 3,
     question: 'How quickly does an RCD typically trip at 30mA leakage?',
-    options: ['Within 5 seconds', 'Within 40 milliseconds', 'Within 1 minute', 'Within 10 seconds'],
-    correctIndex: 1,
+    options: [
+      'Within 10 seconds',
+      'Within 1 minute',
+      'Within 5 seconds',
+      'Within 40 milliseconds',
+    ],
+    correctIndex: 3,
     explanation:
       'RCDs trip almost instantly, usually within 40 milliseconds at 30mA leakage current to prevent electric shock.',
   },
@@ -62,12 +72,12 @@ const Module7Section3_1 = () => {
       id: 2,
       question: 'What does an RCD protect against?',
       options: [
+        'Short circuits only',
         'Overload conditions only',
         'Earth leakage and electric shock',
-        'Short circuits only',
         'Voltage fluctuations',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'RCDs protect against earth leakage and electric shock by monitoring current balance.',
     },
@@ -75,12 +85,12 @@ const Module7Section3_1 = () => {
       id: 3,
       question: 'How does an RCD detect a fault?',
       options: [
-        'By measuring voltage levels',
+        'Crimped lugs with appropriate terminals',
+        'Increased heating due to eddy currents',
+        'The fire and rescue service incident commander',
         'By monitoring current balance between line and neutral',
-        'By checking resistance values',
-        'By measuring frequency changes',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'RCDs work by constantly monitoring the balance between current flowing out through line and returning through neutral.',
     },
@@ -88,12 +98,12 @@ const Module7Section3_1 = () => {
       id: 4,
       question: 'Give one common cause of repeated MCB tripping.',
       options: [
-        'Low voltage supply',
         'Overloaded circuit with too many appliances',
-        'High resistance connections',
-        'Poor power factor',
+        'Earth fault loop impedance at a distribution board',
+        'The designer or, if none, the principal contractor',
+        'The vertical tube that transfers loads to the ground',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Overloaded circuits with too many appliances connected are a common cause of repeated MCB tripping.',
     },
@@ -101,10 +111,10 @@ const Module7Section3_1 = () => {
       id: 5,
       question: 'Give one common cause of repeated RCD tripping.',
       options: [
-        'Too many lights on the circuit',
+        'Prevents rushed paperwork at the end',
         'Moisture ingress or deteriorating insulation',
-        'High current demand',
-        'Low voltage conditions',
+        '230V (equal sources in parallel)',
+        'Peak value divided by RMS value',
       ],
       correctAnswer: 1,
       explanation:
@@ -114,12 +124,12 @@ const Module7Section3_1 = () => {
       id: 6,
       question: 'Why must frequent tripping never be ignored?',
       options: [
-        "It's inconvenient for users",
+        'Electrical equipment being charged accidentally',
+        'Designated areas, trained banksmen, separation from other activities',
         'It indicates dangerous conditions that could lead to fire or shock',
-        'It increases electricity bills',
-        'It damages the protective device',
+        'Follow full safe isolation even for quick tests',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Frequent tripping indicates dangerous conditions; ignoring it risks fire, injury, and potentially prosecution.',
     },
@@ -128,11 +138,11 @@ const Module7Section3_1 = () => {
       question: 'What sequence of steps should an electrician follow after a device trips?',
       options: [
         'Reset immediately and monitor',
-        'Isolate, test, identify, repair, then re-energise',
-        'Replace the device with a higher rating',
         'Bypass the device temporarily',
+        'Replace the device with a higher rating',
+        'Isolate, test, identify, repair, then re-energise',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'The professional process is: isolate the circuit, test using appropriate instruments, identify and correct the fault, then re-energise.',
     },
@@ -140,12 +150,12 @@ const Module7Section3_1 = () => {
       id: 8,
       question: 'What risk arises from repeatedly resetting a device without investigation?',
       options: [
-        'Increased electricity costs',
         'Escalating hazard potentially leading to fires or shocks',
-        'Faster wear of the device',
-        'Reduced system efficiency',
+        'Danger present — risk of injury — IMMEDIATE remedial action required',
+        'Sequential control of discrete manufacturing steps',
+        'Match the phasing of building occupation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Resetting without finding the cause risks escalating the hazard, potentially leading to fires, shocks, or equipment damage.',
     },
@@ -153,10 +163,10 @@ const Module7Section3_1 = () => {
       id: 9,
       question: 'Why is it dangerous to replace a tripping breaker with a higher-rated one?',
       options: [
-        'It costs more money',
+        'A locking mechanism that can be engaged to prevent movement',
         'It removes the safety barrier that prevents serious accidents',
-        'It reduces system efficiency',
-        "It's not approved by manufacturers",
+        'All sources are deactivated (voltage→short, current→open)',
+        'To ensure safe isolation when switches are open',
       ],
       correctAnswer: 1,
       explanation:
@@ -167,12 +177,12 @@ const Module7Section3_1 = () => {
       question:
         'In the real-world example of the student flats, what fault caused the RCD to trip?',
       options: [
-        'Overloaded circuit',
+        'No, the cable capacity is insufficient',
+        'A rescue plan for retrieving a fallen worker',
         'Internal insulation fault in microwave',
-        'Damaged cable',
-        'Poor connections',
+        'Variable hours but often premium rates',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The microwave had developed an internal insulation fault, causing current to leak to earth and trip the RCD repeatedly.',
     },

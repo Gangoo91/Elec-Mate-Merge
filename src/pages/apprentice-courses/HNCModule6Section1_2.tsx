@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'sbem-purpose',
     question: 'What is the primary purpose of SBEM software?',
     options: [
-      'To design HVAC systems',
+      '7 days written notice after the final date for payment',
       'To calculate building energy performance and demonstrate Part L compliance',
-      'To specify lighting levels',
-      'To calculate electrical loads',
+      'A system that switches capacitor banks automatically based on measured power factor',
+      'Distributed ledger technology enabling transparent, secure energy transactions and trading',
     ],
     correctIndex: 1,
     explanation:
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'ber-ter-definition',
     question: 'What does BER stand for in SBEM calculations?',
     options: [
+      'Building Efficiency Ratio',
       'Building Energy Requirement',
       'Building Emission Rate',
       'Basic Energy Rating',
-      'Building Efficiency Ratio',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BER stands for Building Emission Rate - the calculated CO₂ emission rate (kgCO₂/m²/year) for the actual proposed building design. This must be equal to or less than the TER (Target Emission Rate) to achieve compliance.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'ncm-methodology',
     question: 'What does NCM stand for in building energy assessment?',
     options: [
-      'National Calculation Methodology',
-      'Non-domestic Carbon Model',
-      'Numerical Compliance Method',
       'National Certification Model',
+      'Numerical Compliance Method',
+      'Non-domestic Carbon Model',
+      'National Calculation Methodology',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'NCM stands for National Calculation Methodology - the government-approved method for calculating the energy performance of non-domestic buildings. SBEM implements the NCM to produce compliance calculations.',
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'compliance-demonstration',
     question: 'To demonstrate Part L compliance, the BER must be:',
     options: [
-      'Greater than the TER',
       'Equal to or less than the TER',
+      'Greater than the TER',
       'Within 10% of the TER',
       'Exactly equal to the TER',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "For Part L compliance, the Building Emission Rate (BER) must be equal to or less than the Target Emission Rate (TER). The lower the BER compared to TER, the better the building's energy performance.",
   },
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the notional building used for in SBEM calculations?',
     options: [
-      'To represent the actual design proposal',
+      'System type, efficiency/COP, fuel type, and control strategy',
+      'By reducing the calculated BER through on-site generation offset',
       'To establish the Target Emission Rate (TER) as a compliance benchmark',
-      'To calculate heating loads only',
-      'To determine construction costs',
+      'Improving HVAC efficiency and lighting power density',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The notional building is a hypothetical reference building with the same size, shape and use as the proposed building, but with standardised specifications. It establishes the TER that the actual building's BER must meet or beat.",
   },
@@ -112,9 +112,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which of these is NOT a required geometric input for SBEM?',
     options: [
+      'Window areas and orientation',
       'Zone floor areas',
       'External wall areas',
-      'Window areas and orientation',
       'Furniture layouts',
     ],
     correctAnswer: 3,
@@ -124,8 +124,13 @@ const quizQuestions = [
   {
     id: 4,
     question: 'What unit is used to express U-values in SBEM inputs?',
-    options: ['kW/m²K', 'W/m²K', 'W/mK', 'kJ/m²K'],
-    correctAnswer: 1,
+    options: [
+      'W/m²K',
+      'kW/m²K',
+      'W/mK',
+      'kJ/m²K',
+    ],
+    correctAnswer: 0,
     explanation:
       'U-values are expressed in W/m²K (Watts per square metre per Kelvin). This measures the rate of heat transfer through a building element per unit area for a given temperature difference. Lower U-values indicate better insulation.',
   },
@@ -135,8 +140,8 @@ const quizQuestions = [
     options: [
       'Total lighting energy consumption per year',
       'Installed lighting power per unit floor area (W/m²)',
-      'Luminaire efficiency in lumens per watt',
       'Emergency lighting battery capacity',
+      'Luminaire efficiency in lumens per watt',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,8 +151,13 @@ const quizQuestions = [
     id: 6,
     question:
       'What is the typical maximum acceptable air permeability for a new non-domestic building under Part L?',
-    options: ['15 m³/h/m² @ 50Pa', '10 m³/h/m² @ 50Pa', '5 m³/h/m² @ 50Pa', '3 m³/h/m² @ 50Pa'],
-    correctAnswer: 1,
+    options: [
+      '15 m³/h/m² @ 50Pa',
+      '5 m³/h/m² @ 50Pa',
+      '10 m³/h/m² @ 50Pa',
+      '3 m³/h/m² @ 50Pa',
+    ],
+    correctAnswer: 2,
     explanation:
       'Part L 2021 sets a maximum air permeability of 10 m³/h/m² at 50Pa for new non-domestic buildings. Better performing buildings often achieve 3-5 m³/h/m². Lower permeability reduces uncontrolled heat loss but requires adequate ventilation design.',
   },
@@ -155,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'How does SBEM account for renewable energy contributions?',
     options: [
-      'Renewables cannot be included in SBEM',
+      'To establish the Target Emission Rate (TER) as a compliance benchmark',
+      'To provide an energy rating and recommendations for the building',
+      'Installed lighting power per unit floor area (W/m²)',
       'By reducing the calculated BER through on-site generation offset',
-      'By increasing the TER to allow easier compliance',
-      'Only solar thermal is permitted',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "SBEM reduces the BER by accounting for on-site renewable energy generation such as PV, solar thermal, wind or biomass. The renewable contribution is subtracted from the building's calculated emissions to give the final BER.",
   },
@@ -168,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'What information does SBEM require about HVAC systems?',
     options: [
-      'Manufacturer brochures only',
       'System type, efficiency/COP, fuel type, and control strategy',
-      'Just the heating capacity in kW',
-      'Only the refrigerant type',
+      'By reducing the calculated BER through on-site generation offset',
+      'To establish the Target Emission Rate (TER) as a compliance benchmark',
+      'To provide an energy rating and recommendations for the building',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'SBEM requires comprehensive HVAC data including system type (e.g., VRF, chiller, gas boiler), seasonal efficiencies or COPs, fuel type, distribution losses, and control strategies. This enables accurate calculation of heating and cooling energy use.',
   },
@@ -182,10 +192,10 @@ const quizQuestions = [
     question:
       'What is the purpose of the EPC (Energy Performance Certificate) generated from SBEM?',
     options: [
-      'To prove electrical installation compliance',
+      'By reducing the calculated BER through on-site generation offset',
       'To provide an energy rating and recommendations for the building',
-      'To certify the structural design',
-      'To approve the planning application',
+      'System type, efficiency/COP, fuel type, and control strategy',
+      'Improving HVAC efficiency and lighting power density',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'When must SBEM calculations be submitted to Building Control?',
     options: [
-      'Only at completion',
+      'Full RCBO protection for each circuit',
+      'Cannot protect against live-neutral shock',
       'At design stage and as-built stage',
-      'Only if the building fails compliance',
-      'Every five years',
+      '7.28Ω (Zs = 0.95 × 230 / (5 × 6) = 7.283Ω)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SBEM calculations are required at two stages: design stage (with Building Regulations application) to demonstrate intended compliance, and as-built stage (at completion) to confirm the constructed building meets the design performance.',
   },
@@ -208,12 +218,12 @@ const quizQuestions = [
     id: 11,
     question: 'Which factor has the greatest impact on reducing BER in a typical office building?',
     options: [
-      'Increasing wall thickness',
+      'By reducing the calculated BER through on-site generation offset',
+      'The percentage by which BER is below TER',
+      'To provide an energy rating and recommendations for the building',
       'Improving HVAC efficiency and lighting power density',
-      'Adding more windows',
-      'Using heavier construction materials',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In offices, HVAC and lighting typically account for 60-70% of regulated energy use. Improving system efficiencies (higher COP chillers, efficient boilers) and reducing lighting power density through LED technology have the greatest impact on BER.',
   },
@@ -221,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the compliance margin in SBEM terminology?',
     options: [
-      'The error tolerance in measurements',
       'The percentage by which BER is below TER',
-      'The maximum building size that can be modelled',
       'The acceptable window-to-wall ratio',
+      'The error tolerance in measurements',
+      'The maximum building size that can be modelled',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Compliance margin is the percentage difference between BER and TER, expressed as (TER-BER)/TER × 100. A positive margin indicates the building exceeds minimum requirements. Larger margins provide contingency for as-built variations.',
   },

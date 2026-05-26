@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'cont-purpose',
     question: 'What is the primary purpose of protective conductor continuity testing?',
     options: [
-      'To verify the insulation between conductors',
+      'It requires that fire safety arrangements, including evacuation plans, make reasonable adjustments for disabled persons to ensure they are not placed at a substantial disadvantage',
+      'Being able to identify the component\\\\\\\\\\\\\\\'s manufacturer, batch/lot number, date of manufacture, specification, and supply chain — from manufacture to installation',
       'To confirm that the circuit protective conductor (CPC) provides a continuous, low-resistance path for fault current to flow back to the source, ensuring protective devices operate within the required disconnection time',
-      'To measure the voltage drop across the circuit',
-      'To check the current-carrying capacity of the cable',
+      'All permits, risk assessments, atmospheric monitoring records, training records, equipment inspection records, CCTV footage, witness statements, and the scene itself',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Protective conductor continuity testing confirms that the CPC provides a continuous, low-resistance earth fault path from every point in the circuit back to the source. This is essential for safety — if a line-to-earth fault occurs, the fault current must be sufficient to operate the protective device (MCB, fuse, or RCD) within the maximum disconnection time specified by BS 7671.',
   },
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'cont-r1r2',
     question: 'What does the R1+R2 measurement represent?',
     options: [
-      'The total resistance of two separate circuits added together',
+      'Death OR physical or mental impairment resulting in lifelong dependency on third party care for basic needs OR significantly reduced life expectancy.',
       'The combined resistance of the line conductor (R1) and the circuit protective conductor (R2) measured end-to-end from the distribution board to the furthest point of the circuit',
-      'The resistance of two earth rods in parallel',
-      'The resistance of the neutral and earth conductors',
+      'PUWER requires that all equipment used in confined spaces (including gas detectors, ventilation fans, breathing apparatus, and communication systems) is suitable, maintained, and used by trained persons',
+      'Factors including long hours, time away from family, job insecurity, physical demands, and a culture of not talking about feelings',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'cont-ring-test',
     question: 'Why is a specific three-step test procedure required for ring final circuits?',
     options: [
-      'Because ring circuits are more expensive to install',
+      'Use a pulling grip ("Chinese finger trap") that grips the cable&rsquo;s OUTER SHEATH evenly along its length, distributing the pull force without stressing the conductor.',
       'To verify that the ring is continuous (no breaks), that cross-connections have not been made, and to obtain accurate R1+R2 values at each socket outlet',
-      'Because ring circuits use thicker cable than radial circuits',
-      'To measure the voltage at each socket outlet',
+      'A specific risk assessment must be carried out for pregnant workers, and the task must be modified or avoided if a significant risk is identified',
+      'Express your views as opinions rather than disguised facts, using language like "I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m wondering..." or "It seems to me..."',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     question:
       'What type of instrument is used for continuity testing, and what test current does BS 7671 require?',
     options: [
-      'An insulation resistance tester at 500 V d.c.',
+      'Evacuate the scaffold and surrounding area immediately, raise the alarm, and do not re-enter until declared safe',
       'A low-resistance ohmmeter capable of delivering a test current of not less than 200 mA from a no-load voltage between 4 V and 24 V d.c.',
-      'A clamp meter measuring in amps',
-      'A multimeter set to the a.c. voltage range',
+      'The panel\'s IP rating is maintained after the work — all covers, gaskets and cable entries are properly refitted and sealed',
+      'A core requirement — maintenance technicians must demonstrate environmental awareness, sustainable working practices and continuous improvement in their professional behaviour',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'Continuity of circuit protective conductors should be tested:',
     options: [
-      'Only during the initial installation',
+      'Explain the safety reasons, outline the work involved, and offer to break it into phases if possible',
       'During initial verification and at each subsequent periodic inspection, as well as after any repair or modification to the circuit',
-      'Only if a fault is suspected',
-      'Only on circuits above 32 A',
+      'Slightly lower accuracy than the high-current test (factor of 2-3 in resolution) but adequate for verifying compliance with Table 41.3',
+      'Team members felt safe to take interpersonal risks — to speak up, ask questions, admit mistakes, and propose ideas without fear of punishment or humiliation',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: 'When performing a continuity test, the circuit must be:',
     options: [
-      'Energised at normal supply voltage',
+      'To detect the presence and approximate position of underground cables and pipes',
+      'To protect against overcurrent and short circuit faults',
       'De-energised, isolated, and proved dead before connecting the test instrument',
-      'Connected to a temporary 110 V supply',
-      'Tested while under normal load conditions',
+      'Advance notification, coordination meetings, and progress updates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'All continuity testing must be carried out on de-energised circuits. The circuit must be isolated, locked off, and proved dead using the prove-test-prove procedure before connecting the low-resistance ohmmeter. Testing on live circuits would damage the instrument and endanger the technician.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'A continuity test on a protective conductor gives a reading of 0.5 Ω. The technician should:',
     options: [
-      'Reject the circuit immediately',
+      'Because a lower test current may not detect high-resistance joints or poor connections that would be significant under fault conditions',
+      'Determine the earth fault loop impedance at the furthest point of the circuit (Zs = Ze + R1+R2) and verify that the protective device will disconnect within the required time',
+      'That there is a continuous, low-resistance connection between the main earthing terminal and each extraneous-conductive-part (gas, water, structural steelwork)',
       'Consider the reading in context — compare it against the expected value based on cable size, length, and conductor material to determine if it is within acceptable limits',
-      'Multiply the reading by two to get the true value',
-      'Record it as satisfactory without further consideration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A continuity reading must be evaluated in context. The expected resistance depends on the cable size (cross-sectional area), length, and conductor material (copper or aluminium). Published resistance tables in BS 7671 and the IET On-Site Guide provide the resistance per metre for each conductor size. If the measured value significantly exceeds the expected value, this indicates a poor connection, damaged conductor, or incorrect cable size.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       'During a ring final circuit continuity test, the technician measures the end-to-end resistance of the line conductor ring (L-L) as 0.8 Ω and the CPC ring (E-E) as 1.2 Ω. What would be the expected reading at the mid-point socket outlet after cross-connecting?',
     options: [
-      '2.0 Ω',
       'Approximately 0.5 Ω (one quarter of the sum of L-L and E-E readings)',
-      '0.8 Ω',
-      '1.2 Ω',
+      'A description of the fault, the investigation process, findings, and recommended actions',
+      'Systems automatically adjust start/stop times based on external temperature',
+      'Distributing available power across multiple charge points to prevent overload',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'After cross-connecting line to CPC at the distribution board, the reading at the approximate mid-point of the ring should be close to one quarter of the sum of the individual end-to-end readings: (0.8 + 1.2) / 4 = 0.5 Ω. This is because at the mid-point, you are measuring two parallel paths of equal resistance. This value represents the R1+R2 at the furthest point of the ring.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does a significantly higher-than-expected continuity reading indicate?',
     options: [
-      'The cable is too short',
+      'Make proper use of control measures and PPE provided by the employer, and report defects',
       'A high-resistance joint, loose connection, damaged conductor, or incorrect cable size in the circuit',
-      'The test instrument battery is fully charged',
-      'The circuit is correctly installed',
+      'Segregated into its own skip — the disposal cost is much lower and it can often be reused or recycled as aggregate',
+      'Identify hazards, Decide who might be harmed, Evaluate risks, Record findings, Review',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 6,
     question: 'Before taking continuity measurements, the test leads should be:',
     options: [
-      'Connected to the supply for calibration',
+      'Because a lower test current may not detect high-resistance joints or poor connections that would be significant under fault conditions',
+      'De-energised, isolated, and proved dead before connecting the test instrument',
       'Nulled (zeroed) by short-circuiting them together and subtracting the lead resistance from subsequent readings',
-      'Replaced with new leads before every test',
-      'Tested at 500 V d.c. to check their insulation',
+      'A high-resistance joint, loose connection, damaged conductor, or incorrect cable size in the circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Test lead resistance can be significant — typically 0.01 to 0.05 Ω — and must be subtracted from readings to obtain accurate circuit resistance values. Most modern instruments have a null function that stores the lead resistance and automatically subtracts it. If the instrument does not have this function, the lead resistance must be measured and manually subtracted from each reading.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 7,
     question: 'In a TT earthing system, continuity testing of the circuit protective conductor:',
     options: [
-      'Is not required because the earth electrode provides the return path',
+      'Because a lower test current may not detect high-resistance joints or poor connections that would be significant under fault conditions',
+      'Consider the reading in context — compare it against the expected value based on cable size, length, and conductor material to determine if it is within acceptable limits',
+      'A possible break in the neutral ring, an interconnection, or the neutral being connected to a different ring — further investigation is required',
       'Is still essential to verify a continuous path from each point in the circuit to the main earthing terminal, even though the return path to the source is via the earth',
-      'Should be carried out at 1000 V d.c.',
-      'Only needs to be done on circuits protected by RCDs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In a TT system, continuity of the CPC from each point in the circuit to the main earthing terminal is still essential. The CPC must provide a low-resistance path to the earth electrode. While the earth fault return path is through the mass of earth (and Ze is typically much higher than in TN systems), the CPC within the installation must still be continuous for the RCD to detect the fault current.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     question:
       'When testing the continuity of main and supplementary bonding conductors, the test verifies:',
     options: [
-      'That the bonding conductor has sufficient insulation',
       'That there is a continuous, low-resistance connection between the main earthing terminal and each extraneous-conductive-part (gas, water, structural steelwork)',
-      'That the bonding conductor can carry the full load current',
-      'That the bonding conductor is the correct colour',
+      'Use a temporary link (a known, measured length of conductor) at the far end to join the line and CPC, then test from the near end — recording and subtracting the link resistance',
+      'Consider the reading in context — compare it against the expected value based on cable size, length, and conductor material to determine if it is within acceptable limits',
+      'A possible break in the neutral ring, an interconnection, or the neutral being connected to a different ring — further investigation is required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Bonding conductor continuity testing verifies that a continuous, low-resistance connection exists between the main earthing terminal and each extraneous-conductive-part that could introduce a potential from outside the electrical installation. This includes incoming gas and water pipes, structural steelwork, and other metallic services. The test ensures that these parts are maintained at or near earth potential to prevent dangerous touch voltages.',
   },
@@ -178,10 +178,10 @@ const quizQuestions = [
     question:
       'A ring final circuit test reveals that the end-to-end resistance of the neutral ring is significantly different from the line ring, despite both being the same size cable. This suggests:',
     options: [
-      'Normal variation that can be ignored',
+      'Because a lower test current may not detect high-resistance joints or poor connections that would be significant under fault conditions',
       'A possible break in the neutral ring, an interconnection, or the neutral being connected to a different ring — further investigation is required',
-      'The neutral cable is a different material',
-      'The test instrument is faulty',
+      'Nulled (zeroed) by short-circuiting them together and subtracting the lead resistance from subsequent readings',
+      'Consider the reading in context — compare it against the expected value based on cable size, length, and conductor material to determine if it is within acceptable limits',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,12 +191,12 @@ const quizQuestions = [
     id: 10,
     question: 'The R1+R2 value obtained from continuity testing is used to:',
     options: [
-      'Calculate the cable voltage drop',
+      'Consider the reading in context — compare it against the expected value based on cable size, length, and conductor material to determine if it is within acceptable limits',
+      'Because a lower test current may not detect high-resistance joints or poor connections that would be significant under fault conditions',
       'Determine the earth fault loop impedance at the furthest point of the circuit (Zs = Ze + R1+R2) and verify that the protective device will disconnect within the required time',
-      'Select the correct fuse rating',
-      'Calculate the power consumed by the circuit',
+      'Is still essential to verify a continuous path from each point in the circuit to the main earthing terminal, even though the return path to the source is via the earth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The R1+R2 value is added to the external earth fault loop impedance (Ze) to calculate the total earth fault loop impedance (Zs) at the furthest point of the circuit. This Zs value must not exceed the maximum permitted for the protective device type and rating, ensuring that sufficient fault current flows to operate the device within the disconnection time specified by BS 7671 (0.4 s for socket outlet circuits, 5 s for fixed equipment circuits in TN systems).',
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     question:
       'When testing a long cable run, the technician cannot reach both ends simultaneously. An acceptable method is:',
     options: [
-      'Estimate the resistance based on the cable specification',
+      'Consider the reading in context — compare it against the expected value based on cable size, length, and conductor material to determine if it is within acceptable limits',
+      'Because a lower test current may not detect high-resistance joints or poor connections that would be significant under fault conditions',
+      'That there is a continuous, low-resistance connection between the main earthing terminal and each extraneous-conductive-part (gas, water, structural steelwork)',
       'Use a temporary link (a known, measured length of conductor) at the far end to join the line and CPC, then test from the near end — recording and subtracting the link resistance',
-      'Test only one conductor and double the result',
-      'Use a higher test voltage to overcome the distance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'When both ends of a cable cannot be accessed simultaneously, a temporary link of known resistance can be connected at the far end to bridge between the line conductor and the CPC. The technician then tests from the near end. The measured value includes the link resistance, which must be subtracted to obtain the true R1+R2. This method is commonly used for long cable runs in large buildings.',
   },
@@ -218,12 +218,12 @@ const quizQuestions = [
     id: 12,
     question: 'Why is the minimum test current of 200 mA specified for continuity testing?',
     options: [
-      'To save battery power in the test instrument',
       'Because a lower test current may not detect high-resistance joints or poor connections that would be significant under fault conditions',
-      'To match the typical RCD operating current',
-      'Because 200 mA is the standard for all electrical tests',
+      'Is still essential to verify a continuous path from each point in the circuit to the main earthing terminal, even though the return path to the source is via the earth',
+      'Consider the reading in context — compare it against the expected value based on cable size, length, and conductor material to determine if it is within acceptable limits',
+      'Nulled (zeroed) by short-circuiting them together and subtracting the lead resistance from subsequent readings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A minimum test current of 200 mA is specified because high-resistance joints and poor connections may appear to have acceptable resistance when tested at very low currents, but their resistance increases significantly under the higher currents that flow during a fault. The 200 mA minimum ensures that such defective connections are detected during testing rather than causing a failure under fault conditions.',
   },

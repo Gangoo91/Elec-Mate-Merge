@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'straight-joint',
     question: 'What is the primary purpose of a straight-through cable joint?',
     options: [
-      'To change the cable from single-core to multicore',
+      'Spills above certain thresholds must be reported to the Environment Agency, and the firm needs to investigate the cause to prevent a repeat',
+      'Zooming into specific areas, measuring distances between features, and searching for components by tag number',
       'To repair a damaged section of cable or extend a cable run while maintaining electrical continuity, insulation integrity and mechanical protection',
-      'To reduce the cable cross-sectional area',
-      'To convert AC to DC',
+      'The assessor looks for evidence that confirms their pre-existing opinion of the learner while ignoring contradictory evidence',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "A straight-through joint connects two cable ends to maintain electrical continuity, restore insulation integrity and provide mechanical protection equivalent to the original cable. The joint must maintain the cable's current-carrying capacity, insulation resistance, and where applicable, the earth continuity of the armour or screen.",
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'When terminating a steel wire armoured (SWA) cable, the gland serves which dual function?',
     options: [
-      'It provides a watertight seal only',
+      'Assess the situation calmly, contact HMRC about Time to Pay if needed, speak to StepChange or Citizens Advice, and adjust spending to essentials',
+      'A trade union rep or a work colleague at the grievance meeting (statutory right under the Employment Relations Act 1999)',
+      'It is likely AIB; it should be presumed to contain asbestos, recorded in the register, and sampled or managed accordingly',
       'It mechanically clamps the cable armour to provide both mechanical retention and an earth continuity connection through the armour',
-      'It only provides an earth connection',
-      'It is purely decorative',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'An SWA cable gland (e.g., CW or BW type) serves two critical functions: it mechanically clamps the wire armour to provide strain relief and cable retention, and it provides a low-resistance earth continuity connection between the cable armour and the earthing system of the enclosure. Both functions are essential for safety — failure of either can result in cable pull-out or loss of earth continuity.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'Why must crimped connections be made using the correct die size in a calibrated crimp tool?',
     options: [
-      'To make the crimp look neat',
+      'The ladder may not be properly secured, the scaffold may not be designed for this load point, and it bypasses controlled access',
+      'Digital actuators move to fully open or closed positions, analog actuators modulate to precise positions',
+      'To conduct their undertaking so as to ensure, so far as is reasonably practicable, that persons not in their employment are not exposed to risks to their health or safety',
       'To achieve the correct compression that ensures a gas-tight connection with the specified mechanical strength and current-carrying capacity',
-      'Because regulations require a specific colour of crimp',
-      'To satisfy insurance requirements only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Correct crimp die size produces the precise compression needed for a gas-tight metal-to-metal contact between the conductor and the crimp terminal. Under-crimping results in a loose connection with high resistance, leading to overheating. Over-crimping damages the conductor strands, reducing the cross-sectional area and weakening the joint. Only calibrated tools with matching dies produce reliable crimps.',
   },
@@ -55,8 +55,13 @@ const quickCheckQuestions = [
     id: 'ir-after-joint',
     question:
       'What minimum insulation resistance value would you expect to achieve after completing a cable joint on a 400 V circuit?',
-    options: ['0.25 MΩ', '0.5 MΩ', '1.0 MΩ or greater (per BS 7671 Table 6.3)', '10 kΩ'],
-    correctIndex: 2,
+    options: [
+      '1.0 MΩ or greater (per BS 7671 Table 6.3)',
+      'Current assumed to flow from positive to negative',
+      'Power is proportional to speed cubed',
+      'Financial Conduct Authority (FCA)',
+    ],
+    correctIndex: 0,
     explanation:
       'BS 7671 Table 6.3 specifies a minimum insulation resistance of 1.0 MΩ for circuits operating above 50 V up to and including 500 V, tested at 500 V DC. A properly made joint should achieve significantly higher values — typically tens or hundreds of megohms. A reading at or near the minimum indicates a potential issue with the joint quality that warrants investigation.',
   },
@@ -81,12 +86,12 @@ const quizQuestions = [
     id: 2,
     question: 'When making a heat shrink joint, the heat gun temperature should be:',
     options: [
-      'As high as possible to speed up the process',
+      'CW type for outdoor, BW type for indoor — but for SWA cable entering steel enclosures, a CW gland with an earthing tag is typically used',
+      'Situations where the joint may be submerged in water or buried directly in the ground, as the resin provides a watertight and mechanically robust seal',
       'Set to the temperature recommended by the joint kit manufacturer and applied evenly, working from the centre outward to expel air and moisture',
-      'Applied to one spot until fully shrunk before moving on',
-      'The same temperature regardless of the cable size or joint type',
+      'Correct torque ensures a reliable low-resistance connection — too loose causes overheating, too tight damages the terminal or conductor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The heat gun must be set to the manufacturer's recommended temperature (typically 100-130°C for standard heat shrink). Heat must be applied evenly, working from the centre of the joint outward towards each end to expel trapped air and moisture. Overheating damages the cable insulation and can cause the heat shrink material to burn or become brittle. Uneven heating results in incomplete shrinkage and potential voids.",
   },
@@ -94,12 +99,12 @@ const quizQuestions = [
     id: 3,
     question: 'Resin-filled cable joints are particularly suitable for:',
     options: [
-      'Temporary repairs only',
+      'CW type for outdoor, BW type for indoor — but for SWA cable entering steel enclosures, a CW gland with an earthing tag is typically used',
+      'It allows a new cable to be connected into an existing cable run without breaking the through circuit, creating a T-shaped junction',
+      'Correct torque ensures a reliable low-resistance connection — too loose causes overheating, too tight damages the terminal or conductor',
       'Situations where the joint may be submerged in water or buried directly in the ground, as the resin provides a watertight and mechanically robust seal',
-      'Indoor lighting circuits only',
-      'Joints where future disassembly is required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Resin joints provide excellent protection against moisture ingress and mechanical damage, making them the preferred choice for underground cable joints and joints in damp or submerged locations. The two-part resin is mixed and poured into a mould around the joint, where it sets to form a solid, waterproof and electrically insulating barrier. Once set, resin joints are permanent and cannot be disassembled.',
   },
@@ -107,12 +112,12 @@ const quizQuestions = [
     id: 4,
     question: 'When stripping SWA cable for gland termination, the critical dimensions are:',
     options: [
-      'Not important — strip as much as needed',
       "The armour strip length (determined by the gland size), the outer sheath strip length, the inner sheath strip length, and the conductor tail length — all specified in the gland manufacturer's installation guide",
-      'Only the conductor tail length matters',
-      'All cables are stripped to the same dimensions regardless of size',
+      "XLPE insulation must be handled with extreme cleanliness — contamination (fingerprints, moisture, dust) on the insulation surface can cause partial discharge sites and eventual failure",
+      "Insulation resistance test between all conductors and earth and between conductors, continuity test of all conductors through the joint, and visual inspection of the completed joint",
+      "Twist the strands tightly, insert fully into the ferrule, and crimp with the correct tool using the matching die — verify the ferrule is correctly shaped with no strand visible outside the ferrule",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Each dimension is critical for a correct gland installation: the outer sheath strip length must allow the gland compression ring to seat correctly, the armour strip length must provide enough armour for the gland to clamp securely, the inner sheath strip provides insulation between the armour and conductors, and the conductor tails must be long enough for termination but not so long as to create excess conductor in the enclosure.',
   },
@@ -120,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: 'The correct crimping sequence for a bootlace ferrule on a stranded conductor is:',
     options: [
-      'Insert the conductor, then crimp with pliers',
+      'To control the electrical stress concentration at the point where the cable insulation screen is cut back, preventing partial discharge and eventual insulation breakdown',
       'Twist the strands tightly, insert fully into the ferrule, and crimp with the correct tool using the matching die — verify the ferrule is correctly shaped with no strand visible outside the ferrule',
-      'Solder the strands first, then insert into the ferrule',
-      'Cut the conductor flush and push directly into the terminal',
+      'To ensure correct phase identification is maintained across the joint — incorrect phasing can cause motor reversal, equipment damage, or dangerous cross-connections',
+      'Set to the temperature recommended by the joint kit manufacturer and applied evenly, working from the centre outward to expel air and moisture',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +139,10 @@ const quizQuestions = [
     question:
       'What type of SWA gland is suitable for indoor use with a cable entering a steel enclosure?',
     options: [
-      'CW type (indoor/outdoor weatherproof)',
-      'BW type (indoor unarmoured cable gland)',
+      'To ensure correct phase identification is maintained across the joint — incorrect phasing can cause motor reversal, equipment damage, or dangerous cross-connections',
+      'It allows a new cable to be connected into an existing cable run without breaking the through circuit, creating a T-shaped junction',
       'CW type for outdoor, BW type for indoor — but for SWA cable entering steel enclosures, a CW gland with an earthing tag is typically used',
-      'Any gland will work regardless of location',
+      'To control the electrical stress concentration at the point where the cable insulation screen is cut back, preventing partial discharge and eventual insulation breakdown',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,12 +152,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why should cable cores be individually identified (marked) before jointing?',
     options: [
-      'To make the joint look professional',
+      'Insulation resistance test between all conductors and earth and between conductors, continuity test of all conductors through the joint, and visual inspection of the completed joint',
+      'Correct torque ensures a reliable low-resistance connection — too loose causes overheating, too tight damages the terminal or conductor',
+      'To control the electrical stress concentration at the point where the cable insulation screen is cut back, preventing partial discharge and eventual insulation breakdown',
       'To ensure correct phase identification is maintained across the joint — incorrect phasing can cause motor reversal, equipment damage, or dangerous cross-connections',
-      'Identification is not necessary for joints',
-      'Only for three-phase cables above 25 mm²',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Core identification ensures that each conductor is reconnected to its correct counterpart across the joint. In three-phase circuits, incorrect phasing causes motor reversal and equipment damage. In control circuits, cross-connections can cause dangerous maloperation. BS 7671 requires cable identification throughout, and joints must maintain this identification using colour-coded heat shrink sleeves, ferrule markers or other permanent marking methods.',
   },
@@ -161,12 +166,12 @@ const quizQuestions = [
     question:
       'After completing a cable joint, which tests should be carried out BEFORE the cable is re-energised?',
     options: [
-      'No testing is required — visual inspection is sufficient',
       'Insulation resistance test between all conductors and earth and between conductors, continuity test of all conductors through the joint, and visual inspection of the completed joint',
-      'Only a continuity test',
-      'Only a voltage test',
+      'XLPE insulation must be handled with extreme cleanliness — contamination (fingerprints, moisture, dust) on the insulation surface can cause partial discharge sites and eventual failure',
+      'To ensure correct phase identification is maintained across the joint — incorrect phasing can cause motor reversal, equipment damage, or dangerous cross-connections',
+      'To control the electrical stress concentration at the point where the cable insulation screen is cut back, preventing partial discharge and eventual insulation breakdown',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "After jointing, a minimum of three tests must be carried out: insulation resistance (to confirm the joint's insulation integrity — minimum 1.0 MΩ for LV per BS 7671), continuity (to confirm each conductor is correctly connected through the joint with acceptable resistance), and a thorough visual inspection (to check for exposed conductors, correct sealing, and mechanical integrity). These tests verify both the electrical and physical quality of the joint.",
   },
@@ -174,10 +179,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of stress control in medium voltage (MV) cable terminations?',
     options: [
-      'To make the termination physically stronger',
+      'XLPE insulation must be handled with extreme cleanliness — contamination (fingerprints, moisture, dust) on the insulation surface can cause partial discharge sites and eventual failure',
       'To control the electrical stress concentration at the point where the cable insulation screen is cut back, preventing partial discharge and eventual insulation breakdown',
-      'To reduce the weight of the termination',
-      "To improve the cable's current-carrying capacity",
+      'It allows a new cable to be connected into an existing cable run without breaking the through circuit, creating a T-shaped junction',
+      'The armour strip length (determined by the gland size), the outer sheath strip length, the inner sheath strip length, and the conductor tail length — all specified in the gland manufacturer\\\\\\\\\\\\\\\'s installation guide',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,12 +192,12 @@ const quizQuestions = [
     id: 10,
     question: 'Torque values for electrical terminal connections are important because:',
     options: [
-      'They are only a guideline and can be ignored',
+      'To ensure correct phase identification is maintained across the joint — incorrect phasing can cause motor reversal, equipment damage, or dangerous cross-connections',
+      'Situations where the joint may be submerged in water or buried directly in the ground, as the resin provides a watertight and mechanically robust seal',
       'Correct torque ensures a reliable low-resistance connection — too loose causes overheating, too tight damages the terminal or conductor',
-      'Higher torque always means a better connection',
-      'Torque only matters for connections above 100 A',
+      'CW type for outdoor, BW type for indoor — but for SWA cable entering steel enclosures, a CW gland with an earthing tag is typically used',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Torque-controlled connections are essential for reliable electrical joints. Under-torqued connections result in high contact resistance and localised heating — a leading cause of electrical fires. Over-torqued connections damage terminal threads, crush conductor strands, and crack terminal blocks, all of which create unreliable connections. BS 7671 Regulation 526.2 requires connections to be mechanically and electrically reliable, and manufacturer's torque specifications provide the benchmark.",
   },
@@ -201,12 +206,12 @@ const quizQuestions = [
     question:
       'When jointing XLPE-insulated cables, which precaution is particularly important compared to PVC cables?',
     options: [
-      'XLPE cables are easier to joint than PVC',
+      'Correct torque ensures a reliable low-resistance connection — too loose causes overheating, too tight damages the terminal or conductor',
+      'Set to the temperature recommended by the joint kit manufacturer and applied evenly, working from the centre outward to expel air and moisture',
+      'CW type for outdoor, BW type for indoor — but for SWA cable entering steel enclosures, a CW gland with an earthing tag is typically used',
       'XLPE insulation must be handled with extreme cleanliness — contamination (fingerprints, moisture, dust) on the insulation surface can cause partial discharge sites and eventual failure',
-      'XLPE cables cannot be jointed at all',
-      'No special precautions are needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'XLPE (cross-linked polyethylene) insulation is highly sensitive to contamination. Even fingerprints or microscopic dust particles can create weak points in the insulation where partial discharge can initiate under voltage stress. Jointing XLPE cables requires scrupulous cleanliness: clean hands or gloves, lint-free cleaning materials, and protection from rain, dust and condensation. This is especially critical for MV and HV cable joints where the voltage stress is high.',
   },
@@ -214,12 +219,12 @@ const quizQuestions = [
     id: 12,
     question: 'A branch joint (tee joint) in a cable differs from a straight joint in that:',
     options: [
-      'It is simpler to make',
       'It allows a new cable to be connected into an existing cable run without breaking the through circuit, creating a T-shaped junction',
-      'It can only be used underground',
-      'It does not require insulation resistance testing',
+      'CW type for outdoor, BW type for indoor — but for SWA cable entering steel enclosures, a CW gland with an earthing tag is typically used',
+      'Set to the temperature recommended by the joint kit manufacturer and applied evenly, working from the centre outward to expel air and moisture',
+      'Correct torque ensures a reliable low-resistance connection — too loose causes overheating, too tight damages the terminal or conductor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A branch (tee) joint allows a tap-off connection from an existing cable without interrupting the through circuit. The joint must maintain the current-carrying capacity of both the through cable and the branch, provide adequate insulation for all conductors, and where applicable, maintain the earth continuity of the cable armour for all three cable sections. Branch joints are more complex than straight joints and require careful planning of conductor connections and insulation build-up.',
   },

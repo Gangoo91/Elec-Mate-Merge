@@ -27,7 +27,12 @@ const quickCheckQuestions = [
     id: 'bs5266-monthly',
     question:
       'What is the maximum interval for functional testing of emergency luminaires under BS 5266-1?',
-    options: ['Weekly', 'Monthly', 'Quarterly', 'Six-monthly'],
+    options: [
+      'Six-monthly',
+      'Monthly',
+      'Quarterly',
+      'Weekly',
+    ],
     correctIndex: 1,
     explanation:
       'BS 5266-1 requires emergency luminaires to receive a brief functional test at intervals not exceeding one month to verify they illuminate when the normal supply fails.',
@@ -35,7 +40,12 @@ const quickCheckQuestions = [
   {
     id: 'bs5839-weekly',
     question: 'How often must fire alarm systems be tested by the user under BS 5839-1?',
-    options: ['Daily', 'Weekly', 'Monthly', 'Quarterly'],
+    options: [
+      'Daily',
+      'Weekly',
+      'Quarterly',
+      'Monthly',
+    ],
     correctIndex: 1,
     explanation:
       'BS 5839-1 requires weekly testing of fire alarm systems, with a different manual call point tested each week so that all call points are tested within a 13-week cycle.',
@@ -45,12 +55,12 @@ const quickCheckQuestions = [
     question:
       "Under the Regulatory Reform (Fire Safety) Order 2005, who is the 'responsible person'?",
     options: [
-      'The fire brigade',
-      'The building control officer',
+      'Knowledge, training, experience, and understanding of hazards',
+      'Provides consistent, accurate bends with less physical effort',
+      'Minimum current from supply (maximum impedance)',
       'The employer or person in control of the premises',
-      'The insurance company',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "The RRO defines the 'responsible person' as the employer (for workplaces), or the person who has control of the premises, or the owner. They must ensure fire safety measures are maintained.",
   },
@@ -58,12 +68,12 @@ const quickCheckQuestions = [
     id: 'fra-coordination',
     question: 'How often should a fire risk assessment typically be reviewed?',
     options: [
-      'Only when there is a fire',
-      'Every 5 years',
       'Annually or when significant changes occur',
-      'Only when requested by the fire authority',
+      'By multiplying likelihood and severity scores',
+      'Lower than individual readings due to parallel paths',
+      'At design stage (RIBA Stage 3-4)',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Fire risk assessments should be reviewed at least annually, or sooner if there are significant changes to the premises, occupancy, work processes, or if the assessment is no longer valid.',
   },
@@ -74,8 +84,13 @@ const quizQuestions = [
     id: 1,
     question:
       'Under BS 5266-1, what is the duration of the full rated duration test for emergency lighting?',
-    options: ['1 hour', '2 hours', 'The full rated duration (typically 3 hours)', '30 minutes'],
-    correctAnswer: 2,
+    options: [
+      'Use appropriate sealing gaskets or compounds',
+      'The full rated duration (typically 3 hours)',
+      'Correct type, rating, and indicator status',
+      'Creating a loop in the bus topology',
+    ],
+    correctAnswer: 1,
     explanation:
       'The annual test must verify the emergency luminaires operate for their full rated duration, which is typically 3 hours for most commercial premises, though some high-risk applications may require longer.',
   },
@@ -83,8 +98,13 @@ const quizQuestions = [
     id: 2,
     question:
       'How frequently must emergency lighting systems be inspected and tested by a competent person under BS 5266-1?',
-    options: ['Monthly', 'Quarterly', 'Six-monthly', 'Annually'],
-    correctAnswer: 3,
+    options: [
+      'Six-monthly',
+      'Monthly',
+      'Annually',
+      'Quarterly',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 5266-1 requires annual inspection and testing by a competent person, including verification of full rated duration, illumination levels, and system integrity.',
   },
@@ -92,8 +112,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Under BS 5839-1, what is the recommended maximum period between services by a competent person?',
-    options: ['Monthly', 'Quarterly', 'Six-monthly', 'Annually'],
-    correctAnswer: 2,
+    options: [
+      'Quarterly',
+      'Monthly',
+      'Annually',
+      'Six-monthly',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS 5839-1 recommends fire alarm systems be serviced at intervals not exceeding six months by a competent person, who should inspect, test, and maintain all system components.',
   },
@@ -101,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'The Regulatory Reform (Fire Safety) Order 2005 applies to:',
     options: [
-      'Only industrial premises',
-      'Only buildings over 18m in height',
       'All non-domestic premises and common areas of residential buildings',
-      'Only premises with more than 50 occupants',
+      'Promptly, before the modifications are put into use',
+      'Recorded in the log book and as-built drawings updated',
+      'To ensure test frequencies match risk levels and changes are captured',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The RRO applies to virtually all non-domestic premises in England and Wales, including workplaces, commercial premises, and the common areas of blocks of flats and HMOs.',
   },
@@ -114,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'What documentation must be maintained for emergency lighting under BS 5266-1?',
     options: [
-      'Only the original installation certificate',
+      'Define what each device does when activated and system responses',
       'A log book recording all tests, inspections, and defects',
-      'Only annual inspection reports',
-      'No documentation is required',
+      'All non-domestic premises and common areas of residential buildings',
+      'Recorded in the log book and as-built drawings updated',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'During the weekly fire alarm test, what should be recorded?',
     options: [
-      'Only that the test was carried out',
+      'Recorded in the log book and as-built drawings updated',
+      'Promptly, before the modifications are put into use',
       'The call point tested, date, time, and any faults',
-      'Only faults found',
-      "Nothing - weekly tests don't require documentation",
+      'A log book recording all tests, inspections, and defects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The log book should record the date and time of each test, which call point was tested, the name of the person conducting the test, and any faults or false alarms.',
   },
@@ -140,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is an automatic test system (ATS) for emergency lighting?',
     options: [
-      'A system that automatically illuminates during a fire',
+      'A log book recording all tests, inspections, and defects',
+      'Recorded in the log book and as-built drawings updated',
+      'All non-domestic premises and common areas of residential buildings',
       'A system that automatically tests and records emergency luminaire function',
-      'A system that tests sprinklers',
-      'A system that tests fire alarms',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An ATS automatically initiates and monitors tests of emergency luminaires at programmed intervals, records results, and reports failures, reducing manual testing requirements while ensuring compliance.',
   },
@@ -153,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'Under the RRO, failure to comply with fire safety requirements can result in:',
     options: [
-      'A verbal warning only',
       'Enforcement notices, prohibition notices, or prosecution',
-      'Only recommendations for improvement',
-      'Automatic insurance invalidation',
+      'Recorded in the log book and as-built drawings updated',
+      'Define what each device does when activated and system responses',
+      'A log book recording all tests, inspections, and defects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The fire authority can issue enforcement notices requiring improvements, prohibition notices preventing use of premises, or prosecute responsible persons. Serious breaches can result in unlimited fines or imprisonment.',
   },
@@ -179,12 +204,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of coordinating testing schedules with fire risk assessments?',
     options: [
-      'To reduce testing costs',
+      'Promptly, before the modifications are put into use',
+      'Define what each device does when activated and system responses',
       'To ensure test frequencies match risk levels and changes are captured',
-      'To avoid testing during business hours',
-      'To simplify insurance claims',
+      'All non-domestic premises and common areas of residential buildings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Coordination ensures testing frequencies are appropriate for the risk level, that any changes identified in the FRA trigger appropriate testing, and that test results inform FRA reviews.',
   },
@@ -192,12 +217,12 @@ const quizQuestions = [
     id: 11,
     question: 'BS 5839-1 requires cause and effect documentation to:',
     options: [
-      'Record insurance details',
+      'To ensure test frequencies match risk levels and changes are captured',
+      'All non-domestic premises and common areas of residential buildings',
+      'Recorded in the log book and as-built drawings updated',
       'Define what each device does when activated and system responses',
-      'List emergency contact numbers',
-      'Specify paint colours for devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cause and effect documentation specifies how the system responds to each trigger - which zones activate, what outputs operate (sounders, door releases, lifts), and any time delays or staged responses.',
   },
@@ -206,12 +231,12 @@ const quizQuestions = [
     question:
       'When must a fire risk assessment be updated following emergency system modifications?',
     options: [
-      'Only if the fire authority requests it',
-      'At the next scheduled annual review',
       'Promptly, before the modifications are put into use',
-      'Only if there is a fire incident',
+      'Recorded in the log book and as-built drawings updated',
+      'Enforcement notices, prohibition notices, or prosecution',
+      'A log book recording all tests, inspections, and defects',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The FRA should be reviewed and updated before modified systems are put into use to ensure the changes don't introduce new risks and that the overall fire safety strategy remains valid.",
   },

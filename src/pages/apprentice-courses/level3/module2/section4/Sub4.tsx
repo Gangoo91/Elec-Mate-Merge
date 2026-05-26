@@ -42,12 +42,12 @@ const checks = [
     question:
       "A customer has a TN-C-S (PME) domestic supply and wants a 7 kW EV charger fitted on the outside wall of the house, with a tethered cable used to charge the car parked on the driveway. Can you simply use the property's PME earthing facility for the charge point's protective conductor contact?",
     options: [
-      "Yes — PME earthing is fine for any outdoor circuit.",
       "Not directly. Reg 722.411.4 applies to TN systems and addresses requirements where a PME earthing facility would otherwise be used as the means of earthing for the protective conductor contact(s) of a charging point located outdoors or that might reasonably be expected to be used to charge a vehicle outdoors. It sets alternative methods (b) to (e) that shall be used instead of using the PME facility directly. The four routes are an installation earth electrode, a device that disconnects on out-of-window utilisation voltage between line and neutral within 5 s, an alternative device or equivalent functionality within charging equipment that electrically disconnects the vehicle from the live conductors and from protective earth, or other compliant arrangements.",
-      "Yes — but only if you fit a Type B RCD.",
-      "Yes — PME prohibition only applies to commercial chargers.",
+      "Adding a battery changes the maximum potential export from the property and changes the inverter behaviour as seen from the network. ENA G98 (single-phase up to 16 A per phase) and G99 (above 16 A or three-phase) require the combined system to be notified. For a connect-and-notify install (G98) the installer notifies the DNO within 28 days of energising. For G99 the installer applies in advance and the DNO returns connection conditions before energising. The MCS-certified installer handles the paperwork; the apprentice should understand that the existing PV notification does not cover the added storage.",
+      "Dedicated 13 A or 16 A supply on a 6 A or 10 A MCB, in 1.5 mm² T&E to the unit location (utility room, loft, plant cupboard). Local DP isolator. Boost wiring from kitchens and bathrooms — sometimes via humidity sensors or PIR, sometimes via pull-cord switches in bathrooms or push-buttons in kitchens. Some units include a low-voltage commissioning interface (e.g. for installer-set air-flow rates). The unit's nameplate is typically 50-300 W on full load — modest demand. The bulk of the electrical work is the boost wiring network, not the unit supply.",
+      "A 1-page document in plain English: (1) WHAT YOU REPORTED — customer's symptom in their words. (2) WHAT WE FOUND — the fault, in plain English. (3) WHAT WE DID — the fix, in plain English. (4) WHAT WE TESTED — the verification, in plain English. (5) RECOMMENDATIONS — anything further the customer should consider. (6) WARRANTY — what's covered for what period. (7) NEXT STEPS — any follow-up work, retest schedule, contact info. Most modern firms have a customer summary template; the apprentice fills it in at the end of each job. Customer keeps the summary; firm keeps the technical job sheet.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The open-PEN risk is the rationale. On a TN-C-S supply the PEN conductor combines neutral and protective earth between the substation and the cut-out. If the PEN breaks open between the substation and the property, the property's earthing rises toward line voltage (depending on load balance on neighbouring properties). For an EV charging on a driveway the touch-voltage between the car body and the surrounding ground (concrete, soil, gravel) becomes potentially lethal because the ground is not at PME potential. Reg 722.411.4 requires one of methods (b) to (e) — an installation earth electrode (with maximum resistance per Annex A722.3 to keep MET-to-earth voltage at most 70 V RMS under PEN open-circuit), a 207 to 253 V utilisation-voltage detection device with disconnection within 5 s, or equivalent functionality built into the charging equipment.",
   },
@@ -56,10 +56,10 @@ const checks = [
     question:
       "An installer has skipped the AFDD on a final circuit feeding a 22 kW three-phase EV charger. The charger conforms to the BS EN 61851 series and the connector conforms to BS EN IEC 62196-2. Is this Section 722 compliant?",
     options: [
-      "No — AFDDs are recommended (Reg 421.1.7) on every EV charger circuit.",
+      "Directly — every tool in the cable-prep kit (auto strippers, ratchet crimpers, preset torque drivers, calibrated test instruments) exists to deliver consistent, repeatable, manufacturer-spec terminations. 'Good workmanship' is delivered through the tools as much as through the operative's skill. An apprentice using the right tool the right way produces 134.1.1-compliant work; using the wrong tool (knife strip, plier crimp, eyeballed torque) produces work that fails 134.1.1 even if it tests OK on the day.",
       "Yes — Reg 722.421.1.7.201 states that AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series. The verifier should confirm by manufacturer declaration, marking, datasheet or test report that the equipment conforms to BS EN 61851 and that any socket-outlet or vehicle connector conforms to BS EN IEC 62196-2. Where evidence is present, the AFDD exemption applies legitimately.",
-      "Yes — AFDDs are never required on three-phase circuits.",
-      "No — AFDDs are required on every circuit over 16 A.",
+      "Yes — apprentices are workers and Reg 15 applies in full. The competence duty in Reg 15(1)(a) is satisfied because apprentices are 'in the process of obtaining' the competence (which is why they're always supervised). The report-hazards duty (Reg 15(1)(b)) and the co-operation duty (Reg 15(1)(c)) apply identically to apprentices and to fully-qualified electricians.",
+      "The topology of the installation — supply origin, every sub-main, every distribution board, every protective device, every final-circuit group — represented in single-line form (one line per cable regardless of how many conductors it actually has). Plus annotations: ratings, cable sizes, fault levels, Ze, PSCC, Zs, breaker types.",
     ],
     correctIndex: 1,
     explanation:
@@ -70,12 +70,12 @@ const checks = [
     question:
       "A designer proposes using a non-conducting location and earth-free local equipotential bonding as the protective measures for an EV charging area. Section 722 — accept or reject?",
     options: [
-      "Accept — both are valid protective measures under BS 7671.",
+      "Give as much advance notice as possible of the day's plan, the week's plan and any expected changes. Provide written or visual schedules where possible. When changes are unavoidable, explain the reason calmly and give the apprentice a moment to adjust. Provide clear, unambiguous instructions ('start at the kitchen, do the back-boxes first, the cable will be in the loft'). Avoid unwritten rules and 'common sense' assumptions. Many autistic workers thrive on predictability and clear structure — giving that structure costs nothing and improves performance.",
+      "Take ALL adequate precautions: secure isolation (lock-off + key in pocket, not left in lock); a warning notice at the point of isolation; in some installations a separate caution at the point of work; voltage proving on a known live source before AND after testing the isolation; all to prevent the equipment becoming live again whilst work is in progress. Talking to the customer about not touching it is part of the precaution chain.",
+      "Verify polarity LIVE during the energised testing in Section 4 — confirm at the supply origin that L and N are correctly identified per the supply provider, and verify single-pole switches at every accessory really do interrupt the line as designed. The dead test catches static wiring errors; the live test catches errors at the supply or hidden swaps further upstream.",
       "Reject. Reg 722.410.3.6 prohibits the use of non-conducting location and earth-free local equipotential bonding within Chapter 72 (EV charging installations). The designer must select alternative protective measures permitted within Chapter 72 and elsewhere in BS 7671 — typically protective earthing with ADS, RCDs at the rated residual operating current required by Section 722, and where applicable SELV / PELV. Reg 722.410.3.5 separately prohibits obstacles and placing out of reach within Section 722 scope.",
-      "Accept — but only in agricultural premises.",
-      "Accept — Section 722 leaves protective measure selection entirely to the designer.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Section 722 explicitly prohibits four specific protective measures — obstacles, placing out of reach (722.410.3.5), non-conducting location, and earth-free local equipotential bonding (722.410.3.6). The reasoning is that EV charging brings members of the public (and their vehicles) into electrical contact with the installation in conditions that those four measures cannot safely manage. The acceptable protective measures are the conventional Part 4 set — ADS with appropriate RCDs, SELV / PELV where applicable, and double or reinforced insulation. The required action is direct — any design proposing non-conducting location or earth-free bonding in an EV charging context shall be revised.",
   },
@@ -87,11 +87,11 @@ const quizQuestions = [
     question:
       "What is the scope of BS 7671:2018+A4:2026 Section 722, and which configuration triggers it?",
     options: [
-      "Only commercial public charging — domestic chargers are outside Section 722.",
+      "They have a continuing duty under EAWR Reg 4 (system in safe condition) AND a contractual duty to put the work right. Failure to act on discovery, especially if anyone could be exposed to the danger, could be a criminal offence under EAWR. Notify the client immediately, isolate the affected circuit if necessary, return to remedy.",
       "Section 722 applies to circuits intended to supply electric vehicles for charging purposes. Applicability is based on circuit intent at design and installation, not on whether the circuit is being used at any given moment for EV charging. Domestic, commercial, public, dedicated and shared circuits all fall within scope where the intent is EV charging.",
-      "Only chargers above 7 kW output.",
-      "Only three-phase chargers.",
-      ],
+      "Socket 12 is on a spur off the ring. The extra resistance (0.36 - 0.19 = 0.17 Ω) is the round-trip length of the spur cable in series with the ring midpoint reading. One unfused spur per outlet on the ring is permitted; document the spur cable size and length on the schedule.",
+      "Because L3 starts to be looked to as a quasi-supervisor and starts to influence others. Knowing where YOU sit in the duty stack — and where ELSE the duty sits — lets you make accurate decisions, escalate correctly, and avoid being unwittingly drawn into a duty cascade you didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t recognise.",
+    ],
     correctAnswer: 1,
     explanation:
       "The applicability test is precise — the circuit must be intended to supply EVs for charging. A general-purpose 13 A socket sometimes used for granny-charging is in scope only if the circuit design intent includes EV charging. A dedicated EV charging final circuit is always in scope. Section 722 is one of the most actively revised sections of BS 7671 — A1:2020 introduced significant changes, and A4:2026 incorporated A1:2020 alongside further changes affecting EV charging installations.",
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       "What does Reg 722.411.4 require where a PME (TN-C-S) earthing facility would otherwise be used for the protective conductor contact of an outdoor EV charging point?",
     options: [
-      "It permits PME earthing to be used directly with a Type AC RCD.",
+      "The Apprentice, the College Tutor and the Workplace Mentor (with the Employer's training lead or HR sometimes attending as a fourth voice). The three-way review is the formal sit-down where progress is calibrated, gaps identified, and the next month's targets agreed. It's the structural mechanism that stops academic and practical sides drifting apart.",
+      "A dutyholder named under BSA 2022 for an occupied higher-risk residential building. The Accountable Person is responsible for the building's safety case, for managing building safety risks, and for maintaining the golden thread of information. The Principal Accountable Person is the lead AP where multiple APs exist.",
       "Reg 722.411.4 applies to TN systems and addresses requirements where a PME earthing facility would otherwise be used as the means of earthing for the protective conductor contact(s) of a charging point located outdoors or that might reasonably be expected to be used to charge a vehicle outdoors. It sets alternative methods (b) to (e) that shall be used instead of using the PME facility directly as the charging-point protective-earth connection.",
-      "It permits PME earthing only on three-phase chargers.",
-      "It removes any earthing requirement for outdoor chargers.",
-      ],
-    correctAnswer: 1,
+      "It marks the entry as absolute hazardous waste — always hazardous regardless of concentration or test result. Non-asterisked entries are non-hazardous; entries with mirror codes (one starred, one not) require a hazardous-property assessment on the specific waste before deciding which code applies. The List of Waste regulations and the Environment Agency technical guidance set out the assessment methodology.",
+    ],
+    correctAnswer: 2,
     explanation:
       "The scope of Reg 722.411.4 makes the rule and the rationale clear. The PME (Protective Multiple Earthing) arrangement is fine for the property as long as the PEN remains intact, but a broken PEN raises the property's earth potential toward line voltage. For an EV on a driveway the surrounding ground stays at true earth potential while the car body sits at the elevated PME potential — the touch voltage can be lethal. The four alternative routes manage that risk in different ways.",
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       "How does Reg 722.411.4(b) propose to manage the open-PEN risk for an outdoor EV charger?",
     options: [
-      "By bonding the chassis of the car to the property's PME earthing.",
+      "Pass. The maximum trip time at 1 x I delta n for a general-purpose 30 mA RCD is 300 ms per the product standard, and the system disconnection time is 400 ms (TN) or 200 ms (TT) per Table 41.1. 35 ms is well under all limits. A trip time of 35 ms is typical for a healthy modern RCD; older RCDs may give 80-200 ms — also within limits. Trip times near or exceeding 300 ms suggest the RCD is approaching end of life and should be replaced.",
+      "A \\\\\\\"skilled person (electrically)\\\\\\\" as defined in BS 7671 Part 2 — typically evidenced by membership of a competent person scheme (NICEIC, NAPIT, ELECSA, Stroma) and current 2391/2394/2395 (or equivalent) inspection and testing qualification. The duty-holder is liable if they appoint someone not competent.",
+      "Investigate. Expected R2 for 20 m of 1.5 mm² Cu is approximately 0.24 Ω. 0.85 Ω is roughly 3.5 × the expected value — strongly suggests a poor termination (loose terminal at an accessory, oxidised connection in a junction box) or a partly broken CPC. Trace through the circuit, retighten or replace the suspect connection, retest.",
       "By providing an installation earth electrode connected to the main earthing terminal of the installation by a protective conductor complying with Regulation 544.1.1, used as the means of earthing for the charging point protective conductor contact. The earth electrode resistance is determined per Annex A722.3 to ensure the MET-to-earth voltage does not exceed 70 V RMS under a PEN open-circuit fault.",
-      "By installing a Type B RCD only.",
-      "By switching the charger off whenever the wind blows.",
-      ],
-    correctAnswer: 1,
+    ],
+    correctAnswer: 3,
     explanation:
       "Method (b) creates a true earth reference at the property by driving an installation earth electrode and using that as the earthing reference for the charge point. Annex A722 Item A722.3 gives guidance on the maximum resistance for that electrode — set so that, even under a PEN open-circuit fault, the MET-to-earth voltage does not exceed 70 V RMS. That 70 V threshold is below the touch-voltage hazard limit. The earth electrode and the PME earthing remain bonded together in the property, so the difference between the car body and the surrounding ground stays inside the safe envelope.",
   },
@@ -129,12 +129,12 @@ const quizQuestions = [
     question:
       "How does Reg 722.411.4(d) propose to manage the open-PEN risk through a utilisation-voltage detection device?",
     options: [
-      "By measuring DC voltage on the charging cable.",
       "Protection against electric shock shall be provided by a device which electrically disconnects the vehicle from the live conductors of the supply and from protective earth in accordance with Regulation 543.3.3.101(b) within 5 s in the event of the utilisation voltage at the charging point, between the line and neutral conductors, being greater than 253 V RMS or less than 207 V RMS. The device shall provide isolation and be selected in accordance with Table 537.4.",
-      "By measuring the speed of any approaching vehicle.",
-      "By switching the supply to DC during charging.",
-      ],
-    correctAnswer: 1,
+      "No — there's a London weighting (typically £2-3/hr extra for work inside the M25), a separate set of SJIB rates for Scotland, and travel allowances vary. The headline JIB hourly rate is the national minimum for the grade; London-weighted rates apply on top for inner-London work. Always check your contract for which rate applies.",
+      "It means the local LV cable, transformer or upstream HV network can’t safely accept the additional export without reinforcement (typically a transformer upgrade or cable replacement). The customer either pays for the reinforcement (often £10,000+), accepts an export-limited install (the inverter is throttled to a lower export rating), or chooses not to proceed.",
+      "Because the retail trading hours can't be disrupted. Floor lifts, ceiling tile removal, dust generation and circuit isolation all interfere with shoppers and staff. Out-of-hours work (typically 8pm to 6am for high-street retail) lets the work proceed without affecting trade. Prep includes agreed access times, security pass arrangements, fire-alarm coordination (if temporary detector covers are needed) and a formal hand-back at end of shift.",
+    ],
+    correctAnswer: 0,
     explanation:
       "Method (d) detects the open-PEN condition indirectly through its effect on utilisation voltage. When a PEN opens, the property's neutral floats relative to true earth and the line-to-neutral voltage at the property either rises or falls depending on the load balance on neighbouring properties on the same PEN. The 207 V to 253 V window (231 V plus or minus 10 percent — the standard tolerance for nominal 230 V) is the test — outside that window, the device disconnects the vehicle within 5 seconds, electrically separating it from both live conductors and from protective earth. Many modern dedicated EV chargers integrate this detection internally — Reg 722.411.4(e) covers the 'alternative device or equivalent functionality within charging equipment' route on that basis.",
   },
@@ -143,11 +143,11 @@ const quizQuestions = [
     question:
       "What does Reg 722.421.1.7.201 say about AFDDs on EV charging circuits, and what evidence does the verifier need?",
     options: [
-      "AFDDs are recommended (Reg 421.1.7) on every EV charging circuit.",
+      "Code it on the EICR (C1 immediate danger / C2 potentially dangerous / C3 improvement recommended / FI further investigation). Inform the customer / dutyholder. Recommend remedial action with timescales appropriate to the code. C1 requires immediate action — make safe on the day. The EICR itself is the formal report; it goes to the dutyholder.",
       "AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series. Acceptance of the exemption requires verification that the EV charging equipment conforms to the BS EN 61851 series (manufacturer declaration, marking, datasheet or test report) and that any socket-outlet or vehicle connector incorporated in the EV charging equipment conforms to BS EN IEC 62196-2.",
-      "AFDDs are required only on three-phase circuits.",
-      "AFDDs are forbidden on EV charging circuits.",
-      ],
+      "No fixed minimum in regulations — driven by needs assessment. HSE ACOP L74 gives indicative numbers (low-hazard: 1 appointed person for &lt;25 employees; 1 EFAW for 25-50; 1 FAW for &gt;50; high-hazard: more demanding). Construction and electrical work generally falls in higher-hazard band.",
+      "Gather and preserve facts at the scene; provide a contemporaneous written account; notify the responsible person immediately; assist with form completion if asked; provide witness information; preserve evidence; cooperate with any HSE follow-up. The operative isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t normally the report-maker but is the source of the facts.",
+    ],
     correctAnswer: 1,
     explanation:
       "Section 722 carves out a specific AFDD exemption for compliant EV charging equipment because the BS EN 61851 series imposes its own arc-detection regime within the charging equipment. The acceptance rules are explicit — the exemption applies only with documentary evidence of conformity. A verifier accepting the exemption without documentation is operating outside Section 722.",
@@ -157,12 +157,12 @@ const quizQuestions = [
     question:
       "Which protective measures does Section 722 explicitly prohibit for EV charging installations?",
     options: [
-      "RCDs and double insulation.",
+      "When the circuit supplies multiple loads that will not all run simultaneously at full power. Apply diversity to the connected load before deriving Ib. For a dedicated single-load circuit (single shower, single hob), no diversity applies — Ib equals the rated current of the load.",
+      "Establish a full exclusion zone with barriers minimum 6 metres from the base, deploy adequate task and area lighting, station banksmen at all access points, display warning signs, ensure all personnel wear enhanced high-visibility clothing, have a traffic management plan approved by the local authority, and confirm the rescue plan accounts for reduced visibility",
       "Reg 722.410.3.5 prohibits obstacles and placing out of reach (Section 417 measures). Reg 722.410.3.6 prohibits non-conducting location and earth-free local equipotential bonding. Designers must select alternative protective measures permitted within Chapter 72 and elsewhere in BS 7671 — typically ADS with appropriate RCDs, SELV / PELV where applicable, and double or reinforced insulation.",
-      "ADS and SELV.",
-      "Earthing of the charging equipment.",
-      ],
-    correctAnswer: 1,
+      "Yes — properly so. Lighthouse, Samaritans, EIC, Mind all operate strict confidentiality. Calls are not recorded for sharing; staff are bound by confidentiality agreements; details are not shared with employers or any third party (except in specific circumstances of immediate risk to life under safeguarding rules). You can call anonymously if you prefer. The fear of being identified is one of the things that keeps people from calling — but the confidentiality is real.",
+    ],
+    correctAnswer: 2,
     explanation:
       "The four prohibited measures are deliberately narrow. They are unsafe in EV charging contexts because members of the public (the customer, family, visitors) interact with the installation while connected to a vehicle that is itself connected to the surrounding ground. Obstacles and placing out of reach do not cope with a connected charging cable. Non-conducting location and earth-free bonding do not cope with the vehicle being inherently part of the protective system. The required action is direct — designs proposing those measures must be revised before installation.",
   },
@@ -171,12 +171,12 @@ const quizQuestions = [
     question:
       "What is the open-PEN problem on a TN-C-S supply, and why does it specifically threaten an outdoor EV charging point on a driveway?",
     options: [
-      "The PEN cable becomes oversized and overheats.",
+      "STOP the original fault investigation. The disconnected CPC is a Code 1 (Danger Present — immediate action required) defect under the EICR coding system — the metal lampholders, ceiling roses and ceiling-mounted accessories on this circuit have NO earth fault path, so a fault to exposed metalwork won't operate the protective device and the metalwork will sit at phase voltage. Make the situation safe — either re-terminate the CPC properly OR isolate the circuit and label 'OUT OF SERVICE — CPC FAULT — do not re-energise'. Inform the customer in writing. Then resume original fault investigation if the customer agrees to the additional work.",
+      "Propose a scope that includes everything that can be safely tested live (visual inspection, thermographic survey of switchgear, RCD test buttons, live tests on circuits where safe to do so) and clearly excludes what cannot be tested without isolation, recording the exclusion under Limitations with the recommendation that the duty holder schedule a planned outage for full testing within an agreed period. Note any FI for items the live-only inspection cannot fully verify.",
+      "Because recycling preserves the material value (the metal, the polymer, the glass) for re-use in new manufacturing, whereas energy recovery destroys the material and recovers only the chemical energy. Under the waste hierarchy, keeping materials in productive use is preferred over extracting one-time energy from them. Energy from waste sits above landfill because at least some value (electricity / heat) is recovered, but it sits below recycling because the material is lost.",
       "On a TN-C-S supply the PEN conductor combines neutral and protective earth between the substation and the cut-out. If the PEN breaks open between the substation and the property, the property's earthing rises toward line voltage depending on the load balance on neighbouring properties on the same PEN. For an EV on a driveway, the car body sits at the elevated PME potential while the surrounding ground (concrete, soil, gravel) stays at true earth potential — the touch-voltage between the car body and the ground can be lethal.",
-      "The PEN reverses polarity.",
-      "The PEN attracts lightning to the charging point.",
-      ],
-    correctAnswer: 1,
+    ],
+    correctAnswer: 3,
     explanation:
       "Open-PEN is the engineering term and it is the central rationale for Reg 722.411.4. Inside the property an open PEN raises every exposed-conductive-part to elevated PME potential simultaneously, so simultaneous-touch hazards within the property are largely managed by the bonding scheme. Outside the property the surrounding ground is not part of that bonded scheme — the driveway concrete sits at true earth potential while the bonded EV body sits at PME potential. That mismatch is the hazard. The four routes of Reg 722.411.4 manage it either by establishing a true earth reference at the property (route b), by detecting the open PEN through its voltage signature and disconnecting (route d), or by relying on equivalent functionality within the charging equipment (route e).",
   },
@@ -185,12 +185,12 @@ const quizQuestions = [
     question:
       "What is the role of Annex A722 Item A722.3 in applying Reg 722.411.4(b), and how does it determine acceptance?",
     options: [
-      "It sets the colour of the charge-point housing.",
       "Annex A722 Item A722.3 gives guidance on determining the maximum resistance required for the earth electrode in route (b). The resistance must be low enough to ensure that, under a PEN open-circuit fault, the MET-to-earth voltage does not exceed 70 V RMS. That keeps the touch voltage between the car body and the surrounding ground within the safe envelope. Acceptance on site requires the calculated maximum resistance, the measured electrode resistance, and a record showing the measured value is at or below the calculated maximum.",
-      "It sets the maximum charging current.",
-      "It sets the colour of the cable used.",
-      ],
-    correctAnswer: 1,
+      "Reg 722.410.3.5 prohibits obstacles and placing out of reach (Section 417 measures). Reg 722.410.3.6 prohibits non-conducting location and earth-free local equipotential bonding. Designers must select alternative protective measures permitted within Chapter 72 and elsewhere in BS 7671 — typically ADS with appropriate RCDs, SELV / PELV where applicable, and double or reinforced insulation.",
+      "Five questions. (1) IS PARTS AVAILABLE? Older MCBs may be obsolete; replacement requires new model. (2) IS REPAIR EVEN POSSIBLE? Most MCBs are sealed units; 'repair' usually means swap. (3) IS THE EXISTING DESIGN STILL APPROPRIATE? Modern installations may need RCBO (RCD + MCB combined) instead of MCB-only. (4) WILL THE NEW COMPONENT FIT THE BUSBAR? Some old CUs need full CU replacement to fit modern devices. (5) WHAT'S THE OVERALL CU AGE / CONDITION? If the CU itself is approaching end of life (typical 25–30 years), full CU replacement may be the right call. Engineering decision is rarely just 'repair vs replace one device'.",
+      "Cooperate fully with your employer's investigation. Provide a calm, factual account of what happened — what you did, when, with what materials, against what specification, with what test results, with what documentation. Don't speculate about the customer's motives. Don't post about it on social media. Don't approach the customer directly. The employer will manage the customer relationship; your job is to give your employer the evidence base they need to respond.",
+    ],
+    correctAnswer: 0,
     explanation:
       "The 70 V threshold is the touch-voltage limit set by the wider BS 7671 framework for these conditions. Annex A722 Item A722.3 lets the designer back-calculate the maximum permissible electrode resistance from the supply characteristics. Acceptance is by calculation plus measurement plus documentation — the design pack records the calculated maximum, the commissioning record records the measured value, and the EIC notes both.",
   },

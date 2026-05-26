@@ -34,8 +34,13 @@ const quickCheckQuestions = [
   {
     id: 'hse-steps',
     question: 'How many steps are there in the HSE risk assessment process?',
-    options: ['3 steps', '4 steps', '5 steps', '6 steps'],
-    correctIndex: 2,
+    options: [
+      '4 steps',
+      '5 steps',
+      '6 steps',
+      '3 steps',
+    ],
+    correctIndex: 1,
     explanation:
       'The HSE five steps to risk assessment are: (1) Identify hazards, (2) Decide who might be harmed, (3) Evaluate risks and decide on precautions, (4) Record significant findings, (5) Review and update.',
   },
@@ -43,12 +48,12 @@ const quickCheckQuestions = [
     id: 'risk-calculation',
     question: 'How is risk typically calculated in a risk matrix?',
     options: [
-      'Likelihood + Severity',
-      'Likelihood × Severity',
       'Severity ÷ Likelihood',
       'Likelihood - Severity',
+      'Likelihood × Severity',
+      'Likelihood + Severity',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Risk = Likelihood × Severity. This multiplication gives a risk score that helps prioritise which hazards need immediate attention and which control measures are most appropriate.',
   },
@@ -56,10 +61,10 @@ const quickCheckQuestions = [
     id: 'review-frequency',
     question: 'When must a risk assessment be reviewed?',
     options: [
-      'Only annually',
-      'Only when an accident occurs',
+      'Equipment remains live when switched \\\\\\\'off\\\\\\\'',
+      'Open plan offices over 60m² and sports halls',
       'When circumstances change or at regular intervals',
-      'Only when HSE requests it',
+      'Limited access for tools and reduced working space',
     ],
     correctIndex: 2,
     explanation:
@@ -69,8 +74,13 @@ const quickCheckQuestions = [
     id: 'five-employees',
     question:
       'Risk assessments must be recorded in writing when an employer has how many employees?',
-    options: ['Any number', '3 or more', '5 or more', '10 or more'],
-    correctIndex: 2,
+    options: [
+      '10 or more',
+      '5 or more',
+      'Any number',
+      '3 or more',
+    ],
+    correctIndex: 1,
     explanation:
       'Under the Management of Health and Safety at Work Regulations 1999, employers with 5 or more employees must record the significant findings of their risk assessments in writing.',
   },
@@ -93,7 +103,12 @@ const quizQuestions = [
   {
     id: 2,
     question: "On a 5×5 risk matrix, what risk score range is typically classified as 'High Risk'?",
-    options: ['1-4', '5-9', '10-16', '17-25'],
+    options: [
+      '17-25',
+      '1-4',
+      '10-16',
+      '5-9',
+    ],
     correctAnswer: 2,
     explanation:
       "On a 5×5 matrix (scores 1-25), high risk is typically 10-16. Scores of 17-25 are usually 'Very High' or 'Intolerable', while 5-9 is 'Medium' and 1-4 is 'Low'.",
@@ -103,12 +118,12 @@ const quizQuestions = [
     question:
       'Which group of people must be specifically considered when identifying who might be harmed?',
     options: [
-      'Only employees doing the work',
+      'A crane, chain block, or hydraulic gantry rated for the transformer\\\\\\\\\\\\\\\'s weight',
+      'A persistent fault still exists on the circuit',
+      'At least 10 years after the last machine in the series is manufactured',
       'Employees, contractors, visitors, and members of the public',
-      'Only qualified electricians',
-      'Only management personnel',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Step 2 requires considering everyone who might be affected, including employees, contractors, cleaners, visitors, maintenance staff, delivery drivers, and members of the public who may be nearby.',
   },
@@ -116,12 +131,12 @@ const quizQuestions = [
     id: 4,
     question: "What does 'ALARP' mean in risk assessment terminology?",
     options: [
-      'Always Lower All Risk Priorities',
       'As Low As Reasonably Practicable',
+      'Always Lower All Risk Priorities',
       'Assess Likelihood And Risk Potential',
       'Apply Legal And Regulatory Procedures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "ALARP means 'As Low As Reasonably Practicable'. Risks should be reduced to this level, balancing the cost and effort of further reduction against the benefits gained.",
   },
@@ -129,8 +144,13 @@ const quizQuestions = [
     id: 5,
     question:
       'In a 3×3 risk matrix with severity levels Low (1), Medium (2), and High (3), what is the risk score for a hazard with Medium likelihood and High severity?',
-    options: ['3', '5', '6', '9'],
-    correctAnswer: 2,
+    options: [
+      '5',
+      '6',
+      '9',
+      '3',
+    ],
+    correctAnswer: 1,
     explanation:
       "Risk = Likelihood × Severity. Medium likelihood (2) × High severity (3) = 6. This would typically be classified as a 'High' risk requiring control measures.",
   },
@@ -138,12 +158,12 @@ const quizQuestions = [
     id: 6,
     question: 'What must be included when recording significant findings?',
     options: [
-      'Only the hazards identified',
+      'By showing how BMS improves compliance and efficiency',
+      'Unique circuit references, load descriptions, and protective device coordination',
       'Hazards, people at risk, existing controls, and further actions needed',
-      'Only the control measures in place',
-      'Only accidents that have occurred',
+      'All metered energy including electricity, gas, oil, and district heating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Significant findings must include: the hazards identified, groups of people who might be harmed, existing control measures, risk ratings, and any further actions required to reduce risk.',
   },
@@ -151,7 +171,12 @@ const quizQuestions = [
     id: 7,
     question:
       'When working on live LV electrical equipment, what severity rating would electric shock typically receive on a 5-point scale?',
-    options: ['1 - Negligible', '2 - Minor', '4 - Major', '5 - Catastrophic'],
+    options: [
+      '1 - Negligible',
+      '2 - Minor',
+      '4 - Major',
+      '5 - Catastrophic',
+    ],
     correctAnswer: 3,
     explanation:
       'Electric shock from LV equipment (230V/400V) can cause fatality, so it typically receives a severity rating of 5 (Catastrophic) or 4 (Major) depending on the specific circumstances and voltage levels.',
@@ -160,12 +185,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which of the following would trigger an immediate review of a risk assessment?',
     options: [
-      "A colleague's birthday",
       'A near-miss incident',
       'Good weather conditions',
+      "A colleague's birthday",
       'Normal daily operations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Near-miss incidents indicate that controls may be inadequate and the risk assessment should be reviewed immediately. Other triggers include accidents, new equipment, process changes, or new information about hazards.',
   },
@@ -174,10 +199,10 @@ const quizQuestions = [
     question:
       'For a cable installation project in a busy office, which hazard would typically have the HIGHEST likelihood rating?',
     options: [
-      'Electric shock from 230V supply',
+      'By paying Class 2 voluntary contributions',
       'Manual handling injuries from cable drums',
-      'Explosion from flammable gases',
-      'Structural collapse',
+      'If they employ 5 or more people',
+      'PIR (Passive Infrared) sensor',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,11 +213,11 @@ const quizQuestions = [
     question: 'What is the hierarchy of control measures in order of effectiveness?',
     options: [
       'PPE, Engineering controls, Elimination, Substitution',
+      'Substitution, Elimination, PPE, Engineering controls',
       'Elimination, Substitution, Engineering controls, Administrative controls, PPE',
       'Administrative controls, PPE, Engineering controls, Elimination',
-      'Substitution, Elimination, PPE, Engineering controls',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The hierarchy of control (most to least effective): Elimination, Substitution, Engineering controls, Administrative controls, PPE. Always consider higher-level controls before relying on PPE as a last resort.',
   },

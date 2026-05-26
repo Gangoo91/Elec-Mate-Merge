@@ -43,10 +43,10 @@ const checks = [
     id: 's5-3-vi-vs-multimeter-check',
     question: 'Why is a two-pole voltage indicator preferred over a multimeter for proving dead?',
     options: [
-      'It’s cheaper',
+      'Yes, the worker should inform their GP so it can be noted on their medical records',
       'It can’t be on the wrong range, has fixed leads, and gives a positive ‘live’ indication you can’t miss',
-      'It reads more accurately',
-      'It’s waterproof',
+      'To provide a systematic method for identifying, assessing, and controlling manual handling risks',
+      'Share relevant, accurate information and reassure the person that help is available and recovery is possible',
     ],
     correctIndex: 1,
     explanation:
@@ -55,7 +55,12 @@ const checks = [
   {
     id: 's5-3-gs38-tip-check',
     question: 'What is the maximum exposed metal at the tip of a GS38 test probe?',
-    options: ['2 mm (preferably) or 4 mm maximum', '8 mm', '12 mm', 'No limit if you’re careful'],
+    options: [
+      '2 mm (preferably) or 4 mm maximum',
+      'Controls and operational improvements',
+      'Saddles, brackets, or conduit clips',
+      'Total resistance increases',
+    ],
     correctIndex: 0,
     explanation:
       "GS38 wants ≤4 mm of bare metal at the tip — and ‘preferably 2 mm’ — so a slipped probe can’t bridge two adjacent terminals. Older multimeter probes with 30+ mm of bare metal don’t meet GS38 and shouldn’t be used for proving dead.",
@@ -64,10 +69,10 @@ const checks = [
     id: 's5-3-multi-hasp-check',
     question: 'You and another electrician are working on the same isolated sub-main. How should the lock-off be arranged?',
     options: [
-      'One padlock, you both share the key',
+      'Traditional termination using adhesive and mechanical polishing',
       'One padlock per person, both clipped onto the same multi-hasp on the device',
-      "Don’t lock off — you can watch each other",
-      'The senior electrician locks; the apprentice doesn’t',
+      'The ability to isolate only the faulted circuit whilst maintaining supply to healthy circuits',
+      'Calculating optimal start times to reach target temperatures',
     ],
     correctIndex: 1,
     explanation:
@@ -82,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does GS38 cover?',
     options: [
-      'Cable sizing for low-voltage installations',
+      'Organising your account into Situation, Task, Action, Result',
       'Test equipment safety for electrical work on LV systems (probes, leads, indicators)',
-      'PPE for arc-flash work',
-      'Approved electricians’ training routes',
+      'Efficiency = useful energy out ÷ total energy in (× 100 for percentage)',
+      'Ensuring all team members lift and lower on a coordinated signal',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'What item is specifically designed to test that your voltage indicator is working?',
     options: [
-      'A second multimeter',
+      'Handling underperformance in people who are your friends',
+      'To identify and control hazards before accidents occur',
       'A proving unit (battery-powered known voltage source)',
-      'The mains socket nearest the work',
-      'A neon screwdriver',
+      'Difference between synchronous and rotor speed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A proving unit. Battery-powered, generates a known AC voltage (typically 230 V or higher) and often a DC voltage too, with a contact pad/probe set you can press the indicator probes against. Lets you confirm the indicator works without going near a live circuit.",
   },
@@ -108,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'Your voltage indicator’s LEDs work but the haptic/buzzer doesn’t. Is the indicator still safe to use?',
     options: [
-      'Yes — LEDs are the primary indication',
+      'Building rest and recovery into your schedule as a non-negotiable part of growth',
+      'A written or electronic record covering all matters specified in Schedule 7 of the WAH Regulations',
+      'If I were not already invested in this, would I start it today knowing what I now know?',
       'No — GS38 expects multiple indication modes; one failure means the unit is suspect and goes out of service',
-      'Yes if you can see the LEDs clearly',
-      'Only if you double-check with a second tester',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "GS38 wants more than one indication mode (LED + buzzer/vibration + sometimes a digital display) precisely so a single failure doesn’t leave you with a silent ‘dead’ reading. If any one indicator stops working, the unit goes out of service until repaired or replaced.",
   },
@@ -121,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'What should be on a lock-off tag?',
     options: [
-      'Nothing — the lock is enough',
       "Worker’s name, date applied, brief description of work, contact phone number",
-      'Just the company name',
-      'Only the date',
+      "Advance payments towards next year's tax bill based on the previous year",
+      "Moving occupants horizontally through fire-resisting barriers into an adjacent safe compartment",
+      "Prohibition notice, prosecution, unlimited fines, and potential imprisonment",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Name (so anyone wanting to re-energise can find the right person), date applied, brief description of work, and a contact number. Without the name + number, the tag tells nobody anything they can act on.",
   },
@@ -134,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a CAT rating on test equipment, and what should you use for distribution-board work?',
     options: [
-      'It’s a battery type — use AAA',
+      'The manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instruction manual and/or a handover certificate',
       'It’s the IEC 61010 measurement category — CAT III 600 V or higher for LV distribution work',
-      'It’s a price band',
-      'It’s the warranty length',
+      'A completed inspection by a competent person confirming it is fit for purpose and adequate for the intended load',
+      'Issue a written variation order and get it signed before proceeding',
     ],
     correctAnswer: 1,
     explanation:
@@ -147,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'What kind of padlock should you use for personal lock-off?',
     options: [
-      'Any padlock from the toolbox',
+      'The resistance between conductors and earth, preventing dangerous currents',
+      'Hundreds of manufacturers produce KNX-compatible devices following the same standard',
       'A padlock with a unique key — never a ‘keyed-alike’ set someone else could open',
-      'A combination lock — easier to manage',
-      'A keyed-alike set so the supervisor can re-energise if needed',
+      'At a safe distance from the building, away from access routes for emergency vehicles',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Personal padlocks are ‘keyed-different’ — your key is the only one that opens YOUR lock. ‘Keyed-alike’ sets defeat the entire point of personal control. A combination lock is also unsafe because anyone watching can re-use the combination.",
   },
@@ -160,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'A pull-out fuse carrier is the only means of isolation and you can’t fit a lock-off. What do you do?',
     options: [
-      'Skip the lock-off, just leave a sign',
+      'Two of the three phase connections being transposed (swapped)',
+      'They have been advised of work completed and any recommendations',
+      'To ensure safe working environments including emergency lighting',
       'Withdraw the fuse carrier and keep it physically with you (in your toolbox or van)',
-      'Tape the carrier in place',
-      'Refuse to do the work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Withdraw the carrier and keep possession of it. The circuit cannot be re-energised without you and the carrier being present. HSE HSG85 explicitly recognises this method where lockable devices aren’t fitted.",
   },
@@ -173,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'You drop your voltage indicator off a step-up. It still appears to work. What now?',
     options: [
-      "Crack on — if it powers up it’s fine",
       "Take it out of service immediately, prove it on a proving unit + visually inspect, and if there’s any doubt replace it",
-      'Use it but only on dead circuits',
-      "Tape it up if there’s a crack",
+      "Pass — well below the 300 ms maximum for general non-delay type, indicating a healthy RCD with margin.",
+      "Using back-up protection from an upstream HRC fuse with a verified coordination combination",
+      "Reducing unnecessary site visits through remote monitoring, enabling predictive maintenance, and allowing fault diagnosis before travelling to site",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A drop can crack internal components, displace a fuse, fracture a lead. Take it out of service, prove on a proving unit, visually check leads/probes/case. ANY doubt — bin it. The cost of a £100 indicator is nothing compared with a false ‘dead’ reading.",
   },

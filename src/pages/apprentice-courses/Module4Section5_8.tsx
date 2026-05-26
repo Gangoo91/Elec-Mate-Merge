@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the main danger of a loose connection?',
     options: [
-      'Reduced voltage',
+      'To avoid calibration discrepancies',
       'Overheating and potential fire risk',
-      'Increased current',
-      'Faster wear',
+      'A suitable and sufficient risk assessment',
+      'It optimises solar irradiance capture',
     ],
     correctIndex: 1,
     explanation:
@@ -26,8 +26,13 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'Name one piece of test equipment used to locate open circuits.',
-    options: ['Voltage indicator', 'Continuity tester', 'Current clamp', 'Power analyser'],
-    correctIndex: 1,
+    options: [
+      'Power analyser',
+      'Current clamp',
+      'Continuity tester',
+      'Voltage indicator',
+    ],
+    correctIndex: 2,
     explanation:
       'Continuity testers (including low resistance ohmmeters and multimeters) are used to verify complete electrical paths and identify open circuits.',
   },
@@ -35,12 +40,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why should you record all fault rectification work?',
     options: [
-      'For billing purposes',
+      'It could not detect a broken neutral conductor',
+      'A government financial incentive for renewable heating',
+      'Learning normal patterns to identify anomalies',
       'For site documentation and quality assurance',
-      'To impress clients',
-      'For tool inventory',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Recording fault rectification provides quality assurance, helps identify recurring problems, supports certification, and assists with future maintenance.',
   },
@@ -51,16 +56,26 @@ const quizQuestions = [
     id: 1,
     question:
       'Which of the following is a dangerous fault caused by swapping live and neutral conductors?',
-    options: ['Open circuit', 'Short circuit', 'Reversed polarity', 'Earth fault'],
-    correctAnswer: 2,
+    options: [
+      'Open circuit',
+      'Reversed polarity',
+      'Short circuit',
+      'Earth fault',
+    ],
+    correctAnswer: 1,
     explanation:
       'Reversed polarity occurs when live and neutral conductors are incorrectly connected, creating serious safety hazards.',
   },
   {
     id: 2,
     question: 'True or False: You should re-test the installation after correcting a fault.',
-    options: ['True', 'False', 'Only for major faults', 'Only if required by regulations'],
-    correctAnswer: 0,
+    options: [
+      'Only for major faults',
+      'Only if required by regulations',
+      'True',
+      'False',
+    ],
+    correctAnswer: 2,
     explanation:
       'True - Re-testing after fault correction verifies the repair and ensures no new faults were introduced.',
   },
@@ -68,12 +83,12 @@ const quizQuestions = [
     id: 3,
     question: 'Name two causes of short circuits.',
     options: [
-      'Insulation damage and conductor contact',
-      'High voltage and low current',
       'Poor earthing and loose connections',
+      'High voltage and low current',
       'Wrong cable size and overloading',
+      'Insulation damage and conductor contact',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Short circuits are typically caused by insulation damage allowing direct contact between live conductors.',
   },
@@ -81,19 +96,24 @@ const quizQuestions = [
     id: 4,
     question: 'What is the first step before attempting to repair a fault?',
     options: [
-      'Gather tools',
       'Isolate and prove dead',
+      'Gather tools',
       'Order replacement parts',
       'Call supervisor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Safety requires complete isolation and verification that circuits are dead before any repair work begins.',
   },
   {
     id: 5,
     question: 'Which test instrument is used to check insulation condition?',
-    options: ['Multimeter', 'Insulation resistance tester', 'Clamp meter', 'Voltage stick'],
+    options: [
+      '70-95% depending on size and type',
+      'Insulation resistance tester',
+      '1 lux on the centre line of travel',
+      'Sensible heat / Total heat',
+    ],
     correctAnswer: 1,
     explanation:
       'Insulation resistance testers apply high voltage to detect insulation breakdown and deterioration.',
@@ -102,12 +122,12 @@ const quizQuestions = [
     id: 6,
     question: "Why is it important to tighten terminals to the manufacturer's torque settings?",
     options: [
+      'All observations, defects, and compliance issues',
+      'To provide additional connection points for sensors and actuators',
       'To prevent loose connections and ensure optimal contact',
-      'To speed up installation',
-      'To reduce material costs',
-      'To comply with colour coding',
+      'Materials with conductivity between conductors and insulators',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Correct torque prevents loose connections while avoiding over-tightening damage, ensuring safe and reliable connections.',
   },
@@ -115,12 +135,12 @@ const quizQuestions = [
     id: 7,
     question: 'Give one reason to test at both first fix and second fix stages.',
     options: [
+      'A measure of how accurately colours appear; minimum Ra 80',
+      'Connect it to earth and provide mechanical protection',
+      'Properly installed, mounted, and adjusted',
       'To identify faults early before they become expensive',
-      'To use test equipment regularly',
-      'To satisfy insurance requirements',
-      'To train apprentices',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Early testing identifies faults when they are easier and less expensive to correct, before final installation is complete.',
   },
@@ -128,12 +148,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why should you address only one fault at a time?',
     options: [
-      'To save time',
       'To avoid confusion and ensure each repair is verified',
-      'To use fewer tools',
-      'To reduce paperwork',
+      'Two capacitors: large for start, small for run',
+      'Between live conductors and between each live conductor and earth',
+      'Valid, Authentic, Current, Sufficient, Reliable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Addressing one fault at a time prevents confusion, allows proper verification of each repair, and avoids introducing new problems.',
   },

@@ -41,10 +41,10 @@ const checks = [
     question:
       'On a UK 13 A BS 1363 socket-outlet (face on, looking at the front), which terminal is the line?',
     options: [
-      'Top (earth side).',
+      'To increase penalties and make more offences triable either way',
       'Right-hand pin / terminal as you face the socket.',
-      'Left-hand pin / terminal as you face the socket.',
-      'Bottom centre.',
+      'Some faults only appear under load conditions',
+      'Yes, if protective devices are fitted',
     ],
     correctIndex: 1,
     explanation:
@@ -54,12 +54,12 @@ const checks = [
     id: 'm4-s6-sub4-socket-tester-trap',
     question: 'A plug-in socket tester (the three-LED kind) shows "OK" at every socket on a circuit. Polarity proven?',
     options: [
-      'Yes — that\'s exactly what the tester is for.',
+      'Toolbox talks are short pre-shift safety briefings on a single topic — the RAMS for the day, a recent near-miss, a seasonal hazard. They keep the formal RAMS active in the day-to-day work. Recorded with attendance. Together with the RAMS sign-on they form the daily safety briefing chain.',
+      'Activate the last-30-minutes triage protocol: count the remaining items, sort into \\\\\\\\\\\\\\\'quick win\\\\\\\\\\\\\\\' (90s each), \\\\\\\\\\\\\\\'medium\\\\\\\\\\\\\\\' (2-3 min each), \\\\\\\\\\\\\\\'pure guess\\\\\\\\\\\\\\\' (10s each). Clear the quick wins first to bank marks, then medium, then guess-sweep the pure-guess items in the final 2-3 minutes. Confirm no blanks at the bell.',
+      'The gateway is formally opened with the EPAO, who will then schedule the EPA components within the timeframe specified in the assessment plan — there is typically a period between gateway and EPA for final preparation',
       'No — a socket tester is a verification tool only and CAN show "OK" with reversed polarity if there is a fault that masks it (e.g. a borrowed neutral that completes the circuit through another path). Confirm with a continuity test from the consumer unit before signing off.',
-      'Yes, provided the indicator says all three LEDs are lit.',
-      'Yes, but only on TN-S systems.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'IET GN3 and the manufacturers of socket testers are explicit: socket testers are an indication tool, not a verification instrument. They can give a misleading "OK" if the wiring has a particular fault pattern that completes the indicator circuit via an unexpected path. Use them as a quick first-pass sanity check, but the dead polarity test (continuity from the CU outwards) is the one that proves compliance with Reg 643.6.',
   },
@@ -68,12 +68,12 @@ const checks = [
     question:
       'Testing polarity on a 2-way hall light: switch S1 has terminals COM, L1, L2; switch S2 has matching terminals. The strap conductors run between L1-L1 and L2-L2. The line feeds in at COM of S1; the switched line feeds out from COM of S2. With both switches set so the lamp is OFF, which dead continuity reading should you expect at S2 between COM and L1?',
     options: [
-      'Closed (low resistance).',
+      'Acknowledge the client\\\'s concern, explain clearly what was agreed and delivered, maintain professional boundaries, and document the conversation — reviews based on genuine experience are fair, but threats to extort free work should not be rewarded',
+      'Check the light curtain alignment, clean the lenses, inspect for environmental contaminants (dust, coolant mist), verify the safety relay status, check wiring connections, review the maintenance history for recurring issues, and ensure the safety distance calculation is still valid',
+      'Recognise the combination of hazards as significant, evaluate the risk as substantial, and recommend the board be de-energised for inspection and remedial work before maintenance proceeds',
       'Open (OL) when S2 toggle is in the L2 position; closed when toggled to L1. Test both positions and confirm the meter responds correctly to switch action — that proves the switching mechanism is wired to the line rather than the neutral.',
-      'Closed regardless of switch position.',
-      'Open regardless of switch position.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'For a properly wired 2-way switch, the COM is the common pole and the meter reads open or closed to L1 / L2 depending on toggle position. Testing both positions verifies the switch is in the line, not the neutral (a common fault where someone wired switching into the neutral conductor). The same goes for the lamp itself — switched line goes to the centre contact of the lampholder; neutral goes to the outer screw thread (Reg 643.6(b)).',
   },
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 A4:2026 Reg 643.6 lists three things that must be verified during the polarity test. Which set?',
     options: [
-      'Continuity, IR, RCD.',
+      '32 A continuous duty — with no diversity reduction applied, since EV charging is a continuous load that draws rated current for extended periods (several hours), the cable must be sized for 100% of the rated current using the appropriate correction factors from BS 7671 Appendix 4',
       '(a) Every fuse and single-pole control / protective device is in the line conductor only; (b) for circuits with an earthed neutral, ES and BC lampholders have the outer or screwed contacts connected to neutral (except E14/E27 to BS EN 60238); (c) wiring is correctly connected throughout.',
-      'Earth bonding, RCD trip time, IR.',
-      'Phase rotation only.',
+      'In stages — during erection (first-fix verification of buried items before cover-up), at second-fix completion, and final at energisation. Reg 641.1 explicitly covers "during erection and on completion".',
+      'Consistently testing installations to standard even when unsupervised, documenting results accurately, and proactively addressing any issues found — because your internal standards drive your behaviour, not external monitoring',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: 'A single-pole switch in the neutral conductor would be:',
     options: [
-      'Acceptable on a 230 V circuit.',
+      'Simulate the control conditions (setpoints, alarm triggers, timer events) and verify that the system responds with the correct output actions in the correct sequence and within the specified time parameters',
+      'To plan, manage and monitor the construction phase and co-ordinate matters relating to it to ensure that, so far as is reasonably practicable, construction work is carried out without risks to health or safety. The PC produces the Construction Phase Plan and updates it as the project evolves.',
       'A non-compliance with BS 7671 because when the switch is open the line conductor remains live to the load — anyone working on the load thinks it is dead but the line is still energised. Reg 643.6(a) requires single-pole switches in the line.',
-      'Required by the IET On-Site Guide.',
-      'Acceptable provided an RCD is fitted.',
+      'Complete and sign the documentation for their own scope of responsibility, clearly note the outstanding sign-off, and arrange for the responsible person to review and sign at the earliest opportunity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The principle: a single-pole switching device must isolate the live (dangerous) conductor when open. On a 230 V single-phase TN system the neutral is at or near earth potential when nominally healthy, but the line is at 230 V to earth. Switching the neutral leaves the line connected to the load — anyone touching it believes the load is off and gets a shock. Reg 643.6(a) and Reg 537.2.2 both reinforce this requirement.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'You are testing polarity at a 13 A unswitched FCU feeding an immersion heater. With the FCU isolated and the cable disconnected from the consumer unit at the line, what continuity reading would prove correct line polarity into the FCU?',
     options: [
-      'OL between line of incoming cable and L of FCU.',
+      '100 percent of the largest ring final + 40 percent of the next + 30 percent of any remaining rings (or similar — the exact wording depends on the OSG edition).',
+      'All foreseeable hazards including atmospheric, physical, biological, and those introduced by the work activity, along with the control measures required',
+      'A detector that uses a light source and photosensor to detect smoke particles by light scattering; most effective at detecting slow-smouldering fires that produce large visible smoke particles',
       'Low-resistance continuity between the line of the incoming cable and the L (line) terminal of the FCU; OL between the line of the incoming cable and the N terminal of the FCU.',
-      'Both readings should be zero.',
-      'Both readings should be OL.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Polarity by continuity: with the supply end of the cable disconnected at the CU, you inject a test signal into the line conductor and verify it appears only at the L terminal of the accessory, never at the N terminal. Continuity L-to-L reads low; continuity L-to-N reads OL. If you get continuity L-to-N you have the line and neutral swapped somewhere in the cable run — track it down before energising.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'After a successful dead polarity test, polarity must also be confirmed live as part of the live test sequence. Why both?',
     options: [
-      'Belt and braces.',
       'The dead test proves the wiring is correct between conductor identification at the CU and conductor identification at the accessory. The live test (using an approved voltage indicator at the accessory after first energising) confirms that the assumed L conductor at the CU actually carries the supply line — the dead test cannot detect a labelling error or a reversed connection at the meter tails.',
-      'The dead test does not count.',
-      'BS 7671 requires three polarity tests.',
+      'Sign in, get a brief visitor induction, wear correct PPE, and be escorted by the Site Manager or a senior member of the contractor\\\'s team. For a client representative the escort is usually the Project Manager or Site Manager because they\\\'ll want to talk through progress, snags and any commercial issues.',
+      'Because the terminal is engineered to clamp at a specific force range — too little, the conductor isn\\\'t held firmly and the joint runs hot; too much, the parts deform and crack. The published value is the engineering specification. BS 7671 134.1.1 says installations must comply with manufacturers\\\' instructions; ignoring the published torque value breaches 134.1.1 directly. NICEIC / NAPIT scheme assessments check this at audit.',
+      'Combination pliers — heavy-duty grip, twisting solid conductors, pulling cable through tight runs, light cutting of soft material. Side cutters (sometimes called diagonal cutters or \\\'snips\\\') — flush cutting of insulated and bare conductor, trimming cable ends. Long-nose pliers — forming loops, reaching into recessed terminals, holding small components while you tighten. One job each, no overlap if you can help it.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The dead test verifies the wiring of the installation — line in CU goes to L at every accessory. The live test verifies that what you called "line" at the CU is in fact the supply line and not the neutral (which can happen if meter tails were swapped at installation, or in rare cases of incorrect DNO supply). Both tests are needed for complete polarity verification. The live test uses an approved voltage indicator and is part of the live-test sequence after first energisation.',
   },
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'A bayonet (BC) lampholder per BS 7671 Reg 643.6(b) — which contact must be connected to the neutral?',
     options: [
-      'The centre contact.',
+      'A heat loss calculation to BS EN 12831 (or equivalent) for the property, sized to meet the design heat load at the design external temperature, with emitter sizing for low flow temperatures',
       'The outer or screwed contact (the metal cup that the bulb base contacts when twisted in). Centre contact = switched line. This is so that even with the bulb removed, no live metalwork is exposed to a person fitting the next bulb.',
-      'Either, doesn\'t matter.',
-      'Neither, BC lampholders use no neutral.',
+      'A progressive deterioration that requires investigation — possibly bearing wear, insulation degradation, ventilation blockage, or increasing load — before the motor fails catastrophically',
+      'Specified in the assessment plan — usually 2-4 weeks, allowing time for the EPAO to assign an assessor, for the assessor to review your portfolio, and for final preparation',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'You discover during polarity testing that a junction box in the loft has the line and neutral swapped on one outgoing tail. The CU end is correct. What\'s the safe approach?',
     options: [
-      'Swap the line and neutral at the CU as well, to match the JB.',
+      'Generally inferred from cable size, length, and design data; physical measurement only required if compliance is in doubt — limits are 3% (lighting) and 5% (other) of nominal',
+      'Offensive, intimidating, malicious, or insulting behaviour, or an abuse of power, that undermines, humiliates, or causes physical or emotional harm to someone',
       'Re-make the junction box terminations correctly so line continues as line and neutral as neutral throughout. Document the corrected fault. Re-test polarity to confirm. Never compensate for one error by introducing another.',
-      'Leave it — no real difference.',
-      'Disconnect the entire downstream wiring.',
+      'Low-resistance continuity between the line of the incoming cable and the L (line) terminal of the FCU; OL between the line of the incoming cable and the N terminal of the FCU.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The fix is always to correct the wiring back to compliance — line is line, neutral is neutral, throughout the installation. Compensating by deliberately reversing at the CU would create a downstream installation that passed continuity polarity tests but failed live polarity (because the supply line would arrive at terminals labelled neutral). It would also create chaos for anyone working on the installation in future. Re-make the junction box, retest, document, move on.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'Polarity testing on a circuit with both a 2-way switching arrangement and an intermediate switch in the middle. How do you test the polarity of the strap conductors?',
     options: [
-      'Skip the straps, just test the lamp.',
+      'First-issue ECS card typically £36-40 (varies by grade and route). Three-yearly renewal similar cost. ECS H&S Assessment fee around £20-30 at most testing centres. Specialist endorsements have separate course costs (CompEx 5-day course around £1,000-1,500; AM2S around £400-600 plus prep). Employers often pay the card and H&S fees for employed staff; self-employed cover their own.',
+      'Production stop-times. Industrial sites typically run continuous or shift-based production, and electrical work that requires isolation has to fit within scheduled outages or planned shutdowns. The prep includes coordinating with plant operations, integrating with the site lockout/tagout system, observing any ATEX zones in process plants, and often working out-of-hours so the production line isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t affected.',
+      'The arrangements for ensuring there are suitable welfare facilities, the site rules (if any), and any specific measures concerning work falling within Schedule 3 (high-risk work such as work near or over water, involving diving, in a caisson, involving explosives, etc.)',
       'Set the switches to a known closed position, then continuity-test from line at the CU through to the switched-line terminal of the lamp. Toggle each switch in turn and verify the meter responds correctly at every step. The intermediate switch should swap the strap connections when toggled — the meter should show this in the continuity readings.',
-      'Use only the live polarity test.',
-      'Test the straps with insulation resistance.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multi-way switching has multiple strap conductors and an intermediate switch that crosses the straps over when toggled. Polarity test: set all switches to a position that closes the circuit, continuity test from CU L to lamp switched-line. Then toggle each switch in sequence and confirm the meter responds appropriately. The intermediate switch toggling should reverse the strap connections — confirmed by continuity changes between the strap terminals at the intermediate switch when toggled.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'Where on the schedule of test results does the polarity result go?',
     options: [
-      'Nowhere — it\'s assumed.',
       'A dedicated polarity column on the per-circuit row of the STR, usually a tick or a P/F. The Schedule of Inspections also records polarity verification at a higher level. If polarity fails at sign-off the EIC cannot be issued — Reg 644.1.1 requires defects to be corrected before certification.',
-      'In the IR section.',
-      'On the Schedule of Inspections only.',
+      'Understand why different assets have different maintenance strategies, contribute to criticality assessments using their operational knowledge, prioritise their own work based on asset criticality, and explain to colleagues why maintenance effort varies between assets',
+      'Recognise that direct eye contact norms vary significantly across cultures — in many cultures, avoiding direct eye contact is a sign of respect, not evasion. Adjust your communication style to accommodate cultural differences rather than interpreting through your own cultural lens',
+      'A loose terminal was not gas-tight, oxidisation built up at the contact face over weeks, contact resistance climbed, the joint heated under any current draw, the heat softened the terminal screw and conductor, and the connection failed mechanically. Reg 526.1 (durable electrical continuity and adequate mechanical strength) failure.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The IET model STR has a dedicated polarity column per circuit (typically a tick box or a Pass/Fail). The Schedule of Inspections also confirms polarity at the installation level. Reg 644.1.1: "For a new installation, any defect or omission revealed during the inspection and testing shall be corrected before the Certificate is issued." Polarity defects are show-stoppers — fix and retest before the EIC is issued.',
   },

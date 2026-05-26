@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'adp-definition',
     question: 'What is the Apparatus Dew Point (ADP)?',
     options: [
+      'The air temperature leaving the coil',
       'The air dew point before the coil',
       'The effective surface temperature of an ideal cooling coil',
       'The chilled water supply temperature',
-      'The air temperature leaving the coil',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The ADP is the theoretical saturation temperature that represents the effective coil surface temperature. If a coil were 100% effective, all air would leave at the ADP (saturated).',
   },
@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     id: 'contact-factor',
     question: 'A cooling coil with a contact factor of 0.85 means:',
     options: [
-      '85% of the air bypasses the coil',
+      'The handler has less than one year of service with the employer',
       '85% of the air contacts the coil surface effectively',
-      'The coil is 85°C',
-      '85% of the load is sensible',
+      'A temporary manual override that reverts after a set time',
+      'Battery backup will maintain supply after mains isolation',
     ],
     correctIndex: 1,
     explanation:
@@ -67,12 +67,12 @@ const quickCheckQuestions = [
     id: 'rows-depth',
     question: 'Why do cooling coils typically have 4-8 rows while heating coils have 1-2 rows?',
     options: [
-      'Heating coils use larger tubes',
       'Cooling involves larger temperature differences and dehumidification',
-      'Heating coils are more expensive',
-      'Air flows faster through heating coils',
+      'The continual improvement cycle at the core of an Environmental Management System',
+      'Participating — share ideas and facilitate decision-making together',
+      'The equivalent circuit seen by a load as a voltage source in series with a resistance',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Cooling coils need more surface area because: (1) cooling temperature differences are smaller, (2) latent heat removal requires surface below dew point, (3) heat transfer from air to water is less efficient than water to air.',
   },
@@ -82,7 +82,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'The contact factor (CF) and bypass factor (BF) are related by:',
-    options: ['CF + BF = 0', 'CF + BF = 1', 'CF × BF = 1', 'CF = 2 × BF'],
+    options: [
+      'CF + BF = 0',
+      'CF + BF = 1',
+      'CF × BF = 1',
+      'CF = 2 × BF',
+    ],
     correctAnswer: 1,
     explanation:
       'CF + BF = 1. If contact factor is 0.85, bypass factor is 0.15. The total air equals contacted air plus bypassed air.',
@@ -91,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'On a psychrometric chart, the coil process line extends from:',
     options: [
+      'Outside air to return air',
       'Room condition to supply condition',
       'Entering air condition toward the ADP',
-      'Outside air to return air',
       'Dew point to dry bulb',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The coil process line is drawn from the entering air condition toward the ADP. The off-coil condition lies on this line, at a position determined by the contact factor.',
   },
@@ -104,16 +109,26 @@ const quizQuestions = [
     id: 3,
     question:
       'If entering air is 26°C and ADP is 10°C with CF = 0.80, the off-coil temperature is:',
-    options: ['12.0°C', '13.2°C', '14.8°C', '16.0°C'],
-    correctAnswer: 1,
+    options: [
+      '14.8°C',
+      '12.0°C',
+      '16.0°C',
+      '13.2°C',
+    ],
+    correctAnswer: 3,
     explanation:
       'T_off = ADP + BF × (T_in - ADP) = 10 + 0.20 × (26 - 10) = 10 + 3.2 = 13.2°C. Or: T_off = T_in - CF × (T_in - ADP) = 26 - 0.80 × 16 = 13.2°C.',
   },
   {
     id: 4,
     question: 'The chilled water temperature rise across a cooling coil is typically:',
-    options: ['2-3K', '4-5K', '5-6K', '8-10K'],
-    correctAnswer: 2,
+    options: [
+      '5-6K',
+      '4-5K',
+      '2-3K',
+      '8-10K',
+    ],
+    correctAnswer: 0,
     explanation:
       'Standard chilled water systems operate with 5-6K rise (6/12°C). This balances heat transfer effectiveness with reasonable water flow rates and pumping energy.',
   },
@@ -121,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: "What determines whether a cooling coil operates 'wet' or 'dry'?",
     options: [
-      'The chilled water flow rate',
+      'Time for metal halides to vaporise and reach operating temperature',
       'Whether the coil surface is below the entering air dew point',
-      'The number of coil rows',
-      'The air velocity across the coil',
+      'Legacy single-channel long-haul links (not DWDM)',
+      'Both normal supply AND any standby/generator supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,11 +150,11 @@ const quizQuestions = [
     question: 'Increasing the number of coil rows generally:',
     options: [
       'Decreases contact factor',
-      'Increases contact factor',
       'Has no effect on contact factor',
+      'Increases contact factor',
       'Increases bypass factor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'More rows increase the surface area and air contact time, increasing the contact factor (more air is effectively treated) and reducing bypass factor.',
   },
@@ -147,36 +162,51 @@ const quizQuestions = [
     id: 7,
     question: "The 'grand sensible heat factor' (GSHF) for a coil is:",
     options: [
-      'The room SHR',
+      'Manual adjustment to controller output',
+      '1.5 times the rating of protective device',
+      'Direction of induced current',
       'The ratio of sensible to total coil load',
-      'The contact factor',
-      'The bypass factor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'GSHF = sensible coil load / total coil load. It represents the slope of the coil condition line on the psychrometric chart and must be compatible with the room SHR.',
   },
   {
     id: 8,
     question: 'For a heating coil, the air-side temperature rise is calculated using:',
-    options: ['ΔT = Q / (ṁ × hfg)', 'ΔT = Q / (ṁ × cp)', 'ΔT = Q × cp × ṁ', 'ΔT = ṁ / (Q × cp)'],
-    correctAnswer: 1,
+    options: [
+      'ΔT = Q / (ṁ × cp)',
+      'ΔT = Q × cp × ṁ',
+      'ΔT = Q / (ṁ × hfg)',
+      'ΔT = ṁ / (Q × cp)',
+    ],
+    correctAnswer: 0,
     explanation:
       'ΔT = Q / (ṁ × cp) where Q is heat transfer rate (kW), ṁ is mass flow (kg/s), and cp is specific heat (1.005 kJ/kg·K). Rearranged from Q = ṁ × cp × ΔT.',
   },
   {
     id: 9,
     question: 'LTHW heating coils typically operate with flow/return temperatures of:',
-    options: ['40/30°C', '60/50°C', '82/71°C', '120/100°C'],
-    correctAnswer: 2,
+    options: [
+      '40/30°C',
+      '82/71°C',
+      '60/50°C',
+      '120/100°C',
+    ],
+    correctAnswer: 1,
     explanation:
       'Traditional LTHW (Low Temperature Hot Water) systems use 82/71°C (180/160°F). Modern systems may use lower temperatures (70/50°C) for heat pump compatibility.',
   },
   {
     id: 10,
     question: 'Face velocity across a cooling coil is typically limited to:',
-    options: ['1.0-1.5 m/s', '2.0-3.0 m/s', '4.0-5.0 m/s', '6.0-8.0 m/s'],
-    correctAnswer: 1,
+    options: [
+      '1.0-1.5 m/s',
+      '6.0-8.0 m/s',
+      '2.0-3.0 m/s',
+      '4.0-5.0 m/s',
+    ],
+    correctAnswer: 2,
     explanation:
       'Cooling coil face velocities are typically 2.0-3.0 m/s. Higher velocities risk moisture carryover (water droplets blown off the coil); lower velocities require larger coils.',
   },
@@ -184,12 +214,12 @@ const quizQuestions = [
     id: 11,
     question: 'The log mean temperature difference (LMTD) for a coil is used to:',
     options: [
-      'Calculate air humidity',
+      'Installing capacitors to counteract inductive reactive power',
+      'It creates a brief high current and measures voltage drop',
+      'To highlight residual risks and required precautions on drawings',
       'Determine the effective temperature driving force for heat transfer',
-      'Measure air velocity',
-      'Calculate pressure drop',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'LMTD accounts for the varying temperature difference along the coil length. It provides the effective ΔT for heat transfer calculations: Q = U × A × LMTD.',
   },
@@ -197,12 +227,12 @@ const quizQuestions = [
     id: 12,
     question: "A 'direct expansion' (DX) coil differs from a chilled water coil because:",
     options: [
-      'It uses hot water',
       'Refrigerant evaporates inside the coil tubes',
-      'It cannot dehumidify',
-      'It has fewer rows',
+      'Limits current and drops voltage in a controlled way.',
+      'Oval conduit or suitable protection against nails',
+      'External earth fault loop impedance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'In DX coils, liquid refrigerant evaporates inside the tubes, directly absorbing heat from the air. This eliminates the chilled water system but requires the coil to be part of a refrigeration circuit.',
   },

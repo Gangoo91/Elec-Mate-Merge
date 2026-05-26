@@ -22,6 +22,11 @@ export interface SafetyTemplate {
   is_active: boolean;
   regulatory_references: string[];
   structured_content: StructuredSafetyDocument | null;
+  /** Full-depth AI-regenerated content (v2). Renderer prefers this when present. */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  structured_content_v2: any | null;
+  work_type: 'domestic' | 'commercial' | 'industrial' | null;
+  regenerated_at: string | null;
   created_at: string;
 }
 
@@ -35,6 +40,9 @@ export interface UserSafetyDocument {
   company_name: string | null;
   site_address: string | null;
   structured_content: StructuredSafetyDocument | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  structured_content_v2: any | null;
+  version: number;
   adopted_at: string;
   review_date: string | null;
   approved_by: string | null;
@@ -105,6 +113,8 @@ export function useAdoptTemplate() {
       companyName,
       siteAddress,
       structuredContent,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      structuredContentV2,
       fieldValues,
     }: {
       templateId: string;
@@ -113,6 +123,8 @@ export function useAdoptTemplate() {
       companyName?: string;
       siteAddress?: string;
       structuredContent?: StructuredSafetyDocument | null;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      structuredContentV2?: any | null;
       fieldValues?: Record<string, string>;
     }) => {
       const {
@@ -129,6 +141,17 @@ export function useAdoptTemplate() {
         htmlContent = structuredToHtml(filledStructured, fieldValues);
       }
 
+      // If v2 is provided, stamp the field values into the v2 payload too
+      // so the user's name / company / date carry through cleanly.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let v2Payload: any | null = null;
+      if (structuredContentV2) {
+        v2Payload = JSON.parse(JSON.stringify(structuredContentV2));
+        if (fieldValues) {
+          v2Payload._fieldValues = fieldValues;
+        }
+      }
+
       const { data, error } = await supabase
         .from('user_safety_documents')
         .insert({
@@ -138,7 +161,10 @@ export function useAdoptTemplate() {
           content: htmlContent,
           company_name: companyName ?? null,
           site_address: siteAddress ?? null,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           structured_content: filledStructured as any,
+          structured_content_v2: v2Payload,
+          version: v2Payload ? 2 : 1,
           status: 'Draft',
           review_date: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         })

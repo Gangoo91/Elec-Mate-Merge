@@ -39,12 +39,12 @@ const checks = [
     question:
       "A specification on a BREEAM Excellent commercial fit-out asks for cables and accessories with EPDs verified to EN 15804. What does that mean and why does the specifier care?",
     options: [
-      "It means the products must be made from recycled material only.",
+      "BS EN 50625 is a series of European standards covering the collection, logistics, treatment and recycling of waste electrical and electronic equipment, including the WEEE-specific cable streams that come out of strip-out work. It defines best-practice processes for recovering copper, aluminium and polymer fractions from waste cable while minimising emissions of regulated substances. Specifying a BS EN 50625 compliant recycling route for stripped-out cable feeds into the BREEAM Wst credits, satisfies the waste hierarchy duty under regulation 12, and protects the contractor against accusations of routing cable to substandard processors that simply burn the polymer to recover the copper.",
+      "The electrical scope: dedicated final circuit from the consumer unit (typical 32 A radial on 6 mm cable for 5-7 kW unit, 40 A on 10 mm for 9-12 kW; Type C MCB or RCBO because of compressor inrush); local means of isolation outside near the outdoor unit (rotary isolator with weatherproof enclosure to BS EN 60947-3); controls cabling between outdoor unit, indoor controller, room thermostats, weather compensation sensor, zone valves, hot water cylinder thermostat; immersion heater wiring on the cylinder (programmable thermostat for legionella protection); bonding of the outdoor chassis where the manufacturer specifies or where it is an extraneous-conductive-part; certification on the EIC. The refrigerant pipework, charge weighing, leak test and commissioning of the refrigeration circuit are F-Gas certified personnel territory and outside the L3 electrical scope.",
       "An Environmental Product Declaration (EPD) is a standardised, third-party-verified document that quantifies the life-cycle environmental impacts of a construction product across a defined set of indicators (global warming potential, ozone depletion, acidification, eutrophication, abiotic resource depletion, water use and several others). EN 15804 is the European standard that sets the methodology, scope rules and reporting format. The specifier wants EPD-backed products because the BREEAM Mat 01 credit (and similar credits in LEED, WELL and the UK Net-Zero Carbon Buildings Standard) award points for products with verified third-party EPDs that allow embodied-carbon comparisons across alternatives.",
-      "It is a manufacturer marketing badge with no technical meaning.",
-      "It is a UK-specific term that does not apply post-Brexit.",
+      "The full life cycle is broken into modules: A1-A3 product stage (raw material supply, transport to factory, manufacturing); A4-A5 construction stage (transport to site, installation); B1-B7 use stage (use, maintenance, repair, replacement, refurbishment, operational energy and water use); C1-C4 end-of-life stage (deconstruction, transport, waste processing, disposal); and D benefits and loads beyond the system boundary (recycling and recovery beyond end of life). Different EPDs cover different module sets — A1-A3 cradle-to-gate is the most common minimum; A1-C4 plus D is the most complete cradle-to-grave with recycling credits.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "EPDs are the construction industry's standardised environmental data sheet. EN 15804 sets the methodology so that an EPD from one manufacturer can be compared like-for-like with an EPD from another. The specifier on a BREEAM project needs the data because the credit scoring depends on quantitative comparisons across the bill of materials. As an electrician you do not produce the EPD but you do need to know what is being asked when a spec calls for EPD-backed cable or accessories.",
   },
@@ -53,10 +53,10 @@ const checks = [
     question:
       "A cable manufacturer claims their installation cable contains 60% recycled copper. What does that figure actually tell you, and what does it not?",
     options: [
-      "It tells you the cable is 60% lighter than virgin-copper cable.",
+      "Without bypass diodes or panel-level optimisation, the shaded panel limits the current through the entire string — like a kink in a hose. A 30% shade on one panel can drop the whole string output by 30% or more. Bypass diodes within each panel partially mitigate this by allowing current to bypass the affected substring. Panel-level optimisation (Tigo / SolarEdge / micro-inverter architecture) goes further — each panel runs at its own MPP regardless of neighbours. For a string-heavy install with predictable shading, the design choice of optimisers vs plain string matters more than the panel choice.",
       "It tells you that 60% of the copper mass in the conductor came from recycled (post-consumer or post-industrial) copper feedstock rather than primary mined copper. Recycled copper carries roughly 15-20% of the embodied carbon of primary copper because the energy-intensive smelting from ore is avoided. What it does not tell you is the recycled content of the insulation polymer, the bedding, the sheath, the steel armour or the drum packaging. A complete environmental picture needs the full EPD, not just one headline number.",
-      "It tells you the cable will only last 60% as long.",
-      "It tells you the cable has 60% lower copper conductivity.",
+      "Local authority enforcement with civil penalties up to £30,000 per breach. Multiple breaches can result in cumulative penalties. The local authority can also undertake the remedial works themselves and recover the cost from the landlord. Severe or repeat breaches can affect the landlord's standing in the rental market and (in extreme cases) result in property prohibition orders.",
+      "Refrigerant evaporates at low temperature in the outdoor coil (or ground loop), absorbing heat from the source. The compressor squeezes the resulting low-pressure vapour, raising its pressure and temperature. The hot high-pressure vapour condenses in the indoor heat exchanger, releasing heat into the wet heating system. The liquid refrigerant expands back to low pressure through the expansion valve and the cycle repeats. Electrical work drives the compressor; the heat in the wet system comes from outside, not from the electricity. Energy is conserved.",
     ],
     correctIndex: 1,
     explanation:
@@ -67,12 +67,12 @@ const checks = [
     question:
       "What does BS EN 50625 cover and why does it matter to a contractor stripping out old cable on a refurbishment?",
     options: [
-      "It is the cable rating standard for fire-protected conditions.",
       "BS EN 50625 is a series of European standards covering the collection, logistics, treatment and recycling of waste electrical and electronic equipment, including the WEEE-specific cable streams that come out of strip-out work. It defines best-practice processes for recovering copper, aluminium and polymer fractions from waste cable while minimising emissions of regulated substances. Specifying a BS EN 50625 compliant recycling route for stripped-out cable feeds into the BREEAM Wst credits, satisfies the waste hierarchy duty under regulation 12, and protects the contractor against accusations of routing cable to substandard processors that simply burn the polymer to recover the copper.",
-      "It is a UK-only standard with no European equivalent.",
-      "It only applies to fibre-optic cable.",
+      "Because primary copper smelting from ore is one of the most energy-intensive industrial processes globally. Recycled copper requires roughly 15-20% of the energy of primary copper to produce, which translates to a corresponding reduction in embodied carbon for the conductor portion of the cable. Cable is overwhelmingly copper by mass (or aluminium for some larger sizes), so the conductor dominates the embodied carbon calculation. A high-recycled-content conductor is therefore one of the largest single levers for reducing cable embodied carbon at specification stage.",
+      "Domestic ASHP installs usually include an unvented hot water cylinder (typically 200 to 300 L for a family home) with two heat sources — the heat pump heating coil (primary, low-temperature) and an electric immersion heater (secondary, higher-temperature). The heat pump heats the cylinder to 45 to 50 °C for normal hot water demand. The immersion heater is run periodically (typically weekly) to lift the cylinder temperature to 60 °C for at least 60 minutes for legionella pasteurisation per the WHS guidance under HSWA 1974 / L8 ACoP. Some heat pumps can do the legionella cycle themselves at high flow temperature without the immersion. The programmable thermostat on the immersion is the L3 electrician's wiring scope. Hot water at 60 °C is hot enough to scald — anti-scald TMVs are required at outlets per Building Regs Part G.",
+      "Mode 3 is AC charging through a dedicated charger that controls and protects the charging session — typical domestic 7 kW units (single-phase) or 22 kW units (three-phase). The vehicle's onboard charger converts AC to DC for the battery. Mode 4 is DC fast charging — the off-vehicle equipment (typically 50-350 kW public rapid chargers) outputs DC directly to the battery, bypassing the vehicle's onboard charger. Domestic installations are essentially always Mode 3. BS 7671 Section 722 (significantly amended in A4:2026) governs the electrical installation requirements.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Cable recycling has historically been a problem area because the cheapest way to separate copper from PVC sheath is open burning, which is illegal in the EU and UK but happens in unregulated jurisdictions to which UK waste cable can be exported. BS EN 50625 sets the European best-practice standard for compliant recycling. Routing your strip-out cable through a BS EN 50625 compliant processor is the simplest defence against the cable ending up at an open-burning site overseas.",
   },
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       "What is an Environmental Product Declaration (EPD) and what standard governs its preparation in the construction sector?",
     options: [
-      "A product warranty document.",
+      "A CPS is a Government-approved scheme that lets a contractor self-certify Part P notifiable work in dwellings (England/Wales). JIB is the joint employer/union body that sets pay grades, conditions and the national working rules for the contracting industry. CPS is contractor-level and licences the firm; JIB grading is operative-level and decides what you're paid and what you're allowed to sign for unsupervised on a JIB site. Different bodies, different scopes, different audiences.",
       "An EPD is a standardised, third-party-verified document that quantifies the life-cycle environmental impacts of a construction product across a defined set of indicators. EN 15804 (in the UK retained as BS EN 15804+A2) is the European standard that sets the methodology, scope rules, indicator list and reporting format for construction product EPDs. EPDs are prepared under a Product Category Rule (PCR) for the product type and are verified by an independent third party before publication.",
-      "A safety data sheet.",
-      "A test certificate for product compliance.",
+      "'So far as is reasonably practicable' (SFAIRP) — the duty-holder weighs the risk against the cost, time and effort of further precautions. The bar is set by what a competent person would have done. Established in Edwards v National Coal Board (1949). Trivially expensive controls against serious risk = required. Disproportionately expensive controls against trivial residual risk = not required.",
+      "Safeguarding. Children are present during term time, which restricts when work can be done, requires DBS-checked operatives for any work where unsupervised contact with pupils is foreseeable, and adds rules around photography, conversation and movement around the building. Most major electrical work in schools is done during holidays for exactly this reason. The school's safeguarding lead is a key contact during prep.",
     ],
     correctAnswer: 1,
     explanation:
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       "Which life-cycle stages does an EN 15804 EPD typically cover for a construction product like cable?",
     options: [
-      "Manufacture only.",
+      "Resolve it informally first where possible. The ACAS Code recommends informal resolution as the starting point, then a written grievance under the employer's documented grievance procedure, then a meeting with management with the right to be accompanied by a colleague or trade-union representative, then a written outcome with a right of appeal. ACAS conciliation is available if the internal procedure fails. Employment tribunal is the last resort and tribunals will assess whether both parties followed the Code reasonably.",
+      "Two reasons. (1) Auditability — readings are stored against a circuit ID and timestamp, providing tamper-evident evidence at scheme audit and dispute. (2) Cert generation — test results download directly into certificate software (NICEIC PartnerNet, NAPIT, custom firm software, Elec-Mate) and auto-populate the EIC / EICR test schedule, eliminating transcription errors. The combination saves the time previously spent hand-writing and double-checking test schedules.",
       "The full life cycle is broken into modules: A1-A3 product stage (raw material supply, transport to factory, manufacturing); A4-A5 construction stage (transport to site, installation); B1-B7 use stage (use, maintenance, repair, replacement, refurbishment, operational energy and water use); C1-C4 end-of-life stage (deconstruction, transport, waste processing, disposal); and D benefits and loads beyond the system boundary (recycling and recovery beyond end of life). Different EPDs cover different module sets — A1-A3 cradle-to-gate is the most common minimum; A1-C4 plus D is the most complete cradle-to-grave with recycling credits.",
-      "Use stage only.",
-      "Disposal stage only.",
+      "Direct discrimination (s.13) is treating someone less favourably BECAUSE OF a protected characteristic — e.g. refusing to hire someone because they're female. Indirect discrimination (s.19) is applying a 'provision, criterion or practice' that looks neutral but puts people sharing a protected characteristic at a particular disadvantage and can't be objectively justified — e.g. requiring all apprentices to be over 6ft tall would indirectly discriminate against women on average. Both are unlawful.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The modular structure lets specifiers compare products at the same scope. A cable EPD that only covers A1-A3 (manufacturing) cannot be directly compared with a competitor EPD that covers A1-C4 plus D (full life cycle). Reading the scope before reading the headline number is the key skill. BREEAM Mat 01 typically requires at least cradle-to-gate (A1-A3) coverage and rewards higher coverage with more credits.",
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       "Why is recycled copper content the single most useful environmental metric for installation cable?",
     options: [
-      "It is not particularly useful.",
+      "CAT IV 600 V two-pole testers — Martindale VI-13800 (~£60), Fluke T130 (~£100), Kewtech KT1780 (~£70). CAT III 1000 V / CAT IV 600 V multimeters — Fluke 87V (~£400), Megger AVO830 (~£200). CAT IV-rated MFTs — Megger MFT1721+ (~£900), Kewtech KT200 (~£500). Personal apprentice purchases typically: Martindale VI-13800 + Fluke 117 (CAT III 600 V — adequate for DB work but not cut-out). Firm-issued: Megger MFT1741+ and Fluke 87V for senior staff.",
+      "Wind shear from neighbouring buildings. Domestic-scale turbines need clean laminar wind, which only happens at hub heights well clear of surrounding obstacles. In a typical suburban garden the turbine sits in turbulent air, the yield is well below the manufacturer's wind-tunnel claims, and the noise / vibration interface is poor. Even where the planning application succeeds, the energy yield often disappoints. Wind makes sense in open rural settings with tall masts; it does not make sense in suburban back gardens.",
+      "Three things — battery life vs run time (a hard day on an SDS will drain a 5 Ah pack faster than you can charge spares), tool weight (cordless SDS with a 9 Ah pack on the back is noticeably heavier than a corded equivalent), and what supply is actually on site (no 110 V on site = corded 230 V is awkward, cordless wins). Most apprentices end up with a mixed loadout — cordless drill/driver + cordless impact for general work, corded SDS / grinder / recip on site supply for the heavy-duty jobs.",
       "Because primary copper smelting from ore is one of the most energy-intensive industrial processes globally. Recycled copper requires roughly 15-20% of the energy of primary copper to produce, which translates to a corresponding reduction in embodied carbon for the conductor portion of the cable. Cable is overwhelmingly copper by mass (or aluminium for some larger sizes), so the conductor dominates the embodied carbon calculation. A high-recycled-content conductor is therefore one of the largest single levers for reducing cable embodied carbon at specification stage.",
-      "Because copper recycling reduces conductor resistance.",
-      "Because recycled copper is cheaper at point of sale.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Conductor mass dominates cable embodied carbon, and copper smelting dominates conductor embodied carbon. Recycled copper short-circuits the smelting step and so delivers proportionally large embodied-carbon savings. Major UK cable manufacturers (Prysmian, Nexans, BICC, Doncaster Cables, AEI Cables) all now publish recycled-content figures and EPDs for their main installation cable lines. On a BREEAM project the cable specification will normally call out a minimum recycled content as well as an EPD.",
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       "What is a Product Category Rule (PCR) in the EPD framework?",
     options: [
-      "A product safety standard.",
       "A PCR is a published rulebook that defines the methodology for preparing an EPD for a specific product category — for example installation cable, luminaires, switchgear or insulation. It specifies the functional unit (e.g. one metre of cable of given specification), the system boundary, the data requirements, the calculation methodology and the reporting format. All manufacturers preparing EPDs for that product category follow the same PCR, ensuring like-for-like comparability across competing products. PCRs are managed by EPD programme operators such as EPD International, IBU and INIES.",
-      "A pricing rulebook.",
-      "A regulatory permit.",
+      "Three reasons. (1) Density — many terminations in a small space; many opportunities for one to be wrong. (2) Heat — control electronics generate heat; cooling is often inadequate; thermal cycling stresses components. (3) Vibration — panels in plant rooms and on walls near equipment vibrate; vibration loosens terminations over time. Approach: always work on de-energised, isolated panels under permit-to-work where applicable; identify each component's function from the panel schedule; check terminations with thermal imaging while running; replace components by part number from the schedule; retest each output to verify correct operation.",
+      "Structured cabling is the standardised installation of data cabling (typically Cat 6/Cat 6A copper, plus single-mode and multi-mode fibre) supporting IT and telephony in commercial buildings. Key standards: BS EN 50173 series, TIA-568. Specific competence in cable termination (RJ45, fibre splicing), patch panels, cabinet installation and certification testing (Fluke DTX-CableAnalyzer or similar). BICSI training is the international standard route.",
+      "Work at Height Regulations 2005 apply. (1) Risk assessment includes the height work specifically — fall distance, type of platform (ladder / step / platform / scaffold), duration. (2) Working platform: ladder for short-duration access tasks (under 30 minutes per task), platform for longer / heavier work. (3) Securing the ladder — stabiliser, person footing, anti-slip feet, 1:4 angle, three points of contact. (4) Tools secured against falling onto people below. (5) Loft work — board out the loft hatch and a working area; do not stand on plasterboard. (6) Single-operative restriction — solo work at height carries higher risk and the firm's lone-working procedure may bar it. WaHR 2005 is enforced by the HSE alongside EAWR — both apply simultaneously.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "PCRs are what makes EPDs comparable. Without a PCR, every manufacturer would calculate things differently and the headline numbers would be meaningless. The PCR is essentially the recipe that all EPDs in a category must follow. Updates to PCRs (typically every five years) require all EPDs in scope to be re-issued, which is why some EPDs lapse and need refreshing.",
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       "Why does the BREEAM Mat 01 credit give weight to EPDs and how does that affect cable specification?",
     options: [
-      "It does not give weight to EPDs.",
+      "The Information Commissioner's Office — the UK's independent regulator for data protection. The maximum fine for the most serious breaches is the higher of £17.5 million OR 4% of the firm's global annual turnover. Lower-tier breaches max out at £8.7 million OR 2% of turnover. In practice most fines on small businesses are far lower, but reputational damage (named-and-shamed in ICO enforcement notices) is often more painful than the fine itself.",
       "Mat 01 (Environmental impact of materials) awards points for using construction products with verified third-party EPDs because they enable life-cycle assessment of the building materials and so reward designers for choosing lower-impact options. On a target BREEAM rating (typically Very Good or Excellent on commercial UK projects) the Mat 01 credit can be the difference between achieving the rating and missing it. That feeds back into the cable spec — the specifier asks for EPD-backed cable from the wholesaler, the wholesaler asks the manufacturer, the manufacturer publishes EPDs to stay on tender lists. The market signal is real.",
-      "It only applies to insulation, not cable.",
-      "It is voluntary on BREEAM projects.",
+      "Five categories. (1) THE DUTY HOLDER — the customer for domestic, the employer for commercial, the landlord for rented. They get the certificate and the verbal hand-back. (2) THE ORIGINAL DESIGNER if it's their installation and a design change has been made (informational courtesy). (3) BUILDING CONTROL via the competent-person scheme (NICEIC, NAPIT, ELECSA, STROMA) for notifiable work under Part P in England / Wales (slightly different in Scotland and Northern Ireland). (4) THE FIRM's INTERNAL JOB SYSTEM — job sheet update, photos, certificate copy filed. (5) THE NEXT PERIODIC INSPECTOR — implicit, served by leaving the certificate bundle (EICR + Schedule of Remedial Works + MWC) on file with the Duty Holder.",
+      "Where a 'provision, criterion or practice', a physical feature, or a lack of an auxiliary aid puts a disabled person at a substantial disadvantage compared with others, the employer must take such steps as it is reasonable to take to avoid the disadvantage. Three sub-duties — adjust the practice, adjust the physical feature, provide the auxiliary aid. The duty is anticipatory in some contexts (services) and reactive in employment (kicks in when the employer knows or ought reasonably to know).",
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       "What does BS EN 50625 series cover and why is it the right reference for cable recycling on a strip-out project?",
     options: [
-      "Cable installation methods only.",
+      "The MFT (Megger MFT1741+, Kewtech KT64+) injects different test currents based on the RCD type. Type AC test: pure sinusoidal AC at I∆n. Type A test: pure sinusoidal AC AT I∆n PLUS pulsating DC at 1.4× I∆n (because Type A must detect both). Type F test: all of the above PLUS composite multi-frequency. Type B test: all of the above PLUS smooth DC at twice I∆n. Selecting the wrong type on the MFT may show 'pass' on a Type B device (because you're only testing the AC capability, not the DC) — false confidence. Modern MFTs auto-detect or have explicit type selection.",
+      "Stay with them if you can do so safely. Encourage them to call 999 or go to A&E. If they won't, and you genuinely believe they're at imminent risk, call 999 yourself or take them to A&E. The Samaritans (116 123) is available 24/7 if it helps to talk while you decide what to do. Mind's helpline is available too (0300 123 3393). Don't promise confidentiality you can't keep — be honest that you may need to escalate if you're worried about their safety. After the immediate crisis is managed, look after yourself too — supporting someone through a mental health crisis is heavy and the same charities are available to you.",
       "BS EN 50625 is a series of European standards setting best-practice requirements for the collection, logistics, treatment and recycling of waste electrical and electronic equipment, including cable streams generated during strip-out and installation. It covers the de-pollution, separation and material recovery processes and sets emission limits to prevent illegal open-burning of cable to recover copper. Routing strip-out cable through a BS EN 50625 compliant recycler protects against the cable ending up in unregulated overseas burning operations and provides documented compliance with the waste hierarchy duty.",
-      "Cable testing methods only.",
-      "Only fibre-optic cable.",
+      "PASMA (Prefabricated Access Suppliers' and Manufacturers' Association) is the recognised training standard for assembling, dismantling and using mobile tower scaffolds. It's not a statutory licence in the way IPAF is for MEWPs, but PUWER 1998 Reg 9 requires anyone using or assembling work equipment to be adequately trained, and on construction sites the principal contractor's site rules typically require PASMA card-holders for tower assembly.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The cable recycling supply chain has a chequered history because cheap copper recovery historically meant burning the PVC sheath off in open pits, releasing dioxins and other regulated substances. BS EN 50625 codifies the European best-practice alternative — mechanical separation, controlled treatment and proper material recovery. Asking the wholesaler or waste carrier to confirm BS EN 50625 compliance is the simplest specification check.",
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       "What is the difference between a manufacturer-specific EPD and an industry-average EPD?",
     options: [
-      "There is no difference.",
+      "Hold the line on the coding — explain the BPG4 logic for C2 (single foreseeable fault scenario), reference the specific risk in plain terms, document the conversation. The absence of harm to date does not change the risk; it means the foreseeable fault has not yet occurred. The professional duty under EAWR Reg 16 (competence) and the inspector's continuing Reg 4 duty both require honest coding, not customer-pleasing coding.",
+      "The MCS certificate, accompanied by the G98 (or G99) DNO notification copy. The customer applies to a Smart Export Guarantee licensee (typically a major electricity supplier) and uploads both. Without the MCS certificate the supplier will not register the customer for export payments. The smart export meter (the customer's existing smart meter, usually) provides the half-hourly export data that the tariff is paid against.",
+      "Three. (1) Test readings — pre-rectification (the failed reading) and post-rectification (the corrected reading), with timestamps and instrument IDs. (2) Functional test outcomes — what was tested, what worked, any anomalies. (3) Customer hand-back record — what was demonstrated, what documentation provided, customer's signed acceptance. The records become the diagnostic narrative on the job sheet — defensible audit trail of what was found, what was done, what was verified.",
       "A manufacturer-specific EPD reports the actual life-cycle impacts of a specific product manufactured at a specific factory by a specific producer. An industry-average EPD reports the average impacts across all members of an industry association making a similar product. Manufacturer-specific EPDs allow real comparison between competing products; industry-average EPDs only allow comparison between product categories. BREEAM gives more weight to manufacturer-specific EPDs because they reward producers that genuinely outperform their peers, not those that simply benefit from a category average.",
-      "Industry-average EPDs are non-verifiable.",
-      "Manufacturer-specific EPDs are voluntary, industry-average ones are mandatory.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Manufacturer-specific EPDs are the gold standard for project specification because they reflect the actual product. Industry-average EPDs are useful for early-stage building life-cycle assessment when the actual products are not yet selected. The cable industry has a mix of both — major UK manufacturers publish manufacturer-specific EPDs for their core ranges; smaller manufacturers may rely on industry-average EPDs from trade associations. The spec normally distinguishes the two.",
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       "An apprentice asks the wholesaler for the EPD on a particular brand of meter tail. The wholesaler does not have one. What is the right next step?",
     options: [
-      "Order the cable anyway and ignore the spec.",
       "Ask the manufacturer directly via their technical support or sustainability team — most major UK cable and accessory manufacturers publish EPDs on their website or supply on request. If the manufacturer does not publish an EPD for that product, that fact alone is relevant to the project specifier because the spec called for EPD-backed products. The right action is to flag the missing EPD to the project specifier and either source an EPD-backed equivalent from another manufacturer or request a written derogation from the spec. Documenting the search and the decision protects the contractor against later challenge.",
-      "Throw the spec out and use whatever is in stock.",
-      "Tell the customer EPDs are not required.",
+      "Old radiators were sized for 70-80°C flow temperature from a gas boiler. To deliver the same heat output at lower flow temperature, the radiators need to be larger. If you ask a heat pump to drive undersized old radiators at 70-80°C flow, the temperature lift is much bigger than at 35-40°C flow — so the COP drops sharply. SCOP reflects the actual flow temperature the system runs at across the heating season. Properly designed heat-pump retrofits include a radiator survey and upsize plan, or convert to underfloor where possible.",
+      "The ECA is a trade body — voluntary membership organisation representing contractors' commercial interests, providing technical / commercial / legal support, lobbying, training and standard-form contracts. The JIB is the joint employer/union body that sets pay, conditions and grading on JIB-affiliated jobs. ECA members typically apply JIB rules but the bodies are separate. SELECT plays a similar (but distinct) role for the contracting industry in Scotland.",
+      "The training-provider tutor first — they have responsibility for the quality of the apprentice's training experience and the authority to intervene with the employer. The apprenticeship agreement is a tripartite document (apprentice, employer, training provider) and the training provider can hold the employer to account on training delivery. If that doesn't resolve it, the apprentice can raise a formal grievance with the employer under the ACAS Code, escalate to ACAS conciliation, and ultimately to an employment tribunal.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Spec compliance is a real contractual obligation on a BREEAM or net-zero project. The right routine is: search for EPD, escalate to manufacturer, source equivalent from competitor if needed, document the decision. As an apprentice you will not run the procurement decision but you do need to know that EPD requests are routine, that EPDs are typically free to obtain, and that asking the question early prevents a much bigger problem at handover.",
   },

@@ -32,23 +32,38 @@ const quickCheckQuestions = [
   {
     id: 'air-nitrogen',
     question: 'What is the approximate percentage of nitrogen in dry air by volume?',
-    options: ['21%', '58%', '78%', '99%'],
-    correctIndex: 2,
+    options: [
+      '78%',
+      '58%',
+      '21%',
+      '99%',
+    ],
+    correctIndex: 0,
     explanation:
       'Dry air is approximately 78% nitrogen by volume. Oxygen makes up about 21%, with the remaining 1% being argon, carbon dioxide and trace gases.',
   },
   {
     id: 'ideal-gas',
     question: 'Which gas constant (R) is used for dry air in ideal gas calculations?',
-    options: ['8.314 J/mol·K', '287 J/kg·K', '461 J/kg·K', '1005 J/kg·K'],
-    correctIndex: 1,
+    options: [
+      '1005 J/kg·K',
+      '8.314 J/mol·K',
+      '287 J/kg·K',
+      '461 J/kg·K',
+    ],
+    correctIndex: 2,
     explanation:
       'The specific gas constant for dry air is 287 J/kg·K. This is derived from the universal gas constant (8.314 J/mol·K) divided by the molar mass of air (0.02897 kg/mol).',
   },
   {
     id: 'air-density',
     question: 'What is the approximate density of dry air at 20°C and atmospheric pressure?',
-    options: ['0.8 kg/m³', '1.0 kg/m³', '1.2 kg/m³', '1.5 kg/m³'],
+    options: [
+      '1.5 kg/m³',
+      '0.8 kg/m³',
+      '1.2 kg/m³',
+      '1.0 kg/m³',
+    ],
     correctIndex: 2,
     explanation:
       'Dry air at 20°C (293K) and 101.325 kPa has a density of approximately 1.2 kg/m³. Using ρ = P/(RT) = 101325/(287 × 293) = 1.205 kg/m³.',
@@ -56,7 +71,12 @@ const quickCheckQuestions = [
   {
     id: 'specific-heat',
     question: 'What is the specific heat capacity of dry air at constant pressure (cp)?',
-    options: ['287 J/kg·K', '718 J/kg·K', '1005 J/kg·K', '1860 J/kg·K'],
+    options: [
+      '718 J/kg·K',
+      '287 J/kg·K',
+      '1005 J/kg·K',
+      '1860 J/kg·K',
+    ],
     correctIndex: 2,
     explanation:
       'The specific heat capacity of dry air at constant pressure is approximately 1005 J/kg·K (or 1.005 kJ/kg·K). This value is essential for sensible heat calculations in HVAC.',
@@ -67,7 +87,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which component makes up approximately 21% of dry air by volume?',
-    options: ['Nitrogen', 'Oxygen', 'Argon', 'Carbon dioxide'],
+    options: [
+      'Nitrogen',
+      'Oxygen',
+      'Argon',
+      'Carbon dioxide',
+    ],
     correctAnswer: 1,
     explanation:
       'Oxygen makes up approximately 21% of dry air by volume. This is essential for combustion and respiration processes considered in building ventilation design.',
@@ -76,20 +101,25 @@ const quizQuestions = [
     id: 2,
     question: "The ideal gas law equation is PV = mRT. What does 'R' represent?",
     options: [
-      'Universal gas constant',
+      'As close as possible to the inductive load',
+      'Safety glasses and dust mask',
       'Specific gas constant for the gas',
-      'Resistance to flow',
-      'Ratio of specific heats',
+      'Rework, delays, or damaged installations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'In the form PV = mRT, R is the specific gas constant for the particular gas. For dry air, R = 287 J/kg·K.',
   },
   {
     id: 3,
     question: 'Calculate the density of air at 25°C and 101.325 kPa using ρ = P/(RT).',
-    options: ['1.084 kg/m³', '1.184 kg/m³', '1.284 kg/m³', '1.384 kg/m³'],
-    correctAnswer: 1,
+    options: [
+      '1.284 kg/m³',
+      '1.084 kg/m³',
+      '1.384 kg/m³',
+      '1.184 kg/m³',
+    ],
+    correctAnswer: 3,
     explanation:
       'ρ = P/(RT) = 101325/(287 × 298) = 101325/85526 = 1.184 kg/m³. Note: Temperature must be in Kelvin (25 + 273 = 298K).',
   },
@@ -98,28 +128,38 @@ const quizQuestions = [
     question:
       'Why does moist air have a lower density than dry air at the same temperature and pressure?',
     options: [
-      'Water vapour is heavier than air',
       'Water vapour molecules displace heavier nitrogen and oxygen molecules',
-      'Moisture increases air pressure',
-      'Water vapour has a higher gas constant',
+      '50-65 percent of the socket-circuit nameplate aggregate, depending on equipment mix.',
+      'Check status indicator shows device is functional',
+      'A mandatory inspection for AC systems over 12kW, assessing efficiency and sizing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Water vapour (M = 18 g/mol) is lighter than nitrogen (M = 28 g/mol) and oxygen (M = 32 g/mol). When water vapour displaces these heavier molecules, the mixture becomes less dense.',
   },
   {
     id: 5,
     question: 'What is the specific gas constant for water vapour?',
-    options: ['287 J/kg·K', '378 J/kg·K', '461 J/kg·K', '718 J/kg·K'],
-    correctAnswer: 2,
+    options: [
+      '378 J/kg·K',
+      '461 J/kg·K',
+      '718 J/kg·K',
+      '287 J/kg·K',
+    ],
+    correctAnswer: 1,
     explanation:
       "The specific gas constant for water vapour is 461 J/kg·K. This higher value (compared to dry air's 287 J/kg·K) reflects water's lower molecular mass.",
   },
   {
     id: 6,
     question: 'Atmospheric pressure at sea level is approximately:',
-    options: ['100 kPa', '101.325 kPa', '1013.25 kPa', '10.1325 kPa'],
-    correctAnswer: 1,
+    options: [
+      '100 kPa',
+      '1013.25 kPa',
+      '101.325 kPa',
+      '10.1325 kPa',
+    ],
+    correctAnswer: 2,
     explanation:
       'Standard atmospheric pressure at sea level is 101.325 kPa (or 1013.25 mbar, or 760 mmHg). This is the reference pressure for most HVAC calculations.',
   },
@@ -128,27 +168,37 @@ const quizQuestions = [
     question: 'How does air density change with increasing altitude?',
     options: [
       'Density increases',
-      'Density decreases',
-      'Density remains constant',
       'Density first increases then decreases',
+      'Density remains constant',
+      'Density decreases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Air density decreases with altitude because atmospheric pressure decreases. At 1500m elevation, air density is approximately 15% lower than at sea level.',
   },
   {
     id: 8,
     question: 'The ratio of specific heats (γ = cp/cv) for air is approximately:',
-    options: ['1.0', '1.2', '1.4', '1.6'],
-    correctAnswer: 2,
+    options: [
+      '1.4',
+      '1.6',
+      '1.0',
+      '1.2',
+    ],
+    correctAnswer: 0,
     explanation:
       'For dry air, γ = cp/cv = 1005/718 = 1.4. This ratio is important for compressible flow calculations and understanding adiabatic processes.',
   },
   {
     id: 9,
     question: 'What is the molecular mass of dry air?',
-    options: ['18 g/mol', '28 g/mol', '29 g/mol', '32 g/mol'],
-    correctAnswer: 2,
+    options: [
+      '18 g/mol',
+      '29 g/mol',
+      '28 g/mol',
+      '32 g/mol',
+    ],
+    correctAnswer: 1,
     explanation:
       'Dry air has an effective molecular mass of approximately 29 g/mol (28.97 g/mol), weighted by the proportions of nitrogen, oxygen and other gases.',
   },
@@ -156,7 +206,12 @@ const quizQuestions = [
     id: 10,
     question:
       'An air handling unit supplies 5000 litres/s of air at 20°C. What is the mass flow rate?',
-    options: ['5.0 kg/s', '5.5 kg/s', '6.0 kg/s', '6.5 kg/s'],
+    options: [
+      '5.0 kg/s',
+      '5.5 kg/s',
+      '6.0 kg/s',
+      '6.5 kg/s',
+    ],
     correctAnswer: 2,
     explanation:
       'At 20°C, air density ≈ 1.2 kg/m³. Volume flow = 5000 l/s = 5 m³/s. Mass flow = ρ × V̇ = 1.2 × 5 = 6.0 kg/s.',
@@ -164,7 +219,12 @@ const quizQuestions = [
   {
     id: 11,
     question: 'Which factor does NOT affect air density?',
-    options: ['Temperature', 'Pressure', 'Humidity', 'Air velocity'],
+    options: [
+      'Temperature',
+      'Pressure',
+      'Humidity',
+      'Air velocity',
+    ],
     correctAnswer: 3,
     explanation:
       'Air velocity does not affect density - it affects the kinetic energy and pressure distribution in moving air, but not the mass per unit volume.',
@@ -172,8 +232,13 @@ const quizQuestions = [
   {
     id: 12,
     question: 'The specific heat at constant volume (cv) for dry air is approximately:',
-    options: ['287 J/kg·K', '718 J/kg·K', '1005 J/kg·K', '1860 J/kg·K'],
-    correctAnswer: 1,
+    options: [
+      '718 J/kg·K',
+      '1860 J/kg·K',
+      '287 J/kg·K',
+      '1005 J/kg·K',
+    ],
+    correctAnswer: 0,
     explanation:
       'cv for dry air is approximately 718 J/kg·K. The relationship cp - cv = R gives: 1005 - 718 = 287 J/kg·K (the gas constant).',
   },

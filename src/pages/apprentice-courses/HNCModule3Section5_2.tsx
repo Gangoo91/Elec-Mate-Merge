@@ -33,7 +33,12 @@ const quickCheckQuestions = [
     id: 'turns-ratio',
     question:
       'A transformer has 1000 primary turns and 100 secondary turns. If the primary voltage is 11kV, what is the secondary voltage?',
-    options: ['110V', '1100V', '11000V', '110kV'],
+    options: [
+      '110V',
+      '1100V',
+      '11000V',
+      '110kV',
+    ],
     correctIndex: 1,
     explanation:
       'Using V1/V2 = N1/N2: V2 = V1 x (N2/N1) = 11000 x (100/1000) = 1100V. The turns ratio of 10:1 steps down the voltage by a factor of 10.',
@@ -42,8 +47,13 @@ const quickCheckQuestions = [
     id: 'current-transform',
     question:
       'A step-down transformer reduces voltage from 400V to 230V. If the secondary current is 50A, what is the primary current (assuming ideal transformer)?',
-    options: ['28.8A', '50A', '86.9A', '100A'],
-    correctIndex: 0,
+    options: [
+      '50A',
+      '100A',
+      '86.9A',
+      '28.8A',
+    ],
+    correctIndex: 3,
     explanation:
       'For an ideal transformer, V1 x I1 = V2 x I2. Therefore I1 = (V2 x I2) / V1 = (230 x 50) / 400 = 28.75A. When voltage steps down, current steps up proportionally.',
   },
@@ -51,10 +61,10 @@ const quickCheckQuestions = [
     id: 'core-losses',
     question: 'Which type of transformer loss remains essentially constant regardless of load?',
     options: [
-      'Copper losses',
-      'Stray losses',
+      'Action + Location + Re-test',
+      'Tender pricing breakdowns',
       'Core losses (iron losses)',
-      'Eddy current losses only',
+      'External wall insulation (EWI)',
     ],
     correctIndex: 2,
     explanation:
@@ -63,8 +73,13 @@ const quickCheckQuestions = [
   {
     id: 'efficiency-calc',
     question: 'A transformer delivers 45kW output with 2kW total losses. What is its efficiency?',
-    options: ['91.5%', '95.7%', '97.8%', '100%'],
-    correctIndex: 1,
+    options: [
+      '97.8%',
+      '91.5%',
+      '95.7%',
+      '100%',
+    ],
+    correctIndex: 2,
     explanation:
       'Efficiency = Pout / (Pout + losses) = 45 / (45 + 2) = 45/47 = 0.957 = 95.7%. This can also be calculated as Pout/Pin = 45/47.',
   },
@@ -88,7 +103,12 @@ const quizQuestions = [
     id: 2,
     question:
       'A transformer has a turns ratio of 20:1 (step-down). If connected to 11kV supply, what is the secondary voltage?',
-    options: ['220V', '440V', '550V', '1100V'],
+    options: [
+      '1100V',
+      '220V',
+      '550V',
+      '440V',
+    ],
     correctAnswer: 2,
     explanation:
       'V2 = V1 / turns ratio = 11000 / 20 = 550V. For a step-down transformer, the secondary voltage equals the primary voltage divided by the turns ratio.',
@@ -97,8 +117,13 @@ const quizQuestions = [
     id: 3,
     question:
       'In an ideal transformer with turns ratio 2:1, if primary current is 5A, what is the secondary current?',
-    options: ['2.5A', '5A', '10A', '20A'],
-    correctAnswer: 2,
+    options: [
+      '5A',
+      '2.5A',
+      '20A',
+      '10A',
+    ],
+    correctAnswer: 3,
     explanation:
       'Using I1/I2 = N2/N1 (inverse of voltage ratio): I2 = I1 x (N1/N2) = 5 x 2 = 10A. In a step-down transformer, current steps up by the same ratio.',
   },
@@ -106,12 +131,12 @@ const quizQuestions = [
     id: 4,
     question: 'What causes hysteresis losses in a transformer core?',
     options: [
-      'Resistance of the copper windings',
       'Molecular friction as magnetic domains realign each cycle',
-      'Circulating currents in the core laminations',
-      'Leakage flux between windings',
+      'Proportional-Integral-Derivative control algorithm',
+      'The voltage at which an insulator fails and becomes conductive',
+      'Test during non-occupied hours with proper notifications',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Hysteresis losses result from the energy required to continuously reverse the magnetic domains in the core material as the AC flux alternates 50 times per second.',
   },
@@ -119,12 +144,12 @@ const quizQuestions = [
     id: 5,
     question: 'How are eddy current losses minimised in transformer cores?',
     options: [
-      'Using thicker laminations',
-      'Using solid iron cores',
+      'Flow increases but less than double due to system curve',
       'Using thin laminations insulated from each other',
-      'Increasing core cross-sectional area',
+      'The starter motor and battery bank',
+      'False - homemade or modified test equipment must never be used',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Thin laminations (typically 0.35mm-0.5mm) coated with insulating varnish break up the eddy current paths, significantly reducing I squared R losses in the core.',
   },
@@ -132,8 +157,13 @@ const quizQuestions = [
     id: 6,
     question:
       'A 100kVA transformer has full-load copper losses of 1.5kW and core losses of 1kW. What is its efficiency at full load with 0.8 power factor?',
-    options: ['96.0%', '96.9%', '97.5%', '98.5%'],
-    correctAnswer: 1,
+    options: [
+      '96.0%',
+      '97.5%',
+      '96.9%',
+      '98.5%',
+    ],
+    correctAnswer: 2,
     explanation:
       'Output power = 100 x 0.8 = 80kW. Total losses = 1.5 + 1 = 2.5kW. Efficiency = 80 / (80 + 2.5) = 80/82.5 = 96.97% which rounds to 96.9%',
   },
@@ -141,12 +171,12 @@ const quizQuestions = [
     id: 7,
     question: 'At what load does a transformer achieve maximum efficiency?',
     options: [
-      'Always at full load',
+      'Separated Extra-Low Voltage',
+      'IP44 minimum or suitable for the location',
+      'Fail for non-compliance with specification',
       'When copper losses equal core losses',
-      'When core losses are minimum',
-      'Always at half load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Maximum efficiency occurs when variable losses (copper losses) equal fixed losses (core losses). This typically occurs at 50-75% of full load for most transformers.',
   },
@@ -154,15 +184,25 @@ const quizQuestions = [
     id: 8,
     question:
       'A transformer has no-load voltage of 240V and full-load voltage of 230V at 0.8 pf lagging. What is the voltage regulation?',
-    options: ['2.1%', '4.2%', '4.3%', '5.0%'],
-    correctAnswer: 2,
+    options: [
+      '4.3%',
+      '5.0%',
+      '2.1%',
+      '4.2%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Voltage regulation = (V no-load - V full-load) / V full-load x 100 = (240 - 230) / 230 x 100 = 4.35% which rounds to 4.3%',
   },
   {
     id: 9,
     question: 'What is the typical percentage impedance for a 1000kVA distribution transformer?',
-    options: ['2-3%', '4-6%', '8-10%', '12-15%'],
+    options: [
+      '2-3%',
+      '4-6%',
+      '8-10%',
+      '12-15%',
+    ],
     correctAnswer: 1,
     explanation:
       'Distribution transformers typically have 4-6% impedance. Lower impedance allows higher fault currents but better voltage regulation; higher impedance limits fault current but increases voltage drop.',
@@ -171,12 +211,12 @@ const quizQuestions = [
     id: 10,
     question: 'Why are isolation transformers used in building services applications?',
     options: [
-      'To step voltage up for long cable runs',
+      'The equivalent DC voltage that would produce the same heating effect',
+      'To ensure materials arrive when needed and in correct quantities',
       'To provide galvanic isolation between circuits for safety',
-      'To improve power factor',
-      'To reduce harmonic distortion',
+      'To establish the Target Emission Rate (TER) as a compliance benchmark',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Isolation transformers provide galvanic separation between primary and secondary circuits, preventing direct electrical connection. This is essential for safety in applications like medical equipment, IT systems and bathrooms.',
   },

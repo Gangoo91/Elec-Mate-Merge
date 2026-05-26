@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'dynamic-ra-definition',
     question: 'A dynamic risk assessment is best described as:',
     options: [
-      'A formal, written risk assessment completed in the office before work starts',
+      'To record all tests as required by BS 5266-1 and provide evidence of compliance for fire authorities and insurance',
+      'An electrician uses the term "earth continuity conductor" while the plumber thinks they mean a physical earth wire to the ground',
       'A continuous, mental process of assessing and responding to changing conditions at the point of work in real time',
-      'A risk assessment that only applies to emergency situations',
-      'A computer-based risk assessment tool',
+      'The controller output saturates at its limit while the integral term continues to accumulate',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A dynamic risk assessment is a continuous, real-time process of observing conditions at the point of work, identifying new or changed hazards, evaluating the risk, and deciding on the appropriate response — including stopping work if necessary. It supplements (but does not replace) the formal written risk assessment and runs continuously throughout the task.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'slam-technique',
     question: 'What does the SLAM acronym stand for?',
     options: [
-      'Stop, Look, Assess, Manage',
       'Survey, List, Act, Monitor',
-      'Safety, Leadership, Awareness, Management',
       'Secure, Locate, Avoid, Mitigate',
+      'Safety, Leadership, Awareness, Management',
+      'Stop, Look, Assess, Manage',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'SLAM stands for Stop, Look, Assess, Manage. It is a simple, memorable technique for carrying out a dynamic risk assessment at the point of work. Stop what you are doing; Look at the task and surroundings; Assess the hazards and risks; Manage the situation by implementing controls, modifying the task, or stopping work if the risk is too high.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'In which of the following situations should a maintenance technician stop work immediately?',
     options: [
-      'When the tea break is due',
       'When a circuit that was confirmed dead is found to be live, or when an unexpected hazard is discovered that is not covered by the existing risk assessment',
-      'When it starts to rain lightly during outdoor work',
-      'When a colleague asks a question about the task',
+      'The practice of making misleading or unsubstantiated claims about the environmental benefits of a product, service, or company practice',
+      'They must have, or organisations must ensure they have, the skills, knowledge, training and experience appropriate to their role — and behavioural capability',
+      'Taking ownership of your work, decisions and their outcomes — accepting responsibility for both successes and problems, and not deflecting blame onto others',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Work must stop immediately when conditions change to the point where the existing risk assessment and method statement are no longer valid — particularly when an unexpected, serious hazard is discovered. Finding a circuit live when it was supposed to be dead is a critical safety failure that requires immediate stop-work, withdrawal to a safe area, and investigation before any further activity.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'documenting-dynamic-ra',
     question: 'Should the findings of a dynamic risk assessment be documented?',
     options: [
-      'No — dynamic risk assessments are purely mental processes that never need recording',
+      'Rotor bar defects, bearing faults, air gap eccentricity and mechanical load problems — all while the motor is running',
+      'Ice on platforms, rungs and frames creates severe slip hazards and can also affect locking mechanisms on castors and connections',
       'Yes — significant findings and decisions should be recorded, especially if work was stopped, modified or a new hazard was identified',
-      'Only if the HSE is on site',
-      'Only if someone is injured as a result',
+      'It is a non-statutory British Standard, but is referenced by statutory regulations such as EAWR 1989 as a means of compliance',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'While dynamic risk assessment is a real-time mental process, significant findings should be documented. If you stopped work due to a new hazard, modified the work method, or identified a condition not covered by the formal risk assessment, this should be recorded. The record feeds back into the formal risk assessment system, triggering a review and update. It also provides evidence of competent decision-making if the decision is later questioned.',
   },
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'Dynamic risk assessment is needed because:',
     options: [
-      'Written risk assessments are always wrong',
+      'How competence is identified, gained, refreshed and recorded — supporting EAWR Reg 16 and HASAWA s.2(2)(c)',
       'Workplace conditions can change after the formal risk assessment was written, and new hazards can emerge during the work',
-      'It is a legal requirement to carry out a dynamic risk assessment for every task',
-      'It replaces the need for any written documentation',
+      'Both frameworks suggest that optimal learning occurs when challenges are just beyond current ability but achievable with appropriate support',
+      'Only after other control measures have been considered and risks cannot be adequately controlled by other means',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: 'The SLAM technique should be applied:',
     options: [
-      'Only at the start of the working day',
+      'A risk assessment carried out at the actual work location, verifying that the conditions match the formal risk assessment',
+      'Stop work if they believe there is an imminent risk of serious injury — this is a fundamental right and duty',
       'Continuously throughout the task, and whenever conditions change or something does not seem right',
-      'Only when the supervisor is watching',
-      'Only after an accident has occurred',
+      'Safe working practices and personal responsibility for health and safety',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SLAM is a continuous process, not a one-off check. You should apply it throughout the task — particularly when transitioning between steps, when conditions change, when you feel uncertain about something, or when your instinct tells you something is not right. Effective dynamic risk assessment becomes a habit — an automatic mental process that runs alongside the physical work.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'During a cable installation, you discover what appears to be asbestos insulation board in the ceiling void. Your dynamic risk assessment response should be:',
     options: [
-      'Continue working carefully and report it at the end of the day',
+      'A risk assessment carried out at the actual work location, verifying that the conditions match the formal risk assessment',
+      'Hazard recognition skills, the SLAM technique, decision-making frameworks, knowledge of when to stop work, and the escalation process',
+      'Reporting the finding to your supervisor or the person in charge, so they can decide on the appropriate response, especially if the hazard is beyond your authority or competence to control',
       'Stop work immediately, withdraw from the area, secure it to prevent others entering, and report to the supervisor — do not disturb the suspected material',
-      'Break off a sample and take it for testing',
-      'Cover it with dust sheets and carry on',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Discovery of suspected asbestos is a critical stop-work trigger. You must stop work immediately and withdraw from the area without disturbing the material (which could release fibres). Secure the area to prevent others entering, and report to your supervisor. Only licensed asbestos removal contractors can handle asbestos-containing materials. The formal risk assessment and method statement must be reviewed before work can resume.',
   },
@@ -111,9 +111,9 @@ const quizQuestions = [
     question: "A 'point-of-work risk assessment' is:",
     options: [
       'A risk assessment carried out at the actual work location, verifying that the conditions match the formal risk assessment',
-      'A risk assessment carried out at the company head office',
-      'A risk assessment that only applies to sharp objects at the workstation',
-      'A type of risk assessment used only in hospitals',
+      'Stop work if they believe there is an imminent risk of serious injury — this is a fundamental right and duty',
+      'Continuously throughout the task, and whenever conditions change or something does not seem right',
+      'Hazard recognition skills, the SLAM technique, decision-making frameworks, knowledge of when to stop work, and the escalation process',
     ],
     correctAnswer: 0,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'Which of the following is an example of a changing condition that should trigger a dynamic risk assessment during electrical maintenance?',
     options: [
-      'A colleague arriving with the correct tools',
+      'Better speed and torque control, especially at low speeds and under varying loads',
       'Water beginning to leak into the switchroom from a burst pipe above',
-      'The tea van arriving on site',
-      'A sunny day becoming slightly cloudier',
+      'Tracking peak power demand to manage electricity costs and capacity',
+      'The vertical distance between two consecutive ledger levels',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 6,
     question: 'The escalation process for a dynamic risk assessment finding means:',
     options: [
-      'Fixing the problem yourself regardless of your competence',
+      'Formal risk assessment provides the planned safety framework; dynamic risk assessment runs continuously at the point of work to identify changes and respond to new conditions',
+      'Stop work immediately, verify the status of their own isolation, and challenge the colleague — the integrity of the safe isolation system has been compromised',
       'Reporting the finding to your supervisor or the person in charge, so they can decide on the appropriate response, especially if the hazard is beyond your authority or competence to control',
-      'Sending an email to head office and waiting for a reply',
-      "Adding the hazard to next year's risk assessment review",
+      'Hazard recognition skills, the SLAM technique, decision-making frameworks, knowledge of when to stop work, and the escalation process',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Escalation means reporting the finding up the management chain to someone with the authority and competence to deal with it. If you discover a hazard that is beyond your ability to control — for example, a structural concern, a suspected gas leak, or an asbestos find — you must stop work and escalate immediately. Do not attempt to manage hazards outside your competence. The person in charge can then decide on the appropriate response, which may involve specialist contractors, additional resources, or a formal reassessment.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'A maintenance technician is working on a distribution board and notices that a colleague on the same site has removed the lock from an isolator that forms part of their safe isolation. They should:',
     options: [
-      'Assume the colleague has a good reason and continue working',
+      'Reporting the finding to your supervisor or the person in charge, so they can decide on the appropriate response, especially if the hazard is beyond your authority or competence to control',
+      'Hazard recognition skills, the SLAM technique, decision-making frameworks, knowledge of when to stop work, and the escalation process',
+      'A risk assessment carried out at the actual work location, verifying that the conditions match the formal risk assessment',
       'Stop work immediately, verify the status of their own isolation, and challenge the colleague — the integrity of the safe isolation system has been compromised',
-      'Report it in the weekly safety report',
-      'Put their own lock on a different isolator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The removal of a lock from an isolation point is a critical safety event. The maintenance technician must stop work immediately because their safe isolation may have been compromised. They should verify that their circuit is still dead (prove dead again), and challenge the colleague to understand why the lock was removed. This situation must be resolved before any further work — it is a potential fatal hazard that demands immediate action, not a note in a report.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 8,
     question: 'Training for dynamic risk assessment should include:',
     options: [
-      'Only classroom theory — practical experience is not needed',
       'Hazard recognition skills, the SLAM technique, decision-making frameworks, knowledge of when to stop work, and the escalation process',
-      'Only how to fill in paperwork',
-      'Training is not needed — dynamic risk assessment is instinctive',
+      'A risk assessment carried out at the actual work location, verifying that the conditions match the formal risk assessment',
+      'Stop work immediately, withdraw from the area, secure it to prevent others entering, and report to the supervisor — do not disturb the suspected material',
+      'Continuously throughout the task, and whenever conditions change or something does not seem right',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Effective dynamic risk assessment requires training in hazard recognition (knowing what to look for), structured techniques like SLAM (knowing how to assess), decision-making frameworks (knowing what to do with the information), knowledge of stop-work authority (knowing when and how to stop), and the escalation process (knowing who to tell). While experience builds competence over time, formal training provides the foundation that makes dynamic assessment systematic rather than haphazard.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       'Which of the following best describes the relationship between formal risk assessment and dynamic risk assessment?',
     options: [
-      'Dynamic risk assessment replaces formal risk assessment',
-      'Formal risk assessment replaces the need for dynamic risk assessment',
+      'Hazard recognition skills, the SLAM technique, decision-making frameworks, knowledge of when to stop work, and the escalation process',
       'Formal risk assessment provides the planned safety framework; dynamic risk assessment runs continuously at the point of work to identify changes and respond to new conditions',
-      'They are the same thing carried out by different people',
+      'Stop work immediately, withdraw from the area, secure it to prevent others entering, and report to the supervisor — do not disturb the suspected material',
+      'Reporting the finding to your supervisor or the person in charge, so they can decide on the appropriate response, especially if the hazard is beyond your authority or competence to control',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The two types of assessment are complementary. The formal risk assessment provides the planned framework — it identifies anticipated hazards, evaluates risks, and specifies controls before work begins. The dynamic risk assessment operates in real time at the point of work, monitoring actual conditions, identifying changes, and responding to situations that the formal assessment did not or could not anticipate. Both are needed for safe work.',
   },
@@ -192,12 +192,12 @@ const quizQuestions = [
     question:
       'During live fault-finding on a control panel, the maintenance technician notices an unusual burning smell that was not present when work started. The correct response is:',
     options: [
-      'Ignore it — burning smells are normal in electrical panels',
+      'Feedback from site (what\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s actually working / not); contribution to writing RAMS for routine jobs; review of generic templates; coaching of L2 mates on dynamic assessment; near-miss data feeding the next RAMS update.',
+      'All protective devices operate (RCD test, RCBO test, AFDD self-test), correct switching/control sequences, interlocks, emergency stops, automatic devices and that the system performs as intended without re-introducing the original fault',
       'Apply SLAM: stop the current activity, look for the source of the smell, assess whether it indicates a new hazard (overheating, insulation failure), and manage by withdrawing if necessary, de-energising the panel if safe to do so, and reporting the finding',
-      'Open the panel door wider to ventilate the smell',
-      'Continue fault-finding but work faster to finish before anything happens',
+      'The exact nature of the modification, why it was necessary, who authorised it, what was changed, and ensure that drawings and documentation are updated to reflect the as-built condition',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A burning smell in an electrical panel indicates potential overheating, insulation breakdown, or an incipient fault — all serious hazards. The SLAM technique provides a structured response: Stop the current activity; Look for the source (visual inspection, thermal observation); Assess whether it represents a new or escalating hazard; Manage by withdrawing to a safe distance, de-energising the panel if it can be done safely, and reporting to the supervisor. Do not ignore unusual conditions — they are often early warning signs of serious failures.',
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     id: 11,
     question: 'Every worker on site has the authority to:',
     options: [
-      'Continue working regardless of conditions, as long as a risk assessment exists',
+      'Continuously throughout the task, and whenever conditions change or something does not seem right',
+      'Hazard recognition skills, the SLAM technique, decision-making frameworks, knowledge of when to stop work, and the escalation process',
+      'A risk assessment carried out at the actual work location, verifying that the conditions match the formal risk assessment',
       'Stop work if they believe there is an imminent risk of serious injury — this is a fundamental right and duty',
-      'Stop work only if they hold a management position',
-      'Stop work only if they have completed a NEBOSH qualification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Every worker has both the right and the duty to stop work if they believe there is an imminent risk of serious personal injury. This is established by the Management of Health and Safety at Work Regulations 1999 (Regulation 8) and reinforced by the Health and Safety at Work Act 1974 (Section 7). No qualification, job title or seniority is needed — if you believe the situation is dangerous, stop and report. No reputable employer will penalise a worker for stopping work on genuine safety grounds.',
   },
@@ -219,12 +219,12 @@ const quizQuestions = [
     question:
       'Under ST1426, the ability to carry out dynamic risk assessment is part of which competence area?',
     options: [
-      'Technical drawing interpretation',
       'Safe working practices and personal responsibility for health and safety',
-      'Business improvement techniques',
-      'Stock control and logistics',
+      'Overloading, short circuits, earth faults, or protective device problems',
+      'Complete sequences of operations and system integration',
+      'Up to 5 years\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' imprisonment and/or an unlimited fine',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 requires maintenance technicians to demonstrate competence in safe working practices, which includes the ability to assess risk dynamically at the point of work, make appropriate decisions about whether to proceed, and take personal responsibility for their own safety and the safety of others. This is assessed in the end-point assessment through the professional discussion (where you describe how you have applied dynamic risk assessment in practice) and the practical observation (where assessors observe your real-time safety awareness).',
   },

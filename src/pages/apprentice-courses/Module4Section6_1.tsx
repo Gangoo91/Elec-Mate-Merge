@@ -13,7 +13,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'When should a visual inspection be carried out — before or after testing?',
-    options: ['After testing', 'Before testing', 'During testing', "It doesn't matter"],
+    options: [
+      'During testing',
+      'Before testing',
+      "It doesn't matter",
+      'After testing',
+    ],
     correctIndex: 1,
     explanation:
       'BS 7671 Regulation 611.3 states that visual inspection shall precede testing. This ensures visible defects are identified and corrected before electrical testing begins.',
@@ -22,12 +27,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Name two defects that can be found during a visual inspection.',
     options: [
+      'Frequency and harmonics',
+      'Voltage drop and power factor',
       'Missing grommets and exposed copper',
       'High resistance and earth faults',
-      'Voltage drop and power factor',
-      'Frequency and harmonics',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Visual inspections can identify physical defects like missing grommets at cable entries and exposed copper conductors at terminations - both serious safety hazards.',
   },
@@ -35,12 +40,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why must cables be routed in recognised safe zones?',
     options: [
-      'For aesthetic reasons',
+      'Stop work and report to supervisor',
+      'Outside zones or cord operated',
+      'An unwanted fire signal (UwFS)',
       'To prevent accidental damage',
-      'To reduce costs',
-      'For easier testing',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Safe zones protect cables from accidental damage during future building work, drilling, or maintenance activities, preventing potentially dangerous situations.',
   },
@@ -53,7 +58,12 @@ const Module4Section6_1 = () => {
     {
       id: 1,
       question: 'According to BS 7671, when must a visual inspection be performed?',
-      options: ['After testing', 'Before testing', 'After energisation', 'Only for domestic work'],
+      options: [
+        'After testing',
+        'Before testing',
+        'After energisation',
+        'Only for domestic work',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 Regulation 611.3 clearly states that visual inspection shall precede testing to identify defects before energisation.',
@@ -61,16 +71,26 @@ const Module4Section6_1 = () => {
     {
       id: 2,
       question: 'Name one tool commonly used in visual inspections.',
-      options: ['Torch', 'Multimeter', 'Insulation tester', 'Clamp meter'],
-      correctAnswer: 0,
+      options: [
+        'Insulation tester',
+        'Clamp meter',
+        'Torch',
+        'Multimeter',
+      ],
+      correctAnswer: 2,
       explanation:
         'A torch is essential for visual inspections to illuminate areas and identify defects that may not be visible in normal lighting.',
     },
     {
       id: 3,
       question: 'What is the main regulatory reference for visual inspections?',
-      options: ['BS 5839', 'BS 7671', 'BS EN 50200', 'BS 5266'],
-      correctAnswer: 1,
+      options: [
+        'BS EN 50200',
+        'BS 5839',
+        'BS 5266',
+        'BS 7671',
+      ],
+      correctAnswer: 3,
       explanation:
         'BS 7671 is the main regulatory standard for electrical installations, including requirements for visual inspections.',
     },
@@ -78,8 +98,13 @@ const Module4Section6_1 = () => {
       id: 4,
       question:
         'True or False: Visual inspections can identify electrical faults that cannot be seen.',
-      options: ['True', 'False', 'Only sometimes', 'Only with special equipment'],
-      correctAnswer: 1,
+      options: [
+        'False',
+        'True',
+        'Only sometimes',
+        'Only with special equipment',
+      ],
+      correctAnswer: 0,
       explanation:
         'False - Visual inspections only identify defects that can be seen. Electrical faults like insulation breakdown require testing.',
     },
@@ -87,12 +112,12 @@ const Module4Section6_1 = () => {
       id: 5,
       question: 'List two common defects a visual inspection might reveal.',
       options: [
-        'Missing grommets and exposed copper conductors',
         'High resistance and earth faults',
-        'Voltage fluctuations and power surges',
+        'Missing grommets and exposed copper conductors',
         'Frequency variations and harmonics',
+        'Voltage fluctuations and power surges',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'Missing grommets and exposed copper conductors are visible defects that compromise safety and can be identified during visual inspection.',
     },
@@ -100,12 +125,12 @@ const Module4Section6_1 = () => {
       id: 6,
       question: 'Why is it important to check for grommets or bushes at cable entries?',
       options: [
+        'Gradually increase lighting based on time of day',
+        'Inhalation of solder flux fumes containing colophony (rosin)',
         'To prevent damage to cable insulation from sharp edges',
-        'To improve aesthetics',
-        'To reduce installation time',
-        'To comply with colour coding',
+        'Terre-Neutre-Separés (separate earth and neutral)',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'Grommets and bushes protect cable insulation from damage caused by sharp metal edges at entry points, preventing potential safety hazards.',
     },
@@ -113,12 +138,12 @@ const Module4Section6_1 = () => {
       id: 7,
       question: 'What should you do if a defect is classified as dangerous?',
       options: [
-        'Continue with testing',
+        'Ask questions or confirm with your supervisor',
+        'Open circuit the load terminals and measure voltage',
+        'Mechanical binding or single phasing',
         'Stop work, report, and make the area safe',
-        'Record it and continue',
-        'Inform the client later',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Dangerous defects require immediate action - stop work, report to supervisor, and make the area safe before proceeding.',
     },
@@ -127,12 +152,12 @@ const Module4Section6_1 = () => {
       question:
         'True or False: A visual inspection can be skipped if the installer is confident in their work.',
       options: [
-        'True',
         'False',
         'Only for simple installations',
+        'True',
         'Only for experienced installers',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'False - Visual inspection is mandatory under BS 7671 regardless of installer confidence or experience level.',
     },

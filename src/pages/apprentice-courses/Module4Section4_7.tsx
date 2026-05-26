@@ -41,7 +41,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which regulation covers working at height in the UK?',
-    options: ['BS 7671', 'Work at Height Regulations 2005', 'PUWER', 'CDM Regulations'],
+    options: [
+      'Part L compliance for non-dwellings',
+      'Work at Height Regulations 2005',
+      'High-frequency random pattern',
+      'Horizontal movement to the left',
+    ],
     correctAnswer: 1,
     explanation:
       'The Work at Height Regulations 2005 specifically govern all work at height activities in the UK construction industry.',
@@ -57,15 +62,25 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the correct ladder positioning ratio?',
-    options: ['3:1 ratio', '4:1 ratio', '5:1 ratio', '2:1 ratio'],
-    correctAnswer: 1,
+    options: [
+      '5:1 ratio',
+      '3:1 ratio',
+      '2:1 ratio',
+      '4:1 ratio',
+    ],
+    correctAnswer: 3,
     explanation:
       'The 4:1 ratio means for every 4 metres of height, the base should be 1 metre away from the wall.',
   },
   {
     id: 4,
     question: 'Name two common hazards when working at height.',
-    options: ['Falls and dropped tools', 'Noise and vibration', 'Heat and cold', 'Dust and fumes'],
+    options: [
+      'Falls and dropped tools',
+      'Noise and vibration',
+      'Heat and cold',
+      'Dust and fumes',
+    ],
     correctAnswer: 0,
     explanation:
       'Falls from height and dropped tools striking people below are the most common and serious hazards when working at height.',
@@ -74,10 +89,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is one key safety feature of scaffolding platforms?',
     options: [
-      'Mobility',
+      'Total resistance increases',
       'Guard rails and toe boards',
-      'Lightweight construction',
-      'Quick assembly',
+      'Resistance values add together',
+      'Fire risk from overheating',
     ],
     correctAnswer: 1,
     explanation:
@@ -87,10 +102,10 @@ const quizQuestions = [
     id: 6,
     question: 'When should fall arrest equipment be used?',
     options: [
-      'Always when working at height',
-      'Only on ladders',
+      "Batteries require replacement every 3–5 years",
+      "Internal diameter, alignment, and cable pulling capability",
       "When there's a risk of falling and no physical barrier",
-      'Never required',
+      "Each device rated for full prospective fault current at its location",
     ],
     correctAnswer: 2,
     explanation:
@@ -100,12 +115,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why should you avoid overreaching on a ladder?',
     options: [
-      "It's uncomfortable",
+      'Depends on cross-sectional area',
+      'Insulation resistance tester',
+      'To prevent smoke spread throughout the building',
       'It can cause loss of balance and falls',
-      "It's inefficient",
-      'It damages the ladder',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Overreaching shifts your centre of gravity outside the ladder's base, causing loss of balance and potential falls.",
   },
@@ -113,12 +128,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the benefit of using tool lanyards?',
     options: [
-      'Easier tool access',
       'Prevents tools from dropping and injuring people below',
-      'Reduces tool weight',
-      'Improves tool performance',
+      'Competence and confidence reinforce each other in a positive cycle',
+      'A person with relevant knowledge, skills, and experience',
+      'Remove or control any element of the fire triangle',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Tool lanyards prevent dropped tools from falling and potentially injuring people working below.',
   },

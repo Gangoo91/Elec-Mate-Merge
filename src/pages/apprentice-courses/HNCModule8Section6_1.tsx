@@ -27,7 +27,12 @@ const quickCheckQuestions = [
     id: 'hvac-load-calculation',
     question:
       'When calculating the total electrical load for an HVAC system, which factor must be applied to motor full load current to determine cable sizing?',
-    options: ['0.8 (80% derating)', '1.0 (exact FLC)', '1.25 (25% increase)', '1.5 (50% increase)'],
+    options: [
+      '0.8 (80% derating)',
+      '1.0 (exact FLC)',
+      '1.25 (25% increase)',
+      '1.5 (50% increase)',
+    ],
     correctIndex: 2,
     explanation:
       'BS 7671 Regulation 433.3.1 requires that conductors supplying motors shall be rated for not less than 125% of the full load current of the motor to account for starting conditions and continuous operation at rated load.',
@@ -37,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'What is the typical voltage classification for BMS control wiring connecting to HVAC equipment?',
     options: [
-      'Mains voltage (230V AC)',
       'Extra-Low Voltage (typically 24V AC/DC)',
-      'Medium voltage (1000V)',
-      'High voltage (11kV)',
+      'Approximately mid-height of the ventilated space',
+      'Swimming pools with zone requirements',
+      'Harsh industrial environment',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BMS control signals typically operate at Extra-Low Voltage (ELV), commonly 24V AC or DC. This provides safety advantages and allows smaller cable sizes, though mains-rated control circuits are also used for direct switching applications.',
   },
@@ -52,11 +57,11 @@ const quickCheckQuestions = [
       'According to BS 7671, what is the minimum separation required between power cables and ELV control cables in shared containment?',
     options: [
       'No separation required',
-      'Physical partition or 50mm spacing',
       'Physical partition or 150mm spacing',
+      'Physical partition or 50mm spacing',
       'Separate containment routes only',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BS 7671 Regulation 528.1 requires segregation between Band I (ELV) and Band II (LV mains) circuits. This can be achieved by physical partition, 50mm separation in cable tray, or separate compartments in trunking systems.',
   },
@@ -64,7 +69,12 @@ const quickCheckQuestions = [
     id: 'mcc-protection',
     question:
       'What type of motor protection device is typically specified in an MCC to prevent damage from prolonged overload conditions?',
-    options: ['MCB only', 'Fuse only', 'Thermal overload relay', 'Time delay relay'],
+    options: [
+      'MCB only',
+      'Time delay relay',
+      'Thermal overload relay',
+      'Fuse only',
+    ],
     correctIndex: 2,
     explanation:
       'Thermal overload relays (or electronic equivalents) are essential motor protection devices that monitor current over time. They trip when sustained overload conditions would cause motor winding damage, providing protection that instantaneous devices cannot offer.',
@@ -76,8 +86,13 @@ const quizQuestions = [
     id: 1,
     question:
       'A 15kW three-phase HVAC chiller motor operates at 400V with a power factor of 0.85. What is the approximate full load current (FLC)?',
-    options: ['18.5A', '22A', '25.5A', '32A'],
-    correctAnswer: 2,
+    options: [
+      '18.5A',
+      '25.5A',
+      '22A',
+      '32A',
+    ],
+    correctAnswer: 1,
     explanation:
       'FLC = P / (√3 × V × pf) = 15,000 / (1.732 × 400 × 0.85) = 15,000 / 588.7 = 25.5A. This calculation is essential for cable sizing and protective device selection.',
   },
@@ -85,8 +100,13 @@ const quizQuestions = [
     id: 2,
     question:
       'Which BS 7671 regulation specifically addresses the requirements for motor circuit protection?',
-    options: ['Section 411', 'Section 433', 'Section 525', 'Section 701'],
-    correctAnswer: 1,
+    options: [
+      'Section 525',
+      'Section 411',
+      'Section 433',
+      'Section 701',
+    ],
+    correctAnswer: 2,
     explanation:
       'Section 433 of BS 7671 covers protection against overload current, including specific requirements for motor circuits in Regulation 433.3. This includes the 125% conductor rating requirement.',
   },
@@ -94,8 +114,13 @@ const quizQuestions = [
     id: 3,
     question:
       'When designing cable containment for HVAC plant rooms, what percentage spare capacity is recommended for future expansion?',
-    options: ['10%', '15%', '25%', '50%'],
-    correctAnswer: 2,
+    options: [
+      '15%',
+      '10%',
+      '50%',
+      '25%',
+    ],
+    correctAnswer: 3,
     explanation:
       'Industry best practice recommends 25% spare capacity in cable containment systems for HVAC installations. This accommodates future plant additions, control upgrades, and maintenance access without complete containment redesign.',
   },
@@ -103,8 +128,13 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the standard supply voltage for large HVAC equipment such as chillers and AHU motors in UK commercial installations?',
-    options: ['230V single-phase', '400V three-phase', '230V three-phase', '415V three-phase'],
-    correctAnswer: 1,
+    options: [
+      '400V three-phase',
+      '230V single-phase',
+      '230V three-phase',
+      '415V three-phase',
+    ],
+    correctAnswer: 0,
     explanation:
       '400V three-phase (phase-to-phase) is the standard UK commercial/industrial supply voltage. Motors above approximately 3kW are typically three-phase for efficiency and starting current benefits.',
   },
@@ -113,10 +143,10 @@ const quizQuestions = [
     question:
       'In an MCC (Motor Control Centre) design, what is the purpose of the interposing relay between BMS output and motor starter?',
     options: [
-      'To amplify the BMS signal strength',
+      'To vary motor speed for energy efficiency and demand matching',
       'To provide isolation between BMS and power circuits',
-      'To reduce motor starting current',
-      'To convert AC to DC voltage',
+      'Steel wire armoured (SWA) or equivalent mechanical protection',
+      'Rated voltage, current, frequency, and IP rating',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,12 +157,12 @@ const quizQuestions = [
     question:
       'According to BS 7671, what type of cable should be used for mains-rated HVAC control circuits in industrial environments?',
     options: [
-      'Any PVC-insulated cable',
+      'Rated voltage, current, frequency, and IP rating',
+      'To provide isolation between BMS and power circuits',
       'Steel wire armoured (SWA) or equivalent mechanical protection',
-      'Flexible cord only',
-      'Rubber-insulated cable',
+      'To vary motor speed for energy efficiency and demand matching',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Industrial HVAC installations typically require mechanically protected cables such as SWA (BS 5467/6724) or cables in conduit/trunking. This provides protection against mechanical damage in plant room environments.',
   },
@@ -140,8 +170,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the minimum IP rating typically required for electrical equipment installed in a mechanical plant room?',
-    options: ['IP20', 'IP44', 'IP54', 'IP65'],
-    correctAnswer: 2,
+    options: [
+      'IP20',
+      'IP44',
+      'IP65',
+      'IP54',
+    ],
+    correctAnswer: 3,
     explanation:
       'Plant rooms typically require IP54 minimum (dust protected, splash proof) due to potential condensation, maintenance water spillage, and general industrial conditions. Higher ratings may be needed near cooling towers or humidifiers.',
   },
@@ -149,8 +184,13 @@ const quizQuestions = [
     id: 8,
     question:
       'When calculating HVAC electrical loads, what diversity factor is typically applied to multiple fan coil units on a common circuit?',
-    options: ['1.0 (no diversity)', '0.9', '0.8', '0.6'],
-    correctAnswer: 2,
+    options: [
+      '0.8',
+      '0.6',
+      '1.0 (no diversity)',
+      '0.9',
+    ],
+    correctAnswer: 0,
     explanation:
       'A diversity factor of 0.8 (80%) is commonly applied to multiple fan coil units as they rarely all operate at maximum simultaneously. This reflects realistic loading patterns whilst maintaining adequate capacity.',
   },
@@ -158,10 +198,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of a Variable Speed Drive (VSD) in HVAC motor control?',
     options: [
-      'To increase motor starting torque',
+      'To provide isolation between BMS and power circuits',
       'To vary motor speed for energy efficiency and demand matching',
-      'To provide motor isolation only',
-      'To convert single-phase to three-phase',
+      'Steel wire armoured (SWA) or equivalent mechanical protection',
+      'Rated voltage, current, frequency, and IP rating',
     ],
     correctAnswer: 1,
     explanation:
@@ -172,12 +212,12 @@ const quizQuestions = [
     question:
       'Which document defines the interface points between HVAC mechanical contractor and electrical contractor?',
     options: [
-      'Building Regulations Part P',
+      'V_line = sqrt(3) x V_phase',
+      'Refrigerant evaporates inside the coil tubes',
       'Points of Connection Schedule (PoC)',
-      'CIBSE Guide M',
-      'BS 7671 Appendix 4',
+      'Vd = (mV/A/m × I × L) ÷ 1000',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Points of Connection (PoC) Schedule defines exact interface points, responsibilities, and connection requirements between mechanical and electrical contractors. This is essential for coordination and prevents costly site disputes.',
   },
@@ -185,8 +225,13 @@ const quizQuestions = [
     id: 11,
     question:
       'What earthing arrangement is typically used for HVAC equipment in UK commercial buildings?',
-    options: ['TT system only', 'IT system', 'TN-S or TN-C-S system', 'No earthing required'],
-    correctAnswer: 2,
+    options: [
+      'TT system only',
+      'IT system',
+      'No earthing required',
+      'TN-S or TN-C-S system',
+    ],
+    correctAnswer: 3,
     explanation:
       'UK commercial buildings typically use TN-S or TN-C-S earthing systems. HVAC equipment must be bonded to the main earthing terminal, with supplementary bonding in plant rooms as required by BS 7671 Section 411.',
   },
@@ -195,12 +240,12 @@ const quizQuestions = [
     question:
       'What is the recommended maximum voltage drop for motor circuits according to BS 7671 guidance?',
     options: [
+      '5% of nominal voltage',
+      '4% of nominal voltage',
       '2% of nominal voltage',
       '3% of nominal voltage',
-      '4% of nominal voltage',
-      '5% of nominal voltage',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'BS 7671 Appendix 4 recommends a maximum 5% voltage drop from origin to final load. For motor circuits, this ensures adequate starting voltage and prevents operational issues at full load.',
   },
@@ -208,7 +253,12 @@ const quizQuestions = [
     id: 13,
     question:
       "In HVAC load schedules, what does the abbreviation 'DOL' indicate for motor starting method?",
-    options: ['Delayed On-Line', 'Direct On-Line', 'Dual Operating Load', 'Dynamic Output Limiter'],
+    options: [
+      'Dual Operating Load',
+      'Direct On-Line',
+      'Dynamic Output Limiter',
+      'Delayed On-Line',
+    ],
     correctAnswer: 1,
     explanation:
       "DOL (Direct On-Line) starting connects the motor directly to full supply voltage. It's simple and economical but produces high starting currents (6-8× FLC) and is typically limited to motors under 7.5-11kW.",
@@ -218,12 +268,12 @@ const quizQuestions = [
     question:
       'What information must be included on HVAC equipment nameplates according to BS EN 60204-1?',
     options: [
-      'Manufacturer name only',
+      'To provide isolation between BMS and power circuits',
+      'Steel wire armoured (SWA) or equivalent mechanical protection',
       'Rated voltage, current, frequency, and IP rating',
-      'Installation date and contractor',
-      'Building address and floor level',
+      'To vary motor speed for energy efficiency and demand matching',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 60204-1 requires nameplates to show: manufacturer, supply voltage, number of phases, frequency, full load current, IP rating, and other relevant operational data. This information is essential for safe operation and maintenance.',
   },

@@ -16,10 +16,10 @@ const Module6Section7_1 = () => {
       id: 1,
       question: 'What is the main purpose of electrical certification?',
       options: [
-        'To charge more money',
+        'The module\\\\\\\\\\\\\\\'s communication address and point configuration',
         'To prove safety and compliance with regulations',
-        'To create paperwork',
-        'To satisfy customers',
+        'To check consistency of quality across all work',
+        'To ensure all items are systematically checked',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,20 +29,25 @@ const Module6Section7_1 = () => {
       id: 2,
       question: 'Which UK regulation requires all electrical systems to be safe?',
       options: [
-        'Health and Safety at Work Act',
+        'Sustainable Drainage Systems',
+        'Celebrate with a small positive emotion',
         'Electricity at Work Regulations 1989',
-        'Building Regulations',
-        'Wiring Regulations',
+        'Traditional light switches',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The Electricity at Work Regulations 1989 (EAWR) make it a legal duty to ensure electrical systems are constructed and maintained safely.',
     },
     {
       id: 3,
       question: 'Which standard sets out the certification requirements for electrical work?',
-      options: ['BS 7671', 'BS 5839', 'BS 6423', 'BS 1363'],
-      correctAnswer: 0,
+      options: [
+        'BS 6423',
+        'BS 5839',
+        'BS 1363',
+        'BS 7671',
+      ],
+      correctAnswer: 3,
       explanation:
         'BS 7671 (The Wiring Regulations) sets out the technical requirements for electrical installations, including mandatory testing and certification.',
     },
@@ -50,12 +55,12 @@ const Module6Section7_1 = () => {
       id: 4,
       question: 'Why is certification important for insurers and building control?',
       options: [
-        'It looks professional',
         'It provides evidence of compliance and due diligence',
-        "It's required by law",
-        'It helps with marketing',
+        'The minimum base dimension (the shorter side)',
+        'Commissioning records, O&M manuals, and as-built drawings',
+        'Claims arising from design work and certification advice',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Certification provides insurers and building control with evidence that proper testing was conducted and safety standards were met.',
     },
@@ -63,10 +68,10 @@ const Module6Section7_1 = () => {
       id: 5,
       question: 'What key details are included on a certificate?',
       options: [
-        'Only test results',
+        'A device that allows current in one direction only (when forward biased)',
         'Installation details, test results, and competent person signatures',
-        "Just the electrician's name",
-        'Equipment serial numbers only',
+        'The design team, documented through an RFI or technical query',
+        'Overloading, loose connections, or high resistance contacts',
       ],
       correctAnswer: 1,
       explanation:
@@ -84,12 +89,12 @@ const Module6Section7_1 = () => {
       id: 7,
       question: 'Why must a certificate include the signature of a competent person?',
       options: [
-        'For legal requirement',
+        'Testing and configuring the complete system',
+        'Recommendations for improving energy efficiency',
+        'Building thermal performance (weather sensitivity)',
         'To provide accountability and traceability',
-        'To look official',
-        'For insurance purposes',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Signatures establish accountability and ensure responsibility is clear and traceable for the work carried out.',
     },
@@ -97,12 +102,12 @@ const Module6Section7_1 = () => {
       id: 8,
       question: 'What are the legal consequences of failing to issue a certificate?',
       options: [
-        'Minor paperwork issues',
         'Prosecution, fines, insurance denial, and personal liability',
-        'Customer complaints',
-        'Nothing serious',
+        'To reduce high currents to measurable levels for meters',
+        'Leveraging each protocol\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s strengths for specific applications',
+        'At the cooker control unit and cooker outlet',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Failing to certify can result in prosecution, fines, imprisonment, insurance denial, and personal liability for damages.',
     },
@@ -111,11 +116,11 @@ const Module6Section7_1 = () => {
       question: 'What must be completed before a new installation can be energised?',
       options: [
         'Payment from client',
-        'Building control approval',
         'Certification',
+        'Building control approval',
         'Material delivery',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Certification must be complete before energising any new installation to ensure it meets safety standards.',
     },
@@ -124,12 +129,12 @@ const Module6Section7_1 = () => {
       question:
         'In the real-world example, what mistake left the contractor personally liable for damages?',
       options: [
-        'Using wrong cables',
+        'IP44 minimum (IP54/IP55 in dustier or wetter areas) per Reg 705.512.2',
+        'Complete failure to trip at any test current',
         'Failing to issue an Electrical Installation Certificate',
-        'Poor workmanship',
-        'Late completion',
+        'That all testing is complete and results are satisfactory',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The contractor failed to issue an EIC, leaving no documentation to prove compliance, resulting in personal liability for fire damages.',
     },

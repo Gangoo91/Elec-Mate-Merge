@@ -53,12 +53,12 @@ const AM2Module5Section1 = () => {
       id: 'open-circuit',
       question: 'What is the most common symptom of an open circuit fault?',
       options: [
-        'Lights dimming',
+        'Current cost performance trends will continue',
+        'Measure coil resistance with power off',
+        'The cpc may be a smaller cross-sectional area',
         'Circuit completely dead, no power at all',
-        'RCD tripping',
-        'MCB tripping on overload',
       ],
-      correctIndex: 1,
+      correctIndex: 3,
       explanation:
         'Open circuits break the electrical path completely, resulting in no power reaching the load.',
     },
@@ -66,12 +66,12 @@ const AM2Module5Section1 = () => {
       id: 'high-resistance',
       question: 'Which test would most likely detect a high resistance connection?',
       options: [
-        'Insulation resistance test',
-        'RCD test',
+        'Possible overheating due to a loose connection or excessive current',
         'Continuity test showing higher than expected resistance',
-        'Polarity test',
+        'To maintain circuit integrity during a fire',
+        'High-density parallel connections for 40G/100G+',
       ],
-      correctIndex: 2,
+      correctIndex: 1,
       explanation:
         'High resistance connections show up as unexpectedly high readings during continuity testing.',
     },
@@ -80,12 +80,12 @@ const AM2Module5Section1 = () => {
       question:
         'What happens when you test insulation resistance on a circuit with a short circuit fault?',
       options: [
-        'Reading over 1MΩ',
+        'At designated assembly points away from the building',
+        'Before the construction phase begins',
+        'The phase angle between voltage and current',
         'Reading close to zero or very low resistance',
-        'No reading at all',
-        'Meter shows error',
       ],
-      correctIndex: 1,
+      correctIndex: 3,
       explanation:
         'Short circuits provide a direct path between conductors, resulting in very low or zero insulation resistance.',
     },
@@ -109,8 +109,13 @@ const AM2Module5Section1 = () => {
       id: 2,
       question:
         'If a circuit shows infinite resistance during insulation testing, what type of fault is likely present?',
-      options: ['Short circuit', 'Open circuit', 'High resistance connection', 'Earth fault'],
-      correctAnswer: 1,
+      options: [
+        'High resistance connection',
+        'Short circuit',
+        'Open circuit',
+        'Earth fault',
+      ],
+      correctAnswer: 2,
       explanation:
         'Open circuits break the path completely, so insulation testing between conductors shows infinite resistance.',
     },
@@ -119,12 +124,12 @@ const AM2Module5Section1 = () => {
       question:
         'What would you expect to find during continuity testing on a high resistance connection?',
       options: [
-        'Zero resistance',
-        'Infinite resistance',
+        'Correct indication of equipment status',
+        'Not all loads operate at maximum simultaneously',
+        'From day one, applied equally to everyone',
         'Higher than expected resistance reading',
-        'Normal resistance reading',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'High resistance connections show elevated resistance readings during continuity testing.',
     },
@@ -132,12 +137,12 @@ const AM2Module5Section1 = () => {
       id: 4,
       question: 'Where are open circuit faults typically introduced in AM2 setups?',
       options: [
-        'Inside consumer units',
         'At junction boxes or connection points',
-        'Within cables',
-        'At the meter',
+        'Flush-mounted and surface-mounted',
+        'Connect shield at both ends',
+        'To ensure continuous visibility',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Junction boxes and connection points are the safest and most realistic places to introduce open circuit faults.',
     },
@@ -145,12 +150,12 @@ const AM2Module5Section1 = () => {
       id: 5,
       question: 'What is the main symptom of a short circuit fault?',
       options: [
-        'No power to circuit',
-        'Lights dimming',
+        'Retest to verify the correction',
         'Protective device operates (MCB trips)',
-        'High resistance readings',
+        'A government-backed default pension scheme',
+        'Local equipotential bonding',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Short circuits cause excessive current flow, which trips protective devices like MCBs or fuses.',
     },
@@ -160,10 +165,10 @@ const AM2Module5Section1 = () => {
       options: [
         'RCD operates correctly',
         'RCD fails to operate',
-        'RCD operates too quickly',
         'RCD test gives inconsistent results',
+        'RCD operates too quickly',
       ],
-      correctAnswer: 3,
+      correctAnswer: 2,
       explanation:
         'Inconsistent RCD operation or unexpected tripping can indicate earth fault issues.',
     },
@@ -173,10 +178,10 @@ const AM2Module5Section1 = () => {
       options: [
         'Fix it immediately',
         'Ignore it and continue',
-        'Report it to the assessor',
         'Mark it as a deliberate fault',
+        'Report it to the assessor',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Any genuine faults discovered must be reported to the assessor immediately for safety.',
     },
@@ -184,12 +189,12 @@ const AM2Module5Section1 = () => {
       id: 8,
       question: 'How are high resistance connections typically created in AM2 setups?',
       options: [
-        'Cutting wires',
         'Loose terminals or poor connections',
-        'Adding resistors',
-        'Using wrong cable sizes',
+        'Annual energy savings exceeded £250,000',
+        'A silence period of 3.5 character times',
+        'Level the tower and lock all castors',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Loose terminals or deliberately poor connections create realistic high resistance faults.',
     },
@@ -197,10 +202,10 @@ const AM2Module5Section1 = () => {
       id: 9,
       question: "What's the key difference between open circuit and high resistance faults?",
       options: [
-        'No difference',
+        'Electrical isolation and safe working practices',
         'Open circuit = no continuity, high resistance = poor continuity',
-        'High resistance affects only live conductors',
-        'Open circuits only occur in neutral conductors',
+        'Either end of previous day or first thing in morning',
+        'Running a petrol-powered generator inside the space',
       ],
       correctAnswer: 1,
       explanation:
@@ -210,12 +215,12 @@ const AM2Module5Section1 = () => {
       id: 10,
       question: 'True or false: All AM2 installations will have exactly one deliberate fault.',
       options: [
-        'True',
+        'Risk of shock is increased, such as bathrooms',
+        'Ohmmeter or continuity tester',
         'False - there may be multiple faults',
-        'True - but only in circuits under test',
-        'False - some may have no faults',
+        'Live to earth and live to neutral',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'AM2 installations may contain multiple deliberate faults to thoroughly test diagnostic skills.',
     },

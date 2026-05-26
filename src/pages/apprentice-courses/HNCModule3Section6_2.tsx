@@ -32,16 +32,26 @@ const quickCheckQuestions = [
   {
     id: 'efficiency-formula',
     question: 'What is the basic efficiency formula?',
-    options: ['η = Pin/Pout × 100%', 'η = Pout/Pin × 100%', 'η = Pin × Pout', 'η = Pout - Pin'],
-    correctIndex: 1,
+    options: [
+      'η = Pin/Pout × 100%',
+      'η = Pout - Pin',
+      'η = Pin × Pout',
+      'η = Pout/Pin × 100%',
+    ],
+    correctIndex: 3,
     explanation:
       'Efficiency (η) equals output power divided by input power, multiplied by 100% to express as a percentage: η = Pout/Pin × 100%. This always gives a value less than 100% due to losses.',
   },
   {
     id: 'ie-class',
     question: 'Which motor efficiency class represents the highest efficiency level?',
-    options: ['IE1 Standard', 'IE2 High', 'IE3 Premium', 'IE5 Ultra Premium'],
-    correctIndex: 3,
+    options: [
+      'IE2 High',
+      'IE3 Premium',
+      'IE5 Ultra Premium',
+      'IE1 Standard',
+    ],
+    correctIndex: 2,
     explanation:
       'IE5 Ultra Premium represents the highest motor efficiency class, approximately 20% lower losses than IE4. The scale runs from IE1 (Standard) to IE5 (Ultra Premium).',
   },
@@ -49,12 +59,12 @@ const quickCheckQuestions = [
     id: 'all-day-efficiency',
     question: 'All-day efficiency for transformers is calculated using:',
     options: [
-      'Peak load only',
-      'Average hourly load',
+      'Privacy modes with scheduled/triggered recording',
+      'Document all results and reasons for retesting',
+      'A licensed asbestos removal contractor',
       'Energy output ÷ Energy input over 24 hours',
-      'Maximum efficiency point',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'All-day efficiency considers the total energy delivered over 24 hours divided by total energy consumed. This accounts for varying load profiles throughout the day.',
   },
@@ -62,8 +72,13 @@ const quickCheckQuestions = [
     id: 'payback-period',
     question:
       'If an efficient motor costs GBP 2,400 more but saves GBP 800/year in energy, what is the simple payback period?',
-    options: ['1 year', '2 years', '3 years', '4 years'],
-    correctIndex: 2,
+    options: [
+      '3 years',
+      '1 year',
+      '2 years',
+      '4 years',
+    ],
+    correctIndex: 0,
     explanation:
       'Simple payback period = Extra cost ÷ Annual savings = GBP 2,400 ÷ GBP 800/year = 3 years. This is a basic economic measure for equipment selection decisions.',
   },
@@ -74,7 +89,12 @@ const quizQuestions = [
     id: 1,
     question:
       'A motor draws 15kW from the supply and delivers 12.75kW at the shaft. What is its efficiency?',
-    options: ['82%', '85%', '88%', '90%'],
+    options: [
+      '82%',
+      '85%',
+      '88%',
+      '90%',
+    ],
     correctAnswer: 1,
     explanation: 'Efficiency η = Pout/Pin × 100% = 12.75/15 × 100% = 85%',
   },
@@ -82,7 +102,12 @@ const quizQuestions = [
     id: 2,
     question:
       'Under EU Ecodesign regulations (2021), what is the minimum efficiency class for most new three-phase motors 0.75-1000kW?',
-    options: ['IE1 Standard', 'IE2 High', 'IE3 Premium', 'IE4 Super Premium'],
+    options: [
+      'IE4 Super Premium',
+      'IE1 Standard',
+      'IE3 Premium',
+      'IE2 High',
+    ],
     correctAnswer: 2,
     explanation:
       'Since July 2021, new three-phase motors 0.75-1000kW must meet IE3 minimum. Motors 75-200kW must meet IE4 since July 2023.',
@@ -91,8 +116,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A transformer has 500W iron losses and 1500W copper losses at full load. At what fraction of full load does maximum efficiency occur?',
-    options: ['0.33', '0.50', '0.58', '0.75'],
-    correctAnswer: 2,
+    options: [
+      '0.50',
+      '0.33',
+      '0.75',
+      '0.58',
+    ],
+    correctAnswer: 3,
     explanation:
       'Maximum efficiency occurs when iron losses = copper losses. Since copper losses vary with load squared: x² × 1500 = 500, so x = √(500/1500) = √0.333 = 0.577 ≈ 0.58',
   },
@@ -100,20 +130,25 @@ const quizQuestions = [
     id: 4,
     question: 'Why does motor efficiency typically decrease at part-load operation?',
     options: [
-      'Copper losses increase',
-      'Iron losses increase',
       'Fixed losses become a larger proportion of reduced output',
-      'Cooling becomes less effective',
+      'To record all workplace accidents, injuries, and incidents, however minor',
+      'Correct rating and suitable for the intended purpose',
+      'Electrical equipment being charged accidentally',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Fixed losses (iron losses, friction, windage) remain constant regardless of load. At reduced load, these fixed losses represent a larger percentage of the smaller output power.',
   },
   {
     id: 5,
     question: "What percentage of a motor's life cycle cost is typically energy consumption?",
-    options: ['25-35%', '45-55%', '65-75%', '90-97%'],
-    correctAnswer: 3,
+    options: [
+      '45-55%',
+      '90-97%',
+      '25-35%',
+      '65-75%',
+    ],
+    correctAnswer: 1,
     explanation:
       "Energy costs typically represent 90-97% of a motor's total life cycle cost. Initial purchase is only 2-5%, making efficiency a crucial selection criterion.",
   },
@@ -121,8 +156,13 @@ const quizQuestions = [
     id: 6,
     question:
       'A building has three systems with efficiencies of 95%, 90%, and 85%. What is the overall system efficiency?',
-    options: ['72.7%', '90%', '85%', '270%'],
-    correctAnswer: 0,
+    options: [
+      '85%',
+      '90%',
+      '72.7%',
+      '270%',
+    ],
+    correctAnswer: 2,
     explanation:
       "For systems in series, overall efficiency = η1 × η2 × η3 = 0.95 × 0.90 × 0.85 = 0.727 = 72.7%. Efficiencies multiply, they don't add.",
   },
@@ -131,11 +171,11 @@ const quizQuestions = [
     question: 'When conducting an energy audit, what is the typical first step?',
     options: [
       'Install sub-metering on all circuits',
-      'Collect utility bills and establish baseline consumption',
-      'Recommend equipment replacements',
       'Conduct thermal imaging surveys',
+      'Recommend equipment replacements',
+      'Collect utility bills and establish baseline consumption',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The first step is establishing baseline energy consumption from utility bills (12+ months ideally). This provides the reference against which improvements are measured.',
   },
@@ -143,16 +183,26 @@ const quizQuestions = [
     id: 8,
     question:
       'A 100kVA transformer operates at 80% of full load with 0.85 power factor. Iron losses are 800W and full-load copper losses are 1800W. What is the efficiency?',
-    options: ['96.2%', '97.1%', '97.8%', '98.3%'],
-    correctAnswer: 1,
+    options: [
+      '97.1%',
+      '97.8%',
+      '96.2%',
+      '98.3%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Output power = 100 × 0.8 × 0.85 = 68kW. Copper losses at 0.8 load = 1800 × 0.8² = 1152W. Total losses = 800 + 1152 = 1952W. Input = 68000 + 1952 = 69952W. η = 68000/69952 × 100 = 97.2%',
   },
   {
     id: 9,
     question: 'What is the Net Present Value (NPV) criterion for a worthwhile investment?',
-    options: ['NPV = 0', 'NPV < 0', 'NPV > 0', 'NPV = initial cost'],
-    correctAnswer: 2,
+    options: [
+      'NPV = 0',
+      'NPV > 0',
+      'NPV < 0',
+      'NPV = initial cost',
+    ],
+    correctAnswer: 1,
     explanation:
       'A positive NPV indicates the investment generates returns exceeding the discount rate. NPV > 0 means the project adds value and should be considered worthwhile.',
   },
@@ -160,8 +210,13 @@ const quizQuestions = [
     id: 10,
     question:
       'HVAC systems in commercial buildings typically consume what percentage of total electrical energy?',
-    options: ['20-30%', '40-50%', '60-70%', '80-90%'],
-    correctAnswer: 1,
+    options: [
+      '20-30%',
+      '80-90%',
+      '40-50%',
+      '60-70%',
+    ],
+    correctAnswer: 2,
     explanation:
       'HVAC systems typically consume 40-50% of commercial building electrical energy. This makes them primary targets for efficiency improvements and energy audits.',
   },

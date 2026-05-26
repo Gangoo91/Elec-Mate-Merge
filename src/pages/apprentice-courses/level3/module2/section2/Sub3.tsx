@@ -42,12 +42,12 @@ const checks = [
     question:
       "What does BS 7671 Section 753 actually cover and where does it apply on a heat pump install?",
     options: [
-      "Section 753 covers the entire heat pump install including the refrigerant circuit.",
       "Section 753 covers heating cables and embedded heating systems — the electrical heating elements buried in floors, walls, ceilings or pipework. It applies to underfloor electric heating, trace heating on pipework (frost protection), heated mirrors / heated handrails. On a heat pump install, Section 753 applies if the wet system includes any electric trim heaters or electric pre-heat / boost elements; it does not cover the heat pump itself, which falls under general BS 7671 plus manufacturer's instructions plus MCS MIS 3005. The refrigerant circuit is not BS 7671 territory at all — it is F-Gas Regulations.",
-      "Section 753 only covers underfloor heating in commercial buildings.",
-      "Section 753 covers solar thermal hot water systems.",
+      "Significantly. (1) New components have manufacturer warranty (Hager 5 years on RCBOs, Schneider 5–10 years on Acti9, BG 10 years on accessories). Repaired components typically don't carry the warranty into the repair life. (2) Some manufacturers explicitly void warranty if the device has been opened / repaired — repairs DIY void the cover. (3) For domestic appliances, the customer's home insurance / appliance warranty may cover replacement but not repair, or vice versa. The L3 apprentice should ask 'is this still under warranty?' before quoting any repair — an in-warranty issue is the manufacturer's problem, not the firm's.",
+      "They allow two independent strings to run at their own MPP. A roof with both an east-facing and a west-facing slope gets one string per slope, each tracked independently — the east string MPPs in the morning, the west string MPPs in the afternoon, and the inverter combines the AC outputs. Without dual-MPPT, mixing east and west panels in one string forces a compromise MPP that wastes 10-20% of the available energy. Many domestic UK installs benefit from dual-MPPT given typical roof geometries.",
+      "Unwanted conduct related to a protected characteristic (or unwanted conduct of a sexual nature) which has the purpose or effect of violating a person's dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment. The conduct doesn't have to be 'severe' to count — repeated 'banter' related to race, sex, disability or another protected characteristic can be harassment if it has the proscribed effect on the recipient.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Section 753 is specifically about embedded electrical heating elements. On a typical air-source heat pump install in the UK, Section 753 may or may not apply depending on whether any electric heating elements are integrated into the wet system. The heat pump itself is a piece of equipment with its own electrical supply — covered by general BS 7671. The refrigerant work is F-Gas-certified personnel only.",
   },
@@ -56,12 +56,12 @@ const checks = [
     question:
       "What does the F-Gas Regulations mean for the L3 apprentice on a heat pump install?",
     options: [
-      "Nothing — F-Gas only applies to commercial refrigeration.",
+      "EPR is the umbrella permitting framework for waste activities, water discharges, radioactive substances and certain installations in England and Wales. Anyone carrying, brokering, treating, transferring or disposing of waste needs the appropriate authorisation under EPR — typically a waste carrier registration (lower tier), a broker / dealer registration, or a full environmental permit for a treatment site. As an electrical contractor you most likely need a lower-tier waste carrier registration to lawfully transport your own controlled waste. Anyone you transfer waste to must hold their own appropriate authorisation.",
+      "IT (Isolated Terra) — neutral isolated from earth (or connected via high impedance). Single earth fault doesn't cause significant fault current; alarm only. Typically used in continuous-process industries (chemical plants, hospitals), where one fault must not stop the process. TN-S (Terra Neutral Separated) — neutral and earth separately distributed from transformer; standard UK domestic / commercial older arrangement; faults clear normally via overcurrent / RCD. The L3 apprentice rarely meets IT outside specialist sites; if you're diagnosing in a hospital ITU or specialist process plant, the supply may be IT and the fault behaviour is fundamentally different.",
       "F-Gas (Fluorinated Greenhouse Gases Regulations) governs work on refrigerant circuits containing fluorinated refrigerants (R32, R290, R410A, R134a). Anyone doing refrigerant work — installing refrigerant pipework, charging the system, recovering refrigerant during service — must hold the relevant F-Gas certification (City & Guilds 2079 or equivalent). The L3 apprentice on a heat pump install does NOT do refrigerant work unless they hold separate F-Gas certification. The electrical scope (supply, isolation, controls, bonding) is BS 7671 territory and within the apprentice's scope; the refrigerant scope is F-Gas territory and requires separate certification. The two trades work alongside each other on a heat pump install.",
-      "F-Gas means the apprentice can do all the refrigerant work.",
-      "F-Gas applies only to commercial fridges, not to domestic heat pumps.",
+      "Durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit, at the main isolation, at the inverter and at any DC isolators. The Distribution Network Operator's emergency contacts. The PV system identification (kWp rating, inverter manufacturer/model). The signage requirements come from BS 7671 Section 712 plus MCS MIS 3002 plus the DNO's G98/G99 connection conditions. A future maintainer who turns up to a 'normal' fault call must know there's a generator on the property before they start touching things.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "F-Gas is a hard boundary between trades. The electrician sizes the supply, fits the isolation, terminates the controls, bonds the chassis. The F-Gas-certified engineer handles every refrigerant-side activity. Crossing the line without certification is a regulatory offence and an insurance issue. Modern domestic heat pumps using R290 (propane, natural refrigerant) have less F-Gas burden but the F-Gas Regulations still apply where fluorinated refrigerants are present.",
   },
@@ -70,10 +70,10 @@ const checks = [
     question:
       "What does MCS MIS 3005 cover on a heat pump install and how does it relate to BS 7671?",
     options: [
-      "MIS 3005 replaces BS 7671 for heat pump installs.",
+      "Hazardous waste. Fluorescent tubes contain mercury vapour (typically 3–5 mg per 5-foot tube) — that's enough to make the tube a Hazardous Waste under the Hazardous Waste (England and Wales) Regulations 2005. NEVER smash on site (releases mercury vapour). Transport intact in the original sleeve or a tube-tube; route via a licensed hazardous waste carrier or a wholesaler with a tube-recycling scheme (CEF, Edmundson run these). The firm needs to hold the Consignment Note (or Hazardous Waste Annual Return registration if they generate over 500 kg / year). Disposal cost is around £1–2 per tube.",
       "MCS MIS 3005 is the installer competence and product certification standard for heat pump installations (air-source, ground-source, water-source). It covers system design (heat-loss calculation methodology, emitter sizing, SCOP estimate), product selection (eligible MCS-certified equipment), installation quality (refrigerant work by F-Gas certified personnel, electrical work to BS 7671), commissioning (flow temperature setup, control validation), and customer handover. Required for the customer to claim Boiler Upgrade Scheme grants and demonstrate quality assurance. BS 7671 covers the electrical safety side; MIS 3005 covers the broader install quality and the design competence. Both apply to most UK domestic heat pump installs.",
-      "MIS 3005 is for inverters only.",
-      "MIS 3005 only applies to ground-source heat pumps.",
+      "During the EFLI test the instrument briefly draws fault current through the L-E loop. That current creates a voltage drop along the CPC equal to I_test x R_CPC. Any exposed-conductive-part connected to that CPC briefly rises above true earth by that voltage. For a 25 A test current and a 0.4 Omega CPC, that\\\\'s 10 V — small but noticeable to a person touching the metalwork. The duration is brief (a few cycles) but the risk is real, especially in installations where the public can access the metalwork during testing.",
+      "Three categories. (1) Smart meter / utility meter failures — internal electronic failure (the meter itself stops measuring); diagnosis: voltage on the consumer side normal, customer reports billing issues; DNO call to replace meter. (2) Sub-metering installations (kWh meters at apartment level) — internal CT failure, terminal corrosion, comms link failure to BMS. (3) Specific instrument circuits in commercial buildings — temperature sensors, level sensors, flow meters; usually low-voltage SELV but with sensitive signal levels easily disrupted by EMI from nearby high-current cables. Diagnostic approach: substitute the suspect sensor with a known-good unit; if symptom moves, the sensor was at fault.",
     ],
     correctIndex: 1,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       "What is the typical electrical interface for a domestic air-source heat pump?",
     options: [
-      "A 13 A socket on the 32 A ring main.",
+      "(1) The site / customer's existing risk-assessment and method statement — what the principal contractor has identified as on-site hazards. (2) Your firm's task RAMS — the document specific to fault diagnosis at this premises, which you may need to produce or update on arrival. (3) A permit-to-work or equivalent authorisation — for commercial / industrial sites only, signed by the authorised manager, defining what you're allowed to do. Without these three you don't have a defensible position if something goes wrong, and the customer's safety policy will record you as an unauthorised worker.",
       "A dedicated final circuit from the consumer unit. Typical sizes: 32 A radial on 6 mm cable for a 5-7 kW unit; 40 A radial on 10 mm cable for a 9-12 kW unit. Type C MCB or RCBO (the high inrush from the compressor start can nuisance-trip a Type B). Local means of isolation outside near the outdoor unit. Manufacturer-specified controls cabling between outdoor unit, indoor controller and any zone valves / pumps. Bonding of the outdoor chassis where the manufacturer specifies or where it is an extraneous-conductive-part. The heat pump's nameplate gives the maximum rated current; the MCS designer specifies the cable and protective device.",
-      "A three-phase supply regardless of property size.",
-      "An ELV supply at 24 V.",
+      "REPAIRABLE: cable terminations, accessory faceplates, individual lampholders, switch modules, dimmer cores, individual MCBs / RCBOs (within a CU), circuit cables (mid-run patch with junction box). REPLACEMENT-ONLY (typically): consumer units (sealed enclosures, integrated busbar), transformers and ballasts (factory-sealed), most LED drivers (sealed pots), AFDDs (electronic devices), most modern accessories (one-piece moulded). The boundary is usually 'is the failed item a single field-replaceable unit?'. Sealed devices are replacement-only; assembled devices with field-accessible components are repairable.",
+      "Three criteria. (1) Safety — dead tests before live, low-energy before high-energy. (2) Discrimination — choose the test whose result will most narrow the candidate hypotheses (e.g. an IR test that distinguishes 'short circuit' from 'open circuit' is more useful than a continuity test that only distinguishes one). (3) Cost — quick tests before slow tests, free tests before tests that cost the customer (e.g. visual inspection before opening the CU). The order is safety first, then discrimination, then cost. Most efficient diagnostic path is shortest sequence of tests that distinguishes between the surviving hypotheses.",
     ],
     correctAnswer: 1,
     explanation:
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       "What does Building Regs Part L require for a new-build property with a heat pump?",
     options: [
-      "Nothing — Part L only applies to gas boilers.",
+      "Multiple — typically one or more CT clamps on the main supply tails (live and sometimes neutral) feeding the EV charger's load management, the battery inverter's grid-export control, the HEMS's whole-property monitoring, and sometimes the heat pump's load-shifting logic. On a fully integrated install you may have 3-4 CT clamps in or near the consumer unit, each reading the same physical conductor and feeding a different consumer of that data. The apprentice's job is to install each clamp around the correct conductor in the correct orientation per the manufacturer's instructions for each consuming device.",
+      "Adding a battery changes the maximum potential export from the property and changes the inverter behaviour as seen from the network. ENA G98 (single-phase up to 16 A per phase) and G99 (above 16 A or three-phase) require the combined system to be notified. For a connect-and-notify install (G98) the installer notifies the DNO within 28 days of energising. For G99 the installer applies in advance and the DNO returns connection conditions before energising. The MCS-certified installer handles the paperwork; the apprentice should understand that the existing PV notification does not cover the added storage.",
       "Part L (Conservation of Fuel and Power) requires every new build and every notifiable refurbishment to demonstrate compliance via a SAP calculation that meets the Target Emission Rate (TER) and Target Fabric Energy Efficiency (TFEE) for the property type. A heat pump's contribution to the SAP calculation depends on its SCOP and the carbon intensity of grid electricity. Modern heat pumps in well-designed homes pass Part L comfortably. The Future Homes Standard (in force from 2025) effectively rules out fossil-fuel boilers from new-build because the SAP calculation cannot reach compliance with a gas boiler under the tightening targets. The MCS designer's SCOP estimate feeds the SAP calculation.",
-      "Part L only applies to PV.",
-      "Part L is the same as BS 7671.",
+      "Hazardous-area work (ATEX zones, confined spaces, working at height in remote locations, work near live HV) carries higher risk than standard work. The 'lone working' precautions of Sub 1.2 are NOT enough — the risk profile demands two-person working as default. EAWR Reg 14(c) suitable precautions and HSE INDG73 + HSG85 + Confined Spaces Regulations 1997 + Work at Height Regulations 2005 all combine to require: documented permit-to-work, named authorised person, second person stationed within sight or comms, defined rescue procedure, dedicated emergency response. L3 apprentice never works hazardous-area solo; firm policy will explicitly forbid.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Part L is the construction-side energy regulation that drives much of the UK push toward heat pumps and electrification. Successive Part L revisions tighten the SAP target rate; the Future Homes Standard takes fossil-fuel boilers off new-build from 2025. The L3 apprentice should recognise Part L as the underlying driver behind heat pump uptake, even though the day-to-day work focuses on the BS 7671 electrical side.",
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       "What is the difference between an air-source heat pump and a ground-source heat pump from the apprentice's electrical perspective?",
     options: [
-      "Ground-source needs a three-phase supply and air-source does not.",
+      "Treat it as 'asbestos suspect until proven otherwise'. Buildings constructed before 2000 (and refurbished before 2000) can contain asbestos in textured ceilings, insulation board, cement products, floor tiles and pipe lagging. Stop and check the asbestos register if the building has one (commercial buildings are required to have one under the Control of Asbestos Regulations 2012). For a domestic property without a register, assume suspect material is present and avoid disturbance until you can verify or arrange a survey.",
+      "G98 is post-notification — install, commission, notify within 28 days. The whole transaction completes inside 28 days from commissioning. G99 is pre-application — submit the application before commissioning, wait for the DNO to model the network, receive a Connection Offer, accept the Offer (which may contain export limits or fault-level conditions), then commission. Typical G99 timeline is 4-12 weeks for a domestic system; longer for commercial. On a fast-moving install programme the G99 paperwork is usually the long pole — start it early.",
+      "The EIC carries the standard schedule of inspections and schedule of test results for the new circuit(s). For a PV install that includes the DC string circuits (with DC voltages and DC IR test results), the AC isolator and AC final connection back into the consumer unit, the labelling and signage at every isolation point, and the dual-supply warning at the consumer unit. Section 712 of BS 7671 (extensively revised in A4:2026) drives the inspection items. The 'designer' / 'constructor' / 'inspector and tester' boxes on the EIC may all be the MCS-certified installer's lead engineer; signatures still have to be physically present.",
       "Both are predominantly single-phase domestic in the UK. The differences are in the install scope, not the electrical interface. Air-source has an outdoor unit on the property exterior — a single electrical supply, refrigerant pipework to the indoor cylinder/buffer, controls cabling. Ground-source has either horizontal slinky coils in trenches or vertical boreholes — much larger civils scope, ground-loop pumps that are themselves loads on the electrical supply, and an indoor unit that contains the compressor (so no outdoor unit). Electrical sizing is similar (5-12 kW typical); cable runs are different (ground-source indoor unit is fed from the CU; air-source has cable to the outdoor unit). MCS MIS 3005 covers both.",
-      "Air-source needs a TT earth and ground-source needs PNB.",
-      "Ground-source requires no MCS certification.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "From the apprentice's wiring perspective, ASHP and GSHP are similar — single-phase final circuit, 32-40 A typical, controls cabling. The big differences are the civils scope (boreholes / trenches for GSHP) and the indoor unit location (GSHP has compressor indoor; ASHP has compressor outdoor). MCS MIS 3005 covers both technology types.",
   },
@@ -129,12 +129,12 @@ const quizQuestions = [
     question:
       "What does PAS 2035 mean and when does it apply to a heat pump retrofit?",
     options: [
-      "PAS 2035 is the UK standard for heat pump products.",
       "PAS 2035 (Publicly Available Specification — Retrofitting dwellings for improved energy efficiency) is the standard that governs domestic energy efficiency retrofit projects. It requires a 'whole-house' approach — fabric assessment, ventilation strategy, moisture risk management, and any retrofit measures (including heat pump installation) must be coordinated by a Retrofit Coordinator and designed by a Retrofit Designer. Required for grant-funded retrofits (ECO4, Boiler Upgrade Scheme in some cases, local authority schemes). Helps avoid the failure mode where a heat pump is fitted to an uninsulated leaky house and posts a poor SCOP. The MCS-certified heat pump installer works within the PAS 2035 framework on grant-funded projects.",
-      "PAS 2035 is for new-build only.",
-      "PAS 2035 only applies to PV.",
+      "PQ analyser (Fluke 1748, Megger PQM, Dranetz HDPQ) is a long-term monitoring instrument — connect it at the supply or DB for a few days / weeks, it logs voltage, current, harmonic spectrum, transient events, sags / swells / interruptions, frequency, power factor, flicker. The multimeter shows you NOW; the PQ analyser shows you the past 7 days. Essential for diagnosing intermittent faults on commercial installations where the symptom only appears occasionally — the PQ log captures the moment of the fault and the conditions around it.",
+      "A boiler drives a wet heating system — pumps hot water around radiators / underfloor circuits and a hot-water cylinder. Typical output 10-50 kW, located in a utility room or outhouse, automatic fuel feed (auger from a hopper), automatic ignition, automatic ash handling. A stove is a room heater — radiates heat directly into the room it sits in, plus optional back-boiler for some hot water. Lower output (5-15 kW typical), manual loading (logs or pellets), no automatic ash removal. Different installation regulations, different MCS standards, different customer expectations.",
+      "The apprentice typically contributes the cable run from the consumer unit to the charge-point location (often a 6 mm or 10 mm meter-tails route through a wall), the supplementary bonding (where required), the supply-side termination at the consumer unit including any new RCBO or AFDD, the CT clamp installation around the supply tail, the labelling, and assists with first-fix mounting of the unit enclosure. The MCS-certified person handles the design, the OZEV-compliant unit selection, the commissioning and the regulatory paperwork (including the DNO notification under ENA G98 if export is enabled, and registration with OZEV for any grant claim).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "PAS 2035 is the 'fabric first' regulatory framework for retrofit. Its existence pushes back against the bad-practice failure mode of fitting heat pumps to unsuitable buildings. The L3 apprentice may not interact with PAS 2035 paperwork directly but should recognise its existence as part of the regulatory landscape on grant-funded retrofit projects.",
   },
@@ -143,10 +143,10 @@ const quizQuestions = [
     question:
       "Why does a heat pump typically use a Type C MCB or RCBO rather than a Type B?",
     options: [
-      "Type C is cheaper than Type B.",
+      "Loss-of-mains (LoM) protection, commonly called anti-islanding. The inverter monitors voltage, frequency, vector shift and rate of change of frequency on the AC side. When the grid reference is lost or moves outside the permitted window defined in ENA G98 / G99, the inverter ceases to export within the specified timing. The intent is to protect DNO engineers, prevent asynchronous reclosure damage and stop a small generator attempting to support a much larger network it cannot stabilise.",
       "The compressor in a heat pump produces a substantial inrush current at start-up — typically 5-10x the steady-state running current for a fraction of a second. A Type B MCB (3-5x trip threshold) can nuisance-trip on this inrush; a Type C MCB (5-10x trip threshold) is more tolerant and is the standard recommendation. Modern inverter-driven heat pumps with soft-start typically have lower inrush than older fixed-speed units, but Type C is still the typical specification. The MCS-certified designer specifies the protective device per the manufacturer's installation manual.",
-      "Type B is for commercial only.",
-      "Heat pumps do not need any MCB.",
+      "Reg 14(2) requires every employee to inform their employer (or any other employee with specific responsibility for safety) of any work situation which they reasonably consider represented a serious and immediate danger to health and safety, AND any matter which they reasonably consider represented a shortcoming in the employer's protection arrangements for health and safety. The duty extends to near-misses, defective safe systems of work, and any condition the employee believes presents danger.",
+      "The apprentice typically contributes the cable run from the consumer unit to the charge-point location (often a 6 mm or 10 mm meter-tails route through a wall), the supplementary bonding (where required), the supply-side termination at the consumer unit including any new RCBO or AFDD, the CT clamp installation around the supply tail, the labelling, and assists with first-fix mounting of the unit enclosure. The MCS-certified person handles the design, the OZEV-compliant unit selection, the commissioning and the regulatory paperwork (including the DNO notification under ENA G98 if export is enabled, and registration with OZEV for any grant claim).",
     ],
     correctAnswer: 1,
     explanation:
@@ -157,12 +157,12 @@ const quizQuestions = [
     question:
       "What is the Boiler Upgrade Scheme (BUS) and how does it interact with the heat pump electrical install?",
     options: [
-      "It is a discount on boiler servicing.",
+      "SECR is a statutory disclosure regime introduced in 2019 under the Companies (Directors Report) and Limited Liability Partnerships (Energy and Carbon Report) Regulations 2018. It requires large UK companies (typically meeting two of: turnover above 36 million pounds, balance sheet above 18 million pounds, or above 250 employees) to disclose their UK energy use and associated greenhouse gas emissions in their annual report. The disclosure covers scope 1, scope 2 and a defined subset of scope 3 (business travel in employee-owned vehicles), along with intensity metrics and a narrative on energy efficiency actions taken.",
+      "Stop and verify before testing. Unusual supply arrangements suggest either (a) the property is genuinely TT (rural, older, or specifically designed) which may need different fault-diagnosis approach, OR (b) the customer's installation isn't what you expected from the booking (e.g. an older commercial site with three-phase supply you weren't briefed on). Either way, the test plan needs to match the actual supply. Escalate to supervisor if unsure; update the RAMS to reflect the actual installation; brief the customer if the work scope changes. Never just push ahead with the test plan you arrived with if it doesn't match what you find.",
       "BUS is the UK government grant scheme that contributes a fixed amount (currently £7,500) toward the cost of replacing a fossil-fuel boiler with a heat pump or biomass boiler. The customer applies via an MCS-certified installer who handles the application paperwork. Eligibility requires the install to be MCS-certified, the property to meet basic insulation standards (loft and cavity wall insulation where applicable), and the system to be designed per MCS MIS 3005. The grant does not change the electrical install — Section 753 (where applicable), general BS 7671, F-Gas boundary still apply. The L3 apprentice's wiring scope is unaffected; the customer's financial decision often is grant-dependent.",
-      "BUS is a transport service.",
-      "BUS replaces MCS certification.",
+      "A boiler drives a wet heating system — pumps hot water around radiators / underfloor circuits and a hot-water cylinder. Typical output 10-50 kW, located in a utility room or outhouse, automatic fuel feed (auger from a hopper), automatic ignition, automatic ash handling. A stove is a room heater — radiates heat directly into the room it sits in, plus optional back-boiler for some hot water. Lower output (5-15 kW typical), manual loading (logs or pellets), no automatic ash removal. Different installation regulations, different MCS standards, different customer expectations.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "BUS is the headline grant for domestic heat pumps in 2024-2026. Eligibility ties directly to MCS certification — the installer must hold MCS, the install must be MCS-compliant. The L3 apprentice does not touch the BUS paperwork (the MCS-certified designer handles it) but should recognise that the customer's financial decision is often grant-driven.",
   },
@@ -171,12 +171,12 @@ const quizQuestions = [
     question:
       "What labelling is required on a domestic heat pump installation per BS 7671?",
     options: [
-      "Just the manufacturer's logo.",
+      "Durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit, at the main isolation, at the inverter and at any DC isolators. The DNO emergency contacts. The PV system identification (kWp rating, inverter manufacturer/model). Required by BS 7671 Section 712, MCS MIS 3002 and the DNO's G98/G99 connection conditions. The signage protects future maintainers who may not realise there's a generator on the property.",
+      "The EPC should be re-issued to reflect the new performance — heat pump, PV, MVHR, insulation upgrades all change the SAP rating. The MCS-certified installer normally arranges the EPC update. An updated EPC matters for: (a) future house sale (the buyer's solicitor sees current performance); (b) mortgage applications (lenders increasingly weight EPC ratings); (c) insurance (some insurers now adjust premium for low-EPC properties); (d) BUS grant requires a valid EPC at the time of install. EPCs are valid for 10 years from issue.",
+      "Significant. A south-facing roof at 30-40° pitch is the optimal UK orientation, posting 100% of reference yield. East-facing or west-facing roofs typically produce 80-85% of optimal. North-facing produces 50-65% (still positive but with much longer payback). Steeper pitches favour winter performance; shallower pitches favour summer performance. Flat roofs get an A-frame mount to set a target pitch and azimuth. The MCS Yield Calculator handles all of this — produces the kWh figure for the SAP and the customer handover.",
       "Standard Section 514 identification — the heat pump final circuit at the consumer unit clearly identified; the local isolator labelled and the location of the upstream RCBO referenced; any controls cabling identified at termination points. Where Section 753 applies (e.g. integrated trim heaters) the relevant section signage applies. The MCS-certified designer's commissioning paperwork includes a SCOP estimate, the system design parameters, and a customer-facing handover document. The label is for the customer (so they know which isolator does what), the next electrician (so they understand the install years later), and the service engineer (so they can isolate safely).",
-      "Labelling is optional for heat pumps.",
-      "Only the customer's name.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Heat pump labelling follows the same Section 514 framework as the rest of the install. The MCS-certified designer's commissioning pack adds the SCOP estimate, design heat-loss calculation summary and handover documentation. The combination is what the customer needs to evidence the install for grant claims and warranty.",
   },
@@ -185,12 +185,12 @@ const quizQuestions = [
     question:
       "What is the apprentice's electrical scope on a typical air-source heat pump install?",
     options: [
-      "Everything including the refrigerant work.",
       "First-fix supply cable from consumer unit to outdoor unit location (typically 6 mm or 10 mm radial, Type C RCBO). Local isolator outside near the outdoor unit. Controls cabling between outdoor unit, indoor cylinder/controller, any zone valves, room thermostats and weather compensation sensor. Bonding of the outdoor chassis where the manufacturer specifies or where extraneous-conductive-part criteria apply. Power and controls to any electric trim heater (Section 753 where applicable). Where the install includes smart-home integration or HEMS dispatch, Cat5e/Cat6 to the indoor controller. Commissioning of the electrical side. The refrigerant work is F-Gas-certified scope — the apprentice does not touch refrigerant pipework or do any refrigerant charging unless they hold separate F-Gas certification.",
-      "Only the consumer unit termination.",
-      "Only the customer briefing.",
+      "Hazardous-area work (ATEX zones, confined spaces, working at height in remote locations, work near live HV) carries higher risk than standard work. The 'lone working' precautions of Sub 1.2 are NOT enough — the risk profile demands two-person working as default. EAWR Reg 14(c) suitable precautions and HSE INDG73 + HSG85 + Confined Spaces Regulations 1997 + Work at Height Regulations 2005 all combine to require: documented permit-to-work, named authorised person, second person stationed within sight or comms, defined rescue procedure, dedicated emergency response. L3 apprentice never works hazardous-area solo; firm policy will explicitly forbid.",
+      "L–L (phase-to-phase) fault is a direct connection between two phases of a three-phase supply (e.g. L1 and L2). Continuity between the phases reads near zero. Fault current is high (limited only by supply + cable impedance) — typically 5–10 kA on a typical commercial supply. Operates the magnetic element of the protective device on at least one of the affected phases. The unaffected phase remains live; loads connected line-to-neutral on the unaffected phase continue working. Common cause: insulation breakdown in three-phase cable or motor windings, accidental contact between phases at a terminal block.",
+      "G100 (active export limitation scheme) applies where the customer wants to install a system bigger than the DNO would otherwise accept, on the basis that an active limiter will cap exported power to a level the network can accommodate. It is a way to install (say) a 12 kWp PV array on a network that cannot accept 12 kW export, by limiting export to 3.68 kW with self-consumption and battery storage soaking up the rest. G100 sits within the broader G99 process — the DNO Connection Offer will include the G100 export limit and the limiter type-test requirement. The L3 apprentice will not run the G100 application but should recognise it as the technical mechanism behind 'oversized array, limited export' designs.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Heat pump electrical installs are now mainstream UK domestic work. The L3 apprentice's scope is the electrical side — supply, isolation, controls, bonding, labelling. The F-Gas-certified engineer handles all refrigerant work. The MCS-certified designer holds the overall scope together. Recognising the trade boundary is a Unit 301 expectation.",
   },

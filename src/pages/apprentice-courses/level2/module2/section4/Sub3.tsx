@@ -40,11 +40,11 @@ const checks = [
     question: 'In a parallel circuit, the voltage across each branch is…',
     options: [
       'Divided between the branches',
-      'Equal to the supply voltage on every branch',
       'Zero on the unused branches',
+      'Equal to the supply voltage on every branch',
       'Different for each branch depending on resistance',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Every branch is hard-wired straight across the supply, so each one sees the full supply voltage. That is the whole point of parallel — each load is independent.',
   },
@@ -53,12 +53,12 @@ const checks = [
     question:
       'A 24 V supply feeds two branches in parallel: R₁ = 60 Ω and R₂ = 120 Ω. Which branch carries more current?',
     options: [
+      'Neither, the supply blocks current to higher R',
+      'Both the same — it’s parallel',
       'R₁ — lower resistance pulls more current',
       'R₂ — higher resistance pulls more current',
-      'Both the same — it’s parallel',
-      'Neither, the supply blocks current to higher R',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Same voltage on both branches, so I = V ÷ R. Lower R means higher I. R₁ draws 0.4 A, R₂ draws 0.2 A. The smaller resistor always hogs more current.',
   },
@@ -69,10 +69,10 @@ const checks = [
     options: [
       'All three go off — broken path',
       'They glow at half brightness',
-      'They keep working as normal',
       'They go to full mains plus the failed lamp’s share',
+      'They keep working as normal',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Each branch is independent. One open-circuit branch just stops drawing current. The other two still see the full 230 V and carry on. This is why nearly every UK final circuit is parallel.',
   },
@@ -97,35 +97,50 @@ const quizQuestions = [
     id: 2,
     question: 'Total current in a parallel circuit equals…',
     options: [
+      'The supply voltage divided by the largest R',
       'The smallest branch current',
       'The sum of every branch current',
-      'The supply voltage divided by the largest R',
       'Always 1 A',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Currents split at the junction and add back up at the return junction. Itotal = I₁ + I₂ + I₃ + … (Kirchhoff’s current law).',
   },
   {
     id: 3,
     question: 'For two resistors in parallel, the equivalent resistance formula is…',
-    options: ['R₁ + R₂', '(R₁ × R₂) ÷ (R₁ + R₂)', 'R₁ − R₂', 'R₁ × R₂'],
-    correctAnswer: 1,
+    options: [
+      'R₁ − R₂',
+      'R₁ + R₂',
+      'R₁ × R₂',
+      '(R₁ × R₂) ÷ (R₁ + R₂)',
+    ],
+    correctAnswer: 3,
     explanation:
       'Two-resistor shortcut: product over sum. For three or more, use the reciprocal formula 1 ÷ Rt = 1 ÷ R₁ + 1 ÷ R₂ + …',
   },
   {
     id: 4,
     question: 'Two branches: 2 Ω and 6 Ω in parallel. Equivalent resistance?',
-    options: ['8 Ω', '4 Ω', '1.5 Ω', '3 Ω'],
-    correctAnswer: 2,
+    options: [
+      '1.5 Ω',
+      '4 Ω',
+      '8 Ω',
+      '3 Ω',
+    ],
+    correctAnswer: 0,
     explanation: 'Rt = (2 × 6) ÷ (2 + 6) = 12 ÷ 8 = 1.5 Ω. Always less than the smallest branch.',
   },
   {
     id: 5,
     question: 'Three identical 60 Ω resistors in parallel give a total resistance of…',
-    options: ['180 Ω', '60 Ω', '20 Ω', '10 Ω'],
-    correctAnswer: 2,
+    options: [
+      '60 Ω',
+      '20 Ω',
+      '10 Ω',
+      '180 Ω',
+    ],
+    correctAnswer: 1,
     explanation:
       'Identical resistors shortcut: Rt = R ÷ n = 60 ÷ 3 = 20 Ω. Three equal paths share the current evenly.',
   },
@@ -134,11 +149,11 @@ const quizQuestions = [
     question: 'Add another branch to an existing parallel circuit. What happens overall?',
     options: [
       'Total resistance goes up, total current goes down',
-      'Total resistance goes down, total current goes up',
       'Nothing changes — branches are independent',
+      'Total resistance goes down, total current goes up',
       'Voltage on existing branches drops',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Another path for current to flow lowers total resistance, so the supply pushes more current overall. Existing branches still see the same voltage and same current.',
   },
@@ -146,8 +161,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A 12 V supply feeds three parallel branches: 120 Ω, 80 Ω and 240 Ω. What is the total current drawn from the supply?',
-    options: ['0.10 A', '0.15 A', '0.30 A', '0.60 A'],
-    correctAnswer: 2,
+    options: [
+      '0.10 A',
+      '0.15 A',
+      '0.60 A',
+      '0.30 A',
+    ],
+    correctAnswer: 3,
     explanation:
       'I₁ = 12 ÷ 120 = 0.10 A. I₂ = 12 ÷ 80 = 0.15 A. I₃ = 12 ÷ 240 = 0.05 A. Total = 0.10 + 0.15 + 0.05 = 0.30 A.',
   },
@@ -155,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'Where do you meet parallel wiring on a typical UK domestic install?',
     options: [
-      'A switch in line with a single lamp',
-      'Old-style fairy lights',
       'A ring final circuit serving multiple sockets',
-      'Inside a fuse cartridge',
+      'You own the van at the end of the agreement',
+      'Verify operation of switches and controls',
+      'Power and data cables in office environments',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Sockets on a ring final, lamps on a lighting circuit, every fixed appliance — all parallel off the live and neutral. Each one needs the full 230 V and has to keep working when others switch off.',
   },

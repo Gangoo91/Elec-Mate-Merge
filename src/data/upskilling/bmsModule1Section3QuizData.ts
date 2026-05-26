@@ -5,10 +5,10 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What are the three main benefits of a BMS?',
     options: [
-      'Cost, compliance, control',
-      'Efficiency, comfort, control',
-      'Monitoring, maintenance, management',
       'Safety, security, sustainability',
+      'Efficiency, comfort, control',
+      'Cost, compliance, control',
+      'Monitoring, maintenance, management',
     ],
     correctAnswer: 1,
     explanation:
@@ -19,11 +19,11 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     question: 'How does a BMS optimise HVAC to save energy?',
     options: [
       'By running systems at maximum capacity continuously',
-      'By scheduling operation based on occupancy and weather conditions',
       'By disconnecting systems when not in use',
+      'By scheduling operation based on occupancy and weather conditions',
       'By using only manual control settings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BMS optimises HVAC by scheduling operation based on occupancy patterns, weather conditions, and time-based controls, avoiding unnecessary energy consumption when areas are unoccupied.',
   },
@@ -31,12 +31,12 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 3,
     question: 'What type of reports can BMS provide to identify inefficiencies?',
     options: [
-      'Financial audit reports',
-      'Staff productivity reports',
+      'CC-CV (Constant Current-Constant Voltage)',
+      'Turn off all lights in the system',
+      'A proving unit (battery-powered known voltage source)',
       'Energy consumption and trend analysis reports',
-      'Building security reports',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'BMS provides detailed energy consumption reports, trend analysis, and performance benchmarking that highlight inefficiencies and enable targeted improvements.',
   },
@@ -44,12 +44,12 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 4,
     question: 'How can BMS improve workplace productivity?',
     options: [
-      'By reducing the number of staff required',
       'By maintaining optimal temperature, lighting, and air quality conditions',
-      'By automating all building functions',
-      'By providing entertainment systems',
+      'By reducing unnecessary operation and enabling predictive maintenance',
+      'By providing 24/7 remote monitoring and quick response to issues',
+      'Provides a single dashboard for all building systems enabling quick issue identification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BMS improves productivity by maintaining optimal environmental conditions (temperature, humidity, lighting, air quality) that support occupant comfort and wellbeing.',
   },
@@ -57,10 +57,10 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 5,
     question: 'Give one example of BMS improving occupant comfort.',
     options: [
-      'Automatically locking doors at night',
+      'By scheduling operation based on occupancy and weather conditions',
       'Dimming lights when natural daylight is sufficient',
-      'Playing background music',
-      'Controlling elevator speeds',
+      'Energy consumption and trend analysis reports',
+      'By providing 24/7 remote monitoring and quick response to issues',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 6,
     question: 'What is one advantage of centralised monitoring?',
     options: [
-      'Reduces the need for qualified technicians',
-      'Eliminates all building maintenance requirements',
+      'By reducing unnecessary operation and enabling predictive maintenance',
+      'By maintaining optimal temperature, lighting, and air quality conditions',
       'Provides a single dashboard for all building systems enabling quick issue identification',
-      'Automatically fixes all building problems',
+      'By scheduling operation based on occupancy and weather conditions',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,20 +83,25 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 7,
     question: 'How does BMS improve reliability?',
     options: [
-      'By replacing all old equipment',
+      'By reducing unnecessary operation and enabling predictive maintenance',
+      'By maintaining optimal temperature, lighting, and air quality conditions',
+      'Dimming lights when natural daylight is sufficient',
       'By providing 24/7 remote monitoring and quick response to issues',
-      'By eliminating the need for maintenance',
-      'By using only premium components',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BMS improves reliability through continuous monitoring, early fault detection, automated responses to issues, and enabling quick remedial action to prevent system failures.',
   },
   {
     id: 8,
     question: 'Which standard supports compliance for energy efficiency in building automation?',
-    options: ['BS 7671', 'EN 15232', 'IEC 61850', 'ISO 9001'],
-    correctAnswer: 1,
+    options: [
+      'EN 15232',
+      'BS 7671',
+      'IEC 61850',
+      'ISO 9001',
+    ],
+    correctAnswer: 0,
     explanation:
       'EN 15232 is the European standard that defines the energy performance of buildings and the impact of building automation, control and building management systems.',
   },
@@ -104,12 +109,12 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 9,
     question: 'How does BMS extend equipment lifespan?',
     options: [
-      'By running equipment at maximum capacity',
-      'By replacing equipment more frequently',
+      'By scheduling operation based on occupancy and weather conditions',
       'By reducing unnecessary operation and enabling predictive maintenance',
-      'By using only manual control',
+      'By providing 24/7 remote monitoring and quick response to issues',
+      'By maintaining optimal temperature, lighting, and air quality conditions',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'BMS extends equipment lifespan by optimising operating schedules to reduce unnecessary runtime, monitoring performance parameters, and enabling predictive maintenance to prevent failures.',
   },
@@ -117,7 +122,12 @@ export const bmsModule1Section3QuizData: QuizQuestion[] = [
     id: 10,
     question:
       'In the real-world example, what financial saving did the retail chain achieve in the first year?',
-    options: ['£200,000', '£300,000', '£400,000', '£500,000'],
+    options: [
+      '£200,000',
+      '£300,000',
+      '£400,000',
+      '£500,000',
+    ],
     correctAnswer: 2,
     explanation:
       'The retail chain achieved £400,000 in utility cost savings in the first year through an 18% reduction in energy consumption across their stores.',

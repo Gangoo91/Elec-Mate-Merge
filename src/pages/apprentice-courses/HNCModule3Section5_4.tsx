@@ -32,16 +32,26 @@ const quickCheckQuestions = [
   {
     id: 'sync-speed',
     question: 'What is the synchronous speed of a 4-pole motor on a 50Hz supply?',
-    options: ['1000 rev/min', '1500 rev/min', '3000 rev/min', '750 rev/min'],
-    correctIndex: 1,
+    options: [
+      '1500 rev/min',
+      '1000 rev/min',
+      '3000 rev/min',
+      '750 rev/min',
+    ],
+    correctIndex: 0,
     explanation:
       'Synchronous speed ns = (120 x f) / p = (120 x 50) / 4 = 1500 rev/min. The motor runs slightly slower than this due to slip.',
   },
   {
     id: 'slip-calc',
     question: 'A 4-pole, 50Hz motor runs at 1440 rev/min. What is the slip?',
-    options: ['2%', '4%', '5%', '6%'],
-    correctIndex: 1,
+    options: [
+      '2%',
+      '6%',
+      '5%',
+      '4%',
+    ],
+    correctIndex: 3,
     explanation:
       'Slip s = (ns - nr) / ns = (1500 - 1440) / 1500 = 60/1500 = 0.04 = 4%. This is typical for a fully loaded motor.',
   },
@@ -49,16 +59,26 @@ const quickCheckQuestions = [
     id: 'starting-current',
     question:
       'A motor has a full load current of 25A. What starting current would you expect with DOL starting?',
-    options: ['25-50A', '75-100A', '150-200A', '250-300A'],
-    correctIndex: 2,
+    options: [
+      '75-100A',
+      '150-200A',
+      '25-50A',
+      '250-300A',
+    ],
+    correctIndex: 1,
     explanation:
       'DOL starting current is typically 6-8 times FLC. For 25A FLC: 25 x 6 = 150A to 25 x 8 = 200A. This is why reduced voltage starting methods are used for larger motors.',
   },
   {
     id: 'rotor-type',
     question: 'Which rotor type is most commonly used in HVAC applications?',
-    options: ['Wound rotor', 'Squirrel cage', 'Salient pole', 'Cylindrical'],
-    correctIndex: 1,
+    options: [
+      'Cylindrical',
+      'Wound rotor',
+      'Squirrel cage',
+      'Salient pole',
+    ],
+    correctIndex: 2,
     explanation:
       'Squirrel cage rotors dominate HVAC applications due to their robust construction, low maintenance, and cost-effectiveness. They have no brushes, slip rings, or external rotor connections.',
   },
@@ -69,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What creates the rotating magnetic field in a three-phase induction motor?',
     options: [
-      'Permanent magnets in the stator',
+      'To identify achievable credits and evidence requirements early in design',
       'Three-phase currents in spatially displaced stator windings',
-      'DC excitation of the rotor',
-      'Commutator action',
+      'The building\\\\\\\'s responsible person (employer, owner or occupier)',
+      'Creates opportunities and support networks',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,20 +102,25 @@ const quizQuestions = [
     id: 2,
     question: 'Why must the rotor of an induction motor run slower than synchronous speed?',
     options: [
-      'To reduce noise and vibration',
+      'Using reclaimed and refurbished components where standards permit',
+      'Work completed, problems encountered, materials used, and time spent',
       'To allow relative motion between rotor and field, inducing rotor current',
-      'To prevent overheating',
-      'To match the load speed',
+      'Tax relief on business equipment and vehicle purchases spread over time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'If the rotor ran at synchronous speed, there would be no relative motion between the rotor conductors and the rotating field. No relative motion means no induced EMF, no rotor current, and therefore no torque.',
   },
   {
     id: 3,
     question: 'A 2-pole motor operates on a 50Hz supply. Calculate the synchronous speed.',
-    options: ['1500 rev/min', '3000 rev/min', '1000 rev/min', '750 rev/min'],
-    correctAnswer: 1,
+    options: [
+      '1000 rev/min',
+      '1500 rev/min',
+      '750 rev/min',
+      '3000 rev/min',
+    ],
+    correctAnswer: 3,
     explanation:
       'ns = (120 x f) / p = (120 x 50) / 2 = 3000 rev/min. Two-pole motors have the highest synchronous speed for a given frequency.',
   },
@@ -103,20 +128,25 @@ const quizQuestions = [
     id: 4,
     question: 'At what point on the torque-speed curve is maximum torque developed?',
     options: [
-      'At synchronous speed',
-      'At zero speed (starting)',
       'At the pull-out point (typically 20-30% slip)',
-      'At full load speed',
+      'Detailed justification and assessment of equivalent safety',
+      'To level the tower on slightly uneven ground',
+      'Decreases UGR (better glare control)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Maximum (breakdown) torque occurs at the pull-out point, typically at 20-30% slip. Beyond this point, increasing slip reduces torque and the motor stalls.',
   },
   {
     id: 5,
     question: 'What is the typical power factor of an induction motor at no load?',
-    options: ['0.95 lagging', '0.85 lagging', '0.5 lagging', '0.2-0.3 lagging'],
-    correctAnswer: 3,
+    options: [
+      '0.85 lagging',
+      '0.2-0.3 lagging',
+      '0.95 lagging',
+      '0.5 lagging',
+    ],
+    correctAnswer: 1,
     explanation:
       'At no load, the motor draws mainly magnetising current with very little active power component. Power factor is very low (0.2-0.3 lagging) and improves significantly as load increases.',
   },
@@ -138,11 +168,11 @@ const quizQuestions = [
     question: "A motor nameplate shows 'Duty: S1'. What does this mean?",
     options: [
       'Intermittent duty with starting',
-      'Continuous running duty',
-      'Short-time duty',
       'Periodic duty with braking',
+      'Short-time duty',
+      'Continuous running duty',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'S1 indicates continuous running duty - the motor can run indefinitely at rated load. HVAC fans and pumps typically require S1 duty rating.',
   },
@@ -151,12 +181,12 @@ const quizQuestions = [
     question:
       'Why might a wound rotor motor be specified instead of squirrel cage for a large pump?',
     options: [
-      'Lower initial cost',
-      'Higher efficiency at full load',
       'Reduced starting current and adjustable starting torque',
-      'Smaller physical size',
+      'Stairwells are key escape routes requiring continuous illumination',
+      'It is still valid and they can apply for a card',
+      'Minimum distance after a reflective event where loss can be measured',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Wound rotor motors allow external resistance to be added to the rotor circuit, reducing starting current and providing high starting torque. This is valuable for large pumps where supply limitations exist.',
   },
@@ -164,8 +194,13 @@ const quizQuestions = [
     id: 9,
     question:
       'An AHU fan motor draws 45A at full load with 0.85 power factor. What is the apparent power on 400V three-phase?',
-    options: ['15.3 kVA', '26.5 kVA', '31.2 kVA', '45.0 kVA'],
-    correctAnswer: 2,
+    options: [
+      '15.3 kVA',
+      '31.2 kVA',
+      '26.5 kVA',
+      '45.0 kVA',
+    ],
+    correctAnswer: 1,
     explanation:
       'S = root3 x VL x IL = 1.732 x 400 x 45 = 31,177 VA = 31.2 kVA. The power factor determines the real power: P = S x pf = 31.2 x 0.85 = 26.5 kW.',
   },
@@ -173,12 +208,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the primary advantage of using a VSD with an HVAC fan motor?',
     options: [
-      'Eliminates the need for motor protection',
+      'Related to phase conductor size per Table 54.7 or calculation',
+      'Remove from service and arrange repair or replacement',
       'Energy savings through speed control matching actual demand',
-      'Increases motor starting torque',
-      'Allows operation above synchronous speed',
+      'Clients increasingly ask for systems that integrate with BMS',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'VSDs allow fan speed to match actual airflow demand. Since fan power varies with the cube of speed, reducing speed by 20% reduces power by approximately 50%. This delivers significant energy savings in variable load HVAC systems.',
   },

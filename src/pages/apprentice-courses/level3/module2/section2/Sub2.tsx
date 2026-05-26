@@ -43,12 +43,12 @@ const checks = [
     question:
       "What are the acceptable methods for PEN-fault protection on a domestic EV charge point fed from a TN-C-S supply per Section 722?",
     options: [
-      "There is only one acceptable method — a TT electrode for the EV side.",
       "Three acceptable methods. (1) The charge point includes built-in PEN-fault detection-and-disconnection — most modern UK domestic units (Zappi, Ohme, Hypervolt, Wallbox, GivEnergy) include this and the manufacturer's spec confirms compliance. (2) The EV side is on a dedicated TT earth electrode separate from the property's TN-C-S earth — used where the unit does not include built-in detection or where the install configuration favours TT. (3) An external PEN-fault detection device (separate enclosure) is fitted upstream of the unit. Method 1 is the dominant approach in 2024-2026; Method 2 is still common; Method 3 is the historical approach that pre-dates built-in detection and is now uncommon. A4:2026 has refined the technical detail of each method.",
-      "Bond the EV chassis directly to the supply earth.",
-      "PEN-fault protection is not required on domestic EV installs.",
+      "The BUS is the current main UK government grant for low-carbon heating retrofits — currently up to £7,500 toward an ASHP install, £7,500 toward a GSHP install, and lower amounts toward biomass boilers in eligible properties. The grant is administered by Ofgem and paid to the MCS-certified installer who passes it through to the customer as a price reduction. Eligible properties: existing dwellings (not new-build) with a valid EPC and no outstanding insulation recommendations on the EPC. The grant has been extended several times and is currently confirmed through the late 2020s.",
+      "PME (TN-C-S) supplies present a specific risk for EV charging — if the supply's PEN conductor opens, the vehicle's exposed-conductive-part can rise toward the line voltage relative to true earth. Section 722 (significantly amended in A4:2026) requires either an open-PEN protection device (built into most modern charging units — disconnects the supply if PEN-fault is detected via voltage-rise sensing) OR an earth electrode for the vehicle's chassis (TT arrangement at the charge point). The decision is made by the certified installer based on the supply earthing arrangement and the manufacturer's guidance. Section 722 spells out the conditions under which each option applies.",
+      "Five conditions. (1) Cumulative repair cost approaching system replacement cost (cumulative repairs at 70%+ of new system). (2) System at end-of-life (CU 25+ years old, multiple aging components). (3) Code 1 / Code 2 EICR findings affecting multiple aspects of the system. (4) Building work or change-of-use happening; opportunity to upgrade. (5) New regulatory requirements (A4:2026 or future) that the existing system can't meet without major rework. The decision is normally the senior / customer's; the L3 apprentice identifies the indicators and escalates.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Three acceptable methods exist; the MCS-certified designer chooses one per the install conditions. Built-in detection (Method 1) is the most common approach because it removes a separate TT electrode and a separate enclosure from the install scope. The apprentice should confirm during commissioning that whichever method the design specifies is installed and tested.",
   },
@@ -57,12 +57,12 @@ const checks = [
     question:
       "What does RDC-DD mean and why does it matter for the upstream protective device choice?",
     options: [
-      "RDC-DD is a brand of charge point.",
+      "A 4 µF cap charged to 230 V peak (~325 V) stores 0.21 J. Modern bin-mounted ballasts have integral bleed resistors that drop the voltage in 1 minute; older ballasts may not. The voltage is enough to give a sharp shock but not normally fatal. Standard discharge: wait 1 minute after isolation; verify with a meter (DC voltage between cap terminals should read &lt;30 V); if still charged, short the cap terminals through a 5–10 kΩ resistor with insulated leads. Never short with a screwdriver — pits the contacts and the discharge arc can weld. The hazard is real but manageable; the panic some apprentices show is excessive.",
+      "Where the employee knew or ought reasonably to have known about the hazard, where they had an opportunity to communicate it to the colleague or supervisor, and where the failure to communicate caused or contributed to the colleague being exposed to risk. HSE has prosecuted individual employees under s.7 for failing to brief a successor on a permit-to-work, for not communicating that a circuit was still live, and for not raising a concern about a defective safe system of work. The s.7 duty is personal and cannot be delegated.",
       "RDC-DD stands for Residual Direct Current Detecting Device. It is the 6 mA DC fault current detection feature built into modern Mode 3 charge points (per IEC 62752 / IEC 61851-1). The presence of an RDC-DD in the unit means a Type A RCD upstream is acceptable — the Type A handles the AC residual current, the RDC-DD handles the smooth DC fault current that could otherwise blind the Type A. Without an RDC-DD in the unit, the upstream device must detect both — typically a Type B RCD, which is significantly more expensive (around 5x the price of a Type A). Section 722 of BS 7671 makes the RCD type a function of what the unit provides; A4:2026 has clarified the framework.",
-      "It is an RCD that only works on direct current.",
-      "It is the green LED on the front of the charge point.",
+      "External label identifying the property as having a PV system (typically near the meter and at the main isolator); internal labels at the AC isolator (identifying it as the PV AC isolator, not a generic isolator), at the DC isolator (warning that the array remains energised in light), at the inverter (warning of dual supply), and on the consumer unit (identifying the PV final circuit). The labelling is for the customer (so they know what their isolators do), the next electrician (so they understand the install years later), and the fire-fighter (so they know the building has PV before forcing entry). Section 514 of BS 7671 covers identification; Section 712 and the IET CoP add PV-specific requirements.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "RDC-DD vs Type B is the key cost-driver on the upstream protective device choice. Modern UK domestic charge points almost universally include an RDC-DD because the 6 mA detection is part of the IEC 62752 / 61851-1 product standard. A Type A RCBO upstream is then acceptable. Always confirm against the unit's data sheet before specifying the upstream device.",
   },
@@ -71,12 +71,12 @@ const checks = [
     question:
       "Why has BS 7671 A4:2026 introduced the term PNB alongside the older TN-C-S / PME terminology?",
     options: [
-      "PNB is a new earthing system that replaces TN-C-S.",
+      "BS 7671 (A4:2026 Reg 421.1.7) recommends AFDDs in specified locations including dwellings — but the wording is \\\\\\\"recommending\\\\\\\", not mandating. They are not strictly required by BS 7671 for a typical owner-occupied house. They ARE mandatory in Higher Risk Residential Buildings (HRRBs — typically blocks of flats over 18 m or 7 storeys) under the Building Safety Act 2022. For your house, they are a strongly recommended best-practice fire protection. Cost is roughly 60-100 GBP per AFDD-RCBO; protecting all socket and lighting circuits typically adds 600-1200 GBP to a CU change. Many domestic specifiers now include AFDDs as standard.",
+      "Standard order: (1) Ze at the supply origin (incoming meter tails or the main switch). Establishes the supply impedance baseline. (2) Each circuit at its furthest point in turn — go in label order or by RCD group. Use no-trip mode on RCD-protected circuits. (3) For any borderline reading, retest in full trip mode after preparing for the trip. (4) For any failing reading, investigate (terminations, route length, CPC size). The order isn\\\\\\\\\\\\\\\\\\\\\\\\'t arbitrary — Ze first gives you the baseline you need to sanity-check the per-circuit readings.",
+      "Six essential references. (1) BS 7671:2018+A4:2026 itself (paper or PDF on the laptop/phone) — particularly Chapter 4 (Protection), Chapter 5 (Selection), Chapter 6 (Testing), Appendix 6 (Forms). (2) IET Guidance Note 3 (current edition) for testing methods and result interpretation. (3) IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th Edition, 2026) for equipment-side work. (4) HSE GS38 for proving-dead instruments. (5) Manufacturer data sheets for the devices being replaced (downloaded ahead of the visit to the laptop). (6) The site's as-built drawings + Schedule of Test Results from the original EIC / EICR. The L3 apprentice doesn't memorise any of this; the L3 apprentice KNOWS where to look it up in 30 seconds when the question arises on site.",
       "PNB stands for Protective Neutral Bonded — it is the updated terminology for the earthing arrangement historically called TN-C-S or PME (Protective Multiple Earthing) in UK practice. The terminology change is aligned with international standards and clarifies the protective bonding role of the combined PEN conductor at the property. The technical arrangement is the same as before; the name is new. A4:2026 has updated cross-references throughout BS 7671 — including in Section 722 — to use PNB alongside the older PME term during the transition. As an L3 apprentice from 2026 onwards you should recognise both terms and understand they refer to the same arrangement.",
-      "PNB applies only to commercial supplies.",
-      "PNB is for off-grid systems only.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "PNB is the new terminology for what was called TN-C-S / PME. The technical arrangement (combined PEN conductor through the cut-out, separated into N and earth at the property) is unchanged. The terminology shift in A4:2026 aligns BS 7671 with international standards. EV charge points on PNB / TN-C-S supplies still need PEN-fault protection per Section 722 — the name change does not change the regulation.",
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       "What is the scope statement of BS 7671 Section 722 in plain English?",
     options: [
-      "Only commercial EV charge points.",
+      "PME (TN-C-S) supplies present a specific risk for EV charging — if the supply's PEN conductor opens, the vehicle's exposed-conductive-part can rise toward the line voltage relative to true earth. Section 722 (significantly amended in A4:2026) requires either an open-PEN protection device (built into most modern charging units — disconnects the supply if PEN-fault is detected via voltage-rise sensing) OR an earth electrode for the vehicle's chassis (TT arrangement at the charge point). The decision is made by the certified installer based on the supply earthing arrangement and the manufacturer's guidance. Section 722 spells out the conditions under which each option applies.",
       "Section 722 applies to circuits intended to supply electric vehicles for charging purposes — both Mode 3 (AC charging through a dedicated charge point) and Mode 4 (DC fast / rapid charging) are within scope. The section adds requirements on top of the general BS 7671 framework for PEN-fault protection on TN-C-S (PNB) supplies, RCD requirements for AC and DC fault detection, additional protection arrangements, cable rating and labelling. A4:2026 has refined Section 722 alongside the broader updates around PNB terminology and AFDD coverage.",
-      "Only domestic EV charge points.",
-      "Only off-grid EV systems.",
+      "Starting each week by asking your team: \\\"What obstacles are you facing that I can help remove?\\\" — then using empathy to understand the real blockers (which may be emotional as well as practical), self-regulation to resist the urge to micromanage the solutions, coaching to develop the team\\\\\\\\\\\\'s own problem-solving capability, and genuine follow-through that builds trust. The leader serves by enabling, not by doing everything themselves",
+      "Three steps: (1) Visual — case undamaged, leads not nicked or crushed, probes have intact finger barriers, no visible burn marks or melted plastic. (2) Calibration — calibration label in date (typically annual for MFT, two-yearly for two-pole testers, manufacturer's interval for multimeters); calibration certificate available if challenged. (3) Function — tester proves on a known live source AND on a known dead source; battery level indication healthy; selector switch operates cleanly. Any failure on any step — the instrument is not used until rectified. Most firms have a pre-use inspection log signed by the operative at the start of each shift.",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       "What is the difference between Type A and Type B RCDs in the EV charging context?",
     options: [
-      "Type A is for residential and Type B is for commercial.",
+      "Continuity proving (sometimes 'continuity check') is a quick low-current test (typically 200 mA on the MFT or multimeter on continuity range) to confirm a connection exists — yes/no, not a precise measurement. R1+R2 is a precise measurement of the loop resistance of a complete circuit (line + protective conductor). For fault diagnosis: continuity proving is used to quickly verify that an isolation has fully disconnected a circuit (continuity from supply to load reads OPEN); R1+R2 is used to precisely characterise a circuit's loop resistance for comparison against expected design values. Both have their place; the L3 apprentice uses them at different stages.",
+      "Plain English + cost. Example: 'Your kitchen circuit can't handle the load you're putting on it. There are three options. (1) Cheap — rearrange your appliances so you don't run kettle, microwave and toaster at the same time. £0 cost; reduced convenience. (2) Medium — add a dedicated socket for the kettle on a separate circuit. £450 cost; same convenience. (3) Expensive — rewire the kitchen for full modern capacity. £2,500 cost; future-proofed. Each option is safe; they differ on cost and convenience. Which fits your situation best?'. Customer makes the commercial decision; you've explained the technical position; the firm has a defensible record.",
       "Type A RCDs detect AC residual currents and pulsating DC residual currents. They cannot detect smooth (continuous) DC residual currents — these can blind the device. Type B RCDs detect AC, pulsating DC and smooth DC residual currents. EV charge points produce smooth DC fault currents that a Type A alone cannot reliably trip. Two acceptable solutions per Section 722: (1) the unit includes its own RDC-DD (6 mA DC detection per IEC 62752 / 61851-1) and the upstream RCD can be Type A; (2) the unit does not include an RDC-DD and the upstream device must be Type B. Modern UK domestic units almost universally include the RDC-DD, so Type A upstream is the dominant choice. Always confirm against the unit's data sheet.",
-      "Both types are interchangeable.",
-      "Type B is cheaper than Type A.",
+      "Structured de-brief — the supervisor's job is to draw out the learning, the apprentice's job is to be honest. Topics to cover: (1) DIAGNOSIS — was the fault what you expected from the brief? Were there surprises? (2) ISOLATION — did your isolation procedure work cleanly? Any near-misses? (3) RECTIFICATION — did the work go as planned? Any unexpected complications? (4) TESTING — did the verification confirm the rectification? Any borderline readings? (5) DOCUMENTATION — is the certificate complete and accurate? (6) CUSTOMER — was the hand-back smooth? Any feedback to capture? The de-brief is 15&ndash;20 minutes, ideally same-day while memory is fresh. The supervisor builds an accurate picture of the apprentice's developing competence; the apprentice hears their work reviewed and learns. A successful visit + a structured de-brief is more valuable than a successful visit + no review.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Type A vs Type B is the key cost-driver on the EV upstream protective device. Type B costs around 5x as much as Type A. Modern Mode 3 units include built-in 6 mA DC detection (RDC-DD) which makes a Type A RCBO upstream acceptable. The MCS-certified designer specifies based on the unit's data sheet.",
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     question:
       "What is the purpose of the control pilot signal between the charge point and the EV?",
     options: [
-      "It plays music for the customer while the car charges.",
+      "A transient is a brief (microseconds to milliseconds) over-voltage spike — typical magnitudes 1 kV to 6 kV (lightning-induced can reach 20 kV+). Sources: (1) lightning strikes (direct or induced from nearby strikes). (2) switching events — large inductive loads (motors, transformers) creating back-EMF spikes when switched off. (3) fault clearing — supply network faults causing brief over-voltages on the consumer's side. (4) capacitor switching on power-factor correction equipment. Damage: solid-state devices (LED drivers, electronic boards, computers) have peak-voltage tolerance below the transient magnitude. Single transient can fail an entire LED ceiling rose array. Protection: SPDs (Surge Protective Devices) under BS 7671 443.",
+      "Five-step. (1) Power on — confirm self-test passes (Megger and Kewtech both run automatic self-tests on power-up). (2) Continuity — short the leads together; reading should be the lead resistance (typically 0.10–0.30 Ω) with audible buzzer; null the leads if the unit supports it. (3) Insulation resistance — connect leads together, press test at 250 V — should read &gt;999 MΩ (open circuit). (4) Loop / EFLI — connect to a known live socket; reading should match known reference for that location (or be plausible — typically 0.4–1.5 Ω at a domestic socket). (5) RCD — check on a known-good RCD outlet; trip-time should match the RCD's rating. Five minutes; catches drift, battery issues, lead damage.",
+      "Around eight hours of accredited training (typically delivered as a one-day workshop or split over two half-days) covering climate science, the carbon impact of the trainee role and sector, individual and workplace action, and the social and economic context of the climate transition. To become Certified Carbon Literate the trainee must demonstrate understanding through assessment and commit in writing to one personal action and one workplace action. The Carbon Literacy Project (a Manchester-based registered charity) accredits training providers and issues the certifications. Major UK construction and engineering firms run rolling Carbon Literacy programmes for their workforces.",
       "The control pilot is a low-voltage PWM signal between the charge point and the vehicle that negotiates charging current, communicates protection status, signals connection / disconnection events and triggers safe shutdown on fault. The signal is part of the IEC 61851 Mode 3 protocol. The car uses the duty cycle of the PWM signal to determine the maximum current the charge point can supply; the charge point uses the signal level to know whether the cable is connected, whether the car is ready to charge, and whether a fault has occurred. The signalling is built into the unit and the cable; the apprentice does not configure it but should recognise its role.",
-      "It is a customer remote control.",
-      "It is a Bluetooth pairing signal.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The control pilot is the safety-critical handshake between the charge point and the car. Without it, the car will not charge. With it, both ends know the safe operating current and either can initiate a controlled shutdown. Mode 1 charging (no control pilot) is the reason Mode 1 is essentially banned for EVs in the UK — without the pilot, there is no way to negotiate safe current limits.",
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       "On a TN-C-S supply with built-in PEN-fault detection in the unit, what does the apprentice need to verify at commissioning?",
     options: [
-      "Nothing — the manufacturer's compliance covers it.",
       "Three things. (1) The unit is configured / wired correctly for PEN-fault detection (some units have a DIP switch or software setting for the earthing arrangement; some auto-detect; some require firmware configuration). (2) The detection circuit is operational — many units include a self-test that runs on power-up and the apprentice should observe the test pass. (3) The unit's earthing is connected per the manufacturer's wiring diagram (the protective measure depends on the right conductors being terminated correctly). The MCS-certified designer specifies the test sequence; the apprentice executes per the design and verifies the result.",
-      "Only the earth resistance.",
-      "Only the customer's appliance compatibility.",
+      "Every 3 months — formal PAT (combined visual + electrical test) for harsh-environment use. HSE HSG107 'Maintaining portable electrical equipment' and the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th ed.) publish typical intervals; construction-site Class I portable tools are at the short end at 3 months. Office Class I equipment is 12 months (the low-risk regime in HSE INDG236). Class II (double-insulated) and battery chargers are typically longer.",
+      "The incongruence between calm words and stressed body language suggests the client is suppressing significant frustration or anxiety. The project manager should: acknowledge the difficulty of the situation empathically (\\\"I can see this is a stressful situation, and I understand why\\\"), address the emotional undercurrent rather than just the facts, and create space for the client to express genuine concerns — because unaddressed suppressed emotions often escalate",
+      "Possibly yes. Heavy usage accelerates wear on the input components (relays in IR/loop test stages, current transformers in clamp meters, switches and connectors). The calibration interval is set assuming 'normal' use; heavy use justifies a shorter interval. Also — any incident (drop, exposure to wet, exposure to heat above operating temperature, fault current through the instrument, blown fuse) is grounds for an interim calibration regardless of date. The general principle: calibration is a confidence interval, not a guarantee — use intelligence about how the instrument has been treated to decide if early re-calibration is justified.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Built-in PEN-fault protection is not 'fit and forget' — it requires correct wiring and correct configuration plus the commissioning self-test to verify operation. Skipping any of these is a non-compliance even if the unit physically powers up. The IET Code of Practice for EV Charging Equipment Installation walks through the commissioning verification.",
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       "Why does Section 722 require a means of isolation local to the charge point in addition to the upstream RCBO in the consumer unit?",
     options: [
-      "It is a customer convenience feature only.",
+      "Reg 134.1.1 applies to ANY work on the installation — design, erection, alteration, repair. It says the work shall be carried out by skilled and instructed persons in accordance with the requirements of BS 7671. For rectification, the practical implication is — the rectified circuit, after the work, must STILL meet the original BS 7671 design intent (correct cable size, correct protective device, correct earthing arrangement, correct supplementary bonding). 'Putting it back as it was' is not enough if the original was non-compliant; the rectification is an opportunity to bring the affected circuit up to the current edition of BS 7671 (A4:2026 in 2026). Where the original design predates current standards, the rectification at least matches like-for-like and any departure from current standards is recorded on the certificate.",
       "Three reasons. (1) Safe work — the next electrician arriving to service the unit needs a local isolator to lock off the supply for safe work without trekking back to the consumer unit. (2) Emergency response — a fire-fighter or first responder needs an obvious local means of disconnection if the unit is involved in an incident. (3) Customer use — the customer should be able to isolate the unit if needed without intervening at the consumer unit. The local isolator is typically a rotary or padlockable switch fitted within sight of the unit. Section 537 of BS 7671 covers isolation generally; Section 722 adds the EV-specific requirement; the IET Code of Practice gives the practical recommendation on type and location.",
-      "It is a duplicate of the upstream RCBO and not actually required.",
-      "It only applies to commercial chargers.",
+      "Clamping around BOTH conductors (L AND N together) when measuring LOAD current. The clamp reads imbalance — for load current you want one conductor only (L OR N, not both). Reading shows zero or near-zero, apprentice assumes 'no load', misses the actual current. Conversely, when measuring earth leakage, you DO clamp L AND N together (the imbalance IS the leakage). The two use cases are mutually exclusive — load = one conductor, leakage = both conductors. Apprentices learn this in week one and re-learn it every time they pick up a clamp.",
+      "(a) SELF — direct shock, arc-flash burn, fall from a recoil reaction. (b) OTHER PERSONNEL — assistant or apprentice working with you may contact live conductor; bystanders may be in arc range. (c) CUSTOMER/CLIENT — equipment damage from accidental short, fire risk from compromised insulation, customer staff injury if they touch exposed live parts. (d) PUBLIC — collapse of structure if a fire results, contamination if hazardous materials escape (e.g. transformer oil), wider supply outage if a fault propagates upstream. (e) BUILDING SYSTEMS — cascade failures (a botched isolation can take out the wrong circuit, knocking out fire alarm AND lifts AND emergency lighting at once), data loss on IT systems, equipment damage on plant restart.",
     ],
     correctAnswer: 1,
     explanation:
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       "What does AFDD mean and when does Section 722 / A4:2026 require it on an EV final circuit?",
     options: [
-      "AFDD is an obscure acronym not relevant to EV work.",
+      "Reg 14(2) requires every employee to inform their employer (or any other employee with specific responsibility for safety) of any work situation which they reasonably consider represented a serious and immediate danger to health and safety, AND any matter which they reasonably consider represented a shortcoming in the employer's protection arrangements for health and safety. The duty extends to near-misses, defective safe systems of work, and any condition the employee believes presents danger.",
+      "Five steps. (1) Initial visual inspection — device fitted correctly, terminations torqued per manufacturer, label visible. (2) Continuity tests (R1+R2) on the dead circuit per the standard MWC test set. (3) IR test at 500 V — disconnect or use 250 V if the AFDD-RCBO\\\\\\\\'s electronics can\\\\\\\\'t withstand 500 V (most modern devices tolerate 500 V on the line side but check the manufacturer manual). (4) Energise, single AC test at 1 x I delta n on the RCBO portion (the RCD half is verified normally). (5) Functional test of the AFDD portion via the manufacturer test button — press T, device trips, reset. Document the AFDD test on the Schedule of Test Results.",
       "AFDD stands for Arc Fault Detection Device. AFDDs detect characteristic arcing in cables and terminations — the kind that can lead to electrical fires before any conventional protective device would trip. A4:2026 has expanded the AFDD requirements across BS 7671, including in some final-circuit contexts. For EV final circuits, the AFDD requirement depends on the installation context (some socket-feeding circuits, some special-locations work). The MCS-certified designer specifies whether an AFDD is required for the specific install per A4:2026; the apprentice fits per the design. AFDD-RCBO combination devices are increasingly available and simplify the consumer unit layout.",
-      "AFDD only applies to industrial installs.",
-      "AFDD is identical to RCBO and the terms are interchangeable.",
+      "A boiler drives a wet heating system — pumps hot water around radiators / underfloor circuits and a hot-water cylinder. Typical output 10-50 kW, located in a utility room or outhouse, automatic fuel feed (auger from a hopper), automatic ignition, automatic ash handling. A stove is a room heater — radiates heat directly into the room it sits in, plus optional back-boiler for some hot water. Lower output (5-15 kW typical), manual loading (logs or pellets), no automatic ash removal. Different installation regulations, different MCS standards, different customer expectations.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "AFDDs are a real fire-safety advance and A4:2026 has expanded their required scope across BS 7671. For EV charging installs, AFDDs are not universally required but the design may specify them depending on the install context. The combined AFDD-RCBO devices coming onto the market simplify the CU layout because one device covers overcurrent, residual current and arc-fault detection.",
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       "On a TT-earthed property with no PNB / TN-C-S, does Section 722 still apply?",
     options: [
-      "No — Section 722 only applies to TN-C-S.",
+      "Common triggers: profits exceed £40-50k/year (where Ltd's lower-cost dividend tax structure starts to outweigh the extra admin); contracts increasingly require Ltd-only counterparties (some commercial clients refuse to engage sole traders); risk profile grows (more employees, larger contracts, higher liability exposure); raising external investment (impossible as sole trader); planning succession or sale of the business (Ltd is sellable, sole trader isn't).",
+      "Durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit, at the main isolation, at the inverter and at any DC isolators. The DNO emergency contacts. The PV system identification (kWp rating, inverter manufacturer/model). Required by BS 7671 Section 712, MCS MIS 3002 and the DNO's G98/G99 connection conditions. The signage protects future maintainers who may not realise there's a generator on the property.",
+      "On a TN-C-S supply the PEN conductor combines neutral and protective earth between the substation and the cut-out. If the PEN breaks open between the substation and the property, the property's earthing rises toward line voltage depending on the load balance on neighbouring properties on the same PEN. For an EV on a driveway, the car body sits at the elevated PME potential while the surrounding ground (concrete, soil, gravel) stays at true earth potential — the touch-voltage between the car body and the ground can be lethal.",
       "Yes. Section 722 applies to all EV charging installations regardless of earthing arrangement. The PEN-fault protection requirement specifically targets TN-C-S (PNB) supplies because that is where the broken-PEN risk exists; TT-earthed properties already have a separate earth electrode and do not have the PEN-fault risk. But all the other Section 722 requirements (RCD type, control pilot, isolation, labelling, cable rating) apply equally to TT-earthed installs. The MCS-certified designer specifies per the supply conditions; the apprentice executes per the design.",
-      "Only Section 411 applies on TT-earthed installs.",
-      "Section 722 applies only to grid-connected installs.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Section 722 applies universally; the PEN-fault clauses specifically target PNB / TN-C-S because the risk is specific to that arrangement. TT-earthed properties do not need PEN-fault protection (because there is no shared PEN conductor) but still need the rest of Section 722.",
   },
@@ -186,12 +186,12 @@ const quizQuestions = [
     question:
       "What is the role of the IET Code of Practice for Electric Vehicle Charging Equipment Installation?",
     options: [
-      "It replaces BS 7671 Section 722 and the apprentice does not need to know the wiring regs.",
       "The IET CoP is the practical implementation guide that walks through how to apply Section 722 on a real install — supply assessment, earthing arrangement choice, protective device selection, cable sizing, isolation, labelling, commissioning. Currently in its 5th edition with regular updates to track BS 7671 amendments and OZEV regulation changes. Not legally mandatory in itself but referenced by reasonable-installer expectations and by MCS / OZEV scheme requirements. The apprentice should recognise it as a practical companion to Section 722 — Section 722 is the legal floor; the IET CoP is the practical playbook.",
-      "It only covers commercial charging.",
-      "It is a customer-facing brochure.",
+      "The EPC should be re-issued to reflect the new performance — heat pump, PV, MVHR, insulation upgrades all change the SAP rating. The MCS-certified installer normally arranges the EPC update. An updated EPC matters for: (a) future house sale (the buyer's solicitor sees current performance); (b) mortgage applications (lenders increasingly weight EPC ratings); (c) insurance (some insurers now adjust premium for low-EPC properties); (d) BUS grant requires a valid EPC at the time of install. EPCs are valid for 10 years from issue.",
+      "G98 is post-notification — install, commission, notify within 28 days. The whole transaction completes inside 28 days from commissioning. G99 is pre-application — submit the application before commissioning, wait for the DNO to model the network, receive a Connection Offer, accept the Offer (which may contain export limits or fault-level conditions), then commission. Typical G99 timeline is 4-12 weeks for a domestic system; longer for commercial. On a fast-moving install programme the G99 paperwork is usually the long pole — start it early.",
+      "Dedicated radial circuit, typically 32 A or 40 A on a Type C (or D) MCB, in 6 mm² T&E or SWA depending on installation method and length. RCD per BS 7671 Section 411.3.3 / 415.1 — type per manufacturer's instruction (often Type A or Type B / RDC-DD). Local rotary or DP isolator outdoors at the unit. Smart controls integration via dedicated low-voltage cable. Cyclic-rated cable selection — heat pumps run for hours not minutes. Manufacturer's bonding requirements where the chassis forms an extraneous-conductive part.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The IET Code of Practice for EV Charging Equipment Installation is the practical implementation guide for Section 722. The MCS / OZEV-certified installer should be working from it (or the equivalent product-specific install guide) on every install. The apprentice should recognise the document and what it does.",
   },

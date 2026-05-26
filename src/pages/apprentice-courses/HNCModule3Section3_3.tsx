@@ -33,35 +33,50 @@ const quickCheckQuestions = [
     id: 'phase-angle-def',
     question: 'What does a phase angle of +30 degrees indicate?',
     options: [
-      'Current lags voltage by 30 degrees',
       'Current leads voltage by 30 degrees',
+      'Current lags voltage by 30 degrees',
       'Voltage and current are in phase',
       'The circuit is purely resistive',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A positive phase angle indicates that current leads voltage. This occurs in capacitive circuits where current flows to charge the capacitor before voltage builds up across it.',
   },
   {
     id: 'lagging-current',
     question: 'In which type of circuit does current lag behind voltage?',
-    options: ['Purely resistive', 'Purely capacitive', 'Inductive', 'Open circuit'],
-    correctIndex: 2,
+    options: [
+      'Inductive',
+      'Open circuit',
+      'Purely resistive',
+      'Purely capacitive',
+    ],
+    correctIndex: 0,
     explanation:
       "In inductive circuits (motors, transformers, fluorescent ballasts), current lags voltage because the inductor opposes changes in current flow. This is remembered by 'ELI' - voltage (E) leads current (I) in inductors (L).",
   },
   {
     id: 'phasor-length',
     question: 'What does the length of a phasor represent?',
-    options: ['Phase angle', 'Frequency', 'RMS magnitude', 'Time period'],
-    correctIndex: 2,
+    options: [
+      'Phase angle',
+      'Frequency',
+      'Time period',
+      'RMS magnitude',
+    ],
+    correctIndex: 3,
     explanation:
       'The length (magnitude) of a phasor represents the RMS value of the quantity (voltage or current). The angle represents the phase relationship, and the phasor rotates at the supply frequency.',
   },
   {
     id: 'power-factor-angle',
     question: 'If power factor is 0.8 lagging, what is the phase angle?',
-    options: ['36.87 degrees', '53.13 degrees', '45 degrees', '60 degrees'],
+    options: [
+      '36.87 degrees',
+      '53.13 degrees',
+      '45 degrees',
+      '60 degrees',
+    ],
     correctIndex: 0,
     explanation:
       "Power factor = cos(phi), so phi = arccos(0.8) = 36.87 degrees. 'Lagging' indicates current lags voltage, typical of inductive loads like motors.",
@@ -73,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is phase difference in an AC circuit?',
     options: [
-      'The difference in frequency between voltage and current',
+      'To protect cable insulation from sharp edges',
       'The angular displacement between voltage and current waveforms',
-      'The difference in peak values',
-      'The time taken for one complete cycle',
+      '1 major injury : 29 minor injuries : 300 near-misses',
+      'You could miss critical safety information and risk accidents',
     ],
     correctAnswer: 1,
     explanation:
@@ -86,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the phase relationship in a purely resistive AC circuit?',
     options: [
-      'Current leads voltage by 90 degrees',
-      'Current lags voltage by 90 degrees',
-      'Voltage and current are in phase',
       'Phase varies with frequency',
+      'Current leads voltage by 90 degrees',
+      'Voltage and current are in phase',
+      'Current lags voltage by 90 degrees',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,8 +113,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the mnemonic for remembering phase relationships in L and C circuits?',
-    options: ['CIVIL', 'ELI the ICE man', 'SOHCAHTOA', 'ROY G BIV'],
-    correctAnswer: 1,
+    options: [
+      'SOHCAHTOA',
+      'CIVIL',
+      'ROY G BIV',
+      'ELI the ICE man',
+    ],
+    correctAnswer: 3,
     explanation:
       'ELI the ICE man: In inductors (L), voltage (E) leads current (I). In capacitors (C), current (I) leads voltage (E). This helps remember the 90-degree phase shifts in reactive components.',
   },
@@ -107,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'When adding two phasors graphically, what method is used?',
     options: [
-      'Multiply their magnitudes',
-      'Add their angles only',
       'Head-to-tail vector addition',
+      'Add their angles only',
+      'Multiply their magnitudes',
       'Subtract the smaller from larger',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Phasors are added using the head-to-tail (parallelogram) method. Place the tail of the second phasor at the head of the first, then draw the resultant from the origin to the final head.',
   },
@@ -120,7 +140,12 @@ const quizQuestions = [
     id: 5,
     question:
       'In a three-phase system with correct phase sequence, what is the angular separation between phases?',
-    options: ['90 degrees', '120 degrees', '180 degrees', '60 degrees'],
+    options: [
+      '90 degrees',
+      '120 degrees',
+      '60 degrees',
+      '180 degrees',
+    ],
     correctAnswer: 1,
     explanation:
       'In a balanced three-phase system, the phases (L1, L2, L3) are separated by 120 degrees. With correct sequence (L1-L2-L3), each phase reaches its peak 120 degrees after the previous one.',
@@ -129,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'What happens to a three-phase motor if two phases are swapped?',
     options: [
-      'It runs at half speed',
+      'The contract (e.g., JCT or NEC)',
+      'AC, pulsating DC, and smooth DC',
       'It runs in reverse direction',
-      'It draws more current',
-      'No effect',
+      'Family history of depression',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Swapping any two phases reverses the phase sequence, causing the motor to run in the opposite direction. This is critical for pumps, fans and conveyors where rotation direction matters.',
   },
@@ -143,11 +168,11 @@ const quizQuestions = [
     question: 'A motor has a power factor of 0.7 lagging. How can this be improved?',
     options: [
       'Add series inductance',
-      'Add parallel capacitance',
-      'Increase the load',
       'Reduce the supply voltage',
+      'Increase the load',
+      'Add parallel capacitance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Parallel capacitors provide leading reactive current that partially cancels the lagging reactive current of the motor. This reduces the overall phase angle and improves power factor towards unity.',
   },
@@ -155,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the resultant of two equal phasors at 90 degrees to each other?',
     options: [
-      'Zero',
-      'Twice the magnitude at 45 degrees',
       'Square root of 2 times magnitude at 45 degrees',
-      'Same magnitude at 90 degrees',
+      'Until the reading stabilises (typically 1 minute)',
+      'Because natural light distribution varies across the space',
+      'Keep communications cables separate from mains power cables',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Using Pythagoras: resultant = sqrt(V squared + V squared) = V times sqrt(2) = 1.414V. The resultant bisects the angle, so it's at 45 degrees to both original phasors.",
   },
@@ -168,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why do large induction motors require reduced voltage starting?',
     options: [
-      'To improve power factor',
+      'Both devices may operate simultaneously in the crossover region',
       'To limit starting current which can be 6-8 times full load current',
-      'To increase starting torque',
-      'To match supply frequency',
+      'Dangerous high voltages develop that can damage insulation and harm personnel',
+      'To prevent unauthorised access to the work area',
     ],
     correctAnswer: 1,
     explanation:

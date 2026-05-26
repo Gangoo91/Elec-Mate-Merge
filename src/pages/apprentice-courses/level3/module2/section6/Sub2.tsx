@@ -38,12 +38,12 @@ const checks = [
     question:
       "You are stripping out an old kitchen rewire. Which of these items is WEEE under the Waste Electrical and Electronic Equipment Regulations 2013?",
     options: [
-      "Only the old fuse board.",
       "All of them — the old fuse board, the under-cabinet LED strips, the extractor fan motor, the integrated oven, the lighting transformers, the ceiling pendants. WEEE covers any equipment dependent on electric currents or electromagnetic fields to work properly. Cable offcuts and fixings are not WEEE but are still controlled waste under the Environmental Protection Act 1990 Duty of Care.",
-      "Only large appliances over 50 cm in any dimension.",
-      "Nothing — installation waste is exempt from WEEE.",
+      "The 110 V supply on site is centre-tapped earthed (CTE), so the voltage between either leg and earth is only 55 V. A faulty tool that ends up with the case live to one leg only puts 55 V between the casing and the operative, not 230 V. Combined with a 30 mA RCD at the transformer this dramatically reduces shock energy and survivability if something goes wrong.",
+      "A heat pump struggles in a poorly-insulated house with undersized radiators — it’s designed to deliver lots of low-temperature heat, not a little high-temperature heat. The realistic CoP will be poor (closer to 2 than 3), the running costs will surprise the customer, and the property may need insulation upgrades and rad-replacement first. Be honest before quoting.",
+      "Most electricians take a 1-day refresher course within 3-6 months of an amendment, then sit the updated 2382 within 12 months. CPS schemes typically expect QS-named individuals to be current within 12 months. Working without updated knowledge means signing certificates against outdated standards — both a competence concern and a scheme compliance risk.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "WEEE is broadly drawn. Anything that needed electricity to function falls in scope, from a 9 V smoke alarm to a three-phase commercial oven. The old kitchen strip-out is a textbook WEEE-rich job. The waste must be segregated and routed to an Approved Authorised Treatment Facility (AATF), normally via a registered waste carrier. Cable copper goes to scrap separately and is not WEEE but is itself valuable recyclable material.",
   },
@@ -52,10 +52,10 @@ const checks = [
     question:
       "You drop a lithium-ion battery pack from a cordless drill onto a concrete floor. The case is dented but the battery is still warm to touch ten minutes later and the connector area looks slightly swollen. What does that combination warn you of?",
     options: [
-      "Nothing — lithium-ion batteries are designed to take impact damage.",
+      "Three steps. (1) MINIMISE the damage during the work — score around the tile carefully; remove only the affected tile(s); save them for re-fit if intact. (2) MAKE SAFE the tile area — no exposed substrate, no sharp edges, no water-ingress path. (3) BRIEF THE CUSTOMER — explain what tiles were affected; recommend a tiler for re-fit (referrals are good business); document the damage on the job sheet. The electrician doesn't normally re-tile (specialist trade with tile-cutting tools, adhesives, grout) but is responsible for minimising damage AND informing the customer.",
       "Possible thermal runaway in progress. Mechanical damage can pierce the internal separator inside a Li-ion cell, creating an internal short circuit. The short discharges energy as heat, which raises cell temperature, which decomposes the electrolyte, which generates more heat — a positive feedback loop. Once started, runaway is essentially unstoppable and can vent flammable / toxic gas (HF, CO, hydrocarbons) and ignite. Move the battery to an open outdoor location away from buildings and other batteries on something non-combustible (sand, brick), evacuate the area, call the fire service and do not put it back in the tool or charger.",
-      "Just put it on the windowsill and keep an eye on it for an hour.",
-      "Discharge it through a load to make it safe.",
+      "Two layers. (1) Check the charger's own diagnostic LEDs / app — the Wallbox app gives a fault code; flashing red on Pulsar Plus typically codes as 'communication or vehicle handshake fail'. The SAE J1772 / IEC 61851 protocol is a low-voltage 12 V handshake (the charger sends a PWM signal on the CP pin; the vehicle pulls the line down through resistors to indicate state); a flaky cable, a dirty plug or an EV-side software issue can fail the handshake without the L–N–E circuit being faulty. (2) Verify with a second known-good vehicle if available — if the second car charges, the fault is in the customer's car, not the charger or the wiring. The L3 apprentice does NOT replace the wallbox without first ruling out the J1772 handshake and the customer's vehicle.",
+      "The fridge motor's start-up draws inrush current (typically 6–10× running current). The fridge runs at maybe 1.5 A; inrush is 9–15 A for 100 ms. That sudden current causes a voltage drop along the supply path. If the supply path has higher-than-design impedance — undersized cable, HRJ at a termination, oversized circuit relative to cable — the voltage drop is large enough to dim the lights momentarily. Most likely cause on older installations: HRJ at the consumer-unit incoming tail or the meter tails. On newer installations: undersized cable for the load. Diagnosis: clamp meter on the incoming tail during fridge cycle reveals the voltage drop magnitude; thermal imaging finds the HRJ.",
     ],
     correctAnswer: 1,
     explanation:
@@ -66,10 +66,10 @@ const checks = [
     question:
       "Your van has been carrying a mix of new tool batteries, used tool batteries due for return, and one obviously damaged battery from a customer site. What is the right way to organise them for storage?",
     options: [
-      "All in one box together — they are the same chemistry.",
+      "Research suggests neurodivergence — dyslexia, ADHD, and autism — may be more common in trade roles than the general population. Some studies suggest dyslexia at materially higher rates in trade and creative industries (the visual-spatial reasoning associated with dyslexia is often a strength in hands-on work). ADHD and autism prevalence in the trade is also frequently reported as elevated. The Equality Act 2010 reasonable-adjustments duty (s.20) applies where the condition has a substantial and long-term effect, and Sub 5.2 covers the practical adjustments in detail.",
       "Three separate containers. New batteries in their original packaging or a dedicated lithium-safe storage box, separated from the others. Used but undamaged batteries in a metal container with terminals taped or with cell-tray separation to prevent short circuits. The damaged battery in a separate fire-resistant container (vermiculite, sand or a purpose-made Li-ion bag), stored away from the van interior and away from other batteries, and returned to a battery recycling collection point as soon as practical. Never stack damaged with undamaged.",
-      "Stack them at the bottom of the toolbox.",
-      "Throw the damaged one in general waste.",
+      "DUAL-RCD CU — two main RCDs, each protecting a group of circuits via standard MCBs. Cheaper to install but a single fault on one circuit trips the entire RCD's group (e.g. a fault on the kitchen ring trips all circuits on RCD1, including the freezer and lights). ALL-RCBO CU — every circuit has its own RCBO with both overcurrent and earth-leakage protection. More expensive but a fault on one circuit only affects that circuit. Cumulative leakage is also limited per circuit. A4:2026 reinforces RCBO-per-circuit for higher-occupancy dwellings; trade preference is RCBO-per-circuit for any new install.",
+      "Five trades, five scopes. ELECTRICIAN — electrical work + make-good (filling, sealing, fire-stopping). PLASTERER — preparation, scrim, bond, skim of larger areas; finishing plaster surface. TILER — cutting, adhesive, fitting, grouting tiles; specialist tools. PAINTER / DECORATOR — preparation, primer, top-coat, decorative finishes. BUILDER — structural / load-bearing work; brick / block / concrete repair. Each trade has its competence boundary; the electrician's work is electrical + minimal building-fabric restoration. Specialist trades for finishing.",
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       "What does the Waste Electrical and Electronic Equipment (WEEE) Regulations 2013 require of someone who removes electrical kit from a customer property as part of a rewire or replacement?",
     options: [
-      "Nothing — installer waste is outside scope.",
+      "Stay with them if you can do so safely. Encourage them to call 999 or go to A&E. If they won't, and you genuinely believe they're at imminent risk, call 999 yourself or take them to A&E. The Samaritans (116 123) is available 24/7 if it helps to talk while you decide what to do. Mind's helpline is available too (0300 123 3393). Don't promise confidentiality you can't keep — be honest that you may need to escalate if you're worried about their safety. After the immediate crisis is managed, look after yourself too — supporting someone through a mental health crisis is heavy and the same charities are available to you.",
       "WEEE removed during install or repair must be segregated from general waste and routed to an Approved Authorised Treatment Facility (AATF) for recovery and recycling. The waste producer (you or your employer) holds the Duty of Care under the Environmental Protection Act 1990 to ensure the waste is properly described, transferred to an authorised waste carrier, and accompanied by a waste transfer note that is retained for at least two years. Many electrical wholesalers operate as WEEE collection points under the Distributor Take-Back Scheme.",
-      "It only applies to producers of new equipment.",
-      "It only applies to consumers, not tradespeople.",
+      "Written grievance following the employer's documented grievance procedure (which the employer is required to provide under the ACAS Code of Practice on Discipline and Grievance). The written grievance triggers a structured response with timescales and right of appeal. Verbal complaints are easy to ignore; documented grievances are not. ACAS conciliation is available if the internal process fails.",
+      "AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series. Acceptance of the exemption requires verification that the EV charging equipment conforms to the BS EN 61851 series (manufacturer declaration, marking, datasheet or test report) and that any socket-outlet or vehicle connector incorporated in the EV charging equipment conforms to BS EN IEC 62196-2.",
     ],
     correctAnswer: 1,
     explanation:
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       "What is thermal runaway in a lithium-ion battery and why is it the key safety hazard for tool batteries on site?",
     options: [
-      "An electrical overload that trips the charger.",
+      "Appendix 6 — model forms for certification and reporting. The appendices to BS 7671 also include Appendix 1 (British Standards referenced), Appendix 4 (cable current-carrying capacity tables), Appendix 12 (voltage drop), Appendix 15 (ring and radial circuit arrangements) and Appendix 17 (protective measures against environmental influences). Knowing the appendices by topic is half of installer navigation.",
+      "Explaining the situation in person, leading with the safety reason (\\\\\\\"I have found a section of wiring that does not meet current safety standards\\\\\\\"), showing the specific issue where possible, expressing empathy for the inconvenience (\\\\\\\"I understand this is not what you were expecting\\\\\\\"), presenting options rather than a single demand, and giving the client time to process before requiring a decision",
       "A self-sustaining exothermic chain reaction inside a Li-ion cell. Damage, overcharge, internal manufacturing defect or external heat triggers an internal short circuit, which generates heat, which decomposes the organic electrolyte, which generates more heat and flammable / toxic gas, which can ignite. Once the chain reaction has started in one cell the heat can propagate to neighbouring cells in the pack. The fire is intense, fast, and self-fuelling because the cell carries its own oxidiser within the cathode material.",
-      "A safety system that vents the battery to atmosphere harmlessly.",
-      "Normal charging behaviour at high state of charge.",
+      "Three separate containers. New batteries in their original packaging or a dedicated lithium-safe storage box, separated from the others. Used but undamaged batteries in a metal container with terminals taped or with cell-tray separation to prevent short circuits. The damaged battery in a separate fire-resistant container (vermiculite, sand or a purpose-made Li-ion bag), stored away from the van interior and away from other batteries, and returned to a battery recycling collection point as soon as practical. Never stack damaged with undamaged.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Thermal runaway is the failure mode that drives every other Li-ion safety control. Cell separators, battery management systems, fuses, charge curves and safe-storage rules all exist to prevent it starting and to limit the spread if it does. Tool batteries on site — drilled, dropped, immersed, stored in hot vans and overcharged on cheap aftermarket chargers — have all of the trigger conditions present. Treating them with the same care as you would a small petrol container is the correct mental model.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       "A customer asks you to dispose of a swollen, end-of-life lithium-ion solar battery from their garage. What is the safest correct route?",
     options: [
-      "Put it in the kerbside recycling bin.",
+      "Public Liability (PL, typically £5-10m cover, £200-500/year), Employers' Liability (EL, statutory minimum £5m under the Employers' Liability (Compulsory Insurance) Act 1969 — required if you have any employees), Professional Indemnity (PI, £1-2m cover for design liability if you do any design work, £300-800/year), Tools-in-Transit insurance, Business Vehicle insurance for company vans. Plus director and officer cover for the directors personally.",
+      "Rented domestic properties in England — including most assured shorthold tenancies, licences to occupy, and HMOs. Excludes social housing tenancies under separate regulation, lodger arrangements where the landlord shares the dwelling, long leases (7+ years), student halls of residence under separate regimes, and accommodation provided to family members. Wales has its own equivalent (Renting Homes Wales Act 2016 plus the Renting Homes — Fitness for Human Habitation Regulations 2022); Scotland has the Housing (Scotland) Act 2006 plus tolerable standard / repairing standard guidance; Northern Ireland follows similar requirements via the Housing (Northern Ireland) Order 2003.",
+      "A JIB-graded employer is a firm that has signed up to the JIB Working Rule Agreement and undertakes to pay at least JIB minimum rates and follow JIB conditions (holiday, sick pay, pension, apprentice training rules). For an apprentice this matters because JIB-graded firms are bound to follow the JIB Apprentice Code of Practice — named mentor, structured training, Stage progression on evidence, paid college time.",
       "Do not transport it in your vehicle without specialist packaging. A swollen battery is a damaged battery and is classed as dangerous goods for transport (UN 3480/3481, Class 9). Photograph the unit, isolate it from other equipment, ventilate the area, and either contact the original manufacturer take-back scheme or arrange collection by a specialist hazardous-waste carrier. Many domestic solar battery manufacturers operate a free end-of-life take-back. The customer holds the Duty of Care for their own household waste; you can advise but should not transport a damaged unit unpackaged.",
-      "Take it to the local civic amenity site in the back of your van.",
-      "Discharge it overnight then bin it.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A swollen Li-ion cell is in a pre-runaway state and the safe-handling regime treats it accordingly. UK transport of damaged Li-ion batteries is regulated under ADR 2025 and requires specific packaging, labelling and documentation. A polite refusal to transport, plus the right contact details for the manufacturer take-back, is the correct apprentice response. Domestic battery storage systems (Tesla Powerwall, GivEnergy, Sonnen and similar) all have take-back routes. Where doubt exists the local hazardous-waste contractor is the right call.",
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     question:
       "Why is putting all your end-of-life lithium-ion tool batteries in one cardboard box at the back of the van a poor practice?",
     options: [
-      "It is a perfectly safe arrangement.",
       "Loose terminals can short against neighbouring batteries or against tools and metal fixings, generating heat and potentially triggering a thermal runaway. Cardboard provides no fire resistance. A van interior in summer can reach 50-60 degC, raising the rest state of every cell. If one cell vents the entire box can propagate the runaway. The right arrangement is a metal or fire-resistant container with cell-tray separation or terminal taping, kept out of direct sun, and emptied to a recycling point regularly.",
-      "Cardboard absorbs static electricity.",
-      "The batteries discharge faster in cardboard.",
+      "Where a 'provision, criterion or practice', a physical feature, or a lack of an auxiliary aid puts a disabled person at a substantial disadvantage compared with others, the employer must take such steps as it is reasonable to take to avoid the disadvantage. Three sub-duties — adjust the practice, adjust the physical feature, provide the auxiliary aid. The duty is anticipatory in some contexts (services) and reactive in employment (kicks in when the employer knows or ought reasonably to know).",
+      "CDM 2015 Reg 13(1)(a) requires the principal contractor to plan, manage and monitor the construction phase. In practice this includes site sign-in / sign-out registers, attendance at toolbox talks, RAMS sign-on records, and any permit records. These records combine with the apprentice's own records to form a full picture of who was on site doing what when. The records are commonly required after any incident or in any later dispute.",
+      "Apprenticeship standards (gov.uk) require evidence of at least 20% of the apprenticeship being off-the-job training. The log records day-release at college, online courses, structured study time, shadowing in unfamiliar areas, and any other learning activity outside normal productive work. Without it, the apprenticeship may not meet the standards required for the End-Point Assessment to be funded and certified.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Van fires from Li-ion battery accumulation are a well-documented and rising trend among UK trades. The fix is unglamorous: a metal toolbox section, terminal taping or cell trays, regular emptying. The cost is low and the risk reduction is significant. Insurers are increasingly excluding cover for fires arising from accumulated Li-ion stock, so the commercial case lines up with the safety case.",
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       "Which legal duty sits over the top of the WEEE Regulations and applies to all controlled waste generated by an electrical contractor?",
     options: [
-      "There is no overarching duty.",
+      "An EICR carried out and signed by a competent person (usually a CPS-registered contractor) in accordance with BS 7671 Part 6 / IET GN3, at the recommended frequency for the premises type, with a satisfactory or remediated outcome. Without that, the insurer's claim that the installation wasn't maintained to current standards is hard to refute.",
       "The Duty of Care under section 34 of the Environmental Protection Act 1990. The waste producer must take all reasonable steps to ensure waste is contained, transferred only to authorised persons, properly described in a waste transfer note (or hazardous waste consignment note where applicable), and ultimately recovered or disposed of by an authorised facility. Duty of Care applies regardless of whether the waste is also covered by WEEE, Hazardous Waste Regulations or other regimes.",
-      "Only the Health and Safety at Work Act 1974.",
-      "Only the Electricity at Work Regulations 1989.",
+      "Roughly £400-800/year for the basic stack: PL £5-10m (£200-500), Tools-in-Transit (£100-300), van insurance (commercial separately, typically £600-1,200/year for a small van). Add EL if you have an apprentice (£200-600). Add PI if you do any design work (£200-500). Total annual insurance bill for a sole trader with apprentice and design work: roughly £1,500-2,500.",
+      "Three separate containers. New batteries in their original packaging or a dedicated lithium-safe storage box, separated from the others. Used but undamaged batteries in a metal container with terminals taped or with cell-tray separation to prevent short circuits. The damaged battery in a separate fire-resistant container (vermiculite, sand or a purpose-made Li-ion bag), stored away from the van interior and away from other batteries, and returned to a battery recycling collection point as soon as practical. Never stack damaged with undamaged.",
     ],
     correctAnswer: 1,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       "What is the simplest way to verify that a waste carrier removing WEEE from a customer site is properly authorised?",
     options: [
-      "Take their word for it.",
+      "Yes — IET subscriptions are tax-deductible against income tax under HMRC's List 3 of approved professional bodies. Effectively reduces the cost by your marginal tax rate. For a higher-rate taxpayer (40%) the £200/year MIET subscription costs £120 net. List 3 covers most major UK professional bodies including IET, RICS, IMechE, IChemE etc.",
+      "The Operations and Maintenance (O&M) pack — typically a bound document or PDF with: signed EIC (top-level), Schedule of Inspections, Schedule of Test Results, design pack (single-line, panel schedules, calculations), as-built drawings, Building Control Compliance Certificate (or notification reference), commissioning test results, departures log, manufacturer manuals for installed equipment, recommended maintenance schedule.",
       "Ask for and record their Environment Agency (or SEPA / NRW / NIEA) Waste Carrier Registration number, then verify it on the public Environment Agency Waste Carrier register before transferring the waste. Keep the waste transfer note showing the carrier number, vehicle registration, waste description and EWC code, signed by both parties. Retain for at least two years. A two-minute online check is the difference between compliant and not.",
-      "Check they have a Yellow Pages listing.",
-      "Check the carrier vehicle is yellow and has a flashing beacon.",
+      "Structured cabling is the standardised installation of data cabling (typically Cat 6/Cat 6A copper, plus single-mode and multi-mode fibre) supporting IT and telephony in commercial buildings. Key standards: BS EN 50173 series, TIA-568. Specific competence in cable termination (RJ45, fibre splicing), patch panels, cabinet installation and certification testing (Fluke DTX-CableAnalyzer or similar). BICSI training is the international standard route.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The Environment Agency operates a free public register of authorised waste carriers. A two-minute lookup against the carrier registration number is the standard pre-transfer check. Most established waste carriers will have the number printed on the vehicle and will provide a properly drawn-up waste transfer note. Refusing to provide a number is a strong red flag — fly-tipping operators sometimes pose as legitimate carriers and the producer Duty of Care passes back to the original waste producer if the waste is later dumped illegally.",
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       "Why do the London Fire Brigade and HSE publish regular guidance specifically on lithium-ion battery storage in tradesperson vans and small workshops?",
     options: [
-      "Because Li-ion fires are very rare and academic interest is high.",
+      "Three things. (1) The unit is configured / wired correctly for PEN-fault detection (some units have a DIP switch or software setting for the earthing arrangement; some auto-detect; some require firmware configuration). (2) The detection circuit is operational — many units include a self-test that runs on power-up and the apprentice should observe the test pass. (3) The unit's earthing is connected per the manufacturer's wiring diagram (the protective measure depends on the right conductors being terminated correctly). The MCS-certified designer specifies the test sequence; the apprentice executes per the design and verifies the result.",
+      "Advisory, Conciliation and Arbitration Service — a non-departmental public body that provides free, impartial advice on workplace rights and conflict resolution. ACAS publishes the Codes of Practice on Discipline and Grievance, runs early conciliation (mandatory before most employment tribunal claims), provides advice through a national helpline, and trains employers and unions on workplace dispute resolution.",
+      "Installation in accordance with the manufacturer's instructions, including torque values, conductor preparation, environmental conditions and any product registration the manufacturer requires. Deviation gives the manufacturer grounds to void the warranty. Some manufacturers (especially EV charger and solar manufacturers) require product registration within a specified period after install.",
       "Because the rate of fires originating from Li-ion batteries (e-bikes, e-scooters, power tools, solar storage) has risen sharply in recent years across the UK as the installed base has grown. Fires in vehicles, garages and small workshops are a recurring incident type. The guidance focuses on segregation, charging on non-combustible surfaces, not charging unattended overnight, and immediate isolation of damaged batteries. The same rules apply in proportion to a tradesperson van as to a battery storage warehouse.",
-      "Because it is a niche issue with no real impact.",
-      "Because Li-ion batteries are being banned outright.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "London Fire Brigade campaigns like #ChargeSafe and HSE bulletins reflect a real and rising risk. The same reasoning that prevents commercial battery storage warehouses from sitting next to occupied buildings applies in miniature to a van or small workshop. Charging Li-ion overnight on a wooden bench in an unattended workshop is the lower-cost equivalent of the same risk profile. Following the published guidance is cheap and the consequences of ignoring it are severe.",
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       "An apprentice spots a smoke alarm pile up to head height in the corner of the workshop while old fuse boards stack on the floor next to it. What is the responsible response?",
     options: [
-      "Leave it — it is not your job.",
       "Raise it with the supervisor and get the WEEE segregated and routed to an AATF promptly. Smoke alarms typically contain small primary batteries and circuit boards (and ionising-chamber units contain a tiny radioactive source — Americium-241 — which has its own disposal route). Old fuse boards contain wiring, plastics and sometimes mercury contactors in older kit. Both are classic WEEE. Letting the pile grow is a Duty of Care breach in the making and is also a fire risk because of the accumulated combustible plastic.",
-      "Take photos for social media.",
-      "Bin it all with the general waste.",
+      "DUAL-RCD CU — two main RCDs, each protecting a group of circuits via standard MCBs. Cheaper to install but a single fault on one circuit trips the entire RCD's group (e.g. a fault on the kitchen ring trips all circuits on RCD1, including the freezer and lights). ALL-RCBO CU — every circuit has its own RCBO with both overcurrent and earth-leakage protection. More expensive but a fault on one circuit only affects that circuit. Cumulative leakage is also limited per circuit. A4:2026 reinforces RCBO-per-circuit for higher-occupancy dwellings; trade preference is RCBO-per-circuit for any new install.",
+      "Five-yearly EICR (Electrical Installation Condition Report) covering the entire fixed electrical installation, including any PV, EV chargers, heat pump supplies, battery storage circuits and MVHR supplies that have been added. Landlord must provide the EICR to tenants and to the local authority on request. Any C1 (immediate danger) or C2 (potentially dangerous) findings must be remediated within 28 days. Environmental tech additions trigger an updated EICR; they don't escape the regime. The Regulations apply to private rented properties in England; equivalents in the devolved nations.",
+      "C3 — improvement recommended. Reg 421.1.7 uses the language of recommendation, not requirement, for the relevant categories. The absence of an AFDD on an existing circuit is not in itself a defect requiring urgent action — but it is an improvement that brings the installation closer to current best practice. Higher-Risk Residential Buildings under the Building Safety Act 2022 are a separate matter where AFDDs may be a hard requirement.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Workshop housekeeping is part of the apprentice job. WEEE accumulating in a corner is a paper-trail problem (Duty of Care) and a fire risk in one. Raising it with a supervisor in writing creates a record and gives you cover if it is later mishandled. Ionising-chamber smoke alarms in particular have specific disposal routes; many fire safety contractors operate a take-back scheme.",
   },

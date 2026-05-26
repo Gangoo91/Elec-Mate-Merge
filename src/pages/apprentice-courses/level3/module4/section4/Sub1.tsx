@@ -46,10 +46,10 @@ const checks = [
     question:
       "What are the seven logical stages of fault diagnosis used in industry?",
     options: [
-      "Just guess.",
+      "SEG is a regulated payment scheme requiring electricity suppliers to pay domestic generators for electricity exported to the grid. Replaced the Feed-in Tariff (FiT) which closed to new entrants in 2019. SEG tariffs vary by supplier (typically 5-15p/kWh in 2026); customers shop around for the best rate. To qualify, the install must be MCS-certified and the meter must be capable of recording export (most modern smart meters are). The customer signs up for SEG with their chosen supplier; it isn't automatic.",
       "(1) COLLECT SYMPTOMS — customer interview + visual inspection. (2) FORMULATE HYPOTHESIS — what fault types match the symptoms? Narrow to 2–3 candidates. (3) PLAN TESTS — which tests will distinguish the candidates? Order them safely (dead before live). (4) EXECUTE TESTS — using the right instruments per Sub 2.x. (5) ANALYSE RESULTS — do the readings confirm or refute each hypothesis? Update hypothesis based on findings. (6) FORMULATE FIX — what action corrects the confirmed fault? Consider repair vs replace. (7) EXECUTE FIX — make safe, repair / replace, verify with retest, document. The stages turn diagnosis into a structured process; skipping a stage almost always returns to bite you.",
-      "Just two stages.",
-      "Just visual.",
+      "The heat-loss calc determines the unit size, the flow temperature, the emitter design, the SCOP estimate and ultimately whether the customer is warm and the running costs match the quote. MCS MIS 3005 mandates a room-by-room heat-loss calculation per BS EN 12831 — fabric-by-fabric, with U-values for each wall / window / floor / roof element, ventilation losses by air change rate, design outdoor temperature for the location, design indoor temperature for each room. The result is the design heat load (kW) which sizes the unit. Skip it or fudge it and the system either oversizes (cycles inefficiently, premature compressor wear, poor SCOP) or undersizes (cannot meet load on cold days, customer freezes, complaint city). The L3 apprentice does not run the heat-loss calc but should recognise it as the foundation document of the whole install.",
+      "Because the JIB rules require you to hold the practical assessment (AM2 or equivalent) before they'll grade you as Electrician. After college and 2365-03 you remain on the final-year Apprentice (or Adult Trainee) rate — qualifications complete, AM2 not yet passed (colloquially called the 'Improver' stage, though that is NOT a formal JIB grade). After AM2 your employer applies to JIB to upgrade you to Electrician grade, which carries the full Electrician pay rate (around £19-20/hr in 2024 outside London). The jump to Electrician is the biggest single pay rise in the apprenticeship.",
     ],
     correctIndex: 1,
     explanation:
@@ -60,12 +60,12 @@ const checks = [
     question:
       "Why is FORMULATE HYPOTHESIS (stage 2) the most important stage and what happens when you skip it?",
     options: [
-      "Doesn't matter.",
       "Because the hypothesis drives the test plan; without a hypothesis, you're randomly testing and hoping. With a clear hypothesis (or two competing hypotheses), each test is designed to confirm or refute a specific candidate. Skipping the hypothesis stage = running every test on every circuit = 4 hours of testing instead of 30 minutes of targeted testing. The 'just test everything' approach also misses faults that don't show on standard tests (HRJ needs voltage drop on load, not just continuity). Hypothesis-driven testing is faster, more accurate, and the L3 step-up.",
-      "Just test everything.",
-      "Random.",
+      "Both are batteries under the Waste Batteries and Accumulators Regulations 2009 — separate stream from WEEE, separate Take-Back Scheme via wholesalers and battery distributors. Lead-acid (older emergency lighting, alarm panels) — non-spillable but contains lead and sulphuric acid; route via the wholesaler battery bin or a licensed battery recycler. Lithium-ion (newer fittings, including some LED emergency packs) — fire risk if punctured, short-circuited or thermally abused; tape the terminals, transport in a non-conductive container, never bin. Both routes are free at the wholesaler; both are legal requirements.",
+      "Eye protection (impact-rated, EN 166 F minimum — chop saws produce hot metal sparks at speed), hearing protection (chop saws regularly exceed 100 dB), cut-resistant gloves (sharp edges on the cut tray), respiratory protection if cutting indoors with no extraction (galvanised steel coating produces zinc oxide fume at cutting temperature — the cause of metal-fume fever, sometimes called 'zinc shakes'), and sturdy boots with toe protection. Long sleeves to protect arms from sparks.",
+      "The certificate references the edition in force on the date of installation (e.g. BS 7671:2018+A4:2026). Subsequent amendments don't make the install non-compliant retrospectively, but they DO change what's required for any future addition / alteration / EICR you do on the same installation. Periodic inspection (EICR) is carried out to the standard in force at the time of the inspection — so a 2026 install will be EICR'd against whatever amendment is current in 2031.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The hypothesis stage is what turns electrical fault-finding into engineering. Without a working hypothesis, the apprentice is doing data collection without a purpose. With one, each test answers a specific question. The shift from 'I'll just test things' to 'I think it's X — let me test that' is the L3 mental model.",
   },
@@ -74,12 +74,12 @@ const checks = [
     question:
       "What happens at stage 5 (ANALYSE RESULTS) if your test results don't match the hypothesis?",
     options: [
-      "Give up.",
       "You loop back to stage 2 and update the hypothesis. The results have eliminated one hypothesis and may have suggested another. Re-plan tests based on the updated hypothesis (stage 3), execute (stage 4), re-analyse (stage 5). The diagnosis loops between stages 2–5 until you reach a hypothesis that explains all the test results. This iterative loop is normal — first hypotheses are usually partial. The discipline is to keep iterating with structured tests rather than abandon the process and guess.",
-      "Always start over.",
-      "Just guess.",
+      "Four dead-test functions on the MFT: (1) Continuity of protective conductors (R1+R2 / R2), low-resistance ohms range; (2) Insulation resistance, 500 V DC test (250 V for SELV / 1000 V for over 500 V circuits); (3) Polarity, by continuity check from origin to accessory; (4) Earth electrode resistance (where TT system or earth electrode used). The live-test sequence then adds Ze, Zs, PFC and RCD time/current. Sub 6.x covers the full sequence in detail.",
+      "When (a) the fault is on the supply / cut-out / tails / main switch / busbar itself, OR (b) you can't reliably identify which circuit feeds the fault location, OR (c) the work involves removing or refitting the consumer unit cover where the busbar is exposed, OR (d) the fault has compromised the integrity of the CU (water ingress, burnt terminal block, melted enclosure). Full isolation has bigger customer impact (whole property loses supply) so weigh it against the alternative of working live or working with limited isolation — but if the safety case requires full isolation, the customer impact doesn't change the answer.",
+      "Stay calm. Don't take it personally. Acknowledge the customer's frustration without agreeing with the substance ('I can see this isn't what you expected — I'm sorry it's frustrating'). Don't argue, don't explain at length, don't get defensive. Offer to call your supervisor immediately so they can come to site or speak to the customer directly. Document the interaction in your job pack — date, time, exact words, your response — and let the supervisor handle the conversation about scope and quality. Carry on with the work in a non-confrontational way until the supervisor arrives.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Real diagnoses iterate. The first hypothesis is usually wrong or incomplete; the test results refine it. The L3 apprentice's competence is partly recognising 'the results don't match — what's the new hypothesis?' rather than forcing the data to fit. Senior electricians may iterate several times on a complex fault.",
   },
@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 1,
     question: "How does the structured 7-stage approach differ from 'just looking around until something obvious shows up'?",
     options: [
-      "Same thing.",
+      "Six standard items. (1) Bonding plaster (Knauf bonding or Thistle Bonding, 5 kg bag) — for filling small chases. (2) Filler (Polycell, Tetrion) — for very small holes and screw holes. (3) Plasterboard offcuts — for patching plasterboard holes. (4) Scrim tape — for plasterboard joins. (5) Fire-stop sealant (FireFly, Hilti CP series) — for cable penetrations through fire-rated walls. (6) Touch-up paint (white emulsion small tin, customer-supplied paint where possible) — for minor wall finishing where the customer is unlikely to repaint. Cost £40–60 for the kit; lasts months.",
       "Structured approach: hypothesis-driven, targeted tests, documented progression, finds the actual root cause, consistent across operatives. Look-around approach: opportunistic, finds the obvious but misses the subtle, no documentation, dependent on the operative's intuition, inconsistent across visits. The look-around approach can solve simple faults quickly (which is why apprentices learn it first) but breaks down on complex / intermittent / multi-symptom faults. The structured approach scales to any fault complexity and produces defensible documentation. L3 expectation is structured.",
-      "Look-around is faster.",
-      "Look-around is better.",
+      "Treat it as 'asbestos suspect until proven otherwise'. Buildings constructed before 2000 (and refurbished before 2000) can contain asbestos in textured ceilings, insulation board, cement products, floor tiles and pipe lagging. Stop and check the asbestos register if the building has one (commercial buildings are required to have one under the Control of Asbestos Regulations 2012). For a domestic property without a register, assume suspect material is present and avoid disturbance until you can verify or arrange a survey.",
+      "Hold the line on the coding — explain the BPG4 logic for C2 (single foreseeable fault scenario), reference the specific risk in plain terms, document the conversation. The absence of harm to date does not change the risk; it means the foreseeable fault has not yet occurred. The professional duty under EAWR Reg 16 (competence) and the inspector's continuing Reg 4 duty both require honest coding, not customer-pleasing coding.",
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 2,
     question: "What documentation should accompany each stage of the diagnostic process?",
     options: [
-      "None.",
+      "(1) Confirm with the panel display whether it's a system fault (resolved by a panel reset) or a circuit fault (suggests your work has caused damage). (2) If a system fault — reset the panel, confirm restoration, document. (3) If a circuit fault — STOP, isolate again, retest the affected circuit (continuity, IR, polarity), find and rectify the cause. (4) During the period the alarm was in fault — the building's fire-safety arrangements have been compromised; the customer's responsible person under the RR(FS)O 2005 should have been notified BEFORE the work and a fire watch should have been in place during the work. Document the period of fault on the alarm log book. Inform the alarm-receiving centre.",
+      "Plain English at slow pace, supplemented by visual demonstration where appropriate, written translated handouts (HSE provides multilingual safety leaflets), use of a bilingual co-worker as informal interpreter, back-briefing to confirm understanding ('show me what you'd do if you saw a fire'), and provision of safety signage and PPE labels in the relevant languages where the workforce is consistently multilingual. The duty under MHSWR Reg 10 is for information to be 'comprehensible' — that's a statutory standard, not a courtesy.",
       "(1) Symptoms — customer's words in quotes, timeline, conditions, what they've tried. (2) Hypothesis — what you think is wrong and why. (3) Test plan — which tests, in which order, what each will distinguish. (4) Test results — readings, with timestamps and instrument IDs. (5) Analysis — what the results confirm or refute, updated hypothesis if needed. (6) Fix plan — repair / replace decision, materials needed, expected duration. (7) Fix execution — what was done, post-fix retest readings, customer hand-back. The documentation creates the diagnostic narrative on the job sheet — defensible record of what was found and done.",
-      "Just the bill.",
-      "Just symptoms.",
+      "Thermal runaway is a self-sustaining exothermic chemical reaction inside the cell. Once it starts in one cell (typically triggered by internal short circuit, mechanical damage, overcharge, or sustained over-temperature) the heat from that cell propagates to the next cell, which also enters runaway, and so on through the pack. The reaction releases flammable and toxic gases (including hydrogen fluoride and carbon monoxide) and can reach 600+ degC. Standard CO2 or dry-powder extinguishers do not stop a runaway battery — water is used to cool surrounding cells and limit propagation, but the cell itself burns until its energy is spent. This is why siting, fire separation and the BMS exist — to prevent and contain runaway.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Documentation is the audit trail that makes the diagnosis defensible. Modern firms use job-sheet apps (simPRO, BigChange, Joblogic) that prompt for each stage's information. The discipline is the same on paper or app — capture each stage, attach the readings, build the narrative.",
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: "When is it acceptable to skip the formal stages and just do the obvious fix?",
     options: [
-      "Always.",
+      "A manufacturer-specific EPD reports the actual life-cycle impacts of a specific product manufactured at a specific factory by a specific producer. An industry-average EPD reports the average impacts across all members of an industry association making a similar product. Manufacturer-specific EPDs allow real comparison between competing products; industry-average EPDs only allow comparison between product categories. BREEAM gives more weight to manufacturer-specific EPDs because they reward producers that genuinely outperform their peers, not those that simply benefit from a category average.",
+      "Explain clearly that refrigerant work is restricted by law to F-Gas-certified persons under the F-Gas Regulation. If the unit feels less effective they should call the original installer or an F-Gas certified service company who will leak-test and re-charge as needed. Topping up a refrigerant circuit DIY is illegal, dangerous (some refrigerants are A2L mildly flammable and R-290 is A3 flammable), and would void the warranty. The cost of professional service is small relative to the cost of an uncovered failure.",
+      "Currently £90,000 of VAT-taxable turnover in any rolling 12-month period (£85,000 was the long-standing figure, raised to £90,000 in April 2024). When you cross the threshold you must register for VAT within 30 days and start charging VAT (currently 20% standard rate) on your invoices. Quarterly VAT returns. You can reclaim VAT paid on business purchases. For a busy electrical firm crossing the threshold is a significant administrative event.",
       "When the fault is obvious AND the obvious fix is risk-free AND the customer has been informed. Example: a blown bulb in an emergency-bulb socket — replace the bulb, verify operation, document. No need for full hypothesis. But — even the 'obvious' fix benefits from a quick stage check: is the customer's report consistent with the fix (yes, blown bulb explains 'no light'); is the bulb the correct rating; is the lampholder undamaged. The 5-second mental check catches the cases where 'obvious' wasn't actually right. Apprentices who skip even the mental check create comeback work.",
-      "When tired.",
-      "Never.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Even simple jobs benefit from a quick mental run-through of the stages. The full formal documentation isn't needed for trivial fixes; the mental discipline is. Apprentices who 'just do the obvious' on every job miss the cases where 'obvious' is wrong; the structured-thinking discipline catches them.",
   },
@@ -129,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: "What's the difference between a 'symptom' and a 'fault' in diagnostic vocabulary?",
     options: [
-      "Same thing.",
       "SYMPTOM — what the customer / observer notices (lights flicker, breaker trips, smell of burning). FAULT — the underlying engineering condition that causes the symptom (HRJ at terminal, earth leakage from appliance, broken conductor at junction). One fault can produce multiple symptoms (HRJ at consumer unit incoming tail causes flickering on every circuit when high-current loads cycle); one symptom can result from multiple possible faults (RCD trip can be earth leakage, smooth DC residual, or device failure). Diagnosis is the process of going from symptoms to the actual fault.",
-      "Symptom is better.",
-      "Fault is symptom.",
+      "IEC 62446-1 is the international standard for grid-connected PV system documentation, commissioning tests and inspection. It defines the test procedure for PV strings: Voc, Isc, polarity, insulation resistance, with pass/fail thresholds. MCS MGD 003 is the UK MCS-flavoured equivalent — it adopts the IEC 62446-1 method and adds UK-specific requirements (MCS-eligible product list, installer competence, customer pack contents). Modern multifunction PV test instruments are calibrated against IEC 62446-1; the resulting test record satisfies both IEC and MCS requirements. The L3 apprentice on a PV install will use a test instrument that automates the IEC 62446-1 sequence.",
+      "A manufacturer-specific EPD reports the actual life-cycle impacts of a specific product manufactured at a specific factory by a specific producer. An industry-average EPD reports the average impacts across all members of an industry association making a similar product. Manufacturer-specific EPDs allow real comparison between competing products; industry-average EPDs only allow comparison between product categories. BREEAM gives more weight to manufacturer-specific EPDs because they reward producers that genuinely outperform their peers, not those that simply benefit from a category average.",
+      "Dedicated 13 A or 16 A supply on a 6 A or 10 A MCB, in 1.5 mm² T&E to the unit location (utility room, loft, plant cupboard). Local DP isolator. Boost wiring from kitchens and bathrooms — sometimes via humidity sensors or PIR, sometimes via pull-cord switches in bathrooms or push-buttons in kitchens. Some units include a low-voltage commissioning interface (e.g. for installer-set air-flow rates). The unit's nameplate is typically 50-300 W on full load — modest demand. The bulk of the electrical work is the boost wiring network, not the unit supply.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Symptom vs fault is foundational vocabulary. The customer reports symptoms; the engineer identifies faults. The diagnostic process maps from symptoms to faults — which is hard because the mapping is many-to-many.",
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: "How do you decide which test to run first when you have multiple competing hypotheses?",
     options: [
-      "Random.",
+      "Section 2 requires the BSR to facilitate improvement of competence of those working on building safety and standards. Industry-led 'Competence Steering Group' has produced sector competence frameworks (engineers, fire engineers, principal designers, principal contractors, electrical installers among others). Mandatory competence is being introduced gradually for specified roles on HRRBs and is moving towards being mandatory more broadly.",
       "Three criteria. (1) Safety — dead tests before live, low-energy before high-energy. (2) Discrimination — choose the test whose result will most narrow the candidate hypotheses (e.g. an IR test that distinguishes 'short circuit' from 'open circuit' is more useful than a continuity test that only distinguishes one). (3) Cost — quick tests before slow tests, free tests before tests that cost the customer (e.g. visual inspection before opening the CU). The order is safety first, then discrimination, then cost. Most efficient diagnostic path is shortest sequence of tests that distinguishes between the surviving hypotheses.",
-      "Same order always.",
-      "Just any test.",
+      "It binds whoever is the duty-holder for the system at the time — most often the duty-holder under HASAWA who controls the premises (employer, dutyholder, landlord). The duty-holder discharges the maintenance obligation by arranging periodic inspection (an EICR) to a recommended frequency, acting on the resulting condition codes (C1 / C2 / FI), and keeping records. The electrician carrying out the EICR is the technical evidence the duty-holder is meeting Reg 4(2).",
+      "Because the standard's enforcement and interpretation hinges on the precise definitions. 'Exposed-conductive-part' (a conductive part of equipment that can be touched and which is liable to become live in fault conditions) and 'extraneous-conductive-part' (a conductive part liable to introduce a potential, generally Earth, not forming part of the electrical installation) are different categories with different bonding rules. Mis-classify one as the other and you mis-bond, you fail the EICR, you potentially leave the customer unprotected. Definitions ARE the technical content.",
     ],
     correctAnswer: 1,
     explanation:
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: "What's the role of the 'visual inspection' in the logical stages, and what should you look for?",
     options: [
-      "Just look around.",
+      "BS 7671 Part 6 643 requires verification testing of any circuit that has been worked on, regardless of how minor the work. The MWC test panel records: continuity of CPC and protective conductors, insulation resistance, polarity, R1+R2, Zs, RCD trip-time at I&Delta;n where RCD-protected. The L3 apprentice carries out the tests with the Megger MFT1741 (or equivalent) and records the readings on the certificate. The point is — if the work has affected the circuit electrically (and replacing a protective device certainly has), verification is mandatory. 'It looks fine' is not a substitute for measured test results.",
+      "The HEMS schedules the heat pump's main run-time toward cheap off-peak windows where possible (e.g. overnight on Octopus Go). The battery charges during the same off-peak window. During the expensive peak window (typically 16:00-19:00) the battery discharges to cover the property load, including any heat pump running, while the grid import drops to near zero. Net peak grid demand from the property falls; the customer's bill falls; the grid stress falls. Some smart tariffs explicitly reward this — Octopus Cosy, for example, has dedicated cheap windows aligned with heat-pump run preferences.",
       "Visual inspection happens at stage 1 (collect symptoms) and is structured. Look for: (1) Signs of past faults — scorched terminals, blackened insulation, soot marks, melted plastic, replaced fuses, taped joints. (2) Workmanship issues — over-stripped conductors visible at terminals, exposed conductors past the insulation, unfinished connections. (3) Environmental factors — water marks, condensation, dust accumulation, evidence of vermin, damaged cable runs. (4) System integrity — covers in place, accessories secured, signage current. The visual catches the easy 30% of faults before any instrument is used; the rest requires testing.",
-      "Random looking.",
-      "Just at the breaker.",
+      "Four hypotheses to walk through. (1) Run capacitor failed open or shorted — single-phase induction motors need the run cap to develop starting torque; a failed cap means the motor draws stalled-rotor current (5–8 × FLA) until the MCB trips. Test cap with a meter on capacitance range or a dedicated cap tester; replace if outside ±10% of rated value. (2) Bearings seized or stiff — manually rotate the rotor; if it doesn't spin freely, replace bearings or motor. (3) Centrifugal switch contacts welded (older motors) — keeps the start winding in circuit constantly, drawing high current. (4) Wiring fault on the motor terminal block (loose or wrong connection). The L3 apprentice walks the tree in order; the cap is the first thing to check because it's the most common fault and the cheapest fix.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Structured visual inspection is the cheapest diagnostic test you have. It costs nothing, catches obvious faults, and informs the hypothesis. Most experienced electricians develop a 'walking inspection' habit — they note things wrong as they walk to the work area. The L3 apprentice builds the same habit through deliberate practice.",
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: "What if the diagnosis takes longer than the time the customer is willing to pay for?",
     options: [
-      "Skip steps.",
+      "Without storage, surplus PV (generated when the property is not consuming it — typically midday) exports to the grid at the Smart Export Guarantee rate (typically 5-15 p/kWh). With storage, surplus PV charges the battery and discharges to the property in the evening, displacing import at the much higher import rate (typically 25-35 p/kWh). The PV-to-property utilisation rate rises from typically 20-40 percent self-consumption (PV-only) to 60-90 percent (PV plus battery). This is the single biggest financial driver for adding battery storage to an existing PV install.",
+      "Prefabrication off-site (e.g. pre-terminating SWA tails to length, pre-building consumer units, pre-assembling cable trays in a workshop) reduces on-site cuts and offcuts. Off-site cutting can be measured precisely; on-site cuts under time pressure tend to leave more wastage. Less waste = lower material cost = smaller skip = less environmental impact. Relevant to environmental tech because: (a) the customer is by definition committed to sustainability so resource-efficient installation matches their values; (b) the trade is increasingly held to evidence-based environmental claims; (c) it's a 2357 Unit 312 AC 2.1 explicit requirement. Plus prefabrication gives faster on-site install times.",
+      "Because the install is a long-lived asset that will outlast the original installer's involvement. Notices communicate critical information — main earth location, RCD test interval, mixed supplies, isolator function — to whoever interacts with the install in future, including the customer in an emergency, the next electrician on a fault visit, and the EICR engineer in five years' time. The labels are how the install talks to people when the original installer isn't there.",
       "Three options. (1) Time-box the investigation: agree with customer 'I'll spend up to 90 minutes on initial diagnosis, after which we'll review the findings and decide next steps'. (2) Stage the work: complete the make-safe at the agreed time, schedule a return visit for full diagnosis. (3) Escalate to senior or specialist if the fault is beyond your competence. NEVER skip stages to fit a time budget — that creates the comeback work that's more expensive than honest extra time. Document the time-boxing decision and the customer's acceptance.",
-      "Bill more.",
-      "Just give up.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Time pressure is a real constraint and the structured approach helps you manage it. Agreeing a time-box upfront with the customer protects everyone — the customer knows the cost ceiling, the apprentice has a clear scope, the firm has a defensible billing position. Skipping stages to save time is the worst trade — creates more time later.",
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: "What's the purpose of the post-fix RETEST stage and why is it non-negotiable?",
     options: [
-      "Just for show.",
       "Three reasons. (1) Verify the fix actually worked — a repair you think is good can fail under live conditions; the retest catches the failure before the customer's reset goes wrong. (2) Verify the fix didn't introduce a new fault — terminal screw over-tightened can crack; cable repositioned can chafe; new component can be DOA. (3) Generate the documented evidence of compliance — the post-fix retest readings on the job sheet are the proof that BS 7671 643 requirements are met. Skipping the retest = no evidence of correct repair = comeback risk + regulatory exposure.",
-      "Just leave.",
-      "Customer can test.",
+      "Both can be held liable. The individual harasser is personally liable under s.110 (helping a discriminatory act). The employer is vicariously liable under s.109 for acts done by the employee 'in the course of employment'. The employer's defence is to show they took 'all reasonable steps' to prevent the conduct — i.e. proper policies, training, monitoring and enforcement. A claimant can name both the individual and the employer in the same claim.",
+      "3 percent for lighting circuits, 5 percent for other circuits (sockets, fixed loads). Measured from the origin of the installation to the load. Verified by calculation during design (cable size + length + load) and confirmed by measurement under load during commissioning if there\\\\\\\\'s any doubt. On long runs (above 30-40 m), voltage drop becomes the limiting factor in cable size selection — often requiring a larger cable than overcurrent protection alone would dictate.",
+      "MCS MIS 3002 is the installer-competence and installation-quality standard for solar PV. BS 7671 Section 712 is the electrical-design standard for the wiring, protection, isolation and labelling. Both apply on every install. MIS 3002 references BS 7671 explicitly for the electrical detail; BS 7671 applies regardless of whether the install is MCS-certified. MCS certification is required if the customer wants Smart Export Guarantee payments; BS 7671 compliance is required because it's the electrical regulation.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The retest is what closes the diagnostic loop. Without it, you have a hypothesis that was confirmed by symptom + tests + visual finding, then a fix — but no evidence the fix actually worked. The retest provides that evidence. Standard L3 practice includes the relevant BS 7671 643 tests on the affected circuit after rectification.",
   },

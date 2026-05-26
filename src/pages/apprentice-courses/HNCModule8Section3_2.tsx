@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'split-components',
     question: 'What are the two main units in a split system air conditioning installation?',
     options: [
-      'Compressor unit and fan unit',
+      '1.37Ω (Ze + (R1+R2)×1.20 = 0.35 + 0.85×1.20 = 0.35 + 1.02 = 1.37Ω)',
+      'Layered security with multiple sensor types and monitoring',
       'Indoor unit (evaporator) and outdoor unit (condenser/compressor)',
-      'Refrigerant tank and heat exchanger',
-      'Expansion vessel and pump unit',
+      'Operating time versus fault current magnitude',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A split system comprises an indoor unit containing the evaporator and fan, connected via refrigerant pipework to an outdoor unit housing the compressor and condenser. This separation allows the noisy compressor to be located externally.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'vrf-advantage',
     question: 'What is the primary advantage of VRF/VRV systems over conventional split systems?',
     options: [
-      'Lower initial cost',
-      'Simpler installation',
+      'When testing the entire installation with all breakers closed',
       'Variable refrigerant flow to multiple indoor units with individual zone control',
-      'No requirement for refrigerant pipework',
+      'To confirm the tester is working correctly and hasn\\\\\\\\\\\\\\\'t failed during use',
+      'Move the casualty into fresh air, ensuring it is safe for you to approach',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'VRF (Variable Refrigerant Flow) systems can modulate refrigerant flow to multiple indoor units independently, providing precise individual zone temperature control and improved energy efficiency through inverter-driven compressors.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     question:
       'What additional capability does a 3-pipe VRF system provide compared to a 2-pipe system?',
     options: [
-      'Higher cooling capacity only',
       'Simultaneous heating and cooling in different zones',
-      'Reduced refrigerant charge',
-      'Lower electrical consumption',
+      'Communication protocols (WiFi, Zigbee, Z-Wave) and interference',
+      'Efficacy limits, controls and upward light restrictions',
+      '0%, 25%, 50%, 75%, and 100% of range',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       '3-pipe VRF systems (heat recovery) can simultaneously heat some zones whilst cooling others, recovering heat from cooling zones to assist heating zones. This provides superior energy efficiency in buildings with diverse thermal loads.',
   },
@@ -67,12 +67,12 @@ const quickCheckQuestions = [
     id: 'inverter-compressor',
     question: 'Why do VRF systems use inverter-driven compressors?',
     options: [
-      'To reduce initial cost',
-      'To eliminate the need for refrigerant',
       'To vary compressor speed and match output to actual demand',
-      'To simplify the electrical installation',
+      'EAWR 1989 Regulation 4(2) — "as may be necessary to prevent danger"',
+      'To verify quantities, quality and condition against the order',
+      'Provides accurate level reference over long distances and around obstacles',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Inverter compressors can continuously vary their speed to precisely match the cooling or heating demand, avoiding inefficient on/off cycling, reducing energy consumption by up to 30%, and providing more stable temperature control.',
   },
@@ -96,8 +96,13 @@ const quizQuestions = [
     id: 2,
     question:
       'What is the typical maximum refrigerant pipe length for a standard residential split system?',
-    options: ['10 metres', '15-25 metres', '50 metres', '100 metres'],
-    correctAnswer: 1,
+    options: [
+      '50 metres',
+      '10 metres',
+      '15-25 metres',
+      '100 metres',
+    ],
+    correctAnswer: 2,
     explanation:
       'Standard residential split systems typically allow 15-25 metres maximum pipe length, though this varies by manufacturer. Longer runs require additional refrigerant charge and may affect system performance.',
   },
@@ -106,12 +111,12 @@ const quizQuestions = [
     question:
       'What electrical supply is typically required for a 7kW single-phase split system outdoor unit?',
     options: [
-      '13A socket outlet',
-      'Dedicated 20A radial circuit',
       '32A ring final circuit',
+      '13A socket outlet',
       'Three-phase supply',
+      'Dedicated 20A radial circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A 7kW split system typically draws around 10-12A at full load on 230V, requiring a dedicated 20A radial circuit with appropriate isolation and RCD protection as per BS 7671.',
   },
@@ -120,12 +125,12 @@ const quizQuestions = [
     question:
       'In a multi-split system, how many indoor units can typically be connected to one outdoor unit?',
     options: [
-      'Maximum 2 units',
-      'Maximum 5 units',
       '2-9 units depending on system capacity',
-      'Unlimited units',
+      'Dedicated 20A radial circuit',
+      'Variable Refrigerant Volume',
+      'Three-phase 400V, 32A typical',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Multi-split systems typically support 2-9 indoor units per outdoor unit, depending on the outdoor unit capacity and individual indoor unit sizes. The total connected capacity must not exceed the outdoor unit rating.',
   },
@@ -135,8 +140,8 @@ const quizQuestions = [
     options: [
       'Variable Rate Ventilation',
       'Variable Refrigerant Volume',
-      'Volumetric Refrigerant Valve',
       'Variable Recovery Ventilation',
+      'Volumetric Refrigerant Valve',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of an oil separator in a VRF system?',
     options: [
-      'To filter contaminated refrigerant',
-      'To remove moisture from the system',
+      'Protective equipment detects and isolates faults to prevent danger',
+      'To ensure visibility during mains power failure and emergency conditions',
       'To separate and return compressor oil to prevent accumulation in heat exchangers',
-      'To reduce system operating pressure',
+      'Changes to layout, occupancy, or use may affect emergency lighting requirements',
     ],
     correctAnswer: 2,
     explanation:
@@ -159,8 +164,13 @@ const quizQuestions = [
     id: 7,
     question:
       'For a VRF system serving a 5-storey building, what is the typical maximum height difference allowed between outdoor and indoor units?',
-    options: ['15 metres', '30-50 metres', '75 metres', '100 metres'],
-    correctAnswer: 1,
+    options: [
+      '15 metres',
+      '100 metres',
+      '75 metres',
+      '30-50 metres',
+    ],
+    correctAnswer: 3,
     explanation:
       'Most VRF systems allow 30-50 metres vertical height difference between outdoor and highest/lowest indoor units. Oil return and refrigerant pressure drop become critical factors in taller installations.',
   },
@@ -168,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'What type of refrigerant pipe sizing determines the liquid line diameter?',
     options: [
-      'Based on pressure drop only',
       'Based on ensuring liquid state and acceptable subcooling',
-      'Same size as suction line',
-      'Based on maximum velocity only',
+      'Identify goals and actions for career advancement',
+      'Someone else can re-energise the circuit while you work on it',
+      'Continuity, insulation resistance, and polarity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Liquid line sizing ensures refrigerant remains in liquid state with adequate subcooling. Undersized liquid lines cause flash gas which reduces system capacity and can damage the expansion device.',
   },
@@ -195,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'During VRF system commissioning, what must be verified before initial start-up?',
     options: [
-      'Interior decoration is complete',
+      'To set out how health and safety will be managed during the construction phase',
+      'Absolute duties must be complied with; qualified duties are subject to \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'reasonably practicable\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
       'Refrigerant pipe pressure test, evacuation to below 500 Pa, and correct refrigerant charge',
-      'All windows are closed',
-      'BMS connection is operational',
+      'By the date specified in the contract or a reasonable time before the due date',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Pre-start commissioning requires nitrogen pressure testing (typically 3.0 MPa), deep vacuum evacuation to below 500 Pa absolute, and correct refrigerant charge calculated from pipe lengths. These ensure system integrity and performance.',
   },
@@ -209,12 +219,12 @@ const quizQuestions = [
     question:
       'In a heat recovery VRF system, what component distributes refrigerant between heating and cooling indoor units?',
     options: [
-      'Standard Y-branch',
+      '2-9 units depending on system capacity',
+      'Refrigerant velocity and pressure drop affecting system capacity',
+      'Based on ensuring liquid state and acceptable subcooling',
       'BC (Branch Controller) or BS (Branch Selector) box',
-      'Simple tee connection',
-      'Manual isolation valve',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Heat recovery VRF systems use BC (Branch Controller) or BS (Branch Selector) boxes containing solenoid valves to route refrigerant appropriately to indoor units operating in either heating or cooling mode simultaneously.',
   },
@@ -223,12 +233,12 @@ const quizQuestions = [
     question:
       'What is the primary consideration when selecting VRF pipe sizes for long horizontal runs?',
     options: [
-      'Pipe material cost',
-      'Aesthetic appearance',
       'Refrigerant velocity and pressure drop affecting system capacity',
-      'Ease of insulation',
+      'Based on ensuring liquid state and acceptable subcooling',
+      'To separate and return compressor oil to prevent accumulation in heat exchangers',
+      'BC (Branch Controller) or BS (Branch Selector) box',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Long horizontal runs increase pressure drop, reducing available capacity at distant indoor units. Pipe sizing must balance velocity (for oil return) against pressure drop to maintain system performance across all connected units.',
   },

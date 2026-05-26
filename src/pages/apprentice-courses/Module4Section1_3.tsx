@@ -18,10 +18,10 @@ const Module4Section1_3 = () => {
       question:
         'Which cable type would you select for outdoor installation requiring mechanical protection?',
       options: [
-        'Twin and earth',
+        'The employer, free of charge',
         'Steel wire armoured (SWA)',
-        'PVC singles in trunking',
-        'Flexible cord',
+        'Three phases with no neutral',
+        'Mechanical fixings with gaskets',
       ],
       correctAnswer: 1,
       explanation:
@@ -39,12 +39,12 @@ const Module4Section1_3 = () => {
       id: 3,
       question: 'What marking should PPE have to confirm compliance in the UK?',
       options: [
-        'BS marking only',
-        'CE or UKCA marking',
         'Manufacturer logo',
+        'BS marking only',
         'No marking required',
+        'CE or UKCA marking',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'CE or UKCA marking confirms that PPE meets required safety and performance standards in the UK.',
     },
@@ -52,12 +52,12 @@ const Module4Section1_3 = () => {
       id: 4,
       question: 'Give two examples of mechanical containment systems.',
       options: [
-        'Cable ties and tape',
         'Conduit, trunking, tray, basket',
-        'Insulation and sheathing',
-        'Plugs and sockets',
+        'A pallet truck or trolley',
+        'Fatigue and reduced concentration',
+        'Loss when fibre axes are not parallel',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Conduit, trunking, cable tray, and cable basket are all mechanical containment systems for cable protection.',
     },
@@ -65,10 +65,10 @@ const Module4Section1_3 = () => {
       id: 5,
       question: 'What PPE is required when drilling masonry?',
       options: [
-        'Just safety boots',
+        'Ceiling tiles, partition walls, and fire protection panels',
         'Eye protection, dust mask, hearing protection',
-        'Only gloves',
-        'Hard hat only',
+        'Skipping the re-prove step after isolation',
+        '50mm minimum insulation with perimeter strip',
       ],
       correctAnswer: 1,
       explanation:
@@ -78,12 +78,12 @@ const Module4Section1_3 = () => {
       id: 6,
       question: 'Name one risk of using the wrong cable size.',
       options: [
-        'Better performance',
+        'A document describing the QMS scope, processes, and procedures',
+        'Pull pin, Aim at base, Squeeze handle, Sweep side to side',
         'Overheating, voltage drop, potential fire hazard',
-        'Improved efficiency',
-        'Cost savings',
+        'Ventricular fibrillation - potentially fatal',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Wrong cable size can cause overheating, excessive voltage drop, and create fire hazards.',
     },
@@ -91,12 +91,12 @@ const Module4Section1_3 = () => {
       id: 7,
       question: 'How should insulated tools be stored?',
       options: [
-        'Anywhere convenient',
+        'Combined distance and angle measurement for precise positioning',
+        'To suppress airborne fibre release by keeping the material damp',
+        'Multiple scenes for different activities (sleeping, reading, etc.)',
         'In a clean, dry place, away from sharp or abrasive items',
-        'With other metal tools',
-        'In damp conditions',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Insulated tools must be stored in clean, dry conditions away from damage to maintain their protective properties.',
     },
@@ -104,12 +104,12 @@ const Module4Section1_3 = () => {
       id: 8,
       question: 'What does CE or UKCA marking indicate?',
       options: [
-        'Country of manufacture',
         'They meet required safety and performance standards',
-        'Price category',
-        'Installation method',
+        'The site supervisor or project manager',
+        'Before bulk containment installation commences',
+        'Use measures that minimise the distance and consequences of a fall',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'CE or UKCA marking indicates that products meet required safety and performance standards for the UK market.',
     },
@@ -121,10 +121,10 @@ const Module4Section1_3 = () => {
       id: 'material-check',
       question: 'What factor is most important when selecting cable insulation type?',
       options: [
-        'Colour preference',
+        'Poor connections or undersized conductors',
         'Environmental conditions and temperature',
-        'Brand reputation',
-        'Cost only',
+        'New installation certificate',
+        'HSG107 — Maintaining portable electric equipment',
       ],
       correctIndex: 1,
       explanation:
@@ -134,12 +134,12 @@ const Module4Section1_3 = () => {
       id: 'tool-check',
       question: 'Why is tool quality important in electrical work?',
       options: [
-        'It looks more professional',
+        'Carbon dioxide (CO2) emissions per unit of energy',
+        'Timber floorboards in a Victorian house',
         'Quality tools ensure safety, accuracy, and reliability',
-        'They cost more',
-        'They are heavier',
+        'Temperature differences creating buoyancy',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'Quality tools ensure safety through proper insulation, provide accuracy for precise work, and offer reliability for consistent performance.',
     },
@@ -147,10 +147,10 @@ const Module4Section1_3 = () => {
       id: 'ppe-check',
       question: 'When should PPE be inspected?',
       options: [
-        'Once a year',
+        'Discrimination (selectivity or coordination)',
         'Before each use and periodically per manufacturer guidance',
-        'Only when damaged',
-        'Never needed',
+        'Gather information about the fault symptoms',
+        'May be available through some memberships',
       ],
       correctIndex: 1,
       explanation:

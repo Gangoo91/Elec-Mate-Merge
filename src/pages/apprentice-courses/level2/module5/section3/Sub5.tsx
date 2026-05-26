@@ -43,10 +43,10 @@ const checks = [
     question:
       "It's Friday afternoon and you've been keeping the site diary blank all week, planning to fill it in from memory before you submit the time sheet. What goes wrong with that approach?",
     options: [
-      "Nothing — Friday catch-up is normal practice.",
+      "It binds whoever is the duty-holder for the system at the time — most often the duty-holder under HASAWA who controls the premises (employer, dutyholder, landlord). The duty-holder discharges the maintenance obligation by arranging periodic inspection (an EICR) to a recommended frequency, acting on the resulting condition codes (C1 / C2 / FI), and keeping records. The electrician carrying out the EICR is the technical evidence the duty-holder is meeting Reg 4(2).",
       "You'll forget the detail. By Friday you can roughly remember Monday's hours but not which circuits you worked on, who you were with, what materials you used, or what variations came up. The diary is a contemporaneous record — its evidential value depends on it being written close to the event. Write daily; the five minutes at the end of each shift saves the Friday panic and produces a record that's actually useful in dispute.",
-      "The diary fills itself from the firm's app.",
-      "The supervisor will write it for you.",
+      "Make a contemporaneous note in your own records — date, time, location, what was said, by whom, who else was present, your response. Keep the note factual and unemotional. Don't share with the co-worker (it's your private record at this stage). If the conflict continues and you escalate, the contemporaneous notes are your evidence base and they carry significant weight because they were written at the time, not from memory weeks later.",
+      "Safely isolate. At the CU, identify the line and CPC of the circuit under test. Disconnect the line from the protective device and the CPC from the earth bar. Link the disconnected L and CPC together at the CU end with a low-resistance jumper. Test between L and CPC (or L and earth at the accessory) at the furthest accessory — the reading is R1+R2 for the circuit.",
     ],
     correctIndex: 1,
     explanation:
@@ -57,10 +57,10 @@ const checks = [
     question:
       "Your apprenticeship standard requires at least 20% off-the-job training over the duration of the programme. You've been on site full-time for three months without recording any off-the-job hours. What's the consequence?",
     options: [
-      "Nothing — only the college tutor needs to track it.",
+      "Voltage drop on the upstairs lighting circuit, OR a problem at the upstairs lighting tap-off. Most likely causes: (1) HRJ at a junction box upstream of the upstairs lights, (2) loose terminal at the lighting RCBO, (3) high-resistance neutral on the upstairs circuit (broken or partially connected), (4) under-sized cable retrofit (someone replaced cable with smaller cross-section). Test: measure voltage at an upstairs lampholder under normal load; compare to nominal 230 V. If significantly low (&lt;220 V), trace upstream for the HRJ. Thermal imaging at the suspected location.",
       "The apprenticeship can be at risk. Apprenticeship standards (gov.uk) require evidence of at least 20% off-the-job training across the full programme. If your log shows no off-the-job hours for an extended period, the training provider's audit will flag it and the funding rules around the apprenticeship may not be met. Off-the-job includes day-release at college, online learning, shadowing in unfamiliar work areas, and structured study at home.",
-      "Just lie on the log.",
-      'It is automatically calculated from your time sheet.',
+      "Reg 13 places a duty on the principal contractor to plan, manage, monitor and co-ordinate the construction phase, and to ensure suitable site induction. Reg 4(2) puts a duty on the client and Reg 9 puts a duty on the principal designer to provide pre-construction information. The information must be in a form that can be understood by those who need to use it — that's a written, structured, accessible duty, not a verbal handover at the gate.",
+      "Plain English at slow pace, supplemented by visual demonstration where appropriate, written translated handouts (HSE provides multilingual safety leaflets), use of a bilingual co-worker as informal interpreter, back-briefing to confirm understanding ('show me what you'd do if you saw a fire'), and provision of safety signage and PPE labels in the relevant languages where the workforce is consistently multilingual. The duty under MHSWR Reg 10 is for information to be 'comprehensible' — that's a statutory standard, not a courtesy.",
     ],
     correctIndex: 1,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     question:
       "Six months from now there's a dispute with your employer about whether you worked overtime on a particular Saturday. What's the strongest evidence in your favour?",
     options: [
-      "Your memory of the day.",
+      "The location, the specific activity (gas torch, grinding, welding), the operative names, the permit validity window (start time, end time), the precautions in place (combustibles cleared, fire blanket / extinguisher to hand, fire watch arranged for after work), the cool-down / fire-watch requirement (typically 30-60 minutes after work ceases), and signatures from issuer, operative and (on completion) the fire-watch confirming no smouldering.",
       "A daily site diary entry for that Saturday plus the employer-signed time sheet for that week. The diary records what you did and who you were with; the time sheet records the hours and is countersigned by the employer. The two together form a contemporaneous, independently witnessed record. Without them, the dispute is your word against the firm's — and that's a position you don't want to be in.",
-      "A WhatsApp screenshot from the time.",
-      'You can\'t prove it without HR being involved at the time.',
+      "That the installation incorporates an RCD, that the user should test it quarterly (or six-monthly per the older guidance) by pressing the test button, that the RCD should trip when tested, and that if it doesn't trip the user should call a competent electrician immediately. Maintains the protection by catching RCD failure before it matters.",
+      "It means the local LV cable, transformer or upstream HV network can’t safely accept the additional export without reinforcement (typically a transformer upgrade or cable replacement). The customer either pays for the reinforcement (often £10,000+), accepts an export-limited install (the inverter is throttled to a lower export rating), or chooses not to proceed.",
     ],
     correctIndex: 1,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       "Which records make up the apprentice's day-to-day paper trail?",
     options: [
-      "Just the time sheet — that's what gets you paid.",
+      "It introduced the right for the payee's own payment application to become the default payment notice if the payer fails to issue one, strengthened adjudication provisions, and removed the requirement for construction contracts to be in writing",
       "Daily site diary, weekly time sheet, NVQ portfolio entries (evidence for the End-Point Assessment), off-the-job training log (apprenticeship standards), monthly apprentice review forms (you + employer + tutor), JIB grading entries where applicable, and any required H&S sign-on records (RAMS sign-on, toolbox talk attendance).",
-      "Anything you remember at the end of the week.",
-      'Whatever the firm asks for.',
+      "On-site assessment of the actual conditions found on arrival, by the operative(s) doing the work, in real time. Catches what the static RAMS couldn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t have known. MHSWR Reg 3 expects current assessment; the dynamic version is the closing-the-gap mechanism.",
+      "All EV charger installations should be notified to the DNO via the appropriate notification scheme (e.g., Building Regulations Part P notification). Installations above 3.68 kW on a single-phase supply or adding significant load may require prior approval, particularly on constrained network areas",
     ],
     correctAnswer: 1,
     explanation:
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       "What is the specific purpose of the daily site diary, separate from the time sheet?",
     options: [
-      "It is a duplicate of the time sheet.",
+      "Load management is doing its job. The CT clamp on the main supply detects the rising property total when the heat pump enters defrost cycle or fast-heat mode (drawing 3-7 kW) and the charger throttles its own draw to keep the total below the configured limit (typically the main-fuse rating). This is the design intent — better to throttle the charger temporarily than to trip the cut-out. The customer should be briefed on this at handover so the slowdown is not interpreted as a fault.",
+      "To take reasonable care for the health and safety of self and others, and to co-operate with the employer's safety arrangements. In RAMS terms that means reading the document, following the written method, raising defects in the document, and not working outside the documented controls. 'Following orders' is no defence to an s.7 prosecution.",
       "The diary is your detailed contemporaneous record of what you did, who you worked with, what materials you used, what variations came up, what unusual events occurred. The time sheet records the hours; the diary records the substance. The diary is your evidence in any later dispute (pay, customer, NVQ portfolio, employer review) and is the source from which NVQ portfolio entries are written up.",
-      "It is for the customer.",
-      "It is for HMRC.",
+      "A formal legal notice issued by an HSE inspector when the inspector is of the opinion that activities are being carried out involving (or likely to involve) a risk of serious personal injury. The notice prohibits the activity until the matters specified in it are remedied. Can take immediate effect — the work stops the moment the notice is served.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The site diary is a different kind of record from the time sheet. The time sheet is a hours-and-pay document; the diary is a what-happened document. The diary's value is in its detail — circuit numbers, materials used, customer conversations, variations to the scope, unusual events. By year three you'll be writing your NVQ portfolio entries from the diary; without it you're reconstructing from memory.",
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     question:
       "Why does the apprenticeship off-the-job training log matter to your apprenticeship status?",
     options: [
-      "It does not — only on-the-job hours count.",
+      "Measured limit = 0.8 x 1.37 = 1.10 Omega. Table 41.3 values assume conductor at 70 deg C operating temperature; measured Zs is at ambient (typically 15-25 deg C). Cable resistance rises with temperature — about 20 percent from 20 deg C to 70 deg C for copper. The 0.8 multiplier corrects approximately for this. For full rigour use GN3 Appendix B per-degree coefficients, but the 0.8 rule of thumb is the standard site-practice correction.",
+      "Automated bank feed (transactions imported from your bank), invoice generation and tracking (sent invoices visible, paid status tracked), VAT return preparation (Making Tax Digital compliant), expense tracking with photo receipts, integration with payroll for staff/apprentices, real-time profit and loss view. Cost £15-30/month for sole trader; saves hours of manual bookkeeping each month.",
+      "Three layers — pre-use visual inspection by the operative every shift (cable, plug, casing, guard, switch, brushes for corded tools); periodic in-service inspection (formal visual check by a competent person); and PAT (Portable Appliance Testing) on the documented site interval. Sub 1.3 covers this in detail. The point: PUWER Reg 5 isn't 'PAT once a year'. It's an ongoing duty with multiple layers.",
       "Apprenticeship standards (gov.uk) require evidence of at least 20% of the apprenticeship being off-the-job training. The log records day-release at college, online courses, structured study time, shadowing in unfamiliar areas, and any other learning activity outside normal productive work. Without it, the apprenticeship may not meet the standards required for the End-Point Assessment to be funded and certified.",
-      "Only college tutors maintain it.",
-      "It is purely advisory.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The 20% off-the-job training requirement is a statutory feature of English apprenticeship standards funded under the apprenticeship levy. It's audited by the training provider and by the ESFA. The apprentice is responsible for the log — typically a digital record on the training provider's portal or a paper log countersigned weekly. A log that shows substantial gaps will trigger a compliance investigation.",
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     question:
       "What's the link between the daily site diary and your NVQ portfolio for the End-Point Assessment?",
     options: [
-      "There is no link.",
       "The diary is the source from which NVQ portfolio entries are written up. The portfolio needs evidence of competence against specific units and learning outcomes — circuit installs, fault-finding, testing, customer interaction. The diary is where the contemporaneous record of those activities lives, with the level of detail needed to write up a portfolio entry months later. Portfolio entries written from a thin diary tend to be thin themselves.",
-      "The portfolio is filled in by the college only.",
-      'The diary is just for the firm.',
+      "Section 826 of BS 7671 covers Electrical Energy Storage Systems (EESS) and was added at the 18th Edition. It applies in addition to the rest of BS 7671 and to any product-specific standards (such as the IEC 62619 cell standard). The IET Code of Practice for Electrical Energy Storage Systems supplements Section 826 with practical guidance on siting, ventilation, fire separation, signage and emergency isolation. A4:2026 has refined parts of this framework as the technology has matured.",
+      "Someone trained to recognise the early signs of mental health difficulty in colleagues, listen non-judgementally, provide initial support and signpost to professional help. Standard 2-day training course (delivered by Mates in Mind, MHFA England and others) costs around £150-300. Many UK construction firms now have one or more Mental Health First Aiders on staff alongside physical First Aiders.",
+      "The casualty has autonomy on their own treatment but the supervisor has duties to the firm, the regulator and the wider workplace. Refusing medical assessment is the casualty's right but doesn't discharge the supervisor's HASAWA s.2 / s.7 duty. Supervisor should: strongly recommend assessment, document the conversation, escalate to a more senior manager, decline to release the casualty back to safety-critical work without clearance.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The NVQ portfolio is the evidence base for the End-Point Assessment (EPA) at the end of the apprenticeship. It needs detailed, dated, witnessed evidence of the apprentice's competence. The diary is the upstream source — the day-by-day detail that gets curated and written up into portfolio entries. A weak diary leads to a weak portfolio leads to a weak EPA.",
   },
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       "What's the function of the monthly apprentice review meeting and the form that comes out of it?",
     options: [
-      "It is a disciplinary meeting.",
+      "The Achievement Measurement 2 — the long-standing JIB practical test for electrical installation. It's a multi-day practical assessment in a controlled environment covering installation, testing, fault-finding and inspection. Passing the AM2 is the line between 'Improver' and 'Electrician' on the JIB grading and is the practical centrepiece of the EPA for the Installation Electrician apprenticeship.",
       "The monthly review brings together the apprentice, the employer (or supervisor) and the training provider's tutor or assessor. The review discusses progress on the apprenticeship standards, on-the-job competence, off-the-job training hours, any concerns from any side, and actions for the next month. The form is a record of the review and is part of the audit trail for the apprenticeship's compliance with the standards.",
-      "It is just a casual chat.",
-      "It only happens at the end of the apprenticeship.",
+      "The Information Commissioner's Office — the UK's independent regulator for data protection. The maximum fine for the most serious breaches is the higher of £17.5 million OR 4% of the firm's global annual turnover. Lower-tier breaches max out at £8.7 million OR 2% of turnover. In practice most fines on small businesses are far lower, but reputational damage (named-and-shamed in ICO enforcement notices) is often more painful than the fine itself.",
+      "Stop. Either fetch the hi-vis from the van, borrow a spare from the site office (most large sites keep loaners), or step off site until properly equipped. Working without required PPE is a breach of HASAWA s.7 (failure to co-operate with the employer's safety arrangements) AND a breach of CDM 2015 Reg 15 (worker's duties). It's also a fast way to get sent home by the principal contractor and recorded against the firm's safety performance.",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       "What does JIB grading have to do with the apprentice's records?",
     options: [
-      "Nothing — JIB is for qualified electricians only.",
+      "Establishes personal liability for company directors, managers, secretaries and similar officers where a corporate offence is committed with their consent, connivance or attributable to their neglect. Allows the HSE to prosecute the individual as well as (or instead of) the company.",
+      "Zs = Ze + (R1 + R2 × temperature multiplier), where Ze is the declared external earth fault loop impedance, R1 is the line conductor resistance, R2 is the CPC resistance, and the multiplier (typically 1.20 for 70 °C thermoplastic) brings the cold cable resistance up to operating temperature.",
       "The JIB Apprentice Grading scheme tracks an apprentice's progress through training and uses recorded competence (often drawn from the diary, portfolio and review forms) to support grade progression. JIB grades are tied to industry-standard pay rates under the JIB Working Rules; progressing through the grades requires evidence, and the diary is part of the evidence chain.",
-      "JIB is purely a pay scheme with no link to records.",
-      'JIB grading is automatic with time served.',
+      "Like parallel resistors. Two equal-IR cables in parallel halve the apparent IR. Three reduce it to one-third. To localise a low-IR fault on parallel cables, isolate one cable at a time and retest — the cable whose disconnection raises the reading is the lower-IR run.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The JIB (Joint Industry Board) operates an apprentice grading scheme alongside its post-qualification grading scheme. Apprentice grades progress with documented competence and time served, and the documentary evidence draws on the apprenticeship records. Apprentices working under a JIB-affiliated employer should know which grade they're on and what evidence is needed to progress.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       "Why is digital recording (apps such as Tradify, Powered Now, Procore mobile) becoming common for apprentice records?",
     options: [
-      "It isn't — paper is still standard.",
+      "Uses the words precisely. \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"There\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s a hazard here\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" means something has potential to cause harm — useful for hazard identification. \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"There\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s a high risk\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" means likelihood × severity is concerning — useful for control prioritisation. Mixing the terms loses clarity.",
+      "Apprentices complete practical tasks (Concrete Experience), reflect during the task (reflection-in-action), discuss afterwards (reflection-on-action and Reflective Observation), draw conclusions (Abstract Conceptualisation), and apply improvements on the next task (Active Experimentation)",
+      "Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"somatic marker hypothesis\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness",
       "Apps reduce the friction of recording — entries can be made on the phone in the moment, photos and locations can be attached automatically, the data is searchable later. They also make sharing with the supervisor and the training provider easier. Paper diaries still work fine if maintained; digital tools just lower the barrier to actually keeping them current.",
-      "Apps are mandatory under apprenticeship standards.",
-      'Paper records are no longer accepted.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Digital tools (Tradify, Powered Now, Procore mobile, Yunex, etc.) are increasingly common in the trade because they reduce the activation energy required to keep records current. Photo evidence with embedded timestamps and locations is much harder to dispute than handwritten notes. The format doesn't matter to the apprenticeship standards — paper or digital both work — but the discipline of recording does.",
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       "What's the principal contractor's responsibility under CDM 2015 Reg 13 in relation to records of who's on site?",
     options: [
-      "None — the PC doesn't keep records.",
       "CDM 2015 Reg 13(1)(a) requires the principal contractor to plan, manage and monitor the construction phase. In practice this includes site sign-in / sign-out registers, attendance at toolbox talks, RAMS sign-on records, and any permit records. These records combine with the apprentice's own records to form a full picture of who was on site doing what when. The records are commonly required after any incident or in any later dispute.",
-      "Only after an incident.",
-      'Records are voluntary.',
+      "No — it\\\\\\\\'s shifted. At L2 the limits were tighter (most things needed supervisor sign-off). At L3 you can do more without immediate supervision, but the limits still exist (EIC sign-off, complex three-phase, hazardous areas, F-Gas, gas, asbestos licensed work). Honestly knowing where YOUR current limit sits is the L3 judgement skill.",
+      "At L2 you sat firmly inside Reg 15 (worker). At L3 you start carrying weight inside Reg 9 (contractor) — you may run a small job alone, you may be the senior trade on site, your firm may be 'the Contractor' for a domestic job where the homeowner is the client. Recognising that the contractor duties apply to your firm (and to your conduct as the firm's representative) is the planning-duty step.",
+      "WAHR 2005 Reg 12 requires a tower used for working at height to be inspected before use after assembly, after any event likely to have affected it (high winds, impact, alteration), and at intervals not exceeding 7 days. The pre-use check covers stability (level base, outriggers deployed, brakes on), structural integrity (no missing components, all connectors locked), platform fully boarded with guardrails and toeboards, and a current inspection record (Form 91 / scaff tag). The user does the daily check; a more thorough inspection is by a competent person.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "CDM 2015 Reg 13 places the planning, managing and monitoring duty on the principal contractor on notifiable construction sites. Site attendance records are part of how the PC monitors the site. From the apprentice's perspective, the PC's records (sign-in, toolbox talk attendance, RAMS sign-on) supplement the apprentice's own records (diary, time sheet) and form a fuller, mutually reinforcing record set.",
   },

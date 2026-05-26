@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'generator-sizing',
     question: 'When sizing a standby generator, what factor accounts for motor starting currents?',
     options: [
-      'Power factor correction',
       'Voltage regulation',
-      'Starting kVA allowance',
       'Fuel consumption rate',
+      'Power factor correction',
+      'Starting kVA allowance',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Starting kVA allowance must be included when sizing generators because motor starting currents can be 6-8 times the full load current. Without this allowance, voltage dip during motor starting could cause equipment malfunction or generator overload.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'amf-panel',
     question: 'What is the primary function of an Automatic Mains Failure (AMF) panel?',
     options: [
-      'To regulate generator output voltage',
       'To detect mains failure and automatically start the generator',
-      'To synchronise multiple generators',
-      'To measure fuel consumption',
+      'To help operators respond appropriately by categorising alarms by severity',
+      'Duration of the installation plus reasonable period',
+      'Higher fluid velocities increase the heat transfer coefficient',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'An AMF panel monitors mains supply and automatically starts the standby generator when mains power fails or falls outside acceptable parameters. It also manages the transfer of load and monitors generator operation.',
   },
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     question:
       'For a diesel generator installation, what determines the minimum fuel storage requirement?',
     options: [
-      'Generator physical size',
+      'CO₂ sensors were placed too close to open windows',
       'Required autonomy period plus safety margin',
-      'Fuel supplier delivery schedule',
-      'Building floor area',
+      'To reject heat from the refrigerant to the surroundings',
+      'In the room containing the room thermostat',
     ],
     correctIndex: 1,
     explanation:
@@ -69,11 +69,11 @@ const quickCheckQuestions = [
       'How often should standby generators undergo load testing according to best practice?',
     options: [
       'Annually only',
-      'When installed and after major repairs',
       'Monthly with weekly no-load runs',
+      'When installed and after major repairs',
       'Only when mains failure occurs',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Best practice requires weekly no-load test runs to ensure starting reliability, plus monthly load testing to prevent wet stacking (carbon buildup from prolonged light-load operation) and verify full load capability.',
   },
@@ -84,8 +84,13 @@ const quizQuestions = [
     id: 1,
     question:
       'A building has a connected load of 400 kW with a power factor of 0.8. What is the minimum generator kVA rating required before applying any diversity or starting allowances?',
-    options: ['320 kVA', '400 kVA', '500 kVA', '640 kVA'],
-    correctAnswer: 2,
+    options: [
+      '320 kVA',
+      '500 kVA',
+      '400 kVA',
+      '640 kVA',
+    ],
+    correctAnswer: 1,
     explanation:
       'kVA = kW ÷ power factor = 400 ÷ 0.8 = 500 kVA. This is the base rating before considering starting currents, future growth, or altitude derating factors.',
   },
@@ -93,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: "What is 'wet stacking' in diesel generators and how is it prevented?",
     options: [
-      'Coolant overflow prevented by regular draining',
-      'Fuel contamination prevented by filtration',
-      'Carbon buildup from light loading prevented by regular load testing',
       'Battery acid spillage prevented by proper mounting',
+      'Coolant overflow prevented by regular draining',
+      'Carbon buildup from light loading prevented by regular load testing',
+      'Fuel contamination prevented by filtration',
     ],
     correctAnswer: 2,
     explanation:
@@ -106,8 +111,13 @@ const quizQuestions = [
     id: 3,
     question:
       'In an AMF panel, what is the typical mains failure detection time before initiating generator start?',
-    options: ['Instantaneous (0 seconds)', '1-3 seconds', '10-15 seconds', '30-60 seconds'],
-    correctAnswer: 1,
+    options: [
+      '10-15 seconds',
+      'Instantaneous (0 seconds)',
+      '30-60 seconds',
+      '1-3 seconds',
+    ],
+    correctAnswer: 3,
     explanation:
       'AMF panels typically have a 1-3 second delay before initiating generator start to filter out momentary voltage dips and avoid unnecessary starts. Critical loads may require shorter delays with UPS support.',
   },
@@ -115,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the purpose of load shedding in a standby generator system?',
     options: [
-      'To reduce fuel consumption during normal operation',
       'To prevent generator overload by disconnecting non-essential loads',
+      'To reduce fuel consumption during normal operation',
       'To balance load between multiple generators',
       'To reduce noise levels during night operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Load shedding disconnects non-essential loads during generator operation to prevent overload and ensure essential loads receive power. Loads are prioritised and shed in sequence based on criticality.',
   },
@@ -128,8 +138,13 @@ const quizQuestions = [
     id: 5,
     question:
       'For a hospital standby generator installation, what autonomy period is typically required?',
-    options: ['4 hours', '8 hours', '24-72 hours', '168 hours (1 week)'],
-    correctAnswer: 2,
+    options: [
+      '8 hours',
+      '24-72 hours',
+      '168 hours (1 week)',
+      '4 hours',
+    ],
+    correctAnswer: 1,
     explanation:
       'Healthcare Technical Memoranda (HTM) typically require 24-72 hours fuel autonomy for hospital generators to maintain essential services during extended outages, though specific requirements depend on facility criticality.',
   },
@@ -137,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: "What is the function of the 'cool down' period in a generator shutdown sequence?",
     options: [
-      'To allow the building to switch back to mains gradually',
+      'Carbon buildup from light loading prevented by regular load testing',
+      'To prevent generator overload by disconnecting non-essential loads',
       'To allow the engine to cool before stopping to prevent damage',
-      'To complete fuel line purging',
-      'To reset the AMF panel',
+      'Test records, maintenance logs, and periodic inspection reports',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The cool down period allows the engine to run at no load for 3-5 minutes, enabling gradual temperature reduction. Stopping a hot engine immediately can cause thermal shock and bearing damage.',
   },
@@ -150,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which component in a diesel generator provides cranking power for engine starting?',
     options: [
-      'The alternator',
-      'The battery charger',
+      'BS 1192 / AEC (UK) layer naming',
+      'Automated door locks with monitoring',
+      'To ensure visibility and prevent falls',
       'The starter motor and battery bank',
-      'The fuel injection pump',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The starter motor, powered by a dedicated battery bank, provides the cranking power to start the diesel engine. The battery charger maintains battery condition during standby periods.',
   },
@@ -164,12 +179,12 @@ const quizQuestions = [
     question:
       'What derating factor should be applied to a generator installed at 1,000m above sea level?',
     options: [
-      'No derating required',
       'Approximately 3-4% per 300m above 150m',
-      '10% flat rate',
-      '25% flat rate',
+      'Local processing with opt-in cloud features',
+      'Volt-free contacts or BACnet/Modbus',
+      'LSOH (Low Smoke Zero Halogen) cable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Generator output must be derated approximately 3-4% for every 300m above 150m altitude due to reduced air density affecting engine combustion and alternator cooling. At 1,000m, this equates to roughly 9-12% derating.',
   },
@@ -177,7 +192,12 @@ const quizQuestions = [
     id: 9,
     question:
       'In a two-generator parallel system, what prevents reverse power flow when one generator fails?',
-    options: ['The AMF panel', 'Reverse power relays', 'The governor', 'Load shedding contactors'],
+    options: [
+      'The AMF panel',
+      'Reverse power relays',
+      'The governor',
+      'Load shedding contactors',
+    ],
     correctAnswer: 1,
     explanation:
       'Reverse power relays detect when a generator becomes a motor (consuming rather than producing power) and disconnect it from the busbar to prevent damage and protect the remaining generator from overload.',
@@ -185,8 +205,13 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What is the typical transfer time from mains failure to generator supplying load?',
-    options: ['Under 1 second', '10-15 seconds', '30-60 seconds', '2-3 minutes'],
-    correctAnswer: 1,
+    options: [
+      'Under 1 second',
+      '2-3 minutes',
+      '10-15 seconds',
+      '30-60 seconds',
+    ],
+    correctAnswer: 2,
     explanation:
       'Typical total transfer time is 10-15 seconds comprising: mains failure detection (1-3s), engine cranking and start (5-8s), and load transfer (2-4s). Critical loads requiring faster transfer need UPS support.',
   },
@@ -195,11 +220,11 @@ const quizQuestions = [
     question: 'Gas generators compared to diesel generators typically offer:',
     options: [
       'Higher power density and lower emissions',
-      'Lower emissions but slower starting times',
-      'Better fuel storage and faster response',
       'Lower capital cost and higher maintenance',
+      'Better fuel storage and faster response',
+      'Lower emissions but slower starting times',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Gas generators produce lower NOx and particulate emissions than diesel but have slower starting times (may require continuous pilot flame or preheating) and require mains gas supply or LPG storage.',
   },
@@ -208,12 +233,12 @@ const quizQuestions = [
     question:
       'What documentation must be maintained for a standby generator installation under BS 7671?',
     options: [
-      'Only the original installation certificate',
       'Test records, maintenance logs, and periodic inspection reports',
-      'Fuel delivery receipts only',
-      'Manufacturer warranty documents',
+      'Carbon buildup from light loading prevented by regular load testing',
+      'To prevent generator overload by disconnecting non-essential loads',
+      'To allow the engine to cool before stopping to prevent damage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Comprehensive documentation including installation certification, regular test records (weekly/monthly), maintenance logs, fuel quality records, and periodic inspection reports must be maintained to demonstrate compliance and ensure reliability.',
   },

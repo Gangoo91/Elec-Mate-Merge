@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'bs60617-check',
     question: 'What is the purpose of BS EN 60617 in electrical engineering?',
     options: [
-      'It specifies cable sizes for domestic installations',
-      'It provides the standardised graphical symbols used on electrical circuit diagrams',
       'It defines the requirements for electrical testing',
+      'It specifies cable sizes for domestic installations',
       'It sets the colour coding for three-phase supplies',
+      'It provides the standardised graphical symbols used on electrical circuit diagrams',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'BS EN 60617 provides the internationally standardised graphical symbols used on electrical and electronic circuit diagrams. Using standardised symbols ensures that diagrams can be read and interpreted correctly by anyone, regardless of which organisation or country produced them.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'What is the key difference between a power circuit and a control circuit on a schematic diagram?',
     options: [
-      'There is no difference — they are the same thing',
+      'The extent to which a design facilitates safe and efficient construction, minimising foreseeable risks to workers during the build process',
+      'Use plain English with a visual demonstration, ask them to demonstrate it back, and provide a written checklist (translated where possible)',
+      'Communicate clearly and professionally; explain results, defects (with codes), recommended actions, retention of documentation, and limitations — and confirm in writing',
       'Power circuits carry the main load current to drive equipment; control circuits carry low-current signals to control the operation of the power circuit',
-      'Control circuits always use DC and power circuits always use AC',
-      'Power circuits are only found in domestic installations',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Power circuits carry the main load current (often at higher voltages and currents) to drive motors, heaters, and other loads. Control circuits carry low-current signals that control the switching and sequencing of the power circuit through contactors, relays, timers, and other control devices.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'signal-flow-check',
     question: 'On a circuit diagram, signal flow conventionally runs:',
     options: [
-      'From right to left',
-      'From bottom to top',
+      'Weather, workforce, visitors, work completed, deliveries, and issues',
       'From left to right (and/or top to bottom) — representing the logical sequence of operation',
-      'In any random direction',
+      'Prior consent for construction works that may generate noise, agreeing methods and hours of work',
+      'An electronic device that controls motor speed by varying the supply frequency',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'By convention, signal flow on circuit diagrams runs from left to right and/or from top to bottom. Power supply lines are typically at the top and bottom (or left and right), with the control logic flowing logically between them. This convention makes diagrams easier to read and follow.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'iec81346-check',
     question: 'What is the purpose of IEC 81346 reference designation?',
     options: [
-      'It specifies the colour of equipment enclosures',
+      'Normal behaviour — the high starting current (locked rotor current) is needed to develop starting torque',
+      'Isolated or disconnected before the test, so test current is not diverted through them and the reading reflects the electrode resistance alone.',
+      'Knowledge of risk assessment principles, the ability to contribute to risk assessments, and compliance with safe systems of work derived from them',
       'It provides a systematic method for identifying and labelling equipment, components, and signals on drawings and in the field',
-      'It defines safety testing frequencies',
-      'It specifies the minimum IP rating for enclosures',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'IEC 81346 provides a structured reference designation system for identifying equipment at all levels — from the overall plant down to individual components. It ensures that every item has a unique, unambiguous identifier that is consistent between drawings, equipment labels, and maintenance records.',
   },
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'The symbol for a normally open (NO) contact on a circuit diagram is:',
     options: [
-      'Two parallel lines (representing a closed switch)',
+      'Minimum separation to detect two adjacent reflective events',
       'Two lines that do not touch, indicating the contact is open in its resting state',
-      'A circle with a cross inside',
-      'A triangle pointing to the right',
+      'Prove dead with a GS38-compliant voltage indicator that has itself been proved on a known source',
+      'Reverse polarity can cause permanent damage or safety hazards',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: 'A contactor coil symbol on a circuit diagram typically appears in:',
     options: [
-      'The power circuit only',
+      'Provide a universal language that allows electrical diagrams to be read by any competent person worldwide',
+      'The physical wiring connections, terminal numbers, and cable routes needed to build the circuit',
       'The control circuit, where it is energised by the control logic to switch the power circuit contacts',
-      'Neither — contactors are not shown on diagrams',
-      'Only on single-line diagrams',
+      'In series with the contactor coil in the control circuit, so it breaks the control circuit on overload',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The contactor coil appears in the control circuit, where it is energised by the control logic (start buttons, interlocks, timers). When the coil energises, the associated power contacts in the power circuit close, connecting the load. The coil and contacts are cross-referenced on the diagram.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 3,
     question: 'BS EN 60617 symbols are important because they:',
     options: [
-      'Are optional and vary between organisations',
+      'Link related components that appear on different parts of the diagram or on different sheets — such as a relay coil and its contacts',
+      'The physical wiring connections, terminal numbers, and cable routes needed to build the circuit',
+      'The control circuit, where it is energised by the control logic to switch the power circuit contacts',
       'Provide a universal language that allows electrical diagrams to be read by any competent person worldwide',
-      'Are only used in the UK',
-      'Only apply to electronic circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 60617 symbols are internationally standardised, ensuring that circuit diagrams can be read and understood by any competent person regardless of nationality, organisation, or the software used to create the diagram. This is essential for maintenance across multi-national installations.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 4,
     question: 'On a motor control circuit diagram, the overload relay contact is typically wired:',
     options: [
-      'In parallel with the motor',
       'In series with the contactor coil in the control circuit, so it breaks the control circuit on overload',
-      'Only in the power circuit',
-      'It is not shown on diagrams',
+      'Provide a universal language that allows electrical diagrams to be read by any competent person worldwide',
+      'The control circuit, where it is energised by the control logic to switch the power circuit contacts',
+      'Link related components that appear on different parts of the diagram or on different sheets — such as a relay coil and its contacts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The overload relay contact (normally closed) is wired in series with the contactor coil circuit. When the motor draws excessive current, the overload relay trips, opening the NC contact, which de-energises the contactor coil and disconnects the motor from the supply.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'Cross-referencing on circuit diagrams is used to:',
     options: [
-      'Make the drawing look more complex',
+      'An NC contact is closed in its resting state and opens when actuated; an NO contact is open in its resting state and closes when actuated',
       'Link related components that appear on different parts of the diagram or on different sheets — such as a relay coil and its contacts',
-      'Indicate the drawing scale',
-      'Show the cable type',
+      'In series with the contactor coil in the control circuit, so it breaks the control circuit on overload',
+      'The control circuit, where it is energised by the control logic to switch the power circuit contacts',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,8 +134,13 @@ const quizQuestions = [
   {
     id: 6,
     question: "The IEC 81346 reference designation prefix letter 'K' indicates:",
-    options: ['A switch', 'A relay or contactor', 'A motor', 'A transformer'],
-    correctAnswer: 1,
+    options: [
+      'A switch',
+      'A motor',
+      'A relay or contactor',
+      'A transformer',
+    ],
+    correctAnswer: 2,
     explanation:
       'In IEC 81346, the prefix letter K designates relays and contactors. Other common prefix letters include M (motor), Q (circuit breaker or switch-disconnector), F (fuse or protective device), T (transformer), and S (switch or selector).',
   },
@@ -143,12 +148,12 @@ const quizQuestions = [
     id: 7,
     question: 'A normally closed (NC) contact differs from a normally open (NO) contact because:',
     options: [
-      'They are the same thing with different names',
+      'In series with the contactor coil in the control circuit, so it breaks the control circuit on overload',
+      'Link related components that appear on different parts of the diagram or on different sheets — such as a relay coil and its contacts',
+      'The control circuit, where it is energised by the control logic to switch the power circuit contacts',
       'An NC contact is closed in its resting state and opens when actuated; an NO contact is open in its resting state and closes when actuated',
-      'NC contacts are only used in power circuits',
-      'NO contacts are only used in DC circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "NC (normally closed) contacts are closed when the actuating device is de-energised — they open when actuated. NO (normally open) contacts are open when de-energised and close when actuated. The 'normal' state refers to the de-energised or resting condition.",
   },
@@ -156,12 +161,12 @@ const quizQuestions = [
     id: 8,
     question: 'On a power circuit diagram, the three-phase supply lines are typically labelled:',
     options: [
-      'A, B, C',
       'L1, L2, L3 (with N for neutral and PE for protective earth)',
-      'Red, Yellow, Blue',
-      '1, 2, 3',
+      'Verify equipment is calibrated and functioning correctly',
+      'Adjacent to delivery access with good ground conditions',
+      'Equipment details, location, and test history',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The IEC standard labels for three-phase supply lines are L1, L2, and L3, with N for neutral and PE for protective earth. While older colour-based designations (R, Y, B) may still be encountered on legacy drawings, L1/L2/L3 is the current standard.',
   },
@@ -170,10 +175,10 @@ const quizQuestions = [
     question:
       'A circuit diagram shows the logical connections between components, while a wiring diagram shows:',
     options: [
-      'The same information in a different colour',
+      'The control circuit, where it is energised by the control logic to switch the power circuit contacts',
       'The physical wiring connections, terminal numbers, and cable routes needed to build the circuit',
-      'Only the power supply connections',
-      'Only the control circuit',
+      'Provide a universal language that allows electrical diagrams to be read by any competent person worldwide',
+      'In series with the contactor coil in the control circuit, so it breaks the control circuit on overload',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,12 +188,12 @@ const quizQuestions = [
     id: 10,
     question: 'The symbol for a fuse on a BS EN 60617 circuit diagram is:',
     options: [
-      'A circle with a dot in the centre',
+      'Easy to read, auto-ranging, and can capture transients',
+      'People can have a growth mindset in some areas of life and a fixed mindset in others',
       'A rectangle with a line through it (or a rectangular block symbol)',
-      'A triangle with an arrow',
-      'Two parallel plates',
+      'Workers know the practical requirements and comfort needed for effective use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The standard fuse symbol is a rectangular block (or a rectangle with a line through it representing the fuse element). It is placed in the circuit at the point where overcurrent protection is required. The fuse rating is noted adjacent to the symbol.',
   },
@@ -197,12 +202,12 @@ const quizQuestions = [
     question:
       'Why is it important to understand both power and control circuit diagrams for maintenance?',
     options: [
-      'It is only necessary to understand power circuits',
+      'Aluminium forms a resistive oxide layer, is prone to cold-flow under pressure, and has a different thermal expansion coefficient from copper terminal components',
+      'Regularly reporting to the board on mental health KPIs including sickness absence, EAP utilisation, staff survey wellbeing scores, MHFA interaction data, and benchmarking against sector norms',
+      'Collecting and treating wastewater from baths, showers, washbasins, and washing machines for reuse in non-potable applications such as toilet flushing and garden irrigation',
       'Faults can occur in either circuit, and understanding both allows effective fault-finding — a control circuit fault can prevent the power circuit from operating even though the power circuit is healthy',
-      'Control circuits are only relevant to design engineers',
-      'Power and control circuits are always shown on the same diagram',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Many maintenance faults are in the control circuit rather than the power circuit. A tripped overload, a faulty limit switch, or a broken interlock wire in the control circuit will prevent the motor from running, even though the power circuit is perfectly healthy. Understanding both circuits is essential for systematic fault-finding.',
   },

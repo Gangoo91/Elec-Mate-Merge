@@ -16,7 +16,12 @@ const Module6Section2_3 = () => {
       id: 1,
       question:
         'What is the maximum distance from the top of a wall that a cable can run in a horizontal zone?',
-      options: ['100 mm', '150 mm', '200 mm', '250 mm'],
+      options: [
+        '100 mm',
+        '150 mm',
+        '200 mm',
+        '250 mm',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 specifies horizontal zones within 150 mm from the top of a wall or above an accessory.',
@@ -32,7 +37,12 @@ const Module6Section2_3 = () => {
     {
       id: 3,
       question: 'What is the minimum depth for a concealed cable without RCD protection?',
-      options: ['30 mm', '40 mm', '50 mm', 'More than 50 mm'],
+      options: [
+        '50 mm',
+        '30 mm',
+        '40 mm',
+        'More than 50 mm',
+      ],
       correctAnswer: 3,
       explanation:
         'Cables must be buried more than 50 mm deep to avoid requiring additional RCD protection.',
@@ -41,20 +51,25 @@ const Module6Section2_3 = () => {
       id: 4,
       question: 'Give one reason why diagonal runs are unsafe.',
       options: [
-        'They cost more',
         'They increase the chance of accidental drilling',
-        'They look unprofessional',
-        'They take longer to install',
+        'Water-based or gel polymer compounds safe for cables',
+        'FTP cables include an overall foil shield around all pairs',
+        'The type of electrical system the equipment is rated for',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Diagonal runs are unsafe because they increase the chance of accidental drilling into cables.',
     },
     {
       id: 5,
       question: 'Which regulation sets out safe zones for cables?',
-      options: ['BS 7671', 'Building Regulations', 'HSE Guidelines', 'IET Guidance'],
-      correctAnswer: 0,
+      options: [
+        'Building Regulations',
+        'BS 7671',
+        'IET Guidance',
+        'HSE Guidelines',
+      ],
+      correctAnswer: 1,
       explanation:
         'BS 7671 (IET Wiring Regulations) sets out the requirements for safe cable zones.',
     },
@@ -62,32 +77,37 @@ const Module6Section2_3 = () => {
       id: 6,
       question: 'What additional protection is required for cables buried less than 50 mm deep?',
       options: [
-        'Extra insulation',
+        'Smooth operation throughout range',
+        'Red zone - requires immediate action',
         'RCD or mechanical protection',
-        'Warning labels',
-        'Deeper burial',
+        'The outer shell becomes live',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Cables less than 50 mm deep require RCD protection or mechanical protection like conduit/trunking.',
     },
     {
       id: 7,
       question: 'Name one tool used to verify cable routes during inspection.',
-      options: ['Multimeter', 'Cable detector', 'Insulation tester', 'Earth loop tester'],
-      correctAnswer: 1,
+      options: [
+        'Multimeter',
+        'Earth loop tester',
+        'Insulation tester',
+        'Cable detector',
+      ],
+      correctAnswer: 3,
       explanation: 'Cable detectors are used to locate and verify cable routes during inspections.',
     },
     {
       id: 8,
       question: 'Where should cables be installed in relation to sockets and switches?',
       options: [
-        'Diagonally from accessories',
-        'Randomly positioned',
         'Directly above or below in vertical zones',
-        'At 45-degree angles',
+        'Gather information and symptoms',
+        'Lower fault current and higher regulation',
+        'The metal casing of a Class I appliance',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Cables should run directly above or below sockets and switches in vertical zones.',
     },
@@ -108,10 +128,10 @@ const Module6Section2_3 = () => {
       id: 10,
       question: 'Why is it important to follow cable zone rules?',
       options: [
-        'To save money',
-        'For aesthetic reasons',
+        'Personal Contract Purchase',
+        'Toxic metal contamination',
         'To ensure safety and compliance',
-        'To use less cable',
+        'System shuts down for safety',
       ],
       correctAnswer: 2,
       explanation:

@@ -19,23 +19,23 @@ import { MethodSummaryEditSheet } from './MethodSummaryEditSheet';
 type SectionType = 'tools' | 'materials' | 'tips' | 'mistakes';
 
 interface SummarySectionProps {
-  icon: LucideIcon;
+  /** Kept for back-compat; icons are not rendered in the editorial style. */
+  icon?: LucideIcon;
   title: string;
   count: number;
   items: string[];
   defaultOpen?: boolean;
+  /** Kept for back-compat; tone is monochrome editorial now. */
   accentColor?: string;
   editable?: boolean;
   onEdit?: () => void;
 }
 
 const SummarySection: React.FC<SummarySectionProps> = ({
-  icon: Icon,
   title,
   count,
   items,
   defaultOpen = false,
-  accentColor = 'elec-yellow',
   editable = false,
   onEdit,
 }) => {
@@ -46,34 +46,37 @@ const SummarySection: React.FC<SummarySectionProps> = ({
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <CollapsibleTrigger className="w-full group">
-        <div className="flex items-center justify-between py-3 px-1 touch-manipulation min-h-[44px]">
-          <div className="flex items-center gap-3">
-            <Icon
-              className={cn(
-                'h-5 w-5 shrink-0',
-                accentColor === 'amber-500' ? 'text-amber-500' : 'text-elec-yellow'
-              )}
-            />
-            <span className="text-sm font-semibold text-white">{title}</span>
-            <Badge className="bg-white/10 text-white border-0 text-xs px-2 py-0.5">{count}</Badge>
+        <div className="flex items-baseline justify-between py-3 px-1 touch-manipulation min-h-[44px]">
+          <div className="flex items-baseline gap-3">
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+              {title}
+            </span>
+            <span className="text-[11px] text-white/45 tabular-nums">{count}</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-3">
             {editable && onEdit && (
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-8 w-8 p-0 text-white hover:text-elec-yellow hover:bg-elec-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity"
+              <span
+                role="button"
+                tabIndex={0}
+                className="text-[12px] font-medium text-white/55 hover:text-elec-yellow transition-colors touch-manipulation opacity-0 group-hover:opacity-100"
                 onClick={(e) => {
                   e.stopPropagation();
                   onEdit();
                 }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onEdit();
+                  }
+                }}
               >
-                <Pencil className="h-4 w-4" />
-              </Button>
+                Edit
+              </span>
             )}
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-white transition-transform duration-200',
+                'h-4 w-4 text-white/55 transition-transform duration-200',
                 isOpen && 'rotate-180'
               )}
             />
@@ -81,25 +84,25 @@ const SummarySection: React.FC<SummarySectionProps> = ({
         </div>
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <ul className="space-y-2 pb-4 pl-8">
+        <ul className="space-y-2 pb-4">
           {items.map((item, idx) => (
-            <li key={idx} className="flex items-start gap-2 text-sm text-white">
-              <span className="text-elec-yellow/60 mt-0.5 shrink-0">•</span>
+            <li key={idx} className="flex items-baseline gap-3 text-[13.5px] text-white/85 leading-relaxed">
+              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-white/40 w-8 shrink-0">
+                {String(idx + 1).padStart(2, '0')}
+              </span>
               <span className="flex-1">{item}</span>
             </li>
           ))}
         </ul>
         {editable && onEdit && (
-          <div className="pl-8 pb-4">
-            <Button
-              variant="outline"
-              size="sm"
+          <div className="pb-4">
+            <button
+              type="button"
               onClick={onEdit}
-              className="h-9 text-xs border-white/[0.08] text-white hover:text-elec-yellow hover:border-elec-yellow/30"
+              className="text-[12px] font-medium text-white/55 hover:text-elec-yellow transition-colors touch-manipulation"
             >
-              <Pencil className="h-3.5 w-3.5 mr-1.5" />
-              Edit {title}
-            </Button>
+              Edit {title.toLowerCase()}
+            </button>
           </div>
         )}
       </CollapsibleContent>
@@ -177,18 +180,24 @@ export function MethodStatementSummary({
 
   return (
     <>
-      <div className="bg-white/[0.03] border border-white/[0.08] rounded-xl overflow-hidden">
-        {/* Card Header */}
-        <div className="px-4 py-3 border-b border-white/[0.08] flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <ClipboardList className="h-4 w-4 text-elec-yellow" />
-            <h3 className="text-sm font-semibold text-white">Job Summary</h3>
+      <section className="space-y-4">
+        {/* Editorial header */}
+        <div className="flex items-baseline justify-between gap-3">
+          <div className="space-y-1">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+              Job summary
+            </div>
+            <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
+              Tools, materials, gotchas.
+            </h3>
           </div>
-          <Badge className="bg-white/10 text-white border-0 text-[10px]">{totalItems} items</Badge>
+          <span className="text-[11px] text-white/45 tabular-nums shrink-0">
+            {totalItems} items
+          </span>
         </div>
 
-        {/* Collapsible Sections */}
-        <div className="px-3 divide-y divide-white/[0.05]">
+        {/* Sections — divide-y editorial */}
+        <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
           {/* Tools */}
           {hasTools && (
             <SummarySection
@@ -242,7 +251,7 @@ export function MethodStatementSummary({
             />
           )}
         </div>
-      </div>
+      </section>
 
       {/* Edit Sheet */}
       {editingSection && (

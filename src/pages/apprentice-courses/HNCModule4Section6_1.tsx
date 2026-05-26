@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'nbs-purpose',
     question: 'What is the primary purpose of NBS specifications?',
     options: [
-      'To replace drawings entirely',
+      'Correct start/stop function and latching',
       'To communicate design requirements unambiguously',
-      'To reduce project costs',
-      'To simplify contractor selection',
+      'Tighten to manufacturer\'s torque specification',
+      'Regular cleaning, inspection, replacement when damaged or worn',
     ],
     correctIndex: 1,
     explanation:
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'performance-spec',
     question: 'What does a performance specification define?',
     options: [
+      'Maintenance procedures',
+      'Installation methods only',
       'Exact product models to use',
       'Required outcomes and standards',
-      'Installation methods only',
-      'Maintenance procedures',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Performance specifications define the required outcomes, standards and performance criteria, allowing contractors flexibility in how they achieve these requirements.',
   },
@@ -59,12 +59,12 @@ const quickCheckQuestions = [
     id: 'clause-structure',
     question: "In NBS, what is a 'clause'?",
     options: [
-      'A legal contract term',
       'An individual specification item within a work section',
-      'A drawing reference',
-      'A cost estimate',
+      'Carry out polarity, continuity, and insulation resistance tests',
+      'The effective diameter of the light-carrying region',
+      'Fully concentrating, understanding, responding, and remembering',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A clause is an individual specification item within a work section. Each clause addresses a specific requirement, product, or workmanship standard.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which NBS work section covers general electrical installation requirements?',
     options: [
-      'Section Y - Building services general',
-      'Section Z - Building fabric reference',
       'Section V - Electrical supply',
       'Section W - Communications',
+      'Section Y - Building services general',
+      'Section Z - Building fabric reference',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Section Y covers building services general requirements including electrical installations, with Y70-Y74 covering specific electrical sections.',
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       'What is the key advantage of a performance specification over a prescriptive specification?',
     options: [
-      'It is always cheaper',
+      'To show the project team structure and reporting relationships',
+      'Hazardous substances, exposure routes, health effects, control measures',
+      'Begin CPR immediately and call 999 — electric shock can cause cardiac arrest',
       'It allows contractor innovation while meeting required standards',
-      'It eliminates the need for drawings',
-      'It reduces design responsibility',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Performance specifications allow contractors flexibility to propose solutions that meet the required standards, potentially offering innovation and value engineering opportunities.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: "When should 'Preliminaries' clauses be included in an NBS specification?",
     options: [
-      'Only for large projects',
       'At the start of each work section to set general requirements',
-      'At the end of the document',
-      'They are optional and rarely used',
+      'To prevent signal reflections and communication errors',
+      'Data centre infrastructure and telecommunications standards',
+      'Creates a record for future reference and provides evidence of proper testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Preliminaries clauses appear at the start of work sections to establish general requirements, standards, and workmanship that apply throughout that section.',
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is NBS Create?',
     options: [
-      'A CAD drawing package',
+      '5 years after the tax year they relate to',
       'A cloud-based specification writing platform',
-      'A project management tool',
-      'A cost estimation software',
+      'Complete failure to trip at any test current',
+      'To verify the integrity of the protective conductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'How should amendments to standard NBS clauses be handled?',
     options: [
-      'Delete the original clause entirely',
+      'Fast response time and high power capability',
+      'Both ceiling height and furniture layout',
       'Clearly identify amendments using project-specific text',
-      'Never modify standard clauses',
-      'Use handwritten notes on drawings',
+      'Treat the material as if it contains asbestos and manage it accordingly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Amendments should be clearly identified, typically shown in a different format (italics or colour), so users can distinguish project-specific requirements from standard text.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'What information should a prescriptive specification include for equipment?',
     options: [
-      "Only the manufacturer's name",
+      'Acute stress is short-term; chronic stress is long-lasting and ongoing',
+      'The risks, precautions, control measures, and results of any monitoring',
+      'Seek clarification from the design team before proceeding',
       'Manufacturer, model, specific technical data and approval requirements',
-      'Just a general description',
-      'Cost information only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Prescriptive specifications should include manufacturer, model number, specific technical characteristics, and any approval or certification requirements.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why is specification coordination with drawings critical?',
     options: [
-      'It makes documents look professional',
-      'It is a legal requirement',
       'Conflicting information causes disputes, delays and cost overruns',
-      'It reduces the number of pages',
+      'Radial is designed as one-way feed, broken ring is faulty two-way feed',
+      'How much the actual value can vary either side of the marked value.',
+      'Hard hat, high-visibility clothing, safety boots, and gloves',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Conflicting information between specifications and drawings is a major cause of disputes, delays and cost overruns. Careful coordination prevents these issues.',
   },
@@ -193,12 +193,12 @@ const quizQuestions = [
     id: 9,
     question: "What does 'equal and approved' mean in a specification?",
     options: [
-      'Any product can be used',
-      'Only the specified product is acceptable',
+      'Systematic approach, safety first, proper documentation, and continuous improvement',
       'An equivalent product may be proposed subject to engineer approval',
-      'The cheapest option must be selected',
+      'Replacing fossil fuel heating with electric systems like heat pumps',
+      'The task — what does it involve and can it be avoided or redesigned?',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "'Equal and approved' allows contractors to propose equivalent products that meet the specification requirements, subject to the engineer's approval.",
   },
@@ -207,10 +207,10 @@ const quizQuestions = [
     question:
       'Which document typically takes precedence when there is a conflict between specification and drawings?',
     options: [
-      'Always the drawings',
-      'Always the specification',
+      'It provides additional stiffness to the tower structure and serves as a rest point during climbing',
+      'Carpal tunnel syndrome from work involving hand-held vibrating tools',
       'As defined in the contract preliminaries (often specification takes precedence for quality)',
-      'The contractor decides',
+      'To allow temporary manual control for maintenance, emergencies, and special events',
     ],
     correctAnswer: 2,
     explanation:

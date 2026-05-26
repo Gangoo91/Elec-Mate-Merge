@@ -44,10 +44,10 @@ const checks = [
     question:
       "You finish a CU change for a regular customer. As you're packing the van they hand you £50 in cash and say 'a little extra for the good work'. The company policy explicitly says no tips. What do you do?",
     options: [
-      "Take it — they'll be offended if you don't, and the firm doesn't need to know.",
+      "Per Section 712 of BS 7671 + manufacturer instructions, the metal frame of the array (rails + panel frames) typically requires equipotential bonding back to the inverter or to a dedicated earthing terminal — sized per the PV system designer\\\\\\\\'s requirements (often 6 mm² or 10 mm² Cu). The bond addresses fault-current paths in the DC system AND lightning-induced surges. Cross-reference Section 712 (PV systems) and BS EN 62305 (lightning protection).",
       "Politely decline. Explain that the firm has a no-tips policy because it keeps the relationship clean — the firm has already been paid for the work via the invoice, and accepting an extra payment from a customer can look like an inducement to give favourable certificates or quotes in future. Offer instead that they could leave a Google review or recommend the firm.",
-      "Take it but split it with the apprentice for the day.",
-      "Take it and donate it to charity later so it isn't really a tip.",
+      "Yes — most specialisms welcome experienced electricians from any background. The path requires investment in specialist training (BAFE, CompEx, NSI/SSAIB, BICSI) and sometimes a step-down in seniority while building specialist competence. Many career-direction electricians specialise in their 5-15 year window post-AM2 to escape the price-pressure of generic domestic work and access higher-value markets.",
+      "Type B RCD is the default for both. Both regs use almost identical wording — Type B per BS EN 62423 or BS EN 60947-2 unless (a) the PCE provides at least simple separation between AC and DC, (b) a transformer separates PCE from RCD, or (c) the PCE manufacturer explicitly states Type B is not required.",
     ],
     correctIndex: 1,
     explanation:
@@ -58,12 +58,12 @@ const checks = [
     question:
       "On a tricky CU swap-out you find an existing dangerous installation — burnt MCBs, lashed-up tails, no main earth. You take a photo to show the supervisor and post it to your personal Instagram with caption 'look at this nightmare from a previous owner'. Two days later the customer's solicitor sends a letter. What did you breach, and what should you have done?",
     options: [
-      "Nothing — it's your personal Instagram, no work name on it.",
+      "The Scottish Joint Industry Board (SJIB) is the equivalent of the JIB for the electrical contracting industry in Scotland. It sets working rules, pay rates and grades for Scottish electricians, working alongside SELECT (the Scottish trade association). SJIB grading uses similar terminology (Apprentice, Approved Electrician, Technician) but the rates and the ECS card variants are Scottish-specific.",
+      "Management of Health and Safety at Work Regulations 1999, Reg 10 — every employer must provide employees with comprehensible and relevant information on the risks to their health and safety identified by the assessment, and on the preventive and protective measures. Regulation 11 covers co-operation and co-ordination on shared workplaces. The duty to communicate safety information is statutory, not optional.",
       "Multiple breaches — confidentiality (customer's property identifiable from the room), GDPR (the photo is personal data of the property owner), the firm's social-media policy (likely prohibits posting customer property without consent) and reputationally, the customer's trust in the firm. The right call: photograph for the supervisor only, store in the firm's case management system, never post to personal social media. If you want a teaching photo for trade content, get explicit written consent and crop out anything identifying.",
-      "Only the social-media policy — confidentiality and GDPR don't apply to photos.",
-      "Nothing — the customer should be grateful you exposed the previous owner's bad work.",
+      "Wind shear from neighbouring buildings. Domestic-scale turbines need clean laminar wind, which only happens at hub heights well clear of surrounding obstacles. In a typical suburban garden the turbine sits in turbulent air, the yield is well below the manufacturer's wind-tunnel claims, and the noise / vibration interface is poor. Even where the planning application succeeds, the energy yield often disappoints. Wind makes sense in open rural settings with tall masts; it does not make sense in suburban back gardens.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "A photo of a customer's property is personal data under UK GDPR (it relates to an identifiable person — the property owner — through the address context). Posting it to social media without consent breaches GDPR, the firm's confidentiality policy and the social-media policy. The customer doesn't have to accept 'I didn't name them' as a defence — the photo identifies them by context. Personal social media doesn't insulate you because the duty travels with the data, not with the platform. Always assume the customer will see the post.",
   },
@@ -72,12 +72,12 @@ const checks = [
     question:
       "You and another apprentice keep clashing — the other apprentice has been making belittling comments in the van and at the depot. You've tried raising it informally and it's continued. What does the firm's grievance procedure typically expect you to do next, and what protects you from being penalised for raising it?",
     options: [
-      "Just put up with it — apprenticeships are tough.",
       "Raise it formally in writing under the firm's grievance procedure (usually addressed to your line manager or HR). The ACAS Code of Practice on Discipline and Grievance sets the framework most UK firms follow — informal first, then written, then a meeting, then a written outcome with a right of appeal. The Equality Act 2010 protects you from harassment and the Employment Rights Act 1996 protects you from being penalised for raising the grievance.",
-      "Sort it out yourself in the van — it's a personal matter.",
-      "Quit and find a new firm.",
+      "Notices must be 'clearly and durably marked' (Reg 514.13.1) and 'shall be securely fixed in a visible position'. The practical interpretation: typed/printed labels on durable substrate (BS 951 plates for earthing, laminated card for inside-CU notices), securely fixed (screwed, riveted, or industrial adhesive), readable from a normal stand-back distance. Hand-written sticky labels degrade fast and aren't compliant.",
+      "Brief and respectful: \\\"I understand the pressure but the legal framework here is X. The consequences cascade if we cut corners. We\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re a regulated trade; we have to comply. We can do this safely with X / Y / Z; we can\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t do it the other way.&quot; Most customers accept the framing once explained calmly.",
+      "Two responsibilities. (1) Identify the option set — what are the realistic repair / replace / redesign options for the specific fault? (2) Quantify the trade-offs — cost, lead time, reliability for each option. The DECISION is typically made by the senior / supervisor for non-trivial cases, OR by the customer based on the apprentice's options brief. The apprentice doesn't normally commit the firm to a specific repair / replace path on their own initiative — escalation to senior is the L3 expectation for commercial-impact decisions.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The ACAS Code on Discipline and Grievance is the recognised UK framework — most firms' policies mirror it. Informal first, then written grievance, then a meeting where you can be accompanied, then a written outcome, then an appeal. The Equality Act 2010 s.26 covers harassment (unwanted conduct related to a protected characteristic). Employment Rights Act 1996 s.47B (whistleblowing) and the general protection against victimisation under the Equality Act protect you from being treated less favourably for raising the issue. Quitting closes off your remedies — raising the grievance opens them.",
   },
@@ -91,10 +91,10 @@ const quizQuestions = [
     question:
       "What is a company SAFETY POLICY and why is the employer legally required to have one?",
     options: [
-      "An optional document that some firms choose to have.",
+      "Two-way radios on a pre-agreed channel, tested before the pull starts. Brief both ends on the agreed call-words ('pull', 'stop', 'slack', 'snag'), confirm channel volume so both parties hear over background noise, and agree a default action if comms drop ('stop' is always the default). Phones are a backup, not the primary — they can ring while you're holding cable.",
       "A written statement of the employer's general policy on health and safety, the organisation in place to deliver it, and the arrangements for putting it into effect. HASAWA s.2(3) requires every employer with five or more employees to prepare one and bring it to the attention of all staff.",
-      "A document only required for construction sites.",
-      "A document only required for firms with over 50 employees.",
+      "To confirm that the circuit protective conductor (CPC) provides a continuous, low-resistance path for fault current to flow back to the source, ensuring protective devices operate within the required disconnection time",
+      "Standard MCB ratings (6, 10, 16, 20, 25, 32, 40 A) with Type B or C overcurrent characteristic, combined with 30 mA Type A or Type AC residual current protection (Type B / F variants becoming available). Same form factor as a standard RCBO; same cascade and breaking-capacity specifications.",
     ],
     correctAnswer: 1,
     explanation:
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       "Which set of HR policies typically governs the formal handling of disputes between employees and the firm?",
     options: [
-      "Equality Act 2010.",
+      "Compressed into the EIC trio + customer handover pack: design notes (Zs calculations, RCBO selection, earthing review) typically held in the contractor file but not always issued separately to the customer; EIC + Schedules + manuals consolidated into the customer pack; verbal walk-through handles the operational handover.",
+      "Appendix 6 — model forms for certification and reporting. The appendices to BS 7671 also include Appendix 1 (British Standards referenced), Appendix 4 (cable current-carrying capacity tables), Appendix 12 (voltage drop), Appendix 15 (ring and radial circuit arrangements) and Appendix 17 (protective measures against environmental influences). Knowing the appendices by topic is half of installer navigation.",
       "The grievance and disciplinary policies, normally aligned to the ACAS Code of Practice on Discipline and Grievance. Grievance covers complaints raised BY the employee against the firm or another employee. Disciplinary covers action taken BY the firm against the employee for misconduct, capability or other concerns.",
-      "Working Time Regulations 1998.",
-      "Equality and Diversity policy only.",
+      "Around 1.2 Nm for the circuit terminals, around 3.5 Nm for the incomers (verify against the specific data sheet — values vary by product line and update cycle). Hager publishes the torques inside the CU lid, in the data sheet, and in the Hager Pro app. Wylex and Schneider have similar values for equivalent products.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The ACAS Code is the recognised framework. Tribunals can adjust awards by up to 25% if the Code wasn't followed. Grievance and disciplinary are different procedures with different starting points — knowing which one applies tells you whose story is being told and what the next steps are.",
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       "You're working on a customer's site and the customer offers you and your colleague cans of beer at the end of the day. What's the typical company policy on this and why?",
     options: [
-      "Accept — refusing is rude.",
+      "A genuine shift to: \\\\\\\"This is the most challenging situation I have faced, but I now have a clear action plan to address the specific issues. I have identified three process improvements that will prevent recurrence. I feel motivated to apply these lessons, and this experience will make me a significantly more capable project manager\\\\\\\" — with the motivation to act matching the new belief",
+      "No — each extraneous-conductive-part must have its own dedicated main protective bonding conductor running back to the MET (or via a properly designed bonding bar). Daisy-chaining means a disconnection at one part disables bonding to the next, and the conductor’s integrity becomes dependent on the previous clamp.",
+      "CAT III 600 V minimum (CAT IV 600 V preferred). The DB is a fixed-installation distribution location, which is CAT III by definition. The Fluke 376FC is CAT IV 600 V / CAT III 1000 V — adequate. The Megger DCM340 is CAT IV 300 V / CAT III 600 V — adequate for 230/400 V three-phase. Cheap clamp meters with only CAT II rating are not safe at this location — they can fail catastrophically on a transient. Always check the CAT rating before using a borrowed or new clamp meter at a DB.",
       "Decline. Most firms have a drug-and-alcohol policy that prohibits consumption during working hours, including any time you're still in uniform, on customer premises or driving the van. Even if the working day is officially over, you're still representing the firm and you may have to drive. The policy protects the customer (no impaired work), the firm (no insurance issues, no reputational damage) and you (no DR10 driving conviction).",
-      "Accept but only have one.",
-      "Accept and put it on the job sheet as 'customer goodwill'.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Drug-and-alcohol policies are universal in the trades because the work is safety-critical and most operatives drive company vehicles. Accepting alcohol on a customer's premises, even after work, is typically a sackable offence on the second occasion and a written warning on the first. The customer offering it is rarely a real test — declining politely is what the customer expects and respects. 'Just one' isn't a defence at a roadside breathalyser.",
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       "What does a CONFIDENTIALITY POLICY typically cover for a small electrical contractor?",
     options: [
-      "Only commercial pricing information.",
       "Customer personal data (names, addresses, phone numbers, photos of their property), commercially sensitive information (the firm's pricing strategy, supplier discounts, employee salaries), and anything covered by a customer's NDA on commercial sites. The policy applies whether you're at work, in the pub, or on social media — the duty is on the data, not the location.",
-      "Only employee salaries.",
-      "Only NDA-covered commercial sites.",
+      "EI enables informal leadership through: influence without authority (social skills), building trust through consistent, regulated behaviour (self-regulation), motivating others through enthusiasm and competence (motivation), understanding and responding to team needs (empathy), and modelling emotionally intelligent behaviour that others naturally follow (self-awareness)",
+      "It's a flag that the substance can cause an allergic respiratory response in some operatives — repeated exposure can sensitise even without a single high-dose event. Means tighter respiratory PPE control (FFP3 minimum, often a respirator), good extract ventilation, and health surveillance under COSHH 2002 Reg 11 if the exposure is regular. Two-pack epoxy isocyanates are the textbook example in the trade.",
+      "It continuously monitors the insulation resistance between the live DC conductors and earth, throughout the life of the array. A drop in insulation (a damaged cable, water in a connector) triggers an alarm or shuts down the inverter — catching insulation faults before they become DC arcing fires.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Confidentiality policies are broader than people think. They typically include: customer personal data (overlap with GDPR), customer property details (addresses, layouts, security systems), commercially sensitive firm info (pricing, suppliers), employee personal info (salaries, performance), and anything explicitly covered by a customer NDA. Breach is usually a disciplinary matter and can be a criminal matter under data protection law. Sub 3 covers GDPR specifically.",
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     question:
       "How does the Equality Act 2010 define 'harassment' in a workplace context?",
     options: [
-      "Only physical assault.",
+      "Reg 510.3 — 'Every item of equipment shall be selected and erected so as to allow compliance with the regulations stated in this chapter and the relevant regulations in other parts of BS 7671 and shall take account of manufacturers' instructions.' Selection AND erection. The 'take account of manufacturers' instructions' clause is what makes the data sheet effectively part of the standard.",
       "Unwanted conduct related to a relevant protected characteristic (age, race, sex, gender reassignment, religion or belief, sexual orientation, disability, marriage and civil partnership, pregnancy and maternity) that has the purpose or effect of violating the person's dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment for them. Section 26 of the Act.",
-      "Only verbal abuse.",
-      "Only behaviour by the employer, not by colleagues.",
+      "G98 'Connect and Notify' applies because the inverter output is up to and including 16 A per phase. The MCS installer notifies the DNO within 28 days of commissioning using the standard G98 notification form. No prior DNO approval is required for G98 connections — the installer connects, then notifies. The DNO is required to update its network records and confirm receipt.",
+      "Identifying ways to deliver the required functionality and quality at lower cost — alternative materials with equivalent performance, alternative installation methods, alternative design approaches. Done collaboratively with the client / design team. Different from corner-cutting (which reduces quality).",
     ],
     correctAnswer: 1,
     explanation:
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       "What does a SOCIAL MEDIA POLICY typically prohibit and why?",
     options: [
-      "Posting anything online ever.",
+      "Neuroscience research (including Antonio Damasio\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s \\\\\\\\\\\\\\\"somatic marker hypothesis\\\\\\\\\\\\\\\") demonstrates that emotions are essential to effective decision-making, and people who believe they are making purely rational decisions are simply unaware of the emotional influences operating below conscious awareness",
+      "To indicate that a device (e.g. a fuse, switch or MCB) only interrupts the line conductor, not the neutral. Important for any future electrician working on the circuit — the neutral may still be live relative to earth even with the device open, so isolation procedures (lock-off, prove dead) must take account of the single-pole nature.",
       "Posting customer property, customer information, project details or photos taken on site without explicit written consent; making derogatory comments about customers, colleagues, suppliers or competitors; representing personal opinions as the firm's opinions; sharing anything that could damage the firm's reputation. The policy applies to personal accounts because the duty travels with the content, not the platform.",
-      "Only LinkedIn posts about colleagues.",
-      "Only public posts — private messages are exempt.",
+      "Leave the tag in place. The tag means a competent person has identified a fault and quarantined the tool. Removing the tag without authority is a HASAWA s.7 breach (failure to co-operate with the employer's safety arrangements) AND likely a PUWER Reg 4 breach (using equipment that's not been certified suitable). Either find an alternative tool or speak to the supervisor.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Social media policies have become a standard part of the HR pack because they're a major source of disciplinary action and tribunal cases. The key principle is that the duty to confidentiality, GDPR and reputation travels with the content — it doesn't matter if the post is on your personal account, in a private group, or on a 'work' page. The customer who sees the photo of their kitchen on your Instagram won't accept 'it's my personal account' as a defence.",
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       "Why do company policies typically specify standards for working relationships with sub-contractors as well as employees?",
     options: [
-      "They don't — sub-contractors are someone else's responsibility.",
+      "It's a positive declaration that you have read the RAMS, understood it, and will work to it. Once your signature is on the sheet you've personally adopted the document — including the working method, the controls and the residual risks. It's the contractor's evidence to the HSE that the operatives were properly briefed, and it's the reason your supervisor will push back if you sign without reading.",
+      "Report internally; if the defect appears systemic (e.g. a brand of MCB failing prematurely across multiple installs), escalate to the firm\\\\\\\\'s technical lead who can report to the manufacturer / RAPEX (Rapid Alert System for Non-Food Products) / Office for Product Safety and Standards. Product withdrawals and safety alerts come out of these channels.",
+      "The diary is the source from which NVQ portfolio entries are written up. The portfolio needs evidence of competence against specific units and learning outcomes — circuit installs, fault-finding, testing, customer interaction. The diary is where the contemporaneous record of those activities lives, with the level of detail needed to write up a portfolio entry months later. Portfolio entries written from a thin diary tend to be thin themselves.",
       "Because the principal contractor (or main installer) carries practical and often legal responsibility for what happens on their site, including the conduct, safety and quality of sub-contractor work. CDM 2015 places duties on the PC for site coordination. The firm's policies typically require sub-contractors to be vetted, briefed, given clear scope, paid promptly and held to the same conduct standards as employees.",
-      "Only to make sub-contractors feel included.",
-      "Only on commercial sites.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Sub-contractor management is one of the highest-risk areas for a small firm — the firm carries the reputation risk of work it didn't directly do, and on construction sites the legal duties under CDM 2015 transfer in part to the principal contractor for coordination and welfare. Standard policy: vet sub-contractors (insurance, scheme membership, references), agree clear scope in writing, brief them on site rules, pay promptly to maintain the relationship, and escalate disputes to the PC promptly rather than letting them fester on site.",
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       "Why does a COMMERCIAL POLICY typically cover things like vehicle use, fuel cards and expenses?",
     options: [
-      "To make life difficult for employees.",
       "To set clear rules so that company assets (vans, fuel cards, tools, materials) are used for business and not personal purposes — protecting the firm financially, ensuring tax compliance (HMRC treats personal use of a company vehicle as a benefit-in-kind), and giving employees a defensible record if they're ever audited or accused of misuse.",
-      "Only to track fuel consumption.",
-      "Only because insurance requires it.",
+      "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve noticed tools left on the walkway on three occasions this week (observation). I feel worried (feeling) because someone could trip and be seriously injured (need for safety). Would you be willing to use the tool belt and return tools to the kit bag after each use? (request)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
+      "All business income (invoices issued, payments received), all business expenses (receipts, invoices), bank statements, mileage records if claiming vehicle expenses, capital purchases (tools, equipment, vehicle). Keep for at least 5 years after the 31 January filing deadline.",
+      "Investigate the common failure mode using RCA techniques, check whether the contactor rating is adequate for the application, review the operating environment and duty cycle, and propose a design improvement or alternative component to prevent recurrence across the plant",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Commercial policies on vehicles, fuel cards and expenses serve three purposes: (1) prevent loss/misuse of company assets, (2) ensure HMRC tax compliance (personal use of a company van is a benefit-in-kind that has to be declared and taxed unless de minimis), (3) give a clear audit trail so employees can defend their use if challenged. Insurance is a fourth driver — most fleet insurance only covers business use unless extended to social/domestic.",
   },

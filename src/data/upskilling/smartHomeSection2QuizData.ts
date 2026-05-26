@@ -5,10 +5,10 @@ export const smartHomeSection2QuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'What are the five main benefits of smart home applications?',
     options: [
-      'Convenience, cost reduction, entertainment, decoration, complexity',
-      'Convenience, energy efficiency, safety and security, accessibility, comfort and lifestyle',
-      'Automation, wireless connectivity, app control, voice commands, remote access',
       'Lighting control, heating control, security monitoring, entertainment, communication',
+      'Convenience, energy efficiency, safety and security, accessibility, comfort and lifestyle',
+      'Convenience, cost reduction, entertainment, decoration, complexity',
+      'Automation, wireless connectivity, app control, voice commands, remote access',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,12 +18,12 @@ export const smartHomeSection2QuizQuestions: QuizQuestion[] = [
     id: 2,
     question: 'Which feature allows smart lighting to automatically adapt to occupancy?',
     options: [
-      'Motion sensors and occupancy detection',
-      'Timer-based scheduling only',
       'Manual smartphone control',
+      'Timer-based scheduling only',
+      'Motion sensors and occupancy detection',
       'Voice command activation',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Motion sensors and occupancy detection allow smart lighting systems to automatically turn lights on when someone enters a room and off when the room is vacant, improving energy efficiency.',
   },
@@ -31,12 +31,12 @@ export const smartHomeSection2QuizQuestions: QuizQuestion[] = [
     id: 3,
     question: 'How can smart HVAC systems anticipate heating or cooling needs?',
     options: [
-      'By using only internal temperature sensors',
-      'Through manual programming schedules',
+      'Convenience, energy efficiency, safety and security, accessibility, comfort and lifestyle',
+      'They provide remote access control and activity monitoring',
+      'Through voice control, automation, and remote monitoring capabilities',
       'By integrating with weather forecasts and learning household patterns',
-      'By maintaining constant temperature settings',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Smart HVAC systems can integrate with weather forecast data and learn household patterns to anticipate heating or cooling needs, pre-conditioning spaces for optimal comfort and efficiency.',
   },
@@ -45,9 +45,9 @@ export const smartHomeSection2QuizQuestions: QuizQuestion[] = [
     question: "What does 'zoning' mean in smart HVAC systems?",
     options: [
       'Dividing the house into different temperature-controlled areas',
-      'Setting up security zones for monitoring',
-      'Creating lighting scenes for different rooms',
-      'Establishing Wi-Fi coverage areas',
+      'False - many can operate locally but lose remote features without internet',
+      'By integrating with weather forecasts and learning household patterns',
+      'They provide remote access control and activity monitoring',
     ],
     correctAnswer: 0,
     explanation:
@@ -58,11 +58,11 @@ export const smartHomeSection2QuizQuestions: QuizQuestion[] = [
     question: 'What is one key benefit of smart locks over traditional locks?',
     options: [
       'They are significantly cheaper to install',
-      'They never require batteries or power',
       'They provide remote access control and activity monitoring',
+      'They never require batteries or power',
       'They are completely immune to all security threats',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Smart locks provide remote access control, allowing users to lock/unlock doors from anywhere, and activity monitoring to track who enters and when, enhancing both convenience and security.',
   },
@@ -70,10 +70,10 @@ export const smartHomeSection2QuizQuestions: QuizQuestion[] = [
     id: 6,
     question: 'Which smart security feature provides real-time communication with visitors?',
     options: [
-      'Motion detection cameras',
+      'Window sensors',
       'Smart door locks',
       'Video doorbell systems',
-      'Window sensors',
+      'Motion detection cameras',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,12 +83,12 @@ export const smartHomeSection2QuizQuestions: QuizQuestion[] = [
     id: 7,
     question: "How can smart technology support elderly residents' independence?",
     options: [
-      'By requiring complex technical knowledge',
+      'By integrating with weather forecasts and learning household patterns',
+      'False - many can operate locally but lose remote features without internet',
+      'Convenience, energy efficiency, safety and security, accessibility, comfort and lifestyle',
       'Through voice control, automation, and remote monitoring capabilities',
-      'By eliminating all manual controls',
-      'By restricting access to certain functions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Smart technology supports elderly independence through voice control (reducing physical interaction needs), automation (handling routine tasks), and remote monitoring (allowing family/carers to check on wellbeing).',
   },
@@ -96,12 +96,12 @@ export const smartHomeSection2QuizQuestions: QuizQuestion[] = [
     id: 8,
     question: 'True or False: Smart lights can only operate if connected to the internet?',
     options: [
-      'True - they always require internet connectivity',
       'False - many can operate locally but lose remote features without internet',
+      'True - they always require internet connectivity',
       'True - they are completely dependent on cloud services',
       'False - they never use internet connectivity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'False. Many smart lights can operate locally through hubs or direct connections, maintaining basic functionality during internet outages, though remote access and cloud features become unavailable.',
   },
@@ -110,10 +110,10 @@ export const smartHomeSection2QuizQuestions: QuizQuestion[] = [
     question:
       'Which smart lighting feature automatically adjusts brightness based on available natural light?',
     options: [
-      'Motion detection',
+      'Voice control activation',
       'Daylight harvesting sensors',
       'Timer scheduling',
-      'Voice control activation',
+      'Motion detection',
     ],
     correctAnswer: 1,
     explanation:

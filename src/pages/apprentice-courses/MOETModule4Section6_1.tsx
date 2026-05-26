@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'A motor repeatedly trips its overload relay after being reset. What does the tripping represent?',
     options: [
-      'The root cause of the failure',
+      'They are long enough to make meaningful progress but short enough to maintain urgency',
+      'Acquiring new skills, dealing with challenges, and extending your comfort zone',
+      'The reference junction temperature affects the total EMF, so it must be measured and corrected for',
       'A symptom indicating an underlying problem that requires further investigation',
-      'Proof that the overload relay is faulty',
-      'Evidence that the motor should be replaced immediately',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The repeated tripping is a symptom — a visible indication that something is wrong. The root cause could be mechanical overload, bearing failure, supply voltage imbalance, a winding fault, or even an incorrectly set relay. Without further investigation, simply resetting the overload treats only the symptom and allows the underlying failure to persist or worsen.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'rca-latent-failures',
     question: 'What is a latent failure in the context of root cause analysis?',
     options: [
-      'A failure that occurs immediately upon commissioning',
+      'Earth electrode resistance (where applicable), earth fault loop impedance (Ze and Zs), prospective fault current, RCD operation and functional tests',
+      'Approximately 40-45 % — allows the cables to slide past each other during the pull and provides some thermal dissipation room.',
       'A hidden deficiency in the system, process or organisation that remains undetected until conditions trigger a failure event',
-      'A component failure caused by manufacturing defects',
-      'A failure that only occurs in hot weather',
+      'Any substance that can harm health, including dust, fumes, vapours, mists, gases, and biological agents',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Latent failures are dormant weaknesses — they may exist for weeks, months or years without causing any visible problem. They become active failures only when certain conditions align. Examples include an untested standby system, an out-of-date procedure, or a missing protective device. RCA aims to uncover these hidden deficiencies before they contribute to a failure event.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'What is the recommended first step when beginning a root cause investigation after an equipment failure?',
     options: [
-      'Immediately repair the equipment and return it to service',
+      'Providing the MS in larger sans-serif font on cream paper, supplemented by a verbal walk-through and a labelled site sketch',
+      'Maintain three points of contact (two hands and one foot or two feet and one hand)',
+      'Segregate at source — copper to a metals merchant, PVC to a plastic recycling stream, general waste to skip',
       'Preserve the failure scene, collect factual evidence and document the as-found condition before disturbing anything',
-      'Interview the operator to determine who is at fault',
-      'Order replacement parts from the manufacturer',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Preserving the failure scene is critical. Once equipment is disturbed, repaired or cleaned, valuable evidence is lost. The as-found condition — including the position of switches, state of indicators, condition of components, any unusual smells or discolouration — provides the raw data from which root causes can be determined. Photographs, measurements and witness statements should all be captured before any remedial action.',
   },
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which statement best distinguishes a root cause from a contributing factor?',
     options: [
-      'A root cause is always a mechanical failure; contributing factors are always human errors',
+      'The complete condition including position of controls, state of indicators, environmental conditions, any unusual observations, and photographs',
+      'A model showing how multiple layers of defence each have weaknesses, and failures occur when weaknesses in all layers align simultaneously',
       'A root cause is the fundamental reason the failure occurred; a contributing factor increases the likelihood or severity but would not cause the failure alone',
-      'There is no practical difference between the two terms',
-      'Contributing factors are more important than root causes',
+      'Because most failures result from a combination of technical, human and organisational factors, and addressing only one may not prevent recurrence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The root cause is the fundamental deficiency that, if corrected, would prevent recurrence of the failure. Contributing factors are conditions that influence the outcome but are not the primary cause. For example, poor lighting (contributing factor) may have made it harder to see a loose connection (root cause), but improving lighting alone would not prevent loose connections.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'A circuit breaker fails to trip during a fault condition. Investigation reveals the trip mechanism was never tested after installation five years ago. The root cause is most likely:',
     options: [
-      'The circuit breaker is defective from manufacture',
+      'Apply systematic approaches to identify the root cause of faults and recommend improvements to prevent recurrence',
+      'Latent organisational failures such as inadequate procedures or training gaps',
+      'Human factors including poor workmanship, procedural violations, and inadequate training',
       'A failure in the preventive maintenance programme to include functional testing of protective devices',
-      'Excessive fault current beyond the device rating',
-      'Operator error in resetting the breaker',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The absence of periodic functional testing represents a systemic failure in the maintenance programme. While the mechanism itself may have degraded, the root cause is that the organisation failed to implement testing that would have identified and corrected the problem before a critical failure occurred.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'Which type of failure is typically the hardest to identify through routine inspection?',
     options: [
-      'Visible mechanical damage',
       'Latent organisational failures such as inadequate procedures or training gaps',
-      'Loose connections with visible arcing damage',
-      'Corroded cable glands',
+      'Controlled breathing, lowering your voice, and maintaining open body language',
+      '1 lux for at least 3 hours after supply failure, with uniformity max-to-min not exceeding 40:1.',
+      'Life safety systems like emergency lighting and fire alarms',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Latent organisational failures — such as outdated procedures, training deficiencies, or missing maintenance tasks — are invisible during routine physical inspections. They require systematic analysis of management systems, documentation, and work practices to uncover. Physical defects like loose connections or corrosion can be identified visually or through testing.',
   },
@@ -126,10 +126,10 @@ const quizQuestions = [
     question:
       'When documenting the as-found condition of a failed piece of equipment, which of the following should be recorded?',
     options: [
-      'Only the specific component that has failed',
+      'Apply systematic approaches to identify the root cause of faults and recommend improvements to prevent recurrence',
       'The complete condition including position of controls, state of indicators, environmental conditions, any unusual observations, and photographs',
-      'Only information that supports the initial theory of failure',
-      "The manufacturer's recommended maintenance schedule",
+      'Because most failures result from a combination of technical, human and organisational factors, and addressing only one may not prevent recurrence',
+      'A failure in the preventive maintenance programme to include functional testing of protective devices',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       'In electrical maintenance, which category of failure accounts for the highest proportion of incidents according to HSE data?',
     options: [
-      'Manufacturing defects in new equipment',
+      'It establishes the sequence of events leading up to the failure, helping to identify causal relationships',
+      'A failure in the preventive maintenance programme to include functional testing of protective devices',
       'Human factors including poor workmanship, procedural violations, and inadequate training',
-      'Acts of nature such as lightning strikes',
-      'Software failures in programmable devices',
+      'Latent organisational failures such as inadequate procedures or training gaps',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'HSE data consistently shows that human factors are the largest contributor to electrical maintenance incidents. Poor workmanship (e.g., loose connections, incorrect cable selection), procedural violations (e.g., working live without authorisation), and inadequate training are recurring themes in incident investigation reports.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'A transformer overheats and fails. The oil was last sampled three years ago despite a requirement for annual sampling. Dissolved gas analysis would have shown developing insulation degradation. This scenario illustrates:',
     options: [
-      'An unpredictable random failure',
+      'Human factors including poor workmanship, procedural violations, and inadequate training',
+      'Latent organisational failures such as inadequate procedures or training gaps',
+      'Apply systematic approaches to identify the root cause of faults and recommend improvements to prevent recurrence',
       'A failure to implement condition-based monitoring that would have provided early warning of deterioration',
-      'A design fault in the transformer',
-      'Normal end-of-life failure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This is a classic example of a maintenance programme failure. The condition monitoring tool (dissolved gas analysis) existed and would have detected the developing fault, but the required sampling schedule was not followed. The root cause lies in the management system that failed to ensure compliance with the monitoring programme, not in the transformer itself.',
   },
@@ -169,9 +169,9 @@ const quizQuestions = [
       'Which of the following is an example of treating the symptom rather than the root cause?',
     options: [
       'Replacing a repeatedly blowing fuse with a higher-rated fuse',
-      'Investigating why a fuse keeps blowing and correcting the overcurrent condition',
       'Installing a more sensitive protective device after a fault analysis',
       'Carrying out insulation resistance testing to identify the fault location',
+      'Investigating why a fuse keeps blowing and correcting the overcurrent condition',
     ],
     correctAnswer: 0,
     explanation:
@@ -181,10 +181,10 @@ const quizQuestions = [
     id: 9,
     question: 'What role does timeline analysis play in root cause investigation?',
     options: [
-      'It determines how quickly the repair can be completed',
+      'A failure to implement condition-based monitoring that would have provided early warning of deterioration',
       'It establishes the sequence of events leading up to the failure, helping to identify causal relationships',
-      'It calculates the financial cost of downtime',
-      'It sets the deadline for submitting the investigation report',
+      'Apply systematic approaches to identify the root cause of faults and recommend improvements to prevent recurrence',
+      'Human factors including poor workmanship, procedural violations, and inadequate training',
     ],
     correctAnswer: 1,
     explanation:
@@ -194,12 +194,12 @@ const quizQuestions = [
     id: 10,
     question: 'Under the ST1426 standard, maintenance technicians are expected to:',
     options: [
-      'Only repair equipment and leave root cause analysis to engineers',
+      'The complete condition including position of controls, state of indicators, environmental conditions, any unusual observations, and photographs',
+      'A failure to implement condition-based monitoring that would have provided early warning of deterioration',
       'Apply systematic approaches to identify the root cause of faults and recommend improvements to prevent recurrence',
-      'Replace all failed components without investigation',
-      'Carry out root cause analysis only when instructed by management',
+      'Because most failures result from a combination of technical, human and organisational factors, and addressing only one may not prevent recurrence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The ST1426 Maintenance and Operations Engineering Technician standard requires technicians to apply systematic fault-finding and diagnostic techniques, including the ability to identify root causes and recommend corrective and preventive actions. This is a core competency, not an optional activity.',
   },
@@ -207,12 +207,12 @@ const quizQuestions = [
     id: 11,
     question: "Which of the following best describes the 'Swiss cheese model' of failure?",
     options: [
-      'A model describing how cheese ages and deteriorates over time',
+      'A root cause is the fundamental reason the failure occurred; a contributing factor increases the likelihood or severity but would not cause the failure alone',
+      'Because most failures result from a combination of technical, human and organisational factors, and addressing only one may not prevent recurrence',
+      'Apply systematic approaches to identify the root cause of faults and recommend improvements to prevent recurrence',
       'A model showing how multiple layers of defence each have weaknesses, and failures occur when weaknesses in all layers align simultaneously',
-      'A diagram showing the hierarchy of maintenance responsibilities',
-      'A method for testing insulation resistance at multiple points',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Swiss cheese model (developed by James Reason) illustrates how accidents occur when holes (weaknesses) in multiple layers of defence align. Each layer — design, procedures, training, supervision, protective devices — has imperfections. A failure event occurs when a hazard pathway passes through aligned holes in all layers simultaneously. RCA aims to identify and close these holes.',
   },
@@ -221,12 +221,12 @@ const quizQuestions = [
     question:
       'Why is it important to identify multiple root causes rather than stopping at the first cause found?',
     options: [
-      'To make the investigation report longer and more impressive',
       'Because most failures result from a combination of technical, human and organisational factors, and addressing only one may not prevent recurrence',
-      'To assign blame to multiple individuals',
-      'Because regulations require at least three root causes to be identified',
+      'A root cause is the fundamental reason the failure occurred; a contributing factor increases the likelihood or severity but would not cause the failure alone',
+      'It establishes the sequence of events leading up to the failure, helping to identify causal relationships',
+      'Apply systematic approaches to identify the root cause of faults and recommend improvements to prevent recurrence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Complex failures rarely have a single root cause. They typically result from the interaction of technical deficiencies, human errors, and organisational weaknesses. Identifying and addressing all contributing root causes provides robust protection against recurrence. Stopping at the first cause found often means deeper systemic issues remain unaddressed.',
   },

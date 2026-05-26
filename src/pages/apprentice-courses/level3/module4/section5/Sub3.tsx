@@ -41,10 +41,10 @@ const checks = [
     question:
       "What's the typical electrician's scope for building-fabric restoration after fault rectification?",
     options: [
-      "Full re-decoration.",
+      "No. RAMS must be task-specific and current. A generic 'electrical works' document doesn't capture this fault, this DB, this circuit, this customer's environment, or the unknowns of an investigation. The L3 expectation is a fault-specific addendum to the RAMS that captures (a) the reported symptom, (b) the suspected cause and your diagnostic approach, (c) the live-vs-dead working decision under EAWR Reg 14, (d) the specific instruments you'll use and how they meet GS38, (e) emergency contacts. Without that, the firm's RAMS doesn't meet HSWA Section 2 / 3 duties for THIS task.",
       "Three categories. (1) MAKE GOOD — close holes left by chasing / drilling, refit removed accessories, ensure no exposed cable / live parts. Always within the electrician's scope. (2) BASIC PATCH — bond and skim small areas of plaster (1–2 m² on internal walls), patch small cable entry holes. Within scope at apprentice level under supervision; some firms include in standard quote. (3) FULL RESTORATION — re-plaster larger areas, re-tile, re-paint, re-floor. Outside the electrician's scope; coordinated with plasterer / decorator / tiler. The customer often expects make-good as standard; basic patching as quoted; full restoration as separate.",
-      "All restoration.",
-      "None.",
+      "Test instruments (MFTs and voltage indicators), insulated tools, electrical PPE (gloves, mats, face shields where applicable), lock-off devices, warning labels — all of it. Reg 4(4) is why your MFT must be in calibration, why your voltage indicator must comply with HSE GS38, why your insulated tools must be in date and undamaged, and why your lock-off kit has to actually work. Use unsuitable equipment and you breach Reg 4(4) regardless of whether the install itself is sound.",
+      "Whether the work activity can be eliminated, substituted or engineered to avoid producing the silica dust at source — the COSHH hierarchy of control. PPE (FFP3 mask) is the LAST resort, not the first. On-tool extraction connected to an M-class vacuum, water suppression and route-planning that minimises chasing are all higher in the hierarchy than mask-only working. The HSE workplace exposure limit (WEL) for respirable crystalline silica is currently 0.1 mg/m3 8-hour TWA and is under regulatory review.",
     ],
     correctIndex: 1,
     explanation:
@@ -55,12 +55,12 @@ const checks = [
     question:
       "What's the special restoration requirement when a cable passes through a fire-rated wall or floor?",
     options: [
-      "Just patch.",
+      "(1) Visual — case undamaged, leads not nicked, probes have intact finger barriers, no melted plastic, screen clean. (2) Calibration — sticker date in date for every instrument; calibration register up to date. (3) Function — two-pole tester proves on Martindale GVD2; multimeter shows expected voltage on a known-live socket; MFT self-test passes; clamp meter reads expected current on a known load; socket tester shows correct lights on a known-good socket; VDE drivers show no crack in insulation. 5–8 minutes per shift; the routine catches every instrument fault that has caused an incident.",
+      "WEEE removed during install or repair must be segregated from general waste and routed to an Approved Authorised Treatment Facility (AATF) for recovery and recycling. The waste producer (you or your employer) holds the Duty of Care under the Environmental Protection Act 1990 to ensure the waste is properly described, transferred to an authorised waste carrier, and accompanied by a waste transfer note that is retained for at least two years. Many electrical wholesalers operate as WEEE collection points under the Distributor Take-Back Scheme.",
+      "STOP. Asbestos is a notifiable hazardous material under the Control of Asbestos Regulations 2012 — even a small amount in an old DB. (1) STOP work immediately, do not disturb further. (2) ISOLATE the area (the customer and other trades out of the room). (3) DOCUMENT what you found (mobile photo from a safe distance — do NOT touch). (4) ESCALATE to the supervisor — the supervisor coordinates a licensed asbestos contractor (HSE-licensed for asbestos removal work). (5) NEVER attempt removal yourself; an L3 apprentice is not licensed for asbestos. The cost of getting this wrong is health-life — asbestos-related disease has a 20–40 year latency, and the legal liability is criminal.",
       "BS 7671 527.2 + Building Regs Approved Document B require fire-stopping at the cable penetration. The hole around the cable must be sealed with intumescent material that maintains the fire rating of the wall / floor (typically 60 minutes for compartment walls, 30 minutes for protected escape routes). Standard products: Promat PROMASEAL, Hilti CP series, FireFly fire collars. The electrician fits the fire-stop; the customer's responsible person under RR(FS)O 2005 needs to know it's been done. Skipping fire-stopping creates a fire-spread path that defeats the building's compartmentation strategy. Code 1 (Danger Present) finding on EICR if not done.",
-      "Just plaster.",
-      "Nothing special.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Fire-stopping is a regulated requirement at compartment-wall penetrations. BS 7671 527.2 + Approved Document B + RR(FS)O 2005 all combine to make this non-negotiable. The L3 apprentice should know to fit fire-stop and document on the job sheet.",
   },
@@ -69,10 +69,10 @@ const checks = [
     question:
       "How should you brief the customer on the restoration scope at the start of the work?",
     options: [
-      "Don't brief.",
+      "The location, the specific activity (gas torch, grinding, welding), the operative names, the permit validity window (start time, end time), the precautions in place (combustibles cleared, fire blanket / extinguisher to hand, fire watch arranged for after work), the cool-down / fire-watch requirement (typically 30-60 minutes after work ceases), and signatures from issuer, operative and (on completion) the fire-watch confirming no smouldering.",
       "Three points. (1) WHAT'S INCLUDED — make-good (no holes, no exposed cable, accessories refitted) is part of the work. Basic patching of small areas (if your firm includes this) is part of the quote. Full restoration (re-plaster / re-tile / re-paint) is separate. (2) WHAT'S NOT INCLUDED — be explicit about what the customer will need a separate trade for. (3) WHO TO USE — recommend a plasterer / decorator / tiler if the customer needs one (referrals are good business). The brief upfront prevents the post-work dispute about 'why isn't the wall finished?'.",
-      "Just leave.",
-      "Just bill.",
+      "A wiring-side fault lives in the fixed installation — cables, accessories, terminations, JBs, switchgear. You can isolate the load and the fault remains. An equipment-side fault lives in the connected appliance / load — element, motor, driver, control board. You can isolate at the load and the fault disappears from the fixed installation. The diagnostic move that separates them is to disconnect the load at the SFCU / plug / terminal block and re-test the fixed wiring; if the fixed wiring is healthy, the fault is in the equipment, and the customer's recourse is the manufacturer's warranty / a service engineer, not your fix.",
+      "Plan budget: scheme membership and update events typically £400-800/year if scheme-affiliated (NICEIC, NAPIT) include some CPD; one BS 7671 refresher per amendment year £150-300; one specialist training £400-800; IET Academy / scheme platform online learning typically included with subscription; manufacturer training often free; trade events (ECA Live etc.) £100-300. Total CPD spend typically £1,000-2,500/year for an active QS.",
     ],
     correctIndex: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: "What's a 'make-good' standard for an electrician after rectifying a fault that involved chasing a wall?",
     options: [
-      "Leave as is.",
+      "The MCS Code of Practice is the over-arching code that all MCS-certified installers must comply with. It covers consumer protection (sales practices, contracts, performance estimates honestly disclosed), installation quality, commissioning records, customer handover documentation, complaints handling and after-sales support. The installer's MCS certification can be withdrawn for breaches of the Code. The Code references the technology-specific MCS Installation Standards (MIS 3001 solar thermal, 3002 PV, 3003 wind, 3004 biomass boiler, 3005 heat pump, 3006 biomass stove, 3007 EV, 3008 hydro, 3012 battery storage) for the technical detail.",
       "Three deliverables. (1) NO HOLES — any chase or drilled hole is filled with bonding compound (Knauf bonding plaster, Thistle Bonding) to flush with the surrounding wall. (2) NO EXPOSED CABLE — any cable that was exposed during the work is properly clipped, secured, sleeved if appropriate. (3) NO LIVE PARTS exposed — accessory plates fitted, blanking plates on unused boxes, fire-stops on penetrations. Make-good is the electrician's responsibility; full re-skim and re-paint are the plasterer / decorator's. The boundary is 'safe and finished to fill stage' — beyond that needs other trades.",
-      "Just neat.",
-      "Just safe.",
+      "Where equipment is connected and is likely to influence the test or be damaged by the test voltage, a 250 V DC IR test shall be used following connection of the equipment, as clarified in the A4:2026 redraft. Practical implication for fault diagnosis: when you re-IR-test a circuit AFTER fixing a fault and reconnecting electronics (LED drivers, dimmers, electronic timers, smart sockets), use the 250 V range on the MFT to verify the post-fix IR without damaging the kit. The 500 V test still applies before the equipment is connected — that's how you confirm the wiring itself is healthy. The two-stage test (500 V isolated + 250 V with kit re-connected) is the A4:2026-aligned procedure.",
+      "The install can't commission until the DNO has approved the G99 application. Approval timeline 2-12 weeks depending on local network conditions. Customer needs to know this up front — booking holiday around an install date that depends on G99 approval is a recipe for disappointment. The MCS-certified installer normally manages the application and provides timeline expectations. As the apprentice you should never quote a commission date for a G99 install without confirmation from the certified installer.",
     ],
     correctAnswer: 1,
     explanation:
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 2,
     question: "When chasing has been required to access a fault, what's the trade convention for cable depth and protection?",
     options: [
-      "Doesn't matter.",
+      "Day-rate: customer pays an agreed daily (or hourly) rate for time spent plus materials at agreed markup. Risk on time-overrun sits with the customer. Fixed-price: you quote a single all-in price for the defined scope. Risk on time-overrun sits with you. Customers typically prefer fixed-price (predictable budget); contractors typically prefer day-rate (no overrun risk). Practical compromise: fixed-price for well-defined scopes, day-rate for variable or fault-finding work.",
+      "Common adjustments include written schedules for the day and week, advance notice of any changes, clear and unambiguous instructions ('start at the kitchen, do the back-boxes first, the cable will be in the loft' — not 'sort the kitchen out'), avoidance of 'common sense' assumptions, predictable routine where the role allows, designated quiet space for breaks where sensory overload is a factor, and one-to-one briefings rather than large group sessions where the apprentice prefers. Adjustments are agreed with the individual — autism is a spectrum and people vary enormously.",
       "BS 7671 522.6 + Approved Document B / Part P require: (1) Cables in walls within 50 mm of the surface must be in a 'safe zone' (above socket level, vertical from socket / switch position, within 150 mm of ceiling / wall edge) OR mechanically protected (steel conduit, capping / channel, RCD-protected supply). (2) Cables BELOW 50 mm depth — no zone restriction. (3) Cables in plastered chases — capping (PVC channel) over the cable before plastering OR steel conduit. The chase depth and the cable protection are inspected during EICR; non-compliance is Code 2 (Potentially Dangerous) typically.",
-      "Just bury.",
-      "Just clip.",
+      "The type-test certificate is the manufacturer's evidence — issued by an accredited test lab — that the inverter model has been tested to the EREC G98 / G99 / EN 50549 protection requirements. It records the LoM detection method (ROCOF, vector shift, hybrid), the trip thresholds for over-voltage / under-voltage / over-frequency / under-frequency, the disconnection time, and the recovery delay. The DNO accepts the type-test certificate at face value — they do not retest each inverter on each install. Without a current type-test certificate, the DNO will refuse to accept G98 / G99 notification and the install cannot legally export.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Cable burial requirements are detailed in BS 7671 522.6 and Approved Document B. The L3 apprentice ensures cables run in safe zones with appropriate protection; the customer doesn't need the technical detail but should be reassured 'all cables are protected per current standards'.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: "What's the L3 apprentice's role when a fault rectification damages a customer's tiles?",
     options: [
-      "Replace them.",
+      "In approximate frequency order: (1) Socket terminals — back-of-socket screw terminals on the loop-in conductors; loosen over time; expose under load. (2) The ring break — at any point a previous installer cut the ring and rejoined into a JB, that joint is the weak point; particularly common when a kitchen extension was added and the ring was extended. (3) Spurs — single-socket spurs from the ring; the join into the ring is in a JB or behind the spur socket and is often wired with insufficient cable length. (4) The ring continuity itself — undersized or damaged cable through walls, particularly where chased cables have been re-plastered over and the chase has been dampened, accelerating insulation degradation.",
+      "CAT III 600 V minimum (CAT IV 600 V preferred). The DB is a fixed-installation distribution location, which is CAT III by definition. The Fluke 376FC is CAT IV 600 V / CAT III 1000 V — adequate. The Megger DCM340 is CAT IV 300 V / CAT III 600 V — adequate for 230/400 V three-phase. Cheap clamp meters with only CAT II rating are not safe at this location — they can fail catastrophically on a transient. Always check the CAT rating before using a borrowed or new clamp meter at a DB.",
+      "The MCS certificate, accompanied by the G98 (or G99) DNO notification copy. The customer applies to a Smart Export Guarantee licensee (typically a major electricity supplier) and uploads both. Without the MCS certificate the supplier will not register the customer for export payments. The smart export meter (the customer's existing smart meter, usually) provides the half-hourly export data that the tariff is paid against.",
       "Three steps. (1) MINIMISE the damage during the work — score around the tile carefully; remove only the affected tile(s); save them for re-fit if intact. (2) MAKE SAFE the tile area — no exposed substrate, no sharp edges, no water-ingress path. (3) BRIEF THE CUSTOMER — explain what tiles were affected; recommend a tiler for re-fit (referrals are good business); document the damage on the job sheet. The electrician doesn't normally re-tile (specialist trade with tile-cutting tools, adhesives, grout) but is responsible for minimising damage AND informing the customer.",
-      "Walk away.",
-      "Just patch.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Tile damage during fault work is a real customer concern. Minimising damage + informing customer + recommending specialist trade is the L3 expectation. Pre-existing tile damage should be photographed and documented at the start of the work to prevent disputes.",
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     id: 4,
     question: "When you've cut into plasterboard to access a junction box, what's the right way to make-good?",
     options: [
-      "Just push back.",
       "Three options depending on hole size. (1) SMALL HOLE (≤50 mm) — fit a junction box with a screw-on lid that becomes the access point; 'make-good' is the box itself. Future access without re-cutting. (2) MEDIUM HOLE (50–200 mm) — patch with plasterboard offcut, screwed to a backing batten, scrim tape, bond and skim flush. Customer's painter finishes. (3) LARGE HOLE (&gt;200 mm) — full plasterboard repair, scrim, bond, skim, customer's painter / decorator. Always leave the area swept clean and the dust contained where possible (sheet over furniture, vacuum on completion).",
-      "Plaster.",
-      "Just paint.",
+      "Annual visual inspection (panels secure, free of physical damage, free of significant soiling); array frame and connections check (no corrosion, no loose mountings); cable inspection (UV degradation, rodent damage, MC4 connector integrity); inverter inspection (error log review, ventilation clear, no overheating signs); meter / monitoring check (datalog producing readings, expected output for season); signage check (durable warning signs still in place at consumer unit / meter / inverter / DC isolators). Periodic 5-year EICR for the electrical condition. Soiling cleaning may be needed in dusty / urban / coastal locations — specialist PV cleaners use deionised water.",
+      "One per RCBO. Each RCBO is an independent RCD device. Test each at 1 x I delta n, record trip time on the Schedule of Test Results against the circuit number. Standard MFT workflow: select RCD test mode, set I delta n to 30 mA (or other rating per device), AC test, plug into the circuit\\\\'s socket or test from the RCBO load terminals, press TEST, record trip time, move to next circuit. 12 RCBOs = 12 tests + 12 readings on the schedule. Modern MFTs auto-fill the schedule when they\\\\'re paired with certification software.",
+      "Battery hazards are different from AC hazards: (1) DC shock — once your hand is on a DC busbar, your muscles can't release because there's no zero-crossing — DC at 60 V upward is treated as a let-go hazard; (2) hydrogen gas — lead-acid cells gas during charge, hydrogen accumulates in poorly-ventilated rooms, explosive at 4% LEL — battery rooms have forced ventilation for this reason; (3) electrolyte — sulphuric acid contact with skin / eyes — face shield, acid-resistant gloves, eye-wash station; (4) thermal runaway — a damaged or shorted cell can catch fire, with toxic fumes; (5) short-circuit current — a 100 Ah lead-acid string can deliver 5–10 kA short-circuit, enough to weld a spanner.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Plasterboard repair scales with hole size. The smallest holes can be turned into permanent access points (good practice for junction boxes that may need future inspection). Medium holes need patching; large holes need full repair. The L3 apprentice does the basic patching; the painter / decorator finishes.",
   },
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: "What's the trade boundary between an electrician and a builder / plasterer / tiler?",
     options: [
-      "All same.",
+      "The training-provider tutor first — they have responsibility for the quality of the apprentice's training experience and the authority to intervene with the employer. The apprenticeship agreement is a tripartite document (apprentice, employer, training provider) and the training provider can hold the employer to account on training delivery. If that doesn't resolve it, the apprentice can raise a formal grievance with the employer under the ACAS Code, escalate to ACAS conciliation, and ultimately to an employment tribunal.",
       "Five trades, five scopes. ELECTRICIAN — electrical work + make-good (filling, sealing, fire-stopping). PLASTERER — preparation, scrim, bond, skim of larger areas; finishing plaster surface. TILER — cutting, adhesive, fitting, grouting tiles; specialist tools. PAINTER / DECORATOR — preparation, primer, top-coat, decorative finishes. BUILDER — structural / load-bearing work; brick / block / concrete repair. Each trade has its competence boundary; the electrician's work is electrical + minimal building-fabric restoration. Specialist trades for finishing.",
-      "All builder.",
-      "All plasterer.",
+      "Because the principal contractor (or main installer) carries practical and often legal responsibility for what happens on their site, including the conduct, safety and quality of sub-contractor work. CDM 2015 places duties on the PC for site coordination. The firm's policies typically require sub-contractors to be vetted, briefed, given clear scope, paid promptly and held to the same conduct standards as employees.",
+      "Building Regulations Part L (Conservation of Fuel and Power) applies to new build, extensions and major renovations. Heat pump installs in those contexts must demonstrate compliance with the relevant Part L primary energy and carbon emissions targets, typically through SAP (Standard Assessment Procedure) for dwellings. The Future Homes Standard expected to bring fossil-fuel boilers off new-build from 2025 elevates heat pumps to the default route for new-build. MCS MIS 3005 sits alongside Part L — MCS proves the installer is competent, Part L sets the building energy targets, and the SAP calculation that informs Part L compliance uses MCS-style heat-loss and SCOP methodology.",
     ],
     correctAnswer: 1,
     explanation:
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 6,
     question: "What additional materials should an L3 apprentice carry for routine make-good work?",
     options: [
-      "None.",
+      "RESOLUTION — the smallest increment the instrument can detect and display, usually expressed as a count of the least-significant digit (e.g. 0.01 Omega resolution means the display can show changes of 0.01 Omega). ACCURACY — how close the displayed reading is to the true value, expressed as a percentage tolerance plus a digit count (e.g. plus or minus 5 percent plus or minus 3 digits at full mode, plus or minus 10 percent at no-trip mode). A high-resolution instrument with poor accuracy gives precise-looking but unreliable readings; a high-accuracy instrument with low resolution gives reliable but imprecise readings. You need both — modern MFTs typically achieve 0.01 Omega resolution and plus or minus 5-10 percent accuracy depending on mode.",
+      "The Climate Change Act 2008 (as amended) commits the UK to net-zero greenhouse gas emissions by 2050. Buildings are roughly 17% of UK emissions; the Future Homes Standard and successive Part L revisions are the regulatory mechanism for hitting that target. Each Part L revision tightens the SAP / SBEM target rate — meaning new builds have to demonstrate progressively lower regulated CO₂ emissions to gain Building Regs approval.",
       "Six standard items. (1) Bonding plaster (Knauf bonding or Thistle Bonding, 5 kg bag) — for filling small chases. (2) Filler (Polycell, Tetrion) — for very small holes and screw holes. (3) Plasterboard offcuts — for patching plasterboard holes. (4) Scrim tape — for plasterboard joins. (5) Fire-stop sealant (FireFly, Hilti CP series) — for cable penetrations through fire-rated walls. (6) Touch-up paint (white emulsion small tin, customer-supplied paint where possible) — for minor wall finishing where the customer is unlikely to repaint. Cost £40–60 for the kit; lasts months.",
-      "Just bonding.",
-      "None needed.",
+      "EPAO (End-Point Assessment Organisation) assessors deliver the End-Point Assessment for Apprenticeship Standards — the formal independent assessment at the end of the apprenticeship. EPAOs are independent bodies (separate from the training college) — examples include NET (National Electrotechnical Training), JTL, City & Guilds. EPAO assessors typically need TAQA L3 plus EPAO-specific training and current industry experience.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The make-good kit is part of the L3 apprentice's van. Carrying the basics means you can complete the make-good on-site rather than leaving the customer with unfilled holes. Most experienced electricians carry this without thinking.",
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 7,
     question: "What's the right way to document building-fabric damage / restoration on the job sheet?",
     options: [
-      "Don't.",
+      "LLP = Limited Liability Partnership, a hybrid form created by the Limited Liability Partnerships Act 2000. Partners have limited liability (like Ltd directors) but the partnership is taxed as a partnership (members file Self Assessment on share of profits, no Corporation Tax). Common in professional services (law, accountancy) but rare in trades. For an electrical firm with multiple working partners LLP is sometimes considered as an alternative to Ltd.",
+      "Five-bag setup, all clearly labelled: (1) WEEE — failed devices, scorched accessories, electronic components. (2) BATTERIES — taped terminals, separate from metalwork. (3) HAZARDOUS — fluorescent tubes (intact, in tube tube), CFLs, mercury switches. (4) COPPER SCRAP — cable offcuts (insulation on, never stripped by burning), bare copper offcuts. (5) GENERAL — packaging, plastic offcuts, non-recyclable. Each bag goes to its correct route at the next wholesaler trip OR firm scrap collection. The five-bag system makes compliance routine, not a special effort.",
+      "Workplace mentor is the unpaid (or informally paid) day-job mentor allocated to a specific apprentice within the employing firm. Different from college assessor (paid, formally qualified, employed by college). The mentor signs portfolio entries as evidence of on-site competence, attends three-way reviews, calibrates progress with the college tutor. Mentor competence is evidenced by JIB Approved Electrician grade plus experience — no specific qualification required.",
       "Three sections. (1) PRE-WORK — photographs of any pre-existing damage to walls / floors / tiles / surfaces near the work area. Protects against 'you damaged that' disputes. (2) WORK SCOPE — what fabric was disturbed during the work (chasing, drilling, plasterboard cutting, tile removal). (3) RESTORATION — what make-good was done, what's outstanding for other trades, customer's acknowledgment. The photographs + scope + restoration record protects the firm from misunderstandings about what was done vs what was pre-existing.",
-      "Just verbal.",
-      "Just bill.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Documentation of pre-existing damage is the firm's defence. Five-second mobile photo of the work area at arrival, attached to the job sheet, settles 90% of damage disputes. The restoration record (what was done vs what's outstanding) closes the loop with the customer.",
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     id: 8,
     question: "When should you use intumescent / fire-resistant materials in restoration?",
     options: [
-      "Never.",
       "Whenever a cable / conduit / fitting penetrates a fire-rated wall or floor. Standard locations: party walls between dwellings; compartment walls in HMOs / commercial buildings; floors between flats; ducts and risers; protected escape stairwells. Fire-stopping products: intumescent sealant (Hilti CP 606, Promat PROMASEAL), fire-rated batts (Rockwool Firepro), fire collars on conduit / pipe penetrations. The fire rating of the seal must match or exceed the wall / floor rating (typically 30 / 60 / 90 / 120 minutes). Documented on the job sheet; updated on building's fire-safety log.",
-      "Only outdoor.",
-      "Random.",
+      "AFDDs, RCBOs, RCCBs and SPDs all have internal electronic components that can present low resistance during a 500 V IR test, potentially skewing results or causing unacceptable current flow during testing. GN3 explicitly identifies these device categories. The standard practice is to either disconnect the device for the IR test (re-test after re-fitting), use 250 V if the device can\\\\\\\\'t tolerate 500 V (check manufacturer manual), or apply IR test only to the wiring (not through the device) by isolating at the load terminals.",
+      "Continuity proving (sometimes 'continuity check') is a quick low-current test (typically 200 mA on the MFT or multimeter on continuity range) to confirm a connection exists — yes/no, not a precise measurement. R1+R2 is a precise measurement of the loop resistance of a complete circuit (line + protective conductor). For fault diagnosis: continuity proving is used to quickly verify that an isolation has fully disconnected a circuit (continuity from supply to load reads OPEN); R1+R2 is used to precisely characterise a circuit's loop resistance for comparison against expected design values. Both have their place; the L3 apprentice uses them at different stages.",
+      "Speak directly to the customer, identify yourself by name when you arrive and when you leave a room, describe what you're doing and where ('I'm just going to the consumer unit by the front door now'), don't move furniture or leave tools where they could be a trip hazard for the guide dog or the customer, ask before touching the guide dog (don't pet a working guide dog without asking), and offer to provide written documentation in large print, audio or accessible PDF as required. Equality Act 2010 makes this a service-provider duty.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Fire-stopping is a regulated requirement at compartment penetrations. BS 7671 527.2 + Approved Document B + RR(FS)O 2005 all combine to make this non-negotiable. Intumescent products expand under heat to seal the penetration; without them, fire / smoke spreads through the cable hole.",
   },

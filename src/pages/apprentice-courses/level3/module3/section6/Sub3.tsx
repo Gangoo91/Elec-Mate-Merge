@@ -17,20 +17,75 @@ const TITLE = 'Electronic components and semiconductors | Level 3 Module 3.6.3 |
 const DESCRIPTION = 'Diodes, LEDs, transistors, thyristors, MOSFETs, op-amps, thermistors. The components inside every modern LED driver, VFD and EV charger.';
 
 const checks = [
-  { id: 'l3-m3-6-3-diode', question: 'A silicon diode\'s typical forward voltage drop:', options: ['0.1 V', '0.7 V', '3 V', '12 V'], correctIndex: 1, explanation: 'Si diode V_F ≈ 0.6-0.7 V at rated current. Schottky ~ 0.3 V; LED 1.8-3.4 V depending on colour.' },
-  { id: 'l3-m3-6-3-bridge', question: 'A bridge rectifier converts:', options: ['AC to DC with a single half-cycle', 'AC to DC using both half-cycles via four diodes', 'DC to AC', 'AC to higher AC'], correctIndex: 1, explanation: 'Bridge rectifier (4 diodes) inverts the negative half-cycle so output is always positive — full-wave DC, double the average voltage of half-wave.' },
-  { id: 'l3-m3-6-3-zener', question: 'A Zener diode is used:', options: ['Forward biased as a switch', 'Reverse biased to provide a stable reference voltage at the Zener voltage', 'In place of a resistor', 'For RF rectification'], correctIndex: 1, explanation: 'Zener breaks down at a precise reverse voltage (e.g. 5.1 V) and clamps to that. Used for voltage references, simple regulators, over-voltage protection.' },
+  { id: 'l3-m3-6-3-diode', question: 'A silicon diode\'s typical forward voltage drop:', options: [
+    '3 V',
+    '12 V',
+    '0.7 V',
+    '0.1 V',
+  ], correctIndex: 2, explanation: 'Si diode V_F ≈ 0.6-0.7 V at rated current. Schottky ~ 0.3 V; LED 1.8-3.4 V depending on colour.' },
+  { id: 'l3-m3-6-3-bridge', question: 'A bridge rectifier converts:', options: [
+    'Continuity, insulation, polarity (dead), then Zs, RCD (live)',
+    'To establish the true extent of work executed',
+    'AC to DC using both half-cycles via four diodes',
+    'To verify quantities, quality and condition against the order',
+  ], correctIndex: 2, explanation: 'Bridge rectifier (4 diodes) inverts the negative half-cycle so output is always positive — full-wave DC, double the average voltage of half-wave.' },
+  { id: 'l3-m3-6-3-zener', question: 'A Zener diode is used:', options: [
+    'EIC is for new installations, EICR is for existing installations',
+    'First fault does not cause disconnection - monitoring required',
+    'To distribute circuits and provide overcurrent and RCD protection',
+    'Reverse biased to provide a stable reference voltage at the Zener voltage',
+  ], correctIndex: 3, explanation: 'Zener breaks down at a precise reverse voltage (e.g. 5.1 V) and clamps to that. Used for voltage references, simple regulators, over-voltage protection.' },
 ];
 
 const quizQuestions = [
-  { id: 1, question: 'Diode forward bias means:', options: ['Anode +, cathode −', 'Anode −, cathode +', 'No bias', 'AC excitation'], correctAnswer: 0, explanation: 'Forward bias: + on anode, − on cathode. Diode conducts after the small forward voltage drop. Reverse: blocks until breakdown.' },
-  { id: 2, question: 'A NPN transistor base-emitter junction acts like:', options: ['A capacitor', 'A diode (must be forward biased to turn the transistor on)', 'A resistor', 'A switch'], correctAnswer: 1, explanation: 'Base-emitter is a forward-biased PN junction. Apply ~0.7 V B-E and the transistor turns on; collector current flows, controlled by base current × β.' },
-  { id: 3, question: 'A MOSFET is controlled by:', options: ['Current at the gate', 'Voltage at the gate', 'Current at the drain', 'Voltage at the source'], correctAnswer: 1, explanation: 'MOSFET = field-effect device. Gate VOLTAGE creates the channel; essentially zero gate current. Hence very efficient driver circuits.' },
-  { id: 4, question: 'An LED forward voltage:', options: ['Always 0.7 V', '1.8-3.4 V depending on colour', '5 V', '12 V'], correctAnswer: 1, explanation: 'Red LED ~1.8 V, green ~2.2, blue/white ~3.0-3.4. Higher V_F for shorter wavelengths. Always size series resistor for the actual V_F.' },
-  { id: 5, question: 'A thermistor (NTC) resistance:', options: ['Rises with temperature', 'Falls with temperature', 'Constant', 'Variable randomly'], correctAnswer: 1, explanation: 'NTC = Negative Temperature Coefficient. Resistance falls with rising temperature. Used as inrush limiters, temperature sensors.' },
-  { id: 6, question: 'An LDR resistance:', options: ['Falls with light', 'Rises with light', 'Constant', 'Depends on temperature only'], correctAnswer: 0, explanation: 'LDR = Light Dependent Resistor (cadmium sulphide). Light frees more carriers → resistance falls. Used in dusk-till-dawn switches.' },
-  { id: 7, question: 'A thyristor (SCR) conducts when:', options: ['Triggered at the gate, then continues until current falls below holding current', 'Continuously', 'Only on AC', 'Only on DC'], correctAnswer: 0, explanation: 'Thyristor: gate pulse triggers conduction; latches on. Stops only when current drops below holding current (e.g. AC zero crossing). Used in soft starters, dimmer triacs.' },
-  { id: 8, question: 'An op-amp\'s open-loop gain is:', options: ['10', '100', 'Very high — 100 000 to 1 000 000', '1'], correctAnswer: 2, explanation: 'Op-amp open-loop gain is enormous (10⁵-10⁶). With negative feedback, you tame it to a precise, predictable circuit gain set by external resistors.' },
+  { id: 1, question: 'Diode forward bias means:', options: [
+    'Anode −, cathode +',
+    'Anode +, cathode −',
+    'No bias',
+    'AC excitation',
+  ], correctAnswer: 1, explanation: 'Forward bias: + on anode, − on cathode. Diode conducts after the small forward voltage drop. Reverse: blocks until breakdown.' },
+  { id: 2, question: 'A NPN transistor base-emitter junction acts like:', options: [
+    'Coupling different simulation tools to model interacting systems',
+    'Emergency Lighting Completion Certificate',
+    'A diode (must be forward biased to turn the transistor on)',
+    'Approximately mid-height of the ventilated space',
+  ], correctAnswer: 2, explanation: 'Base-emitter is a forward-biased PN junction. Apply ~0.7 V B-E and the transistor turns on; collector current flows, controlled by base current × β.' },
+  { id: 3, question: 'A MOSFET is controlled by:', options: [
+    'Current at the drain',
+    'Current at the gate',
+    'Voltage at the source',
+    'Voltage at the gate',
+  ], correctAnswer: 3, explanation: 'MOSFET = field-effect device. Gate VOLTAGE creates the channel; essentially zero gate current. Hence very efficient driver circuits.' },
+  { id: 4, question: 'An LED forward voltage:', options: [
+    '1.8-3.4 V depending on colour',
+    'Polarity test at outlets/switches',
+    'To calculate Zs when added to Ze',
+    'Within 600mm of meter, consumer side',
+  ], correctAnswer: 0, explanation: 'Red LED ~1.8 V, green ~2.2, blue/white ~3.0-3.4. Higher V_F for shorter wavelengths. Always size series resistor for the actual V_F.' },
+  { id: 5, question: 'A thermistor (NTC) resistance:', options: [
+    'Rises with temperature',
+    'Falls with temperature',
+    'Variable randomly',
+    'Constant',
+  ], correctAnswer: 1, explanation: 'NTC = Negative Temperature Coefficient. Resistance falls with rising temperature. Used as inrush limiters, temperature sensors.' },
+  { id: 6, question: 'An LDR resistance:', options: [
+    'Constant',
+    'Rises with light',
+    'Falls with light',
+    'Depends on temperature only',
+  ], correctAnswer: 2, explanation: 'LDR = Light Dependent Resistor (cadmium sulphide). Light frees more carriers → resistance falls. Used in dusk-till-dawn switches.' },
+  { id: 7, question: 'A thyristor (SCR) conducts when:', options: [
+    'Purchase, energy, maintenance, lamp replacement, and disposal costs',
+    'Multi-core cables clipped direct to a non-metallic surface in still air.',
+    'The amount of time an activity can be delayed without affecting the critical path',
+    'Triggered at the gate, then continues until current falls below holding current',
+  ], correctAnswer: 3, explanation: 'Thyristor: gate pulse triggers conduction; latches on. Stops only when current drops below holding current (e.g. AC zero crossing). Used in soft starters, dimmer triacs.' },
+  { id: 8, question: 'An op-amp\'s open-loop gain is:', options: [
+    'Very high — 100 000 to 1 000 000',
+    'Legal protection and supports maintenance',
+    'Distance, humidity, pressure, pollution',
+    'Setting productivity targets',
+  ], correctAnswer: 0, explanation: 'Op-amp open-loop gain is enormous (10⁵-10⁶). With negative feedback, you tame it to a precise, predictable circuit gain set by external resistors.' },
 ];
 
 const faqs = [

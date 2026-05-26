@@ -33,11 +33,11 @@ export const questionsPart4: StandardMockQuestion[] = [
     question: 'What grades are available in the MOET EPA?',
     options: [
       'Pass or fail only',
+      'Percentage scores with no grade boundaries',
       'Fail, pass, or distinction',
       'Grades A to E',
-      'Percentage scores with no grade boundaries',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The MOET EPA awards three possible outcomes: fail, pass, or distinction. To achieve a distinction, the apprentice must demonstrate performance that exceeds the pass criteria across the assessment components, showing deeper knowledge, higher-level skills, and more developed professional behaviours.',
     section: 'EPA Structure',
@@ -50,12 +50,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'During the EPA knowledge test, a question asks about the purpose of a risk assessment. Which answer best demonstrates the depth of understanding expected at Level 3?',
     options: [
-      'It is a form that must be filled in before starting work',
+      'A method statement, risk assessment, switching schedule, permit to work system, LOTO procedures, proof of competence for all personnel, and a communication plan including handover procedures',
+      'Explain the systematic fault-finding approach used, the reasoning behind each diagnostic step, how you ensured safety throughout, the root cause identified, and the preventive measures recommended',
+      'Technicians contribute by identifying recurring failure patterns, proposing improvements to maintenance procedures, feeding back accurate data through the CMMS, sharing knowledge with colleagues, suggesting energy-saving measures, and participating in root cause analysis following significant failures',
       'It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999',
-      'It is a checklist provided by the HSE',
-      'It is a verbal briefing given by the site supervisor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'At Level 3, the EPA expects technicians to demonstrate a thorough understanding that goes beyond basic definitions. A risk assessment is not merely a form but a systematic process rooted in legislation (MHSWR 1999). Referencing the hierarchy of control, specific regulations, and the evaluation methodology demonstrates the depth of knowledge expected for a pass or distinction.',
     section: 'EPA Knowledge',
@@ -68,12 +68,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'What is the role of the Independent End-Point Assessment Organisation (EPAO) in the MOET EPA?',
     options: [
-      'To provide training to the apprentice throughout the programme',
       'To independently assess the apprentice against the standard, ensuring impartiality and consistency of assessment decisions',
-      'To employ the apprentice during their apprenticeship',
-      'To write the apprenticeship standard',
+      'To provide a structured collection of evidence demonstrating competence across the apprenticeship standard, used to support the professional discussion',
+      'A knowledge test, a practical assessment, and a professional discussion supported by a portfolio of evidence',
+      'Level 2 English and maths qualifications (or equivalent), completion of the on-programme learning, and employer confirmation of readiness',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The EPAO is an independent organisation responsible for carrying out the end-point assessment. They design and deliver the assessment activities, train and standardise assessors, and make the final grading decisions. Their independence from the employer and training provider ensures impartiality and maintains the integrity of the qualification.',
     section: 'EPA Structure',
@@ -85,10 +85,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     id: 125,
     question: 'Before entering EPA gateway, what must an apprentice have achieved?',
     options: [
-      'A minimum of one year of employment only',
+      'To provide a structured collection of evidence demonstrating competence across the apprenticeship standard, used to support the professional discussion',
       'Level 2 English and maths qualifications (or equivalent), completion of the on-programme learning, and employer confirmation of readiness',
-      'A degree-level qualification in engineering',
-      'Five years of industrial maintenance experience',
+      'A knowledge test, a practical assessment, and a professional discussion supported by a portfolio of evidence',
+      'To independently assess the apprentice against the standard, ensuring impartiality and consistency of assessment decisions',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'During the EPA practical assessment, the assessor observes a technician performing safe isolation. What would demonstrate distinction-level performance?',
     options: [
-      'Following the basic steps of isolation without explanation',
+      'Power rating, voltage, speed, mounting type, IP rating, duty cycle, and operating environment from the original motor nameplate, equipment data sheet in the O&M manual, asset register in the CMMS, and the original design specification',
+      'Investigate the I/O signals using PLC monitoring software, check sensor outputs and wiring, review the PLC programme logic for timing issues, check for electrical noise from nearby VSDs, and examine the safety circuit for marginal switch contacts',
       'Performing isolation correctly whilst explaining each step, referencing the Electricity at Work Regulations 1989, demonstrating GS 38 compliant test equipment, and proactively identifying and managing risks',
-      'Asking a colleague to perform the isolation instead',
-      'Completing the isolation as quickly as possible without testing the voltage indicator',
+      'Insulation resistance testing at 500 V DC (minimum 1 megohm per BS 7671), winding resistance balance check (within 2%), rotation direction verification, no-load current measurement, and vibration check after coupling to the driven equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Distinction-level performance requires the apprentice to not only demonstrate technical competence but also to articulate the reasoning behind each step, reference relevant legislation and standards, use appropriate equipment correctly, and show proactive risk management. This demonstrates the deeper understanding and professional behaviours expected for a distinction grade.',
     section: 'EPA Practical',
@@ -122,12 +122,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     id: 127,
     question: 'What is the purpose of the portfolio of evidence in the MOET EPA?',
     options: [
-      'To replace the need for practical assessment',
+      'A diverse range including completed work orders, test certificates, risk assessments, method statements, witness testimonies, and reflective accounts that map to specific areas of the standard',
+      'Level 2 English and maths qualifications (or equivalent), completion of the on-programme learning, and employer confirmation of readiness',
+      'Explain the systematic fault-finding approach used, the reasoning behind each diagnostic step, how you ensured safety throughout, the root cause identified, and the preventive measures recommended',
       'To provide a structured collection of evidence demonstrating competence across the apprenticeship standard, used to support the professional discussion',
-      'To record attendance at college only',
-      'To contain copies of all textbooks studied',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The portfolio of evidence is a curated collection of work-based evidence that demonstrates the apprentice's competence, knowledge, and behaviours across the requirements of the standard. It supports the professional discussion by providing concrete examples for the assessor to explore. Evidence may include work orders, test records, risk assessments, maintenance reports, and reflective accounts.",
     section: 'Portfolio',
@@ -140,12 +140,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'During the professional discussion, the assessor asks about a complex fault you diagnosed. What approach would best demonstrate the required competencies?',
     options: [
-      'Describe only the final solution without explaining the diagnostic process',
       'Explain the systematic fault-finding approach used, the reasoning behind each diagnostic step, how you ensured safety throughout, the root cause identified, and the preventive measures recommended',
-      'State that you asked a senior engineer to fix it',
-      'Provide a one-word answer about the faulty component',
+      'To provide a structured collection of evidence demonstrating competence across the apprenticeship standard, used to support the professional discussion',
+      'A diverse range including completed work orders, test certificates, risk assessments, method statements, witness testimonies, and reflective accounts that map to specific areas of the standard',
+      'Describe specific examples of self-directed learning, CPD activities undertaken on their own initiative, technical challenges they researched independently, and how they have applied new knowledge to improve their practice',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The professional discussion assesses the apprentice's ability to reflect on and articulate their work experiences. A comprehensive response covering systematic fault-finding methodology, safety considerations, root cause analysis, and recommendations for prevention demonstrates the technical knowledge, problem-solving skills, and professional behaviours expected by the standard.",
     section: 'Professional Discussion',
@@ -157,10 +157,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     id: 129,
     question: 'Which types of evidence are most valuable in a MOET EPA portfolio?',
     options: [
-      'Only photographs of equipment',
+      'Check the VSD fault log for diagnostic codes, assess the motor insulation resistance and phase balance, inspect the mechanical load, review recent changes or maintenance, and apply root cause analysis before implementing a permanent fix',
       'A diverse range including completed work orders, test certificates, risk assessments, method statements, witness testimonies, and reflective accounts that map to specific areas of the standard',
-      'Generic training certificates unrelated to the standard',
-      'Only college assignment grades',
+      'Insulation resistance testing at 500 V DC (minimum 1 megohm per BS 7671), winding resistance balance check (within 2%), rotation direction verification, no-load current measurement, and vibration check after coupling to the driven equipment',
+      'Describe specific examples of self-directed learning, CPD activities undertaken on their own initiative, technical challenges they researched independently, and how they have applied new knowledge to improve their practice',
     ],
     correctAnswer: 1,
     explanation:
@@ -175,12 +175,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       "In the professional discussion, how should an apprentice demonstrate the behaviour 'taking responsibility for own professional development'?",
     options: [
-      'State that their employer sends them on courses',
+      'The star-delta timer relay (KT1), the delta contactor (KM3) coil and contacts, the star contactor (KM2) auxiliary contacts that enable the delta contactor, interlocking contacts between KM2 and KM3, and the control circuit wiring between these components',
+      'Record the finding, raise a priority work order for investigation during the next planned shutdown, increase monitoring frequency, assess the risk of continued operation, and report to the duty engineer for a decision on continued running',
       'Describe specific examples of self-directed learning, CPD activities undertaken on their own initiative, technical challenges they researched independently, and how they have applied new knowledge to improve their practice',
-      'Mention that they have a training folder',
-      'Say that they passed their college exams',
+      'Performing isolation correctly whilst explaining each step, referencing the Electricity at Work Regulations 1989, demonstrating GS 38 compliant test equipment, and proactively identifying and managing risks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Demonstrating professional development behaviours requires evidence of self-motivation and initiative. The apprentice should provide specific examples of learning activities they identified and pursued themselves, such as researching technical topics, attending voluntary training, obtaining additional certifications, and actively seeking challenging work to develop new skills.',
     section: 'Professional Discussion',
@@ -193,12 +193,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'An EPA assessor asks about your understanding of maintenance strategies. Which response demonstrates comprehensive knowledge?',
     options: [
-      'We fix things when they break',
+      'It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999',
+      'Acknowledge the alarm, check the UPS control panel for specific fault details, perform battery impedance or resistance testing, check battery terminal voltages and connections, assess the remaining battery autonomy, and report the findings with a recommendation for battery replacement if required',
+      'Performing isolation correctly whilst explaining each step, referencing the Electricity at Work Regulations 1989, demonstrating GS 38 compliant test equipment, and proactively identifying and managing risks',
       'Our site uses a balanced approach combining planned preventive maintenance for critical assets, condition-based monitoring using thermography and vibration analysis, and run-to-failure for non-critical items, all managed through a CMMS with KPIs including MTBF, MTTR, and maintenance backlog',
-      'We do maintenance every month',
-      'The maintenance manager decides what to do',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This response demonstrates Level 3 understanding by referencing multiple maintenance strategies (PPM, CBM, RTF), specific condition monitoring techniques, digital management tools (CMMS), and relevant KPIs. It shows the apprentice understands how different strategies are applied to different criticality levels, which is a key aspect of the MOET standard.',
     section: 'Professional Discussion',
@@ -211,12 +211,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'What is the maximum timeframe typically allowed to complete all EPA components once the first assessment has been taken?',
     options: [
-      'One week',
       'Typically three to six months, as specified by the assessment plan',
       'Two years',
       'There is no time limit',
+      'One week',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The MOET assessment plan specifies a window of typically three to six months for completion of all EPA components once the first assessment activity has commenced. This allows reasonable time for scheduling all three components whilst maintaining the currency and relevance of the assessment. Specific timings are determined by the EPAO in line with the assessment plan.',
     section: 'EPA Structure',
@@ -235,10 +235,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A maintenance technician is called to investigate a tripping VSD on a critical production line pump. Applying a systematic approach, what is the correct sequence of actions?',
     options: [
-      'Reset the VSD repeatedly until it stays running',
+      'Describe specific examples of self-directed learning, CPD activities undertaken on their own initiative, technical challenges they researched independently, and how they have applied new knowledge to improve their practice',
       'Check the VSD fault log for diagnostic codes, assess the motor insulation resistance and phase balance, inspect the mechanical load, review recent changes or maintenance, and apply root cause analysis before implementing a permanent fix',
-      'Replace the VSD immediately',
-      'Bypass the VSD and run the motor direct on line',
+      'A diverse range including completed work orders, test certificates, risk assessments, method statements, witness testimonies, and reflective accounts that map to specific areas of the standard',
+      'Our site uses a balanced approach combining planned preventive maintenance for critical assets, condition-based monitoring using thermography and vibration analysis, and run-to-failure for non-critical items, all managed through a CMMS with KPIs including MTBF, MTTR, and maintenance backlog',
     ],
     correctAnswer: 1,
     explanation:
@@ -253,12 +253,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A planned shutdown is scheduled for an 11 kV/400 V substation to replace a transformer. What planning documents and safety systems are required?',
     options: [
-      'Only a verbal agreement with the operations manager',
+      'Explain the systematic fault-finding approach used, the reasoning behind each diagnostic step, how you ensured safety throughout, the root cause identified, and the preventive measures recommended',
+      'Insulation resistance testing at 500 V DC (minimum 1 megohm per BS 7671), winding resistance balance check (within 2%), rotation direction verification, no-load current measurement, and vibration check after coupling to the driven equipment',
       'A method statement, risk assessment, switching schedule, permit to work system, LOTO procedures, proof of competence for all personnel, and a communication plan including handover procedures',
-      'A purchase order for the new transformer only',
-      'An email to the maintenance team',
+      'Inform the supervisor that they have not been trained on this specific equipment, request appropriate training or supervision, and offer to assist a competent colleague to develop their skills in a controlled manner',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'This cross-module question combines: safety management (Module 1 - method statements, risk assessments, permits, LOTO), electrical plant knowledge (Module 3 - substation operations, switching procedures), documentation (Module 6 - switching schedules, communication plans), and professional behaviours (competence, planning). It reflects the real-world complexity that a MOET technician must manage.',
     section: 'Integrated Scenario',
@@ -271,12 +271,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'During a routine PPM visit, a thermographic survey of a motor control centre reveals a hot spot at 85 degrees C on one contactor connection (normal operating temperature is 40 degrees C). What actions should be taken?',
     options: [
-      'Ignore it as the contactor is still working',
+      'A poor power factor increases current draw for the same real power, causing overheating in cables and equipment, increased losses, higher electricity costs from reactive power charges, and may indicate failing capacitors that need replacement during maintenance',
+      'Inform the supervisor that they have not been trained on this specific equipment, request appropriate training or supervision, and offer to assist a competent colleague to develop their skills in a controlled manner',
+      'Performing isolation correctly whilst explaining each step, referencing the Electricity at Work Regulations 1989, demonstrating GS 38 compliant test equipment, and proactively identifying and managing risks',
       'Record the finding, raise a priority work order for investigation during the next planned shutdown, increase monitoring frequency, assess the risk of continued operation, and report to the duty engineer for a decision on continued running',
-      'Immediately shut down the entire production line',
-      'Apply more grease to the connection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This integrates condition monitoring (Module 4), electrical safety (Module 1), risk assessment, plant knowledge (Module 3), and documentation/reporting (Module 6). The response balances production impact against safety risk, demonstrates understanding of condition monitoring trending, and follows correct reporting procedures. The 45-degree temperature differential is significant and requires action.',
     section: 'Integrated Scenario',
@@ -289,12 +289,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A PLC-controlled packaging line has an intermittent fault causing random stoppages. The PLC diagnostics show no fault codes. What cross-disciplinary approach should be used?',
     options: [
-      'Replace the PLC immediately',
       'Investigate the I/O signals using PLC monitoring software, check sensor outputs and wiring, review the PLC programme logic for timing issues, check for electrical noise from nearby VSDs, and examine the safety circuit for marginal switch contacts',
-      'Restart the PLC every time it stops',
-      'Increase the PLC scan time',
+      'Competence is the combination of technical knowledge, practical skills, experience, and the ability to recognise and manage risk appropriate to the work being undertaken. The MOET apprenticeship develops all these elements through structured training, supervised workplace experience, and formal assessment',
+      'Inform the supervisor that they have not been trained on this specific equipment, request appropriate training or supervision, and offer to assist a competent colleague to develop their skills in a controlled manner',
+      'Describe specific examples of self-directed learning, CPD activities undertaken on their own initiative, technical challenges they researched independently, and how they have applied new knowledge to improve their practice',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'This integrates PLC and automation knowledge (Module 5), fault-finding methodology (Module 4), electrical interference understanding (Module 2/3), and safety circuit knowledge (Module 5). Intermittent faults require a systematic, multi-disciplinary approach. Checking for electrical noise from VSDs and marginal safety switch contacts are particularly relevant for industrial packaging environments.',
     section: 'Integrated Scenario',
@@ -307,10 +307,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'An apprentice is preparing evidence for their EPA portfolio relating to a motor replacement task. Which combination of evidence would best demonstrate competence?',
     options: [
-      'A photograph of the new motor only',
+      'Investigate the I/O signals using PLC monitoring software, check sensor outputs and wiring, review the PLC programme logic for timing issues, check for electrical noise from nearby VSDs, and examine the safety circuit for marginal switch contacts',
       'The completed work order, risk assessment, method statement, safe isolation certificate, motor test results (insulation resistance, rotation check), commissioning record, and a reflective account of the task with lessons learnt',
-      'A college assignment about motors',
-      "A copy of the motor manufacturer's catalogue",
+      'A poor power factor increases current draw for the same real power, causing overheating in cables and equipment, increased losses, higher electricity costs from reactive power charges, and may indicate failing capacitors that need replacement during maintenance',
+      'Power rating, voltage, speed, mounting type, IP rating, duty cycle, and operating environment from the original motor nameplate, equipment data sheet in the O&M manual, asset register in the CMMS, and the original design specification',
     ],
     correctAnswer: 1,
     explanation:
@@ -325,12 +325,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A maintenance technician needs to specify a replacement motor for a conveyor system. What information is needed and where would it be found?',
     options: [
-      'Only the motor frame size',
+      'Explain the systematic fault-finding approach used, the reasoning behind each diagnostic step, how you ensured safety throughout, the root cause identified, and the preventive measures recommended',
+      'The star-delta timer relay (KT1), the delta contactor (KM3) coil and contacts, the star contactor (KM2) auxiliary contacts that enable the delta contactor, interlocking contacts between KM2 and KM3, and the control circuit wiring between these components',
       'Power rating, voltage, speed, mounting type, IP rating, duty cycle, and operating environment from the original motor nameplate, equipment data sheet in the O&M manual, asset register in the CMMS, and the original design specification',
-      'The colour of the motor',
-      'The price from the cheapest supplier',
+      'A diverse range including completed work orders, test certificates, risk assessments, method statements, witness testimonies, and reflective accounts that map to specific areas of the standard',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "This combines motor knowledge (Module 2), plant systems understanding (Module 3), documentation and record keeping (Module 6), and maintenance management (Module 4). Correct motor specification requires reference to multiple documentation sources and understanding of the motor's operating requirements within the complete system.",
     section: 'Integrated Scenario',
@@ -345,12 +345,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A 400 V three-phase motor has been rewound. Before returning it to service, what tests must be performed and what minimum values apply?',
     options: [
-      'No tests are required after a professional rewind',
+      'Our site uses a balanced approach combining planned preventive maintenance for critical assets, condition-based monitoring using thermography and vibration analysis, and run-to-failure for non-critical items, all managed through a CMMS with KPIs including MTBF, MTTR, and maintenance backlog',
+      'Investigate the common failure mode using RCA techniques, check whether the contactor rating is adequate for the application, review the operating environment and duty cycle, and propose a design improvement or alternative component to prevent recurrence across the plant',
+      'Describe specific examples of self-directed learning, CPD activities undertaken on their own initiative, technical challenges they researched independently, and how they have applied new knowledge to improve their practice',
       'Insulation resistance testing at 500 V DC (minimum 1 megohm per BS 7671), winding resistance balance check (within 2%), rotation direction verification, no-load current measurement, and vibration check after coupling to the driven equipment',
-      'Only check the nameplate is attached',
-      'Run the motor at full load immediately to test it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This question integrates electrical testing knowledge (Module 2/4), motor theory (Module 2), safety procedures (Module 1), and commissioning documentation (Module 6). A comprehensive post-rewind testing regime ensures the motor is fit for service. The insulation resistance minimum of 1 megohm at 500 V DC is specified by BS 7671 Table 6.1 for circuits up to 500 V.',
     section: 'Applied Knowledge',
@@ -363,12 +363,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       "What is the significance of power factor in an industrial installation and how does it affect the maintenance technician's work?",
     options: [
-      'Power factor has no relevance to maintenance',
       'A poor power factor increases current draw for the same real power, causing overheating in cables and equipment, increased losses, higher electricity costs from reactive power charges, and may indicate failing capacitors that need replacement during maintenance',
-      'Power factor only matters for domestic installations',
-      'Power factor is only relevant to the electricity supplier',
+      'A method statement, risk assessment, switching schedule, permit to work system, LOTO procedures, proof of competence for all personnel, and a communication plan including handover procedures',
+      'Check the VSD fault log for diagnostic codes, assess the motor insulation resistance and phase balance, inspect the mechanical load, review recent changes or maintenance, and apply root cause analysis before implementing a permanent fix',
+      'Acknowledge the alarm, check the UPS control panel for specific fault details, perform battery impedance or resistance testing, check battery terminal voltages and connections, assess the remaining battery autonomy, and report the findings with a recommendation for battery replacement if required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'This cross-module question links electrical theory (Module 2), plant systems (Module 3 - capacitor banks), maintenance implications (Module 4 - failing capacitors, overheating), and cost awareness. Understanding power factor helps technicians identify the root cause of overheating cables, interpret energy monitoring data, and maintain power factor correction equipment.',
     section: 'Applied Knowledge',
@@ -381,10 +381,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A building management system (BMS) alarm indicates a UPS battery fault. What should the maintenance technician do?',
     options: [
-      'Ignore the alarm as the UPS is still running',
+      'It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999',
       'Acknowledge the alarm, check the UPS control panel for specific fault details, perform battery impedance or resistance testing, check battery terminal voltages and connections, assess the remaining battery autonomy, and report the findings with a recommendation for battery replacement if required',
-      'Switch off the UPS immediately',
-      'Reset the BMS alarm and continue',
+      'A poor power factor increases current draw for the same real power, causing overheating in cables and equipment, increased losses, higher electricity costs from reactive power charges, and may indicate failing capacitors that need replacement during maintenance',
+      'Competence is the combination of technical knowledge, practical skills, experience, and the ability to recognise and manage risk appropriate to the work being undertaken. The MOET apprenticeship develops all these elements through structured training, supervised workplace experience, and formal assessment',
     ],
     correctAnswer: 1,
     explanation:
@@ -399,12 +399,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'When interpreting a motor control schematic to fault-find a star-delta starter that fails to change from star to delta, which components and connections should be checked?',
     options: [
-      'Only the main fuses',
+      'A method statement, risk assessment, switching schedule, permit to work system, LOTO procedures, proof of competence for all personnel, and a communication plan including handover procedures',
+      'Describe specific examples of self-directed learning, CPD activities undertaken on their own initiative, technical challenges they researched independently, and how they have applied new knowledge to improve their practice',
       'The star-delta timer relay (KT1), the delta contactor (KM3) coil and contacts, the star contactor (KM2) auxiliary contacts that enable the delta contactor, interlocking contacts between KM2 and KM3, and the control circuit wiring between these components',
-      'The motor windings only',
-      'The incoming supply voltage',
+      'Technicians contribute by identifying recurring failure patterns, proposing improvements to maintenance procedures, feeding back accurate data through the CMMS, sharing knowledge with colleagues, suggesting energy-saving measures, and participating in root cause analysis following significant failures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'This integrates schematic reading (Module 6), motor starter knowledge (Module 3), control circuit understanding (Module 5), and systematic fault finding (Module 4). The star-to-delta changeover relies on a specific sequence: the timer initiates changeover, the star contactor drops out, and the delta contactor pulls in. Interlocking prevents both being energised simultaneously.',
     section: 'Applied Knowledge',
@@ -417,12 +417,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A safety light curtain on a press machine has been reported as intermittently blanking out. The machine has emergency-stopped twice today. What systematic approach should be followed?',
     options: [
-      'Disable the light curtain to keep production running',
+      'A poor power factor increases current draw for the same real power, causing overheating in cables and equipment, increased losses, higher electricity costs from reactive power charges, and may indicate failing capacitors that need replacement during maintenance',
+      'It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999',
+      'Investigate the common failure mode using RCA techniques, check whether the contactor rating is adequate for the application, review the operating environment and duty cycle, and propose a design improvement or alternative component to prevent recurrence across the plant',
       'Check the light curtain alignment, clean the lenses, inspect for environmental contaminants (dust, coolant mist), verify the safety relay status, check wiring connections, review the maintenance history for recurring issues, and ensure the safety distance calculation is still valid',
-      'Replace the light curtain immediately without investigation',
-      'Reduce the sensitivity of the light curtain',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'This cross-module question combines safety systems (Module 1/5), systematic fault finding (Module 4), environmental awareness (Module 3), and documentation review (Module 6). Safety devices must never be disabled or their sensitivity reduced. The systematic approach addresses common causes of light curtain problems whilst ensuring the safety integrity of the machine is maintained.',
     section: 'Applied Knowledge',
@@ -435,12 +435,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'An energy audit has identified that a group of conveyor motors are operating at 60% load on average. What recommendation might a maintenance technician make?',
     options: [
-      'No action needed as the motors are running',
       'Consider replacing the oversized motors with correctly sized alternatives, or fitting VSDs to match motor speed to the actual load requirement, reducing energy consumption and improving the power factor',
-      'Increase the conveyor speed to use more power',
-      'Add more load to the conveyors',
+      'Insulation resistance testing at 500 V DC (minimum 1 megohm per BS 7671), winding resistance balance check (within 2%), rotation direction verification, no-load current measurement, and vibration check after coupling to the driven equipment',
+      'It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999',
+      'Inform the supervisor that they have not been trained on this specific equipment, request appropriate training or supervision, and offer to assist a competent colleague to develop their skills in a controlled manner',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'This integrates motor theory (Module 2 - efficiency curves, power factor at partial load), energy management, VSD technology (Module 3), maintenance strategy (Module 4 - planned replacement), and professional development (Module 7 - contributing to continuous improvement). Motors operating well below rated load have poor efficiency and power factor, increasing energy costs.',
     section: 'Applied Knowledge',
@@ -455,10 +455,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'What is the importance of effective communication in the role of a maintenance technician?',
     options: [
-      'Communication is not important for maintenance work',
+      'Describe specific examples of self-directed learning, CPD activities undertaken on their own initiative, technical challenges they researched independently, and how they have applied new knowledge to improve their practice',
       'Clear communication ensures safe handovers between shifts, accurate fault reporting for root cause analysis, effective coordination with production teams, correct documentation of maintenance activities, and professional interaction with colleagues, supervisors, and contractors',
-      'Communication is only needed during emergencies',
-      'Written communication is not necessary if verbal instructions are given',
+      'Insulation resistance testing at 500 V DC (minimum 1 megohm per BS 7671), winding resistance balance check (within 2%), rotation direction verification, no-load current measurement, and vibration check after coupling to the driven equipment',
+      'Explain the systematic fault-finding approach used, the reasoning behind each diagnostic step, how you ensured safety throughout, the root cause identified, and the preventive measures recommended',
     ],
     correctAnswer: 1,
     explanation:
@@ -473,12 +473,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A maintenance technician notices that the same type of contactor keeps failing across multiple motor starters in a plant. What approach demonstrates continuous improvement thinking?',
     options: [
-      'Keep replacing them with the same type',
+      'It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999',
+      'Performing isolation correctly whilst explaining each step, referencing the Electricity at Work Regulations 1989, demonstrating GS 38 compliant test equipment, and proactively identifying and managing risks',
       'Investigate the common failure mode using RCA techniques, check whether the contactor rating is adequate for the application, review the operating environment and duty cycle, and propose a design improvement or alternative component to prevent recurrence across the plant',
-      'Accept it as normal wear and tear',
-      'Order a large stock of replacement contactors',
+      'Record the finding, raise a priority work order for investigation during the next planned shutdown, increase monitoring frequency, assess the risk of continued operation, and report to the duty engineer for a decision on continued running',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'This question tests the continuous improvement behaviour expected in the MOET standard. Rather than accepting repeated failures, a competent technician applies root cause analysis, challenges existing specifications, and proposes improvements. This proactive approach demonstrates the problem-solving and initiative expected at Level 3 and would contribute strong evidence for the EPA portfolio.',
     section: 'Continuous Improvement',
@@ -491,12 +491,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'During a professional discussion, the assessor asks how you ensure compliance with relevant legislation in your daily work. What comprehensive answer would be expected?',
     options: [
-      'I follow what my supervisor tells me',
+      'Check the light curtain alignment, clean the lenses, inspect for environmental contaminants (dust, coolant mist), verify the safety relay status, check wiring connections, review the maintenance history for recurring issues, and ensure the safety distance calculation is still valid',
+      'The completed work order, risk assessment, method statement, safe isolation certificate, motor test results (insulation resistance, rotation check), commissioning record, and a reflective account of the task with lessons learnt',
+      'Investigate the common failure mode using RCA techniques, check whether the contactor rating is adequate for the application, review the operating environment and duty cycle, and propose a design improvement or alternative component to prevent recurrence across the plant',
       'I apply the requirements of the Health and Safety at Work Act 1974, the Electricity at Work Regulations 1989, and relevant ACoPs and British Standards such as BS 7671, through practical actions including risk assessment, safe isolation, use of appropriate PPE, maintenance of competence, and accurate record keeping',
-      'I read the regulations once during my training',
-      'I rely on the company safety officer to ensure compliance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The EPA expects technicians to demonstrate awareness of how legislation translates into daily practice. Citing specific legislation (HSWA 1974, EAWR 1989), standards (BS 7671), and practical applications (risk assessment, safe isolation, PPE, competence, records) shows the integrated understanding of theory and practice that distinguishes a competent Level 3 technician.',
     section: 'Professional Discussion',
@@ -509,12 +509,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       "What is meant by 'competence' in the context of the Electricity at Work Regulations 1989, and how does the MOET apprenticeship contribute to it?",
     options: [
-      'Competence simply means holding a qualification',
       'Competence is the combination of technical knowledge, practical skills, experience, and the ability to recognise and manage risk appropriate to the work being undertaken. The MOET apprenticeship develops all these elements through structured training, supervised workplace experience, and formal assessment',
-      'Competence is determined solely by the number of years worked',
-      'Competence is only relevant for electricians, not maintenance technicians',
+      'The star-delta timer relay (KT1), the delta contactor (KM3) coil and contacts, the star contactor (KM2) auxiliary contacts that enable the delta contactor, interlocking contacts between KM2 and KM3, and the control circuit wiring between these components',
+      'The completed work order, risk assessment, method statement, safe isolation certificate, motor test results (insulation resistance, rotation check), commissioning record, and a reflective account of the task with lessons learnt',
+      'Acknowledge the alarm, check the UPS control panel for specific fault details, perform battery impedance or resistance testing, check battery terminal voltages and connections, assess the remaining battery autonomy, and report the findings with a recommendation for battery replacement if required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The EAWR 1989 Regulation 16 requires persons to be competent to prevent danger and injury. The HSE defines competence as a combination of training, skills, experience, and knowledge. The MOET apprenticeship directly addresses all these elements, making it a structured pathway to achieving the competence required under the regulations for electrical maintenance work.',
     section: 'Professional Practice',
@@ -527,10 +527,10 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       'A maintenance technician is asked to work on equipment they have not been trained on. What is the correct professional response?',
     options: [
-      'Attempt the work anyway to avoid appearing unhelpful',
+      'It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999',
       'Inform the supervisor that they have not been trained on this specific equipment, request appropriate training or supervision, and offer to assist a competent colleague to develop their skills in a controlled manner',
-      'Refuse all work on unfamiliar equipment permanently',
-      'Watch an online video and proceed with the work',
+      'Check the VSD fault log for diagnostic codes, assess the motor insulation resistance and phase balance, inspect the mechanical load, review recent changes or maintenance, and apply root cause analysis before implementing a permanent fix',
+      'Performing isolation correctly whilst explaining each step, referencing the Electricity at Work Regulations 1989, demonstrating GS 38 compliant test equipment, and proactively identifying and managing risks',
     ],
     correctAnswer: 1,
     explanation:
@@ -545,12 +545,12 @@ export const questionsPart4: StandardMockQuestion[] = [
     question:
       "How does the concept of 'continuous improvement' apply to a maintenance department, and how can a technician contribute?",
     options: [
-      'Continuous improvement is a management responsibility only',
+      'It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999',
+      'Record the finding, raise a priority work order for investigation during the next planned shutdown, increase monitoring frequency, assess the risk of continued operation, and report to the duty engineer for a decision on continued running',
       'Technicians contribute by identifying recurring failure patterns, proposing improvements to maintenance procedures, feeding back accurate data through the CMMS, sharing knowledge with colleagues, suggesting energy-saving measures, and participating in root cause analysis following significant failures',
-      'Continuous improvement means working faster',
-      'It only applies to production departments',
+      'Describe specific examples of self-directed learning, CPD activities undertaken on their own initiative, technical challenges they researched independently, and how they have applied new knowledge to improve their practice',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Continuous improvement is a key behaviour in the MOET standard. Maintenance technicians are uniquely placed to identify improvement opportunities because they work directly with the equipment. Contributing to CMMS data accuracy, participating in RCA, sharing knowledge, and proposing practical improvements are all ways technicians drive continuous improvement in reliability, safety, and efficiency.',
     section: 'Continuous Improvement',

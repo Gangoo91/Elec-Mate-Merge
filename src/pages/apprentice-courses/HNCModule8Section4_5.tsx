@@ -27,8 +27,13 @@ const quickCheckQuestions = [
     id: 'affinity-power-law',
     question:
       'According to the affinity laws, if fan speed is reduced to 80% of full speed, what percentage of original power is consumed?',
-    options: ['80%', '64%', '51.2%', '40%'],
-    correctIndex: 2,
+    options: [
+      '51.2%',
+      '80%',
+      '40%',
+      '64%',
+    ],
+    correctIndex: 0,
     explanation:
       'Power varies with the cube of speed. At 80% speed: Power = 0.8³ = 0.512 = 51.2% of original power. This cubic relationship is why VSDs offer such significant energy savings on variable flow applications.',
   },
@@ -36,8 +41,13 @@ const quickCheckQuestions = [
     id: 'simple-payback',
     question:
       'A VSD installation costs £4,500 and saves £1,800 per year in energy costs. What is the simple payback period?',
-    options: ['1.5 years', '2.0 years', '2.5 years', '3.0 years'],
-    correctIndex: 2,
+    options: [
+      '1.5 years',
+      '2.0 years',
+      '3.0 years',
+      '2.5 years',
+    ],
+    correctIndex: 3,
     explanation:
       'Simple Payback = Capital Cost / Annual Savings = £4,500 / £1,800 = 2.5 years. Projects with payback periods under 3 years are generally considered attractive investments.',
   },
@@ -45,8 +55,13 @@ const quickCheckQuestions = [
     id: 'carbon-factor',
     question:
       'Using a UK grid carbon factor of 0.233 kgCO₂/kWh, what annual carbon saving results from 15,000 kWh energy reduction?',
-    options: ['2,495 kgCO₂', '3,495 kgCO₂', '4,495 kgCO₂', '5,495 kgCO₂'],
-    correctIndex: 1,
+    options: [
+      '3,495 kgCO₂',
+      '5,495 kgCO₂',
+      '4,495 kgCO₂',
+      '2,495 kgCO₂',
+    ],
+    correctIndex: 0,
     explanation:
       'Carbon Saving = Energy Saved × Carbon Factor = 15,000 kWh × 0.233 kgCO₂/kWh = 3,495 kgCO₂ (3.5 tonnes CO₂ per year). This demonstrates the environmental benefit of VSD installations.',
   },
@@ -54,7 +69,12 @@ const quickCheckQuestions = [
     id: 'part-l-motors',
     question:
       'Under Part L of the Building Regulations, what is the minimum motor efficiency class required for new installations?',
-    options: ['IE1 Standard', 'IE2 High', 'IE3 Premium', 'IE4 Super Premium'],
+    options: [
+      'IE4 Super Premium',
+      'IE2 High',
+      'IE3 Premium',
+      'IE1 Standard',
+    ],
     correctIndex: 2,
     explanation:
       'Part L requires IE3 Premium efficiency motors as minimum for new installations since 2017. IE4 Super Premium motors are increasingly specified for applications with long running hours to maximise energy savings.',
@@ -67,12 +87,12 @@ const quizQuestions = [
     question:
       'The affinity laws state that flow rate (Q) varies with which relationship to speed (N)?',
     options: [
-      'Q ∝ N (directly proportional)',
       'Q ∝ N² (square law)',
+      'Q ∝ N (directly proportional)',
       'Q ∝ N³ (cube law)',
       'Q ∝ √N (square root)',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Flow rate is directly proportional to speed: Q₂/Q₁ = N₂/N₁. Doubling the speed doubles the flow rate. This linear relationship contrasts with the cubic relationship for power.',
   },
@@ -80,8 +100,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A centrifugal pump operates at 2900 rpm delivering 50 m³/h. If speed is reduced to 2175 rpm, what is the new flow rate?',
-    options: ['25.0 m³/h', '37.5 m³/h', '42.2 m³/h', '66.7 m³/h'],
-    correctAnswer: 1,
+    options: [
+      '42.2 m³/h',
+      '25.0 m³/h',
+      '37.5 m³/h',
+      '66.7 m³/h',
+    ],
+    correctAnswer: 2,
     explanation:
       'Using Q₂/Q₁ = N₂/N₁: Q₂ = 50 × (2175/2900) = 50 × 0.75 = 37.5 m³/h. The flow reduces linearly with speed.',
   },
@@ -90,12 +115,12 @@ const quizQuestions = [
     question:
       'According to the affinity laws, pressure (head) varies with which relationship to speed?',
     options: [
-      'H ∝ N (directly proportional)',
-      'H ∝ N² (square law)',
       'H ∝ N³ (cube law)',
+      'H ∝ N (directly proportional)',
       'H ∝ N⁰·⁵ (square root)',
+      'H ∝ N² (square law)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Pressure (head) varies with the square of speed: H₂/H₁ = (N₂/N₁)². If speed halves, pressure reduces to one quarter. This is why VSDs must be carefully applied to maintain minimum system pressure.',
   },
@@ -105,9 +130,9 @@ const quizQuestions = [
       'A supply air fan consumes 15 kW at full speed. If the ductwork dampers are throttled to reduce flow to 70%, approximately what power is saved?',
     options: [
       'No significant savings - dampers dissipate energy',
-      '4.5 kW (30% reduction)',
-      '7.5 kW (50% reduction)',
-      '10.5 kW (70% reduction)',
+      'Overheating, interference, equipment malfunction',
+      'Trips on AC sinusoidal, pulsating DC and smooth DC',
+      'To ensure the switch breaks the phase conductor',
     ],
     correctAnswer: 0,
     explanation:
@@ -117,7 +142,12 @@ const quizQuestions = [
     id: 5,
     question:
       'A 22 kW motor operates 5,000 hours/year at average 65% load. If electricity costs £0.18/kWh, what are the annual running costs?',
-    options: ['£9,900', '£12,870', '£19,800', '£25,740'],
+    options: [
+      '£9,900',
+      '£12,870',
+      '£25,740',
+      '£19,800',
+    ],
     correctAnswer: 1,
     explanation:
       'Annual cost = Power × Load factor × Hours × Cost = 22 × 0.65 × 5000 × 0.18 = £12,870. Understanding running costs helps justify efficiency investments.',
@@ -126,8 +156,13 @@ const quizQuestions = [
     id: 6,
     question:
       'What is the typical efficiency improvement when replacing an IE2 motor with an IE4 motor at 11 kW rating?',
-    options: ['1-2%', '3-4%', '5-7%', '10-12%'],
-    correctAnswer: 1,
+    options: [
+      '1-2%',
+      '5-7%',
+      '3-4%',
+      '10-12%',
+    ],
+    correctAnswer: 2,
     explanation:
       'At 11 kW, typical efficiency improves from ~89% (IE2) to ~93% (IE4), a 3-4% improvement. While seemingly small, over thousands of running hours this represents significant energy and cost savings.',
   },
@@ -135,8 +170,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A VSD installation costs £6,000, saves £2,400/year, with maintenance cost increase of £200/year. What is the true simple payback?',
-    options: ['2.5 years', '2.73 years', '3.0 years', '3.33 years'],
-    correctAnswer: 1,
+    options: [
+      '2.5 years',
+      '3.33 years',
+      '3.0 years',
+      '2.73 years',
+    ],
+    correctAnswer: 3,
     explanation:
       'Net annual saving = £2,400 - £200 = £2,200. Payback = £6,000 / £2,200 = 2.73 years. Always account for maintenance and lifecycle costs in investment calculations.',
   },
@@ -144,8 +184,13 @@ const quizQuestions = [
     id: 8,
     question:
       'For NPV calculations with 8% discount rate over 10 years, what is the approximate present value factor?',
-    options: ['4.21', '5.34', '6.71', '7.25'],
-    correctAnswer: 2,
+    options: [
+      '6.71',
+      '7.25',
+      '4.21',
+      '5.34',
+    ],
+    correctAnswer: 0,
     explanation:
       'The cumulative present value factor for 10 years at 8% discount rate is approximately 6.71. This is used to calculate NPV: NPV = (Annual Savings × PV Factor) - Capital Cost.',
   },
@@ -153,7 +198,12 @@ const quizQuestions = [
     id: 9,
     question:
       'A building has 10 × 7.5 kW AHU motors running 3,500 hours/year. If VSDs could save 35% energy, what is the annual kWh saving?',
-    options: ['65,625 kWh', '91,875 kWh', '131,250 kWh', '262,500 kWh'],
+    options: [
+      '65,625 kWh',
+      '91,875 kWh',
+      '131,250 kWh',
+      '262,500 kWh',
+    ],
     correctAnswer: 1,
     explanation:
       'Total motor power = 10 × 7.5 = 75 kW. Annual consumption = 75 × 3,500 = 262,500 kWh. Saving = 262,500 × 0.35 = 91,875 kWh per year.',
@@ -165,10 +215,10 @@ const quizQuestions = [
     options: [
       'Motors below 0.75 kW',
       'Motors integrated into machinery',
-      'Motors for intermittent duty',
       'All of the above',
+      'Motors for intermittent duty',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'ErP exemptions include motors below 0.75 kW or above 375 kW, motors designed for intermittent duty, brake motors, and motors integrated into products where efficiency cannot be tested separately.',
   },
@@ -176,8 +226,13 @@ const quizQuestions = [
     id: 11,
     question:
       'A pump system shows 40% energy saving from VSD installation with £3,200 annual saving. If carbon costs £50/tonne and grid factor is 0.233 kgCO₂/kWh, what additional carbon credit value?',
-    options: ['£160', '£340', '£535', '£800'],
-    correctAnswer: 2,
+    options: [
+      '£160',
+      '£340',
+      '£800',
+      '£535',
+    ],
+    correctAnswer: 3,
     explanation:
       'Energy saved = £3,200 / £0.15/kWh ≈ 21,333 kWh. Carbon saved = 21,333 × 0.233 = 4,971 kg = 4.97 tonnes. Carbon value = 4.97 × £50 = £248.50. Note: actual calculation depends on electricity price assumed.',
   },
@@ -186,12 +241,12 @@ const quizQuestions = [
     question:
       'What is the recommended approach when applying affinity laws to systems with significant static head?',
     options: [
-      'Apply affinity laws without modification',
-      'Use only the flow relationship, not power',
       'Account for static head as minimum pressure requirement',
       'Affinity laws cannot be used for static head systems',
+      'Apply affinity laws without modification',
+      'Use only the flow relationship, not power',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Systems with static head (like pumping to height) have a minimum pressure requirement regardless of flow. The affinity laws apply to the variable friction losses only - the static head component must be maintained at all speeds.',
   },

@@ -32,10 +32,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary purpose of BREEAM Mat 01 (Environmental Impacts from Construction Products)?',
     options: [
-      'To measure construction programme duration',
+      'A scaffold with a single row of standards, with putlogs built into the brickwork',
       'To assess life cycle environmental impacts of building materials using LCA methodology',
-      'To calculate material costs for the project',
-      'To verify supplier delivery schedules',
+      'Daily summaries for facility managers, weekly for energy managers',
+      'Place them in the recovery position, monitor their breathing, and stay with them',
     ],
     correctIndex: 1,
     explanation:
@@ -45,8 +45,13 @@ const quickCheckQuestions = [
     id: 'responsible-sourcing',
     question:
       'Which BREEAM issue specifically addresses responsible sourcing of construction products?',
-    options: ['Mat 01', 'Mat 02', 'Mat 03', 'Wst 01'],
-    correctIndex: 2,
+    options: [
+      'Mat 03',
+      'Mat 02',
+      'Mat 01',
+      'Wst 01',
+    ],
+    correctIndex: 0,
     explanation:
       'Mat 03 (Responsible Sourcing of Construction Products) specifically addresses responsible sourcing, requiring materials to be sourced from suppliers with certified environmental management systems and responsible sourcing certification schemes such as BES 6001.',
   },
@@ -54,12 +59,12 @@ const quickCheckQuestions = [
     id: 'construction-waste',
     question: 'What does BREEAM Wst 01 require for construction waste management?',
     options: [
-      'All waste must be sent to landfill',
+      'Test results, faults, repairs, replacements, and inspections',
+      'Investigate the cause as it\\\\\\\\\\\\\\\'s below the minimum requirement',
+      'They set standards for integration and safety requirements',
       'A Resource Management Plan setting diversion targets from landfill',
-      'Only hazardous waste tracking',
-      'No waste monitoring is required',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Wst 01 requires a Resource Management Plan (RMP) that sets targets for diverting construction waste from landfill, monitors actual waste arisings, and demonstrates commitment to reducing, reusing, and recycling construction materials.',
   },
@@ -67,10 +72,10 @@ const quickCheckQuestions = [
     id: 'circular-economy',
     question: 'How does circular economy thinking apply to MEP material selection?',
     options: [
-      'Use the cheapest materials regardless of recyclability',
+      'Different filter types protect against different classes of substance; the wrong filter provides no protection',
       'Design for disassembly, specify recyclable materials, and consider end-of-life recovery',
-      'Install materials that cannot be removed',
-      'Ignore material life cycle considerations',
+      'The current creates a magnetic field that attracts the iron armature',
+      'Employees\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019 capabilities and training needs when allocating tasks',
     ],
     correctIndex: 1,
     explanation:
@@ -84,10 +89,10 @@ const quizQuestions = [
     question:
       'What documentation is required to demonstrate compliance with BREEAM Mat 01 credits?',
     options: [
-      'Supplier invoices only',
+      'Connecting two tubes at 90 degrees to each other',
       'Environmental Product Declarations (EPDs) or equivalent LCA data',
-      'Material safety data sheets',
-      'Building control approval',
+      'The arc current may be less than the MCB rating',
+      'To prevent premature failure due to environmental conditions',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,10 +103,10 @@ const quizQuestions = [
     question:
       'In BREEAM Mat 03, what level of responsible sourcing certification is required for the highest credits?',
     options: [
-      'No certification required',
-      'Any supplier statement',
+      'It enables material recovery and reuse at end of building life',
+      'Verified environmental impact data across defined life cycle stages',
       'Third-party certified schemes such as BES 6001 or FSC',
-      'Self-declared environmental policies',
+      'Copper cables, steel containment, pipework, and ductwork',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,8 +116,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What minimum percentage of construction waste diversion from landfill typically earns BREEAM Wst 01 credits?',
-    options: ['50%', '70%', '85%', '95%'],
-    correctAnswer: 1,
+    options: [
+      '85%',
+      '50%',
+      '95%',
+      '70%',
+    ],
+    correctAnswer: 3,
     explanation:
       'BREEAM Wst 01 typically requires a minimum 70% diversion of non-hazardous construction waste from landfill for baseline credits, with higher percentages (up to 95%) earning additional credits depending on the scheme version.',
   },
@@ -120,12 +130,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which MEP materials are most relevant for Mat 03 responsible sourcing credits?',
     options: [
-      'Only structural steel',
       'Copper cables, steel containment, pipework, and ductwork',
-      'Paint and finishes only',
-      'Concrete and masonry',
+      'Verified environmental impact data across defined life cycle stages',
+      'Third-party certified schemes such as BES 6001 or FSC',
+      'Recycled copper conductors can contribute to recycled content targets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Key MEP materials for Mat 03 include copper cables and conductors, steel cable containment and supports, copper and steel pipework, galvanised steel ductwork, and aluminium components - all of which can be sourced from certified suppliers.',
   },
@@ -133,10 +143,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does an Environmental Product Declaration (EPD) provide?',
     options: [
-      'Product installation instructions',
+      'Third-party certified schemes such as BES 6001 or FSC',
       'Verified environmental impact data across defined life cycle stages',
-      'Warranty information',
-      'Pricing and lead time data',
+      'Recycled copper conductors can contribute to recycled content targets',
+      'Copper cables, steel containment, pipework, and ductwork',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,8 +155,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Which BREEAM issue addresses operational waste storage and recycling facilities?',
-    options: ['Wst 01', 'Wst 02', 'Wst 03', 'Mat 01'],
-    correctAnswer: 1,
+    options: [
+      'Wst 01',
+      'Wst 03',
+      'Wst 02',
+      'Mat 01',
+    ],
+    correctAnswer: 2,
     explanation:
       "Wst 02 (Operational Waste) addresses the provision of adequate space and facilities for segregation and storage of operational recyclable waste, encouraging building users to recycle during the building's operational phase.",
   },
@@ -155,11 +170,11 @@ const quizQuestions = [
     question: 'How does designing for disassembly support circular economy principles?',
     options: [
       'It makes buildings harder to demolish',
-      'It enables material recovery and reuse at end of building life',
-      'It reduces initial construction costs',
       'It eliminates the need for maintenance',
+      'It reduces initial construction costs',
+      'It enables material recovery and reuse at end of building life',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Designing for disassembly uses mechanical fixings rather than adhesives, documents material locations, and enables components to be recovered intact for refurbishment or recycling at end of building life, supporting circular material flows.',
   },
@@ -167,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'What recycled content consideration applies to copper cables in BREEAM assessments?',
     options: [
-      'Copper cables cannot have recycled content',
       'Recycled copper conductors can contribute to recycled content targets',
-      'Only new copper is permitted',
-      'Recycled content is not tracked for cables',
+      'Verified environmental impact data across defined life cycle stages',
+      'Third-party certified schemes such as BES 6001 or FSC',
+      'By segregating waste, returning packaging, and using prefabrication to reduce site waste',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Copper cables can specify recycled copper conductors, which contributes to building-level recycled content targets. Copper has excellent recyclability and recycled copper maintains equivalent performance to virgin material.',
   },
@@ -180,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of a Site Waste Management Plan (SWMP) in construction?',
     options: [
-      'To plan site security arrangements',
+      'Recycled copper conductors can contribute to recycled content targets',
       'To forecast, record, and manage construction waste arisings and disposal routes',
-      'To schedule material deliveries',
-      'To track labour productivity',
+      'By segregating waste, returning packaging, and using prefabrication to reduce site waste',
+      'Copper cables, steel containment, pipework, and ductwork',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,8 +208,13 @@ const quizQuestions = [
     id: 10,
     question:
       'Which standard defines the methodology for Environmental Product Declarations in construction?',
-    options: ['BS 7671', 'EN 15804', 'ISO 9001', 'CIBSE Guide A'],
-    correctAnswer: 1,
+    options: [
+      'BS 7671',
+      'CIBSE Guide A',
+      'EN 15804',
+      'ISO 9001',
+    ],
+    correctAnswer: 2,
     explanation:
       'EN 15804 (Sustainability of Construction Works - Environmental Product Declarations) defines the core product category rules for construction products, ensuring EPDs are calculated consistently and can be compared across suppliers.',
   },
@@ -202,12 +222,12 @@ const quizQuestions = [
     id: 11,
     question: 'How can MEP contractors contribute to Wst 01 construction waste credits?',
     options: [
-      'By disposing of all waste in general skips',
+      'Verified environmental impact data across defined life cycle stages',
+      'Recycled copper conductors can contribute to recycled content targets',
+      'It enables material recovery and reuse at end of building life',
       'By segregating waste, returning packaging, and using prefabrication to reduce site waste',
-      'By ignoring waste requirements',
-      'By disposing of waste off-site without records',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'MEP contractors contribute by segregating metals, plastics, and cardboard; returning cable drums and packaging to suppliers; using off-site prefabrication to reduce site waste; and maintaining accurate waste transfer documentation.',
   },
@@ -215,12 +235,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is embodied carbon in the context of building materials?',
     options: [
-      'The carbon released during building operation',
       'The total greenhouse gas emissions from extraction, manufacture, and transport of materials',
-      'The carbon stored in timber products',
-      'The carbon footprint of building users',
+      'Verified environmental impact data across defined life cycle stages',
+      'To forecast, record, and manage construction waste arisings and disposal routes',
+      'Recycled copper conductors can contribute to recycled content targets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Embodied carbon represents the total greenhouse gas emissions associated with material extraction, manufacturing, transportation, and installation (life cycle stages A1-A5). It is a key metric in Mat 01 LCA assessments.',
   },

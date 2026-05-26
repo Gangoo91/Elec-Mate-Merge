@@ -66,11 +66,11 @@ const AM2Module5Section5 = () => {
       question: "If you fix a reversed polarity at a socket, what's the appropriate re-test?",
       options: [
         'Earth fault loop impedance test',
-        'Insulation resistance test',
         'Polarity test at the socket outlet',
+        'Insulation resistance test',
         'RCD operation test',
       ],
-      correctIndex: 2,
+      correctIndex: 1,
       explanation:
         'After correcting polarity errors, you must re-test polarity at the specific outlet to confirm the correction.',
     },
@@ -79,11 +79,11 @@ const AM2Module5Section5 = () => {
       question: 'What re-test is required after fixing an open circuit fault?',
       options: [
         'Insulation resistance test',
-        'Continuity test of conductors',
-        'Earth fault loop impedance test',
         'RCD operation test',
+        'Earth fault loop impedance test',
+        'Continuity test of conductors',
       ],
-      correctIndex: 1,
+      correctIndex: 3,
       explanation:
         'Open circuit faults are proven rectified by demonstrating continuity between conductor ends.',
     },
@@ -94,10 +94,10 @@ const AM2Module5Section5 = () => {
       id: 1,
       question: 'Why is re-testing mandatory after rectification?',
       options: [
-        'To waste time',
+        'Using presence detection and scheduling',
         'To prove the circuit is now safe and compliant',
-        'To use more test equipment',
-        'To impress the assessor',
+        'Test date, next test date, and tester ID',
+        'To prevent premature collapse during fires',
       ],
       correctAnswer: 1,
       explanation:
@@ -106,7 +106,12 @@ const AM2Module5Section5 = () => {
     {
       id: 2,
       question: 'What part of BS 7671 covers verification requirements?',
-      options: ['Part 4', 'Part 5', 'Part 6', 'Part 7'],
+      options: [
+        'Part 7',
+        'Part 4',
+        'Part 6',
+        'Part 5',
+      ],
       correctAnswer: 2,
       explanation:
         'BS 7671 Part 6 covers inspection and testing, including verification after alteration or repair.',
@@ -114,8 +119,13 @@ const AM2Module5Section5 = () => {
     {
       id: 3,
       question: 'What re-test is needed after fixing an open circuit?',
-      options: ['Insulation resistance', 'Continuity of conductors', 'RCD operation', 'Polarity'],
-      correctAnswer: 1,
+      options: [
+        'RCD operation',
+        'Insulation resistance',
+        'Polarity',
+        'Continuity of conductors',
+      ],
+      correctAnswer: 3,
       explanation:
         'Open circuit faults are verified as fixed by re-testing continuity between conductor ends.',
     },
@@ -123,12 +133,12 @@ const AM2Module5Section5 = () => {
       id: 4,
       question: 'What re-test proves a short circuit has been cleared?',
       options: [
-        'Continuity',
         'Insulation resistance between conductors',
-        'Earth loop impedance',
-        'RCD test',
+        'To anticipate future error based on rate of change',
+        'Detailed records with locations',
+        'Conductor resistance and current',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Short circuits are proven cleared by re-testing insulation resistance between the previously shorted conductors.',
     },
@@ -136,12 +146,12 @@ const AM2Module5Section5 = () => {
       id: 5,
       question: 'What test confirms that polarity is now correct?',
       options: [
-        'Continuity test',
-        'Insulation test',
+        'Residual Current Device (RCD)',
         'Polarity test at outlets/switches',
-        'Earth loop test',
+        'Secure connections and accessibility',
+        'Materials to be used (e.g., cable type)',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Polarity errors require re-testing polarity at the specific outlets or switches that were corrected.',
     },
@@ -149,12 +159,12 @@ const AM2Module5Section5 = () => {
       id: 6,
       question: 'Which test confirms a high resistance fault is rectified?',
       options: [
-        'Insulation resistance',
+        'Communication conflicts occur',
+        'Use rollers and apply lubricant',
         'Earth fault loop impedance (Zs)',
-        'RCD operation',
-        'Functional testing',
+        '25-30 years with degradation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'High resistance faults in protective conductors are verified by re-testing earth fault loop impedance (Zs).',
     },
@@ -170,12 +180,12 @@ const AM2Module5Section5 = () => {
       id: 8,
       question: 'What happens if you forget to state a re-test in AM2?',
       options: [
-        'Nothing',
         'You lose marks even if fault diagnosis was correct',
-        'Only minor point deduction',
-        'Assessor will remind you',
+        'Cables are in prescribed zones or have RCD protection',
+        'To prevent signal reflections that cause communication errors',
+        'Flexible connections and movement accommodation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Forgetting to state the appropriate re-test results in lost marks, even with correct fault diagnosis.',
     },
@@ -183,10 +193,10 @@ const AM2Module5Section5 = () => {
       id: 9,
       question: 'Why should you include measurement units in recorded results?',
       options: [
-        'To show precision',
+        'Higher complexity and material use',
         'To meet professional documentation standards',
-        'To confuse assessors',
-        'Units are optional',
+        'A guard rail around an open edge',
+        'File or ream to remove sharp edges',
       ],
       correctAnswer: 1,
       explanation:
@@ -196,12 +206,12 @@ const AM2Module5Section5 = () => {
       id: 10,
       question: "What's the golden rule for rectification and re-testing answers?",
       options: [
-        'Fix first, test later',
+        'To subtract lead resistance from readings',
+        'Redundant Ethernet ring or dual-star topology',
         'Always link rectification with appropriate re-test',
-        'Test everything',
-        'Only test if asked',
+        'Outriggers extending the effective base to at least 3m',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Always link rectification actions with the specific re-test that proves the fault has been corrected.',
     },

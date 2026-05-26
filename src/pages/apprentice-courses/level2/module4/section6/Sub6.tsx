@@ -40,12 +40,12 @@ const checks = [
     question:
       'A new domestic CU swap-out has been completed. Which combination of forms is needed for handover per BS 7671?',
     options: [
-      'Just an EIC.',
-      'Just an STR.',
+      'It highlights the critical moment of choice between an emotional trigger and our reaction — recognising and expanding this space is a core EI skill that separates reactive from intentional behaviour',
+      '10% of accessories with all DBs and CUs fully inspected, all final-circuit dead and live tests on a sampled basis where the inspection cannot be 100% without disruption — sampling rate must be agreed in writing with the customer in advance and recorded in the limitations on the report.',
+      'PUWER governs the safe provision, use and maintenance of all the equipment a maintenance technician uses daily — from hand tools to test instruments to access equipment',
       'Electrical Installation Certificate (EIC) + Schedule of Inspections + Schedule of Test Results — the three together form the complete certification pack required by Section 644 for new installations and significant alterations.',
-      'Minor Electrical Installation Works Certificate only.',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'A CU swap-out is a major alteration and requires the full EIC + Schedule of Inspections + Schedule of Test Results trio. The EIC is the top-level signed certificate that ties the package together. The Schedule of Inspections records the visual inspection items. The Schedule of Test Results records every test reading per circuit. Minor Works Certificate (MEIWC) is for small additions or alterations to existing circuits — not for a new CU. See Sub 8 for column-by-column STR walk-through.',
   },
@@ -54,12 +54,12 @@ const checks = [
     question:
       'On the EIC for a new domestic install, the "Designer", "Constructor" and "Inspector" boxes can be filled in by:',
     options: [
-      'The customer.',
+      'When your VAT-taxable turnover over the previous 12 months exceeds the VAT registration threshold (currently £90,000, set by HMRC and updated periodically) — or when you expect to exceed it in the next 30 days.',
+      'Where metallic mounting frames are connected to exposed-conductive-parts of Class I PV equipment, they form part of that equipment\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earthing arrangement; otherwise, fault-loop impedance and lightning protection requirements apply',
       'The same person if they did all three roles, or different people if the work was split between specialists. Each role-holder signs their own box. The certificate is invalidated if the signatures are forged or if a role is left blank when the work was actually carried out.',
-      'Anyone present at handover.',
-      'Must always be three different people.',
+      'PEEPs are reasonable adjustments under Equality Act + safety arrangements under RRFSO 2005 + MHSWR Reg 3. Failure to provide PEEP for someone needing one = unlawful discrimination + safety breach.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The EIC has separate signed declarations for designer, constructor (installer) and inspector. The same competent person can hold all three (common on a small domestic job done by a single electrician). On a larger project they may be different — e.g. consulting engineer designs, contractor installs, third-party inspects. Each must sign their own box. Forging or leaving blanks creates an invalid certificate.',
   },
@@ -68,12 +68,12 @@ const checks = [
     question:
       'During final testing of a new install, a circuit fails the IR test (reads 0.6 MΩ). What does Reg 644.1.1 require?',
     options: [
-      'Issue the EIC with a note that the circuit fails IR.',
       'For a new installation, any defect or omission revealed during inspection and testing shall be corrected before the Certificate is issued. So you fix the IR defect, retest, then issue the EIC. You cannot issue a clean EIC for an installation with a known defect.',
-      'Issue the EIC and fix the defect at the next visit.',
-      'Issue an EICR instead of an EIC.',
+      'Electrical Installation Certificate (EIC) + Schedule of Inspections + Schedule of Test Results — the three together form the complete certification pack required by Section 644 for new installations and significant alterations.',
+      'COP = instant ratio of heat output to electrical input at a single test point; SCOP = seasonal average across realistic operating conditions in a defined climate — SCOP is what determines real-world running cost',
+      'They may unintentionally alienate colleagues, miss important social cues, fail to adapt their communication style to different audiences, and receive repeated negative feedback they cannot understand or act upon',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 644.1.1 verbatim: "For a new installation, any defect or omission revealed during the inspection and testing shall be corrected before the Certificate is issued." The EIC certifies the installation is safe at handover — issuing one for an installation with a known IR fault would be a misrepresentation. Find the fault, fix it, retest, then issue the certificate with all clean readings. The corrective work itself does not need a separate certificate; it\'s part of the original installation.',
   },
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 Reg 642.4 — recording requirements:',
     options: [
-      'Optional.',
+      'Follow all instructions exactly; submit on time (late tenders are rejected without consideration); include all required documents (method statements, H&S policy, insurance certificates, ISO accreditations if requested, references, financial accounts); price every BoQ line; sign and bind the submission as required.',
       'Test results shall be recorded. The recording forms part of the certification process and the records shall be retained for the lifetime of the installation (or as required by the contracting party). The Schedule of Test Results is the standard form.',
-      'Only required for installations over 100 kW.',
-      'Only required for periodic inspections.',
+      'The locations of points of demand, the loads expected on circuits, daily and yearly variation of demand, special conditions (such as harmonics), and special control or signalling requirements.',
+      'Because the measurement is taken at ambient temperature with the cable cold (R1 + R2 at ambient ~20 °C), but the design Zs was calculated assuming the conductor is at its operating temperature (~70 °C for thermoplastic). The cold measurement is roughly 1/1.20 ≈ 0.83 of the hot figure.',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: 'When is a Minor Electrical Installation Works Certificate (MEIWC) used instead of an EIC?',
     options: [
-      'For new CU installations.',
+      'A detector that uses a light source and photosensor to detect smoke particles by light scattering; most effective at detecting slow-smouldering fires that produce large visible smoke particles',
+      'SDS-Plus bits have specially shaped slots in the shank that allow the bit to move forward and back (for hammering) while being positively driven in rotation — they cannot slip in the chuck',
       'For minor additions or alterations to an existing circuit (e.g. adding a single socket on an existing ring) that do NOT require a new circuit. New circuits, CU replacements and major alterations require an EIC + Schedule of Inspections + STR.',
-      'For three-phase installations only.',
-      'Whenever the customer prefers it.',
+      'Identify one high-visibility safety behaviour, implement it consistently, and frame it as &ldquo;who we are as a company&rdquo; rather than &ldquo;what we have to do&rdquo;',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'MEIWC is for minor work on existing circuits — adding a socket to a ring, adding a light fitting to a lighting circuit, replacing a damaged accessory like-for-like. The MEIWC is a single-page form that captures the test results for the altered portion only. Anything that adds a new circuit, replaces a CU, or makes a major change to the installation requires the full EIC trio.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'Per-circuit columns on the IET model Schedule of Test Results include all of the following except:',
     options: [
-      'Circuit number, description, type of wiring.',
-      'Customer\'s pet name and birthday.',
       'CSA of conductors, max Zs, OCPD type/rating, RCBO IΔn.',
+      'Circuit number, description, type of wiring.',
       'R1+R2, IR readings (L-L / L-E / N-E), polarity tick, Zs measured, RCD trip times.',
+      'Customer\\\\\\\\\\\\\\\'s pet name and birthday.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Standard STR columns are technical data per circuit: identification (number, description, wiring type, reference method), cable data (CSA L+CPC), protective device (type, rating, IΔn for RCBOs), max Zs (from Table 41.3), and the test results (R1+R2, ring final readings, IR L-L / L-E / N-E, polarity, Zs measured, RCD trip time, AFDD test where fitted). No personal information goes on the STR.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'Modern multifunction testers can download test data to a phone or PC. Does this replace the requirement to complete an STR?',
     options: [
-      'Yes — the download is sufficient.',
       'No — the STR is the regulatory document. The instrument download is a useful audit trail and a way to capture test data at the point of testing, but the completed STR with all required fields and signatures is what satisfies Reg 642.4 and Section 644. Most professionals use the download to populate the STR rather than as a standalone replacement.',
-      'Yes, provided the download is digitally signed.',
-      'Only for periodic inspections.',
+      'Recognise that direct eye contact norms vary significantly across cultures — in many cultures, avoiding direct eye contact is a sign of respect, not evasion. Adjust your communication style to accommodate cultural differences rather than interpreting through your own cultural lens',
+      'Monitor the generator loading continuously, verify that all life-safety and critical loads are energised, confirm load shedding has disconnected the correct non-essential circuits, and be prepared to manually intervene if automatic systems fail',
+      'A safe system of work — including risk assessment, isolation procedure, voltage proving (dead-test), lock-off, and a written method statement where appropriate. Reg 4(3) is the legal hook for everything you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'d recognise as \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'site safety procedure\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The completed STR (paper or PDF) with all the required columns and the inspector\'s signature is the regulatory deliverable. Instrument downloads are a useful working tool — they capture readings without manual transcription and provide a defendable audit trail of what the meter actually measured — but they do not satisfy the formal certification requirement on their own. Most certification software (NICEIC Online, ElecCert, EasyCert) imports instrument downloads to auto-populate the STR fields, which the inspector then reviews and signs.',
   },
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'A circuit on the STR has Zs (calc) = 0.75 Ω from the dead test continuity values, and Zs (measured) = 0.78 Ω from the live test at the far end of the circuit. What does this slight difference mean?',
     options: [
-      'A serious fault.',
+      'Tissue damage caused by current passing through the body OR by arc / flash heating the skin. Internal burns can be severe with small surface marking. Different from thermal burns (cooler at surface; hotter at depth).',
       'Normal — the live Zs measurement includes some additional impedance from the protective device internal contacts and from any small leakage paths at the time of the live measurement. A 0.03 Ω difference is well within the expected agreement between the two methods.',
-      'The instrument is faulty.',
-      'The cable is too small.',
+      'ASHP delivers 3–4 kWh of heat per 1 kWh electrical input (high efficiency) but works best in well-insulated dwellings with low flow temperatures (~45 °C); a poorly insulated house with high-temperature radiators can negate the running-cost advantage',
+      'Auto-disconnection occurs in the same disconnection times as the equivalent TN system (Table 41.1) — once a second fault establishes a fault loop through the protective conductor, fault current flows like a TN line-to-earth fault and the protective device disconnects',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'The Schedule of Inspections records:',
     options: [
-      'Per-circuit test readings.',
+      'Redesign — options include increasing the cpc CSA (e.g. from 1.5 mm² to 2.5 mm² as a separate cpc on a single-cable run), shortening the route by relocating the device or the load, dropping to a lower-rated device (B25 max Zs = 1.75 Ω), or fitting a 30 mA RCD as the alternative path under Reg 411.4.204 if the circuit type allows it.',
+      'Because they extract a much larger quantity of heat from a renewable source (the outside air or ground) than the electricity input would deliver if used for direct resistive heating — typically 3:1, so they massively reduce the carbon footprint of heating.',
       'Visual inspection items at the installation level — connection of conductors, identification of conductors, presence of required diagrams and labels, presence of barriers / enclosures / SPDs / RCDs, suitability of equipment for the location, etc. A tick-list grouped by category.',
-      'Only the results of the IR test.',
-      'Only the customer\'s contact details.',
+      'Simulate the control conditions (setpoints, alarm triggers, timer events) and verify that the system responds with the correct output actions in the correct sequence and within the specified time parameters',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Schedule of Inspections is the visual check list. Items include: connection of live conductors, identification of conductors, route of cables, selection of conductors for current-carrying capacity and voltage drop, connection of accessories, presence of fire barriers and enclosures, presence of warning notices and labels, presence of diagrams and instructions, presence of fault protection (RCDs etc.), connection of single-pole devices in line, polarity, methods of safe isolation. Each item is ticked, marked N/A or marked with a comment.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'The EIC has a section for "Departures from BS 7671". What goes there?',
     options: [
-      'Nothing — departures are not allowed.',
+      'Monitor the generator loading continuously, verify that all life-safety and critical loads are energised, confirm load shedding has disconnected the correct non-essential circuits, and be prepared to manually intervene if automatic systems fail',
+      'The JIB National Working Rules set out agreed terms covering wages, working hours, overtime, travel, and conditions, providing a contractual framework for resolving disputes about these matters in the electrical contracting industry',
+      'Visual inspection items at the installation level — connection of conductors, identification of conductors, presence of required diagrams and labels, presence of barriers / enclosures / SPDs / RCDs, suitability of equipment for the location, etc. A tick-list grouped by category.',
       'Any deliberate deviation from a BS 7671 requirement that the designer judges acceptable for the specific installation, with justification. E.g. omitting an RCD on a non-dwelling socket-outlet under the Reg 411.3.3 risk-assessment exception. Each departure must be documented with reasoning.',
-      'Only used for three-phase installations.',
-      'Customer complaints.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 recognises that not every installation can or should comply with every numerical requirement of every regulation. The "Departures" section of the EIC is where the designer documents any deviation, with reasoning, so the customer and any future inspector understands why. Common examples: socket-outlet without RCD under the documented risk-assessment exception (Reg 411.3.3), overlong cable run accepted with reduced disconnection time, equipment fitted in a special location with mitigating measures. Each departure must be agreed by the duty-holder and recorded.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'After issue of the EIC, copies should be:',
     options: [
-      'Filed in the contractor\'s office and forgotten.',
-      'Provided to the customer (full pack — EIC + Schedule of Inspections + STR), retained by the contractor (typically minimum six years), and uploaded to any applicable Competent Person Scheme (NICEIC, NAPIT, Stroma, ECA etc.) within the scheme\'s required notification window — typically 30 days for Part P-notifiable work.',
-      'Returned to BS 7671 headquarters.',
-      'Posted on the side of the consumer unit only.',
+      'Provided to the customer (full pack — EIC + Schedule of Inspections + STR), retained by the contractor (typically minimum six years), and uploaded to any applicable Competent Person Scheme (NICEIC, NAPIT, Stroma, ECA etc.) within the scheme\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s required notification window — typically 30 days for Part P-notifiable work.',
+      'A notice shall be fixed in a prominent position at or near the origin of the installation indicating: the date of the next inspection, the name of the contractor or scheme, and contact details. The notice survives between EICs as a continuity record.',
+      'Microgeneration Certification Scheme — the consumer-protection scheme covering low-carbon installations (solar PV, heat pumps, battery storage, biomass) that customers can use to access government feed-in tariffs, the Smart Export Guarantee or Boiler Upgrade Scheme grants.',
+      'The sum of line and CPC resistance — R1 + R2 — i.e. the standard interpretation. Where accessory boxes ARE in contact with earthed metalwork (a metal back-box screwed to a metal stud, for example), parallel earth paths can lower the apparent R2, masking the true CPC resistance.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Three copies typically: customer (handover pack — they need it for any sale of the property and for any future EICR), contractor (file copy, retained for at least six years for liability purposes, often longer), and CPS (Competent Person Scheme registration if the installation is Part P notifiable in England and Wales — the scheme generates the Building Control Compliance Certificate that the customer also needs). Some schemes auto-upload from the contractor\'s software; others require manual entry within 30 days.',
   },

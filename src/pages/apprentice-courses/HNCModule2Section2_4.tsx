@@ -41,15 +41,25 @@ const quickCheckQuestions = [
   {
     id: 'k-factor',
     question: 'A 90° elbow has K = 0.75. For flow at 2 m/s, what is the head loss? (g = 10 m/s²)',
-    options: ['0.075 m', '0.15 m', '0.30 m', '1.5 m'],
-    correctIndex: 1,
+    options: [
+      '0.075 m',
+      '0.30 m',
+      '0.15 m',
+      '1.5 m',
+    ],
+    correctIndex: 2,
     explanation:
       'Minor loss h = K × v²/2g = 0.75 × 2²/(2×10) = 0.75 × 0.2 = 0.15 m. K factors allow quick calculation of fitting losses without complex geometry analysis.',
   },
   {
     id: 'pipe-roughness',
     question: 'Which pipe material typically has the lowest absolute roughness?',
-    options: ['Cast iron', 'Galvanised steel', 'Copper', 'Concrete'],
+    options: [
+      'Cast iron',
+      'Galvanised steel',
+      'Copper',
+      'Concrete',
+    ],
     correctIndex: 2,
     explanation:
       'Copper has very low roughness (ε ≈ 0.0015 mm) compared to galvanised steel (ε ≈ 0.15 mm) or cast iron (ε ≈ 0.26 mm). Lower roughness means lower friction factors and pressure drops.',
@@ -57,8 +67,13 @@ const quickCheckQuestions = [
   {
     id: 'cibse-tables',
     question: 'CIBSE pipe sizing tables typically give pressure drop in:',
-    options: ['Pa per metre of pipe', 'Bar total', 'Metres head', 'PSI per foot'],
-    correctIndex: 0,
+    options: [
+      'PSI per foot',
+      'Pa per metre of pipe',
+      'Bar total',
+      'Metres head',
+    ],
+    correctIndex: 1,
     explanation:
       'CIBSE tables give pressure drop rate in Pa/m (Pascals per metre of pipe run). This allows quick calculation of total pipe friction loss by multiplying by pipe length.',
   },
@@ -68,8 +83,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the Darcy-Weisbach equation for head loss?',
-    options: ['h_f = fLv²/2gD', 'h_f = ρgh', 'h_f = P/ρg', 'h_f = Kv²/2g'],
-    correctAnswer: 0,
+    options: [
+      'h_f = ρgh',
+      'h_f = fLv²/2gD',
+      'h_f = P/ρg',
+      'h_f = Kv²/2g',
+    ],
+    correctAnswer: 1,
     explanation:
       "The Darcy-Weisbach equation h_f = f(L/D)(v²/2g) relates head loss to friction factor (f), pipe length (L), diameter (D), velocity (v), and gravity (g). It's the fundamental equation for pipe friction.",
   },
@@ -77,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: 'On a Moody diagram, friction factor depends on which two parameters?',
     options: [
+      'Flow rate and pipe length',
       'Pressure and temperature',
       'Reynolds number and relative roughness',
-      'Flow rate and pipe length',
       'Density and viscosity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Moody diagram plots friction factor (f) against Reynolds number (Re) with curves for different relative roughness (ε/D). For turbulent flow, both Re and roughness affect friction factor.',
   },
@@ -90,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'For fully turbulent flow in rough pipes, the friction factor:',
     options: [
-      'Depends only on Reynolds number',
+      'Reynolds number and relative roughness',
+      'Determine friction factor for turbulent flow',
+      'The route with highest pressure drop',
       'Depends only on relative roughness',
-      'Is always 64/Re',
-      'Approaches zero',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In the fully rough turbulent zone, friction factor depends only on relative roughness (ε/D), not on Reynolds number. This is shown by the horizontal portions of curves on the Moody diagram.',
   },
@@ -103,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'The Colebrook-White equation is used to:',
     options: [
-      'Calculate flow rate directly',
       'Determine friction factor for turbulent flow',
-      'Size pipe diameters',
-      'Calculate pump power',
+      'Length of straight pipe giving the same pressure drop',
+      'Depends only on relative roughness',
+      'The route with highest pressure drop',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Colebrook-White equation: 1/√f = -2log₁₀(ε/3.7D + 2.51/Re√f) is the basis for the Moody diagram. It requires iteration to solve but gives accurate friction factors for turbulent flow.',
   },
@@ -116,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: "What is 'equivalent length' for fittings?",
     options: [
-      'The actual length of the fitting',
+      'Determine friction factor for turbulent flow',
       'Length of straight pipe giving the same pressure drop',
-      'The pipe diameter',
-      'Distance between fittings',
+      'They create significant flow restrictions (high K values)',
+      'Reynolds number and relative roughness',
     ],
     correctAnswer: 1,
     explanation:
@@ -129,16 +149,26 @@ const quizQuestions = [
     id: 6,
     question:
       'A system has 50m of pipe with pressure drop rate 200 Pa/m and fittings totalling 15m equivalent length. What is total friction loss?',
-    options: ['10 kPa', '13 kPa', '15 kPa', '20 kPa'],
-    correctAnswer: 1,
+    options: [
+      '10 kPa',
+      '15 kPa',
+      '13 kPa',
+      '20 kPa',
+    ],
+    correctAnswer: 2,
     explanation:
       'Total equivalent length = 50 + 15 = 65m. Total loss = 65 × 200 = 13,000 Pa = 13 kPa. This is the combined pipe and fitting friction loss.',
   },
   {
     id: 7,
     question: 'CIBSE recommends a maximum pressure drop rate of approximately:',
-    options: ['50 Pa/m', '100 Pa/m', '250-350 Pa/m', '500 Pa/m'],
-    correctAnswer: 2,
+    options: [
+      '50 Pa/m',
+      '100 Pa/m',
+      '500 Pa/m',
+      '250-350 Pa/m',
+    ],
+    correctAnswer: 3,
     explanation:
       'CIBSE typically recommends 250-350 Pa/m for index circuits to balance pipe cost against pump energy. Higher rates may be used for short runs; lower rates for long circuits.',
   },
@@ -146,20 +176,25 @@ const quizQuestions = [
     id: 8,
     question: 'Why do balancing valves and strainers often dominate pressure drop in HVAC systems?',
     options: [
-      'They are always larger than pipes',
       'They create significant flow restrictions (high K values)',
       'They are made of rough materials',
+      'They are always larger than pipes',
       'They are always at high elevations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Valves and strainers have high K values due to flow restrictions, changes in direction, and turbulence. A partially closed valve or dirty strainer can have K > 10, creating substantial pressure drops.',
   },
   {
     id: 9,
     question: 'When pipe diameter is doubled (all else equal), how does friction head loss change?',
-    options: ['Halves', 'Quarters', 'Reduces to 1/32', 'Doubles'],
-    correctAnswer: 2,
+    options: [
+      'Halves',
+      'Reduces to 1/32',
+      'Quarters',
+      'Doubles',
+    ],
+    correctAnswer: 1,
     explanation:
       'From h_f = fLv²/2gD: if D doubles, v reduces by factor 4 (continuity), so v² reduces by 16. Combined with 1/D term, loss reduces by factor 32. Larger pipes dramatically reduce friction.',
   },
@@ -167,27 +202,37 @@ const quizQuestions = [
     id: 10,
     question: "The 'index circuit' in a pipe system is:",
     options: [
-      'The shortest route',
+      'Reynolds number and relative roughness',
+      'Depends only on relative roughness',
       'The route with highest pressure drop',
-      'The first circuit installed',
-      'The circuit nearest the pump',
+      'Determine friction factor for turbulent flow',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The index circuit has the highest total pressure drop from pump to the furthest/most resistant terminal. The pump must overcome this pressure drop; other circuits are balanced to match.',
   },
   {
     id: 11,
     question: 'What is relative roughness?',
-    options: ['ε × D', 'ε / D', 'D / ε', 'ε + D'],
-    correctAnswer: 1,
+    options: [
+      'ε × D',
+      'ε + D',
+      'D / ε',
+      'ε / D',
+    ],
+    correctAnswer: 3,
     explanation:
       "Relative roughness = ε/D where ε is absolute roughness (mm) and D is internal diameter (mm). It's dimensionless and used on the Moody diagram. Larger pipes have lower relative roughness.",
   },
   {
     id: 12,
     question: 'For copper pipe with ε = 0.0015mm and D = 15mm, what is the relative roughness?',
-    options: ['0.0001', '0.001', '0.01', '0.1'],
+    options: [
+      '0.0001',
+      '0.1',
+      '0.01',
+      '0.001',
+    ],
     correctAnswer: 0,
     explanation:
       "ε/D = 0.0015/15 = 0.0001 (or 1×10⁻⁴). This very low relative roughness means copper pipes operate close to the 'smooth pipe' line on the Moody diagram.",

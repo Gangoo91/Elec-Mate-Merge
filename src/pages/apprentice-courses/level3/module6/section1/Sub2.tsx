@@ -39,12 +39,12 @@ const checks = [
     question:
       'Your client asks why the design pack quotes Reg 311.1 instead of just listing the cable sizes. What is the most professional response?',
     options: [
-      'It is the rule, no further explanation needed.',
+      'Assess the scene for danger, then check their airway, breathing, and circulation (ABC) without moving them unnecessarily due to potential spinal injury',
+      'Complete and sign the documentation for their own scope of responsibility, clearly note the outstanding sign-off, and arrange for the responsible person to review and sign at the earliest opportunity',
       'Reg 311.1 forces you to assess maximum demand BEFORE you size anything. The cable schedule is the output of the calc, not the calc itself — Part 3 is the audit trail that proves the calc was done.',
-      'Because Building Control demand to see it.',
-      'Quoting regs makes the document look professional.',
+      'Install a proprietary fire barrier or fire-stopping system within the trunking at the point of penetration, restoring the fire rating of the compartment',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Reg 311 (Maximum demand and diversity) is the first numerical assessment in any design. Without it, every cable size is a guess. The design pack quotes Part 3 because that is the regulatory anchor for every downstream calculation — supply characteristics, demand, division of installation, compatibility and external influences. The cable schedule shows what you picked; Part 3 shows you were entitled to pick it.",
   },
@@ -53,12 +53,12 @@ const checks = [
     question:
       'A client wants you to design the LV side of a 11 kV/400 V transformer-fed installation in a small data centre. Which Part of BS 7671 tells you this is in scope, and what does it specifically exclude?',
     options: [
-      'Part 1 — it covers everything.',
+      'Below 0.05 ohm — typical readings on a healthy 10 mm² bond of 4-5 m are 0.02 to 0.05 ohm. BS 7671 doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t specify an absolute maximum but the joint must be reliable and verifiable.',
+      'It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999',
+      'Visually inspect for storage damage, check the coil resistance, verify the contacts are not corroded or contaminated, ensure the operating mechanism moves freely, and confirm the component is within its shelf-life (if applicable)',
       'Part 1 (Reg 110) covers the LV installation up to and including the main switchgear; the HV side and the supply transformer are excluded because they are the property and responsibility of the DNO or private network operator.',
-      'Part 2 — definitions only.',
-      'Part 3 only — Part 1 does not deal with scope.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Reg 110.1 sets the scope: BS 7671 covers the design, erection and verification of electrical installations operating at LV (up to 1000 V AC). It explicitly excludes systems for the distribution of energy to the public, generation transmission and distribution by the supply industry, and railway / aircraft / marine traction equipment. On a private 11 kV/400 V installation the LV side from the secondary terminals down is in scope; the HV switchgear and transformer primary side are not — those need a separate competent person operating to ENA or similar standards.",
   },
@@ -67,12 +67,12 @@ const checks = [
     question:
       'You read in a manufacturer datasheet: "suitable for use as a circuit-breaker in accordance with BS EN 60898." A junior asks if this means the same thing as RCBO. The correct answer references which Part?',
     options: [
-      'Part 1 — scope.',
       'Part 2 — Definitions. A circuit-breaker (BS EN 60898) provides overcurrent protection only; an RCBO (BS EN 61009) combines overcurrent with residual-current protection. The two terms are not interchangeable and the wrong device gives the wrong protection.',
-      'Part 3 — assessment.',
-      'Part 4 — protection.',
+      'Apply a structured diagnostic approach: gather information about the symptoms, consult technical documentation, form a hypothesis, test it methodically, and escalate if the fault is beyond your competence',
+      'Record the actual value, flag it as marginal, investigate the possible cause, and consider recommending remedial action — a value near the limit today may deteriorate to a fail before the next inspection',
+      'Smart charging enables the charge rate, timing and duration to be managed dynamically in response to grid conditions, electricity tariffs, local network constraints and user preferences — it is essential to prevent network overloading as millions of EVs connect to a grid that was not designed for their combined demand',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Part 2 of BS 7671 is the definitions register. Circuit-breaker, RCBO, RCD, AFDD, SPD — each has a precise definition tied to a specific product standard. Mis-using terms in a design specification can lead the installer to fit the wrong device. Always quote the product standard alongside the device type in your specification: B32 RCBO to BS EN 61009-1, 30 mA Type A is unambiguous; a 32 A breaker with RCD is not.",
   },
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 is divided into seven Parts. Which three sit above all the design work in this module?',
     options: [
-      'Parts 4, 5 and 6.',
+      'Correct cable type/size, support spacing, bend radii, segregation, labelling, and termination quality',
       'Parts 1 (Scope, object and fundamental principles), 2 (Definitions), and 3 (Assessment of general characteristics).',
-      'Parts 5, 6 and 7.',
-      'Just Part 4 — protection.',
+      'Stop and raise an RFI — joist depth is a structural constraint, the designer needs to resolve the route.',
+      'Digital logs provide instant access to time-stamped records that cannot be lost or damaged',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'Reg 311 (Maximum demand and diversity) requires you to do what at the design stage?',
     options: [
-      'Total up the connected load and use that as the design current.',
+      'Avoid identifying clients or live worksites without consent, no derogatory comments about colleagues/clients/competitors, and respect confidentiality',
+      'The complete system of sensor, controller and final control element that measures a process variable, compares it to a setpoint, and adjusts the process accordingly',
       'Determine the maximum demand of the installation, having due regard to diversity, before selecting cables and protective devices.',
-      'Wait for the EICR to tell you the actual demand.',
-      'Assume the same demand as the previous installation.',
+      'A building with very high energy performance where remaining energy is largely from renewable sources',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Reg 311.1 specifically calls for assessment of maximum demand WITH diversity. Connected load (sum of nameplate ratings) is almost always larger than realistic peak demand because not every appliance runs at full load simultaneously. Diversity factors (IET On-Site Guide Table A1, IET GN1) reduce connected load to a defensible peak.",
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'Reg 312 covers division of the installation. Why does the designer care about this at design stage?',
     options: [
-      'To make wiring easier.',
+      'A systematic process of looking beyond the immediate cause to identify the underlying organisational, procedural, or design failures that allowed the injury to occur',
+      'Quick preliminary detection of the presence or absence of AC voltage on cables and conductors — it does NOT replace a proper voltage indicator for confirming \\\\\\\\\\\\\\\'dead\\\\\\\\\\\\\\\' before work begins',
+      'Circuit protection devices that detect dangerous electrical arcing (series and parallel arcs) in final circuits and disconnect the supply before the arc can cause a fire',
       'To limit the consequences of a fault, simplify safe inspection and testing, take account of danger, and avoid hazards arising from a single fault — by deciding how circuits are grouped, how DBs are arranged and how isolation works.',
-      'To save money on cable.',
-      'It is purely an aesthetic decision.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Reg 312 (Division of installation) names the structural decisions: how many DBs, how circuits are grouped, what gets dedicated supplies (e.g. fire alarm, IT critical loads, life-safety systems), how isolation is achieved, and how the installation can be partially shut down for maintenance without losing critical functions.",
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     id: 4,
     question: 'Reg 313 covers supply characteristics. The designer must know all of the following EXCEPT:',
     options: [
-      'Nominal voltage and tolerance.',
+      'The colour of the meter cover.',
       'Number and type of live conductors.',
       'Earthing arrangement (TN-S, TN-C-S, TT, IT) and external earth fault loop impedance Ze.',
-      'The colour of the meter cover.',
+      'Nominal voltage and tolerance.',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       "Reg 313 lists the supply characteristics that drive every protection and earthing decision: voltage, current, frequency, PSCC, Ze, earthing arrangement, conductor configuration. The aesthetic of the meter cover is not a regulatory matter. Get this list from the DNO declaration before you start designing.",
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'Reg 314 covers external influences. Which BS 7671 Appendix gives you the full classification matrix?',
     options: [
-      'Appendix 4.',
+      'A battery or generator backup that powers the hydraulic system when the main engine fails',
       'Appendix 5 — the AA / AB / AC and BD classification of environment, utilisation and building construction.',
-      'Appendix 14.',
-      'Appendix 17.',
+      'Pumping groundwater or surface water from excavations — risk of polluting watercourses with sediment or contaminants',
+      'Physical separation OR equivalent insulation OR an earthed metallic screen — to prevent transfer of mains potential into ELV circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why does the L3 designer care about Reg 132 (in Part 1) AND Reg 311 to 314 (in Part 3)?',
     options: [
+      'It has a secondary heat exchanger that recovers latent heat by condensing water vapour from flue gases',
+      'Zero tolerance with for-cause and post-incident testing, supported by an employee assistance referral route',
       'Part 1 says what must be done; Part 3 says how to assess the inputs to those decisions. Both apply.',
-      'They duplicate each other.',
-      'Part 3 is for installers only.',
-      'Part 1 is optional for residential work.',
+      'To carry out routine visual skin inspections and questionnaires, and refer any concerns to occupational health',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       "Part 1 names the design responsibility (Reg 132) and lists fourteen specific design considerations. Part 3 (Reg 311 to 314) is the structured assessment that produces the inputs for those design considerations. The designer reads both: Part 1 to understand what they must produce; Part 3 to understand how to evidence the inputs.",
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     id: 7,
     question: 'On a small commercial fit-out the DNO declares Ze = 0.35 ohm, PSCC = 16 kA, three-phase 400/230 V TN-C-S, 100 A per phase. Which Reg is this information collected against?',
     options: [
-      'Reg 311.',
+      'The person on whose behalf the inspection is carried out (typically the employer or person controlling the work)',
+      'Code C2 (potentially dangerous) on EICR, isolate, plan replacement of affected components, investigate water ingress and moisture source as the root cause',
+      'You should keep what the person tells you private unless there is a risk of harm to themselves or others',
       'Reg 313 — supply characteristics. The figures must be on the design pack and on the EIC, and they cap every protective device decision downstream.',
-      'Reg 421.',
-      'Reg 525.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Reg 313 collects supply characteristics. The PSCC of 16 kA caps the breaking capacity of every device on the installation: every MCB, RCBO, switch-disconnector, BS 88 fuse must be rated for at least 16 kA, or be backed up by an upstream device that limits PSCC at the next level (cascade or energy let-through). Without the supply data on file you cannot prove device adequacy at design stage.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     id: 8,
     question: 'You discover during the survey that the existing building is classified BE2 (fire propagation risk) under Appendix 5. Which design decisions follow from that?',
     options: [
-      'No change — BE2 only affects testing.',
       'Wiring systems must be selected to limit propagation of fire (Reg 527.1.2), penetrations must be fire-stopped (Reg 527.2), specific cable types may be required (LSF/LSZH or fire-resistant), and segregation from escape routes must be reviewed (Section 422).',
-      'The whole building must be rewired in MICC.',
-      'Switch off all ring finals.',
+      'The insurer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s right, after paying your claim, to step into your legal position and pursue recovery from any third party who caused or contributed to the loss. This is why you shouldn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t settle directly with a third party or admit liability — it can prejudice the insurer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recovery and void your cover.',
+      'Non-compliant — Zs exceeds the A4:2026 maximum of 1.37 Ω; the circuit fails disconnection time and must be re-designed (larger conductor, RCD additional protection, or supplementary bonding) before energising',
+      'It works best when the original failure was not caused by negligence, the recovery is swift and genuine, and the client perceives the effort as exceptional — it does not apply to repeated failures or serious safety issues',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "BE2 classification (locations with fire propagation risk) triggers the requirements of Section 422 of BS 7671 — restricted use of certain wiring system materials, fire-stopping of penetrations, and reviewed cable selection (typically LSF/LSZH for escape routes; fire-resistant for life-safety circuits). The assessment in Part 3 directly drives selection decisions in Part 5.",
   },

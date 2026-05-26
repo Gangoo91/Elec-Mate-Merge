@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'title-block-purpose',
     question: 'What is the primary purpose of the title block on an engineering drawing?',
     options: [
-      'To fill empty space on the drawing sheet',
+      'Long vertical or horizontal steel runs (>30 m) — typically using slotted bolt holes or sliding splices to allow thermal expansion.',
+      'A space that is substantially enclosed AND has a reasonably foreseeable risk of serious injury from hazardous conditions',
       'To provide essential identification and reference information including drawing number, title, scale, projection, revision status and approval signatures',
-      'To display the company logo only',
-      'To list the cost of the project',
+      'Free-fall distance, energy absorber deployment, harness stretch, D-ring shift, and a safety clearance below the worker\\\\\\\\\\\\\\\'s feet',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The title block is the 'identity card' of the drawing. It contains the drawing number (unique identifier), title, scale, projection convention, revision status, originator, checker, approver, date, and often material and finish specifications. This information is essential for document control and ensuring you are reading the correct, current drawing.",
   },
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'Why is the drawing number the most important piece of information on an engineering drawing?',
     options: [
-      'It tells you the size of the paper',
+      'Heat-transfer technology that uses electrical energy to move thermal energy from the ground into the building, with a typical CoP of 3–4',
       'It is the unique identifier used to retrieve, reference, cross-reference and manage the drawing throughout the life of the installation',
-      'It indicates the order in which drawings should be read',
-      'It shows how many drawings exist in total',
+      'To coordinate matters relating to health and safety and ensure designers cooperate, share information and apply the general principles of prevention',
+      'The maximum concentration of the gas or vapour in air above which the mixture is too rich to support combustion',
     ],
     correctIndex: 1,
     explanation:
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'revision-table',
     question: 'A revision table on a drawing shows:',
     options: [
-      "A list of all the company's drawings",
+      'All permits, risk assessments, atmospheric monitoring records, training records, equipment inspection records, CCTV footage, witness statements, and the scene itself',
       'A chronological record of all changes made to the drawing, including revision letter, date, description of change and who authorised it',
-      "The original designer's notes",
-      'A schedule of future planned changes',
+      'A unitless number representing the cross-sectional area the cable takes up in the enclosure (including air space allowance)',
+      'Simple, immediately implementable changes that significantly reduce conflict risk — such as always sending a confirmation text after phone agreements',
     ],
     correctIndex: 1,
     explanation:
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'The standard paper sizes used for engineering drawings in the UK follow which series?',
     options: [
-      'Letter, Legal, Tabloid',
+      'A question that tests factual recall, such as identifying PPE or safety signs',
+      'Quality drops, deadlines slip, and stress increases as you context-switch between jobs',
+      'The perimeter increases, reducing the L×W / Hm(L+W) ratio',
       'The ISO A series: A0 (largest standard), A1, A2, A3, A4 (smallest common size)',
-      'B1 through B5',
-      'Custom sizes chosen by each company',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'UK engineering drawings use the ISO A series: A0 (841 x 1189 mm) is the largest standard size; A1 is half of A0, A2 is half of A1, and so on. A3 and A4 are commonly used for smaller detail drawings and schematic diagrams. The aspect ratio of all A sizes is 1 to the square root of 2, meaning each size folds exactly into the next smaller size.',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The title block on an engineering drawing is positioned:',
     options: [
-      'In the centre of the drawing',
+      'Manufacturer, model, specific technical data and approval requirements',
       'In the bottom right corner of the drawing sheet, visible when the drawing is folded to A4 size',
-      'At the top of the drawing',
-      'On the reverse side of the paper',
+      'Record factual observations with specific locations, citing relevant regulation and correct code (C1, C2, C3, FI)',
+      'Explain the underlying theory and regulation references before the practical task',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: 'A drawing scale of 1:2 means:',
     options: [
-      'The drawing is twice the actual size',
+      'By reducing the calculated BER through on-site generation offset',
+      'The bracing must be fitted in the correct orientation and on the correct faces as specified by the manufacturer',
       'The drawing is half the actual size — every 1 mm on the drawing represents 2 mm in reality',
-      'There are two copies of the drawing',
-      'The drawing has two views',
+      'Keep it available for inspection by anyone who may need it for future construction work on the structure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A scale of 1:2 is a reduction — the drawing is half the actual size. Scales greater than 1:1 (e.g., 2:1, 5:1) are enlargements used for small components. Scales less than 1:1 (e.g., 1:2, 1:5, 1:10, 1:50) are reductions used for large equipment or building layouts. The scale is always stated in the title block.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 3,
     question: 'The border around an engineering drawing serves to:',
     options: [
-      'Make the drawing look more attractive',
+      'The drawing number, title, originator, legal owner, date, scale, projection symbol and sheet number',
+      'That the drawing has been through a formal review process — created by a competent person, technically checked, and formally approved for issue',
+      'A controlled index of all drawings in a project or installation, showing drawing numbers, titles, current revision status and distribution',
       'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
-      'Show the maximum printable area of the printer',
-      'Indicate where to fold the drawing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The border defines the usable drawing area, provides a filing margin (left side, typically 20 mm for binding), and often includes zone reference marks (letters vertically, numbers horizontally) that allow specific features to be located by grid reference — similar to map coordinates.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: "When a drawing states 'Do Not Scale', this means:",
     options: [
-      'The drawing is not drawn to any scale',
       'You must use only the written dimension values, not measurements taken from the paper, as the printed size may not accurately represent the stated scale',
-      'The drawing has no dimensions',
-      'The scale bar is incorrect',
+      'A controlled index of all drawings in a project or installation, showing drawing numbers, titles, current revision status and distribution',
+      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
+      'A GA drawing shows the overall layout and spatial arrangement of equipment, while a detail drawing shows individual components with full manufacturing information',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The warning 'Do Not Scale' reminds users that measurements taken directly from the paper (using a ruler) may be inaccurate due to printing variations, paper shrinkage, or photocopying distortion. Always use the stated dimension figures. If a dimension is not shown and cannot be determined from other dimensions, request clarification from the drawing originator.",
   },
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'A drawing register is:',
     options: [
-      'A type of cash register',
+      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
       'A controlled index of all drawings in a project or installation, showing drawing numbers, titles, current revision status and distribution',
-      'A method of registering copyright',
-      'A temperature control device',
+      'That the drawing has been through a formal review process — created by a competent person, technically checked, and formally approved for issue',
+      'Item numbers matching balloon references on the drawing, component descriptions, quantities, part numbers and material specifications',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'The difference between a general arrangement (GA) drawing and a detail drawing is:',
     options: [
-      'GA drawings are always larger in paper size',
+      'You must use only the written dimension values, not measurements taken from the paper, as the printed size may not accurately represent the stated scale',
+      'Item numbers matching balloon references on the drawing, component descriptions, quantities, part numbers and material specifications',
       'A GA drawing shows the overall layout and spatial arrangement of equipment, while a detail drawing shows individual components with full manufacturing information',
-      'Detail drawings are more important than GA drawings',
-      'GA drawings use third angle projection only',
+      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GA drawings show how equipment is arranged within a space — equipment positions, clearances, access routes, and relationships between items. Detail drawings show individual components with precise dimensions, tolerances, material specifications, and manufacturing information. For maintenance, the GA drawing helps you find the equipment; the detail drawing helps you work on it.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 7,
     question: 'A parts list (bill of materials) on a drawing contains:',
     options: [
-      'Only the total cost of all components',
+      'Locate specific features on large drawings by referencing the grid coordinates along the border edges',
+      'A GA drawing shows the overall layout and spatial arrangement of equipment, while a detail drawing shows individual components with full manufacturing information',
+      'Related information is contained on the referenced drawing and both should be read together for complete understanding',
       'Item numbers matching balloon references on the drawing, component descriptions, quantities, part numbers and material specifications',
-      'A list of tools required',
-      'The names of the people who built the assembly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The parts list provides comprehensive identification for every component: item number (matching the drawing's balloon references), description, quantity required, manufacturer's part number or drawing reference, and material specification. This is the primary resource for ordering replacement components during maintenance.",
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 8,
     question: "Zone references on a drawing border (e.g., 'B3') are used to:",
     options: [
-      'Indicate the paper quality',
       'Locate specific features on large drawings by referencing the grid coordinates along the border edges',
-      'Show the drawing revision',
-      'Indicate areas that have been modified',
+      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
+      'The drawing number, title, originator, legal owner, date, scale, projection symbol and sheet number',
+      'Related information is contained on the referenced drawing and both should be read together for complete understanding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Zone references work like map grid references. Letters run vertically (A, B, C from bottom) and numbers horizontally (1, 2, 3 from right). A note saying 'See detail at B3' directs you to the intersection of column 3 and row B on the drawing. This is essential for quickly finding features on large A0 or A1 drawings.",
   },
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'The originator, checker and approver signatures in the title block demonstrate:',
     options: [
-      'How many people are employed in the drawing office',
+      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
       'That the drawing has been through a formal review process — created by a competent person, technically checked, and formally approved for issue',
-      'Who owns the copyright',
-      'The management hierarchy',
+      'The drawing number, revision status, scale and projection convention — to confirm you have the correct, current drawing and can interpret it accurately',
+      'Item numbers matching balloon references on the drawing, component descriptions, quantities, part numbers and material specifications',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,12 +188,12 @@ const quizQuestions = [
     id: 10,
     question: 'When a drawing references another drawing (cross-reference), this means:',
     options: [
-      'The other drawing is a duplicate',
+      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
+      'Locate specific features on large drawings by referencing the grid coordinates along the border edges',
       'Related information is contained on the referenced drawing and both should be read together for complete understanding',
-      'The referenced drawing has been superseded',
-      'The drawing is incomplete',
+      'The drawing is half the actual size — every 1 mm on the drawing represents 2 mm in reality',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cross-references link related drawings. For example, a GA drawing may reference detail drawings for individual components, schematic drawings for circuit logic, and cable schedule drawings for wiring information. During maintenance, you often need to consult multiple cross-referenced drawings to get the complete picture.',
   },
@@ -202,12 +202,12 @@ const quizQuestions = [
     question:
       'For electrical maintenance, the most important drawing layout information to check first is:',
     options: [
-      'The paper size',
+      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
+      'Related information is contained on the referenced drawing and both should be read together for complete understanding',
+      'You must use only the written dimension values, not measurements taken from the paper, as the printed size may not accurately represent the stated scale',
       'The drawing number, revision status, scale and projection convention — to confirm you have the correct, current drawing and can interpret it accurately',
-      'The company name',
-      'The colour of the border',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Before reading any technical content, verify: the drawing number (correct drawing for the job), revision status (current version, not superseded), scale (to understand proportions), and projection convention (to interpret views correctly). These four checks take seconds but prevent serious interpretation errors.',
   },
@@ -215,12 +215,12 @@ const quizQuestions = [
     id: 12,
     question: 'Under BS EN ISO 7200, the title block must contain as a minimum:',
     options: [
-      'Only the drawing title',
       'The drawing number, title, originator, legal owner, date, scale, projection symbol and sheet number',
-      'Only the revision number',
-      'Just the company logo and address',
+      'Locate specific features on large drawings by referencing the grid coordinates along the border edges',
+      'Related information is contained on the referenced drawing and both should be read together for complete understanding',
+      'Define the drawing area, provide zone references for locating features, and accommodate filing margin and trim marks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS EN ISO 7200 specifies mandatory title block fields: drawing number, title, legal owner (organisation), originator name, date, scale, projection symbol, and sheet numbering (if multi-sheet). Additional fields for checker, approver, material, finish, and tolerances are recommended but not always mandatory.',
   },

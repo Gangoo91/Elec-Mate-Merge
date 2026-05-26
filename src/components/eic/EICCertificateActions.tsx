@@ -26,6 +26,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -68,6 +69,7 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [emailRecipient, setEmailRecipient] = useState('');
   const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [showMissingFieldsSheet, setShowMissingFieldsSheet] = useState(false);
 
   // Validation checks
   const hasRequiredInstallationDetails =
@@ -110,15 +112,10 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
 
   const handleGeneratePDF = async () => {
     if (!canGenerateCertificate) {
+      // Open the missing-fields sheet so the user sees what's left + where it lives,
+      // rather than dead-ending on a disabled button + a transient toast.
       haptic.warning();
-      toast({
-        title: 'Cannot Generate Certificate',
-        description:
-          missingFields.length > 0
-            ? `Missing: ${missingFields.join(', ')}. Complete the Declarations section — all three signatures are required.`
-            : 'Please complete all required sections before generating the EIC.',
-        variant: 'destructive',
-      });
+      setShowMissingFieldsSheet(true);
       return;
     }
 
@@ -373,19 +370,22 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
           ))}
         </div>
 
-        {/* Validation — inline */}
+        {/* Validation hint — inline, tappable to open full sheet */}
         {!canGenerateCertificate && (
-          <p className="text-[10px] text-elec-yellow">
-            {!hasRequiredInstallationDetails && 'Complete client details. '}
-            {!hasRequiredDeclarations && 'Complete all declarations with signatures.'}
-          </p>
+          <button
+            type="button"
+            onClick={() => setShowMissingFieldsSheet(true)}
+            className="w-full text-left text-[10px] text-elec-yellow underline-offset-2 hover:underline touch-manipulation"
+          >
+            {missingFields.length} item{missingFields.length === 1 ? '' : 's'} to complete before generating — tap to see
+          </button>
         )}
 
-        {/* Generate button */}
+        {/* Generate button — always tappable; opens missing-fields sheet if not ready */}
         <button
           type="button"
           onClick={handleGeneratePDF}
-          disabled={!canGenerateCertificate || isExporting}
+          disabled={isExporting}
           className="h-12 w-full touch-manipulation bg-elec-yellow text-black font-semibold text-sm rounded-lg active:scale-[0.98] transition-transform disabled:opacity-50 flex items-center justify-center gap-2"
         >
           {isExporting ? 'Generating...' : 'Generate EIC PDF'}
@@ -439,6 +439,80 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
         status={exportStatus}
         certificateType="EIC"
       />
+
+      {/* Missing-fields sheet — replaces the dead-end disabled-button + toast pattern */}
+      <Sheet open={showMissingFieldsSheet} onOpenChange={setShowMissingFieldsSheet}>
+        <SheetContent
+          side="bottom"
+          className="bg-background border-white/[0.06] rounded-t-2xl"
+        >
+          <SheetHeader>
+            <SheetTitle className="text-white flex items-center gap-2 text-left">
+              <AlertTriangle className="h-5 w-5 text-elec-yellow shrink-0" />
+              {missingFields.length} item{missingFields.length === 1 ? '' : 's'} to complete
+            </SheetTitle>
+          </SheetHeader>
+          <div className="space-y-4 py-4">
+            <p className="text-xs text-white/60">
+              Finish these fields then tap Generate again. Tap any item below for the
+              tab it lives in.
+            </p>
+            {(() => {
+              const detailsItems = missingFields.filter((f) =>
+                ['Client name', 'Installation address', 'Installation date'].includes(f)
+              );
+              const declarationItems = missingFields.filter((f) => !detailsItems.includes(f));
+              return (
+                <>
+                  {detailsItems.length > 0 && (
+                    <div className="space-y-2">
+                      <p className="text-[10px] uppercase tracking-wider text-elec-yellow font-semibold">
+                        Installation Details tab
+                      </p>
+                      <div className="space-y-1.5">
+                        {detailsItems.map((f) => (
+                          <div
+                            key={f}
+                            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06]"
+                          >
+                            <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow shrink-0" />
+                            <span className="text-sm text-white">{f}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {declarationItems.length > 0 && (
+                    <div className="space-y-2">
+                      <p className="text-[10px] uppercase tracking-wider text-elec-yellow font-semibold">
+                        Declarations tab
+                      </p>
+                      <div className="space-y-1.5">
+                        {declarationItems.map((f) => (
+                          <div
+                            key={f}
+                            className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.06]"
+                          >
+                            <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow shrink-0" />
+                            <span className="text-sm text-white">{f}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
+            <button
+              type="button"
+              onClick={() => setShowMissingFieldsSheet(false)}
+              className="w-full h-11 rounded-lg bg-white/[0.05] border border-white/[0.08] text-white text-sm font-semibold touch-manipulation active:scale-[0.98]"
+            >
+              Got it
+            </button>
+          </div>
+        </SheetContent>
+      </Sheet>
 
       {/* Email Dialog */}
       <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>

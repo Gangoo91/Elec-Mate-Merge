@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'fouriers-law',
     question: "In Fourier's Law (Q = -kA dT/dx), what does the negative sign indicate?",
     options: [
-      'Heat loss to surroundings',
       'Heat flows from cold to hot',
       'Heat flows from hot to cold',
       'Thermal resistance',
+      'Heat loss to surroundings',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The negative sign indicates that heat flows in the direction of decreasing temperature - from hot to cold regions. This is consistent with the Second Law of Thermodynamics.',
   },
@@ -59,12 +59,12 @@ const quickCheckQuestions = [
     id: 'composite-wall',
     question: 'For a composite wall with layers in series, how are thermal resistances combined?',
     options: [
-      'R_total = R1 × R2 × R3',
-      'R_total = R1 + R2 + R3',
       '1/R_total = 1/R1 + 1/R2 + 1/R3',
+      'R_total = R1 × R2 × R3',
       'R_total = (R1 + R2)/2',
+      'R_total = R1 + R2 + R3',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'For layers in series, thermal resistances add directly: R_total = R1 + R2 + R3. This is analogous to electrical resistors in series. The same heat flow passes through each layer.',
   },
@@ -72,12 +72,12 @@ const quickCheckQuestions = [
     id: 'steady-state',
     question: 'What characterises steady-state conduction?',
     options: [
-      'Temperature varies with time',
-      'Heat flow rate varies with position',
+      'Combined PEN in supply, separated in installation',
+      'Missing grommets and exposed copper conductors',
+      'By providing 24/7 remote monitoring and quick response to issues',
       'Temperature is constant at any given point over time',
-      'Heat accumulates in the material',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'In steady-state conduction, temperatures remain constant at any given point over time. Heat entering equals heat leaving - no energy is stored. This simplifies calculations and is the basis of most building services thermal analysis.',
   },
@@ -87,7 +87,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the SI unit for thermal conductivity (k)?',
-    options: ['W/m²·K', 'W/m·K', 'm²·K/W', 'J/kg·K'],
+    options: [
+      'W/m²·K',
+      'W/m·K',
+      'm²·K/W',
+      'J/kg·K',
+    ],
     correctAnswer: 1,
     explanation:
       'Thermal conductivity is measured in Watts per metre per Kelvin (W/m·K). It represents the rate of heat transfer through a material per unit thickness per unit temperature difference.',
@@ -96,8 +101,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A 220mm brick wall (k = 0.84 W/m·K) has inner and outer surface temperatures of 18°C and 5°C. What is the heat flux?',
-    options: ['49.6 W/m²', '59.2 W/m²', '39.5 W/m²', '69.8 W/m²'],
-    correctAnswer: 0,
+    options: [
+      '39.5 W/m²',
+      '69.8 W/m²',
+      '49.6 W/m²',
+      '59.2 W/m²',
+    ],
+    correctAnswer: 2,
     explanation:
       'Using q = k × ΔT/L = 0.84 × (18-5)/0.22 = 0.84 × 13/0.22 = 49.6 W/m². This is the rate of heat loss per square metre of wall area.',
   },
@@ -105,8 +115,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the thermal resistance (R-value) of 100mm of mineral wool insulation (k = 0.035 W/m·K)?',
-    options: ['2.86 m²·K/W', '0.35 m²·K/W', '3.50 m²·K/W', '0.0035 m²·K/W'],
-    correctAnswer: 0,
+    options: [
+      '3.50 m²·K/W',
+      '0.35 m²·K/W',
+      '0.0035 m²·K/W',
+      '2.86 m²·K/W',
+    ],
+    correctAnswer: 3,
     explanation:
       'R = L/k = 0.1/0.035 = 2.86 m²·K/W. Higher R-values indicate better insulation. This is why mineral wool is widely used in building construction.',
   },
@@ -114,8 +129,13 @@ const quizQuestions = [
     id: 4,
     question:
       'A wall comprises 100mm brick (k=0.84), 50mm cavity insulation (k=0.035), and 100mm blockwork (k=0.19). What is the total thermal resistance of the masonry layers?',
-    options: ['1.48 m²·K/W', '1.96 m²·K/W', '2.07 m²·K/W', '0.69 m²·K/W'],
-    correctAnswer: 2,
+    options: [
+      '2.07 m²·K/W',
+      '1.96 m²·K/W',
+      '1.48 m²·K/W',
+      '0.69 m²·K/W',
+    ],
+    correctAnswer: 0,
     explanation:
       'R_brick = 0.1/0.84 = 0.119, R_insulation = 0.05/0.035 = 1.43, R_block = 0.1/0.19 = 0.526. Total R = 0.119 + 1.43 + 0.526 = 2.07 m²·K/W. The cavity insulation contributes most of the thermal resistance.',
   },
@@ -125,8 +145,8 @@ const quizQuestions = [
     options: [
       'Heat flow is the same through each path',
       'Temperature drop is the same across each path',
-      'Thermal resistances add directly',
       'Heat always takes the longest path',
+      'Thermal resistances add directly',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,8 +156,13 @@ const quizQuestions = [
     id: 6,
     question:
       'A steel pipe (k = 50 W/m·K) with 25mm wall thickness has a thermal bridge factor compared to 25mm pipe insulation (k = 0.035 W/m·K) of approximately:',
-    options: ['50 times worse', '1430 times worse', '35 times worse', 'Similar performance'],
-    correctAnswer: 1,
+    options: [
+      '50 times worse',
+      '35 times worse',
+      '1430 times worse',
+      'Similar performance',
+    ],
+    correctAnswer: 2,
     explanation:
       'Ratio = k_steel/k_insulation = 50/0.035 = 1429. Uninsulated steel pipes conduct heat approximately 1430 times faster than insulated pipes - hence the critical importance of pipe insulation.',
   },
@@ -158,15 +183,25 @@ const quizQuestions = [
     id: 8,
     question:
       'For a 50mm diameter hot water pipe at 60°C in a 20°C ambient, adding 25mm of pipe insulation (k = 0.035 W/m·K) typically reduces heat loss by approximately:',
-    options: ['50%', '75%', '90%', '99%'],
-    correctAnswer: 2,
+    options: [
+      '90%',
+      '99%',
+      '50%',
+      '75%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Pipe insulation typically reduces heat loss by 85-95%. The exact reduction depends on pipe size, temperature difference, and insulation thickness, but 90% is a reasonable estimate for 25mm insulation on LPHW pipework.',
   },
   {
     id: 9,
     question: 'What is the U-value of a wall with total thermal resistance R_total = 3.5 m²·K/W?',
-    options: ['3.5 W/m²·K', '0.29 W/m²·K', '0.35 W/m²·K', '2.86 W/m²·K'],
+    options: [
+      '3.5 W/m²·K',
+      '0.29 W/m²·K',
+      '0.35 W/m²·K',
+      '2.86 W/m²·K',
+    ],
     correctAnswer: 1,
     explanation:
       'U = 1/R_total = 1/3.5 = 0.286 ≈ 0.29 W/m²·K. U-value is the overall heat transfer coefficient and is the reciprocal of total thermal resistance. Lower U-values indicate better insulation.',
@@ -176,10 +211,10 @@ const quizQuestions = [
     question:
       'During transient conduction, which property determines how quickly a material responds to temperature changes?',
     options: [
-      'Thermal conductivity only',
-      'Density only',
+      'Isolate the circuit from supply',
+      'Safety override functions',
       'Thermal diffusivity (α = k/ρc)',
-      'Specific heat capacity only',
+      'Ensure metalwork is at earth potential',
     ],
     correctAnswer: 2,
     explanation:
@@ -189,8 +224,13 @@ const quizQuestions = [
     id: 11,
     question:
       'Building Regulations Approved Document L requires new build walls to achieve a maximum U-value of:',
-    options: ['0.55 W/m²·K', '0.35 W/m²·K', '0.26 W/m²·K', '0.18 W/m²·K'],
-    correctAnswer: 2,
+    options: [
+      '0.55 W/m²·K',
+      '0.35 W/m²·K',
+      '0.18 W/m²·K',
+      '0.26 W/m²·K',
+    ],
+    correctAnswer: 3,
     explanation:
       'Approved Document L (Conservation of fuel and power) requires walls in new dwellings to achieve U ≤ 0.26 W/m²·K. This drives the need for substantial wall insulation in modern construction.',
   },
@@ -199,12 +239,12 @@ const quizQuestions = [
     question:
       'Why is the internal surface resistance (R_si) typically higher than the external surface resistance (R_se)?',
     options: [
-      'Internal walls are thicker',
       'Internal air movement is lower, reducing convective heat transfer',
-      'External walls have better insulation',
-      "It's the same - this statement is incorrect",
+      'Use measures that minimise the distance and consequences of a fall',
+      'Current-carrying conductor in a magnetic field experiences a force',
+      'A range from very formal to semi-formal to informal, matched to context',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Internal surface resistance (R_si ≈ 0.13 m²·K/W) is higher than external (R_se ≈ 0.04 m²·K/W) because internal air is relatively still, while external surfaces experience wind-driven convection that increases heat transfer.',
   },

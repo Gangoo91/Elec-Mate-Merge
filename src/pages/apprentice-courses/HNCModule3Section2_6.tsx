@@ -31,7 +31,12 @@ const quickCheckQuestions = [
   {
     id: 'resonant-frequency',
     question: 'What is the resonant frequency of a circuit with L = 10mH and C = 100uF?',
-    options: ['15.9 Hz', '50 Hz', '159 Hz', '500 Hz'],
+    options: [
+      '15.9 Hz',
+      '50 Hz',
+      '159 Hz',
+      '500 Hz',
+    ],
     correctIndex: 2,
     explanation:
       'Using f0 = 1/(2pi x sqrt(LC)): f0 = 1/(2pi x sqrt(0.01 x 0.0001)) = 1/(2pi x 0.001) = 159 Hz. This is where XL = XC and the circuit is at resonance.',
@@ -39,8 +44,13 @@ const quickCheckQuestions = [
   {
     id: 'series-resonance-impedance',
     question: 'At resonance in a series RLC circuit, the impedance equals:',
-    options: ['Zero', 'R only', 'XL + XC', 'Maximum value'],
-    correctIndex: 1,
+    options: [
+      'R only',
+      'Zero',
+      'XL + XC',
+      'Maximum value',
+    ],
+    correctIndex: 0,
     explanation:
       'At series resonance, XL = XC and they cancel out (being 180 degrees out of phase), leaving only the resistance R. This gives minimum impedance and maximum current.',
   },
@@ -48,8 +58,13 @@ const quickCheckQuestions = [
     id: 'quality-factor',
     question:
       'A series RLC circuit has XL = 500 ohms at resonance and R = 10 ohms. What is the Q factor?',
-    options: ['5', '50', '500', '5000'],
-    correctIndex: 1,
+    options: [
+      '5',
+      '500',
+      '50',
+      '5000',
+    ],
+    correctIndex: 2,
     explanation:
       'Q = XL/R = 500/10 = 50. This high Q factor means the voltage across L or C will be 50 times the supply voltage at resonance - a significant magnification.',
   },
@@ -57,8 +72,13 @@ const quickCheckQuestions = [
     id: 'harmonic-resonance',
     question:
       'PFC capacitors are most at risk of failure when the system resonant frequency coincides with which harmonic?',
-    options: ['Fundamental (50 Hz)', '3rd harmonic', '5th or 7th harmonic', '11th harmonic'],
-    correctIndex: 2,
+    options: [
+      '11th harmonic',
+      'Fundamental (50 Hz)',
+      '3rd harmonic',
+      '5th or 7th harmonic',
+    ],
+    correctIndex: 3,
     explanation:
       'The 5th (250 Hz) and 7th (350 Hz) harmonics are typically the strongest in non-linear loads. If PFC capacitors tune the system to resonate at these frequencies, severe overcurrents and capacitor failure can result.',
   },
@@ -68,7 +88,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the formula for resonant frequency in an LC circuit?',
-    options: ['f0 = 2pi x sqrt(LC)', 'f0 = 1/(2pi x sqrt(LC))', 'f0 = LC/(2pi)', 'f0 = sqrt(L/C)'],
+    options: [
+      'f0 = 2pi x sqrt(LC)',
+      'f0 = 1/(2pi x sqrt(LC))',
+      'f0 = LC/(2pi)',
+      'f0 = sqrt(L/C)',
+    ],
     correctAnswer: 1,
     explanation:
       'The resonant frequency f0 = 1/(2pi x sqrt(LC)). At this frequency, the inductive reactance equals the capacitive reactance (XL = XC), creating resonance.',
@@ -77,28 +102,38 @@ const quizQuestions = [
     id: 2,
     question: 'In a series RLC circuit at resonance, what happens to the current?',
     options: [
+      'Current is zero',
       'Current is minimum',
       'Current is maximum',
-      'Current is zero',
       'Current equals the voltage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "At series resonance, impedance is minimum (Z = R only), so current reaches its maximum value. This is why series resonance is sometimes called 'acceptor' resonance.",
   },
   {
     id: 3,
     question: 'What is the dynamic impedance of a parallel resonant circuit?',
-    options: ['Zd = R', 'Zd = L/(CR)', 'Zd = LC/R', 'Zd = R/(LC)'],
-    correctAnswer: 1,
+    options: [
+      'Zd = LC/R',
+      'Zd = R',
+      'Zd = R/(LC)',
+      'Zd = L/(CR)',
+    ],
+    correctAnswer: 3,
     explanation:
       "The dynamic impedance Zd = L/(CR) represents the very high impedance at parallel resonance. For practical circuits, this can be several kilohms, making parallel resonance a 'rejector' circuit.",
   },
   {
     id: 4,
     question: 'A circuit has Q = 25 and resonant frequency 200 Hz. What is the bandwidth?',
-    options: ['5 Hz', '8 Hz', '25 Hz', '50 Hz'],
-    correctAnswer: 1,
+    options: [
+      '8 Hz',
+      '5 Hz',
+      '25 Hz',
+      '50 Hz',
+    ],
+    correctAnswer: 0,
     explanation:
       'Bandwidth B = f0/Q = 200/25 = 8 Hz. The bandwidth extends from f1 to f2 where the response falls to 0.707 (-3dB) of its maximum value.',
   },
@@ -106,8 +141,13 @@ const quizQuestions = [
     id: 5,
     question:
       'In a series resonant circuit with Q = 30 and supply voltage 230V, what is the voltage across the capacitor at resonance?',
-    options: ['230V', '2300V', '6900V', '7.67V'],
-    correctAnswer: 2,
+    options: [
+      '2300V',
+      '6900V',
+      '7.67V',
+      '230V',
+    ],
+    correctAnswer: 1,
     explanation:
       'At series resonance, VC = Q x VS = 30 x 230 = 6900V. This voltage magnification is why series resonance can be dangerous in power systems.',
   },
@@ -115,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'What characterises parallel resonance in a practical circuit?',
     options: [
-      'Maximum current from supply',
-      'Minimum impedance',
+      'Adding PFC capacitors to systems with VSD drives',
+      'Higher Q means sharper (narrower) frequency response',
       'Minimum current from supply (maximum impedance)',
-      'Unity power factor',
+      'The frequency range between -3dB points (f2 - f1)',
     ],
     correctAnswer: 2,
     explanation:
@@ -128,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why are detuning reactors used with PFC capacitor banks?',
     options: [
-      'To increase power factor',
-      'To reduce harmonic currents',
+      'To detail all circuits, protective devices, cable sizes and loads',
+      'Creates room for different interpretations, leading to disputes',
+      'The equivalent DC voltage that would produce the same heating effect',
       'To prevent harmonic resonance by shifting the resonant frequency below dominant harmonics',
-      'To increase the capacitance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Detuning reactors (typically 7% or 14% of capacitor reactance) shift the system resonant frequency below the 5th harmonic (250 Hz), preventing dangerous amplification of harmonic currents.',
   },
@@ -142,12 +182,12 @@ const quizQuestions = [
     question:
       'When capacitors are switched onto a supply, what causes the inrush current transient?',
     options: [
-      'Power factor correction',
       'The capacitor charging through low source impedance with minimal damping',
-      'Magnetic saturation',
-      'Thermal effects',
+      'To prevent harmonic resonance by shifting the resonant frequency below dominant harmonics',
+      'Higher Q means sharper (narrower) frequency response',
+      'The system may resonate with 7th harmonic (350 Hz) causing capacitor overload',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The discharged capacitor acts as a short circuit initially, drawing high inrush current limited only by source impedance. Peak currents can be 20-30 times rated current without pre-insertion resistors.',
   },
@@ -169,12 +209,12 @@ const quizQuestions = [
     question:
       'A 400V three-phase system has 200 kVAr PFC capacitors and transformer inductance creating a resonant frequency of 350 Hz. What is the risk?',
     options: [
-      'No risk - 350 Hz is above supply frequency',
+      'To ensure exits are visible from a distance and confirm they lead outside',
+      'By trained personnel to evacuate people who cannot use stairs independently',
       'The system may resonate with 7th harmonic (350 Hz) causing capacitor overload',
-      'The capacitors will improve power factor more efficiently',
-      'Only a risk at fundamental frequency',
+      'Only if it’s unreasonable to be dead, reasonable to do live, and suitable precautions are taken',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '350 Hz is exactly the 7th harmonic (7 x 50 Hz). VSD drives and non-linear loads generate significant 7th harmonic current, which will be amplified by resonance, potentially destroying the capacitors.',
   },
@@ -183,11 +223,11 @@ const quizQuestions = [
     question: 'What is the half-power bandwidth of a resonant circuit?',
     options: [
       'The frequency range where power is maximum',
-      'The frequency range between -3dB points (f2 - f1)',
-      'Half the resonant frequency',
       'The frequency where Q = 0.5',
+      'Half the resonant frequency',
+      'The frequency range between -3dB points (f2 - f1)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The half-power bandwidth is the frequency range between the points where power falls to half its maximum value (-3dB). These are the frequencies where current/voltage is 0.707 of maximum.',
   },
@@ -196,12 +236,12 @@ const quizQuestions = [
     question:
       'In building services, which scenario most commonly leads to harmonic resonance problems?',
     options: [
-      'Installing LED lighting',
       'Adding PFC capacitors to systems with VSD drives',
-      'Using resistive heating loads',
-      'Operating at unity power factor',
+      'Higher Q means sharper (narrower) frequency response',
+      'Minimum current from supply (maximum impedance)',
+      'The frequency range between -3dB points (f2 - f1)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'VSD drives generate significant 5th and 7th harmonics. Adding PFC capacitors can tune the system to resonate at these frequencies, causing severe harmonic current amplification and capacitor failure.',
   },

@@ -33,11 +33,11 @@ const quickCheckQuestions = [
     question: 'In the lumen method, which formula calculates the number of luminaires required?',
     options: [
       'N = E × A × MF × UF / Φ',
-      'N = (E × A) / (Φ × UF × MF)',
-      'N = Φ × UF × MF / (E × A)',
       'N = (Φ × A) / (E × UF × MF)',
+      'N = Φ × UF × MF / (E × A)',
+      'N = (E × A) / (Φ × UF × MF)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'N = (E × A) / (Φ × UF × MF) where E = required illuminance (lux), A = area (m²), Φ = luminaire lumens, UF = utilisation factor, MF = maintenance factor.',
   },
@@ -60,10 +60,10 @@ const quickCheckQuestions = [
     options: [
       'Determining lamp wattage',
       'Calculating maintenance schedules',
-      'Finding the utilisation factor from tables',
       'Measuring surface reflectances',
+      'Finding the utilisation factor from tables',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The room index (RI = L×W / Hm(L+W)) describes room proportions and is used with surface reflectances to read utilisation factors from luminaire photometric tables.',
   },
@@ -71,8 +71,13 @@ const quickCheckQuestions = [
     id: 'inverse-square-law',
     question:
       'According to the inverse square law, if distance from a light source doubles, illuminance becomes:',
-    options: ['Half', 'Quarter', 'One-eighth', 'Double'],
-    correctIndex: 1,
+    options: [
+      'Quarter',
+      'Half',
+      'Double',
+      'One-eighth',
+    ],
+    correctIndex: 0,
     explanation:
       'The inverse square law states E = I/d². Doubling distance (2d) gives E = I/(2d)² = I/4d², so illuminance reduces to one quarter of its original value.',
   },
@@ -96,7 +101,12 @@ const quizQuestions = [
     id: 2,
     question:
       'An office of 120m² requires 400 lux maintained. Luminaires output 3200 lumens each. UF = 0.55, MF = 0.8. How many luminaires are needed?',
-    options: ['20', '27', '34', '40'],
+    options: [
+      '40',
+      '20',
+      '34',
+      '27',
+    ],
     correctAnswer: 2,
     explanation:
       'N = (E × A) / (Φ × UF × MF) = (400 × 120) / (3200 × 0.55 × 0.8) = 48000 / 1408 = 34.1, so 34 luminaires minimum.',
@@ -105,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'What factors affect the Utilisation Factor (UF)?',
     options: [
-      'Room proportions and surface reflectances only',
-      'Lamp type and colour temperature',
+      'To adjust ventilation rates based on actual occupancy or pollutant levels',
+      'Intentionally or recklessly interfere with anything provided for health and safety',
+      'Linking a new habit to an existing habit as a trigger',
       'Room proportions, surface reflectances, and luminaire distribution',
-      'Maintenance schedule and cleaning frequency',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'UF depends on: room index (proportions), surface reflectances (ceiling, walls, floor), and luminaire light distribution characteristics. It represents how much emitted light reaches the working plane.',
   },
@@ -118,20 +128,25 @@ const quizQuestions = [
     id: 4,
     question: 'The maintenance factor (MF) typically accounts for which depreciation effects?',
     options: [
-      'Lamp lumen depreciation only',
-      'Luminaire dirt accumulation only',
       'Both lamp depreciation and luminaire/room dirt accumulation',
-      'Voltage fluctuations',
+      'Solvents, chemicals, dusts, fumes, and biological agents',
+      'XLPE has higher maximum operating temperature (90°C vs 70°C)',
+      'Written (email) so there is a clear record both parties can refer back to',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'MF = LLMF × LSF × LMF × RSMF, accounting for lamp lumen maintenance, lamp survival, luminaire maintenance, and room surface maintenance factors.',
   },
   {
     id: 5,
     question: 'CIBSE LG7 recommends what maintained illuminance for general office work?',
-    options: ['200 lux', '300 lux', '400-500 lux', '750 lux'],
-    correctAnswer: 2,
+    options: [
+      '300 lux',
+      '400-500 lux',
+      '750 lux',
+      '200 lux',
+    ],
+    correctAnswer: 1,
     explanation:
       'CIBSE LG7 recommends 300-500 lux for general office work depending on task difficulty. 500 lux is typical for writing, typing, and reading. CAD work may require higher levels.',
   },
@@ -140,11 +155,11 @@ const quizQuestions = [
     question: 'What is the point-by-point method used for?',
     options: [
       'Quick estimates of average illuminance',
-      'Calculating illuminance at specific points',
       'Determining lamp replacement schedules',
+      'Calculating illuminance at specific points',
       'Measuring existing lighting installations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The point-by-point method calculates illuminance at specific points using intensity data and geometry. It is used for detailed analysis, spotlighting, and irregular layouts.',
   },
@@ -152,8 +167,13 @@ const quizQuestions = [
     id: 7,
     question:
       'For the point-by-point method, what is the formula for illuminance from a point source at angle θ to normal?',
-    options: ['E = I × cos θ / d²', 'E = I / (d × cos θ)', 'E = I × d² × cos θ', 'E = I / d'],
-    correctAnswer: 0,
+    options: [
+      'E = I / d',
+      'E = I / (d × cos θ)',
+      'E = I × d² × cos θ',
+      'E = I × cos θ / d²',
+    ],
+    correctAnswer: 3,
     explanation:
       'E = (I × cos θ) / d² combines the inverse square law with the cosine law. I is intensity towards the point (cd), d is distance (m), θ is angle from normal.',
   },
@@ -161,15 +181,25 @@ const quizQuestions = [
     id: 8,
     question:
       'What room index would you calculate for a room 12m × 8m with mounting height 2.5m above the working plane?',
-    options: ['1.5', '1.92', '2.4', '3.2'],
-    correctAnswer: 1,
+    options: [
+      '1.92',
+      '2.4',
+      '1.5',
+      '3.2',
+    ],
+    correctAnswer: 0,
     explanation: 'RI = (L × W) / (Hm × (L + W)) = (12 × 8) / (2.5 × (12 + 8)) = 96 / 50 = 1.92',
   },
   {
     id: 9,
     question:
       'Which CIBSE document provides maintained illuminance recommendations for different building types?',
-    options: ['CIBSE Guide A', 'CIBSE LG series', 'CIBSE TM10', 'BS 7671'],
+    options: [
+      'CIBSE Guide A',
+      'CIBSE LG series',
+      'CIBSE TM10',
+      'BS 7671',
+    ],
     correctAnswer: 1,
     explanation:
       'The CIBSE Lighting Guides (LG series) provide specific recommendations: LG1 Industrial, LG2 Hospitals, LG5 Lecture/Conference, LG6 Outdoor, LG7 Offices, LG10 Daylighting.',
@@ -178,16 +208,26 @@ const quizQuestions = [
     id: 10,
     question:
       'A spotlight has intensity 5000 cd towards a point 3m away at 30° to the normal. What is the illuminance?',
-    options: ['481 lux', '556 lux', '642 lux', '1667 lux'],
-    correctAnswer: 0,
+    options: [
+      '1667 lux',
+      '556 lux',
+      '481 lux',
+      '642 lux',
+    ],
+    correctAnswer: 2,
     explanation:
       'E = (I × cos θ) / d² = (5000 × cos 30°) / 3² = (5000 × 0.866) / 9 = 4330 / 9 = 481 lux',
   },
   {
     id: 11,
     question: 'What happens to the utilisation factor as room index increases?',
-    options: ['It decreases', 'It increases', 'It stays constant', 'It fluctuates randomly'],
-    correctAnswer: 1,
+    options: [
+      'It decreases',
+      'It fluctuates randomly',
+      'It stays constant',
+      'It increases',
+    ],
+    correctAnswer: 3,
     explanation:
       'As room index increases (larger, more proportionate rooms or lower mounting height), more light reaches the working plane directly, so UF increases. Small, tall rooms have low UF.',
   },
@@ -195,8 +235,13 @@ const quizQuestions = [
     id: 12,
     question:
       'What is a typical maintenance factor for LED luminaires in a clean office environment?',
-    options: ['0.6', '0.7', '0.8', '0.95'],
-    correctAnswer: 2,
+    options: [
+      '0.8',
+      '0.95',
+      '0.6',
+      '0.7',
+    ],
+    correctAnswer: 0,
     explanation:
       'LED luminaires in clean environments typically use MF around 0.8, accounting for gradual lumen depreciation over life and minimal dirt accumulation with regular cleaning.',
   },

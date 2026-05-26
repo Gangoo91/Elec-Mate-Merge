@@ -42,7 +42,12 @@ const checks = [
     id: 'l3-m3-3-1-line-phase',
     question:
       'In a 400 V star-connected 3-phase system, the phase voltage (line to neutral) is:',
-    options: ['230 V', '240 V', '400 V', '693 V'],
+    options: [
+      '230 V',
+      '240 V',
+      '693 V',
+      '400 V',
+    ],
     correctIndex: 0,
     explanation:
       'V_phase = V_line / √3 = 400 / 1.732 = 230.9 V ≈ 230 V. That is why every UK 3-phase install gives 230 V single-phase between any line and the neutral.',
@@ -51,8 +56,13 @@ const checks = [
     id: 'l3-m3-3-1-delta',
     question:
       'In a delta-connected 3-phase system with line voltage 400 V, the phase voltage is:',
-    options: ['230 V', '400 V', '693 V', 'Zero'],
-    correctIndex: 1,
+    options: [
+      '230 V',
+      '693 V',
+      '400 V',
+      'Zero',
+    ],
+    correctIndex: 2,
     explanation:
       'In delta, each winding sits across a line-to-line pair, so phase voltage = line voltage = 400 V. There is no neutral connection in a true delta.',
   },
@@ -61,12 +71,12 @@ const checks = [
     question:
       'A 3-phase motor running anticlockwise. To reverse it you should:',
     options: [
-      'Reverse the neutral',
+      'Slip ~15-20 % (depends on rotor R)',
+      'Specialisation, supervision, or technical roles',
       'Swap any two of the three line connections',
-      'Reverse all three lines',
-      'Add a neutral',
+      'Balance loads across all three phases',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Swap any two lines (e.g. L1↔L2). That reverses the phase rotation, reverses the rotating field, and reverses the rotor. Reversing all three would have no effect — same direction.",
   },
@@ -76,14 +86,24 @@ const quizQuestions = [
   {
     id: 1,
     question: 'UK three-phase mains is supplied at:',
-    options: ['230/400 V 50 Hz', '110/220 V 60 Hz', '400/690 V 50 Hz', '230/400 V 60 Hz'],
-    correctAnswer: 0,
+    options: [
+      '110/220 V 60 Hz',
+      '230/400 V 50 Hz',
+      '400/690 V 50 Hz',
+      '230/400 V 60 Hz',
+    ],
+    correctAnswer: 1,
     explanation: '230 V phase to neutral, 400 V line to line, 50 Hz in the UK and Europe.',
   },
   {
     id: 2,
     question: 'Three-phase line voltages are spaced:',
-    options: ['90° apart', '180° apart', '120° apart', '60° apart'],
+    options: [
+      '60° apart',
+      '90° apart',
+      '120° apart',
+      '180° apart',
+    ],
     correctAnswer: 2,
     explanation:
       'Each phase is 120° (one third of a cycle) ahead of the next. At any instant the three voltages sum to zero — which is why a balanced 3-phase load doesn\'t need a neutral.',
@@ -92,31 +112,36 @@ const quizQuestions = [
     id: 3,
     question: 'Star connection means each phase winding is connected:',
     options: [
-      'In a closed loop with the others',
+      'Heat cramps → heat exhaustion → heat stroke',
+      'Safety, accessibility, aesthetics, or compliance',
+      'Gather information about the symptoms and history',
       'Between a line and a common neutral point',
-      'Between two lines only',
-      'In parallel with the supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Star (Y, "wye"): each winding connects from a line to a common neutral (star) point.',
   },
   {
     id: 4,
     question: 'Delta connection means the three windings form:',
     options: [
-      'A common neutral',
       'A closed triangle, each winding between two lines',
-      'Three separate loops',
-      'A series chain',
+      'A process with no heat transfer to or from the system',
+      'Combination of PIR, thermal imaging, and AI analysis',
+      'Power supplied to field devices through communication cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'Delta (Δ): each winding sits between two of the three lines, forming a triangle.',
   },
   {
     id: 5,
     question: 'For a balanced star-connected load, the neutral current is:',
-    options: ['Maximum', 'Equal to one line current', 'Zero', 'Three times line current'],
-    correctAnswer: 2,
+    options: [
+      'Equal to one line current',
+      'Zero',
+      'Three times line current',
+      'Maximum',
+    ],
+    correctAnswer: 1,
     explanation:
       'Three equal currents 120° apart sum to zero. That is why a balanced load can run with a single 3-phase 4-wire supply or even a 3-wire delta connection.',
   },
@@ -124,10 +149,10 @@ const quizQuestions = [
     id: 6,
     question: 'Most UK industrial loads (motors, distribution) use:',
     options: [
-      'Single phase',
-      '3-phase delta',
+      'At the origin (supply intake)',
+      'Automatic electronic lock',
       '3-phase star with neutral',
-      '2-phase',
+      'Testing insulation effectiveness',
     ],
     correctAnswer: 2,
     explanation:
@@ -137,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'The earth-fault loop path on a TN-S system runs from:',
     options: [
-      'Fault → CPC → MET → earth electrode → fault',
+      'Electrical systems maintained to prevent danger, with records providing evidence of compliance',
+      'That batteries can sustain illumination for the full 3-hour rated period',
+      'Conservation requirements, structural limitations, access restrictions, and specialist techniques',
       'Fault → CPC → MET → cable sheath/earth conductor → transformer star point → faulty phase',
-      'Fault → cable insulation → fault',
-      'Fault → neutral only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "TN-S: fault current returns through the dedicated PE conductor (cable sheath / armour) to the supply transformer's star point. That low-impedance path is what enables the protective device to operate inside the disconnection time.",
   },
@@ -151,9 +176,9 @@ const quizQuestions = [
     question: 'Phase rotation matters for:',
     options: [
       '3-phase motors and synchronous generators',
-      'All single-phase loads',
-      'DC supplies',
-      'Lighting only',
+      'Visual and noise impact on communities',
+      'R_th = R_N and I_N = V_th/R_th',
+      'Socket outlets ≤32A and mobile equipment outdoors',
     ],
     correctAnswer: 0,
     explanation:

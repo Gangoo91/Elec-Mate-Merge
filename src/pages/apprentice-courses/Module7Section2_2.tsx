@@ -16,10 +16,10 @@ const Module7Section2_2 = () => {
       id: 1,
       question: 'What is a short circuit?',
       options: [
-        'When current takes a longer path than intended',
+        'By reducing current flow for the same real power, current squared losses decrease',
         'When live conductors at different potentials come into direct contact',
-        'When voltage is reduced in a circuit',
-        'When earth fault occurs',
+        'Routing the cable to avoid the asbestos entirely (elimination of exposure)',
+        'Elimination, substitution, engineering controls, administrative controls, PPE',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,10 +29,10 @@ const Module7Section2_2 = () => {
       id: 2,
       question: 'What happens to current during a short circuit?',
       options: [
-        'Current decreases significantly',
-        'Current stays the same',
-        'Current increases to very high levels',
         'Current flows backwards',
+        'Current decreases significantly',
+        'Current increases to very high levels',
+        'Current stays the same',
       ],
       correctAnswer: 2,
       explanation:
@@ -42,12 +42,12 @@ const Module7Section2_2 = () => {
       id: 3,
       question: 'Give two causes of short circuits.',
       options: [
-        'High voltage and low resistance',
-        'Damaged insulation and incorrect installation',
         'Too much earthing and poor connections',
+        'High voltage and low resistance',
         'Circuit breakers and fuses',
+        'Damaged insulation and incorrect installation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Short circuits are commonly caused by damaged or deteriorated insulation and incorrect or careless installation practices.',
     },
@@ -55,12 +55,12 @@ const Module7Section2_2 = () => {
       id: 4,
       question: 'What type of damage can rodents cause that may lead to a short circuit?',
       options: [
-        'Eating electrical equipment',
         'Chewing through cable insulation',
+        'Eating electrical equipment',
         'Building nests in switch panels',
         'Touching live parts',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Rodents can chew through cable insulation, exposing conductors which can then come into contact and cause a short circuit.',
     },
@@ -68,10 +68,10 @@ const Module7Section2_2 = () => {
       id: 5,
       question: 'Why are short circuits dangerous?',
       options: [
-        'They reduce voltage to equipment',
+        'Return to rectify defects notified by the client at no additional cost',
         'They cause very high currents that can lead to fire and equipment damage',
-        'They make circuits more efficient',
-        'They improve earthing',
+        'A device suitable for the motor starting current characteristics',
+        'Regulation 4(1) — construction of systems to prevent danger',
       ],
       correctAnswer: 1,
       explanation:
@@ -82,11 +82,11 @@ const Module7Section2_2 = () => {
       question: 'What protective devices are used against short circuits?',
       options: [
         'Voltmeters and ammeters',
-        'Fuses, MCBs and MCCBs',
         'Earth rods and bonding',
+        'Fuses, MCBs and MCCBs',
         'Insulation and barriers',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Fuses, MCBs (Miniature Circuit Breakers), and MCCBs (Moulded Case Circuit Breakers) are designed to protect against short circuits by rapidly disconnecting the supply.',
     },
@@ -102,12 +102,12 @@ const Module7Section2_2 = () => {
       id: 8,
       question: 'What requirement does BS 7671 place on disconnection times?',
       options: [
-        'No specific requirements',
         'Maximum disconnection times for safety',
         'Minimum disconnection times only',
+        'No specific requirements',
         'Variable times depending on weather',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'BS 7671 sets out requirements for maximum disconnection times to ensure protective devices operate quickly enough to prevent danger during short circuits.',
     },
@@ -115,12 +115,12 @@ const Module7Section2_2 = () => {
       id: 9,
       question: 'What must an electrician do if a circuit trips repeatedly due to a short circuit?',
       options: [
-        'Keep re-energising until it works',
-        'Replace the circuit breaker immediately',
+        'Industry developments and new technology requirements',
         'Never re-energise until the cause is identified and rectified',
-        'Ignore it if equipment still works',
+        'Signed statement of intent in the safety policy',
+        'Metal part of electrical equipment that can become live under fault',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'An electrician must never re-energise a circuit that trips repeatedly until the cause is properly identified and rectified, as this indicates a dangerous fault condition.',
     },
@@ -128,12 +128,12 @@ const Module7Section2_2 = () => {
       id: 10,
       question: 'In the real-world example, what mistake caused the lighting circuit to short?',
       options: [
-        'Wrong cable size was used',
+        'The person on whose behalf the inspection is carried out',
+        'Above the bath/shower to 2.25m from floor level',
         'A cable was pinched by a screw when fixing a light fitting',
-        'Too much current was flowing',
-        'The earth connection was loose',
+        'Additions or alterations not requiring new circuits',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'A cable was pinched by a screw when fixing a light fitting, causing the insulation to break down and allowing line and neutral conductors to touch, creating a short circuit.',
     },

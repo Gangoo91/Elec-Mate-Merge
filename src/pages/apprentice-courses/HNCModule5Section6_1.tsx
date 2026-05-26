@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'welfare-cdm',
     question: 'Under CDM 2015, who has the primary duty to provide welfare facilities on site?',
     options: [
-      'The client',
-      'The principal designer',
       'The principal contractor',
+      'The principal designer',
+      'The client',
       'The building services contractor',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The principal contractor has the primary duty under CDM 2015 to provide adequate welfare facilities for all workers on the construction site.',
   },
@@ -44,20 +44,25 @@ const quickCheckQuestions = [
     id: 'compound-layout',
     question: 'What is the primary consideration when planning site compound layout?',
     options: [
-      'Minimising land rental costs',
-      'Maximising storage capacity',
+      'Periodic synchronization signals from coordinators',
       'Maintaining safe traffic and pedestrian segregation',
-      'Locating nearest to the building entrance',
+      'CDM 2007 replaced it with the CDM Co-ordinator',
+      'AC to DC using both half-cycles via four diodes',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Safe segregation of vehicle and pedestrian routes is the primary safety consideration in compound layout planning to prevent struck-by incidents.',
   },
   {
     id: 'temp-electrical',
     question: 'What voltage is required for portable tools on construction sites under BS 7671?',
-    options: ['230V single phase', '110V centre-tapped earth', '400V three phase', '50V SELV'],
-    correctIndex: 1,
+    options: [
+      '110V centre-tapped earth',
+      '230V single phase',
+      '400V three phase',
+      '50V SELV',
+    ],
+    correctIndex: 0,
     explanation:
       '110V centre-tapped earth (CTE) is the standard for portable tools on UK construction sites, limiting shock voltage to 55V to earth.',
   },
@@ -65,12 +70,12 @@ const quickCheckQuestions = [
     id: 'access-control',
     question: 'An induction is required before site access primarily to:',
     options: [
-      'Check qualifications',
-      'Issue PPE',
+      'To prevent delays, clashes, and rework',
+      'An impulse line filled with fill fluid',
+      'Insulation resistance test between L-E and N-E',
       'Communicate site-specific hazards and rules',
-      'Register for payroll',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Site inductions ensure all workers understand site-specific hazards, emergency procedures, and rules before starting work.',
   },
@@ -81,20 +86,25 @@ const quizQuestions = [
     id: 1,
     question: 'According to CDM 2015, welfare facilities must include which minimum provisions?',
     options: [
+      'The Contractor loses their right to additional time and money',
       'Toilets, washing facilities, drinking water, rest area, changing rooms',
-      'Toilets and drinking water only',
-      'Toilets, washing facilities, and first aid',
-      'Rest area and canteen facilities only',
+      'The ground may collapse under the weight of the MEWP, causing it to overturn',
+      'Issue records, training records, inspection records, maintenance records',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'CDM 2015 Schedule 2 specifies minimum welfare requirements: sanitary conveniences, washing facilities, drinking water, changing rooms/lockers, and facilities for rest.',
   },
   {
     id: 2,
     question: 'How many sanitary conveniences are required for up to 25 workers under CDM 2015?',
-    options: ['1', '2', '3', '4'],
-    correctAnswer: 0,
+    options: [
+      '3',
+      '4',
+      '1',
+      '2',
+    ],
+    correctAnswer: 2,
     explanation:
       'CDM 2015 guidance recommends minimum 1 toilet per 7 males or 1 per 25 if urinals also provided, and 1 per 7 females. For mixed sites up to 25, minimum 1 is required.',
   },
@@ -103,20 +113,25 @@ const quizQuestions = [
     question:
       'Temporary electrical supplies on construction sites should be installed in accordance with:',
     options: [
-      'BS 7671 only',
-      'BS 7671 and BS 7909',
       'HSE guidance only',
+      'BS 7671 only',
       "Site manager's discretion",
+      'BS 7671 and BS 7909',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 provides general requirements whilst BS 7909 gives specific guidance for temporary electrical installations at events and construction sites.',
   },
   {
     id: 4,
     question: 'The recommended maximum cable run for 110V supplies on site is:',
-    options: ['25 metres', '50 metres', '100 metres', 'No specific limit'],
-    correctAnswer: 2,
+    options: [
+      '100 metres',
+      '50 metres',
+      '25 metres',
+      'No specific limit',
+    ],
+    correctAnswer: 0,
     explanation:
       "While there's no absolute limit, 100 metres is typically the practical maximum for 110V supplies to maintain acceptable voltage drop and protection.",
   },
@@ -124,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'A site compound fire assembly point should be:',
     options: [
-      'Inside the compound near the office',
+      'Either mains connection or bowser with appropriate treatment',
       'At a safe distance from the compound with clear access',
-      'At the site entrance gate',
-      'Wherever space allows',
+      'Adjacent to delivery access with good ground conditions',
+      'IP44 rated minimum and 30mA RCD protected',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +152,10 @@ const quizQuestions = [
     id: 6,
     question: 'Temporary water supplies on construction sites typically require:',
     options: [
-      'Connection to mains only',
-      'Bowser tanks only',
+      'When they have a mortgage or dependants who rely on their income',
+      'Higher operating frequency eliminates flicker and improves efficacy',
       'Either mains connection or bowser with appropriate treatment',
-      'Bottled water provision',
+      'The internal test resistor has failed but the RCD mechanism works',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,16 +164,26 @@ const quizQuestions = [
   {
     id: 7,
     question: 'What is the minimum illumination level required in welfare facilities?',
-    options: ['50 lux', '100 lux', '150 lux', '200 lux'],
-    correctAnswer: 2,
+    options: [
+      '50 lux',
+      '100 lux',
+      '200 lux',
+      '150 lux',
+    ],
+    correctAnswer: 3,
     explanation:
       'HSE guidance recommends minimum 150 lux in welfare facilities to enable safe use of facilities and reading of safety notices.',
   },
   {
     id: 8,
     question: 'Site security fencing should typically be a minimum height of:',
-    options: ['1.2 metres', '1.8 metres', '2.0 metres', '2.4 metres'],
-    correctAnswer: 2,
+    options: [
+      '2.0 metres',
+      '2.4 metres',
+      '1.2 metres',
+      '1.8 metres',
+    ],
+    correctAnswer: 0,
     explanation:
       '2.0 metres is the recommended minimum height for site security fencing to deter unauthorised access and protect the public.',
   },
@@ -166,8 +191,13 @@ const quizQuestions = [
     id: 9,
     question:
       'Hot work permits are required when working within what distance of combustible materials?',
-    options: ['3 metres', '6 metres', '10 metres', '15 metres'],
-    correctAnswer: 2,
+    options: [
+      '3 metres',
+      '10 metres',
+      '6 metres',
+      '15 metres',
+    ],
+    correctAnswer: 1,
     explanation:
       'Hot work permits are typically required when working within 10 metres of combustible materials, though this may vary by site rules.',
   },
@@ -175,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'Material storage areas should be positioned:',
     options: [
-      'At the furthest point from the building',
+      'IP44 rated minimum and 30mA RCD protected',
+      'Either mains connection or bowser with appropriate treatment',
       'Adjacent to delivery access with good ground conditions',
-      'Inside the building under construction',
-      'Outside the site compound',
+      'At a safe distance from the compound with clear access',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Storage areas should be accessible for deliveries, on firm level ground, and positioned to minimise double-handling of materials.',
   },
@@ -189,12 +219,12 @@ const quizQuestions = [
     question:
       'The Construction Logistics and Community Safety (CLOCS) standard primarily addresses:',
     options: [
-      'Material ordering procedures',
+      'A load with unequal current draw on each phase',
+      'All lids are in place and secured',
+      'Equivalent CO2 impact per kg released',
       'Safe vehicle movements and driver competence',
-      'Community consultation requirements',
-      'Environmental protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'CLOCS focuses on construction vehicle safety, particularly protecting vulnerable road users through driver training, vehicle standards, and route planning.',
   },
@@ -202,12 +232,12 @@ const quizQuestions = [
     id: 12,
     question: 'Temporary electrical distribution boards on site must be:',
     options: [
-      'Protected by 30mA RCD only',
       'IP44 rated minimum and 30mA RCD protected',
-      'Located inside site cabins only',
       'Protected by fuses rather than MCBs',
+      'Protected by 30mA RCD only',
+      'Located inside site cabins only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Site distribution equipment must be minimum IP44 rated for outdoor use and all socket circuits protected by 30mA RCDs for personal protection.',
   },

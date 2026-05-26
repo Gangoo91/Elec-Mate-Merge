@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'adiabatic-purpose',
     question: 'What does the adiabatic equation determine for cable protection?',
     options: [
-      'Cable voltage drop',
+      'Changes in legislation, organisation, or after incidents',
+      'Widens the temperature deadband to reduce plant operation',
       'Minimum cable size to withstand fault current for disconnection time',
-      'Maximum cable length',
-      'Cable grouping factor',
+      'Create immediate positive feedback or rewards after completing the habit',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The adiabatic equation S = √(I²t)/k determines the minimum conductor cross-sectional area (S) required to withstand the thermal energy from fault current without damage.',
   },
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'k-value-meaning',
     question: "What does the 'k' value in the adiabatic equation represent?",
     options: [
-      'Kiloamps of fault current',
       'Cable thermal constant based on conductor and insulation materials',
-      'Kelvin temperature rise',
-      'Correction factor for ambient',
+      'Delta primary, star secondary with neutral, 330 degrees (11 o\\\\\\\\\\\\\\\'clock) phase shift',
+      'Functional testing of detection and alarm systems',
+      'Reduced voltage, RCD protection, and robust equipment',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The k value is a constant that depends on the conductor material (copper/aluminium) and insulation type (PVC/XLPE). It represents the cable's ability to absorb thermal energy.",
   },
@@ -59,12 +59,12 @@ const quickCheckQuestions = [
     id: 'i2t-definition',
     question: 'What is I²t (let-through energy)?',
     options: [
-      'Current squared times temperature',
       'Total energy let through by a protective device during fault clearance',
-      'Installation test current',
-      'Impedance squared times time',
+      'The engine speed (and therefore the output frequency)',
+      'A motor designed to run on single-phase supply using starting mechanisms',
+      'By opening and closing to regulate air passage through ducts',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'I²t is the let-through energy - the thermal stress the protective device allows through to the cable during fault clearance. Lower I²t values mean better cable protection.',
   },
@@ -72,8 +72,13 @@ const quickCheckQuestions = [
     id: 'fault-withstand-check',
     question:
       'For a cable to be adequately protected against fault current, which condition must be satisfied?',
-    options: ['I²t ≥ k²S²', 'k²S² ≥ I²t', 'S ≥ I²t', 'k ≥ I²t'],
-    correctIndex: 1,
+    options: [
+      'S ≥ I²t',
+      'I²t ≥ k²S²',
+      'k ≥ I²t',
+      'k²S² ≥ I²t',
+    ],
+    correctIndex: 3,
     explanation:
       "The cable's thermal withstand (k²S²) must be greater than or equal to the let-through energy (I²t) of the protective device. This ensures the cable won't be damaged during a fault.",
   },
@@ -83,7 +88,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the adiabatic equation used in cable fault protection?',
-    options: ['S = I × t', 'S = √(I²t) / k', 'S = I² × t × k', 'S = k × I × t'],
+    options: [
+      'S = I × t',
+      'S = √(I²t) / k',
+      'S = I² × t × k',
+      'S = k × I × t',
+    ],
     correctAnswer: 1,
     explanation:
       'S = √(I²t) / k gives the minimum conductor size (S in mm²) where I is fault current, t is disconnection time, and k is the cable thermal constant.',
@@ -91,7 +101,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'The k value for copper conductors with PVC insulation (70°C) is:',
-    options: ['76', '100', '115', '143'],
+    options: [
+      '143',
+      '76',
+      '115',
+      '100',
+    ],
     correctAnswer: 2,
     explanation:
       'From BS 7671 Table 43.1: k = 115 for copper conductors with 70°C PVC insulation. This is a commonly used value in building services calculations.',
@@ -99,8 +114,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'A 4mm² copper/PVC cable (k=115) has what maximum I²t withstand?',
-    options: ['460 A²s', '2,116 A²s', '211,600 A²s', '1,840 A²s'],
-    correctAnswer: 2,
+    options: [
+      '2,116 A²s',
+      '460 A²s',
+      '1,840 A²s',
+      '211,600 A²s',
+    ],
+    correctAnswer: 3,
     explanation:
       'Maximum I²t = k²S² = 115² × 4² = 13,225 × 16 = 211,600 A²s. This is the thermal energy limit the cable can withstand.',
   },
@@ -108,28 +128,38 @@ const quizQuestions = [
     id: 4,
     question: 'Why is fault current highest at the origin of an installation?',
     options: [
-      'More protective devices',
       'Lower cable impedance between supply and fault point',
-      'Higher voltage at origin',
-      'Larger cables are used',
+      'Circuits are grouped by function with clear labelling',
+      'Adjacent to delivery access with good ground conditions',
+      'They inject test current through the earth path',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Fault current is inversely proportional to circuit impedance. At the origin, there's minimal impedance between the supply transformer and fault point, resulting in maximum fault current.",
   },
   {
     id: 5,
     question: 'What happens to fault withstand time (t) if cable size is doubled?',
-    options: ['Time doubles', 'Time halves', 'Time quadruples', 'Time remains the same'],
-    correctAnswer: 2,
+    options: [
+      'Time halves',
+      'Time quadruples',
+      'Time remains the same',
+      'Time doubles',
+    ],
+    correctAnswer: 1,
     explanation:
       'From t = k²S²/I², if S doubles (×2), then S² quadruples (×4). The permissible fault duration increases by a factor of 4 for a given fault current.',
   },
   {
     id: 6,
     question: 'An MCB has I²t let-through of 50,000 A²s. Which cable sizes are protected? (k=115)',
-    options: ['1.5mm² and above', '2.5mm² and above', '4mm² and above', '6mm² and above'],
-    correctAnswer: 0,
+    options: [
+      '4mm² and above',
+      '2.5mm² and above',
+      '1.5mm² and above',
+      '6mm² and above',
+    ],
+    correctAnswer: 2,
     explanation:
       'Required S = √(50,000)/115 = 223.6/115 = 1.95mm². Therefore 2.5mm² is the minimum (1.5mm² is marginal at k²S² = 29,756 A²s). In practice, 2.5mm² would be specified.',
   },
@@ -137,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: "What is 'current limitation' by an MCB?",
     options: [
-      'Reducing normal operating current',
+      'The degree of protection against solid objects (5) and water (5)',
+      'Store intermediate logic states without driving physical outputs',
+      'Record clearly and investigate thoroughly',
       'Tripping before prospective fault current reaches peak',
-      'Limiting cable heating during normal use',
-      'Reducing voltage drop',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Current-limiting MCBs trip so quickly that they disconnect before the prospective fault current reaches its peak value. This significantly reduces the I²t let-through energy.',
   },
@@ -150,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why do XLPE cables have higher k values than PVC?',
     options: [
-      'XLPE is more conductive',
       'XLPE can withstand higher temperatures (90°C vs 70°C) before damage',
-      'XLPE has lower resistance',
-      'XLPE is thinner',
+      'The process of measuring quantities from drawings for pricing',
+      'Local networking, events, and professional support',
+      'Pressure measured relative to atmospheric pressure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'XLPE insulation can withstand higher temperatures (250°C short-circuit limit vs 160°C for PVC). This allows the conductor to absorb more thermal energy, giving k = 143 for copper/XLPE.',
   },
@@ -163,19 +193,24 @@ const quizQuestions = [
     id: 9,
     question: 'At what point in a circuit is fault current verification most critical?',
     options: [
-      'At the load',
-      'Mid-way along the cable',
+      'The electrician assigned to install it',
       'At the origin (closest to supply)',
-      'At the distribution board',
+      '1.67 times the live conductor resistance',
+      'They consume the most energy in a building',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "The highest fault current occurs at the origin where impedance is lowest. If the cable can withstand this maximum fault, it's protected throughout its length.",
   },
   {
     id: 10,
     question: 'A 6kA fault lasting 0.1s flows through a cable. What is the I²t?',
-    options: ['600 A²s', '60,000 A²s', '3,600,000 A²s', '360,000 A²s'],
+    options: [
+      '600 A²s',
+      '60,000 A²s',
+      '3,600,000 A²s',
+      '360,000 A²s',
+    ],
     correctAnswer: 2,
     explanation:
       'I²t = I² × t = 6000² × 0.1 = 36,000,000 × 0.1 = 3,600,000 A²s. This would require careful verification that cable k²S² exceeds this value.',

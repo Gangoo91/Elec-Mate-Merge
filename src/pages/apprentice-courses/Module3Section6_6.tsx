@@ -23,7 +23,12 @@ const quizQuestions = [
   {
     id: 1,
     question: "What regulation requires following manufacturer's installation instructions?",
-    options: ['BS 5839', 'BS 7671', 'BS 5266', 'ISO 9001'],
+    options: [
+      'BS 5839',
+      'BS 7671',
+      'BS 5266',
+      'ISO 9001',
+    ],
     correctAnswer: 1,
     explanation:
       "BS 7671 explicitly requires adherence to manufacturer's instructions as part of safe installation practice.",
@@ -40,20 +45,25 @@ const quizQuestions = [
     id: 3,
     question: 'Name one reason warranties may be voided.',
     options: [
+      "Improper sensor placement or sensitivity settings",
+      "Guaranteeing you will pass the actual EPA",
+      "The householder who commissioned the work",
       "Installing outside manufacturer's stated parameters",
-      'Using approved cable types',
-      'Following BS 7671 requirements',
-      'Proper earthing connections',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       "Installing equipment outside manufacturer's specified parameters typically voids warranty coverage and may create safety risks.",
   },
   {
     id: 4,
     question: 'Which document details preferred brands and finishes for a project?',
-    options: ['Manufacturer manual', 'BS 7671', 'Site specification', 'NICEIC logbook'],
-    correctAnswer: 2,
+    options: [
+      'Site specification',
+      'BS 7671',
+      'Manufacturer manual',
+      'NICEIC logbook',
+    ],
+    correctAnswer: 0,
     explanation:
       'Site specifications detail project-specific requirements including preferred brands, finishes, and installation methods.',
   },
@@ -61,10 +71,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why should you record any deviation from installation instructions?',
     options: [
-      'For fun',
+      'Check for hidden services and structural elements',
       'For accountability, inspection approval, and warranty protection',
-      'To increase project costs',
-      'To confuse inspectors',
+      'Not all loads operate simultaneously at full load',
+      'It creates a brief high current and measures voltage drop',
     ],
     correctAnswer: 1,
     explanation:
@@ -74,10 +84,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the safest approach if site specs and manufacturer instructions differ?',
     options: [
-      'Ignore both',
-      'Follow site specs only',
+      'It provides feedback to improve future designs and identify performance issues',
+      'Prove dead with approved voltage indicator',
       'Follow the most stringent requirement and seek clarification',
-      'Choose randomly',
+      'To monitor system status and faults remotely',
     ],
     correctAnswer: 2,
     explanation:
@@ -87,12 +97,12 @@ const quizQuestions = [
     id: 7,
     question: 'Give one example of a site-specific requirement.',
     options: [
-      'Basic cable sizing',
+      'To set out how health and safety will be managed during pre-construction',
+      'Sensitivity to dielectric constant changes in the medium',
+      'To condition and circulate air through ducts',
       'Specified cable brand, containment type, or colour coding',
-      'Standard BS 7671 compliance',
-      'Generic installation methods',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Site specifications commonly detail specific brands, containment systems, colour coding schemes, and installation finishes.',
   },
@@ -100,12 +110,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is one consequence of failing to follow site specs on a commercial job?',
     options: [
-      'Improved efficiency',
       'Project delay, failed inspection, or contract breach',
-      'Cost savings',
-      'Enhanced safety',
+      'The waveform has significant harmonic distortion',
+      'To provide an energy rating and recommendations for the building',
+      'Equipment cannot operate without adequate ventilation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Failing to follow site specifications can result in project delays, failed inspections, contract breaches, and potential legal consequences.',
   },
@@ -117,12 +127,12 @@ const quickCheckQuestions = [
     id: 'torque-settings',
     question: 'Why do manufacturers provide specific torque settings for terminations?',
     options: [
-      'To increase installation time',
+      'Cable pulling winches, conduit cleaning equipment, and cable lubricants',
+      'A load with unequal current draw on each phase',
+      'Refuse to commence work until safe isolation has been completed and verified',
       'To ensure optimal connection integrity and prevent overheating',
-      'To sell more tools',
-      'For cosmetic purposes only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Specific torque settings ensure proper connection integrity, prevent overheating from loose connections, and avoid damage from overtightening.',
   },
@@ -130,12 +140,12 @@ const quickCheckQuestions = [
     id: 'site-specs-vs-bs7671',
     question: 'What is the main difference between site specifications and BS 7671?',
     options: [
-      'They are identical',
+      'Word of mouth, online presence, and professional reputation',
+      'Rods, tapes, plates, foundation electrodes, and structural steel',
       'Site specs are project-specific requirements that may exceed BS 7671 minimums',
-      'Site specs replace BS 7671',
-      'BS 7671 is optional',
+      'A ruggedised industrial computer designed to control machines and processes using a stored program',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Site specifications are project-specific requirements that often exceed BS 7671 minimum standards but cannot permit non-compliance with safety regulations.',
   },
@@ -143,12 +153,12 @@ const quickCheckQuestions = [
     id: 'ignoring-instructions',
     question: 'Give one potential consequence of ignoring manufacturer instructions.',
     options: [
-      'Improved performance',
+      'The certificate is invalid and fraud may have occurred',
+      'Being regularly reviewed, communicated, and implemented',
       'Voided warranty, unsafe operation, or compliance failure',
-      'Cost savings',
-      'Faster installation',
+      'To record what was visually inspected and the outcome',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Ignoring manufacturer instructions can void warranties, create unsafe conditions, cause compliance failures, and result in legal liability.',
   },

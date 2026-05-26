@@ -35,12 +35,12 @@ const quickCheckQuestions = [
     id: 'whistleblowing-law',
     question: 'What is the primary legislation protecting whistleblowers in the UK?',
     options: [
+      'Bribery Act 2010',
       'Health and Safety at Work Act 1974',
       'Public Interest Disclosure Act 1998',
       'Employment Rights Act 1996 only',
-      'Bribery Act 2010',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The Public Interest Disclosure Act 1998 (PIDA) is the primary legislation protecting whistleblowers. It amends the Employment Rights Act 1996 to protect workers who make 'qualifying disclosures' about wrongdoing from detriment or dismissal.",
   },
@@ -49,11 +49,11 @@ const quickCheckQuestions = [
     question: 'Which of the following would qualify as a protected disclosure under PIDA?',
     options: [
       'Reporting that a colleague was late to work',
-      'Disclosing that safety equipment is being removed to save costs',
       'Complaining about office temperature preferences',
+      'Disclosing that safety equipment is being removed to save costs',
       'Reporting that canteen food is too expensive',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A qualifying disclosure must relate to one of six categories including criminal offences, breach of legal obligations, danger to health and safety, environmental damage, miscarriage of justice, or concealment of any of these. Removing safety equipment would create danger to health and safety.',
   },
@@ -61,12 +61,12 @@ const quickCheckQuestions = [
     id: 'conflict-of-interest',
     question: 'What should a building services engineer do if they have a conflict of interest?',
     options: [
-      'Keep it secret to avoid complications',
-      "Ignore it if it doesn't affect the project",
       'Declare it and, if necessary, withdraw from the decision or project',
-      'Only declare it if someone asks',
+      'Evacuate the area immediately, prevent ignition sources, and ventilate before re-entry',
+      'Using stimulated Raman scattering for distributed amplification',
+      'Occupants remain in their fire-resistant compartment unless directly threatened',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Professional codes of conduct require declaration of conflicts of interest. If the conflict is significant, the professional should withdraw from the decision or project. Transparency and acting in the client's/employer's best interest are fundamental ethical obligations.",
   },
@@ -74,12 +74,12 @@ const quickCheckQuestions = [
     id: 'iet-membership',
     question: 'What is a key obligation of IET membership regarding competence?',
     options: [
-      'To never admit to not knowing something',
       'To only undertake work within your competence and decline work outside it',
-      'To accept all work offered regardless of competence',
-      'Competence obligations only apply to Chartered Engineers',
+      'To avoid large variations between bright and dark areas that could impair visibility',
+      'At least 20 minutes continuously, ensuring water flows away from the unaffected eye',
+      'Submittal number, description, date submitted, and approval status',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The IET Code of Conduct requires members to only undertake work or take on responsibilities that they are competent to perform. This applies to all membership grades and requires members to decline or refer work beyond their competence.',
   },
@@ -92,11 +92,11 @@ const quizQuestions = [
       'Which of the following is NOT one of the six categories for a qualifying disclosure under PIDA?',
     options: [
       'A criminal offence has been, is being, or is likely to be committed',
-      'The health and safety of any individual is endangered',
       'A personal grievance about pay or conditions',
+      'The health and safety of any individual is endangered',
       'Information tending to show any of the above is being or is likely to be concealed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'PIDA protects disclosures about: criminal offences, breach of legal obligations, miscarriage of justice, health and safety dangers, environmental damage, and concealment of any of these. Personal grievances about employment terms are not protected as whistleblowing.',
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     id: 2,
     question: 'To whom should a worker first make a protected disclosure?',
     options: [
-      'Directly to the media',
+      'Implement responsive design with prioritised information',
+      'To confirm work is complete, the area is safe, and controls can be removed',
       'Their employer or, for health and safety matters, the HSE',
-      'Their local MP',
-      'Social media platforms',
+      'Limited dust ingress protection and splash water protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The legislation encourages internal disclosure first - to the employer or, for relevant matters, to prescribed persons like the HSE. External disclosure (media, MPs) is protected in more limited circumstances, typically when internal disclosure would be futile or dangerous.',
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     id: 3,
     question: "What does professional 'integrity' require in building services engineering?",
     options: [
-      "Always agreeing with the client's demands",
+      'To evaluate fire safety measures including emergency lighting',
+      'Activity, inspection stage, acceptance criteria, responsibility, and reference documents',
+      'To balance heating and cooling systems and avoid simultaneous operation that wastes energy',
       'Acting honestly, fairly, and transparently in professional relationships',
-      'Keeping all professional matters confidential under all circumstances',
-      'Maximising profit on every project',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Integrity means acting honestly, fairly, and transparently. It includes not misleading clients or the public, not taking bribes or inducements, declaring conflicts of interest, and being truthful in professional representations.',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       'An electrician discovers their company is routinely bypassing safety interlocks to speed up commissioning. What is the ethical course of action?',
     options: [
-      "Ignore it as it's not their responsibility",
-      'Continue the practice since everyone else does',
       'Raise the concern through appropriate channels, internally first',
-      'Immediately call the police',
+      'The space where occupants use telecommunications services',
+      'Maintain adequate clearance or use heat-resistant cables',
+      'The patch may block energy delivery and cause a skin burn',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The ethical response is to raise the concern. PIDA encourages internal disclosure first - to supervisors, safety representatives, or through internal whistleblowing procedures. If internal routes fail or are inappropriate, external disclosure to the HSE may be warranted.',
   },
@@ -144,8 +144,13 @@ const quizQuestions = [
     id: 5,
     question:
       "Which professional body's code of conduct specifically applies to electrical engineers in the UK?",
-    options: ['RICS', 'RIBA', 'IET', 'CIOB'],
-    correctAnswer: 2,
+    options: [
+      'RIBA',
+      'IET',
+      'CIOB',
+      'RICS',
+    ],
+    correctAnswer: 1,
     explanation:
       'The Institution of Engineering and Technology (IET) is the professional body for electrical, electronic, manufacturing, and IT engineers. Its Code of Conduct sets ethical standards for members working in the electrotechnical sector.',
   },
@@ -155,11 +160,11 @@ const quizQuestions = [
       'Under the IET Code of Conduct, members must exercise professional skill and judgement to:',
     options: [
       'Maximise their own financial benefit',
-      'Protect the health, safety and welfare of all',
       'Support their employer regardless of ethical concerns',
+      'Protect the health, safety and welfare of all',
       'Maintain confidentiality above all other considerations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The IET Code requires members to 'exercise professional skill and judgment to the best of their ability and discharge their professional responsibilities with integrity' with particular emphasis on 'protecting health, safety and welfare'.",
   },
@@ -168,12 +173,12 @@ const quizQuestions = [
     question:
       'A consultant engineer is offered a commission by a supplier if they specify their products. What should they do?',
     options: [
-      'Accept it as normal business practice',
-      "Accept but don't tell the client",
+      'Carry out a suitable and sufficient assessment of risks to health and safety, including stress',
+      'How much the actual value can vary either side of the marked value.',
+      'A freestanding, moveable scaffold on wheels or castors used for short-duration tasks',
       'Decline, as it creates a conflict of interest that could compromise professional judgement',
-      'Accept only if the products are genuinely best value',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Accepting commissions or inducements from suppliers creates a conflict of interest. Professional codes prohibit this as it compromises independent professional judgement. The engineer must specify products based on technical merit and client interest, not personal gain.',
   },
@@ -181,12 +186,12 @@ const quizQuestions = [
     id: 8,
     question: 'What protection does PIDA provide to workers who make qualifying disclosures?',
     options: [
-      'Immunity from all legal proceedings',
       'Protection from dismissal and detriment by their employer',
-      'Guaranteed promotion',
-      'Protection only if they are union members',
+      'A pulsating DC earth fault current from a rectifier circuit',
+      'Prospective short-circuit current (Ipsc)',
+      'Locate and mark existing services before setting out new positions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PIDA protects workers from unfair dismissal and from being subjected to any detriment by their employer because of making a protected disclosure. Dismissal for making a protected disclosure is automatically unfair.',
   },
@@ -194,10 +199,10 @@ const quizQuestions = [
     id: 9,
     question: "The ECA (Electrical Contractors' Association) requires member companies to:",
     options: [
-      'Use only the cheapest labour available',
+      'Between the navel and the bottom of the breastbone (sternum)',
       'Maintain high standards of workmanship and business ethics',
-      'Subcontract all work to non-members',
-      'Avoid all union engagement',
+      'First fault does not cause disconnection - monitoring required',
+      'Based on installation type, use, and condition found',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,11 +213,11 @@ const quizQuestions = [
     question: 'What is the relationship between professional ethics and legal requirements?',
     options: [
       'They are identical - ethics means following the law',
+      'There is no relationship between them',
       'Professional ethics often exceed minimum legal requirements',
       'Legal requirements are always more demanding than ethics',
-      'There is no relationship between them',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Professional ethics typically go beyond minimum legal compliance. While the law sets minimum standards, professional codes often require higher standards of conduct, transparency, and responsibility. A practice might be legal but still unethical.',
   },

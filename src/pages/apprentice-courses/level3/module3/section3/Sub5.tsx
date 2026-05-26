@@ -38,8 +38,13 @@ const checks = [
   {
     id: 'l3-m3-3-5-balanced',
     question: 'Three balanced single-phase loads (each 30 A, pf 1.0) on a 3-phase + N supply. Neutral current is:',
-    options: ['10 A', '30 A', '52 A', '0 A'],
-    correctIndex: 3,
+    options: [
+      '0 A',
+      '10 A',
+      '52 A',
+      '30 A',
+    ],
+    correctIndex: 0,
     explanation:
       'Balanced loads = three currents 120° apart = vector sum exactly zero. The neutral carries no current.',
   },
@@ -47,7 +52,12 @@ const checks = [
     id: 'l3-m3-3-5-imbalance',
     question:
       'L1 = 30 A, L2 = 0 A, L3 = 0 A (single-phase load on L1 only). Neutral current is:',
-    options: ['0 A', '10 A', '30 A', '52 A'],
+    options: [
+      '10 A',
+      '0 A',
+      '30 A',
+      '52 A',
+    ],
     correctIndex: 2,
     explanation:
       'With only L1 loaded, all the return current must flow through the neutral. I_N = I_L1 = 30 A.',
@@ -56,7 +66,12 @@ const checks = [
     id: 'l3-m3-3-5-triplen',
     question:
       'Three balanced 30 A loads, each with 30 % third-harmonic content. Approximate neutral current is:',
-    options: ['0 A', '9 A', '27 A', '90 A'],
+    options: [
+      '90 A',
+      '0 A',
+      '27 A',
+      '9 A',
+    ],
     correctIndex: 2,
     explanation:
       'Fundamentals balance to zero. But 3rd harmonics on each phase are IN PHASE in the neutral — they add. 3 × (30 × 0.3) = 27 A of triplen current in the neutral, even though the load is "balanced" at the fundamental.',
@@ -67,20 +82,25 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Three perfectly balanced phase currents 120° apart sum to:',
-    options: ['I × 3', 'I × √3', 'Zero', 'I'],
-    correctAnswer: 2,
+    options: [
+      'I × 3',
+      'Zero',
+      'I × √3',
+      'I',
+    ],
+    correctAnswer: 1,
     explanation: 'Vector sum of three equal magnitudes 120° apart = zero. That\'s why balanced loads need no neutral.',
   },
   {
     id: 2,
     question: 'For a 3-phase 4-wire supply, the neutral conductor must be sized for:',
     options: [
-      'Half the line current',
+      'It must be face-fit tested to the individual wearer and properly maintained',
+      'Consider whether the cable can be reused on another project',
       'Full line current at minimum (and oversized for harmonic-rich loads)',
-      'No current — it never carries any',
-      'Twice the line current',
+      'Maximum power is transferred when load resistance equals source resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The neutral might carry full line current under fault or extreme imbalance, plus triplen harmonics that add. BS 7671 §523 may require neutral upsizing where 3rd harmonic content &gt; 15 %.',
   },
@@ -88,12 +108,12 @@ const quizQuestions = [
     id: 3,
     question: 'Triplen harmonics (3rd, 9th, 15th, …) in a 3-phase neutral:',
     options: [
-      'Cancel out',
+      'Legal liability for the work',
+      'Ceiling height and wall material',
+      'Investigate and retest if necessary',
       'Sum to three times the per-phase value',
-      'Reduce by √3',
-      'Cause negative current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'All three phases produce the same triplen harmonic in phase with each other (because 3 × 120° = 360° = full cycle). They add directly in the neutral.',
   },
@@ -101,8 +121,13 @@ const quizQuestions = [
     id: 4,
     question:
       'Most non-linear single-phase loads (LED, computer PSU, EV charger) draw harmonics dominated by:',
-    options: ['Even harmonics (2, 4, 6)', 'Triplens (3, 9, 15)', '5th and 7th only', 'No harmonics'],
-    correctAnswer: 1,
+    options: [
+      'Triplens (3, 9, 15)',
+      'Even harmonics (2, 4, 6)',
+      '5th and 7th only',
+      'No harmonics',
+    ],
+    correctAnswer: 0,
     explanation:
       'Single-phase rectifier loads draw mostly 3rd, 5th and 7th. Triplens dominate at lower kVA loads. Hence neutrals on LED-heavy lighting installs run hot.',
   },
@@ -110,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'A 3-phase RCD operates by detecting:',
     options: [
-      'Overcurrent on one phase',
+      'Systems automatically adjust start/stop times based on external temperature',
       'Imbalance between line currents and neutral (sum ≠ 0 = leakage to earth)',
-      'Voltage drop',
-      'Frequency variation',
+      'An initial medical examination before first exposure, and then at least every 2 years',
+      'Pilot signal integrity and protective conductor current measurement',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,7 +148,12 @@ const quizQuestions = [
     id: 6,
     question:
       'A site has L1 = 50 A, L2 = 30 A, L3 = 50 A (single-phase loads, in phase). Neutral current (approximated as scalar imbalance):',
-    options: ['0 A', '10 A', '20 A', '50 A'],
+    options: [
+      '0 A',
+      '10 A',
+      '20 A',
+      '50 A',
+    ],
     correctAnswer: 2,
     explanation:
       'Vector sum of three currents 120° apart with magnitudes 50, 30, 50: I_N = √(50² + 30² + 50² − 50×30 − 30×50 − 50×50) = √(2500 + 900 + 2500 − 1500 − 1500 − 2500) = √400 = 20 A.',
@@ -133,12 +163,12 @@ const quizQuestions = [
     question:
       'Why is balancing 3-phase loads important?',
     options: [
-      'Looks neat',
+      'Working near an open window and assuming natural ventilation is adequate',
+      'Related to line conductor resistance by cross-sectional area ratio',
+      'Prospective Fault Current - confirms equipment rating',
       'Reduces neutral current; minimises losses; allows full transformer use',
-      'Required by BS 7671 explicitly',
-      'Reduces voltage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Balancing minimises the wasted current in the neutral and unloads the supply transformer evenly. Each phase can be loaded to capacity instead of one being saturated.',
   },
@@ -147,12 +177,12 @@ const quizQuestions = [
     question:
       'On a heavily LED-loaded retail install, BS 7671 §523 may require:',
     options: [
-      'No special action',
       'Upsizing the neutral conductor relative to the lines',
-      'Removing the neutral',
-      'Extra phase conductor',
+      'Substantially enclosed and a foreseeable risk of serious injury',
+      'For the working life of the installation',
+      'Lights that operate only when the normal supply fails',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When 3rd harmonic content &gt; 15 % of fundamental, BS 7671 requires factoring the neutral as a current-carrying conductor in cable sizing. Practically: neutral CSA ≥ line CSA; sometimes 1.5× for very harmonic-rich loads.',
   },

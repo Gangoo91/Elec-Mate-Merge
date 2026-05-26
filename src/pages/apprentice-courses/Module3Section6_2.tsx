@@ -15,7 +15,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'How far from the wall corner is a vertical safe zone?',
-    options: ['100 mm', '150 mm', '200 mm', '250 mm'],
+    options: [
+      '100 mm',
+      '150 mm',
+      '200 mm',
+      '250 mm',
+    ],
     correctAnswer: 1,
     explanation:
       'Vertical safe zones extend 150mm from wall corners (internal or external) as specified in BS 7671 to provide predictable cable locations.',
@@ -31,8 +36,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the minimum depth for an unprotected cable outside a safe zone?',
-    options: ['25 mm', '35 mm', '50 mm', '75 mm'],
-    correctAnswer: 2,
+    options: [
+      '35 mm',
+      '25 mm',
+      '75 mm',
+      '50 mm',
+    ],
+    correctAnswer: 3,
     explanation:
       'Cables outside safe zones must be buried at least 50mm deep from the surface to provide adequate protection from accidental penetration.',
   },
@@ -41,9 +51,9 @@ const quizQuestions = [
     question: 'Name one type of mechanical protection for cables.',
     options: [
       'Steel conduit or trunking',
-      'Plastic cable ties',
-      'Electrical tape',
-      'Paint marking',
+      'Type marking (AC, A, F, B)',
+      'Retest to verify the correction',
+      'BSRIA and Usable Buildings Trust',
     ],
     correctAnswer: 0,
     explanation:
@@ -52,16 +62,26 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What safe zone is directly above a socket outlet?',
-    options: ['Vertical', 'Horizontal', 'Ceiling line zone', 'None'],
-    correctAnswer: 0,
+    options: [
+      'Horizontal',
+      'Vertical',
+      'None',
+      'Ceiling line zone',
+    ],
+    correctAnswer: 1,
     explanation:
       'A vertical safe zone extends directly above (and below) any electrical accessory to the ceiling or floor level.',
   },
   {
     id: 6,
     question: 'Which regulation defines safe zones?',
-    options: ['BS 5839', 'BS 7671', 'BS EN 60529', 'BS 5266'],
-    correctAnswer: 1,
+    options: [
+      'BS 5839',
+      'BS EN 60529',
+      'BS 7671',
+      'BS 5266',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 7671 (IET Wiring Regulations) defines safe zones for concealed cables in Section 522 to prevent accidental damage.',
   },
@@ -69,12 +89,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why is it dangerous to route cables diagonally in walls?',
     options: [
-      'They use more cable',
+      'Safety standard for electrical test equipment and probes',
+      'Higher efficiency and temperature coefficient',
+      'Conduct basic tests under supervision',
       'They are unpredictable and likely to be drilled into',
-      'They look untidy',
-      'They cost more to install',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Diagonal routing is unpredictable - people assume cables follow safe zones and may drill into walls expecting no cables in diagonal areas.',
   },
@@ -83,12 +103,12 @@ const quizQuestions = [
     question:
       'What is one additional requirement for cables routed outside safe zones in a bathroom?',
     options: [
-      'Use bigger cables',
-      'Paint them white',
       'Compliance with bathroom zoning requirements',
-      'Install at head height',
+      'Installing accessories and making final connections',
+      'The wrong circuit was isolated, causing costly downtime',
+      'To avoid electromagnetic interference',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Bathroom cables must comply with both safe zone requirements AND bathroom zoning regulations (BS 7671 Section 701).',
   },
@@ -99,23 +119,38 @@ const quickCheckQuestions = [
   {
     id: 'safe-zones',
     question: 'How far from the ceiling line is a recognised safe zone?',
-    options: ['100 mm', '150 mm', '200 mm', '300 mm'],
-    correctIndex: 1,
+    options: [
+      '100 mm',
+      '300 mm',
+      '150 mm',
+      '200 mm',
+    ],
+    correctIndex: 2,
     explanation:
       'Safe zones extend 150mm from the ceiling line (top of wall) where cables are expected and can be safely concealed.',
   },
   {
     id: 'burial-depth',
     question: 'What is the minimum burial depth for an unprotected cable outside a safe zone?',
-    options: ['25 mm', '50 mm', '75 mm', '100 mm'],
-    correctIndex: 1,
+    options: [
+      '50 mm',
+      '25 mm',
+      '75 mm',
+      '100 mm',
+    ],
+    correctIndex: 0,
     explanation:
       'Cables outside safe zones must be buried at least 50mm deep to provide adequate protection from accidental penetration by nails or screws.',
   },
   {
     id: 'protection-methods',
     question: 'Name one method of protecting a cable outside a safe zone.',
-    options: ['Paint marking', 'Steel conduit protection', 'Plastic covering', 'Warning stickers'],
+    options: [
+      'Paint marking',
+      'Steel conduit protection',
+      'Plastic covering',
+      'Warning stickers',
+    ],
     correctIndex: 1,
     explanation:
       'Steel conduit, trunking, or armoured cable provides mechanical protection allowing safe installation outside designated safe zones.',

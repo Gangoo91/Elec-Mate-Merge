@@ -14,7 +14,12 @@ const quickCheckQuestions = [
     id: 'capacitor-energy',
     question:
       'A 470 μF capacitor is charged to 400 V DC (as found in a VSD DC bus). What energy is stored?',
-    options: ['0.037 J', '3.76 J', '37.6 J', '376 J'],
+    options: [
+      '3.76 J',
+      '0.037 J',
+      '37.6 J',
+      '376 J',
+    ],
     correctIndex: 2,
     explanation:
       'Energy stored E = ½CV² = 0.5 x 470x10⁻⁶ x 400² = 0.5 x 0.00047 x 160,000 = 37.6 joules. While this may seem small, 37.6 J delivered in a fraction of a second can cause a severe shock, burns and cardiac arrest. For comparison, a defibrillator delivers approximately 150-360 J — capacitor stored energy is in the same order of magnitude and must be treated with extreme caution.',
@@ -22,8 +27,13 @@ const quickCheckQuestions = [
   {
     id: 'rc-time-constant',
     question: 'What is the time constant of a 100 μF capacitor charging through a 10 kΩ resistor?',
-    options: ['0.001 seconds', '0.1 seconds', '1 second', '10 seconds'],
-    correctIndex: 2,
+    options: [
+      '10 seconds',
+      '0.1 seconds',
+      '0.001 seconds',
+      '1 second',
+    ],
+    correctIndex: 3,
     explanation:
       'The RC time constant τ = R x C = 10,000 x 100x10⁻⁶ = 1 second. After one time constant, the capacitor charges to 63.2% of the supply voltage. After five time constants (5 seconds), the capacitor is considered fully charged (99.3%). The time constant is critical for understanding how quickly circuits respond and how long capacitors take to discharge to a safe voltage.',
   },
@@ -32,12 +42,12 @@ const quickCheckQuestions = [
     question:
       "Faraday's law of electromagnetic induction states that the induced EMF is proportional to:",
     options: [
-      'The strength of the magnetic field',
       'The rate of change of magnetic flux linkage',
+      'The strength of the magnetic field',
       'The resistance of the conductor',
       'The temperature of the inductor',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Faraday's law states: e = -N(dΦ/dt) — the induced EMF equals the negative of the number of turns multiplied by the rate of change of magnetic flux. The faster the flux changes, the greater the induced EMF. This is the fundamental principle behind generators, transformers, inductors and all electromagnetic energy conversion devices.",
   },
@@ -45,12 +55,12 @@ const quickCheckQuestions = [
     id: 'lenz-law',
     question: "Lenz's law states that the direction of an induced current is always such that it:",
     options: [
-      'Supports the change producing it',
       'Is independent of the change producing it',
-      'Opposes the change producing it',
+      'Supports the change producing it',
       'Doubles the change producing it',
+      'Opposes the change producing it',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Lenz's law states that an induced current always flows in a direction that opposes the change that produced it. This is a consequence of energy conservation — if the induced current supported the change, a self-sustaining system would create energy from nothing. Lenz's law explains why inductors oppose changes in current and why back-EMF is generated in motors.",
   },
@@ -60,8 +70,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'The unit of capacitance is the:',
-    options: ['Henry (H)', 'Ohm (Ω)', 'Farad (F)', 'Weber (Wb)'],
-    correctAnswer: 2,
+    options: [
+      'Henry (H)',
+      'Farad (F)',
+      'Ohm (Ω)',
+      'Weber (Wb)',
+    ],
+    correctAnswer: 1,
     explanation:
       'The unit of capacitance is the farad (F), named after Michael Faraday. One farad is the capacitance that stores one coulomb of charge at a potential difference of one volt. In practice, one farad is an extremely large capacitance — typical values range from picofarads (pF, 10⁻¹²) for ceramic capacitors to millifarads (mF, 10⁻³) for large electrolytic capacitors. Supercapacitors can reach several farads.',
   },
@@ -69,10 +84,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which type of capacitor is polarised and must be connected with correct polarity?',
     options: [
-      'Ceramic disc capacitor',
-      'Film capacitor',
+      'Equipment to be suitable and maintained',
+      'Industry-wide terms and conditions including pay rates',
       'Electrolytic capacitor (aluminium or tantalum)',
-      'Mica capacitor',
+      'To check insulation effectiveness',
     ],
     correctAnswer: 2,
     explanation:
@@ -81,16 +96,26 @@ const quizQuestions = [
   {
     id: 3,
     question: 'The energy stored in a capacitor is given by:',
-    options: ['E = CV', 'E = ½CV²', 'E = C²V', 'E = ½C²V'],
-    correctAnswer: 1,
+    options: [
+      'E = C²V',
+      'E = CV',
+      'E = ½C²V',
+      'E = ½CV²',
+    ],
+    correctAnswer: 3,
     explanation:
       'The energy stored in a capacitor is E = ½CV², where C is the capacitance in farads and V is the voltage across the capacitor. Note that the energy increases with the square of the voltage — doubling the voltage quadruples the stored energy. This is why high-voltage capacitors (such as those in VSDs and power supplies) store dangerous amounts of energy.',
   },
   {
     id: 4,
     question: 'The unit of inductance is the:',
-    options: ['Farad (F)', 'Henry (H)', 'Tesla (T)', 'Siemens (S)'],
-    correctAnswer: 1,
+    options: [
+      'Henry (H)',
+      'Farad (F)',
+      'Tesla (T)',
+      'Siemens (S)',
+    ],
+    correctAnswer: 0,
     explanation:
       'The unit of inductance is the henry (H), named after Joseph Henry. One henry is the inductance that produces an EMF of one volt when the current changes at a rate of one ampere per second. Typical values: millihenries (mH) for motor windings and chokes, microhenries (μH) for filter inductors, and henries (H) for large power inductors.',
   },
@@ -98,12 +123,12 @@ const quizQuestions = [
     id: 5,
     question: 'When a capacitor is fully charged in a DC circuit, the current through it is:',
     options: [
-      'Maximum',
-      'Equal to V/R',
+      'Electrolytic capacitor (aluminium or tantalum)',
       'Zero (the capacitor acts as an open circuit to DC)',
-      'Increasing exponentially',
+      'A diode connected in reverse across the coil (flyback diode)',
+      'L_total = L₁ + L₂ + L₃ (arithmetic sum)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Once a capacitor is fully charged, the voltage across it equals the supply voltage and no further current flows — the capacitor acts as an open circuit to DC. This is because there is no potential difference to drive current. In an AC circuit, the continuously changing voltage causes a continuously changing charge and therefore a continuous current — this is why capacitors pass AC but block DC.',
   },
@@ -111,20 +136,25 @@ const quizQuestions = [
     id: 6,
     question: 'A motor start capacitor is used to:',
     options: [
-      'Store energy for the motor to use when the supply fails',
+      'To provide controlled pulling force for long or difficult cable runs',
+      'High-rupturing-capacity (HRC) cartridge fuses for industrial use',
       'Create a phase shift to produce a rotating magnetic field for starting a single-phase motor',
-      'Correct the power factor of the motor',
-      'Reduce the motor speed',
+      'To allow fire investigators to determine the origin, cause, and circumstances of the fire',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Single-phase induction motors cannot produce a rotating magnetic field from a single-phase supply alone. A start capacitor is connected in series with an auxiliary (start) winding. The capacitor shifts the current in the start winding by approximately 90 degrees relative to the main winding current, creating a two-phase effect that produces a rotating magnetic field for starting. Once the motor reaches speed, a centrifugal switch typically disconnects the start capacitor.',
   },
   {
     id: 7,
     question: 'The RL time constant of a circuit with L = 2 H and R = 100 Ω is:',
-    options: ['0.002 seconds', '0.02 seconds', '0.2 seconds', '200 seconds'],
-    correctAnswer: 1,
+    options: [
+      '0.002 seconds',
+      '200 seconds',
+      '0.2 seconds',
+      '0.02 seconds',
+    ],
+    correctAnswer: 3,
     explanation:
       'The RL time constant τ = L/R = 2/100 = 0.02 seconds (20 ms). After one time constant, the current in an RL circuit reaches 63.2% of its final value when energising, or decays to 36.8% of its initial value when de-energising. After five time constants (0.1 seconds), the current is considered to have reached its steady-state value.',
   },
@@ -132,12 +162,12 @@ const quizQuestions = [
     id: 8,
     question: 'When an inductor carrying current is suddenly disconnected, what happens?',
     options: [
-      'The current stops immediately with no side effects',
       'The inductor generates a high back-EMF voltage spike as the magnetic field collapses',
-      'The inductor discharges slowly like a capacitor',
-      'Nothing — inductors have no stored energy',
+      'A diode connected in reverse across the coil (flyback diode)',
+      'Create a phase shift to produce a rotating magnetic field for starting a single-phase motor',
+      'Stored electrical energy that persists after the supply is disconnected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "An inductor stores energy in its magnetic field (E = ½LI²). When the current is suddenly interrupted, the magnetic field collapses rapidly, inducing a very high voltage spike across the inductor (by Faraday's law: e = -L(dI/dt)). This back-EMF can be hundreds or thousands of volts and can damage contacts, semiconductors and insulation. Suppression devices (snubbers, flyback diodes, varistors) are used to protect against these voltage spikes.",
   },
@@ -145,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: "A 'snubber circuit' across a relay coil typically consists of:",
     options: [
-      'A fuse and a resistor in series',
+      'Zero (the capacitor acts as an open circuit to DC)',
       'A diode connected in reverse across the coil (flyback diode)',
-      'A transformer',
-      'A second relay coil',
+      'Stored electrical energy that persists after the supply is disconnected',
+      'Electrolytic capacitor (aluminium or tantalum)',
     ],
     correctAnswer: 1,
     explanation:
@@ -158,12 +188,12 @@ const quizQuestions = [
     id: 10,
     question: 'Capacitors connected in parallel have a total capacitance of:',
     options: [
-      'C_total = C₁ + C₂ + C₃ (arithmetic sum)',
-      '1/C_total = 1/C₁ + 1/C₂ + 1/C₃ (reciprocal sum)',
-      'C_total = C₁ x C₂ / (C₁ + C₂)',
       'C_total equals the smallest capacitor',
+      '1/C_total = 1/C₁ + 1/C₂ + 1/C₃ (reciprocal sum)',
+      'C_total = C₁ + C₂ + C₃ (arithmetic sum)',
+      'C_total = C₁ x C₂ / (C₁ + C₂)',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Capacitors in parallel add directly: C_total = C₁ + C₂ + C₃. This is the opposite of resistors (which add in series). Parallel connection increases the total capacitance and is used in PFC capacitor banks to build up the required kVAr rating from standard-sized capacitor units. In series, the reciprocal formula applies: 1/C_total = 1/C₁ + 1/C₂.',
   },
@@ -172,12 +202,12 @@ const quizQuestions = [
     question:
       'Which of the following is a safety hazard specific to capacitors that has no equivalent for resistors?',
     options: [
-      'Overheating due to excessive current',
+      'Create a phase shift to produce a rotating magnetic field for starting a single-phase motor',
+      'Zero (the capacitor acts as an open circuit to DC)',
+      'A diode connected in reverse across the coil (flyback diode)',
       'Stored electrical energy that persists after the supply is disconnected',
-      'Voltage drop in the circuit',
-      'Increased circuit impedance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Capacitors store electrical energy in their electric field, and this energy remains after the supply is disconnected. A charged capacitor can deliver a dangerous shock minutes, hours or even days after disconnection — unlike a resistor, which dissipates all energy as heat immediately. This is why capacitors in power supplies, VSDs and PFC banks must be verified as discharged before any maintenance work begins.',
   },
@@ -186,9 +216,9 @@ const quizQuestions = [
     question: 'Inductors connected in series (with no mutual coupling) have a total inductance of:',
     options: [
       'L_total = L₁ + L₂ + L₃ (arithmetic sum)',
-      '1/L_total = 1/L₁ + 1/L₂ + 1/L₃ (reciprocal sum)',
-      'L_total = L₁ x L₂ / (L₁ + L₂)',
       'L_total equals the largest inductor',
+      'L_total = L₁ x L₂ / (L₁ + L₂)',
+      '1/L_total = 1/L₁ + 1/L₂ + 1/L₃ (reciprocal sum)',
     ],
     correctAnswer: 0,
     explanation:

@@ -28,6 +28,7 @@ import { sanitizeDocumentHtml } from '@/utils/inputSanitization';
 import { structuredToHtml, getFieldValues } from '@/utils/safety-template-renderer';
 import type { StructuredSafetyDocument, DocumentSection } from '@/types/safety-template';
 import { SectionRenderer } from './sections/SectionRenderer';
+import { SafetyTemplateV2Renderer } from './SafetyTemplateV2Renderer';
 import { SafetyDocumentShare } from '../common/SafetyDocumentShare';
 import { useToast } from '@/hooks/use-toast';
 import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
@@ -289,6 +290,165 @@ export function SafetyTemplateEditor({
       {children}
     </button>
   );
+
+  // ─── v2 short-circuit ────────────────────────────────────────────
+  // If the user adopted a v2 template, the doc carries the full-depth
+  // structured_content_v2 payload. We don't yet support deep editing of
+  // v2 sections — surface the document read-only with editable field
+  // values + status, and save persists those alongside the v2 payload.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const docV2: any = (doc as any).structured_content_v2;
+  const isV2 = !!docV2 && (doc.version === 2 || Array.isArray(docV2.hazards));
+  // Field values for v2 docs — pull from v2._fieldValues if previously
+  // stamped, fall back to v1 fields, fall back to doc top-level columns.
+  const [v2FieldValues, setV2FieldValues] = useState<Record<string, string>>(() => {
+    if (docV2?._fieldValues) return docV2._fieldValues;
+    if (doc.structured_content) return getFieldValues(doc.structured_content);
+    return {
+      company_name: doc.company_name ?? '',
+      site_address: doc.site_address ?? '',
+    };
+  });
+
+  const handleV2Save = async () => {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const updatedV2: any = {
+        ...docV2,
+        _fieldValues: v2FieldValues,
+      };
+      await updateDocument.mutateAsync({
+        id: doc.id,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        structured_content_v2: updatedV2 as any,
+        company_name: v2FieldValues.company_name ?? doc.company_name,
+        site_address: v2FieldValues.site_address ?? doc.site_address,
+      });
+      setHasChanges(false);
+      toast({ title: 'Document Saved', description: 'Your changes have been saved.' });
+      onSaved?.();
+      onOpenChange(false);
+    } catch {
+      // Error handled by mutation
+    }
+  };
+
+  if (isV2) {
+    const fields = (docV2.fields ?? []) as Array<{
+      id?: string;
+      key?: string;
+      type?: string;
+      label: string;
+      placeholder?: string;
+      required?: boolean;
+    }>;
+    const fieldKey = (f: { id?: string; key?: string }) => f.id ?? f.key ?? '';
+    return (
+      <Sheet open={open} onOpenChange={handleClose}>
+        <SheetContent side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden">
+          <div className="flex flex-col h-full bg-background">
+            {/* Header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
+              <div className="min-w-0 flex-1">
+                <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+                  {doc.template_id ? 'Adopted template' : 'Document'}
+                </div>
+                <h2 className="text-[16px] font-semibold tracking-tight text-white truncate">
+                  {doc.name}
+                </h2>
+              </div>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setShowShare(true)}
+                  className="h-9 px-3 rounded-lg text-[12.5px] font-medium text-white/65 hover:text-white touch-manipulation"
+                >
+                  <Share2 className="h-3.5 w-3.5 inline mr-1" />
+                  Share
+                </button>
+                <button
+                  type="button"
+                  onClick={handleV2Save}
+                  disabled={updateDocument.isPending}
+                  className="h-9 px-3 rounded-lg text-[12.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors disabled:opacity-50"
+                >
+                  {updateDocument.isPending ? (
+                    <>
+                      <Loader2 className="h-3.5 w-3.5 animate-spin inline mr-1" />
+                      Saving
+                    </>
+                  ) : (
+                    <>
+                      <Save className="h-3.5 w-3.5 inline mr-1" />
+                      Save
+                    </>
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  className="h-9 w-9 rounded-lg text-white/65 hover:text-white touch-manipulation flex items-center justify-center"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Body */}
+            <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-6 space-y-8">
+              {/* Field values — editable */}
+              {fields.length > 0 && (
+                <section className="space-y-3">
+                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+                    Document details
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {fields.map((f) => {
+                      const k = fieldKey(f);
+                      return (
+                        <div key={k}>
+                          <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 block mb-1">
+                            {f.label}
+                            {f.required && <span className="text-red-400 ml-1">*</span>}
+                          </label>
+                          <Input
+                            type={f.type === 'date' ? 'date' : 'text'}
+                            placeholder={f.placeholder ?? f.label}
+                            value={v2FieldValues[k] ?? ''}
+                            onChange={(e) => {
+                              setV2FieldValues((prev) => ({ ...prev, [k]: e.target.value }));
+                              setHasChanges(true);
+                            }}
+                            className="h-10 text-sm bg-white/[0.03] border-white/[0.10]"
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
+
+              {/* V2 content — read-only render */}
+              <SafetyTemplateV2Renderer v2={docV2} />
+
+              {/* Soft footer note about advanced editing */}
+              <p className="text-[11.5px] text-white/45 leading-relaxed">
+                Deep editing of hazards and steps is coming soon. Today you can update document
+                details + status, share, and export to PDF — the full document content travels
+                with you.
+              </p>
+            </div>
+          </div>
+        </SheetContent>
+        <SafetyDocumentShare
+          open={showShare}
+          onOpenChange={setShowShare}
+          documentId={doc.id}
+          documentName={doc.name}
+        />
+      </Sheet>
+    );
+  }
 
   return (
     <Sheet open={open} onOpenChange={handleClose}>

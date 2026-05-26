@@ -7,16 +7,21 @@ export const bmsModule5Section3QuizData = [
   {
     question: 'Why is Modbus considered simpler than BACnet?',
     options: [
-      'It runs faster',
+      'To prevent signal reflections and communication errors',
       'It uses basic data registers and simple addressing',
-      "It's newer technology",
-      'It requires less power',
+      'Star wiring instead of daisy-chain topology',
+      'Much faster communication and more scalable',
     ],
     correctAnswer: 'It uses basic data registers and simple addressing',
   },
   {
     question: 'What type of cabling does Modbus RTU use?',
-    options: ['Ethernet cable', 'RS-485 twisted-pair cable', 'Coaxial cable', 'Fibre optic cable'],
+    options: [
+      'Certificate and schedules',
+      'RS-485 twisted-pair cable',
+      'New residential buildings',
+      'Optimise accuracy and safety',
+    ],
     correctAnswer: 'RS-485 twisted-pair cable',
   },
   {
@@ -27,25 +32,30 @@ export const bmsModule5Section3QuizData = [
   {
     question: 'Why must RS-485 buses be terminated at both ends?',
     options: [
-      'To increase speed',
+      'It uses basic data registers and simple addressing',
       'To prevent signal reflections and communication errors',
-      'To save power',
-      'To reduce cable costs',
+      'Much faster communication and more scalable',
+      'Star wiring instead of daisy-chain topology',
     ],
     correctAnswer: 'To prevent signal reflections and communication errors',
   },
   {
     question: 'What type of cabling does Modbus TCP/IP use?',
-    options: ['RS-485 cable', 'Cat5e or higher Ethernet cable', 'Coaxial cable', 'Telephone cable'],
+    options: [
+      'Steel wire armoured (SWA)',
+      'Cat5e or higher Ethernet cable',
+      'Planning for emergencies and rescue',
+      'To ensure continuous visibility',
+    ],
     correctAnswer: 'Cat5e or higher Ethernet cable',
   },
   {
     question: 'What is one advantage of TCP/IP over RTU?',
     options: [
-      "It's cheaper to install",
+      'Star wiring instead of daisy-chain topology',
       'Much faster communication and more scalable',
-      "It's simpler to configure",
-      'It uses less power',
+      'It uses basic data registers and simple addressing',
+      'To prevent signal reflections and communication errors',
     ],
     correctAnswer: 'Much faster communication and more scalable',
   },
@@ -57,16 +67,21 @@ export const bmsModule5Section3QuizData = [
   {
     question: 'What is a common mistake that causes Modbus RTU communication failures?',
     options: [
-      'Using too high baud rates',
+      'It uses basic data registers and simple addressing',
       'Star wiring instead of daisy-chain topology',
-      'Installing too few devices',
-      'Using Ethernet cable',
+      'To prevent signal reflections and communication errors',
+      'Much faster communication and more scalable',
     ],
     correctAnswer: 'Star wiring instead of daisy-chain topology',
   },
   {
     question: 'In the real-world example, what wiring method caused problems with the submeters?',
-    options: ['Daisy-chain wiring', 'Star wiring configuration', 'Ring topology', 'Mesh network'],
+    options: [
+      'Lithium iron phosphate (LiFePO4)',
+      'Star wiring configuration',
+      'Motor nominal current (In)',
+      'BS 7671 Regulation 521.10.202',
+    ],
     correctAnswer: 'Star wiring configuration',
   },
 ];

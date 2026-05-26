@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'bonding-purpose',
     question: 'What is the primary purpose of equipotential bonding?',
     options: [
-      'To provide a path for normal load current to return to the source',
+      'The collective understanding created when all parties freely contribute their ideas, opinions, and feelings to the dialogue',
+      'The right for any party to a construction contract to refer a dispute to an independent adjudicator for a binding decision within 28 days',
+      'Delivering bad news about a significant project problem requiring immediate discussion',
       'To ensure all simultaneously accessible metalwork is at the same potential, reducing touch voltage during a fault',
-      'To increase the earth fault current for faster device operation',
-      'To reduce electricity consumption',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Equipotential bonding connects all simultaneously accessible exposed-conductive-parts and extraneous-conductive-parts to the same potential. During a fault, if all metalwork in an area is at the same voltage, the potential difference that a person could experience between any two touchable surfaces is minimised — reducing the risk of electric shock.',
   },
@@ -27,8 +27,13 @@ const quickCheckQuestions = [
     id: 'main-bonding-size',
     question:
       'For a TN-C-S (PME) supply with a 25 mm² incoming line conductor, what is the minimum main bonding conductor size?',
-    options: ['6 mm² copper', '10 mm² copper', '16 mm² copper', '25 mm² copper'],
-    correctIndex: 1,
+    options: [
+      '10 mm² copper',
+      '25 mm² copper',
+      '6 mm² copper',
+      '16 mm² copper',
+    ],
+    correctIndex: 0,
     explanation:
       'For TN-C-S (PME) supplies, BS 7671 Table 54.8 requires main bonding conductors to be not less than 10 mm² copper where the incoming line conductor is up to 35 mm². This is more onerous than the general requirement because of the additional risk associated with PME — the broken PEN conductor scenario requires robust bonding to limit dangerous voltage differences.',
   },
@@ -36,12 +41,12 @@ const quickCheckQuestions = [
     id: 'supplementary-bonding',
     question: 'Supplementary bonding is required:',
     options: [
-      'In every room of every installation without exception',
+      'Use a non-trip or low-current earth loop test mode if available, or accept the trip and reset the RCD after testing',
+      'Because it is substantially enclosed with limited access, and could contain hazardous atmospheres, flooding, or cable faults',
       'In locations where the conditions increase the risk of shock, such as bathrooms, or where the automatic disconnection time may not be met',
-      'Only in industrial installations',
-      'Only when the installation has no RCD protection',
+      'When a colleague on site repeatedly borrows your tools without asking and you need to address it directly without damaging the working relationship',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Supplementary bonding provides additional equipotential bonding within a specific area where the shock risk is increased — for example, bathrooms (BS 7671 Section 701) where the body resistance is reduced by wet conditions. It is also required where Zs values cannot meet the disconnection time requirements and an alternative solution is needed.',
   },
@@ -49,12 +54,12 @@ const quickCheckQuestions = [
     id: 'extraneous-conductive-part',
     question: 'Which of the following is an extraneous-conductive-part that requires main bonding?',
     options: [
-      'The metal enclosure of a consumer unit',
       'A metallic gas installation pipe entering the building',
       'A metal light switch faceplate',
       'A copper cable conductor within the installation',
+      'The metal enclosure of a consumer unit',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'An extraneous-conductive-part is a conductive part that is not part of the electrical installation but which may introduce a potential — typically earth potential. Metallic gas pipes, water pipes, structural steelwork, and central heating pipes entering a building are extraneous-conductive-parts that must be main bonded. The consumer unit enclosure is an exposed-conductive-part (part of the electrical installation), not an extraneous-conductive-part.',
   },
@@ -65,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'Main equipotential bonding connects the main earthing terminal to:',
     options: [
-      'Every socket outlet in the installation',
+      'EAP (Employee Assistance Programme), Lighthouse Construction Industry Charity helpline, Mind, Mates in Mind, and the GP route',
       'Extraneous-conductive-parts such as metallic gas, water and structural steel entering the building',
-      "The supply company's meter",
-      'The lighting circuits only',
+      'Council Directive 92/57/EEC — the Temporary or Mobile Construction Sites Directive',
+      'Point where service provider responsibility ends and customer\\\\\\\'s begins',
     ],
     correctAnswer: 1,
     explanation:
@@ -78,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: 'The main bonding connection to gas pipework must be made:',
     options: [
-      'On the street side of the gas meter',
+      'The smaller of the two CPCs connected to those exposed-conductive-parts',
+      'A purpose-made clamp to BS 951, permanently labelled \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Safety Electrical Connection — Do Not Remove\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
       'Within 600 mm of the meter outlet (consumer side), before any branch pipework',
-      'At the boiler',
-      'At any convenient point on the gas pipework',
+      'Only if the automatic disconnection conditions of Regulation 411.3.2 cannot be met',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The main bonding connection to gas pipework must be made within 600 mm of the meter outlet on the consumer's side (downstream of the meter), before any branch pipework. This ensures the bonding is as close as possible to the point where the pipe enters the installation, capturing all downstream metalwork. It must be on the consumer's side of the meter to avoid interfering with the meter installation.",
   },
@@ -91,7 +96,12 @@ const quizQuestions = [
     id: 3,
     question:
       'Under BS 7671, the minimum cross-sectional area for a main bonding conductor in a TN-S system with a 16 mm² incoming line conductor is:',
-    options: ['2.5 mm² copper', '4 mm² copper', '6 mm² copper', '10 mm² copper'],
+    options: [
+      '6 mm² copper',
+      '2.5 mm² copper',
+      '4 mm² copper',
+      '10 mm² copper',
+    ],
     correctAnswer: 3,
     explanation:
       'For TN-S and TN-C-S systems, BS 7671 Table 54.8 specifies minimum main bonding conductor sizes. For a supply with a line conductor of 16 mm², the minimum main bonding conductor is 10 mm² copper. The standard specifies minimum sizes of 6 mm², 10 mm², or 25 mm² depending on the supply conductor size, but with an absolute minimum of 6 mm² for any installation.',
@@ -101,12 +111,12 @@ const quizQuestions = [
     question:
       'Supplementary bonding conductors between two exposed-conductive-parts must have a minimum cross-sectional area of:',
     options: [
-      '1 mm² copper',
       'The smaller of the two CPCs connected to those exposed-conductive-parts',
-      'Half the size of the larger CPC',
-      '10 mm² copper',
+      'Adding resources to critical tasks to reduce duration at increased cost',
+      'K-rated transformer, oversized neutrals, and centralised active filtering',
+      'To adjust colour temperature and intensity to support natural body rhythms',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 Regulation 544.2.3 requires that a supplementary bonding conductor connecting two exposed-conductive-parts must have a conductance not less than that of the smaller CPC connected to those parts. In practice, this means using a conductor at least the same size as the smaller CPC. Where the bond connects an exposed-conductive-part to an extraneous-conductive-part, it must be at least half the CPC size, with a minimum of 2.5 mm² (mechanically protected) or 4 mm² (unprotected).',
   },
@@ -114,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'A bonding conductor must be identified by:',
     options: [
-      'Red PVC sleeving or tape',
+      'It eliminates gainer effects and gives true splice loss',
       'Green-and-yellow striped insulation or sleeving',
-      'Blue PVC insulation',
-      'No identification is required',
+      'Maintain safe clearance distances and use goal post barriers',
+      'During trading hours consistently',
     ],
     correctAnswer: 1,
     explanation:
@@ -128,12 +138,12 @@ const quizQuestions = [
     question:
       'In a bathroom (special location — Section 701), supplementary bonding is required when:',
     options: [
-      'Always, regardless of other conditions',
+      'A purpose-made clamp to BS 951, permanently labelled \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Safety Electrical Connection — Do Not Remove\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'The smaller of the two CPCs connected to those exposed-conductive-parts',
       'Only if the automatic disconnection conditions of Regulation 411.3.2 cannot be met',
-      'Only in commercial premises',
-      'Only if the bathroom has a metal bath',
+      'Within 600 mm of the meter outlet (consumer side), before any branch pipework',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 Regulation 701.415.2 (as amended) states that supplementary bonding in bathrooms may be omitted where all circuits comply with the automatic disconnection requirements of Regulation 411.3.2 and all circuits are protected by 30 mA RCDs. If these conditions are met, supplementary bonding is not required. Where they cannot be met, supplementary bonding must be provided.',
   },
@@ -141,12 +151,12 @@ const quizQuestions = [
     id: 7,
     question: 'The bonding clamp used on a gas or water pipe must be:',
     options: [
-      'Any convenient cable tie or jubilee clip',
+      "Within 600 mm of the meter outlet (consumer side), before any branch pipework",
+      "The section downstream of the plastic insert is no longer bonded and may need separate bonding or re-assessment",
+      "The smaller of the two CPCs connected to those exposed-conductive-parts",
       "A purpose-made clamp to BS 951, permanently labelled 'Safety Electrical Connection — Do Not Remove'",
-      'A standard pipe clip from a plumbing supplier',
-      'A solder connection to the pipe',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Bonding clamps must be purpose-made to BS 951 and must be permanently labelled 'Safety Electrical Connection — Do Not Remove' (BS 7671 Regulation 514.13.1). This label ensures that anyone working on the pipework understands the electrical safety significance of the connection and does not inadvertently remove it — which could leave metalwork unbonded and dangerous.",
   },
@@ -155,12 +165,12 @@ const quizQuestions = [
     question:
       'If a plastic section is inserted into an otherwise metallic water pipe system (e.g., during repairs), what is the bonding implication?',
     options: [
-      'No action needed — the plastic section has no effect',
       'The section downstream of the plastic insert is no longer bonded and may need separate bonding or re-assessment',
-      'The entire bonding system must be removed',
-      'An additional RCD must be installed',
+      'A purpose-made clamp to BS 951, permanently labelled \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Safety Electrical Connection — Do Not Remove\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'That the conductor is correctly sized, securely connected with a BS 951 clamp, correctly labelled, and has continuity to the MET',
+      'Only if the automatic disconnection conditions of Regulation 411.3.2 cannot be met',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A plastic (non-conductive) section inserted into a metallic pipe breaks the bonding continuity. The metalwork downstream of the plastic section is no longer connected to the main bonding and could be at a different potential. The situation must be assessed — if the downstream metalwork is simultaneously accessible with other earthed metalwork, supplementary bonding or an alternative solution may be required.',
   },
@@ -168,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'Main bonding conductors must be connected to:',
     options: [
-      'The neutral bar of the consumer unit',
+      'Regularly and whenever there are significant changes',
       'The main earthing terminal of the installation',
-      'The electricity meter',
-      "Each individual circuit's CPC",
+      'The maximum fault current the device can safely interrupt',
+      'A level horizontal or vertical reference line',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,10 +193,10 @@ const quizQuestions = [
     options: [
       'Metallic water service pipe',
       'Metallic gas installation pipe',
-      'Structural steelwork accessible within the building',
       'A plastic cold water pipe from a private borehole',
+      'Structural steelwork accessible within the building',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'A plastic pipe is not a conductive part and therefore cannot introduce a potential or provide a path for fault current. It does not require bonding. Only metallic (conductive) pipes, ducts and structural elements that may introduce earth potential into the building are classified as extraneous-conductive-parts requiring main bonding.',
   },
@@ -194,12 +204,12 @@ const quizQuestions = [
     id: 11,
     question: 'When inspecting main bonding during periodic inspection, you should verify:',
     options: [
-      'Only that the bonding conductor exists',
+      'A purpose-made clamp to BS 951, permanently labelled \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Safety Electrical Connection — Do Not Remove\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'A broken PEN conductor could cause dangerous voltages on earthed metalwork, so robust bonding is essential to maintain equipotentiality',
+      'The section downstream of the plastic insert is no longer bonded and may need separate bonding or re-assessment',
       'That the conductor is correctly sized, securely connected with a BS 951 clamp, correctly labelled, and has continuity to the MET',
-      'Only that the label is present',
-      'Only the colour of the conductor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A thorough inspection of main bonding includes: verifying the conductor size meets BS 7671 requirements for the supply type and size; checking the connection is secure using a proper BS 951 clamp; confirming the 'Safety Electrical Connection — Do Not Remove' label is present and legible; and testing continuity from the bonding clamp back to the main earthing terminal using a low-resistance ohmmeter.",
   },
@@ -207,12 +217,12 @@ const quizQuestions = [
     id: 12,
     question: 'For PME (TN-C-S) supplies, main bonding requirements are more onerous because:',
     options: [
-      'PME supplies have higher voltage',
       'A broken PEN conductor could cause dangerous voltages on earthed metalwork, so robust bonding is essential to maintain equipotentiality',
-      'PME systems use aluminium conductors',
-      'PME installations are always larger',
+      'A purpose-made clamp to BS 951, permanently labelled \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Safety Electrical Connection — Do Not Remove\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'That the conductor is correctly sized, securely connected with a BS 951 clamp, correctly labelled, and has continuity to the MET',
+      'The section downstream of the plastic insert is no longer bonded and may need separate bonding or re-assessment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PME supplies carry the specific risk that loss of the PEN conductor allows earth-referenced metalwork to rise to dangerous voltage. Robust main bonding ensures that even if this occurs, all metalwork in the installation remains at the same potential — minimising the voltage a person could experience between simultaneously accessible metalwork. This is why BS 7671 specifies larger minimum bonding conductor sizes for PME supplies.',
   },

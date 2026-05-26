@@ -15,11 +15,11 @@ const quickCheckQuestions = [
     question: 'What does a TON (Timer On-Delay) instruction do?',
     options: [
       'Turns the output ON immediately and OFF after the preset time',
-      'Delays turning the output ON for a preset time after the input becomes TRUE',
       'Counts the number of input pulses received',
+      'Delays turning the output ON for a preset time after the input becomes TRUE',
       'Generates a fixed-frequency pulse output continuously',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A TON starts timing when its input (enable) becomes TRUE. After the preset time elapses, the done bit turns ON. If the input goes FALSE before the preset is reached, the timer resets to zero. This is the most common timer type in industrial PLC programmes.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'counter-ctu',
     question: 'How does a CTU (Count Up) counter increment its value?',
     options: [
-      'Continuously while the input remains TRUE',
       'By one each time the count input transitions from FALSE to TRUE (rising edge)',
-      'By counting the duration in seconds that the input is held',
-      'By one on every PLC scan cycle regardless of input state',
+      'Dismissing the significance of small day-to-day achievements',
+      'Clarify scope, refine details, and agree final terms without fundamentally changing the tender',
+      'Because natural light distribution varies across the space',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A CTU increments its accumulated value by one on each rising edge (FALSE-to-TRUE transition) of the count input. When the accumulated value reaches the preset, the done bit turns ON. A separate reset input returns the accumulated value to zero.',
   },
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'sequencer-purpose',
     question: 'What is the main purpose of a sequencer in PLC programming?',
     options: [
-      'Sort data values into alphabetical or numerical order',
+      'An electrically insulated safety helmet tested to withstand electrical contact',
       'Control a process that must follow defined steps in a fixed order with transition conditions',
-      'Speed up the PLC scan cycle for faster execution',
-      'Replace all timers and counters with a single instruction',
+      'Holding your breath can raise blood pressure dangerously and reduce stability',
+      'A competent person, at the start of each shift and after any event likely to have affected stability',
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'retentive-timer',
     question: 'How does a retentive timer differ from a standard TON timer?',
     options: [
-      'A retentive timer runs faster than a standard timer',
+      'Current rating, trip curve (B, C or D), breaking capacity, number of poles, and physical compatibility with the distribution board',
       'A retentive timer remembers its accumulated time if the input goes FALSE, resuming when TRUE returns',
-      'A retentive timer can only be used with analogue outputs',
-      'A retentive timer does not need a preset value to be configured',
+      'An overload occurs in a sound circuit due to excess demand; a short-circuit results from a fault of negligible impedance',
+      'Toe boards, brick guards, debris netting, tool lanyards, and exclusion zones should be used as appropriate',
     ],
     correctIndex: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     id: 2,
     question: 'The time base of a PLC timer determines:',
     options: [
+      'The maximum number of outputs the timer can control',
       'The maximum number of timers that can run simultaneously',
       'The resolution — for example, 1 ms, 10 ms, 100 ms or 1 s per count increment',
-      'The maximum number of outputs the timer can control',
       'The voltage level of the timer output signal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The time base sets the timer resolution. A 100 ms base means each count increment represents 100 ms, so a preset of 50 gives 5 seconds. Faster time bases provide greater precision; slower bases allow longer delays without large preset values.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 3,
     question: 'A TP (Timer Pulse) instruction produces:',
     options: [
-      'Continuous oscillation at a fixed frequency',
-      'A single pulse of fixed duration regardless of how long the input is held',
       'A delayed OFF output after the input goes FALSE',
+      'Continuous oscillation at a fixed frequency',
       'A retentive time accumulation across multiple activations',
+      'A single pulse of fixed duration regardless of how long the input is held',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A TP generates a single pulse of preset duration on the rising edge of the input. The pulse runs to completion even if the input goes FALSE before the preset time. Used for fixed-duration operations such as solenoid activation pulses.',
   },
@@ -108,12 +108,12 @@ const quizQuestions = [
     id: 4,
     question: 'A CTD (Count Down) counter starts counting from:',
     options: [
-      'Zero, incrementing upwards',
       'The preset value, decrementing towards zero',
+      'Zero, incrementing upwards',
       'The maximum integer value of the PLC data type',
       'Always from 100 regardless of configuration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A CTD loads the preset value and decrements by one on each count pulse. The done bit turns ON when the accumulated value reaches zero. Used for dispensing fixed quantities, batch counting remaining items, and cycle-limited operations.',
   },
@@ -123,8 +123,8 @@ const quizQuestions = [
     options: [
       'The PLC scan cycle naturally reaches Step 4 in the programme',
       'The transition condition between the two steps evaluates to TRUE',
-      'A fixed universal time delay expires between all steps',
       'The operator presses any button on the control panel',
+      'A fixed universal time delay expires between all steps',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,12 +134,12 @@ const quizQuestions = [
     id: 6,
     question: 'The difference between the accumulated value and the preset value in a timer is:',
     options: [
-      'They are identical in all timer types',
+      'The resolution — for example, 1 ms, 10 ms, 100 ms or 1 s per count increment',
+      'A single pulse of fixed duration regardless of how long the input is held',
       'The preset is the target time; the accumulated is the current elapsed time counting towards that target',
-      'The accumulated value is always larger than the preset',
-      'The preset is calculated automatically from the accumulated value',
+      'A graphical method for designing sequential control processes, standardised in IEC 60848',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The preset (PV/PT) is the target value set by the programmer. The accumulated (CV/ET) is the current elapsed time since the timer started. When the accumulated reaches the preset, the done bit turns ON. The accumulated resets to zero when a non-retentive timer resets.',
   },
@@ -148,11 +148,11 @@ const quizQuestions = [
     question: 'Cascaded timers are used when:',
     options: [
       'Faster timing resolution is needed for high-speed processes',
-      'The total required delay exceeds the maximum value of a single timer instruction',
-      'Counting and timing must occur simultaneously on the same signal',
       'Multiple motors need to start with the same delay',
+      'Counting and timing must occur simultaneously on the same signal',
+      'The total required delay exceeds the maximum value of a single timer instruction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Cascading connects one timer's done bit to the next timer's enable input. The total delay equals the sum of all presets in the cascade. This technique is used when the required delay exceeds the maximum value a single timer can represent.",
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       'For counting bottles passing a photoelectric sensor on a conveyor, the correct instruction is:',
     options: [
-      'A TON timer measuring the duration between bottles',
       'A CTU counter with the sensor signal connected as the count input',
       'A TOF timer holding the output after each bottle passes',
+      'A TON timer measuring the duration between bottles',
       'An analogue input scaling the sensor output to a count value',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A CTU counter with the photoelectric sensor as the count input increments by one each time a bottle breaks and remakes the beam (rising edge). The done bit triggers the next operation (e.g., box closure) when the batch preset count is reached.',
   },
@@ -188,11 +188,11 @@ const quizQuestions = [
     question: 'A timer that is not reaching its preset is most likely caused by:',
     options: [
       'A corrupt timer instruction that needs to be deleted and re-entered',
+      'A short circuit on the output module driven by the timer',
       'The enable input going FALSE before the preset is reached, causing the timer to reset',
       'The PLC system clock running slower than its specification',
-      'A short circuit on the output module driven by the timer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'For non-retentive timers (TON), if the enable input goes FALSE before the preset is reached, the accumulated value resets to zero. Check via online monitoring for intermittent input dropout — the input may be flickering due to a loose connection or noisy sensor signal.',
   },
@@ -200,12 +200,12 @@ const quizQuestions = [
     id: 11,
     question: 'A high-speed counter (HSC) differs from a standard counter because it:',
     options: [
-      'Counts in larger increments to save processing time',
+      'The enable input going FALSE before the preset is reached, causing the timer to reset',
+      'A graphical method for designing sequential control processes, standardised in IEC 60848',
+      'The resolution — for example, 1 ms, 10 ms, 100 ms or 1 s per count increment',
       'Counts input pulses via dedicated hardware, independent of the PLC scan cycle',
-      'Can only count down, not up',
-      'Requires an analogue input module instead of a digital one',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'High-speed counters use dedicated hardware inputs that count independently of the scan cycle. Standard counters can miss pulses that occur faster than the scan time. HSCs are essential for encoder feedback, flow meter pulses, and any application with pulse rates exceeding the scan frequency.',
   },
@@ -213,12 +213,12 @@ const quizQuestions = [
     id: 12,
     question: 'Under ST1426, timers and counters are important because:',
     options: [
-      'They are only used in robotic applications that maintenance does not service',
       'They form the basis of most automated sequences and process control in industrial machinery',
-      'They are not relevant to electrical maintenance technicians',
       'They are only found in domestic heating control systems',
+      'They are only used in robotic applications that maintenance does not service',
+      'They are not relevant to electrical maintenance technicians',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Timers and counters are fundamental building blocks in virtually every automated process. Maintenance technicians encounter them daily in motor start delays, batch counting, cooling fan run-on, sequential operations, and production monitoring. Understanding their operation is essential for efficient fault diagnosis.',
   },

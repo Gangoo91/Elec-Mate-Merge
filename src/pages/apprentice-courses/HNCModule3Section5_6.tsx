@@ -32,8 +32,13 @@ const quickCheckQuestions = [
   {
     id: 'dc-series-motor',
     question: 'What type of DC motor provides the highest starting torque?',
-    options: ['Shunt motor', 'Series motor', 'Compound motor', 'Separately excited motor'],
-    correctIndex: 1,
+    options: [
+      'Shunt motor',
+      'Compound motor',
+      'Series motor',
+      'Separately excited motor',
+    ],
+    correctIndex: 2,
     explanation:
       'Series DC motors provide the highest starting torque because armature current flows through both the armature and field windings, creating a strong magnetic field at startup when current is highest.',
   },
@@ -41,10 +46,10 @@ const quickCheckQuestions = [
     id: 'dc-speed-control',
     question: 'Which method provides the widest range of speed control for DC motors?',
     options: [
-      'Field weakening only',
+      'Changing pole pairs',
       'Armature resistance control',
       'PWM armature voltage control',
-      'Changing pole pairs',
+      'Field weakening only',
     ],
     correctIndex: 2,
     explanation:
@@ -54,12 +59,12 @@ const quickCheckQuestions = [
     id: 'armature-reaction',
     question: 'What is the main effect of armature reaction in DC machines?',
     options: [
+      'Reduced starting torque',
       'Increased efficiency',
       'Distortion of the main field flux',
       'Improved commutation',
-      'Reduced starting torque',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Armature reaction distorts the main field flux distribution, shifting the magnetic neutral axis. This causes sparking at the brushes if not compensated by interpoles or brush shift.',
   },
@@ -68,10 +73,10 @@ const quickCheckQuestions = [
     question:
       'What is the main advantage of brushless DC (BLDC) motors over conventional DC motors?',
     options: [
-      'Higher starting torque',
-      'Simpler control electronics',
+      'Public spaces and industrial environments',
+      'Employers (free of charge to employees)',
       'No brush wear and lower maintenance',
-      'Lower initial cost',
+      'Asbestos-containing materials',
     ],
     correctIndex: 2,
     explanation:
@@ -97,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: 'Why must a DC series motor never be operated without a mechanical load?',
     options: [
-      'It will not start',
-      'The brushes will wear out',
+      'Loose or intermittent connections',
+      'Energy = (Slope × Degree days) + Base load',
       'It may overspeed and be damaged (runaway)',
-      'The field will demagnetise',
+      'Higher IP rating for dust protection',
     ],
     correctAnswer: 2,
     explanation:
@@ -110,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of interpoles (commutating poles) in DC machines?',
     options: [
-      'To increase motor efficiency',
       'To provide regenerative braking',
-      'To improve commutation and reduce brush sparking',
+      'To increase motor efficiency',
       'To increase starting torque',
+      'To improve commutation and reduce brush sparking',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Interpoles are small poles between main poles that produce a flux opposing armature reaction. They improve commutation by ensuring the EMF in coils undergoing commutation is in the correct direction, reducing sparking.',
   },
@@ -123,8 +128,13 @@ const quizQuestions = [
     id: 4,
     question:
       'A DC shunt motor runs at 1500 rpm at full load. If the field current is reduced by 20%, the approximate new speed will be:',
-    options: ['1200 rpm', '1500 rpm', '1875 rpm', '1800 rpm'],
-    correctAnswer: 2,
+    options: [
+      '1875 rpm',
+      '1500 rpm',
+      '1200 rpm',
+      '1800 rpm',
+    ],
+    correctAnswer: 0,
     explanation:
       'In a shunt motor, speed is inversely proportional to field flux. If field is reduced to 80% (0.8), speed increases by factor of 1/0.8 = 1.25. New speed = 1500 x 1.25 = 1875 rpm (field weakening).',
   },
@@ -133,12 +143,12 @@ const quizQuestions = [
     question:
       'What type of DC generator excitation uses a portion of the output to energise the field?',
     options: [
-      'Separately excited',
-      'Permanent magnet',
+      'Measure downstream of suitable protection',
       'Self-excited (shunt/series/compound)',
-      'Synchronous',
+      'To prevent cable insulation damage',
+      'Infinite or very high resistance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Self-excited generators (shunt, series, or compound wound) use part of the generated output to supply their own field windings, whereas separately excited generators require an external DC supply for the field.',
   },
@@ -146,12 +156,12 @@ const quizQuestions = [
     id: 6,
     question: 'During regenerative braking of a DC motor, the machine operates as a:',
     options: [
-      'Motor absorbing power',
+      'EIC for new work, EICR for existing installations',
+      'To share safety information and site updates',
       'Generator returning power to the supply',
-      'Transformer',
-      'Resistive load',
+      'Balance loads across all three phases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "During regenerative braking, the motor's inertia keeps it spinning faster than the equivalent supply-driven speed, so it generates EMF greater than the supply voltage and feeds current back to the supply as a generator.",
   },
@@ -159,12 +169,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which DC motor type is most commonly used in modern lift/elevator applications?',
     options: [
-      'Series wound DC motor',
-      'Shunt wound DC motor',
+      '6 metres (or as specified by the DNO)',
+      'Marks lost for BS 7671 space factor breach',
+      'Produce, implement, and communicate a mental health at work plan',
       'Gearless permanent magnet synchronous motor (PMSM)',
-      'Compound DC motor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Modern lifts predominantly use gearless permanent magnet synchronous motors (PMSM) with variable frequency drives. Traditional DC motors were common historically but are now mainly found in older installations.',
   },
@@ -172,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the back-EMF in a DC motor?',
     options: [
-      'The voltage drop across brush resistance',
       'The voltage induced in the armature opposing the supply voltage',
-      'The voltage across the field winding',
-      'The starting voltage required',
+      'To seek clarity on ITT requirements without gaining unfair advantage',
+      'Breaking a large network into smaller, manageable sections',
+      'A unit of solid angle in three-dimensional space',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Back-EMF (counter-EMF) is the voltage generated in the rotating armature that opposes the applied voltage. It limits armature current and is proportional to speed: E = V - IaRa. At startup, back-EMF is zero so starting current is very high.',
   },
@@ -186,10 +196,10 @@ const quizQuestions = [
     question:
       'In a BLDC motor, what provides the commutation function that brushes perform in conventional DC motors?',
     options: [
-      'A mechanical commutator',
+      'Stop, report it, get checked at A&E, log it under RIDDOR if it qualifies',
       'Electronic switching via Hall sensors or sensorless control',
-      'Slip rings',
-      'A gearbox',
+      'Additional optical power needed to overcome system impairments',
+      'To ensure they meet specifications and haven\\\\\\\\\\\\\\\'t been damaged',
     ],
     correctAnswer: 1,
     explanation:
@@ -199,12 +209,12 @@ const quizQuestions = [
     id: 10,
     question: 'A compound DC motor combines which characteristics?',
     options: [
-      'AC and DC operation',
+      'A document describing the content, boundaries, and deliverables of each WBS element',
+      'Opposition of a capacitor to AC, decreasing with frequency',
       'High starting torque of series and good speed regulation of shunt',
-      'Synchronous and induction motor features',
-      'Single-phase and three-phase operation',
+      'Discharge capacitors and release mechanical energy safely',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Compound motors have both series and shunt field windings, combining high starting torque (series characteristic) with reasonable speed regulation under varying load (shunt characteristic). Used in cranes, hoists, and presses.',
   },

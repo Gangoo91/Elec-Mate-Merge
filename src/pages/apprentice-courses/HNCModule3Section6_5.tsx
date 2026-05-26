@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'bms-primary-function',
     question: 'What is the primary function of a Building Management System (BMS)?',
     options: [
-      'Replace manual switches',
+      'All results with explanation of methods used',
       'Monitor and control building services automatically',
-      'Generate electricity',
-      'Provide emergency lighting',
+      'Equal to the supply voltage on every branch',
+      'A fracture of any bone other than a finger, thumb, or toe',
     ],
     correctIndex: 1,
     explanation:
@@ -60,11 +60,11 @@ const quickCheckQuestions = [
     question: 'What type of protocol is BACnet?',
     options: [
       'Proprietary manufacturer protocol',
-      'Open standard for building automation',
-      'Residential-only protocol',
       'Power line carrier protocol',
+      'Residential-only protocol',
+      'Open standard for building automation',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "BACnet (Building Automation and Control Networks) is an open, non-proprietary protocol specifically designed for building automation, enabling interoperability between different manufacturers' equipment.",
   },
@@ -72,12 +72,12 @@ const quickCheckQuestions = [
     id: 'optimum-start',
     question: 'What does optimum start control achieve?',
     options: [
-      'Immediate full heating on occupancy',
+      'A dangerous occurrence that must be reported to the HSE',
+      'WAHR 2005, LOLER 1998, PUWER 1998, and the Electricity at Work Regulations 1989',
+      'Rating is appropriate for the circuit and cable',
       'Pre-heats building to reach setpoint exactly at occupancy time',
-      'Runs heating continuously',
-      'Disables heating during peak hours',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Optimum start calculates the latest time to start heating/cooling so the building reaches the required temperature precisely when occupancy begins, avoiding wasted energy from starting too early.',
   },
@@ -101,24 +101,39 @@ const quizQuestions = [
     id: 2,
     question:
       'A temperature sensor reads 18°C when the setpoint is 21°C. In a proportional controller with Kp = 2, what is the controller output percentage?',
-    options: ['3%', '6%', '42%', 'Cannot be calculated'],
-    correctAnswer: 1,
+    options: [
+      '42%',
+      '3%',
+      '6%',
+      'Cannot be calculated',
+    ],
+    correctAnswer: 2,
     explanation:
       'Error = Setpoint - Measured = 21 - 18 = 3°C. Proportional output = Kp × Error = 2 × 3 = 6%. The controller outputs 6% demand to the heating system.',
   },
   {
     id: 3,
     question: 'Which network protocol operates at 9600 baud and uses master-slave communication?',
-    options: ['BACnet IP', 'KNX', 'Modbus RTU', 'LonWorks'],
-    correctIndex: 2,
+    options: [
+      'LonWorks',
+      'BACnet IP',
+      'KNX',
+      'Modbus RTU',
+    ],
+    correctIndex: 3,
     explanation:
       'Modbus RTU operates over RS-485 at 9600 baud (or higher) using master-slave communication, where only the master initiates data exchanges.',
   },
   {
     id: 4,
     question: 'What is the typical supply voltage for KNX bus systems?',
-    options: ['5V DC', '12V DC', '29V DC (nominal 30V)', '230V AC'],
-    correctAnswer: 2,
+    options: [
+      '29V DC (nominal 30V)',
+      '12V DC',
+      '5V DC',
+      '230V AC',
+    ],
+    correctAnswer: 0,
     explanation:
       'KNX bus operates at 29V DC nominal (tolerance 21-30V). The bus provides both communication and power to devices, though high-power devices require separate mains supply.',
   },
@@ -126,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: "In HVAC control, what is 'dead band'?",
     options: [
-      'A failed zone with no control',
+      'The proportion of dangerous failures that are detected by automatic testing',
       'A temperature range where neither heating nor cooling operates',
-      'Maximum fan speed setting',
-      'Emergency shutdown condition',
+      'The voltage induced in the armature opposing the supply voltage',
+      'Physical movement away from workspace, ideally outdoors',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,20 +154,25 @@ const quizQuestions = [
     id: 6,
     question: 'What is the primary advantage of daylight harvesting in lighting control?',
     options: [
-      'Increases lamp life only',
+      'They identify isolations and hazards for the next team',
+      'Battery backup failure losing settings, or mechanism wear',
       'Reduces artificial lighting when natural daylight is sufficient',
-      'Improves colour rendering',
-      'Eliminates the need for emergency lighting',
+      'Loss caused by a gap between fibre end-faces at a connection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Daylight harvesting uses photocells to measure available daylight and dims artificial lighting accordingly, reducing energy consumption by 20-60% in perimeter zones while maintaining required illuminance levels.',
   },
   {
     id: 7,
     question: 'Which commissioning activity verifies that a BMS point displays the correct value?',
-    options: ['Loop testing', 'Point-to-point testing', 'Trend logging', 'Firmware update'],
-    correctAnswer: 1,
+    options: [
+      'Loop testing',
+      'Firmware update',
+      'Trend logging',
+      'Point-to-point testing',
+    ],
+    correctAnswer: 3,
     explanation:
       'Point-to-point testing verifies each BMS point by applying a known input (e.g., measured temperature) and confirming the BMS displays the correct value with proper engineering units and scaling.',
   },
@@ -160,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'What does BEMS stand for and how does it differ from BMS?',
     options: [
-      'Building Electrical Management System - focuses on electrical only',
       'Building Energy Management System - emphasises energy monitoring and optimisation',
       'Basic Emergency Management System - handles alarms only',
+      'Building Electrical Management System - focuses on electrical only',
       'Broadband Energy Metering System - for utility billing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BEMS (Building Energy Management System) emphasises energy monitoring, analysis, and optimisation features. While BMS focuses on control, BEMS adds energy dashboards, sub-metering, and analytics for energy reduction.',
   },
@@ -174,10 +194,10 @@ const quizQuestions = [
     question:
       'Which sensor technology is most suitable for detecting occupancy in an open-plan office?',
     options: [
-      'Magnetic reed switch',
+      '13 A plugs, socket outlets and adaptors',
       'Passive infrared (PIR) with microwave (dual-tech)',
-      'Smoke detector',
-      'Pressure mat',
+      'Viewing waveforms to diagnose complex signal problems',
+      'Telecommunications Grounding Busbar',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,12 +207,12 @@ const quizQuestions = [
     id: 10,
     question: "What is the purpose of BACnet's 'COV' (Change of Value) service?",
     options: [
-      'Continuous polling of all values',
+      'Negotiated annually between industry representatives',
+      'The time between placing an order and receiving the goods',
       'Event-driven notification when a value changes significantly',
-      'Overwriting corrupted data',
-      'Verifying controller firmware',
+      'They must be removed before the tower is moved',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'COV (Change of Value) is an event-driven service where devices notify subscribers only when values change by a defined increment, reducing network traffic compared to continuous polling.',
   },

@@ -27,12 +27,12 @@ const FunctionalSkillsModule2Section2 = () => {
       id: 1,
       question: 'When completing an EICR, what does a C1 classification code indicate?',
       options: [
-        'An improvement is recommended',
-        'The observation requires further investigation',
+        'Severity of generalised anxiety disorder symptoms',
         'Danger present — risk of injury; immediate remedial action required',
-        'The installation meets all current standards',
+        'Remove it from service immediately and arrange for disposal or return to manufacturer',
+        'Emergency lighting is required regardless of ceiling height in occupied spaces',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'A C1 (Code 1) classification indicates that danger is present and there is a risk of injury. Immediate remedial action is required. This is the most serious classification and means the defect needs to be addressed straight away.',
     },
@@ -40,12 +40,12 @@ const FunctionalSkillsModule2Section2 = () => {
       id: 2,
       question: 'Which of the following is the correct way to describe a defect on an EICR?',
       options: [
-        'Socket in kitchen is dodgy',
+        'Above the bath/shower to 2.25m from floor level',
+        'Assessing whether the situation is irrelevant, benign-positive, or stressful',
         'Missing earth connection to socket outlet in kitchen — circuit 5',
-        'Kitchen socket needs fixing',
-        'Problem with socket',
+        'Workers know the practical requirements and comfort needed for effective use',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "Technical writing on certification forms must be precise, specific, and unambiguous. 'Missing earth connection to socket outlet in kitchen — circuit 5' clearly identifies the defect, the location, and the circuit. Vague descriptions like 'dodgy' or 'needs fixing' are unprofessional and unhelpful.",
     },
@@ -54,12 +54,12 @@ const FunctionalSkillsModule2Section2 = () => {
       question:
         'On an Electrical Installation Certificate (EIC), which section records the results of the initial verification tests?',
       options: [
-        'Section A — Details of the contractor',
         'Section B — Details of the installation',
-        'Schedule of Test Results',
+        'Section A — Details of the contractor',
         'Section D — Declaration',
+        'Schedule of Test Results',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'The Schedule of Test Results accompanies the EIC and records all the test values obtained during initial verification, including continuity, insulation resistance, polarity, earth fault loop impedance, and RCD test results.',
     },
@@ -67,12 +67,12 @@ const FunctionalSkillsModule2Section2 = () => {
       id: 4,
       question: 'What is the most important consideration when writing a method statement?',
       options: [
-        'Using as many technical terms as possible',
-        'Making it as short as possible',
         'Ensuring it is clear, accurate, and can be understood by all personnel',
-        'Including photographs on every page',
+        'Some faults don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t immediately affect operation but create safety risks',
+        'Local networking, events, and professional support',
+        'The design team, documented through an RFI or technical query',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'The primary purpose of a method statement is to communicate how work will be carried out safely. It must be clear enough for all personnel involved to understand, including those whose first language may not be English. Clarity and accuracy take priority over brevity or complexity.',
     },
@@ -81,10 +81,10 @@ const FunctionalSkillsModule2Section2 = () => {
       question:
         'When sending a professional email to a client about a completed installation, which opening is most appropriate?',
       options: [
-        "Hiya, just letting you know the job's done",
+        'Asking \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' repeatedly (typically about five times) to drill down from the symptom through immediate causes to the underlying root cause',
         'Dear Mr Thompson, I am writing to confirm that the electrical installation work at your property has been completed',
-        'Hi mate, all finished at yours',
-        'To whom it may concern, the job is done',
+        'Asbestos awareness training, refreshed regularly, before starting work — covering risks, types of ACMs, and what to do if they are encountered',
+        'Text messages tend to be interpreted more negatively than intended because tone is stripped from written words',
       ],
       correctAnswer: 1,
       explanation:
@@ -109,12 +109,12 @@ const FunctionalSkillsModule2Section2 = () => {
       question:
         'When writing a technical report about a fault you have investigated, what should you include?',
       options: [
-        'Only the solution — the client does not need to know the details',
+        'The voltage generated by the rotating armature, which opposes the supply voltage',
+        'DURING erection where appropriate, AND on completion BEFORE the installation is put into service',
+        'Ensure RCD operates within required time (typically Ra×IΔn ≤ 50V)',
         'A description of the fault, the investigation process, findings, and recommended actions',
-        'Just the cost of the repair',
-        'A copy of your qualifications',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'A technical report should provide a complete picture: what the fault was, how you investigated it, what you found, and what actions you recommend. This gives the client confidence in your work and creates a clear record for future reference.',
     },
@@ -122,12 +122,12 @@ const FunctionalSkillsModule2Section2 = () => {
       id: 8,
       question: 'What information should always be recorded on a day sheet or site diary?',
       options: [
-        'Only the materials used',
         'Date, personnel on site, work carried out, materials used, any issues encountered, and hours worked',
-        'Just the start and finish time',
-        'Only problems or delays',
+        'Multiple close-up photos showing labelling, connections, and overall layout with good lighting',
+        'Activities that may pollute the environment, such as waste operations, water discharges, or certain industrial processes',
+        'A graphical method for designing sequential control processes, standardised in IEC 60848',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Day sheets should provide a comprehensive daily record: the date, who was on site, what work was done, what materials were used, any problems encountered, and hours worked. This information is essential for project management, invoicing, and resolving any disputes.',
     },

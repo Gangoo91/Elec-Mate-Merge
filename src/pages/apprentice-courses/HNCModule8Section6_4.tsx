@@ -28,11 +28,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of CIBSE Commissioning Code M?',
     options: [
       'To specify equipment manufacturer requirements',
-      'To provide a framework for systematic commissioning of building services',
-      'To define electrical installation standards',
       'To regulate building construction methods',
+      'To define electrical installation standards',
+      'To provide a framework for systematic commissioning of building services',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'CIBSE Commissioning Code M provides a comprehensive framework for the systematic commissioning of building services, ensuring systems operate as designed and meet performance specifications.',
   },
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'witness-testing',
     question: 'Who typically witnesses commissioning tests on major building projects?',
     options: [
-      'Only the installing contractor',
-      'The building owner exclusively',
+      "It allows KNX-controlled devices to appear as BACnet objects for central monitoring",
       "The client's representative, commissioning manager, or independent commissioning specialist",
-      'Local authority building control only',
+      "The employer must identify and implement additional control measures immediately to reduce exposure below the WEL",
+      "To set out how health and safety will be managed during the construction phase",
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "Witness testing involves the client's representative, commissioning manager or independent commissioning specialist observing and verifying that tests are conducted correctly and results meet specification.",
   },
@@ -66,12 +66,12 @@ const quickCheckQuestions = [
     id: 'seasonal-commissioning',
     question: 'Why is seasonal commissioning necessary for HVAC systems?',
     options: [
-      'To spread commissioning costs over multiple seasons',
-      'To verify system performance under different ambient conditions (heating and cooling modes)',
       'Because building regulations require quarterly testing',
       'To allow equipment manufacturers time to visit site',
+      'To spread commissioning costs over multiple seasons',
+      'To verify system performance under different ambient conditions (heating and cooling modes)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Seasonal commissioning verifies that HVAC systems perform correctly under both heating and cooling conditions, which cannot be fully tested during a single commissioning period regardless of season.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'What does the commissioning specification typically include?',
     options: [
-      'Only the list of equipment to be commissioned',
+      'Chiller performance, cooling coil operation, condenser water temperatures and space cooling capacity',
+      'Verifying fan rotational direction, belt tension, damper operation and filter installation',
       'Design criteria, test procedures, acceptance criteria, witnessing requirements and documentation',
-      'Equipment manufacturer contact details',
-      'Building insurance requirements',
+      'To schedule commissioning activities in logical sequence, coordinated with construction programme',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A comprehensive commissioning specification includes design criteria against which to commission, detailed test procedures, acceptance criteria, witnessing requirements, and documentation requirements.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of a commissioning programme?',
     options: [
-      'To list all equipment serial numbers',
+      'A record of defects, incomplete items and remedial works required before handover',
+      'Demonstrating that systems achieve their design intent under actual operating conditions',
+      'Test procedures, blank test sheets, calibration certificates for instruments, and method statements',
       'To schedule commissioning activities in logical sequence, coordinated with construction programme',
-      'To record final test results',
-      'To specify equipment maintenance intervals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The commissioning programme schedules commissioning activities in logical sequence, ensuring prerequisites are complete before dependent activities begin, and coordinates with the overall construction programme.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     question:
       'During static commissioning of an air handling unit, which checks would be performed?',
     options: [
-      'Measuring supply air temperatures',
       'Verifying fan rotational direction, belt tension, damper operation and filter installation',
-      'Recording room temperatures',
-      'Testing BMS alarm responses',
+      'A record of defects, incomplete items and remedial works required before handover',
+      'Chiller performance, cooling coil operation, condenser water temperatures and space cooling capacity',
+      'The commissioning manager or commissioning management contractor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Static commissioning of an AHU includes checking fan rotation direction, belt tension and alignment, damper operation through full travel, filter installation and sealing, and access panel security.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'What is the typical tolerance for air flow rates at terminal devices according to CIBSE guidelines?',
     options: [
-      'Exactly as designed with no tolerance',
       '+/- 5% of design flow rate',
       '+/- 10% of design flow rate',
       '+/- 20% of design flow rate',
+      'Exactly as designed with no tolerance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'CIBSE guidelines typically specify +/- 10% tolerance on air flow rates at terminal devices. Tighter tolerances may be specified for critical applications such as operating theatres or cleanrooms.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 6,
     question: 'What documentation should be prepared for witness testing?',
     options: [
-      'No documentation is required for witness testing',
+      'Design criteria, test procedures, acceptance criteria, witnessing requirements and documentation',
+      'A record of defects, incomplete items and remedial works required before handover',
       'Test procedures, blank test sheets, calibration certificates for instruments, and method statements',
-      'Only the equipment manuals',
-      'Building plans only',
+      'To capture system performance data over time for analysis and verification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Witness testing requires prepared test procedures, blank test sheets for recording results, current calibration certificates for all test instruments, method statements, and risk assessments.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 7,
     question: "What is a 'snagging list' in the context of commissioning?",
     options: [
-      'A list of equipment to be commissioned',
+      'Verifying fan rotational direction, belt tension, damper operation and filter installation',
+      'To schedule commissioning activities in logical sequence, coordinated with construction programme',
+      'The commissioning manager or commissioning management contractor',
       'A record of defects, incomplete items and remedial works required before handover',
-      'A list of building occupants',
-      'The commissioning programme schedule',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A snagging list records defects, incomplete works, and items requiring remedial action identified during commissioning, inspections and witness testing that must be resolved before final handover.',
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the purpose of trend logging during commissioning?',
     options: [
-      'To record staff attendance on site',
       'To capture system performance data over time for analysis and verification',
-      'To log material deliveries',
-      'To track commissioning costs',
+      'A record of defects, incomplete items and remedial works required before handover',
+      'The commissioning manager or commissioning management contractor',
+      'Demonstrating that systems achieve their design intent under actual operating conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Trend logging captures system performance data (temperatures, pressures, flows, energy consumption) over time, enabling analysis of system behaviour, identification of issues, and verification of design performance.',
   },
@@ -190,10 +190,10 @@ const quizQuestions = [
     question:
       'During seasonal commissioning in cooling mode, what key parameters should be verified?',
     options: [
-      'Heating coil temperatures only',
+      'Demonstrating that systems achieve their design intent under actual operating conditions',
       'Chiller performance, cooling coil operation, condenser water temperatures and space cooling capacity',
-      'Boiler efficiency only',
-      'Radiator heat output',
+      'Design criteria, test procedures, acceptance criteria, witnessing requirements and documentation',
+      'To schedule commissioning activities in logical sequence, coordinated with construction programme',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,12 +203,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is performance verification in the context of building services?',
     options: [
-      'Checking equipment is installed correctly',
+      'A record of defects, incomplete items and remedial works required before handover',
+      'To schedule commissioning activities in logical sequence, coordinated with construction programme',
       'Demonstrating that systems achieve their design intent under actual operating conditions',
-      'Verifying manufacturer warranties',
-      'Confirming contractor insurance',
+      'Verifying fan rotational direction, belt tension, damper operation and filter installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Performance verification demonstrates that building services systems achieve their design intent, delivering required environmental conditions, energy performance and operational efficiency under actual operating conditions.',
   },
@@ -216,12 +216,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the recommended duration for extended performance monitoring?',
     options: [
-      '24 hours',
-      'One week',
+      'IT equipment density and personal devices',
+      'Lower magnitude 5th and 7th harmonics',
+      'Promptly, before the modifications are put into use',
       'Typically 12 months to capture seasonal variations',
-      '48 hours',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Extended performance monitoring typically continues for 12 months post-handover to capture full seasonal variations, verify energy performance, and identify any issues that only manifest under specific conditions.',
   },
@@ -230,12 +230,12 @@ const quizQuestions = [
     question:
       'Who is responsible for coordinating commissioning activities across different trades?',
     options: [
-      'Each individual subcontractor',
       'The commissioning manager or commissioning management contractor',
-      'The building owner',
-      'Local authority inspectors',
+      'Typically 12 months to capture seasonal variations',
+      'A record of defects, incomplete items and remedial works required before handover',
+      'To capture system performance data over time for analysis and verification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The commissioning manager (or commissioning management contractor on larger projects) coordinates commissioning activities across all trades, ensuring logical sequencing, resolving interface issues and maintaining the commissioning programme.',
   },

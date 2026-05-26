@@ -39,7 +39,12 @@ const checks = [
   {
     id: 'l3-m3-1-2-prefix',
     question: 'A capacitor is marked 47 μF. Express that in farads using scientific notation.',
-    options: ['4.7 × 10⁻³ F', '4.7 × 10⁻⁵ F', '4.7 × 10⁻⁶ F', '4.7 × 10⁻⁹ F'],
+    options: [
+      '4.7 × 10⁻⁹ F',
+      '4.7 × 10⁻⁵ F',
+      '4.7 × 10⁻³ F',
+      '4.7 × 10⁻⁶ F',
+    ],
     correctIndex: 1,
     explanation:
       'micro = 10⁻⁶, so 47 μF = 47 × 10⁻⁶ F = 4.7 × 10⁻⁵ F (move the decimal one place to convert 47 × 10⁻⁶ into standard form).',
@@ -47,16 +52,26 @@ const checks = [
   {
     id: 'l3-m3-1-2-derived',
     question: 'Which of these is the SI unit of magnetic flux?',
-    options: ['Tesla (T)', 'Weber (Wb)', 'Henry (H)', 'Farad (F)'],
-    correctIndex: 1,
+    options: [
+      'Tesla (T)',
+      'Henry (H)',
+      'Weber (Wb)',
+      'Farad (F)',
+    ],
+    correctIndex: 2,
     explanation:
       'Weber (Wb) is total flux. Tesla (T) is flux density (Wb/m²). Henry (H) is inductance, Farad (F) is capacitance.',
   },
   {
     id: 'l3-m3-1-2-convert',
     question: 'A transformer plate reads 1.6 MVA. How many VA is that?',
-    options: ['1600 VA', '16 000 VA', '160 000 VA', '1 600 000 VA'],
-    correctIndex: 3,
+    options: [
+      '1 600 000 VA',
+      '1600 VA',
+      '16 000 VA',
+      '160 000 VA',
+    ],
+    correctIndex: 0,
     explanation: 'mega = 10⁶, so 1.6 MVA = 1.6 × 10⁶ VA = 1 600 000 VA.',
   },
 ];
@@ -65,7 +80,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which is the SI base unit of electric current?',
-    options: ['Volt', 'Ampere', 'Watt', 'Coulomb'],
+    options: [
+      'Volt',
+      'Ampere',
+      'Watt',
+      'Coulomb',
+    ],
     correctAnswer: 1,
     explanation:
       'The ampere (A) is the base SI unit of electric current. Volts, watts and coulombs are derived from it.',
@@ -73,29 +93,49 @@ const quizQuestions = [
   {
     id: 2,
     question: 'The unit of capacitance is:',
-    options: ['Henry', 'Farad', 'Tesla', 'Weber'],
-    correctAnswer: 1,
+    options: [
+      'Tesla',
+      'Henry',
+      'Farad',
+      'Weber',
+    ],
+    correctAnswer: 2,
     explanation:
       'Farad (F). 1 F = 1 coulomb per volt. Practical capacitors are usually μF, nF or pF — a 1 F capacitor is huge.',
   },
   {
     id: 3,
     question: 'Convert 0.000 22 H (henry) to milli-henries (mH).',
-    options: ['0.022 mH', '0.22 mH', '22 mH', '220 mH'],
-    correctAnswer: 1,
+    options: [
+      '22 mH',
+      '0.022 mH',
+      '220 mH',
+      '0.22 mH',
+    ],
+    correctAnswer: 3,
     explanation: '0.000 22 H = 2.2 × 10⁻⁴ H. Multiply by 1000 to get mH: 0.22 mH.',
   },
   {
     id: 4,
     question: 'Power is measured in:',
-    options: ['Joules', 'Watts', 'Volts', 'Coulombs'],
-    correctAnswer: 1,
+    options: [
+      'Watts',
+      'Joules',
+      'Volts',
+      'Coulombs',
+    ],
+    correctAnswer: 0,
     explanation: 'Watt (W) = joule per second. Energy is in joules; power is the rate of energy transfer.',
   },
   {
     id: 5,
     question: 'Which prefix represents 10⁻¹²?',
-    options: ['nano', 'pico', 'micro', 'femto'],
+    options: [
+      'nano',
+      'pico',
+      'femto',
+      'micro',
+    ],
     correctAnswer: 1,
     explanation:
       'pico = 10⁻¹² (picofarad pF). nano = 10⁻⁹, micro = 10⁻⁶, femto = 10⁻¹⁵.',
@@ -103,15 +143,25 @@ const quizQuestions = [
   {
     id: 6,
     question: 'A 50 nF capacitor in pF is:',
-    options: ['5 pF', '50 pF', '500 pF', '50 000 pF'],
-    correctAnswer: 3,
+    options: [
+      '5 pF',
+      '50 pF',
+      '50 000 pF',
+      '500 pF',
+    ],
+    correctAnswer: 2,
     explanation: '1 nF = 1000 pF (nano = 10⁻⁹, pico = 10⁻¹²). 50 nF × 1000 = 50 000 pF.',
   },
   {
     id: 7,
     question: 'Magnetic flux density (B) is measured in:',
-    options: ['weber (Wb)', 'tesla (T)', 'henry (H)', 'ampere-turns (At)'],
-    correctAnswer: 1,
+    options: [
+      'weber (Wb)',
+      'ampere-turns (At)',
+      'henry (H)',
+      'tesla (T)',
+    ],
+    correctAnswer: 3,
     explanation:
       'Tesla (T) is flux density — the amount of flux per unit area (1 T = 1 Wb/m²). Weber is total flux.',
   },
@@ -119,8 +169,13 @@ const quizQuestions = [
     id: 8,
     question:
       'Resistance of a heater = 23 Ω. Expressed in milliohms, that is:',
-    options: ['0.023 mΩ', '2.3 mΩ', '23 000 mΩ', '23 000 000 mΩ'],
-    correctAnswer: 2,
+    options: [
+      '23 000 mΩ',
+      '23 000 000 mΩ',
+      '0.023 mΩ',
+      '2.3 mΩ',
+    ],
+    correctAnswer: 0,
     explanation: '1 Ω = 1000 mΩ. 23 × 1000 = 23 000 mΩ.',
   },
 ];

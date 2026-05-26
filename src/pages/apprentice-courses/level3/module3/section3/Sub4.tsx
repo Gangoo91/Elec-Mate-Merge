@@ -40,7 +40,12 @@ const checks = [
     id: 'l3-m3-3-4-qc',
     question:
       "A factory has P = 100 kW, pf 0.7 lagging. To improve to pf 0.95 lagging, what kVAr capacitor is needed?",
-    options: ['25 kVAr', '69 kVAr', '102 kVAr', '140 kVAr'],
+    options: [
+      '25 kVAr',
+      '69 kVAr',
+      '102 kVAr',
+      '140 kVAr',
+    ],
     correctIndex: 1,
     explanation:
       'tan(cos⁻¹ 0.7) = tan(45.57°) = 1.020. tan(cos⁻¹ 0.95) = tan(18.19°) = 0.329. Q_C = 100 × (1.020 − 0.329) = 100 × 0.691 = 69.1 kVAr.',
@@ -49,8 +54,13 @@ const checks = [
     id: 'l3-m3-3-4-cap',
     question:
       "What capacitance (μF) at 230 V single-phase 50 Hz gives 1 kVAr reactive?",
-    options: ['25 μF', '60 μF', '120 μF', '240 μF'],
-    correctIndex: 1,
+    options: [
+      '25 μF',
+      '240 μF',
+      '120 μF',
+      '60 μF',
+    ],
+    correctIndex: 3,
     explanation:
       'Q = V² / X_C = V² × 2πfC. C = Q / (2πfV²) = 1000 / (2π × 50 × 230²) = 1000 / (16 619 600) ≈ 60 μF.',
   },
@@ -59,12 +69,12 @@ const checks = [
     question:
       "An office with 50 kW load varying from 10 kW to 50 kW through the day. Best PFC method?",
     options: [
-      'Single static capacitor sized for full load',
       'Automatic capacitor bank with multiple stages',
-      'No PFC needed',
-      'Static capacitor sized for half load',
+      'The resistance of the phase conductor',
+      'RCD protection not exceeding 30mA',
+      'Use a proving unit before and after testing',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Variable load needs variable correction. A single fixed cap sized for 50 kW would over-correct at 10 kW (leading pf, voltage rise risk). An automatic bank switches stages in/out to track the load.',
   },
@@ -75,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: "Power factor correction reduces:",
     options: [
-      'Real power consumption',
+      'Maximum input power before receiver saturates or is damaged',
       'Apparent power and line current for the same real power',
-      'Voltage at the load',
-      'Frequency',
+      'DMPs do not write off any debt and creditors can withdraw at any time',
+      'Essential loads maximum demand plus starting currents',
     ],
     correctAnswer: 1,
     explanation:
@@ -87,8 +97,13 @@ const quizQuestions = [
   {
     id: 2,
     question: "PFC capacitors are connected:",
-    options: ['In series with the load', 'In parallel across the load (or supply)', 'Between line and earth', 'In the neutral'],
-    correctAnswer: 1,
+    options: [
+      'Internal staircases at a comfortable angle',
+      'Brushes wear, sparking, RFI emission',
+      'In parallel across the load (or supply)',
+      'Marks lost for incomplete work',
+    ],
+    correctAnswer: 2,
     explanation:
       'PFC caps are always in parallel (shunt). Series capacitors do something completely different (series compensation in HV transmission).',
   },
@@ -96,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: "Q_C formula for capacitor bank size to correct from pf₁ to pf₂:",
     options: [
-      'Q_C = P × (cos φ₁ − cos φ₂)',
-      'Q_C = P × (tan φ₁ − tan φ₂)',
       'Q_C = S × pf₁ × pf₂',
+      'Q_C = P × (cos φ₁ − cos φ₂)',
       'Q_C = V × I × pf',
+      'Q_C = P × (tan φ₁ − tan φ₂)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Q_C = P × (tan φ₁ − tan φ₂). Because Q = P × tan φ at any pf, the difference in Q before and after gives the kVAr you need to add.',
   },
@@ -109,12 +124,12 @@ const quizQuestions = [
     id: 4,
     question: "Detuned reactors are added to PFC banks to:",
     options: [
-      'Increase the capacitance',
       'Avoid resonance with supply harmonics that would amplify them',
-      'Cool the capacitors',
-      'Reduce the cost',
+      'Appropriate connection means and protective measures',
+      'To evaluate fire safety measures including emergency lighting',
+      'Cross-linked polyethylene - high-temperature insulation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A bare PFC cap can resonate with supply inductance at a harmonic frequency (typically 5th, 7th). The reactor lowers the resonant frequency below the dominant harmonic, preventing amplification.",
   },
@@ -122,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: 'Active harmonic filters work by:',
     options: [
-      'Storing energy in capacitors',
+      'Drawing cable from drum, pulling through containment, termination, labelling, and testing',
       'Injecting opposite-phase harmonic currents to cancel the load harmonics',
-      'Tripping when harmonics exceed limits',
-      'Filtering DC',
+      'Discrimination is achieved up to a specific fault level only',
+      'Only if the automatic disconnection conditions of Regulation 411.3.2 cannot be met',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,8 +149,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Over-correcting with too much capacitance causes:',
-    options: ['No effect', 'Leading pf and possible voltage rise', 'Loss of real power', 'Frequency change'],
-    correctAnswer: 1,
+    options: [
+      'PE-X (cross-linked polyethylene)',
+      'Continuity of ring final circuit conductors',
+      'Leading pf and possible voltage rise',
+      'True - false values can cause section failure',
+    ],
+    correctAnswer: 2,
     explanation:
       'Beyond unity, you get leading pf — the install now sources kVAr to the network. Risks include voltage rise, capacitor stress and resonance amplification.',
   },
@@ -143,12 +163,12 @@ const quizQuestions = [
     id: 7,
     question: 'Static PFC (single fixed capacitor) is best for:',
     options: [
-      'Variable office loads',
+      'To verify the area is safe for reoccupation',
+      'Move to a clean area away from the contamination',
+      'Identify hazards and implement control measures',
       'Constant-load motors that run continuously',
-      'Lighting circuits',
-      'Heating circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Single big motor running continuously = constant Q = single fixed capacitor matches it. Variable loads need multi-stage switching.',
   },
@@ -156,8 +176,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A load improves from S = 20 kVA to S = 12 kVA after PFC. The line current drops by what factor?',
-    options: ['No change', '20/12 = 1.67×', '12/20 = 0.6× of original', 'Half'],
-    correctAnswer: 2,
+    options: [
+      '12/20 = 0.6× of original',
+      'Half',
+      'No change',
+      '20/12 = 1.67×',
+    ],
+    correctAnswer: 0,
     explanation:
       'I = S / V (or S / (√3 V_L)). Halving S halves I. Going from 20 kVA → 12 kVA: I drops to 12/20 = 60 % of original.',
   },

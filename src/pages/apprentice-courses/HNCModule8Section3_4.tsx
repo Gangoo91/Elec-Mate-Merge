@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'fcu-pipe-config',
     question: 'What is the main advantage of a 4-pipe fan coil unit over a 2-pipe system?',
     options: [
-      'Lower installation cost',
-      'Reduced maintenance requirements',
+      'A reference cable at the far end for loss measurement',
       'Simultaneous heating and cooling capability in different zones',
-      'Smaller physical footprint',
+      'The unit cooling/heating capacity and equivalent refrigerant pipe length',
+      'To ensure only the protective device nearest the fault operates',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       '4-pipe FCUs have separate heating and cooling coils with independent pipework, allowing simultaneous heating and cooling in different zones. This is essential for buildings where some zones need cooling (south-facing) while others need heating (north-facing) at the same time.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'chilled-beam-type',
     question: 'What distinguishes an active chilled beam from a passive chilled beam?',
     options: [
-      'Active beams use refrigerant directly',
+      'Outdoor temperature below which supplementary heating is needed',
+      'On distorted or non-sinusoidal waveforms (drives, SMPS, LED drivers)',
+      'Refuse to commence work until safe isolation has been completed and verified',
       'Active beams incorporate a primary air supply that induces room air across the coil',
-      'Active beams have built-in fans',
-      'Active beams only provide cooling',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Active chilled beams use a primary air supply (ducted from an AHU) that passes through nozzles, inducing room air across the cooling coil through the venturi effect. Passive beams rely solely on natural convection with no primary air connection.',
   },
@@ -54,20 +54,25 @@ const quickCheckQuestions = [
     question:
       'When should a 3-way control valve be used instead of a 2-way valve on a chilled water terminal unit?',
     options: [
-      'When precise temperature control is required',
       'When the system uses constant flow primary pumping',
+      'When precise temperature control is required',
       'When condensate management is critical',
       'When the unit has an EC motor',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       '3-way valves maintain constant flow through the system by bypassing water around the coil when not needed. They are used with constant flow pumping systems. 2-way valves are preferred for variable flow systems as they allow pump speed reduction when demand drops.',
   },
   {
     id: 'condensate-requirement',
     question: 'What is the minimum recommended fall for FCU condensate drain pipework?',
-    options: ['1:10 (10%)', '1:50 (2%)', '1:100 (1%)', '1:200 (0.5%)'],
-    correctIndex: 2,
+    options: [
+      '1:10 (10%)',
+      '1:50 (2%)',
+      '1:200 (0.5%)',
+      '1:100 (1%)',
+    ],
+    correctIndex: 3,
     explanation:
       'A minimum fall of 1:100 (1% or 10mm per metre) is typically required for condensate drainage to ensure water flows freely to the drain point. Steeper gradients (1:50) are preferred where possible to prevent standing water and biological growth.',
   },
@@ -79,10 +84,10 @@ const quizQuestions = [
     question:
       'A 2-pipe fan coil unit system requires changeover between heating and cooling modes. What does this mean?',
     options: [
-      'The fan speed must be manually adjusted',
+      'Lower rates during off-peak periods encourage load shifting to reduce peak demand',
       'The entire building system must switch between circulating chilled water and hot water',
-      'Individual units can switch between modes independently',
-      'The electrical supply must be isolated during changeover',
+      'To identify faults caused by ageing or deterioration before they become dangerous',
+      'A basket (Stokes) stretcher or a confined space rescue stretcher (such as a SKED or roll-up stretcher)',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,8 +97,13 @@ const quizQuestions = [
     id: 2,
     question:
       'What is the typical sensible cooling capacity range for a ceiling-mounted cassette unit in an office application?',
-    options: ['0.5 - 1.5 kW', '2 - 8 kW', '15 - 25 kW', '50 - 100 kW'],
-    correctAnswer: 1,
+    options: [
+      '15 - 25 kW',
+      '0.5 - 1.5 kW',
+      '2 - 8 kW',
+      '50 - 100 kW',
+    ],
+    correctAnswer: 2,
     explanation:
       'Ceiling cassette units typically provide 2-8 kW sensible cooling capacity, making them suitable for individual offices, meeting rooms, and retail spaces. Larger spaces may require multiple units or alternative terminal types.',
   },
@@ -102,12 +112,12 @@ const quizQuestions = [
     question:
       'Why must chilled water flow temperature to passive chilled beams typically be maintained above 14°C?',
     options: [
-      'To maximise cooling output',
+      'The pressure drop across the coil at design water flow rate',
+      'To modulate airflow to a zone based on temperature demand',
+      'To direct airflow away from occupants and optimise air distribution',
       'To prevent condensation forming on the beam surfaces',
-      'To reduce pump energy consumption',
-      'To comply with F-gas regulations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Passive chilled beams have no condensate drainage provision. The chilled water temperature must be kept above the room dew point (typically 14-16°C for office conditions) to prevent condensation forming on the beam surfaces.',
   },
@@ -116,12 +126,12 @@ const quizQuestions = [
     question:
       'An EC (electronically commutated) fan motor in an FCU offers advantages over an AC induction motor. Which statement is correct?',
     options: [
-      'EC motors are cheaper to purchase',
       'EC motors offer variable speed control with high efficiency across the speed range',
-      'EC motors require no electrical connection',
-      'EC motors can only operate at fixed speeds',
+      'The unit cooling/heating capacity and equivalent refrigerant pipe length',
+      'The pressure drop across the coil at design water flow rate',
+      'MCB protection with RCD where accessible to non-skilled persons',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EC motors incorporate permanent magnets and electronic commutation, providing efficient variable speed operation with typical efficiency of 80-90% even at part load. AC motors lose significant efficiency when speed-controlled via voltage reduction.',
   },
@@ -129,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the primary function of a VAV (Variable Air Volume) terminal box?',
     options: [
-      'To filter the supply air',
+      'To direct airflow away from occupants and optimise air distribution',
       'To modulate airflow to a zone based on temperature demand',
-      'To provide heating via a hot water coil',
-      'To humidify the supply air',
+      'MCB protection with RCD where accessible to non-skilled persons',
+      'To prevent condensation forming on the beam surfaces',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,11 +153,11 @@ const quizQuestions = [
     question: "A fan coil unit specification states 'Delta P = 40 kPa'. What does this indicate?",
     options: [
       "The unit's fan static pressure capability",
-      'The pressure drop across the coil at design water flow rate',
       'The maximum allowable system pressure',
+      'The pressure drop across the coil at design water flow rate',
       'The condensate pump discharge pressure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Delta P (pressure drop) across the coil is critical for system hydraulic design. The water circuit must overcome this resistance plus pipework losses. A 40 kPa coil pressure drop is typical for FCUs.',
   },
@@ -158,10 +168,10 @@ const quizQuestions = [
     options: [
       'On/off switching',
       '3-point floating control',
-      '0-10V DC analogue signal',
       'Manual handwheel adjustment',
+      '0-10V DC analogue signal',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       '0-10V DC (or 4-20mA) analogue signals provide proportional, continuous modulation of valve position. This enables precise temperature control compared to on/off (cycling) or 3-point (incremental adjustment) control methods.',
   },
@@ -169,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the typical induction ratio for an active chilled beam?',
     options: [
-      '1:1 - equal primary and induced air',
       '1:3 to 1:5 - three to five times more room air than primary air',
-      '1:10 - ten times more room air',
-      'No induction occurs in active beams',
+      'The pressure drop across the coil at design water flow rate',
+      'MCB protection with RCD where accessible to non-skilled persons',
+      'To direct airflow away from occupants and optimise air distribution',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Active chilled beams typically achieve induction ratios of 1:3 to 1:5, meaning for every 1 volume of primary air, 3-5 volumes of room air are induced across the cooling coil. This provides significant cooling with minimal ductwork.',
   },
@@ -183,10 +193,10 @@ const quizQuestions = [
     question:
       'A 4-way ceiling cassette unit has adjustable louvres. What is the primary purpose of individual louvre control?',
     options: [
-      'To reduce noise levels',
+      'To modulate airflow to a zone based on temperature demand',
       'To direct airflow away from occupants and optimise air distribution',
-      'To increase cooling capacity',
-      'To reduce condensate production',
+      'The unit cooling/heating capacity and equivalent refrigerant pipe length',
+      'To prevent condensation forming on the beam surfaces',
     ],
     correctAnswer: 1,
     explanation:
@@ -196,12 +206,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of a condensate pump on a fan coil unit?',
     options: [
-      'To increase cooling capacity',
+      'To prevent condensation forming on the beam surfaces',
+      'The pressure drop across the coil at design water flow rate',
       'To lift condensate to a drain point when gravity drainage is not possible',
-      'To circulate chilled water through the coil',
-      'To provide humidity control',
+      'MCB protection with RCD where accessible to non-skilled persons',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When FCUs are positioned below the nearest drain connection or where gravity falls cannot be achieved, a condensate pump lifts the water to the drainage system. Pumps typically include a float switch and alarm contact.',
   },
@@ -210,12 +220,12 @@ const quizQuestions = [
     question:
       'For a VRF cassette unit, what determines the refrigerant pipe sizes to the indoor unit?',
     options: [
-      'The electrical supply cable size',
+      '1:3 to 1:5 - three to five times more room air than primary air',
+      'MCB protection with RCD where accessible to non-skilled persons',
+      'To prevent condensation forming on the beam surfaces',
       'The unit cooling/heating capacity and equivalent refrigerant pipe length',
-      'The ceiling void height only',
-      'The drain pipe diameter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Refrigerant pipe sizing depends on the unit capacity (refrigerant flow rate) and the equivalent pipe length including fittings. Manufacturer sizing tables must be followed precisely to ensure correct refrigerant distribution and oil return.',
   },
@@ -224,12 +234,12 @@ const quizQuestions = [
     question:
       'What minimum electrical protection is typically required for a fan coil unit with EC motor and electric reheat?',
     options: [
-      'Fused spur only',
       'MCB protection with RCD where accessible to non-skilled persons',
-      'No protection required as units are low voltage',
-      'Manual isolator only',
+      '1:3 to 1:5 - three to five times more room air than primary air',
+      'The pressure drop across the coil at design water flow rate',
+      'To modulate airflow to a zone based on temperature demand',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'FCUs require MCB protection sized for the total load (fan motor plus any electric reheat). RCD protection (30mA) is required where units are accessible to non-skilled persons per BS 7671. An adjacent isolator is also typically required for maintenance.',
   },

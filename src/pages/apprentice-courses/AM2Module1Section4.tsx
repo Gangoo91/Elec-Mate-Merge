@@ -48,10 +48,10 @@ const AM2Module1Section4 = () => {
       id: 2,
       question: "What's the final step in safe isolation?",
       options: [
-        'Lock off the circuit',
-        'Attach warning notices',
-        'Re-prove your tester',
         'Test the isolated circuit',
+        'Lock off the circuit',
+        'Re-prove your tester',
+        'Attach warning notices',
       ],
       correctAnswer: 2,
       explanation:
@@ -70,12 +70,12 @@ const AM2Module1Section4 = () => {
       id: 4,
       question: 'Which IET document defines the testing sequence used in AM2?',
       options: [
-        'BS 7671 Wiring Regulations',
         'GN3 Guidance Note 3',
+        'BS 7671 Wiring Regulations',
         'GN1 Guidance Note 1',
         'IET Code of Practice',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'IET Guidance Note 3 (GN3) sets out the correct testing sequence used in the AM2 assessment.',
     },
@@ -83,12 +83,12 @@ const AM2Module1Section4 = () => {
       id: 5,
       question: 'In fault diagnosis, what three things must you identify for each fault?',
       options: [
-        'Location, type, and rectification method',
         'Circuit, voltage, and current',
-        'Cause, effect, and prevention',
+        'Location, type, and rectification method',
         'Test, measure, and record',
+        'Cause, effect, and prevention',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'You must identify the precise location, type of fault, and how to rectify it for full marks.',
     },

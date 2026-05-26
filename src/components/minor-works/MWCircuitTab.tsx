@@ -247,31 +247,50 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
       {/* ------------------------------------------------------------------ */}
       <SectionTitle title="Circuit Details" />
       <div className="space-y-3">
-        <div className="grid grid-cols-2 gap-2 items-end">
-          <FormField label="Distribution Board">
-            <Input
-              value={(formData.distributionBoard as string) || ''}
-              onChange={(e) => onUpdate('distributionBoard', e.target.value)}
-              placeholder="e.g., Main DB"
-              className={inputClass}
-            />
-          </FormField>
-          <FormField label="DB Location & Type">
-            <Input
-              value={(formData.dbLocationType as string) || ''}
-              onChange={(e) => onUpdate('dbLocationType', e.target.value)}
-              placeholder="e.g., Under stairs"
-              className={inputClass}
-            />
-          </FormField>
-        </div>
+        <FormField label="Distribution Board">
+          <div className="grid grid-cols-4 gap-1 mb-1.5">
+            {['Main DB', 'Submain', 'Garage CU', 'EV CU'].map((preset) => (
+              <ToggleButton
+                key={preset}
+                selected={formData.distributionBoard === preset}
+                label={preset}
+                onClick={() => onUpdate('distributionBoard', preset)}
+              />
+            ))}
+          </div>
+          <Input
+            value={(formData.distributionBoard as string) || ''}
+            onChange={(e) => onUpdate('distributionBoard', e.target.value)}
+            placeholder="Or type custom name"
+            className={inputClass}
+          />
+        </FormField>
+
+        <FormField label="DB Location">
+          <div className="grid grid-cols-4 gap-1 mb-1.5">
+            {['Under stairs', 'Hallway', 'Garage', 'Loft'].map((preset) => (
+              <ToggleButton
+                key={preset}
+                selected={formData.dbLocationType === preset}
+                label={preset}
+                onClick={() => onUpdate('dbLocationType', preset)}
+              />
+            ))}
+          </div>
+          <Input
+            value={(formData.dbLocationType as string) || ''}
+            onChange={(e) => onUpdate('dbLocationType', e.target.value)}
+            placeholder="Or type custom location"
+            className={inputClass}
+          />
+        </FormField>
 
         <div className="grid grid-cols-2 gap-2 items-end">
-          <FormField label="Circuit Designation" required>
+          <FormField label="Circuit No." required>
             <Input
               value={(formData.circuitDesignation as string) || ''}
               onChange={(e) => onUpdate('circuitDesignation', e.target.value)}
-              placeholder="e.g., Circuit 1"
+              placeholder="e.g., C1 or MCB-05"
               className={inputClass}
             />
           </FormField>
@@ -279,10 +298,25 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
             <Input
               value={(formData.circuitDescription as string) || ''}
               onChange={(e) => onUpdate('circuitDescription', e.target.value)}
-              placeholder="e.g., Kitchen sockets"
+              placeholder="Tap a preset or type"
               className={inputClass}
             />
           </FormField>
+        </div>
+
+        {/* Circuit description presets */}
+        <div className="grid grid-cols-4 gap-1">
+          {[
+            'Sockets', 'Lighting', 'Cooker', 'Shower',
+            'Immersion', 'Hob', 'EV charger', 'Heating',
+          ].map((preset) => (
+            <ToggleButton
+              key={preset}
+              selected={formData.circuitDescription === preset}
+              label={preset}
+              onClick={() => onUpdate('circuitDescription', preset)}
+            />
+          ))}
         </div>
 
         <FormField label="Circuit Type">
@@ -468,12 +502,12 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
               />
             </FormField>
             <FormField label="AFDD Rating (A)">
-              <Input
-                type="number"
+              <MobileSelectPicker
                 value={(formData.afddRating as string) || ''}
-                onChange={(e) => onUpdate('afddRating', e.target.value)}
-                placeholder="16"
-                className={inputClass}
+                onValueChange={(v) => onUpdate('afddRating', v)}
+                options={DEVICE_RATINGS}
+                placeholder="Rating"
+                title="AFDD Rating (A)"
               />
             </FormField>
           </div>
@@ -559,63 +593,89 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate }) => {
           </FormField>
         </div>
 
-        {/* Live Conductor Size — toggle grid for common, picker for all */}
+        {/* Live Conductor Size — common sizes as chips, "Other" opens picker for full list */}
         <FormField label="Live Conductor Size" required>
-          <div className="grid grid-cols-6 gap-1">
+          <div className="grid grid-cols-7 gap-1">
             {COMMON_CABLE_SIZES.map((size) => (
               <ToggleButton
                 key={size}
                 selected={formData.liveConductorSize === size}
-                label={`${size}`}
+                label={size}
                 onClick={() => onUpdate('liveConductorSize', size)}
               />
             ))}
+            <div className="col-span-1">
+              <MobileSelectPicker
+                value={
+                  COMMON_CABLE_SIZES.includes(formData.liveConductorSize as string)
+                    ? ''
+                    : (formData.liveConductorSize as string) || ''
+                }
+                onValueChange={(v) => onUpdate('liveConductorSize', v)}
+                options={CONDUCTOR_SIZES.filter((o) => !COMMON_CABLE_SIZES.includes(o.value))}
+                placeholder="Other"
+                title="Live Conductor Size (mm²)"
+                triggerClassName={cn(
+                  'h-10 rounded-lg font-semibold text-xs touch-manipulation',
+                  !COMMON_CABLE_SIZES.includes(formData.liveConductorSize as string) &&
+                    formData.liveConductorSize
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              />
+            </div>
           </div>
           {!COMMON_CABLE_SIZES.includes(formData.liveConductorSize as string) &&
             formData.liveConductorSize && (
               <span className="text-[10px] text-elec-yellow mt-1 block">
-                Selected: {(formData.liveConductorSize as string)}mm²
+                {formData.liveConductorSize as string}mm²
               </span>
             )}
-          <MobileSelectPicker
-            value={(formData.liveConductorSize as string) || ''}
-            onValueChange={(v) => onUpdate('liveConductorSize', v)}
-            options={CONDUCTOR_SIZES}
-            placeholder="All sizes..."
-            title="Live Conductor Size (mm²)"
-            triggerClassName={cn(
-              'mt-1',
-              false
-            )}
-          />
         </FormField>
 
         <FormField label="CPC Size">
-          <div className="grid grid-cols-6 gap-1">
+          <div className="grid grid-cols-7 gap-1">
             {COMMON_CABLE_SIZES.map((size) => {
               const allowed = filteredCpcSizes.some((o) => o.value === size);
               return (
                 <ToggleButton
                   key={size}
                   selected={formData.cpcSize === size}
-                  label={`${size}`}
+                  label={size}
                   onClick={() => allowed && onUpdate('cpcSize', size)}
                 />
               );
             })}
+            <div className="col-span-1">
+              <MobileSelectPicker
+                value={
+                  COMMON_CABLE_SIZES.includes(formData.cpcSize as string)
+                    ? ''
+                    : (formData.cpcSize as string) || ''
+                }
+                onValueChange={(v) => onUpdate('cpcSize', v)}
+                options={filteredCpcSizes.filter((o) => !COMMON_CABLE_SIZES.includes(o.value))}
+                placeholder="Other"
+                title="CPC Size (mm²)"
+                triggerClassName={cn(
+                  'h-10 rounded-lg font-semibold text-xs touch-manipulation',
+                  !COMMON_CABLE_SIZES.includes(formData.cpcSize as string) && formData.cpcSize
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              />
+            </div>
           </div>
-          <MobileSelectPicker
-            value={(formData.cpcSize as string) || ''}
-            onValueChange={(v) => onUpdate('cpcSize', v)}
-            options={filteredCpcSizes}
-            placeholder="All sizes..."
-            title="CPC Size (mm²)"
-            triggerClassName="mt-1"
-          />
+          {!COMMON_CABLE_SIZES.includes(formData.cpcSize as string) &&
+            formData.cpcSize && (
+              <span className="text-[10px] text-elec-yellow mt-1 block">
+                {formData.cpcSize as string}mm²
+              </span>
+            )}
           {formData.liveConductorSize &&
             parseFloat(formData.liveConductorSize as string) > 16 && (
               <span className="text-[10px] text-white block mt-1">
-                Sizes shown up to {formData.liveConductorSize as string}mm² (per BS 7671)
+                CPC limited to {formData.liveConductorSize as string}mm² (BS 7671)
               </span>
             )}
         </FormField>

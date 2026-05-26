@@ -14,7 +14,12 @@ const quickCheckQuestions = [
     id: 'turns-ratio-calc',
     question:
       'A transformer has 1,000 primary turns and 250 secondary turns. If the primary voltage is 400V, what is the secondary voltage?',
-    options: ['1,600V', '100V', '250V', '50V'],
+    options: [
+      '50V',
+      '100V',
+      '250V',
+      '1,600V',
+    ],
     correctIndex: 1,
     explanation:
       'Using the turns ratio: Vs/Vp = Ns/Np. So Vs = 400 x (250/1000) = 100V. The turns ratio is 4:1 step-down, meaning the secondary voltage is one quarter of the primary voltage.',
@@ -23,8 +28,13 @@ const quickCheckQuestions = [
     id: 'transformer-losses',
     question:
       'Which type of transformer loss is caused by eddy currents circulating in the core laminations?',
-    options: ['Copper losses', 'Iron (core) losses', 'Stray losses', 'Dielectric losses'],
-    correctIndex: 1,
+    options: [
+      'Iron (core) losses',
+      'Dielectric losses',
+      'Copper losses',
+      'Stray losses',
+    ],
+    correctIndex: 0,
     explanation:
       'Iron losses (also called core losses) comprise eddy current losses and hysteresis losses. Eddy currents are minimised by laminating the core — dividing it into thin sheets insulated from each other, which interrupts the current paths.',
   },
@@ -33,12 +43,12 @@ const quickCheckQuestions = [
     question:
       'Why must the secondary winding of a current transformer (CT) NEVER be left open-circuit while the primary is energised?',
     options: [
-      'The CT will overheat slightly',
-      'The reading will be inaccurate',
+      'Ca from Table 4B1 (correction factor for ambient air temperature, 70 °C cable).',
+      'Because the operator may become incapacitated without warning, requiring an immediate ground-level rescue',
+      'A combination of activity modification, physiotherapy, anti-inflammatory treatment, and ergonomic workplace adjustments',
       'A dangerously high voltage develops across the open secondary, risking flashover and fatal shock',
-      'The primary current will increase',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'When a CT secondary is open-circuited, the entire primary current acts as a magnetising current, driving the core into deep saturation. This induces extremely high voltages (potentially several kilovolts) across the secondary terminals, creating a lethal shock and fire hazard. Always short-circuit the secondary before disconnecting any CT load.',
   },
@@ -46,12 +56,12 @@ const quickCheckQuestions = [
     id: 'transformer-oil-test',
     question: 'What does dissolved gas analysis (DGA) of transformer oil primarily detect?',
     options: [
-      'The viscosity of the oil',
-      "The oil's dielectric strength",
       'Internal faults such as arcing, overheating, or partial discharge',
-      "The oil's moisture content",
+      'The design meets BS 7671 and client requirements',
+      'Separate metallic return path via supply cable sheath',
+      'Regularly reviewing progress towards your goal and adjusting your approach',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'DGA identifies gases dissolved in transformer oil that are produced by different types of internal faults. For example, acetylene indicates arcing, ethylene indicates severe overheating, and hydrogen indicates partial discharge or corona. DGA is one of the most valuable diagnostic tools for transformer condition monitoring.',
   },
@@ -62,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the fundamental operating principle of a transformer?',
     options: [
-      'Electrostatic induction between two plates',
+      'They must be removed from the platform entirely',
       'Electromagnetic induction between two magnetically coupled windings',
-      'Piezoelectric effect in a crystal',
-      'Thermoelectric effect in dissimilar metals',
+      'Separate different voltage levels and prevent interference',
+      'Pulsating DC — both halves of the AC sine wave folded above the zero line.',
     ],
     correctAnswer: 1,
     explanation:
@@ -75,8 +85,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A step-up transformer has a turns ratio of 1:5 and a primary voltage of 230V. What is the secondary voltage?',
-    options: ['46V', '1,150V', '230V', '460V'],
-    correctAnswer: 1,
+    options: [
+      '230V',
+      '46V',
+      '1,150V',
+      '460V',
+    ],
+    correctAnswer: 2,
     explanation:
       'For a 1:5 step-up transformer: Vs = Vp x (Ns/Np) = 230 x 5 = 1,150V. The secondary voltage is five times the primary voltage. Note that the secondary current will be one-fifth of the primary current (power is conserved, minus losses).',
   },
@@ -84,12 +99,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is a characteristic of copper losses in a transformer?',
     options: [
-      'They are constant regardless of load',
+      'Uses a single winding with a tapping point, providing no galvanic isolation',
+      'To adjust the output voltage by altering the number of turns in use',
+      'Oil Natural, Air Natural — no pumps or fans',
       'They vary with the square of the load current (I squared R)',
-      'They only occur at no-load',
-      'They are eliminated by laminating the core',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Copper losses (I squared R losses) are caused by the resistance of the winding conductors. Since power loss = I squared x R, copper losses increase with the square of the load current. This is why transformers run cooler at light loads.',
   },
@@ -97,12 +112,12 @@ const quizQuestions = [
     id: 4,
     question: 'Why are transformer cores constructed from thin laminations rather than solid iron?',
     options: [
-      'To reduce weight',
       'To reduce eddy current losses by limiting the paths available for circulating currents',
-      'To increase the magnetic flux density',
-      'To make the transformer easier to assemble',
+      'A possible inter-turn short circuit on that winding, reducing the effective number of turns',
+      'Uses a single winding with a tapping point, providing no galvanic isolation',
+      'The ratio of insulation resistance at 10 minutes to the value at 1 minute, indicating insulation condition',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Laminating the core divides it into thin sheets, each insulated from its neighbours by a thin oxide or varnish layer. This restricts eddy currents to small loops within each lamination, dramatically reducing I squared R heating losses. Typical lamination thickness is 0.35mm to 0.5mm.',
   },
@@ -112,8 +127,8 @@ const quizQuestions = [
     options: [
       'To change the frequency of the output',
       'To adjust the output voltage by altering the number of turns in use',
-      'To switch between single-phase and three-phase operation',
       'To reverse the direction of power flow',
+      'To switch between single-phase and three-phase operation',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,8 +138,13 @@ const quizQuestions = [
     id: 6,
     question:
       'An instrument current transformer (CT) has a ratio of 200/5. If the primary current is 150A, what is the secondary current?',
-    options: ['7.5A', '3.75A', '1.5A', '37.5A'],
-    correctAnswer: 1,
+    options: [
+      '7.5A',
+      '1.5A',
+      '3.75A',
+      '37.5A',
+    ],
+    correctAnswer: 2,
     explanation:
       'Using the CT ratio: Is = Ip x (secondary rating / primary rating) = 150 x (5/200) = 3.75A. CTs step down high currents to safe, measurable levels (typically 5A or 1A secondary) for instruments and protection relays.',
   },
@@ -132,8 +152,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What minimum insulation resistance value would typically be expected for a healthy 11kV transformer winding at 20 degrees C?',
-    options: ['0.5 megohms', '5 megohms', '100 megohms or greater', '1 kilohm'],
-    correctAnswer: 2,
+    options: [
+      '0.5 megohms',
+      '5 megohms',
+      '1 kilohm',
+      '100 megohms or greater',
+    ],
+    correctAnswer: 3,
     explanation:
       "For an 11kV transformer, insulation resistance values of 100 megohms or greater are typical for a healthy winding. Values below the manufacturer's minimum indicate moisture ingress or insulation degradation. IR testing should be performed at the test voltage recommended by the manufacturer.",
   },
@@ -142,12 +167,12 @@ const quizQuestions = [
     question:
       'Which type of transformer provides galvanic isolation with a 1:1 turns ratio and is used to protect sensitive equipment?',
     options: [
-      'Auto-transformer',
-      'Current transformer',
       'Isolation transformer',
       'Step-down transformer',
+      'Auto-transformer',
+      'Current transformer',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'An isolation transformer has separate primary and secondary windings (typically 1:1 ratio) that provide galvanic isolation — no direct electrical connection between input and output. This protects against earth faults, reduces noise, and is used for sensitive electronic equipment and medical applications.',
   },
@@ -155,12 +180,12 @@ const quizQuestions = [
     id: 9,
     question: 'What type of cooling is designated by the code ONAN on a transformer nameplate?',
     options: [
+      'Motion-activated with auto-off timer',
       'Oil Natural, Air Natural — no pumps or fans',
-      'Oil Natural, Air Negative pressure',
-      'Oil pumped, Air Natural',
-      'Oil Natural, Air heated',
+      'It overlaps with other work packages to ensure coverage',
+      'Between line, neutral and earth at the point of test',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'ONAN stands for Oil Natural Air Natural — the oil circulates by natural convection (thermosiphon effect) and heat is dissipated to the surrounding air by natural convection from the radiator fins. This is the simplest and most common cooling method for distribution transformers up to several MVA.',
   },
@@ -168,12 +193,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the polarisation index (PI) test for a transformer winding?',
     options: [
-      'A test of the magnetic polarity of the windings',
+      'Uses a single winding with a tapping point, providing no galvanic isolation',
+      'To reduce eddy current losses by limiting the paths available for circulating currents',
       'The ratio of insulation resistance at 10 minutes to the value at 1 minute, indicating insulation condition',
-      'A test of the winding resistance at different temperatures',
-      "A measurement of the transformer's power factor",
+      'A possible inter-turn short circuit on that winding, reducing the effective number of turns',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The polarisation index is calculated as PI = IR at 10 minutes / IR at 1 minute. A PI of 2.0 or greater typically indicates good insulation. A low PI (close to 1.0) suggests the insulation is contaminated with moisture or conductive material. The PI test is particularly useful for large transformers where absolute IR values can be misleading.',
   },
@@ -181,12 +206,12 @@ const quizQuestions = [
     id: 11,
     question: 'An auto-transformer differs from a double-wound transformer because it:',
     options: [
-      'Has no iron core',
+      'To reduce eddy current losses by limiting the paths available for circulating currents',
+      'They vary with the square of the load current (I squared R)',
+      'A possible inter-turn short circuit on that winding, reducing the effective number of turns',
       'Uses a single winding with a tapping point, providing no galvanic isolation',
-      'Can only step voltage up, never down',
-      'Has three windings instead of two',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An auto-transformer uses a single winding with a tapping point — part of the winding is common to both the primary and secondary circuits. This means there is a direct electrical connection (no galvanic isolation) between input and output. Auto-transformers are smaller and cheaper for small voltage changes but must not be used where isolation is required for safety.',
   },
@@ -195,12 +220,12 @@ const quizQuestions = [
     question:
       'During a winding resistance test on a transformer, one phase reads significantly lower than the other two. What does this indicate?',
     options: [
-      'Normal variation between phases',
       'A possible inter-turn short circuit on that winding, reducing the effective number of turns',
-      'The transformer is overloaded',
-      'The test instrument needs calibration',
+      'To adjust the output voltage by altering the number of turns in use',
+      'To reduce eddy current losses by limiting the paths available for circulating currents',
+      'The ratio of insulation resistance at 10 minutes to the value at 1 minute, indicating insulation condition',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A significantly lower winding resistance on one phase compared to the others indicates a possible inter-turn short circuit — shorted turns reduce the total resistance of that winding. All three phases should read within approximately 2% of each other. This fault will also cause increased local heating and reduced output voltage on the affected phase.',
   },

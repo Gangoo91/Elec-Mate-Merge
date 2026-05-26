@@ -10,24 +10,39 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'Which wiring system requires the most planning but offers maximum protection?',
-    options: ['Surface wiring', 'PVC conduit', 'Steel conduit', 'Flexible cord'],
-    correctAnswer: 2,
+    options: [
+      'Surface wiring',
+      'Steel conduit',
+      'PVC conduit',
+      'Flexible cord',
+    ],
+    correctAnswer: 1,
     explanation:
       'Steel conduit provides excellent mechanical and fire protection but requires careful planning for routing and earthing continuity.',
   },
   {
     id: 2,
     question: 'When is surface wiring most appropriate?',
-    options: ['New builds', 'Temporary installations', 'Underground', 'High-risk environments'],
-    correctAnswer: 1,
+    options: [
+      'Underground',
+      'New builds',
+      'Temporary installations',
+      'High-risk environments',
+    ],
+    correctAnswer: 2,
     explanation:
       "Surface wiring is ideal for temporary installations, retrofits, and situations where concealed wiring isn't practical.",
   },
   {
     id: 3,
     question: "What's the key advantage of trunking systems?",
-    options: ['Lowest cost', 'Easy cable changes', 'Best protection', 'Smallest size'],
-    correctAnswer: 1,
+    options: [
+      'Best protection',
+      'Lowest cost',
+      'Smallest size',
+      'Easy cable changes',
+    ],
+    correctAnswer: 3,
     explanation:
       'Trunking allows easy access for cable changes, additions, and maintenance without major disruption.',
   },
@@ -38,8 +53,13 @@ const quizQuestions = [
     id: 1,
     question:
       'Which wiring system offers the best mechanical protection in industrial environments?',
-    options: ['Surface wiring', 'PVC conduit', 'Steel conduit', 'Trunking'],
-    correctAnswer: 2,
+    options: [
+      'Surface wiring',
+      'Steel conduit',
+      'PVC conduit',
+      'Trunking',
+    ],
+    correctAnswer: 1,
     explanation:
       'Steel conduit provides superior mechanical protection and is preferred in industrial settings where cables may be subject to impact damage.',
   },
@@ -48,28 +68,38 @@ const quizQuestions = [
     question:
       "For a domestic kitchen renovation where cables need to be hidden, what's the most practical approach?",
     options: [
-      'Surface wiring with clips',
+      'Environmental conditions',
+      'Continuous earth path',
       'Concealed conduit in walls',
-      'SWA cable',
-      'Flexible cord only',
+      'SWA to weatherproof outlets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Concealed PVC conduit allows cables to be hidden within walls while providing protection and allowing future cable changes.',
   },
   {
     id: 3,
     question: "What's the maximum recommended length for flexible cord connections?",
-    options: ['2 metres', '5 metres', '10 metres', 'No limit'],
-    correctAnswer: 0,
+    options: [
+      '10 metres',
+      '5 metres',
+      'No limit',
+      '2 metres',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS 7671 recommends flexible cords should generally not exceed 2 metres and should not be used as permanent wiring.',
   },
   {
     id: 4,
     question: 'Which system is most suitable for underground cable runs?',
-    options: ['PVC conduit', 'Steel conduit', 'SWA cable', 'Surface wiring'],
-    correctAnswer: 2,
+    options: [
+      'SWA cable',
+      'Steel conduit',
+      'PVC conduit',
+      'Surface wiring',
+    ],
+    correctAnswer: 0,
     explanation:
       'SWA (Steel Wire Armoured) cable is designed for underground use with integral protection and moisture resistance.',
   },
@@ -77,8 +107,13 @@ const quizQuestions = [
     id: 5,
     question:
       'In an office fit-out with frequent layout changes, which system offers the most flexibility?',
-    options: ['Fixed conduit', 'Surface clips', 'Trunking', 'Buried cables'],
-    correctAnswer: 2,
+    options: [
+      'Surface clips',
+      'Trunking',
+      'Buried cables',
+      'Fixed conduit',
+    ],
+    correctAnswer: 1,
     explanation:
       'Trunking systems allow easy access for cable changes and additions, making them ideal for environments with changing requirements.',
   },
@@ -98,8 +133,13 @@ const quizQuestions = [
   {
     id: 7,
     question: 'Which factor is most important when selecting between PVC and steel conduit?',
-    options: ['Cost only', 'Environmental conditions', 'Cable size', 'Voltage level'],
-    correctAnswer: 1,
+    options: [
+      'Cost only',
+      'Voltage level',
+      'Cable size',
+      'Environmental conditions',
+    ],
+    correctAnswer: 3,
     explanation:
       'Environmental conditions (temperature, mechanical stress, fire risk, corrosion) are the primary factors in material selection.',
   },
@@ -108,12 +148,12 @@ const quizQuestions = [
     question:
       "For temporary building site installations, what's the most appropriate wiring method?",
     options: [
-      'Permanent conduit',
       'SWA to weatherproof outlets',
       'Standard flexible cords',
+      'Permanent conduit',
       'Surface clipping only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'SWA cable to proper weatherproof outlets provides the durability and protection needed for construction site conditions.',
   },

@@ -45,10 +45,10 @@ const checks = [
     question:
       "GS38 (4th ed) specifies the maximum exposed metal tip on a test probe. What's the figure and why?",
     options: [
-      "10 mm — for visibility.",
+      "Because a ladder is a personal access platform that doesn't have a guardrail and depends on the user's three-point contact and footing for stability. It provides minimal collective protection. INDG401 and INDG402 (HSE guidance) limit ladder use to short-duration tasks (typically up to 30 minutes at one location), light work (one-handed work where reasonably practicable, with a free hand for grip) and where a higher control isn't reasonably practicable.",
       "4 mm maximum exposed metal tip. Older 19 mm tips can bridge across two adjacent terminals on UK distribution boards (terminal pitch typically 8 mm). The 4 mm limit eliminates the phase-to-phase short-circuit risk from a probe slip. Modern probes (Martindale, Fluke, Megger, Kewtech) ship with insulated shrouds or screw-on tip caps that limit the exposed length to ≤ 4 mm.",
-      "20 mm — for reach.",
-      "No limit.",
+      "Typical materials markup is 15-30% on top of cost — covers the time sourcing, collecting, returning, managing stock, dealing with wholesaler accounts, and wastage. Higher markup on stocked items you carry in van inventory; potentially lower markup on large special orders where you don't add much value.",
+      "A rotary cable stripper (Jokari Quadro, Knipex 16 95 02, BAHCO 4490) — sized to the SWA outer diameter, runs around the sheath cleanly and removes a length to expose the armour without scoring the inner cores. Stanley knives can do it but the risk of scoring the inner is high; rotary strippers are the standard. For the armour itself — separate tool (armour shears for smaller, angle grinder for bigger) covered in Sub 1.2.",
     ],
     correctIndex: 1,
     explanation:
@@ -59,12 +59,12 @@ const checks = [
     question:
       "What CAT (measurement category) rating is the minimum for test instruments used at a domestic consumer unit?",
     options: [
-      "CAT II — they're cheaper.",
       "CAT III 600 V minimum at the DB; CAT IV 600 V if working on the supply tails or cut-out. CAT ratings define the transient overvoltage withstand of the instrument's input protection. Using CAT II at a DB risks instrument failure with operator injury — the inputs explode, glass shards, possible eye loss. Fluke 117 is CAT III 600 V (DB and branch circuits, NOT cut-out). Fluke 87V is CAT III 1000 V / CAT IV 600 V.",
-      "Doesn't matter.",
-      "CAT I.",
+      "Test instruments (MFTs and voltage indicators), insulated tools, electrical PPE (gloves, mats, face shields where applicable), lock-off devices, warning labels — all of it. Reg 4(4) is why your MFT must be in calibration, why your voltage indicator must comply with HSE GS38, why your insulated tools must be in date and undamaged, and why your lock-off kit has to actually work. Use unsuitable equipment and you breach Reg 4(4) regardless of whether the install itself is sound.",
+      "Metal CUs (as required by Amendment 3 onwards in domestic) are exposed-conductive-parts in their own right — but the regulation also drives consistent earthing practice across the property, and any metal back-box anywhere in the installation should already have been earthed regardless of CU material. The line item makes the existing requirement explicit in the quote.",
+      "The dead test proves the wiring is correct between conductor identification at the CU and conductor identification at the accessory. The live test (using an approved voltage indicator at the accessory after first energising) confirms that the assumed L conductor at the CU actually carries the supply line — the dead test cannot detect a labelling error or a reversed connection at the meter tails.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "CAT ratings come from IEC 61010 and they're not optional. Always meet OR exceed the CAT rating for the work location: CAT II for sockets, CAT III for DB and distribution, CAT IV for supply origin.",
   },
@@ -73,12 +73,12 @@ const checks = [
     question:
       "What's the GS38 distinction between a voltage detector (volt-stick) and a voltage indicator (two-pole tester)?",
     options: [
-      "No difference.",
+      "Ownership requires self-regulation of defensive impulses (ego protection, fear of consequences), involves taking responsibility without self-condemnation, and focuses on learning and solution — whereas blame culture is driven by unregulated fear and redirects negative emotion outward to protect the self",
+      "Section 702 of BS 7671 — extensive supplementary bonding inside Zone 0, 1 and 2 around the pool (between the pool liner reinforcement, surrounding metalwork, ladders, lighting frames etc.) and tighter restrictions on equipment in each zone. Supplementary bonding generally cannot be omitted in pool zones — the wet skin / immersed body risk is far higher than a domestic bathroom.",
       "Voltage DETECTOR — non-contact, capacitively senses presence of AC. Useful for first-pass live identification but does NOT confirm absence of voltage (high-impedance / dead conductor reads as 'no voltage'). NOT GS38-compliant for proving dead. Voltage INDICATOR — direct-contact, low-impedance, lamp + LED + audible. IS GS38-compliant for proving dead. Volt-sticks are first-look tools; two-pole testers are proving tools.",
-      "Volt-sticks are better.",
-      "Indicators are obsolete.",
+      "Apps reduce the friction of recording — entries can be made on the phone in the moment, photos and locations can be attached automatically, the data is searchable later. They also make sharing with the supervisor and the training provider easier. Paper diaries still work fine if maintained; digital tools just lower the barrier to actually keeping them current.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Confusing the two has killed people. Apprentice waves a Fluke 1AC-A1 II at a cable, no beep, assumes dead, takes a shock from a high-impedance source the stick missed. GS38 explicitly requires low-impedance two-pole for proving dead.",
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: "List the seven instruments in an L3 apprentice's fault-diagnosis kit and what each is for.",
     options: [
-      "Just a multimeter.",
+      "Direct application to Local Authority Building Control (LABC) BEFORE the work starts via a Building Notice or Full Plans application; LABC inspects and issues their own completion certificate. Significantly more expensive (per-job fees often hundreds of pounds) and slower than the CPS route — most contractors register with NICEIC / NAPIT / ELECSA to use the post-completion 30-day upload instead.",
       "(1) GS38 two-pole tester (Martindale VI-13800, Fluke T130, Kewtech KT1780) — proving dead. (2) Proving unit (Martindale GVD2) — proves the tester. (3) MFT (Megger MFT1741+, Kewtech KT64+, Fluke 1664FC) — continuity, IR, EFLI, RCD, polarity. (4) Multimeter (Fluke 117 or 87V) — measurement. (5) Clamp meter (Fluke 376FC, Megger DCM340) — load and earth-leakage current. (6) Socket tester (Martindale CP501) — quick polarity check. (7) VDE screwdriver set (Wera Kraftform, Wiha SoftFinish, CK Dextro) — IEC 60900 1000 V AC.",
-      "Just an MFT.",
-      "Just a tester.",
+      "Production stop-times. Industrial sites typically run continuous or shift-based production, and electrical work that requires isolation has to fit within scheduled outages or planned shutdowns. The prep includes coordinating with plant operations, integrating with the site lockout/tagout system, observing any ATEX zones in process plants, and often working out-of-hours so the production line isn't affected.",
+      "Yes — IET specifically promotes EngTech as accessible to vocational-route practitioners. JIB Approved Electrician + 2391-52 + portfolio of evidence + professional review = typical EngTech qualification. The IET provides regional ambassadors who advise on the application route. Many JIB Approved Electricians could qualify for EngTech but never apply because they don't realise they're eligible.",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: "Why can't a multimeter replace a GS38 two-pole tester for proving dead?",
     options: [
-      "It can.",
+      "Reg 14(2) requires every employee to inform their employer (or any other employee with specific responsibility for safety) of any work situation which they reasonably consider represented a serious and immediate danger to health and safety, AND any matter which they reasonably consider represented a shortcoming in the employer's protection arrangements for health and safety. The duty extends to near-misses, defective safe systems of work, and any condition the employee believes presents danger.",
+      "Notices must be 'clearly and durably marked' (Reg 514.13.1) and 'shall be securely fixed in a visible position'. The practical interpretation: typed/printed labels on durable substrate (BS 951 plates for earthing, laminated card for inside-CU notices), securely fixed (screwed, riveted, or industrial adhesive), readable from a normal stand-back distance. Hand-written sticky labels degrade fast and aren't compliant.",
       "Three reasons. (1) Input impedance — multimeters at 10 MΩ read induced/phantom voltages as if they were real sources; two-pole at a few kΩ loads them to zero. (2) Probe geometry — multimeter probes typically have longer exposed tips and weaker finger barriers, failing GS38. (3) Indication — a multimeter shows a digit on a screen which can be misread; the two-pole's lamp + LED + audible is unambiguous. The instruments are complementary; the multimeter measures, the two-pole proves dead.",
-      "Just for show.",
-      "It's a conspiracy.",
+      "Informal coordination — 'I'm five minutes away', 'meet me at the welfare unit', 'have you got a 16mm fly lead in the van'. NOT for contractual changes, scope variations, formal warnings, grievances, safety briefings of record, or anything you might need to defend in a dispute. WhatsApp messages have been admitted as evidence in court, but they carry less evidential weight than a signed variation order and they sit on a personal device the employer doesn't control.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Each instrument is optimised for its job. Multimeter input impedance is a feature for measurement (doesn't load the circuit) but a bug for proving dead. Two-pole low impedance is a feature for proving dead but unusable for measurement.",
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: "Why are HRC fuses used in test lead assemblies (typically 500 mA F or 1 A FF) rather than glass cartridges?",
     options: [
-      "Cheaper.",
+      "The installer red-lines deviations on a working copy of the design pack at handover. The designer reviews each red-line, re-runs any affected calc, updates the affected schedules, the SLD and the layouts, marks the new revision, and re-issues. The re-issued pack is the as-installed pack — the master that the building owner inherits.",
+      "Present both statistics in a lessons learnt briefing, analyse why entrapment is increasing despite overall fatality improvements, review all current entrapment prevention measures, implement additional controls such as secondary guarding and enhanced training, set measurable targets for entrapment reduction, and monitor progress quarterly using the PDCA cycle",
+      "Class A (solids — wood, paper, fabric) — Water (red label, all-red body legacy / red with white panel modern); Class B (flammable liquids) — Foam (cream label) or CO2 (black label); Class C (flammable gases) — Dry powder (blue label); Class D (metals) — specialist dry powder; Class F (cooking oils) — wet chemical (yellow label). Plus electrical fires (no class letter — addressed by CO2 or dry powder, never water).",
       "HRC fuses can interrupt very high prospective fault currents safely (1500 A or higher breaking capacity). Glass cartridges have ~35 A breaking capacity; on a high-PSCC circuit (UK domestic 6 kA, commercial 16 kA+) a glass fuse can rupture violently when fault current exceeds its breaking capacity — glass shards, hot metal, no current interruption. Fluke and Martindale lead sets use sand-filled HRC elements.",
-      "Easier to find.",
-      "Better looking.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Fuse breaking capacity matters. HRC fuses (Bussmann KTK, Eaton FNQ-R, Mersen) are sand-filled and rated to 100 kA breaking; glass cartridges are not safe in test lead applications. Always replace blown lead fuses with HRC.",
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: "What's the practical use of a clamp meter (Fluke 376FC, Megger DCM340) in fault diagnosis?",
     options: [
-      "Just installation.",
       "Three uses. (1) Load current measurement on individual circuits without breaking the circuit — confirms which circuit feeds an unidentified appliance. (2) Earth leakage measurement — clamp around L+N together (the imbalance is the earth leakage) — diagnoses RCD nuisance trips. (3) Inrush current capture (Fluke 376FC) — captures motor / HVAC compressor / ballast start-up to diagnose nuisance trips on undersized breakers. Modern clamps have iFlex flexible transducers for cables too thick for the rigid jaw.",
-      "Only big cables.",
-      "Only AC.",
+      "One per RCBO. Each RCBO is an independent RCD device. Test each at 1 x I delta n, record trip time on the Schedule of Test Results against the circuit number. Standard MFT workflow: select RCD test mode, set I delta n to 30 mA (or other rating per device), AC test, plug into the circuit\\\\'s socket or test from the RCBO load terminals, press TEST, record trip time, move to next circuit. 12 RCBOs = 12 tests + 12 readings on the schedule. Modern MFTs auto-fill the schedule when they\\\\'re paired with certification software.",
+      "They apply together. Section 712 covers the PV-side electrical requirements (DC isolation, string protection, inverter compliance, AC connection). Section 826 covers the EESS aspects (battery isolation, BMS, fire safety, signage). The hybrid inverter is a single piece of equipment that has to comply with both — the manufacturer's certification typically demonstrates compliance with both sections. The IET Codes of Practice for Grid-Connected PV and for EESS both reference each other. A4:2026 has clarified the interaction in places where ambiguity existed in the 18th Edition.",
+      "Dedicated 13 A or 16 A supply on a 6 A or 10 A MCB, in 1.5 mm² T&E to the unit location (utility room, loft, plant cupboard). Local DP isolator. Boost wiring from kitchens and bathrooms — sometimes via humidity sensors or PIR, sometimes via pull-cord switches in bathrooms or push-buttons in kitchens. Some units include a low-voltage commissioning interface (e.g. for installer-set air-flow rates). The unit's nameplate is typically 50-300 W on full load — modest demand. The bulk of the electrical work is the boost wiring network, not the unit supply.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The clamp meter is the most under-used fault-diagnosis instrument in apprentice kits. Non-invasive measurement during normal operation is its superpower — the fault is happening WHILE you measure.",
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: "Socket testers (Martindale CP501, Kewtech LOOPCHECK107) are widely used. What can they NOT tell you?",
     options: [
-      "Nothing.",
+      "Make a contemporaneous note in your own records — date, time, location, what was said, by whom, who else was present, your response. Keep the note factual and unemotional. Don't share with the co-worker (it's your private record at this stage). If the conflict continues and you escalate, the contemporaneous notes are your evidence base and they carry significant weight because they were written at the time, not from memory weeks later.",
       "Can tell you: polarity and connection state of a 13A socket — correct, reversed polarity, missing earth, missing neutral. Some advanced models add EFLI and basic RCD trip indication. Cannot tell you: actual values of EFLI / IR / continuity (limited accuracy vs MFT), shared-neutral conditions, high-resistance joints below threshold, intermittent faults. Socket testers are first-look tools; the MFT gives the numbers for the certificate.",
-      "Everything.",
-      "Only polarity.",
+      "Understand the strategic context of maintenance (why different strategies exist for different assets), apply structured analytical techniques (RCA, FMEA, criticality analysis), contribute to continuous improvement, and articulate how maintenance effectiveness is measured and improved — demonstrating the knowledge, skills and behaviours expected of a competent maintenance technician",
+      "Whenever they design, supply or commission an article (including a control panel, a bespoke distribution board, a prefabricated assembly) for use at work — they must ensure it is safe and without risks to health when properly used, and supply adequate information about safe use, installation and dismantling. So a contractor designing a one-off control panel for a commercial customer is captured by s.6 as well as by EAWR.",
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: "What's the right way to handle a test instrument that's been dropped or suspected damaged?",
     options: [
-      "Carry on.",
+      "Leave it in place. Reg 701.415.2 ALLOWS omission when all three conditions are met (ADS, RCDs, main bonding) — but it doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t require removal of existing compliant bonding. Existing supplementary bonds add a layer of redundancy at no cost; removing them creates work and risk for no safety benefit.",
+      "Yes — apprentices have the same legal right to join (or not join) a union as any other worker. Unions typically offer reduced 'apprentice rate' subscriptions. Apprentice membership is a personal choice; on JIB-graded sites the union shop steward is typically available to support apprentices through workplace issues even if they're not yet members.",
       "Stop using it. Apply a 'DO NOT USE' label or tag. Inform the supervisor. At base, do a function check on a known live source, calibration check against a reference instrument, visual inspection. If anything fails — send for repair / re-calibration; substitute with backup. PUWER 1998 Reg 5 + Reg 6 put the duty on the employer; the operative's prompt action protects the next user.",
-      "Just keep going.",
-      "Test on a live circuit.",
+      "Because most domestic PME supplies have a PEN of 35 mm² or less, which Table 54.8 maps to a 10 mm² minimum copper-equivalent main bonding. On bigger supplies (commercial three-phase, 70 mm² PEN) the bonding steps up to 16 mm² or 25 mm². Always read the supplier neutral first, then Table 54.8.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A dropped instrument is presumed unsafe. The danger isn't visible damage — it's hairline cracks in the input PCB that let fault current bypass protection on the next live test. Behaves normally for a while, then fails violently.",
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: "Calibration intervals for the standard L3 fault-diagnosis kit?",
     options: [
-      "Whenever you remember.",
+      "Goal: \\\\\\\"Pass the I&T knowledge test within 6 weeks.\\\\\\\" Reality: \\\\\\\"Currently scoring 40% on practice tests.\\\\\\\" Options: \\\\\\\"Evening study, mentor-led revision, practice papers, college support.\\\\\\\" Will: \\\\\\\"Two practice papers per week, mentor review every Friday.\\\\\\\"",
+      "Yes — manufacturer training (Schneider Electric, Siemens, Hager, Wago, ABB, etc.) typically counts as CPD with most CPS schemes provided it's substantive (not a sales pitch). Manufacturer events often free or low-cost; cover product-specific install, design, troubleshooting. Strong source of practical CPD especially for specialist equipment (PLCs, smart switchgear, EV chargers, PV inverters). Count attendance toward annual CPD hours.",
+      "No person shall intentionally or recklessly interfere with or misuse anything provided in the interests of H&S. Examples — removing a machine guard, defeating an interlock, taking down a barrier, reaching round a lock-off, stuffing the door of an interlocked enclosure, switching off a smoke detector you find inconvenient. s.8 is a personal criminal offence and applies to everyone on site, employee or not.",
       "MFT — annually (Megger UK Service ~£100 per unit, UKAS-traceable). Two-pole tester — every 24 months (Martindale ~£40). Multimeter — annually (Fluke ~£80–150). Clamp meter — annually. Proving unit — annually with the two-pole. Track in a calibration register; replace stickers on receipt back from the lab. NICEIC / NAPIT audits will check.",
-      "Every five years.",
-      "Never.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Calibration is the bookkeeping that protects the certificate. An out-of-calibration instrument's readings are inadmissible — sign-offs based on them can be challenged in court. Register entry: instrument ID, date, lab, certificate number, next-due date.",
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: "What does a CAT IV 600 V instrument cost on average and which ones are typical L3 apprentice purchases?",
     options: [
-      "All instruments are CAT IV.",
       "CAT IV 600 V two-pole testers — Martindale VI-13800 (~£60), Fluke T130 (~£100), Kewtech KT1780 (~£70). CAT III 1000 V / CAT IV 600 V multimeters — Fluke 87V (~£400), Megger AVO830 (~£200). CAT IV-rated MFTs — Megger MFT1721+ (~£900), Kewtech KT200 (~£500). Personal apprentice purchases typically: Martindale VI-13800 + Fluke 117 (CAT III 600 V — adequate for DB work but not cut-out). Firm-issued: Megger MFT1741+ and Fluke 87V for senior staff.",
-      "Just one figure.",
-      "Cost doesn't matter.",
+      "Three crimpers — (1) ratchet H-die crimper for bootlace ferrules and small insulated lugs (0.5 to 6 mm² covers 90% of domestic / small commercial work, e.g. Knipex 97 53 04). (2) Hex-die ratchet crimper for compression lugs 10 to 25 mm² (e.g. Knipex 97 51 19). (3) Hydraulic crimper for compression lugs and bushings 25 to 240 mm² (e.g. Klauke EK 50 cordless or hand-pump units for one-off work). Layered range, each tool sized to its job.",
+      "An EICR carried out and signed by a competent person (usually a CPS-registered contractor) in accordance with BS 7671 Part 6 / IET GN3, at the recommended frequency for the premises type, with a satisfactory or remediated outcome. Without that, the insurer's claim that the installation wasn't maintained to current standards is hard to refute.",
+      "Where an offence under HASAWA is committed by a body corporate (a limited company) and is proved to have been committed with the consent or connivance of, or attributable to neglect on the part of, a director, manager, secretary or similar officer, that individual ALSO commits the offence and is liable to personal prosecution. Relevant once you become Approved Electrician, then a senior, then potentially a director — your personal liability scales with your role.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "CAT IV adds cost for a reason — better input protection, beefier internal isolation, more conservative voltage clamps. Worth paying for if you'll be on supply-side work; the Fluke 117 is fine if you'll never go above the DB.",
   },

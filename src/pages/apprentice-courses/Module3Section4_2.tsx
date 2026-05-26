@@ -34,7 +34,12 @@ const quickCheckQuestions = [
   {
     id: 'trunking-stage',
     question: 'At which stage is trunking typically installed — First Fix or Second Fix?',
-    options: ['First Fix', 'Second Fix', 'Both stages', 'Neither stage'],
+    options: [
+      'First Fix',
+      'Second Fix',
+      'Both stages',
+      'Neither stage',
+    ],
     correctIndex: 0,
     explanation:
       'Trunking is installed during First Fix as it forms part of the cable containment infrastructure that must be in place before surfaces are finished.',
@@ -43,12 +48,12 @@ const quickCheckQuestions = [
     id: 'decoration-timing',
     question: 'Why should Second Fix only occur after decoration is complete?',
     options: [
-      'To save time',
       'To prevent damage to final fittings and finishes',
-      'To reduce costs',
-      'To meet building regulations',
+      'Enhanced protection and load management systems',
+      'Before every shift the machine is used',
+      'Different absorption and scattering at different wavelengths',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Second Fix must wait until decoration is complete to prevent damage to electrical accessories and to avoid contaminating painted surfaces during installation.',
   },
@@ -57,11 +62,11 @@ const quickCheckQuestions = [
     question: 'Name one key task in the First Fix stage.',
     options: [
       'Installing socket outlets',
-      'Running cables through containment',
-      'Fitting light switches',
       'Testing final circuits',
+      'Fitting light switches',
+      'Running cables through containment',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Running cables through floors, walls, ceilings, and containment is a key First Fix task, establishing the electrical infrastructure before surfaces are finished.',
   },
@@ -71,8 +76,13 @@ const mainQuizQuestions = [
   {
     id: 1,
     question: 'Which stage includes installing back boxes?',
-    options: ['First Fix', 'Second Fix', 'Both', 'Neither'],
-    correctAnswer: 0,
+    options: [
+      'Second Fix',
+      'First Fix',
+      'Both',
+      'Neither',
+    ],
+    correctAnswer: 1,
     explanation:
       'Back boxes are installed during First Fix as they need to be embedded in walls before plastering and decoration.',
   },
@@ -80,12 +90,12 @@ const mainQuizQuestions = [
     id: 2,
     question: 'Why is the two-stage approach used?',
     options: [
-      'To split labour costs evenly',
+      'The quality of insulation between conductors and earth',
+      'The coupling between the coils and their turns',
       'To protect final fittings and coordinate with other trades',
-      'To avoid electrical testing',
-      'To save on materials',
+      'To express feelings and needs without blaming or accusing the other person',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The two-stage approach protects final electrical fittings from damage during construction and allows proper coordination with other building trades.',
   },
@@ -100,16 +110,26 @@ const mainQuizQuestions = [
   {
     id: 4,
     question: 'Name one accessory installed during Second Fix.',
-    options: ['Back boxes', 'Conduit', 'Socket outlets', 'Cable trays'],
-    correctAnswer: 2,
+    options: [
+      'Socket outlets',
+      'Conduit',
+      'Back boxes',
+      'Cable trays',
+    ],
+    correctAnswer: 0,
     explanation:
       'Socket outlets are installed during Second Fix, along with switches, light fittings, and other accessories that complete the electrical installation.',
   },
   {
     id: 5,
     question: 'Which stage usually includes running main earthing conductors?',
-    options: ['First Fix', 'Second Fix', 'Both', 'Neither'],
-    correctAnswer: 0,
+    options: [
+      'Second Fix',
+      'First Fix',
+      'Neither',
+      'Both',
+    ],
+    correctAnswer: 1,
     explanation:
       'Main earthing conductors are installed during First Fix as part of the essential electrical infrastructure that must be in place before final connections.',
   },
@@ -119,10 +139,10 @@ const mainQuizQuestions = [
     options: [
       'To hide it completely',
       'To prevent damage from other trades',
-      'To allow cables to be run easily without damaging finished walls',
       'All of the above',
+      'To allow cables to be run easily without damaging finished walls',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'All options are correct — trunking is installed before plastering to hide it, protect it from damage, and allow easy cable installation without damaging finished surfaces.',
   },
@@ -130,12 +150,12 @@ const mainQuizQuestions = [
     id: 7,
     question: 'What document must be finalised during Second Fix for compliance?',
     options: [
-      'Building permit',
+      'The success rate rises to approximately 95%',
+      'Near-vertical lines sloping slightly',
+      'Measure downstream of suitable protection',
       'Electrical Installation Certificate',
-      'Planning permission',
-      'Fire safety certificate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Electrical Installation Certificate must be completed and signed during Second Fix to demonstrate compliance with BS 7671 and building regulations.',
   },
@@ -143,12 +163,12 @@ const mainQuizQuestions = [
     id: 8,
     question: 'Give one reason why Second Fix requires careful handling of accessories.',
     options: [
-      'They are expensive',
       'To avoid damaging walls, paintwork, or finishes',
-      'They are fragile',
-      'To save time',
+      'Every 10 years or on change of occupancy',
+      '4mA baseline allows fault detection',
+      'Apply direct pressure over the wound',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Careful handling during Second Fix is essential to avoid damaging the completed walls, paintwork, or floor finishes that have been applied since First Fix.',
   },

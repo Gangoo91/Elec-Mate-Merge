@@ -33,7 +33,12 @@ const quickCheckQuestions = [
     id: 'ways-calc',
     question:
       'A commercial building has 45 lighting circuits and 60 power circuits. With 20% spare, how many ways minimum?',
-    options: ['105 ways', '126 ways', '115 ways', '130 ways'],
+    options: [
+      '105 ways',
+      '126 ways',
+      '130 ways',
+      '115 ways',
+    ],
     correctIndex: 1,
     explanation:
       'Total circuits = 45 + 60 = 105. With 20% spare: 105 × 1.2 = 126 ways. Always round up to accommodate future expansion.',
@@ -41,15 +46,25 @@ const quickCheckQuestions = [
   {
     id: 'diversity',
     question: 'What diversity factor is typically applied to general socket outlets in offices?',
-    options: ['100%', '80%', '50%', '40%'],
-    correctIndex: 3,
+    options: [
+      '40%',
+      '50%',
+      '80%',
+      '100%',
+    ],
+    correctIndex: 0,
     explanation:
       'Office socket outlets typically use 40% diversity (0.4) as not all sockets are used simultaneously. First 10A at 100%, remainder at 40% per BS 7671 guidance.',
   },
   {
     id: 'labelling',
     question: 'Which BS 7671 Regulation requires circuit identification at distribution boards?',
-    options: ['Regulation 411', 'Regulation 514.9', 'Regulation 537', 'Regulation 611'],
+    options: [
+      'Regulation 411',
+      'Regulation 514.9',
+      'Regulation 537',
+      'Regulation 611',
+    ],
     correctIndex: 1,
     explanation:
       'Regulation 514.9 requires durable labels identifying each circuit. Labels must be legible, suitably positioned and durable for the expected life of the installation.',
@@ -57,8 +72,13 @@ const quickCheckQuestions = [
   {
     id: 'access',
     question: 'What is the minimum mounting height for distribution boards in general areas?',
-    options: ['300mm', '450mm', '1000mm', '1400mm'],
-    correctIndex: 1,
+    options: [
+      '300mm',
+      '1400mm',
+      '1000mm',
+      '450mm',
+    ],
+    correctIndex: 3,
     explanation:
       'DBs should be mounted with operating handles between 450mm and 1200mm from floor level for accessibility. The 450mm minimum prevents difficult low-level operation.',
   },
@@ -69,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary function of a distribution board?',
     options: [
-      'To generate electrical power',
+      'Potentially dangerous - urgent remedial action required',
       'To distribute power to final circuits with individual protection',
-      'To transform voltage levels',
-      'To measure energy consumption',
+      'To reduce touch voltage between simultaneously accessible conductive parts',
+      'Industrial distribution boards, motor circuits and commercial switchgear',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,12 +103,12 @@ const quizQuestions = [
     question:
       'When calculating ways for a three-phase board, how are single-phase circuits counted?',
     options: [
-      'Each counts as 3 ways',
+      'To minimise neutral current and prevent overloading',
+      'When dead testing is not practicable',
       'Each counts as 1 way on its allocated phase',
-      'Single-phase not permitted on 3-phase boards',
-      'Each counts as 1.5 ways',
+      'Drawings showing what was actually installed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Single-phase circuits occupy 1 way on their allocated phase. A three-phase board with 12 ways per phase provides 36 single-pole ways total, which must be balanced across phases.',
   },
@@ -96,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: 'What should be labelled according to Regulation 514.9.1?',
     options: [
-      'Circuit reference and nominal current only',
-      'Cable size and length',
+      'A goal focused on the type of person you want to become',
+      'Checking common failure points before rare ones',
+      'Prosecute employees who refuse to lift',
       'Type of circuit, circuit reference and RCD info',
-      'Manufacturer details only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Labels must identify the circuit reference (number/name), type of wiring, nominal current rating, and which RCD protects each circuit. This enables safe isolation and maintenance.',
   },
@@ -109,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: 'Why is phase balancing important in three-phase distribution boards?',
     options: [
-      'It is only required for aesthetic reasons',
       'To minimise neutral current and prevent overloading',
-      'Phase balancing is optional',
-      'To reduce installation time',
+      'Keep communications cables separate from mains power cables',
+      'Legal requirement and proof of compliance',
+      'Non-combustible material or metal enclosure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Unbalanced phases cause neutral current flow, potentially overloading the neutral conductor. Good balance keeps neutral current low and ensures equal loading of supply phases.',
   },
@@ -122,12 +142,12 @@ const quizQuestions = [
     id: 5,
     question: 'What diversity factor applies to cooking appliances in commercial kitchens?',
     options: [
-      '100% of all appliances',
       'First 10A at 100%, 30% remainder',
       '75% of connected load',
       '50% of all appliances',
+      '100% of all appliances',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Commercial cooking diversity varies by application, but typically 75-80% of connected load is used as kitchen equipment operates simultaneously during service periods.',
   },
@@ -135,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of cable entry arrangements in distribution boards?',
     options: [
-      'Only for appearance',
+      'Environmental conditions and temperature',
+      '"Safety Electrical Connection — Do Not Remove"',
       'To maintain IP rating and prevent vermin ingress',
-      'To reduce cost',
-      'Cable entries are optional',
+      'Show sizes, support spacing, and load capacity information',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Proper cable entry (glands, grommets, blanking plates) maintains the enclosure IP rating, prevents rodent/insect ingress, and ensures mechanical protection of cables at entry points.',
   },
@@ -148,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'When must RCD protection be provided at distribution boards?',
     options: [
-      'Only for outdoor circuits',
+      'Average performance over a heating season',
+      'Specific training in fire alarm systems to BS 5839',
+      'Access restrictions and conservation requirements',
       'For all socket outlets up to 32A in most locations',
-      'RCD protection is optional',
-      'Only for lighting circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 requires 30mA RCD protection for socket outlets up to 32A intended for general use, mobile equipment outdoors, and cables installed in walls without earthed protection.',
   },
@@ -161,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'What spacing is typically required between adjacent distribution boards?',
     options: [
-      'No spacing required',
-      '100mm minimum',
       '300mm minimum for ventilation',
-      '500mm mandatory',
+      '50% of rated residual current',
+      'Torque decreases as flux weakens',
+      'Safety for emergency responders',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       '300mm spacing between boards aids heat dissipation and provides working space for cable installation. Manufacturers specify minimum spacings for thermal management.',
   },
@@ -174,8 +194,13 @@ const quizQuestions = [
     id: 9,
     question:
       'Which IP rating is typically required for distribution boards in a bathroom outside zones?',
-    options: ['IP2X', 'IP4X', 'IP44', 'IP65'],
-    correctIndex: 2,
+    options: [
+      'IP65',
+      'IP44',
+      'IP2X',
+      'IP4X',
+    ],
+    correctIndex: 1,
     explanation:
       'Outside bathroom zones 0, 1 and 2, equipment should be at least IPX1 for splash protection. IP44 is commonly specified for bathrooms to protect against splashing water.',
   },
@@ -183,10 +208,10 @@ const quizQuestions = [
     id: 10,
     question: 'What information must be displayed at the origin of an installation?',
     options: [
-      "Only the installer's name",
-      'Electrical Installation Certificate reference',
+      'To prevent overcrowding, damage, and theft',
+      'The British Standards Institution (BSI)',
       'Maximum demand, earthing type, and nominal voltage',
-      'Cable manufacturer details',
+      'At least 1.6 times the downstream fuse rating',
     ],
     correctAnswer: 2,
     explanation:

@@ -41,9 +41,9 @@ const quickCheckQuestions = [
     question: 'In PWM (Pulse Width Modulation) technology, how is the output voltage controlled?',
     options: [
       'By varying the amplitude of the DC bus voltage',
-      'By changing the switching frequency of the inverter',
-      'By varying the width of voltage pulses at a fixed DC bus voltage',
       'By using a variable transformer at the output',
+      'By varying the width of voltage pulses at a fixed DC bus voltage',
+      'By changing the switching frequency of the inverter',
     ],
     correctIndex: 2,
     explanation:
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'vf-ratio',
     question: 'Why must the V/f ratio be maintained constant in standard VSD operation?',
     options: [
-      'To prevent the motor from overheating',
+      'To accommodate the expansion of water as it heats up, maintaining safe system pressure',
+      'All of the above may apply depending on requirements',
+      'The site manager, recorded in the accident/incident book and used to update the RA',
       'To maintain constant magnetic flux and thus constant torque capability',
-      'To reduce harmonic distortion',
-      'To comply with EMC regulations',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Motor flux is proportional to V/f. Maintaining constant V/f ensures constant flux, which maintains the motor's torque-producing capability across the speed range. Reducing voltage without reducing frequency would cause flux collapse and loss of torque.",
   },
@@ -67,12 +67,12 @@ const quickCheckQuestions = [
     question:
       'According to the fan affinity laws, if fan speed is reduced to 50%, what is the power consumption?',
     options: [
+      '75% of full speed power',
+      '12.5% of full speed power',
       '50% of full speed power',
       '25% of full speed power',
-      '12.5% of full speed power',
-      '75% of full speed power',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Power varies with the cube of speed (P proportional to N cubed). At 50% speed: Power = 0.5 cubed = 0.125 = 12.5%. This cubic relationship is why VSDs offer such dramatic energy savings on variable-torque loads like fans and pumps.',
   },
@@ -95,8 +95,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the typical DC bus voltage in a VSD supplied from 400V three-phase?',
-    options: ['400V DC', 'About 565V DC', '230V DC', 'About 325V DC'],
-    correctAnswer: 1,
+    options: [
+      '230V DC',
+      '400V DC',
+      'About 565V DC',
+      'About 325V DC',
+    ],
+    correctAnswer: 2,
     explanation:
       'The DC bus voltage equals peak line voltage: Vdc = Vline x root(2) = 400 x 1.414 = approximately 565V DC. This is higher than the RMS supply voltage because the rectifier charges capacitors to the peak value.',
   },
@@ -104,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the relationship between motor synchronous speed and supply frequency?',
     options: [
-      'Speed = 120 x f / p (where p = pole pairs)',
       'Speed = 60 x f / p (where p = number of poles)',
-      'Speed = 120 x f / p (where p = number of poles)',
+      'Speed = 120 x f / p (where p = pole pairs)',
       'Speed = f x p / 120',
+      'Speed = 120 x f / p (where p = number of poles)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Synchronous speed Ns = 120f/p where f = frequency (Hz) and p = number of poles. A 4-pole motor at 50Hz: Ns = 120 x 50 / 4 = 1500 rpm. At 25Hz: Ns = 750 rpm.',
   },
@@ -118,12 +123,12 @@ const quizQuestions = [
     question:
       'What happens to motor torque capability if frequency is increased above base frequency whilst maintaining rated voltage?',
     options: [
-      'Torque increases proportionally',
-      'Torque remains constant',
       'Torque decreases as flux weakens',
-      'Torque doubles',
+      'Delegate them if possible',
+      'Pushing a loaded trolley along a corridor',
+      'Voltage and current are in phase',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Above base frequency, voltage cannot increase (limited by supply), so V/f ratio decreases, flux weakens, and torque capability reduces. This is the 'constant power' or 'field weakening' region where the motor can maintain power but not torque.",
   },
@@ -132,10 +137,10 @@ const quizQuestions = [
     question:
       'What is the main advantage of vector control (flux vector/field-oriented control) over V/f control?',
     options: [
-      'Lower cost implementation',
+      'An IGBT-based rectifier that can regenerate power and reduce harmonics',
       'Better speed and torque control, especially at low speeds and under varying loads',
-      'Reduced harmonic distortion',
-      'Higher maximum speed capability',
+      'Use screened/shielded cables with 360-degree termination at both ends',
+      'To reduce harmonic currents and protect against supply transients',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,7 +150,12 @@ const quizQuestions = [
     id: 6,
     question:
       'A centrifugal pump operates at variable flow using a VSD. At 70% speed, what is the approximate power consumption?',
-    options: ['70% of full power', '49% of full power', '34% of full power', '24.5% of full power'],
+    options: [
+      '70% of full power',
+      '49% of full power',
+      '34% of full power',
+      '24.5% of full power',
+    ],
     correctAnswer: 2,
     explanation:
       'For centrifugal pumps (variable torque loads), power varies with speed cubed: P = 0.7 cubed = 0.343 = approximately 34%. This dramatic reduction compared to throttling valves (which waste energy) makes VSDs highly efficient for pump control.',
@@ -156,10 +166,10 @@ const quizQuestions = [
     options: [
       '2nd, 4th, 6th harmonics',
       '3rd, 9th, 15th harmonics',
-      '5th, 7th, 11th, 13th harmonics',
       'All odd harmonics equally',
+      '5th, 7th, 11th, 13th harmonics',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       '6-pulse rectifiers generate harmonics of order h = 6k plus/minus 1 where k = 1, 2, 3... This gives 5th, 7th, 11th, 13th, etc. The 5th and 7th are typically the largest, with magnitudes inversely proportional to harmonic order.',
   },
@@ -167,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the purpose of a line reactor (choke) fitted at the VSD input?',
     options: [
-      'To boost the input voltage',
       'To reduce harmonic currents and protect against supply transients',
-      'To improve motor efficiency',
-      'To provide regenerative braking',
+      'Better speed and torque control, especially at low speeds and under varying loads',
+      'Speed = 120 x f / p (where p = number of poles)',
+      'An IGBT-based rectifier that can regenerate power and reduce harmonics',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Input line reactors (typically 3-5% impedance) reduce harmonic current distortion by smoothing current peaks, protect the rectifier from supply voltage spikes and transients, and reduce DC bus ripple - improving both power quality and drive reliability.',
   },
@@ -180,12 +190,12 @@ const quizQuestions = [
     id: 9,
     question: 'What EMC precaution is essential when installing VSD cables?',
     options: [
-      'Use the longest cable route possible',
-      'Run motor cables parallel to data cables',
+      'Better speed and torque control, especially at low speeds and under varying loads',
       'Use screened/shielded cables with 360-degree termination at both ends',
-      'Avoid using cable trays',
+      'Motor cooling capability - fan-cooled motors lose cooling at low speeds',
+      'To reduce harmonic currents and protect against supply transients',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'VSD output cables carry high-frequency PWM switching waveforms that radiate EMI. Screened cables with proper 360-degree gland terminations at both drive and motor ends contain the emissions, preventing interference with sensitive equipment and ensuring EMC compliance.',
   },
@@ -193,7 +203,12 @@ const quizQuestions = [
     id: 10,
     question:
       'What is the typical Total Harmonic Distortion (THDi) of a standard 6-pulse VSD without filtering?',
-    options: ['Less than 5%', '5-10%', '30-40%', '80-100%'],
+    options: [
+      'Less than 5%',
+      '5-10%',
+      '30-40%',
+      '80-100%',
+    ],
     correctAnswer: 2,
     explanation:
       'Standard 6-pulse VSDs typically produce 30-40% THDi at full load, potentially higher at part load. This can cause transformer heating, neutral conductor overload, and interference with other equipment - hence the need for harmonic mitigation on larger installations.',
@@ -203,12 +218,12 @@ const quizQuestions = [
     question:
       'What determines the minimum speed at which a motor can operate continuously when driven by a VSD?',
     options: [
-      "The VSD's minimum frequency setting",
+      'Better speed and torque control, especially at low speeds and under varying loads',
+      'Use screened/shielded cables with 360-degree termination at both ends',
+      'To reduce harmonic currents and protect against supply transients',
       'Motor cooling capability - fan-cooled motors lose cooling at low speeds',
-      'The supply voltage',
-      'The DC bus capacitor size',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Self-cooled (IC411) motors have shaft-mounted fans whose airflow reduces with speed. Below typically 20-30% speed, cooling may be inadequate for continuous full-torque operation. Solutions include force-ventilated motors (IC416), derating, or inverter-duty motors designed for extended speed range.',
   },
@@ -217,12 +232,12 @@ const quizQuestions = [
     question:
       'For an HVAC supply fan motor rated 15kW, what VSD rating would typically be selected?',
     options: [
-      'Exactly 15kW',
       '15kW or the next size up (typically 18.5kW)',
-      '7.5kW due to energy savings',
-      '30kW for safety margin',
+      'Concrete and sandstone (containing silica)',
+      'The CPC has a smaller CSA than the live conductors',
+      'Turn off all lights in the system',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'VSDs are selected to match or slightly exceed motor kW rating. For a 15kW motor, a 15kW drive is suitable, though selecting 18.5kW provides margin for motor overloads and future-proofing. Over-sizing beyond this wastes capital cost without benefit.',
   },
@@ -230,10 +245,10 @@ const quizQuestions = [
     id: 13,
     question: 'What is an Active Front End (AFE) in VSD technology?',
     options: [
-      'A user interface panel',
+      'To reduce harmonic currents and protect against supply transients',
       'An IGBT-based rectifier that can regenerate power and reduce harmonics',
-      'A motor protection relay',
-      'An output filter',
+      'Use screened/shielded cables with 360-degree termination at both ends',
+      'Better speed and torque control, especially at low speeds and under varying loads',
     ],
     correctAnswer: 1,
     explanation:
@@ -243,7 +258,12 @@ const quizQuestions = [
     id: 14,
     question:
       'What is the typical carrier frequency (switching frequency) range for IGBT inverters in VSDs?',
-    options: ['50-60 Hz', '1-4 kHz', '2-16 kHz', '50-100 kHz'],
+    options: [
+      '50-60 Hz',
+      '1-4 kHz',
+      '2-16 kHz',
+      '50-100 kHz',
+    ],
     correctAnswer: 2,
     explanation:
       'Modern IGBT inverters typically switch at 2-16 kHz. Higher frequencies produce smoother motor current and quieter operation but increase inverter losses and motor insulation stress. 4-8 kHz is common for HVAC applications, balancing efficiency and motor heating.',

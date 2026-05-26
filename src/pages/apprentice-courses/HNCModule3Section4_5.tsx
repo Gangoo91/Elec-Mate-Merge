@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'voltage-drop-limit-power',
     question: 'What is the maximum permitted voltage drop for power circuits under BS 7671?',
     options: [
-      '3% of supply voltage',
       '4% of supply voltage',
-      '5% of supply voltage',
       '6% of supply voltage',
+      '3% of supply voltage',
+      '5% of supply voltage',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'BS 7671 permits a maximum voltage drop of 5% for power circuits (20V at 400V three-phase, or 11.5V at 230V single-phase). Lighting circuits are limited to 3%.',
   },
@@ -46,9 +46,9 @@ const quickCheckQuestions = [
     id: 'three-phase-vd-formula',
     question: 'Which formula calculates voltage drop in a three-phase circuit using mV/A/m values?',
     options: [
-      'Vd = mV/A/m × I × L × 2',
-      'Vd = mV/A/m × I × L / 1000',
       'Vd = mV/A/m × I × L × √3',
+      'Vd = mV/A/m × I × L / 1000',
+      'Vd = mV/A/m × I × L × 2',
       'Vd = mV/A/m × I × L × 1.732 / 1000',
     ],
     correctIndex: 1,
@@ -59,8 +59,13 @@ const quickCheckQuestions = [
     id: 'derating-grouping',
     question:
       'When 6 circuits are grouped together in trunking, what is the typical correction factor (Cg)?',
-    options: ['0.52', '0.57', '0.70', '0.80'],
-    correctIndex: 2,
+    options: [
+      '0.52',
+      '0.57',
+      '0.80',
+      '0.70',
+    ],
+    correctIndex: 3,
     explanation:
       "For 6 circuits grouped together, Cg ≈ 0.70 (from BS 7671 Table 4C1). This reduces the cable's current-carrying capacity to 70% due to mutual heating between cables.",
   },
@@ -68,8 +73,8 @@ const quickCheckQuestions = [
     id: 'armoured-cable-use',
     question: 'What is the primary purpose of steel wire armour (SWA) on a cable?',
     options: [
-      'Improved current capacity',
       'Electromagnetic shielding',
+      'Improved current capacity',
       'Mechanical protection',
       'Reduced voltage drop',
     ],
@@ -84,7 +89,12 @@ const quizQuestions = [
     id: 1,
     question:
       'A 22kW three-phase motor operates at 400V with 0.85 power factor. What is the design current (Ib)?',
-    options: ['31.8A', '37.4A', '55A', '64.7A'],
+    options: [
+      '31.8A',
+      '37.4A',
+      '55A',
+      '64.7A',
+    ],
     correctAnswer: 1,
     explanation:
       'Using Ib = P / (√3 × VL × cosφ) = 22000 / (1.732 × 400 × 0.85) = 22000 / 588.9 = 37.4A',
@@ -93,7 +103,12 @@ const quizQuestions = [
     id: 2,
     question:
       'A 35mm² copper cable has a mV/A/m value of 1.25. What is the voltage drop over 80m carrying 100A (three-phase)?',
-    options: ['5V', '8.66V', '10V', '17.32V'],
+    options: [
+      '17.32V',
+      '5V',
+      '10V',
+      '8.66V',
+    ],
     correctAnswer: 2,
     explanation:
       'Vd = (mV/A/m × I × L) / 1000 = (1.25 × 100 × 80) / 1000 = 10V. This is 2.5% of 400V - acceptable.',
@@ -102,8 +117,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Which BS 7671 table provides mV/A/m values for armoured cables with copper conductors?',
-    options: ['Table 4D1A', 'Table 4D2A', 'Table 4D4A', 'Table 4E4A'],
-    correctAnswer: 2,
+    options: [
+      'Table 4D2A',
+      'Table 4D1A',
+      'Table 4E4A',
+      'Table 4D4A',
+    ],
+    correctAnswer: 3,
     explanation:
       'Table 4D4A covers armoured 90°C thermosetting cables (XLPE/SWA). Table 4D2A is for thermoplastic (PVC) armoured cables.',
   },
@@ -111,8 +131,13 @@ const quizQuestions = [
     id: 4,
     question:
       'A cable route passes through 50mm of thermal insulation on one side. What correction factor applies?',
-    options: ['0.55', '0.70', '0.81', '1.0'],
-    correctIndex: 2,
+    options: [
+      '0.81',
+      '0.55',
+      '0.70',
+      '1.0',
+    ],
+    correctIndex: 0,
     explanation:
       'For 50mm contact with thermally insulating material on one side, the correction factor (Ci) is approximately 0.81 (BS 7671 Table 4A2). Greater insulation thickness requires lower factors.',
   },
@@ -120,8 +145,13 @@ const quizQuestions = [
     id: 5,
     question:
       'What ambient temperature correction factor (Ca) applies for 35°C when the cable is rated at 30°C?',
-    options: ['0.94', '0.91', '0.87', '0.79'],
-    correctAnswer: 0,
+    options: [
+      '0.91',
+      '0.94',
+      '0.79',
+      '0.87',
+    ],
+    correctAnswer: 1,
     explanation:
       'From BS 7671 Table 4B1, for 35°C ambient with 70°C PVC cable rated at 30°C reference, Ca = 0.94. Higher ambients require greater derating.',
   },
@@ -129,8 +159,13 @@ const quizQuestions = [
     id: 6,
     question:
       'A submain must supply 150A over 45m. What is the maximum acceptable mV/A/m for a 5% voltage drop limit?',
-    options: ['1.48 mV/A/m', '2.96 mV/A/m', '4.44 mV/A/m', '6.67 mV/A/m'],
-    correctAnswer: 1,
+    options: [
+      '1.48 mV/A/m',
+      '4.44 mV/A/m',
+      '2.96 mV/A/m',
+      '6.67 mV/A/m',
+    ],
+    correctAnswer: 2,
     explanation:
       'Maximum Vd = 400V × 5% = 20V. Rearranging: mV/A/m = (Vd × 1000) / (I × L) = (20 × 1000) / (150 × 45) = 2.96 mV/A/m',
   },
@@ -139,11 +174,11 @@ const quizQuestions = [
     question: 'When is the √3 factor used in three-phase voltage drop calculations?',
     options: [
       'Always, for all three-phase calculations',
-      'Only when using ohms/metre resistance values, not mV/A/m',
-      'Only for line-to-neutral calculations',
       "Never - it's built into all three-phase tables",
+      'Only for line-to-neutral calculations',
+      'Only when using ohms/metre resistance values, not mV/A/m',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The √3 factor is only needed when calculating from R (Ω/m) values. BS 7671 mV/A/m values already incorporate the three-phase geometry factor.',
   },
@@ -151,7 +186,12 @@ const quizQuestions = [
     id: 8,
     question:
       'A motor circuit has 6m from the origin to the distribution board (3% drop) and 25m from the board to the motor. What drop is permitted in the final section?',
-    options: ['2%', '5%', '3%', '8%'],
+    options: [
+      '2%',
+      '3%',
+      '8%',
+      '5%',
+    ],
     correctAnswer: 0,
     explanation:
       'Total permitted = 5%. Already used = 3%. Remaining = 5% - 3% = 2% for the final circuit. This is a common design constraint in large installations.',
@@ -160,8 +200,13 @@ const quizQuestions = [
     id: 9,
     question:
       'What is the minimum CSA of aluminium conductor permitted for general use under BS 7671?',
-    options: ['6mm²', '10mm²', '16mm²', '25mm²'],
-    correctAnswer: 2,
+    options: [
+      '6mm²',
+      '16mm²',
+      '10mm²',
+      '25mm²',
+    ],
+    correctAnswer: 1,
     explanation:
       "BS 7671 Regulation 524.1 requires aluminium conductors to be 16mm² minimum (except for certain specific applications). This accounts for aluminium's lower conductivity and termination requirements.",
   },

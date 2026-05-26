@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'db-scale',
     question: 'Why is the decibel scale logarithmic rather than linear?',
     options: [
-      'It makes calculations simpler',
       'Sound pressure levels vary over a huge range (1:10 million)',
-      'It matches digital audio formats',
-      'It was invented before calculators',
+      'Better protection and flexibility for changes',
+      'High humidity typically reduces insulation resistance',
+      'Fire protection linings behind heaters, boilers and in fire surrounds',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Human hearing responds to sound pressures from 20 μPa to 200 Pa - a range of 10 million:1. The logarithmic dB scale compresses this to a manageable 0-140 dB range.',
   },
@@ -48,8 +48,8 @@ const quickCheckQuestions = [
     options: [
       '2 Hz to 200 Hz',
       '20 Hz to 20,000 Hz',
-      '200 Hz to 2,000 Hz',
       '2,000 Hz to 200,000 Hz',
+      '200 Hz to 2,000 Hz',
     ],
     correctIndex: 1,
     explanation:
@@ -58,8 +58,13 @@ const quickCheckQuestions = [
   {
     id: 'db-addition',
     question: 'If two identical sound sources each produce 60 dB, what is the combined level?',
-    options: ['60 dB', '63 dB', '90 dB', '120 dB'],
-    correctIndex: 1,
+    options: [
+      '60 dB',
+      '90 dB',
+      '63 dB',
+      '120 dB',
+    ],
+    correctIndex: 2,
     explanation:
       'Doubling sound power adds 3 dB. Two identical sources (60 + 60 dB) = 63 dB, not 120 dB. Decibels add logarithmically, not arithmetically.',
   },
@@ -67,7 +72,12 @@ const quickCheckQuestions = [
     id: 'inverse-square',
     question:
       'According to the inverse square law, if you double your distance from a point source, the sound level:',
-    options: ['Decreases by 3 dB', 'Decreases by 6 dB', 'Decreases by 10 dB', 'Halves'],
+    options: [
+      'Decreases by 3 dB',
+      'Decreases by 6 dB',
+      'Decreases by 10 dB',
+      'Halves',
+    ],
     correctIndex: 1,
     explanation:
       'The inverse square law states sound intensity drops as 1/r². Doubling distance quarters intensity, which equals a 6 dB reduction (10 log 0.25 = -6 dB).',
@@ -91,32 +101,52 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the speed of sound in air at 20°C?',
-    options: ['140 m/s', '343 m/s', '1500 m/s', '3000 m/s'],
-    correctAnswer: 1,
+    options: [
+      '1500 m/s',
+      '140 m/s',
+      '343 m/s',
+      '3000 m/s',
+    ],
+    correctAnswer: 2,
     explanation:
       'Sound travels at approximately 343 m/s in air at 20°C. Speed increases with temperature (roughly 0.6 m/s per °C) and varies significantly in other media (1500 m/s in water, 5000 m/s in steel).',
   },
   {
     id: 3,
     question: 'Calculate the wavelength of a 500 Hz tone in air (c = 340 m/s).',
-    options: ['0.34 m', '0.68 m', '1.47 m', '170 m'],
-    correctAnswer: 1,
+    options: [
+      '1.47 m',
+      '0.34 m',
+      '170 m',
+      '0.68 m',
+    ],
+    correctAnswer: 3,
     explanation:
       'Using λ = c/f: wavelength = 340/500 = 0.68 m. Low frequencies have long wavelengths (difficult to block), high frequencies have short wavelengths (easier to attenuate).',
   },
   {
     id: 4,
     question: 'What is the reference sound pressure for 0 dB SPL?',
-    options: ['1 Pa', '20 Pa', '20 μPa', '1 μPa'],
-    correctAnswer: 2,
+    options: [
+      '20 μPa',
+      '20 Pa',
+      '1 Pa',
+      '1 μPa',
+    ],
+    correctAnswer: 0,
     explanation:
       '0 dB SPL is referenced to 20 μPa (20 × 10⁻⁶ Pa), which is approximately the threshold of human hearing at 1 kHz. This is an extremely small pressure.',
   },
   {
     id: 5,
     question: 'Convert a sound pressure level of 94 dB to Pascals, given that 94 dB = 1 Pa.',
-    options: ['0.002 Pa', '0.02 Pa', '1 Pa', '2 Pa'],
-    correctAnswer: 2,
+    options: [
+      '0.02 Pa',
+      '1 Pa',
+      '2 Pa',
+      '0.002 Pa',
+    ],
+    correctAnswer: 1,
     explanation:
       '94 dB SPL corresponds to exactly 1 Pascal sound pressure. This is a useful reference point: SPL = 20 log(p/20μPa), so 20 log(1/0.00002) = 20 log(50000) = 94 dB.',
   },
@@ -124,7 +154,12 @@ const quizQuestions = [
     id: 6,
     question:
       'Three machines produce 70 dB, 73 dB, and 75 dB respectively. What is the approximate combined level?',
-    options: ['72.5 dB', '75 dB', '77 dB', '218 dB'],
+    options: [
+      '72.5 dB',
+      '75 dB',
+      '77 dB',
+      '218 dB',
+    ],
     correctAnswer: 2,
     explanation:
       'Add logarithmically: start with highest (75 dB), add 73 dB (+1.8 dB) = 76.8, add 70 dB (+1.0 dB) ≈ 77.8 dB. The combined level is dominated by the loudest sources.',
@@ -133,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'What does the dB(A) weighting represent?',
     options: [
-      'Peak sound level',
-      'Average sound level',
+      'The maximum settable current rating and breaking capacity range',
+      'Tabular format with columns and rows',
+      'Is not discoverable through reasonable inspection at handover',
       'Frequency weighting matching human ear sensitivity',
-      'The maximum allowable exposure',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A-weighting adjusts measured levels to match the frequency response of human hearing, which is less sensitive to low and very high frequencies. dB(A) is standard for environmental noise.',
   },
@@ -146,8 +181,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A sound source produces 80 dB at 1m. What level would you expect at 4m in a free field?',
-    options: ['74 dB', '72 dB', '68 dB', '60 dB'],
-    correctAnswer: 2,
+    options: [
+      '68 dB',
+      '60 dB',
+      '74 dB',
+      '72 dB',
+    ],
+    correctAnswer: 0,
     explanation:
       'Using the inverse square law: doubling distance reduces level by 6 dB. 1m→2m = 74 dB, 2m→4m = 68 dB. Each doubling of distance gives another 6 dB reduction.',
   },
@@ -156,10 +196,10 @@ const quizQuestions = [
     question:
       'What is the relationship between sound power level (Lw) and sound pressure level (Lp)?',
     options: [
-      'They are identical',
+      'Achieve minimum energy efficiency standards',
       'Lp depends on distance from source; Lw does not',
-      'Lw depends on distance from source; Lp does not',
-      'Both depend equally on distance',
+      'Usually significantly less than 100A due to diversity',
+      'Temperature sensing accuracy and communication protocols',
     ],
     correctAnswer: 1,
     explanation:
@@ -168,7 +208,12 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What is a typical background noise level for an open plan office?',
-    options: ['25-30 dB(A)', '35-40 dB(A)', '45-50 dB(A)', '55-60 dB(A)'],
+    options: [
+      '25-30 dB(A)',
+      '35-40 dB(A)',
+      '45-50 dB(A)',
+      '55-60 dB(A)',
+    ],
     correctAnswer: 2,
     explanation:
       'CIBSE Guide A recommends 45-50 dB(A) for open plan offices. This provides speech privacy and masks distracting noises while still allowing communication.',
@@ -177,8 +222,13 @@ const quizQuestions = [
     id: 11,
     question:
       'What is the sound intensity at 2m from a 1W omnidirectional point source in a free field?',
-    options: ['0.02 W/m²', '0.04 W/m²', '0.08 W/m²', '0.25 W/m²'],
-    correctAnswer: 0,
+    options: [
+      '0.25 W/m²',
+      '0.04 W/m²',
+      '0.08 W/m²',
+      '0.02 W/m²',
+    ],
+    correctAnswer: 3,
     explanation:
       'I = W / (4πr²) = 1 / (4π × 4) = 1 / 50.3 ≈ 0.02 W/m². Sound intensity follows the inverse square law for point sources.',
   },
@@ -186,12 +236,12 @@ const quizQuestions = [
     id: 12,
     question: 'Why are low frequency sounds (bass) harder to control in buildings?',
     options: [
-      'They carry more energy',
       'They have long wavelengths relative to construction thicknesses',
-      'They are louder',
-      'They travel faster',
+      'RCD protection with rated residual current not exceeding 30mA',
+      'Moisture, damaged insulation, or contamination',
+      'Maintains constant head across the system, matching pump speed to demand',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Low frequencies have long wavelengths (e.g., 100 Hz = 3.4m). Barriers and absorbers need to be comparable to the wavelength to be effective, making low frequency control challenging.',
   },

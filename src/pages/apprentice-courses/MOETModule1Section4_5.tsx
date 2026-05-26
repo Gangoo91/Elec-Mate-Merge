@@ -16,12 +16,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following items of equipment used by an electrical maintenance technician is subject to LOLER?',
     options: [
-      'A voltage indicator',
+      'Wild birds, certain wild animals and plants, and their habitats',
+      'The order in which the three phases reach their peak values',
       'A mobile elevating work platform (MEWP) used to access high-level cable tray',
-      'A multifunction tester',
-      'An insulated screwdriver',
+      'Risk Assessments and Method Statements (RAMS), Electrical Installation Certificate (EIC)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A MEWP is lifting equipment used for lifting persons — it is subject to LOLER. Voltage indicators, MFTs and screwdrivers are work equipment subject to PUWER, but they are not lifting equipment. LOLER applies to equipment used for lifting or lowering loads (including persons).',
   },
@@ -29,8 +29,13 @@ const quickCheckQuestions = [
     id: 'loler-thorough-exam',
     question:
       'How often must lifting equipment used for lifting persons (such as a MEWP) undergo a thorough examination under LOLER?',
-    options: ['Every 3 months', 'Every 6 months', 'Every 12 months', 'Every 24 months'],
-    correctIndex: 1,
+    options: [
+      'Every 6 months',
+      'Every 3 months',
+      'Every 12 months',
+      'Every 24 months',
+    ],
+    correctIndex: 0,
     explanation:
       'Under LOLER Regulation 9, lifting equipment used for lifting persons must undergo a thorough examination by a competent person at least every 6 months. Other lifting equipment (not used for lifting persons) requires thorough examination at least every 12 months. More frequent examinations may be required based on risk assessment.',
   },
@@ -38,12 +43,12 @@ const quickCheckQuestions = [
     id: 'loler-planning',
     question: 'Regulation 8 of LOLER requires that every lifting operation shall be:',
     options: [
-      'Completed as quickly as possible',
+      'Keep it available for inspection by anyone who may need it for future construction work on the structure',
+      'Whether the receiver understood the message and can act on it correctly',
+      'Ensuring the space is adequately isolated from all connected services, pipelines, and energy sources before entry',
       'Properly planned by a competent person, appropriately supervised and carried out in a safe manner',
-      'Authorised by the building owner',
-      'Recorded on video',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Regulation 8 requires every lifting operation to be properly planned by a competent person, appropriately supervised, and carried out in a safe manner. The plan must address the risks specific to the lift, the equipment to be used, the load weight and centre of gravity, the ground conditions, and the environmental factors.',
   },
@@ -52,12 +57,12 @@ const quickCheckQuestions = [
     question:
       'Under Regulation 11 of LOLER, if a thorough examination reveals a defect that involves an existing or imminent risk of serious personal injury, the competent person must:',
     options: [
-      'Inform the employer verbally within 7 days',
       'Send a report to the HSE (or relevant enforcing authority) as soon as practicable',
-      'Record the defect in the maintenance log only',
-      'Allow continued use with additional precautions',
+      'To document final status, lessons learned, and formally close the project',
+      'A rectangle with a line through it (or a rectangular block symbol)',
+      'Close the day: review completed work, capture loose ends, preview tomorrow',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Regulation 11 requires the competent person carrying out the thorough examination to notify the relevant enforcing authority (usually the HSE) as soon as is practicable if they find a defect that involves an existing or imminent risk of serious personal injury. The equipment must not be used until the defect is remedied.',
   },
@@ -81,12 +86,12 @@ const quizQuestions = [
     id: 2,
     question: "The definition of 'lifting equipment' under LOLER includes:",
     options: [
-      'Only cranes and hoists',
+      'Made by the competent person and contain specified information including any defects found and the next examination date',
+      'Measures must be taken to prevent persons being crushed, trapped, struck, or falling from the carrier',
       'Work equipment for lifting or lowering loads, including accessories used for attaching loads to machinery',
-      'Only equipment with a safe working load greater than 1 tonne',
-      'Only equipment operated by hydraulic power',
+      'Have a current thorough examination report (within 6 months), be operated by a trained person, and the lift must be planned',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'LOLER defines lifting equipment broadly as work equipment for lifting or lowering loads, including the load and anything attached for that purpose. This covers cranes, hoists, chain blocks, MEWPs, scissor lifts, gin wheels, cable pulling winches, lifting slings, shackles, and eyebolts.',
   },
@@ -94,12 +99,12 @@ const quizQuestions = [
     id: 3,
     question: 'Regulation 4 of LOLER requires that lifting equipment shall be of adequate:',
     options: [
-      'Colour and visibility',
+      'Health and Safety Executive (HSE)',
+      'Reduced carbon emissions and greenhouse gases',
+      'GHS06 — Acute Toxicity (severe)',
       'Strength and stability for each load',
-      'Insurance cover',
-      'Age — less than 10 years old',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 4 requires lifting equipment to be of adequate strength and stability for each load, having regard in particular to the stress induced at its mounting or fixing point. This means the equipment and its supporting structure must be capable of withstanding the loads imposed during lifting operations.',
   },
@@ -108,12 +113,12 @@ const quizQuestions = [
     question:
       'Regulation 5 of LOLER provides additional requirements for lifting equipment used for lifting persons. Which of the following is required?',
     options: [
-      'The equipment must be painted bright yellow',
       'Measures must be taken to prevent persons being crushed, trapped, struck, or falling from the carrier',
-      'A first aider must be present at all times',
-      'The equipment must have GPS tracking',
+      'Its safe working load (SWL) — and where the SWL depends on the configuration, the SWL for each configuration',
+      'Have a current thorough examination report (within 6 months), be operated by a trained person, and the lift must be planned',
+      'Made by the competent person and contain specified information including any defects found and the next examination date',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 5 requires that where lifting equipment is used for lifting persons, measures must be taken to prevent the carrier (platform/cage) falling, the person being crushed/trapped/struck, and the person falling from the carrier. There must also be a means of rescue in case of emergency.',
   },
@@ -122,10 +127,10 @@ const quizQuestions = [
     question:
       'Regulation 6 of LOLER covers the positioning and installation of lifting equipment. This requires consideration of:',
     options: [
-      'Only the aesthetic appearance of the equipment',
+      'Made by the competent person and contain specified information including any defects found and the next examination date',
       'The risk of the equipment or the load striking a person, the risk of the load drifting, falling freely or being released unintentionally, and adequate clearances',
-      'Only the proximity to fire exits',
-      'The availability of three-phase power supply',
+      'Maintenance activities frequently involve lifting operations — using MEWPs, chain hoists, cable winches and lifting accessories to access and move heavy electrical equipment',
+      'A planned lifting operation (Reg 8), using equipment with a current thorough examination report (Reg 9), marked with the SWL (Reg 7), with adequate strength (Reg 4)',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +140,12 @@ const quizQuestions = [
     id: 6,
     question: 'Regulation 7 of LOLER requires lifting equipment to be clearly marked with:',
     options: [
-      "The manufacturer's logo only",
+      'Work equipment for lifting or lowering loads, including accessories used for attaching loads to machinery',
+      'Made by the competent person and contain specified information including any defects found and the next examination date',
       'Its safe working load (SWL) — and where the SWL depends on the configuration, the SWL for each configuration',
-      'The date of manufacture only',
-      'The name of the operator',
+      'Measures must be taken to prevent persons being crushed, trapped, struck, or falling from the carrier',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Regulation 7 requires lifting equipment to be clearly marked with its safe working load (SWL). Where the SWL varies with the configuration (e.g., boom length, radius of operation), the SWL for each configuration must be marked. Equipment designed for lifting persons must be appropriately and clearly marked to that effect.',
   },
@@ -149,12 +154,12 @@ const quizQuestions = [
     question:
       "Under Regulation 9, a 'thorough examination' of lifting equipment must be carried out by:",
     options: [
-      'Any employee of the company that owns the equipment',
+      'Risk of injury from electric shock, burns, fire, or explosion arising from electricity',
+      'Habits that align with who you want to become, not just what you want to achieve',
+      'Ground temperatures are more stable and higher in winter',
       'A competent person — independent and with sufficient knowledge and experience',
-      'The equipment manufacturer only',
-      'An HSE inspector',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A thorough examination must be carried out by a competent person who has sufficient practical and theoretical knowledge and experience of the equipment to detect defects and assess their significance. The competent person should be independent — typically from an insurance company engineering inspection body or specialist inspection company.',
   },
@@ -162,8 +167,13 @@ const quizQuestions = [
     id: 8,
     question:
       'The maximum interval between thorough examinations for lifting equipment NOT used for lifting persons is:',
-    options: ['3 months', '6 months', '12 months', '24 months'],
-    correctAnswer: 2,
+    options: [
+      '12 months',
+      '24 months',
+      '3 months',
+      '6 months',
+    ],
+    correctAnswer: 0,
     explanation:
       'For lifting equipment not used for lifting persons, the maximum interval between thorough examinations is 12 months. For equipment used for lifting persons (e.g., MEWPs), the maximum interval is 6 months. These are maximum intervals — more frequent examinations may be required based on risk assessment, intensity of use, or operating environment.',
   },
@@ -171,10 +181,10 @@ const quizQuestions = [
     id: 9,
     question: 'Regulation 10 of LOLER requires that reports of thorough examinations are:',
     options: [
-      'Sent to the equipment manufacturer',
+      'Work equipment for lifting or lowering loads, including accessories used for attaching loads to machinery',
       'Made by the competent person and contain specified information including any defects found and the next examination date',
-      'Filed with the local authority',
-      'Published on the company website',
+      'Measures must be taken to prevent persons being crushed, trapped, struck, or falling from the carrier',
+      'Its safe working load (SWL) — and where the SWL depends on the configuration, the SWL for each configuration',
     ],
     correctAnswer: 1,
     explanation:
@@ -185,12 +195,12 @@ const quizQuestions = [
     question:
       'An electrical maintenance technician uses a chain hoist to remove a transformer from a substation. Under LOLER, this operation requires:',
     options: [
-      'Only a visual check of the chain hoist before use',
+      'Made by the competent person and contain specified information including any defects found and the next examination date',
+      'Maintenance activities frequently involve lifting operations — using MEWPs, chain hoists, cable winches and lifting accessories to access and move heavy electrical equipment',
       'A planned lifting operation (Reg 8), using equipment with a current thorough examination report (Reg 9), marked with the SWL (Reg 7), with adequate strength (Reg 4)',
-      'Only a risk assessment',
-      'Approval from the HSE before the lift',
+      'The risk of the equipment or the load striking a person, the risk of the load drifting, falling freely or being released unintentionally, and adequate clearances',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Removing a transformer is a lifting operation under LOLER. It requires: planning by a competent person (Reg 8), equipment of adequate strength (Reg 4), correctly positioned (Reg 6), marked with SWL (Reg 7), with a current thorough examination report (Reg 9), and carried out safely under appropriate supervision.',
   },
@@ -199,12 +209,12 @@ const quizQuestions = [
     question:
       'A MEWP is being used by an electrical maintenance technician to access high-level cable containment. Under LOLER, the MEWP must:',
     options: [
-      'Only have an MOT certificate',
+      'Its safe working load (SWL) — and where the SWL depends on the configuration, the SWL for each configuration',
+      'Work equipment for lifting or lowering loads, including accessories used for attaching loads to machinery',
+      'Made by the competent person and contain specified information including any defects found and the next examination date',
       'Have a current thorough examination report (within 6 months), be operated by a trained person, and the lift must be planned',
-      'Only have third-party insurance',
-      'Only be less than 5 years old',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A MEWP used for lifting persons must have a current thorough examination report (maximum 6-month intervals under Reg 9), be of adequate strength and stability (Reg 4), have measures to prevent falls (Reg 5), be operated by a person trained in its safe use (PUWER Reg 9), and the operation must be planned (Reg 8).',
   },
@@ -212,12 +222,12 @@ const quizQuestions = [
     id: 12,
     question: 'Under ST1426, knowledge of LOLER is relevant to maintenance technicians because:',
     options: [
-      'All maintenance technicians must be certified crane operators',
       'Maintenance activities frequently involve lifting operations — using MEWPs, chain hoists, cable winches and lifting accessories to access and move heavy electrical equipment',
-      'LOLER only applies to the construction industry',
-      'It is only relevant if you work offshore',
+      'Help them reframe from "I am not a speaker" (fixed) to "I have not developed this skill yet" (growth), then create opportunities for gradual practice',
+      'Ground conditions, weather, nearby hazards, access/egress, overhead services, the task being performed and emergency procedures',
+      'Possible structural damage to connections and welds from the electrical discharge, magnetisation of components, and a residual risk of damaged locking mechanisms — a full inspection is required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Electrical maintenance frequently involves lifting operations: using MEWPs to access high-level equipment, chain hoists to remove transformers and switchgear, cable pulling winches, and lifting slings and shackles. ST1426 requires maintenance technicians to understand the regulations governing these activities.',
   },

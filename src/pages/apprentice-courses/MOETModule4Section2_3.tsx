@@ -16,11 +16,11 @@ const quickCheckQuestions = [
       'Which vibration parameter is most useful for detecting low-frequency faults such as imbalance in rotating machinery?',
     options: [
       'Acceleration (g)',
-      'Velocity (mm/s RMS)',
-      'Displacement (microns peak-to-peak)',
       'Jerk (rate of change of acceleration)',
+      'Displacement (microns peak-to-peak)',
+      'Velocity (mm/s RMS)',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Velocity (mm/s RMS) is the most commonly used parameter for general vibration severity assessment because it gives equal weighting across a broad frequency range. However, displacement is preferred for very low frequencies (below ~10 Hz) and acceleration for very high frequencies. For overall condition monitoring on standard rotating machinery, velocity is the standard parameter referenced in ISO 10816.',
   },
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'A vibration spectrum shows a dominant peak at 1x the running speed (shaft rotational frequency). The most likely cause is:',
     options: [
-      'Bearing wear',
-      'Mechanical looseness',
+      'Levelised Cost of Electricity',
+      'Investigate cause of variation',
       'Mass imbalance (unbalance)',
-      'Gear mesh fault',
+      'Current-limiting capability',
     ],
     correctIndex: 2,
     explanation:
@@ -43,12 +43,12 @@ const quickCheckQuestions = [
     question:
       'When mounting an accelerometer on a motor bearing housing, which orientation typically gives the best sensitivity to bearing defects?',
     options: [
-      'Axial (along the shaft centreline)',
-      'Tangential (at 90 degrees to both radial and axial)',
       'Radial (perpendicular to the shaft centreline, vertical or horizontal)',
-      'At 45 degrees to the shaft',
+      'HVAC and lighting integration for occupancy simulation',
+      'A DP/PA coupler or link device that converts between the two physical layers',
+      'Correct type, properly tightened, and providing earth continuity where required',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Radial mounting (perpendicular to the shaft) provides the best sensitivity for detecting bearing defects because the impact forces from rolling element defects are transmitted radially through the bearing housing. Both vertical and horizontal radial readings should be taken. Axial readings are important for detecting misalignment and thrust bearing issues.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     question:
       'ISO 10816 classifies vibration severity into zones. Which zone indicates that long-term operation is unacceptable and damage may occur?',
     options: [
-      'Zone A — newly commissioned machines',
+      'Zone D — vibration severity is sufficient to cause damage',
       'Zone B — acceptable for unrestricted long-term operation',
       'Zone C — restricted long-term operation, remedial action needed',
-      'Zone D — vibration severity is sufficient to cause damage',
+      'Zone A — newly commissioned machines',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'ISO 10816 defines four zones: Zone A (new or reconditioned machines), Zone B (acceptable for long-term operation), Zone C (tolerable only for limited periods — remedial action required at next opportunity), and Zone D (severity is sufficient to cause damage — immediate action required). The velocity thresholds depend on the machine class and mounting.',
   },
@@ -73,12 +73,12 @@ const quizQuestions = [
     id: 1,
     question: 'Vibration analysis is classified as which type of maintenance strategy?',
     options: [
-      'Reactive maintenance',
-      'Time-based preventive maintenance',
+      'Document and report them to the customer',
       'Condition-based predictive maintenance',
-      'Design-out maintenance',
+      'Current capacity vs. rated capacity',
+      'The contract administrator or architect',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Vibration analysis is a condition-based predictive maintenance technique. Rather than replacing components at fixed time intervals regardless of condition, vibration monitoring detects the actual condition of rotating machinery and enables maintenance to be scheduled when a deterioration trend indicates impending failure.',
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     id: 2,
     question: 'The three fundamental vibration parameters are:',
     options: [
+      'Frequency, amplitude and wavelength',
       'Speed, torque and power',
       'Displacement, velocity and acceleration',
-      'Frequency, amplitude and wavelength',
       'Temperature, pressure and flow',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The three fundamental vibration parameters are displacement (distance moved, in microns), velocity (rate of movement, in mm/s), and acceleration (rate of change of velocity, in g or m/s squared). These are mathematically related — velocity is the time derivative of displacement, and acceleration is the time derivative of velocity.',
   },
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 3,
     question: 'A piezoelectric accelerometer works by:',
     options: [
-      'Measuring resistance changes in a strain gauge',
-      'Detecting changes in capacitance between two plates',
+      'The bearing geometry — number of rolling elements, pitch diameter, element diameter and contact angle',
+      'The time between a detectable potential failure (P) and the actual functional failure (F)',
+      'Condition monitoring and predictive maintenance for maintenance technicians',
       'Generating an electrical charge proportional to the applied force on a piezoelectric crystal',
-      'Using a laser to measure surface displacement',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A piezoelectric accelerometer contains a crystal (typically quartz or ceramic) that generates an electrical charge when subjected to mechanical stress (the piezoelectric effect). A seismic mass inside the sensor applies force to the crystal proportional to the vibration acceleration, producing a charge signal that is converted to a voltage output.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 4,
     question: 'FFT (Fast Fourier Transform) analysis converts vibration data from:',
     options: [
-      'Analogue to digital format',
       'The time domain to the frequency domain',
+      'Analogue to digital format',
       'Displacement to velocity',
       'Metric to imperial units',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'FFT converts a complex time-domain vibration waveform into its individual frequency components, producing a frequency spectrum. This allows technicians to identify specific fault frequencies — for example, the shaft rotational frequency (imbalance), bearing defect frequencies, and gear mesh frequencies — that would be impossible to distinguish in the raw time waveform.',
   },
@@ -128,8 +128,8 @@ const quizQuestions = [
     options: [
       'Mass imbalance',
       'Angular misalignment',
-      'Bearing outer race defect',
       'Electrical fault in the motor',
+      'Bearing outer race defect',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,12 +139,12 @@ const quizQuestions = [
     id: 6,
     question: 'Bearing defect frequencies (BPFO, BPFI, BSF, FTF) are determined by:',
     options: [
-      'The motor voltage and current',
+      'Rapid deterioration requiring urgent attention — the machine may be approaching catastrophic failure',
+      'Generating an electrical charge proportional to the applied force on a piezoelectric crystal',
       'The bearing geometry — number of rolling elements, pitch diameter, element diameter and contact angle',
-      'The viscosity of the lubricant',
-      'The ambient temperature',
+      'After the motor has reached stable thermal equilibrium at normal operating load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Bearing defect frequencies are calculated from the bearing geometry: number of balls or rollers, pitch circle diameter, element diameter, contact angle and shaft speed. BPFO (ball pass frequency outer race), BPFI (inner race), BSF (ball spin frequency) and FTF (fundamental train frequency) each indicate defects on specific bearing components.',
   },
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'When trending vibration data over time, an exponential increase in vibration level typically indicates:',
     options: [
-      'Normal wear progression',
-      'The machine has been rebalanced',
+      'The bearing geometry — number of rolling elements, pitch diameter, element diameter and contact angle',
+      'Generating an electrical charge proportional to the applied force on a piezoelectric crystal',
+      'After the motor has reached stable thermal equilibrium at normal operating load',
       'Rapid deterioration requiring urgent attention — the machine may be approaching catastrophic failure',
-      'Seasonal temperature variation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'An exponential rise in vibration level indicates the machine has entered the final stage of the P-F curve (potential failure to functional failure). The rate of deterioration is accelerating, and catastrophic failure may be imminent. Immediate action is required — either controlled shutdown for maintenance or continuous monitoring with a defined alarm and trip level.',
   },
@@ -166,8 +166,13 @@ const quizQuestions = [
     id: 8,
     question:
       'Which ISO standard provides guidance on acceptable vibration severity levels for rotating machinery?',
-    options: ['ISO 9001', 'ISO 14001', 'ISO 10816 (now superseded by ISO 20816)', 'ISO 45001'],
-    correctAnswer: 2,
+    options: [
+      'ISO 10816 (now superseded by ISO 20816)',
+      'Copper losses and iron (core) losses',
+      'Approximately mid-height of the ventilated space',
+      'Limited access for tools and reduced working space',
+    ],
+    correctAnswer: 0,
     explanation:
       'ISO 10816 (and its successor ISO 20816) provides vibration severity classification for various types of rotating machinery. It defines velocity thresholds for zones A through D based on machine class, power rating and mounting type. It is the primary reference standard for evaluating whether measured vibration levels are acceptable.',
   },
@@ -176,10 +181,10 @@ const quizQuestions = [
     question:
       'An electrical motor running at 1480 RPM on a 50 Hz supply has a slip frequency of 20 RPM. Vibration peaks at exactly 50 Hz with sidebands at slip frequency indicate:',
     options: [
-      'Mechanical imbalance',
+      '5-10 years depending on update rate and configuration',
       'An electrical fault such as broken rotor bars or uneven air gap',
-      'A coupling problem',
-      'Foundation looseness',
+      'Formal sign-off before proceeding, documented in ITP with witness signatures',
+      'Open circuit = no continuity, high resistance = poor continuity',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,10 +194,10 @@ const quizQuestions = [
     id: 10,
     question: 'The P-F interval in condition monitoring refers to:',
     options: [
-      'The time between two preventive maintenance tasks',
-      'The power factor of the electrical supply',
+      'An electrical fault such as broken rotor bars or uneven air gap',
+      'Rapid deterioration requiring urgent attention — the machine may be approaching catastrophic failure',
       'The time between a detectable potential failure (P) and the actual functional failure (F)',
-      'The pressure-flow relationship in hydraulic systems',
+      'After the motor has reached stable thermal equilibrium at normal operating load',
     ],
     correctAnswer: 2,
     explanation:
@@ -203,12 +208,12 @@ const quizQuestions = [
     question:
       'For baseline vibration measurements on a newly commissioned motor, readings should be taken:',
     options: [
-      'Immediately after switch-on, before the motor warms up',
+      'Generating an electrical charge proportional to the applied force on a piezoelectric crystal',
+      'Condition monitoring and predictive maintenance for maintenance technicians',
+      'The time between a detectable potential failure (P) and the actual functional failure (F)',
       'After the motor has reached stable thermal equilibrium at normal operating load',
-      'Only at no-load condition',
-      'With the motor decoupled from the driven equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Baseline readings should be taken after the machine has reached normal operating temperature and is running at its typical load condition. Thermal expansion affects bearing clearances, alignment and vibration characteristics. Readings taken before thermal stability is reached will not represent the true operating condition and will give misleading baselines.',
   },
@@ -216,12 +221,12 @@ const quizQuestions = [
     id: 12,
     question: 'Under ST1426, vibration analysis falls within which knowledge and skills area?',
     options: [
-      'Business improvement techniques only',
       'Condition monitoring and predictive maintenance for maintenance technicians',
-      'Electrical installation design',
-      'Contract management',
+      'After the motor has reached stable thermal equilibrium at normal operating load',
+      'An electrical fault such as broken rotor bars or uneven air gap',
+      'The time between a detectable potential failure (P) and the actual functional failure (F)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 requires maintenance technicians to understand and apply condition monitoring techniques including vibration analysis as part of their predictive maintenance capabilities. This falls under the knowledge requirements for maintenance strategies and the skills relating to diagnosing and rectifying faults in engineering systems.',
   },

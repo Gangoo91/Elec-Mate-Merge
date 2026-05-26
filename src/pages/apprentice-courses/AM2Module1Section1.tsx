@@ -36,10 +36,10 @@ const AM2Module1Section1 = () => {
       id: 1,
       question: 'What is the primary purpose of the AM2 assessment?',
       options: [
-        'To teach new electrical skills',
+        'After physical damage, unusual readings, failed checks, repairs, or exposure to extremes',
         'To prove competence and readiness to work as a qualified electrician',
-        'To catch out apprentices with trick questions',
-        'To provide theoretical knowledge only',
+        'On distorted or non-sinusoidal waveforms (drives, SMPS, LED drivers)',
+        'Recording your progress makes you more likely to improve',
       ],
       correctAnswer: 1,
       explanation:
@@ -49,12 +49,12 @@ const AM2Module1Section1 = () => {
       id: 2,
       question: 'Who is the AM2 assessment primarily aimed at?',
       options: [
-        'Complete beginners to electrical work',
+        'The scaffold must not be used until it has been inspected by a competent person',
+        'To verify protective devices have adequate breaking capacity',
         'Final-stage apprentices and experienced electricians seeking qualification',
-        'Electrical engineers only',
-        'DIY enthusiasts',
+        'To allow safe shutdown of dangerous processes before evacuation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The AM2 is for apprentices at the end of their training or experienced electricians going through assessment routes like NVQ Level 3.',
     },
@@ -62,12 +62,12 @@ const AM2Module1Section1 = () => {
       id: 3,
       question: 'What credential does passing the AM2 allow you to apply for?',
       options: [
-        'City & Guilds certificate',
         'University degree',
-        'ECS Gold Card',
+        'City & Guilds certificate',
         'Health and Safety certificate',
+        'ECS Gold Card',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Passing the AM2 allows you to apply for an ECS Gold Card, which is your passport to working as a fully qualified electrician in the UK.',
     },

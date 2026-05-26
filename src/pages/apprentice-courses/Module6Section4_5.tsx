@@ -22,10 +22,10 @@ const Module6Section4_5 = () => {
       id: 1,
       question: 'Why are test results recorded?',
       options: [
-        'Company policy',
+        'Measured resistance values (e.g., R1+R2)',
         'To provide evidence of compliance and ensure safety',
-        'Customer satisfaction',
-        'Insurance requirements',
+        'The contractor had to retest circuits and lost reputation',
+        'Electrical Installation Condition Report (EICR)',
       ],
       correctAnswer: 1,
       explanation:
@@ -35,20 +35,25 @@ const Module6Section4_5 = () => {
       id: 2,
       question: 'Which certificate is used for new installations?',
       options: [
-        'Minor Works Certificate',
+        'Measured resistance values (e.g., R1+R2)',
+        'Rectify the fault before energising',
         'Electrical Installation Certificate (EIC)',
-        'EICR',
-        'Test Certificate',
+        'To provide evidence of compliance and ensure safety',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The Electrical Installation Certificate (EIC) is the correct certificate for new electrical installations.',
     },
     {
       id: 3,
       question: 'What certificate is used for small alterations?',
-      options: ['EIC', 'Minor Works Certificate', 'EICR', 'Inspection Report'],
-      correctAnswer: 1,
+      options: [
+        'EICR',
+        'EIC',
+        'Inspection Report',
+        'Minor Works Certificate',
+      ],
+      correctAnswer: 3,
       explanation:
         'The Minor Works Certificate is used for small alterations and additions to existing installations.',
     },
@@ -56,19 +61,24 @@ const Module6Section4_5 = () => {
       id: 4,
       question: 'Which report is used for periodic inspections?',
       options: [
-        'EIC',
-        'Minor Works Certificate',
         'Electrical Installation Condition Report (EICR)',
-        'PAT Report',
+        'The competent person carrying out/supervising the tests',
+        'Rectify the fault before energising',
+        'To provide evidence of compliance and ensure safety',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'The Electrical Installation Condition Report (EICR) is used for periodic inspections of existing installations.',
     },
     {
       id: 5,
       question: 'Where can sample test result schedules be found?',
-      options: ['BS 7671 Appendix 5', 'BS 7671 Appendix 6', 'IET Guidance Note 2', 'BS 7909'],
+      options: [
+        'BS 7671 Appendix 5',
+        'BS 7671 Appendix 6',
+        'BS 7909',
+        'IET Guidance Note 2',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 Appendix 6 contains sample test result schedules and certification formats.',
@@ -76,8 +86,13 @@ const Module6Section4_5 = () => {
     {
       id: 6,
       question: 'True or False: Minor works do not require recorded results.',
-      options: ['True', 'False', 'Only sometimes', 'Depends on voltage'],
-      correctAnswer: 1,
+      options: [
+        'True',
+        'Only sometimes',
+        'False',
+        'Depends on voltage',
+      ],
+      correctAnswer: 2,
       explanation:
         'False. All electrical work, including minor works, must have recorded test results for compliance.',
     },
@@ -85,12 +100,12 @@ const Module6Section4_5 = () => {
       id: 7,
       question: 'What should be done if a polarity test fails?',
       options: [
-        'Continue with installation',
+        'Live tap-off (plug-in) unit',
+        'Contact burns, arc burns, and flash burns',
+        'L143 — Managing and Working with Asbestos',
         'Rectify the fault before energising',
-        'Note for later',
-        'Test again',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Any polarity faults must be rectified before the circuit is energised to prevent safety hazards.',
     },
@@ -98,12 +113,12 @@ const Module6Section4_5 = () => {
       id: 8,
       question: 'What must be recorded for continuity tests?',
       options: [
-        'Pass/fail only',
         'Measured resistance values (e.g., R1+R2)',
-        'Approximate values',
-        'Visual confirmation',
+        'To provide evidence of compliance and ensure safety',
+        'Electrical Installation Condition Report (EICR)',
+        'Rectify the fault before energising',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Actual measured resistance values must be recorded, including specific readings like R1+R2 for earth fault loop paths.',
     },
@@ -111,10 +126,10 @@ const Module6Section4_5 = () => {
       id: 9,
       question: 'Who signs off test records?',
       options: [
-        'The client',
+        'Measured resistance values (e.g., R1+R2)',
         'The competent person carrying out/supervising the tests',
-        'The site manager',
-        'Any qualified electrician',
+        'Electrical Installation Certificate (EIC)',
+        'The contractor had to retest circuits and lost reputation',
       ],
       correctAnswer: 1,
       explanation:
@@ -124,12 +139,12 @@ const Module6Section4_5 = () => {
       id: 10,
       question: 'In the real-world example, what happened due to missing records?',
       options: [
-        'Nothing serious',
+        'Electrical Installation Certificate (EIC)',
+        'Measured resistance values (e.g., R1+R2)',
         'The contractor had to retest circuits and lost reputation',
-        'Client was satisfied',
-        'Work was accepted anyway',
+        'The competent person carrying out/supervising the tests',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Missing records resulted in costly retesting and reputational damage when compliance could not be proven.',
     },

@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'bs7671-workmanship',
     question: 'What does BS 7671 Regulation 134.1.1 require regarding workmanship?',
     options: [
-      'Work only needs to look acceptable to the client',
+      'To identify points requiring extra luminaires and potential obstructions',
+      'To link specified luminaires to design calculations proving compliance',
+      'The casualty\\\\\\\\\\\\\\\'s skin is hot and dry, and their body temperature is above 40°C',
       'Good workmanship by competent persons or under their supervision, using proper materials',
-      'Workmanship standards only apply to new installations',
-      'There are no workmanship requirements in BS 7671',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Regulation 134.1.1 states that every electrical installation shall be designed, erected and verified by competent persons using proper materials and good workmanship. This applies equally to maintenance and repair work. The assessor uses this as the benchmark for evaluating your practical work.',
   },
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'Why is documentation important when completing maintenance work to industry standards?',
     options: [
-      'It is only needed for insurance claims',
+      '"All circuits were tested in accordance with BS 7671 and the results are recorded in the attached schedule"',
       'Documentation provides evidence of compliance, enables future maintenance, creates an audit trail, and demonstrates professionalism',
-      'It slows down the work unnecessarily',
-      'Only managers need to worry about documentation',
+      'Carry out functional verification testing to confirm the repair is successful and the system operates correctly',
+      'Podium steps provide an enclosed platform with guard rails, giving a larger and safer working area',
     ],
     correctIndex: 1,
     explanation:
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'ip-rating-awareness',
     question: 'When replacing a component in a panel with an IP rating, what must you ensure?',
     options: [
-      'IP ratings are not important for maintenance work',
+      "Every \\\\\\\"duty holder\\\\\\\" — employer, self-employed person, and to a more limited extent every employee — in respect of the matters within their control.",
+      "Man (People), Machine (Equipment), Method (Process), Material, Measurement, Mother Nature (Environment)",
       "The panel's IP rating is maintained after the work — all covers, gaskets and cable entries are properly refitted and sealed",
-      'Only the front cover matters',
-      'IP ratings only apply to outdoor installations',
+      "Regulations, technology, and best practices evolve continuously. CPD ensures your knowledge and skills remain current, safe, and compliant",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Maintaining the IP (Ingress Protection) rating is a regulatory and safety requirement. If you leave a cable entry unsealed, a cover off, or a gasket misaligned, the IP rating is compromised. This could allow moisture, dust or vermin ingress, leading to faults or safety hazards. The assessor will check this during the EPA.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       "Why is it important to apply the manufacturer's specified torque settings when making electrical connections?",
     options: [
-      'Torque settings are only suggestions, not requirements',
+      'An arc across a loose terminal in line with the load — current stays low, MCB doesn’t see it, but it generates intense heat',
+      'Vapours heavier than air (vapour density greater than 1) sink and accumulate at low levels such as basements, pits, and drains, where they may find ignition sources',
+      'Locate and operate the manual lowering valve to release hydraulic pressure for a controlled gravity descent, while maintaining communication and monitoring the casualty',
       'Under-tightened connections can overheat and cause fires; over-tightened connections can damage conductors and terminals — correct torque ensures safe, durable connections',
-      'Any tightness is acceptable as long as the conductor does not pull out',
-      'Torque settings only matter for high-voltage installations',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Correct torque is a safety-critical requirement. Under-tightened connections create high-resistance joints that overheat, potentially causing fires. Over-tightened connections damage conductor strands or crack terminal housings. Using a calibrated torque screwdriver and applying the manufacturer's specified values ensures connections are safe, reliable and compliant.",
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 requires that all electrical work shall be carried out by:',
     options: [
-      'Anyone willing to do the work',
+      'To ensure equipment neither emits nor is affected by electromagnetic interference',
       'Competent persons or persons under their supervision, using proper materials and good workmanship',
-      'Only fully qualified electricians with JIB cards',
-      'Persons who have completed an online course',
+      'Extending the programme increases costs and may breach contract dates',
+      'Variable load and supply voltage to keep secondary voltage near nominal',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: "When completing a repair, 'proper materials' under BS 7671 means:",
     options: [
-      'The cheapest available materials',
+      'Verify that protection coordination is maintained — the protective device rating, type and characteristics are still appropriate for the circuit',
+      'They contain specific installation requirements, torque settings, clearances and operating parameters that ensure the component works safely and correctly',
       'Materials that comply with relevant British or European standards, are suitable for the conditions, and are correctly rated',
-      'Any materials that fit',
-      'Only materials from the original manufacturer',
+      'Correct component installation, secure connections, proper cable management, labelling, and no damage to adjacent equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Proper materials must comply with relevant product standards (BS EN standards), be suitable for the environmental conditions (temperature, moisture, corrosion), and be correctly rated for the electrical parameters. Using non-compliant materials undermines the safety of the installation.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'After completing maintenance work, you should carry out a visual inspection to verify:',
     options: [
-      'The work looks visually clean only',
+      'Maintenance work involves additions or alterations to an existing circuit, such as adding a socket or replacing a distribution board',
+      'Ensuring all covers, gaskets, cable glands and entries are correctly refitted to restore the original ingress protection',
+      'Verify that protection coordination is maintained — the protective device rating, type and characteristics are still appropriate for the circuit',
       'Correct component installation, secure connections, proper cable management, labelling, and no damage to adjacent equipment',
-      'Only that the circuit operates',
-      'The client is satisfied with the appearance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A post-work visual inspection is a systematic check of workmanship quality, safety compliance, and completeness. It should cover component installation, connection security, cable management, identification and labelling, and confirmation that no collateral damage has occurred.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 4,
     question: 'Circuit identification and labelling after maintenance work is required because:',
     options: [
-      'It makes the installation look professional',
       'BS 7671 requires accurate circuit identification at distribution boards and equipment, enabling safe future maintenance and isolation',
-      'It is optional for maintenance work',
-      'Labelling is only required on new installations',
+      'Confirming correct operation under normal and fault conditions, checking protective device operation, verifying control sequences, and recording all test results',
+      'Maintenance work involves additions or alterations to an existing circuit, such as adding a socket or replacing a distribution board',
+      'Neatly dressed conductors, correct bending radii, no strain on terminals, clear labelling, and segregation of power and control circuits where required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 514.9.1 requires every circuit to be identified with information necessary for safe maintenance and operation. If your maintenance work changes any circuit details, the labelling must be updated. Incorrect labelling is a safety hazard — it could lead to working on the wrong circuit.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Maintaining the IP rating of an enclosure during maintenance means:',
     options: [
-      'Painting the enclosure after work',
+      'Neatly dressed conductors, correct bending radii, no strain on terminals, clear labelling, and segregation of power and control circuits where required',
       'Ensuring all covers, gaskets, cable glands and entries are correctly refitted to restore the original ingress protection',
-      'Writing the IP rating on the front',
-      'IP ratings cannot be maintained during maintenance',
+      'Materials that comply with relevant British or European standards, are suitable for the conditions, and are correctly rated',
+      'It prevents safety hazards, demonstrates professional standards, ensures no debris or tools are left in equipment, and is an assessed behaviour in the EPA',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       "Manufacturer's instructions and data sheets should be followed during maintenance because:",
     options: [
-      'They are interesting to read',
+      'It prevents safety hazards, demonstrates professional standards, ensures no debris or tools are left in equipment, and is an assessed behaviour in the EPA',
+      'It confirms the component meets the essential safety requirements of relevant UK/EU product standards and can be legally placed on the market',
       'They contain specific installation requirements, torque settings, clearances and operating parameters that ensure the component works safely and correctly',
-      'They are legally binding documents',
-      "Only new installations need to follow manufacturer's instructions",
+      'Correct component installation, secure connections, proper cable management, labelling, and no damage to adjacent equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Manufacturer's instructions provide the specific information needed for correct installation: torque settings, conductor sizes, clearances, orientation requirements, and operating conditions. Deviating from these instructions can compromise the component's safety and void any warranty or certification.",
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 7,
     question: 'A minor works certificate (BS 7671 Appendix 6) should be completed when:',
     options: [
-      'Only for new installations',
+      'Confirming correct operation under normal and fault conditions, checking protective device operation, verifying control sequences, and recording all test results',
+      'Correct component installation, secure connections, proper cable management, labelling, and no damage to adjacent equipment',
+      'Ensuring all covers, gaskets, cable glands and entries are correctly refitted to restore the original ingress protection',
       'Maintenance work involves additions or alterations to an existing circuit, such as adding a socket or replacing a distribution board',
-      'Any maintenance work is carried out',
-      'Only when the client requests it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A minor works certificate is required for additions or alterations to existing circuits. Like-for-like replacement of a component in a maintenance context may not require one, but any change that alters the circuit (different rating, additional point, new circuit) does. Knowing when certification is required demonstrates professional competence.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 8,
     question: 'Professional cable management in a distribution board includes:',
     options: [
-      'Pushing cables in any available space',
       'Neatly dressed conductors, correct bending radii, no strain on terminals, clear labelling, and segregation of power and control circuits where required',
-      'Using cable ties every 10 mm',
-      'Leaving slack for future modifications only',
+      'Materials that comply with relevant British or European standards, are suitable for the conditions, and are correctly rated',
+      'It confirms the component meets the essential safety requirements of relevant UK/EU product standards and can be legally placed on the market',
+      'Confirming correct operation under normal and fault conditions, checking protective device operation, verifying control sequences, and recording all test results',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Professional cable management includes: neat dressing with appropriate bending radii, no mechanical strain on terminals, clear identification of each conductor, segregation where required (e.g., SELV from LV), and sufficient — but not excessive — slack. This workmanship quality is clearly visible and assessed during the EPA.',
   },
@@ -177,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: 'When your maintenance work affects the protective devices in a circuit, you should:',
     options: [
-      'Assume they are still correct from the original installation',
+      'Materials that comply with relevant British or European standards, are suitable for the conditions, and are correctly rated',
       'Verify that protection coordination is maintained — the protective device rating, type and characteristics are still appropriate for the circuit',
-      'Remove the protective devices for testing off-site',
-      'Replace all protective devices as a precaution',
+      'Correct component installation, secure connections, proper cable management, labelling, and no damage to adjacent equipment',
+      'Neatly dressed conductors, correct bending radii, no strain on terminals, clear labelling, and segregation of power and control circuits where required',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,12 +190,12 @@ const quizQuestions = [
     id: 10,
     question: 'Cleaning up the work area after completing maintenance is important because:',
     options: [
-      'It makes a good impression but is not strictly necessary',
+      'They contain specific installation requirements, torque settings, clearances and operating parameters that ensure the component works safely and correctly',
+      'Confirming correct operation under normal and fault conditions, checking protective device operation, verifying control sequences, and recording all test results',
       'It prevents safety hazards, demonstrates professional standards, ensures no debris or tools are left in equipment, and is an assessed behaviour in the EPA',
-      'Only for appearance during the EPA',
-      "The client's cleaner will handle it",
+      'Verify that protection coordination is maintained — the protective device rating, type and characteristics are still appropriate for the circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Housekeeping is both a safety requirement and a professional behaviour. Debris in electrical equipment can cause faults or fires. Tools left behind can cause short circuits. A clean, organised work area demonstrates the professional standards expected of a competent maintenance technician and is directly assessed in the EPA.',
   },
@@ -203,12 +203,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the significance of the CE/UKCA marking on electrical components?',
     options: [
-      'It indicates the component is expensive',
+      'Neatly dressed conductors, correct bending radii, no strain on terminals, clear labelling, and segregation of power and control circuits where required',
+      'It prevents safety hazards, demonstrates professional standards, ensures no debris or tools are left in equipment, and is an assessed behaviour in the EPA',
+      'They contain specific installation requirements, torque settings, clearances and operating parameters that ensure the component works safely and correctly',
       'It confirms the component meets the essential safety requirements of relevant UK/EU product standards and can be legally placed on the market',
-      'It is a quality award from the manufacturer',
-      'It indicates the component is recycled',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The CE (EU) and UKCA (UK) markings confirm that the product meets the essential safety, health and environmental requirements of the relevant regulations. Using components without these markings is a compliance issue. As a maintenance technician, you should check for these markings when selecting replacement components.',
   },
@@ -216,12 +216,12 @@ const quizQuestions = [
     id: 12,
     question: 'When verifying completed maintenance work, functional testing should include:',
     options: [
-      'Simply switching the circuit on and confirming power is present',
       'Confirming correct operation under normal and fault conditions, checking protective device operation, verifying control sequences, and recording all test results',
-      'Only checking the voltage at the supply point',
-      'Functional testing is not required for maintenance work',
+      'Ensuring all covers, gaskets, cable glands and entries are correctly refitted to restore the original ingress protection',
+      'Verify that protection coordination is maintained — the protective device rating, type and characteristics are still appropriate for the circuit',
+      'Neatly dressed conductors, correct bending radii, no strain on terminals, clear labelling, and segregation of power and control circuits where required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Functional testing verifies that the complete system operates correctly — not just that power is present. This includes checking that motors run in the correct direction, control sequences operate as designed, protective devices trip at the correct settings, interlocks function, and all alarm and indication systems respond correctly. Recording results provides evidence of thorough verification.',
   },

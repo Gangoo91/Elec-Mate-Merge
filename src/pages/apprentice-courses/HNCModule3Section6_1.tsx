@@ -32,8 +32,13 @@ const quickCheckQuestions = [
   {
     id: 'i2r-loss',
     question: 'If current through a cable doubles, how does the I²R power loss change?',
-    options: ['Doubles', 'Quadruples', 'Halves', 'Stays the same'],
-    correctIndex: 1,
+    options: [
+      'Quadruples',
+      'Stays the same',
+      'Doubles',
+      'Halves',
+    ],
+    correctIndex: 0,
     explanation:
       'Power loss P = I²R. If current doubles (2I), power becomes (2I)² × R = 4I²R - it quadruples. This is why cable sizing is critical for high-current circuits.',
   },
@@ -42,11 +47,11 @@ const quickCheckQuestions = [
     question: 'Why are transformer cores made from laminated steel sheets rather than solid steel?',
     options: [
       'To reduce weight',
-      'To reduce eddy current losses',
-      'To increase magnetic flux',
       'To improve cooling',
+      'To increase magnetic flux',
+      'To reduce eddy current losses',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Laminations break up the paths for eddy currents, dramatically reducing these losses. The thin insulating layers between laminations increase resistance to circulating currents.',
   },
@@ -54,10 +59,10 @@ const quickCheckQuestions = [
     id: 'hysteresis-loss',
     question: 'What property of magnetic materials causes hysteresis loss?',
     options: [
-      'High conductivity',
-      'Low permeability',
+      'Different metals in contact with electrolyte present',
+      'Creating gaps in illumination with excessive spacing',
       'Magnetic domain resistance to realignment',
-      'High thermal conductivity',
+      'Easier tap-off connections at each floor',
     ],
     correctIndex: 2,
     explanation:
@@ -66,8 +71,13 @@ const quickCheckQuestions = [
   {
     id: 'skin-effect',
     question: 'At what frequency does skin effect become significant in copper conductors?',
-    options: ['50 Hz only', 'Above 1 kHz', 'Below 10 Hz', 'At DC only'],
-    correctIndex: 1,
+    options: [
+      'At DC only',
+      '50 Hz only',
+      'Above 1 kHz',
+      'Below 10 Hz',
+    ],
+    correctIndex: 2,
     explanation:
       'Skin effect becomes significant above about 1 kHz. At 50 Hz, it is minimal for typical cable sizes, but at higher frequencies current concentrates near the conductor surface, increasing effective resistance.',
   },
@@ -77,7 +87,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the formula for resistive power loss in a conductor?',
-    options: ['P = V/I', 'P = I²R', 'P = R/I²', 'P = V × R'],
+    options: [
+      'P = V/I',
+      'P = I²R',
+      'P = R/I²',
+      'P = V × R',
+    ],
     correctAnswer: 1,
     explanation:
       'P = I²R (also known as Joule heating) shows that power loss is proportional to the square of current and the resistance. This is fundamental to understanding cable losses.',
@@ -85,7 +100,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A 100m cable run with resistance 0.5Ω carries 20A. What is the power loss?',
-    options: ['10W', '40W', '200W', '400W'],
+    options: [
+      '400W',
+      '10W',
+      '200W',
+      '40W',
+    ],
     correctAnswer: 2,
     explanation:
       'Using P = I²R: P = 20² × 0.5 = 400 × 0.5 = 200W. This significant loss highlights the importance of cable sizing for long runs.',
@@ -93,8 +113,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Which type of loss is frequency-dependent and proportional to f²?',
-    options: ['Resistive loss', 'Hysteresis loss', 'Eddy current loss', 'Stray loss'],
-    correctAnswer: 2,
+    options: [
+      'Hysteresis loss',
+      'Resistive loss',
+      'Stray loss',
+      'Eddy current loss',
+    ],
+    correctAnswer: 3,
     explanation:
       'Eddy current losses are proportional to frequency squared (Pe ∝ f²). This is why they become increasingly significant at higher frequencies.',
   },
@@ -102,16 +127,26 @@ const quizQuestions = [
     id: 4,
     question:
       'A distribution transformer has iron losses of 500W and full-load copper losses of 2000W. What are the total losses at full load?',
-    options: ['500W', '2000W', '2500W', '1500W'],
-    correctAnswer: 2,
+    options: [
+      '2500W',
+      '2000W',
+      '500W',
+      '1500W',
+    ],
+    correctAnswer: 0,
     explanation:
       'Total losses = iron losses + copper losses = 500W + 2000W = 2500W. Iron losses (hysteresis + eddy current) are constant; copper losses (I²R) vary with load.',
   },
   {
     id: 5,
     question: 'What is the typical skin depth in copper at 50 Hz?',
-    options: ['0.3mm', '3mm', '9mm', '30mm'],
-    correctAnswer: 2,
+    options: [
+      '3mm',
+      '9mm',
+      '30mm',
+      '0.3mm',
+    ],
+    correctAnswer: 1,
     explanation:
       'At 50 Hz, skin depth in copper is approximately 9mm. Since most building cables are smaller than 18mm diameter, skin effect is negligible at mains frequency.',
   },
@@ -119,20 +154,25 @@ const quizQuestions = [
     id: 6,
     question: 'Which material property is most important for reducing hysteresis losses?',
     options: [
-      'High resistivity',
+      'Automatic monitoring of energy consumption',
+      'Regularly, after incidents, when changes occur',
       'Low coercivity (soft magnetic material)',
-      'High permeability',
-      'Low thermal conductivity',
+      'Specific training and assessment by the employer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Low coercivity (soft magnetic materials like silicon steel) have narrow hysteresis loops, requiring less energy to reverse magnetisation each cycle.',
   },
   {
     id: 7,
     question: 'A motor nameplate shows 90% efficiency at 15kW output. What is the input power?',
-    options: ['13.5kW', '15kW', '16.67kW', '18kW'],
-    correctAnswer: 2,
+    options: [
+      '13.5kW',
+      '15kW',
+      '18kW',
+      '16.67kW',
+    ],
+    correctAnswer: 3,
     explanation:
       'Efficiency = Output/Input, so Input = Output/Efficiency = 15kW/0.90 = 16.67kW. The losses are 16.67 - 15 = 1.67kW.',
   },
@@ -140,19 +180,24 @@ const quizQuestions = [
     id: 8,
     question: 'Why must cables be derated when grouped together?',
     options: [
-      'To reduce voltage drop',
       'Because I²R losses cause heat that cannot dissipate',
-      'To meet BS 7671 aesthetics',
-      'To reduce material costs',
+      'To maintain circuit integrity during fire conditions',
+      'A tuning problem with the PID controller',
+      'Mechanical binding or single phasing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Grouped cables cannot dissipate heat as effectively as isolated cables. The I²R losses generate heat; if this cannot escape, temperature rises and insulation may be damaged.',
   },
   {
     id: 9,
     question: 'At what load does a transformer typically operate most efficiently?',
-    options: ['25% load', '50-75% load', '100% load', 'No load'],
+    options: [
+      '25% load',
+      '50-75% load',
+      '100% load',
+      'No load',
+    ],
     correctAnswer: 1,
     explanation:
       'Transformers are most efficient when copper losses equal iron losses, typically around 50-75% load. At light loads, constant iron losses dominate; at heavy loads, I²R losses dominate.',
@@ -161,8 +206,13 @@ const quizQuestions = [
     id: 10,
     question:
       'Which IE efficiency class represents the highest motor efficiency under IEC 60034-30-1?',
-    options: ['IE1 Standard', 'IE2 High', 'IE3 Premium', 'IE4 Super Premium'],
-    correctAnswer: 3,
+    options: [
+      'IE1 Standard',
+      'IE2 High',
+      'IE4 Super Premium',
+      'IE3 Premium',
+    ],
+    correctAnswer: 2,
     explanation:
       'IE4 Super Premium is the highest standard efficiency class (IE5 Ultra Premium exists but is not yet widely mandated). Higher IE classes have lower losses and better efficiency.',
   },

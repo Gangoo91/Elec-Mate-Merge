@@ -39,10 +39,10 @@ const checks = [
     question:
       'A new lighting circuit feeds an emergency luminaire on the escape stairwell of a 4-storey block of flats. The cable type required by BS 7671 A4:2026 is:',
     options: [
-      'Standard PVC T&E.',
-      'Standard PVC singles in conduit.',
+      'Verify that a voltage indicator/two-pole tester is functioning correctly before and after testing for dead, without exposing the user to a live source',
+      'Platform height is the height of the working platform; working height is typically platform height plus approximately 2 metres (average reach)',
       'A fire-resistant cable (FP200, FP400, MICC) classified to BS EN 50200 (PH30/PH60/PH120 depending on duration), with non-combustible supports.',
-      'SWA.',
+      'Regularly, and whenever there is a significant change in the work activity, equipment, or following an incident',
     ],
     correctIndex: 2,
     explanation:
@@ -53,10 +53,10 @@ const checks = [
     question:
       'A 3-phase sub-main runs underground from a meter cabinet to an outbuilding 35 m away. Direct-buried installation. The right cable choice is:',
     options: [
-      'PVC T&E.',
-      'PVC singles in PVC conduit.',
+      'Specific questions: which lights, when did it start, is it constant or intermittent, does it happen at particular times, have any other electrical issues been noticed nearby?',
+      'An injury that results in the worker being incapacitated for more than 7 consecutive days, not counting the day of the injury',
       'Steel-Wire-Armoured (SWA) cable, direct buried with sand bedding, cable tile and warning tape per BS 7671 522.8 / 522.6 and IET guidance.',
-      'MICC.',
+      'Repeat support calls, warranty disputes, and a Building Control or scheme audit failure if certs are missing',
     ],
     correctIndex: 2,
     explanation:
@@ -67,12 +67,12 @@ const checks = [
     question:
       'A new cable installation in a school is required to be Low Smoke Zero Halogen (LSZH). The reason is:',
     options: [
-      'It is cheaper.',
       'In a fire, LSZH cables produce dramatically less toxic smoke and no halogen acid gases — critical in densely-populated public buildings where smoke inhalation during evacuation is a major risk.',
-      'BS 7671 requires it everywhere.',
-      'It looks better.',
+      'Providing scalable data storage, analytics, machine learning, dashboarding, and remote access for industrial data collected from edge devices',
+      'A business name that\\\\\\\\\\\\\\\'s different from your personal name (sole trader) or registered company name (limited company). Allows trading under a more professional or memorable brand. Must appear on business documents alongside your legal name.',
+      'Recognise HRRB sites; understand the gateway regime and PAP role; verify CPP integrates with golden thread; produce digital cert records (not paper-only); cooperate with PAP / AP requests for information.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'LSZH cables are specified for buildings where smoke from a fire would seriously affect evacuation — schools, hospitals, transport hubs, public buildings, theatres, large commercial. Standard PVC cables release dense black smoke and hydrogen chloride gas when burned; LSZH cables release minimal smoke and no acid gases. The decision is driven by the building&rsquo;s fire risk assessment and BS 9999 / BS 5266 / BS 5839 — not by cost (LSZH is typically 30-50 % more than PVC).',
   },
@@ -84,10 +84,10 @@ const quizQuestions = [
     question:
       'PVC twin and earth (T&E, 6242Y) is the most common UK domestic cable. Its primary limitations are:',
     options: [
-      'Too expensive.',
+      'Because IR pushes 500 V DC into the circuit; if the CPC is not continuous, the test current may take an unintended path and the IR result is meaningless.',
       'No mechanical protection (vulnerable to chasing in masonry without capping); standard PVC sheath fails in fire within minutes; not fire-resistant for emergency / escape route circuits.',
-      'Too heavy.',
-      'Too thin.',
+      'C2 — potentially dangerous. The RCD provides additional protection but the high electrode resistance compromises the disconnection-of-supply protection. The combination is unreliable in fault conditions.',
+      'The instrument may be used only for non-critical measurements or reference purposes because it does not meet the full accuracy specification',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,12 +98,12 @@ const quizQuestions = [
     question:
       'Steel-Wire-Armoured (SWA) cable comprises:',
     options: [
-      'PVC sheath only.',
+      'An SWA stripping tool or rotary cable cutter designed for armoured cable, which cuts through the armour wires without damaging the inner insulation',
+      'Set to the temperature recommended by the joint kit manufacturer and applied evenly, working from the centre outward to expel air and moisture',
       'Inner conductors with insulation, an inner PVC sheath, a layer of galvanised steel wire armour, and an outer PVC (or LSZH) sheath. Available in 2, 3, 4 or 5 cores from 1.5 mm² up to 400 mm² CSA.',
-      'Aluminium armour only.',
-      'Single-core cable.',
+      'Cutting the mica insulation between commutator segments to below the copper surface to prevent the mica from protruding as the copper wears',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SWA construction: stranded copper conductors (or aluminium for very large CSAs), individual conductor insulation (XLPE for thermosetting / 90 °C, or PVC for 70 °C), inner sheath / bedding layer, galvanised steel wire armour (the SWA), outer sheath PVC or LSZH. The armour acts as the CPC AND mechanical protection. Used for sub-mains, distribution, direct burial, suspension cable runs.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     question:
       'MICC (Mineral Insulated Copper Cable, "Pyro") consists of:',
     options: [
-      'Plastic insulation.',
+      'Create a private, safe environment, express what you have observed factually, reassure confidentiality within safety limits, and leave the door open for future conversations',
+      'EIC, schedule of test results, schedule of inspections, manufacturer instructions for installed kit (CU, AFDDs, smoke alarms, EV charger if any), and user instructions',
+      'Ensure that temporary works (such as formwork, falsework, and temporary propping) are designed, erected, and dismantled safely, with appropriate checks and supervision',
       'A solid copper sheath enclosing copper conductors separated by compressed magnesium oxide mineral powder. Naturally fire-resistant (operates at ~1000 °C briefly), waterproof when terminated with proper glands.',
-      'Stainless steel only.',
-      'Glass fibre insulation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'MICC has a copper outer sheath and copper conductors separated by tightly-compressed magnesium oxide (MgO) powder. The mineral insulation is naturally fire-resistant — MICC can operate at ~1000 °C briefly without circuit failure. Used for the highest-integrity fire-safety circuits (oil rig fire pumps, nuclear plant essential systems, heritage fire alarm). Modern equivalents (FP200, FP400) achieve similar fire performance with easier termination and lower cost.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'FP200 and FP400 are:',
     options: [
-      'PVC cable variants.',
       'Modern fire-resistant cables — silicone-rubber or insulating-tape construction with a stainless-steel screen. Easier to install than MICC, lower cost, BS 5839 compliant for fire alarm and emergency lighting circuits.',
-      'Twin-and-earth grades.',
-      'Underground armoured cables.',
+      'Stays outside the space; maintains communication with entrant; monitors entrant condition; initiates rescue if entrant becomes unresponsive or atmosphere deteriorates; cannot enter the space themselves (risk of becoming second casualty).',
+      'A single conductor only (line or neutral) — clamping around both line and neutral together would give a reading of approximately zero because the currents flow in opposite directions and their magnetic fields cancel',
+      'Because they contain decomposing organic matter producing toxic gases such as hydrogen sulphide, methane, and carbon dioxide, with oxygen depletion and risk of sudden flooding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'FP200 (Prysmian, formerly Pirelli) and FP400 (higher fire-rating variant) use a stainless-steel screen wrap over silicone-rubber or insulating-tape insulated conductors. The insulation chars in a fire but maintains mechanical and electrical integrity for the rated time (PH30, PH60, PH90, PH120 per BS EN 50200). Easier and faster to install than MICC, with PVC-style flexibility. The standard modern choice for fire alarm (BS 5839) and emergency lighting circuits in commercial buildings.',
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'A sub-main runs in a service riser shared with sprinkler and fire-alarm services in a hospital. The cable specification is most likely:',
     options: [
-      'PVC T&E.',
+      'To prove the cpc has a low-resistance path so that under fault the disconnection device operates within the required time (and to prove main and supplementary bonding continuity)',
       'LSZH-sheathed XLPE-insulated SWA — combines mechanical protection (SWA), thermal performance (XLPE 90 °C operation), and low-smoke-zero-halogen sheath for the public-building environment.',
-      'MICC for everything.',
-      'Standard PVC singles in conduit.',
+      'The energy efficiency rating of a building on a scale from A (most efficient) to G (least efficient), along with recommendations for improvement',
+      'You must maintain unwavering faith that you will prevail in the end, AND at the same time, confront the most brutal facts of your current reality — holding both truths simultaneously',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       'BS 7671 A4:2026 Reg 422.3 introduced new requirements for cables on:',
     options: [
-      'All circuits everywhere.',
+      'Identification of foreseeable emergencies, procedures for spill containment, fire response, evacuation routes, communication systems, and roles/responsibilities',
+      'Within escape routes, under stairs in a single-staircase building, in habitable rooms (where avoidable), in roof spaces (where heat/cold extremes apply) or close to gas meters',
       'Circuits supplying emergency lighting, fire detection and other safety services on escape routes — fire-resistant cable + non-combustible supports for the rated duration.',
-      'Domestic ring finals.',
-      'EV charging only.',
+      'Consider replacing the oversized motors with correctly sized alternatives, or fitting VSDs to match motor speed to the actual load requirement, reducing energy consumption and improving the power factor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A4:2026 introduced separate requirements for escape routes (deleting the old BD2/BD3/BD4 condition references). Reg 422.3 covers cable selection in escape routes — fire-resistant cable, non-combustible supports, both for the duration required by the building&rsquo;s fire safety strategy (typically 30, 60, 90 or 120 minutes for a building with phased evacuation). This is a significant tightening from previous editions and changes the cable take-off on every commercial / HMO / public-building project.',
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       'A 4-bedroom domestic dwelling. The lighting circuit serves the upstairs bedrooms via T&E in the floor void. The supply to a smoke alarm chain (BS 5839-6) on the same lighting circuit must be:',
     options: [
-      'Standard PVC T&E — same as the rest of the lighting circuit.',
+      'Investigate the task, review the risk assessment, consider the symptoms as a potential early sign of a WRULD, and refer the worker for occupational health assessment',
+      'Maximise £4,000 Lifetime ISA (if under 40 and saving for first home), contribute £10,000 to pension (gaining higher-rate tax relief), keep £1,000 accessible',
+      'For TN: measured Zs at every furthest point gives a fault current (U0/Zs) that operates the OCPD within the required disconnection time per Reg 411.3.2; OR a 30mA RCD is fitted',
       'A separate fire-resistant cable (or supported by non-combustible support throughout the route, depending on BS 5839-6 grade requirements).',
-      'MICC always.',
-      'No specific requirement.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 5839-6 (domestic and similar fire detection) sets cable requirements for the smoke alarm chain. For Grade D systems (mains-powered with backup) the cable can typically be standard PVC IF the support method is non-combustible throughout (Reg 521.10.202 from A4:2026). For higher Grade C systems (in HMOs and larger dwellings) fire-resistant cable may be required. Always check the building&rsquo;s grade requirement against BS 5839-6 before specifying.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       'Cable selection for an outdoor garden lighting installation (running across a lawn, exposed to UV and rain) is most likely:',
     options: [
-      'PVC T&E in the open.',
       'SWA, possibly LSZH-sheathed, for mechanical protection and UV resistance, with IP-rated terminations and weatherproof glanding.',
-      'Standard PVC singles.',
-      'Bell-wire.',
+      'A covered walkway (fan or tunnel) must be provided to protect pedestrians from falling objects',
+      'Refer to the spec/drawings/BS 7671 — the standards arbitrate; if still unclear, raise an RFI to the designer',
+      'Forced ventilation should be maintained or increased to improve the atmosphere for both the casualty and the rescue team',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Outdoor garden installations need mechanical protection (lawnmowers, garden tools, frost heave) and UV-resistant outer sheath. SWA is the standard choice — direct-buried or surface-clipped to a fence with stainless P-clips. LSZH sheath for premises near densely-occupied buildings. Glands and terminations IP66 minimum. Standard PVC T&E will degrade in sunlight within months and has no mechanical protection.',
   },

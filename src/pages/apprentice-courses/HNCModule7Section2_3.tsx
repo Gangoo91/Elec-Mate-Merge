@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'safety-services-definition',
     question: 'What are safety services as defined in BS 7671?',
     options: [
-      'Any electrical service in a building',
       'Services essential for safety of persons in emergency conditions',
-      'Services that protect electrical equipment',
-      'Services installed in fire compartments',
+      'Inflammation of the skin caused or made worse by substances encountered at work',
+      'The physical key transfer sequence between locks',
+      'Potentially dangerous and urgent remedial action required',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Safety services are electrical services essential for the safety of persons in the event of emergency conditions such as fire, requiring maintained power supply for evacuation, firefighting, and rescue operations.',
   },
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'fire-rating-standard',
     question: 'Which standard specifies fire-resistant cable requirements for UK installations?',
     options: [
-      'BS 7671 only',
+      'Insulation resistance test between L-E and N-E',
       'BS 7846 for fire performance classification',
-      'BS 5839 for fire detection',
-      'IEC 60364 for wiring systems',
+      'Excellent electrical conductivity',
+      'To keep projects on schedule and reduce conflict',
     ],
     correctIndex: 1,
     explanation:
@@ -53,8 +53,13 @@ const quickCheckQuestions = [
     id: 'changeover-time',
     question:
       'What is the maximum changeover time for automatic transfer to safety supply for emergency lighting?',
-    options: ['0.5 seconds', '5 seconds', '15 seconds', '60 seconds'],
-    correctIndex: 1,
+    options: [
+      '60 seconds',
+      '15 seconds',
+      '0.5 seconds',
+      '5 seconds',
+    ],
+    correctIndex: 3,
     explanation:
       'BS 7671 Regulation 560.6.12 requires safety services to be available within specified times - typically 5 seconds maximum for emergency lighting to ensure safe evacuation conditions.',
   },
@@ -62,12 +67,12 @@ const quickCheckQuestions = [
     id: 'cable-rating-duration',
     question: 'A cable rated PH60 will maintain circuit integrity for how long?',
     options: [
+      '120 minutes under fire conditions',
+      '90 minutes under fire conditions',
       '30 minutes under fire conditions',
       '60 minutes under fire conditions',
-      '90 minutes under fire conditions',
-      '120 minutes under fire conditions',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The PH classification indicates the duration in minutes: PH60 means the cable will maintain circuit integrity for 60 minutes when exposed to fire conditions as tested to BS 8491.',
   },
@@ -92,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: "What does the 'Enhanced' classification mean for fire-resistant cables to BS 8519?",
     options: [
-      'Higher current carrying capacity',
-      'Improved electromagnetic compatibility',
+      'Within steel conduit with mineral insulated cable',
+      'Evacuation time allowance for larger buildings',
       'Circuit integrity maintained with water spray application',
-      'Reduced smoke emission',
+      'BS EN 60947-6-1 for transfer switching equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -105,7 +110,12 @@ const quizQuestions = [
     id: 3,
     question:
       'For a hospital critical care area, what minimum fire rating would typically be required for safety service cables?',
-    options: ['PH30 (30 minutes)', 'PH60 (60 minutes)', 'PH90 (90 minutes)', 'PH120 (120 minutes)'],
+    options: [
+      'PH90 (90 minutes)',
+      'PH30 (30 minutes)',
+      'PH60 (60 minutes)',
+      'PH120 (120 minutes)',
+    ],
     correctAnswer: 3,
     explanation:
       'Critical healthcare facilities typically require PH120 rated cables to maintain life safety systems for 2 hours, allowing extended evacuation times for vulnerable patients and continued operation of critical medical equipment.',
@@ -114,12 +124,12 @@ const quizQuestions = [
     id: 4,
     question: 'An Automatic Transfer Switch (ATS) must comply with which standard?',
     options: [
-      'BS 7671 only',
       'BS EN 60947-6-1 for transfer switching equipment',
-      'BS 7846 for cable systems',
-      'BS 5839 for fire systems',
+      'Circuit integrity maintained with water spray application',
+      'Within steel conduit with mineral insulated cable',
+      'Evacuation time allowance for larger buildings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Automatic Transfer Switches must comply with BS EN 60947-6-1 which specifies requirements for transfer switching equipment including operating times, withstand capability, and coordination requirements.',
   },
@@ -127,12 +137,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which source classification provides power with zero break during changeover?',
     options: [
-      'Non-automatic supply',
       'Automatic supply with short break',
-      'Automatic supply with medium break',
       'Uninterruptible supply (no-break)',
+      'Non-automatic supply',
+      'Automatic supply with medium break',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'An uninterruptible supply (no-break) uses UPS or rotating machinery to provide continuous power with zero interruption. This is required for critical loads that cannot tolerate any supply interruption.',
   },
@@ -140,10 +150,10 @@ const quizQuestions = [
     id: 6,
     question: "What is the purpose of the 'two-hour rule' in BS 7671 for safety services?",
     options: [
-      'Maximum testing duration',
-      'Minimum battery capacity for UPS',
+      'BS EN 60947-6-1 for transfer switching equipment',
+      'Uninterruptible supply (no-break)',
       'Evacuation time allowance for larger buildings',
-      'Generator start-up time',
+      'Circuit integrity maintained with water spray application',
     ],
     correctAnswer: 2,
     explanation:
@@ -153,12 +163,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which cable installation method provides the highest fire resistance?',
     options: [
-      'Clipped direct to combustible surface',
+      'BS EN 60947-6-1 for transfer switching equipment',
+      'Circuit integrity maintained with water spray application',
+      'Evacuation time allowance for larger buildings',
       'Within steel conduit with mineral insulated cable',
-      'In plastic trunking',
-      'In suspended ceiling void',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mineral insulated cables within steel conduit provide the highest fire resistance. MICC is inherently fire-resistant, and steel conduit adds mechanical protection and additional fire performance.',
   },
@@ -166,8 +176,13 @@ const quizQuestions = [
     id: 8,
     question:
       'How often must automatic transfer switches be functionally tested according to best practice?',
-    options: ['Daily', 'Weekly', 'Monthly', 'Annually'],
-    correctAnswer: 2,
+    options: [
+      'Monthly',
+      'Annually',
+      'Daily',
+      'Weekly',
+    ],
+    correctAnswer: 0,
     explanation:
       'Monthly functional testing of ATS units is recommended to verify correct operation. This includes simulating mains failure, verifying transfer to generator, and retransfer on mains restoration.',
   },
@@ -175,7 +190,12 @@ const quizQuestions = [
     id: 9,
     question:
       'What is the maximum voltage drop permitted for safety service circuits under normal conditions?',
-    options: ['2%', '3%', '4%', '5%'],
+    options: [
+      '2%',
+      '3%',
+      '4%',
+      '5%',
+    ],
     correctAnswer: 1,
     explanation:
       'BS 7671 recommends maximum 3% voltage drop for lighting circuits. For safety services, maintaining adequate voltage is critical to ensure equipment operates correctly during emergencies.',
@@ -183,8 +203,13 @@ const quizQuestions = [
   {
     id: 10,
     question: 'Which safety system typically requires the fastest changeover time?',
-    options: ['Emergency lighting', 'Sprinkler pump', 'Smoke extract fan', 'Fire alarm panel'],
-    correctAnswer: 3,
+    options: [
+      'Emergency lighting',
+      'Sprinkler pump',
+      'Fire alarm panel',
+      'Smoke extract fan',
+    ],
+    correctAnswer: 2,
     explanation:
       'Fire alarm panels typically require the fastest changeover (&lt;0.5s) as they must maintain continuous monitoring capability. Loss of power, even momentarily, could miss a detection event.',
   },
@@ -192,8 +217,13 @@ const quizQuestions = [
     id: 11,
     question:
       'For fire-resistant cable installations, what is the maximum support spacing for horizontal runs?',
-    options: ['150mm', '300mm', '450mm', '600mm'],
-    correctAnswer: 1,
+    options: [
+      '150mm',
+      '600mm',
+      '450mm',
+      '300mm',
+    ],
+    correctAnswer: 3,
     explanation:
       'Fire-resistant cables should be supported at maximum 300mm centres horizontally (450mm vertically) to prevent cable sagging and potential circuit failure under fire conditions when insulation softens.',
   },
@@ -201,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'What documentation must be maintained for safety service installations?',
     options: [
-      'Installation certificate only',
       'Test certificates and maintenance records throughout operational life',
-      'Manufacturer datasheets only',
-      'Initial commissioning report only',
+      'Complete sequences of operations and system integration',
+      'To account for all personnel and prevent re-entry',
+      'Lower level hazards including irritant, skin sensitiser, or harmful',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Comprehensive documentation including installation certificates, commissioning records, test results, and ongoing maintenance records must be maintained throughout the operational life as evidence of continued compliance.',
   },

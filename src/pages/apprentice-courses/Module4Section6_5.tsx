@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Name one type of mechanical defect and one wiring defect.',
     options: [
-      'Loose fixings and incorrect terminations',
-      'Overloading and moisture',
       'Wrong cable size and polarity errors',
+      'Loose fixings and incorrect terminations',
       'Poor containment and design errors',
+      'Overloading and moisture',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Mechanical defects include loose fixings, damaged accessories, and poor containment support. Wiring defects include incorrect terminations, polarity errors, and broken CPC connections.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why must all rectification work be re-tested?',
     options: [
-      'To comply with regulations',
+      'Recording your progress makes you more likely to improve',
+      'Listen empathically to understand the client\\\\\\\'s full concern before responding',
       'To confirm the defect has been properly corrected and safety restored',
-      'To satisfy the client',
-      'To complete documentation',
+      'Excessive circulating currents and possible damage',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Re-testing after rectification ensures that the defect has been properly corrected, safety has been restored, and the installation still complies with BS 7671 requirements.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What regulation places a duty to maintain safe electrical systems?',
     options: [
-      'BS 7671',
+      'Like-for-like socket replacement',
+      'The budgeted cost of work actually performed',
+      'DC rapid chargers deliver DC to the vehicle',
       'Electricity at Work Regulations 1989',
-      'Building Regulations',
-      'Health and Safety at Work Act',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The Electricity at Work Regulations 1989 place a statutory duty to maintain electrical systems in a safe condition and prevent danger from electrical installations.',
   },
@@ -59,7 +59,12 @@ const Module4Section6_5 = () => {
     {
       id: 1,
       question: 'Which of the following is a common insulation defect?',
-      options: ['Loose fixing', 'Damaged sheathing', 'Wrong accessory type', 'Overloading'],
+      options: [
+        'Loose fixing',
+        'Damaged sheathing',
+        'Wrong accessory type',
+        'Overloading',
+      ],
       correctAnswer: 1,
       explanation:
         'Damaged sheathing is a common insulation defect that can expose conductors and create safety hazards including electric shock and short circuit risks.',
@@ -67,8 +72,13 @@ const Module4Section6_5 = () => {
     {
       id: 2,
       question: "True or False: Defects that don't affect safety can be left uncorrected.",
-      options: ['True', 'False', 'Only minor defects', 'Only cosmetic issues'],
-      correctAnswer: 1,
+      options: [
+        'Only minor defects',
+        'True',
+        'False',
+        'Only cosmetic issues',
+      ],
+      correctAnswer: 2,
       explanation:
         'False - all defects must be rectified before energisation to ensure long-term safety, compliance, and professional standards, regardless of their immediate impact.',
     },
@@ -76,12 +86,12 @@ const Module4Section6_5 = () => {
       id: 3,
       question: 'What is the first step before rectifying a wiring defect?',
       options: [
-        'Test the circuit',
+        'Insert meter in series with the circuit',
+        'Heat dissipation is severely restricted',
+        'Work-Related Upper Limb Disorder',
         'Isolate and lock off the circuit',
-        'Document the defect',
-        'Gather replacement parts',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'The first step is always to isolate and lock off the circuit to ensure safe working conditions before beginning any rectification work.',
     },
@@ -89,12 +99,12 @@ const Module4Section6_5 = () => {
       id: 4,
       question: 'Name two tools that may assist in defect identification.',
       options: [
-        'Hammer and chisel',
         'Continuity tester and insulation resistance tester',
-        'Tape measure and pencil',
-        'Drill and screwdriver',
+        'The contractor who employs the injured worker',
+        'An explosive release of electrical energy',
+        'Grid-connected or island-mode inverters (PV systems)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Continuity testers and insulation resistance testers are essential tools for identifying electrical defects through systematic testing of circuit integrity and insulation properties.',
     },
@@ -102,10 +112,10 @@ const Module4Section6_5 = () => {
       id: 5,
       question: 'Which regulation requires installations to be maintained in a safe condition?',
       options: [
-        'BS 7671',
+        'Yes, including calibration date',
         'Electricity at Work Regulations 1989',
-        'BS EN 61439',
-        'Building Regulations Part M',
+        'Meets European safety standards',
+        '2-9 units depending on system capacity',
       ],
       correctAnswer: 1,
       explanation:
@@ -115,12 +125,12 @@ const Module4Section6_5 = () => {
       id: 6,
       question: 'Why should replacement cables cover the full damaged section?',
       options: [
-        'To save money',
+        'Cable length × mΩ/m values for both conductors',
+        'To reduce cable runs and installation costs',
         'To ensure reliability and avoid unsafe splices',
-        'To improve appearance',
-        'To reduce installation time',
+        'Achieving the most balanced load distribution possible',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Replacing the full damaged section ensures reliability and avoids potentially unsafe splices that could create future failure points or safety hazards.',
     },
@@ -128,12 +138,12 @@ const Module4Section6_5 = () => {
       id: 7,
       question: 'What is one way to prevent recurrence of polarity defects?',
       options: [
-        'Use different cable colours',
+        'To record historical data for analysis',
+        'A refurbishment and demolition asbestos survey (R&D survey)',
+        'Enhanced IP ratings and RCD protection',
         'Double-check conductor connections before final fix',
-        'Install additional protection',
-        'Use higher rated components',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Double-checking conductor connections before final fixing helps prevent polarity errors by ensuring line, neutral, and earth connections are correctly identified and terminated.',
     },
@@ -141,12 +151,12 @@ const Module4Section6_5 = () => {
       id: 8,
       question: 'Why should you address only one fault at a time during rectification?',
       options: [
-        'To save time',
         'To confirm each fault is resolved before moving on',
-        'To reduce costs',
-        'To satisfy regulations',
+        '"EICR_2024_Thompson_42-High-Street.pdf"',
+        'Proved on a known live source before AND after use',
+        'Permit to work details and compliance with site procedures',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Addressing one fault at a time allows you to confirm each issue is properly resolved and re-tested before moving to the next, ensuring systematic and thorough fault correction.',
     },
@@ -155,10 +165,10 @@ const Module4Section6_5 = () => {
       question:
         'Give one reason why photographs should be taken before and after defect correction.',
       options: [
-        'For training purposes',
+        'To prevent unexpected energisation during work',
         'To provide a clear record and proof of corrective action',
-        'For insurance claims',
-        'To show the client',
+        'To ensure safe working by identifying which circuits need to be isolated',
+        'Disconnect all appliances and attempt to reset',
       ],
       correctAnswer: 1,
       explanation:
@@ -168,8 +178,13 @@ const Module4Section6_5 = () => {
       id: 10,
       question:
         'True or False: Minor cosmetic defects (like a crooked switch) never need rectification.',
-      options: ['True', 'False', 'Only if the client complains', 'Only on commercial jobs'],
-      correctAnswer: 1,
+      options: [
+        'True',
+        'Only on commercial jobs',
+        'False',
+        'Only if the client complains',
+      ],
+      correctAnswer: 2,
       explanation:
         'False - cosmetic defects still need rectification as they affect client satisfaction, indicate poor workmanship, and reflect on professional standards.',
     },

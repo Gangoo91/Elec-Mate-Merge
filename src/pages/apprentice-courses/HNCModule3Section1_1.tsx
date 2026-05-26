@@ -32,15 +32,25 @@ const quickCheckQuestions = [
   {
     id: 'uk-voltage',
     question: 'What is the standard UK single-phase supply voltage (RMS)?',
-    options: ['220V', '230V', '240V', '250V'],
-    correctIndex: 1,
+    options: [
+      '240V',
+      '250V',
+      '230V',
+      '220V',
+    ],
+    correctIndex: 2,
     explanation:
       'UK single-phase supply is 230V AC RMS (±10% tolerance). This was harmonised with European standards, though historically the UK used 240V.',
   },
   {
     id: 'power-formula',
     question: 'Which formula correctly relates power, voltage and current?',
-    options: ['P = V/I', 'P = V × I', 'P = V + I', 'P = I/V'],
+    options: [
+      'P = V/I',
+      'P = V × I',
+      'P = V + I',
+      'P = I/V',
+    ],
     correctIndex: 1,
     explanation:
       'Power (in Watts) equals Voltage (in Volts) multiplied by Current (in Amps): P = V × I. This fundamental relationship is essential for all load calculations.',
@@ -48,16 +58,26 @@ const quickCheckQuestions = [
   {
     id: 'heater-current',
     question: 'A 3kW heater operates at 230V. What current does it draw?',
-    options: ['7.5A', '10A', '13A', '16A'],
-    correctIndex: 2,
+    options: [
+      '13A',
+      '16A',
+      '7.5A',
+      '10A',
+    ],
+    correctIndex: 0,
     explanation:
       'Using I = P/V: I = 3000W ÷ 230V = 13.04A ≈ 13A. This is why 3kW heaters typically require a 16A or 20A circuit.',
   },
   {
     id: 'resistance-unit',
     question: 'What is the SI unit of electrical resistance?',
-    options: ['Ampere', 'Volt', 'Ohm', 'Watt'],
-    correctIndex: 2,
+    options: [
+      'Watt',
+      'Ohm',
+      'Volt',
+      'Ampere',
+    ],
+    correctIndex: 1,
     explanation:
       'Resistance is measured in Ohms (Ω), named after Georg Ohm who discovered the relationship between voltage, current and resistance.',
   },
@@ -68,27 +88,37 @@ const quizQuestions = [
     id: 1,
     question: 'What is voltage?',
     options: [
-      'The rate of flow of electric charge',
-      'The opposition to current flow',
+      'PWM (chopped) approximating a sine wave at variable frequency',
       'The electrical potential difference between two points',
-      'The rate of energy transfer',
+      'To navigate around obstacles while maintaining parallel runs',
+      'Providing networking, influence, and development opportunities',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Voltage (V) is the electrical potential difference between two points, measured in Volts. It represents the 'pressure' that pushes electrons through a circuit.",
   },
   {
     id: 2,
     question: 'If a circuit has a resistance of 46Ω and draws 5A, what is the voltage across it?',
-    options: ['9.2V', '23V', '41V', '230V'],
-    correctAnswer: 3,
+    options: [
+      '41V',
+      '9.2V',
+      '230V',
+      '23V',
+    ],
+    correctAnswer: 2,
     explanation: "Using Ohm's Law: V = I × R = 5A × 46Ω = 230V",
   },
   {
     id: 3,
     question: 'What is the relationship between power, current and resistance?',
-    options: ['P = I/R', 'P = I²R', 'P = R/I²', 'P = IR'],
-    correctAnswer: 1,
+    options: [
+      'P = R/I²',
+      'P = I/R',
+      'P = IR',
+      'P = I²R',
+    ],
+    correctAnswer: 3,
     explanation:
       'P = I²R is one of the power equations derived from combining P = VI and V = IR. Power increases with the square of current, which is why cable sizing is critical.',
   },
@@ -96,16 +126,26 @@ const quizQuestions = [
     id: 4,
     question:
       'A commercial building has 50 LED luminaires each rated at 45W. What is the total lighting load?',
-    options: ['1125W', '2250W', '2.25kW', 'Both B and C are correct'],
-    correctAnswer: 3,
+    options: [
+      'Both B and C are correct',
+      '2250W',
+      '2.25kW',
+      '1125W',
+    ],
+    correctAnswer: 0,
     explanation:
       'Total power = 50 × 45W = 2250W = 2.25kW. Both answers represent the same value in different units.',
   },
   {
     id: 5,
     question: 'What maximum voltage is permitted for SELV circuits in bathrooms?',
-    options: ['12V AC', '24V DC', '50V AC or 120V DC', '230V with RCD protection'],
-    correctAnswer: 2,
+    options: [
+      '24V DC',
+      '50V AC or 120V DC',
+      '230V with RCD protection',
+      '12V AC',
+    ],
+    correctAnswer: 1,
     explanation:
       'SELV (Separated Extra-Low Voltage) is limited to 50V AC or 120V DC ripple-free. This provides protection against electric shock in wet environments.',
   },
@@ -113,8 +153,13 @@ const quizQuestions = [
     id: 6,
     question:
       'A 2.5mm² cable has a resistance of 7.41mΩ/m. What is the total resistance of 30m of this cable (go and return)?',
-    options: ['0.222Ω', '0.444Ω', '0.111Ω', '7.41Ω'],
-    correctAnswer: 1,
+    options: [
+      '0.222Ω',
+      '0.111Ω',
+      '0.444Ω',
+      '7.41Ω',
+    ],
+    correctAnswer: 2,
     explanation:
       'Total length = 30m × 2 (go and return) = 60m. Total R = 60m × 7.41mΩ/m = 444.6mΩ = 0.445Ω ≈ 0.444Ω',
   },
@@ -122,8 +167,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the typical power density (W/m²) used for general office lighting calculations?',
-    options: ['5 W/m²', '10-12 W/m²', '25-30 W/m²', '50 W/m²'],
-    correctAnswer: 1,
+    options: [
+      '5 W/m²',
+      '50 W/m²',
+      '25-30 W/m²',
+      '10-12 W/m²',
+    ],
+    correctAnswer: 3,
     explanation:
       'Modern LED office lighting typically uses 10-12 W/m² to achieve 300-500 lux. This has reduced significantly from the 15-20 W/m² common with fluorescent lighting.',
   },
@@ -131,8 +181,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A three-phase supply delivers 100kW at 400V line voltage with 0.85 power factor. What is the line current?',
-    options: ['144A', '170A', '250A', '295A'],
-    correctAnswer: 1,
+    options: [
+      '170A',
+      '250A',
+      '144A',
+      '295A',
+    ],
+    correctAnswer: 0,
     explanation:
       'Using P = √3 × VL × IL × cosφ: IL = P / (√3 × VL × cosφ) = 100000 / (1.732 × 400 × 0.85) = 170A',
   },
@@ -140,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why is P = I²R particularly important for cable sizing?',
     options: [
-      'Higher current cables are cheaper',
+      'Insulation, continuity, RCD, and loop impedance testing',
       'Power loss increases with the square of current, causing heating',
-      'It determines the cable colour coding',
-      'It is required for certification',
+      'To avoid conflicts like lights switching on at full brightness in bright daylight',
+      'Ventricular fibrillation (VF) and pulseless ventricular tachycardia (pVT)',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,7 +207,12 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What energy does a 3kW immersion heater consume in 4 hours?',
-    options: ['0.75 kWh', '3 kWh', '12 kWh', '12000 J'],
+    options: [
+      '0.75 kWh',
+      '3 kWh',
+      '12 kWh',
+      '12000 J',
+    ],
     correctAnswer: 2,
     explanation:
       'Energy = Power × Time = 3kW × 4h = 12 kWh. This is the unit measured by electricity meters for billing purposes.',

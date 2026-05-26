@@ -40,8 +40,13 @@ const checks = [
     id: 'tne-clip-spacing',
     question:
       'For 2.5 mm² T&E clipped direct on a horizontal run, the typical maximum interval between clips per OSG Table 4.5 is approximately:',
-    options: ['100 mm', '250 mm', '600 mm', '1000 mm'],
-    correctIndex: 1,
+    options: [
+      '600 mm',
+      '100 mm',
+      '1000 mm',
+      '250 mm',
+    ],
+    correctIndex: 3,
     explanation:
       'OSG Table 4.5 (cable support intervals) gives ~250 mm horizontal for typical small-CSA T&E clipped to a wall or ceiling. Vertical the interval can extend to ~400 mm because gravity pulls less perpendicular load on the clip. Going beyond these intervals lets the cable sag, which puts mechanical stress on terminations (522.8.5) and looks scrappy.',
   },
@@ -50,12 +55,12 @@ const checks = [
     question:
       'For a cold bend on 25 mm PVC conduit, the minimum bend radius is approximately:',
     options: [
-      'Same as the conduit OD (1× OD).',
-      '3× OD.',
       '6× OD (so ~150 mm radius for 25 mm conduit).',
-      '12× OD.',
+      'Remove from service immediately',
+      'Ceiling 0.7, Walls 0.5, Floor 0.2',
+      'True (but must be recorded as a limitation)',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Cold bend radius for PVC conduit is typically 6× the outside diameter — for 25 mm OD that is ~150 mm radius (or ~300 mm bend diameter). Tighter and the conduit kinks and the cable inside no longer pulls. Heat-bend if you need tighter, but most jobs use formed bends or pull-elbows.',
   },
@@ -64,12 +69,12 @@ const checks = [
     question:
       'BS 7671 Reg 521.10.202 (introduced via A4:2026 / Amendment 4) requires non-combustible cable supports against premature collapse in fire — applying:',
     options: [
-      'Only on escape routes.',
-      'Only in commercial premises.',
+      'A framework where treatment is matched to severity, starting with least intensive and stepping up if needed',
       'Throughout the installation, not just on escape routes (A4:2026 expanded the previous escape-route-only requirement).',
-      'Only above ceilings.',
+      'Letterforms are simpler with fewer decorative strokes, helping some readers (e.g. dyslexic) distinguish characters',
+      'Noise, exhaust emissions, fuel storage bunding, oil containment and planning permission',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'A4:2026 made this a significant change — previously the requirement applied only on escape routes. Now Reg 521.10.202 requires cables to be adequately supported against premature collapse in fire throughout the installation. In practice this means metal clips or fire-rated supports for clipped cables, not just plastic cable ties along ceiling voids. Worth re-reading the regulation in full when planning a fix-out.',
   },
@@ -80,7 +85,12 @@ const quizQuestions = [
     id: 1,
     question:
       'For 6 mm² T&E clipped direct vertically (e.g. a feeder drop), typical maximum support interval is approximately:',
-    options: ['200 mm', '400 mm', '600 mm', '1200 mm'],
+    options: [
+      '200 mm',
+      '400 mm',
+      '600 mm',
+      '1200 mm',
+    ],
     correctAnswer: 1,
     explanation:
       'OSG Table 4.5 gives ~400 mm for vertical T&E in the 4-6 mm² range. The cable&rsquo;s self-weight is the limiting factor — vertical clips carry less perpendicular load than horizontal, so intervals can be longer. Always check the OSG table for the specific CSA and orientation.',
@@ -90,12 +100,12 @@ const quizQuestions = [
     question:
       'Steel conduit run on a wall, 1.5 m intervals between saddles. Standard practice for change-of-direction support is:',
     options: [
-      'No additional support at bends.',
+      'PPE must be maintained in an efficient state, in efficient working order, and in good repair',
+      'Biodiversity net gain of at least 10% must be delivered by most new developments',
       'A saddle within ~150-200 mm of every box, fitting and change of direction.',
-      'A saddle at every metre regardless of bends.',
-      'Glue at the bend.',
+      'Electrical systems maintained to prevent danger, with records providing evidence of compliance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Every box, fitting and change of direction needs a saddle within ~150-200 mm to support the conduit at the discontinuity. Without it, the bend or fitting takes the full mechanical load of the unsupported run beyond — over time the threads work loose and the joint pulls apart.',
   },
@@ -104,12 +114,12 @@ const quizQuestions = [
     question:
       'PVC trunking has lid clips that secure the cover to the body. On a long horizontal run, lid clips should be:',
     options: [
-      'One per length only.',
+      '0.35 Ω — the recognised maximum for PME systems used in design where no DNO declared figure is available.',
+      'To provide a formal documented system that authorises specific work at specific locations under defined safety conditions',
+      'The regulations do not specify a minimum temperature; risk assessment should consider the effects of cold, ice, and wind chill',
       'One every ~600 mm — closer at ends and at any point where the lid might be lifted by passing traffic.',
-      'Glued.',
-      'Snapped on by hand only, no clips.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Trunking lids without enough clips bow out, gap, or fall off. ~600 mm spacing is a typical baseline; tighter at exposed ends, in high-traffic areas, on vertical runs (gravity pulls the lid down), and around fittings. Fit the clips that come with the trunking — they are sized for the lid section and snap into the trunking body.',
   },
@@ -118,12 +128,12 @@ const quizQuestions = [
     question:
       'Cable basket runs in a service riser typically need expansion provision on:',
     options: [
-      'Every joint.',
       'Long vertical or horizontal steel runs (>30 m) — typically using slotted bolt holes or sliding splices to allow thermal expansion.',
-      'Plastic basket only.',
-      'No expansion needed for basket.',
+      'No - against public policy to insure the cost of breaking the law. PI / EL covers legal defence costs and civil claims but NOT criminal fines.',
+      'Continuity of protective conductors (Regulation 643.2.1), including main and supplementary bonding',
+      'Because power failure may occur without fire, and fire may occur without triggering alarms immediately',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Steel cable basket and tray expand significantly with temperature change — a 30 m run can expand 10-15 mm between cold and warm conditions. Splice plates with slotted bolt holes, or expansion-joint sections every ~30 m, allow that movement without buckling the run or stressing supports. Aluminium basket expands roughly twice as much.',
   },
@@ -132,12 +142,12 @@ const quizQuestions = [
     question:
       'Bend radius for 6 mm² T&E (twin and CPC) is typically:',
     options: [
-      'No minimum.',
-      '3× cable overall diameter.',
+      'Forgetting to bring necessary tools to site',
       '6× cable overall diameter (factory minimum).',
-      '12× cable overall diameter.',
+      'The type of hazard posed by the substance',
+      'To prevent unauthorised access to the work area',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'IET guidance (Appendix to OSG and IET On-Site Guide) gives 6× the overall cable diameter as the minimum bend radius for non-armoured cables like T&E. SWA is 8×; MICC is 12×. Tighter than the minimum and the conductor strain can damage the insulation; instant-fail on a periodic IR test six months later.',
   },
@@ -146,10 +156,10 @@ const quizQuestions = [
     question:
       'A T&E cable runs along a ceiling void in a flat above a commercial unit. Reg 521.10.202 (A4:2026) means it must be supported by:',
     options: [
-      'Plastic cable ties only.',
-      'Plastic ties OR metal clips — both are equivalent.',
+      'The most effective type of preventive action — elimination removes the failure mode entirely rather than relying on human intervention to manage it',
+      'EAWR Reg 4(2) — the duty to maintain systems in safe condition. This duty does not stop when an inspection finds a defect; it continues until the defect is remedied.',
       'Non-combustible supports (metal clips, metal cable ties, or fire-rated systems) so cables do not prematurely collapse in fire — applies throughout the installation now, not just escape routes.',
-      'No special requirement for cable support.',
+      'Unlimited fine and/or up to 2 years imprisonment for individuals; unlimited fine for companies. Sentencing follows the Definitive Guideline (HSE Sentencing Council, 2016) and turns on culpability, harm and turnover.',
     ],
     correctAnswer: 2,
     explanation:
@@ -160,12 +170,12 @@ const quizQuestions = [
     question:
       'A 32 m horizontal run of 25 mm steel conduit needs an expansion coupler because:',
     options: [
-      'BS 7671 says so.',
+      'To create realistic expectations about progress, disruption, timeline, and finish quality, reducing the gap between expectation and reality that causes complaints',
+      'Hand the schedule to the supervisor for sign-off, then lift it into the formal design pack (cable schedule, single-line, EIC issue draft) before procurement starts.',
+      'Credits that developers can purchase from the government as a last resort to meet their BNG obligation when on-site and off-site options have been exhausted',
       'Steel expands ~12 µm per m per °C; over 32 m a 30°C swing gives ~11 mm of expansion that has to be accommodated to prevent stress on the saddles and threaded joints.',
-      'Conduit always needs an expansion coupler.',
-      'It is decorative.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Steel coefficient of thermal expansion is roughly 12 µm/m/°C. A 32 m steel conduit run subject to a 30°C temperature swing expands ~12 mm. Without an expansion coupler somewhere in that length, the movement loads up the saddles and the threaded joints, eventually pulling the run apart. Standard practice — expansion coupler every ~30 m of long horizontal or vertical steel run.',
   },
@@ -174,12 +184,12 @@ const quizQuestions = [
     question:
       'Cable cleats (heavy-duty cable supports for SWA on tray) are used because:',
     options: [
-      'They look professional.',
       'They restrain the cable against the considerable mechanical forces created by short-circuit fault currents in heavy cables (sub-mains, distribution).',
-      'They replace the gland.',
-      'No reason — cable ties would do.',
+      'Share your knowledge and experience patiently, explain the reasoning behind procedures (not just the steps), supervise safety-critical tasks, and encourage them to ask questions',
+      'Set out who can work alone, what risk assessment applies, communication/check-in arrangements, and high-risk activities that need a buddy',
+      'Use intrinsically safe (Ex i) test equipment, obtain a permit-to-work, gas-test the area, wear anti-static PPE, and only use methods compliant with the area\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s zone classification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When a heavy SWA or single-core cable carries a short-circuit fault current, the mechanical force from the magnetic field on the conductor can throw the cable several inches sideways. Cable cleats (rated to a kA force) restrain that movement. For sub-mains and distribution cables, cleats are mandatory rather than just good practice. Cable ties would snap on the first fault.',
   },

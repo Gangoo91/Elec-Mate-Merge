@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'point-to-point-def',
     question: 'What is the primary purpose of point-to-point verification in BMS commissioning?',
     options: [
-      'To test network connectivity',
       'To verify each field device connects to the correct controller address',
-      'To calibrate all sensors',
-      'To test the graphics interface',
+      'The employer or person in control of the premises',
+      'Client, principal designer, principal contractor, designers, and contractors',
+      'Formal change notifications, updated drawings, impact assessments, and approval records',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Point-to-point verification confirms that each field device (sensor, actuator, switch) is correctly wired to its designated controller input/output address as per the points schedule.',
   },
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'actuator-stroke',
     question: 'What does actuator stroke testing verify?',
     options: [
-      'The speed of actuator movement only',
+      'AC sinusoidal and pulsating DC residual currents',
       'Full travel from 0-100% and correct direction of operation',
-      'Only the electrical connections',
-      'The firmware version of the actuator',
+      'Flexible section or loop to accommodate movement',
+      'An ID card confirming qualifications and competence',
     ],
     correctIndex: 1,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'graphics-testing',
     question: 'During graphics testing, what must be verified for each displayed value?',
     options: [
-      'Only that it appears on screen',
+      'The basic unit of matter consisting of protons, neutrons, and electrons',
       'Correct value, units, and real-time update from field devices',
-      'The colour scheme only',
-      'Only the font size',
+      'Prevention costs less than correction; correction costs less than failure',
+      'Both heating and cooling loads where applicable',
     ],
     correctIndex: 1,
     explanation:
@@ -70,8 +70,13 @@ const quickCheckQuestions = [
     id: 'trend-logging',
     question:
       'What is the typical minimum data retention period for BMS trend logs in commercial buildings?',
-    options: ['1 week', '1 month', '3-12 months', '5 years'],
-    correctIndex: 2,
+    options: [
+      '3-12 months',
+      '1 month',
+      '5 years',
+      '1 week',
+    ],
+    correctIndex: 0,
     explanation:
       'Commercial buildings typically require 3-12 months of trend data retention for energy analysis, fault diagnosis, and compliance verification. Critical systems may require longer retention.',
   },
@@ -82,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'What document is essential for conducting point-to-point verification?',
     options: [
-      'The building floor plans',
+      'Approximately half a million or more',
       'The points schedule with controller addresses',
-      'The electrical schematic only',
-      'The architectural drawings',
+      'Regular updates, monitoring, and periodic restarts',
+      'The cable bend radius requirements and quantity of cables',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'When testing a temperature sensor during commissioning, what should be verified?',
     options: [
-      'Only that it displays a value',
+      'Completion of a PASMA-approved training course',
+      'Prosecution, fines, insurance denial, and personal liability',
       'Reading accuracy, response time, and correct scaling',
-      'Only the wiring connections',
-      'Only the physical mounting',
+      'To provide a known voltage source to prove a voltage indicator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Temperature sensor verification includes checking reading accuracy against a reference, verifying correct scaling (e.g., 4-20mA to 0-50°C), response time to changes, and appropriate filtering.',
   },
@@ -108,8 +113,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A control valve actuator should close when receiving what signal in a fail-safe heating application?',
-    options: ['Maximum signal (100%)', 'No signal (0%)', '50% signal', 'Pulsed signal'],
-    correctAnswer: 1,
+    options: [
+      '50% signal',
+      'Maximum signal (100%)',
+      'Pulsed signal',
+      'No signal (0%)',
+    ],
+    correctAnswer: 3,
     explanation:
       'In fail-safe heating applications, control valves should close on loss of signal (0%) to prevent overheating. This is tested by removing the control signal and verifying the valve closes.',
   },
@@ -118,12 +128,12 @@ const quizQuestions = [
     question:
       'During functional performance testing of an AHU, what sequence should be tested first?',
     options: [
-      'Cooling sequence',
       'Safety interlocks and fan proving',
-      'Humidity control',
-      'Scheduling',
+      'Voltage drop calculations',
+      'Switches, contacts, and alarm devices',
+      'Criminal and civil liability possible',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Safety interlocks must be tested first to ensure protective functions work correctly. This includes fire damper proving, filter differential pressure trips, and fan status proving.',
   },
@@ -131,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the purpose of alarm testing in BMS commissioning?',
     options: [
-      'To annoy the building occupants',
+      'Designs building systems at a higher technical/professional level',
       'To verify alarms activate at correct setpoints and route to appropriate recipients',
-      'To test the speakers only',
-      'To check the network bandwidth',
+      'Locations with specific risks requiring additional protection measures',
+      'Radial is designed as one-way feed, broken ring is faulty two-way feed',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,7 +154,12 @@ const quizQuestions = [
     id: 6,
     question:
       'When integrating a BMS with a fire alarm system, what protocol is commonly used in the UK?',
-    options: ['BACnet only', 'Modbus only', 'Volt-free contacts or BACnet/Modbus', 'WiFi'],
+    options: [
+      'LED ≈ 100 lm/W, GLS ≈ 12 lm/W',
+      'During the planning phase before work begins',
+      'Volt-free contacts or BACnet/Modbus',
+      'Use proper clamping or holding techniques',
+    ],
     correctAnswer: 2,
     explanation:
       'Fire alarm integration typically uses volt-free contacts for critical signals (fire mode, damper control) with BACnet or Modbus for monitoring. This ensures fail-safe operation.',
@@ -153,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'What should be verified during BMS network commissioning?',
     options: [
-      'Only the IP addresses',
+      'Temperature rise should not cause degradation of insulation or surrounding materials',
+      'Learning about opportunities and industry developments',
+      'It establishes when the inspection was carried out and when the next inspection is due',
       'Network topology, addressing, communication speeds, and redundancy failover',
-      'Only the cable colours',
-      'Only the patch panel layout',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Network commissioning verifies correct topology, unique addressing, appropriate communication speeds, segment loading, and redundancy failover where specified.',
   },
@@ -167,12 +182,12 @@ const quizQuestions = [
     question:
       'A trend log shows a temperature oscillating rapidly between 18°C and 22°C. This likely indicates:',
     options: [
-      'Normal operation',
       'A tuning problem with the PID controller',
-      'A faulty trend log',
-      'Correct setpoint operation',
+      'When disconnection times cannot be met',
+      'Clear description and location',
+      'Age, environment, and original standards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Rapid oscillation around setpoint indicates poor PID tuning - typically too much proportional or integral gain. The controller needs retuning for stable operation.',
   },
@@ -180,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'What documentation must be provided at BMS handover?',
     options: [
-      'Only the user manual',
+      'Double-check conductor connections before final fix',
       'As-built drawings, points schedule, O&M manuals, and training records',
-      'Only the training certificates',
-      'Only the warranty information',
+      'A power drill running while a colleague explains a task',
+      'A receiver\\\\\\\\\\\\\\\'s preconceived negative opinion about the sender',
     ],
     correctAnswer: 1,
     explanation:
@@ -194,12 +209,12 @@ const quizQuestions = [
     question:
       'During system integration testing, what must be verified between the BMS and lighting control system?',
     options: [
-      'Only that lights can be switched',
+      'Sense motor current and trip if the running current exceeds set value for a sustained period',
+      'Site supervisor, affected trades, and project coordinator',
       'Bi-directional communication, status feedback, and coordinated sequences',
-      'Only the dimming levels',
-      'Only the switch positions',
+      'GSHPs typically have higher COP (3.5-5.0 vs 2.5-4.0)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Integration testing verifies bi-directional communication (commands and feedback), correct status reporting, coordinated sequences (e.g., occupancy-based control), and failure mode behaviour.',
   },

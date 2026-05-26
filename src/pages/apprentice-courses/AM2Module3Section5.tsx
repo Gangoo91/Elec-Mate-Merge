@@ -49,12 +49,12 @@ const AM2Module3Section5 = () => {
       id: 'specification-accuracy',
       question: 'If you install sockets 50mm higher than the spec drawing, what happens?',
       options: [
-        "It's acceptable as long as it's safe",
         'Marks lost - not to specification',
+        "It's acceptable as long as it's safe",
         'Only matters if assessor notices',
         'Minor deviation is allowed',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Marks lost - installations must match drawings exactly. Even safe deviations from specification result in lost marks.',
     },
@@ -62,8 +62,13 @@ const AM2Module3Section5 = () => {
       id: 'bs7671-connections',
       question:
         'Which BS 7671 regulation requires all connections to be electrically and mechanically sound?',
-      options: ['Regulation 134.1.4', 'Regulation 526.1', 'Regulation 522', 'Regulation 559'],
-      correctIndex: 1,
+      options: [
+        'Regulation 134.1.4',
+        'Regulation 559',
+        'Regulation 522',
+        'Regulation 526.1',
+      ],
+      correctIndex: 3,
       explanation:
         "Regulation 526.1 states verbatim: 'Every connection between conductors or between a conductor and other equipment shall provide durable electrical continuity and adequate mechanical strength and protection.' That's the clause an AM2 assessor expects you to quote when asked why a termination has to be both tight and properly insulated.",
     },
@@ -71,12 +76,12 @@ const AM2Module3Section5 = () => {
       id: 'bare-copper-safety',
       question: 'If the assessor sees bare copper at a socket terminal, what happens?',
       options: [
-        'Minor mark deduction only',
+        'At the furthest point from the distribution board',
+        'Combining multiple DC string outputs',
         'Work marked unsafe - significant marks lost',
-        'Warning given to fix it',
-        'No impact if connection is secure',
+        'Prove tester, test dead, prove tester',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'Work marked unsafe with significant marks lost, possibly leading to failure. No bare copper is acceptable at any termination.',
     },
@@ -87,15 +92,25 @@ const AM2Module3Section5 = () => {
       id: 1,
       question:
         'Which BS 7671 regulation requires that every joint and connection is of proper construction as regards conductance, insulation, mechanical strength and protection?',
-      options: ['Regulation 134.1.4', 'Regulation 526.5', 'Regulation 522', 'Regulation 411'],
-      correctAnswer: 0,
+      options: [
+        'Regulation 526.5',
+        'Regulation 134.1.4',
+        'Regulation 522',
+        'Regulation 411',
+      ],
+      correctAnswer: 1,
       explanation:
         "Regulation 134.1.4 states verbatim: 'Every electrical joint and connection shall be of proper construction as regards conductance, insulation, mechanical strength and protection.' That's the workmanship clause AM2 holds you to — every screw torque, every sleeve, every gland.",
     },
     {
       id: 2,
       question: "What's the maximum amount of bare copper acceptable at a termination?",
-      options: ['1mm', '2mm', 'None - zero tolerance', '5mm if secure'],
+      options: [
+        '5mm if secure',
+        '1mm',
+        'None - zero tolerance',
+        '2mm',
+      ],
       correctAnswer: 2,
       explanation:
         'Zero bare copper is acceptable. Insulation must run right up to the terminal for safety and compliance.',
@@ -104,12 +119,12 @@ const AM2Module3Section5 = () => {
       id: 3,
       question: 'Why must CPCs always be sleeved?',
       options: [
-        'For aesthetics',
+        'Setting productivity targets',
+        'Ask directly about suicide',
+        'Prospective short-circuit current (Ipsc)',
         'BS 7671 identification requirement',
-        'To prevent corrosion',
-        'Cost reduction',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'BS 7671 requires proper conductor identification. CPC sleeving ensures clear identification and compliance.',
     },
@@ -117,12 +132,12 @@ const AM2Module3Section5 = () => {
       id: 4,
       question: 'What happens if sockets are installed crooked in AM2?',
       options: [
-        'Nothing if they work',
         'Workmanship marks lost',
+        'Nothing if they work',
         'Minor warning only',
         'Acceptable variation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         "Crooked installation loses workmanship marks as it doesn't meet professional standards expected in AM2.",
     },
@@ -130,7 +145,12 @@ const AM2Module3Section5 = () => {
       id: 5,
       question:
         'Which BS 7671 regulation requires every termination and joint in a live conductor or PEN conductor to be made within a suitable accessory, equipment enclosure, or non-combustible building enclosure?',
-      options: ['Regulation 134', 'Regulation 526.5', 'Regulation 522', 'Regulation 411'],
+      options: [
+        'Regulation 134',
+        'Regulation 526.5',
+        'Regulation 411',
+        'Regulation 522',
+      ],
       correctAnswer: 1,
       explanation:
         "Regulation 526.5 states verbatim: 'Every termination and joint in a live conductor or a PEN conductor shall be made within one of the following or a combination thereof: (a) a suitable accessory complying with the appropriate product standard; (b) an equipment enclosure complying with the appropriate product standard; (c) an enclosure partially formed or completed with building material which is non-combustible when tested to BS 476-4.' This is why a connector block sat in a void without an enclosure fails AM2.",
@@ -140,11 +160,11 @@ const AM2Module3Section5 = () => {
       question: 'Give one example of poor workmanship in trunking:',
       options: [
         'Lids fitted flush',
-        'Gaps between lid sections',
         'Screws aligned',
+        'Gaps between lid sections',
         'Level installation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Gaps between trunking lid sections demonstrate poor workmanship and lose marks in assessment.',
     },
@@ -152,12 +172,12 @@ const AM2Module3Section5 = () => {
       id: 7,
       question: 'How should cables be presented inside a DB?',
       options: [
-        'Any way that fits',
+        'No — only their weight has changed',
+        'A cantilever configuration',
+        'Outdoor or damp environments',
         'Dressed neatly with no tangles',
-        'Bundled together tightly',
-        'Crossing for space',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Cables must be dressed neatly with no tangles, maintaining professional presentation standards.',
     },
@@ -172,7 +192,12 @@ const AM2Module3Section5 = () => {
     {
       id: 9,
       question: 'What tool should you always use to check accessory alignment?',
-      options: ['Tape measure only', 'Spirit level', 'Visual estimation', 'Plumb line'],
+      options: [
+        'Tape measure only',
+        'Spirit level',
+        'Visual estimation',
+        'Plumb line',
+      ],
       correctAnswer: 1,
       explanation:
         'Spirit level ensures accessories are properly aligned and level, meeting professional installation standards.',
@@ -181,12 +206,12 @@ const AM2Module3Section5 = () => {
       id: 10,
       question: "What's the golden rule for self-inspection in AM2?",
       options: [
-        'Speed over quality',
+        'The ACAS Code of Practice on Disciplinary and Grievance Procedures',
+        'Reactive effects may need to be considered',
         'Would this pass customer handover/NICEIC inspection?',
-        'Good enough is sufficient',
-        'Focus on function only',
+        'Regular check-in procedures and emergency contacts',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "The golden rule: if your installation wouldn't pass customer handover or NICEIC inspection, it won't pass AM2.",
     },

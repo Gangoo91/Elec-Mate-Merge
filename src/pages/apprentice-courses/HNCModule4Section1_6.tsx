@@ -32,7 +32,12 @@ const quickCheckQuestions = [
   {
     id: 'hvac-peak',
     question: 'When does HVAC load typically peak in a UK office building?',
-    options: ['Early morning', 'Mid-afternoon in summer', 'Evening', 'Night-time'],
+    options: [
+      'Early morning',
+      'Mid-afternoon in summer',
+      'Evening',
+      'Night-time',
+    ],
     correctIndex: 1,
     explanation:
       'Office HVAC peaks in mid-afternoon during summer when cooling demand is highest due to solar gain, internal gains, and ambient temperature. Winter heating peak is typically early morning.',
@@ -41,10 +46,10 @@ const quickCheckQuestions = [
     id: 'lighting-profile',
     question: 'Office lighting load profile is primarily driven by:',
     options: [
-      'Weather conditions',
+      'Within 15 days of the incident',
       'Occupancy and daylight availability',
-      'Energy prices',
-      'Building age',
+      'Snubber to suppress switch-off transients',
+      'In steel conduit with proper earthing',
     ],
     correctIndex: 1,
     explanation:
@@ -66,8 +71,13 @@ const quickCheckQuestions = [
   {
     id: 'seasonal-variation',
     question: 'Which building type shows the greatest seasonal variation in electrical demand?',
-    options: ['Data centre', 'Hospital', 'Air-conditioned office', 'Warehouse'],
-    correctIndex: 2,
+    options: [
+      'Warehouse',
+      'Air-conditioned office',
+      'Hospital',
+      'Data centre',
+    ],
+    correctIndex: 1,
     explanation:
       'Air-conditioned offices show significant seasonal variation: high summer cooling demand, lower winter demand (if gas-heated). Data centres and hospitals have more constant loads year-round.',
   },
@@ -78,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is a load profile?',
     options: [
-      'A list of all connected equipment',
+      'A current source in parallel with a resistance',
       'A graph showing how electrical demand varies over time',
-      'The cable sizing schedule',
-      'The switchgear rating table',
+      'Large commercial buildings, hospitals, high-rise buildings',
+      'A range around the setpoint where no adjustment occurs',
     ],
     correctAnswer: 1,
     explanation:
@@ -90,8 +100,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'In a typical office, HVAC represents what proportion of total electrical load?',
-    options: ['10-20%', '30-50%', '60-70%', '80-90%'],
-    correctAnswer: 1,
+    options: [
+      '60-70%',
+      '10-20%',
+      '30-50%',
+      '80-90%',
+    ],
+    correctAnswer: 2,
     explanation:
       'HVAC typically represents 30-50% of total office electrical load, making it the largest single load category. This can vary significantly with climate and building design.',
   },
@@ -99,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'Pre-conditioning HVAC starts before occupancy to:',
     options: [
-      'Reduce energy consumption',
+      'False - always check specifications for socket types',
+      'Temperature drop is the same across each path',
+      'To protect against moisture ingress and maintain IP rating',
       'Achieve comfortable conditions at start of occupancy',
-      'Test the equipment daily',
-      'Reduce peak demand',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Pre-conditioning (starting HVAC 1-2 hours before occupancy) ensures comfortable temperatures when staff arrive. This shifts some load earlier but ensures conditions are met.',
   },
@@ -112,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'Daylight-linked lighting control reduces electrical demand by:',
     options: [
-      "Switching off lights when it's sunny",
       'Dimming artificial lights proportionally to daylight contribution',
-      'Only operating lights at night',
-      'Using motion sensors only',
+      'Investigation to identify root cause before taking action',
+      'Temperature, humidity, and material storage conditions',
+      'Consulting, training, inspection, or reduced-hours roles',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Daylight linking dims artificial lights progressively as natural daylight increases, maintaining constant illuminance while reducing electrical consumption - typically saving 20-40%.',
   },
@@ -127,8 +142,8 @@ const quizQuestions = [
     options: [
       'Higher peak demand but lower average',
       'Lower peak demand but higher average',
-      'Similar peak and average',
       'Higher peak and higher average',
+      'Similar peak and average',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,19 +154,24 @@ const quizQuestions = [
     question: 'Which factor most affects seasonal electrical demand variation in UK buildings?',
     options: [
       'Lighting hours',
-      'Cooling vs heating mode',
       'Occupancy patterns',
+      'Cooling vs heating mode',
       'Equipment efficiency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The shift between cooling mode (summer) and heating mode (winter) causes the greatest seasonal variation. Cooling is electrically intensive; heating is often gas-fired with only fans/pumps electrical.',
   },
   {
     id: 7,
     question: 'Small power load factor in offices is typically:',
-    options: ['10-20%', '30-50%', '70-80%', '90-100%'],
-    correctAnswer: 1,
+    options: [
+      '10-20%',
+      '90-100%',
+      '70-80%',
+      '30-50%',
+    ],
+    correctAnswer: 3,
     explanation:
       "Small power has low load factor (30-50%) because equipment isn't continuously at full load - PCs idle, monitors sleep, not all desks occupied. This justifies high diversity factors.",
   },
@@ -159,19 +179,24 @@ const quizQuestions = [
     id: 8,
     question: 'Retail lighting demand peaks when?',
     options: [
-      'Early morning',
-      'Mid-afternoon',
       'During trading hours consistently',
-      'Late evening',
+      'A site survey and risk assessment',
+      'Inductor/capacitor filter',
+      'High accuracy and minimal sensor movement',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Retail lighting is typically at constant full output during all trading hours to maintain consistent appearance and encourage sales. It steps down only outside trading hours.',
   },
   {
     id: 9,
     question: 'Weekend electrical demand in an office building is typically:',
-    options: ['Zero', '10-30% of weekday peak', '50-70% of weekday peak', 'Same as weekday'],
+    options: [
+      'Zero',
+      '10-30% of weekday peak',
+      '50-70% of weekday peak',
+      'Same as weekday',
+    ],
     correctAnswer: 1,
     explanation:
       'Weekend demand is typically 10-30% of weekday peak, covering base loads: servers, security, emergency lighting, minimal HVAC. Some areas may operate for Saturday working.',
@@ -180,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'Understanding load profiles helps with:',
     options: [
-      'Only cable sizing',
+      'To set out how health and safety will be managed during pre-construction',
+      'Variable Speed Drive/Variable Frequency Drive',
       'Maximum demand assessment, tariff selection, and load management',
-      'Determining cable colours',
-      'Selecting light fittings',
+      'Volume control damper (VCD) or balancing damper',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Load profiles inform multiple decisions: accurate maximum demand assessment, optimal tariff selection (time-of-use rates), demand-side management, PV/battery sizing, and generator capacity.',
   },

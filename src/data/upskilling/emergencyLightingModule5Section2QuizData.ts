@@ -3,10 +3,10 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 1,
     question: 'What is the purpose of a functional emergency lighting test?',
     options: [
-      'To drain the batteries completely',
+      'To demonstrate compliance during fire inspections and provide evidence for insurers',
       'To ensure all luminaires switch into emergency mode when mains power fails',
-      'To test the wiring installation only',
-      'To check the brightness of the lamps',
+      'To avoid leaving the building unprotected while batteries recharge after the test',
+      'Only long enough to confirm operation (short duration)',
     ],
     correctAnswer: 1,
     explanation:
@@ -15,8 +15,13 @@ export const emergencyLightingModule5Section2QuizQuestions = [
   {
     id: 2,
     question: 'How often must functional tests be carried out?',
-    options: ['Weekly', 'Monthly', 'Annually', 'Every 6 months'],
-    correctAnswer: 1,
+    options: [
+      'Weekly',
+      'Annually',
+      'Monthly',
+      'Every 6 months',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 5266-1 requires short functional tests to be carried out monthly to ensure ongoing system operation.',
   },
@@ -24,12 +29,12 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 3,
     question: 'How long should monthly functional tests last?',
     options: [
-      '3 hours',
-      '1 hour',
+      'Network analyzer with Zigbee capabilities',
+      'Show the physical location of equipment on floor plans',
+      'Knowledge, training, experience, and understanding of hazards',
       'Only long enough to confirm operation (short duration)',
-      '30 minutes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Monthly tests are kept deliberately short - just long enough to confirm all luminaires switch to emergency mode without draining the batteries.',
   },
@@ -37,12 +42,12 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 4,
     question: 'What is the purpose of the annual 3-hour duration test?',
     options: [
-      'To comply with insurance requirements only',
       'To verify battery capacity and ensure escape routes remain illuminated for the full evacuation period',
-      'To test the charging circuits',
-      'To check the brightness of exit signs',
+      'To avoid leaving the building unprotected while batteries recharge after the test',
+      'To ensure all luminaires switch into emergency mode when mains power fails',
+      'To demonstrate compliance during fire inspections and provide evidence for insurers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The annual 3-hour test verifies that batteries can sustain emergency lighting for the full rated period, ensuring safe evacuation in a real emergency.',
   },
@@ -50,20 +55,25 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 5,
     question: 'When must a 3-hour duration test also be completed besides annually?',
     options: [
-      'Every month',
-      'Only during commissioning',
+      'Insert connector and push forward with one motion',
       'At commissioning and after any system modifications',
-      'Never - annual testing is sufficient',
+      'Limited access for tools and reduced working space',
+      'Implement responsive design with prioritised information',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A full 3-hour duration test must be completed at commissioning, annually, and after any modifications to the emergency lighting system.',
   },
   {
     id: 6,
     question: 'What standard governs testing requirements for emergency lighting?',
-    options: ['BS 7671', 'BS 5266-1 and BS EN 50172', 'BS 5839', 'BS EN 60598'],
-    correctAnswer: 1,
+    options: [
+      'Automatic electronic lock',
+      'Uneven runs or missing fixings',
+      'BS 5266-1 and BS EN 50172',
+      'Weather conditions during test',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 5266-1 and BS EN 50172 are the key standards that specify testing requirements for emergency lighting systems in the UK.',
   },
@@ -71,12 +81,12 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 7,
     question: 'Why should duration tests be scheduled outside of occupied hours?',
     options: [
-      'To save electricity',
-      'To avoid disturbing staff',
+      'To ensure all luminaires switch into emergency mode when mains power fails',
+      'To verify battery capacity and ensure escape routes remain illuminated for the full evacuation period',
+      'To demonstrate compliance during fire inspections and provide evidence for insurers',
       'To avoid leaving the building unprotected while batteries recharge after the test',
-      "It's not necessary - tests can be done anytime",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "After a 3-hour duration test, batteries need time to recharge. Testing outside occupied hours ensures the building isn't left without emergency lighting protection.",
   },
@@ -84,12 +94,12 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 8,
     question: 'Give one reason why a luminaire might fail a 3-hour test.',
     options: [
-      'The LED is too bright',
       'The battery is ageing and has lost capacity',
-      'The charging circuit is too efficient',
-      'The luminaire is too new',
+      'A double set (kickback or offset bend)',
+      'Investigate the cause and do not proceed until resolved',
+      'Horizontal movement to the left',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Ageing batteries (typically over 3-5 years old) lose capacity and may pass short monthly tests but fail to sustain load for the full 3-hour duration.',
   },
@@ -97,10 +107,10 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 9,
     question: 'Why must test results be recorded in the logbook?',
     options: [
-      "It's optional but recommended",
+      'To ensure all luminaires switch into emergency mode when mains power fails',
       'To demonstrate compliance during fire inspections and provide evidence for insurers',
-      'Only for large buildings',
-      'To help the manufacturer',
+      'To verify battery capacity and ensure escape routes remain illuminated for the full evacuation period',
+      'To avoid leaving the building unprotected while batteries recharge after the test',
     ],
     correctAnswer: 1,
     explanation:
@@ -110,10 +120,10 @@ export const emergencyLightingModule5Section2QuizQuestions = [
     id: 10,
     question: 'What happened in the Leeds care home case study?',
     options: [
-      'The system worked perfectly during a fire drill',
-      'Monthly tests were not carried out',
+      'Lock off the main switch with a personal padlock and post a caution notice — and prove dead at the point of work',
+      'Do NOT touch the tower; warn others to stay clear; call the network operator and emergency services; do not approach until confirmed safe',
       'Lights failed after 40 minutes during a drill because batteries were over 7 years old and annual duration tests had been neglected',
-      'The building had no emergency lighting',
+      'Decline — provide a proper VAT invoice (or zero-VAT invoice if not registered) for tax compliance and to protect the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s warranty rights',
     ],
     correctAnswer: 2,
     explanation:

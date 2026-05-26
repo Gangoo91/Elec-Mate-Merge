@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Name one reason why neat cable dressing is important beyond appearance.',
     options: [
-      'It looks professional',
+      '31 January following the end of the tax year',
       'Improves airflow and reduces heat build-up',
-      'It saves money',
-      'It reduces material costs',
+      'To prevent cable damage and ensure proper fit',
+      'Operating below maximum ratings to ensure reliability',
     ],
     correctIndex: 1,
     explanation:
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What must be avoided when using cable ties?',
     options: [
-      'Using too many ties',
+      'Chemical resistant cable with appropriate sheath',
+      'File smooth or fit protective grommets',
       'Over-tightening that crushes insulation',
-      'Using different colours',
-      'Cutting them too short',
+      'Ohmmeter or continuity tester',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Over-tightening cable ties can crush cable insulation, potentially causing short circuits and reducing the cable's current-carrying capacity.",
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why should ELV and mains cables be separated?',
     options: [
-      'For colour coding',
+      'Provides a parallel earth path that lowers Zs.',
+      '1-minute to 30-second reading ratio',
+      'Serial communication for industrial devices',
       'To reduce electromagnetic interference and safety',
-      'To save space',
-      'For easier identification',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'ELV and mains cables must be separated to prevent electromagnetic interference and ensure safety by avoiding voltage transfer between systems.',
   },
@@ -58,11 +58,11 @@ const quizQuestions = [
     question: 'Which is NOT a benefit of neat cable dressing?',
     options: [
       'Reduced heat build-up',
-      'Improved fault finding',
       'Increased voltage drop',
+      'Improved fault finding',
       'Enhanced accessibility',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Neat cable dressing reduces voltage drop by avoiding sharp bends and overcrowding, rather than increasing it.',
   },
@@ -70,15 +70,25 @@ const quizQuestions = [
     id: 2,
     question:
       'True or False: Over-tightening cable ties is acceptable if it holds cables securely.',
-    options: ['True', 'False', 'Only for small cables', 'Only in dry locations'],
-    correctAnswer: 1,
+    options: [
+      'Only for small cables',
+      'True',
+      'False',
+      'Only in dry locations',
+    ],
+    correctAnswer: 2,
     explanation:
       'False - Over-tightening cable ties can crush insulation, damage conductors, and create safety hazards.',
   },
   {
     id: 3,
     question: 'Name one tool or accessory used to secure cables inside enclosures.',
-    options: ['Cable ties', 'Cable clamps', 'Adhesive clips', 'All of the above'],
+    options: [
+      'Adhesive clips',
+      'Cable ties',
+      'Cable clamps',
+      'All of the above',
+    ],
     correctAnswer: 3,
     explanation:
       'Cable ties, clamps, and adhesive clips are all suitable for securing cables inside enclosures when properly rated.',
@@ -88,9 +98,9 @@ const quizQuestions = [
     question: 'Why should cables be grouped by function?',
     options: [
       'For logical routing and easier maintenance',
-      'To save money',
-      'To reduce cable length',
-      'For colour coordination',
+      'To hold 30% of gross income for tax obligations',
+      'Ring broken or interconnection fault',
+      'Chrysotile, amosite, and crocidolite',
     ],
     correctAnswer: 0,
     explanation:
@@ -102,8 +112,8 @@ const quizQuestions = [
     options: [
       'Using cable ties',
       'Crossing over terminals',
-      'Colour coding cables',
       'Securing cables',
+      'Colour coding cables',
     ],
     correctAnswer: 1,
     explanation:
@@ -112,8 +122,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Which regulation covers the requirement for avoiding undue stress on terminations?',
-    options: ['BS 5839', 'BS 7671', 'BS EN 50172', 'BS 6701'],
-    correctAnswer: 1,
+    options: [
+      'BS 5839',
+      'BS EN 50172',
+      'BS 7671',
+      'BS 6701',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 7671 requires that wiring in enclosures is arranged to avoid undue stress on terminations and conductors.',
   },
@@ -121,12 +136,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why is a final visual inspection before closing the enclosure important?',
     options: [
+      'When dead testing is not practicable',
+      'Difference between synchronous and rotor speed',
+      'A hard-wired communication system or intrinsically safe radio',
       'To ensure neatness, compliance, and accessibility',
-      'To count the cables',
-      'To check cable colours',
-      'To measure cable length',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Final inspection ensures neatness, BS 7671 compliance, accessibility for future work, and professional standards.',
   },
@@ -134,12 +149,12 @@ const quizQuestions = [
     id: 8,
     question: 'Give one method for identifying cables inside an enclosure.',
     options: [
+      'All of the above',
+      'Cable labelling',
       'Numbered cable markers',
       'Colour-coded sleeving',
-      'Cable labelling',
-      'All of the above',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Numbered markers, colour coding, and labelling are all effective methods for cable identification in enclosures.',
   },

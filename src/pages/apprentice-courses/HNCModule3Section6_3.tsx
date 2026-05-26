@@ -33,8 +33,13 @@ const quickCheckQuestions = [
     id: 'load-factor',
     question:
       'A building has a maximum demand of 500kW and average demand of 300kW. What is the load factor?',
-    options: ['0.40', '0.60', '0.80', '1.67'],
-    correctIndex: 1,
+    options: [
+      '0.40',
+      '1.67',
+      '0.80',
+      '0.60',
+    ],
+    correctIndex: 3,
     explanation:
       'Load Factor = Average Demand / Maximum Demand = 300kW / 500kW = 0.60 (60%). A higher load factor indicates more efficient use of the electrical supply capacity.',
   },
@@ -42,8 +47,13 @@ const quickCheckQuestions = [
     id: 'peak-shaving',
     question:
       'Which technique involves using battery storage or generators to reduce grid demand during peak periods?',
-    options: ['Load shedding', 'Peak shaving', 'Time shifting', 'Load cycling'],
-    correctIndex: 1,
+    options: [
+      'Load cycling',
+      'Time shifting',
+      'Load shedding',
+      'Peak shaving',
+    ],
+    correctIndex: 3,
     explanation:
       'Peak shaving uses supplementary power sources (batteries, generators, or renewable energy) to reduce the peak demand drawn from the grid, lowering demand charges and improving supply stability.',
   },
@@ -51,8 +61,13 @@ const quickCheckQuestions = [
     id: 'power-factor-benefit',
     question:
       'Improving power factor from 0.70 to 0.95 reduces the apparent power (kVA) by approximately what percentage for the same real power (kW)?',
-    options: ['15%', '26%', '36%', '50%'],
-    correctIndex: 1,
+    options: [
+      '26%',
+      '15%',
+      '36%',
+      '50%',
+    ],
+    correctIndex: 0,
     explanation:
       'At pf 0.70: kVA = kW/0.70 = 1.43×kW. At pf 0.95: kVA = kW/0.95 = 1.05×kW. Reduction = (1.43-1.05)/1.43 = 26.6%. This reduces cable sizing and distribution losses.',
   },
@@ -61,11 +76,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of demand response programmes?',
     options: [
       'Increase electricity consumption',
+      'Increase power factor',
       'Reduce demand during grid stress periods',
       'Eliminate the need for backup generators',
-      'Increase power factor',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Demand response programmes reduce electricity consumption during periods of grid stress (high demand or supply shortage), helping maintain grid stability and often providing financial incentives to participants.',
   },
@@ -76,10 +91,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is maximum demand (MD) in building electrical systems?',
     options: [
-      'The total installed load capacity',
+      'The difference between predicted and actual energy performance',
       'The highest average power drawn over a defined period',
-      'The peak instantaneous power',
-      'The contracted supply capacity',
+      'PPE must be correctly rated for the hazard level',
+      'To provide grip, stability, and protection from dropped loads',
     ],
     correctAnswer: 1,
     explanation:
@@ -89,8 +104,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A commercial building operates from 08:00 to 18:00 with total energy consumption of 2400 kWh and maximum demand of 400 kW. What is the load factor?',
-    options: ['0.50', '0.60', '0.75', '0.80'],
-    correctAnswer: 1,
+    options: [
+      '0.75',
+      '0.50',
+      '0.60',
+      '0.80',
+    ],
+    correctAnswer: 2,
     explanation:
       'Operating hours = 10h. Average demand = 2400 kWh / 10h = 240 kW. Load Factor = Average / Maximum = 240 / 400 = 0.60 (60%).',
   },
@@ -98,12 +118,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which loads should typically be given highest priority in a load shedding scheme?',
     options: [
-      'Air conditioning and comfort cooling',
-      'Life safety and emergency systems',
       'General lighting',
+      'Air conditioning and comfort cooling',
       'Electric vehicle charging',
+      'Life safety and emergency systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Life safety systems (fire alarms, emergency lighting, smoke extract, lifts for evacuation) must always be protected from load shedding. These are essential for occupant safety and regulatory compliance.',
   },
@@ -111,8 +131,13 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the typical ratio between peak and off-peak electricity tariffs in UK time-of-use pricing?',
-    options: ['1.2:1', '1.5:1', '2:1 to 3:1', '5:1'],
-    correctAnswer: 2,
+    options: [
+      '2:1 to 3:1',
+      '1.5:1',
+      '1.2:1',
+      '5:1',
+    ],
+    correctAnswer: 0,
     explanation:
       'UK time-of-use tariffs typically see peak rates 2-3 times higher than off-peak rates. This provides significant incentive to shift flexible loads to cheaper periods.',
   },
@@ -120,7 +145,12 @@ const quizQuestions = [
     id: 5,
     question:
       'A building has 500 kVA apparent power at 0.75 power factor. After installing capacitor banks, the power factor improves to 0.95. What is the new apparent power?',
-    options: ['375 kVA', '395 kVA', '475 kVA', '525 kVA'],
+    options: [
+      '375 kVA',
+      '395 kVA',
+      '525 kVA',
+      '475 kVA',
+    ],
     correctAnswer: 1,
     explanation:
       'Real power P = S × pf = 500 × 0.75 = 375 kW. New apparent power S = P / pf = 375 / 0.95 = 395 kVA. The same real power requires 21% less supply capacity.',
@@ -128,8 +158,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the recommended minimum delay for staggered motor starting in BMS systems?',
-    options: ['5 seconds', '10-30 seconds', '2-5 minutes', '10 minutes'],
-    correctAnswer: 1,
+    options: [
+      '5 seconds',
+      '2-5 minutes',
+      '10-30 seconds',
+      '10 minutes',
+    ],
+    correctAnswer: 2,
     explanation:
       'Typical staggered start delays of 10-30 seconds between large motors prevent coincident inrush currents. This reduces peak demand and voltage dip during building start-up.',
   },
@@ -137,8 +172,13 @@ const quizQuestions = [
     id: 7,
     question:
       'Which demand-side management technique shifts load from peak to off-peak periods without reducing total consumption?',
-    options: ['Peak clipping', 'Strategic conservation', 'Load shifting', 'Valley filling'],
-    correctAnswer: 2,
+    options: [
+      'Peak clipping',
+      'Strategic conservation',
+      'Valley filling',
+      'Load shifting',
+    ],
+    correctAnswer: 3,
     explanation:
       'Load shifting moves flexible loads (e.g., thermal storage, EV charging, water heating) from expensive peak periods to cheaper off-peak periods. Total consumption remains similar but costs and grid impact reduce.',
   },
@@ -146,8 +186,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A factory has a maximum demand charge of 12/kVA/month. Reducing MD from 800 kVA to 650 kVA saves how much annually?',
-    options: ['900', '1,800', '10,800', '21,600'],
-    correctAnswer: 2,
+    options: [
+      '10,800',
+      '21,600',
+      '900',
+      '1,800',
+    ],
+    correctAnswer: 0,
     explanation:
       'Monthly saving = (800 - 650) × 12 = 150 × 12 = 1,800. Annual saving = 1,800 × 12 months = 21,600... Wait, let me recalculate: Monthly = 150 × 12 = 1,800. Annual = 1,800 × 12 = 21,600. Actually the question says per month so: Annual = (800-650) × 12 × 12 = 21,600. But typically the charge is per kVA per month, so annual = 150 × 12 × 12 = 21,600.',
   },
@@ -169,12 +214,12 @@ const quizQuestions = [
     question:
       'Which renewable energy technology is most effective for peak shaving in UK commercial buildings?',
     options: [
-      'Wind turbines',
+      'Overload and short circuit',
+      'Check condition and correct fuse wire',
       'Solar PV with battery storage',
-      'Ground source heat pumps',
-      'Biomass CHP',
+      'All conditions must be true',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Solar PV generates most power during daytime peaks when commercial demand is highest. Combined with battery storage, excess generation can be stored for evening peaks or cloudy periods, making it highly effective for peak shaving.',
   },

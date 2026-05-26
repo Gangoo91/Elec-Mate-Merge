@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'team-role-clarity',
     question: 'Why is role clarity important within an electrical maintenance team?',
     options: [
-      'It allows team members to avoid tasks they dislike',
+      'Status indicator (healthy/fault), backup protection intact, connections tight, and SPD rating appropriate for the installation',
+      'Investigate why the deviation occurs, as it may reveal a flaw in the original procedure or unassessed risks',
       'It ensures every team member knows their responsibilities, reducing duplication and preventing safety gaps',
-      'It means only one person needs to understand the full task',
-      'It eliminates the need for communication between team members',
+      'A broad arm sling supporting the arm on the injured side, with the hand slightly higher than the elbow',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Role clarity ensures that every team member understands their specific responsibilities within a task. In electrical maintenance, unclear roles can lead to safety-critical tasks being missed or duplicated. For example, if two technicians both assume the other has carried out safe isolation, neither may actually do it — with potentially fatal consequences.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'toolbox-talk-purpose',
     question: 'What is the primary purpose of a toolbox talk before a maintenance task?',
     options: [
-      'To check that everyone has the correct tools',
+      'Assumptions, unclear instructions, and failure to confirm understanding',
+      'Operators ignored it, leading to boiler lockout and loss of heating across hospital wards',
       'To brief the team on the task scope, hazards, roles and safety measures',
-      'To assign overtime payments for the job',
-      'To complete the paperwork required by management',
+      'Steel wire armoured (SWA) or equivalent mechanical protection',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A toolbox talk is a short, focused briefing that ensures every team member understands the task scope, specific hazards, individual roles, safety measures and emergency procedures before work begins. It is a key collaborative safety practice and a behaviour assessed in the EPA.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'A colleague disagrees with your approach to a fault-finding task. What is the most professional response?',
     options: [
-      'Ignore their opinion and proceed with your method',
-      'Escalate immediately to management without discussion',
       'Listen to their reasoning, discuss the options and agree the safest and most effective approach together',
-      'Let them do it their way to avoid confrontation',
+      'When the enjoyable activity was exclusively available during the target behaviour',
+      'To provide a structured method for combining likelihood and severity to produce a risk rating',
+      'Electric shock, arc flash burns, potential fatality — and personal liability under EAWR 1989 Reg 14',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Professional teamwork requires the ability to listen, discuss and negotiate. Disagreements about approach are normal in maintenance work. The correct response is to hear your colleague out, evaluate both approaches against safety and effectiveness criteria, and reach agreement. If agreement cannot be reached, escalation to a supervisor is appropriate — but only after genuine discussion.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'When working in a cross-functional maintenance team, why is it important to understand other disciplines?',
     options: [
-      'So you can do their jobs for them',
-      'To impress management during appraisals',
       'To coordinate work safely, understand interfaces between systems and communicate effectively across disciplines',
-      'It is not important — each discipline should work independently',
+      'Stopping at the first technical answer without exploring human and organisational factors',
+      'Adjusting flow temperature based on difference between room and setpoint temperature',
+      'To photograph and digitise receipts for automatic data extraction and accounting software integration',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Cross-functional understanding enables safe coordination. An electrical technician working alongside mechanical, instrumentation or HVAC engineers needs to understand how their systems interact. For example, isolating an electrical supply affects the mechanical equipment it powers — both teams must coordinate to ensure safety.',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: "Belbin's team role theory suggests that effective teams need:",
     options: [
-      'All members to have identical skills and approaches',
+      'Automated scheduling, searchable databases, error checking, and audit trails',
       'A balance of different roles including thinkers, doers and people-focused contributors',
-      'At least ten members to cover all necessary roles',
-      'One dominant leader with compliant followers',
+      'Only when direct pressure has failed to control catastrophic limb bleeding',
+      'The cumulative wear and tear on the body from chronic activation of stress response systems',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: 'During a planned maintenance shutdown, the most important teamwork behaviour is:',
     options: [
+      'Completing your own tasks and leaving site immediately',
       'Working as quickly as possible without consulting others',
       'Clear, timely communication of progress, delays and safety issues to all team members',
-      'Completing your own tasks and leaving site immediately',
       'Avoiding contact with other trades to prevent confusion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'During shutdowns, multiple trades work simultaneously on interconnected systems. Clear, timely communication prevents dangerous conflicts (e.g., one team energising a system another team is working on), ensures the schedule is maintained, and allows rapid response to unexpected issues.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the primary benefit of collaborative problem-solving in fault diagnosis?',
     options: [
-      'It spreads the blame if the diagnosis is wrong',
+      'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
+      'It helps colleagues improve their performance, builds trust and strengthens team capability',
+      'Tasks are matched to individual competence, clearly communicated and monitored for progress',
       'It combines different knowledge, experience and perspectives to reach a more accurate diagnosis faster',
-      'It means less experienced technicians do not need to learn',
-      'It reduces the amount of testing required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Collaborative fault diagnosis draws on the combined knowledge, experience and perspectives of multiple technicians. One person may have encountered a similar fault before, another may have specialist knowledge of the system. This collective approach leads to faster, more accurate diagnosis and helps develop less experienced team members.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       'A new apprentice joins your maintenance team. The best approach to supporting them is:',
     options: [
-      'Leave them to figure things out on their own',
-      'Give them only simple tasks that do not require supervision',
       'Mentor them actively — explain tasks, demonstrate techniques, allow supervised practice and provide constructive feedback',
-      'Tell them to read the manuals and ask questions only if stuck',
+      'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
+      'Conflict, disagreement and jostling for position as team members establish working relationships',
+      'Providing a thorough verbal and written handover covering work completed, outstanding items, safety status and any issues encountered',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Active mentoring is a key teamwork behaviour expected under ST1426. It involves explaining, demonstrating, supervising practice and giving feedback. This develops the apprentice's competence safely and efficiently, builds team capability, and demonstrates the professional behaviours assessed in the EPA.",
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: "In the Tuckman model of team development, the 'storming' stage is characterised by:",
     options: [
-      'The team working at peak efficiency',
+      'It helps colleagues improve their performance, builds trust and strengthens team capability',
       'Conflict, disagreement and jostling for position as team members establish working relationships',
-      'The team breaking up and members leaving',
-      'Complete agreement on all decisions',
+      'Stop work, assess the situation together, share information and agree a safe way forward',
+      'It combines different knowledge, experience and perspectives to reach a more accurate diagnosis faster',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'When delegating tasks within a maintenance team, the team leader should ensure:',
     options: [
-      'Tasks are given to whoever is closest, regardless of competence',
-      'Only the most experienced person does any work',
+      'Stop work, assess the situation together, share information and agree a safe way forward',
+      'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
       'Tasks are matched to individual competence, clearly communicated and monitored for progress',
-      'Everyone does the same task simultaneously for speed',
+      'Conflict, disagreement and jostling for position as team members establish working relationships',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'Which of the following is an example of positive team behaviour during a complex maintenance task?',
     options: [
-      'Completing your section and leaving without checking if colleagues need help',
-      'Keeping your specialist knowledge to yourself to maintain your value',
+      'Mentor them actively — explain tasks, demonstrate techniques, allow supervised practice and provide constructive feedback',
+      'Valuing different perspectives, adapting communication styles and ensuring all team members can contribute effectively',
+      'It helps colleagues improve their performance, builds trust and strengthens team capability',
       'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
-      'Working through breaks to finish ahead of schedule',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Positive team behaviour includes helping colleagues, sharing knowledge freely, maintaining awareness of overall progress and contributing beyond your immediate task. These behaviours build team capability, improve safety and efficiency, and are specifically assessed in the EPA professional behaviours component.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     question:
       'When handing over a maintenance task to the next shift, the most important action is:',
     options: [
-      'Leaving a brief note on the workbench',
       'Providing a thorough verbal and written handover covering work completed, outstanding items, safety status and any issues encountered',
-      'Sending an email after you have left site',
-      'Assuming the next shift will check everything themselves',
+      'Conflict, disagreement and jostling for position as team members establish working relationships',
+      'Mentor them actively — explain tasks, demonstrate techniques, allow supervised practice and provide constructive feedback',
+      'Valuing different perspectives, adapting communication styles and ensuring all team members can contribute effectively',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Shift handovers are a critical teamwork practice in maintenance. A thorough handover (verbal and written) ensures continuity, prevents duplication and — most importantly — communicates safety-critical information such as isolation status, outstanding hazards and incomplete work. Poor handovers have been identified as a factor in numerous industrial incidents.',
   },
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which behaviour demonstrates respect for diversity within a maintenance team?',
     options: [
-      'Treating everyone identically regardless of their needs',
+      'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
       'Valuing different perspectives, adapting communication styles and ensuring all team members can contribute effectively',
-      'Only working with people who share your background',
-      'Avoiding discussion of any differences',
+      'Working effectively with others, contributing to team objectives and supporting colleagues',
+      'It helps colleagues improve their performance, builds trust and strengthens team capability',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,12 +191,12 @@ const quizQuestions = [
     id: 10,
     question: 'Under ST1426, which teamwork behaviour is specifically assessed in the EPA?',
     options: [
-      'The ability to work completely independently without any team interaction',
+      'Conflict, disagreement and jostling for position as team members establish working relationships',
+      'Stop work, assess the situation together, share information and agree a safe way forward',
       'Working effectively with others, contributing to team objectives and supporting colleagues',
-      'Completing tasks faster than all other team members',
-      'Avoiding all disagreement with colleagues',
+      'Clear, timely communication of progress, delays and safety issues to all team members',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'ST1426 specifically assesses the ability to work effectively with others, contribute to team objectives and support colleagues. The EPA assessor looks for evidence of collaboration, communication, respect for others and a positive contribution to team performance. This is demonstrated through your portfolio evidence and professional discussion.',
   },
@@ -206,11 +206,11 @@ const quizQuestions = [
       'When a maintenance team encounters an unexpected problem during a task, the first collective action should be:',
     options: [
       'Each person tries their own solution independently',
-      'Stop work, assess the situation together, share information and agree a safe way forward',
-      'Continue working and hope the problem resolves itself',
       'Immediately call an external specialist without team discussion',
+      'Continue working and hope the problem resolves itself',
+      'Stop work, assess the situation together, share information and agree a safe way forward',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "When unexpected problems arise, the team should stop, assess collectively, share relevant information and experience, and agree a safe approach before proceeding. This collaborative response draws on the team's combined knowledge, ensures safety is maintained and models the professional behaviours expected under ST1426.",
   },
@@ -219,12 +219,12 @@ const quizQuestions = [
     question:
       'Why is giving constructive feedback to colleagues considered a valuable teamwork skill?',
     options: [
-      'It demonstrates superiority over colleagues',
       'It helps colleagues improve their performance, builds trust and strengthens team capability',
-      'It is only necessary during formal appraisals',
-      'It replaces the need for formal training',
+      'Clear, timely communication of progress, delays and safety issues to all team members',
+      'Working effectively with others, contributing to team objectives and supporting colleagues',
+      'Offering to help colleagues, sharing knowledge and maintaining awareness of the overall task progress',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Constructive feedback — given respectfully, specifically and in a timely manner — helps colleagues develop their skills, corrects unsafe practices and builds mutual trust. In maintenance teams, the ability to give and receive feedback is essential for safety and continuous improvement. It is a key professional behaviour assessed in the EPA.',
   },

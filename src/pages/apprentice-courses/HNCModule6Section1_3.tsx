@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'u-value-definition',
     question: 'What does the U-value of a building element measure?',
     options: [
-      'The thermal mass of the material',
+      'To bind strands together and ensure reliable connection',
+      'The Principal Contractor (who co-ordinates all trades)',
       'The rate of heat transfer per unit area per degree temperature difference',
-      'The amount of solar gain through the element',
-      'The air permeability of the construction',
+      'Constant power delivery and more efficient power transmission',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The U-value (thermal transmittance) measures the rate of heat transfer through a building element per unit area for every degree of temperature difference between inside and outside. Lower U-values indicate better insulation.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'thermal-bridge',
     question: 'What is a thermal bridge in building construction?',
     options: [
-      'A structural beam that spans between buildings',
+      'Provide contact details, role, company information and relevant accreditations',
+      'Adequate illumination, duration, and reliability during emergencies',
       'An area where heat transfer is significantly higher than surrounding elements',
-      'A connection between heating systems',
-      'A gap in the insulation layer',
+      'Fabricated or falsified documents claiming work that was not performed',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A thermal bridge is an area of the building envelope where heat transfer is significantly greater than the surrounding construction, typically occurring at junctions, penetrations, or where insulation is interrupted.',
   },
@@ -58,12 +58,12 @@ const quickCheckQuestions = [
     question:
       'For Part L compliance, which approach considers both fabric elements and thermal bridges?',
     options: [
-      'Area-weighted average',
-      'Worst-case scenario',
+      '5 to 8 times full-load current',
+      'At the origin (closest to supply)',
+      'Near exits and at changes of direction',
       'Target Fabric Energy Efficiency (TFEE)',
-      'Simple additive method',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The Target Fabric Energy Efficiency (TFEE) standard in Part L considers the combined performance of all fabric elements plus thermal bridging effects to assess overall building envelope performance.',
   },
@@ -71,12 +71,12 @@ const quickCheckQuestions = [
     id: 'psi-value',
     question: 'What does the psi (ψ) value represent in thermal bridging calculations?',
     options: [
+      'The solar heat gain coefficient',
+      'The air leakage rate at joints',
       'The U-value of an insulation material',
       'The linear thermal transmittance at junctions',
-      'The air leakage rate at joints',
-      'The solar heat gain coefficient',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The psi (ψ) value represents the linear thermal transmittance of a thermal bridge, measured in W/mK. It quantifies the additional heat loss per metre length of a junction or linear feature.',
   },
@@ -86,7 +86,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What are the units for U-value?',
-    options: ['W/K', 'W/m²K', 'W/mK', 'J/m²K'],
+    options: [
+      'W/K',
+      'W/m²K',
+      'W/mK',
+      'J/m²K',
+    ],
     correctAnswer: 1,
     explanation:
       'U-value is measured in W/m²K (watts per square metre per kelvin). This represents the rate of heat transfer through one square metre of the element for each degree of temperature difference.',
@@ -95,8 +100,13 @@ const quizQuestions = [
     id: 2,
     question:
       'According to Part L 2021 for new dwellings, what is the limiting U-value for external walls?',
-    options: ['0.35 W/m²K', '0.26 W/m²K', '0.18 W/m²K', '0.30 W/m²K'],
-    correctAnswer: 1,
+    options: [
+      '0.18 W/m²K',
+      '0.35 W/m²K',
+      '0.26 W/m²K',
+      '0.30 W/m²K',
+    ],
+    correctAnswer: 2,
     explanation:
       'Part L 2021 sets the limiting U-value for external walls in new dwellings at 0.26 W/m²K. This is a backstop value - actual designs typically achieve lower values to meet overall energy targets.',
   },
@@ -104,8 +114,13 @@ const quizQuestions = [
     id: 3,
     question:
       'When calculating the U-value of a wall, which resistance must be included for the external surface?',
-    options: ['Rsi = 0.13 m²K/W', 'Rse = 0.04 m²K/W', 'Rse = 0.13 m²K/W', 'Rsi = 0.04 m²K/W'],
-    correctAnswer: 1,
+    options: [
+      'Rse = 0.13 m²K/W',
+      'Rsi = 0.13 m²K/W',
+      'Rsi = 0.04 m²K/W',
+      'Rse = 0.04 m²K/W',
+    ],
+    correctAnswer: 3,
     explanation:
       'The external surface resistance (Rse) is 0.04 m²K/W for exposed surfaces. The internal surface resistance (Rsi) is 0.13 m²K/W for horizontal heat flow (walls).',
   },
@@ -113,8 +128,13 @@ const quizQuestions = [
     id: 4,
     question:
       'A 100mm thick insulation material has a thermal conductivity of 0.035 W/mK. What is its thermal resistance?',
-    options: ['0.35 m²K/W', '2.86 m²K/W', '3.50 m²K/W', '0.29 m²K/W'],
-    correctAnswer: 1,
+    options: [
+      '2.86 m²K/W',
+      '0.35 m²K/W',
+      '3.50 m²K/W',
+      '0.29 m²K/W',
+    ],
+    correctAnswer: 0,
     explanation:
       'Thermal resistance R = thickness / conductivity = 0.100 / 0.035 = 2.86 m²K/W. Higher thermal resistance means better insulation performance.',
   },
@@ -122,8 +142,13 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the limiting U-value for roofs in new non-domestic buildings under Part L 2021?',
-    options: ['0.25 W/m²K', '0.18 W/m²K', '0.16 W/m²K', '0.20 W/m²K'],
-    correctAnswer: 2,
+    options: [
+      '0.18 W/m²K',
+      '0.16 W/m²K',
+      '0.20 W/m²K',
+      '0.25 W/m²K',
+    ],
+    correctAnswer: 1,
     explanation:
       'Part L 2021 sets the limiting U-value for roofs in new non-domestic buildings at 0.16 W/m²K. Roofs typically have lower limiting values as they experience greatest heat loss.',
   },
@@ -131,7 +156,12 @@ const quizQuestions = [
     id: 6,
     question:
       'Which term describes the total thermal transmittance including linear thermal bridges?',
-    options: ['Elemental U-value', 'Adjusted U-value', 'Effective U-value', 'Composite U-value'],
+    options: [
+      'Elemental U-value',
+      'Adjusted U-value',
+      'Effective U-value',
+      'Composite U-value',
+    ],
     correctAnswer: 2,
     explanation:
       'The effective U-value accounts for both the basic elemental U-value and the additional heat loss through thermal bridges (using psi values). This gives a more accurate representation of real-world performance.',
@@ -140,7 +170,12 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the default y-value used for thermal bridging when no detailed calculations are provided?',
-    options: ['0.05 W/m²K', '0.08 W/m²K', '0.10 W/m²K', '0.15 W/m²K'],
+    options: [
+      '0.05 W/m²K',
+      '0.08 W/m²K',
+      '0.10 W/m²K',
+      '0.15 W/m²K',
+    ],
     correctAnswer: 3,
     explanation:
       'When detailed psi value calculations are not available, a default y-value of 0.15 W/m²K is used. This penalises buildings without proper thermal bridge detailing and typically adds significantly to heat loss.',
@@ -150,12 +185,12 @@ const quizQuestions = [
     question:
       'For a window, what does the frame factor affect in thermal performance calculations?',
     options: [
-      'The air leakage around the frame',
       'The proportion of glazed area to total window area',
       'The structural integrity of the installation',
+      'The air leakage around the frame',
       'The solar gain through the glass',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The frame factor represents the ratio of glazed area to total window area. Since frames typically have higher U-values than glazing, a higher frame factor (more frame) generally increases overall window U-value.',
   },
@@ -178,10 +213,10 @@ const quizQuestions = [
     options: [
       'Mineral wool (0.035-0.040 W/mK)',
       'PIR/PUR foam (0.022-0.028 W/mK)',
-      'Expanded polystyrene (0.032-0.038 W/mK)',
       'Phenolic foam (0.018-0.022 W/mK)',
+      'Expanded polystyrene (0.032-0.038 W/mK)',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Phenolic foam has the lowest thermal conductivity of common insulation materials (0.018-0.022 W/mK), making it highly efficient where space is limited. However, it requires careful detailing due to potential moisture sensitivity.',
   },
@@ -191,11 +226,11 @@ const quizQuestions = [
       'When calculating the U-value of a ground floor, what additional factor must be considered?',
     options: [
       'The building height',
-      'The perimeter-to-area ratio',
-      'The external air temperature only',
       'The roof insulation level',
+      'The external air temperature only',
+      'The perimeter-to-area ratio',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Ground floor U-value calculations must consider the perimeter-to-area ratio (P/A). Heat loss occurs predominantly around the floor perimeter, so buildings with high P/A ratios (small footprints) have higher effective floor U-values.',
   },
@@ -203,7 +238,12 @@ const quizQuestions = [
     id: 12,
     question:
       'What is the typical psi value for an insulated wall/roof junction with good detailing?',
-    options: ['0.06 W/mK', '0.16 W/mK', '0.25 W/mK', '0.35 W/mK'],
+    options: [
+      '0.06 W/mK',
+      '0.35 W/mK',
+      '0.25 W/mK',
+      '0.16 W/mK',
+    ],
     correctAnswer: 0,
     explanation:
       'A well-detailed insulated wall/roof junction typically achieves a psi value around 0.06 W/mK. Poor detailing can result in values of 0.20 W/mK or higher, significantly increasing heat loss at junctions.',

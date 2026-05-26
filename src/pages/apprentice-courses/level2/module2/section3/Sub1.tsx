@@ -34,8 +34,13 @@ const checks = [
   {
     id: 'electron-theory-charge-check',
     question: 'Which sub-atomic particle carries a negative charge?',
-    options: ['Proton', 'Neutron', 'Electron', 'Nucleus'],
-    correctIndex: 2,
+    options: [
+      'Neutron',
+      'Proton',
+      'Nucleus',
+      'Electron',
+    ],
+    correctIndex: 3,
     explanation:
       "Electrons carry the negative charge and orbit the nucleus. Protons are positive, neutrons are neutral, and the nucleus is the lump in the middle made of the first two.",
   },
@@ -44,12 +49,12 @@ const checks = [
     question:
       'In a copper cable carrying DC, the actual electrons drift in which direction relative to conventional current?',
     options: [
-      'Same direction as conventional current',
+      'Metallic (ferrous and non-ferrous) materials only',
+      'Installing sockets before plastering is complete',
       'Opposite direction to conventional current',
-      'At 90 degrees to it',
-      "It's random — no real direction",
+      'Replacing 25 kg bags of cement with 15 kg bags',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Conventional current is drawn from positive to negative. Electrons (the things actually moving) drift the other way — negative to positive. Both descriptions of the same circuit, just opposite arrows.",
   },
@@ -58,12 +63,12 @@ const checks = [
     question:
       'A free electron in a copper cable drifts along the wire at roughly what speed?',
     options: [
-      'About the speed of light',
-      'A few hundred metres per second',
       'A fraction of a millimetre per second',
       'The same speed as the electrical signal',
+      'About the speed of light',
+      'A few hundred metres per second',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Drift velocity is tiny — well under 1 mm per second on a typical cable. The energy and the signal travel at near light speed through the field surrounding the wire, but the electrons themselves crawl.",
   },
@@ -74,10 +79,10 @@ const quizQuestions = [
     id: 1,
     question: 'What sits at the centre of an atom?',
     options: [
-      'A cloud of electrons',
+      'Loud machinery on a building site',
       'A nucleus made of protons and neutrons',
-      'Just protons, on their own',
-      'A vacuum',
+      'Insulation degradation beginning',
+      'All observations, defects, and compliance issues',
     ],
     correctAnswer: 1,
     explanation:
@@ -87,12 +92,12 @@ const quizQuestions = [
     id: 2,
     question: 'A neutral atom has equal numbers of:',
     options: [
+      'Electrons and neutrons',
       'Protons and neutrons',
       'Protons and electrons',
-      'Electrons and neutrons',
       'Protons and ions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Equal positive (proton) and negative (electron) charges cancel out. That's the definition of a neutral atom. Knock an electron loose and you get a positive ion.",
   },
@@ -100,12 +105,12 @@ const quizQuestions = [
     id: 3,
     question: 'Why is copper such a good conductor?',
     options: [
+      'Carry out full initial verification style testing',
+      'Dwellings including houses, flats, and communal areas',
+      'Protection from voltage transients',
       'It has lots of free electrons in its outer shell',
-      'It has more protons than other metals',
-      "It's heavier than other metals",
-      'It has no electrons at all',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       "Copper's outer electrons are loosely held — they roam around as a 'sea' of free electrons. Apply a potential difference and they drift, which is what we measure as current.",
   },
@@ -113,12 +118,12 @@ const quizQuestions = [
     id: 4,
     question: 'What does the term "electric current" actually describe?',
     options: [
-      'The flow of voltage along a wire',
       'The rate of flow of charge past a point',
+      'The flow of voltage along a wire',
       'The amount of resistance in a cable',
       'The size of the cable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Current (I) is charge flow per second. One amp = one coulomb per second. Voltage is the push behind it; resistance is what holds it back.",
   },
@@ -128,8 +133,8 @@ const quizQuestions = [
     options: [
       'Negative to positive',
       'Positive to negative',
-      'Earth to live',
       'Source to switch',
+      'Earth to live',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,11 +145,11 @@ const quizQuestions = [
     question: 'In a metal conductor, electron flow is:',
     options: [
       'In the same direction as conventional current',
-      'In the opposite direction to conventional current',
       'Only present in AC circuits',
+      'In the opposite direction to conventional current',
       'Only present at the moment of switch-on',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Electrons drift from negative to positive — opposite to the conventional arrow. Same circuit, same current, just two ways of describing the direction.",
   },
@@ -153,20 +158,25 @@ const quizQuestions = [
     question:
       'When you flick a light switch and the lamp lights up almost instantly, what is travelling at near light speed?',
     options: [
-      'The individual electrons',
+      'Electrical Installation Certificate',
+      'A skills card confirming competence level',
+      'They create significant flow restrictions (high K values)',
       'The electromagnetic field around the conductor',
-      'The copper itself',
-      'The neutron flow',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The field — the push — propagates at close to the speed of light. The electrons themselves only crawl. Think of a row of marbles: shove one end and the other end moves almost instantly, but no single marble has gone the full distance.",
   },
   {
     id: 8,
     question: 'The unit of electric charge is the:',
-    options: ['Volt', 'Ampere', 'Coulomb', 'Ohm'],
-    correctAnswer: 2,
+    options: [
+      'Coulomb',
+      'Ohm',
+      'Volt',
+      'Ampere',
+    ],
+    correctAnswer: 0,
     explanation:
       "Charge is measured in coulombs (C). One coulomb is roughly 6.24 × 10¹⁸ electrons. One amp = one coulomb passing a point every second. Volts measure the push, ohms measure resistance.",
   },

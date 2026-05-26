@@ -379,6 +379,31 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
 
       {/* Bonding Connections */}
       <SectionTitle title="Bonding Connections To" />
+
+      {/* Common combos — one tap for typical UK domestic */}
+      <div className="grid grid-cols-2 gap-1.5 mb-2">
+        {[
+          { keys: ['water', 'gas'], label: 'Water + Gas' },
+          { keys: ['water', 'gas', 'oil'], label: 'Water + Gas + Oil' },
+        ].map(({ keys, label }) => (
+          <button
+            key={label}
+            type="button"
+            onClick={() => {
+              const newLocs = new Set<string>(keys);
+              setBondingLocations(newLocs);
+              updateMainBondingLocations(newLocs, otherChecked ? otherBonding : '');
+            }}
+            className={cn(
+              'h-9 rounded-lg font-medium text-[10px] touch-manipulation active:scale-[0.98]',
+              'bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow'
+            )}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+
       <div className="grid grid-cols-3 gap-1">
         {[
           { key: 'water', label: 'Water' },

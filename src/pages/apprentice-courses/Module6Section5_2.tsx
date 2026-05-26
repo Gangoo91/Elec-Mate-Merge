@@ -22,10 +22,10 @@ const Module6Section5_2 = () => {
       id: 1,
       question: 'What instrument is used to perform insulation resistance tests?',
       options: [
-        'Multimeter',
+        'To ensure safety and accurate readings',
         'Insulation resistance tester (megger)',
-        'Oscilloscope',
-        'Clamp meter',
+        'Damage to connected equipment',
+        'The electrician performing the test',
       ],
       correctAnswer: 1,
       explanation:
@@ -34,7 +34,12 @@ const Module6Section5_2 = () => {
     {
       id: 2,
       question: 'What voltages are commonly used during insulation resistance testing?',
-      options: ['12V, 24V, 48V', '110V, 230V, 400V', '250V, 500V, 1000V DC', '50V, 100V, 200V'],
+      options: [
+        '50V, 100V, 200V',
+        '12V, 24V, 48V',
+        '250V, 500V, 1000V DC',
+        '110V, 230V, 400V',
+      ],
       correctAnswer: 2,
       explanation:
         'Test voltages of 250V DC, 500V DC, or 1000V DC are commonly used depending on the installation voltage and BS 7671 requirements.',
@@ -43,12 +48,12 @@ const Module6Section5_2 = () => {
       id: 3,
       question: 'Why must circuits be isolated before testing?',
       options: [
-        'To save battery power',
+        'To prevent damage from high test voltages',
+        'The electrician performing the test',
+        'Insulation resistance tester (megger)',
         'To ensure safety and accurate readings',
-        "It's not necessary",
-        'To speed up testing',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Circuits must be isolated to ensure safety of personnel and equipment, and to obtain accurate test readings without interference from live circuits.',
     },
@@ -56,19 +61,24 @@ const Module6Section5_2 = () => {
       id: 4,
       question: 'Why should sensitive equipment be disconnected before testing?',
       options: [
-        'To save time',
         'To prevent damage from high test voltages',
-        'It makes no difference',
-        'To get faster results',
+        'To ensure safety and accurate readings',
+        'Insulation resistance tester (megger)',
+        'Testing without disconnecting sensitive equipment',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Sensitive electronic equipment must be disconnected because the high DC test voltages can permanently damage delicate electronic components.',
     },
     {
       id: 5,
       question: 'What does a warning light on a tester usually indicate?',
-      options: ['Low battery', 'Test voltage is present', 'Test complete', 'Equipment fault'],
+      options: [
+        'Low battery',
+        'Test voltage is present',
+        'Equipment fault',
+        'Test complete',
+      ],
       correctAnswer: 1,
       explanation:
         'The warning light indicates that test voltage is present and warns that the circuit is dangerous to touch during testing.',
@@ -77,16 +87,26 @@ const Module6Section5_2 = () => {
       id: 6,
       question:
         'True or False: It is safe to test a live circuit with an insulation resistance tester.',
-      options: ['True', 'False', 'Sometimes', 'Only at low voltage'],
-      correctAnswer: 1,
+      options: [
+        'True',
+        'Sometimes',
+        'False',
+        'Only at low voltage',
+      ],
+      correctAnswer: 2,
       explanation:
         'False. It is never safe to test a live circuit with an insulation resistance tester. The circuit must always be isolated first.',
     },
     {
       id: 7,
       question: 'What must be done to a circuit after insulation resistance testing?',
-      options: ['Nothing', 'Discharge it to earth', 'Test it again', 'Leave it isolated'],
-      correctAnswer: 1,
+      options: [
+        'Nothing',
+        'Leave it isolated',
+        'Test it again',
+        'Discharge it to earth',
+      ],
+      correctAnswer: 3,
       explanation:
         'The circuit must be discharged to earth after testing to remove any stored energy that could cause shock or false readings.',
     },
@@ -94,12 +114,12 @@ const Module6Section5_2 = () => {
       id: 8,
       question: 'Name one risk of carrying out an IR test incorrectly.',
       options: [
-        'Taking too long',
         'Damage to connected equipment',
-        'Better accuracy',
-        'Faster results',
+        'Discharge it to earth',
+        'Test voltage is present',
+        'The electrician performing the test',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         "Incorrect IR testing can damage connected equipment, especially sensitive electronic devices that weren't disconnected before testing.",
     },
@@ -107,10 +127,10 @@ const Module6Section5_2 = () => {
       id: 9,
       question: 'Who is responsible for ensuring safe testing procedures are followed?',
       options: [
-        'The client',
+        'Damage to connected equipment',
         'The electrician performing the test',
-        'The supervisor only',
-        'No one specific',
+        'To prevent damage from high test voltages',
+        'Insulation resistance tester (megger)',
       ],
       correctAnswer: 1,
       explanation:
@@ -120,12 +140,12 @@ const Module6Section5_2 = () => {
       id: 10,
       question: 'In the real-world example, what mistake led to damage of computer equipment?',
       options: [
-        'Wrong test voltage',
+        'To prevent damage from high test voltages',
+        'Insulation resistance tester (megger)',
         'Testing without disconnecting sensitive equipment',
-        'Faulty tester',
-        'Testing too quickly',
+        'The electrician performing the test',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The apprentice tested without disconnecting computers, and the 500V DC test voltage damaged the computer power supplies.',
     },

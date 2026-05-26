@@ -38,12 +38,12 @@ const checks = [
     question:
       "You are stripping out a 1990s commercial unit and removing 60 fluorescent tubes plus several PCB-suspected ballasts. Which UK waste regime applies and what paperwork do you need?",
     options: [
-      "WEEE only — fluorescent tubes are just lamps.",
+      "(1) Identify circuit (label, drawings, customer info — hypothesis only). (2) Isolate (operate the breaker / switch — confirm it's the right one). (3) Lock-off (apply a personal padlock + tag with your name + date). (4) Prove the tester on a known live source (Martindale GVD2 proving unit OR a known live socket nearby) — voltage tester only. (5) Test the circuit at the work point (between L–N, L–E, N–E) — voltage tester only. (6) Re-prove the tester on the same known live source. Multimeters do NOT prove dead. Socket testers do NOT prove dead. Only a GS38 voltage tester does.",
+      "Significantly. A repair that's exposed to harsh environment (outdoor, kitchen, plant room, washroom) may not last as long as the same repair in benign environment. The repair-vs-replace decision should consider: (a) what's the IP / environmental rating of the repaired vs replacement component? (b) Will the repair retain the original IP rating? (c) Is the new component IP-rated for the actual environment? Replacement often comes with current IP / environmental ratings; repair preserves the existing rating (which may have degraded). For harsh environments, replacement is usually the right call.",
       "Both WEEE and the Hazardous Waste Regulations apply. Fluorescent tubes contain mercury and are absolute hazardous waste under the European Waste Catalogue (EWC code 20 01 21*). Older ballasts may contain PCBs (polychlorinated biphenyls) which are also hazardous waste. Each transfer requires a Hazardous Waste Consignment Note (not just a waste transfer note), the carrier and the destination must hold the appropriate environmental permits, and the producer (you) must keep the consignment notes for at least three years. Tubes must be transported intact (not crushed) to prevent mercury vapour release.",
-      "Just a normal waste transfer note will cover it.",
-      "No paperwork required if quantity is below 200 kg.",
+      "Plain English + cost. Example: 'Your kitchen circuit can't handle the load you're putting on it. There are three options. (1) Cheap — rearrange your appliances so you don't run kettle, microwave and toaster at the same time. £0 cost; reduced convenience. (2) Medium — add a dedicated socket for the kettle on a separate circuit. £450 cost; same convenience. (3) Expensive — rewire the kitchen for full modern capacity. £2,500 cost; future-proofed. Each option is safe; they differ on cost and convenience. Which fits your situation best?'. Customer makes the commercial decision; you've explained the technical position; the firm has a defensible record.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Hazardous waste sits under a stricter regime than non-hazardous WEEE. The Hazardous Waste Consignment Note is the controlling document; the Environment Agency uses the consignment data to track movements end-to-end. Crushing fluorescent tubes on site without an appropriate permit is a separate breach because of the mercury release. The PCB ballast issue is real for older fittings — pre-1986 ballasts in particular may contain PCBs and require specialist treatment.",
   },
@@ -52,12 +52,12 @@ const checks = [
     question:
       "A customer is replacing all the fluorescent fittings in their warehouse with LED panels. Apply the waste hierarchy to the old fluorescent fittings — what is the correct order of preference?",
     options: [
-      "Disposal first, then recycling, then re-use.",
       "Prevention (could the existing fittings be retrofitted with LED tubes instead of replaced?) first, then preparation for re-use (could the fittings be cleaned and resold for second-hand commercial reuse?), then recycling (separate the metal, glass and plastic components for material recovery), then other recovery (energy from waste for non-recyclable plastic), and only then disposal as the last resort. The Waste (England and Wales) Regulations 2011 (regulation 12) require waste producers to apply this hierarchy and to take all reasonable steps to apply it in order of preference.",
-      "Recycling and disposal are equivalent — pick whichever is cheaper.",
-      "The hierarchy is voluntary guidance, not a legal duty.",
+      "Rarely, in the modern UK context. Micro-CHP burns gas to generate electricity locally and uses the waste heat to drive the wet system. It made sense when grid electricity was carbon-intensive (~500 gCO₂/kWh) and gas was cheap. As the grid decarbonises (~200 gCO₂/kWh now), the relative carbon advantage shrinks. Heat pumps deliver lower running carbon per kWh of heat. Micro-CHP is now mostly seen in larger commercial / institutional applications where heat demand is constant and high. For domestic UK new-build, the Future Homes Standard effectively rules it out.",
+      "Setup: MFT in EFLI / Loop mode (typically position '4' on Megger MFT1741+). Test leads to L and CPC at the test point (typically a socket, an accessory, or the DB output). Safety: this is a LIVE test — circuit must be energised, RCD-protected (MFT injects a low-current test pulse that doesn't trip the RCD on most tests, but use the 'Hi' or 'no-trip' mode for verification on RCD-protected circuits). Press TEST. The MFT measures the current that flows during the brief test pulse and calculates Zs. Reading appears in 1–3 seconds. Compare to BS 7671 Appendix 3 / Table 41.3 maximum for the protective device.",
+      "No. EAWR Reg 14(c) requires 'suitable precautions including where necessary the provision of suitable protective equipment'. The risk being 'low' doesn't dispense with the precaution — it informs which precaution. For 230 V live work, Class 0 insulated gloves (rated 1000 V AC) plus insulated tools are the standard precaution. The senior is exposing both themselves and the firm to liability under EAWR (failure to take suitable precautions) and HSWA Section 7 (employee duty to take reasonable care of own and others' safety). The apprentice's defence: 'I followed the firm's PPE matrix' — so make sure there IS one and it specifies gloves for live work.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The waste hierarchy is the legal framework for waste decision-making in the UK. Regulation 12 of the Waste (England and Wales) Regulations 2011 imposes a duty on waste producers to take all reasonable steps to apply the hierarchy in order. On a fluorescent-to-LED retrofit, prevention via tube-only retrofit and preparation for re-use of the fittings should both be considered before bulk recycling. The hierarchy is the right answer to the customer who asks whether the old fittings can be used somewhere else.",
   },
@@ -66,12 +66,12 @@ const checks = [
     question:
       "What is the role of the Environmental Permitting Regulations 2016 (EPR) in waste handling on an electrical contracting business?",
     options: [
-      "EPR only applies to large industrial sites.",
+      "Run the customer through: how the system operates (continuous low-temperature heating, not on-off cycles like a gas boiler); how to set the room thermostat (set and forget at desired temperature, modest setbacks only); how to use the hot water schedule (typically once or twice a day); when to expect higher running costs (cold spells push up consumption); what the smart controls do; what the warning lights / app notifications mean; who to call for support (warranty contact, manufacturer support, installer aftercare); annual service requirement. Five-to-ten minutes that prevents months of customer confusion.",
+      "Personally bound under s.110 (helping someone else commit an unlawful act, e.g. participating in harassment) and as a witness who is duty-bound to co-operate with internal investigations. The apprentice's reputational and legal exposure grows if they participate in or condone discriminatory or harassing behaviour. The apprentice also has a route to RAISE concerns — internal complaints procedure, ACAS conciliation, Employment Tribunal claim — and is protected against victimisation under s.27 for raising them in good faith.",
+      "Bond each extraneous service (gas, water) separately back to the MET per Reg 544.1.2 (within 600 mm of intake). Bond the structural steel frame at multiple accessible points back to the MET. Bond the LPS earth network to the MET via direct bond or spark gap per BS EN 62305. Each system has its own dedicated bonding cable to the MET — no daisy-chaining. The MET is the single common reference for the entire integrated earth and bonding network.",
       "EPR is the umbrella permitting framework for waste activities, water discharges, radioactive substances and certain installations in England and Wales. Anyone carrying, brokering, treating, transferring or disposing of waste needs the appropriate authorisation under EPR — typically a waste carrier registration (lower tier), a broker / dealer registration, or a full environmental permit for a treatment site. As an electrical contractor you most likely need a lower-tier waste carrier registration to lawfully transport your own controlled waste. Anyone you transfer waste to must hold their own appropriate authorisation.",
-      "EPR replaced the Duty of Care.",
-      "EPR is voluntary.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "EPR 2016 consolidated dozens of older permitting regimes into one framework. For an electrical contractor the immediate practical effects are: register as a waste carrier (free for lower-tier registration if you only carry your own waste), check the waste carrier registration of anyone removing waste from your sites, and check the environmental permit of the destination treatment facility. The Environment Agency operates a free public register where these checks take 30 seconds.",
   },
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       "What is the difference between a waste transfer note and a Hazardous Waste Consignment Note?",
     options: [
-      "There is no difference — the names are interchangeable.",
+      "Stop and ask the supervisor for the missing items — RAMS, risk assessment, COSHH for any chemicals, the rest of the drawings (single line, schedule of circuits), the schematic, the schedule of test results from the existing install, BS 7671 and the OSG, mfr data for the new board, and the permit if any of the work is hot. Without that information you can't show your work was done to a 'suitable and sufficient' standard under MHSWR Reg 3 and you can't show compliance with BS 7671 Reg 132.13.",
       "A waste transfer note is the standard document used for non-hazardous controlled waste under the Duty of Care. A Hazardous Waste Consignment Note is the stricter document used for hazardous waste under the Hazardous Waste Regulations 2005 — it requires more information including the precise EWC code, the hazardous properties (HP codes), the chemical composition, the carrier and destination authorisations, and a signature from each party in the chain. Consignment notes must be retained for at least three years (waste transfer notes for two years).",
-      "Consignment notes are voluntary.",
-      "Transfer notes are only used in Scotland.",
+      "The programme tells you the sequence and the deadline — miss it and your firm is at risk of liquidated damages. The snag list is your end-of-job homework. Variations and delay notices are how additional work or extra time is recorded so the firm can claim it. Your firm's cash flow — and ultimately your wages — depend on this paperwork being right. Even as an apprentice, learning to read the programme and the snag list is part of becoming a tradesperson.",
+      "Anti-islanding — the inverter detects loss of grid reference and shuts down within the time limits of G98 / G99 (typically loss-of-mains protection per ENA EREC G98 / G99). This protects DNO engineers who may be working on what they believe is a dead supply, prevents asynchronous reclosure damage, and stops a small generator trying to support a much larger network it cannot stabilise. To run through a power cut you need a hybrid inverter with explicit islanded-mode capability and a transfer arrangement that isolates the property from the grid first.",
     ],
     correctAnswer: 1,
     explanation:
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       "What does the waste hierarchy require waste producers to do under regulation 12 of the Waste (England and Wales) Regulations 2011?",
     options: [
-      "Choose any disposal route the producer prefers.",
+      "Hot work (gas torch, grinding sparks, welding) on commercial premises, confined-space entry (ducts, voids, lift shafts), live electrical work under EAWR Reg 14, and high-energy switching on industrial / healthcare sites. The permit is a formal document authorising the specific activity within a specific time window, listing the precautions, and signed by the issuing authority and the operative.",
+      "Install a separate earth electrode (earth rod) for the EV charging circuit, creating TT earthing for that circuit, with an RCD providing earth fault protection — or use an EVSE that the manufacturer confirms has integral open-PEN protection meeting the requirements of BS 7671 Regulation 722.411.4",
       "Take all such measures available to it as are reasonable in the circumstances to apply the waste hierarchy in order of priority: prevention, preparation for re-use, recycling, other recovery (including energy recovery), and disposal as the last resort. The producer must record the steps taken to apply the hierarchy on the waste transfer note. Departures from the order must be justified on environmental grounds.",
-      "Choose the cheapest available disposal route.",
-      "Apply the hierarchy only on commercial sites.",
+      "Report it to your insurer promptly within the timeframe specified in the policy (often within 7-30 days). Preserve evidence (photos, statements, certificates). Don't admit liability — let the insurer handle the negotiation. Failure to notify within the policy timeframe can void cover for that claim.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Regulation 12 turns the hierarchy from policy into duty. The waste transfer note now includes a tick-box requiring the producer to confirm the hierarchy has been applied. On a typical electrical install the practical application is: design out waste at order stage (prevention), keep usable accessories aside for re-use, separate cable copper for recycling, and only what genuinely cannot be recovered goes to disposal.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       "Which of these is classed as absolute hazardous waste and triggers the consignment note regime regardless of quantity?",
     options: [
-      "All construction waste.",
+      "Read it, follow it, sign on, work to the controls and steps as written, and flag anything on site that doesn't match what the document describes. Writing RAMS is a Level 3 / 4 / supervisor competency — at Level 2 you're a reader and follower of RAMS, and a flagger when reality doesn't match.",
+      "Most HASAWA offences are triable either way — the prosecution chooses Magistrates' (summary) or Crown (indictment). Magistrates' Court can impose unlimited fines on H&S offences (since 2015) and up to 6 months imprisonment. Crown Court can impose unlimited fines and up to 2 years imprisonment for individuals (longer for some related offences like Corporate Manslaughter — life). The Sentencing Council Definitive Guideline applies in both courts.",
+      "Each operative working on the isolated circuit fits their own lock to the isolation point (or to a hasp / multi-lock if multiple operatives). Tag identifies the operative, the circuit, the date / time, and the work. Lock removed only by the operative who fitted it (and only when their work is complete and safe to re-energise).",
       "Fluorescent tubes (mercury-containing, EWC 20 01 21* — the asterisk denotes hazardous), oil-filled transformers and capacitors containing PCBs (EWC 16 02 09*), batteries containing lead, mercury or cadmium (EWC 16 06 01* and similar), asbestos-cement consumer unit backplates from older installations (EWC 17 06 05*), and waste oils. The asterisk in the EWC code is the marker for absolute hazardous waste.",
-      "Cable copper offcuts.",
-      "General builder waste.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The EWC (now the List of Waste in UK terminology) is the single catalogue of waste types. Codes ending in * are absolute hazardous waste — always hazardous regardless of concentration or other tests. Other codes are mirror entries — hazardous only if certain hazardous properties (HP codes) are present above thresholds. Knowing which EWC codes apply to common electrical waste streams is part of the consignment note completion task.",
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     question:
       "Why has the lower-tier waste carrier registration regime become essentially mandatory for electrical contractors in the UK?",
     options: [
-      "It is still voluntary.",
       "Because under the Environmental Permitting Regulations and the Waste (England and Wales) Regulations any business that transports waste it has produced from a customer site to a disposal point is carrying controlled waste and requires a waste carrier registration. Lower-tier registration (for businesses carrying only their own waste) is free and renewable; upper-tier (for businesses carrying other parties waste, or carrying construction and demolition waste from third parties) carries a fee. Failure to register is a criminal offence.",
-      "Because of pure voluntary trade body rules.",
-      "Because of customer marketing pressure only.",
+      "Take all such measures available to it as are reasonable in the circumstances to apply the waste hierarchy in order of priority: prevention, preparation for re-use, recycling, other recovery (including energy recovery), and disposal as the last resort. The producer must record the steps taken to apply the hierarchy on the waste transfer note. Departures from the order must be justified on environmental grounds.",
+      "All work equipment — anything used by an employee at work, including tools, machinery, vehicles, ladders, lifting equipment and apparatus. The duties cover suitability (Reg 4), maintenance (Reg 5), inspection (Reg 6), specific risks (Reg 7), information and instructions (Reg 8), training (Reg 9), conformity (Reg 10), dangerous parts protection (Reg 11), specified hazards (Reg 12), high/low temperature (Reg 13), controls (Reg 14–17), isolation (Reg 19) and stability (Reg 20).",
+      "A proving unit is a small portable source of low-voltage AC (typically 240 V or 110 V output) used to verify a voltage tester is functioning BEFORE and AFTER each safe-isolation test. The 'prove dead' routine: prove tester on the unit (should read live), test the circuit (should read dead), prove tester again on the unit (still reads live = tester is working = circuit really IS dead). Without proving the tester at both ends, a faulty tester reading 'dead' on a live circuit could kill you.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Most electrical contractors carry waste they have produced themselves (offcuts, removed kit, packaging) and qualify for lower-tier registration which is free. The Environment Agency online registration takes about ten minutes. Upper-tier registration is needed for anyone carrying third-party waste or third-party construction and demolition waste. The check on the wholesaler or skip operator removing waste from your site needs to confirm they hold the correct tier of registration for the activity.",
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       "A customer in Wales asks you to remove an old asbestos-cement consumer unit backplate during a rewire. What is the correct response?",
     options: [
-      "Remove it yourself and dispose of it in the customer skip.",
+      "Anti-islanding is the inverter's ability to detect when the grid has gone down and to disconnect itself within milliseconds — preventing the inverter from continuing to feed a portion of the local network ('islanding') with the DNO's workers expecting that section to be dead. ENA G98 (and G99 for larger systems) defines the protection settings the inverter must implement (typically G99/1-7 or earlier G83/G59 protection settings depending on inverter age). Modern inverters self-test the anti-islanding regularly. A4:2026 has refined the BS 7671 cross-references to G98/G99.",
       "Asbestos-containing material work is restricted under the Control of Asbestos Regulations 2012. Even non-licensed removal of low-risk asbestos-containing materials requires the worker to be trained to non-licensable asbestos work standard, and the resulting waste is hazardous waste (EWC 17 06 05*) requiring consignment to a permitted asbestos waste site. The simple answer is do not remove asbestos-bearing accessories yourself unless you and your employer hold the appropriate non-licensable asbestos training and authorisation. Refer to a licensed or competent contractor as appropriate.",
-      "Remove it without paperwork — it is below the limit.",
-      "Wrap in newspaper and put in domestic waste.",
+      "A boiler drives a wet heating system — pumps hot water around radiators / underfloor circuits and a hot-water cylinder. Typical output 10-50 kW, located in a utility room or outhouse, automatic fuel feed (auger from a hopper), automatic ignition, automatic ash handling. A stove is a room heater — radiates heat directly into the room it sits in, plus optional back-boiler for some hot water. Lower output (5-15 kW typical), manual loading (logs or pellets), no automatic ash removal. Different installation regulations, different MCS standards, different customer expectations.",
+      "Pregnancy and maternity (s.18). The Act prohibits unfavourable treatment of women because of pregnancy or maternity leave during the 'protected period' (broadly, from the start of pregnancy to the end of maternity leave). This is a separate category to sex discrimination — pregnancy / maternity claims don't need a male comparator. It's one of the most enforced parts of the Act and a leading source of Employment Tribunal awards.",
     ],
     correctAnswer: 1,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       "What does the European Waste Catalogue code with an asterisk (e.g. 16 06 01*) tell you?",
     options: [
-      "Nothing — the asterisk is decorative.",
+      "The single shared online platform where all project information is stored, controlled and exchanged — drawings, models, schedules, RFIs, change orders, all under structured access control and revision management. Examples include Autodesk Construction Cloud, Procore, Asite, Aconex, Viewpoint For Projects.",
+      "Typical materials markup is 15-30% on top of cost — covers the time sourcing, collecting, returning, managing stock, dealing with wholesaler accounts, and wastage. Higher markup on stocked items you carry in van inventory; potentially lower markup on large special orders where you don't add much value.",
       "It marks the entry as absolute hazardous waste — always hazardous regardless of concentration or test result. Non-asterisked entries are non-hazardous; entries with mirror codes (one starred, one not) require a hazardous-property assessment on the specific waste before deciding which code applies. The List of Waste regulations and the Environment Agency technical guidance set out the assessment methodology.",
-      "It marks waste that is exempt from the consignment regime.",
-      "It marks Scottish-only waste codes.",
+      "The Scottish Joint Industry Board (SJIB) is the equivalent of the JIB for the electrical contracting industry in Scotland. It sets working rules, pay rates and grades for Scottish electricians, working alongside SELECT (the Scottish trade association). SJIB grading uses similar terminology (Apprentice, Approved Electrician, Technician) but the rates and the ECS card variants are Scottish-specific.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Reading the EWC code is part of being a competent waste producer. Most electrical hazardous waste streams have well-known absolute codes — 20 01 21* for fluorescent tubes, 16 06 01* for lead-acid batteries, 16 06 02* for nickel-cadmium batteries, 16 02 09* for PCB-containing transformers, 17 06 05* for asbestos-containing construction materials. Memorising the half-dozen common codes for your trade saves time on consignment note completion.",
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       "Why is energy recovery (incineration with energy capture) ranked below recycling in the waste hierarchy?",
     options: [
-      "Because energy recovery is illegal in the UK.",
+      "A generic RAMS is template wording that could apply to any job — 'electrical hazards', 'working at height', 'use of PPE'. A site-specific RAMS names the actual site, the actual tasks, the hazards identified on the walk-round, the specific access kit, the specific controls and the specific steps. The HSE 'suitable and sufficient' test under MHSWR Reg 3 effectively requires site-specific content.",
+      "'So far as is reasonably practicable' (SFAIRP) — the duty-holder weighs the risk against the cost, time and effort of further precautions. The bar is set by what a competent person would have done. Established in Edwards v National Coal Board (1949). Trivially expensive controls against serious risk = required. Disproportionately expensive controls against trivial residual risk = not required.",
+      "Significant. A south-facing roof at 30-40° pitch is the optimal UK orientation, posting 100% of reference yield. East-facing or west-facing roofs typically produce 80-85% of optimal. North-facing produces 50-65% (still positive but with much longer payback). Steeper pitches favour winter performance; shallower pitches favour summer performance. Flat roofs get an A-frame mount to set a target pitch and azimuth. The MCS Yield Calculator handles all of this — produces the kWh figure for the SAP and the customer handover.",
       "Because recycling preserves the material value (the metal, the polymer, the glass) for re-use in new manufacturing, whereas energy recovery destroys the material and recovers only the chemical energy. Under the waste hierarchy, keeping materials in productive use is preferred over extracting one-time energy from them. Energy from waste sits above landfill because at least some value (electricity / heat) is recovered, but it sits below recycling because the material is lost.",
-      "Because incineration produces no useful energy.",
-      "There is no ranking between energy recovery and recycling.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The hierarchy reflects the circular-economy principle that materials should stay in use as long as possible. Recycling extends material life; energy recovery ends it. Energy recovery is still preferable to landfill because at least the chemical energy is captured, but the loss of the original material value is permanent. The hierarchy gives the waste producer a clear ladder to climb in any given decision.",
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       "Which UK regulator enforces the Hazardous Waste Regulations 2005 and the EPR 2016 regimes in England?",
     options: [
-      "Trading Standards.",
       "The Environment Agency. The EA operates the consignment note tracking system, the waste carrier registration system, the environmental permit register and the public lookup tools. SEPA (Scotland), Natural Resources Wales (NRW) and the Northern Ireland Environment Agency (NIEA) cover the equivalent functions in their respective territories. Civil sanctions, variable monetary penalties and criminal prosecution are all available where breaches are detected, and the agencies publish enforcement bulletins regularly.",
-      "Local Authority Building Control.",
-      "Ofgem.",
+      "Professional Indemnity (PI) — covers the firm against claims arising from errors, omissions or negligent advice in their professional capacity (design, specification, recommendation). PL covers physical damage / injury from the contractor's activities; PI covers economic loss caused by bad advice or design. Increasingly relevant as installers move into design-and-build, EV charging design, solar PV design and prosumer's installations under BS 7671 Part 8.",
+      "Operation of mechanical interlocks (e.g. door interlock prevents opening while energised, key interlock prevents racking out a circuit-breaker without permit), confirmation that emergency-off devices break the supply, manual operation of the main switch under load (where safe), and that any control circuit logic (contactors, relays, time delays) operates as designed.",
+      "Automated bank feed (transactions imported from your bank), invoice generation and tracking (sent invoices visible, paid status tracked), VAT return preparation (Making Tax Digital compliant), expense tracking with photo receipts, integration with payroll for staff/apprentices, real-time profit and loss view. Cost £15-30/month for sole trader; saves hours of manual bookkeeping each month.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The EA is the lead environmental regulator in England across the waste regimes. Their enforcement activity is data-driven — the consignment note system flags anomalies which trigger compliance visits. As a contractor your best defence is well-kept paperwork and correctly registered carriers. The free Environment Agency public registers (waste carriers, environmental permits, hazardous waste producers) are the right tool for routine compliance checks.",
   },

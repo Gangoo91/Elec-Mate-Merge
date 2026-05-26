@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'Which is the correct order of the hierarchy of controls, from most to least effective?',
     options: [
-      'PPE, administrative, engineering, substitution, elimination',
-      'Elimination, substitution, engineering controls, administrative controls, PPE',
-      'Administrative, PPE, engineering, elimination, substitution',
       'Engineering, elimination, administrative, substitution, PPE',
+      'Elimination, substitution, engineering controls, administrative controls, PPE',
+      'PPE, administrative, engineering, substitution, elimination',
+      'Administrative, PPE, engineering, elimination, substitution',
     ],
     correctIndex: 1,
     explanation:
@@ -30,11 +30,11 @@ const quickCheckQuestions = [
       'Which of the following is an example of an engineering control in electrical maintenance?',
     options: [
       'A toolbox talk about electrical safety',
+      'Rotating workers to reduce fatigue from repetitive tasks',
       'Wearing insulated gloves when working on live equipment',
       'Installing finger-safe (IP2X) covers on distribution board busbars',
-      'Rotating workers to reduce fatigue from repetitive tasks',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Finger-safe (IP2X) busbar covers are an engineering control — they physically prevent contact with live parts through the design of the equipment. Engineering controls work by isolating people from the hazard without relying on individual behaviour. A toolbox talk is an administrative control, insulated gloves are PPE, and worker rotation is an administrative control.',
   },
@@ -42,7 +42,12 @@ const quickCheckQuestions = [
     id: 'residual-risk',
     question:
       'After applying all reasonably practicable controls from the hierarchy, what remains is called:',
-    options: ['Eliminated risk', 'Transferred risk', 'Residual risk', 'Theoretical risk'],
+    options: [
+      'Eliminated risk',
+      'Transferred risk',
+      'Residual risk',
+      'Theoretical risk',
+    ],
     correctIndex: 2,
     explanation:
       'Residual risk is the level of risk that remains after all reasonably practicable control measures have been applied. It is the risk the work team must manage through ongoing vigilance, monitoring and compliance with the safe system of work. Residual risk must be ALARP (as low as reasonably practicable) before work can proceed.',
@@ -52,12 +57,12 @@ const quickCheckQuestions = [
     question:
       'Why are combined controls from multiple levels of the hierarchy generally more effective than a single control?',
     options: [
-      'Because the HSE requires a minimum of three controls for every hazard',
+      'Carry out safe isolation — prove the tester on a known live source, isolate, lock-off, test dead',
+      'Gradually increasing work hours and physical demands over an agreed period, with regular review and modified duties as needed',
+      'Ensure a construction phase plan is drawn up by the contractor or principal contractor',
       'Because if one control fails or is compromised, the remaining controls still provide some protection (defence in depth)',
-      'Because it makes the risk assessment document longer and more impressive',
-      'Because PPE alone is always sufficient',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The principle of 'defence in depth' means that layering controls from different levels of the hierarchy provides multiple barriers between the hazard and the worker. If one control fails — for example, if an interlock is defeated — the remaining controls (safe system of work, PPE) still provide some protection. No single control should ever be relied upon as the sole barrier.",
   },
@@ -68,10 +73,10 @@ const quizQuestions = [
     id: 1,
     question: 'The hierarchy of controls is based on the principle that:',
     options: [
-      'PPE is always the first choice because it is cheapest',
+      'It safely restores operation in the short term, is documented with clear limitations, and a permanent corrective action is planned and tracked to completion',
       'Controls that remove or reduce the hazard at source are more effective and reliable than those that rely on human behaviour',
-      'Administrative controls are the most effective because they involve training',
-      'All five levels must be applied to every hazard regardless of the risk level',
+      'Weak areas identified through practice test analysis, while maintaining revision of strong areas',
+      'Yes — RA × IΔn = 180 × 0.1 = 18 V, which is comfortably below the 50 V touch-voltage limit. The criterion passes.',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +87,10 @@ const quizQuestions = [
     question:
       'An electrical maintenance team decides to replace a planned live cable joint with a method that allows the work to be done with the circuit de-energised. This is an example of:',
     options: [
-      'Administrative control',
-      'Personal protective equipment',
-      'Elimination of the electrical hazard',
       'Substitution of materials',
+      'Administrative control',
+      'Elimination of the electrical hazard',
+      'Personal protective equipment',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,8 +100,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Substituting a solvent-based contact cleaner with a water-based alternative is an example of:',
-    options: ['Elimination', 'Substitution', 'Engineering control', 'Administrative control'],
-    correctAnswer: 1,
+    options: [
+      'Engineering control',
+      'Elimination',
+      'Administrative control',
+      'Substitution',
+    ],
+    correctAnswer: 3,
     explanation:
       'Substitution involves replacing a hazardous substance, process or piece of equipment with a less hazardous alternative. Replacing a flammable, toxic solvent with a water-based cleaner reduces the chemical hazard without eliminating the cleaning activity. The hazard is not removed entirely (the water-based cleaner may still have some hazards), but it is significantly reduced.',
   },
@@ -104,12 +114,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following is an administrative control for managing electrical risk?',
     options: [
-      'Installing an interlocked isolator on a motor',
       'Implementing a permit to work system for HV switching',
+      'Installing an interlocked isolator on a motor',
       'Fitting IP2X covers to distribution board busbars',
       'Wearing arc flash rated face shield',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A permit to work system is an administrative control — it is a documented procedure that controls how work is carried out by people. Administrative controls depend on people following the system correctly. An interlocked isolator and IP2X covers are engineering controls (they physically prevent access to the hazard). An arc flash face shield is PPE.',
   },
@@ -117,10 +127,10 @@ const quizQuestions = [
     id: 5,
     question: 'PPE is at the bottom of the hierarchy of controls because:',
     options: [
-      'It is the most expensive option',
+      'No — socket testers are a wiring verification tool only. They do not provide the GS38-required indicator features (shrouded probes, current limiting, prove function) and cannot be considered a safe-isolation tool.',
       'It does nothing to reduce or remove the hazard — it only protects the individual wearing it, and its effectiveness depends entirely on correct selection, fitting, use and maintenance',
-      'PPE is never effective against electrical hazards',
-      'It is not required by law',
+      'A lone worker policy, periodic check-ins, GPS-tracked safety device or app, dynamic risk assessment, agreed escalation contact and avoidance of live working unless unavoidable and risk-assessed',
+      'Occupational diseases including occupational asthma, occupational dermatitis, and certain cancers caused by workplace substance exposure',
     ],
     correctAnswer: 1,
     explanation:
@@ -132,11 +142,11 @@ const quizQuestions = [
       'A maintenance technician is asked to install a new circuit in a ceiling void. The void contains asbestos insulation board. Applying the hierarchy of controls, the FIRST option to consider is:',
     options: [
       'Wearing a disposable coverall and half-face mask',
-      'Routing the cable to avoid the asbestos entirely (elimination of exposure)',
       'Writing a method statement for working near asbestos',
+      'Routing the cable to avoid the asbestos entirely (elimination of exposure)',
       'Limiting the time spent in the ceiling void to 30 minutes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The first option to consider under the hierarchy is always elimination. If the cable can be routed to completely avoid the asbestos-containing material, the exposure hazard is eliminated. Only if elimination is not reasonably practicable should you move down the hierarchy to consider engineering controls (encapsulation), administrative controls (licensed removal, method statements) or PPE.',
   },
@@ -145,12 +155,12 @@ const quizQuestions = [
     question:
       'An interlocked isolator on a motor ensures that the motor cannot be started while the guard is open. This is:',
     options: [
-      'An administrative control because it requires maintenance',
-      'PPE because it protects the worker',
+      'Signs of overheating, damage, or poor workmanship',
+      'A system that varies airflow to match zone cooling/heating loads',
+      'Store on proper supports and protect from damage',
       'An engineering control because it physically prevents the hazard',
-      'Elimination because the motor cannot run',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'An interlocked isolator is an engineering control. It uses a physical mechanism to prevent the motor from being energised when the guard is removed, regardless of what the operator does. Engineering controls are highly effective because they do not rely on human behaviour — the interlock works automatically every time (provided it is maintained and not defeated).',
   },
@@ -158,12 +168,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which of the following statements about residual risk is correct?',
     options: [
-      'Residual risk is always zero after controls are applied',
       'Residual risk is the risk that remains after all reasonably practicable controls have been implemented',
-      'Residual risk only applies to electrical hazards',
-      'Residual risk does not need to be communicated to the work team',
+      'Identify appropriate controls for hazards encountered in their work, apply them correctly, and monitor their effectiveness',
+      'Routing the cable to avoid the asbestos entirely (elimination of exposure)',
+      'Eliminate the hazard by re-routing the cables underground or overhead, away from the walkway',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Residual risk is the level of risk remaining after all reasonably practicable control measures have been applied. It is rarely zero — some level of risk usually remains. The residual risk must be ALARP and must be clearly communicated to the work team so they understand what hazards they are still exposed to and can remain vigilant.',
   },
@@ -172,10 +182,10 @@ const quizQuestions = [
     question:
       'A construction site has exposed 400 V cables running across a pedestrian walkway. The best hierarchy response is:',
     options: [
-      'Issue high-visibility vests to all pedestrians',
+      'An instrument mounted in the field (below the line) vs in the control room (above the line)',
       'Eliminate the hazard by re-routing the cables underground or overhead, away from the walkway',
-      'Put up a warning sign',
-      'Brief the site workers about the cables in a toolbox talk',
+      'Part S (Infrastructure for electric vehicles) and Part P (Electrical Safety)',
+      'To detect and identify live traffic on a fibre without breaking the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -185,12 +195,12 @@ const quizQuestions = [
     id: 10,
     question: 'When selecting controls for a hazard, you should:',
     options: [
-      'Start at the bottom of the hierarchy with PPE because it is quickest to implement',
+      'The gradual expansion of work beyond the original agreement, often through small additions that individually seem minor',
+      'A material that absorbs/releases heat when changing state (solid/liquid), storing thermal energy',
       'Start at the top of the hierarchy with elimination and work down, applying the most effective controls that are reasonably practicable',
-      'Only apply controls that cost less than £500',
-      'Apply all five levels simultaneously regardless of the hazard',
+      'Recorded explicitly on the report so the reader understands the scope of what was NOT inspected and the implications',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The correct approach is to start at the top of the hierarchy (elimination) and work downwards. At each level, ask whether that type of control is reasonably practicable for the hazard in question. Apply the most effective controls possible, and use lower-level controls (such as PPE) only to manage residual risk that remains after higher-level controls have been applied.',
   },
@@ -198,12 +208,12 @@ const quizQuestions = [
     id: 11,
     question: 'Monitoring the effectiveness of control measures is important because:',
     options: [
-      'It is only necessary for controls costing more than £1,000',
+      'It does nothing to reduce or remove the hazard — it only protects the individual wearing it, and its effectiveness depends entirely on correct selection, fitting, use and maintenance',
+      'Residual risk is the risk that remains after all reasonably practicable controls have been implemented',
+      'Identify appropriate controls for hazards encountered in their work, apply them correctly, and monitor their effectiveness',
       'Controls can degrade over time, be defeated or bypassed, or prove inadequate in practice — monitoring ensures they continue to work as intended',
-      'The HSE will fine you if you do not produce a monitoring report',
-      'Monitoring is only required for PPE, not for engineering or administrative controls',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'All control measures require monitoring because they can degrade, be bypassed, or prove inadequate over time. Engineering controls need maintenance (interlocks can fail, guards can be removed). Administrative controls need reinforcement (procedures can drift, training can be forgotten). PPE needs inspection and replacement (PPE degrades with use). Regular monitoring ensures controls remain effective and identifies when they need to be improved.',
   },
@@ -211,12 +221,12 @@ const quizQuestions = [
     id: 12,
     question: 'Under ST1426, a maintenance technician should be able to:',
     options: [
-      'Design a complete hierarchy of controls for a nuclear power station',
       'Identify appropriate controls for hazards encountered in their work, apply them correctly, and monitor their effectiveness',
-      'Only wear PPE when instructed by a supervisor',
-      'Delegate all control selection to the health and safety department',
+      'Controls can degrade over time, be defeated or bypassed, or prove inadequate in practice — monitoring ensures they continue to work as intended',
+      'Residual risk is the risk that remains after all reasonably practicable controls have been implemented',
+      'Eliminate the hazard by re-routing the cables underground or overhead, away from the walkway',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 requires maintenance technicians to demonstrate knowledge of control measures and the ability to apply them in practice. This includes selecting appropriate controls for the hazards they encounter, implementing those controls correctly, monitoring their effectiveness, and reporting when controls are inadequate or have failed. This is assessed in the end-point assessment practical observation and professional discussion.',
   },

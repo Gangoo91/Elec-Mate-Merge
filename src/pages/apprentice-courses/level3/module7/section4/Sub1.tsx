@@ -39,10 +39,10 @@ const checks = [
     question:
       "How often does BS 7671 get a new edition or major amendment?",
     options: [
-      "Every 100 years.",
+      "I apply the requirements of the Health and Safety at Work Act 1974, the Electricity at Work Regulations 1989, and relevant ACoPs and British Standards such as BS 7671, through practical actions including risk assessment, safe isolation, use of appropriate PPE, maintenance of competence, and accurate record keeping",
       "New edition typically every 7-10 years (15th, 16th, 17th, 18th editions); amendments to the current edition every 3-4 years (A1, A2, A3, A4 etc.). The 18th Edition was published in 2018; A1 was 2020 (EV); A2 was 2022 (mainly editorial); A3 was 2024 (renewables-related); A4 lands in 2026 with significant changes including AFDD requirements, TN-C-S handling and revised schedule columns.",
-      "Daily.",
-      "Never.",
+      "Because the install is a long-lived asset that will outlast the original installer's involvement. Notices communicate critical information — main earth location, RCD test interval, mixed supplies, isolator function — to whoever interacts with the install in future, including the customer in an emergency, the next electrician on a fault visit, and the EICR engineer in five years' time. The labels are how the install talks to people when the original installer isn't there.",
+      "Verify: (1) approved voltage indicator (GS38) selected; (2) test on a known live source first (prove); (3) tested on the conductors to be isolated (test); (4) re-test on the known live source (prove again); (5) lock-off device fitted; (6) tag-out / warning notice; (7) keys held by the operative who locked it; (8) re-check before starting work. Six-step procedure all present.",
     ],
     correctIndex: 1,
     explanation:
@@ -53,12 +53,12 @@ const checks = [
     question:
       "What's the headline change in BS 7671 A4:2026?",
     options: [
-      "Nothing major.",
       "Several major changes: broader recommendation for Arc Fault Detection Devices (AFDDs) under Reg 421.1.7 (recommending wording, not mandating — HRRBs are made mandatory via the Building Safety Act 2022), updated TN-C-S (PNB) handling guidance, revised schedule columns on certificates (forms updated), updated requirements for renewables and energy storage, revised special-locations content. A4 represents the most significant single amendment to BS 7671 in recent memory.",
-      "Just typo fixes.",
-      "Only colour changes.",
+      "Risk Assessment + Method Statement. The risk assessment identifies hazards, evaluates the risk and lists the controls (required by Management of Health & Safety at Work Regs 1999 Reg 3). The method statement sets out HOW the work will be done safely, step by step. Together they're the working H&S document for a job — the inspector after an incident asks for both.",
+      "Disposable filtering facepiece masks rely on a tight face seal to filter the air. Facial hair (stubble or beard) inside the seal area allows leakage past the seal — typically 10-20% of inhaled air bypasses the filter. The mask is no longer providing the rated protection. INDG479 (HSE guidance on RPE fit testing) is explicit that disposable masks are not suitable for bearded workers — they need a powered air-purifying respirator (PAPR) with a loose-fitting hood.",
+      "Unwanted conduct related to a relevant protected characteristic (age, race, sex, gender reassignment, religion or belief, sexual orientation, disability, marriage and civil partnership, pregnancy and maternity) that has the purpose or effect of violating the person's dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment for them. Section 26 of the Act.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "A4:2026 is a major update. AFDD recommendations broaden significantly under Reg 421.1.7 (the wording is 'recommending', not mandating — HRRBs come under mandatory scope via the Building Safety Act 2022 framework, not BS 7671 itself). TN-C-S handling addresses the long-running open-PEN concern with newer evidence-based guidance. Schedule column changes affect certificate forms — every CPS scheme and electrical software vendor has had to update accordingly. Plan A4 CPD: read the amendment, take a 1-day refresher course, sit the updated 2382-26 exam.",
   },
@@ -67,10 +67,10 @@ const checks = [
     question:
       "Why do CPS schemes (NICEIC, NAPIT) require CPD for QS-named individuals?",
     options: [
-      "Just to make money.",
+      "No. Refrigerant work is restricted to F-Gas-certified personnel only, under the F-Gas Regulations (assimilated EU Regulation 517/2014, retained in UK law). Connecting refrigerant pipework, charging the system, recovering refrigerant — all require F-Gas certification, even for the small charges in domestic heat pumps. Working without certification is a criminal offence and invalidates the manufacturer's warranty. As the electrician your boundary is the electrical supply, isolation, controls and bonding — not the refrigerant circuit.",
       "Because the QS is responsible for the firm's competence to self-certify Part P notifiable work. Out-of-date QS competence (not keeping up with BS 7671 amendments) means the firm is signing off work to outdated standards. Schemes require evidence of ongoing CPD specifically to keep the QS aligned with current BS 7671 and current best practice. Failure to evidence CPD can result in scheme registration suspension.",
-      "Only optional.",
-      "Just for marketing.",
+      "(1) PROVE the voltage indicator works on a known live source (proving unit OR a known live circuit). (2) TEST the conductors to be isolated — line-to-earth, line-to-neutral, line-to-line, neutral-to-earth. (3) PROVE the voltage indicator works AGAIN on the same known live source. Confirms the indicator wasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t faulty during the test.",
+      "EN ISO 20345 (safety footwear) for general work; specific S-grade ratings (S1, S1P, S3 etc) indicate features (toe protection, midsole protection, antistatic, water resistance). For electrical work the mark to look for is the EH (Electrical Hazard) rating or class S2/S3 with insulating sole.",
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: "What's the difference between a BS 7671 'edition' and an 'amendment'?",
     options: [
-      "Same thing.",
+      "Written grievance following the employer's documented grievance procedure (which the employer is required to provide under the ACAS Code of Practice on Discipline and Grievance). The written grievance triggers a structured response with timescales and right of appeal. Verbal complaints are easy to ignore; documented grievances are not. ACAS conciliation is available if the internal process fails.",
       "Edition = major rewrite (e.g. 17th to 18th in 2018) covering all sections, often introducing new chapters and structural changes. Amendment = targeted update to the current edition (e.g. A1, A2, A3, A4 to the 18th Edition) covering specific topics. Editions are spaced 7-10 years apart; amendments 2-4 years apart. Both update the regulatory framework but at different scales.",
-      "Editions are minor.",
-      "Only Scotland uses amendments.",
+      "GS38 — 'Electrical test equipment for use by electricians'. It's HSE guidance, not statute, but the courts treat it as the reference for what 'safe' test probes, leads and instruments look like in practice. It specifies probe finger barriers, exposed metal length (no more than 4 mm), insulated leads, fused leads where appropriate, and the use of voltage indicators rather than meters where possible.",
+      "A work-related FATALITY or a SPECIFIED INJURY (Schedule 1) — fracture (excl fingers/thumbs/toes), amputation, sight loss, crush injury, serious burn, scalping, head-injury unconsciousness, enclosed-space injury. Phone HSE on 0345 300 9923; F2508 follows within 10 days.",
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: "Who actually writes BS 7671?",
     options: [
-      "The Government.",
+      "5 years per ESF/GN3 frequency guidance — adjusted shorter where condition or risk warrants. The 5-year interval is a recommended starting point; commercial environments with higher risk (workshops, kitchens, public-facing spaces) typically warrant shorter intervals.",
+      "Reviewing the job scope, checking availability of parts and materials, ensuring test equipment is calibrated and charged, obtaining necessary permits, informing production of the work window, and briefing any team members involved",
       "JPEL/64 — the Joint IET / BSI Technical Committee that drafts BS 7671. Members include the IET, BSI, ECA, NICEIC, BEAMA, JIB, manufacturers, government bodies and others. Drafts go through public consultation before publication. The IET publishes BS 7671 jointly with BSI.",
-      "Only NICEIC.",
-      "Only manufacturers.",
+      "Remove the cross-connection at the CU, re-land the line and neutral conductors into their correct terminals on the protective device, double-check polarity by visual inspection of the terminations, then proceed to insulation resistance testing (Sub 3) before energising.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "JPEL/64 is the technical authority behind BS 7671. The committee structure ensures input from across the industry — installers, designers, manufacturers, regulators, schemes. Drafts go through public consultation (you can submit comments) before final publication. Knowing this helps demystify the regs: they're consensus-built by industry experts, not handed down from above.",
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: "What's the C&G 2382 and how does it track BS 7671 amendments?",
     options: [
-      "Doesn't track.",
+      "Where equipment was disconnected to allow the standard 500 V DC test, after the equipment is reconnected a 250 V DC test must be applied between live conductors and the protective conductor — minimum 1 MΩ. Confirms the equipment itself does not present an unacceptable insulation defect.",
+      "Any deliberate deviation from a BS 7671 requirement that the designer judges acceptable for the specific installation, with justification. E.g. omitting an RCD on a non-dwelling socket-outlet under the Reg 411.3.3 risk-assessment exception. Each departure must be documented with reasoning.",
+      "Competence = having the technical knowledge / skill / experience to do the work safely. Authority = being permitted by the firm or a regulator to do it. Both are required. An L3 may be competent on a task but not authorised (e.g. EIC sign-off requires Qualified Supervisor authority); or authorised by job title but not yet competent on a specific item (e.g. CompEx work).",
       "C&G 2382 is the BS 7671 Wiring Regulations qualification — open-book exam testing knowledge of the current edition. Each major edition triggers a new 2382 variant: 2382-15 was 17th Edition; 2382-18 was 17th Edition + A3; 2382-22 is 18th Edition; 2382-26 will cover A4:2026. Holding the latest 2382 is the standard CPD evidence for keeping current with BS 7671.",
-      "Only academic.",
-      "Just a textbook.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "2382 is the regs knowledge qualification that tracks BS 7671 versions. Holding the latest 2382 evidences current BS 7671 competence. CPS schemes typically expect QS-named individuals to hold the current 2382 within a reasonable period of each amendment. Plan to take the new 2382 within 6-12 months of each major BS 7671 amendment.",
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     id: 4,
     question: "What's an AFDD and why does A4:2026 require them more widely?",
     options: [
-      "A type of cable.",
       "Arc Fault Detection Device — protective device that detects arc faults (intermittent low-energy faults that don't always trigger overcurrent or RCD protection but can cause fires). Combine MCB and RCD functions with arc-detection electronics. Previously recommended for specific circuits; A4:2026 expands the recommendation under Reg 421.1.7 to AC final circuits generally (note: 'recommending' wording — not a BS 7671 mandate; HRRBs are made mandatory via the Building Safety Act 2022 framework). Cost typically £30-60 per AFDD.",
-      "Just a marketing label.",
-      "Only for solar.",
+      "Treat the DC side as live until proven dead with a meter rated for the voltage. The DC isolator at the array end and the DC isolator at the inverter end must both be operated and locked-off, then verify dead with a meter at both ends of the string. Even with the inverter AC-side isolated and switched off, the array continues to generate as long as light hits the panels. Covering the panels reduces but does not eliminate the DC output. Inverter manufacturer's instructions usually require a dwell time after isolation to allow internal capacitors to discharge.",
+      "The Operations and Maintenance (O&M) pack — typically a bound document or PDF with: signed EIC (top-level), Schedule of Inspections, Schedule of Test Results, design pack (single-line, panel schedules, calculations), as-built drawings, Building Control Compliance Certificate (or notification reference), commissioning test results, departures log, manufacturer manuals for installed equipment, recommended maintenance schedule.",
+      "The MCS Code of Practice is the over-arching code that all MCS-certified installers must comply with. It covers consumer protection (sales practices, contracts, performance estimates honestly disclosed), installation quality, commissioning records, customer handover documentation, complaints handling and after-sales support. The installer's MCS certification can be withdrawn for breaches of the Code. The Code references the technology-specific MCS Installation Standards (MIS 3001 solar thermal, 3002 PV, 3003 wind, 3004 biomass boiler, 3005 heat pump, 3006 biomass stove, 3007 EV, 3008 hydro, 3012 battery storage) for the technical detail.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "AFDDs address the gap in protection that overcurrent devices and RCDs can miss — arc faults often involve intermittent low-energy current that doesn't trip MCBs or RCDs but generates enough heat to cause fires. Wider AFDD requirement in A4:2026 reflects evidence that arc faults are a meaningful cause of UK electrical fires. Materials cost increase per circuit is modest; design and install changes are more substantive.",
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: "What's TN-C-S (PNB) and why does A4:2026 update its handling?",
     options: [
-      "Same as TN-S.",
+      "An elected workplace union representative — elected by union members at the firm or site to represent their interests in dealing with the employer. The shop steward is the first port of call for individual workplace issues (pay disputes, disciplinary, health and safety concerns). On larger sites there may be multiple stewards covering different trades or shifts.",
       "TN-C-S (Terra-Neutral combined-separate) with PNB (Protective Neutral Bonding) is the most common UK earthing system — DNO supplies a combined neutral-and-earth (PEN) conductor that's split at the property into separate N and PE. The risk addressed in A4 is the open-PEN scenario — if the supply-side PEN fails, the property's exposed-conductive-parts can rise to dangerous voltage. A4 updates guidance on EV charging and risk assessment for TN-C-S systems.",
-      "Only for Scotland.",
-      "Just a label.",
+      "Management of Health and Safety at Work Regulations 1999, Reg 3 — every employer (and every self-employed person) must make a 'suitable and sufficient' assessment of the risks to the health and safety of employees and of anyone else affected by their undertaking. Where there are five or more employees the significant findings must be recorded.",
+      "Eye protection (impact-rated, EN 166 F minimum — chop saws produce hot metal sparks at speed), hearing protection (chop saws regularly exceed 100 dB), cut-resistant gloves (sharp edges on the cut tray), respiratory protection if cutting indoors with no extraction (galvanised steel coating produces zinc oxide fume at cutting temperature — the cause of metal-fume fever, sometimes called 'zinc shakes'), and sturdy boots with toe protection. Long sleeves to protect arms from sparks.",
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     id: 6,
     question: "How quickly should an electrician update CPD after a BS 7671 amendment?",
     options: [
-      "10 years.",
+      "Gateway 1 — at planning, considers fire safety and access. Gateway 2 — before construction, the BSR reviews the design and construction control plan; no construction can start without approval. Gateway 3 — before occupation, the BSR signs off the as-built building against the approved design and the golden thread; no occupation without approval.",
+      "Yes — manufacturer training (Schneider Electric, Siemens, Hager, Wago, ABB, etc.) typically counts as CPD with most CPS schemes provided it's substantive (not a sales pitch). Manufacturer events often free or low-cost; cover product-specific install, design, troubleshooting. Strong source of practical CPD especially for specialist equipment (PLCs, smart switchgear, EV chargers, PV inverters). Count attendance toward annual CPD hours.",
       "Most electricians take a 1-day refresher course within 3-6 months of an amendment, then sit the updated 2382 within 12 months. CPS schemes typically expect QS-named individuals to be current within 12 months. Working without updated knowledge means signing certificates against outdated standards — both a competence concern and a scheme compliance risk.",
-      "Never.",
-      "1 day.",
+      "In writing, contemporaneously. Text or email to the supervisor; CC to a senior manager or H&S manager; copy retained. State what was asked, what you said, and the reason (regulation cited or risk identified). Time-stamped. The contemporaneous written record is the strongest evidence in any subsequent ERA s.44 claim or HSE prosecution.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "12-month window for major amendments is the practical standard. CPS schemes explicitly track this at annual assessment. The 1-day refresher course is widely available (NICEIC training, NAPIT, JTL, NET, IET Academy, Elec-Mate); cost typically £150-300. The updated 2382 cost typically £150-250. Total CPD cost for a major amendment: £300-550. Worth budgeting for proactively.",
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     id: 7,
     question: "Are BS 7671 changes retrospective?",
     options: [
-      "Yes always.",
+      "Stop them and verify they understand what's locked off and why. Show them your padlock and tag. Confirm they're not about to remove your lock or restore your circuit. If they need to do work that affects YOUR isolation (e.g. they're investigating the busbar), the work must coordinate — both operatives' locks stay on, both operatives complete their work, both operatives remove their own locks. The 'multi-lock hasp' (Brady 65681 takes 6 padlocks) is designed for this — multiple operatives, one device, no operative removes their lock until they're personally finished.",
+      "The actual cable routes, fitting positions, junction-box locations, cable sizes used (where they differ from design), any deviations from the design and the reasons for them. As-installed drawings record what's actually in the wall, ceiling and floor void — so the next electrician (or the customer's plumber drilling for a new radiator) knows what they're dealing with.",
+      "Because a faulty proving-dead tester can show 'zero' on a live circuit — and you'd take a fatal shock. The function check confirms the tester responds to a known source. The proving-tester-on-known-source step is built into the JIB six-step (Sub 1.2) for exactly this reason. The Martindale GVD2 proving unit gives a portable known source; alternatively a known-live socket on a different circuit. Either way, the tester's response on a known source is the evidence the tester is working. Without that evidence, a 'zero' reading on the circuit you're about to work on means nothing.",
       "No — generally not retrospective. Existing installations don't have to be brought up to the current edition. New installations and additions/alterations must comply with the current edition (the version in force when the work is done). Existing installations are assessed against the standard they were installed to (with safety-critical exceptions). EICR coding takes the current standard into account but with calibration for what was acceptable when installed.",
-      "Only Scottish.",
-      "Only commercial.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Non-retrospective is a fundamental principle — otherwise every installation would need rebuilding every few years. The practical effect: new work to current standard; existing installations assessed against standards-of-the-time with safety-critical exceptions. EICR coding applies C1/C2/C3/FI judgements that account for both current and historic standards. Knowing this matters for periodic inspection work.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     id: 8,
     question: "Where do you get CPD that counts for CPS scheme requirements?",
     options: [
-      "Anywhere.",
       "Multiple sources accepted by CPS schemes: scheme-organised events (NICEIC Connect, NAPIT events, ELECSA training), accredited training providers (JTL, NET, IET Academy, Elec-Mate), trade events (ECA Live, Electric Vehicles Show), online platforms (IET Academy, scheme portals), manufacturer training (sometimes counts), reading and self-study (some schemes accept evidence). Keep a CPD log with date, topic, time, source.",
-      "Just YouTube.",
-      "Only college.",
+      "Group flow requires all individual flow conditions PLUS additional social conditions: shared goals, close listening, equal participation, familiarity with each other, open communication, forward momentum, and an element of risk. The team must balance individual autonomy with collective coordination, creating a state where the group achieves more than any individual could alone",
+      "(1) Stop work immediately. (2) Don\\\\\\\\'t disturb further. (3) Vacate the area; close off if possible. (4) Inform the dutyholder, your supervisor, the principal contractor (where appointed). (5) Don\\\\\\\\'t start work again until survey confirms / licensed contractor takes over (depending on type / quantity). Document everything.",
+      "The Contracts Manager owns the commercial relationship with the main contractor (or client direct) — the programme, the variations, the labour resourcing, the invoicing. They sit above the Project Engineer and the Site Supervisor, often running several jobs in parallel. They're rarely on any one site full-time but they're the senior decision-maker for that contract.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "CPD evidence comes from many sources. Most CPS schemes ask for typically 30+ hours of CPD per year for QS-named individuals, with mix of formal (courses, conferences) and informal (reading, online learning, manufacturer training). Keep a CPD log — schemes audit at annual assessment. Plan a structured CPD calendar at year-start; don't scramble at audit time.",
   },

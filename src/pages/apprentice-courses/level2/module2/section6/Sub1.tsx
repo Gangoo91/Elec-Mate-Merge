@@ -38,8 +38,8 @@ const checks = [
     options: [
       'Electrical runs on AC, electronic runs on DC — that’s the whole story.',
       'Electrical moves big power; electronic uses small signals to control or sense.',
-      'Electronic kit is always low voltage and doesn’t need testing.',
       'Electrical work is a trade; electronic work is just IT.',
+      'Electronic kit is always low voltage and doesn’t need testing.',
     ],
     correctIndex: 1,
     explanation:
@@ -48,16 +48,26 @@ const checks = [
   {
     id: 'resistor-colour-bands',
     question: 'A resistor has bands brown-black-red-gold. What’s the value and tolerance?',
-    options: ['10 Ω ± 5%', '100 Ω ± 5%', '1 kΩ ± 5%', '10 kΩ ± 10%'],
-    correctIndex: 2,
+    options: [
+      '1 kΩ ± 5%',
+      '100 Ω ± 5%',
+      '10 Ω ± 5%',
+      '10 kΩ ± 10%',
+    ],
+    correctIndex: 0,
     explanation:
       'Brown=1, black=0, red=×100, gold=±5%. So 10 × 100 = 1,000 Ω = 1 kΩ, ±5%. The tolerance band tells you the actual value sits between 950 Ω and 1,050 Ω.',
   },
   {
     id: 'series-parallel-combine',
     question: 'Two 10 Ω resistors in parallel give what total resistance?',
-    options: ['20 Ω', '10 Ω', '5 Ω', '0 Ω'],
-    correctIndex: 2,
+    options: [
+      '5 Ω',
+      '10 Ω',
+      '20 Ω',
+      '0 Ω',
+    ],
+    correctIndex: 0,
     explanation:
       'Two equal resistors in parallel halve. R = (R1 × R2) / (R1 + R2) = 100/20 = 5 Ω. Series adds, parallel reduces — same rule that runs through every circuit on Module 2.',
   },
@@ -68,10 +78,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why does a Level 2 electrician need to know basic electronics?',
     options: [
-      'They don’t — leave it to the manufacturer.',
+      'Personalisation (it is all my fault), pervasiveness (it will affect everything), and permanence (it will last forever)',
       'Because every modern board, smart switch, RCD, AFDD and EV charger has electronics inside that you’ll have to fault-find or replace.',
-      'Only if you go into industrial maintenance.',
-      'Only for inspection and testing roles.',
+      'The employer, self-employed person, or person in control of the premises where work is carried out',
+      'Energise the install in a controlled manner — main switch on, RCBOs on one at a time — then proceed to live testing (Ze, Zs, RCD operation, prospective fault current).',
     ],
     correctAnswer: 1,
     explanation:
@@ -81,36 +91,51 @@ const quizQuestions = [
     id: 2,
     question: 'What does a resistor do in a circuit?',
     options: [
-      'Stores energy in an electric field.',
+      'Any person who may need assistance to evacuate the building',
+      'Swap conductors into correct terminals',
       'Limits current and drops voltage in a controlled way.',
-      'Lets current flow in one direction only.',
-      'Generates voltage from heat.',
+      'Light levels, control functionality, and energy consumption',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A resistor opposes current flow. Push current through it and you get a voltage drop (V = IR) and a bit of heat. That’s how LED drivers limit current to the LED, how voltage dividers feed sensors, and how every test instrument scales its inputs.',
   },
   {
     id: 3,
     question: 'What’s the unit of resistance and its symbol?',
-    options: ['Volt (V)', 'Ampere (A)', 'Ohm (Ω)', 'Watt (W)'],
-    correctAnswer: 2,
+    options: [
+      'Ampere (A)',
+      'Volt (V)',
+      'Watt (W)',
+      'Ohm (Ω)',
+    ],
+    correctAnswer: 3,
     explanation:
       'Ohms, written with the Greek capital omega Ω. 1 Ω = the resistance that drops 1 V when 1 A flows. Same Ohm’s law from LO4 — it doesn’t change just because the resistor is a component you can hold.',
   },
   {
     id: 4,
     question: 'A 4-band resistor reads yellow-violet-orange-gold. What is it?',
-    options: ['4.7 kΩ ± 5%', '47 kΩ ± 5%', '470 kΩ ± 5%', '4.7 MΩ ± 5%'],
-    correctAnswer: 1,
+    options: [
+      '47 kΩ ± 5%',
+      '4.7 kΩ ± 5%',
+      '470 kΩ ± 5%',
+      '4.7 MΩ ± 5%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Yellow=4, violet=7, orange=×1,000, gold=±5%. So 47 × 1,000 = 47,000 Ω = 47 kΩ. Same code on every resistor in every kit you’ll ever open.',
   },
   {
     id: 5,
     question: 'Three resistors in series: 100 Ω, 220 Ω, 330 Ω. Total resistance?',
-    options: ['100 Ω', '220 Ω', '550 Ω', '650 Ω'],
-    correctAnswer: 3,
+    options: [
+      '220 Ω',
+      '650 Ω',
+      '100 Ω',
+      '550 Ω',
+    ],
+    correctAnswer: 1,
     explanation:
       'Series resistance just adds. 100 + 220 + 330 = 650 Ω. Same rule as series circuits in Section 4 — only difference is now you’re adding component-level values rather than cable resistances.',
   },
@@ -118,12 +143,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why are most resistors specified with a power rating (e.g. 0.25 W, 0.5 W, 1 W)?',
     options: [
-      'Marketing — bigger looks better.',
+      'Dim lights, especially at the end of the circuit',
+      'To record what was visually inspected and the outcome',
       'To stop them overheating and going open-circuit when current flows.',
-      'So they fit standard board layouts.',
-      'Because BS 7671 demands it.',
+      'Reporting of Injuries, Deaths and Dangerous Occurrences Regulations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Resistance × current² = heat. Run too much current through an undersized resistor and it cooks. On a board you’ll often see one charred resistor — that’s usually a clue something else has failed and overdriven it.',
   },
@@ -131,12 +156,12 @@ const quizQuestions = [
     id: 7,
     question: 'What does “tolerance” mean on a resistor?',
     options: [
-      'How long it lasts before it fails.',
-      'How much heat it can take.',
+      'A hard-wired communication system or intrinsically safe radio',
+      'Generic Emergency Evacuation Plan — a template plan for visitors or occasional users',
+      'Only use reply-all when your response is genuinely relevant to everyone on the thread',
       'How much the actual value can vary either side of the marked value.',
-      'Whether it works on AC or DC.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A 100 Ω ±5% resistor will measure anywhere between 95 Ω and 105 Ω and still be in spec. That’s why two boards with identical resistors can read slightly differently on a meter.',
   },
@@ -144,12 +169,12 @@ const quizQuestions = [
     id: 8,
     question: 'On a smart RCBO PCB, you see a resistor with a burnt mark. What’s the right next step?',
     options: [
-      'Bridge it with wire and energise — see if it works.',
-      'Replace just the resistor and re-energise straight away.',
       'Quarantine the device, order a replacement RCBO, and treat it as a failed component (not a repair).',
-      'Sand the burn off and refit.',
+      'A visitor sign-in system, escorted evacuation, and checking the visitor log at the assembly point',
+      'The tower must be immediately taken out of use and reduced to a compliant configuration or dismantled entirely',
+      'Allowing multiple people to apply their own padlocks to one isolation point',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'You don’t repair safety-critical devices on the PCB. The burn means something else has failed — fixing the symptom can leave the actual fault live. Replace the device and report it to the manufacturer.',
   },

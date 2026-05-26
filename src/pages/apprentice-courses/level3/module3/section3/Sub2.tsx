@@ -42,8 +42,13 @@ const checks = [
     id: 'l3-m3-3-2-power',
     question:
       'A 3-phase load draws 22 A line current at 400 V line, pf = 0.85. Real power consumed:',
-    options: ['8.8 kW', '12.96 kW', '15.25 kW', '17.6 kW'],
-    correctIndex: 1,
+    options: [
+      '12.96 kW',
+      '17.6 kW',
+      '15.25 kW',
+      '8.8 kW',
+    ],
+    correctIndex: 0,
     explanation:
       'P = √3 × V_L × I_L × cos φ = 1.732 × 400 × 22 × 0.85 = 12 957 W ≈ 12.96 kW.',
   },
@@ -51,8 +56,13 @@ const checks = [
     id: 'l3-m3-3-2-current',
     question:
       "A 7.5 kW (output) motor at 400 V 3-phase, η = 90 %, pf = 0.86. Line current is approximately:",
-    options: ['7.5 A', '12.5 A', '14.0 A', '21.7 A'],
-    correctIndex: 2,
+    options: [
+      '14.0 A',
+      '21.7 A',
+      '12.5 A',
+      '7.5 A',
+    ],
+    correctIndex: 0,
     explanation:
       'P_input = 7500 / 0.9 = 8333 W. I_L = P / (√3 × V_L × cos φ) = 8333 / (1.732 × 400 × 0.86) = 8333 / 595.6 = 14.0 A.',
   },
@@ -60,8 +70,13 @@ const checks = [
     id: 'l3-m3-3-2-delta',
     question:
       'A delta-connected load with phase current 10 A. Line current is:',
-    options: ['5.77 A', '10 A', '17.32 A', '30 A'],
-    correctIndex: 2,
+    options: [
+      '5.77 A',
+      '10 A',
+      '30 A',
+      '17.32 A',
+    ],
+    correctIndex: 3,
     explanation: 'I_line = √3 × I_phase = 1.732 × 10 = 17.32 A in delta.',
   },
 ];
@@ -70,22 +85,37 @@ const quizQuestions = [
   {
     id: 1,
     question: 'In a balanced star system, line voltage equals:',
-    options: ['Phase voltage', '√3 × phase voltage', '2 × phase voltage', 'Phase voltage / √3'],
+    options: [
+      'Phase voltage',
+      '√3 × phase voltage',
+      '2 × phase voltage',
+      'Phase voltage / √3',
+    ],
     correctAnswer: 1,
     explanation: 'V_line = √3 × V_phase. Vector sum of two phase voltages 120° apart.',
   },
   {
     id: 2,
     question: 'In a balanced delta system, line current equals:',
-    options: ['Phase current', '√3 × phase current', '2 × phase current', 'Phase current / √3'],
-    correctAnswer: 1,
+    options: [
+      '2 × phase current',
+      'Phase current',
+      '√3 × phase current',
+      'Phase current / √3',
+    ],
+    correctAnswer: 2,
     explanation: 'I_line = √3 × I_phase. Vector sum of two winding currents at the line node.',
   },
   {
     id: 3,
     question: '3-phase real power formula:',
-    options: ['V × I', 'V × I × cos φ', '√3 × V_L × I_L × cos φ', '√3 × V_phase × I_phase'],
-    correctAnswer: 2,
+    options: [
+      'V × I × cos φ',
+      'V × I',
+      '√3 × V_phase × I_phase',
+      '√3 × V_L × I_L × cos φ',
+    ],
+    correctAnswer: 3,
     explanation:
       'P = √3 × V_line × I_line × cos φ — for any balanced 3-phase load, regardless of star or delta connection.',
   },
@@ -93,14 +123,24 @@ const quizQuestions = [
     id: 4,
     question:
       'A balanced 3-phase load: line voltage 400 V, line current 30 A, pf 1.0. Apparent power:',
-    options: ['12 kVA', '20.8 kVA', '36 kVA', '40 kVA'],
-    correctAnswer: 1,
+    options: [
+      '20.8 kVA',
+      '12 kVA',
+      '36 kVA',
+      '40 kVA',
+    ],
+    correctAnswer: 0,
     explanation: 'S = √3 × V_L × I_L = 1.732 × 400 × 30 = 20 784 VA ≈ 20.8 kVA.',
   },
   {
     id: 5,
     question: 'Same load as Q4 with pf 0.7. Real power:',
-    options: ['12 kW', '14.5 kW', '20.8 kW', '8 kW'],
+    options: [
+      '12 kW',
+      '14.5 kW',
+      '8 kW',
+      '20.8 kW',
+    ],
     correctAnswer: 1,
     explanation: 'P = S × pf = 20.8 × 0.7 = 14.56 kW.',
   },
@@ -108,8 +148,13 @@ const quizQuestions = [
     id: 6,
     question:
       'A 3-phase motor draws 25 A line on 400 V, pf 0.8, η 85 %. Mechanical output power:',
-    options: ['11.8 kW', '13.86 kW', '14.7 kW', '17.32 kW'],
-    correctAnswer: 0,
+    options: [
+      '14.7 kW',
+      '13.86 kW',
+      '11.8 kW',
+      '17.32 kW',
+    ],
+    correctAnswer: 2,
     explanation:
       'Input = √3 × 400 × 25 × 0.8 = 13 856 W. Output = 13 856 × 0.85 = 11 778 W ≈ 11.8 kW.',
   },
@@ -117,8 +162,13 @@ const quizQuestions = [
     id: 7,
     question:
       "A 3-phase delta load with line voltage 400 V and phase impedance 30 Ω. Line current is:",
-    options: ['7.7 A', '13.3 A', '23.1 A', '40 A'],
-    correctAnswer: 2,
+    options: [
+      '7.7 A',
+      '13.3 A',
+      '40 A',
+      '23.1 A',
+    ],
+    correctAnswer: 3,
     explanation:
       'I_phase = V_phase / Z = 400 / 30 = 13.33 A. I_line = √3 × I_phase = 1.732 × 13.33 = 23.09 A.',
   },
@@ -126,7 +176,12 @@ const quizQuestions = [
     id: 8,
     question:
       "A 3-phase star load: line voltage 400 V, phase impedance 25 Ω. Line current is:",
-    options: ['9.24 A', '16 A', '24 A', '32 A'],
+    options: [
+      '9.24 A',
+      '24 A',
+      '32 A',
+      '16 A',
+    ],
     correctAnswer: 0,
     explanation:
       'V_phase = 400 / √3 = 230.9 V. I_phase = I_line = V_phase / Z = 230.9 / 25 = 9.24 A.',

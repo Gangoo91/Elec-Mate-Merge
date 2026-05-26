@@ -61,12 +61,12 @@ const checks = [
     question:
       "A fellow apprentice tells you he's not been sleeping, missed two weeks of college, can't concentrate at work, and feels like he's letting everyone down. He doesn't want a fuss made. What's your response?",
     options: [
-      "Tell him to 'man up' and stop being soft.",
       "Listen properly. Don't interrupt, don't try to fix it, don't minimise ('it'll pass'). Acknowledge what he's said and that it sounds hard. Don't diagnose or guess what's going on. Suggest some routes for support — Mates in Mind (free training and resources via matesinmind.org), the Lighthouse Construction Industry Charity 24/7 helpline (0345 605 1956), the Electrical Industries Charity (electricalcharity.org), Samaritans (116 123, 24/7), or his GP. Ask whether he'd like you to mention to your training-provider mentor, but don't break his confidence without asking. Follow up with him in a few days. Keep listening over time.",
-      "Tell every other apprentice in the cohort.",
-      "Avoid him because mental health stuff makes you uncomfortable.",
+      "Uses an EFLI tester to measure the loop impedance from the supply, with the installation\\\\\\\\\\\\\\\\\\\\\\\\'s earthing conductor disconnected from the electrode and connected to the EFLI tester instead. The reading gives total loop impedance — for TT, this approximates the electrode resistance plus the supply network impedance (small in comparison). Useful when stakes / clamps are not available, but requires the earthing conductor to be safely re-connected before re-energising.",
+      "Three-step protection. (1) Do the work only if you're satisfied the verbal authorisation is genuine and you have a witness or recorded confirmation. (2) Send the customer a text or email immediately summarising — 'You authorised the additional repair to the kitchen ring at £180, total job now £350, please reply YES to confirm'. (3) If they don't reply within a reasonable time, follow up by phone and document the conversation. The combination of in-person authorisation + written summary + customer reply gives the firm enough evidence to invoice and defend the charge. If you can't get any written trail, walk away from the extra scope.",
+      "An earth-loop tester is a dedicated instrument (Megger LRCD-M, Kewtech KT200) that measures earth fault loop impedance ONLY — typically faster, more accurate at low impedance values, and with higher injected test current than the EFLI function on a general MFT. Used by 2391 / 2394 testers and by commissioning engineers who need to verify many EFLI values quickly. The MFT's EFLI function is fine for L3 fault-diagnosis use; dedicated loop testers are improver-level kit.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Peer support in the trade is about listening, signposting and following up — not diagnosing or fixing. The Mates in Mind 'Start the Conversation' framework, the Lighthouse Club's training and the NHS 'every mind matters' guidance all share the same core: listen properly, don't minimise, signpost to professional support, follow up. The construction industry has the highest suicide rate of any UK sector (ONS data — male construction workers around 3x the national male average); telling someone to 'man up' is the cultural pattern that perpetuates that statistic. Talking — properly, without judgment, with signposting — is what saves lives.",
   },
@@ -75,12 +75,12 @@ const checks = [
     question:
       "You're four months into your apprenticeship. Money's tight on apprentice wages, you're working 40 hours plus college release plus assignments, you're not sleeping properly, and you've been waking up dreading the day. You don't think you're 'depressed' — you just feel flat. What should you do?",
     options: [
-      "Carry on — it'll pass on its own.",
+      "Multiple frameworks: Building Regs Part J (combustion appliances, flues, ventilation); Clean Air Act (smoke control areas — many urban areas restrict what can be burned and require Defra-exempt appliances); Ecodesign Directive (new appliance emissions standards); MCS MIS 3004 / 3006 (installer competence and installation quality for solid biomass boilers and stoves). Plus the F-Gas-equivalent for any chiller / heat-pump component. Biomass is operationally heavier than gas or heat pumps because of fuel storage, ash handling and the regulatory layer on emissions.",
+      "Hypothesis-driven order. Example for 'lights flicker' hypothesis: (1) Visual + customer interview (cost: free). (2) Clamp meter on lighting circuit during normal load (live, low risk). (3) Voltage measurement at lampholder during high-load event (live, low risk). (4) If above inconclusive — isolate, IR test on lighting circuit, R1+R2, EFLI Zs (dead and live tests in BS 7671 643 order). (5) If still inconclusive — install PQ analyser for 24–72 hours. The sequence escalates from quick / cheap / safe to slow / expensive / higher-risk only as needed. Many faults solve at step 1–3 without ever needing the full BS 7671 643 sequence.",
       "Talk to someone. Your GP is the right starting point for any persistent change in mood, sleep or concentration — a 10-15 minute appointment is all it takes to start the conversation. The Lighthouse Construction Industry Charity 24/7 helpline (0345 605 1956) is free, confidential, available to apprentices, and does NOT require you to be in crisis to call. The Electrical Industries Charity (electricalcharity.org) has both emotional and financial support pathways — if money pressure is part of what's grinding you down, they have grants and benefits advice. Mates in Mind has resources specifically for the trade. Talking to your training-provider tutor or a trusted mentor is also a legitimate route. The earlier you talk, the easier it is to address.",
-      "Self-medicate with alcohol.",
-      "Quit the apprenticeship.",
+      "Annual service is the standard — required by most manufacturer warranties and recommended by MCS aftercare. Involves: F-Gas refrigerant check (charge weight, leak test); wet-system check (pressure, inhibitor, flow rate, balancing); electrical check (supply, isolation, RCD, controls); outdoor unit clean (fins, condensate drain); performance verification (flow temperature, COP estimate, comparison with previous year). Without annual service the SCOP gradually drifts down, the warranty becomes void, and small problems escalate to expensive faults.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The trade-specific risk profile for apprentices is well documented — extra pressure (training + work + assessments + low pay), often working away from family and support networks, in a culture that historically discouraged talking about feeling low. The right answer is to talk early, before things get worse. The GP is the starting point for clinical assessment and possible referral to NHS talking therapies (IAPT / NHS Talking Therapies). The construction-sector charities (Lighthouse Club, Mates in Mind, Electrical Industries Charity) are designed for the trade and don't require you to be in crisis to call. None of this means you're 'weak' — it means you're using the support that exists. The Sub doesn't diagnose what you're experiencing; it points to the people who can help.",
   },
@@ -89,12 +89,12 @@ const checks = [
     question:
       "Your apprentice colleague has just told you she's been diagnosed with ADHD. She's worried about how to mention it at work and what 'reasonable adjustments' to ask for. What do you tell her?",
     options: [
-      "Tell her to keep it secret — admitting ADHD will damage her career.",
+      "Three separate certificate types. (1) EIC (Electrical Installation Certificate) — issued for new installations, new circuits or significant additions. Three signature panels: Designer, Constructor, Inspector. Records the design, the construction, the verification. (2) EICR (Electrical Installation Condition Report) — periodic inspection of an existing installation. Records observations and codes (C1 Danger Present, C2 Potentially Dangerous, C3 Improvement Recommended, FI Further Investigation). NOT a certificate of work done — a snapshot of the existing condition. (3) MWC (Minor Works Certificate) — alterations or additions that don't constitute a new circuit. Replacement of accessories, replacement of a protective device, addition of a single point. Most fault rectifications are MWC because the work is on an existing circuit, not a new one.",
+      "L–L (phase-to-phase) fault is a direct connection between two phases of a three-phase supply (e.g. L1 and L2). Continuity between the phases reads near zero. Fault current is high (limited only by supply + cable impedance) — typically 5–10 kA on a typical commercial supply. Operates the magnetic element of the protective device on at least one of the affected phases. The unaffected phase remains live; loads connected line-to-neutral on the unaffected phase continue working. Common cause: insulation breakdown in three-phase cable or motor windings, accidental contact between phases at a terminal block.",
       "She has the choice about whether and when to disclose, but Equality Act 2010 s.20 reasonable-adjustments duty applies once she has disclosed (the duty is reactive in employment — the employer needs to know). Common adjustments for ADHD in the trade include short structured briefings, written summaries of verbal instructions, advance notice of changes, structured task lists with clear priorities, and quiet space for focused work where needed. Access to Work (DWP scheme) can fund equipment and support that exceeds 'reasonable' for the employer. The British Dyslexia Association, ADHD UK and the National Autistic Society all have workplace guides that are useful starting points. Talking to her training-provider tutor is a good first step — the apprenticeship route has experience supporting neurodivergent apprentices.",
-      "Refuse to work with her.",
-      "Tell every other colleague in the firm.",
+      "No, MCS is not legally required to install a heat pump. Building Regulations Part L compliance is required for any new heating system in a notifiable installation, but Part L can be demonstrated by various pathways. MCS is required if the customer wants the Boiler Upgrade Scheme (BUS) grant — currently £7,500 toward an ASHP install. Most manufacturer warranties also require MCS-certified installation. So in practice almost every install is MCS, even though it isn't a legal install requirement. Without MCS the customer can have a working heat pump; they just don't get the grant or the warranty.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Neurodiversity is materially more common in trade roles than the general population (research suggests dyslexia at 4-10x baseline rates in some trade studies, with ADHD and autism also more frequent). The Equality Act 2010 covers ADHD as a disability where it has a substantial and long-term effect on day-to-day activities. The s.20 reasonable-adjustments duty applies once the apprentice has disclosed. Common adjustments are low-cost, well-evidenced and often help non-neurodivergent colleagues too. Disclosure is a personal choice — disclosure brings the legal protections, but some apprentices choose not to disclose. Either way, signposting to the right charity guides and to the training-provider tutor is the helpful response. Confidentiality is hers to control.",
   },
@@ -108,10 +108,10 @@ const quizQuestions = [
     question:
       "What does ONS data show about suicide rates among male construction workers in the UK?",
     options: [
-      "Construction workers have the lowest suicide rate of any UK sector.",
+      "The waste duty of care under EPA 1990 s.34 requires that waste be transferred only to an authorised person (registered waste carrier with a waste carrier licence), accompanied by a Waste Transfer Note (WTN) describing the waste. The fluorescent tubes are hazardous waste (mercury) and require a separate Hazardous Waste Consignment Note. The DB is WEEE under the WEEE Regs 2013 with its own consignment requirements. 'The site cleaner with no licence' isn't authorised; the £20 deal is a duty-of-care breach for which the firm can be fined unlimited.",
       "Male construction workers have a suicide rate around 3x the national male average — the highest of any UK sector. The factors most consistently identified as drivers include long hours, transient work patterns, financial pressure (particularly for self-employed workers), a 'tough it out' culture that historically discouraged talking about feeling low, substance use as a coping mechanism, and isolation from family and support networks. Mates in Mind, the Lighthouse Construction Industry Charity and the Samaritans all work specifically on this issue.",
-      "There's no published data.",
-      "Suicide rates are the same as the general population.",
+      "Shorter cycles than the standard for the parent property type because the elevated risk in special locations justifies more frequent inspection. EV charge points are commonly inspected annually by the EV-charging-equipment manufacturer's recommendation; swimming pools annually for plant room; agricultural premises every 3 years given the harsh environment; caravans and marinas have their own GN3 Chapter 66 frequencies.",
+      "PV cables on a roof void or external run are exposed to UV, mechanical damage from foot traffic and rodents, and elevated temperatures (loft voids hit 50+ degC in summer). Steel conduit provides physical protection, UV shielding, and a fault-current path. The cable inside is typically a UV-stable single-core PV cable (often dual-insulated H1Z2Z2-K type) rated for the elevated temperatures. The conduit is bonded to the main earthing terminal. Section 712 references the general BS 7671 requirements for cable installation methods and the elevated-temperature derating; the IET CoP gives the practical guidance on conduit selection and routing.",
     ],
     correctAnswer: 1,
     explanation:
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       "What is the Lighthouse Construction Industry Charity?",
     options: [
-      "A trade body that lobbies for construction firms.",
+      "(1) Eliminate — can the chase be avoided entirely (surface mount, alternative route)? (2) Substitute — can a less dust-producing tool be used (resin-bonded chase saw with extraction vs hammer-and-bolster)? (3) Engineer — on-tool extraction connected to an M-class vacuum, water suppression. (4) Administrative — limit duration, rotate operatives, restrict access. (5) PPE — FFP3 mask as the LAST line, not the first. RPE alone is not COSHH-compliant for routine silica work.",
+      "The monthly review brings together the apprentice, the employer (or supervisor) and the training provider's tutor or assessor. The review discusses progress on the apprenticeship standards, on-the-job competence, off-the-job training hours, any concerns from any side, and actions for the next month. The form is a record of the review and is part of the audit trail for the apprenticeship's compliance with the standards.",
       "A UK charity providing emotional, physical and financial wellbeing support specifically to the construction community and their families. Headline services include a 24/7 confidential helpline (0345 605 1956), a Helpline app, financial assistance grants for trade workers in difficulty, mental health and wellbeing training (Mental Health First Aid, Wellbeing Training), and signposting to appropriate professional services. The helpline is staffed by trained advisers and is free. Anyone in the construction industry — apprentices, qualified tradespeople, family members — can call.",
-      "A regulator.",
-      "A training provider.",
+      "A space substantially enclosed (whether or not entirely) and where a 'specified risk' could arise — fire/explosion (gas, vapour, dust), loss of consciousness from fumes or lack of oxygen, drowning, asphyxiation from free-flowing solid, or trapping/heat-related illness. Reg 4 prohibits entry unless reasonably practicable to do the work without entering. Reg 5 requires a safe system of work (entry permit, atmospheric monitoring, rescue arrangements) where entry is necessary.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The Lighthouse Construction Industry Charity (lighthouseclub.org) is the UK's leading wellbeing charity for the construction community. The 24/7 helpline (0345 605 1956) is the headline service — free, confidential, and available to anyone in the construction industry without referral or qualifying period. The charity also provides financial grants for trade workers facing hardship and mental-health-first-aid training that's well respected across the industry. Apprentices are eligible for all services.",
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     question:
       "What is Mates in Mind?",
     options: [
-      "A social media platform for construction workers.",
+      "One per RCBO. Each RCBO is an independent RCD device. Test each at 1 x I delta n, record trip time on the Schedule of Test Results against the circuit number. Standard MFT workflow: select RCD test mode, set I delta n to 30 mA (or other rating per device), AC test, plug into the circuit\\\\\\\\'s socket or test from the RCBO load terminals, press TEST, record trip time, move to next circuit. 12 RCBOs = 12 tests + 12 readings on the schedule. Modern MFTs auto-fill the schedule when they\\\\\\\\'re paired with certification software.",
+      "FAIL — well above the BS 7671 Table 41.3 maximum of 1.37 Ω for B32 at 0.4 s disconnection. The protective device cannot guarantee disconnection within the required time. Action: (1) Verify the reading. (2) Check supply Ze first — is the high Zs caused by high origin Ze (possible PEN issue) or by added impedance on the circuit (HRJ, undersized cable)? (3) Make safe — isolate the affected circuit. (4) Investigate and rectify. (5) Document as Code 1 if safety is at imminent risk; Code 2 if safety is compromised but not immediately dangerous.",
+      "Fire alarm panels under BS 5839-1 monitor the system for earth faults on the detection / sounder circuits. An EARTH FAULT indication means there's a connection (typically high-resistance) between one of the system conductors and earth — could be water ingress at a detector / sounder, damaged cable, contaminated terminal. The fault doesn't immediately stop the alarm working but it compromises the system's ability to operate reliably and may mask other faults. L3 action: (1) Document the fault on the fire log book. (2) Isolate the affected zone (panel will let you do this) so you can investigate. (3) IR test each loop / circuit on the affected zone. (4) Find and rectify; retest; restore. (5) Inform the customer's responsible person under RR(FS)O 2005.",
       "A UK charity focused on improving mental health and wellbeing in the construction industry. Mates in Mind partners with construction firms to deliver mental health awareness training, supports the development of mental health strategies, and provides freely-accessible resources (toolbox-talk templates, signposting cards, manager guidance). Mates in Mind works closely with Mind, the Samaritans and the Health in Construction Leadership Group. The charity does not provide a helpline directly — it signposts to existing helplines including Samaritans (116 123) and the Lighthouse Club (0345 605 1956).",
-      "A union.",
-      "A recruitment agency.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Mates in Mind (matesinmind.org) is the UK construction-industry mental health charity, founded by Mind, the Samaritans and others to address the sector's high suicide rate. The charity's role is preventative — training, awareness, culture change, toolbox talks — rather than direct crisis support. For crisis support the charity signposts to the Samaritans (116 123, 24/7) and the Lighthouse Club helpline (0345 605 1956, 24/7). Mates in Mind's freely-accessible resources are excellent for individuals who want to start a conversation with a colleague or run a toolbox talk on mental health.",
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       "What is the Electrical Industries Charity?",
     options: [
-      "A regulator of electrical contractors.",
       "A UK charity providing financial, emotional and practical support specifically to people working in the electrical industry and their families. The charity provides financial assistance grants (cost-of-living support, bereavement, illness, redundancy), emotional support and counselling, debt advice, apprentice support, and a careers service. The charity is funded by donations from across the electrical industry. Apprentices and qualified electricians, employees and self-employed workers, are all eligible for support.",
-      "A trade-only social club.",
-      "A manufacturer of electrical equipment.",
+      "Apprentice is a formal JIB grade for someone in a registered apprenticeship — typically a learner working towards the C&G 2365 (or NVQ Level 3) and the AM2. 'Improver' is not a formal JIB grade — it's a colloquial industry term sometimes used for the post-college, pre-AM2 stage where the learner has completed the technical qualifications but not yet sat the AM2. Once AM2 is passed and JIB processes the upgrade, the worker becomes an Electrician on the JIB scale.",
+      "The ECA is a trade body — voluntary membership organisation representing contractors' commercial interests, providing technical / commercial / legal support, lobbying, training and standard-form contracts. The JIB is the joint employer/union body that sets pay, conditions and grading on JIB-affiliated jobs. ECA members typically apply JIB rules but the bodies are separate. SELECT plays a similar (but distinct) role for the contracting industry in Scotland.",
+      "Typical route: TAQA L3 (assessor qualification) — start doing some assessor work to test fit. Then L3 Award in Education and Training (introductory teaching qualification). College hires you part-time as a sessional lecturer; you teach evening classes. Convert to DET (L5 Diploma) over 1-2 years to become full lecturer. Many colleges fund the conversion if you commit to a permanent role.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Electrical Industries Charity (EIC, electricalcharity.org) is the welfare charity for the UK electrical sector. The financial assistance grants are particularly valuable for apprentices and early-career electricians who hit a difficult patch — bereavement, illness in the family, unexpected costs. The emotional support pathway includes counselling and signposting. The careers service supports retraining and career change for tradespeople who need to leave the trade for health or other reasons. Apprentices are eligible without qualifying period.",
   },
@@ -164,10 +164,10 @@ const quizQuestions = [
     question:
       "Approximately how prevalent is dyslexia, ADHD and autism in the trade compared to the general UK population?",
     options: [
-      "All three are less common in the trade than in the general population.",
+      "Lifting equipment used to lift persons (MEWPs, lift platforms, scaffolding hoists carrying personnel) requires thorough examination at 6-monthly intervals. Other lifting equipment (chain blocks, manual hoists, anchor points used for material lifting only) requires 12-monthly thorough examination, OR in accordance with an examination scheme drawn up by a competent person. Per LOLER 1998 Reg 9(3). The examination is by a competent person (typically an independent examiner) and a written report is provided. The current report must be available with the machine.",
       "Research suggests neurodivergence — dyslexia, ADHD, and autism — may be more common in trade roles than the general population. Some studies suggest dyslexia at materially higher rates in trade and creative industries (the visual-spatial reasoning associated with dyslexia is often a strength in hands-on work). ADHD and autism prevalence in the trade is also frequently reported as elevated. The Equality Act 2010 reasonable-adjustments duty (s.20) applies where the condition has a substantial and long-term effect, and Sub 5.2 covers the practical adjustments in detail.",
-      "There's no difference.",
-      "Only dyslexia is more common in the trade.",
+      "Two possibilities. (1) Active arc fault on the circuit — there's a real arc happening that the AFDD is correctly detecting and refusing to ignore. Investigate as a real fault: visual inspection, IR test, thermal imaging. (2) AFDD itself has failed in the 'trip' state — internal electronics fault. Test by removing the AFDD from the busbar (load disconnected) and trying to latch it; if it still won't latch, the AFDD is faulty and needs replacement. The L3 apprentice's protocol: investigate as real fault first; only if no fault is found, consider AFDD failure and substitute with known-good unit.",
+      "Plan budget: scheme membership and update events typically £400-800/year if scheme-affiliated (NICEIC, NAPIT) include some CPD; one BS 7671 refresher per amendment year £150-300; one specialist training £400-800; IET Academy / scheme platform online learning typically included with subscription; manufacturer training often free; trade events (ECA Live etc.) £100-300. Total CPD spend typically £1,000-2,500/year for an active QS.",
     ],
     correctAnswer: 1,
     explanation:
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       "What's the right approach when a peer tells you they're struggling but doesn't want to seek professional help?",
     options: [
-      "Force them to see a GP.",
+      "BUS is the UK government grant scheme that contributes a fixed amount (currently £7,500) toward the cost of replacing a fossil-fuel boiler with a heat pump or biomass boiler. The customer applies via an MCS-certified installer who handles the application paperwork. Eligibility requires the install to be MCS-certified, the property to meet basic insulation standards (loft and cavity wall insulation where applicable), and the system to be designed per MCS MIS 3005. The grant does not change the electrical install — Section 753 (where applicable), general BS 7671, F-Gas boundary still apply. The L3 apprentice's wiring scope is unaffected; the customer's financial decision often is grant-dependent.",
+      "Nameplate kWh is the total energy the cells could theoretically deliver. Usable kWh is what the BMS will actually let you cycle between the manufacturer's safe state-of-charge limits. Manufacturers commonly cap usable capacity at 80-95 percent of nameplate to extend cycle life; a 13.5 kWh nameplate Powerwall, for example, ships with 13.5 kWh usable but many other systems are quoted differently. Read the spec sheet — usable kWh is the number that determines how long the battery actually keeps the lights on, not the headline capacity.",
       "You can't make someone seek help, but you can keep listening, keep checking in, and keep signposting gently. Suggest the Lighthouse Club 24/7 helpline (0345 605 1956) — confidential, no referral needed, no qualifying period. Mention Samaritans (116 123). Mention Mates in Mind resources. Don't break their confidence without asking, but if you genuinely believe they're at imminent risk of harm to themselves, the right thing is to call 999 or take them to A&E — that's a safeguarding step, not a betrayal. Look after yourself too — supporting a peer can be heavy. The same charities are available to you.",
-      "Stop talking to them and let them deal with it themselves.",
-      "Tell every other colleague.",
+      "The EPC should be re-issued to reflect the new performance — heat pump, PV, MVHR, insulation upgrades all change the SAP rating. The MCS-certified installer normally arranges the EPC update. An updated EPC matters for: (a) future house sale (the buyer's solicitor sees current performance); (b) mortgage applications (lenders increasingly weight EPC ratings); (c) insurance (some insurers now adjust premium for low-EPC properties); (d) BUS grant requires a valid EPC at the time of install. EPCs are valid for 10 years from issue.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Peer support has clear limits. You aren't a clinician and you're not responsible for fixing what's going on for someone else. Your role is to listen, signpost and follow up. Where the person isn't ready to seek professional help, the most you can do is keep the door open — keep checking in, gently mention the helplines, don't push. The exception is imminent risk of self-harm or suicide — at that point 999 or A&E is the right step and confidentiality takes second place to safety. Look after yourself in the process; supporting a peer through a difficult time is heavy work and you can use the same support resources too.",
   },
@@ -192,12 +192,12 @@ const quizQuestions = [
     question:
       "What workplace adjustments are commonly helpful for an apprentice with autism?",
     options: [
-      "There are no useful adjustments.",
+      "Advanced cultural empathy: understanding that safety communication styles must be adapted to cultural context. In high power-distance cultures, a peer raising concerns directly may be uncomfortable. In indirect communication cultures, blunt safety warnings may cause face-loss. The electrician must find a culturally appropriate way to communicate urgency without causing shame, possibly involving the site supervisor or using visual demonstration rather than direct verbal confrontation",
+      "Live working is permitted under EAWR Reg 14 only when (a) it's unreasonable for the conductor to be dead, (b) it's reasonable for work to be carried out live, and (c) suitable precautions are taken — ALL three. Choosing live work to avoid customer inconvenience does NOT pass test (a) — convenience isn't 'unreasonable for the conductor to be dead'. The L3 apprentice doesn't get to make that trade-off; the firm's risk assessment makes it, with documented justification, and the supervisor authorises it. The 'I'll just do it live, the customer doesn't want the power off' is the exact failure mode the HSE prosecutes after the inevitable shock.",
+      "DUAL-RCD CU — two main RCDs, each protecting a group of circuits via standard MCBs. Cheaper to install but a single fault on one circuit trips the entire RCD's group (e.g. a fault on the kitchen ring trips all circuits on RCD1, including the freezer and lights). ALL-RCBO CU — every circuit has its own RCBO with both overcurrent and earth-leakage protection. More expensive but a fault on one circuit only affects that circuit. Cumulative leakage is also limited per circuit. A4:2026 reinforces RCBO-per-circuit for higher-occupancy dwellings; trade preference is RCBO-per-circuit for any new install.",
       "Common adjustments include written schedules for the day and week, advance notice of any changes, clear and unambiguous instructions ('start at the kitchen, do the back-boxes first, the cable will be in the loft' — not 'sort the kitchen out'), avoidance of 'common sense' assumptions, predictable routine where the role allows, designated quiet space for breaks where sensory overload is a factor, and one-to-one briefings rather than large group sessions where the apprentice prefers. Adjustments are agreed with the individual — autism is a spectrum and people vary enormously.",
-      "Only providing them with separate workshops.",
-      "Avoiding all communication with them.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The Equality Act 2010 s.20 reasonable-adjustments duty covers autism where it has a substantial and long-term effect. The common adjustments are practical, low-cost and often help non-autistic colleagues too. The starting point is asking the individual what helps — autism is a spectrum and people vary widely. The National Autistic Society (autism.org.uk) provides workplace guides for both employers and employees. Sub 5.2 covers neurodiversity adjustments in more detail.",
   },
@@ -206,12 +206,12 @@ const quizQuestions = [
     question:
       "If you're worried that an apprentice colleague might be at imminent risk of self-harm, what should you do?",
     options: [
-      "Don't say anything — it's not your place.",
       "Stay with them if you can do so safely. Encourage them to call 999 or go to A&E. If they won't, and you genuinely believe they're at imminent risk, call 999 yourself or take them to A&E. The Samaritans (116 123) is available 24/7 if it helps to talk while you decide what to do. Mind's helpline is available too (0300 123 3393). Don't promise confidentiality you can't keep — be honest that you may need to escalate if you're worried about their safety. After the immediate crisis is managed, look after yourself too — supporting someone through a mental health crisis is heavy and the same charities are available to you.",
-      "Drive them home and leave them alone.",
-      "Post about it on social media to alert their family.",
+      "Unwanted conduct related to a protected characteristic (or unwanted conduct of a sexual nature) which has the purpose or effect of violating a person's dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment. The conduct doesn't have to be 'severe' to count — repeated 'banter' related to race, sex, disability or another protected characteristic can be harassment if it has the proscribed effect on the recipient.",
+      "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471). It places a statutory duty on the employer (and certain self-employed people) to report specified workplace injuries, occupational diseases, dangerous occurrences and fatalities to the HSE. Reportable items include fatalities, specified injuries (amputation, fracture other than fingers/toes/thumbs, loss of sight, scalping, etc.), over-7-day absences, and a defined list of dangerous occurrences. Reporting is via the F2508 form on hse.gov.uk.",
+      "Building Control is the local-authority enforcement of the Building Regulations. For most environmental tech installs the route is via a competent-person scheme (the installer's firm is registered with NICEIC / NAPIT / similar, and self-certifies the work) — Building Control is notified by the scheme but doesn't visit. For non-notifiable work (e.g. some maintenance) Building Control isn't involved. For installs that fall outside competent-person schemes, or for major works, Building Control may inspect on-site. The customer receives a Building Regs compliance certificate — either from the competent-person scheme or from Building Control directly.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Imminent risk of self-harm is the situation where confidentiality takes second place to safety. The right responses are to stay with the person if you can, encourage them to call 999 or go to A&E, and be honest that you may need to escalate. Calling 999 yourself or taking them to A&E is appropriate where the risk is imminent and they won't seek help themselves — that's a safeguarding step, not a betrayal. Samaritans (116 123) and Mind (0300 123 3393) can support both you and them through the conversation. Look after yourself afterwards — supporting someone through a crisis is heavy and you can access the same support.",
   },

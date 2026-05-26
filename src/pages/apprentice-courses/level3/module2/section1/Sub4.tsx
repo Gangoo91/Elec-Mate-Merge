@@ -43,10 +43,10 @@ const checks = [
     question:
       "A customer says they want to charge their EV from a 13 A socket in the garage rather than have a dedicated charge point fitted. What is the correct response?",
     options: [
-      "Fine — any socket works for any car.",
+      "This is a strong micro-hydro site. With 30 m head and 100 l/s flow, theoretical hydraulic power is approximately ρ × g × h × Q = 1000 × 9.81 × 30 × 0.1 ≈ 29 kW. After turbine and generator efficiency (typically 70-85%) the realistic output is 20-25 kW continuous — significant baseload renewable energy. Practical issues: SEPA (Scottish equivalent of Environment Agency) abstraction licensing, fish-friendly intake design, civils for weir / intake / penstock / power-house, grid connection (G99 for an installation of this size), and the cost of a buried cable from the power-house to the property. The right site is rare; where it exists, micro-hydro outperforms PV and wind by a wide margin on capacity factor.",
       "That is Mode 2 charging — slow (typically 2.3 kW limited by the 13 A socket and the vehicle's portable EVSE), and most manufacturers explicitly say Mode 2 from a domestic socket is for emergency / occasional use only because the socket is not rated for the sustained current draw a full overnight charge produces. The OZEV Smart Charge Points Regulations 2021 do not apply to Mode 2 (it is not a fixed installation), but the customer loses smart-charging features and the running cost is higher because they cannot access dedicated EV tariffs that need a Mode 3 charge point. The correct recommendation is a dedicated Mode 3 unit — typically 7.4 kW single-phase or 22 kW three-phase — installed per BS 7671 Section 722 and OZEV.",
-      "Mode 4 — DC rapid charging through the 13 A socket.",
-      "Mode 1 — direct connection bypassing the consumer unit.",
+      "The Carbon Literacy Project is a UK accredited training framework (originated in Manchester in 2012) that provides workplace-level training to give every worker a working understanding of climate science, the carbon impact of their own role, and the practical steps they can take to reduce emissions at work and at home. Trainees become Certified Carbon Literate after completing eight hours of training and a documented commitment to action. Major UK construction firms (Balfour Beatty, Mace, ISG, Skanska) and increasingly larger electrical contractors are running Carbon Literacy training to build workforce-wide awareness, support CRP commitments, and meet the people-development credits in BREEAM, the UK Net-Zero Carbon Buildings Standard and similar schemes.",
+      "The MFT (Megger MFT1741+, Kewtech KT64+) injects different test currents based on the RCD type. Type AC test: pure sinusoidal AC at I∆n. Type A test: pure sinusoidal AC AT I∆n PLUS pulsating DC at 1.4× I∆n (because Type A must detect both). Type F test: all of the above PLUS composite multi-frequency. Type B test: all of the above PLUS smooth DC at twice I∆n. Selecting the wrong type on the MFT may show 'pass' on a Type B device (because you're only testing the AC capability, not the DC) — false confidence. Modern MFTs auto-detect or have explicit type selection.",
     ],
     correctIndex: 1,
     explanation:
@@ -57,12 +57,12 @@ const checks = [
     question:
       "What does PEN-fault protection mean on a domestic charge point and why is it specifically required?",
     options: [
-      "It is a brand of insurance for EV chargers.",
+      "Phase sequence test confirms the order of phase rotation (L1, L2, L3 or A, B, C in correct sequence) on three-phase supplies. Wrong sequence reverses the rotation of three-phase induction motors and pumps — can cause damage to driven plant and wrong direction of conveyors / lifts. Tested with a phase rotation indicator (Fluke 9040, Megger PRMA1) — three probe leads, instrument indicates correct or reversed sequence. Required at three-phase commissioning and after any maintenance that may have disturbed phase identification (e.g. cable replacement, supply transformer changes).",
+      "Standard EICR per BS 7671 Part 6 covers the fixed wiring of the property. With env tech additions you must also: verify the PV DC isolator is accessible, labelled and operates correctly; check inverter signage at the consumer unit, meter and DC isolator (BS 7671 Section 712 plus MCS Code requirements); record the PV array Voc and inspect for visible cell or junction-box damage from a roof-safe vantage; test the AC final circuit serving the inverter as a normal final circuit; for the EV charger — verify the open-PEN protection method (built-in, TT electrode, or external device), test the RCD type (Type B or Type A + RDC-DD), check the local isolator is within sight; record findings in the EICR observations alongside the standard codes. Use C1 / C2 / C3 / FI codes per the EICR Best Practice Guide.",
+      "PASS = within BS 7671 / Appendix 3 minimum acceptable limit. HEALTHY = significantly better than the limit; matches what a properly-installed system should produce. Example: BS 7671 643.3 IR limit is ≥ 1 MΩ; modern installations typically read 100+ MΩ on healthy circuits. A reading of 2 MΩ is technically PASS but not HEALTHY — it's an early indicator of insulation degradation that warrants investigation. The L3 step-up is recognising the difference: pass tells you it meets the regulation; healthy tells you the system is in good shape. Borderline pass readings are diagnostic indicators of developing faults.",
       "PEN (combined Protective Earth and Neutral) fault protection guards against the rare but serious scenario where the supply neutral is broken upstream of the property on a TN-C-S (PME) supply. With a broken PEN, the property's earthing system can rise to dangerous voltage above true earth — anything connected to that earthing system, including the EV bodywork via the charge cable, becomes a shock and fire risk. Section 722 of BS 7671 requires the charge point installation to either provide PEN-fault detection-and-disconnection within the unit (most modern units have this built in), or use an alternative earthing arrangement such as a TT earth electrode for the charge point. A4:2026 has refined the technical detail of the acceptable methods.",
-      "It only applies to commercial charge points.",
-      "It is a software setting that limits charge speed at night.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Broken-PEN is the headline EV-specific risk. On a TN-C-S supply, an upstream PEN break leaves the property's earth connected only to the load-current return path through the neighbours — earth potential can swing tens of volts. Inside the house this is dangerous; with an EV plugged in to the metal bodywork on a wet drive it is significantly more dangerous. Section 722 makes the protective measure non-optional. The apprentice should know which method the unit uses (built-in detection vs TT electrode) and confirm it is commissioned correctly.",
   },
@@ -71,10 +71,10 @@ const checks = [
     question:
       "A property with a 60 A main fuse already has a 9.5 kW shower, an electric oven and a 13.5 kWh battery system. The customer wants a 7.4 kW EV charger added. What is the correct apprentice response?",
     options: [
-      "Fit the charger anyway — the customer can balance loads themselves.",
+      "Not always. ASHP outdoor units are covered by Permitted Development in England subject to several conditions, including: not on a flat roof; not on a wall facing or visible from a highway; minimum distance from boundary (often 1 m); MCS 020 sound-assessment compliance; and not in a conservation area / on a listed building. Front-facing wall placement may exclude PD; the certified installer runs the MCS 020 calc and the PD eligibility check. Where PD doesn't apply, full planning permission is required (8-week timeline). Don't fit until planning status is confirmed.",
       "Flag the diversity calculation to the designer. A 60 A main fuse is approximately 14.4 kVA on single-phase 240 V. Concurrent operation of the shower (9.5 kW), oven element (3-4 kW) and EV charger (7.4 kW) would exceed it and trip the cut-out. Two solutions: (1) request a main-fuse upgrade from the DNO (free in many areas, can take weeks), or (2) fit a load-management device that throttles or pauses the EV charger when total property demand approaches the cut-out limit. Most modern Mode 3 chargers (Zappi, Ohme, Hypervolt, etc.) include built-in load-management with a CT clamp on the main supply tail for exactly this scenario. The choice is the designer's; the apprentice's contribution is to flag the constraint and not just bolt the charger on.",
-      "Reduce the EV charger to 3 kW and ignore the calculation.",
-      "Disconnect the shower so the EV can charge.",
+      "Raise it formally. As an apprentice you have three points of contact — your employer (formal grievance procedure under the ACAS Code), your training-provider tutor (responsible for the quality of your training experience), and your end-point assessment organisation. Talk to your tutor first — they have the authority to intervene with the employer about training quality. If the employer is in breach of the apprenticeship agreement (which sets out the training the employer must provide), there's a documented escalation route. ACAS conciliation is available if it can't be resolved internally.",
+      "Because a faulty proving-dead tester can show 'zero' on a live circuit — and you'd take a fatal shock. The function check confirms the tester responds to a known source. The proving-tester-on-known-source step is built into the JIB six-step (Sub 1.2) for exactly this reason. The Martindale GVD2 proving unit gives a portable known source; alternatively a known-live socket on a different circuit. Either way, the tester's response on a known source is the evidence the tester is working. Without that evidence, a 'zero' reading on the circuit you're about to work on means nothing.",
     ],
     correctIndex: 1,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       "What are the four IEC 61851 charging Modes and which one applies to a typical UK home charge point?",
     options: [
-      "Modes 1 to 4 are battery chemistries — Mode 1 is lead-acid, Mode 4 is lithium.",
+      "The label records the refrigerant type, GWP value, charge weight in kilograms and the equivalent tonnes of CO2 the charge represents. The label is a statutory requirement under the F-Gas Regulation. It triggers leak-check frequency rules (typically once a year for charges over 5 tonnes CO2 equivalent without an automatic leak detection system, less often with one), drives the recovery requirements at end of life, and helps the F-Gas engineer choose the right recovery cylinder if the unit is decommissioned.",
       "Mode 1 is direct AC connection to a standard domestic socket with no in-cable protection (effectively banned for EVs in the UK and most of Europe). Mode 2 is AC with in-cable control protection (ICCB) — the 'granny cable' that ships with most EVs for emergency 13 A socket charging. Mode 3 is AC charging through a dedicated charge point with the control pilot signal and protection built into the fixed installation — this is the standard UK home and workplace install. Mode 4 is DC rapid charging where the rectifier is in the charger, not the car — used for motorway rapid charging at 50 kW upwards.",
-      "Mode 1 to Mode 4 are speed levels — 1 is fastest, 4 is slowest.",
-      "All Modes are interchangeable and the customer chooses on the day.",
+      "Common causes (in approximate frequency order): (1) physical damage — nail / screw through cable during DIY, mouse damage in lofts, abrasion against sharp metalwork. (2) thermal damage — cable run alongside a heating pipe, conductors derated by enclosed installation method, prolonged overload heating. (3) moisture / contamination — water ingress into ceiling void, condensation in unheated buildings, salt-air corrosion in coastal properties. (4) UV degradation — exterior cables exposed to sunlight without UV protection. (5) ageing — polymer insulation breakdown after 30+ years (rubber-insulated cables from pre-1970s installations). (6) chemical attack — cables in contact with PVC pipes, certain adhesives, hydrocarbon spills.",
+      "Day-rate: customer pays an agreed daily (or hourly) rate for time spent plus materials at agreed markup. Risk on time-overrun sits with the customer. Fixed-price: you quote a single all-in price for the defined scope. Risk on time-overrun sits with you. Customers typically prefer fixed-price (predictable budget); contractors typically prefer day-rate (no overrun risk). Practical compromise: fixed-price for well-defined scopes, day-rate for variable or fault-finding work.",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       "Where does the BS 7671 framework for electric vehicle charging installations sit?",
     options: [
-      "There is no BS 7671 coverage — only the OZEV Regulations apply.",
+      "Every employee must (a) take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions at work, and (b) co-operate with the employer or any other person in the discharge of any duty placed on the employer or that other person under the relevant statutory provisions. 'Following orders' is not a defence — the personal duty stays with the employee regardless of what they were told to do.",
+      "Site induction covering the relevant parts of the construction phase plan, the site rules, the welfare arrangements, the emergency procedures, and the specific hazards on that site. Plus access to relevant information from the pre-construction phase. CDM 2015 Reg 13 makes this a duty on the principal contractor and Reg 15 makes it a duty on the worker to co-operate with it.",
       "Section 722 of BS 7671 (Electric vehicle charging installations) is the regulation anchor. It applies in addition to the rest of BS 7671 and covers the supply, the charging point, the protective measures (especially the PEN-fault and additional protection requirements), the cable rating and the means of isolation. A4:2026 has refined Section 722 alongside the broader updates around TN-C-S systems (now PNB) and AFDD requirements.",
-      "Section 712 of BS 7671 covers EV charging because both involve DC.",
-      "Section 411 of BS 7671 covers EV charging because it is RCD-protected.",
+      "The four stages — concrete experience (having an emotional interaction), reflective observation (thinking about what happened and how you felt), abstract conceptualisation (identifying patterns and principles), and active experimentation (trying a new approach next time) — create a systematic method for learning from emotional experiences rather than repeating the same patterns",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Section 722 is the EV anchor. It works alongside Section 411 (general protective measures), Section 532 (RCDs), Appendix 4 (cable rating) and the rest of the wiring regs. The IET Code of Practice for Electric Vehicle Charging Equipment Installation (currently in its 5th edition) is the practical companion. A4:2026 refines several technical details, particularly around PEN-fault detection methods.",
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     question:
       "What does the OZEV Smart Charge Points Regulations 2021 require of a domestic charge point installed in the UK?",
     options: [
-      "Nothing — they only apply to commercial charge points.",
+      "Because scope 3 captures the embodied carbon of purchased materials, and an electrical contractor procures very large quantities of high-embodied-carbon material — copper cable in particular. The conductor in a single 100-metre drum of 16 mm two-core SWA cable can carry 20-30 kg of CO2 equivalent in embodied carbon. A contractor buying tens of thousands of metres of cable per year can easily have scope 3 purchased-goods emissions an order of magnitude larger than the combined diesel and electricity figures of scope 1 and scope 2. The use-phase emissions of installed systems (operational electricity drawn by lighting, power and HVAC over decades) can be larger still on commercial fit-outs.",
+      "One per RCBO. Each RCBO is an independent RCD device. Test each at 1 x I delta n, record trip time on the Schedule of Test Results against the circuit number. Standard MFT workflow: select RCD test mode, set I delta n to 30 mA (or other rating per device), AC test, plug into the circuit\\\\\\\\'s socket or test from the RCBO load terminals, press TEST, record trip time, move to next circuit. 12 RCBOs = 12 tests + 12 readings on the schedule. Modern MFTs auto-fill the schedule when they\\\\\\\\'re paired with certification software.",
+      "Three steps: (1) Visual — case undamaged, leads not nicked or crushed, probes have intact finger barriers, no visible burn marks or melted plastic. (2) Calibration — calibration label in date (typically annual for MFT, two-yearly for two-pole testers, manufacturer's interval for multimeters); calibration certificate available if challenged. (3) Function — tester proves on a known live source AND on a known dead source; battery level indication healthy; selector switch operates cleanly. Any failure on any step — the instrument is not used until rectified. Most firms have a pre-use inspection log signed by the operative at the start of each shift.",
       "All charge points sold for use in domestic and workplace settings in Great Britain must be 'smart' — capable of being scheduled, default off-peak charging hours pre-set, randomised delay function (to avoid grid spikes when half a million chargers turn on at midnight), data privacy / cybersecurity baseline, and a 'safety provision' that disconnects on certain fault detections. Compliance is a condition of sale; the installer should fit a unit that the manufacturer has self-certified as Regulations-compliant. The apprentice does not need to verify each technical clause but should recognise that any new domestic install is using a smart-compliant unit.",
-      "They apply only to chargers above 22 kW.",
-      "They require all charge points to be hard-wired with no plug-in option.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The Electric Vehicles (Smart Charge Points) Regulations 2021 came into force from 30 June 2022 in Great Britain. They are sales-side regulations (the manufacturer/seller carries primary responsibility) but the installer should only fit compliant units. The randomised delay (up to 600 seconds) is the most visible change — it stops the grid getting a sudden 5 GW spike when off-peak windows open simultaneously across the country.",
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       "What is a CT clamp doing on a Mode 3 charge-point install and why does it matter to the apprentice?",
     options: [
-      "It measures the EV's battery state of charge.",
       "The current transformer (CT) clamp fits around one of the property's main supply tails (typically the live), measuring the total current the property is drawing. The charge point uses that measurement to throttle or pause its own current draw so the property total never exceeds a configured limit (commonly the main-fuse rating). This is dynamic load management — it lets a 7.4 kW charger live behind a constrained main fuse without the cut-out tripping when the shower comes on. The apprentice's job is to install the CT clamp around the correct tail in the correct orientation per the manufacturer's instructions; wrong orientation gives the unit the wrong measurement and load management does not work.",
-      "It is a decorative cover for the meter tails.",
-      "It is the fuse that protects the charge point from over-current.",
+      "Significant. A south-facing roof at 30-40° pitch is the optimal UK orientation, posting 100% of reference yield. East-facing or west-facing roofs typically produce 80-85% of optimal. North-facing produces 50-65% (still positive but with much longer payback). Steeper pitches favour winter performance; shallower pitches favour summer performance. Flat roofs get an A-frame mount to set a target pitch and azimuth. The MCS Yield Calculator handles all of this — produces the kWh figure for the SAP and the customer handover.",
+      "Cumulative leakage from the charger PLUS other appliances on the same RCD-protected upstream sub-main, NOT the charger alone. Modern EV chargers leak 1–3 mA continuously to earth through their internal filter caps (normal). If the upstream RCBO is shared with other circuits also running their own filter caps (LED drivers, IT kit, induction hob electronics), the cumulative leakage on the RCD can sit at 15–20 mA — well within the 30 mA threshold but close enough that the start-up surge of the EV charger pushes it over. Diagnostic: clamp the upstream RCBO's L+N with a leakage clamp meter (Fluke 360, Megger DCM340), reading the actual residual current; if it's &gt; 15 mA in steady state, the EV charger needs its own dedicated RCD upstream (which is what BS 7671 Reg 722.531.3 + A4:2026 prefer anyway).",
+      "Mode 3 is AC charging through a dedicated charger that controls and protects the charging session — typical domestic 7 kW units (single-phase) or 22 kW units (three-phase). The vehicle's onboard charger converts AC to DC for the battery. Mode 4 is DC fast charging — the off-vehicle equipment (typically 50-350 kW public rapid chargers) outputs DC directly to the battery, bypassing the vehicle's onboard charger. Domestic installations are essentially always Mode 3. BS 7671 Section 722 (significantly amended in A4:2026) governs the electrical installation requirements.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Load management via CT clamp has become standard on UK domestic chargers because so many properties have constrained main fuses. Zappi, Ohme, Hypervolt, Wallbox Pulsar Plus and most modern units include this. The CT clamp orientation matters — the manufacturer's manual specifies which way the arrow points relative to the supply direction. Get it wrong and the unit thinks the property is exporting (or in standby) when it is actually drawing.",
   },
@@ -144,12 +144,12 @@ const quizQuestions = [
     question:
       "Why is a 7.4 kW single-phase charger the typical UK domestic install rather than a 22 kW three-phase unit?",
     options: [
-      "Three-phase chargers are illegal in domestic UK.",
       "Most UK domestic supplies are single-phase. 7.4 kW is approximately 32 A at 230 V — the maximum that fits comfortably on a single-phase supply alongside the rest of the property load. Three-phase is uncommon in UK housing; getting a three-phase upgrade from the DNO is expensive and time-consuming. 22 kW three-phase makes sense in workplace and commercial sites where three-phase is already on site, or in larger properties where the customer is paying for an upgrade anyway. For a typical UK home, 7.4 kW single-phase delivers around 30-40 miles of range per hour — enough for an overnight charge to top up a daily commute.",
-      "22 kW chargers cannot charge most EVs at full speed because the on-board AC charger is the bottleneck.",
       "Both options above are partly correct.",
+      "Three-phase chargers are illegal in domestic UK.",
+      "22 kW chargers cannot charge most EVs at full speed because the on-board AC charger is the bottleneck.",
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       "Both reasons matter. UK domestic is single-phase by default, and most EVs have on-board AC chargers limited to 7.4 kW or 11 kW even when fed three-phase — so the customer pays for the three-phase install and only gets a fraction of the headline 22 kW. For workplace and fleet sites, 22 kW makes more sense. For a typical domestic install, 7.4 kW single-phase is the right answer.",
   },
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       "What does anti-tamper signage on a charge point installation mean in practice?",
     options: [
-      "Decorative branding for the manufacturer.",
+      "Multiple legitimate causes. (1) Instrument tolerance — both the Zs tester and the continuity tester have plus or minus 5-10 percent each, which can compound. (2) Slight temperature difference — the cables may be slightly warmer at live test time than at dead test time. (3) Supply voltage variation between the two tests can affect calculation. (4) The dead-test R1+R2 may include a parallel earth path (e.g. via metal back-boxes) that doesn\\\\\\\\'t carry full fault current under live conditions. Up to 20 percent discrepancy is generally within acceptable tolerance; investigate above 20 percent.",
+      "Plain English + cost. Example: 'Your kitchen circuit can't handle the load you're putting on it. There are three options. (1) Cheap — rearrange your appliances so you don't run kettle, microwave and toaster at the same time. £0 cost; reduced convenience. (2) Medium — add a dedicated socket for the kettle on a separate circuit. £450 cost; same convenience. (3) Expensive — rewire the kitchen for full modern capacity. £2,500 cost; future-proofed. Each option is safe; they differ on cost and convenience. Which fits your situation best?'. Customer makes the commercial decision; you've explained the technical position; the firm has a defensible record.",
       "The charge point installation typically includes a notice label identifying the supply origin, the protective device that isolates it, the type of earthing arrangement (TN-C-S with PEN-fault protection or TT with a local electrode) and any special instructions for emergency isolation. Section 722 and the IET Code of Practice both specify the labelling. The customer should be able to point to the means of isolation and the maintenance log; the next electrician arriving on site (perhaps years later) should be able to identify the install configuration without disassembling anything. The label is not decorative — it is a maintenance and safety document.",
-      "It is graffiti protection paint.",
-      "It is a sticker for the EV sold separately.",
+      "AC, A, F or B — and a time-delayed device adds (S) suffix for devices to BS EN 61008, BS EN 61009 or BS EN 62423. So a time-delayed Type A device is recorded as \\\\\\\"A (S)\\\\\\\". The type code reflects the residual-current waveform sensitivity: AC = pure sinusoidal AC; A = AC + pulsating DC; F = A + composite (motor drives); B = A + F + smooth DC. Time-delayed (S) means selective tripping coordination — typically used as an upstream device with downstream non-delayed RCDs on individual circuits.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Labelling is sometimes treated as a finishing detail and skipped under time pressure. It is not a finishing detail — it is regulatory and it carries forward to every future electrician who visits the property. Section 722 specifies the labelling minimum; the IET Code of Practice for EV Charging Equipment Installation expands on best practice.",
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       "A customer asks why their EV charger appears to slow down or pause when their heat pump is running hard. What is the explanation?",
     options: [
-      "The heat pump is interfering electrically with the charger.",
+      "ACAS promotes early, informal resolution through open conversation — addressing issues promptly, listening to all perspectives, seeking mutually acceptable solutions, and using formal processes only when informal approaches have been exhausted. This aligns with EI-based conflict resolution that prioritises empathic dialogue, assertive communication, and collaborative problem-solving",
+      "Setup: MFT in EFLI / Loop mode (typically position '4' on Megger MFT1741+). Test leads to L and CPC at the test point (typically a socket, an accessory, or the DB output). Safety: this is a LIVE test — circuit must be energised, RCD-protected (MFT injects a low-current test pulse that doesn't trip the RCD on most tests, but use the 'Hi' or 'no-trip' mode for verification on RCD-protected circuits). Press TEST. The MFT measures the current that flows during the brief test pulse and calculates Zs. Reading appears in 1–3 seconds. Compare to BS 7671 Appendix 3 / Table 41.3 maximum for the protective device.",
+      "The Contracts Manager owns the commercial relationship with the main contractor (or client direct) — the programme, the variations, the labour resourcing, the invoicing. They sit above the Project Engineer and the Site Supervisor, often running several jobs in parallel. They're rarely on any one site full-time but they're the senior decision-maker for that contract.",
       "Load management is doing its job. The CT clamp on the main supply detects the rising property total when the heat pump enters defrost cycle or fast-heat mode (drawing 3-7 kW) and the charger throttles its own draw to keep the total below the configured limit (typically the main-fuse rating). This is the design intent — better to throttle the charger temporarily than to trip the cut-out. The customer should be briefed on this at handover so the slowdown is not interpreted as a fault.",
-      "The heat pump is exporting power and confusing the charger.",
-      "The grid voltage drops when the heat pump runs.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Dynamic load management produces visible behaviour the customer may not expect. The same logic kicks in when an electric shower is in use, when the oven is on full, or when the immersion heater fires. Modern chargers usually include a setting for the priority — should the charger throttle entirely when it conflicts with other loads, or take its share. Brief the customer on what the behaviour means.",
   },
@@ -186,12 +186,12 @@ const quizQuestions = [
     question:
       "What is the apprentice's contribution on a Mode 3 charge point install where an MCS-certified electrician is signing off the design?",
     options: [
-      "Nothing — the MCS person does it all.",
       "The apprentice typically contributes the cable run from the consumer unit to the charge-point location (often a 6 mm or 10 mm meter-tails route through a wall), the supplementary bonding (where required), the supply-side termination at the consumer unit including any new RCBO or AFDD, the CT clamp installation around the supply tail, the labelling, and assists with first-fix mounting of the unit enclosure. The MCS-certified person handles the design, the OZEV-compliant unit selection, the commissioning and the regulatory paperwork (including the DNO notification under ENA G98 if export is enabled, and registration with OZEV for any grant claim).",
-      "Only the digging of the cable trench.",
-      "Only the customer briefing.",
+      "Three reasons. (1) Verify the fix actually worked — a repair you think is good can fail under live conditions; the retest catches the failure before the customer's reset goes wrong. (2) Verify the fix didn't introduce a new fault — terminal screw over-tightened can crack; cable repositioned can chafe; new component can be DOA. (3) Generate the documented evidence of compliance — the post-fix retest readings on the job sheet are the proof that BS 7671 643 requirements are met. Skipping the retest = no evidence of correct repair = comeback risk + regulatory exposure.",
+      "Five conditions. (1) Cumulative repair cost approaching system replacement cost (cumulative repairs at 70%+ of new system). (2) System at end-of-life (CU 25+ years old, multiple aging components). (3) Code 1 / Code 2 EICR findings affecting multiple aspects of the system. (4) Building work or change-of-use happening; opportunity to upgrade. (5) New regulatory requirements (A4:2026 or future) that the existing system can't meet without major rework. The decision is normally the senior / customer's; the L3 apprentice identifies the indicators and escalates.",
+      "All charge points sold for use in domestic and workplace settings in Great Britain must be 'smart' — capable of being scheduled, default off-peak charging hours pre-set, randomised delay function (to avoid grid spikes when half a million chargers turn on at midnight), data privacy / cybersecurity baseline, and a 'safety provision' that disconnects on certain fault detections. Compliance is a condition of sale; the installer should fit a unit that the manufacturer has self-certified as Regulations-compliant. The apprentice does not need to verify each technical clause but should recognise that any new domestic install is using a smart-compliant unit.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "EV charge-point installs are a major employer of L3 apprentices because the volume is high and the cable-pulling, termination and bonding work is typical electrician scope. The MCS-2921 / OZEV-authorised installer signs off the design and commissioning; the apprentice does the wiring under their direction. Recognising the sequence of who does what on these jobs is part of Unit 301.",
   },

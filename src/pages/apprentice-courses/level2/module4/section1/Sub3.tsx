@@ -43,10 +43,10 @@ const checks = [
     question:
       "Your colleague says 'this drill was PAT'd in January, so it's fine all year — no need to check it'. Is he right?",
     options: [
-      'Yes — PAT covers it for 12 months.',
+      "Take the tool out of service. Apply a 'do not use' tag (or follow the firm's lock-out / tag-out procedure), put the tool aside, and report it to the supervisor. Insulating tape is NOT a repair on a 110 V (or any voltage) supply lead — once the outer sheath is breached, the cable is damaged and only a competent person can either repair it (replace the lead, not patch it) or condemn it. Your duty is to flag it, not fix it.",
       "No. PAT (Portable Appliance Testing) is one layer of inspection — typically annual for offices, every 3 months for harsh construction-site use. PUWER Reg 5 ALSO requires user pre-use visual checks every shift AND periodic competent-person in-service inspections between PATs. A tool can pass PAT in January and develop a damaged cable in February — the user check is what catches it.",
-      'Sometimes — depends on the colour of the PAT label.',
-      'PAT is optional anyway.',
+      "Use physiological regulation (controlled breathing to manage cortisol), cognitive reappraisal (reframe as \\\\\\\"this is a solvable technical challenge, not a personal attack\\\\\\\"), psychological flexibility (accept discomfort while committing to values of professionalism), and measured vulnerability (\\\\\\\"I understand this is frustrating — let me walk you through our resolution plan\\\\\\\")",
+      "Electrical burns are usually small at the surface but deep at the tissue level — current passing through tissue heats it from the inside out. Thermal burns are usually obvious at the surface. Electrical burns may have separate entry and exit wounds. Both need cooling (10-20 min cool running water for thermal; less aggressive for electrical because of underlying tissue damage), covering with a clean non-adherent dressing, and medical assessment.",
     ],
     correctIndex: 1,
     explanation:
@@ -57,12 +57,12 @@ const checks = [
     question:
       "You're about to use a 110 V SDS and you spot a 20 mm split in the rubber outer sheath of the lead, midway along its length. The inner cores aren't visible but the sheath is clearly compromised. What do you do?",
     options: [
-      'Wrap insulating tape around it and crack on.',
+      "The run capacitor (typically 8–25 µF on a single-phase motor of that size) holds a charge. A 16 µF cap charged to 230 V peak (≈ 325 V) stores about 0.85 J — enough to throw your hand off a terminal if you bridge it. Standard discharge: short the capacitor terminals through a 10 kΩ resistor (NOT directly with a screwdriver — that pits the contacts and can weld). Test for residual voltage with the MFT before you touch.",
+      "HASAWA s.3 — duty of every employer (and self-employed person) to conduct their undertaking in such a way as to ensure, so far as is reasonably practicable, that persons NOT in their employment who may be affected are not exposed to risks to their health or safety. Visitors, neighbours, members of the public — all caught.",
       "Take the tool out of service. Apply a 'do not use' tag (or follow the firm's lock-out / tag-out procedure), put the tool aside, and report it to the supervisor. Insulating tape is NOT a repair on a 110 V (or any voltage) supply lead — once the outer sheath is breached, the cable is damaged and only a competent person can either repair it (replace the lead, not patch it) or condemn it. Your duty is to flag it, not fix it.",
-      'Ignore it.',
-      'Switch it on to test if it still works.',
+      "Resolve it informally first where possible. The ACAS Code recommends informal resolution as the starting point, then a written grievance under the employer's documented grievance procedure, then a meeting with management with the right to be accompanied by a colleague or trade-union representative, then a written outcome with a right of appeal. ACAS conciliation is available if the internal procedure fails. Employment tribunal is the last resort and tribunals will assess whether both parties followed the Code reasonably.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Damaged supply cable on any portable tool = take out of service. PUWER Reg 5 (maintenance) and Reg 4 (suitability) both bite — a tool with a damaged lead is no longer in efficient working order and is no longer suitable for use. Apply a quarantine tag, put the tool in the firm's quarantine area, fill in the defect log, and tell the supervisor. The fix is a new lead fitted by a competent person — not insulating tape, never insulating tape.",
   },
@@ -71,12 +71,12 @@ const checks = [
     question:
       "Your firm's preset Wera 3.5 Nm torque screwdriver lives in the cab of the van and gets used every day for distribution-board terminations. The supervisor mentions it's 'due for calibration'. Why does that matter for an electrical install?",
     options: [
-      'It doesn\'t — torque drivers don\'t go out of calibration.',
       "Torque tools drift over time — the spring inside that gives the click loses tension with use and temperature cycles. A 3.5 Nm preset tool that drifts to 4.5 Nm will over-torque every terminal it touches, deforming the conductor and the screw, and a tool that drifts to 2.5 Nm will under-torque every terminal, leaving high-resistance joints that fail R1+R2 on test and run hot in service. Annual calibration with a certificate is the standard requirement; some firms shorten that to 6-monthly for daily-use tools.",
-      'It only matters for testing tools, not torque drivers.',
-      'Calibration is just paperwork.',
+      "Direct: replacement cable, replastering, redecoration, the second-fix electrician's wasted time, the first-fix electrician's wasted time being called back to identify the route. Indirect: programme delay, customer dissatisfaction, possible warranty claim. Operational: re-pull cable in a partly-finished property is much more disruptive than the original install. Reputational: customer tells the next-door neighbour the kitchen rewire 'went wrong'. The 5-minute discipline of taking phone-camera photos of every chase before plastering and adding a redline to the layout drawing prevents the entire chain.",
+      "BS 7671 applies regardless of whether the install is MCS-certified — it's the electrical safety regulation, not an MCS option. On both MCS and non-MCS installs the L3 electrician is responsible for BS 7671 compliance — design, installation, inspection and testing, certification (EIC). On MCS installs the certified installer additionally signs off the MCS install pack and accesses the funding incentives. On non-MCS installs there's no MCS sign-off and no incentive access, but BS 7671 compliance is unchanged. The distinction matters for the customer's funding access; it doesn't matter for the L3 electrician's electrical responsibility.",
+      "(a) To use any machinery, equipment, dangerous substance, transport equipment, means of production or safety device provided in accordance with any training in the use of that equipment and the instructions respecting that use; AND (b) to inform the employer of any work situation which a person with the training and instruction given to them would reasonably consider represented a serious and immediate danger to health and safety, AND of any matter which a person with the training given would reasonably consider represented a shortcoming in the employer's protection arrangements.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Torque drivers and torque wrenches are precision instruments and they drift with use. Annual calibration with a UKAS-traceable certificate is the standard requirement (every 5,000 cycles or 12 months, whichever first, per most manufacturers). A drifted torque driver causes either over-torqued and damaged terminals or under-torqued and high-resistance terminals — both fail BS 7671 526.1, both cause real installation problems on EICR. Calibration certificates live in the firm's tool register and get checked at scheme audits.",
   },
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       "PUWER 1998 Reg 5 requires work equipment to be 'maintained in an efficient state, in efficient working order and in good repair'. Which inspection regime, taken as a whole, discharges that duty for portable site tools?",
     options: [
-      "Annual PAT only.",
+      "Customer-facing protection — dust sheets and floor protection on the route from van to work area, conversation with the customer about which rooms will be no-go zones during the work, awareness of who else is in the property (children, pets, elderly relatives, vulnerable adults), agreed working hours, and the constant background of HASAWA s.3 duty to non-employees. None of that applies in a void property.",
       "Three layers operating together: (1) operative pre-use visual inspection every shift — cable, plug, casing, guard, switch, anti-restart; (2) periodic in-service inspection by a competent person at a documented interval (monthly for harsh site use is typical); (3) formal Portable Appliance Test (PAT) on the documented cycle — every 3 months for 110 V site tools is HSE-recommended typical. Missing any one layer weakens the Reg 5 defence at any post-incident investigation.",
-      "Just user check.",
-      "Only PAT done by an electrician.",
+      "Self-Awareness: recognise the emotional response (possibly frustration or anxiety about change). Self-Regulation: manage the resistance impulse and reappraise the change as professional development. Motivation: connect the update to professional purpose and mastery. Empathy: understand that colleagues may be at different stages of acceptance. Social Skills: communicate the change constructively, help the team adapt, and create a learning environment for the new requirements",
+      "Per Reg 643.7.2 (paraphrased): \\\"If any test indicates a failure to comply, that test and any preceding test, the results of which may have been influenced by the fault indicated, shall be repeated after the fault has been rectified.\\\" So: repeat IR on the rectified circuit; also repeat continuity on that circuit (which preceded IR and could have been influenced by the same fault). Document corrected reading on the STR.",
     ],
     correctAnswer: 1,
     explanation:
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       "EAWR 1989 Reg 4(2) requires that all electrical systems are 'maintained so as to prevent, so far as is reasonably practicable, danger'. How does this map onto a portable tool?",
     options: [
-      "It doesn't — EAWR is for fixed wiring only.",
+      "Multiple sources accepted by CPS schemes: scheme-organised events (NICEIC Connect, NAPIT events, ELECSA training), accredited training providers (JTL, NET, IET Academy, Elec-Mate), trade events (ECA Live, Electric Vehicles Show), online platforms (IET Academy, scheme portals), manufacturer training (sometimes counts), reading and self-study (some schemes accept evidence). Keep a CPD log with date, topic, time, source.",
+      "The firm (the contracting business) is the data CONTROLLER — it decides what data to collect, why, and how to process it. The customer is the DATA SUBJECT — the person to whom the data relates. The processor would be a third party processing data on the firm's behalf (e.g. the cloud-hosted CRM, the accounting software, an offshore admin team).",
       "EAWR 'electrical systems' includes portable equipment supplied from those systems. A faulty 110 V SDS on a 110 V site supply is part of the electrical system in EAWR terms. The maintenance duty under Reg 4(2) covers the supply (transformer, leads, sockets) AND the equipment plugged into it. Visual checks, PAT, and competent-person inspection all sit under this duty — EAWR is the second statutory hook alongside PUWER.",
-      "Only fixed installations are covered.",
-      "Only if the tool is over £100.",
+      "Reg 510.3 — 'Every item of equipment shall be selected and erected so as to allow compliance with the regulations stated in this chapter and the relevant regulations in other parts of BS 7671 and shall take account of manufacturers' instructions.' Selection AND erection. The 'take account of manufacturers' instructions' clause is what makes the data sheet effectively part of the standard.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "EAWR's definition of 'electrical system' is broad — it captures the supply chain from generation to point of use, including the portable equipment at the end. So a faulty drill on a site lead is squarely within EAWR Reg 4(2). The result is that PAT and pre-use checks discharge BOTH PUWER Reg 5 AND EAWR Reg 4(2) at the same time — two statutory hooks for the same activity.",
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     question:
       "What's the standard recommended PAT interval for a 110 V Class I (earthed metal-cased) portable tool used daily on a construction site, per HSE guidance HSG107 and the IET Code of Practice for In-service Inspection and Testing?",
     options: [
-      "Every 5 years.",
+      "F-Gas Regulations require refrigerant recovery — into a calibrated cylinder, by an F-Gas-certified engineer. Venting fluorinated refrigerants is a criminal offence. The recovered refrigerant goes back to the supplier or a specialist recycling stream. Records are kept of every refrigerant transaction (charge, recovery) under the F-Gas register requirements. As the L3 electrician you don't handle refrigerant — but you should recognise that the F-Gas engineer's recovery activity is the regulated step at decommissioning. Improper venting attracts criminal prosecution under the Environmental Permitting Regulations.",
+      "Five things. (1) Customer disputes the extra charge — firm has no signed authority and may have to write off the additional work. (2) Customer claims you did work they didn't authorise — even safety work the firm correctly deemed necessary. (3) Insurance dispute if the additional work later contributes to a problem — without authorisation paperwork, scope is ambiguous. (4) Scheme provider audit picks up the discrepancy between original quote and final invoice. (5) The relationship breaks down — customer feels stitched up, firm feels unappreciated, future work goes elsewhere. The 5-minute VO conversation prevents all five.",
+      "Group flow requires all individual flow conditions PLUS additional social conditions: shared goals, close listening, equal participation, familiarity with each other, open communication, forward momentum, and an element of risk. The team must balance individual autonomy with collective coordination, creating a state where the group achieves more than any individual could alone",
       "Every 3 months — formal PAT (combined visual + electrical test) for harsh-environment use. HSE HSG107 'Maintaining portable electrical equipment' and the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th ed.) publish typical intervals; construction-site Class I portable tools are at the short end at 3 months. Office Class I equipment is 12 months (the low-risk regime in HSE INDG236). Class II (double-insulated) and battery chargers are typically longer.",
-      "Once when bought.",
-      "Never.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (currently 5th edition) and HSE HSG107 'Maintaining portable electrical equipment' give typical intervals by class and environment. Construction-site Class I tools are 3-monthly because the environment is rough — cables get crushed, casings get knocked, water and dust get in. Office equipment runs much longer intervals. The interval is risk-based; the firm's appointed competent person sets it based on the specific tools and environment.",
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     question:
       "When you carry out a pre-use visual inspection on a 110 V portable tool, which six things should you check before plugging in?",
     options: [
-      "Just turn it on.",
       "(1) Supply cable — full length for cuts, abrasion, kinks, exposed conductor; (2) Plug — body intact, pins straight, cord-grip in place; (3) Tool casing — cracks, missing screws, contamination ingress; (4) Guard or shield — present, correctly fitted, not damaged; (5) Switch — operates positively, no stuck contacts, anti-restart works after release; (6) PAT label — current, in date, legible. Plus check the tool is the right one for the job.",
-      "Just the plug.",
-      "Just the cable.",
+      "£150-300 per notifiable job — varies by Local Authority. Each notifiable Part P job (consumer unit replacement, new circuit in kitchen/bathroom, full rewire) requires either a Building Notice or full Building Regulations application before work, plus an LABC inspection during/after. Cost adds up fast for a busy domestic installer; CPS membership pays for itself in a handful of jobs.",
+      "PSCC (Prospective Short Circuit Current) = the current that would flow in an L-N short-circuit fault, measured by the MFT applying brief test current via the L-N loop. Represents short-circuit fault scenarios. PEFC (Prospective Earth Fault Current) = the current that would flow in an L-E earth fault, measured by the MFT applying brief test current via the L-E loop. Represents earth-fault scenarios. The two are measured separately during a 3-lead Zs test; the higher value is reported as Ipf (PFC) for breaking-capacity verification.",
+      "Stop using it. Apply a 'DO NOT USE' label or tag. Inform the supervisor. At base, do a function check on a known live source, calibration check against a reference instrument, visual inspection. If anything fails — send for repair / re-calibration; substitute with backup. PUWER 1998 Reg 5 + Reg 6 put the duty on the employer; the operative's prompt action protects the next user.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Six points, every shift, every tool, before plugging in. Cable, plug, casing, guard, switch, label. HSE HSG107 'Maintaining portable electrical equipment' and the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th ed.) are the apprentice-friendly briefings on this. Most firms produce a small wallet-sized checklist or a sticker on the back of the tool roll; the routine becomes second-nature within a few months and saves you from picking up the one tool with the dodgy lead.",
   },
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       "You spot a tool in the van with a red 'do not use' tag attached and the supply lead detached. What's the correct response?",
     options: [
-      "Re-attach the lead and use it.",
+      "A workmanship warranty is your written guarantee that the work you've done will be free from workmanship defects for a specified period — typically 1-2 years for standard electrical work, sometimes longer for renewables (RECC requires minimum 2-year workmanship warranty for MCS-registered work). Materials usually carry separate manufacturer warranties (passed through to customer). Clear warranty terms reduce disputes by setting expectations upfront.",
       "Leave the tag in place. The tag means a competent person has identified a fault and quarantined the tool. Removing the tag without authority is a HASAWA s.7 breach (failure to co-operate with the employer's safety arrangements) AND likely a PUWER Reg 4 breach (using equipment that's not been certified suitable). Either find an alternative tool or speak to the supervisor.",
-      "Remove the tag and use the tool.",
-      "Take the tag off and rebadge it.",
+      "No — the STR is the regulatory document. The instrument download is a useful audit trail and a way to capture test data at the point of testing, but the completed STR with all required fields and signatures is what satisfies Reg 642.4 and Section 644. Most professionals use the download to populate the STR rather than as a standalone replacement.",
+      "Within 15 days of the incident — Reg 4(2). The over-7-day injury is one where the worker is incapacitated for more than 7 consecutive days (excluding the day of the accident) and unable to perform their normal duties. The day-of-incident counting trips firms up — the count starts the day AFTER.",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       "Hand tools (no electrical supply) still need safety checks. Which inspection regime applies to a pair of side cutters or an insulated screwdriver?",
     options: [
-      "None — hand tools are exempt.",
+      "Where a 'provision, criterion or practice', a physical feature, or a lack of an auxiliary aid puts a disabled person at a substantial disadvantage compared with others, the employer must take such steps as it is reasonable to take to avoid the disadvantage. Three sub-duties — adjust the practice, adjust the physical feature, provide the auxiliary aid. The duty is anticipatory in some contexts (services) and reactive in employment (kicks in when the employer knows or ought reasonably to know).",
+      "Modern EV chargers can leak smooth DC current under fault conditions — and a Type AC RCD won't trip on smooth DC. So Section 722 requires either a Type B RCD (which detects AC, pulsating DC and smooth DC) OR a Type A RCD plus an RDC-DD (a separate device that adds smooth-DC detection to a Type A RCD). The RDC-DD route is often cheaper than fitting a Type B RCD because Type A RCDs are widely available and inexpensive. The certified installer chooses the architecture; the customer doesn't see the difference but the regulatory compliance requires one or the other.",
       "Operative pre-use visual every shift — check the cutting edges aren't chipped or rolled, the pivot is tight, the handle insulation is intact (especially on VDE-rated drivers — any cracked or chipped insulation = take out of service). Periodic competent-person inspection — annually typical. No 'PAT' equivalent for non-powered hand tools, but the visual regime is just as important. PUWER applies to ALL work equipment, not just powered.",
-      "Only when broken.",
-      "Once a year only.",
+      "Every 3 months — formal PAT (combined visual + electrical test) for harsh-environment use. HSE HSG107 'Maintaining portable electrical equipment' and the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th ed.) publish typical intervals; construction-site Class I portable tools are at the short end at 3 months. Office Class I equipment is 12 months (the low-risk regime in HSE INDG236). Class II (double-insulated) and battery chargers are typically longer.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "PUWER applies to all work equipment, powered or not. Hand tools need pre-use visual checks (cutting edges, pivots, handles) and periodic competent-person inspection. VDE-rated insulated tools are particularly important — any visible damage to the insulation invalidates the 1000 V rating and the tool must be withdrawn. The visual routine is fast (a few seconds per tool) but catches the rolled cutter edge before it slips, the cracked driver handle before it shocks you.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       "Test instruments (multimeter, MFT, clamp meter) need calibration at a documented interval. What's the standard requirement and why does it matter?",
     options: [
-      "Calibration is optional.",
+      "On a monoblock unit the entire refrigerant circuit is contained inside the outdoor unit and only water pipes enter the building. The flammable-refrigerant indoor minimum-room-volume rule (under BS EN 378 and the F-Gas / refrigerant safety standards) only applies where flammable refrigerant is present in occupied indoor space. Splits that route refrigerant pipes indoors do trigger the rule and require detailed room-volume calculations.",
+      "The monthly review brings together the apprentice, the employer (or supervisor) and the training provider's tutor or assessor. The review discusses progress on the apprenticeship standards, on-the-job competence, off-the-job training hours, any concerns from any side, and actions for the next month. The form is a record of the review and is part of the audit trail for the apprenticeship's compliance with the standards.",
+      "Voltage drop on the upstairs lighting circuit, OR a problem at the upstairs lighting tap-off. Most likely causes: (1) HRJ at a junction box upstream of the upstairs lights, (2) loose terminal at the lighting RCBO, (3) high-resistance neutral on the upstairs circuit (broken or partially connected), (4) under-sized cable retrofit (someone replaced cable with smaller cross-section). Test: measure voltage at an upstairs lampholder under normal load; compare to nominal 230 V. If significantly low (&lt;220 V), trace upstream for the HRJ. Thermal imaging at the suspected location.",
       "Annual calibration to a UKAS-traceable standard, with a calibration certificate kept in the firm's instrument register. Test instruments drift over time — a multimeter that reads 235 V on a 230 V supply, or an insulation tester that reads 200 MΩ on a 100 MΩ test, will produce wrong test results that fail BS 7671 612.x. Most certification schemes (NICEIC, NAPIT) require evidence of in-date calibration as part of audit. Sub 1.5 covers test instruments in detail.",
-      "Calibration is for laboratories only.",
-      "Once every 5 years.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Annual calibration with a UKAS-traceable certificate is the standard for test instruments used to demonstrate BS 7671 compliance. Megger, Fluke and Kewtech all offer manufacturer or third-party calibration services — typically £40–80 per instrument per year. The certificate is the evidence that the test results on your EIC / EICR are trustworthy. NICEIC, NAPIT and ELECSA all check this at scheme audits. Sub 1.5 unpacks test instruments specifically.",
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       "A site tool fails its pre-use visual check. What's the correct sequence of actions?",
     options: [
-      "Use it carefully.",
       "(1) Take the tool out of service immediately — don't try to use it 'gently'. (2) Apply the firm's quarantine tag ('do not use', signed and dated). (3) Move the tool to the firm's quarantine area (or, on site, to the supervisor's box). (4) Log the defect in the firm's tool register or defect log. (5) Tell the supervisor — verbally as well as written. (6) Get an alternative tool to continue the work. The fix happens later by a competent person; the apprentice's job ends at quarantine + report.",
-      "Throw it in the bin.",
-      "Just keep using it.",
+      "A genuine shift to: \\\\\\\"This is the most challenging situation I have faced, but I now have a clear action plan to address the specific issues. I have identified three process improvements that will prevent recurrence. I feel motivated to apply these lessons, and this experience will make me a significantly more capable project manager\\\\\\\" — with the motivation to act matching the new belief",
+      "Leather (heat-resistant) gloves rather than synthetic, eye protection rated for thermal hazards (EN 166 with thermal-hazard marking is preferable), long sleeves of natural fibre (synthetics melt onto skin), a fire blanket or extinguisher within arm's reach, and clearance of combustible materials from the work area. On commercial premises a hot-works permit is usually required as an admin control on top of the PPE — see Sub 5 of this section.",
+      "Personally bound under s.110 (helping someone else commit an unlawful act, e.g. participating in harassment) and as a witness who is duty-bound to co-operate with internal investigations. The apprentice's reputational and legal exposure grows if they participate in or condone discriminatory or harassing behaviour. The apprentice also has a route to RAISE concerns — internal complaints procedure, ACAS conciliation, Employment Tribunal claim — and is protected against victimisation under s.27 for raising them in good faith.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Six-step quarantine sequence, in that order. Out of service → tag → quarantine area → log → tell supervisor → continue with alternative. The PUWER Reg 5 system depends on damaged tools being taken out of circulation immediately, not used 'one more time'. The defect log gives the firm visibility on which tools fail at which intervals, which feeds back into purchasing and scheduling decisions.",
   },

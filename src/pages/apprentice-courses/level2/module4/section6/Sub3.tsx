@@ -44,11 +44,11 @@ const checks = [
       'A standard domestic 230 V circuit. Which test voltage and minimum acceptance value does BS 7671 A4:2026 Table 64 specify?',
     options: [
       '250 V DC, minimum 0.5 MΩ.',
-      '500 V DC, minimum 1.0 MΩ.',
       '1000 V DC, minimum 1.0 MΩ.',
+      '500 V DC, minimum 1.0 MΩ.',
       '230 V AC, minimum 100 MΩ.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Table 64 — for circuits "up to and including 500 V (with the exception of SELV/PELV)": test voltage 500 V DC, minimum insulation resistance 1.0 MΩ. SELV/PELV uses 250 V DC at 0.5 MΩ. Above 500 V uses 1000 V DC at 1.0 MΩ. The 500 V/1.0 MΩ figures cover almost everything you will test on a domestic or small commercial install.',
   },
@@ -57,10 +57,10 @@ const checks = [
     question:
       'Before testing insulation resistance on a circuit feeding LED dimmers, surge protection devices and an EV charger control board, you should:',
     options: [
-      'Just press the button — they are designed to handle 500 V.',
+      'The Principal Contractor must ensure a suitable site induction is provided. The induction covers the construction phase plan, site rules, welfare arrangements, emergency procedures and the specific hazards on that site. This is how the management chain transfers safety information to the people doing the work.',
       'Disconnect the electronic loads before the 500 V DC test, since they will be damaged or give a false low reading; reconnect them and apply the 250 V DC test per Reg 643.3.3, which must read at least 1.0 MΩ between live conductors and the protective conductor.',
-      'Test at 1000 V DC.',
-      'Use an AC voltmeter instead of an MFT.',
+      'Because the CPC in 2.5/1.5 T&E is 1.5 mm² while the line is 2.5 mm². Smaller cross-section means higher resistance per metre. Typical: 2.5 mm² ≈ 7.41 mΩ/m, 1.5 mm² ≈ 12.10 mΩ/m. So r2 is roughly r1 × 1.63.',
+      'MHSWR Reg 5 — effective arrangements for planning, organising, controlling, monitoring, reviewing the preventive measures (POCMR). RA is one input; Reg 5 runs the system that operationalises it.',
     ],
     correctIndex: 1,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     question:
       'You measure IR on a domestic ring final at 500 V DC. Combined L+N to E reading is 18 MΩ. What action?',
     options: [
-      'Pass — well above 1 MΩ, no further action.',
+      'Around 0.01-0.03 Ω. 10 mm² Cu has roughly 1.83 mΩ/m at 20 °C; 4 m × 1.83 = 7.3 mΩ ≈ 0.007 Ω, plus terminations. Anything above ~0.05 Ω means a poor termination at the BS 951 clamp or the MET — investigate.',
       'Acceptable per Table 64 (well above 1 MΩ) but worth investigating because a value of 18 MΩ on a typical T&E circuit is much lower than the >100 MΩ you would expect from healthy insulation. Look for moisture in a back-box, slightly nicked sheath at a clip or staple, or a degrading connection.',
-      'Fail — must be exactly infinite.',
-      'Fail — repeat at 1000 V DC.',
+      'Only if they own / control structure / exterior of HRRB. Most BTL landlords own individual flats, not the whole building - the freeholder / managing agent is typically PAP. Single ownership of an HRRB rare; multi-leasehold structures common.',
+      'A brief walkthrough explaining what the certificate covers, where the consumer unit is, how to test the RCDs (using the test buttons), the recommended retest date, and where to find the documentation if they sell the property.',
     ],
     correctIndex: 1,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 A4:2026 Reg 643.3.1 — insulation resistance shall be measured between:',
     options: [
-      'Live conductors only.',
+      'Use a single-pole MCB lock-off device with a personal padlock, the only key retained by the person doing the work, plus a caution notice',
       '(a) live conductors; and (b) live conductors and the protective conductor connected to the earthing arrangement. During the test of (b), line and neutral may be connected together.',
-      'Earth and the building structure.',
-      'Phase and the meter tails only.',
+      'A portfolio showing mentee progression (e.g. NVQ completion rates), feedback from mentees, reflective accounts, CPD records, and testimonials from managers or assessors',
+      'Proactive monitoring of manufacturer end-of-life notices, identifying alternatives before discontinuation, and holding strategic stock of critical obsolescent components',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'You are testing IR on a circuit that includes a single-pole switch. The switch is in the OFF position. Which conductors does the test cover?',
     options: [
-      'Only the cable up to the switch.',
+      'Brief them on site rules, escort them, ensure no live testing or unsafe activities are filmed unattended, and confirm written permissions for any recognisable workers',
+      'A synchronous motor running without mechanical load, used solely for power factor correction by varying its excitation',
       'Only the cable up to the switch — because the switch is open, the conductor downstream of the switch is isolated from the test signal and will not be tested.',
-      'The whole circuit including downstream of the switch.',
-      'Doesn\'t matter, the switch position is irrelevant.',
+      'Assess the situation: check atmospheric monitoring readings, attempt communication, attempt non-entry retrieval, and determine if entry rescue is needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Single-pole switches in the OFF position will exclude the downstream cable from the IR test because the test signal cannot reach that section. Best practice: turn every functional switch in the circuit ON during IR testing so the entire installation is included. For two-way switches, set both throws to a position that closes the circuit. Double-pole switches still need to be ON. Document any sections that cannot be tested (e.g. integral-switched fittings) on the schedule.',
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'On a 12-circuit domestic CU you have completed circuit-by-circuit IR testing. Each circuit reads >100 MΩ. You then test the whole installation as one (everything connected). Reading: 5 MΩ. Why?',
     options: [
-      'There is a fault.',
-      'Parallel paths — every circuit\'s insulation appears in parallel between the same L+N+E conductors at the CU. Twelve circuits each at 100 MΩ in parallel give 100/12 ≈ 8.3 MΩ. The reading is low because of summed leakage paths, not because of an insulation fault. Per-circuit testing is more diagnostically useful and is the recommended method.',
-      'The MFT is broken.',
-      'CPC continuity failed.',
+      'ASHP delivers 3–4 kWh of heat per 1 kWh electrical input (high efficiency) but works best in well-insulated dwellings with low flow temperatures (~45 °C); a poorly insulated house with high-temperature radiators can negate the running-cost advantage',
+      'Ongoing safety communication mechanism — short, on-site, topic-specific. Required under MHSWR Reg 13 (information). Attendance logged as evidence. Topics often respond to recent near-misses, regulation changes, equipment updates, or seasonal risks.',
+      'Live polarity confirmation at the CU (using an approved voltage indicator) plus Ze measurement at the MET. Live polarity confirms the supply is correctly connected (meter tails not swapped); Ze gives you the supply-side impedance for Zs verification.',
+      'Parallel paths — every circuit\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s insulation appears in parallel between the same L+N+E conductors at the CU. Twelve circuits each at 100 MΩ in parallel give 100/12 ≈ 8.3 MΩ. The reading is low because of summed leakage paths, not because of an insulation fault. Per-circuit testing is more diagnostically useful and is the recommended method.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'When you test multiple circuits in parallel, the leakage paths add up — twelve circuits each with say 80 nA of leakage at 500 V give 12 × 80 = 960 nA total, which the meter reports as 500 V ÷ 960 nA ≈ 520 kΩ. (Or in resistance terms, the parallel combination drops the reading.) Test each circuit separately; the per-circuit reading is what matters for diagnostics. Reg 643.3.2 explicitly says each distribution circuit should be tested separately.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'BS 7671 A4:2026 Reg 643.3.3 introduced an extra test step. What is it?',
     options: [
-      'A 1500 V DC flash test.',
       'Where equipment was disconnected to allow the standard 500 V DC test, after the equipment is reconnected a 250 V DC test must be applied between live conductors and the protective conductor — minimum 1 MΩ. Confirms the equipment itself does not present an unacceptable insulation defect.',
-      'No additional test, just the 500 V remains.',
-      'AC voltage test at 240 V.',
+      'Make safe by reinstating the bonding connection if competent and equipped to do so, then test continuity, then code based on the as-found evidence — typically C2 (potentially dangerous, urgent action) for absent main protective bonding to an extraneous-conductive-part. Document the as-found state and the corrective action.',
+      'Written confirmation from both employer and training provider, a record of the gateway readiness review, evidence that all pre-requisites are met (qualifications, portfolio, off-the-job training hours), and formal agreement to proceed',
+      'Hand the Schedule of Inspections to the supervisor for review, fix the ✗ item, decide whether to record the two LIM items as observations on the EIC or revisit them, then proceed to Section 6 dead testing.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A4:2026 Reg 643.3.3 added the post-reconnection 250 V DC test. The thinking: if you had to disconnect electronics to do the main 500 V DC test, you have not actually tested those electronics. The 250 V DC follow-up is gentle enough not to damage them but high enough to detect a serious insulation defect within the equipment. Acceptance is the same 1 MΩ minimum.',
   },
@@ -141,8 +141,8 @@ const quizQuestions = [
     options: [
       '500 V DC, 1.0 MΩ.',
       '250 V DC, minimum 0.5 MΩ.',
-      '1000 V DC, 1.0 MΩ.',
       'No IR test required for SELV.',
+      '1000 V DC, 1.0 MΩ.',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'Combined L+N to earth test on a typical 230 V circuit reads 0.45 MΩ. What does this mean?',
     options: [
-      'Pass.',
+      'Maintenance effectiveness depends directly on the competence of the people performing the work — technicians need both technical skills (fault-finding, condition monitoring, repair techniques) and analytical skills (RCA, FMEA, data interpretation) to implement RCM effectively',
+      'Proper preparation and stabilisation, systematic approach following procedures, comprehensive documentation, trend monitoring, and continuous process improvement',
       'Below the 1.0 MΩ minimum from Table 64 → fail. Investigate: damaged cable insulation, water ingress at a back-box, a wired-up neutral that is touching earth somewhere, a trapped conductor under a pinch screw. Do not energise.',
-      'Pass marginally — energise but record on STR.',
-      'Test again at 1000 V DC to confirm.',
+      'Typically 90 degrees C for copper busbars, with the temperature rise above ambient not exceeding values specified in IEC 61439 (typically 70 K for accessible surfaces)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Anything below 1.0 MΩ on a 500 V DC test for a 230 V circuit is a fail per Table 64. 0.45 MΩ is below the minimum and indicates a real insulation defect somewhere. Common causes: a back-box where the cable sheath has been pinched against a sharp metal edge causing minor but persistent leakage; moisture in an outdoor accessory; a neutral conductor touching the CPC at a terminal; a connector block misassembled. Find the fault, fix it, retest. Do not energise an installation that fails IR — the leakage path will heat up under load and may eventually develop into a full insulation breakdown.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why does BS 7671 require disconnection of equipment "likely to influence the test or be damaged" before the IR test?',
     options: [
-      'For convenience.',
+      'Explaining how the adjusted routing would benefit both trades — showing that the change makes the plumber\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s work easier while solving the cable routing problem, and offering to help with the adjustment',
+      'Record the finding, raise a priority work order for investigation during the next planned shutdown, increase monitoring frequency, assess the risk of continued operation, and report to the duty engineer for a decision on continued running',
+      'PEN-conductor open-circuit risk to outdoor metalwork — apply Section 722-style measures: earth electrode, residual current detection, or use of a dedicated supplier-issued separate earth (TT outdoor)',
       'Because electronics with capacitive or low-impedance protection paths (SPDs, LED driver capacitors, EMC filters in inverters) will either short the test signal (giving a false low reading) or be destroyed by the 500 V DC stress they were never designed to withstand.',
-      'To save battery life on the MFT.',
-      'Required by RoHS.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The 500 V DC test pumps current through any leakage path. A surge protective device (SPD) connected line-to-earth will short the test almost completely — its very purpose is to clamp transient over-voltages by conducting briefly to earth. A 500 V DC stress applied for several seconds is well within its sacrificial range and will either trip its disconnect mechanism or damage the MOV. LED driver electronics include input EMC filter capacitors that conduct DC test current readily. The Reg 643.3.3 disconnect-and-retest procedure exists precisely to handle these cases without false readings or equipment damage.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'A circuit reads >999 MΩ (off the top of the MFT scale, often shown as OL or > 999 MΩ) on the IR test. Pass or fail?',
     options: [
-      'Fail — anything above the scale is suspect.',
-      'Pass — the reading is above the meter\'s measurement range, which means the actual IR is at least the top of scale. Healthy new T&E and similar wiring should always read like this. Document on the STR as ">999 MΩ" or the equivalent symbol the form specifies.',
-      'Indeterminate — repeat with another instrument.',
-      'Fail — meter must be calibrated.',
+      'Pass — the reading is above the meter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s measurement range, which means the actual IR is at least the top of scale. Healthy new T&E and similar wiring should always read like this. Document on the STR as ">999 MΩ" or the equivalent symbol the form specifies.',
+      'Demonstrate operation, explain the smart features and tariff considerations, hand over manufacturer guides and your cert pack, and note the smart charger regs (e.g. randomised delay)',
+      'If you process personal data for business purposes — almost every business does (customer names, addresses, phone numbers, photos). Small businesses (turnover < £632k AND fewer than 11 staff) pay the Tier 1 annual fee of £40 under the Data Protection (Charges and Information) Regulations 2018.',
+      'Logs are factual records of what happened, while reflective accounts add analysis of why decisions were made, what was learned, and how the experience links to professional development',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A reading above the MFT scale (typically 999 MΩ or 200 GΩ depending on instrument range) is exactly what you want to see. It means the leakage current through the insulation is below the meter\'s detection threshold — i.e. the insulation is doing its job perfectly. On the schedule of test results record it as ">999 MΩ" or ">200 GΩ" or whatever the form requires for "above range". Do not record it as "0" or "infinite" — both are misleading for any future inspector reading the form.',
   },

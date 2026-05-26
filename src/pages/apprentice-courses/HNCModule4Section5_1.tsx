@@ -33,8 +33,13 @@ const quickCheckQuestions = [
     id: 'form-4',
     question:
       'Which form of separation provides separate compartments for busbars, functional units AND terminals?',
-    options: ['Form 1', 'Form 2', 'Form 3', 'Form 4'],
-    correctIndex: 3,
+    options: [
+      'Form 1',
+      'Form 2',
+      'Form 4',
+      'Form 3',
+    ],
+    correctIndex: 2,
     explanation:
       'Form 4 provides the highest level of internal separation with distinct compartments for busbars, functional units and terminals, allowing safe access to one section without exposure to others.',
   },
@@ -43,26 +48,36 @@ const quickCheckQuestions = [
     question: 'What does an IP rating of IP54 indicate?',
     options: [
       'Dust tight, splash proof',
-      'Dust protected, water jet proof',
       'Dust tight, water jet proof',
       'Dust protected, splash proof',
+      'Dust protected, water jet proof',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'IP54 means protected against dust ingress (5) and protected against splashing water from all directions (4). The first digit is solids protection (0-6), second is liquids (0-8).',
   },
   {
     id: 'fault-rating',
     question: "What does the 'Icw' rating of switchgear represent?",
-    options: ['Making capacity', 'Breaking capacity', 'Short-time withstand', 'Peak withstand'],
-    correctIndex: 2,
+    options: [
+      'Making capacity',
+      'Breaking capacity',
+      'Peak withstand',
+      'Short-time withstand',
+    ],
+    correctIndex: 3,
     explanation:
       'Icw is the rated short-time withstand current - the RMS value of current the assembly can carry for a specified time (typically 1 second) without damage. This is crucial for discrimination.',
   },
   {
     id: 'type-tested',
     question: 'What standard governs type-tested LV switchgear assemblies?',
-    options: ['BS 7671', 'BS EN 61439', 'BS 88', 'BS EN 60947'],
+    options: [
+      'BS 7671',
+      'BS EN 61439',
+      'BS EN 60947',
+      'BS 88',
+    ],
     correctIndex: 1,
     explanation:
       'BS EN 61439 covers low-voltage switchgear and controlgear assemblies, replacing the previous BS EN 60439. It defines requirements for type-tested assemblies (TTA).',
@@ -74,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of main switchboard in a building?',
     options: [
-      'To provide emergency lighting',
+      'Above the insulation material\\\\\\\'s thermal limit',
       'To receive and distribute the incoming electrical supply',
-      'To generate backup power',
-      'To monitor energy consumption',
+      'Surveying a building with no physical intervention',
+      'Electrical installation certificates and test results',
     ],
     correctAnswer: 1,
     explanation:
@@ -87,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: 'Form 1 switchgear provides:',
     options: [
-      'No internal separation',
-      'Separation between busbars and functional units',
       'Separation between all functional units',
       'Separate terminals for each unit',
+      'No internal separation',
+      'Separation between busbars and functional units',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Form 1 has no internal separation - all components are in a single common compartment. This is the most basic form, suitable where work will only be done with all circuits isolated.',
   },
@@ -100,19 +115,24 @@ const quizQuestions = [
     id: 3,
     question: 'Why would you specify Form 3b separation?',
     options: [
-      'To reduce cost',
+      'An accredited domestic or non-domestic energy assessor',
+      'Possible insulation damage or contamination',
+      'High temperatures require heat-resistant cables and equipment',
       'To allow access to terminals while other units remain live',
-      'To enable withdrawal of units under load',
-      'For outdoor installations only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Form 3b provides separation between busbars and functional units, plus separation of terminals from busbars but not from each other. This allows terminal access without busbar exposure.',
   },
   {
     id: 4,
     question: 'What IP rating is typically required for switchgear in a general plant room?',
-    options: ['IP2X minimum', 'IP3X minimum', 'IP4X minimum', 'IP5X minimum'],
+    options: [
+      'IP2X minimum',
+      'IP3X minimum',
+      'IP4X minimum',
+      'IP5X minimum',
+    ],
     correctAnswer: 0,
     explanation:
       'IP2X (protection against finger contact with live parts) is the minimum for general indoor locations. Plant rooms typically require IP2X to IP3X depending on environmental conditions.',
@@ -121,7 +141,12 @@ const quizQuestions = [
     id: 5,
     question:
       'The prospective fault current (PFC) at a switchboard is 25kA. What minimum fault rating should the switchgear have?',
-    options: ['20kA', '25kA', '32kA', '50kA'],
+    options: [
+      '20kA',
+      '25kA',
+      '50kA',
+      '32kA',
+    ],
     correctAnswer: 1,
     explanation:
       'Switchgear must have a fault rating at least equal to the PFC at the point of installation. With 25kA PFC, you need minimum 25kA rated equipment, though specifying higher provides a safety margin.',
@@ -130,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: "What does 'partially type-tested assembly' (PTTA) mean?",
     options: [
-      'The assembly failed some tests',
-      'Only the enclosure was tested',
+      'Carry out full initial verification style testing',
+      'Hazards and mitigation measures incorporated in design',
       'Verification based on tested components plus design rules',
-      'The assembly requires further testing on site',
+      'Energy cable can withstand during fault without damage',
     ],
     correctAnswer: 2,
     explanation:
@@ -143,20 +168,25 @@ const quizQuestions = [
     id: 7,
     question: 'Which busbar configuration provides the best continuity of supply?',
     options: [
-      'Single busbar',
-      'Single busbar with bus section',
+      'At the cooker control unit and cooker outlet',
+      'To eliminate steady-state error over time',
+      'Provides tensile strength and strain relief',
       'Duplicate busbars with bus coupler',
-      'Ring busbar',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Duplicate busbars with bus coupler allows either busbar to supply all loads. If one busbar or its incomer fails, the coupler closes to maintain supply from the healthy busbar.',
   },
   {
     id: 8,
     question: 'What clearance is required in front of switchgear for safe operation?',
-    options: ['500mm minimum', '700mm minimum', '900mm minimum', '1200mm minimum'],
-    correctAnswer: 1,
+    options: [
+      '700mm minimum',
+      '900mm minimum',
+      '500mm minimum',
+      '1200mm minimum',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 7671 requires 700mm minimum clear working space in front of switchgear. This allows safe operation, access for testing, and emergency escape.',
   },
@@ -164,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'When is IP65 rated switchgear required?',
     options: [
-      'Standard plant rooms',
+      'Current lags voltage by 53° (inductive)',
       'Wash-down areas or external locations',
-      'IT equipment rooms',
-      'Domestic installations',
+      'Date, time, and GPS location data (if enabled)',
+      'Insulated gloves and face protection',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of arc fault containment in modern switchgear?',
     options: [
-      'To reduce noise levels',
-      'To improve energy efficiency',
+      'Cables can be drawn in without damage and heat dissipation is adequate',
+      'One socket showing half the expected value',
       'To protect personnel and limit damage during internal faults',
-      'To simplify maintenance procedures',
+      'Frequency weighting matching human ear sensitivity',
     ],
     correctAnswer: 2,
     explanation:

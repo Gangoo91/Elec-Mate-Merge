@@ -27,10 +27,10 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 1,
       question: 'What is a key difference between Level 1 and Level 2 Maths questions?',
       options: [
-        'Level 2 allows more time per question',
+        'Adding delay events to the original baseline programme to show their impact',
         'Level 2 questions require multi-step reasoning and real-world application',
-        'Level 2 only tests calculator skills',
-        'Level 2 has fewer questions overall',
+        'A conductive part of equipment that can be touched and may become live under fault',
+        'Item descriptions, quantities, specifications, and delivery requirements',
       ],
       correctAnswer: 1,
       explanation:
@@ -40,7 +40,12 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 2,
       question:
         'An electrician charges £45 per hour plus VAT at 20%. A job takes 3 hours and requires £120 of materials (no VAT on materials). What is the total cost?',
-      options: ['£255.00', '£270.00', '£282.00', '£297.00'],
+      options: [
+        '£297.00',
+        '£255.00',
+        '£282.00',
+        '£270.00',
+      ],
       correctAnswer: 2,
       explanation:
         'Labour: 3 x £45 = £135. VAT on labour: £135 x 0.20 = £27. Labour + VAT: £135 + £27 = £162. Total: £162 + £120 materials = £282.00.',
@@ -50,12 +55,12 @@ const FunctionalSkillsModule5Section2 = () => {
       question:
         'In Level 2 English, what structure should you use for each paragraph in a persuasive essay?',
       options: [
-        'Introduction, middle, end',
-        'PEEL: Point, Evidence, Explain, Link',
         'Who, what, when, where, why',
+        'Introduction, middle, end',
         'Fact, opinion, fact, opinion',
+        'PEEL: Point, Evidence, Explain, Link',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'PEEL (Point, Evidence, Explain, Link) is an effective paragraph structure for persuasive writing. State your point, support it with evidence, explain why it matters, then link back to your main argument.',
     },
@@ -63,8 +68,13 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 4,
       question:
         'Sand and gravel are mixed in the ratio 2:3. How much gravel is needed for 25 kg of mix?',
-      options: ['10 kg', '12.5 kg', '15 kg', '20 kg'],
-      correctAnswer: 2,
+      options: [
+        '15 kg',
+        '12.5 kg',
+        '10 kg',
+        '20 kg',
+      ],
+      correctAnswer: 0,
       explanation:
         'Total parts = 2 + 3 = 5. Gravel = 25 divided by 5 x 3 = 15 kg. The gravel makes up 3 out of the 5 total parts of the mixture.',
     },
@@ -72,7 +82,12 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 5,
       question:
         'When writing a formal letter to someone whose name you do not know, how should you sign off?',
-      options: ['Yours sincerely', 'Yours faithfully', 'Kind regards', 'Best wishes'],
+      options: [
+        'Yours sincerely',
+        'Yours faithfully',
+        'Best wishes',
+        'Kind regards',
+      ],
       correctAnswer: 1,
       explanation:
         "Use 'Yours faithfully' when you do not know the recipient's name (i.e. you wrote 'Dear Sir/Madam'). Use 'Yours sincerely' when you do know their name (i.e. you wrote 'Dear Mr Smith').",
@@ -81,7 +96,12 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 6,
       question:
         'A kitchen is 5.4 m by 3.8 m. Tiles cost £28.50 per m² with 15% wastage allowance. What is the total tile cost?',
-      options: ['£584.82', '£653.94', '£684.00', '£710.00'],
+      options: [
+        '£584.82',
+        '£653.94',
+        '£684.00',
+        '£710.00',
+      ],
       correctAnswer: 2,
       explanation:
         'Area = 5.4 x 3.8 = 20.52 m². With 15% wastage: 20.52 x 1.15 = 23.598 m². Round up to 24 m² (cannot buy part-tiles). Cost = 24 x £28.50 = £684.00.',
@@ -90,12 +110,12 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 7,
       question: "What does 'inference' mean in the context of a Level 2 reading exam?",
       options: [
-        'Copying information directly from the text',
+        'That the earth conductor is complete from origin to final point',
+        'Circuit routes, cable sizes, protection settings, and final equipment positions',
+        'Online monitoring in the PLC programming software to view programme execution in real time',
         'Working out meaning from clues in the text that are not directly stated',
-        'Guessing the answer without reading the text',
-        'Finding the main heading of the passage',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Inference means reading between the lines — understanding what the writer implies without stating it directly. You use clues and context to work out meaning that is not explicitly written.',
     },
@@ -103,12 +123,12 @@ const FunctionalSkillsModule5Section2 = () => {
       id: 8,
       question: 'When practising under exam conditions, what is the most important rule?',
       options: [
-        'Play background music to stay relaxed',
-        'Have your phone nearby for emergencies',
         'Set a strict timer and do not pause it or look things up',
         'Take a 10-minute break halfway through',
+        'Play background music to stay relaxed',
+        'Have your phone nearby for emergencies',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'The whole point of timed practice is to simulate the real exam experience. You must commit to the timer and avoid looking things up, just as you would in the actual exam room.',
     },

@@ -916,72 +916,58 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="px-4 py-3 space-y-4">
-              {/* Assessment Toggle Buttons */}
+              {/* Single 3-way toggle writes both BS 7671 F1 + F2 fields so PDF formatter is unchanged. */}
               <div className="space-y-2">
                 <label className="text-xs text-white block">Overall Assessment *</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      onUpdate('overallAssessment', 'satisfactory');
-                      haptic.success();
-                    }}
-                    className={cn(
-                      'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center',
-                      formData.overallAssessment === 'satisfactory'
-                        ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-                        : 'bg-white/[0.05] text-white border border-white/[0.06]'
-                    )}
-                  >
-                    Satisfactory
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      onUpdate('overallAssessment', 'unsatisfactory');
-                      haptic.warning();
-                    }}
-                    className={cn(
-                      'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center',
-                      formData.overallAssessment === 'unsatisfactory'
-                        ? 'bg-red-500/20 border border-red-500/40 text-red-400'
-                        : 'bg-white/[0.05] text-white border border-white/[0.06]'
-                    )}
-                  >
-                    Unsatisfactory
-                  </button>
-                </div>
-              </div>
-
-              {/* Continued Use Toggle Buttons */}
-              <div className="space-y-2">
-                <label className="text-xs text-white block">Satisfactory for Continued Use *</label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
-                    { value: 'yes', label: 'Yes' },
-                    { value: 'no', label: 'No' },
-                    { value: 'yes-with-recommendations', label: 'With Cond.' },
-                  ].map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      onClick={() => {
-                        haptic.light();
-                        onUpdate('satisfactoryForContinuedUse', option.value);
-                      }}
-                      className={cn(
-                        'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm',
-                        'active:scale-[0.98]',
-                        formData.satisfactoryForContinuedUse === option.value
-                          ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                          : 'bg-white/[0.05] text-white border border-white/[0.06]'
-                      )}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
+                    {
+                      key: 'satisfactory',
+                      label: 'Satisfactory',
+                      assessment: 'satisfactory',
+                      continuedUse: 'yes',
+                      activeClass: 'bg-green-500/20 border border-green-500/40 text-green-400',
+                      onFeedback: () => haptic.success(),
+                    },
+                    {
+                      key: 'with-restrictions',
+                      label: 'With Restrictions',
+                      assessment: 'satisfactory',
+                      continuedUse: 'yes-with-recommendations',
+                      activeClass: 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow',
+                      onFeedback: () => haptic.light(),
+                    },
+                    {
+                      key: 'not-satisfactory',
+                      label: 'Not Satisfactory',
+                      assessment: 'unsatisfactory',
+                      continuedUse: 'no',
+                      activeClass: 'bg-red-500/20 border border-red-500/40 text-red-400',
+                      onFeedback: () => haptic.warning(),
+                    },
+                  ].map((option) => {
+                    const isActive =
+                      formData.overallAssessment === option.assessment &&
+                      formData.satisfactoryForContinuedUse === option.continuedUse;
+                    return (
+                      <button
+                        key={option.key}
+                        type="button"
+                        onClick={() => {
+                          haptic.light();
+                          onUpdate('overallAssessment', option.assessment);
+                          onUpdate('satisfactoryForContinuedUse', option.continuedUse);
+                          option.onFeedback();
+                        }}
+                        className={cn(
+                          'h-11 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center text-center px-2',
+                          isActive ? option.activeClass : 'bg-white/[0.05] text-white border border-white/[0.06]'
+                        )}
+                      >
+                        {option.label}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 

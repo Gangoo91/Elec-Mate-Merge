@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'ipf-definition',
     question: 'What is prospective fault current (Ipf)?',
     options: [
-      'Normal operating current',
-      'Maximum current a cable can carry',
       'Maximum current that would flow in a fault',
+      'Maximum current a cable can carry',
       'Current at which RCDs operate',
+      'Normal operating current',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Prospective fault current (Ipf) is the maximum current that would flow if a fault of negligible impedance occurred at a given point. It's essential for selecting protective device breaking capacity.",
   },
@@ -46,16 +46,26 @@ const quickCheckQuestions = [
     id: 'transformer-impedance',
     question:
       'A 500kVA transformer has 5% impedance. What is its approximate fault current at the secondary terminals?',
-    options: ['500A', '5kA', '14.4kA', '72kA'],
-    correctIndex: 2,
+    options: [
+      '500A',
+      '14.4kA',
+      '5kA',
+      '72kA',
+    ],
+    correctIndex: 1,
     explanation:
       'For a 500kVA transformer at 400V: FLC = 500000/(√3×400) = 722A. With 5% impedance, fault current ≈ FLC/0.05 = 722/0.05 = 14,440A ≈ 14.4kA.',
   },
   {
     id: 'cable-impedance',
     question: 'How does cable length affect prospective fault current?',
-    options: ['No effect', 'Increases Ipf', 'Decreases Ipf', 'Only affects voltage drop'],
-    correctIndex: 2,
+    options: [
+      'Only affects voltage drop',
+      'No effect',
+      'Increases Ipf',
+      'Decreases Ipf',
+    ],
+    correctIndex: 3,
     explanation:
       'Longer cables have higher impedance (both resistance and reactance), which increases total circuit impedance and therefore reduces prospective fault current. This is why Ipf is highest at the transformer.',
   },
@@ -63,8 +73,13 @@ const quickCheckQuestions = [
     id: 'zs-calculation',
     question:
       'If Ze = 0.35Ω and the circuit (R1+R2) = 0.25Ω, what is the earth fault loop impedance Zs?',
-    options: ['0.10Ω', '0.60Ω', '0.88Ω', '1.46Ω'],
-    correctIndex: 1,
+    options: [
+      '0.88Ω',
+      '1.46Ω',
+      '0.60Ω',
+      '0.10Ω',
+    ],
+    correctIndex: 2,
     explanation:
       'Zs = Ze + (R1+R2) = 0.35 + 0.25 = 0.60Ω. This simple addition applies when calculating total earth fault loop impedance for disconnection time verification.',
   },
@@ -75,7 +90,12 @@ const quizQuestions = [
     id: 1,
     question:
       'What is the formula for calculating prospective fault current at a point in the system?',
-    options: ['Ipf = V × Z', 'Ipf = V / Z', 'Ipf = Z / V', 'Ipf = V² / Z'],
+    options: [
+      'Ipf = V × Z',
+      'Ipf = V / Z',
+      'Ipf = Z / V',
+      'Ipf = V² / Z',
+    ],
     correctAnswer: 1,
     explanation:
       'Ipf = V/Z where V is the system voltage and Z is the total impedance of the fault path from the source to the fault point. Lower impedance means higher fault current.',
@@ -84,7 +104,12 @@ const quizQuestions = [
     id: 2,
     question:
       'A 1000kVA transformer with 6% impedance supplies a 400V system. What is the prospective fault current at the transformer secondary?',
-    options: ['10.2kA', '16.7kA', '24.1kA', '28.9kA'],
+    options: [
+      '28.9kA',
+      '10.2kA',
+      '24.1kA',
+      '16.7kA',
+    ],
     correctAnswer: 2,
     explanation:
       'FLC = 1000000/(√3×400) = 1443A. Fault current = FLC/impedance = 1443/0.06 = 24,050A ≈ 24.1kA. This is the maximum fault level at the transformer terminals.',
@@ -94,12 +119,12 @@ const quizQuestions = [
     question:
       'Which factor reduces the prospective fault current most significantly as distance from the transformer increases?',
     options: [
-      'Ambient temperature',
       'Cable insulation type',
-      'Cable impedance (R + jX)',
+      'Ambient temperature',
       'Installation method',
+      'Cable impedance (R + jX)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Cable impedance, comprising both resistance (R) and reactance (X), is the dominant factor reducing fault current as distance increases. The longer the cable run, the higher the total impedance.',
   },
@@ -108,19 +133,24 @@ const quizQuestions = [
     question:
       'When measuring prospective fault current at an installation, which test instruments are used?',
     options: [
-      'Insulation resistance tester',
       'Loop impedance tester or prospective fault current meter',
-      'Earth electrode resistance tester',
-      'Phase rotation indicator',
+      'Unlimited fine and/or imprisonment for up to 2 years',
+      'End of RIBA Stage 3/4 (Technical Design)',
+      'Space, weight, ventilation, and connection capacity requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Loop impedance testers and dedicated prospective fault current meters measure Ipf directly at the test point. The Ipf reading is essential for verifying protective device breaking capacity.',
   },
   {
     id: 5,
     question: 'What is the typical Ze value provided by UK DNOs for TN-C-S supplies?',
-    options: ['0.08Ω maximum', '0.35Ω maximum', '0.80Ω maximum', '21Ω maximum'],
+    options: [
+      '0.08Ω maximum',
+      '0.35Ω maximum',
+      '21Ω maximum',
+      '0.80Ω maximum',
+    ],
     correctAnswer: 1,
     explanation:
       'For TN-C-S (PME) supplies, DNOs typically declare a maximum Ze of 0.35Ω. This value should be used in design calculations unless actual measurements indicate a lower value.',
@@ -128,8 +158,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'How is cable impedance per metre typically expressed in BS 7671 tables?',
-    options: ['Ω/km', 'mΩ/m', 'µΩ/m', 'kΩ/m'],
-    correctAnswer: 1,
+    options: [
+      'Ω/km',
+      'µΩ/m',
+      'mΩ/m',
+      'kΩ/m',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 7671 Table 9A and appendices express cable resistance in milliohms per metre (mΩ/m). Values must be converted to ohms for circuit calculations (divide by 1000).',
   },
@@ -138,12 +173,12 @@ const quizQuestions = [
     question:
       'What correction factor should be applied to tabulated cable resistance values for fault calculations?',
     options: [
-      'Multiply by 0.8',
-      'Multiply by 1.0 (no correction)',
+      'Correct colour coding or marking as per BS 7671',
+      'To ensure all items are systematically checked',
+      'Reduce smoke and toxic fumes in fire',
       'Multiply by 1.2 (temperature correction)',
-      'Multiply by 1.45',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Tabulated values are at 20°C. For fault calculations under operating conditions, multiply by 1.2 to account for conductor temperature rise. This factor is conservative for verification purposes.',
   },
@@ -151,8 +186,13 @@ const quizQuestions = [
     id: 8,
     question:
       'Calculate the earth fault loop impedance for 30m of 2.5mm² T&E cable with Ze = 0.35Ω. (R1+R2 = 14.82mΩ/m)',
-    options: ['0.44Ω', '0.79Ω', '0.95Ω', '1.14Ω'],
-    correctAnswer: 1,
+    options: [
+      '0.79Ω',
+      '0.95Ω',
+      '0.44Ω',
+      '1.14Ω',
+    ],
+    correctAnswer: 0,
     explanation:
       'Cable (R1+R2) = 30m × 14.82mΩ/m = 444.6mΩ = 0.445Ω. Zs = Ze + (R1+R2) = 0.35 + 0.445 = 0.795Ω ≈ 0.79Ω at 20°C.',
   },

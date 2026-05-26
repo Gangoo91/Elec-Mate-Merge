@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'switchboard-definition',
     question: 'What is the primary function of an LV switchboard?',
     options: [
-      'To generate electrical power',
+      'Description, Feelings, Evaluation, Analysis, Conclusion, Action Plan',
+      'To express feelings and needs without blaming or accusing the other person',
+      'It must be less than the cable\\\\\\\'s withstand capability to prevent damage',
       'To distribute and control electrical power to downstream circuits',
-      'To convert AC to DC power',
-      'To measure energy consumption only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'An LV switchboard receives power from the incoming supply (transformer or main incomer) and distributes it to downstream circuits via protective devices, providing switching, protection, and isolation functions.',
   },
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'mccb-acb-difference',
     question: 'What is the key operational difference between an MCCB and an ACB?',
     options: [
-      'MCCBs are for DC only, ACBs are for AC only',
+      'An electronic device that controls motor speed by varying the supply frequency',
       'ACBs are withdrawable for maintenance without de-energising the busbar',
-      'MCCBs have higher breaking capacities than ACBs',
-      'There is no significant difference',
+      'Conduct a risk assessment and ensure safe isolation where appropriate',
+      'A motor designed to run on single-phase supply using starting mechanisms',
     ],
     correctIndex: 1,
     explanation:
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'icu-ics-meaning',
     question: 'What does Icu represent in switchgear ratings?',
     options: [
-      'Rated continuous current',
+      'Refractive index difference at glass-air interface',
+      'The competent person carrying out/supervising the tests',
       'Rated ultimate short-circuit breaking capacity',
-      'Rated service voltage',
-      'Rated impulse withstand voltage',
+      'To provide electrical isolation and reduce shock risk',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Icu (rated ultimate short-circuit breaking capacity) is the maximum fault current the device can safely interrupt. After breaking at Icu, the device may require inspection or replacement. Ics is the service short-circuit breaking capacity for continued operation.',
   },
@@ -66,12 +66,12 @@ const quickCheckQuestions = [
     id: 'form-separation',
     question: 'What does Form 4 separation in a switchboard provide?',
     options: [
-      'No internal separation',
-      'Separation of busbars from functional units only',
-      'Separation of busbars, functional units, and terminals from each other',
+      'Assess the environmental influences and duty (BS 7671 external influences)',
+      'Correct rating, secure fixing, circuit identification, and protection from damage',
       'Separation of busbars and functional units, plus separation of all terminals from each other',
+      'When the works are substantially complete and ready for the client to occupy',
     ],
-    correctIndex: 3,
+    correctIndex: 2,
     explanation:
       'Form 4 provides the highest level of internal separation: busbars separated from functional units, functional units separated from each other, and terminals separated from each other. This allows work on one circuit while others remain live.',
   },
@@ -95,20 +95,25 @@ const quizQuestions = [
     id: 2,
     question: 'When would you typically specify an ACB over an MCCB for main incomer protection?',
     options: [
-      'For currents below 100A',
+      'The maximum settable current rating and breaking capacity range',
+      'Separation of terminals from busbars in addition to functional unit separation',
       'When withdrawable functionality and high breaking capacity are required',
-      'When cost is the only consideration',
-      'For final circuit protection',
+      'Time-current characteristics and adjustable settings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'ACBs are specified for main incomers where withdrawable functionality enables maintenance without complete shutdown, and where high breaking capacities (up to 150kA) are needed. They also offer comprehensive protection settings and communication capabilities.',
   },
   {
     id: 3,
     question: 'What is the typical maximum rated current (In) range for MCCBs?',
-    options: ['Up to 63A', '63A to 250A', '100A to 1600A', 'Above 2000A only'],
-    correctAnswer: 2,
+    options: [
+      '63A to 250A',
+      'Up to 63A',
+      'Above 2000A only',
+      '100A to 1600A',
+    ],
+    correctAnswer: 3,
     explanation:
       'MCCBs typically range from 100A to 1600A rated current, with some manufacturers offering frames up to 2500A or 3200A. Below 100A, MCBs are generally more economical; above 1600A, ACBs become more practical.',
   },
@@ -116,12 +121,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the significance of Ics/Icu = 100% on a circuit breaker?',
     options: [
-      'The device can only operate once at fault level',
       'The device can continue normal operation after interrupting at its ultimate breaking capacity',
-      'The device requires replacement after any fault',
-      'The device has no service breaking capacity',
+      'When withdrawable functionality and high breaking capacity are required',
+      'An assembly using type-tested components but requiring design verification for non-tested arrangements',
+      'Separation of terminals from busbars in addition to functional unit separation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When Ics equals Icu (100%), the circuit breaker can interrupt at its maximum rated fault level and remain serviceable for continued operation without inspection or replacement. Lower percentages indicate reduced capability after ultimate fault interruption.',
   },
@@ -129,8 +134,13 @@ const quizQuestions = [
     id: 5,
     question:
       'Which form of internal separation requires barriers between the terminals of all functional units?',
-    options: ['Form 1', 'Form 2', 'Form 3', 'Form 4'],
-    correctAnswer: 3,
+    options: [
+      'Form 2',
+      'Form 4',
+      'Form 1',
+      'Form 3',
+    ],
+    correctAnswer: 1,
     explanation:
       "Form 4 requires separation of terminals belonging to different functional units from each other. Form 4a separates terminals in a common space, while Form 4b provides individual enclosure for each functional unit's terminals.",
   },
@@ -138,12 +148,12 @@ const quizQuestions = [
     id: 6,
     question: 'What does the short-circuit withstand rating (Icw) indicate for a switchboard?',
     options: [
-      'Maximum current the board can switch',
+      'The device can continue normal operation after interrupting at its ultimate breaking capacity',
+      'An assembly using type-tested components but requiring design verification for non-tested arrangements',
       'Maximum fault current the busbars can carry for a specified time without damage',
-      'Normal operating current capacity',
-      'Maximum voltage rating',
+      'Separation of terminals from busbars in addition to functional unit separation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Icw (rated short-time withstand current) is the fault current the switchboard busbars and structure can carry for a specified duration (typically 1 second) without damage. This ensures discrimination by allowing upstream devices time to operate.',
   },
@@ -151,7 +161,12 @@ const quizQuestions = [
     id: 7,
     question:
       'For a 2000A main LV switchboard with 50kA prospective fault current, which device type is most appropriate for the main incomer?',
-    options: ['MCB', 'MCCB 400A frame', 'MCCB 2500A frame', 'ACB'],
+    options: [
+      'MCB',
+      'MCCB 400A frame',
+      'MCCB 2500A frame',
+      'ACB',
+    ],
     correctAnswer: 3,
     explanation:
       'At 2000A with 50kA fault level, an ACB is most appropriate. It provides adequate current rating, sufficient breaking capacity, withdrawable functionality for maintenance, and comprehensive protection features essential for main incomer applications.',
@@ -160,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is a Partially Type-Tested Assembly (PTTA)?',
     options: [
-      'An assembly with no testing performed',
       'An assembly using type-tested components but requiring design verification for non-tested arrangements',
-      'An assembly tested after installation only',
-      'An assembly that fails type testing',
+      'The device can continue normal operation after interrupting at its ultimate breaking capacity',
+      'Maximum fault current the busbars can carry for a specified time without damage',
+      'Separation of terminals from busbars in addition to functional unit separation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A PTTA uses type-tested components and arrangements but includes elements not covered by type tests. The manufacturer must use design rules derived from type tests to verify compliance, with calculations and assessment replacing full testing.',
   },
@@ -173,7 +188,12 @@ const quizQuestions = [
     id: 9,
     question:
       'Which standard specifically covers low-voltage switchgear and controlgear assemblies?',
-    options: ['BS 7671', 'BS EN 61439', 'BS EN 60947', 'BS EN 62271'],
+    options: [
+      'BS 7671',
+      'BS EN 61439',
+      'BS EN 60947',
+      'BS EN 62271',
+    ],
     correctAnswer: 1,
     explanation:
       'BS EN 61439 covers low-voltage switchgear and controlgear assemblies (switchboards, distribution boards, motor control centres). BS EN 60947 covers individual switching devices, while BS 7671 is the wiring regulations.',
@@ -182,12 +202,12 @@ const quizQuestions = [
     id: 10,
     question: 'When selecting an MCCB, what does the frame size primarily determine?',
     options: [
-      'Only the physical dimensions',
+      'Time-current characteristics and adjustable settings',
+      'When withdrawable functionality and high breaking capacity are required',
       'The maximum settable current rating and breaking capacity range',
-      'The type of mounting only',
-      'The colour of the device',
+      'Separation of terminals from busbars in addition to functional unit separation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Frame size determines the maximum rated current achievable with that frame (e.g., 250A frame, 630A frame) and typically defines the available breaking capacity options. Larger frames provide higher current ratings and usually higher breaking capacities.',
   },
@@ -195,12 +215,12 @@ const quizQuestions = [
     id: 11,
     question: 'What advantage does Form 3 separation provide over Form 2?',
     options: [
-      'No additional advantage',
+      'The maximum settable current rating and breaking capacity range',
+      'When withdrawable functionality and high breaking capacity are required',
+      'The device can continue normal operation after interrupting at its ultimate breaking capacity',
       'Separation of terminals from busbars in addition to functional unit separation',
-      'Higher current rating capability',
-      'Reduced cost',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Form 3 adds terminal separation from busbars to the functional unit separation of Form 2. This allows cable termination work while other circuits remain energised, improving safety and reducing downtime during modifications.',
   },
@@ -208,12 +228,12 @@ const quizQuestions = [
     id: 12,
     question: 'For discrimination studies, which MCCB characteristic is most critical?',
     options: [
-      'Physical size',
       'Time-current characteristics and adjustable settings',
-      'Colour coding',
-      "Manufacturer's warranty period",
+      'Wet skin, medical conditions, fatigue, contact area',
+      'Low sampling rate relative to signal frequency',
+      'Adding a single socket outlet to an existing circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Time-current characteristics define how the MCCB responds to overcurrent. Adjustable thermal (Ir) and magnetic (Im) settings enable coordination with upstream and downstream devices, ensuring the device nearest the fault operates first.',
   },

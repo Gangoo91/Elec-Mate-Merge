@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'cost-plan-stages',
     question: 'At which RIBA stage is a formal cost plan first produced?',
     options: [
-      'Stage 0 - Strategic Definition',
       'Stage 2 - Concept Design',
-      'Stage 4 - Technical Design',
+      'Stage 0 - Strategic Definition',
       'Stage 5 - Construction',
+      'Stage 4 - Technical Design',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The first formal cost plan (Cost Plan 1) is produced at RIBA Stage 2 - Concept Design, establishing the budget framework based on initial design concepts and elemental benchmarks.',
   },
@@ -44,20 +44,25 @@ const quickCheckQuestions = [
     id: 'contingency-purpose',
     question: 'What is the primary purpose of design development contingency?',
     options: [
-      'To cover unexpected site conditions',
-      'To allow for design changes and incomplete information',
       'To fund contractor preliminaries',
       'To cover material price increases',
+      'To cover unexpected site conditions',
+      'To allow for design changes and incomplete information',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Design development contingency covers anticipated design changes, incomplete information at early stages, and refinements as the design develops. It typically reduces as design progresses.',
   },
   {
     id: 'preliminaries-typical',
     question: 'What is a typical preliminaries percentage for a medium-sized MEP project?',
-    options: ['2-5%', '8-15%', '25-30%', '40-50%'],
-    correctIndex: 1,
+    options: [
+      '40-50%',
+      '25-30%',
+      '8-15%',
+      '2-5%',
+    ],
+    correctIndex: 2,
     explanation:
       'Preliminaries for MEP works typically range from 8-15% of measured works value, covering site establishment, supervision, temporary services, and project-specific requirements.',
   },
@@ -65,12 +70,12 @@ const quickCheckQuestions = [
     id: 'inflation-allowance',
     question: 'Tender price inflation allowance is applied to cover:',
     options: [
-      'Design team fees only',
+      'Calmly repeating your position without getting drawn into arguments',
+      'Avoid entry entirely if the work can be done from outside the space',
       'Price movements between estimate date and mid-point of construction',
-      'VAT increases',
-      'Client-instructed variations',
+      'Competence and confidence reinforce each other in a positive cycle',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Tender price inflation covers anticipated price movements from the estimate base date to the mid-point of construction, using indices like BCIS or specialist MEP indices.',
   },
@@ -82,18 +87,23 @@ const quizQuestions = [
     question: 'Which element is NOT typically included in a formal cost plan for MEP works?',
     options: [
       'Measured works costs',
-      "Contractor's profit margin",
       'Land acquisition costs',
+      "Contractor's profit margin",
       'Design contingency',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Land acquisition is a development cost, not a construction cost. MEP cost plans include measured works, preliminaries, contingencies, overheads, profit, and inflation allowances.',
   },
   {
     id: 2,
     question: 'Design development contingency at RIBA Stage 2 is typically:',
-    options: ['2-3%', '5-7%', '10-15%', '25-30%'],
+    options: [
+      '25-30%',
+      '2-3%',
+      '10-15%',
+      '5-7%',
+    ],
     correctAnswer: 2,
     explanation:
       'At RIBA Stage 2, design development contingency is typically 10-15% due to limited design information. This reduces to 5-7% at Stage 3 and 2-3% at Stage 4 as design certainty increases.',
@@ -102,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'Construction risk contingency covers:',
     options: [
-      'Design changes requested by the client',
+      'For projects tendering in 12+ months with long construction periods',
+      'Temporary offices, welfare facilities, and site security',
+      'Head office costs, insurances, and company administration',
       'Unforeseen site conditions and construction uncertainties',
-      'Consultant fee increases',
-      'Planning delays',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Construction risk contingency covers unforeseen site conditions, interface issues, and construction uncertainties that cannot be reasonably anticipated at tender stage.',
   },
@@ -115,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: "Main contractor's overheads typically cover:",
     options: [
-      'Site supervision and management only',
       'Head office costs, insurances, and company administration',
-      'Subcontractor profits',
-      'Material wastage',
+      'Unforeseen site conditions and construction uncertainties',
+      'Temporary offices, welfare facilities, and site security',
+      'For projects tendering in 12+ months with long construction periods',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Contractor overheads cover head office costs (rent, utilities, central staff), company insurances, IT systems, marketing, and general administration - typically 3-6% of project value.',
   },
@@ -128,8 +138,13 @@ const quizQuestions = [
     id: 5,
     question:
       'A project has base cost of GBP 2.5M. With 12% preliminaries, 5% overheads, and 4% profit, what is the tender total?',
-    options: ['GBP 2,775,000', 'GBP 3,025,000', 'GBP 3,087,750', 'GBP 3,150,000'],
-    correctAnswer: 2,
+    options: [
+      'GBP 3,025,000',
+      'GBP 3,087,750',
+      'GBP 3,150,000',
+      'GBP 2,775,000',
+    ],
+    correctAnswer: 1,
     explanation:
       'Base GBP 2.5M + Prelims (12% of 2.5M = GBP 300,000) = GBP 2.8M. OH&P typically applied to total: GBP 2.8M x 1.05 x 1.04 = GBP 3,087,600 (approximately GBP 3,087,750).',
   },
@@ -137,8 +152,13 @@ const quizQuestions = [
     id: 6,
     question:
       'What percentage of project value do MEP services typically represent in a commercial building?',
-    options: ['10-15%', '25-40%', '50-60%', '70-80%'],
-    correctAnswer: 1,
+    options: [
+      '10-15%',
+      '50-60%',
+      '25-40%',
+      '70-80%',
+    ],
+    correctAnswer: 2,
     explanation:
       'MEP services typically represent 25-40% of total building cost for commercial projects, with highly serviced buildings (hospitals, data centres) at the higher end or exceeding this range.',
   },
@@ -146,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'Site establishment costs within preliminaries include:',
     options: [
-      'Material costs for permanent installations',
+      'Head office costs, insurances, and company administration',
+      'For projects tendering in 12+ months with long construction periods',
+      'Unforeseen site conditions and construction uncertainties',
       'Temporary offices, welfare facilities, and site security',
-      'Design consultant fees',
-      'Subcontractor profit margins',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Site establishment covers temporary facilities including offices, welfare, storage, security fencing, access roads, signage, and initial site setup - typically a fixed cost within preliminaries.',
   },
@@ -159,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'When should inflation allowance be highest in a cost plan?',
     options: [
-      'For projects tendering immediately',
-      'For projects with short construction periods',
       'For projects tendering in 12+ months with long construction periods',
-      'For refurbishment projects',
+      'Head office costs, insurances, and company administration',
+      'Unforeseen site conditions and construction uncertainties',
+      'Temporary offices, welfare facilities, and site security',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Inflation allowance is highest for projects with extended periods between estimate and construction mid-point, as there is greater exposure to price movements over time.',
   },
@@ -173,11 +193,11 @@ const quizQuestions = [
     question: 'Risk allowance for a complex hospital MEP installation would typically be:',
     options: [
       'Lower than standard office fit-out',
-      'Similar to standard office fit-out',
       'Higher than standard office fit-out',
+      'Similar to standard office fit-out',
       'Zero if design is complete',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Complex projects like hospitals have higher risk allowances due to technical complexity, coordination challenges, infection control requirements, and operational constraints.',
   },
@@ -186,19 +206,24 @@ const quizQuestions = [
     question: 'Which cost plan approach allocates budget by building system?',
     options: [
       'Functional unit method',
+      'Unit rate scheduling',
       'Elemental cost planning',
       'Activity-based costing',
-      'Unit rate scheduling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Elemental cost planning organises costs by building elements (structure, envelope, MEP systems), enabling comparison with benchmark data and cost control by element.',
   },
   {
     id: 11,
     question: "Contractor's profit margin on MEP works typically ranges from:",
-    options: ['1-2%', '3-6%', '10-15%', '20-25%'],
-    correctAnswer: 1,
+    options: [
+      '1-2%',
+      '20-25%',
+      '10-15%',
+      '3-6%',
+    ],
+    correctAnswer: 3,
     explanation:
       'Contractor profit margins typically range from 3-6% depending on project risk, market conditions, and competition. Specialist MEP contractors may achieve slightly higher margins.',
   },
@@ -206,8 +231,13 @@ const quizQuestions = [
     id: 12,
     question:
       'A GBP 4M MEP package with 5% design contingency and 3% construction risk has total contingency of:',
-    options: ['GBP 200,000', 'GBP 320,000', 'GBP 332,800', 'GBP 400,000'],
-    correctAnswer: 1,
+    options: [
+      'GBP 320,000',
+      'GBP 400,000',
+      'GBP 200,000',
+      'GBP 332,800',
+    ],
+    correctAnswer: 0,
     explanation:
       'Design contingency: GBP 4M x 5% = GBP 200,000. Construction risk: GBP 4M x 3% = GBP 120,000. Total contingency: GBP 320,000 (8% of base cost).',
   },

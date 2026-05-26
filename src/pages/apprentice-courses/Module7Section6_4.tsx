@@ -14,10 +14,10 @@ const quizQuestions = [
     id: 1,
     question: 'What types of faults are considered minor?',
     options: [
-      'Damaged cables in walls',
+      'Safely isolate the circuit and prove dead using a voltage indicator and proving unit',
       'Loose connections, miswiring at accessories, and straightforward termination issues',
-      'Failed insulation resistance across circuits',
-      'Design issues requiring circuit modifications',
+      'It caused the lamp holder to remain live when switched off, creating a shock risk',
+      'To ensure safety, proper technique, and professional development while maintaining responsibility',
     ],
     correctAnswer: 1,
     explanation:
@@ -27,10 +27,10 @@ const quizQuestions = [
     id: 2,
     question: 'Why are loose connections still dangerous?',
     options: [
-      "They're not dangerous at all",
-      'They only affect efficiency',
+      'A loose CPC (earth conductor) at one outlet',
+      'To prove the fault has been resolved and the circuit is safe',
       'They can cause overheating, arcing, or electric shock',
-      "They're just cosmetic issues",
+      'Switch connected in the neutral rather than the line conductor',
     ],
     correctAnswer: 2,
     explanation:
@@ -40,12 +40,12 @@ const quizQuestions = [
     id: 3,
     question: 'What must always be done before rectifying a fault?',
     options: [
-      'Check with the client first',
+      'Loose connections, miswiring at accessories, and straightforward termination issues',
+      'Switch connected in the neutral rather than the line conductor',
+      'To ensure safety, proper technique, and professional development while maintaining responsibility',
       'Safely isolate the circuit and prove dead using a voltage indicator and proving unit',
-      'Take photographs for documentation',
-      'Order replacement parts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Safe isolation and proving dead is essential to eliminate shock and fire risk while working.',
   },
@@ -53,12 +53,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is an example of miswiring at a light fitting?',
     options: [
-      'Using the wrong cable colour',
       'Switch connected in the neutral rather than the line conductor',
-      'Lamp holder mounted too low',
-      'Switch positioned incorrectly',
+      'Be individually removable so other employees cannot access personal data',
+      'Fault current must exceed device rating for operation within required time',
+      'Trips on AC sinusoidal, pulsating DC and smooth DC',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When the switch is in the neutral, the lamp holder remains live when switched off, creating a dangerous shock risk.',
   },
@@ -66,10 +66,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why must repairs always be retested?',
     options: [
-      'To meet company policy',
+      'Switch connected in the neutral rather than the line conductor',
       'To prove the fault has been resolved and the circuit is safe',
-      'To use up testing time',
-      'To impress supervisors',
+      'They can cause overheating, arcing, or electric shock',
+      'A loose CPC (earth conductor) at one outlet',
     ],
     correctAnswer: 1,
     explanation:
@@ -78,7 +78,12 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What test should be repeated after correcting a loose CPC?',
-    options: ['Insulation resistance test', 'Polarity test', 'Continuity test', 'RCD test'],
+    options: [
+      'Insulation resistance test',
+      'Polarity test',
+      'Continuity test',
+      'RCD test',
+    ],
     correctAnswer: 2,
     explanation:
       'Continuity testing should be repeated to confirm the CPC connection has been properly restored.',
@@ -87,12 +92,12 @@ const quizQuestions = [
     id: 7,
     question: 'True or False: Apprentices can sign off test records after rectifying minor faults.',
     options: [
-      "True - if they're competent",
+      'Safely isolate the circuit and prove dead using a voltage indicator and proving unit',
+      'It caused the lamp holder to remain live when switched off, creating a shock risk',
+      'Loose connections, miswiring at accessories, and straightforward termination issues',
       'False - apprentices must always work under supervision and cannot sign off certifications',
-      'True - for minor faults only',
-      'True - if supervised',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Apprentices are not authorised to take full responsibility for installations and cannot sign off test records or certifications.',
   },
@@ -100,12 +105,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why is supervision important when apprentices correct faults?',
     options: [
-      'To make the work take longer',
       'To ensure safety, proper technique, and professional development while maintaining responsibility',
-      "Because it's required by law",
-      "To check the apprentice's speed",
+      'Loose connections, miswiring at accessories, and straightforward termination issues',
+      'It caused the lamp holder to remain live when switched off, creating a shock risk',
+      'Safely isolate the circuit and prove dead using a voltage indicator and proving unit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Supervision ensures safety, maintains proper standards, reinforces learning, and provides the necessary authorisation.',
   },
@@ -113,10 +118,10 @@ const quizQuestions = [
     id: 9,
     question: 'In the socket circuit example, what fault was corrected by the apprentice?',
     options: [
-      'A blown fuse',
+      'Services requiring access go to the outside',
       'A loose CPC (earth conductor) at one outlet',
-      'Wrong cable size',
-      'Incorrect RCD rating',
+      'Check security and box condition',
+      'Dedicated frequency band with less interference',
     ],
     correctAnswer: 1,
     explanation:
@@ -126,12 +131,12 @@ const quizQuestions = [
     id: 10,
     question: 'In the lighting example, why was connecting the switch in the neutral dangerous?',
     options: [
-      'It made the light dimmer',
+      'Switch connected in the neutral rather than the line conductor',
+      'Safely isolate the circuit and prove dead using a voltage indicator and proving unit',
       'It caused the lamp holder to remain live when switched off, creating a shock risk',
-      'It used more electricity',
-      'It made the switch harder to operate',
+      'To prove the fault has been resolved and the circuit is safe',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'With the switch in the neutral, the line conductor remains permanently connected to the lamp holder, creating a shock hazard even when the light appears off.',
   },

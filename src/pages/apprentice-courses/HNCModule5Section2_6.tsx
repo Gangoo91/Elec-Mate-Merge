@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'supply-chain-def',
     question: 'What is supply chain management in the context of building services projects?',
     options: [
-      'Only purchasing materials at the lowest price',
       'The coordination of material flow from suppliers to site',
-      'Managing the workforce schedule',
-      'Designing electrical systems',
+      'Stop work, reassess, and update the method statement',
+      'To verify operation of emergency lighting for a short period',
+      'There is no documented evidence of the agreed price',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Supply chain management coordinates the entire flow of materials, information and services from suppliers through to installation on site, ensuring the right materials arrive at the right time.',
   },
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'approved-supplier',
     question: 'Why do main contractors maintain approved supplier lists?',
     options: [
-      'To limit competition',
+      'Increased loss around 1383nm due to hydroxyl ions',
       'To ensure quality, reliability and compliance standards',
-      'To increase material costs',
-      'To reduce the number of products available',
+      'Design stage BRUKL output and energy model report',
+      'Safe working and circuit identification',
     ],
     correctIndex: 1,
     explanation:
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'lead-time',
     question: "What does 'lead time' mean in procurement?",
     options: [
-      'The time to install equipment',
+      'Using a voltage indicator or socket tester',
+      'Equal load on each phase with equal phase angles',
+      'Traditional with specialist subcontracts',
       'The time between placing an order and receiving delivery',
-      'The warranty period',
-      'The design approval time',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Lead time is the duration between placing a purchase order and the materials arriving on site. Understanding lead times is critical for programming work and avoiding delays.',
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'jit-delivery',
     question: 'What is the primary benefit of just-in-time (JIT) delivery?',
     options: [
-      'Lower material quality',
+      'Reducing heating/cooling setpoints during unoccupied periods',
+      'Ensure circuit is isolated and discharged',
+      'By analysing high-frequency characteristics of the arc signature',
       'Reduced site storage requirements and working capital',
-      'Longer project duration',
-      'Increased insurance costs',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Just-in-time delivery reduces the need for on-site storage, minimises working capital tied up in stock, reduces risk of damage or theft, and improves cash flow by delaying payment until materials are needed.',
   },
@@ -88,11 +88,11 @@ const quizQuestions = [
       'Which factor is NOT typically assessed when evaluating a potential supplier for an approved list?',
     options: [
       'Product quality and compliance certifications',
-      'Financial stability and credit rating',
       "The supplier's company logo design",
+      'Financial stability and credit rating',
       'Delivery reliability and lead times',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Supplier evaluation focuses on quality, compliance, financial stability, delivery performance, health and safety record, and pricing competitiveness. Visual branding is not relevant to supplier capability.',
   },
@@ -100,8 +100,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A distribution board has an 8-week lead time. The installation is programmed for week 20. When should the order be placed at the latest?',
-    options: ['Week 12', 'Week 20', 'Week 28', 'Week 8'],
-    correctAnswer: 0,
+    options: [
+      'Week 28',
+      'Week 8',
+      'Week 12',
+      'Week 20',
+    ],
+    correctAnswer: 2,
     explanation:
       'Order must be placed by Week 12 to allow the 8-week lead time for delivery by Week 20. In practice, orders should be placed earlier to allow for potential delays.',
   },
@@ -109,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: "What is a 'call-off schedule' in material procurement?",
     options: [
-      'A list of cancelled orders',
+      'Pre-agreed terms, pricing and streamlined ordering',
+      'Manufacturing and engineering time required',
+      'Supply disruption if the sole supplier fails',
       'A planned series of deliveries from a framework agreement',
-      'A record of returned materials',
-      'A telephone directory of suppliers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A call-off schedule specifies the planned delivery dates and quantities for materials ordered under a framework agreement, allowing staged deliveries to match project progress.',
   },
@@ -122,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which document formally commits a supplier to provide materials at agreed terms?',
     options: [
-      'Request for quotation (RFQ)',
-      'Delivery note',
       'Purchase order',
+      'Delivery note',
+      'Request for quotation (RFQ)',
       'Bill of quantities',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A purchase order is the formal contract document that commits both parties - the supplier to provide the specified materials and the buyer to pay the agreed price.',
   },
@@ -135,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the purpose of goods-inward inspection on site?',
     options: [
-      'To delay the project',
+      'Pre-agreed terms, pricing and streamlined ordering',
       'To verify quantities, quality and condition against the order',
-      'To increase storage costs',
-      'To return all deliveries',
+      'Supply disruption if the sole supplier fails',
+      'A planned series of deliveries from a framework agreement',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,11 +154,11 @@ const quizQuestions = [
     question: 'A Key Performance Indicator (KPI) for supplier performance might include:',
     options: [
       "The supplier's head office location",
-      'On-time delivery percentage',
       'The number of employees',
+      'On-time delivery percentage',
       "The supplier's founding date",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Supplier KPIs typically measure on-time delivery rate, order accuracy, quality defect rate, response time to queries, and pricing competitiveness against market benchmarks.',
   },
@@ -161,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'What risk does single-source procurement present?',
     options: [
-      'Too many delivery options',
+      'A planned series of deliveries from a framework agreement',
+      'Manufacturing and engineering time required',
+      'Review specifications and prepare material schedules',
       'Supply disruption if the sole supplier fails',
-      'Lower material costs',
-      'Simplified administration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Relying on a single supplier creates vulnerability to supply disruption if that supplier experiences production problems, financial difficulties, or logistical issues. Dual-sourcing mitigates this risk.',
   },
@@ -175,12 +180,12 @@ const quizQuestions = [
     question:
       'What is the typical first step in the procurement process for a building services project?',
     options: [
-      'Issue purchase orders immediately',
       'Review specifications and prepare material schedules',
-      'Arrange deliveries',
-      'Pay supplier invoices',
+      'A planned series of deliveries from a framework agreement',
+      'To verify quantities, quality and condition against the order',
+      'Supply disruption if the sole supplier fails',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The procurement process starts with reviewing project specifications and preparing detailed material schedules showing what is needed, quantities required, and when items are needed on site.',
   },
@@ -188,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'Framework agreements with suppliers provide which advantage?',
     options: [
-      'Guaranteed lowest price on every item',
+      'Review specifications and prepare material schedules',
       'Pre-agreed terms, pricing and streamlined ordering',
-      'Unlimited credit facilities',
-      'Free delivery on all orders',
+      'To verify quantities, quality and condition against the order',
+      'Manufacturing and engineering time required',
     ],
     correctAnswer: 1,
     explanation:
@@ -201,12 +206,12 @@ const quizQuestions = [
     id: 10,
     question: 'Which factor most affects lead time for bespoke or customised equipment?',
     options: [
-      'Standard product availability',
+      'Supply disruption if the sole supplier fails',
+      'Pre-agreed terms, pricing and streamlined ordering',
       'Manufacturing and engineering time required',
-      'Distance from supplier warehouse',
-      'Size of the order value',
+      'A delivery note listing contents',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Bespoke equipment requires design, engineering approval, manufacturing and testing before dispatch. This manufacturing time significantly extends lead times compared to standard catalogue items.',
   },
@@ -214,12 +219,12 @@ const quizQuestions = [
     id: 11,
     question: 'What document should accompany every delivery to site?',
     options: [
-      'A purchase order',
+      'There is no specified minimum',
+      '"EICR_2024_Thompson_42-High-Street.pdf"',
+      'Can affect accuracy and safety',
       'A delivery note listing contents',
-      'An invoice for immediate payment',
-      'A product catalogue',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Every delivery should include a delivery note (also called a packing slip) listing all items in the consignment, allowing site staff to check the delivery against the order and record any discrepancies.',
   },
@@ -228,9 +233,9 @@ const quizQuestions = [
     question: 'OTIF stands for:',
     options: [
       'On Time In Full',
-      'Order Transfer Information Form',
-      'Overdue Transport Issue Flag',
       'Outstanding Trade Invoice File',
+      'Overdue Transport Issue Flag',
+      'Order Transfer Information Form',
     ],
     correctAnswer: 0,
     explanation:

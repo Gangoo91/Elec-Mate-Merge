@@ -125,10 +125,10 @@ const AM2Module2Section1 = () => {
       id: 2,
       question: "What's the very first step in safe isolation?",
       options: [
-        'Switch off at the isolator',
-        'Prove your tester',
+        'You might miss a dangerous fault condition',
+        'To prevent accidental re-energisation and ensure safety',
         'Identify the correct circuit using drawings/spec',
-        'Inform others of the isolation',
+        'To ensure it hasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t failed during the test',
       ],
       correctAnswer: 2,
       explanation:
@@ -138,12 +138,12 @@ const AM2Module2Section1 = () => {
       id: 3,
       question: 'Why must you inform others before isolating?',
       options: [
-        "It's good practice only",
+        'Identify the correct circuit using drawings/spec',
+        'When work is finished and circuit is to be re-energised',
+        'False - only proper lock-off devices are acceptable',
         'To prevent accidental re-energisation and ensure safety',
-        'To show professional courtesy',
-        "It's not actually required",
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "Informing others prevents accidental re-energisation and ensures everyone's safety by making them aware of the work being carried out.",
     },
@@ -151,12 +151,12 @@ const AM2Module2Section1 = () => {
       id: 4,
       question: 'What two things must you do after switching off at the isolator?',
       options: [
-        'Test the circuit and prove the tester',
         'Lock off and attach warning notice',
+        'Test the circuit and prove the tester',
         'Inform others and test continuity',
         'Check voltage and current',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'After switching off, you must lock off the isolator and attach a warning notice to prevent unauthorised re-energisation.',
     },
@@ -164,10 +164,10 @@ const AM2Module2Section1 = () => {
       id: 5,
       question: "What's the purpose of re-proving the tester?",
       options: [
-        'To check battery levels',
+        "False - only proper lock-off devices are acceptable",
         "To ensure it hasn't failed during the test",
-        'To calibrate the instrument',
-        'To reset the display',
+        "Identify the correct circuit using drawings/spec",
+        "You might miss a dangerous fault condition",
       ],
       correctAnswer: 1,
       explanation:
@@ -178,11 +178,11 @@ const AM2Module2Section1 = () => {
       question: "What's the risk if you skip the N-E test?",
       options: [
         'Circuit may not function properly',
-        'You might miss a dangerous fault condition',
         'Instrument readings may be inaccurate',
+        'You might miss a dangerous fault condition',
         "There's no specific risk",
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Skipping the N-E test could mean missing a dangerous fault condition that could cause injury or death.',
     },
@@ -190,20 +190,25 @@ const AM2Module2Section1 = () => {
       id: 7,
       question: 'True or false: Tape can be used instead of a lock-off device.',
       options: [
-        'True - tape is acceptable',
+        'When work is finished and circuit is to be re-energised',
+        'Electricity at Work Regulations 1989',
+        'Identify the correct circuit using drawings/spec',
         'False - only proper lock-off devices are acceptable',
-        'True - but only warning tape',
-        "False - unless it's electrical tape",
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Only proper lock-off devices are acceptable. Tape does not provide adequate security and can be easily removed.',
     },
     {
       id: 8,
       question: 'What happens if you isolate the wrong circuit in AM2?',
-      options: ['You get a warning', 'You lose some marks', 'Automatic fail', 'You can try again'],
-      correctAnswer: 2,
+      options: [
+        'Automatic fail',
+        'You can try again',
+        'You get a warning',
+        'You lose some marks',
+      ],
+      correctAnswer: 0,
       explanation:
         'Isolating the wrong circuit is a critical safety error that results in automatic failure of the AM2 assessment.',
     },
@@ -211,10 +216,10 @@ const AM2Module2Section1 = () => {
       id: 9,
       question: 'When do you remove the lock-off and warning notice?',
       options: [
-        'When testing is complete',
+        'To prevent accidental re-energisation and ensure safety',
         'When work is finished and circuit is to be re-energised',
-        'When the assessor says so',
-        'At the end of the day',
+        'To ensure it hasn\\\\\\\\\\\\\\\'t failed during the test',
+        'Identify the correct circuit using drawings/spec',
       ],
       correctAnswer: 1,
       explanation:

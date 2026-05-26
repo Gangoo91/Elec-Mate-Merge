@@ -15,11 +15,11 @@ const quickCheckQuestions = [
     question: "What does it mean that the HSWA 1974 is an 'enabling act'?",
     options: [
       'It allows employers to set their own safety standards without restriction',
-      'It provides the framework under which more specific regulations can be made',
       'It enables employees to refuse any work they consider dangerous',
+      'It provides the framework under which more specific regulations can be made',
       'It enables the HSE to close any business immediately',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The HSWA 1974 is an enabling act because it establishes the broad legal framework and grants powers to the Secretary of State to make more specific regulations (such as the Electricity at Work Regulations 1989) without needing a new Act of Parliament for each set of rules.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'Under Section 2 of the HSWA 1974, who has the primary duty to ensure the health, safety and welfare of employees at work?',
     options: [
-      'The Health and Safety Executive',
       'The employee themselves',
       'The employer',
       'The local authority',
+      'The Health and Safety Executive',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Section 2 places the primary duty on the employer to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all employees. This includes providing safe systems of work, safe plant and equipment, and adequate information, instruction, training and supervision.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       "What does 'so far as is reasonably practicable' (SFARP) require duty holders to consider?",
     options: [
-      'Only the cost of safety measures',
-      'Only the severity of the hazard',
+      'Properly planned by a competent person, appropriately supervised and carried out in a safe manner',
+      'Intrinsic motivation comes from internal satisfaction; extrinsic comes from external rewards',
+      'To formally start the project and align the team on objectives and approach',
       'The degree of risk weighed against the time, trouble, cost and difficulty of reducing it',
-      'Whether competitors have implemented the same measures',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'SFARP requires a balancing exercise: the degree of risk on one side, weighed against the sacrifice (time, trouble, cost and physical difficulty) of the measures needed to avert it. If the risk is significant, only grossly disproportionate costs would justify not taking action. This was established in the Edwards v. National Coal Board (1949) case.',
   },
@@ -55,8 +55,13 @@ const quickCheckQuestions = [
     id: 'hse-enforcement',
     question:
       'Which enforcement notice requires immediate cessation of an activity that the inspector considers involves a risk of serious personal injury?',
-    options: ['Improvement notice', 'Prohibition notice', 'Compliance notice', 'Warning notice'],
-    correctIndex: 1,
+    options: [
+      'Prohibition notice',
+      'Compliance notice',
+      'Warning notice',
+      'Improvement notice',
+    ],
+    correctIndex: 0,
     explanation:
       'A prohibition notice is issued when an inspector considers there is a risk of serious personal injury. It can take immediate effect (a deferred prohibition notice sets a date) and requires the activity to cease until the matter is remedied. An improvement notice, by contrast, gives a specified time period to rectify a contravention.',
   },
@@ -67,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'The Health and Safety at Work Act 1974 is best described as:',
     options: [
-      'A set of prescriptive rules specifying exact safety measures for every industry',
+      'Strong social connections, a sense of belonging, and reasons for living',
       'An enabling act that sets out broad duties and allows specific regulations to be made under it',
-      'A voluntary code of practice for large employers only',
-      'A European directive transposed into UK law',
+      'Challenge the behaviour directly, support the apprentice privately, and report to management if it continues',
+      'To prevent confusion during maintenance and ensure safety circuits are not accidentally modified',
     ],
     correctAnswer: 1,
     explanation:
@@ -81,12 +86,12 @@ const quizQuestions = [
     question:
       'Section 2 of the HSWA 1974 requires employers to provide all of the following EXCEPT:',
     options: [
+      'Information, instruction, training and supervision',
       'Safe plant and safe systems of work',
       'Free personal protective equipment for all visitors',
-      'Information, instruction, training and supervision',
       'A safe working environment with adequate welfare facilities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section 2 requires employers to provide safe plant, safe systems of work, safe handling/storage/transport of substances, information/instruction/training/supervision, and a safe workplace with adequate welfare. There is no blanket requirement to provide free PPE to all visitors — though the PPE at Work Regulations may require it in specific circumstances.',
   },
@@ -94,12 +99,12 @@ const quizQuestions = [
     id: 3,
     question: 'Under Section 3 of the HSWA 1974, employers must ensure the health and safety of:',
     options: [
-      'Only their direct employees',
+      "Remedy the contravention within the time period specified in the notice",
+      "Statutory and regulatory compliance within health and safety",
+      "Free personal protective equipment for all visitors",
       "Non-employees who may be affected by the employer's undertaking",
-      'Only visitors who have signed in at reception',
-      'Only contractors with a valid permit to work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Section 3 extends the employer's duty beyond their own employees to include any person who is not their employee but who may be affected by the employer's undertaking. This covers contractors, visitors, members of the public, and anyone else who could be impacted by the work activity.",
   },
@@ -108,12 +113,12 @@ const quizQuestions = [
     question:
       "An electrical maintenance technician's duty under Section 7 of the HSWA 1974 includes:",
     options: [
-      'Writing the company health and safety policy',
-      'Appointing safety representatives',
       'Taking reasonable care for their own health and safety and that of others affected by their acts or omissions',
-      'Carrying out annual audits of the PTW system',
+      'It provides the overarching legal framework under which the Electricity at Work Regulations 1989 were made',
+      'Inspect the workplace, investigate complaints and attend safety committee meetings',
+      'Intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety or welfare',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Section 7 places a duty on every employee to take reasonable care for their own health and safety and that of other persons who may be affected by their acts or omissions at work. For a maintenance technician, this means following safe isolation procedures, using PPE correctly, and not taking shortcuts that could endanger colleagues.',
   },
@@ -121,10 +126,10 @@ const quizQuestions = [
     id: 5,
     question: 'Section 8 of the HSWA 1974 makes it an offence to:',
     options: [
-      'Refuse to work overtime',
+      'Taking reasonable care for their own health and safety and that of others affected by their acts or omissions',
       'Intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety or welfare',
-      'Report a safety concern to the HSE',
-      'Request additional PPE from the employer',
+      'Inspect the workplace, investigate complaints and attend safety committee meetings',
+      'It provides the overarching legal framework under which the Electricity at Work Regulations 1989 were made',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,11 +141,11 @@ const quizQuestions = [
       'A written health and safety policy is required under Section 2(3) of the HSWA 1974 when an employer has:',
     options: [
       'Any number of employees',
-      '5 or more employees',
       '10 or more employees',
+      '5 or more employees',
       '50 or more employees',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section 2(3) requires every employer with five or more employees to prepare and keep up to date a written statement of their general health and safety policy, the organisation for carrying it out, and the arrangements in force. This must be brought to the attention of all employees.',
   },
@@ -148,12 +153,12 @@ const quizQuestions = [
     id: 7,
     question: 'The SFARP (so far as is reasonably practicable) principle means that:',
     options: [
-      'Employers must eliminate all risks regardless of cost',
+      'Intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety or welfare',
+      'It provides the overarching legal framework under which the Electricity at Work Regulations 1989 were made',
+      'Taking reasonable care for their own health and safety and that of others affected by their acts or omissions',
       'The risk must be weighed against the sacrifice needed to reduce it — if grossly disproportionate, the duty is discharged',
-      'Only risks that have previously caused injury need to be addressed',
-      'The employer need only comply when instructed by an HSE inspector',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SFARP requires duty holders to reduce risk unless the cost (in time, trouble, money and physical difficulty) is grossly disproportionate to the reduction in risk achieved. The burden of proof lies with the duty holder to demonstrate that it was not reasonably practicable to do more.',
   },
@@ -161,12 +166,12 @@ const quizQuestions = [
     id: 8,
     question: 'An HSE inspector issues an improvement notice. The recipient must:',
     options: [
-      'Stop all work immediately',
       'Remedy the contravention within the time period specified in the notice',
-      'Pay an on-the-spot fine',
-      'Dismiss the employee responsible',
+      'An unlimited fine and/or up to 2 years\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' imprisonment',
+      'Free personal protective equipment for all visitors',
+      'Non-employees who may be affected by the employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s undertaking',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An improvement notice specifies the contravention and gives a time period (not less than 21 days) within which the duty holder must remedy it. Work can continue during this period unless a separate prohibition notice is also issued. The recipient has a right of appeal to an employment tribunal within 21 days.',
   },
@@ -175,12 +180,12 @@ const quizQuestions = [
     question:
       'Under the HSWA 1974, the maximum penalty for certain offences tried on indictment (in the Crown Court) is:',
     options: [
-      'A fine of £20,000',
-      "6 months' imprisonment",
+      "Non-employees who may be affected by the employer's undertaking",
       "An unlimited fine and/or up to 2 years' imprisonment",
-      'A written warning from the HSE',
+      "Statutory and regulatory compliance within health and safety",
+      "Free personal protective equipment for all visitors",
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'For the most serious offences under the HSWA 1974 tried on indictment in the Crown Court, the maximum penalty is an unlimited fine and/or imprisonment for up to 2 years. Additionally, the Sentencing Council guidelines (2016) have led to significantly higher fines, particularly for larger organisations.',
   },
@@ -188,12 +193,12 @@ const quizQuestions = [
     id: 10,
     question: 'How does the HSWA 1974 apply specifically to electrical maintenance work?',
     options: [
-      'It does not — electrical work is covered solely by BS 7671',
+      'Intentionally or recklessly interfere with or misuse anything provided in the interests of health, safety or welfare',
+      'The risk must be weighed against the sacrifice needed to reduce it — if grossly disproportionate, the duty is discharged',
       'It provides the overarching legal framework under which the Electricity at Work Regulations 1989 were made',
-      'It only applies to electrical contractors, not maintenance technicians',
-      'It applies only to high voltage work above 1000 V',
+      'Taking reasonable care for their own health and safety and that of others affected by their acts or omissions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The HSWA 1974 is the parent legislation under which the Electricity at Work Regulations 1989 were made using powers in Section 15. All electrical maintenance work falls under the general duties of the HSWA and the specific requirements of the EAWR. BS 7671 is a non-statutory standard, not legislation.',
   },
@@ -201,12 +206,12 @@ const quizQuestions = [
     id: 11,
     question: 'Safety representatives appointed by recognised trade unions have the right to:',
     options: [
-      'Veto any management decision on health and safety',
+      'Remedy the contravention within the time period specified in the notice',
+      'It provides the overarching legal framework under which the Electricity at Work Regulations 1989 were made',
+      'Statutory and regulatory compliance within health and safety',
       'Inspect the workplace, investigate complaints and attend safety committee meetings',
-      'Issue improvement notices to the employer',
-      'Dismiss employees who breach safety rules',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Under the Safety Representatives and Safety Committees Regulations 1977 (made under the HSWA), trade union-appointed safety representatives have the right to inspect the workplace, investigate potential hazards and complaints, attend safety committee meetings, and be consulted by the employer on health and safety matters. They cannot issue enforcement notices — only HSE inspectors can do that.',
   },
@@ -215,12 +220,12 @@ const quizQuestions = [
     question:
       'Under ST1426, knowledge of the HSWA 1974 maps to which area of the apprenticeship standard?',
     options: [
-      'Electrical principles and theory',
       'Statutory and regulatory compliance within health and safety',
-      'Technical drawing interpretation',
-      'Quality management systems',
+      'An unlimited fine and/or up to 2 years\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' imprisonment',
+      'Non-employees who may be affected by the employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s undertaking',
+      'Free personal protective equipment for all visitors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 (Maintenance and Operations Engineering Technician) requires knowledge of statutory and regulatory requirements relating to health and safety. The HSWA 1974 is the foundational legislation that underpins all workplace health and safety duties, making it a core knowledge requirement for the standard.',
   },

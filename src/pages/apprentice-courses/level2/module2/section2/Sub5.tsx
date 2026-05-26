@@ -32,8 +32,13 @@ const checks = [
   {
     id: 'power-formula-check',
     question: 'You do 600 J of work in 10 seconds. What power did you produce?',
-    options: ['6 W', '60 W', '600 W', '6000 W'],
-    correctIndex: 1,
+    options: [
+      '60 W',
+      '6000 W',
+      '6 W',
+      '600 W',
+    ],
+    correctIndex: 0,
     explanation: 'P = W ÷ t = 600 ÷ 10 = 60 W. Power is work per unit time. Unit: watt (W).',
   },
   {
@@ -41,12 +46,12 @@ const checks = [
     question:
       'Two electricians both lift a 30 m drum of T+E (~25 kg) up to a 5 m platform. Sam takes 30 seconds. Pat takes 60 seconds. Who did more WORK, and who produced more POWER?',
     options: [
-      'Sam did more work; Pat produced more power',
-      'Pat did more work; Sam produced more power',
       'Same work; Sam produced more power',
+      'Sam did more work; Pat produced more power',
       'Same work; Pat produced more power',
+      'Pat did more work; Sam produced more power',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Same load, same height = same work (mgh ≈ 1226 J). Sam did it in half the time, so produced double the power. Power is the time half of the equation.',
   },
@@ -55,12 +60,12 @@ const checks = [
     question:
       'A motor is rated 500 W mechanical output. What does that mean in plain terms?',
     options: [
-      'It draws 500 W of electrical power',
       'It does 500 J of mechanical work every second',
-      'It can lift exactly 500 kg',
-      'It is 500% efficient',
+      'Warning of presence of more than one supply',
+      'As Low As Reasonably Practicable',
+      'Orders placed but not yet invoiced',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       '1 W = 1 J/s. A 500 W motor delivers 500 J of useful mechanical work per second at the shaft. The electrical input will be more than 500 W (because no motor is 100% efficient — see next sub).',
   },
@@ -73,10 +78,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is power?',
     options: [
-      'The total work an object can do',
+      'Allow capacitive discharge before touching conductors',
       'The rate at which work is done (or energy is transferred)',
-      'The maximum force a motor can produce',
-      'How heavy something is',
+      'Cables must run within prescribed safe zones to avoid accidental damage',
+      'The tongue withdraws from the switch head, breaking the safety circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,23 +90,38 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the SI unit of power?',
-    options: ['Joule (J)', 'Watt (W)', 'Newton (N)', 'Newton-metre (N·m)'],
-    correctAnswer: 1,
+    options: [
+      'Newton (N)',
+      'Joule (J)',
+      'Watt (W)',
+      'Newton-metre (N·m)',
+    ],
+    correctAnswer: 2,
     explanation:
       'Watt (W). 1 W = 1 J/s — one joule of work done per second. Named after James Watt, the steam-engine engineer.',
   },
   {
     id: 3,
     question: 'Which formula gives mechanical power?',
-    options: ['P = W × t', 'P = W ÷ t', 'P = F × t', 'P = m × g'],
-    correctAnswer: 1,
+    options: [
+      'P = F × t',
+      'P = W × t',
+      'P = m × g',
+      'P = W ÷ t',
+    ],
+    correctAnswer: 3,
     explanation: 'P = work done ÷ time taken. Watts = joules per second.',
   },
   {
     id: 4,
     question: 'Lifting a 20 kg load 2 m in 4 seconds requires roughly what power (g = 9.81)?',
-    options: ['10 W', '49 W', '98 W', '392 W'],
-    correctAnswer: 2,
+    options: [
+      '98 W',
+      '49 W',
+      '10 W',
+      '392 W',
+    ],
+    correctAnswer: 0,
     explanation:
       'Work = mgh = 20 × 9.81 × 2 = 392.4 J. Power = work ÷ time = 392.4 ÷ 4 ≈ 98 W. Same job in 2 seconds would need 196 W.',
   },
@@ -111,8 +131,8 @@ const quizQuestions = [
     options: [
       'They’re different — mechanical uses watts, electrical uses joules',
       'Both are measured in watts; 1 W = 1 J/s in both cases',
-      'Electrical is always 10× bigger than mechanical',
       'They can’t be compared',
+      'Electrical is always 10× bigger than mechanical',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,12 +142,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why might you choose a higher-power tool for a job?',
     options: [
-      'To use less energy',
+      'The battery is ageing and has lost capacity',
+      'Making meaningful progress in small steps',
       'To do the job faster — same energy, less time',
-      'To be safer',
-      'Because it weighs more',
+      'Test armour and internal CPC separately',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A higher-power tool gets the same work done in less time. The total energy needed for the job is roughly the same — power just controls how fast you can do it.',
   },
@@ -135,15 +155,25 @@ const quizQuestions = [
     id: 7,
     question:
       'A motor delivers 750 J of mechanical work in 5 seconds. What is its mechanical power output?',
-    options: ['75 W', '150 W', '375 W', '3750 W'],
-    correctAnswer: 1,
+    options: [
+      '75 W',
+      '3750 W',
+      '375 W',
+      '150 W',
+    ],
+    correctAnswer: 3,
     explanation: 'P = W ÷ t = 750 ÷ 5 = 150 W. Quick check: 150 J/s × 5 s = 750 J. Tallies up.',
   },
   {
     id: 8,
     question: 'A horsepower is roughly equal to…',
-    options: ['10 W', '100 W', '750 W', '75,000 W'],
-    correctAnswer: 2,
+    options: [
+      '750 W',
+      '75,000 W',
+      '10 W',
+      '100 W',
+    ],
+    correctAnswer: 0,
     explanation:
       '1 horsepower ≈ 746 W (rounded to 750 W in the trade). It’s an old imperial unit — stick to watts in any UK exam, but it’s useful for estimating motor sizes from US spec sheets.',
   },

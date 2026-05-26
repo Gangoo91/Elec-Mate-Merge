@@ -133,6 +133,7 @@ serve(async (req) => {
 
     // Build payload in the EXACT nested structure PDF Monkey template expects
     const payload = {
+      version: ramsData?.version ?? 2,
       ramsData: {
         projectName: ramsData.projectName,
         location: ramsData.location,
@@ -140,7 +141,17 @@ serve(async (req) => {
         assessor: ramsData.assessor,
         contractor: ramsData.contractor,
         supervisor: ramsData.supervisor,
-        activities: [methodData.workType || 'Electrical installation work'],
+        activities: ramsData.activities ?? [methodData.workType || 'Electrical installation work'],
+        // v2 narrative blocks — passed through so PDF Monkey template can render
+        // them when upgraded. The local fallback already renders these.
+        executive_summary: ramsData.executive_summary ?? '',
+        rationale: ramsData.rationale ?? '',
+        scope: ramsData.scope ?? '',
+        preparation: ramsData.preparation ?? null,
+        site_logistics: ramsData.site_logistics ?? null,
+        competence_requirements: ramsData.competence_requirements ?? [],
+        complianceRegulations: ramsData.complianceRegulations ?? [],
+        complianceWarnings: ramsData.complianceWarnings ?? [],
         // Sort risks by rating (highest first)
         risks: [...(ramsData.risks || [])]
           .sort((a: any, b: any) => (b.riskRating || 0) - (a.riskRating || 0))
@@ -158,6 +169,21 @@ serve(async (req) => {
               risk.actionBy ||
               new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
             done: risk.done || false,
+            // v2 rich fields
+            rationale: risk.rationale ?? '',
+            who_at_risk: risk.who_at_risk ?? [],
+            controlsStructured: risk.controlsStructured ?? [],
+            residual_likelihood: risk.residual_likelihood ?? null,
+            residual_severity: risk.residual_severity ?? null,
+            residual_risk_rating: risk.residual_risk_rating ?? risk.residualRisk ?? null,
+            ppe_required: risk.ppe_required ?? [],
+            competence_required: risk.competence_required ?? [],
+            bs7671_cites: risk.bs7671_cites ?? [],
+            safety_cites: risk.safety_cites ?? [],
+            training_required: risk.training_required ?? [],
+            monitoring_checks: risk.monitoring_checks ?? [],
+            evidence_required: risk.evidence_required ?? [],
+            stop_work_triggers: risk.stop_work_triggers ?? [],
           })),
         // Emergency contacts as individual fields
         siteManagerName: ramsData.siteManagerName || methodData.siteManagerName || '',
@@ -189,6 +215,13 @@ serve(async (req) => {
         description: methodData.description,
         overallRiskLevel: methodData.overallRiskLevel,
         reviewDate: methodData.reviewDate,
+        // v2 narrative
+        executive_summary: methodData.executive_summary ?? '',
+        scope: methodData.scope ?? '',
+        exclusions: methodData.exclusions ?? [],
+        sequence_summary: methodData.sequence_summary ?? [],
+        handover_artifacts: methodData.handover_artifacts ?? [],
+        verification_strategy: methodData.verification_strategy ?? null,
         steps: (methodData.steps || []).map((step: any) => ({
           id: step.id || `step-${step.stepNumber}`,
           stepNumber: step.stepNumber,
@@ -205,6 +238,37 @@ serve(async (req) => {
           dependencies: step.dependencies || [],
           notes: step.notes || '',
           linkedHazards: step.linkedHazards || [],
+        })),
+        // v2 method_steps — pass through directly (rich fields)
+        method_steps: (methodData.method_steps || []).map((s: any) => ({
+          id: s.id,
+          stepNumber: s.stepNumber,
+          title: s.title,
+          phase: s.phase ?? '',
+          objective: s.objective ?? '',
+          description: formatDescription(s.description ?? ''),
+          linked_hazard_titles: s.linked_hazard_titles ?? [],
+          linked_hazard_ids: s.linked_hazard_ids ?? [],
+          inputs: s.inputs ?? [],
+          outputs: s.outputs ?? [],
+          named_instruments: s.named_instruments ?? [],
+          named_values: s.named_values ?? [],
+          hold_points: s.hold_points ?? [],
+          witness_points: s.witness_points ?? [],
+          quality_checks: s.quality_checks ?? [],
+          acceptance_criteria: s.acceptance_criteria ?? [],
+          safety_requirements: s.safety_requirements ?? [],
+          equipment_needed: s.equipment_needed ?? [],
+          materials_consumed: s.materials_consumed ?? [],
+          competence_required: s.competence_required ?? [],
+          ppe_required: s.ppe_required ?? [],
+          bs7671_cites: s.bs7671_cites ?? [],
+          safety_cites: s.safety_cites ?? [],
+          documentation_produced: s.documentation_produced ?? [],
+          sign_off_required: !!s.sign_off_required,
+          estimated_duration: s.estimated_duration ?? '',
+          risk_level: s.risk_level ?? 'medium',
+          stop_work_triggers: s.stop_work_triggers ?? [],
         })),
         id: methodData.id || '',
         approvedBy: methodData.approvedBy || '',

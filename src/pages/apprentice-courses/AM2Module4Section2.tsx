@@ -54,7 +54,12 @@ const AM2Module4Section2 = () => {
     {
       id: 'probe-exposure',
       question: 'How much of the probe tip should be exposed under GS38?',
-      options: ['1-2 mm maximum', '2-4 mm maximum', '5-10 mm maximum', 'Any length is acceptable'],
+      options: [
+        '1-2 mm maximum',
+        '2-4 mm maximum',
+        'Any length is acceptable',
+        '5-10 mm maximum',
+      ],
       correctIndex: 1,
       explanation:
         'GS38 requires probe tips to have only 2-4 mm of metal exposed to minimise risk of accidental contact.',
@@ -63,12 +68,12 @@ const AM2Module4Section2 = () => {
       id: 'lead-zeroing',
       question: 'Why must leads be zeroed before a continuity test?',
       options: [
-        'To check battery level',
         'To remove resistance of the leads from the measurement',
-        'To calibrate the display',
-        "It's not necessary",
+        'To increase penalties and make more offences triable either way',
+        'Refrigerant type, charge quantity, and GWP',
+        'The scaffold is incomplete or unsafe and must NOT be used',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Lead resistance must be removed from measurements to ensure accurate continuity readings.',
     },
@@ -76,12 +81,12 @@ const AM2Module4Section2 = () => {
       id: 'proving-sequence',
       question: 'What is the correct proving sequence for safe isolation?',
       options: [
-        'Test circuit only',
         'Prove tester -> Test circuit -> Re-prove tester',
-        'Re-prove tester -> Test circuit -> Prove tester',
-        'Test circuit -> Prove tester',
+        'Power ratings, current capacity, and safety margins',
+        'Manual Handling Operations Regulations 1992',
+        '500W to 1kW per outlet for general assessment',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'The safe sequence is: prove tester on known live source, test the circuit, then re-prove on known live source.',
     },
@@ -92,10 +97,10 @@ const AM2Module4Section2 = () => {
       id: 1,
       question: 'What is GS38 and why is it important?',
       options: [
-        'A British Standard for electrical testing',
+        'Observe symptoms and gather information',
         'HSE guidance for electrical test equipment safety',
-        'A type of test instrument',
-        'An electrical regulation',
+        'Small-scale generation located close to consumers',
+        'To detect early signs of work-related ill health',
       ],
       correctAnswer: 1,
       explanation:
@@ -104,8 +109,13 @@ const AM2Module4Section2 = () => {
     {
       id: 2,
       question: 'How much probe tip exposure is allowed under GS38?',
-      options: ['1 mm maximum', '2-4 mm maximum', '5-8 mm maximum', '10 mm maximum'],
-      correctAnswer: 1,
+      options: [
+        '5-8 mm maximum',
+        '1 mm maximum',
+        '2-4 mm maximum',
+        '10 mm maximum',
+      ],
+      correctAnswer: 2,
       explanation:
         'GS38 specifies that probe tips should have only 2-4 mm of metal exposed to minimise the risk of accidental short circuits.',
     },
@@ -113,12 +123,12 @@ const AM2Module4Section2 = () => {
       id: 3,
       question: 'Why must test leads be fused?',
       options: [
-        'To protect the instrument display',
+        'To prevent fingers from slipping forward onto live conductors',
+        'Shading, dirty panels, or inverter faults',
+        'The quality of insulation between conductors and earth',
         'To protect against overcurrent and short circuit faults',
-        'To improve accuracy',
-        'To meet CAT ratings',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Fused leads protect both the user and equipment from dangerous overcurrents that could occur during fault conditions.',
     },
@@ -126,12 +136,12 @@ const AM2Module4Section2 = () => {
       id: 4,
       question: 'What is the purpose of finger barriers on test probes?',
       options: [
-        'To improve grip',
         'To prevent fingers slipping onto live conductors',
-        'To make probes look professional',
-        'To protect the probe tips',
+        'At least 3 years from the date of the entry',
+        'Specific locations of air leakage paths',
+        'Core losses become proportionally larger',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Finger barriers prevent accidental contact with live parts if hands slip down the probe during testing.',
     },
@@ -139,10 +149,10 @@ const AM2Module4Section2 = () => {
       id: 5,
       question: 'What is the correct sequence for proving a voltage tester?',
       options: [
-        'Test circuit then prove on known live source',
+        'Before initial energisation and periodically thereafter',
         'Prove on known live -> Test circuit -> Re-prove on known live',
-        'Test circuit only',
-        'Prove once at start of day',
+        'All earthing and bonding conductors to the means of earthing',
+        'Special procedures and equipment certification',
       ],
       correctAnswer: 1,
       explanation:
@@ -152,12 +162,12 @@ const AM2Module4Section2 = () => {
       id: 6,
       question: 'Why must tester leads be zeroed before continuity testing?',
       options: [
-        'To check the battery',
+        'Two capacitors: large for start, small for run',
+        'Circulating currents induced in the iron core',
         'To remove the resistance of the test leads from readings',
-        'To set the display to zero',
-        'To calibrate the instrument',
+        'A dangerous occurrence that must be reported to the HSE',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Zeroing removes the inherent resistance of the test leads to ensure accurate low-resistance measurements.',
     },
@@ -166,11 +176,11 @@ const AM2Module4Section2 = () => {
       question: 'True or false: You can tape over damaged leads to continue using them in AM2.',
       options: [
         'True - tape repairs are acceptable',
-        'False - damaged leads must not be used',
-        'True - if tape is electrical grade',
         'False - only in emergencies',
+        'True - if tape is electrical grade',
+        'False - damaged leads must not be used',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Damaged leads must never be used in AM2 or real work - tape repairs are not acceptable and will result in immediate failure.',
     },
@@ -178,12 +188,12 @@ const AM2Module4Section2 = () => {
       id: 8,
       question: 'What CAT rating category should test instruments meet?',
       options: [
-        'CAT I only',
-        'CAT II for most electrical work',
         'CAT III or higher depending on application',
-        'Any CAT rating is fine',
+        'EAWR (Electricity at Work Regulations)',
+        'No, it violates conservation of energy',
+        'Fault current path and touch protection',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         "CAT III or appropriate category rating ensures instruments can safely handle the electrical environment they're used in.",
     },
@@ -191,10 +201,10 @@ const AM2Module4Section2 = () => {
       id: 9,
       question: 'What is the assessor looking for when you handle test equipment?',
       options: [
-        'Speed of testing',
+        'AFDD presence/justification for each circuit',
         'GS38 compliance and safe handling procedures',
-        'Expensive equipment',
-        'Perfect numerical results',
+        'Regenerated energy is raising DC bus voltage',
+        'Double or reinforced insulation',
       ],
       correctAnswer: 1,
       explanation:
@@ -204,10 +214,10 @@ const AM2Module4Section2 = () => {
       id: 10,
       question: 'What is the consequence of failing to re-prove a voltage tester?',
       options: [
-        'Minor mark deduction',
-        'Warning from assessor',
+        'Certificate and schedules',
+        'Accurately price work for profitability',
         'Automatic failure of AM2 assessment',
-        'No consequence',
+        'BS EN 361 — Full body harnesses',
       ],
       correctAnswer: 2,
       explanation:

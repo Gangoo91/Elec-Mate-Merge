@@ -424,19 +424,14 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
         if (removeIdx >= 0 && removeIdx < testResults.length) {
           const removed = testResults[removeIdx];
-          setTestResults((prev) => {
-            const filtered = prev.filter((_, i) => i !== removeIdx);
-            return filtered.map((circuit, i) => {
-              const newNum = (i + 1).toString();
-              const desc = circuit.circuitDescription || circuit.circuitType || 'Circuit';
-              return { ...circuit, circuitNumber: newNum, circuitDesignation: `C${newNum}` };
-            });
-          });
+          // Preserve original circuit numbers — leave a gap rather than renumber,
+          // so re-test references the user wrote on physical boards stay aligned.
+          setTestResults((prev) => prev.filter((_, i) => i !== removeIdx));
           if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
             setSelectedCircuitIndex((prev) => Math.max(0, prev - 1));
           }
           toast.success(`Deleted circuit ${removed?.circuitDesignation || removeIdx + 1}`);
-          return `Deleted circuit and renumbered remaining circuits`;
+          return `Deleted circuit ${removed?.circuitDesignation || removeIdx + 1}; other numbers kept as-is`;
         }
         return 'No circuits to delete';
       }
@@ -674,24 +669,17 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
             if (removeIdx >= 0 && removeIdx < testResults.length) {
               const removed = testResults[removeIdx];
-              setTestResults((prev) => {
-                // Remove the circuit
-                const filtered = prev.filter((_, i) => i !== removeIdx);
-                // Renumber all remaining circuits
-                return filtered.map((circuit, i) => ({
-                  ...circuit,
-                  circuitNumber: (i + 1).toString(),
-                  circuitDesignation: `C${i + 1}`,
-                }));
-              });
+              // Preserve original circuit numbers — leave a gap rather than renumber,
+              // so re-test references the user wrote on physical boards stay aligned.
+              setTestResults((prev) => prev.filter((_, i) => i !== removeIdx));
               // Adjust selected index if needed
               if (selectedCircuitIndex >= testResults.length - 1 && selectedCircuitIndex > 0) {
                 setSelectedCircuitIndex((prev) => Math.max(0, prev - 1));
               }
               toast.success(
-                `Deleted circuit ${removed?.circuitDesignation || removeIdx + 1}, renumbered remaining`
+                `Deleted circuit ${removed?.circuitDesignation || removeIdx + 1}; other numbers kept as-is`
               );
-              return `Deleted circuit and renumbered remaining circuits`;
+              return `Deleted circuit ${removed?.circuitDesignation || removeIdx + 1}; other numbers kept as-is`;
             }
             return 'No circuits to delete';
           }
@@ -1163,7 +1151,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         insulationResistance: '',
         insulationLiveNeutral: '',
         insulationLiveEarth: '',
-        insulationNeutralEarth: '',
         polarity: '',
         zs: '',
         maxZs: '',
@@ -1412,7 +1399,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         insulationResistance: circuit.tests?.insulation_resistance?.value || '',
         insulationLiveNeutral: '',
         insulationLiveEarth: '',
-        insulationNeutralEarth: '',
         polarity: circuit.tests?.polarity?.result || '',
         zs: circuit.tests?.zs?.value || '',
         maxZs: circuit.tests?.zs?.max_zs || '',
@@ -1750,7 +1736,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         insulationResistance: '',
         insulationLiveNeutral: '',
         insulationLiveEarth: '',
-        insulationNeutralEarth: '',
         polarity: 'Satisfactory',
         zs: '',
         maxZs: calculateMaxZsForCircuit(
@@ -1825,7 +1810,6 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       insulationResistance: '',
       insulationLiveNeutral: '',
       insulationLiveEarth: '',
-      insulationNeutralEarth: '',
       polarity: '',
       zs: '',
       maxZs: '',

@@ -5,10 +5,10 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     id: 1,
     question: 'Why must BMS integrate with fire panels?',
     options: [
-      'To monitor building temperature more accurately',
-      'To perform critical safety shutdowns and control access during emergencies',
-      'To reduce energy consumption during normal operation',
       'To provide better comfort control for occupants',
+      'To perform critical safety shutdowns and control access during emergencies',
+      'To monitor building temperature more accurately',
+      'To reduce energy consumption during normal operation',
     ],
     correctAnswer: 1,
     explanation:
@@ -19,11 +19,11 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     question: 'Give two examples of actions triggered by a fire alarm in a BMS.',
     options: [
       'Increase heating and close all windows',
-      'AHU shutdown and access door release',
       'Turn on all lights and activate music system',
+      'AHU shutdown and access door release',
       'Reduce water pressure and increase cooling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When a fire alarm triggers, the BMS typically shuts down Air Handling Units (AHUs) to prevent smoke spread and releases access-controlled doors to allow safe evacuation.',
   },
@@ -33,10 +33,10 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     options: [
       'To save energy during the emergency',
       'To reduce noise levels for better communication',
-      'To prevent smoke spread throughout the building',
       'To protect the equipment from damage',
+      'To prevent smoke spread throughout the building',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'AHUs must shut down during fire alarms to prevent the ventilation system from circulating smoke throughout the building, which could make evacuation routes impassable.',
   },
@@ -44,12 +44,12 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     id: 4,
     question: 'What type of signal usually links fire panels to BMS inputs?',
     options: [
-      'Analogue voltage signal (0-10V)',
       'Digital contact signal (dry contact)',
       'Pneumatic pressure signal',
+      'Analogue voltage signal (0-10V)',
       'Optical fibre signal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fire panels typically provide digital contact signals (dry contacts) to BMS inputs. These are simple, reliable on/off signals that indicate alarm activation.',
   },
@@ -58,11 +58,11 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     question: 'What must happen to access-controlled doors during a fire alarm?',
     options: [
       'They must lock automatically to prevent unauthorised access',
-      'They must remain in their current state',
       'They must unlock to allow free evacuation',
+      'They must remain in their current state',
       'They must only unlock for authorised personnel',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Access-controlled doors must unlock during fire alarms to ensure all occupants can evacuate safely without needing cards, codes, or keys.',
   },
@@ -70,12 +70,12 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     id: 6,
     question: 'Give one example of a non-fire emergency shutdown event.',
     options: [
+      'Excessive lighting usage',
       'High outdoor temperature',
       'Gas leak detection',
       'Low humidity levels',
-      'Excessive lighting usage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Gas leak detection is a common non-fire emergency that triggers BMS shutdowns, particularly of boilers, ignition sources, and ventilation systems to prevent explosion risks.',
   },
@@ -83,12 +83,12 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     id: 7,
     question: 'Why is fail-safe wiring used for fire-BMS interlocks?',
     options: [
-      'To reduce installation costs',
+      'Simulating alarm conditions and checking BMS response',
+      'They must unlock to allow free evacuation',
+      'Fire panel relay outputs were wired to wrong BMS input terminals',
       'To ensure broken circuits still generate alarm signals',
-      'To improve signal quality',
-      'To make maintenance easier',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Fail-safe wiring (typically normally-closed contacts) ensures that if a wire breaks or connection fails, the system automatically triggers an alarm condition rather than remaining silent.',
   },
@@ -96,12 +96,12 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     id: 8,
     question: 'Why must fire cabling be segregated from standard BMS cabling?',
     options: [
-      'To prevent electromagnetic interference between systems',
       'To maintain fire integrity and prevent cross-contamination of safety circuits',
-      'To reduce installation complexity',
-      'To improve system performance',
+      'To perform critical safety shutdowns and control access during emergencies',
+      'To ensure broken circuits still generate alarm signals',
+      'Fire panel relay outputs were wired to wrong BMS input terminals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fire cabling must be segregated to maintain fire integrity, prevent electrical interference with safety-critical circuits, and ensure emergency systems remain operational even if standard BMS cabling is damaged.',
   },
@@ -109,10 +109,10 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     id: 9,
     question: 'What commissioning step confirms BMS shutdowns respond to fire signals?',
     options: [
-      'Testing individual sensors in isolation',
+      'Reviewing system documentation',
       'Simulating alarm conditions and checking BMS response',
       'Checking cable continuity only',
-      'Reviewing system documentation',
+      'Testing individual sensors in isolation',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,12 +123,12 @@ export const bmsModule6Section5Quiz: QuizQuestion[] = [
     question:
       'In the real-world example, what mistake prevented AHUs from shutting down initially?',
     options: [
-      'The fire panel was not powered correctly',
+      'To prevent smoke spread throughout the building',
+      'To perform critical safety shutdowns and control access during emergencies',
       'Fire panel relay outputs were wired to wrong BMS input terminals',
-      'The AHUs were not connected to the BMS',
-      'The fire alarm sensors were faulty',
+      'To maintain fire integrity and prevent cross-contamination of safety circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The fire panel's relay outputs had been wired into the wrong BMS input terminals, so the BMS wasn't receiving the fire alarm signals and couldn't shut down the AHUs as required.",
   },

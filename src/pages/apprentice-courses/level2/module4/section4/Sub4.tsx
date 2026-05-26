@@ -38,10 +38,10 @@ const checks = [
     question:
       'Which instrument and range do you use to test main bonding continuity?',
     options: [
-      'A standard multimeter on the 200-ohm range.',
+      'To create realistic expectations about progress, disruption, timeline, and finish quality, reducing the gap between expectation and reality that causes complaints',
       'A multifunction tester (MFT) or dedicated low-resistance ohmmeter on the continuity range — typically 0-2 ohm or 0-20 ohm with 200 mA test current. The instrument must be capable of resolving milliohm readings.',
-      'A megohmmeter on the 500 V insulation range.',
-      'A clamp meter in DC mode.',
+      'Domestic client duties automatically transfer to the contractor or, on notifiable projects, to the principal contractor unless a written agreement transfers them elsewhere',
+      'Leniency bias \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 the assessor should refocus on the specific criteria, use structured observation checklists, and have decisions verified through IQA',
     ],
     correctIndex: 1,
     explanation:
@@ -52,10 +52,10 @@ const checks = [
     question:
       'You have your test leads connected to the MFT. The instrument reads 0.13 ohm before you start the test. Why?',
     options: [
-      'The bond is faulty.',
-      'The reading is the resistance of your test leads — copper conductor, croc clip terminations, instrument internal contact resistance. You must "null" or "zero" the leads using the instrument\'s null/relative function so subsequent readings exclude the lead resistance.',
-      'The instrument is broken.',
-      'The MET is corroded.',
+      'Focus on the systemic factors that allowed or contributed to the error — inadequate procedures, unclear instructions, insufficient training, poor ergonomics or time pressure — rather than individual blame',
+      'The reading is the resistance of your test leads — copper conductor, croc clip terminations, instrument internal contact resistance. You must "null" or "zero" the leads using the instrument\\\\\\\\\\\\\\\'s null/relative function so subsequent readings exclude the lead resistance.',
+      'The combination of thorough preparation, successful mock assessments, gateway sign-off from your employer and training provider, completed qualifications, and a well-organised portfolio — these are evidence of your competence, not just feelings of readiness',
+      'Any place where a person could fall a distance liable to cause personal injury. NO HEIGHT THRESHOLD (the old "above 2m" rule was abolished). Could be standing on a step, on a ladder, on a roof, on a stair, near an unprotected edge.',
     ],
     correctIndex: 1,
     explanation:
@@ -66,10 +66,10 @@ const checks = [
     question:
       'Before testing continuity of a main bonding conductor from the MET to a gas BS 951 clamp, you should:',
     options: [
-      'Test live to make it realistic.',
+      'On commercial sites, the permit names the circuit / equipment to be worked on, the precautions required (which include safe isolation per the JIB procedure), the time window, the worker and the responsible person — the JIB procedure is the practical execution of the permit&rsquo;s isolation requirement.',
       'Isolate the supply, lock off the main switch, prove dead at every point, then disconnect the bond at one end (typically the MET end) so the test current flows only through the bond cable being tested and not through parallel paths via other bonds, the earthing conductor or the supply network.',
-      'Disconnect both ends and test in mid-air.',
-      'Leave everything connected and just test.',
+      'It introduces additional requirements concerning earth electrodes in Chapter 54 — designers must consult the full text of Reg 542.2.8 in the published amendment to determine the obligations, exceptions and any required testing or labelling for earth electrodes installed under A4:2026.',
+      'The set torque has been reached. Inside the handle is a calibrated spring-loaded cam mechanism. As torque rises the cam loads the spring; at the preset value the cam slips and you feel/hear an audible click and a tactile drop in resistance. That signals \\\\\\\\\\\\\\\'stop turning\\\\\\\\\\\\\\\' — keep going past the click and you over-torque the connection.',
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     question:
       'BS 7671 Reg 643.2.1 requires continuity verification of which conductors at initial verification?',
     options: [
-      'Only the line conductors.',
+      'Because UKAS accreditation ensures the laboratory meets standards for competence, quality and reliability of results',
       'Protective conductors, including protective bonding conductors; and in the case of ring final circuits, live conductors.',
-      'Only the neutral conductors.',
-      'Only conductors larger than 16 mm².',
+      'Whoever placed the unclear order — the contractor pays for return restock fees and the impact on the day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s work',
+      'Background/context, findings/observations, analysis/diagnosis, recommendations/actions',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'What is the practical "good bond" continuity reading for a main protective bonding conductor from the MET to a BS 951 clamp on a typical domestic install (10 mm² G/Y, 4-5 m run, well-terminated)?',
     options: [
-      'Above 1 ohm.',
-      'Below 0.05 ohm — typical readings on a healthy 10 mm² bond of 4-5 m are 0.02 to 0.05 ohm. BS 7671 doesn\'t specify an absolute maximum but the joint must be reliable and verifiable.',
-      'Around 10 ohms.',
-      'Exactly 0 ohms — anything above is a fault.',
+      'Structured therapy that involves carefully and gradually processing the traumatic memory, challenging unhelpful trauma-related beliefs, and developing coping strategies — typically over 8 to 12 sessions',
+      'No code — a metal consumer unit installed after the 2016 amendment satisfies the current requirement on enclosure non-combustibility, and accessibility under the stairs is not in itself a coded defect provided escape is not impeded.',
+      'Below 0.05 ohm — typical readings on a healthy 10 mm² bond of 4-5 m are 0.02 to 0.05 ohm. BS 7671 doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t specify an absolute maximum but the joint must be reliable and verifiable.',
+      'Use shorter conduit sections to reduce load length, knee pads for joint protection, frequent micro-breaks, and pre-position materials at the access point to minimise carrying distance in the restricted space',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Industry rule of thumb: a healthy main bond reads under 0.05 ohm. Calculation: 10 mm² Cu conductor has resistance of about 1.83 mOhm/m, so 5 m run = ~9 mOhm = 0.009 ohm. Add termination contact resistance (a few mOhm at each end) and you typically see 0.02 to 0.05 ohm on a clean install. Above 0.10 ohm suggests a problem — loose terminations, oxidised contact, undersized cable.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       'You "null" your MFT test leads and the instrument shows "0.00 ohm". You then probe the bonding cable from MET to gas clamp and read 0.04 ohm. What does this reading represent?',
     options: [
-      'The total resistance of leads + bond.',
+      'The controller runs a test sequence and calculates optimised PID parameters based on the process response',
+      'Recognise that this is a situation where confidentiality must be broken and seek appropriate help, explaining to the colleague why you need to involve others',
+      'Use a structured format: subject line with equipment ID, opening summary, chronological findings, measurements in a table, and clear next-steps request',
       'The resistance of the bond conductor and its two end terminations only — because the lead resistance has been subtracted by the null function.',
-      'The voltage across the bond.',
-      'The current through the bond.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Null = subtract the lead resistance. Subsequent reading = circuit under test only. 0.04 ohm represents the 10 mm² Cu cable resistance plus the contact resistance at the MET terminal and the BS 951 clamp. Healthy reading. Document on the Schedule of Test Results.',
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     question:
       'You\'re testing continuity from the MET to a BS 951 clamp on the gas service, but you forgot to disconnect the bond at the MET end first. The reading is 0.001 ohm — much lower than expected. What\'s happening?',
     options: [
-      'The bond is exceptionally good.',
       'The current is finding parallel paths back through the earthing conductor, supplier neutral (PME) and other bonds. The reading is the parallel resistance of all paths combined, not the resistance of the bond cable being tested. Disconnect at one end first.',
-      'The instrument is faulty.',
-      'The MET is short-circuited.',
+      'To plan, manage and monitor the construction phase and co-ordinate matters relating to it to ensure that, so far as is reasonably practicable, construction work is carried out without risks to health or safety. The PC produces the Construction Phase Plan and updates it as the project evolves.',
+      'Processing waste by sorting, recycling, or treating it before disposal to landfill, as required by the Landfill (England and Wales) Regulations 2002 to ensure only waste that cannot be recovered is landfilled',
+      'Disposing of waste correctly (especially hazardous materials), minimising energy waste, recycling where possible, complying with environmental regulations, and considering the environmental impact of maintenance decisions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'On a fully connected installation, fault current at the bond clamp can return via several paths: the bond under test, the earthing conductor through the MET, the supplier earth network, other bonds. The MFT sees all paths in parallel and reports a much lower combined resistance. To measure THE BOND ONLY, disconnect at one end so the test current can only flow through the bond cable.',
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       'After testing continuity successfully and reconnecting the bond, where do you record the result?',
     options: [
-      'In your phone notes.',
+      'Aligned - reputation for compliance and quality wins repeat business. The HSE Public Register prosecutions / notices are a competitive disadvantage. Firms with clean records win frameworks; firms with poor records lose them.',
       'On the Schedule of Test Results that accompanies the EIC (Electrical Installation Certificate) — typically there is a row for "Continuity of protective conductors" with a column for the measured value at each protective conductor of the installation, including each main bonding conductor.',
-      'Verbally to the customer.',
-      'Nowhere — bonding continuity is informal.',
+      'Charge-hand is a senior trade lead — typically an experienced Approved Electrician who runs a small gang of electricians and apprentices on a specific area of the work, reporting up to the Foreman. On a larger job there can be several Charge-hands under one Foreman, each leading a wing or a floor.',
+      'Basic periodic inspection as part of the fixed installation inspection programme (BS 7671), with repair or replacement when a fault is reported — a run-to-failure approach is acceptable because the consequences of failure are low',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'Your continuity reading from MET to water bond clamp is 0.85 ohm — much higher than expected for a 10 mm² cable on a 4 m run. What\'s the most likely fault?',
     options: [
-      'Cable is too thin.',
+      'Recruitment (engage interest), reduction in degrees of freedom (break into steps), direction maintenance (keep on track), marking critical features (highlight safety-critical points), frustration control (manage difficulty), demonstration (show correct technique)',
+      'Common for electrical positions — verifying competence through wiring exercises, fault-finding scenarios, regs questions, or supervised on-site work for a half-day. Treat them seriously; they\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re often the decisive part of the hiring decision.',
       'A poor or loose termination at one end (most often the MET) or at the BS 951 clamp itself — oxidised contact face, screw not torqued, ferrule damaged. The cable resistance alone should be ~7 mOhm; 0.85 ohm means about 0.84 ohm of contact resistance somewhere.',
-      'The supply is faulty.',
-      'The cable colour is wrong.',
+      'Take time to familiarise yourself with the equipment, ask the assessor for clarification about its operation if needed, and apply your transferable skills and knowledge systematically — the assessor assesses your approach and reasoning, not just equipment-specific knowledge',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A 4 m run of 10 mm² Cu has cable resistance of about 7 mOhm = 0.007 ohm. A reading of 0.85 ohm means there\'s an extra 0.84 ohm of resistance somewhere — almost certainly a contact issue at one termination. Disconnect, inspect, re-make the joint at the MET end first (most common location); if still high, check the BS 951 clamp; if still high, check for damage to the cable strands.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       'Which BS 7671 regulation cross-references the continuity testing of ring final circuit live conductors (the test you might perform alongside protective conductor continuity)?',
     options: [
+      'Alcohol causes blood vessels to dilate, increasing heat loss from the skin and potentially lowering core temperature further',
+      'As defined by the quality management system, regulatory requirements, and equipment lifetime -- typically the lifetime of the instrument plus a defined period',
+      'Acknowledge the request positively, explain it falls outside the original scope, and offer to price it as additional work',
       'Reg 643.2.2 — covers ring final circuit continuity testing as part of the same family of initial verification continuity tests under Section 643.',
-      'Reg 411.5.3.',
-      'Reg 514.13.1.',
-      'Reg 526.1.',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Reg 643.2.2 covers ring final circuit continuity (the loop tests for r1, rn, r2 of the ring). Same family of tests under Section 643 as the protective conductor continuity in Reg 643.2.1. On an EICR or initial verification, you typically do all the continuity tests in one pass with the same MFT.',
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'A bond reads 0.04 ohm at initial verification. Three years later at a periodic inspection (EICR) the same bond reads 1.2 ohm. What probable mechanism caused the rise?',
     options: [
-      'The cable shrunk.',
-      'A loose termination at one end has oxidised over the three years — surface oxide film grows when contact pressure is insufficient, contact resistance climbs, the cable resistance hasn\'t changed but the joint has degraded. Investigate, identify the bad terminal, re-make the joint, retest.',
-      'The pipe rusted.',
-      'The MET moved.',
+      'A loose termination at one end has oxidised over the three years — surface oxide film grows when contact pressure is insufficient, contact resistance climbs, the cable resistance hasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t changed but the joint has degraded. Investigate, identify the bad terminal, re-make the joint, retest.',
+      'An HMRC tax-deduction scheme — contractors in construction must deduct tax (20% for registered subcontractors, 30% for unregistered) from payments to subcontractors and pass it to HMRC. The subcontractor reconciles via their tax return.',
+      'Application of the rating factor (Ca) for thermal insulation per BS 7671 Appendix 4 — Method 100 (cable surrounded by insulation) typically applies a 0.5 derating, requiring larger CSA. Visual inspection checks the design accounts for installation method.',
+      'Firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s contracts manager / director - that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s their decision. The L3 supervisor escalates to them with the facts; they decide commercial response. The L3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s personal duty is to refuse the unsafe instruction; the commercial decision is above that.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Loose termination + time + thermal cycling = oxide film growth at the contact face. Cable resistance stays put (Cu has stable conductivity); the joint resistance climbs from a few mOhm to a few hundred mOhm. Same root cause as the loose-terminal failures covered in Sub 2. Solution: open the bad termination, clean both contact faces, re-make per Sub 2 procedure, torque to spec, retest. The 1.2 ohm reading is a Code C2 finding on the EICR until rectified.',
   },

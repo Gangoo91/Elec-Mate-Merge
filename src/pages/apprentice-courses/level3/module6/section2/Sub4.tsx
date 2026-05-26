@@ -40,12 +40,12 @@ const checks = [
     question:
       "A three-phase 400 V load of 30 kW (balanced) draws what line current?",
     options: [
-      "30 A — same as single-phase.",
+      "To automatically operate equipment based on predetermined schedules",
+      "Comparative data sheet, photometric data, and evidence of equivalent performance",
       "I = P / (√3 × VL × pf) = 30000 / (1.732 × 400 × 1.0) = 43.3 A per line.",
-      "75 A.",
-      "130 A.",
+      "Complete sequences of operations and system integration",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Three-phase balanced load formula: I = P / (√3 × VL × pf), where VL = 400 V line-to-line. At unity power factor: I = 30000 / (1.732 × 400) = 43.3 A per line. At pf 0.85 (typical for mixed loads with motors): I = 30000 / (1.732 × 400 × 0.85) = 51 A per line. Always use the realistic power factor for the load mix; small commercial typically 0.85-0.95.",
   },
@@ -54,12 +54,12 @@ const checks = [
     question:
       "A small commercial DB feeds: cooking 35 A, refrigeration 18 A, lighting 14 A, ring finals 22 A combined, AV 8 A. Sum = 97 A. Sub-main coincidence factor for a single-tenant commercial DB feeding correlated load categories is typically:",
     options: [
-      "1.0 — no smoothing inside one tenant.",
       "0.85-0.95 — categories overlap heavily during operating hours (cooking + refrigeration + lighting all on at lunch service); only AV is independent.",
-      "0.5.",
-      "0.3.",
+      "Fused test leads with finger guards, a maximum tip exposure of 4 mm, and a proving unit or known supply for verification",
+      "Location, type, condition, pressure gauge reading (if applicable), seal integrity, and any damage or obstruction",
+      "A separate metallic conductor (usually the cable sheath) provided by the distributor throughout the distribution system",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Inside a single commercial tenant, the categories are highly correlated to operating hours — cooking peaks at service times when lighting and refrigeration are also running. Sub-main coincidence stays high (0.85-0.95). Multi-tenant commercial buildings get lower coincidence at origin because tenants stagger hours. For a single tenant, treat the sub-main as near-100 percent of the sum of category Ib values.",
   },
@@ -68,10 +68,10 @@ const checks = [
     question:
       "A 100 A three-phase service (300 A total across three phases). The cafe sub-main needs 75 A. The retail sub-main needs 18 A. The office sub-main needs 22 A. What is the right phase distribution?",
     options: [
-      "All loads on L1.",
+      "The idea that everyone has a finite capacity for stress, and resilience involves both reducing the flow in (stressors) and increasing the flow out (coping strategies)",
       "Distribute across L1, L2, L3 to balance — e.g. cafe split across two phases (37 + 38 A), retail on L3 (18 A) plus office on L3 (22 A) = 40 A on L3. Phase loads: L1 ~40 A, L2 ~37 A, L3 ~40 A. Imbalance under 10 percent acceptable.",
-      "All loads on L3.",
-      "It does not matter how phases are loaded.",
+      "Diagrams, charts and information notices shall comply with the applicable standards specified — non-standard symbols are a non-conformance the designer needs to fix",
+      "Earth electrode (live, for TT) -> earth fault loop impedance Ze -> prospective fault current -> earth fault loop impedance Zs -> polarity (energised) -> RCD operation -> AFDD operation -> functional/operational",
     ],
     correctIndex: 1,
     explanation:
@@ -96,8 +96,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Power factor for a typical small commercial mixed load (lighting + sockets + small motors + IT) is approximately:',
-    options: ['1.0', '0.85-0.95', '0.5', '0.2'],
-    correctAnswer: 1,
+    options: [
+      '0.5',
+      '1.0',
+      '0.85-0.95',
+      '0.2',
+    ],
+    correctAnswer: 2,
     explanation:
       "Typical small commercial mixed load: lighting (LED ~0.95), socket loads (typically 0.95-1.0 for IT, 0.85 with motors and HVAC), kitchen (0.85-0.95). Aggregate is usually 0.85-0.95. Heavy motor or welding load drops to 0.7-0.85; pure IT load with PFC PSUs hits 0.95+. Use realistic pf for the load mix; default to 0.9 if unsure.",
   },
@@ -105,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'GN1 Section 7 office socket diversity is typically:',
     options: [
-      '100 percent.',
+      'O₂ between 19.5% and 23.5%, flammable gases below 10% LEL, toxic gases below their respective WELs',
+      'Automated control sequences and emergency override function',
+      'Line and neutral conductors are reversed or devices connected in wrong conductor',
       '50-65 percent of the socket-circuit nameplate aggregate, depending on equipment mix.',
-      '20 percent.',
-      'No diversity allowed.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Office socket loads run at 50-65 percent of nameplate aggregate for typical knowledge work — laptops 30-65 W, monitors 30-50 W, no printer per desk, occasional kettle. Heavy-use spaces (workshops, labs) higher; light-use (boardrooms, occasional meeting rooms) lower. GN1 has worked examples; cite the specific entry in the design pack.",
   },
@@ -118,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'A commercial kitchen with three induction hobs (7 kW each), 5 kW combination oven, 3 kW dishwasher, 8 kW refrigeration. Sub-main Ib at 400 V three-phase (assume balanced):',
     options: [
-      'Sum / 230 = ~165 A.',
       'Apply category diversity (cooking 70-80 percent for high-coincidence service times, refrigeration 100 percent, dishwasher 100 percent), sum the diversified kW (~30 kW), divide by (1.732 × 400 × 0.9 pf) = ~48 A per line.',
-      '8 A per line.',
-      '300 A per line.',
+      'It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999',
+      'The employer must investigate the grievance promptly, take the allegations seriously, follow the ACAS Code of Practice on grievance procedures, protect the apprentice from victimisation, and take appropriate action based on the findings',
+      'Check the control circuit: verify the control supply is present, check start/stop buttons, check for open circuits in the control wiring and safety interlocks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Kitchen diversity: cooking 21 + 21 + 21 × 0.75 = 47 kW × 0.75 = 35 kW, refrigeration 8 kW (100 percent), oven 5 kW (100 percent), dishwasher 3 kW (100 percent). Sum diversified ~22 kW (cooking lower than nameplate sum). At 400 V three-phase pf 0.9: I = 22000 / (1.732 × 400 × 0.9) = 35 A per line. Working answer in the 35-50 A range depending on assumed cooking diversity. Check against actual menu and service pattern.",
   },
@@ -131,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'For a multi-tenant commercial building (5 retail units), the origin coincidence factor is typically:',
     options: [
-      '1.0 (no smoothing).',
+      'IO uses standard Ethernet switching for real-time communication (cycle times 1-10 ms); IRT provides isochronous real-time with sub-microsecond jitter for high-performance motion control',
       'Around 0.7-0.85 — tenants have similar opening hours so peaks largely align, but small variations (different trading hours, different load mix) reduce the perfect-coincidence figure.',
-      '0.3.',
-      'Same as a single dwelling.',
+      'Politely decline and explain your limitation, suggesting a colleague or specialist who is qualified. Working outside competence breaches EWR 1989 Reg 16 and is also a scheme rule for CPS-registered firms.',
+      'An industrial firewall with deep packet inspection (DPI) that understands industrial protocols such as Modbus, OPC UA, and Profinet',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'Phase imbalance on a three-phase commercial installation should ideally be:',
     options: [
-      'Whatever the install allows.',
+      'Re-make the junction box terminations correctly so line continues as line and neutral as neutral throughout. Document the corrected fault. Re-test polarity to confirm. Never compensate for one error by introducing another.',
+      'Record the actual value, flag it as marginal, investigate the possible cause, and consider recommending remedial action — a value near the limit today may deteriorate to a fail before the next inspection',
       'Under 10 percent of the average phase load — e.g. if average is 50 A, no phase should be below 45 A or above 55 A. Heavy imbalance wastes service rating and overloads the heaviest phase.',
-      '50 percent imbalance is fine.',
-      'All load on one phase is acceptable.',
+      'Match the terminal markings on the circuit diagram exactly, allowing a technician to trace any circuit from drawing to panel without ambiguity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Three-phase service rating assumes balanced load. Heavy imbalance overloads the heaviest phase before the others reach their share. Industry target is under 10 percent imbalance. Distribute single-phase loads in rotation; balance heavy single-phase items (cookers, EV chargers) across phases; show the per-phase load on the design pack and target sub-10-percent imbalance.",
   },
@@ -157,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'Reg 132.3 (Nature of demand) requires the designer to consider:',
     options: [
-      'Only the peak demand.',
+      'Reg 644.1.1 — for a new installation, any defect or omission revealed during inspection and testing shall be corrected before the Certificate is issued. A pack that disagrees with the install is a defect.',
+      'Address the safety issue directly using facts and I-messages, document it, and escalate formally if behaviour continues regardless of relationships',
+      'It means a sensor designed to detect one gas may also respond to other gases, potentially giving false readings — this must be understood when interpreting results in environments with multiple gases',
       'The locations of points of demand, the loads expected on circuits, daily and yearly variation of demand, special conditions (such as harmonics), and special control or signalling requirements.',
-      "The customer's budget.",
-      'Only the connected load.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Reg 132.3 makes the demand profile a discrete design consideration. Daily and yearly variation drives the diversity calc. Special conditions like harmonics matter for IT and inverter loads — they raise apparent power above active power. Document the demand profile assumptions in the design pack alongside the diversity factors.",
   },
@@ -170,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'For a commercial design pack, the diversity calc page should show per category, per sub-main and per origin:',
     options: [
-      'Just the final supply Ib.',
       'Connected load, diversity factor with source citation, category Ib, sub-main coincidence with source, sub-main Ib, origin coincidence with source, origin Ib, per-phase distribution, phase imbalance percent, and supply rating with margin.',
-      'A single total kW figure.',
-      'The customer name only.',
+      'Recommended for AC final circuits supplying socket-outlets up to 32 A in dwellings, with the recommendation strengthening to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework.',
+      'Determine the earth fault loop impedance at the furthest point of the circuit (Zs = Ze + R1+R2) and verify that the protective device will disconnect within the required time',
+      'Part 6 has been completely restructured and renumbered to align with the CENELEC standard for inspection and testing. The old chapter and regulation numbers do not map directly to the new 64x.x numbering. Inspectors must use the new numbers on certificates and EICRs from A4:2026 onward.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Commercial diversity calc has more layers than domestic: per-circuit Ib at the DB, sub-main aggregation, origin aggregation, three-phase distribution. Each layer needs its own row. The design pack page becomes a small spreadsheet — but it is the most-audited part of the pack and the foundation of the DNO connection application.",
   },

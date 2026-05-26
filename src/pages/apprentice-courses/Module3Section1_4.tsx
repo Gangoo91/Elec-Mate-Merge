@@ -23,8 +23,13 @@ const quickCheckQuestions = [
   {
     id: 'swa-protection',
     question: 'What component of SWA provides mechanical protection?',
-    options: ['Outer sheath', 'Steel wire armour', 'Bedding layer', 'Conductor insulation'],
-    correctIndex: 1,
+    options: [
+      'Outer sheath',
+      'Bedding layer',
+      'Steel wire armour',
+      'Conductor insulation',
+    ],
+    correctIndex: 2,
     explanation:
       'The steel wire armour provides exceptional mechanical protection against physical damage and impacts.',
   },
@@ -45,12 +50,12 @@ const quickCheckQuestions = [
     id: 'swa-glands',
     question: 'Why must correct glands be used when terminating SWA?',
     options: [
-      'To reduce cable cost',
       'To earth the armour and provide sealing',
-      'To increase flexibility',
-      'To reduce installation time',
+      'Results, test conditions, and equipment details',
+      'Construction Design Management',
+      'Protection against direct contact',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Correct glands ensure the armour is properly earthed and provide IP-rated protection against moisture and dust ingress.',
   },
@@ -73,8 +78,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which layer lies between the insulation and the armour in SWA cable?',
-    options: ['Bedding', 'Sheath', 'Conductor', 'Earth wire'],
-    correctAnswer: 0,
+    options: [
+      'Conductor',
+      'Earth wire',
+      'Bedding',
+      'Sheath',
+    ],
+    correctAnswer: 2,
     explanation:
       'The bedding layer cushions the conductors and provides protection between the insulation and steel armour.',
   },
@@ -89,8 +99,13 @@ const quizQuestions = [
   {
     id: 4,
     question: 'What is the recommended burial depth for SWA cable in a domestic garden?',
-    options: ['100 mm', '300 mm', '600 mm', '900 mm'],
-    correctAnswer: 2,
+    options: [
+      '600 mm',
+      '300 mm',
+      '100 mm',
+      '900 mm',
+    ],
+    correctAnswer: 0,
     explanation:
       '600mm is the standard burial depth for domestic installations, with warning tape placed above.',
   },
@@ -100,8 +115,8 @@ const quizQuestions = [
     options: [
       'To make stripping easier',
       'To earth the armour and provide sealing',
-      'To keep the cable lightweight',
       'To reduce installation cost',
+      'To keep the cable lightweight',
     ],
     correctAnswer: 1,
     explanation:
@@ -110,8 +125,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What tool is commonly used for bending larger SWA cables during installation?',
-    options: ['Cable strippers', 'Bulldog benders', 'Crimping tools', 'Wire cutters'],
-    correctAnswer: 1,
+    options: [
+      'Cable strippers',
+      'Crimping tools',
+      'Bulldog benders',
+      'Wire cutters',
+    ],
+    correctAnswer: 2,
     explanation:
       'Bulldog benders provide the leverage needed to form smooth bends in larger SWA cables without damaging the armour.',
   },
@@ -119,20 +139,25 @@ const quizQuestions = [
     id: 7,
     question: 'When stripping SWA, what must be done to the armour wires?',
     options: [
-      'Cut them as short as possible',
+      'Steel wire mechanical protection',
+      'It produces less toxic smoke in a fire',
+      'To earth the armour and provide sealing',
       'Leave them long and fold back over the gland',
-      'Remove them completely',
-      'Twist them together',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Armour wires should be left long enough to fold back over the gland body to ensure proper earthing contact.',
   },
   {
     id: 8,
     question: 'What type of saw is typically used to cut through SWA armour?',
-    options: ['Wood saw', 'Hacksaw with fine teeth', 'Chainsaw', 'Jigsaw'],
-    correctAnswer: 1,
+    options: [
+      'Hacksaw with fine teeth',
+      'Chainsaw',
+      'Wood saw',
+      'Jigsaw',
+    ],
+    correctAnswer: 0,
     explanation:
       'A hacksaw with fine teeth cuts cleanly through the steel armour without damaging the inner conductors.',
   },
@@ -140,20 +165,25 @@ const quizQuestions = [
     id: 9,
     question: 'Why might LSZH sheathing be specified instead of PVC?',
     options: [
-      "It's cheaper",
-      "It's more flexible",
+      'Steel wire mechanical protection',
       'It produces less toxic smoke in a fire',
-      "It's waterproof",
+      'To earth the armour and provide sealing',
+      'Leave them long and fold back over the gland',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'LSZH (Low Smoke Zero Halogen) sheathing reduces toxic emissions in fire situations, making it safer for enclosed spaces.',
   },
   {
     id: 10,
     question: 'What should be installed above buried SWA cables?',
-    options: ['Concrete slab', 'Warning tape', 'Wooden board', 'Metal plate'],
-    correctAnswer: 1,
+    options: [
+      'Concrete slab',
+      'Metal plate',
+      'Warning tape',
+      'Wooden board',
+    ],
+    correctAnswer: 2,
     explanation:
       'Warning tape is placed above buried cables to alert future excavators and prevent accidental damage.',
   },
@@ -162,11 +192,11 @@ const quizQuestions = [
     question: 'What is the typical minimum bend radius for SWA cable?',
     options: [
       '3 times cable diameter',
-      '6 times cable diameter',
-      '10 times cable diameter',
       '15 times cable diameter',
+      '10 times cable diameter',
+      '6 times cable diameter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SWA cable should maintain a minimum bend radius of 6 times the cable diameter to prevent armour damage.',
   },
@@ -174,12 +204,12 @@ const quizQuestions = [
     id: 12,
     question: 'Which property makes SWA suitable for direct burial without extra conduit?',
     options: [
-      'High electrical conductivity',
-      'Flexible insulation',
       'Steel wire mechanical protection',
       'Small conductor size',
+      'High electrical conductivity',
+      'Flexible insulation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The steel wire armour provides sufficient mechanical protection for direct burial applications.',
   },

@@ -43,10 +43,10 @@ const checks = [
     question:
       'A PV inverter has been switched off and the AC isolator at the consumer unit is open. The customer wants you to swap a faulty MC4 connector on a string cable on the roof. What is the situation on that DC string in daylight?',
     options: [
-      'It is dead, because the inverter is off.',
+      'Voltage difference between feet planted on the ground in the vicinity of an earth fault — current flowing through the ground creates voltage gradient; a person standing across that gradient experiences step potential. Significant near HV faults; can cause shock through the legs.',
       'It is still energised — Reg 712.410.101 makes the point explicit. As long as light is on the panels, the string sits at its open-circuit voltage (often 300–500 V DC) and you have to open the DC isolator AND prove dead with a DC voltmeter before you go anywhere near it.',
-      'It is dead, because the AC isolator is open.',
-      'It is dead — DC dissipates within minutes of the inverter switching off.',
+      'Reg 644.1.1 — for a new installation, any defect or omission revealed during inspection and testing shall be corrected before the Certificate is issued. A documentation mismatch is a defect.',
+      'A potential issue — Regulation 132.13 (mounting / accessibility) and the IET CoP for accessibility recommend mounting heights that allow safe operation; check against design and Part 7 if a special location applies. Document and refer to designer.',
     ],
     correctIndex: 1,
     explanation:
@@ -57,10 +57,10 @@ const checks = [
     question:
       'You are wiring the AC supply circuit from a new domestic PV inverter into the consumer unit. The inverter manufacturer says nothing about RCD type in its installation manual. What does Reg 712.531.3.5.1 say you must fit?',
     options: [
-      'A Type AC RCD — standard for grid-tied PV.',
-      'No RCD is needed on the AC side of a PV inverter.',
+      'Functional check via integral test button at commissioning AND at periodic intervals (per manufacturer); operational testing of arc detection requires OEM-specific equipment',
+      '09:00 — half an hour early. Gives you time to use the toilet, settle nerves, sign in, get briefed, and not start the paper with adrenaline still spiking from a rushed arrival.',
       'A Type B RCD (BS EN 62423 or BS EN 60947-2), unless the inverter provides at least simple separation between AC and DC, or there is transformer separation between inverter and RCD, or the inverter manufacturer states a Type B is not required.',
-      'A Type A RCD is always sufficient.',
+      'They detect different fault current waveforms — Type AC: sinusoidal AC only. Type A: AC + pulsating DC. Type B: AC + pulsating DC + smooth DC. Modern installs with EVs/inverters need Type A or B.',
     ],
     correctIndex: 2,
     explanation:
@@ -71,12 +71,12 @@ const checks = [
     question:
       'A customer wants a 5.5 kW single-phase PV install on her roof. Roughly 24 A per phase at 230 V at full output. Which DNO process applies?',
     options: [
-      'G98 — informal post-installation notification.',
       'G99 — full pre-application to the DNO before install, because the per-phase output exceeds 16 A.',
-      'No DNO process is needed.',
-      'Either, the installer chooses.',
+      'Client, principal designer, principal contractor, designers, and contractors',
+      'Circuit chart, test results, and warning labels as required by BS 7671',
+      'Load calculations, equipment selection, exclusion zones, and certified operators',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'ENA G98 covers small generating units up to 16 A per phase at 230 V (3.68 kW single-phase, 11.04 kW three-phase) and uses an informal notification process — the installer connects, then notifies the DNO. Above that threshold, G99 applies — a full application has to be made to the DNO before installation, with type-test certificates for the inverter, single-line diagram and protection settings. 5.5 kW at 24 A per phase is firmly G99 territory. This is also why the standard "stock" UK domestic install is sized at 3.68 kW — it sits exactly at 16 A per phase and stays inside G98.',
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       'A PV cell is essentially a silicon p-n junction. What physically happens when a photon of sunlight strikes the cell?',
     options: [
-      'The photon heats the silicon, which produces voltage.',
+      'Very High culpability x Cat 1 harm x Large/Very Large turnover. Starting points around £4m-£10m+; range up to £20m+. Examples: Whirlpool £15m (corporate manslaughter), Foodles Production £1.6m (Star Wars set injury — smaller turnover band).',
       'The photon delivers enough energy to lift an electron across the silicon band gap, creating an electron-hole pair. The internal field at the p-n junction sweeps the electron to the n-side and the hole to the p-side, producing a small DC potential — about 0.5–0.6 V per cell.',
-      'The photon physically pushes electrons through the cell.',
-      'The cell emits its own photons in response.',
+      'Self-certify via the NICEIC scheme — issue an EIC, log on the NICEIC portal, NICEIC notifies building control on behalf of the contractor and a Building Regulations Compliance Certificate is issued.',
+      'Electric Vehicle (EV) charging equipment installation — covers the BS 7671 Section 722 requirements, OZEV grant scheme eligibility, manufacturer-specific training pathways and Open-PEN protection considerations for TN-C-S supplies.',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       'A typical UK domestic PV install uses a string of ten 400 W panels in series. Each panel has Voc around 45 V and Isc around 11 A. What rough string voltage and string current go into the inverter at standard test conditions?',
     options: [
-      'Around 45 V and 110 A.',
+      'Anchor it to a consistent portable cue such as starting the van engine, with the admin app pre-loaded and a tiny first step like logging one item',
+      'Reject the RAMS, require it to be revised to address ACMs based on the duty holder\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s register/survey, and verify it before allowing the subcontractor on site',
       'Around 450 V open-circuit and 11 A short-circuit — series adds voltage, parallel adds current. One string of ten panels means voltages add but the current stays the same as a single panel.',
-      'Around 4500 V and 1.1 A.',
-      'Around 230 V and 25 A.',
+      'The total amount of combustible material within a space, expressed as an equivalent mass of wood per unit floor area (kg/m² or MJ/m²)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Series wiring (which is what "string" means) adds voltages but the current through every panel in the string is identical — same as series resistors in Module 2. Ten panels at 45 V each gives roughly 450 V open-circuit, with the string current capped at about 11 A — the Isc of any single panel. The inverter\'s MPPT then operates the string at its peak power point (usually 35–40 V per panel under load), pulling close to the rated 400 W from each.',
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     question:
       'What is the role of an MPPT (Maximum Power Point Tracker) inside a string inverter?',
     options: [
-      'It limits the maximum current to protect the cables.',
+      '70-90 percent of cooking equipment aggregate (high coincidence at service times — multiple hobs, oven, grill running together at lunch and dinner peaks). Refrigeration is 100 percent (compressors cycle independently). Lighting is 100 percent for opening hours. EPOS / IT is low.',
+      'Live polarity confirmation at the CU (using an approved voltage indicator) plus Ze measurement at the MET. Live polarity confirms the supply is correctly connected (meter tails not swapped); Ze gives you the supply-side impedance for Zs verification.',
+      'Teams with high collective EI can better understand client concerns, communicate their approach empathetically, build trust during interviews, handle challenging questions with composure, and demonstrate collaborative working relationships — all of which influence bid evaluations',
       'It continuously adjusts the operating voltage of the string so the panels deliver their peak power as light, temperature and partial shade change throughout the day. The peak power point sits below open-circuit voltage and at a current below short-circuit — the MPPT hunts for the sweet spot.',
-      'It tracks the position of the sun across the sky and tilts the panels.',
-      'It is a fancy name for the inverter\'s on/off switch.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A panel\'s I-V curve is non-linear. There is one operating point where voltage times current is maximum — the MPP. The MPPT algorithm (perturb-and-observe, incremental conductance) nudges the operating voltage up and down a few times a second, watches whether output power rises or falls, and homes in on the peak. As clouds, temperature and shading change the curve, the MPPT keeps tracking.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'When does a Type B RCD become mandatory on the AC supply circuit of a PV inverter under BS 7671:2018+A4:2026?',
     options: [
-      'Never — Type AC is fine.',
-      'Always — there are no exceptions.',
       'Type B is the default per Reg 712.531.3.5.1, unless (a) the inverter provides at least simple separation between AC and DC sides, (b) the installation places a transformer between inverter and RCD, or (c) the inverter manufacturer explicitly states Type B is not required.',
-      'Only on three-phase installations.',
+      'Where an installation incorporates switching between sources of supply, the switching arrangement must prevent parallel operation of sources unless the installation is specifically designed for it',
+      'Common for electrical positions — verifying competence through wiring exercises, fault-finding scenarios, regs questions, or supervised on-site work for a half-day. Treat them seriously; they\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re often the decisive part of the hiring decision.',
+      'Maintain manual inline stabilisation on the spinal casualty, shout for help, and instruct a bystander to clear the area around the seizing casualty to prevent injury; reassess priorities once additional help arrives',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A transformerless PV inverter can leak smooth DC fault current onto the AC side. Smooth DC saturates the toroidal core of a Type AC or Type A RCD and blinds it to AC faults at the same time. Reg 712.531.3.5.1 sets Type B as the default, with the three exceptions listed verbatim: simple separation in the inverter, transformer separation in the install, or a manufacturer statement. If the manual is silent, you fit Type B.',
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       'An IMD (Insulation Monitoring Device) is required by Reg 712.421.101.1 on the DC side of most PV installs. What does it actually do?',
     options: [
-      'It measures string voltage so you can see how much power the panels are making.',
+      'The maximum let-through voltage at the SPD terminals during a surge — the voltage that the equipment downstream actually sees through the SPD. Lower Up = better protection. Manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s Up is measured at a specified test current.',
       'It continuously monitors the insulation resistance between the live DC conductors and earth, throughout the life of the array. A drop in insulation (a damaged cable, water in a connector) triggers an alarm or shuts down the inverter — catching insulation faults before they become DC arcing fires.',
-      'It is the AC side residual current device.',
-      'It is the string fuse.',
+      'Continuity (low-resistance ohmmeter), insulation resistance, loop impedance (Zs), RCD testing, and often earth electrode resistance — all the tests required for BS 7671 initial verification and periodic inspection',
+      'Apply petroleum jelly or non-acidic grease to the prepared conductor and the terminal threads to inhibit corrosion. Heatshrink the joint if there is any risk of dripping water reaching it. Tighten to the manufacturer torque spec.',
     ],
     correctAnswer: 1,
     explanation:
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'Anti-islanding is a key safety requirement on every grid-tied PV inverter. What is it?',
     options: [
-      'Stopping seagulls landing on the panels.',
+      'Type B is the default per Reg 712.531.3.5.1, unless (a) the inverter provides at least simple separation between AC and DC sides, (b) the installation places a transformer between inverter and RCD, or (c) the inverter manufacturer explicitly states Type B is not required.',
+      'Very high, high, medium, low — with starting-point fines that scale with both the culpability finding AND the harm category (1–4) AND the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s annual turnover band (micro / small / medium / large). A \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'very high culpability + Category 1 harm + large organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' combination has produced fines well into seven figures.',
       'The inverter must detect the loss of mains supply and disconnect itself within roughly 200 ms — it must not keep generating into a section of the network the DNO has switched off, otherwise the linesman repairing a fault on the street can be electrocuted.',
-      'A way of stopping islands of cells in the panel from overheating.',
-      'A function that makes the inverter ignore the grid.',
+      'Physical damage, corrosion, loose or missing fixings, overloading, maintained fire barriers at penetrations, earth continuity of metallic systems, and presence of unauthorised cables or modifications',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'If the grid drops out and a PV inverter keeps energising the local conductors, you have created an unintended "island" of live network. The DNO\'s linesman, expecting dead cables, can be killed. Inverters meeting BS EN 50549-1 (the standard called up by ENA G98 for ≤ 16 A per phase generators and by Reg 551.7.4) detect the loss of mains by frequency, voltage and impedance shifts and disconnect within roughly 200 ms. This is the most safety-critical software in the inverter.',
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       'A customer wants a PV install but does not want to pay for an MCS-certified installer. They have asked you (a non-MCS electrician) to fit it. What are the two practical consequences?',
     options: [
-      'None — MCS is purely voluntary.',
+      'Functional requirements (what the installation must do), performance requirements (loads, future expansion, criticality of supplies), aesthetic requirements (accessory styles, colour, locations), operational requirements (maintenance access, isolation strategy, energy targets), and constraints (timescale, budget, planning conditions).',
+      'PASMA (for mobile aluminium tower scaffolds) and IPAF (for mobile elevating work platforms / MEWPs / cherry pickers and scissor lifts). PASMA covers tower assembly and use; IPAF covers powered access. Both are industry-recognised competence schemes accepted on most CDM sites. Many plant operators also hold CPCS (for construction plant — excavators, dumpers, telehandlers) or NPORS.',
+      'To record what was actually done on the visit — labour hours, materials used, parts replaced, tests performed, customer comments, photos. It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the contemporaneous record that supports the invoice, feeds into the cert, and protects the firm if there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s a later complaint about scope or quality.',
       'First, the customer cannot register the system for the Smart Export Guarantee (SEG), so they get no payment from the supplier for any electricity they export. Second, the install is still notifiable to the DNO under G98 / G99 and to building control under Part P — those obligations do not go away just because MCS is skipped.',
-      'The install becomes illegal.',
-      'The customer cannot use the panels at all.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'MCS (Microgeneration Certification Scheme) is the consumer-protection scheme that gates access to SEG export payments. No MCS = no SEG, regardless of how compliant the install is. The DNO notification (G98 informal or G99 formal) and Part P notification are separate legal duties that apply to anyone fitting the system. Most professional PV installers carry MCS purely so their customers can claim SEG.',
   },
@@ -186,12 +186,12 @@ const quizQuestions = [
     question:
       'You are doing an EICR on a 1990s house that had PV added in 2014. You spot that the DC isolator on the side of the inverter is a standard AC rotary switch, not a PV-rated DC isolator. Why is this a Code C2?',
     options: [
-      'It is not — any rotary isolator will do.',
       'A standard AC rotary switch has no DC breaking capacity. Opening it under load on a high-voltage DC string draws an arc that does not self-extinguish at zero crossing (DC has no zero crossing) and can sustain inside the switch — starting a fire. Reg 712.537 and the broader Section 462 require a switch suitable for DC isolation, normally a purpose-built PV DC isolator.',
-      'Because rotary switches are obsolete.',
-      'Because it should have been replaced after 5 years.',
+      'Because recycling preserves the material value (the metal, the polymer, the glass) for re-use in new manufacturing, whereas energy recovery destroys the material and recovers only the chemical energy. Under the waste hierarchy, keeping materials in productive use is preferred over extracting one-time energy from them. Energy from waste sits above landfill because at least some value (electricity / heat) is recovered, but it sits below recycling because the material is lost.',
+      'The Operations and Maintenance (O&M) pack — typically a bound document or PDF with: signed EIC (top-level), Schedule of Inspections, Schedule of Test Results, design pack (single-line, panel schedules, calculations), as-built drawings, Building Control Compliance Certificate (or notification reference), commissioning test results, departures log, manufacturer manuals for installed equipment, recommended maintenance schedule.',
+      'A workmanship warranty is your written guarantee that the work you\\\\\\\'ve done will be free from workmanship defects for a specified period — typically 1-2 years for standard electrical work, sometimes longer for renewables (RECC requires minimum 2-year workmanship warranty for MCS-registered work). Materials usually carry separate manufacturer warranties (passed through to customer). Clear warranty terms reduce disputes by setting expectations upfront.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'AC arc current passes through zero 100 times a second, which is when a normal switch quenches. DC has no zero crossing — the arc has to be physically stretched and cooled by the switch design itself. AC-only switches lack the arc chutes and contact gap geometry to do that, and the arc can sustain inside the switch and ignite the enclosure. PV DC isolators are purpose-built to BS EN 60947-3 with proper DC ratings. A non-DC isolator on a PV string is a real fire risk — the kind of thing an EICR is meant to catch.',
   },

@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why is it important to follow manufacturer torque settings on terminals?',
     options: [
-      'To save time',
+      'Installing a new electrical distribution board in an existing factory',
       'To prevent over-tightening damage and ensure secure connections',
-      'To use less tools',
-      'To reduce material costs',
+      'To ensure adequate fault current for protective device operation',
+      'Circulating currents in conductors causing power loss',
     ],
     correctIndex: 1,
     explanation:
@@ -26,16 +26,26 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'Name one way to ensure accessories are level when fixed.',
-    options: ['Use measuring tape', 'Use spirit level', 'Use plumb line', 'Visual estimation'],
-    correctIndex: 1,
+    options: [
+      'Visual estimation',
+      'Use plumb line',
+      'Use spirit level',
+      'Use measuring tape',
+    ],
+    correctIndex: 2,
     explanation:
       'A spirit level is the standard tool for ensuring accessories are properly aligned and level during installation.',
   },
   {
     id: 3,
     question: 'What precaution should you take when handling decorative faceplates?',
-    options: ['Use power tools', 'Wear clean gloves', 'Work quickly', 'Use maximum force'],
-    correctIndex: 1,
+    options: [
+      'Use maximum force',
+      'Work quickly',
+      'Use power tools',
+      'Wear clean gloves',
+    ],
+    correctIndex: 3,
     explanation:
       'Clean gloves prevent fingerprints, scratches, and contamination on decorative faceplates, maintaining their appearance and finish quality.',
   },
@@ -46,10 +56,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main purpose of final fixing?',
     options: [
-      'To run new cables',
+      '40% - it\\\\\\\'s the largest weighting',
       'To secure and align electrical accessories',
-      'To design the wiring layout',
-      'To test circuit breakers',
+      'Termination resistors were not installed',
+      'Reactive effects may need to be considered',
     ],
     correctAnswer: 1,
     explanation:
@@ -58,8 +68,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'True or False: Over-tightening screws on accessories can cause damage.',
-    options: ['True', 'False', 'Only on plastic accessories', 'Only on metal accessories'],
-    correctAnswer: 0,
+    options: [
+      'Only on plastic accessories',
+      'Only on metal accessories',
+      'True',
+      'False',
+    ],
+    correctAnswer: 2,
     explanation:
       'True - Over-tightening can crack faceplates, strip threads, distort mounting boxes, and damage internal components.',
   },
@@ -67,27 +82,37 @@ const quizQuestions = [
     id: 3,
     question: 'Why should gloves be worn when handling decorative faceplates?',
     options: [
-      'For electrical safety',
+      'To prevent electric shock and fire',
+      'Ear defenders or ear plugs',
+      'Complete failure to trip at any test current',
       'To avoid fingerprints and scratches',
-      'To improve grip',
-      'To prevent static discharge',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Clean gloves prevent fingerprints, scratches, and contamination that would affect the appearance of decorative finishes.',
   },
   {
     id: 4,
     question: 'What tool can be used to ensure a socket is level?',
-    options: ['Multimeter', 'Spirit level', 'Screwdriver', 'Wire strippers'],
-    correctAnswer: 1,
+    options: [
+      'Spirit level',
+      'Multimeter',
+      'Screwdriver',
+      'Wire strippers',
+    ],
+    correctAnswer: 0,
     explanation:
       'A spirit level ensures accessories are properly aligned and level during installation.',
   },
   {
     id: 5,
     question: 'Which regulation covers the correct mounting heights for accessible installations?',
-    options: ['BS 7671', 'Building Regulations Part M', 'BS EN 60309', 'BS 5839'],
+    options: [
+      'Whether the scene is safe (DANGER)',
+      'Building Regulations Part M',
+      'Provide a construction phase plan',
+      'Repeating L1-L2-L3 pattern',
+    ],
     correctAnswer: 1,
     explanation:
       'Building Regulations Part M specifies accessibility requirements including mounting heights for switches and sockets.',
@@ -96,10 +121,10 @@ const quizQuestions = [
     id: 6,
     question: 'What should you check on all earth connections before final fixing?',
     options: [
-      'Voltage level',
-      'Current capacity',
+      'Elimination of the electrical hazard',
+      'Ventricular fibrillation risk',
       'That they are continuous and secure',
-      'Wire colour',
+      'Both sides generate power',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,12 +134,12 @@ const quizQuestions = [
     id: 7,
     question: 'Name one method of correcting uneven mounting surfaces.',
     options: [
-      'Use spacers or shims',
+      'Ignore the problem',
       'Force the accessory flat',
       'Use longer screws',
-      'Ignore the problem',
+      'Use spacers or shims',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Spacers or shims allow accessories to be mounted flush and level on uneven surfaces.',
   },
@@ -122,12 +147,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why is double-checking terminal tightness after fixing important?',
     options: [
-      'To test the circuit',
       'Handling during fixing can loosen screws',
-      'To check polarity',
-      'To verify colour coding',
+      'To level the tower on slightly uneven ground',
+      'PSCC/PFC and Ze are within design parameters',
+      'The ratio of maximum to minimum measurable flow',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Movement and handling during the fixing process can cause terminals to loosen, requiring re-checking and re-tightening.',
   },

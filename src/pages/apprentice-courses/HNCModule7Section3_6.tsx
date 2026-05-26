@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 'maintained-illuminance',
     question: "What does 'maintained illuminance' (Em) represent?",
     options: [
-      'The initial illuminance when luminaires are new',
+      'Narrowing down the fault location to between two test points',
       'The average illuminance below which the value should not fall',
-      'The maximum illuminance at any point',
-      'The illuminance at the walls only',
+      'To reduce electromagnetic interference (EMI)',
+      'An automatic physiological stress response triggered by perceived threats',
     ],
     correctIndex: 1,
     explanation:
@@ -48,8 +48,13 @@ const quickCheckQuestions = [
     id: 'ugr-limit',
     question:
       'For a typical office environment, what is the recommended UGR limit according to CIBSE/BS EN 12464-1?',
-    options: ['UGR &lt; 25', 'UGR &lt; 22', 'UGR &lt; 19', 'UGR &lt; 16'],
-    correctIndex: 2,
+    options: [
+      'UGR &lt; 25',
+      'UGR &lt; 22',
+      'UGR &lt; 16',
+      'UGR &lt; 19',
+    ],
+    correctIndex: 3,
     explanation:
       'For office work involving writing, typing, reading, and data processing, the UGR limit should be 19 or less. This ensures visual comfort and reduces the risk of discomfort glare from luminaires.',
   },
@@ -57,8 +62,13 @@ const quickCheckQuestions = [
     id: 'colour-rendering',
     question:
       'What minimum colour rendering index (Ra) is required for offices under CIBSE guidelines?',
-    options: ['Ra &gt; 60', 'Ra &gt; 70', 'Ra &gt; 80', 'Ra &gt; 90'],
-    correctIndex: 2,
+    options: [
+      'Ra &gt; 80',
+      'Ra &gt; 70',
+      'Ra &gt; 60',
+      'Ra &gt; 90',
+    ],
+    correctIndex: 0,
     explanation:
       'A minimum colour rendering index of Ra &gt; 80 is required for most office and commercial environments. This ensures accurate colour perception for tasks and maintains a pleasant visual environment.',
   },
@@ -83,7 +93,12 @@ const quizQuestions = [
     id: 2,
     question:
       'According to BS EN 12464-1, what is the maintained illuminance requirement for general office areas?',
-    options: ['200 lux', '300 lux', '500 lux', '750 lux'],
+    options: [
+      '750 lux',
+      '200 lux',
+      '500 lux',
+      '300 lux',
+    ],
     correctAnswer: 2,
     explanation:
       'BS EN 12464-1 specifies a maintained illuminance of 500 lux for general office work including writing, typing, reading, and data processing. This aligns with CIBSE LG7 recommendations.',
@@ -92,12 +107,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of the maintenance factor (MF) in lighting design?',
     options: [
-      'To increase initial light output',
+      "When hazardous manual handling cannot be avoided",
+      "A safe distance where accidental contact is not possible",
+      "Prove the tester works on a known live source",
       "To account for light loss over the installation's service life",
-      'To calculate energy consumption',
-      'To determine cable sizes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The maintenance factor accounts for reduced light output over time due to lamp lumen depreciation, luminaire dirt accumulation, and room surface deterioration. MF = LLMF x LSF x LMF x RSMF.',
   },
@@ -105,20 +120,25 @@ const quizQuestions = [
     id: 4,
     question: "CIBSE LG3 'The Visual Environment' primarily addresses:",
     options: [
-      'Specific lighting applications',
       'Fundamental principles of how light affects human vision and comfort',
-      'Emergency lighting requirements',
-      'Daylight harvesting techniques',
+      'Additional consideration for backup power sources',
+      'Working out meaning from clues in the text that are not directly stated',
+      'Duties that must be complied with regardless of cost or practicability',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'LG3 covers fundamental visual science including how the eye works, visual performance, visual comfort, and the relationship between lighting and health. It underpins all other lighting guides.',
   },
   {
     id: 5,
     question: 'What maintained illuminance does BS EN 12464-1 specify for technical drawing tasks?',
-    options: ['300 lux', '500 lux', '750 lux', '1000 lux'],
-    correctAnswer: 2,
+    options: [
+      '500 lux',
+      '750 lux',
+      '1000 lux',
+      '300 lux',
+    ],
+    correctAnswer: 1,
     explanation:
       'Technical drawing requires 750 lux maintained illuminance due to the fine detail and precision required. This is higher than general office work to support accurate visual tasks.',
   },
@@ -138,8 +158,13 @@ const quizQuestions = [
   {
     id: 7,
     question: 'For an assembly area (educational), what is the recommended maintained illuminance?',
-    options: ['150 lux', '200 lux', '300 lux', '500 lux'],
-    correctAnswer: 2,
+    options: [
+      '150 lux',
+      '200 lux',
+      '500 lux',
+      '300 lux',
+    ],
+    correctAnswer: 3,
     explanation:
       'Assembly halls and similar gathering spaces require 300 lux maintained illuminance according to BS EN 12464-1, suitable for general activities without detailed visual tasks.',
   },
@@ -147,12 +172,12 @@ const quizQuestions = [
     id: 8,
     question: 'CIBSE LG10 focuses specifically on:',
     options: [
-      'Emergency lighting design',
       'Daylighting and window design',
       'Industrial lighting applications',
+      'Emergency lighting design',
       'Sports lighting requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'CIBSE LG10 covers daylighting, including window design, daylight factor calculations, solar control, and integration of daylight with electric lighting systems.',
   },
@@ -160,8 +185,13 @@ const quizQuestions = [
     id: 9,
     question:
       'What uniformity ratio (Uo) is typically required for office task areas under CIBSE guidance?',
-    options: ['Uo &gt; 0.3', 'Uo &gt; 0.4', 'Uo &gt; 0.6', 'Uo &gt; 0.8'],
-    correctAnswer: 2,
+    options: [
+      'Uo &gt; 0.3',
+      'Uo &gt; 0.6',
+      'Uo &gt; 0.4',
+      'Uo &gt; 0.8',
+    ],
+    correctAnswer: 1,
     explanation:
       'A uniformity ratio of at least 0.6 is required for task areas, meaning the minimum illuminance should be at least 60% of the average. This prevents excessive contrast across the working plane.',
   },
@@ -169,8 +199,13 @@ const quizQuestions = [
     id: 10,
     question:
       'Which standard specifically addresses workplace lighting requirements in the European Union?',
-    options: ['BS 5266', 'BS EN 12464-1', 'BS 7671', 'BS EN 1838'],
-    correctAnswer: 1,
+    options: [
+      'BS 5266',
+      'BS EN 1838',
+      'BS EN 12464-1',
+      'BS 7671',
+    ],
+    correctAnswer: 2,
     explanation:
       "BS EN 12464-1 'Light and lighting - Lighting of work places - Part 1: Indoor work places' is the European standard adopted in the UK for workplace lighting requirements.",
   },
@@ -178,8 +213,13 @@ const quizQuestions = [
     id: 11,
     question:
       'For circulation areas (corridors) in buildings, what is the minimum maintained illuminance?',
-    options: ['50 lux', '100 lux', '150 lux', '200 lux'],
-    correctAnswer: 1,
+    options: [
+      '50 lux',
+      '200 lux',
+      '150 lux',
+      '100 lux',
+    ],
+    correctAnswer: 3,
     explanation:
       'Corridors and circulation areas require a minimum of 100 lux maintained illuminance according to BS EN 12464-1, sufficient for safe movement but lower than task areas.',
   },
@@ -188,9 +228,9 @@ const quizQuestions = [
     question: 'What does LLMF stand for in lighting maintenance calculations?',
     options: [
       'Lamp Lumen Maintenance Factor',
-      'Light Level Measurement Factor',
-      'Luminaire Lumen Maintenance Factor',
       'Low Light Modification Factor',
+      'Luminaire Lumen Maintenance Factor',
+      'Light Level Measurement Factor',
     ],
     correctAnswer: 0,
     explanation:

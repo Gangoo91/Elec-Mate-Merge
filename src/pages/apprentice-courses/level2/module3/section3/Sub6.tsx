@@ -39,8 +39,13 @@ const checks = [
     id: 'fill-percent-check',
     question:
       'The maximum recommended fill factor for trunking under OSG Appendix H is:',
-    options: ['25%', '35%', '45%', '60%'],
-    correctIndex: 2,
+    options: [
+      '25%',
+      '45%',
+      '35%',
+      '60%',
+    ],
+    correctIndex: 1,
     explanation:
       'OSG Appendix H sets a 45% maximum fill for trunking — leaves enough free space to allow cables to lie naturally, dissipate heat and be added to in future. Cramming above 45% breaches OSG guidance and likely breaches BS 7671 grouping derate assumptions.',
   },
@@ -49,12 +54,12 @@ const checks = [
     question:
       'Cramming more cables into a trunking than the OSG fill factor allows causes:',
     options: [
-      'Faster cable pulling',
-      'No problem at all',
+      'Receiving work orders, recording findings, updating task status, logging parts used, and closing completed work',
+      'Using biological organisms (such as bacteria or plants) to break down or remove contaminants from soil or groundwater',
+      'Yes — Local Authority enforcement officers have similar powers of entry under HASAWA s.20 for premises they enforce',
       'Increased heat retention (Cg derate worsens), inability to draw new cables in later, and possible non-compliance with 433.1.1',
-      'Improved EMI shielding',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Three problems. (1) Bunched cables can’t shed heat, so the Cg grouping factor in Sub3 plummets — your existing cables are now under-rated. (2) No room to draw additional cables in later. (3) The original CCC sizing was done assuming a specific Cg — if you bust that, the cables are non-compliant with 433.1.1.',
   },
@@ -63,12 +68,12 @@ const checks = [
     question:
       'A "cable factor" in OSG Appendix H is best described as:',
     options: [
-      'The cable’s resistance per metre',
+      'The contractor appointed to plan, manage, and coordinate health and safety during the construction phase',
+      'All 230 V portable equipment must be protected by a 30 mA RCD — but 110 V CTE is the preferred and standard supply for construction site power tools',
+      '31 January following the end of the tax year (5 April), with payments on account for the following year due 31 January and 31 July.',
       'A unitless number representing the cross-sectional area the cable takes up in the enclosure (including air space allowance)',
-      'The cable’s current rating',
-      'The number of cores in the cable',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Cable factor is a tabulated unitless number reflecting the effective cross-sectional area the cable occupies inside the enclosure (cable + reasonable air space). You add up cable factors for all cables in the enclosure and compare against the enclosure’s own factor.',
   },
@@ -79,8 +84,13 @@ const quizQuestions = [
     id: 1,
     question:
       'OSG Appendix H gives the recommended maximum fill factor for trunking as:',
-    options: ['25%', '40%', '45%', '60%'],
-    correctAnswer: 2,
+    options: [
+      '25%',
+      '45%',
+      '40%',
+      '60%',
+    ],
+    correctAnswer: 1,
     explanation:
       'The 45% limit is the headline OSG figure for trunking. Conduit similarly limited (typically 40% straight runs, less with bends — Appendix H tabulates exact factors).',
   },
@@ -89,12 +99,12 @@ const quizQuestions = [
     question:
       'You add up the cable factors for every cable in a trunking and compare them to:',
     options: [
-      'The trunking’s mass per metre',
+      'It prevents mistakes, improves coordination, and reduces risks of accidents',
+      'They prevent the platform from being elevated unless all outriggers are correctly deployed',
       'The trunking factor (a tabulated number for each trunking size in OSG Appendix H Table 5C/5D)',
-      'The cable’s Iz value',
-      'The protective device rating',
+      'The site manager (or their nominee) — covers site rules, hazards, emergency procedures, welfare and reporting routes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'OSG Appendix H Table 5C gives cable factors per CSA; Table 5D gives trunking factors per trunking size. Sum of cable factors must be ≤ trunking factor for a compliant install.',
   },
@@ -103,12 +113,12 @@ const quizQuestions = [
     question:
       'A trunking is filled to 45% with the existing cables. You want to add three more circuits. The OSG view is:',
     options: [
-      'Crack on — 45% is just a guideline',
+      'Date, time, location, what happened, who was involved, immediate action, and proposed corrective/preventive action',
+      'A restraint system prevents the wearer from reaching the platform edge; a fall arrest system stops a fall after it has begun',
+      'When more than one contractor is, or is reasonably foreseeable to be, working on the project at the same time — the client must appoint one in writing',
       'You’re at the OSG limit. Adding more cables breaches the fill factor and likely the cable grouping (Cg) derate too — you need bigger trunking or a separate run',
-      'Add a cooling fan to the trunking',
-      'Use thinner cables only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'At 45% you have zero headroom. Three new circuits push you over the OSG limit AND change the Cg grouping factor for every existing cable. Every cable in the trunking would need re-derating against the new total — likely showing existing cables now non-compliant. Bigger trunking or a separate route is the answer.',
   },
@@ -116,8 +126,13 @@ const quizQuestions = [
     id: 4,
     question:
       'You have 50 × 2.5 mm² stranded singles (cable factor 11.4 each) plus 30 × 4 mm² stranded singles (cable factor 15.2 each). Total cable factor sum:',
-    options: ['650', '760', '912', '1026'],
-    correctAnswer: 3,
+    options: [
+      '1026',
+      '760',
+      '912',
+      '650',
+    ],
+    correctAnswer: 0,
     explanation:
       '50 × 11.4 = 570 + 30 × 15.2 = 456 → total 1026. Compare against the trunking factor (e.g. 50×50 trunking ≈ 1037 → just fits with 11 units of headroom).',
   },
@@ -126,10 +141,10 @@ const quizQuestions = [
     question:
       'A 50×50 mm trunking has an OSG factor of approximately 1037. The cable-factor sum from Q4 is 1026. The compliance verdict is:',
     options: [
-      'Massively over capacity',
+      'It must not exceed 1.45 × the lowest current-carrying capacity (Iz) of the circuit conductors',
       'Just fits — but with virtually no headroom for additional cables or future modification',
-      'Doesn’t fit',
-      'Need to recalculate',
+      'To confirm the client has received documentation and acknowledge transfer of responsibility',
+      'To allow safe internal access through the platform whilst maintaining full guardrail protection',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,12 +155,12 @@ const quizQuestions = [
     question:
       'Conduit fill rules differ from trunking because:',
     options: [
-      'Conduit isn’t covered by OSG',
+      'By taking reasonable steps to prevent access by unauthorised persons, including appropriate fencing, hoarding, signage, and controlled access points with sign-in procedures',
+      'Sensible heat changes temperature without phase change; latent heat changes phase without temperature change',
       'Conduit fill depends on the run length and number of bends — OSG tabulates different factors for straight short runs vs longer runs with bends',
-      'Conduit has no fill limit',
-      'Cables in conduit don’t need derating',
+      'Use 250V test voltage where the equipment manufacturer permits, OR test live conductors connected together to earth (without between live and neutral), interpreting accordingly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Conduit factors in OSG Appendix H are split — short straight runs (under 3 m) have higher allowed fill; longer runs and runs with bends use lower factors because the cables need extra clearance to be drawn through. The OSG tables (5A, 5B) differentiate by length and bends.',
   },
@@ -153,8 +168,13 @@ const quizQuestions = [
     id: 7,
     question:
       'You install a conduit run with 5 × 2.5 mm² stranded singles (cable factor 30 each in the long-run/with-bends OSG table). Total cable factor:',
-    options: ['100', '125', '150', '180'],
-    correctAnswer: 2,
+    options: [
+      '100',
+      '125',
+      '180',
+      '150',
+    ],
+    correctAnswer: 3,
     explanation:
       '5 × 30 = 150. Compare against the conduit factor for the chosen size, run length and bend count. A 20 mm conduit, 4 m run with one bend has a factor of approximately 264 → 150 ≤ 264, fits with margin.',
   },
@@ -163,12 +183,12 @@ const quizQuestions = [
     question:
       'You break the OSG fill factor by 20%. The most likely consequences are:',
     options: [
-      'No real-world effect',
       'Cables can’t shed heat properly (Cg derate worsens), pulling new cables becomes very difficult, and the original CCC calculation may now be non-compliant with 433.1.1',
-      'Improved earth continuity',
-      'Faster installation',
+      'Wet surfaces increase the risk of slipping during climbing, and waterlogged ground may not support the tower adequately',
+      'Time for knowledge revision, practical skills practice, portfolio review, mock discussions, reflection on feedback, and rest — balanced across all EPA components',
+      'It compromises balance and stability, increases the risk of trips and falls while carrying loads, and forces awkward postures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Three real consequences linked to the fill rule. Heat retention is the biggest — Cg in Sub3 was set assuming a specific cable count; bust the count and your Iz drops below In and 433.1.1 fails. Plus you’ve made future modification much harder.',
   },

@@ -1,7 +1,73 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 
+export type HudsonLevel =
+  | 'critical'
+  | 'reactive'
+  | 'calculative'
+  | 'proactive'
+  | 'generative';
+
+export type ScoreCategory =
+  | 'compliance'
+  | 'activity'
+  | 'proactive'
+  | 'quality'
+  | 'outcomes';
+
+export interface ScoreDeduction {
+  category: ScoreCategory;
+  label: string;
+  points: number;
+  action: string;
+}
+
+export interface ScoreGain {
+  category: ScoreCategory;
+  label: string;
+  points: number;
+}
+
+export interface ScoreRecommendation {
+  label: string;
+  pointGain: number;
+  effort: 'low' | 'medium' | 'high';
+  category: ScoreCategory;
+}
+
+export interface ScoreHardCap {
+  reason: string;
+  cap: number;
+  deadline?: string;
+}
+
 export interface WeeklySummary {
+  // New 5-dimension shape
+  safetyScore: number;
+  hudsonLevel: HudsonLevel;
+  dimensions: {
+    compliance: number;
+    activity: number;
+    proactive: number;
+    quality: number;
+    outcomes: number;
+  };
+  dimensionMax: {
+    compliance: number;
+    activity: number;
+    proactive: number;
+    quality: number;
+    outcomes: number;
+  };
+  deductions: ScoreDeduction[];
+  gains: ScoreGain[];
+  recommendations: ScoreRecommendation[];
+  hardCap: ScoreHardCap | null;
+  trend: 'improving' | 'declining' | 'stable';
+  trendDelta: number;
+  previousScore: number;
+
+  // Legacy fields kept for back-compat
   period: { start: string; end: string };
   nearMisses: { total: number; followedUp: number; open: number };
   inspections: { total: number; passed: number; failed: number; passRate: number };
@@ -10,8 +76,6 @@ export interface WeeklySummary {
   coshh: { overdueReviews: number; upcomingReviews: number };
   permits: { active: number; expired: number };
   observations: { total: number; positive: number };
-  safetyScore: number;
-  trend: 'improving' | 'declining' | 'stable';
   highlights: string[];
   actionItems: string[];
 }

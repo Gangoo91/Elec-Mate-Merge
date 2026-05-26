@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Which regulation covers manual handling safety?',
     options: [
+      'To plan work alongside other trades',
       'Manual Handling Operations Regulations 1992 (MHOR)',
-      'Work at Height Regulations',
-      'COSHH',
-      'Electricity at Work Regulations',
+      'Protocol choice and network capacity',
+      'Push-pull connector design for reliable mating',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The Manual Handling Operations Regulations 1992 (MHOR) specifically covers the safe handling of loads and requires employers to assess and reduce manual handling risks.',
   },
@@ -40,20 +40,25 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should you keep a load close to your body when lifting?',
     options: [
-      'Improve view of feet',
+      'It is the same across all branches',
+      'Scaled heating elements or failed elements',
       'Reduce strain and leverage on the spine',
-      'Comply with MHOR',
-      'Use less oxygen',
+      '1 fire marshal per 50 occupants',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Keeping the load close to your body reduces the leverage effect on your spine, significantly reducing the risk of back injury and muscle strain.',
   },
   {
     id: 3,
     question: 'Name one mechanical aid you could use for heavy electrical equipment.',
-    options: ['Sack truck', 'Spirit level', 'Tape measure', 'Voltage tester'],
-    correctIndex: 0,
+    options: [
+      'Voltage tester',
+      'Tape measure',
+      'Spirit level',
+      'Sack truck',
+    ],
+    correctIndex: 3,
     explanation:
       'A sack truck is a wheeled lifting aid specifically designed to help move heavy items safely, reducing the physical strain on workers.',
   },
@@ -67,12 +72,12 @@ const Module4Section7_1 = () => {
       id: 1,
       question: 'What is the main UK regulation covering manual handling?',
       options: [
-        'BS 7671',
-        'Health and Safety at Work Act',
+        'Short payback, low risk, high energy savings',
         'Manual Handling Operations Regulations 1992',
-        'PUWER',
+        'Moisture, dust, heat, or UV light',
+        'Complete electrical path between two points',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'The Manual Handling Operations Regulations 1992 (MHOR) is the specific regulation that covers manual handling safety in the workplace.',
     },
@@ -80,8 +85,13 @@ const Module4Section7_1 = () => {
       id: 2,
       question:
         'True or False: You should always test the weight of a load before attempting to lift it.',
-      options: ['True', 'False', 'Only for heavy items', 'Only if you feel unsure'],
-      correctAnswer: 0,
+      options: [
+        'Only for heavy items',
+        'Only if you feel unsure',
+        'True',
+        'False',
+      ],
+      correctAnswer: 2,
       explanation:
         'True - assessing the load first, including its weight, size, and stability, is a fundamental principle of safe manual handling.',
     },
@@ -89,12 +99,12 @@ const Module4Section7_1 = () => {
       id: 3,
       question: 'Why should you keep your back straight when lifting?',
       options: [
-        'To make it easier to bend over',
-        'To reduce strain on the spine',
         'To balance the load',
+        'To make it easier to bend over',
         'To use less energy',
+        'To reduce strain on the spine',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Keeping your back straight maintains the natural curves of your spine and prevents excessive stress on the vertebrae and supporting muscles.',
     },
@@ -102,19 +112,24 @@ const Module4Section7_1 = () => {
       id: 4,
       question: 'What should you do before moving a load through a building?',
       options: [
-        'Run quickly to reduce effort',
         'Clear the route and plan the path',
+        'Run quickly to reduce effort',
         'Lift as high as possible',
         'Carry with arms extended',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Planning the route and clearing obstacles ensures safe passage and prevents trips, falls, or collisions while carrying loads.',
     },
     {
       id: 5,
       question: 'Which lifting aid would you use for moving a heavy cable drum?',
-      options: ['Ladder', 'Sack truck', 'Rope and pulley', 'Spirit level'],
+      options: [
+        'Ladder',
+        'Sack truck',
+        'Spirit level',
+        'Rope and pulley',
+      ],
       correctAnswer: 1,
       explanation:
         'A sack truck (or drum jack) is specifically designed for moving heavy cylindrical objects like cable drums safely and efficiently.',
@@ -123,7 +138,12 @@ const Module4Section7_1 = () => {
       id: 6,
       question:
         'What is the recommended maximum weight an adult should lift without aid (approx.)?',
-      options: ['10 kg', '15 kg', '25 kg', '50 kg'],
+      options: [
+        '10 kg',
+        '15 kg',
+        '25 kg',
+        '50 kg',
+      ],
       correctAnswer: 2,
       explanation:
         "While there's no absolute limit, 25 kg is generally considered the guideline for maximum weight to lift without assistance or mechanical aids.",
@@ -133,12 +153,12 @@ const Module4Section7_1 = () => {
       question:
         'When carrying a long piece of trunking with a partner, what should you do before turning corners?',
       options: [
-        'Drop the load',
-        'Push forward quickly',
+        'Continuity of protective conductors',
+        'Test equipment failure or incorrect connections',
+        'tan φ = √3(W1 - W2) / (W1 + W2)',
         'Communicate clearly with your partner',
-        'Twist your back to adjust',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Clear communication with your partner is essential when manoeuvring long loads around corners to prevent accidents and coordinate movements.',
     },
@@ -146,8 +166,13 @@ const Module4Section7_1 = () => {
       id: 8,
       question:
         "True or False: It's acceptable to twist your back while carrying if the load is light.",
-      options: ['True', 'False', 'Only occasionally', 'Only with loads under 10kg'],
-      correctAnswer: 1,
+      options: [
+        'False',
+        'Only occasionally',
+        'True',
+        'Only with loads under 10kg',
+      ],
+      correctAnswer: 0,
       explanation:
         'False - twisting while carrying any load can cause injury to your spine. Always turn with your feet, not your back.',
     },
@@ -169,11 +194,11 @@ const Module4Section7_1 = () => {
       question: 'Give one consequence of poor manual handling for both the worker and the project.',
       options: [
         'Better efficiency and faster completion',
+        'Enhanced teamwork and communication',
         'Injury and project delays',
         'Lower costs and improved quality',
-        'Enhanced teamwork and communication',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Poor manual handling can lead to worker injury (strains, back problems) and project delays due to sick leave and potential equipment damage.',
     },

@@ -17,10 +17,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What regulation in BS 7671 covers cable safe zones?',
     options: [
-      'Regulation 522.6.201',
-      'Regulation 522.6.202',
       'Regulation 522.6.203',
+      'Regulation 522.6.202',
       'Regulation 522.7.202',
+      'Regulation 522.6.201',
     ],
     correctIndex: 1,
     explanation: 'Regulation 522.6.202 covers cable safe zones in BS 7671.',
@@ -29,16 +29,26 @@ const quickCheckQuestions = [
     id: 2,
     question:
       'Within how many millimetres of a corner or ceiling can a cable be installed without extra protection?',
-    options: ['100 mm', '150 mm', '200 mm', '250 mm'],
-    correctIndex: 1,
+    options: [
+      '250 mm',
+      '200 mm',
+      '150 mm',
+      '100 mm',
+    ],
+    correctIndex: 2,
     explanation:
       'Cables can be installed within 150 mm of corners, ceilings, or skirting boards without additional protection.',
   },
   {
     id: 3,
     question: 'Which cable type is most suitable for underground installations?',
-    options: ['Twin & Earth (T&E)', 'Flexible cables', 'Steel Wire Armoured (SWA)', 'LSZH cables'],
-    correctIndex: 2,
+    options: [
+      'P = √3 × VL × IL × cos(φ)',
+      '1:4 ratio (1 out for every 4 up)',
+      'Hand tight plus a quarter turn',
+      'Steel Wire Armoured (SWA)',
+    ],
+    correctIndex: 3,
     explanation:
       'Steel Wire Armoured (SWA) cables are most suitable for underground installations due to their mechanical protection.',
   },
@@ -65,8 +75,13 @@ const Module5Section2_4 = () => {
       id: 2,
       question:
         'Within how many millimetres of a corner or ceiling can a cable be installed without extra protection?',
-      options: ['100 mm', '150 mm', '200 mm', '250 mm'],
-      correctAnswer: 1,
+      options: [
+        '200 mm',
+        '100 mm',
+        '150 mm',
+        '250 mm',
+      ],
+      correctAnswer: 2,
       explanation:
         'Cables can be installed within 150 mm of corners, ceilings, or skirting boards.',
     },
@@ -82,12 +97,12 @@ const Module5Section2_4 = () => {
       id: 4,
       question: 'Which type of cable is most suitable for underground installations?',
       options: [
-        'Twin & Earth (T&E)',
-        'Flexible cables',
         'Steel Wire Armoured (SWA)',
-        'LSZH cables',
+        'May require modified procedures',
+        'Force per unit area (P = F/A)',
+        'System with earthing electrode',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Steel Wire Armoured (SWA) cables are most suitable for underground installations.',
     },
@@ -95,10 +110,10 @@ const Module5Section2_4 = () => {
       id: 5,
       question: 'What is the main risk of grouping too many cables together?',
       options: [
-        'Increased installation cost',
+        'Rotational force produced by the motor, measured in Nm',
         'Overheating due to reduced current-carrying capacity',
-        'Difficulty in identification',
-        'Voltage drop issues',
+        'Increased loss around 1383nm due to hydroxyl ions',
+        'Potentially dangerous - urgent remedial action required',
       ],
       correctAnswer: 1,
       explanation:
@@ -107,28 +122,38 @@ const Module5Section2_4 = () => {
     {
       id: 6,
       question: 'What type of sheath is recommended where chemical exposure is likely?',
-      options: ['Standard PVC', 'Chemically resistant sheath', 'Rubber sheath', 'Paper insulation'],
-      correctAnswer: 1,
+      options: [
+        'Burn marks or discolouration',
+        'Polychlorinated biphenyls (PCBs)',
+        'Chemically resistant sheath',
+        'They are inversely proportional',
+      ],
+      correctAnswer: 2,
       explanation:
         'Chemically resistant sheath materials should be used where chemical exposure is likely.',
     },
     {
       id: 7,
       question: 'What percentage maximum volt drop is allowed for lighting circuits under BS 7671?',
-      options: ['2%', '3%', '5%', '7%'],
-      correctAnswer: 1,
+      options: [
+        '2%',
+        '7%',
+        '5%',
+        '3%',
+      ],
+      correctAnswer: 3,
       explanation: 'Maximum voltage drop for lighting circuits is 3% under BS 7671.',
     },
     {
       id: 8,
       question: 'Why are LSZH cables used in schools or hospitals?',
       options: [
-        'They are cheaper',
         'They limit toxic smoke in the event of a fire',
-        'They have higher current capacity',
-        'They are easier to install',
+        'Technical competence plus management and leadership skills',
+        'Use the larger cable that meets both requirements',
+        'A rescue plan for retrieving a fallen worker',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'LSZH cables limit toxic smoke production in fire situations, important for public buildings.',
     },
@@ -137,11 +162,11 @@ const Module5Section2_4 = () => {
       question: "Name one environmental factor that can derate a cable's capacity.",
       options: [
         'Cable colour',
-        'Installation height',
         'High ambient temperature',
+        'Installation height',
         'Cable manufacturer',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'High ambient temperature is a key environmental factor that derates cable capacity.',
     },
@@ -151,11 +176,11 @@ const Module5Section2_4 = () => {
         "If a 32 A MCB is protecting a circuit, what must be true about the cable's rating (Iz)?",
       options: [
         'Iz must be exactly 32 A',
+        'Iz is not related to MCB rating',
         'Iz must be at least 32 A',
         'Iz can be less than 32 A',
-        'Iz is not related to MCB rating',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "The cable's current-carrying capacity (Iz) must be at least equal to or greater than the protective device rating.",
     },

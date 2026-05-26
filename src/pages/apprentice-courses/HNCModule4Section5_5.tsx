@@ -32,7 +32,12 @@ const quickCheckQuestions = [
   {
     id: 'voltage-range',
     question: 'What is the permissible voltage range for a 230V UK supply under BS EN 50160?',
-    options: ['220V-240V (±4.3%)', '207V-253V (±10%)', '218V-242V (±5%)', '225V-235V (±2%)'],
+    options: [
+      '220V-240V (±4.3%)',
+      '207V-253V (±10%)',
+      '218V-242V (±5%)',
+      '225V-235V (±2%)',
+    ],
     correctIndex: 1,
     explanation:
       'BS EN 50160 specifies 230V +10%/-10% for LV supplies, giving a range of 207V to 253V. This harmonised European standard replaced the previous UK 240V ±6% tolerance.',
@@ -41,10 +46,10 @@ const quickCheckQuestions = [
     id: 'spd-type',
     question: 'Where should a Type 1 SPD be installed?',
     options: [
-      'At socket outlets',
+      'Eliminates current transient at changeover',
       'At the main distribution board near the origin',
-      'On IT equipment only',
-      'External to the building',
+      'To allow for design changes and incomplete information',
+      'Prove the circuit would be safe after rectification',
     ],
     correctIndex: 1,
     explanation:
@@ -54,12 +59,12 @@ const quickCheckQuestions = [
     id: 'earthing-tncs',
     question: 'What is the key characteristic of a TN-C-S (PME) earthing system?',
     options: [
-      'Separate earth electrode required',
       'Combined neutral and earth (PEN) from DNO',
-      'No earth connection',
-      'Earth via water pipes',
+      'Change in process output per unit change in input',
+      '4mA baseline allows fault detection',
+      'Non-invasive current measurement',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'TN-C-S (Protective Multiple Earthing) has combined neutral and earth (PEN conductor) in the supply, which is split at the origin to provide separate N and PE for the installation.',
   },
@@ -67,10 +72,10 @@ const quickCheckQuestions = [
     id: 'harmonic',
     question: 'What is the main cause of harmonic distortion in modern buildings?',
     options: [
-      'Incandescent lighting',
-      'Resistive heating',
+      'During your peak energy period, typically morning',
+      'Contaminated or moisture-affected insulation',
       'Electronic loads (computers, LED drivers, VFDs)',
-      'Induction motors',
+      'Uncontrolled air leakage through the building envelope',
     ],
     correctIndex: 2,
     explanation:
@@ -83,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: "What is 'voltage dip' (sag)?",
     options: [
-      'Complete loss of voltage',
+      'When the system uses constant flow primary pumping',
       'Temporary reduction in RMS voltage below 90%',
-      'Voltage increase above normal',
-      'Harmonic distortion',
+      'The risk of surface condensation at a thermal bridge',
+      'Workers, visitors, contractors, public, special groups',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: 'What does THD (Total Harmonic Distortion) measure?',
     options: [
-      'Voltage level only',
+      'Prioritise by safety risk, then operational impact',
+      'DALI (Digital Addressable Lighting Interface)',
       'The ratio of harmonic content to fundamental frequency',
-      'Power factor',
-      'Frequency variation',
+      'Electronic equipment is disconnected and circuit is isolated',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'THD quantifies harmonic distortion as a percentage - the ratio of all harmonic components to the fundamental frequency. THD below 5% is typically acceptable for most equipment.',
   },
@@ -109,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the function of an SPD (Surge Protective Device)?',
     options: [
-      'To generate backup power',
-      'To divert transient overvoltages to earth',
       'To regulate voltage level',
+      'To generate backup power',
       'To correct power factor',
+      'To divert transient overvoltages to earth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SPDs protect equipment by providing a low-impedance path to earth for transient overvoltages (surges). They clamp voltage to safe levels and divert surge energy away from sensitive equipment.',
   },
@@ -122,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'What causes flicker in electrical systems?',
     options: [
-      'Steady-state operation',
       'Rapid voltage fluctuations causing visible light variation',
-      'High power factor',
-      'Good quality earthing',
+      'The site supervisor or appointed responsible person',
+      'Loss when fibre cores are not perfectly aligned side-to-side',
+      'Ensure safe isolation and prove dead testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Flicker is caused by rapid voltage fluctuations (typically 0.5-25Hz) that produce visible variation in light output. Common causes include arc furnaces, welding equipment and large motor starting.',
   },
@@ -137,8 +142,8 @@ const quizQuestions = [
     options: [
       'Combined with neutral (PEN)',
       'Separate earth conductor from DNO transformer',
-      'Local earth electrode only',
       'Through the building structure',
+      'Local earth electrode only',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +153,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of EMC (Electromagnetic Compatibility) measures?',
     options: [
-      'To increase power consumption',
+      'They do not account for inter-reflected light from room surfaces',
+      'Identify hazards, decide who might be harmed, evaluate risks, record findings, review',
       'To ensure equipment neither emits nor is affected by electromagnetic interference',
-      'To improve aesthetics',
-      'To reduce installation costs',
+      'The site manager — single point of contact upward to the contracts manager',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "EMC ensures electrical equipment operates without causing interference to other equipment (emission) and can function in its electromagnetic environment (immunity). It's a legal requirement under EMC Directive.",
   },
@@ -161,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the third harmonic (3rd) particularly problematic for?',
     options: [
-      'Single-phase loads only',
+      'Temporary manual control mode for system setup and testing',
+      'It creates a brief high current and measures voltage drop',
+      'Loose connections, failing lamps, incompatible dimmer, or supply issues',
       'Neutral conductors in three-phase systems - they add rather than cancel',
-      'Earth conductors',
-      'Circuit breakers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Third harmonics (and their multiples) from balanced three-phase loads add in the neutral rather than cancelling. This can cause neutral current to exceed phase current, requiring oversized neutrals.',
   },
@@ -174,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'What voltage regulation problem can occur with long cable runs?',
     options: [
-      'Voltage increase',
       'Excessive voltage drop causing equipment malfunction',
-      'Harmonic generation',
-      'Improved power quality',
+      'A fault specific to that individual device or its circuit',
+      'To provide protection against electric shock',
+      'Unlimited fine, remedial orders, publicity orders',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Long cables have higher resistance, causing voltage drop (I×R losses). If the voltage at the load drops below the equipment tolerance (typically -10%), malfunction or damage can occur.',
   },
@@ -187,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is a Type 2 SPD designed to protect against?',
     options: [
-      'Direct lightning strikes only',
+      'It helps with material selection, safety, and fault finding',
       'Switching transients and indirect lightning effects',
-      'Harmonic distortion',
-      'Voltage sags',
+      'The conduit may kink or collapse, restricting cable installation',
+      '3-5 years minimum, 7 years recommended',
     ],
     correctAnswer: 1,
     explanation:
@@ -200,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is power factor correction used for?',
     options: [
-      'Increasing voltage',
+      'Clean all contact surfaces, remake the joint properly',
+      'To reduce electromagnetic interference (EMI)',
       'Reducing reactive power demand and improving efficiency',
-      'Generating harmonics',
-      'Providing backup power',
+      'Before construction begins, based on developed design',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Power factor correction capacitors supply reactive power locally, reducing the reactive current drawn from the supply. This improves efficiency, reduces losses and can lower electricity bills.',
   },

@@ -15,20 +15,75 @@ const TITLE = 'Lighting principles — lumens, lux, design | Level 3 Module 3.6.
 const DESCRIPTION = 'Inverse-square law, Lambert\'s cosine law, the lumen method. Calculating illuminance for a room and meeting CIBSE / BS EN 12464 task levels.';
 
 const checks = [
-  { id: 'l3-m3-6-4-isq', question: 'A point light source 3000 cd produces what illuminance directly under it at 3 m height?', options: ['1000 lx', '333 lx', '111 lx', '9000 lx'], correctIndex: 1, explanation: 'Inverse square: E = I / d² = 3000 / 9 = 333 lx (point directly below).' },
-  { id: 'l3-m3-6-4-cos', question: 'Same lamp, illuminance on a desk 2 m to the side at 3 m vertical (so 3.6 m to point, 33.7° from vertical):', options: ['333 lx', '193 lx', '100 lx', '50 lx'], correctIndex: 1, explanation: 'Distance²= 9+4 = 13, so 333 × (9/13) = 230 lx if vertical, then × cos 33.7° = × 0.832 = 192 lx (cosine law for tilted surface). Approximate; exact answer depends on luminaire intensity distribution.' },
-  { id: 'l3-m3-6-4-lumen', question: 'Lumen method: room L=10 m, W=6 m. Maintain 500 lx average. Total lumens needed (utilisation factor 0.6, maintenance factor 0.8):', options: ['30 000 lm', '60 000 lm', '62 500 lm', '125 000 lm'], correctIndex: 2, explanation: 'F_total = (E × A) / (UF × MF) = (500 × 60) / (0.6 × 0.8) = 30 000 / 0.48 = 62 500 lm.' },
+  { id: 'l3-m3-6-4-isq', question: 'A point light source 3000 cd produces what illuminance directly under it at 3 m height?', options: [
+    '9000 lx',
+    '111 lx',
+    '1000 lx',
+    '333 lx',
+  ], correctIndex: 3, explanation: 'Inverse square: E = I / d² = 3000 / 9 = 333 lx (point directly below).' },
+  { id: 'l3-m3-6-4-cos', question: 'Same lamp, illuminance on a desk 2 m to the side at 3 m vertical (so 3.6 m to point, 33.7° from vertical):', options: [
+    '333 lx',
+    '50 lx',
+    '100 lx',
+    '193 lx',
+  ], correctIndex: 3, explanation: 'Distance²= 9+4 = 13, so 333 × (9/13) = 230 lx if vertical, then × cos 33.7° = × 0.832 = 192 lx (cosine law for tilted surface). Approximate; exact answer depends on luminaire intensity distribution.' },
+  { id: 'l3-m3-6-4-lumen', question: 'Lumen method: room L=10 m, W=6 m. Maintain 500 lx average. Total lumens needed (utilisation factor 0.6, maintenance factor 0.8):', options: [
+    '125 000 lm',
+    '62 500 lm',
+    '30 000 lm',
+    '60 000 lm',
+  ], correctIndex: 1, explanation: 'F_total = (E × A) / (UF × MF) = (500 × 60) / (0.6 × 0.8) = 30 000 / 0.48 = 62 500 lm.' },
 ];
 
 const quizQuestions = [
-  { id: 1, question: 'Luminous intensity unit:', options: ['lumen', 'candela', 'lux', 'watt'], correctAnswer: 1, explanation: 'Candela (cd) is the SI base unit for luminous intensity (light emitted per solid angle in a particular direction).' },
-  { id: 2, question: 'Luminous flux unit:', options: ['lumen', 'lux', 'candela', 'kelvin'], correctAnswer: 0, explanation: 'Lumen (lm) = total visible light output. Lamp data sheets quote lumens.' },
-  { id: 3, question: 'Illuminance unit:', options: ['lumen', 'lux (lm/m²)', 'candela', 'watt/m²'], correctAnswer: 1, explanation: 'Lux (lx) = lumens per square metre. The amount of light landing on a surface.' },
-  { id: 4, question: 'Inverse square law: doubling distance reduces illuminance by:', options: ['Half', 'Quarter (1/2² = 1/4)', 'Eighth', 'No change'], correctAnswer: 1, explanation: 'E ∝ 1/d². Twice the distance → quarter the illuminance from a point source.' },
-  { id: 5, question: 'BS EN 12464-1 office task illuminance:', options: ['100 lx', '300 lx', '500 lx', '1000 lx'], correctAnswer: 2, explanation: 'BS EN 12464-1 Table 5: general office work 500 lx maintained on the task. Higher for fine drawing (1000), lower for circulation (100-200).' },
-  { id: 6, question: 'A 100 W LED panel has efficacy 130 lm/W. Lumens output:', options: ['1300 lm', '13 000 lm', '130 lm', '100 lm'], correctAnswer: 1, explanation: 'Lumens = watts × efficacy = 100 × 130 = 13 000 lm. (Or efficacy can be checked: 13000/100 = 130 lm/W.)' },
-  { id: 7, question: 'Utilisation factor accounts for:', options: ['Lamp age', 'Fraction of lumens that reach the task surface vs lost to walls/ceiling', 'Manufacturing tolerance', 'Voltage variation'], correctAnswer: 1, explanation: 'UF = lumens onto task / total lumens emitted. Depends on room dimensions, reflectance and luminaire distribution. Higher rooms = lower UF.' },
-  { id: 8, question: 'Maintenance factor (MF) covers:', options: ['Cleaning costs', 'Light output reduction over time due to dirt, lamp ageing, room dirt', 'Installation labour', 'Capital depreciation'], correctAnswer: 1, explanation: 'MF (typically 0.7-0.85) is design margin: actual install will deliver less light over years due to lamp lumen depreciation, luminaire dirt, room dirt. Specify lamps with extra margin.' },
+  { id: 1, question: 'Luminous intensity unit:', options: [
+    'lumen',
+    'candela',
+    'lux',
+    'watt',
+  ], correctAnswer: 1, explanation: 'Candela (cd) is the SI base unit for luminous intensity (light emitted per solid angle in a particular direction).' },
+  { id: 2, question: 'Luminous flux unit:', options: [
+    'candela',
+    'kelvin',
+    'lumen',
+    'lux',
+  ], correctAnswer: 2, explanation: 'Lumen (lm) = total visible light output. Lamp data sheets quote lumens.' },
+  { id: 3, question: 'Illuminance unit:', options: [
+    'candela',
+    'lumen',
+    'watt/m²',
+    'lux (lm/m²)',
+  ], correctAnswer: 3, explanation: 'Lux (lx) = lumens per square metre. The amount of light landing on a surface.' },
+  { id: 4, question: 'Inverse square law: doubling distance reduces illuminance by:', options: [
+    'Quarter (1/2² = 1/4)',
+    'Half',
+    'Eighth',
+    'No change',
+  ], correctAnswer: 0, explanation: 'E ∝ 1/d². Twice the distance → quarter the illuminance from a point source.' },
+  { id: 5, question: 'BS EN 12464-1 office task illuminance:', options: [
+    '300 lx',
+    '500 lx',
+    '1000 lx',
+    '100 lx',
+  ], correctAnswer: 1, explanation: 'BS EN 12464-1 Table 5: general office work 500 lx maintained on the task. Higher for fine drawing (1000), lower for circulation (100-200).' },
+  { id: 6, question: 'A 100 W LED panel has efficacy 130 lm/W. Lumens output:', options: [
+    '1300 lm',
+    '130 lm',
+    '13 000 lm',
+    '100 lm',
+  ], correctAnswer: 2, explanation: 'Lumens = watts × efficacy = 100 × 130 = 13 000 lm. (Or efficacy can be checked: 13000/100 = 130 lm/W.)' },
+  { id: 7, question: 'Utilisation factor accounts for:', options: [
+    'Contractor may still be liable under the Limitation Act',
+    'It indicates dangerous conditions that could lead to fire or shock',
+    'Several months to over a year, depending on severity and support',
+    'Fraction of lumens that reach the task surface vs lost to walls/ceiling',
+  ], correctAnswer: 3, explanation: 'UF = lumens onto task / total lumens emitted. Depends on room dimensions, reflectance and luminaire distribution. Higher rooms = lower UF.' },
+  { id: 8, question: 'Maintenance factor (MF) covers:', options: [
+    'Light output reduction over time due to dirt, lamp ageing, room dirt',
+    'A systematic process to identify the underlying causes that led to the fire occurring',
+    'Overlapping design and construction phases to reduce total duration',
+    'Multiple interconnected communication paths for reliability',
+  ], correctAnswer: 0, explanation: 'MF (typically 0.7-0.85) is design margin: actual install will deliver less light over years due to lamp lumen depreciation, luminaire dirt, room dirt. Specify lamps with extra margin.' },
 ];
 
 const faqs = [

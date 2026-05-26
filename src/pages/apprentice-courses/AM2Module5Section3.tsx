@@ -54,11 +54,11 @@ const AM2Module5Section3 = () => {
       question: 'Which tester is used to prove safe isolation?',
       options: [
         'Multifunction tester (MFT)',
-        'Continuity tester',
         'A two-pole voltage indicator',
         'Insulation resistance tester',
+        'Continuity tester',
       ],
-      correctIndex: 2,
+      correctIndex: 1,
       explanation:
         'A two-pole voltage indicator is required for safe isolation procedures, not an MFT. This ensures proper Test-Prove-Test sequence.',
     },
@@ -66,10 +66,10 @@ const AM2Module5Section3 = () => {
       id: 'zero-leads',
       question: 'Why must leads be zeroed before continuity testing?',
       options: [
-        'To check the battery level',
+        'Electricity consumed by devices when switched off but still plugged in',
         'To remove the resistance of the leads from the measurement',
-        'To calibrate the tester',
-        'To comply with regulations',
+        'Participating — share ideas and facilitate decision-making together',
+        'Hazards during construction, maintenance, use and demolition',
       ],
       correctIndex: 1,
       explanation:
@@ -79,12 +79,12 @@ const AM2Module5Section3 = () => {
       id: 'lamp-disconnection',
       question: 'Why must you disconnect lamps before insulation resistance testing?',
       options: [
-        'To save energy',
+        'Energy = (Slope × Degree days) + Base load',
+        'Foam, vapours, and multiple reflections',
         'To prevent damage to equipment and get accurate results',
-        "It's required by law",
-        'To make testing easier',
+        '5-15 minutes before suspension trauma becomes life-threatening',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'Sensitive equipment like lamps can be damaged by high test voltages and will give false low readings during insulation resistance testing.',
     },
@@ -107,8 +107,13 @@ const AM2Module5Section3 = () => {
     {
       id: 2,
       question: 'How much probe tip should be exposed under GS38?',
-      options: ['1-2 mm', '2-4 mm', '5-10 mm', 'No limit specified'],
-      correctAnswer: 1,
+      options: [
+        '5-10 mm',
+        '1-2 mm',
+        '2-4 mm',
+        'No limit specified',
+      ],
+      correctAnswer: 2,
       explanation:
         'GS38 requires probe tips to be shrouded with only 2-4 mm of metal exposed for safety.',
     },
@@ -116,27 +121,37 @@ const AM2Module5Section3 = () => {
       id: 3,
       question: 'Why must continuity leads be zeroed?',
       options: [
-        'To check battery',
+        'Better mixing improves heat transfer coefficient',
+        'Record the limitation in the report',
+        'No, they only work with changing (AC) currents',
         'To remove lead resistance from measurement',
-        'To calibrate tester',
-        'To save time',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Zeroing removes the resistance of the test leads themselves from the measurement for accurate results.',
     },
     {
       id: 4,
       question: 'What test would you use to prove a short circuit?',
-      options: ['Continuity test', 'Polarity test', 'Insulation resistance test', 'RCD test'],
-      correctAnswer: 2,
+      options: [
+        'Insulation resistance test',
+        'Use a spirit or laser level',
+        'PIR (Passive Infrared) sensor',
+        'Set time targets for each stage',
+      ],
+      correctAnswer: 0,
       explanation:
         'Insulation resistance testing at 500V DC will reveal short circuits as very low or zero resistance readings.',
     },
     {
       id: 5,
       question: 'What unit is insulation resistance measured in?',
-      options: ['Ohms', 'Megohms (M)', 'Volts (V)', 'Amperes (A)'],
+      options: [
+        'Ohms',
+        'Megohms (M)',
+        'Amperes (A)',
+        'Volts (V)',
+      ],
       correctAnswer: 1,
       explanation:
         'Insulation resistance is measured in Megohms (M), with minimum 1M required for most circuits.',
@@ -145,10 +160,10 @@ const AM2Module5Section3 = () => {
       id: 6,
       question: 'What test would you use to identify high resistance joints?',
       options: [
-        'Insulation resistance',
-        'Polarity test',
+        'Failed timer or humidity sensor',
+        'Safety glasses and hard hat',
         'Zs (earth fault loop impedance)',
-        'RCD test',
+        'Moisture ingress or corroded connections',
       ],
       correctAnswer: 2,
       explanation:
@@ -157,8 +172,13 @@ const AM2Module5Section3 = () => {
     {
       id: 7,
       question: "What's the maximum trip time for a 30 mA RCD at x1 In?",
-      options: ['40ms', '150ms', '300ms', '500ms'],
-      correctAnswer: 2,
+      options: [
+        '40ms',
+        '150ms',
+        '500ms',
+        '300ms',
+      ],
+      correctAnswer: 3,
       explanation: 'At 1x rated current (30mA), RCDs must trip within 300ms according to BS7671.',
     },
     {
@@ -173,10 +193,10 @@ const AM2Module5Section3 = () => {
       id: 9,
       question: 'Why must you disconnect lamps before insulation resistance testing?',
       options: [
-        'To save power',
+        'Eliminate, substitute, engineer, admin, PPE',
         'To prevent damage and get accurate results',
-        "It's not necessary",
-        'To save time',
+        'The rectifier input draws non-sinusoidal current',
+        'Earth fault loop impedance (Zs)',
       ],
       correctAnswer: 1,
       explanation:
@@ -186,10 +206,10 @@ const AM2Module5Section3 = () => {
       id: 10,
       question: 'What do assessors expect you to do if you get an unrealistic reading?',
       options: [
-        'Ignore it',
-        'Make up a better number',
+        'Consider higher rated RCDs or circuit division',
+        'Recognise excellence and raise professional profile',
         'Re-check instrument settings and connections',
-        'Ask for help',
+        'Connecting two tubes at any angle other than 90 degrees',
       ],
       correctAnswer: 2,
       explanation:

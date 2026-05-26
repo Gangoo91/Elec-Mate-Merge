@@ -15,7 +15,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which tool provides a temporary visual guide without leaving marks?',
-    options: ['Chalk line', 'Laser level', 'Tape measure', 'Marker pen'],
+    options: [
+      'Chalk line',
+      'Laser level',
+      'Tape measure',
+      'Marker pen',
+    ],
     correctAnswer: 1,
     explanation:
       'A laser level provides a temporary visual guide without leaving any permanent marks on surfaces.',
@@ -24,20 +29,25 @@ const quizQuestions = [
     id: 2,
     question: "Should you skip setting out if you've installed similar systems before?",
     options: [
+      'Only for simple installations',
       'True - experience is enough',
       'False - each site is different',
-      'Only for simple installations',
       'Only if time is limited',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'False - each site is different and has unique conditions, obstructions, and requirements that must be assessed.',
   },
   {
     id: 3,
     question: 'What is the typical spacing for fixing trunking horizontally?',
-    options: ['0.5-0.8m', '0.9-1.2m', '1.5-2.0m', '2.0-2.5m'],
-    correctAnswer: 1,
+    options: [
+      '1.5-2.0m',
+      '0.5-0.8m',
+      '2.0-2.5m',
+      '0.9-1.2m',
+    ],
+    correctAnswer: 3,
     explanation:
       'Trunking should typically be fixed horizontally at intervals of 0.9-1.2m for adequate support.',
   },
@@ -45,20 +55,25 @@ const quizQuestions = [
     id: 4,
     question: 'Why should you mark centre lines when setting out conduit runs?',
     options: [
-      'It looks more professional',
       'To keep runs straight and symmetrical',
-      "It's required by law",
-      'To save materials',
+      'Chest compressions without rescue breaths',
+      'Sinusoidal wave over pulsating DC wave',
+      'Safety interlocks and fan proving',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Marking centre lines helps maintain straight, symmetrical runs and ensures consistent alignment throughout the installation.',
   },
   {
     id: 5,
     question: 'Which regulation specifies safe zones for cable containment?',
-    options: ['BS 7671', 'BS 5839', 'BS 5266', 'BS EN 61439'],
-    correctAnswer: 0,
+    options: [
+      'BS 5839',
+      'BS 7671',
+      'BS EN 61439',
+      'BS 5266',
+    ],
+    correctAnswer: 1,
     explanation:
       'BS 7671 (IET Wiring Regulations) specifies the requirements for safe zones and cable containment.',
   },
@@ -66,10 +81,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is one common mistake made when setting out accessory positions?',
     options: [
-      'Using too many tools',
-      'Working too slowly',
+      'Clearly and legibly in permanent ink or digitally',
+      'Maintained and reviewed at risk reduction meetings',
       'Measuring from different reference points',
-      'Following drawings exactly',
+      'Performance 20% worse than the TM46 benchmark',
     ],
     correctAnswer: 2,
     explanation:
@@ -80,11 +95,11 @@ const quizQuestions = [
     question: 'How do you ensure all socket outlets are aligned in a row?',
     options: [
       'Measure each individually',
-      'Use a spirit or laser level',
-      'Estimate by eye',
       'Use a tape measure only',
+      'Estimate by eye',
+      'Use a spirit or laser level',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Using a spirit or laser level ensures all socket outlets are aligned horizontally in a straight line.',
   },
@@ -92,12 +107,12 @@ const quizQuestions = [
     id: 8,
     question: 'What should be checked before marking containment positions on site?',
     options: [
-      'Only the weather',
       'Site measurements, obstructions, and surface suitability',
-      'Just the tools available',
-      'Only the time schedule',
+      'Installation earthing + electrode resistance + supply earth return',
+      'From the platform below, reaching up through the open trapdoor',
+      'Durable and legible marking identifying each circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Site measurements, obstructions, and surface suitability must all be checked before marking positions.',
   },
@@ -108,7 +123,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'What is the typical fixing spacing for horizontal conduit runs?',
-    options: ['0.8-1.0m', '1.2-1.5m', '2.0-2.5m', '3.0m or more'],
+    options: [
+      '2.0-2.5m',
+      '1.2-1.5m',
+      '3.0m or more',
+      '0.8-1.0m',
+    ],
     correctIndex: 1,
     explanation:
       'Horizontal conduit runs should typically be fixed every 1.2-1.5m to provide adequate support and prevent sagging.',
@@ -117,12 +137,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why is it important to use a consistent reference point during setting out?',
     options: [
-      'To save time',
+      'Two parallel lines with S2',
+      'Verify operation of switches and controls',
       'To maintain alignment and accuracy',
-      "It's not important",
-      'To use fewer tools',
+      'Fail for safety and specification breach',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Using a consistent reference point ensures all measurements are accurate and all components align properly throughout the installation.',
   },
@@ -130,12 +150,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Name two tools used for long, straight containment markings.',
     options: [
+      'Spirit level and ruler',
+      'Tape measure and pencil',
       'Hammer and screwdriver',
       'Chalk line and laser level',
-      'Tape measure and pencil',
-      'Spirit level and ruler',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Chalk lines and laser levels are the primary tools for creating long, straight reference lines for containment marking.',
   },

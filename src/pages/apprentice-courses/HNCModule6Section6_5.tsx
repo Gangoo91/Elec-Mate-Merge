@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'circular-definition',
     question: 'What is the fundamental principle of a circular economy?',
     options: [
-      'Maximising production output',
+      'Light switch disconnects neutral instead of line',
+      'Indirect emissions from purchased electricity, heat, and steam',
       'Eliminating waste through continuous reuse of materials and products',
-      'Reducing initial construction costs',
-      'Increasing energy consumption efficiency',
+      'The safety function is still performed despite the fault',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A circular economy aims to eliminate waste and pollution by keeping products and materials in use for as long as possible, regenerating natural systems rather than following a linear take-make-dispose model.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'design-disassembly',
     question: 'What is the primary goal of design for disassembly (DfD)?',
     options: [
-      'Making demolition faster',
+      'Details of activities, dates, and learning outcomes',
+      'Mental health problems are a sign of personal weakness',
       'Enabling components to be separated and reused at end of life',
-      'Reducing initial installation time',
-      'Simplifying maintenance procedures',
+      'Require contraventions to be remedied within a specified time',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Design for disassembly ensures that building components can be easily separated, recovered, and reused or recycled at end of life, rather than being demolished and sent to landfill.',
   },
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'material-passport',
     question: 'What information does a material passport typically contain?',
     options: [
-      "Only the manufacturer's warranty details",
+      'Wrong detector type (ionisation) for the location',
       'Composition, origin, environmental data, and end-of-life instructions',
-      'Just the purchase price and supplier',
-      'Building planning permission documents',
+      'Cable route coordination, power supply planning, and interface requirements',
+      'May have marginally higher initial costs but reduces whole-life costs',
     ],
     correctIndex: 1,
     explanation:
@@ -73,8 +73,8 @@ const quickCheckQuestions = [
     options: [
       'The building owner',
       'The service provider/manufacturer',
-      'The electrical contractor',
       'The facilities management company',
+      'The electrical contractor',
     ],
     correctIndex: 1,
     explanation:
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'Which of the following best describes the circular economy approach compared to linear economy?',
     options: [
-      'Take-make-dispose versus take-make-reuse-recycle',
       'High cost versus low cost production',
+      'Take-make-dispose versus take-make-reuse-recycle',
       'Manual versus automated manufacturing',
       'Local versus global supply chains',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'The linear economy follows a take-make-dispose model where resources become waste. The circular economy eliminates waste through continuous cycles of reuse, repair, remanufacture, and recycling.',
   },
@@ -101,8 +101,13 @@ const quizQuestions = [
     id: 2,
     question:
       'What percentage of construction and demolition waste in the UK could potentially be reused or recycled with proper circular design?',
-    options: ['30-40%', '50-60%', '70-80%', '90% or more'],
-    correctAnswer: 3,
+    options: [
+      '70-80%',
+      '30-40%',
+      '90% or more',
+      '50-60%',
+    ],
+    correctAnswer: 2,
     explanation:
       'Studies indicate that over 90% of construction and demolition waste could be reused or recycled with proper circular design principles, yet current rates are much lower due to linear design approaches.',
   },
@@ -111,12 +116,12 @@ const quizQuestions = [
     question:
       'Which connection type best supports design for disassembly in electrical installations?',
     options: [
-      'Welded joints',
-      'Adhesive bonding',
+      'Any fault that creates risk of shock, fire, or burns',
+      'To prevent damage during earthquakes',
+      'When inductive reactance equals capacitive reactance',
       'Mechanical fasteners and plug-in connections',
-      'Concrete encasement',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Mechanical fasteners (bolts, clips, clamps) and plug-in connections allow components to be separated without damage, enabling reuse. Welding, adhesives, and encasement prevent non-destructive separation.',
   },
@@ -124,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: 'A material passport for a distribution board should include:',
     options: [
-      'Only the circuit schedule',
       'Component materials, manufacturer data, disassembly instructions, and recycling guidance',
-      'Just the test certificates',
-      'Only the installation drawings',
+      'Using reclaimed and refurbished components where standards permit',
+      'Linear supply chains and contractual arrangements favouring new products',
+      'May have marginally higher initial costs but reduces whole-life costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Material passports comprehensively document component materials, manufacturer information, expected lifespan, maintenance requirements, disassembly procedures, and recycling or disposal guidance.',
   },
@@ -137,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is modular design in the context of circular economy for building services?',
     options: [
-      'Installing all systems in a single room',
+      'Prevention, reuse, recycling, recovery, then disposal as last resort',
       'Using standardised, interchangeable components that can be upgraded or replaced independently',
-      'Designing only one type of circuit',
-      'Minimising the number of components used',
+      'Risk of equipment failure, maintenance responsibility, and end-of-life disposal',
+      'Component materials, manufacturer data, disassembly instructions, and recycling guidance',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +156,12 @@ const quizQuestions = [
     question:
       'In a product-as-a-service model for building services, what shifts from the client to the provider?',
     options: [
-      'Building ownership',
+      'Accessible trunking and containment systems with mechanical fixings',
+      'Using standardised, interchangeable components that can be upgraded or replaced independently',
       'Risk of equipment failure, maintenance responsibility, and end-of-life disposal',
-      'Planning permission responsibility',
-      'Building insurance requirements',
+      'May have marginally higher initial costs but reduces whole-life costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Product-as-a-service shifts equipment ownership, maintenance responsibility, performance risk, and end-of-life disposal to the provider, who is then incentivised to maximise equipment longevity and recovery.',
   },
@@ -165,11 +170,11 @@ const quizQuestions = [
     question: 'Which strategy reduces the need for new raw materials in electrical installations?',
     options: [
       'Installing larger cables than required',
-      'Using reclaimed and refurbished components where standards permit',
-      'Specifying the newest equipment only',
       'Avoiding maintenance to reduce interventions',
+      'Specifying the newest equipment only',
+      'Using reclaimed and refurbished components where standards permit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reclaimed and refurbished components reduce demand for virgin materials. Many electrical components like containment, some luminaires, and switchgear can be refurbished to meet required standards.',
   },
@@ -178,12 +183,12 @@ const quizQuestions = [
     question:
       'What is the primary barrier to implementing circular economy principles in UK electrical installations?',
     options: [
-      'Lack of available technology',
-      'Building regulations prohibiting reuse',
       'Linear supply chains and contractual arrangements favouring new products',
-      'Electricians refusing to use circular methods',
+      'May have marginally higher initial costs but reduces whole-life costs',
+      'Risk of equipment failure, maintenance responsibility, and end-of-life disposal',
+      'Component materials, manufacturer data, disassembly instructions, and recycling guidance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Traditional procurement, contractual arrangements, and supply chains are designed around new products. Shifting to circular models requires changes in contracts, warranties, and business relationships.',
   },
@@ -191,12 +196,12 @@ const quizQuestions = [
     id: 9,
     question: 'How does design for disassembly affect initial installation costs?',
     options: [
-      'Always significantly increases costs',
-      'Has no impact on costs',
+      'Accessible trunking and containment systems with mechanical fixings',
       'May have marginally higher initial costs but reduces whole-life costs',
-      'Always reduces initial costs',
+      'Risk of equipment failure, maintenance responsibility, and end-of-life disposal',
+      'Component materials, manufacturer data, disassembly instructions, and recycling guidance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'DfD may have slightly higher initial costs due to accessible fixings and connections, but these are offset by reduced maintenance costs, easier upgrades, and significant end-of-life value recovery.',
   },
@@ -204,12 +209,12 @@ const quizQuestions = [
     id: 10,
     question: 'What role does BIM play in supporting circular economy for building services?',
     options: [
-      'None - BIM is only for new construction',
+      'Risk of equipment failure, maintenance responsibility, and end-of-life disposal',
+      'Using reclaimed and refurbished components where standards permit',
       'Storing material passport data and tracking component lifecycles',
-      'Only for creating installation drawings',
-      'Calculating energy consumption only',
+      'Accessible trunking and containment systems with mechanical fixings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BIM can store material passport information, track component age and condition, schedule maintenance, and provide data for end-of-life decisions, making it a key enabler for circular building services.',
   },
@@ -217,12 +222,12 @@ const quizQuestions = [
     id: 11,
     question: 'Which approach to cable management best supports circular economy principles?',
     options: [
-      'Clipping cables directly to structure',
+      'Prevention, reuse, recycling, recovery, then disposal as last resort',
+      'Risk of equipment failure, maintenance responsibility, and end-of-life disposal',
+      'Using reclaimed and refurbished components where standards permit',
       'Accessible trunking and containment systems with mechanical fixings',
-      'Burying cables in concrete',
-      'Using the minimum containment possible',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Accessible containment with mechanical fixings allows cables to be recovered, containment reused, and routes modified without destructive removal. This contrasts with embedded or clipped installations.',
   },
@@ -230,12 +235,12 @@ const quizQuestions = [
     id: 12,
     question: "What does 'waste hierarchy' prioritise in circular economy thinking?",
     options: [
-      'Landfill disposal as the preferred option',
-      'Incineration for energy recovery',
       'Prevention, reuse, recycling, recovery, then disposal as last resort',
-      'Export of waste to other countries',
+      'May have marginally higher initial costs but reduces whole-life costs',
+      'Accessible trunking and containment systems with mechanical fixings',
+      'Linear supply chains and contractual arrangements favouring new products',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The waste hierarchy prioritises prevention (not creating waste), then reuse, recycling, energy recovery, and finally disposal. Circular economy aims to operate at the top of this hierarchy.',
   },

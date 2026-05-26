@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'resource-histogram',
     question: 'What does a resource histogram display?',
     options: [
-      'Material costs over time',
+      'Conduct suitable and sufficient risk assessments',
+      'The purchase price of the equipment',
       'Resource requirements plotted against time periods',
-      'Equipment depreciation rates',
-      'Subcontractor payment schedules',
+      'They are unresponsive and not breathing normally',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A resource histogram is a bar chart showing resource requirements (typically labour hours or personnel numbers) plotted against time periods, enabling project managers to visualise demand peaks and troughs.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'resource-levelling',
     question: 'The primary purpose of resource levelling is to:',
     options: [
-      'Increase project duration',
+      'Employer liability for acts of employees in the course of employment',
+      'Document setting out health and safety arrangements for construction phase',
       'Reduce resource demand peaks by adjusting activity timing',
-      'Eliminate all float from the programme',
-      'Maximise overtime working',
+      'The associated input or coil is ON (energised)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Resource levelling aims to smooth out peaks in resource demand by adjusting activity timing within available float, avoiding excessive hiring/firing cycles and overtime costs.',
   },
@@ -57,8 +57,13 @@ const quickCheckQuestions = [
     id: 'productivity-rate',
     question:
       'An electrician installing containment achieves 25 metres per day. If 200 metres are required, what labour duration is needed?',
-    options: ['5 days', '8 days', '10 days', '25 days'],
-    correctIndex: 1,
+    options: [
+      '5 days',
+      '10 days',
+      '8 days',
+      '25 days',
+    ],
+    correctIndex: 2,
     explanation:
       'Labour duration = Quantity required / Productivity rate = 200m / 25m per day = 8 days. Always verify productivity rates against project-specific conditions.',
   },
@@ -68,10 +73,10 @@ const quickCheckQuestions = [
     options: [
       'Standard trunking',
       'Twin and earth cable',
-      'Bespoke LV switchgear panels',
       'Modular wiring accessories',
+      'Bespoke LV switchgear panels',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Bespoke LV switchgear panels typically require 12-16 weeks lead time due to design approval, manufacturing, and testing requirements. Standard materials are usually available within days.',
   },
@@ -82,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the relationship between resource loading and resource levelling?',
     options: [
-      'They are identical processes',
+      'From MET to the connection point on the service (gas, water)',
       'Loading identifies requirements; levelling optimises timing',
-      'Levelling identifies requirements; loading optimises timing',
-      'Neither affects programme duration',
+      'Higher sound reduction at most frequencies',
+      'To ensure materials arrive when needed and prevent storage problems',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,7 +100,12 @@ const quizQuestions = [
     id: 2,
     question:
       'A project requires 3 electricians for 4 weeks. What is the total labour resource in person-weeks?',
-    options: ['4 person-weeks', '7 person-weeks', '12 person-weeks', '16 person-weeks'],
+    options: [
+      '16 person-weeks',
+      '4 person-weeks',
+      '12 person-weeks',
+      '7 person-weeks',
+    ],
     correctAnswer: 2,
     explanation:
       'Total labour = Number of resources x Duration = 3 electricians x 4 weeks = 12 person-weeks. This metric helps compare different resource/duration combinations.',
@@ -104,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which factor most significantly affects electrical installation productivity rates?',
     options: [
-      'Weather conditions',
+      'The bill of quantities or material schedule',
+      'Productivity improves as workers gain familiarity',
+      'At tender stage with confirmed lead times',
       'Working at height and access restrictions',
-      'Day of the week',
-      'Number of socket outlets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Working at height, scaffold access, occupied buildings, and coordination with other trades significantly impact productivity. MEWP use can reduce productivity by 30-40% compared to working at floor level.',
   },
@@ -117,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'When should long lead time items be ordered on a building services project?',
     options: [
-      'After all design is complete',
-      'When site work begins',
       'At tender stage with confirmed lead times',
-      'Two weeks before required on site',
+      'Productivity improves as workers gain familiarity',
+      'The bill of quantities or material schedule',
+      'Working at height and access restrictions',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Long lead items (switchgear, generators, chillers) must be identified at tender stage with confirmed lead times. Orders should be placed immediately after contract award to avoid programme delays.',
   },
@@ -131,19 +141,24 @@ const quizQuestions = [
     question:
       'A resource histogram shows a peak of 15 electricians but only 10 are available. What is the resource conflict?',
     options: [
-      '5 electricians short',
       '15 electricians short',
-      '10 electricians excess',
+      '5 electricians short',
       'No conflict exists',
+      '10 electricians excess',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Resource conflict = Peak demand - Available resources = 15 - 10 = 5 electricians short. This must be resolved through levelling, overtime, subcontracting, or programme extension.',
   },
   {
     id: 6,
     question: 'What is the typical productivity allowance for working in an occupied hospital?',
-    options: ['No allowance needed', '10-15% reduction', '30-50% reduction', '100% reduction'],
+    options: [
+      'No allowance needed',
+      '10-15% reduction',
+      '30-50% reduction',
+      '100% reduction',
+    ],
     correctAnswer: 2,
     explanation:
       'Working in occupied hospitals typically reduces productivity by 30-50% due to access restrictions, infection control, noise limitations, and coordination with clinical activities.',
@@ -152,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which document forms the basis for material procurement planning?',
     options: [
-      'The tender submission',
+      'Working at height and access restrictions',
+      'Productivity improves as workers gain familiarity',
+      'At tender stage with confirmed lead times',
       'The bill of quantities or material schedule',
-      'The health and safety plan',
-      'The commissioning specification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The bill of quantities or material schedule lists all materials required with quantities, forming the basis for procurement planning, ordering schedules, and cost control.',
   },
@@ -165,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'Plant utilisation rate measures:',
     options: [
-      'How fast equipment operates',
       'The percentage of available time equipment is productively used',
-      'Equipment purchase cost',
-      'Maintenance frequency',
+      'To allow systematic fault identification and prevent cascading failures',
+      'Unlimited fine and/or up to 5 years imprisonment',
+      'Reduced pumping energy while maintaining heat delivery',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Plant utilisation = (Productive time / Available time) x 100%. High utilisation improves cost-effectiveness; low utilisation indicates poor planning or over-allocation.',
   },
@@ -179,10 +194,10 @@ const quizQuestions = [
     question:
       'Why is resource levelling performed within float rather than extending the programme?',
     options: [
-      'Float is free time that costs nothing',
+      'Providing a known voltage to test that the voltage indicator works',
       'Extending the programme increases costs and may breach contract dates',
-      'Float cannot be used for other purposes',
-      'Programme extension is not permitted',
+      'Hearing only the parts of a message that interest you or confirm your existing views',
+      'Reduced operational energy with residual emissions offset',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,8 +207,13 @@ const quizQuestions = [
     id: 10,
     question:
       'A cable installation requires 500m at a productivity rate of 40m/hour. With two electricians, how many hours to complete?',
-    options: ['6.25 hours', '12.5 hours', '25 hours', '50 hours'],
-    correctAnswer: 0,
+    options: [
+      '50 hours',
+      '12.5 hours',
+      '6.25 hours',
+      '25 hours',
+    ],
+    correctAnswer: 2,
     explanation:
       'Total hours = Quantity / (Rate x Number of workers) = 500m / (40m/hr x 2) = 500/80 = 6.25 hours. Doubling resources halves the duration for linear work.',
   },
@@ -202,11 +222,11 @@ const quizQuestions = [
     question: 'Which procurement strategy minimises storage costs on a congested city centre site?',
     options: [
       'Bulk ordering at project start',
-      'Just-in-time delivery',
-      'Owner-furnished materials',
       'Consignment stock',
+      'Owner-furnished materials',
+      'Just-in-time delivery',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Just-in-time (JIT) delivery schedules materials to arrive as needed, minimising on-site storage requirements - essential on congested sites with limited lay-down areas.',
   },
@@ -214,12 +234,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the effect of learning curve on productivity rates?',
     options: [
-      'No effect on productivity',
-      'Productivity decreases as work progresses',
       'Productivity improves as workers gain familiarity',
       'Learning curve only applies to manufacturing',
+      'No effect on productivity',
+      'Productivity decreases as work progresses',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The learning curve shows productivity improvement as workers become familiar with the work, site, and methods. First-fix in initial areas takes longer than later, repetitive work.',
   },

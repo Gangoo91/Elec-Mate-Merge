@@ -42,12 +42,12 @@ const checks = [
     question:
       "After rectifying a fault on a domestic ring final, what BS 7671 643 tests should you run as part of the verification?",
     options: [
-      "Just one.",
+      "A Statutory Instrument is secondary legislation — passed under the authority of an Act of Parliament. Breach is a criminal offence and the HSE can prosecute. A British Standard is a voluntary technical document published by the British Standards Institution. Breach is not in itself a criminal offence — but where another statute (e.g. Approved Document P, which references BS 7671) effectively requires compliance, departure becomes evidence of a statutory breach.",
+      "Building Regulations Part L (Conservation of Fuel and Power) applies to new build, extensions and major renovations. Heat pump installs in those contexts must demonstrate compliance with the relevant Part L primary energy and carbon emissions targets, typically through SAP (Standard Assessment Procedure) for dwellings. The Future Homes Standard expected to bring fossil-fuel boilers off new-build from 2025 elevates heat pumps to the default route for new-build. MCS MIS 3005 sits alongside Part L — MCS proves the installer is competent, Part L sets the building energy targets, and the SAP calculation that informs Part L compliance uses MCS-style heat-loss and SCOP methodology.",
+      "Workplace mentor is the unpaid (or informally paid) day-job mentor allocated to a specific apprentice within the employing firm. Different from college assessor (paid, formally qualified, employed by college). The mentor signs portfolio entries as evidence of on-site competence, attends three-way reviews, calibrates progress with the college tutor. Mentor competence is evidenced by JIB Approved Electrician grade plus experience — no specific qualification required.",
       "Five tests on the affected circuit. (1) Continuity — R1+R2 verifies the corrected joint reduces loop resistance to expected value. (2) Ring continuity (three-step) verifies ring topology is intact. (3) IR test verifies insulation hasn't been damaged during the work. (4) Polarity verifies any disturbed accessory was reconnected correctly. (5) EFLI Zs verifies the protective device disconnect time meets BS 7671 Table 41.3. Plus on RCD-protected: RCD trip-time test verifies the device operates correctly. The retest is documented on the certificate AND the job sheet — proof that the rectification worked.",
-      "Just visual.",
-      "Just continuity.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Post-rectification retest is what proves the fix worked. Skipping it = no evidence of correct repair = comeback risk + regulatory exposure. Standard L3 practice is the relevant BS 7671 643 tests on the affected circuit — five tests for a typical ring final.",
   },
@@ -56,12 +56,12 @@ const checks = [
     question:
       "What's 'functional testing' and how is it different from BS 7671 643 testing?",
     options: [
-      "Same.",
+      "Yes, but only after preparing — switch off any sensitive loads on the same RCD, brief any occupants the supply may briefly trip, and be ready to reset the RCBO. Full trip-current mode is more accurate (typically plus or minus 5 percent vs plus or minus 10 percent for no-trip), and on a borderline result it can confirm whether the no-trip reading was accurate or whether you have a margin you can rely on. If the full mode confirms the reading you can document with higher confidence; if it differs significantly, investigate further.",
+      "RIDDOR Reg 7 specifies a list of 'dangerous occurrences' that must be reported even if no-one was hurt — they're near-misses with serious potential. The list (RIDDOR Schedule 2) includes electrical short circuits or overloads that cause a fire or explosion, certain types of plant collapse, scaffolding failure, dangerous occurrences in or near a pipeline, and so on. So yes — an electrical incident causing fire or explosion in a fixed installation is reportable as a dangerous occurrence even with no injury.",
+      "Three. (1) Test readings — pre-rectification (the failed reading) and post-rectification (the corrected reading), with timestamps and instrument IDs. (2) Functional test outcomes — what was tested, what worked, any anomalies. (3) Customer hand-back record — what was demonstrated, what documentation provided, customer's signed acceptance. The records become the diagnostic narrative on the job sheet — defensible audit trail of what was found, what was done, what was verified.",
       "BS 7671 643 = ELECTRICAL tests (continuity, IR, polarity, EFLI, RCD trip-time). Functional testing = OPERATIONAL tests — does the system actually do what it's supposed to do? Examples: switch operates the correct circuit; light dims correctly across the dimmer range; smoke alarm sounds when test button pressed; emergency lighting illuminates on simulated mains failure; fire alarm panel signals out to ARC during a 'walk test'. Functional testing is essential for systems where the electrical compliance doesn't fully prove the operation. Standard L3 practice: BS 7671 643 + functional test on the affected system.",
-      "Just visual.",
-      "Just timing.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Functional testing complements BS 7671 643. The electrical tests prove the installation is electrically safe; the functional tests prove it actually works as intended. Both are needed for a defensible hand-back.",
   },
@@ -70,12 +70,12 @@ const checks = [
     question:
       "What's the standard customer hand-back at the end of a fault-rectification visit?",
     options: [
-      "Just leave.",
       "Five-step. (1) DEMONSTRATE the fix — show the customer that the original symptom is no longer present (e.g. 'the breaker's not tripping any more — try plugging in your kettle'). (2) WALK THROUGH the work done — what was found, what was fixed, what tests confirmed. (3) PROVIDE documentation — job sheet copy, any certificates, customer-friendly summary. (4) EDUCATE on prevention — what behaviours / conditions might cause recurrence, what to watch for. (5) AGREE next steps — any further work recommended, follow-up visit if needed, payment terms. The hand-back is what turns a job from 'work done' to 'customer satisfied'. Skipping it leaves customer feeling unfinished.",
-      "Send invoice only.",
-      "Just bill.",
+      "Because the standard's enforcement and interpretation hinges on the precise definitions. 'Exposed-conductive-part' (a conductive part of equipment that can be touched and which is liable to become live in fault conditions) and 'extraneous-conductive-part' (a conductive part liable to introduce a potential, generally Earth, not forming part of the electrical installation) are different categories with different bonding rules. Mis-classify one as the other and you mis-bond, you fail the EICR, you potentially leave the customer unprotected. Definitions ARE the technical content.",
+      "WEEE applies to electrical and electronic equipment that has reached end-of-life — and a failed protective device is exactly that. The Regulations make the producer (Hager, MK, Schneider) responsible for funding end-of-life recovery, with the distributor (CEF, Edmundson, Rexel) operating the Take-Back Scheme at the counter. The contractor's role is to ROUTE the WEEE into that scheme rather than into general waste — the firm holds the Duty of Care under Environmental Protection Act 1990 s.34 for any waste it produces. Skipping the scheme and putting WEEE in the customer's bin breaches both the producer-responsibility framework and the Duty of Care.",
+      "Battery end-of-life in the residential storage context is usually defined as when usable capacity falls to around 70-80% of nameplate (varies by manufacturer warranty wording). A 10 kWh battery delivering 7 kWh of usable capacity is at roughly 70% — close to the typical 10-year warranty threshold. Whether the customer replaces depends on economics: the existing battery may still serve daily PV self-consumption usefully even at 70% capacity; the manufacturer warranty may trigger a free or subsidised replacement; second-life battery applications are emerging. Decommissioning is hazardous-waste handling, not skip handling.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Customer hand-back is the closing act of every job. It's the moment the customer decides whether they're satisfied — and whether they'll call you back next time. The five-step structure makes the hand-back consistent and reduces post-job complaints.",
   },
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: "Why is the post-rectification retest non-negotiable, not 'usually a good idea'?",
     options: [
-      "It's optional.",
+      "PV systems remain energised during a fire — water from a hose hitting an energised DC string can produce a shock hazard for the fire-fighter. The IET Code of Practice for Grid-Connected Solar Photovoltaic Systems (currently 4th edition with 2026 update) addresses this through (1) clear external labelling identifying the property as having PV, (2) DC isolation accessible from outside the building where practicable, (3) emergency switching that de-energises the strings as far as is practical, and (4) optional rapid-shutdown technology that drops module-level voltage to safe levels on a signal. Section 712 references the IET CoP as the practical implementation guide. Some manufacturers now bake rapid-shutdown into the panel optimisers as standard.",
       "Three reasons. (1) PROVES THE FIX — confirms your repair actually worked, before the customer puts loads on it. (2) DETECTS NEW FAULTS — your work may have introduced a new fault (over-tightened terminal, repositioned cable chafing, swap component DOA). The retest catches it before the customer does. (3) GENERATES THE EVIDENCE — the post-rectification readings on the job sheet are the proof of compliance. Skipping the retest = no evidence of correct repair = comeback risk + regulatory exposure if anything goes wrong subsequently. The retest is part of the job, not optional polish.",
-      "Just polish.",
-      "Insurance.",
+      "A dedicated radial circuit, typically 32 A or 40 A (Type C MCB to handle the inrush from the compressor and fan), in 6 mm² or 10 mm² T&E or SWA depending on length and method. RCD protection per BS 7671 Section 411.3.3 / 415.1. A local rotary or DP isolator outdoors at the unit. Smart controls integration via dedicated low-voltage cable. Cyclic-rated cable selection — heat pumps run for hours, not minutes. Bonding to the unit chassis if it forms an extraneous-conductive part.",
+      "Five tests on the affected circuit. (1) Continuity — R1+R2 verifies the corrected joint reduces loop resistance to expected value. (2) Ring continuity (three-step) verifies ring topology is intact. (3) IR test verifies insulation hasn't been damaged during the work. (4) Polarity verifies any disturbed accessory was reconnected correctly. (5) EFLI Zs verifies the protective device disconnect time meets BS 7671 Table 41.3. Plus on RCD-protected: RCD trip-time test verifies the device operates correctly. The retest is documented on the certificate AND the job sheet — proof that the rectification worked.",
     ],
     correctAnswer: 1,
     explanation:
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: "What functional test verifies that an emergency lighting circuit is actually working?",
     options: [
-      "Just check the bulb.",
+      "Independent verification. The dead-test calculation depends on Ze (one measurement) plus R1+R2 (one or many readings, depending on circuit). The live Zs measurement is one direct reading. Comparing the two catches errors in either method, gives confidence in the result, and provides a single value to compare against Table 41.3 with the 0.8 multiplier applied.",
+      "Where an offence under HASAWA is committed by a body corporate (a limited company) and is proved to have been committed with the consent or connivance of, or attributable to neglect on the part of, a director, manager, secretary or similar officer, that individual ALSO commits the offence and is liable to personal prosecution. Relevant once you become Approved Electrician, then a senior, then potentially a director — your personal liability scales with your role.",
       "BS 5266-1 monthly self-test (push the panel test button) AND annual 3-hour discharge test (simulate mains failure for 3 hours, verify illumination throughout). The 3-hour test is the definitive functional verification — confirms battery capacity, lamp operation, switching circuit. After fault rectification on an EL system, perform a 1-hour discharge test as minimum (verifies switching + lamp operation; full battery capacity confirmed at next annual test). Document on the EL log book.",
-      "Visual only.",
-      "Just monthly.",
+      "Starting each week by asking your team: \\\\\\\"What obstacles are you facing that I can help remove?\\\\\\\" — then using empathy to understand the real blockers (which may be emotional as well as practical), self-regulation to resist the urge to micromanage the solutions, coaching to develop the team\\\\\\\\\\\\\\\\\\\\\\\\'s own problem-solving capability, and genuine follow-through that builds trust. The leader serves by enabling, not by doing everything themselves",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Emergency lighting functional testing is its own discipline under BS 5266-1. The monthly self-test confirms switching + lamp; the annual 3-hour confirms battery capacity. After fault work, a partial discharge test verifies operation without depleting the battery; the next scheduled 3-hour confirms full capacity.",
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: "What's a 'walk test' on a fire alarm system and when is it required?",
     options: [
-      "Just walk around.",
+      "Electrical burns are usually small at the surface but deep at the tissue level — current passing through tissue heats it from the inside out. Thermal burns are usually obvious at the surface. Electrical burns may have separate entry and exit wounds. Both need cooling (10-20 min cool running water for thermal; less aggressive for electrical because of underlying tissue damage), covering with a clean non-adherent dressing, and medical assessment.",
+      "Where the employee knew or ought reasonably to have known about the hazard, where they had an opportunity to communicate it to the colleague or supervisor, and where the failure to communicate caused or contributed to the colleague being exposed to risk. HSE has prosecuted individual employees under s.7 for failing to brief a successor on a permit-to-work, for not communicating that a circuit was still live, and for not raising a concern about a defective safe system of work. The s.7 duty is personal and cannot be delegated.",
+      "Cool, dry, ventilated location away from sources of ignition; not directly above or below escape routes; minimum clearances per the manufacturer's instructions for thermal management; not in a habitable room without a fire-rated enclosure or adequate fire separation; not in a loft (high temperature in summer, restricted access for emergency response); accessible for emergency isolation. The IET Code of Practice for Electrical Energy Storage Systems gives the framework. The manufacturer's installation manual is the binding instruction set; deviating from it voids the warranty and the BS 7671 compliance basis.",
       "Walk test = activating each detector in turn (using a heat / smoke / pull station test tool) and verifying the panel correctly identifies the zone. BS 5839-1 requires a walk test as part of the annual service AND after any change to the system OR rectification of a fault that affected a zone. The L3 apprentice doesn't normally do fire-alarm walk tests (specialist work) but supports the senior fire-alarm engineer. The walk test verifies the addressable / zone identification AND the sounder operation. Documented in the fire alarm log book.",
-      "Just visual.",
-      "Random.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Fire alarm walk testing is the operational verification that confirms each detector reports correctly to the panel. BS 5839-1 mandates it. After fault rectification on a fire-alarm zone, a walk test of that zone is the standard verification.",
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: "What records should you keep of the post-rectification verification?",
     options: [
-      "None.",
       "Three. (1) Test readings — pre-rectification (the failed reading) and post-rectification (the corrected reading), with timestamps and instrument IDs. (2) Functional test outcomes — what was tested, what worked, any anomalies. (3) Customer hand-back record — what was demonstrated, what documentation provided, customer's signed acceptance. The records become the diagnostic narrative on the job sheet — defensible audit trail of what was found, what was done, what was verified.",
-      "Just bill.",
-      "Just verbal.",
+      "(1) Strict liability — pollution incidents are offences regardless of intent; (2) duty of care under EPA 1990 s.34 + the Polluter Pays principle; (3) MHSWR Reg 14 (employee duty to report shortcomings); (4) operator's environmental permit conditions; (5) reputational and commercial consequences of an undetected pollution event downstream; (6) personal liability under HASAWA s.7 if the environmental hazard also creates a worker safety hazard.",
+      "It sits in the standards / technical family alongside BS 7671 and the IET OSG. BS 7671 Reg 510.3 ties equipment selection and erection to manufacturer's instructions. Reg 526.1 ties the connection itself (torque, ferrule requirement, mechanical strength) to those instructions. The data sheet is the authoritative source for how the unit is meant to be installed. Treat it as part of the site folder, not the bin.",
+      "A UK charity providing financial, emotional and practical support specifically to people working in the electrical industry and their families. The charity provides financial assistance grants (cost-of-living support, bereavement, illness, redundancy), emotional support and counselling, debt advice, apprentice support, and a careers service. The charity is funded by donations from across the electrical industry. Apprentices and qualified electricians, employees and self-employed workers, are all eligible for support.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Documentation is the audit trail. Pre-vs-post readings prove the fix worked. Functional test records prove the system operates correctly. Customer hand-back record proves the customer was satisfied and informed. The combination is the defensible record.",
   },
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: "What if the post-rectification retest shows a NEW fault that wasn't present before?",
     options: [
-      "Walk away.",
+      "Shorter cycles than the standard for the parent property type because the elevated risk in special locations justifies more frequent inspection. EV charge points are commonly inspected annually by the EV-charging-equipment manufacturer's recommendation; swimming pools annually for plant room; agricultural premises every 3 years given the harsh environment; caravans and marinas have their own GN3 Chapter 66 frequencies.",
       "Stop, investigate. The new fault may have been (a) introduced by your work (terminal damaged, cable chafed, component DOA), (b) revealed by your work (a latent fault that the original fault was masking), (c) a pre-existing fault that the original work didn't touch. Treat as a new diagnostic problem — five-step action chain (verify, identify, make safe, document, rectify or escalate). Don't dismiss as 'must have been there before' without investigation. Customer brief: 'we found and fixed the original fault, but a new issue showed up on retest; we're investigating'.",
-      "Ignore.",
-      "Send invoice.",
+      "Five high-frequency locations. (1) Outdoor sockets (BG / MK weatherproof) — gasket degradation, water ingress at the unused socket, RCD trip on rain. (2) Garden lighting transformers / converters — internal moisture from condensation; replacement standard. (3) Outdoor lighting fittings (security lights, post lights) — sealed fittings break their seal over years; water gets in, IR fails. (4) Conduit / containment — UV degradation of PVC, frost cracking, rodent damage. (5) Cable runs underground — settlement, root damage, archaeological dig damage; rare but significant. Brand patterns: BG / MK weatherproof outdoor sockets typically last 10 years before gasket replacement; cheap unbranded outdoor sockets fail in 2–3 years.",
+      "CALIBRATION — measurement of the instrument's response against reference standards, with results documented in a certificate. The instrument is unchanged; you get a certificate that says 'at the time of test, this instrument read X when measuring Y'. ADJUSTMENT — physical or software adjustment of the instrument to bring it into specification. Some calibration labs do both (calibrate, then adjust if out of spec, then re-calibrate); some do calibration-only (and you make the decision whether to adjust based on the report). The calibration certificate normally states whether adjustment was performed and the as-found vs as-left readings.",
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: "What's the customer-friendly summary that should accompany the technical job sheet?",
     options: [
-      "None needed.",
+      "Reg 134.1.1 requires that 'good workmanship by competent persons and proper materials shall be used in the erection of the electrical installation'. This is the workmanship hook — how the install is physically put together has to meet trade-standard quality. Includes correct torque, correct conductor preparation, neat termination, secure containment, proper labelling. Workmanship is what distinguishes a competent install from one that just barely passes test.",
+      "When the fault is obvious AND the obvious fix is risk-free AND the customer has been informed. Example: a blown bulb in an emergency-bulb socket — replace the bulb, verify operation, document. No need for full hypothesis. But — even the 'obvious' fix benefits from a quick stage check: is the customer's report consistent with the fix (yes, blown bulb explains 'no light'); is the bulb the correct rating; is the lampholder undamaged. The 5-second mental check catches the cases where 'obvious' wasn't actually right. Apprentices who skip even the mental check create comeback work.",
       "A 1-page document in plain English: (1) WHAT YOU REPORTED — customer's symptom in their words. (2) WHAT WE FOUND — the fault, in plain English. (3) WHAT WE DID — the fix, in plain English. (4) WHAT WE TESTED — the verification, in plain English. (5) RECOMMENDATIONS — anything further the customer should consider. (6) WARRANTY — what's covered for what period. (7) NEXT STEPS — any follow-up work, retest schedule, contact info. Most modern firms have a customer summary template; the apprentice fills it in at the end of each job. Customer keeps the summary; firm keeps the technical job sheet.",
-      "Just the bill.",
-      "Just verbal.",
+      "Inadmissible for any purpose where the accuracy of the measurement matters legally — BS 7671 certification, EAWR evidence, EICR coding, dispute resolution. The reasoning: without UKAS-traceable calibration in date, you can't prove the measurement is accurate to the stated tolerance, so the measurement itself is unreliable. A circuit signed off as 'satisfactory IR ≥ 1 MΩ' using an instrument with expired calibration may actually have been 0.1 MΩ (instrument drift) — and any subsequent fire / shock incident will trace back to that signature. The instrument's calibration sticker is the front-line evidence; the certificate is the back-up.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Customer-friendly summary is the bridge between technical work and customer understanding. The technical job sheet is for the trade; the customer summary is for the customer. Both are needed; neither replaces the other.",
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: "Should you ever skip the customer demonstration step at hand-back?",
     options: [
-      "Always.",
+      "Ensure the earthing conductor is RECONNECTED BEFORE the supply is re-energised. The temporary disconnection during the test must be undone or the installation will operate without its protective earth path on first energisation — exposed-conductive-parts would have no defined potential relative to earth and a downstream fault could not disconnect.",
+      "Setup: MFT in EFLI / Loop mode (typically position '4' on Megger MFT1741+). Test leads to L and CPC at the test point (typically a socket, an accessory, or the DB output). Safety: this is a LIVE test — circuit must be energised, RCD-protected (MFT injects a low-current test pulse that doesn't trip the RCD on most tests, but use the 'Hi' or 'no-trip' mode for verification on RCD-protected circuits). Press TEST. The MFT measures the current that flows during the brief test pulse and calculates Zs. Reading appears in 1–3 seconds. Compare to BS 7671 Appendix 3 / Table 41.3 maximum for the protective device.",
+      "F-Gas Regulations (assimilated EU Regulation 517/2014, retained in UK law post-Brexit, with some divergence) require any work on systems containing fluorinated greenhouse gases (the refrigerants used in heat pumps and air conditioning) to be done by F-Gas-certified personnel. Connecting refrigerant pipework, charging, recovering refrigerant, leak testing — all require certification. The Environment Agency enforces in England; equivalents in the devolved nations. Working without certification is a criminal offence and invalidates manufacturer warranties.",
       "Only when the demonstration would put the customer at risk (e.g. testing a high-voltage three-phase circuit where the customer shouldn't be in the work area). For domestic and most commercial work, the demonstration is the moment that confirms to the customer that the work is done. Skipping it leaves the customer uncertain — 'is it really fixed?' — and creates the doubt that turns into complaints. The 5-second 'try plugging in your kettle now — see, no trip' is worth the time.",
-      "Never.",
-      "Random.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Demonstration converts the customer from passive recipient to verified beneficiary. The customer who sees the fix work has nothing to complain about; the customer who only sees the invoice has plenty to complain about. The demonstration is a 30-second customer-confidence investment.",
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: "What documentation should accompany a fault-rectification visit on an EICR-coded installation?",
     options: [
-      "None.",
       "Three documents. (1) Updated EICR (or supplementary report) — codes the previously-failed item as now compliant; references the rectification work. (2) Minor Electrical Installation Works Certificate (MEIWC) for the rectification work — formal compliance certificate for the new / repaired work under BS 7671. (3) Customer-friendly summary — what the certificates mean in plain English. The customer keeps all three; the firm retains copies for 7+ years. NICEIC / NAPIT registration audits will check the certificate trail.",
-      "Just job sheet.",
-      "Just bill.",
+      "Workplace mentor is the unpaid (or informally paid) day-job mentor allocated to a specific apprentice within the employing firm. Different from college assessor (paid, formally qualified, employed by college). The mentor signs portfolio entries as evidence of on-site competence, attends three-way reviews, calibrates progress with the college tutor. Mentor competence is evidenced by JIB Approved Electrician grade plus experience — no specific qualification required.",
+      "Building Control is the local-authority enforcement of the Building Regulations. For most environmental tech installs the route is via a competent-person scheme (the installer's firm is registered with NICEIC / NAPIT / similar, and self-certifies the work) — Building Control is notified by the scheme but doesn't visit. For non-notifiable work (e.g. some maintenance) Building Control isn't involved. For installs that fall outside competent-person schemes, or for major works, Building Control may inspect on-site. The customer receives a Building Regs compliance certificate — either from the competent-person scheme or from Building Control directly.",
+      "Two reasons. (1) Auditability — readings are stored against a circuit ID and timestamp, providing tamper-evident evidence at scheme audit and dispute. (2) Cert generation — test results download directly into certificate software (NICEIC PartnerNet, NAPIT, custom firm software, Elec-Mate) and auto-populate the EIC / EICR test schedule, eliminating transcription errors. The combination saves the time previously spent hand-writing and double-checking test schedules.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Certification follows the work. EICR-coded items rectified need updated coding; new / repaired work needs MEIWC; customer needs plain-English summary. The trade certifies the work; the customer needs to understand it. NICEIC / NAPIT firms have certification software (NICEIC Cert Plus, Easycert) that handles the formats.",
   },

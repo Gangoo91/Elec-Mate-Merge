@@ -27,9 +27,9 @@ const quickCheckQuestions = [
     id: 'ahu-component-sequence',
     question: 'In a typical AHU, what is the correct sequence of components from inlet to outlet?',
     options: [
-      'Fan, filter, coils, damper',
-      'Damper, filter, coils, fan',
       'Filter, damper, fan, coils',
+      'Damper, filter, coils, fan',
+      'Fan, filter, coils, damper',
       'Coils, filter, damper, fan',
     ],
     correctIndex: 1,
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     question:
       'Which filter grade combination would be appropriate for a hospital operating theatre?',
     options: [
-      'G4 only',
-      'G4 pre-filter with F7 main filter',
+      'Verify the tester works correctly',
+      'To prevent cable damage and maintain compliance',
       'G4 pre-filter, F7 intermediate, HEPA terminal',
-      'F7 only',
+      'V_rms = V_pk / root(2), approximately 0.707 x V_pk',
     ],
     correctIndex: 2,
     explanation:
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'When selecting a cooling coil, what is the primary factor that determines the coil face velocity?',
     options: [
-      'Refrigerant type',
+      'The highest power drawn during a specified period',
+      'To maintain required illumination levels',
+      'Principal Accountable Person',
       'Air volume flow rate and coil face area',
-      'Pipe material',
-      'Insulation thickness',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Coil face velocity is calculated by dividing the air volume flow rate by the coil face area (V = Q/A). Typical face velocities are 2.0-2.5 m/s for cooling coils to ensure adequate heat transfer whilst avoiding moisture carryover. Higher velocities increase pressure drop and risk condensate entrainment.',
   },
@@ -68,12 +68,12 @@ const quickCheckQuestions = [
     id: 'acoustic-attenuation',
     question: 'What is the primary purpose of attenuators in an AHU system?',
     options: [
-      'To increase airflow velocity',
       'To filter particles from the air',
-      'To reduce noise transmission through ductwork',
       'To balance air distribution',
+      'To increase airflow velocity',
+      'To reduce noise transmission through ductwork',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Attenuators (silencers) reduce noise transmission through the ductwork system. They typically use acoustic absorption materials to attenuate fan noise and prevent it from reaching occupied spaces. Selection is based on required noise reduction across frequency bands and acceptable pressure drop.',
   },
@@ -83,7 +83,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which component in an AHU controls the proportion of fresh air to recirculated air?',
-    options: ['Supply fan', 'Mixing dampers', 'Heating coil', 'Filter section'],
+    options: [
+      'Supply fan',
+      'Mixing dampers',
+      'Heating coil',
+      'Filter section',
+    ],
     correctAnswer: 1,
     explanation:
       'Mixing dampers control the proportion of fresh (outside) air to recirculated (return) air. They work in conjunction with each other - as fresh air dampers open, recirculation dampers close proportionally. This enables economiser control for free cooling when outside conditions are suitable.',
@@ -91,7 +96,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the typical face velocity range for a heating coil in an AHU?',
-    options: ['0.5-1.0 m/s', '1.5-2.0 m/s', '2.5-3.5 m/s', '4.0-5.0 m/s'],
+    options: [
+      '4.0-5.0 m/s',
+      '0.5-1.0 m/s',
+      '2.5-3.5 m/s',
+      '1.5-2.0 m/s',
+    ],
     correctAnswer: 2,
     explanation:
       'Heating coils typically operate at face velocities of 2.5-3.5 m/s. Unlike cooling coils, there is no moisture carryover concern, so slightly higher velocities are acceptable. However, excessive velocity increases pressure drop and can cause noise issues.',
@@ -99,8 +109,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'A G4 filter is classified as which type?',
-    options: ['HEPA filter', 'Coarse filter', 'Fine filter', 'Ultra-fine filter'],
-    correctAnswer: 1,
+    options: [
+      'Fine filter',
+      'HEPA filter',
+      'Ultra-fine filter',
+      'Coarse filter',
+    ],
+    correctAnswer: 3,
     explanation:
       'G4 is classified as a coarse filter under EN ISO 16890 (replacing the older EN 779 standard). G-class filters (G1-G4) are coarse filters used as pre-filters to protect more efficient downstream filters and HVAC equipment from larger particles.',
   },
@@ -108,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the primary purpose of a droplet eliminator after a cooling coil?',
     options: [
-      'To increase cooling capacity',
       'To prevent condensate carryover into the ductwork',
+      'To increase cooling capacity',
       'To reduce fan power consumption',
       'To improve filtration efficiency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Droplet eliminators (also called moisture eliminators) prevent condensate droplets from being carried into the supply ductwork. They are essential after cooling coils operating below the dew point, as water carryover can cause duct corrosion, microbial growth, and water damage.',
   },
@@ -122,12 +137,12 @@ const quizQuestions = [
     question:
       'Which AHU configuration is most appropriate for a building requiring close temperature and humidity control?',
     options: [
-      'Single duct constant volume',
       'Variable air volume (VAV)',
       'Dual duct',
       'Heat recovery only',
+      'Single duct constant volume',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Dual duct systems provide hot and cold air streams that are mixed at zone level, offering excellent temperature control. They are particularly suited to applications requiring precise conditions, such as laboratories or museums, though they have higher capital and energy costs.',
   },
@@ -135,8 +150,13 @@ const quizQuestions = [
     id: 6,
     question:
       'What minimum filter efficiency is typically required for supply air to general office spaces?',
-    options: ['G4 (coarse)', 'F7 (fine)', 'H13 (HEPA)', 'No filtration required'],
-    correctAnswer: 1,
+    options: [
+      'G4 (coarse)',
+      'H13 (HEPA)',
+      'F7 (fine)',
+      'No filtration required',
+    ],
+    correctAnswer: 2,
     explanation:
       'F7 filters (ePM1 50-65% under ISO 16890) are typically specified for office and commercial spaces. They provide good protection against fine particles and allergens whilst maintaining reasonable pressure drop. G4 pre-filters extend F7 filter life.',
   },
@@ -144,8 +164,13 @@ const quizQuestions = [
     id: 7,
     question:
       'When specifying the electrical supply for an AHU, what factor primarily determines motor starter type?',
-    options: ['Filter type', 'Motor power rating', 'Ductwork material', 'Building height'],
-    correctAnswer: 1,
+    options: [
+      'Filter type',
+      'Building height',
+      'Ductwork material',
+      'Motor power rating',
+    ],
+    correctAnswer: 3,
     explanation:
       'Motor power rating is the primary factor in starter selection. Small motors (&lt;7.5 kW) typically use DOL starters, medium motors may use star-delta starters, and larger motors often require soft starters or VSDs to limit starting current and mechanical stress.',
   },
@@ -153,8 +178,13 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the typical sound power level reduction expected from a standard rectangular attenuator?',
-    options: ['5-10 dB', '15-25 dB', '35-45 dB', '50-60 dB'],
-    correctAnswer: 1,
+    options: [
+      '15-25 dB',
+      '35-45 dB',
+      '5-10 dB',
+      '50-60 dB',
+    ],
+    correctAnswer: 0,
     explanation:
       'Standard rectangular attenuators typically achieve 15-25 dB sound power level reduction, depending on length, splitter spacing, and frequency. Multiple attenuators or longer units may be needed for critical applications. Selection must balance acoustic performance against pressure drop.',
   },
@@ -163,12 +193,12 @@ const quizQuestions = [
     question:
       'What is the primary advantage of a draw-through AHU configuration compared to blow-through?',
     options: [
-      'Lower capital cost',
-      'Better filter access',
+      'A material property indicating resistance per unit length and area',
       'Fan motor heat added after coils does not affect supply temperature',
-      'Smaller footprint',
+      'Independent body advising UK government on emissions targets and progress',
+      'Providing specific knowledge for products installed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'In draw-through configuration, the fan is located downstream of the coils, so fan motor heat (typically 2-3°C rise) is added to already conditioned air. This must be accounted for in coil sizing. Blow-through places the fan before coils, avoiding this issue but requiring more robust filters.',
   },
@@ -176,8 +206,13 @@ const quizQuestions = [
     id: 10,
     question:
       'Which control strategy optimises AHU energy consumption by using outdoor air for cooling when conditions permit?',
-    options: ['Night setback', 'Economiser control', 'Demand control ventilation', 'Zone reset'],
-    correctAnswer: 1,
+    options: [
+      'Night setback',
+      'Zone reset',
+      'Economiser control',
+      'Demand control ventilation',
+    ],
+    correctAnswer: 2,
     explanation:
       'Economiser control (free cooling) uses outdoor air for cooling when the outside temperature and humidity are suitable, reducing mechanical cooling load. Mixed air dampers modulate to introduce maximum fresh air when outdoor conditions are favourable, significantly reducing energy consumption.',
   },
@@ -185,12 +220,12 @@ const quizQuestions = [
     id: 11,
     question: 'What document must be provided for AHU commissioning to verify system performance?',
     options: [
-      "Only the manufacturer's brochure",
+      'Purchase, energy, maintenance, lamp replacement, and disposal costs',
+      'A small peer group that meets regularly to share challenges, ideas, and hold each other accountable',
+      'Waste electrical equipment disposal and energy efficiency',
       'Design data including air volumes, pressures, temperatures and electrical loads',
-      'Just the installation manual',
-      'Building regulations approval only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Commissioning requires comprehensive design data including design air volumes, system pressures (fan total pressure, component pressure drops), design temperatures (on/off coils), electrical loads, and noise criteria. This enables verification that installed performance matches design intent.',
   },
@@ -198,8 +233,13 @@ const quizQuestions = [
     id: 12,
     question:
       'What is the typical maintenance interval for replacing F7 filters in a commercial AHU?',
-    options: ['Monthly', 'Quarterly', '6-12 months depending on loading', 'Every 5 years'],
-    correctAnswer: 2,
+    options: [
+      '6-12 months depending on loading',
+      '½ × IΔn (15mA for 30mA RCD)',
+      'Test results confirm the fault is cleared',
+      'Anything using electrical energy',
+    ],
+    correctAnswer: 0,
     explanation:
       'F7 filters typically require replacement every 6-12 months, depending on air quality, operating hours, and filter loading. Differential pressure monitoring indicates when filters approach their final pressure drop limit and require replacement. Pre-filters extend main filter life.',
   },

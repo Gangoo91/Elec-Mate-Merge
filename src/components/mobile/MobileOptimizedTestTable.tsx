@@ -601,7 +601,7 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
                         options={insulationTestVoltageOptions}
                       />
                       <FormField
-                        label="Live - Live (MΩ)"
+                        label="Live - Neutral (MΩ)"
                         id={`insulationLiveNeutral-${result.id}`}
                         value={result.insulationLiveNeutral || ''}
                         onChange={(val) => onUpdate(result.id, 'insulationLiveNeutral', val)}
@@ -612,14 +612,6 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
                         id={`insulationLiveEarth-${result.id}`}
                         value={result.insulationLiveEarth || ''}
                         onChange={(val) => onUpdate(result.id, 'insulationLiveEarth', val)}
-                        placeholder="e.g., >200"
-                      />
-                      {/* ELE-868 — Neutral-Earth (was missing from UI; PDF already had it) */}
-                      <FormField
-                        label="Neutral - Earth (MΩ)"
-                        id={`insulationNeutralEarth-${result.id}`}
-                        value={result.insulationNeutralEarth || ''}
-                        onChange={(val) => onUpdate(result.id, 'insulationNeutralEarth', val)}
                         placeholder="e.g., >200"
                       />
                     </div>

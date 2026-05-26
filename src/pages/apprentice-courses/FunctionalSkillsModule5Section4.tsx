@@ -29,10 +29,10 @@ const FunctionalSkillsModule5Section4 = () => {
       id: 1,
       question: 'What is the primary purpose of a portfolio in an apprenticeship?',
       options: [
-        'To impress your employer with how much work you have done',
+        'To enable safe and effective identification of escape routes leading to final exits',
         'To provide documented evidence that you meet the assessment criteria and are competent',
-        'To store all your paperwork in one place for convenience',
-        'To replace the need for written exams',
+        'The nature of the task — does it involve twisting, bending, reaching, or repetition?',
+        'To clearly indicate the location and direction of escape routes and final exits',
       ],
       correctAnswer: 1,
       explanation:
@@ -42,12 +42,12 @@ const FunctionalSkillsModule5Section4 = () => {
       id: 2,
       question: 'What is the STAR structure used for in reflective accounts?',
       options: [
+        'A filing system for photographs',
         'Rating the quality of evidence from 1 to 5 stars',
         'Organising your account into Situation, Task, Action, Result',
-        'A filing system for photographs',
         'An assessment grading scale used by external verifiers',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'STAR stands for Situation, Task, Action, Result. It provides a clear structure for writing reflective accounts that demonstrate your competence by explaining the context, your role, what you did, and what the outcome was.',
     },
@@ -55,12 +55,12 @@ const FunctionalSkillsModule5Section4 = () => {
       id: 3,
       question: "What does 'cross-referencing evidence' mean in portfolio building?",
       options: [
-        'Marking evidence with a red cross if it is not good enough',
-        'Mapping each piece of evidence to the specific assessment criteria it covers',
         'Putting all evidence in alphabetical order',
+        'Marking evidence with a red cross if it is not good enough',
         'Asking a colleague to check your portfolio for spelling errors',
+        'Mapping each piece of evidence to the specific assessment criteria it covers',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Cross-referencing means linking each piece of evidence to the specific assessment criteria or learning outcomes it demonstrates. This shows the assessor exactly which requirements each piece of evidence satisfies, and helps you identify any gaps.',
     },
@@ -68,12 +68,12 @@ const FunctionalSkillsModule5Section4 = () => {
       id: 4,
       question: 'Which principle is most important when selecting evidence for your portfolio?',
       options: [
-        'Include as much evidence as possible to be thorough',
-        'Only include the most recent evidence regardless of quality',
         'Choose quality evidence that clearly demonstrates competence, avoiding unnecessary duplication',
-        'Only include certificates and formal qualifications',
+        'The weight of all persons, tools, materials, and equipment on the platform',
+        'Use a non-trip or low-current earth loop test mode if available, or accept the trip and reset the RCD after testing',
+        'An unplanned event that had the potential to cause injury or damage but did not',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Quality over quantity is the key principle. Assessors prefer a well-organised portfolio with strong, relevant evidence rather than a bulky folder full of duplicated or weak items. Each piece should clearly demonstrate a specific competency.',
     },
@@ -81,10 +81,10 @@ const FunctionalSkillsModule5Section4 = () => {
       id: 5,
       question: 'What makes a witness statement valid for your portfolio?',
       options: [
-        'A text message from a friend saying you did a good job',
+        'Assess competence specifically for three-phase work and provide additional training if needed',
         'A signed statement from a qualified supervisor describing specific tasks you performed, with their name, job title, and the date',
-        'A verbal comment from your employer at a meeting',
-        'A social media post about your work from a customer',
+        'Identify hazards, decide who might be harmed, evaluate risks, record findings, review and update',
+        'Avoids the test voltage appearing across the SPD (which is L-N or L-PE) potentially triggering or damaging it',
       ],
       correctAnswer: 1,
       explanation:
@@ -95,10 +95,10 @@ const FunctionalSkillsModule5Section4 = () => {
       question:
         'When taking photographs as portfolio evidence, which of the following is most important?',
       options: [
-        'Using a professional camera rather than a phone',
-        'Including as many photos as possible of every task',
+        'Report it immediately, stop work in that area, and ensure the guardrails are reinstated before work continues',
+        'Awareness of emergency lighting purpose, exit routes, and assembly points',
         'Ensuring photos are clear, well-lit, captioned with your role, and taken with permission',
-        'Only photographing finished work, never work in progress',
+        'The union representative — confidential parallel route alongside the company\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own grievance procedure',
       ],
       correctAnswer: 2,
       explanation:
@@ -108,12 +108,12 @@ const FunctionalSkillsModule5Section4 = () => {
       id: 7,
       question: 'What is the most common reason portfolios are returned for additional work?',
       options: [
-        'The portfolio is too neat and professional',
+        'Participating — share ideas and facilitate decision-making together',
+        'The design current of the cooker after applying diversity',
+        'Suitable for hollow walls where back access is unavailable',
         'There are gaps in coverage — some assessment criteria are not evidenced',
-        'The evidence is too varied in type',
-        'The apprentice included too many reflective accounts',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'The most common reason for portfolios being returned is gaps in coverage — where one or more assessment criteria have no evidence linked to them. Using a cross-referencing matrix and reviewing it regularly helps you identify and fill gaps before final submission.',
     },
@@ -121,12 +121,12 @@ const FunctionalSkillsModule5Section4 = () => {
       id: 8,
       question: 'During an assessor visit, what should you be prepared to do?',
       options: [
-        'Recite all the assessment criteria from memory',
         'Explain any piece of evidence in your portfolio, locate it quickly, and discuss your learning',
-        'Present a formal PowerPoint presentation about your apprenticeship',
-        'Show the assessor your social media posts about work',
+        'A current transient (spike) occurs at the star-to-delta changeover point',
+        'At least every 7 days by a competent person, and after any event likely to have affected its stability',
+        'To prevent conflicts, ensure safety, and maintain project schedule',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Assessors may ask questions about any piece of evidence to confirm it is genuine and that you understand what you did. You should be able to quickly locate evidence using your index, explain it confidently, and discuss what you learned. They want to confirm your competence, not catch you out.',
     },

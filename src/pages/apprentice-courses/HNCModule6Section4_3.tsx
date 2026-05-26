@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'embodied-carbon-definition',
     question: 'What is embodied carbon?',
     options: [
-      'Carbon emissions from building heating',
-      'Carbon stored in vegetation',
+      'Primary and secondary at the same voltage, no electrical connection between them',
+      'Standardised launch conditions for repeatable measurements',
       'Carbon emissions from materials, construction, and end of life',
-      'Carbon dioxide concentration in indoor air',
+      'To provide visual representation of electrical systems and component locations',
     ],
     correctIndex: 2,
     explanation:
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'life-cycle-stage-a1-a3',
     question: 'What do life cycle stages A1-A3 represent?',
     options: [
-      'Construction process emissions',
+      'Loading requirements, penetration needs, and support requirements',
+      'About 50 N/mm² of conductor cross-section (≈ 5 kg/mm²)',
+      'The Control of Asbestos Regulations 2012',
       'Product stage (raw materials, transport, manufacturing)',
-      'Operational energy use',
-      'End of life disposal',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Stages A1-A3 cover the product stage: A1 is raw material extraction, A2 is transport to manufacturer, and A3 is manufacturing. This is often called 'cradle to gate' embodied carbon.",
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'epd-purpose',
     question: 'What is the purpose of an Environmental Product Declaration (EPD)?',
     options: [
-      'To certify electrical safety',
+      'Annual energy consumption estimates representing typical conditions',
+      'That settings match designer\\\\\\\\\\\\\\\'s requirements',
+      'All escape routes and specified safety features',
       'To provide verified environmental impact data for products',
-      'To approve building planning permission',
-      'To measure operational energy efficiency',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "EPDs provide independently verified, comparable data on a product's environmental impacts across its life cycle, including embodied carbon, based on standardised Life Cycle Assessment methodology to EN 15804.",
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'module-d',
     question: 'What does Module D represent in whole life carbon assessment?',
     options: [
-      'Demolition emissions',
-      'Design stage impacts',
       'Benefits beyond the building life cycle (reuse, recycling)',
-      'Ductwork installation',
+      'To provide rigidity and prevent the frame from racking (parallelogramming)',
+      '28 days, extendable to 42 days with the referring party\\\\\\\\\\\\\\\'s consent',
+      'Possible insulation breakdown or contamination',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Module D captures benefits and loads beyond the system boundary - including material reuse, recycling, and energy recovery potential. It represents the circular economy potential of materials at end of life.',
   },
@@ -99,8 +99,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the typical embodied carbon range for copper cable per kilogram?',
-    options: ['0.5-1.0 kgCO₂e/kg', '1.5-3.0 kgCO₂e/kg', '4.0-6.0 kgCO₂e/kg', '8.0-12.0 kgCO₂e/kg'],
-    correctAnswer: 1,
+    options: [
+      '4.0-6.0 kgCO₂e/kg',
+      '0.5-1.0 kgCO₂e/kg',
+      '1.5-3.0 kgCO₂e/kg',
+      '8.0-12.0 kgCO₂e/kg',
+    ],
+    correctAnswer: 2,
     explanation:
       'Virgin copper cable has embodied carbon of approximately 2.0-3.0 kgCO₂e/kg. Using recycled copper content can reduce this significantly, with high-recycled content cables achieving around 1.5 kgCO₂e/kg.',
   },
@@ -108,8 +113,13 @@ const quizQuestions = [
     id: 3,
     question:
       'According to RICS Whole Life Carbon Assessment methodology, which stages are mandatory for reporting?',
-    options: ['A1-A5 only', 'A1-A3 and B6 only', 'A1-A5, B1-B5, C1-C4', 'All stages A-D'],
-    correctAnswer: 2,
+    options: [
+      'A1-A3 and B6 only',
+      'A1-A5 only',
+      'All stages A-D',
+      'A1-A5, B1-B5, C1-C4',
+    ],
+    correctAnswer: 3,
     explanation:
       'RICS methodology requires reporting of A1-A5 (product and construction), B1-B5 (use stage excluding operational energy), and C1-C4 (end of life). Module D is reported separately as it extends beyond the building boundary.',
   },
@@ -117,16 +127,26 @@ const quizQuestions = [
     id: 4,
     question:
       "What percentage of a typical commercial building's whole life carbon is embodied carbon?",
-    options: ['10-15%', '25-35%', '40-60%', '80-90%'],
-    correctAnswer: 2,
+    options: [
+      '40-60%',
+      '25-35%',
+      '10-15%',
+      '80-90%',
+    ],
+    correctAnswer: 0,
     explanation:
       "Embodied carbon typically represents 40-60% of whole life carbon in modern commercial buildings with efficient operational performance. As operational carbon reduces through grid decarbonisation, embodied carbon's proportion increases.",
   },
   {
     id: 5,
     question: 'Which MEP component typically has the highest embodied carbon intensity?',
-    options: ['PVC trunking', 'Steel cable tray', 'Copper busbars', 'Plastic conduit'],
-    correctAnswer: 2,
+    options: [
+      'Steel cable tray',
+      'Copper busbars',
+      'Plastic conduit',
+      'PVC trunking',
+    ],
+    correctAnswer: 1,
     explanation:
       "Copper busbars have very high embodied carbon intensity at approximately 2.5-3.5 kgCO₂e/kg due to copper's energy-intensive extraction and refining. Aluminium busbars offer a lower-carbon alternative at ~8.0 kgCO₂e/kg despite higher mass.",
   },
@@ -135,11 +155,11 @@ const quizQuestions = [
     question: "What does 'cradle to grave' encompass in life cycle assessment?",
     options: [
       'Raw material extraction to factory gate (A1-A3)',
-      'Raw material extraction to end of life disposal (A-C)',
       'Construction to operation only (A4-B7)',
+      'Raw material extraction to end of life disposal (A-C)',
       'Operation to demolition (B-C)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cradle to grave encompasses all life cycle stages from raw material extraction (cradle) through manufacturing, construction, use, and end of life treatment (grave) - stages A1 through C4.',
   },
@@ -149,18 +169,23 @@ const quizQuestions = [
     options: [
       'Detailed design (RIBA Stage 4)',
       'Technical design (RIBA Stage 5)',
-      'Concept design (RIBA Stage 2)',
       'Construction (RIBA Stage 6)',
+      'Concept design (RIBA Stage 2)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Concept design (RIBA Stage 2) offers the greatest opportunity for embodied carbon reduction as fundamental decisions about system types, capacities, and spatial strategies can be influenced. By Stage 4, most decisions are locked in.',
   },
   {
     id: 8,
     question: 'What is the typical embodied carbon of steel cable containment per metre run?',
-    options: ['0.5-1.0 kgCO₂e/m', '2.0-4.0 kgCO₂e/m', '6.0-10.0 kgCO₂e/m', '15.0-25.0 kgCO₂e/m'],
-    correctAnswer: 1,
+    options: [
+      '2.0-4.0 kgCO₂e/m',
+      '6.0-10.0 kgCO₂e/m',
+      '0.5-1.0 kgCO₂e/m',
+      '15.0-25.0 kgCO₂e/m',
+    ],
+    correctAnswer: 0,
     explanation:
       'Heavy-gauge steel cable tray (100mm wide) has embodied carbon of approximately 2.5-4.0 kgCO₂e per metre. Lighter cable basket or recycled content steel can reduce this to 1.5-2.5 kgCO₂e/m.',
   },
@@ -169,11 +194,11 @@ const quizQuestions = [
     question: 'Stage B4 in the life cycle represents:',
     options: [
       'Maintenance activities',
-      'Repair of components',
       'Replacement of building elements',
+      'Repair of components',
       'Refurbishment of the whole building',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "B4 covers replacement of building elements during the building's reference study period. For MEP, this includes planned replacement of components like luminaires, distribution boards, and mechanical equipment that have shorter lifespans than the building.",
   },
@@ -182,19 +207,24 @@ const quizQuestions = [
     question: 'Which refrigerant property is most relevant to embodied carbon assessment?',
     options: [
       'Flammability rating',
+      'Thermal conductivity',
       'Global Warming Potential (GWP)',
       'Operating pressure',
-      'Thermal conductivity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Global Warming Potential (GWP) directly impacts embodied carbon calculations. High-GWP refrigerants like R410A (GWP 2088) contribute significantly to embodied carbon, while low-GWP alternatives like R32 (GWP 675) or R290 (GWP 3) offer substantial reductions.',
   },
   {
     id: 11,
     question: 'What is the primary standard for EPDs in construction products in Europe?',
-    options: ['ISO 14001', 'EN 15804', 'BS 7671', 'BREEAM'],
-    correctAnswer: 1,
+    options: [
+      'ISO 14001',
+      'BREEAM',
+      'BS 7671',
+      'EN 15804',
+    ],
+    correctAnswer: 3,
     explanation:
       'EN 15804 provides the core product category rules for EPDs in the construction sector, ensuring consistent methodology and comparability. It defines the life cycle stages A1-D and reporting requirements.',
   },
@@ -203,12 +233,12 @@ const quizQuestions = [
     question:
       "To achieve a BREEAM 'Excellent' rating, what embodied carbon reduction is typically required for MEP systems?",
     options: [
-      '5% below baseline',
-      '10% below baseline',
       '15-20% below baseline',
       '30% below baseline',
+      '5% below baseline',
+      '10% below baseline',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "BREEAM Mat 01 requires demonstrating embodied carbon reductions. For 'Excellent' ratings, projects typically need to achieve 15-20% reductions through material specification, system optimisation, and use of recycled content or low-carbon alternatives.",
   },

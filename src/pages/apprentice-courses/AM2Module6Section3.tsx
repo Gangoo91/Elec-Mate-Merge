@@ -61,10 +61,10 @@ const AM2Module6Section3 = () => {
       question:
         'If you have 40 questions in 90 minutes, how much time per question should you aim for?',
       options: [
-        '1 minute per question',
-        'About 2 minutes per question',
-        '3 minutes per question',
         '4 minutes per question',
+        'About 2 minutes per question',
+        '1 minute per question',
+        '3 minutes per question',
       ],
       correctIndex: 1,
       explanation:
@@ -74,12 +74,12 @@ const AM2Module6Section3 = () => {
       id: 'best-strategy',
       question: "What's better if you're unsure - leaving blank or making your best choice?",
       options: [
-        'Leave it blank',
-        'Make your best choice',
-        'Skip it completely',
         'Spend 10 minutes thinking',
+        'Leave it blank',
+        'Skip it completely',
+        'Make your best choice',
       ],
-      correctIndex: 1,
+      correctIndex: 3,
       explanation:
         'Make your best choice - no penalty for guessing, but blank answers guarantee lost marks.',
     },
@@ -89,15 +89,25 @@ const AM2Module6Section3 = () => {
     {
       id: 1,
       question: 'How many minutes are available for the online knowledge test?',
-      options: ['60 minutes', '75 minutes', '90 minutes', '120 minutes'],
-      correctAnswer: 2,
+      options: [
+        '60 minutes',
+        '90 minutes',
+        '75 minutes',
+        '120 minutes',
+      ],
+      correctAnswer: 1,
       explanation: 'The AM2 online knowledge test is 90 minutes long.',
     },
     {
       id: 2,
       question: 'Roughly how much time per question if there are 40 questions?',
-      options: ['1 minute', '2 minutes', '3 minutes', '4 minutes'],
-      correctAnswer: 1,
+      options: [
+        '3 minutes',
+        '1 minute',
+        '2 minutes',
+        '4 minutes',
+      ],
+      correctAnswer: 2,
       explanation:
         'With 40 questions in 90 minutes, you get about 2.25 minutes per question - aim for 2 minutes each.',
     },
@@ -105,12 +115,12 @@ const AM2Module6Section3 = () => {
       id: 3,
       question: 'Why should you flag tricky questions instead of staying stuck?',
       options: [
-        'To avoid them completely',
-        'To save time and maintain momentum',
         "Because they're worth fewer marks",
+        'To avoid them completely',
         'To confuse other candidates',
+        'To save time and maintain momentum',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Flagging saves time and maintains momentum - you can return with a fresh perspective later.',
     },
@@ -118,12 +128,12 @@ const AM2Module6Section3 = () => {
       id: 4,
       question: "What's the best strategy if you're unsure of an answer?",
       options: [
-        'Leave it blank',
         'Eliminate wrong options and guess',
-        'Skip the question',
-        'Spend 10 minutes thinking',
+        'The same for all branches',
+        'Bare copper exposed, CPCs unsleeved',
+        'To protect workers from residual risks',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Eliminate wrong options and make your best guess - no penalty for wrong answers but blanks guarantee lost marks.',
     },
@@ -138,8 +148,13 @@ const AM2Module6Section3 = () => {
     {
       id: 6,
       question: 'How many questions should you aim to complete in the first 30 minutes?',
-      options: ['8-10 questions', '10-12 questions', '15-20 questions', 'All 40 questions'],
-      correctAnswer: 1,
+      options: [
+        '8-10 questions',
+        '15-20 questions',
+        '10-12 questions',
+        'All 40 questions',
+      ],
+      correctAnswer: 2,
       explanation:
         'Around 10-12 questions in the first 30 minutes gives you a good pace with time for review.',
     },
@@ -147,12 +162,12 @@ const AM2Module6Section3 = () => {
       id: 7,
       question: "What's the danger of rushing through the test?",
       options: [
-        'You finish too early',
+        'Switching off breakers and removing fuses',
+        'Energy efficiency, comfort, and productivity',
+        'Adding a single socket outlet to an existing circuit',
         'Misreading questions and careless errors',
-        'The examiner gets suspicious',
-        'Nothing - speed is always good',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Rushing leads to misreading questions and careless errors - steady, controlled pace is better.',
     },
@@ -160,12 +175,12 @@ const AM2Module6Section3 = () => {
       id: 8,
       question: 'Why should you check flagged questions first in review time?',
       options: [
-        "They're worth more marks",
-        "You've already attempted them",
         'Fresh perspective on difficult ones',
         'To change all your answers',
+        "They're worth more marks",
+        "You've already attempted them",
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Fresh perspective helps - coming back to flagged questions later often leads to correct answers.',
     },
@@ -174,11 +189,11 @@ const AM2Module6Section3 = () => {
       question: 'How can you stop yourself panicking about the clock?',
       options: [
         'Hide the clock completely',
-        'Check time every minute',
         'Check every 10-15 minutes only',
+        'Check time every minute',
         'Ask the examiner for time',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Check time every 10-15 minutes only - constant clock-watching increases anxiety and wastes time.',
     },
@@ -187,11 +202,11 @@ const AM2Module6Section3 = () => {
       question: "What's the golden rule for time management in AM2?",
       options: [
         'Speed above accuracy',
+        'Focus on calculations only',
         'Answer every question',
         'Spend equal time on each',
-        'Focus on calculations only',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Answer every question - time management ensures you attempt all questions for maximum possible marks.',
     },

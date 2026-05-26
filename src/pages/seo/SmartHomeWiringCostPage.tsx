@@ -567,10 +567,10 @@ const sections = [
 export default function SmartHomeWiringCostPage() {
   return (
     <GuideTemplate
-      title="Smart Home Wiring Cost UK 2026 | Cat6 Retrofit + Real Prices"
-      description="Smart home wiring cost UK 2026: single-room retrofits, whole-house Cat6 + lighting + hub installs. Real fair-margin pricing for UK electricians + clients."
+      title="Smart Home Installation Cost UK 2026: £800-£3,500 Prices"
+      description="UK smart home installation cost 2026: single-room retrofits from £800, whole-house Cat6 + lighting + hub installs up to £3,500. Fair-margin pricing for UK electricians + clients."
       datePublished="2026-03-27"
-      dateModified="2026-05-19"
+      dateModified="2026-05-24"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

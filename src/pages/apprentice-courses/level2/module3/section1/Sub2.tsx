@@ -44,12 +44,12 @@ const checks = [
     question:
       "True or false: BS 7671 is a Statutory Instrument and ignoring it is automatically a criminal offence.",
     options: [
-      "True — BS 7671 is law.",
       "False — BS 7671 is a British Standard published by BSI / co-published by the IET. It carries no statutory force on its own, but it is the document that the HSE, the courts and every CPS use to decide whether you complied with EAWR Reg 4. Ignoring it makes the prosecution case under EAWR a lot easier to bring.",
-      "True — once you sign up to a scheme.",
-      "False — BS 7671 only applies to commercial work.",
+      "EN 60903 Class 00 (rated to 500V AC) or Class 0 (rated to 1,000V AC) electrical insulating gloves, in date, visually inspected for pinholes / damage / contamination, with optional leather over-gloves for mechanical protection. Inspection log entry. NEVER use general-purpose work gloves for live work.",
+      "Fluorinated greenhouse gases — refrigerants used in air conditioning, heat pumps and refrigeration equipment. Hydrofluorocarbons (HFCs) particularly. Phase-down quotas, mandatory leak-checking on equipment containing 5+ tonnes CO2e of F-Gas, certified personnel for installation/maintenance, and ban on certain F-Gases in new equipment from set dates.",
+      "The line conductor is not easily accessible at the CU end (e.g. busbar trunking systems), the circuit is part of a complex distribution network where you want to isolate the CPC verification, or the wander lead is more practical on a large commercial site (one person at the MET, radio contact with the tester at the accessory).",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "BS 7671 is non-statutory by status but quasi-mandatory in practice. HSR25 (the HSE's guidance on EAWR) explicitly cites compliance with BS 7671 as a way to demonstrate compliance with EAWR. So the law is EAWR; the document used to judge whether you met it is BS 7671. Same effect, different legal route.",
   },
@@ -58,12 +58,12 @@ const checks = [
     question:
       "You're doing an EICR. The GN3 example test sequence and the wording in BS 7671 Chapter 64 give slightly different ways of describing the same test. Which one wins?",
     options: [
-      "Always GN3 — it's more practical.",
       "BS 7671 is the standard; GN3 is a guidance document that explains how to apply BS 7671 in practice. If they conflict, BS 7671 is the authority. GN3 should be read as the recommended practical interpretation, not as a competing standard.",
-      "Always GN3 — it's newer.",
-      "Whichever the scheme inspector prefers.",
+      "Make substantial pension contributions now (gaining 40% relief) while building tax-efficient ISA savings to provide flexible retirement income below allowance taper threshold",
+      "Feedback from site (what\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s actually working / not); contribution to writing RAMS for routine jobs; review of generic templates; coaching of L2 mates on dynamic assessment; near-miss data feeding the next RAMS update.",
+      "Record: measured Ze (= electrode resistance for TT) = 180 Ω; RCD test results — IΔn trip at 30 mA / 27 ms (passes the 300 ms requirement for general use, 40 ms for additional protection); RA × IΔn = 180 × 0.03 = 5.4 V (passes Reg 411.5); and the test instrument used and its calibration date.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "GN3 is published by the IET as a guidance note specifically supporting BS 7671 Part 6 (Inspection and Testing). It's authoritative because the same body publishes both, but BS 7671 is the standard, GN3 is the explanation. The scheme inspector will accept either, but if they conflict on a fine point, the BS 7671 wording is the one you cite.",
   },
@@ -72,10 +72,10 @@ const checks = [
     question:
       "A NICEIC-registered firm fits a consumer unit, doesn't do an OPDC test, doesn't issue an EIC, and the customer complains. The work is electrically sound. What's the realistic non-criminal consequence the firm faces?",
     options: [
-      "Nothing — the work is safe.",
+      "Address the 3 Ps first (the failures are specific and temporary, not permanent or pervasive), then restore intrinsic motivation: give the team autonomy in developing their own quality-check process (Pink), provide clear goals and feedback loops for each installation (flow conditions), and ensure the purpose of quality work is connected to genuine values (safety, professionalism). This multi-framework approach addresses both the setback response and the ongoing motivation system",
       "NICEIC scheme action — non-conformance notice, possible suspension, possible removal from the scheme. Removal from the CPS means: no more self-certification under Part P, customers' insurance defences weakened, marketing claims (logo, badge) withdrawn, and frequently insurer-driven loss of public liability cover. The job stays civil, but the firm's ability to trade collapses.",
-      "Automatic HSE prosecution.",
-      "Trading Standards prosecution.",
+      "Record: measured Ze (= electrode resistance for TT) = 180 Ω; RCD test results — IΔn trip at 30 mA / 27 ms (passes the 300 ms requirement for general use, 40 ms for additional protection); RA × IΔn = 180 × 0.03 = 5.4 V (passes Reg 411.5); and the test instrument used and its calibration date.",
+      "SEG is the UK regulatory scheme requiring large electricity suppliers to pay solar PV exporters for surplus electricity exported to the grid (replacing the closed Feed-in Tariff). To register a PV system for SEG the install must be MCS-certified — so the homeowner needs an MCS-registered installer. Tariff rates vary by supplier (typically 4-15p/kWh in 2024).",
     ],
     correctIndex: 1,
     explanation:
@@ -92,11 +92,11 @@ const quizQuestions = [
       "What does BS 7671:2018+A4:2026 actually mean as a citation — break down the four parts.",
     options: [
       "BS = British Standard, 7671 = standard number, 2018 = base edition publication year (the 18th Edition), A4 = the fourth amendment to that base edition, 2026 = year that fourth amendment was published.",
-      "BS = Building Standard, 7671 = postcode prefix, 2018 = HSE serial, A4 = paper size.",
-      "BS = British Standard, 7671 = chapter, 2018 = HSE prosecution year, A4 = annex.",
-      "All four numbers refer to the same thing — they're just decoration.",
+      "The manufacturer's specified torque value for the terminal type — insufficient torque causes high-resistance joints and overheating; excessive torque damages threads, terminals and conductors",
+      "The adiabatic equation: S = sqrt(I squared t) / k, where S is cross-sectional area, I is fault current, t is disconnection time and k is a material constant",
+      "Natural England is the government's statutory adviser on the natural environment, responsible for issuing species licences, designating protected sites, and advising on ecological matters",
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       "Read it as 'British Standard 7671, 2018 base edition, fourth amendment dated 2026'. So the underlying standard is the 18th Edition (2018), and we're now on the A4:2026 amendment. Knowing the citation matters because BS 7671 changes substantially between amendments — A4:2026 brought AFDD requirements, the TN-C-S → PNB renaming and new inspection schedule columns.",
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       "Which IET publication is the practical companion specifically to BS 7671 Part 6 (Inspection and Testing)?",
     options: [
+      "Guidance Note 1 — Selection and Erection",
       "On-Site Guide (OSG)",
       "Guidance Note 3 — Inspection and Testing",
-      "Guidance Note 1 — Selection and Erection",
       "Guidance Note 8 — Earthing and Bonding",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "GN3 is the dedicated I&T companion. It walks through initial verification and periodic inspection, gives example test sequences, recommended condition codes (C1/C2/C3/FI), and the worked examples for filling out an EIC and EICR. Every working electrician on testing duties has a copy.",
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       "The On-Site Guide (OSG) is aimed primarily at:",
     options: [
-      "Designers of complex industrial installations.",
+      "Continuity (low-resistance ohmmeter), insulation resistance, loop impedance (Zs), RCD testing, and often earth electrode resistance — all the tests required for BS 7671 initial verification and periodic inspection",
+      "Striking a concealed live cable can cause fatal electric shock, and striking a gas pipe can cause an explosion — detection before drilling prevents these potentially fatal incidents",
+      "Investigate, record it in the accident book / near-miss log, review the safe-isolation procedure, brief the team, and use it as a positive learning event",
       "Installers of standard domestic and small commercial installations — it pulls the most-used BS 7671 tables (cable sizing, diversity, ratings) into a pocket-sized reference and explains the standard install methods.",
-      "Electrical inspectors only.",
-      "DNO engineers.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The OSG is the install-side companion to BS 7671. It doesn't replace BS 7671 — it picks out the parts a typical site electrician uses every day (single-phase, sub-100 A supplies, common cable types) and gives quick-reference tables and worked examples. For anything outside the standard envelope, you go back to BS 7671 itself.",
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       "What does JIB grading determine for an electrician on a JIB-affiliated job?",
     options: [
-      "Which colour van you can drive.",
       "The minimum hourly/weekly rate of pay, the holiday entitlement, the travel/lodging allowances, the categorisation (Adult Trainee → Labourer → Apprentice → Electrician → Approved Electrician → Technician), and the H&S handbook obligations. Grading is verified by JIB card.",
-      "Which BS 7671 chapter you can sign for.",
-      "Whether you can use NICEIC stickers.",
+      "A coordination procedure that defines time-zoning or space-zoning, communication protocols between subcontractors, a single point of coordination responsibility, and a review of combined loading on the scaffold",
+      "Most providers run 5-10 days of taught content (often a mix of classroom and practical lab) plus the exam and practical assessment at the end. Some intensive 5-day courses; some part-time evening or weekend formats over 10-12 weeks. Self-study is possible but rare because the practical assessment requires specific equipment and witness-by-assessor.",
+      "CAR 2012 Reg 10 — anyone who is or may be exposed to asbestos must receive adequate training. UKATA / IATP-certified asbestos awareness (1-day) is the typical baseline for trades. Higher levels (non-licensed work, licensed work) require more advanced training.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The JIB (Joint Industry Board) is the national wage and conditions agreement for the electrical contracting industry in England, Wales and Northern Ireland (Scotland has SJIB). The grading on your card determines what the contractor must pay you, what you're allowed to do unsupervised on a JIB site, and what your H&S obligations are.",
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     question:
       "A registered NICEIC contractor's annual assessment shows persistent failure to keep test instrument calibration certificates. What's the realistic outcome?",
     options: [
-      "Nothing — calibration is non-statutory.",
+      "Verification of correct cable terminations, torque checks on all connections, correct protective device ratings and settings, correct phase rotation, clean interior free of debris, secure panel fixings, and functional interlocks",
       "Non-conformance issued, given a deadline to evidence calibration, re-assessed. Persistent failure or refusal to remediate triggers escalation: warning, suspension, removal from scheme. Scheme rules are contractual — you signed up to them in writing on enrolment.",
-      "Immediate criminal prosecution.",
-      "Loss of right to trade as an electrician.",
+      "32 A continuous duty — with no diversity reduction applied, since EV charging is a continuous load that draws rated current for extended periods (several hours), the cable must be sized for 100% of the rated current using the appropriate correction factors from BS 7671 Appendix 4",
+      "Providing centralised monitoring and control of all building services, enabling automated load shedding, demand limiting, scheduling of non-essential loads, and real-time power monitoring with alarm management",
     ],
     correctAnswer: 1,
     explanation:
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       "A circuit breaker carries the marking 'BS EN 60898-1, 6 kA, B32'. What is BS EN 60898-1?",
     options: [
-      "A statutory instrument under HASAWA.",
+      "Acknowledge the person's wish for confidentiality, explore the immediacy of risk, explain the limits of confidentiality where there is risk to life, and collaboratively agree next steps including whether crisis services are needed before the GP appointment",
+      "Look up the cable factor for each conductor and the conduit factor for the chosen size and length, then check that the sum of cable factors does not exceed the conduit factor",
       "A product standard — the European harmonised standard for circuit breakers used in domestic and similar installations. BS 7671 references this standard for MCB selection. Devices marked to BS EN 60898 are deemed-to-comply under BS 7671.",
-      "A JIB grade.",
-      "A NICEIC scheme certificate.",
+      "Use the STOP technique: Stop, Take a breath, Observe the frustration without acting on it, then Proceed by calmly raising the issue through the appropriate site coordination process",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "BS EN standards are product specifications — they tell the manufacturer what the product must meet. BS 7671 references them so that when you select an MCB to BS EN 60898 you don't have to re-prove its short-circuit performance, breaking capacity or thermal characteristics. The standard does that work for you. Similarly BS EN 60947 for industrial switchgear and contactors, BS EN 61008/61009 for RCDs/RCBOs.",
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       "Why does ignoring a non-statutory document like BS 7671 weaken your defence in a statutory prosecution under EAWR?",
     options: [
-      "Because BS 7671 is secretly a statute.",
+      "Manufacturer's website (always the latest version), the firm's COSHH register (in paper or app form — common apps include Sypol and Alcumus), and the product packaging at the point of purchase. Many manufacturers print QR codes on the can that link directly to the latest SDS.",
+      "Other apprentices on the same job, the Improver(s) (post-college, pre-AM2 colleagues), the Approved Electrician(s) you're paired with, and the formally-allocated Mentor. The peer group is who you spend most of your time with day to day and who you learn the trade from in real time.",
+      "Compliance with general installation requirements plus consideration of: DC circuit protection, isolation and labelling; ventilation for gas dispersal; fire separation from habitable rooms; accessible isolation for emergency services; and earthing and bonding of all metalwork",
       "Because the HSE's Memorandum of Guidance to EAWR (HSR25) cites BS 7671 as a means of demonstrating compliance with EAWR Reg 4. Following BS 7671 raises a presumption of compliance; departing from it requires you to prove your alternative method was at least as safe — a much harder argument to win in court.",
-      "Because BS 7671 is enforced by NICEIC.",
-      "Because the IET reports breaches to the HSE.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The legal logic is 'reverse onus by reference standard'. If the recognised standard is BS 7671 and you followed it, the burden is on the prosecution to show that wasn't enough. If you ignored it, the burden flips to you to show your method was equivalent. Most defendants can't carry that burden — which is why everyone follows BS 7671 in practice.",
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       "A homeowner's house insurance is voided after a fire. The insurer cites 'failure to demonstrate the electrical installation was maintained in accordance with current standards'. Which non-statutory framework typically supplies the evidence the insurer wants to see?",
     options: [
-      "Nothing — insurance is unrelated to the regs.",
       "An EICR carried out and signed by a competent person (usually a CPS-registered contractor) in accordance with BS 7671 Part 6 / IET GN3, at the recommended frequency for the premises type, with a satisfactory or remediated outcome. Without that, the insurer's claim that the installation wasn't maintained to current standards is hard to refute.",
-      "An ESQCR Schedule 1 declaration.",
-      "A HASAWA s.7 personal-duty statement.",
+      "Penetrations through fire-rated walls / floors / ceilings must be fire-stopped to maintain the fire integrity of the compartment. Cable trays, conduit, individual cables passing through fire walls all require appropriate fire stopping per Approved Doc B.",
+      "A document prepared by the principal contractor before the construction phase starts, setting out the health and safety arrangements for the site (welfare, induction, site rules, hazard controls, emergency procedures, monitoring). Required for any project where there is more than one contractor; the depth of the plan scales with the project size and risk profile. Sub-contractors are entitled to relevant extracts on induction.",
+      "Prevailing \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"tough it out\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" and \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"leave feelings at the gate\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" cultures actively discourage emotional expression and reflection, creating an environment where acknowledging emotions is seen as weakness, which drives emotional suppression, reduces help-seeking, and increases the risk of unrecognised mental health deterioration",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Insurance contracts almost always include a 'maintained to a reasonable standard' clause. The non-statutory documents (BS 7671 + GN3 + a CPS-issued EICR) ARE the evidence base for that clause. No EICR, no defence — the insurer walks away from the claim. This is one of the biggest practical reasons the non-statutory framework matters as much as the statutory one.",
   },

@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'wlc-definition',
     question: 'What does Whole Life Carbon (WLC) assessment measure?',
     options: [
-      'Only operational energy consumption',
+      'Using dedicated conduits, trunking, or trays exclusively for emergency circuits',
+      'Notify the scheme and provide certificate to customer and local authority',
+      'BS EN 60900 — rated to 1,000 V AC / 1,500 V DC and individually tested',
       'Total carbon emissions from cradle to grave including embodied and operational carbon',
-      'Just the manufacturing emissions of materials',
-      'Carbon sequestration in building materials',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Whole Life Carbon assessment measures the total carbon emissions across a building's entire life cycle, including both embodied carbon (materials, construction, maintenance, end-of-life) and operational carbon (energy use during occupancy).",
   },
@@ -45,12 +45,12 @@ const quickCheckQuestions = [
     question:
       "Which life cycle module covers the 'product stage' including raw material extraction and manufacturing?",
     options: [
+      'Module D (Beyond system boundary)',
       'Module B (Use stage)',
       'Module C (End-of-life)',
       'Module A1-A3 (Product stage)',
-      'Module D (Beyond system boundary)',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Module A1-A3 covers the product stage: A1 is raw material extraction and supply, A2 is transport to manufacturer, and A3 is manufacturing. This represents the 'cradle-to-gate' embodied carbon of materials.",
   },
@@ -58,20 +58,25 @@ const quickCheckQuestions = [
     id: 'epd-purpose',
     question: 'What is an Environmental Product Declaration (EPD)?',
     options: [
-      'A building energy performance certificate',
+      'Maintaining a consistent sleep and wake time, even on weekends',
+      'The percentage of consumption variation explained by degree days',
+      'The processing of raw sensor signals to make them suitable for the control system',
       'A standardised document reporting verified environmental impacts of a product',
-      'A planning permission requirement',
-      "A manufacturer's marketing document",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'An EPD is a standardised, third-party verified document that reports the environmental impacts of a product based on Life Cycle Assessment. EPDs follow ISO 14025 and EN 15804 standards, providing reliable data for WLC calculations.',
   },
   {
     id: 'leti-benchmark',
     question: 'What is the LETI 2030 target for whole life carbon in non-domestic buildings?',
-    options: ['1500 kgCO2e/m2', '600 kgCO2e/m2', '300 kgCO2e/m2', '100 kgCO2e/m2'],
-    correctIndex: 1,
+    options: [
+      '1500 kgCO2e/m2',
+      '100 kgCO2e/m2',
+      '300 kgCO2e/m2',
+      '600 kgCO2e/m2',
+    ],
+    correctIndex: 3,
     explanation:
       'LETI (London Energy Transformation Initiative) sets a 2030 target of 600 kgCO2e/m2 for whole life carbon in non-domestic buildings, with an aspirational 2050 target of 350 kgCO2e/m2. These benchmarks drive industry decarbonisation.',
   },
@@ -82,8 +87,13 @@ const quizQuestions = [
     id: 1,
     question:
       'According to RICS methodology, what is the standard study period for whole life carbon assessment?',
-    options: ['25 years', '50 years', '60 years', '100 years'],
-    correctAnswer: 2,
+    options: [
+      '25 years',
+      '60 years',
+      '50 years',
+      '100 years',
+    ],
+    correctAnswer: 1,
     explanation:
       'RICS Professional Statement specifies a 60-year study period as the standard for whole life carbon assessment. This aligns with BS EN 15978 and allows consistent benchmarking across projects.',
   },
@@ -92,12 +102,12 @@ const quizQuestions = [
     question:
       'Which module covers carbon emissions from building maintenance and replacement during use?',
     options: [
+      'Module C2 (Transport to disposal)',
       'Module A5 (Construction process)',
       'Module B4 (Replacement)',
-      'Module C2 (Transport to disposal)',
       'Module D (Reuse potential)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Module B4 covers replacement of building components during the use stage. For MEP systems with 15-25 year lifespans, multiple replacement cycles must be accounted for within the 60-year study period.',
   },
@@ -105,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'What does Module D represent in life cycle assessment?',
     options: [
-      'Demolition activities',
-      'Design stage emissions',
+      'Carbon stored in bio-based materials like timber',
+      'Embodied carbon coefficients for construction materials',
+      'Reducing system sizes through fabric-first approach',
       'Benefits and loads beyond the system boundary (recycling credits)',
-      'Delivery to site',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Module D accounts for potential benefits beyond the building's life cycle, such as recycling, recovery, or reuse potential. It must be reported separately as it represents avoided emissions in future product systems.",
   },
@@ -118,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'The ICE Database provides:',
     options: [
-      'Only UK construction material carbon factors',
-      'Energy performance benchmarks for buildings',
       'Embodied carbon coefficients for construction materials',
+      'Energy performance benchmarks for buildings',
+      'Only UK construction material carbon factors',
       'Building regulations compliance data',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The Inventory of Carbon and Energy (ICE) Database, developed by the University of Bath, provides embodied carbon coefficients (kgCO2e/kg) for construction materials. It's widely used in the UK when product-specific EPDs are unavailable.",
   },
@@ -133,8 +143,8 @@ const quizQuestions = [
     options: [
       'Generic industry databases',
       'Product-specific EPDs',
-      'National averages',
       'Estimated values',
+      'National averages',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,8 +154,13 @@ const quizQuestions = [
     id: 6,
     question:
       "What percentage of a building's whole life carbon do MEP systems typically represent?",
-    options: ['5-10%', '15-25%', '40-50%', '60-70%'],
-    correctAnswer: 1,
+    options: [
+      '5-10%',
+      '40-50%',
+      '15-25%',
+      '60-70%',
+    ],
+    correctAnswer: 2,
     explanation:
       "MEP systems typically account for 15-25% of a building's whole life carbon, primarily due to shorter replacement cycles (15-25 years vs 60+ years for structure) and energy-intensive materials like copper, aluminium, and refrigerants.",
   },
@@ -153,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which refrigerant property is measured in Global Warming Potential (GWP)?',
     options: [
-      'Ozone depletion potential',
-      'Flammability rating',
+      'RIBA Stages 2, 3, 4 and completion',
+      'Carbon stored in bio-based materials like timber',
+      'Module B4 accounts for replacement cycles',
       'Equivalent CO2 impact per kg released',
-      'Energy efficiency ratio',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'GWP measures the climate impact of a refrigerant relative to CO2 over a specified time period (typically 100 years). R-410A has a GWP of 2088, meaning 1kg released equals 2088 kg CO2e. Lower GWP alternatives like R-32 (GWP 675) reduce embodied carbon risk.',
   },
@@ -166,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'RICS requires WLC assessment at which project stages?',
     options: [
-      'Only at completion',
       'RIBA Stages 2, 3, 4 and completion',
-      'Only at planning submission',
-      'Only during operation',
+      'Previous certificates and drawings',
+      'It compensates for cable resistance',
+      'Full fall protection system',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'RICS Professional Statement requires WLC assessment at RIBA Stage 2 (Concept Design), Stage 3 (Developed Design), Stage 4 (Technical Design), and as-built completion. Early assessment enables design optimisation when changes are still feasible.',
   },
@@ -179,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the primary strategy for reducing operational carbon in MEP design?',
     options: [
-      'Using recycled materials',
+      'Equivalent CO2 impact per kg released',
       'Reducing system sizes through fabric-first approach',
-      'Specifying longer-life equipment',
-      'Choosing local suppliers',
+      'Embodied carbon coefficients for construction materials',
+      'Benefits and loads beyond the system boundary (recycling credits)',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,11 +208,11 @@ const quizQuestions = [
     question: 'Which copper cable alternative can reduce embodied carbon by approximately 50%?',
     options: [
       'Steel conductors',
+      'Silver conductors',
       'Aluminium conductors',
       'Copper-clad aluminium',
-      'Silver conductors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Aluminium conductors have approximately 50% lower embodied carbon than copper. While requiring larger cross-sections for equivalent current capacity, aluminium is increasingly used for submains and distribution where termination methods allow.',
   },
@@ -205,12 +220,12 @@ const quizQuestions = [
     id: 11,
     question: "What does 'biogenic carbon' refer to in WLC assessment?",
     options: [
-      'Carbon from fossil fuels',
+      'Embodied carbon coefficients for construction materials',
+      'Reducing system sizes through fabric-first approach',
+      'Equivalent CO2 impact per kg released',
       'Carbon stored in bio-based materials like timber',
-      'Carbon from biological waste',
-      'Carbon dioxide from respiration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Biogenic carbon is carbon sequestered from the atmosphere by plants and stored in bio-based materials. Timber products store biogenic carbon, which may be released at end-of-life. RICS requires biogenic carbon to be reported separately.',
   },
@@ -219,12 +234,12 @@ const quizQuestions = [
     question:
       'A cable tray system is replaced twice during a 60-year building life. How is this captured in WLC?',
     options: [
-      'Only the initial installation is counted',
       'Module B4 accounts for replacement cycles',
-      'Replacements are excluded from assessment',
       'Only the final installation is counted',
+      'Only the initial installation is counted',
+      'Replacements are excluded from assessment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Module B4 (Replacement) captures the embodied carbon of all replacement cycles within the study period. If cable tray has a 20-year life, two replacements (at years 20 and 40) would be included, effectively tripling the B4 carbon impact.',
   },

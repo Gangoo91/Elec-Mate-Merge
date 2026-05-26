@@ -35,8 +35,13 @@ const checks = [
   {
     id: 'si-base-check',
     question: 'Which of these is an SI BASE unit?',
-    options: ['Volt (V)', 'Ohm (Ω)', 'Ampere (A)', 'Watt (W)'],
-    correctIndex: 2,
+    options: [
+      'Ampere (A)',
+      'Volt (V)',
+      'Ohm (Ω)',
+      'Watt (W)',
+    ],
+    correctIndex: 0,
     explanation:
       'The ampere is one of the seven SI base units (along with metre, kilogram, second, kelvin, mole and candela). Volts, ohms and watts are DERIVED — built from base units.',
   },
@@ -45,12 +50,12 @@ const checks = [
     question:
       "A 'newton-metre' (N·m) is the unit of torque. Two SI base units sit underneath it. Which two?",
     options: [
-      'Ampere and second',
       'Kilogram and metre (with second underneath)',
-      'Volt and ohm',
-      'Kelvin and candela',
+      'Repair or replace the damaged conductor and retest',
+      '15th January the following year',
+      'A skills card confirming competence level',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Newton (force) = kg·m/s². Multiply by another metre for torque (N·m). Even mechanical units used by electricians (motor torque, fixings) trace back to base units.',
   },
@@ -59,12 +64,12 @@ const checks = [
     question:
       'The coulomb (C) is the SI derived unit of electric charge. How is it built from base units?',
     options: [
-      '1 C = 1 V × 1 A',
+      'Give up to 5 back blows between the shoulder blades',
+      'Solvents used for cleaning switchgear contacts',
       '1 C = 1 A × 1 s (one ampere flowing for one second)',
-      '1 C = 1 W × 1 s',
-      '1 C is itself a base unit',
+      'During the design and planning stage, before construction begins',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "1 C = 1 A·s. Charge is current multiplied by time — exactly how a battery's capacity in ampere-hours converts to coulombs (1 Ah = 3,600 C). Two base units (ampere + second), one derived unit.",
   },
@@ -74,24 +79,39 @@ const quizQuestions = [
   {
     id: 1,
     question: 'How many SI base units are there?',
-    options: ['Five', 'Six', 'Seven', 'Nine'],
-    correctAnswer: 2,
+    options: [
+      'Five',
+      'Seven',
+      'Six',
+      'Nine',
+    ],
+    correctAnswer: 1,
     explanation:
       'Seven: metre (m), kilogram (kg), second (s), ampere (A), kelvin (K), mole (mol), candela (cd). Every other SI unit is built from these.',
   },
   {
     id: 2,
     question: 'Which SI base unit is the unit of electric current?',
-    options: ['Volt', 'Ampere', 'Coulomb', 'Watt'],
-    correctAnswer: 1,
+    options: [
+      'Coulomb',
+      'Volt',
+      'Ampere',
+      'Watt',
+    ],
+    correctAnswer: 2,
     explanation:
       'Ampere (A). Current is one of the seven base quantities, so the ampere itself is base — not derived.',
   },
   {
     id: 3,
     question: 'Which SI base unit is the unit of mass?',
-    options: ['Newton', 'Pound', 'Kilogram', 'Gram'],
-    correctAnswer: 2,
+    options: [
+      'Pound',
+      'Newton',
+      'Gram',
+      'Kilogram',
+    ],
+    correctAnswer: 3,
     explanation:
       'Kilogram (kg). Note it is the kilogram, not the gram, that is the SI base unit — one of the few SI units with a prefix already baked in.',
   },
@@ -99,20 +119,25 @@ const quizQuestions = [
     id: 4,
     question: 'The ohm (Ω) is a DERIVED unit. What is it derived from?',
     options: [
-      'Just the ampere',
       'Volts ÷ amperes',
+      'Just the ampere',
       'Watts ÷ volts',
       'Coulombs ÷ seconds',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "1 Ω = 1 V ÷ 1 A. That's Ohm's law turned inside out — a unit definition, not just a calculation.",
   },
   {
     id: 5,
     question: 'The watt (W) is the SI derived unit of which quantity?',
-    options: ['Energy', 'Force', 'Power', 'Charge'],
-    correctAnswer: 2,
+    options: [
+      'Force',
+      'Power',
+      'Charge',
+      'Energy',
+    ],
+    correctAnswer: 1,
     explanation:
       'Watt = the unit of POWER (rate of energy transfer). 1 W = 1 J per second. Energy itself is measured in joules (J) or, on your bill, in kWh.',
   },
@@ -120,8 +145,13 @@ const quizQuestions = [
     id: 6,
     question:
       "What unit do UK electricity suppliers use to bill consumers for energy used?",
-    options: ['Watts (W)', 'Kilowatt-hours (kWh)', 'Joules (J)', 'Volt-amps (VA)'],
-    correctAnswer: 1,
+    options: [
+      'Watts (W)',
+      'Joules (J)',
+      'Kilowatt-hours (kWh)',
+      'Volt-amps (VA)',
+    ],
+    correctAnswer: 2,
     explanation:
       'kWh — kilowatt-hours. Energy = power × time. 1 kW running for 1 hour = 1 kWh. That is what your meter counts.',
   },
@@ -130,11 +160,11 @@ const quizQuestions = [
     question: 'Frequency (Hz) tells you what?',
     options: [
       'How much current is flowing',
-      'How many AC cycles happen per second',
-      'How fast the volt drop is',
       'How hot a conductor is',
+      'How fast the volt drop is',
+      'How many AC cycles happen per second',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hertz (Hz) = cycles per second. UK mains is 50 Hz — the AC waveform completes 50 full cycles every second.',
   },
@@ -143,12 +173,12 @@ const quizQuestions = [
     question:
       'Why does it matter that electrical units are SI rather than imperial?',
     options: [
-      "It doesn't — units are units",
       'Manufacturers, BS 7671 and instruments worldwide all use SI, so cross-checks always work',
-      'Imperial units are illegal',
-      'SI units are easier to spell',
+      'The site manager, recorded in the accident/incident book and used to update the RA',
+      'A brief risk assessment carried out immediately before starting a task at the work location',
+      'Role modelling \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 demonstrating correct practice through consistent personal behaviour',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'SI is the global system. Cable drums, MCBs, test instruments, BS 7671, IEC standards — all SI. You can pick up a German MCB and the rating is in amps, just like a UK one.',
   },

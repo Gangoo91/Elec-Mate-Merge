@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     id: 'series-current',
     question: 'What is the key characteristic of current in a series circuit?',
     options: [
-      'Current varies',
       'Current is the same everywhere',
-      'Current is zero',
-      'Current doubles',
+      'Loose connections or overloading',
+      'The management contractor',
+      'Completing the work within 24 hours',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "In series circuits, there's only one path, so current must be the same through all components.",
   },
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 'parallel-voltage',
     question: 'What happens to voltage in parallel branches?',
     options: [
-      'Voltage divides equally',
+      'Stacked boxes or sacks on a flat surface',
       'Voltage is the same across each branch',
-      'Voltage is zero',
-      'Voltage adds up',
+      'At least 1 MΩ per volt of range selected',
+      'P = (2π × n × T) / 60 where n is RPM',
     ],
     correctIndex: 1,
     explanation:
@@ -40,8 +40,13 @@ const quickCheckQuestions = [
   {
     id: 'series-resistance',
     question: 'How do you calculate total resistance in series?',
-    options: ['R₁ × R₂', 'R₁ + R₂', '1/R₁ + 1/R₂', 'R₁ ÷ R₂'],
-    correctIndex: 1,
+    options: [
+      'R₁ × R₂',
+      '1/R₁ + 1/R₂',
+      'R₁ + R₂',
+      'R₁ ÷ R₂',
+    ],
+    correctIndex: 2,
     explanation: 'In series, resistances simply add together: Rtotal = R₁ + R₂ + R₃...',
   },
 ];
@@ -51,8 +56,13 @@ const quizQuestions = [
     id: 1,
     question:
       'In a series circuit with three resistors (10Ω, 20Ω, 30Ω), what is the total resistance?',
-    options: ['60Ω', '20Ω', '6.67Ω', '10Ω'],
-    correctAnswer: 0,
+    options: [
+      '20Ω',
+      '60Ω',
+      '6.67Ω',
+      '10Ω',
+    ],
+    correctAnswer: 1,
     explanation: 'In series circuits, total resistance = R₁ + R₂ + R₃ = 10 + 20 + 30 = 60Ω',
   },
   {
@@ -60,10 +70,10 @@ const quizQuestions = [
     question:
       'What happens to the brightness of lamps in a series circuit when you add more lamps?',
     options: [
-      'They get brighter',
-      'They stay the same',
-      'They get dimmer',
       'Only the first lamp changes',
+      'They get brighter',
+      'They get dimmer',
+      'They stay the same',
     ],
     correctAnswer: 2,
     explanation:
@@ -73,15 +83,25 @@ const quizQuestions = [
     id: 3,
     question:
       'In a parallel circuit, if one branch has 2A and another has 3A, what is the total current from the supply?',
-    options: ['1A', '2.5A', '5A', '6A'],
-    correctAnswer: 2,
+    options: [
+      '2.5A',
+      '1A',
+      '6A',
+      '5A',
+    ],
+    correctAnswer: 3,
     explanation: 'In parallel circuits, total current is the sum of branch currents: 2A + 3A = 5A',
   },
   {
     id: 4,
     question: 'Which circuit type is used for household socket outlets?',
-    options: ['Series only', 'Parallel only', 'Both series and parallel', 'Neither'],
-    correctAnswer: 1,
+    options: [
+      'Parallel only',
+      'Series only',
+      'Both series and parallel',
+      'Neither',
+    ],
+    correctAnswer: 0,
     explanation:
       'Household sockets use parallel circuits so each device gets full voltage and operates independently.',
   },
@@ -92,8 +112,8 @@ const quizQuestions = [
     options: [
       'Only that component stops working',
       'All components stop working',
-      'The other components work harder',
       'Nothing changes',
+      'The other components work harder',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,8 +123,13 @@ const quizQuestions = [
     id: 6,
     question:
       'What is the voltage across each branch in a parallel circuit connected to a 230V supply?',
-    options: ['115V each', '230V each', 'Depends on resistance', 'Voltage divides equally'],
-    correctAnswer: 1,
+    options: [
+      '115V each',
+      'Depends on resistance',
+      '230V each',
+      'Voltage divides equally',
+    ],
+    correctAnswer: 2,
     explanation:
       'In parallel circuits, each branch is connected directly across the supply, so each gets the full 230V.',
   },
@@ -114,22 +139,22 @@ const quizQuestions = [
     options: [
       'Voltage is the same everywhere',
       'Current divides between components',
-      'Resistance values add together',
       'Each component can be controlled separately',
+      'Resistance values add together',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation: 'In series circuits, resistance values add together: Rtotal = R₁ + R₂ + R₃...',
   },
   {
     id: 8,
     question: 'Why are car headlights wired in parallel rather than series?',
     options: [
-      "It's cheaper",
       'Each light gets full voltage and works independently',
-      'It uses less current',
-      "Series circuits don't work in cars",
+      'After completing full GS38 procedure and posting warning notices',
+      'To assist with evacuation and ensure areas are clear',
+      'Loss of supply PEN could make installation conductive parts live',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Parallel wiring ensures each headlight gets the full 12V supply and if one fails, the other continues to work.',
   },
@@ -150,12 +175,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is a key advantage of parallel circuits in electrical installations?',
     options: [
-      'Uses less cable',
+      'Physical intersection of two objects',
+      'Pressure measured relative to atmospheric pressure',
       'Components can be controlled independently',
-      'Total resistance is higher',
-      'Current is the same everywhere',
+      'To prevent dark edges that could hide obstacles',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Parallel circuits allow independent control - you can switch devices on/off without affecting others, which is essential for practical installations.',
   },

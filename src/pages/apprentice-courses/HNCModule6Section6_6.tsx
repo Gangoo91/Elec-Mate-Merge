@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'poe-definition',
     question: 'What is the primary purpose of Post-Occupancy Evaluation (POE)?',
     options: [
-      'To calculate final project costs',
+      'To show the spatial relationship of all services and identify potential clashes',
+      'Durable and legible marking identifying each circuit',
+      'Pilot wire integrity and in-cable control box function',
       'To assess building performance and user satisfaction after handover',
-      'To complete snagging lists',
-      'To train maintenance staff',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Post-Occupancy Evaluation (POE) systematically assesses building performance and user satisfaction after handover, comparing actual outcomes against design intent to identify improvements and lessons learned.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'soft-landings',
     question: 'When does the Soft Landings framework engagement begin?',
     options: [
-      'At practical completion',
-      'During the defects liability period',
       'At the briefing and design stage',
+      'During the defects liability period',
+      'At practical completion',
       'Three years after handover',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Soft Landings engagement begins at the briefing and design stage (Stage 1), not at handover. This early involvement ensures performance targets are defined and the team commits to aftercare from project inception.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'bus-methodology',
     question: 'What does the BUS methodology primarily measure?',
     options: [
-      'Building energy consumption',
+      '25V from a suitable transformer or extra-low voltage (ELV) equipment',
+      'Stop immediately and investigate the cause',
+      'To ensure even wear and extend service life across all boilers',
       'Occupant satisfaction with comfort and building usability',
-      'Construction defects',
-      'Maintenance costs',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The Building Use Studies (BUS) methodology is a standardised occupant satisfaction survey measuring comfort, health, productivity, and overall building usability through benchmarked questionnaires.',
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'performance-gap',
     question: "The 'performance gap' in building services refers to:",
     options: [
-      'The gap between tender and final account',
       'The difference between predicted and actual energy performance',
+      'The gap between tender and final account',
       'The gap between design and construction teams',
       'The time between handover and occupation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The performance gap is the well-documented difference between predicted (design) energy performance and actual measured performance in operation, often showing buildings using 2-5 times more energy than predicted.',
   },
@@ -98,7 +98,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the recommended minimum duration for post-handover energy monitoring?',
-    options: ['3 months', '6 months', '12 months (full seasonal cycle)', '24 months'],
+    options: [
+      'Cavity fixings or toggle bolts',
+      'Electricity tariff prices',
+      '12 months (full seasonal cycle)',
+      'Regularly based on competency assessment',
+    ],
     correctAnswer: 2,
     explanation:
       'A minimum of 12 months monitoring is recommended to capture a full seasonal cycle, ensuring heating and cooling seasons are assessed and seasonal variations in energy use are understood.',
@@ -107,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'In BUS surveys, which parameter is NOT typically measured?',
     options: [
-      'Thermal comfort',
-      'Lighting quality',
+      'Size, type, route, and condition',
+      'Armoured loose-tube with PE jacket',
+      'When the coil is parallel to the field',
       'Construction programme duration',
-      'Air quality',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'BUS surveys measure occupant satisfaction with environmental conditions (thermal comfort, lighting, air quality, noise) and building usability, not construction-related metrics like programme duration.',
   },
@@ -120,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: "What is 'continuous commissioning' in the context of POE?",
     options: [
-      'Repeating initial commissioning tests',
       'Ongoing optimisation of building systems based on performance data',
-      'Training new maintenance staff',
-      'Extending the defects liability period',
+      'Coordinating aftercare activities and maintaining focus on performance outcomes',
+      'Public buildings over 250m² frequently visited by the public',
+      'Temperature, humidity, air movement, and radiant temperature',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Continuous commissioning (also called ongoing commissioning) involves ongoing monitoring and optimisation of building systems based on operational performance data, adjusting setpoints and controls to improve efficiency.',
   },
@@ -133,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'Display Energy Certificates (DECs) are required for:',
     options: [
-      'All new buildings over 50m²',
+      'Unregulated loads, extended operating hours, and poor controls commissioning',
       'Public buildings over 250m² frequently visited by the public',
-      'Only residential properties',
-      'Industrial buildings only',
+      'To identify energy use by system, zone, or tenant for targeted improvements',
+      'Ongoing optimisation of building systems based on performance data',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: "The 'lessons learned' process should primarily feed into:",
     options: [
-      'The project final account',
+      'Ongoing optimisation of building systems based on performance data',
+      'Public buildings over 250m² frequently visited by the public',
       'Future project briefing, design, and specifications',
-      'Building insurance documentation',
-      'Planning permission applications',
+      'Temperature, humidity, air movement, and radiant temperature',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Lessons learned should feed into future project briefing, design standards, and specifications to prevent recurring issues and improve outcomes on subsequent projects - closing the feedback loop.',
   },
@@ -159,8 +164,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What percentage energy uplift factor do CIBSE recommend applying to design predictions?',
-    options: ['5-10%', '10-20%', '20-40%', '50-100%'],
-    correctAnswer: 2,
+    options: [
+      '5-10%',
+      '10-20%',
+      '50-100%',
+      '20-40%',
+    ],
+    correctAnswer: 3,
     explanation:
       'CIBSE TM54 recommends applying a 20-40% uplift factor to design energy predictions to account for the typical performance gap, providing more realistic expectations of operational energy use.',
   },
@@ -168,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'Thermal comfort surveys should assess which of the following?',
     options: [
-      'Only temperature',
       'Temperature, humidity, air movement, and radiant temperature',
-      'Only heating system efficiency',
-      'Only air conditioning capacity',
+      'To identify energy use by system, zone, or tenant for targeted improvements',
+      'Ongoing optimisation of building systems based on performance data',
+      'Public buildings over 250m² frequently visited by the public',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Thermal comfort is multifactorial, requiring assessment of air temperature, humidity, air movement/draughts, and radiant temperature from surfaces - all contributing to perceived comfort per BS EN ISO 7730.',
   },
@@ -181,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of sub-metering in POE?',
     options: [
-      'To reduce meter reading workload',
+      'Coordinating aftercare activities and maintaining focus on performance outcomes',
       'To identify energy use by system, zone, or tenant for targeted improvements',
-      'To comply with planning conditions',
-      'To satisfy building control requirements',
+      'Public buildings over 250m² frequently visited by the public',
+      'Temperature, humidity, air movement, and radiant temperature',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,11 +205,11 @@ const quizQuestions = [
     question: 'Which document provides guidance on undertaking POE in the UK?',
     options: [
       'BS 7671',
+      'HSE Guidance Note 85',
       'CIBSE Guide L and TM22',
       'Building Regulations Part L',
-      'HSE Guidance Note 85',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CIBSE Guide L (Sustainability) and TM22 (Energy Assessment and Reporting Methodology) provide comprehensive guidance on undertaking POE, energy assessment, and building performance evaluation.',
   },
@@ -207,12 +217,12 @@ const quizQuestions = [
     id: 11,
     question: 'The Soft Landings Champion role is responsible for:',
     options: [
-      'Signing off defects',
+      'To identify energy use by system, zone, or tenant for targeted improvements',
+      'Unregulated loads, extended operating hours, and poor controls commissioning',
+      'Ongoing optimisation of building systems based on performance data',
       'Coordinating aftercare activities and maintaining focus on performance outcomes',
-      'Approving final accounts',
-      'Issuing practical completion certificates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Soft Landings Champion coordinates aftercare activities, maintains focus on performance outcomes throughout the project, and ensures the team delivers on Soft Landings commitments from design through occupation.',
   },
@@ -220,12 +230,12 @@ const quizQuestions = [
     id: 12,
     question: 'Which factor commonly contributes to the building performance gap?',
     options: [
-      'Accurate design assumptions',
       'Unregulated loads, extended operating hours, and poor controls commissioning',
-      'Effective building handover',
-      'Comprehensive O&M documentation',
+      'Public buildings over 250m² frequently visited by the public',
+      'Ongoing optimisation of building systems based on performance data',
+      'To identify energy use by system, zone, or tenant for targeted improvements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Common contributors to the performance gap include: unregulated loads not in design calculations, extended actual operating hours, poor controls commissioning, user behaviour differences, and specification changes during construction.',
   },

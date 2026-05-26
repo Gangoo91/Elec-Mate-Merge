@@ -46,10 +46,10 @@ const checks = [
     options: [
       'When the field is strong',
       'Only when the field is constant',
-      'When the flux through the coil is changing',
       'Only when the coil is connected to a battery',
+      'When the flux through the coil is changing',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Faraday’s law: EMF is induced only when the FLUX is CHANGING. A static field with a stationary coil produces nothing. Move the coil, move the magnet, or change the current that produced the field — then you get EMF.',
   },
@@ -58,12 +58,12 @@ const checks = [
     question:
       'You push the N pole of a magnet INTO a coil. The induced current in the coil produces:',
     options: [
+      'A field perpendicular to the magnet’s motion',
       'A south pole at the entry end (pulls the magnet in faster)',
       'A north pole at the entry end (opposes the magnet)',
       'No pole at all',
-      'A field perpendicular to the magnet’s motion',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Lenz’s law: the induced current always OPPOSES the change that caused it. Pushing N in means the coil generates an induced N to push back. That opposition is what you feel as resistance — and it’s what conserves energy in every generator.',
   },
@@ -71,9 +71,9 @@ const checks = [
     id: 'fleming-rules',
     question: 'Which rule do you use to find the direction of induced current in a generator?',
     options: [
-      'Fleming’s left-hand rule',
-      'Fleming’s right-hand rule',
       'Right-hand grip rule',
+      'Fleming’s right-hand rule',
+      'Fleming’s left-hand rule',
       'Lenz’s law alone',
     ],
     correctIndex: 1,
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: "What does Faraday's law of electromagnetic induction state?",
     options: [
-      'Like poles repel',
+      'BMS setpoint and schedule adjustment based on actual use',
       'Induced EMF is proportional to the rate of change of magnetic flux',
-      'Current in a wire creates a magnetic field',
-      'Force equals current times length times field',
+      'Skipping the manual test button after the 1×IΔn trip test',
+      'The linear travel distance of the valve stem from fully closed to fully open',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'Lenz’s law tells you the:',
     options: [
+      'Strength of a magnet',
       'Magnitude of induced EMF',
       'Direction of induced current',
-      'Strength of a magnet',
       'Speed of a motor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Lenz gives you DIRECTION. Faraday gives you magnitude. Together they fully describe induction.',
   },
@@ -113,8 +113,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A 100-turn coil has the flux through it change by 0.02 Wb in 0.5 seconds. The induced EMF is:',
-    options: ['1 V', '2 V', '4 V', '10 V'],
-    correctAnswer: 2,
+    options: [
+      '2 V',
+      '1 V',
+      '10 V',
+      '4 V',
+    ],
+    correctAnswer: 3,
     explanation:
       'EMF = N × (dΦ/dt) = 100 × (0.02 / 0.5) = 100 × 0.04 = 4 V. Faraday’s law in numbers.',
   },
@@ -122,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'Fleming’s LEFT-hand rule applies to:',
     options: [
-      'Generators',
       'Motors',
+      'Generators',
       'Transformers only',
       'AC supplies only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'LEFT for Motors — force on a current-carrying conductor in a field. The mnemonic: Right Generator, Left Motor.',
   },
@@ -135,8 +140,13 @@ const quizQuestions = [
     id: 5,
     question:
       "On Fleming's left-hand rule, the second finger represents:",
-    options: ['Field', 'Force', 'Current', 'Motion'],
-    correctAnswer: 2,
+    options: [
+      'Force',
+      'Current',
+      'Motion',
+      'Field',
+    ],
+    correctAnswer: 1,
     explanation:
       'thuMb = Motion (force), First finger = Field, seCond finger = Current. That’s how you remember it: M-F-C from thumb outward.',
   },
@@ -144,20 +154,25 @@ const quizQuestions = [
     id: 6,
     question: 'Why does an induction motor turn at all?',
     options: [
-      'Because permanent magnets in the rotor pull on the stator',
+      'Each phase to neutral, each phase to earth, AND between each pair of phases (L1-L2, L2-L3, L1-L3)',
+      'Competent person(s) with knowledge of the work, often involving workers who do the task',
       'Because the rotating stator field induces a current in the rotor, which then experiences a force F = BIL',
-      'Because of friction',
-      'Because of heat',
+      'Training on hazards, safe use, control measures, emergency procedures, and PPE use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The rotor has no electrical connection. The stator’s rotating field induces current in the rotor bars (Faraday + Lenz), and that induced current sits in a field — so it feels F = BIL. Pure induction. The clue is in the name.',
   },
   {
     id: 7,
     question: 'What happens to an EMF if you double the speed at which a magnet moves through a coil?',
-    options: ['Halves', 'Doubles', 'Quadruples', 'No change'],
-    correctAnswer: 1,
+    options: [
+      'Halves',
+      'No change',
+      'Quadruples',
+      'Doubles',
+    ],
+    correctAnswer: 3,
     explanation:
       'EMF is proportional to rate of change of flux. Move the magnet twice as fast and dΦ/dt doubles — so the induced EMF doubles. Slow down or stop = EMF drops to zero instantly.',
   },
@@ -166,12 +181,12 @@ const quizQuestions = [
     question:
       'You disconnect a contactor coil under load and see a flash at the contacts. What’s causing it?',
     options: [
-      'Static electricity',
       'A back-EMF induced by the rapidly collapsing field in the coil',
-      'A short circuit',
-      'A bad earth',
+      'Lower than PSCC due to earth electrode resistance',
+      'A vertical tube that transfers the load to the ground',
+      'To provide a safe temporary working platform for people and materials',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Lenz’s law in action. When the current breaks, the flux collapses fast — Faraday’s law gives a big induced EMF that opposes the change (which means it tries to keep the current flowing). That voltage spike jumps the contact gap as an arc. Snubber circuits exist exactly to absorb it.',
   },

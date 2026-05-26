@@ -45,12 +45,12 @@ const checks = [
     question:
       "A drawing has a scale of 1:50. What does that actually mean?",
     options: [
-      '1 unit on paper = 50 units in real life',
-      '50 units on paper = 1 unit in real life',
       "The drawing is 50% of actual size",
+      '50 units on paper = 1 unit in real life',
+      '1 unit on paper = 50 units in real life',
       "The drawing is 50 times bigger than real life",
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       "1:50 means 1 unit on paper = 50 units in real life. So 1 mm on paper = 50 mm real, 1 cm on paper = 50 cm real, etc. The first number is always 'paper'; the second number is always 'real'. Bigger denominator = smaller scale (you fit more onto the page).",
   },
@@ -58,7 +58,12 @@ const checks = [
     id: 'scale-conversion-check',
     question:
       "A wall on a 1:100 floor plan measures 45 mm with a scale rule. How long is the wall in real life?",
-    options: ['450 mm (0.45 m)', '4500 mm (4.5 m)', '45,000 mm (45 m)', '4.5 mm'],
+    options: [
+      '45,000 mm (45 m)',
+      '4500 mm (4.5 m)',
+      '450 mm (0.45 m)',
+      '4.5 mm',
+    ],
     correctIndex: 1,
     explanation:
       "1:100 means multiply the paper measurement by 100. 45 mm × 100 = 4500 mm = 4.5 m. (Mental check: 1:100 means '1 cm = 1 m'. The wall is 4.5 cm on paper, so 4.5 m real. Same answer, faster.)",
@@ -67,8 +72,13 @@ const checks = [
     id: 'scale-reverse-check',
     question:
       "You need to plot a 7 m cable run onto a layout drawn at 1:50. How many millimetres long should the line be on paper?",
-    options: ['35 mm', '70 mm', '140 mm', '350 mm'],
-    correctIndex: 2,
+    options: [
+      '350 mm',
+      '35 mm',
+      '70 mm',
+      '140 mm',
+    ],
+    correctIndex: 3,
     explanation:
       "Going from real to paper, you DIVIDE by the scale denominator. 7 m = 7000 mm. 7000 ÷ 50 = 140 mm. (Mental check: 1:50 means 1 cm paper = 0.5 m real. So 7 m real = 14 cm = 140 mm paper.)",
   },
@@ -81,7 +91,12 @@ const quizQuestions = [
     id: 1,
     question:
       'A drawing has a scale of 1:20. A piece of trunking measures 12 mm on paper. How long is it in real life?',
-    options: ['120 mm', '240 mm', '600 mm', '24 mm'],
+    options: [
+      '120 mm',
+      '240 mm',
+      '600 mm',
+      '24 mm',
+    ],
     correctAnswer: 1,
     explanation:
       '1:20 means multiply paper by 20. 12 × 20 = 240 mm (= 0.24 m). 1:20 is a typical detail scale — used for showing close-up sections of an assembly.',
@@ -90,8 +105,13 @@ const quizQuestions = [
     id: 2,
     question:
       "On a 1:50 layout, the distance between two sockets is drawn as 60 mm. What's the actual wall distance between them?",
-    options: ['600 mm (0.6 m)', '3000 mm (3 m)', '300 mm (0.3 m)', '12,000 mm (12 m)'],
-    correctAnswer: 1,
+    options: [
+      '300 mm (0.3 m)',
+      '600 mm (0.6 m)',
+      '3000 mm (3 m)',
+      '12,000 mm (12 m)',
+    ],
+    correctAnswer: 2,
     explanation:
       '60 mm × 50 = 3000 mm = 3 m. Mental check: at 1:50, 1 cm paper = 0.5 m real. 6 cm paper = 3 m real. Same answer, sanity confirmed.',
   },
@@ -99,8 +119,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A site plan has a scale of 1:1250. A new cable run from a substation to a building measures 4 mm on the drawing. How long is the run?',
-    options: ['5 m', '50 m', '500 m', '0.5 m'],
-    correctAnswer: 0,
+    options: [
+      '500 m',
+      '50 m',
+      '0.5 m',
+      '5 m',
+    ],
+    correctAnswer: 3,
     explanation:
       '4 mm × 1250 = 5000 mm = 5 m. 1:1250 is a common Ordnance Survey site-plan scale — you can fit a whole site onto one A3 sheet but every millimetre on paper represents a metre and a quarter on the ground.',
   },
@@ -108,8 +133,13 @@ const quizQuestions = [
     id: 4,
     question:
       "You need to fit a 6 m floor section onto a 1:100 detail. How long is the line on paper?",
-    options: ['6 mm', '60 mm', '600 mm', '0.6 mm'],
-    correctAnswer: 1,
+    options: [
+      '60 mm',
+      '6 mm',
+      '600 mm',
+      '0.6 mm',
+    ],
+    correctAnswer: 0,
     explanation:
       'Real to paper = divide. 6 m = 6000 mm. 6000 ÷ 100 = 60 mm. At 1:100, the rule is "every metre real = 1 cm paper", which makes mental conversion trivial.',
   },
@@ -120,8 +150,8 @@ const quizQuestions = [
     options: [
       'Always the metric face',
       'The face marked 1:50',
-      'Whichever face is closest to your right hand',
       'The 1:1 face',
+      'Whichever face is closest to your right hand',
     ],
     correctAnswer: 1,
     explanation:
@@ -132,12 +162,12 @@ const quizQuestions = [
     question:
       "A drawing's scale is shown as 1:50 in the title block. The site engineer hands you a printed-out copy and you notice the title block warns 'DO NOT SCALE FROM DRAWING — use named dimensions only'. Why?",
     options: [
-      "The drawing is wrong",
+      "An industrial firewall with deep packet inspection (DPI) that understands industrial protocols such as Modbus, OPC UA, and Profinet",
+      "A notice that must be issued by the payer within a prescribed period, specifying the sum they consider due and the basis on which it is calculated",
       "The print may have been resized (photocopy reduction or 'fit-to-page'), so scale measurements are unreliable. Use the dimension lines and figures instead",
-      "Scale rules don't work on printed paper",
-      "The drawing is for indicative use only and has no real measurements",
+      "Additional loads and forces not accounted for in the tower's design can cause structural failure or overturning",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Photocopying, reducing, or 'fit-to-page' printing resizes the drawing — scaling off it gives you wrong answers. Named dimensions (the small numbered lines with arrows showing actual distances) survive resizing because they're text. When in doubt, trust the named dimension over the scale.",
   },
@@ -147,11 +177,11 @@ const quizQuestions = [
       'Common scale, common purpose. Match the most common use to a 1:100 scale on a UK construction drawing.',
     options: [
       'Detailed component drawing (e.g. an inside view of a panel)',
-      'General floor plan of a single dwelling or office floor',
-      'Whole-site overview with multiple buildings',
       'Symbol legend only',
+      'Whole-site overview with multiple buildings',
+      'General floor plan of a single dwelling or office floor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "1:100 is the bread-and-butter floor-plan scale for whole-floor layouts (single dwelling, office floor, retail unit). 1:50 zooms in on individual rooms or important areas; 1:20 / 1:5 are detail scales; 1:200 / 1:500 / 1:1250 are site-overview / Ordnance Survey scales.",
   },
@@ -159,7 +189,12 @@ const quizQuestions = [
     id: 8,
     question:
       'A drawing of an old industrial site uses imperial scale 1/8\" = 1\'-0\" and you need to estimate a cable run of around 50 ft. Roughly how long is that on paper?',
-    options: ['About 6.25 inches', 'About 50 mm', 'About 12.5 inches', 'About 25 mm'],
+    options: [
+      'About 6.25 inches',
+      'About 12.5 inches',
+      'About 25 mm',
+      'About 50 mm',
+    ],
     correctAnswer: 0,
     explanation:
       '1/8" = 1 ft means each foot of real distance is drawn as 1/8 of an inch. 50 ft × (1/8") = 50/8 = 6.25 inches. You\'ll meet imperial scales on older drawings (pre-1970s and US-origin); the conversion principle is identical to metric — first number is paper, second number is real.',

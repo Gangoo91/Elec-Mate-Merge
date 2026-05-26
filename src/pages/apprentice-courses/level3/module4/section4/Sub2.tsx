@@ -45,12 +45,12 @@ const checks = [
     question:
       "How do you identify whether a domestic supply is TN-S, TN-C-S or TT, and why does it matter for fault diagnosis?",
     options: [
-      "All same.",
+      "Continuity proving (sometimes 'continuity check') is a quick low-current test (typically 200 mA on the MFT or multimeter on continuity range) to confirm a connection exists — yes/no, not a precise measurement. R1+R2 is a precise measurement of the loop resistance of a complete circuit (line + protective conductor). For fault diagnosis: continuity proving is used to quickly verify that an isolation has fully disconnected a circuit (continuity from supply to load reads OPEN); R1+R2 is used to precisely characterise a circuit's loop resistance for comparison against expected design values. Both have their place; the L3 apprentice uses them at different stages.",
+      "Static discharge from the human body can reach 15 kV — well above the 5–100 V damage threshold of CMOS electronics. Standard ESD discipline: (1) wrist strap connected to the panel earth via a 1 MΩ resistor; (2) anti-static mat under the work area where possible; (3) handle PCBs by the edges, not by the components; (4) keep replacement boards in their anti-static bags until the moment of fitting; (5) avoid working in dry conditions where static builds up rapidly; (6) ground yourself on the chassis before touching any board. Failed boards from ESD damage often work intermittently — they fail months later — so ESD-induced faults are notoriously hard to trace to root cause.",
       "Visual inspection of the cut-out + main earth. TN-S — separate earth conductor (typically a green/yellow tail) from the cut-out earth terminal back to the substation; usually older installations or rural areas. TN-C-S (PME) — combined neutral and earth in the supply (the PEN), separated at the cut-out; the most common modern UK arrangement; main earth tail is bonded to the main bonding network. TT — no incoming earth; customer's own earth electrode (rod) provides the only earth path; common in rural and older properties without DNO earth provision. Why it matters: each arrangement has different fault characteristics (Ze, expected Zs, fault current path), different protection requirements (TT needs RCD on origin, TN-C-S has open-PEN risk), and different L–E voltage behaviour during faults.",
-      "Only commercial.",
-      "Doesn't matter.",
+      "The driver in the failed downlight has likely failed — that's the most common LED fitting failure mode. Two correction options. (1) REPLACE the whole downlight — usually faster and the most reliable long-term fix. Cost £15&ndash;30 per unit; matched to the existing run for colour temperature (2700 K, 3000 K, 4000 K) and beam angle. (2) REPLACE just the driver if the fitting is integral-driver and the driver is replaceable as a separate part (some Aurora, Collingwood, Ansell models allow this). On most modern integrated LED downlights the driver is sealed inside and you replace the whole fitting. Verify the new fitting works under load (lights up + dims if dimmable) before closing the ceiling. The customer gets a like-for-like replacement and the rest of the run is unaffected.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Supply arrangement is foundational L3 knowledge. The MFT will measure Ze and tell you the order of magnitude (TN-S/TN-C-S Ze ~0.35–1.0 Ω; TT Ze 1–200+ Ω); visual confirms the arrangement. BS 7671 Chapter 31 + Chapter 41 cover the protection requirements per system; A4:2026 added significant TN-C-S Open PEN protection requirements.",
   },
@@ -59,10 +59,10 @@ const checks = [
     question:
       "How does the BS 7671 643 test sequence differ when applied to FAULT DIAGNOSIS vs commissioning?",
     options: [
-      "Same.",
+      "Reject. Reg 722.410.3.6 prohibits the use of non-conducting location and earth-free local equipotential bonding within Chapter 72 (EV charging installations). The designer must select alternative protective measures permitted within Chapter 72 and elsewhere in BS 7671 — typically protective earthing with ADS, RCDs at the rated residual operating current required by Section 722, and where applicable SELV / PELV. Reg 722.410.3.5 separately prohibits obstacles and placing out of reach within Section 722 scope.",
       "Commissioning runs the full sequence systematically on all circuits. Fault diagnosis runs a TARGETED subset based on the symptom and hypothesis. Example: customer reports RCD nuisance trip on kitchen circuit. Fault-diagnosis sequence: (1) clamp meter check on RCD output (live test, no isolation needed) — confirms cumulative leakage hypothesis. (2) If clamp shows a single-source spike on one appliance — disconnect, retest. (3) Only if the live diagnosis is inconclusive, escalate to dead-test sequence (isolate, IR test on suspect circuit, EFLI to verify protection). Commissioning would dead-test every circuit; fault diagnosis only goes that deep when needed. Saves customer time and money.",
-      "Always full sequence.",
-      "Just visual.",
+      "0.4 seconds (400 ms) for TN, 0.2 seconds (200 ms) for TT — these are the maximum disconnection times specified in Table 41.1 for the supply system and final-circuit type. For a 30 mA general-purpose RCD operated by a 30 mA residual current (1 x I delta n), the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\'s declared maximum trip time is 300 ms (per BS EN 61008 / BS EN 61009 product standards) — well within the Table 41.1 system requirement. The verification is the Table 41.1 limit; the 300 ms is the product spec.",
+      "Anti-islanding is the inverter's ability to detect when the grid has gone down and to disconnect itself within milliseconds — preventing the inverter from continuing to feed a portion of the local network ('islanding') with the DNO's workers expecting that section to be dead. ENA G98 (and G99 for larger systems) defines the protection settings the inverter must implement (typically G99/1-7 or earlier G83/G59 protection settings depending on inverter age). Modern inverters self-test the anti-islanding regularly. A4:2026 has refined the BS 7671 cross-references to G98/G99.",
     ],
     correctIndex: 1,
     explanation:
@@ -73,12 +73,12 @@ const checks = [
     question:
       "What's a PNB (protective neutral bonding) installation and how is it identified?",
     options: [
-      "Same as PME.",
+      "Standard Section 514 identification — the heat pump final circuit at the consumer unit clearly identified; the local isolator labelled and the location of the upstream RCBO referenced; any controls cabling identified at termination points. Where Section 753 applies (e.g. integrated trim heaters) the relevant section signage applies. The MCS-certified designer's commissioning paperwork includes a SCOP estimate, the system design parameters, and a customer-facing handover document. The label is for the customer (so they know which isolator does what), the next electrician (so they understand the install years later), and the service engineer (so they can isolate safely).",
+      "PASS = within BS 7671 / Appendix 3 minimum acceptable limit. HEALTHY = significantly better than the limit; matches what a properly-installed system should produce. Example: BS 7671 643.3 IR limit is ≥ 1 MΩ; modern installations typically read 100+ MΩ on healthy circuits. A reading of 2 MΩ is technically PASS but not HEALTHY — it's an early indicator of insulation degradation that warrants investigation. The L3 step-up is recognising the difference: pass tells you it meets the regulation; healthy tells you the system is in good shape. Borderline pass readings are diagnostic indicators of developing faults.",
+      "Carbon payback for typical UK PV is 1-3 years (the time taken for operating CO₂ savings to offset the manufacturing CO₂ cost). Financial payback depends on system cost, self-consumption, export tariff and electricity price — typically 6-12 years for a standalone PV install in 2026, often shorter if a battery is added (improves self-consumption from 25-40% to 70-90%). After payback the system continues for the rest of its 25-year warranted life essentially as free energy. The carbon case is much stronger than the financial case in isolation; together they make PV the dominant UK domestic environmental tech.",
       "PNB (Protective Neutral Bonding) is a TN-C-S arrangement where the neutral and earth ARE bonded ONLY at a single defined point on the consumer's premises (typically at the main earthing terminal or PEN bond). PME is a similar arrangement but the bonding can be at multiple points along the network. A4:2026 reinforced PNB requirements — particularly around EV charger installations, where the customer-side bond needs careful coordination with the DNO's PEN. Identifying PNB: look at the cut-out + meter + main switch; PNB will have a single, deliberately-located bonding link from incoming neutral to the main earthing terminal, often labelled. Wrong identification leads to wrong fault diagnosis on what should be a 'TT-like' fault path under open-PEN conditions.",
-      "Just neutral.",
-      "Just earth.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "PNB is one of the A4:2026 emphasis areas. EV chargers on TN-C-S installations need careful supply-side coordination — protective measures including S-type RCD upstream, PNB bond, and Type B RCD at the charger. The L3 apprentice's role is to recognise PNB on supply identification and apply the correct fault-diagnosis approach.",
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: "What's the typical Ze (earth fault loop impedance at origin) for each common UK supply arrangement?",
     options: [
-      "All the same.",
+      "Pre-construction information (PC info from client/principal designer) → construction phase plan (principal contractor) → RAMS for each work package (contractor) → toolbox talks each shift (supervisor) → permit-to-work for specific high-risk activities (issued before, closed after). Each layer references the one above it. After an incident the inspector traces backwards from the incident to find the gap.",
       "TN-S: 0.5–1.0 Ω (the dedicated earth conductor adds slightly more impedance than TN-C-S). TN-C-S / PME: 0.35–0.65 Ω (the PEN provides a low-impedance return). TT: 1.0–200+ Ω depending on soil conditions and electrode design (UK typical 50–200 Ω; very dry / rocky soil can be much higher). IT: undefined (high-impedance neutral by design). The Ze tells you immediately what supply arrangement you have, what fault current is available, and what protective measures are needed. Always measure Ze at the origin first when starting any fault investigation.",
-      "Always 1 Ω.",
-      "Always 0.5 Ω.",
+      "A 1-page document in plain English: (1) WHAT YOU REPORTED — customer's symptom in their words. (2) WHAT WE FOUND — the fault, in plain English. (3) WHAT WE DID — the fix, in plain English. (4) WHAT WE TESTED — the verification, in plain English. (5) RECOMMENDATIONS — anything further the customer should consider. (6) WARRANTY — what's covered for what period. (7) NEXT STEPS — any follow-up work, retest schedule, contact info. Most modern firms have a customer summary template; the apprentice fills it in at the end of each job. Customer keeps the summary; firm keeps the technical job sheet.",
+      "Stop. Make the board safe (re-isolate properly, lock-off, dead-test, prove the tester). Tell your supervisor immediately and explain exactly what happened — what you expected, what you found, what action you took. Document the near-miss in writing. The employer is required by HSE guidance to investigate near-misses; they're the leading indicator of next month's RIDDOR-reportable incident. Mgmt H&S Regs 1999 Reg 14 puts a personal duty on you as the employee to inform the employer of any matter you reasonably consider represents a serious and immediate danger — that includes a near-miss that exposed a defect in the safe system of work.",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: "Why does an OPEN PEN on TN-C-S create such a serious fault situation?",
     options: [
-      "It doesn't.",
+      "Fracture (other than to fingers, thumbs and toes); amputation; permanent loss of sight or reduction of sight; crush injuries leading to internal organ damage; serious burns covering more than 10% of the body or causing significant damage to eyes, respiratory system or other vital organs; scalpings requiring hospital treatment; loss of consciousness from head injury or asphyxia; any other injury arising from work in an enclosed space leading to hypothermia, heat-induced illness or requiring resuscitation or admittance to hospital for more than 24 hours.",
+      "MCS MIS 3002 is the installer-competence and installation-quality standard for solar PV. BS 7671 Section 712 is the electrical-design standard for the wiring, protection, isolation and labelling. Both apply on every install. MIS 3002 references BS 7671 explicitly for the electrical detail; BS 7671 applies regardless of whether the install is MCS-certified. MCS certification is required if the customer wants Smart Export Guarantee payments; BS 7671 compliance is required because it's the electrical regulation.",
       "On TN-C-S, the neutral and protective earth share the PEN conductor between transformer and cut-out. If the PEN breaks anywhere upstream, the customer's neutral floats relative to the transformer star point. Customer's bonded metalwork (kitchen taps, sinks, radiators, EV charger chassis, all bonded to the customer earth terminal) rises toward phase voltage relative to true earth. RCD doesn't see it (no residual current — the lifted-neutral voltage flows through bonding network as L–E volt-drop, not as imbalance). First sign: tingle on metal taps or 30+ V N–E reading at cut-out. A4:2026 added explicit Open PEN protection requirements (Reg 411.3.3, especially for EV chargers).",
-      "Just disconnect.",
-      "Random fault.",
+      "Because a faulty proving-dead tester can show 'zero' on a live circuit — and you'd take a fatal shock. The function check confirms the tester responds to a known source. The proving-tester-on-known-source step is built into the JIB six-step (Sub 1.2) for exactly this reason. The Martindale GVD2 proving unit gives a portable known source; alternatively a known-live socket on a different circuit. Either way, the tester's response on a known source is the evidence the tester is working. Without that evidence, a 'zero' reading on the circuit you're about to work on means nothing.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Open PEN is the canonical L3-grade hazard on TN-C-S installations. RCDs don't catch it. The protection is supply-side (DNO maintenance of the PEN) plus customer-side detection (Open PEN protection devices in modern EV chargers, Smart Meters, some new CUs). Always check N–E voltage at the cut-out at the start of any TN-C-S investigation.",
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: "What's the test procedure for diagnosing a fault on a TT installation, and how does it differ from TN-S/TN-C-S?",
     options: [
-      "Same procedure.",
+      "Equality Act 2010 s.6 defines disability as a physical or mental impairment that has a substantial and long-term adverse effect on the person's ability to carry out normal day-to-day activities. 'Long-term' means it has lasted, or is likely to last, 12 months or more. This explicitly includes mental health conditions — depression, anxiety disorders, PTSD, bipolar disorder, schizophrenia and others — where they meet the substantial and long-term thresholds. Where a worker's mental health condition is a disability under the Act, the s.20 reasonable-adjustments duty applies in the same way as for physical disability.",
+      "Annual visual inspection by the user (cable condition, no damage to connector, no signs of overheating). Periodic BS 7671 EICR every 5 years (or change of tenancy for landlord properties under the Electrical Safety Standards Regulations 2020). EV-specific tests: RCD operation (Type B or RDC-DD), open-PEN protection function (where fitted), Zs at the charge point. Manufacturer-recommended firmware updates as available. Where the charger has been involved in a fault event (known surge, vehicle-side incident) bring forward the inspection.",
+      "Four hypotheses to walk through. (1) Run capacitor failed open or shorted — single-phase induction motors need the run cap to develop starting torque; a failed cap means the motor draws stalled-rotor current (5–8 × FLA) until the MCB trips. Test cap with a meter on capacitance range or a dedicated cap tester; replace if outside ±10% of rated value. (2) Bearings seized or stiff — manually rotate the rotor; if it doesn't spin freely, replace bearings or motor. (3) Centrifugal switch contacts welded (older motors) — keeps the start winding in circuit constantly, drawing high current. (4) Wiring fault on the motor terminal block (loose or wrong connection). The L3 apprentice walks the tree in order; the cap is the first thing to check because it's the most common fault and the cheapest fix.",
       "TT-specific differences. (1) Earth electrode is the only return path — measure electrode resistance with a dedicated earth electrode tester (Megger DET3TC) or MFT with earth-stake adaptor. Typical 50–200 Ω; degradation increases over years (drying out, corrosion). (2) BS 7671 411.5 requires 30 mA RCD at origin (S-type if downstream RCDs are also 30 mA). RCD trip-time test on the origin RCD — different from TN where origin protection is overcurrent. (3) EFLI Zs values are MUCH higher than TN — calculate against BS 7671 41.1 limits for TT (often expressed as RA × IΔn ≤ 50 V). (4) Bonding requirements are stricter — bonding network IS the customer's only fault path. The L3 fault investigator approaches TT differently from TN.",
-      "Just IR.",
-      "Same.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "TT installations have different fault characteristics from TN. The earth electrode resistance dominates the EFLI; the RCD at origin is the protection (overcurrent devices alone won't clear earth faults at TT typical Zs values). The L3 apprentice meets TT primarily on rural / older properties; the diagnostic approach reflects the supply arrangement.",
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: "What's the difference between IT and TN-S supply arrangements?",
     options: [
-      "Same.",
       "IT (Isolated Terra) — neutral isolated from earth (or connected via high impedance). Single earth fault doesn't cause significant fault current; alarm only. Typically used in continuous-process industries (chemical plants, hospitals), where one fault must not stop the process. TN-S (Terra Neutral Separated) — neutral and earth separately distributed from transformer; standard UK domestic / commercial older arrangement; faults clear normally via overcurrent / RCD. The L3 apprentice rarely meets IT outside specialist sites; if you're diagnosing in a hospital ITU or specialist process plant, the supply may be IT and the fault behaviour is fundamentally different.",
-      "IT is bigger.",
-      "TN-S obsolete.",
+      "Modern EV chargers can leak smooth DC current under fault conditions — and a Type AC RCD won't trip on smooth DC. So Section 722 requires either a Type B RCD (which detects AC, pulsating DC and smooth DC) OR a Type A RCD plus an RDC-DD (a separate device that adds smooth-DC detection to a Type A RCD). The RDC-DD route is often cheaper than fitting a Type B RCD because Type A RCDs are widely available and inexpensive. The certified installer chooses the architecture; the customer doesn't see the difference but the regulatory compliance requires one or the other.",
+      "(a) OTHER PERSONNEL — other trades on site lose lighting / power for tools, may need to stop work; the firm's lone-working procedure may need adjusting. (b) CUSTOMER/CLIENT — loss of business activity, freezer stock at risk, computers go down (data loss risk), contractual penalties on commercial sites, customer dissatisfaction. (c) PUBLIC — emergency exits may go dark, public-area lighting fails, accessible plant rooms become hazardous, security systems may shut down. (d) BUILDING SYSTEMS — fire alarm goes into fault (with audible alert), emergency lighting batteries enter discharge cycle, lift goes to ground floor and stops, BMS may fault and require manual reset, refrigeration cycles interrupt, motors may auto-restart on power restoration with safety implications.",
+      "Same framework as PV and battery. Any generator connected in parallel with the public distribution network falls under ENA G98 (up to 16 A per phase per inverter / generator) or G99 (above 16 A or where the DNO requires pre-application). Micro-wind turbines, micro-hydro turbines and micro-CHP units output AC and connect via an inverter (or a synchronous generator with grid-tie protection). Biomass boilers without electrical generation (just heat) are not generators — no G98 / G99. ENA G83 was the older fast-track standard for micro-generators; superseded by G98 from 2019. The L3 apprentice should recognise that the document chain (G98 / G99, type-test certificate, MCS commissioning, BS 7671 EIC, install pack) is the same regardless of the generation technology.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "IT systems are specialist. Hospital operating theatres, ITUs, certain industrial process plants. Single-fault tolerance is the IT design feature — you can have a single L–E fault on the system and continue operating, with an alarm prompting investigation. The L3 apprentice doesn't normally work on IT but should know the system exists.",
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: "When investigating a fault on a circuit, what's the typical SEQUENCE of tests?",
     options: [
-      "Random order.",
+      "BS 7671 Section 712 (extensively revised in A4:2026) requires specific signage at the consumer unit (presence of PV generator), at the meter (alternative supply source), at the inverter (DC and AC isolation points) and at any external DC isolators. The EICR inspector verifies presence and legibility of each sign; missing or illegible signage is recorded as an observation (typically C3 — improvement recommended — unless the absence creates an immediate safety risk for maintainers, in which case C2). The Code Breakers schedule and the EICR Best Practice Guide give the typical coding choice. Inspector recommendations should call for the missing signage to be reinstated.",
       "Hypothesis-driven order. Example for 'lights flicker' hypothesis: (1) Visual + customer interview (cost: free). (2) Clamp meter on lighting circuit during normal load (live, low risk). (3) Voltage measurement at lampholder during high-load event (live, low risk). (4) If above inconclusive — isolate, IR test on lighting circuit, R1+R2, EFLI Zs (dead and live tests in BS 7671 643 order). (5) If still inconclusive — install PQ analyser for 24–72 hours. The sequence escalates from quick / cheap / safe to slow / expensive / higher-risk only as needed. Many faults solve at step 1–3 without ever needing the full BS 7671 643 sequence.",
-      "Always full sequence.",
-      "Always IR first.",
+      "Purchased goods and services — dominated by copper cable, aluminium cable, switchgear and luminaires. The practical lever is procurement policy: specify EPD-backed products, set minimum recycled-content thresholds, prefer manufacturer-specific over industry-average EPDs, prefer products with longer expected service life, and reduce material use through more efficient design (smaller cable on shorter runs, lighting with higher lm/W avoiding over-specification). The fix sits at the order stage, before the material is on the van.",
+      "Most firms now use digital MWC apps — Elec-Mate's MWC builder, NICEIC Online, ElectricalCertifyPro, iCertifi. The workflow: (1) Open the app on the van laptop or phone. (2) Pull customer + installation details from the existing job (or scan the previous EIC's QR code). (3) Fill in the work-done description, the test results panel (entered as you measure with the MFT), Designer / Constructor / Inspector signatures (digital signature pad). (4) Customer signs receipt on the device. (5) PDF emailed to the customer; copy filed in the firm's job system; QR code printed for the DB sticker if the firm uses them. The whole process takes 5&ndash;10 minutes if the data is pre-loaded. Paper certificates are still valid but increasingly rare.",
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: "What's a 'continuity proving' test and how is it different from R1+R2?",
     options: [
-      "Same.",
+      "Partnership = two or more people trading together without forming a Ltd company. Partnership is governed by the Partnership Act 1890 (very old statute). Each partner has unlimited personal liability for partnership debts including those incurred by other partners. Tax: each partner files Self Assessment on their share of profits. Less common than sole trader (one-person) or Ltd (limited liability) because you get unlimited liability AND have to share decisions with another partner.",
+      "TT-specific differences. (1) Earth electrode is the only return path — measure electrode resistance with a dedicated earth electrode tester (Megger DET3TC) or MFT with earth-stake adaptor. Typical 50–200 Ω; degradation increases over years (drying out, corrosion). (2) BS 7671 411.5 requires 30 mA RCD at origin (S-type if downstream RCDs are also 30 mA). RCD trip-time test on the origin RCD — different from TN where origin protection is overcurrent. (3) EFLI Zs values are MUCH higher than TN — calculate against BS 7671 41.1 limits for TT (often expressed as RA × IΔn ≤ 50 V). (4) Bonding requirements are stricter — bonding network IS the customer's only fault path. The L3 fault investigator approaches TT differently from TN.",
       "Continuity proving (sometimes 'continuity check') is a quick low-current test (typically 200 mA on the MFT or multimeter on continuity range) to confirm a connection exists — yes/no, not a precise measurement. R1+R2 is a precise measurement of the loop resistance of a complete circuit (line + protective conductor). For fault diagnosis: continuity proving is used to quickly verify that an isolation has fully disconnected a circuit (continuity from supply to load reads OPEN); R1+R2 is used to precisely characterise a circuit's loop resistance for comparison against expected design values. Both have their place; the L3 apprentice uses them at different stages.",
-      "Continuity is precise.",
-      "R1+R2 is fast.",
+      "Stop. EAWR Reg 14 makes live work the exception, requiring three conditions to be met simultaneously — unreasonable to make dead, reasonable to do live, suitable precautions in place. Customer impatience is not a Reg 14 condition. The supervisor needs to (a) re-examine whether isolation is truly impossible, (b) if it genuinely is, document a Reg 14 justification with permit-to-work, and (c) ensure the work is done by a competent person, not an apprentice working alone. The apprentice should refuse the instruction in writing and escalate. HASAWA s.7 + ERA 1996 s.44 protect the refusal.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Continuity proving is the quick yes/no test. R1+R2 is the precise measurement. The MFT does both. Use continuity proving for verification (is this isolated?); use R1+R2 for characterisation (does this circuit's loop match expected design?).",
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: "When testing EFLI, why must you confirm the supply is energised AND the protective device is in the ON position?",
     options: [
-      "Just protocol.",
+      "Pre-Construction Information is the H&S information that the Client (with help from the Principal Designer) provides to designers and contractors before they start on the project. It covers the site (location, existing structures, services, ground conditions), the project (description, programme, key dates, design assumptions), the relevant H&S information (asbestos surveys, condition reports, environmental risks) and the Client's H&S file from any previous works.",
+      "The 'workmanship' standard and 'manufacturers' instructions' obligation. So a faulty cable joint that's electrically OK at the moment of test but executed with poor workmanship breaches 134.1.1, AND ignoring an SPD lead-length spec or a CU manufacturer's torque setting also breaches 134.1.1. This is the regulation a scheme inspector quotes when they're calling out poor workmanship without it being a specific technical-test failure.",
+      "Segregation at source — separate stillages or skips for general / metal / WEEE / hazardous / wood / cardboard. Authorised carriers only, with WTNs / HWCNs accompanying every transfer. WEEE to AATF via specialist recycler. Hazardous (fluorescent tubes, batteries, asbestos) consigned and quarantined. Spillage kit on site for refrigerants and oils. Documentation kept for the legal retention periods (2y WTN, 3y HWCN).",
       "Because EFLI is a LIVE test — the MFT injects a small fault current through the loop and measures the impedance from the response. If the supply is off, no fault current flows; the meter shows OPEN or undefined reading. If the protective device is OFF, the loop is broken upstream of your test point; same result. Both conditions are pre-requisites for a meaningful EFLI test. The MFT (Megger MFT1741+) typically warns 'NO VOLTAGE' or 'CIRCUIT OPEN' if either condition isn't met — but the apprentice should know to check before the warning.",
-      "Doesn't matter.",
-      "Just push test.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Live test pre-requisites are easy to forget. Modern MFTs warn but the discipline is to check upfront — supply on, protective device on, leads connected to the right test point, RCD-protected mode if needed. The 'check upfront' habit catches the conditions that would otherwise produce an invalid reading.",
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: "What's the L3 apprentice's role when supply identification reveals an unusual or unexpected arrangement (e.g. TT in a built-up area, or three-phase supply you weren't expecting)?",
     options: [
-      "Carry on regardless.",
       "Stop and verify before testing. Unusual supply arrangements suggest either (a) the property is genuinely TT (rural, older, or specifically designed) which may need different fault-diagnosis approach, OR (b) the customer's installation isn't what you expected from the booking (e.g. an older commercial site with three-phase supply you weren't briefed on). Either way, the test plan needs to match the actual supply. Escalate to supervisor if unsure; update the RAMS to reflect the actual installation; brief the customer if the work scope changes. Never just push ahead with the test plan you arrived with if it doesn't match what you find.",
-      "Test anyway.",
-      "Same procedure.",
+      "Ask the manufacturer directly via their technical support or sustainability team — most major UK cable and accessory manufacturers publish EPDs on their website or supply on request. If the manufacturer does not publish an EPD for that product, that fact alone is relevant to the project specifier because the spec called for EPD-backed products. The right action is to flag the missing EPD to the project specifier and either source an EPD-backed equivalent from another manufacturer or request a written derogation from the spec. Documenting the search and the decision protects the contractor against later challenge.",
+      "The firm probably won't recover the cost of the additional work in dispute. Verbal variations are binding in principle but hard to prove in practice. Courts and ombudsmen weight written contractual evidence above verbal recollection. The labour, materials and time spent on the undocumented variation sit on the firm's profit margin. Multiplied across many small variations on many jobs it's a material drag on profitability and a leading cause of bad debt.",
+      "WAHR 2005 Reg 12 requires a tower used for working at height to be inspected before use after assembly, after any event likely to have affected it (high winds, impact, alteration), and at intervals not exceeding 7 days. The pre-use check covers stability (level base, outriggers deployed, brakes on), structural integrity (no missing components, all connectors locked), platform fully boarded with guardrails and toeboards, and a current inspection record (Form 91 / scaff tag). The user does the daily check; a more thorough inspection is by a competent person.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Supply identification is the first technical check on any fault-diagnosis visit. If what you find doesn't match what you expected, the test plan needs updating. The discipline of pausing-and-verifying when reality doesn't match expectations is part of safe working — assumptions that aren't checked become hazards.",
   },

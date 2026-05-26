@@ -29,12 +29,12 @@ const Module6Section7_3 = () => {
       id: 2,
       question: 'What is the purpose of a Minor Works Certificate?',
       options: [
-        'To increase costs',
+        'Encourage them to keep coughing and monitor closely',
+        'To report on the condition of an existing installation and identify defects',
         'To provide evidence that small electrical work complies with BS 7671',
-        'To delay projects',
-        'To satisfy insurance only',
+        '5 years (or 40 years for personal exposure records of identifiable employees)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'A Minor Works Certificate provides evidence that even small electrical work has been inspected, tested, and complies with BS 7671.',
     },
@@ -42,12 +42,12 @@ const Module6Section7_3 = () => {
       id: 3,
       question: 'Give two examples of jobs that require an MWC.',
       options: [
-        'New consumer unit and rewiring',
+        'Cash flows over the project life discounted to present value',
+        'In the pocket of the person doing the work',
+        'Use equivalent annual cost (EAC) to compare different lifespans',
         'Adding a socket outlet and adding a lighting point',
-        'Testing only and inspection only',
-        'Design work and planning',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Adding a socket outlet to an existing circuit and adding a lighting point are typical examples of minor works requiring an MWC.',
     },
@@ -55,12 +55,12 @@ const Module6Section7_3 = () => {
       id: 4,
       question: 'What type of work requires an EIC instead of an MWC?',
       options: [
-        'Adding a single socket',
         'Installing a new circuit',
+        'Adding a single socket',
         'Adding a lighting point',
         'Minor repairs',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Installing a new circuit or major alterations require a full Electrical Installation Certificate (EIC) rather than a Minor Works Certificate.',
     },
@@ -68,10 +68,10 @@ const Module6Section7_3 = () => {
       id: 5,
       question: 'What test results are typically recorded on an MWC?',
       options: [
-        'None required',
+        'It must match system response requirements for proper control',
         'Continuity, insulation resistance, polarity, and Zs values',
-        'Only visual inspection',
-        'Cost information only',
+        'Bonding between exposed and extraneous parts',
+        'Cause production downtime and reputation damage',
       ],
       correctAnswer: 1,
       explanation:
@@ -89,12 +89,12 @@ const Module6Section7_3 = () => {
       id: 7,
       question: 'Who is responsible for signing a Minor Works Certificate?',
       options: [
-        'Any electrician',
-        'The client',
+        'Every bay horizontally and every lift vertically',
+        'To provide a detailed plan of how work will be carried out safely',
+        'Self-awareness, self-regulation, motivation, empathy, and social skills',
         'A competent person who carried out or supervised the work',
-        'Building control',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Only a competent person who carried out or supervised the work can legally sign a Minor Works Certificate.',
     },
@@ -103,9 +103,9 @@ const Module6Section7_3 = () => {
       question: 'Why is it important to provide the client with a copy of the MWC?',
       options: [
         'Legal requirement and proof of compliance',
-        'For payment purposes',
-        'To increase costs',
-        'No real importance',
+        'The Work at Height Regulations 2005',
+        'Similar tasks requiring the same mental mode or tools',
+        'To withstand the 325V peak voltage with safety margin',
       ],
       correctAnswer: 0,
       explanation:
@@ -114,7 +114,12 @@ const Module6Section7_3 = () => {
     {
       id: 9,
       question: 'What legal standard does the MWC confirm compliance with?',
-      options: ['BS 7909', 'BS 7671', 'BS 7430', 'BS 6701'],
+      options: [
+        'BS 7909',
+        'BS 7671',
+        'BS 7430',
+        'BS 6701',
+      ],
       correctAnswer: 1,
       explanation:
         'The Minor Works Certificate confirms compliance with BS 7671 (The IET Wiring Regulations).',
@@ -123,12 +128,12 @@ const Module6Section7_3 = () => {
       id: 10,
       question: 'In the real-world example, what problem occurred because no MWC was issued?',
       options: [
-        'Work was delayed',
+        'Creating custom voice commands and integrations',
+        'Proper isolation and depressurisation',
         'The sale was delayed and additional costs occurred',
-        'Nothing happened',
-        'Insurance was cancelled',
+        'Either mains connection or bowser with appropriate treatment',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The house sale was delayed and the seller had to pay for an EICR because no MWC was available to prove the work was compliant.',
     },

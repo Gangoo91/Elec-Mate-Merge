@@ -14,7 +14,12 @@ const quickCheckQuestions = [
   {
     id: '1',
     question: 'Who has overall responsibility for safety and coordination on site?',
-    options: ['Apprentice', 'Site Manager', 'Foreman', 'Client'],
+    options: [
+      'Foreman',
+      'Site Manager',
+      'Client',
+      'Apprentice',
+    ],
     correctIndex: 1,
     explanation:
       'The Site Manager has overall responsibility for site safety, progress, and coordination of all activities.',
@@ -23,12 +28,12 @@ const quickCheckQuestions = [
     id: '2',
     question: 'What is the role of the foreman?',
     options: [
-      'Managing budgets',
+      'Smart relays installed without neutral conductors',
+      'Ultrasonic (clamp-on transit time) flow meter',
       'Daily task allocation and quality checks',
-      'Client meetings',
-      'Ordering materials',
+      '500W per m² or similar rules of thumb',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The foreman manages day-to-day operations, allocates tasks to trades, and conducts quality checks.',
   },
@@ -36,12 +41,12 @@ const quickCheckQuestions = [
     id: '3',
     question: 'Why should you follow the chain of command?',
     options: [
-      "It's faster",
+      '5-10 years from submission',
+      'Variable Refrigerant Volume',
+      '12 litres per second per person',
       'To avoid confusion and delays',
-      "It's a legal requirement",
-      'To make friends',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Following the chain of command prevents confusion, ensures clear communication, and avoids delays in decision-making.',
   },
@@ -51,7 +56,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Who is responsible for the overall progress of the site?',
-    options: ['Apprentice', 'Site Manager', 'Foreman', 'Client'],
+    options: [
+      'Apprentice',
+      'Site Manager',
+      'Foreman',
+      'Client',
+    ],
     correctAnswer: 1,
     explanation:
       'The Site Manager has overall responsibility for project progress, coordination, and ensuring targets are met.',
@@ -59,8 +69,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Who allocates daily tasks to tradespeople?',
-    options: ['Client', 'Supervisor/Foreman', 'Apprentice', 'Health & Safety Officer'],
-    correctAnswer: 1,
+    options: [
+      'Apprentice',
+      'Client',
+      'Supervisor/Foreman',
+      'Health & Safety Officer',
+    ],
+    correctAnswer: 2,
     explanation:
       'The Supervisor or Foreman is responsible for allocating daily tasks and managing trades on the ground.',
   },
@@ -76,19 +91,24 @@ const quizQuestions = [
     id: 4,
     question: 'What is the main role of the Health & Safety Officer?',
     options: [
-      'Task allocation',
       'To monitor risks and ensure safety compliance',
-      'Quality control',
-      'Material ordering',
+      'Dynamic loading and resonance with building structure',
+      'Intermittent starting or chattering',
+      'Danger present - immediate action required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Health & Safety Officer ensures compliance with safety regulations, monitors risks, and delivers safety briefings.',
   },
   {
     id: 5,
     question: 'If you see a loose scaffold board, who should you report it to first?',
-    options: ['Client', 'Your supervisor/foreman', 'Site Manager', 'Other trades'],
+    options: [
+      'Client',
+      'Your supervisor/foreman',
+      'Other trades',
+      'Site Manager',
+    ],
     correctAnswer: 1,
     explanation:
       "Always report safety issues to your immediate supervisor first, unless it's an emergency requiring immediate action.",
@@ -96,8 +116,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Which role is responsible for checking installations meet standards?',
-    options: ['Client', 'Site Supervisor/Foreman', 'Health & Safety Officer', 'Other trades'],
-    correctAnswer: 1,
+    options: [
+      'Client',
+      'Health & Safety Officer',
+      'Site Supervisor/Foreman',
+      'Other trades',
+    ],
+    correctAnswer: 2,
     explanation:
       'The Site Supervisor/Foreman conducts quality checks to ensure work meets required standards and specifications.',
   },
@@ -105,20 +130,25 @@ const quizQuestions = [
     id: 7,
     question: 'Why is it important to know the chain of command?',
     options: [
-      'To make friends',
+      'Gather information from the user about symptoms',
+      'Respect their wishes and stop treatment',
+      'To house major network equipment and backbone terminations',
       'To avoid confusion and keep communication clear',
-      "It's not important",
-      'To get promoted',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Knowing the chain of command ensures clear communication, prevents confusion, and maintains efficient workflow.',
   },
   {
     id: 8,
     question: 'Who is responsible for carrying out electrical work to BS 7671?',
-    options: ['Site Manager', 'Electricians and apprentices', 'Client', 'Health & Safety Officer'],
-    correctAnswer: 1,
+    options: [
+      'Electricians and apprentices',
+      'Remove or disconnect them',
+      'Loose or missing CPC connections',
+      '1.2-1.5m above floor level',
+    ],
+    correctAnswer: 0,
     explanation:
       'Qualified electricians and apprentices under supervision are responsible for carrying out electrical work to BS 7671 standards.',
   },
@@ -138,8 +168,13 @@ const quizQuestions = [
   {
     id: 10,
     question: 'Which of these is NOT typically a site role?',
-    options: ['Site Manager', 'Apprentice', 'Safety Officer', 'Customer Service Agent'],
-    correctAnswer: 3,
+    options: [
+      'Site Manager',
+      'Apprentice',
+      'Customer Service Agent',
+      'Safety Officer',
+    ],
+    correctAnswer: 2,
     explanation:
       'Customer Service Agents work in offices, not on construction sites. Site roles include managers, supervisors, trades, and safety officers.',
   },

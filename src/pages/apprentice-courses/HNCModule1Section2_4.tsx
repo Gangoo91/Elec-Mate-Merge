@@ -35,12 +35,12 @@ const quickCheckQuestions = [
     id: 'method-purpose',
     question: 'What is the primary purpose of a method statement?',
     options: [
-      'To estimate project costs',
+      'Lathes, machine tools, conveyors needing constant speed',
+      'Essential for coordination, safety information, emergency response',
+      'To maintain autonomy and reliability',
       'To document safe systems of work for specific tasks',
-      'To record completed work',
-      'To list materials required',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A method statement documents the safe system of work for a specific task, detailing how work will be carried out safely, step by step, with identified hazards and control measures.',
   },
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     id: 'method-author',
     question: 'Who is typically responsible for preparing a method statement?',
     options: [
-      'The client',
-      'The HSE inspector',
       'The contractor undertaking the work',
-      'The building owner',
+      'Perfecting one detail while neglecting others',
+      'A loss of contact with reality',
+      'Multi-junction concentrator',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The contractor undertaking the work is responsible for preparing method statements. They have the technical knowledge of the tasks and must demonstrate competence to the principal contractor.',
   },
@@ -61,12 +61,12 @@ const quickCheckQuestions = [
     id: 'method-review',
     question: 'When should a method statement be reviewed?',
     options: [
-      'Only at project completion',
+      'To include all wiring in the test',
+      'At tender stage with confirmed lead times',
+      'All cables to be LSF (low smoke and fume)',
       'Before work begins and when conditions change',
-      'Once per year',
-      'Only after an accident',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Method statements must be reviewed before work begins and whenever conditions change, new hazards emerge, or the scope of work is altered. They are living documents that must remain current.',
   },
@@ -74,12 +74,12 @@ const quickCheckQuestions = [
     id: 'sequence-importance',
     question: 'Why is task sequencing important in method statements?',
     options: [
-      'To speed up the work',
-      'To reduce material costs',
+      'By showing equipment running outside of scheduled hours',
       'To ensure safe progression and identify dependencies',
-      'To impress the client',
+      'Exceeding 50V AC or 120V DC but not exceeding 1000V AC or 1500V DC',
+      '30°C ambient, single circuit, no thermal insulation',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Task sequencing ensures work progresses safely with proper dependencies identified. For example, isolation must occur before cable work, and testing must complete before energisation.',
   },
@@ -103,10 +103,10 @@ const quizQuestions = [
     id: 2,
     question: 'Under CDM 2015, when must method statements be provided?',
     options: [
-      'Only for work over £50,000',
-      'Only for domestic projects',
+      'Design clear visual cues and triggers in your environment',
+      'A large number of single-phase computer loads unevenly distributed across phases',
       'For notifiable projects and when requested by the principal contractor',
-      'Only after work is completed',
+      'Create immediate positive feedback or rewards after completing the habit',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the relationship between risk assessments and method statements?',
     options: [
-      'They are the same document',
+      'Replacing a consumer unit, or any new circuit, or work in a bathroom',
+      'Emergency activation that triggers all alarms and notifications',
+      'When there\\\\\\\\\\\\\\\'s risk of cuts, chemical contact, burns, or electrical shock',
       'Risk assessments identify hazards; method statements describe how to control them',
-      'Method statements replace risk assessments',
-      'They are unrelated documents',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Risk assessments identify hazards and evaluate risks, while method statements describe the practical steps and control measures to safely carry out the work. They work together as complementary documents.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'Which of the following should be included in a method statement for electrical isolation?',
     options: [
-      'Staff holiday schedules',
       'Lock-off procedures and verification testing',
-      "Previous year's energy consumption",
-      'Building insurance details',
+      'Due to hydrostatic pressure from the water column above',
+      'Continuous monitoring and recreating fault conditions',
+      'Superior chemical and temperature resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Method statements for electrical isolation must include lock-off procedures (LOTO), verification testing using approved voltage indicators, permit-to-work requirements, and safe reinstatement procedures.',
   },
@@ -143,10 +143,10 @@ const quizQuestions = [
     id: 5,
     question: "What does 'task breakdown' mean in a method statement?",
     options: [
-      'When equipment fails during work',
+      'Secure storage to prevent damage and theft',
       'Dividing work into logical, sequential steps',
-      'Cancelling a project',
-      'Allocating budget to tasks',
+      'Visual inspection and insulation resistance',
+      'Disconnect or isolate SPDs before testing',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,12 +156,12 @@ const quizQuestions = [
     id: 6,
     question: 'Who should sign off a method statement before work commences?',
     options: [
-      'Only the site labourer',
+      'Safety, capacity, and protection requirements',
+      'Refrigerant type, charge quantity, and GWP',
       'The supervisor/manager and those undertaking the work',
-      'The building receptionist',
-      'No signatures are required',
+      'COP (Conference of the Parties) agreements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Method statements should be signed by the supervisor/manager who prepared or approved it and by those undertaking the work to confirm they have read, understood, and will follow the documented procedures.',
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of the emergency procedures section in a method statement?',
     options: [
-      'To increase document length',
-      'To meet insurance requirements only',
+      'Tenants, HVAC, lighting, small power, and specialist loads',
+      'External earth fault loop impedance',
+      'Background noise levels and microphone placement',
       'To ensure rapid, appropriate response to incidents',
-      'To list fire extinguisher locations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The emergency procedures section ensures everyone knows how to respond rapidly and appropriately to incidents, including first aid arrangements, emergency contacts, evacuation procedures, and incident reporting.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'For cable installation in an occupied building, which control measure is essential?',
     options: [
-      'Working during office hours only',
       'Segregation, barriers, and dust control to protect occupants',
-      'Using the fastest installation method',
-      'Minimising documentation',
+      'Basic wage plus employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s NI, holiday pay, sick pay, pension, and overheads',
+      'Slow, controlled breathing — inhale for 4 seconds, hold for 4, exhale for 6',
+      'Because I²R losses cause heat that cannot dissipate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When working in occupied buildings, segregation barriers, dust control (e.g., dust sheets, extraction), and appropriate signage are essential to protect occupants from hazards and minimise disruption.',
   },
@@ -196,10 +196,10 @@ const quizQuestions = [
     question:
       'What should happen if site conditions differ from those described in the method statement?',
     options: [
-      'Continue work regardless',
+      'Verifying correct phase sequence in three-phase supplies',
       'Stop work, reassess, and update the method statement',
-      'Complete work and update documentation later',
-      'Ignore the differences',
+      'Correct start/stop function and latching',
+      'Mind-reading, personalising, and catastrophising',
     ],
     correctAnswer: 1,
     explanation:
@@ -211,11 +211,11 @@ const quizQuestions = [
       'Which document typically accompanies a method statement when submitted to a principal contractor?',
     options: [
       'Company annual accounts',
+      'Marketing brochures',
       'Risk assessment (RAMS)',
       'Employee payroll records',
-      'Marketing brochures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Method statements are typically submitted alongside risk assessments as RAMS (Risk Assessment and Method Statement). Together they demonstrate the hazards identified and the controls that will be implemented.',
   },

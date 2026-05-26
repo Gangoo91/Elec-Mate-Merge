@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'cmms-purpose',
     question: 'What is the primary purpose of a Computerised Maintenance Management System (CMMS)?',
     options: [
-      'To replace the need for maintenance technicians',
+      'Loose connections, overloaded circuits, unbalanced phases, and failing components identified by abnormal temperature rise',
+      'Latent organisational failures such as inadequate procedures or training gaps',
       'To plan, schedule, track and record all maintenance activities and asset information in a centralised database',
-      'To control building heating and ventilation systems',
-      'To generate invoices for maintenance contractors',
+      'The site diary kept by whoever was supervising — that record carries weight in commercial disputes',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A CMMS is a software platform that centralises all maintenance information — asset registers, work orders, schedules, history, spare parts and KPIs. It enables efficient planning, scheduling and tracking of maintenance activities, and provides the data needed for continuous improvement.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'work-order-lifecycle',
     question: 'What is the correct lifecycle of a maintenance work order?',
     options: [
-      'Complete, request, close',
       'Request, plan, schedule, execute, record, close',
-      'Schedule, execute, delete',
-      'Execute, invoice, archive',
+      'Investigate the cause as it\\\\\\\'s below minimum',
+      'Increased vibration levels and elevated bearing temperature',
+      'Persons not in their employment (e.g. members of the public)',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A work order follows a structured lifecycle: it is requested (either from the PPM schedule or a reactive report), planned (resources and materials identified), scheduled (date and time allocated), executed (work carried out), recorded (findings and actions documented), and closed (completion verified and history updated).',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'MTBF stands for Mean Time Between Failures. If a motor has an MTBF of 8,760 hours, what does this indicate?',
     options: [
-      'The motor will always fail after exactly 8,760 hours',
+      'No, the total load of 235 kg exceeds the machine\\\\\\\\\\\\\\\'s SWL of 230 kg; a machine with a higher SWL is required',
+      'Circuit number, description, protective device rating, cable size, and design current',
       'On average, the motor operates for approximately 8,760 hours (about one year of continuous running) between failures',
-      'The motor requires maintenance every 8,760 minutes',
-      'The motor costs £8,760 to repair',
+      'Listen fully to understand the specific concern, then offer an independent inspection if agreement cannot be reached',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'MTBF of 8,760 hours means that, on average, the motor runs for approximately 8,760 hours between failures — roughly one year of continuous 24/7 operation. It is a statistical average, not a guarantee; individual motors may fail sooner or later. A rising MTBF trend indicates improving reliability.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'ppm-compliance',
     question: 'PPM compliance is measured as the percentage of:',
     options: [
-      'Equipment that has never failed',
       'Planned maintenance tasks completed on time versus the total number scheduled',
-      'Maintenance technicians who hold formal qualifications',
-      'Spare parts held in stock',
+      'Joints and connections must be properly made to be mechanically and electrically sound',
+      'Multi-disciplinary collaboration from project inception',
+      'Repair the cable AND mark safe zones (BS 7671 Reg 522.6) AND brief site team to prevent recurrence',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'PPM compliance measures how many scheduled preventive maintenance tasks were completed on time compared to the total number scheduled. A target of 90-95% is typical for well-managed organisations. Low compliance indicates scheduling problems, resource shortages or poor prioritisation.',
   },
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A CMMS (Computerised Maintenance Management System) is used to:',
     options: [
-      'Design new electrical installations',
+      'To melt and fuse the glass fibre ends together',
       'Manage maintenance work orders, asset data, schedules and history',
-      'Control the building management system remotely',
-      'Carry out electrical testing automatically',
+      'Designated routes, barriers, crossing points, traffic management',
+      'Always looking for ways to improve work and service',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: 'CAFM stands for:',
     options: [
+      'Centralised Asset Failure Management',
       'Computer Assisted Fault Monitoring',
       'Computer Aided Facilities Management',
-      'Centralised Asset Failure Management',
       'Condition Assessment and Fault Mapping',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CAFM (Computer Aided Facilities Management) is a broader platform than a CMMS, covering all aspects of facilities management including space management, help desk, contractor management and compliance tracking, as well as maintenance management. Many modern platforms combine CMMS and CAFM functionality.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 3,
     question: 'An asset register should contain which of the following information?',
     options: [
-      'Only the location of each asset',
+      'It minimises disruption to production while allowing safe access to equipment that is normally energised or in continuous use',
+      'Visually display the timeline of scheduled maintenance tasks, showing duration, sequence and resource allocation',
+      'Accurately recording all findings, measurements and actions, including anomalies and recommendations',
       'Asset identification, location, type, rating, manufacturer, installation date, condition, criticality and maintenance history',
-      'Only the purchase price and warranty expiry date',
-      'Only the next scheduled maintenance date',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A comprehensive asset register is the foundation of effective maintenance management. It should include unique identification, precise location, type and rating, manufacturer and model, installation/commissioning date, current condition assessment, criticality ranking, maintenance history, and links to technical documentation.',
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 4,
     question: 'The key advantage of scheduling PPM work during planned shutdowns is:',
     options: [
-      'Technicians prefer working during shutdowns',
       'It minimises disruption to production while allowing safe access to equipment that is normally energised or in continuous use',
-      'Shutdowns are cheaper because electricity is not being used',
-      'It avoids the need for permits to work',
+      'Analysis of historical failure data, condition monitoring trends, KPI performance and cost data to optimise maintenance strategies',
+      'Asset identification, location, type, rating, manufacturer, installation date, condition, criticality and maintenance history',
+      'Visually display the timeline of scheduled maintenance tasks, showing duration, sequence and resource allocation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Scheduling maintenance during planned shutdowns allows access to equipment that cannot be safely maintained while in service, minimises production disruption, and enables more thorough inspection and testing. However, shutdown windows are limited, so work must be carefully planned and prioritised.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'MTTR (Mean Time to Repair) measures:',
     options: [
-      'The average time between equipment failures',
+      'Review existing documentation such as site plans, previous risk assessments and incident reports',
       'The average time taken to restore equipment to operational status after a failure',
-      'The total time equipment has been operational since installation',
-      'The time until the next scheduled maintenance',
+      'Batteries using solid electrolyte instead of liquid, offering higher energy density and safety',
+      'Hearing only parts of the conversation that interest you or confirm your existing views',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,11 +136,11 @@ const quizQuestions = [
     question: 'Equipment availability is calculated as:',
     options: [
       'MTTR divided by MTBF',
-      'MTBF divided by (MTBF + MTTR), expressed as a percentage',
       'Total operating hours divided by total repair hours',
+      'MTBF divided by (MTBF + MTTR), expressed as a percentage',
       'Number of failures divided by total operating hours',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Availability = MTBF / (MTBF + MTTR) x 100%. For example, if MTBF is 990 hours and MTTR is 10 hours, availability is 990/(990+10) = 99%. This metric shows the proportion of time equipment is available for use. High availability requires both high reliability (high MTBF) and fast repair (low MTTR).',
   },
@@ -148,12 +148,12 @@ const quizQuestions = [
     id: 7,
     question: 'A maintenance backlog of over 4 weeks of work typically indicates:',
     options: [
-      'The maintenance team is working efficiently',
+      'Asset identification, location, type, rating, manufacturer, installation date, condition, criticality and maintenance history',
+      'Analysis of historical failure data, condition monitoring trends, KPI performance and cost data to optimise maintenance strategies',
+      'The average time taken to restore equipment to operational status after a failure',
       'Insufficient maintenance resources, poor planning, or too many reactive tasks consuming planned maintenance time',
-      'The equipment is in excellent condition',
-      'The CMMS system is generating too many reports',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A growing maintenance backlog indicates that work is being generated faster than it can be completed. Common causes include insufficient staffing, too much reactive maintenance displacing planned work, poor scheduling, or unrealistic maintenance plans. A healthy backlog is typically 2-4 weeks; beyond this, critical tasks may be missed.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     question:
       'When recording maintenance findings on a work order, which information is most important?',
     options: [
-      'The weather conditions during the maintenance visit',
       'Actual condition found, measurements taken, work carried out, parts used, anomalies identified and recommendations for further action',
-      'The time the technician arrived and left site',
-      "The name of the manufacturer's helpline contact",
+      'It minimises disruption to production while allowing safe access to equipment that is normally energised or in continuous use',
+      'Asset identification, location, type, rating, manufacturer, installation date, condition, criticality and maintenance history',
+      'Insufficient maintenance resources, poor planning, or too many reactive tasks consuming planned maintenance time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Detailed recording of findings is essential for maintenance history, trend analysis and future planning. The record should capture what was found, what was measured (with values), what work was done, what parts were used, any anomalies or concerns, and recommendations for follow-up action. This data drives continuous improvement of the maintenance programme.',
   },
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'Data-driven maintenance decisions rely on:',
     options: [
-      "The maintenance manager's gut feeling",
+      'Actual condition found, measurements taken, work carried out, parts used, anomalies identified and recommendations for further action',
       'Analysis of historical failure data, condition monitoring trends, KPI performance and cost data to optimise maintenance strategies',
-      'Copying what other organisations do without analysis',
-      'Always increasing the frequency of all maintenance tasks',
+      'It minimises disruption to production while allowing safe access to equipment that is normally energised or in continuous use',
+      'Accurately recording all findings, measurements and actions, including anomalies and recommendations',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,12 +188,12 @@ const quizQuestions = [
     id: 10,
     question: 'A Gantt chart in maintenance scheduling is used to:',
     options: [
-      'Measure the temperature of electrical connections',
+      'It minimises disruption to production while allowing safe access to equipment that is normally energised or in continuous use',
+      'Accurately recording all findings, measurements and actions, including anomalies and recommendations',
       'Visually display the timeline of scheduled maintenance tasks, showing duration, sequence and resource allocation',
-      'Calculate the cost of spare parts',
-      'Test the insulation resistance of cables',
+      'Insufficient maintenance resources, poor planning, or too many reactive tasks consuming planned maintenance time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A Gantt chart is a bar chart that shows scheduled tasks along a timeline, making it easy to visualise when work is planned, how long it will take, which tasks overlap, and where resource conflicts exist. It is widely used in maintenance planning, particularly for shutdown scheduling where multiple tasks must be coordinated.',
   },
@@ -201,12 +201,12 @@ const quizQuestions = [
     id: 11,
     question: 'The ratio of planned maintenance hours to total maintenance hours is known as:',
     options: [
-      'PPM compliance',
+      'In a safe, accessible location (physical or digital)',
+      'To safely isolate the PV array for maintenance',
+      'In simple, clear language avoiding unnecessary jargon',
       'The planned/unplanned ratio (or reactive/proactive split)',
-      'Equipment availability',
-      'MTBF',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The planned/unplanned ratio measures how much maintenance time is spent on planned activities versus reactive repairs. World-class maintenance targets at least 80% planned work. A high proportion of reactive work indicates an immature maintenance programme where PPM is either insufficient or poorly implemented.',
   },
@@ -215,12 +215,12 @@ const quizQuestions = [
     question:
       'Under ST1426, which of the following is a required behaviour when completing maintenance records?',
     options: [
-      'Recording only successful tasks and omitting any problems found',
       'Accurately recording all findings, measurements and actions, including anomalies and recommendations',
-      'Leaving records until the end of the week and completing them from memory',
       'Allowing another person to complete your records on your behalf',
+      'Recording only successful tasks and omitting any problems found',
+      'Leaving records until the end of the week and completing them from memory',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 requires maintenance technicians to maintain accurate records of work carried out, including measurements, observations and anomalies. Records should be completed contemporaneously (at the time of the work), be factual and accurate, and include recommendations for further action where appropriate. This is a fundamental professional behaviour.',
   },

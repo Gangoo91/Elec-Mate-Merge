@@ -19,6 +19,7 @@ import {
 import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import { MockExamQuestionPanel } from '@/components/apprentice-courses/MockExamQuestionPanel';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 import { getRandomQuestions } from '@/data/apprentice-courses/level3/module6/questionBank';
 
 const Level3Module8MockExam6 = () => {
@@ -38,7 +39,10 @@ const Level3Module8MockExam6 = () => {
   const [reviewFilter, setReviewFilter] = useState('all');
 
   const startExam = () => {
-    const selectedQuestions = getRandomQuestions(30);
+    const selectedQuestions = shuffleAllQuestionOptions(
+      getRandomQuestions(30),
+      createShuffleSalt()
+    );
     setExamQuestions(selectedQuestions);
     setSelectedAnswers(new Array(30).fill(-1));
     setCurrentQuestion(0);

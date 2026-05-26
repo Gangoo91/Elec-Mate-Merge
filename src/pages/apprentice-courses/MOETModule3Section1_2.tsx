@@ -13,16 +13,26 @@ const quickCheckQuestions = [
   {
     id: 'hv-definition',
     question: 'At what voltage does the definition of high voltage begin for AC systems in the UK?',
-    options: ['230 V', '400 V', 'Above 1000 V', 'Above 3300 V'],
-    correctIndex: 2,
+    options: [
+      '400 V',
+      'Above 3300 V',
+      '230 V',
+      'Above 1000 V',
+    ],
+    correctIndex: 3,
     explanation:
       'In the UK, high voltage is defined as any voltage exceeding 1000 V AC between conductors, or 600 V AC between conductors and earth. This definition is established by the Electricity at Work Regulations 1989 and is fundamental to the safety framework around HV systems.',
   },
   {
     id: 'sf6-gwp',
     question: 'What is the approximate global warming potential of SF6 gas compared to CO2?',
-    options: ['100 times', '1,000 times', '10,000 times', '23,500 times'],
-    correctIndex: 3,
+    options: [
+      '100 times',
+      '23,500 times',
+      '10,000 times',
+      '1,000 times',
+    ],
+    correctIndex: 1,
     explanation:
       'SF6 has a global warming potential approximately 23,500 times that of CO2, making it one of the most potent greenhouse gases known. This is why its use is strictly regulated under EU F-Gas regulations, and alternatives such as vacuum technology and clean-air insulation are increasingly preferred.',
   },
@@ -30,9 +40,9 @@ const quickCheckQuestions = [
     id: 'rmu-teeoff',
     question: 'In a typical ring main unit, what is the function of the tee-off panel?',
     options: [
-      'Connects to the incoming ring cable',
-      'Feeds and protects the transformer',
       'Connects to the outgoing ring cable',
+      'Feeds and protects the transformer',
+      'Connects to the incoming ring cable',
       'Provides earthing only',
     ],
     correctIndex: 1,
@@ -42,8 +52,13 @@ const quickCheckQuestions = [
   {
     id: 'hv-fifth-rule',
     question: 'What is the fifth safety rule that applies to HV isolation but not typically to LV?',
-    options: ['Disconnect', 'Prove dead', 'Apply portable protective earths', 'Secure with locks'],
-    correctIndex: 2,
+    options: [
+      'Apply portable protective earths',
+      '5th, 7th, 11th, 13th harmonics',
+      'Mass imbalance (unbalance)',
+      '12.5% of full speed power',
+    ],
+    correctIndex: 0,
     explanation:
       'The fifth HV safety rule is to apply portable protective earths (PPEs) at the point of work. This step discharges any stored energy (e.g., from cable capacitance) and protects workers if the system is inadvertently re-energised. This additional step is beyond standard LV isolation procedures because of the much greater stored energy in HV systems.',
   },
@@ -53,15 +68,25 @@ const quizQuestions = [
   {
     id: 1,
     question: 'At what voltage does the UK definition of high voltage begin for AC systems?',
-    options: ['Above 230 V', 'Above 400 V', 'Above 1000 V', 'Above 3300 V'],
-    correctAnswer: 2,
+    options: [
+      'Above 230 V',
+      'Above 1000 V',
+      'Above 400 V',
+      'Above 3300 V',
+    ],
+    correctAnswer: 1,
     explanation:
       'High voltage in the UK is defined as exceeding 1000 V AC between conductors, as per the Electricity at Work Regulations 1989.',
   },
   {
     id: 2,
     question: 'What is the most common HV distribution voltage in the UK?',
-    options: ['3.3 kV', '6.6 kV', '11 kV', '33 kV'],
+    options: [
+      '33 kV',
+      '3.3 kV',
+      '11 kV',
+      '6.6 kV',
+    ],
     correctAnswer: 2,
     explanation:
       '11 kV is the most common primary distribution voltage in the UK, used to supply local substations from grid substations.',
@@ -69,23 +94,38 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What arc-quenching medium is used in SF6 circuit breakers?',
-    options: ['Oil', 'Vacuum', 'Sulphur hexafluoride gas', 'Air'],
-    correctAnswer: 2,
+    options: [
+      'Vacuum',
+      'Oil',
+      'Air',
+      'Sulphur hexafluoride gas',
+    ],
+    correctAnswer: 3,
     explanation:
       'SF6 circuit breakers use sulphur hexafluoride gas, which has approximately 2.5 times the dielectric strength of air at atmospheric pressure.',
   },
   {
     id: 4,
     question: 'How many operations can a modern vacuum circuit breaker typically perform?',
-    options: ['100', '1,000', '10,000', '30,000'],
-    correctAnswer: 3,
+    options: [
+      '30,000',
+      '1,000',
+      '10,000',
+      '100',
+    ],
+    correctAnswer: 0,
     explanation:
       'Modern vacuum circuit breakers can typically perform up to 30,000 operations, giving them a very long electrical life with minimal maintenance.',
   },
   {
     id: 5,
     question: 'In a standard ring main unit, how many panels are there in a typical configuration?',
-    options: ['Two', 'Three', 'Four', 'Five'],
+    options: [
+      'Two',
+      'Three',
+      'Five',
+      'Four',
+    ],
     correctAnswer: 1,
     explanation:
       'A typical RMU has three panels: two ring switches (incoming and outgoing) and one tee-off panel (circuit breaker or fuse-switch) feeding the transformer.',
@@ -95,11 +135,11 @@ const quizQuestions = [
     question: 'Who is authorised to carry out HV switching operations?',
     options: [
       'Any qualified electrician',
-      'An Authorised Person (HV)',
       'A Competent Person (HV)',
+      'An Authorised Person (HV)',
       'The site manager',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Only a formally appointed Authorised Person (AP) may carry out HV switching operations and issue safety documents such as permits to work.',
   },
@@ -108,11 +148,11 @@ const quizQuestions = [
     question: 'What is the correct order of the five HV safety rules?',
     options: [
       'Isolate, Disconnect, Earth, Prove Dead, Secure',
-      'Disconnect, Isolate, Secure, Prove Dead, Earth',
-      'Prove Dead, Disconnect, Isolate, Secure, Earth',
       'Disconnect, Earth, Isolate, Secure, Prove Dead',
+      'Prove Dead, Disconnect, Isolate, Secure, Earth',
+      'Disconnect, Isolate, Secure, Prove Dead, Earth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The correct order is: Disconnect, Isolate, Secure (lock off), Prove Dead, Earth. This sequence ensures safety at each stage before proceeding to the next.',
   },
@@ -120,12 +160,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why are portable protective earths applied during HV work?',
     options: [
-      'To test the earth rod',
       'To discharge stored energy and protect against inadvertent re-energisation',
-      'To reduce touch voltage only',
-      'To improve power factor',
+      'Equipotential bonding of all conductive parts within zones',
+      'BS 7671 specified sequence: continuity, insulation, polarity, earth fault loop',
+      'Earth leakage current below test instrument sensitivity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Portable protective earths discharge any stored energy (such as cable capacitance) and provide protection if the system is inadvertently re-energised during work.',
   },
@@ -133,12 +173,12 @@ const quizQuestions = [
     id: 9,
     question: 'If the LV side of a transformer is isolated, what is the status of the HV side?',
     options: [
-      'Also isolated automatically',
-      'De-energised by default',
+      'Fire-survival circuits like emergency lighting and alarm',
       'Still energised at 11 kV unless separately isolated',
-      'Safe to touch',
+      'At least 1 MΩ per volt of range selected',
+      'Superior chemical and temperature resistance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Isolating the LV side does NOT isolate the HV winding. The HV primary remains energised until an Authorised Person carries out separate HV isolation.',
   },
@@ -146,7 +186,12 @@ const quizQuestions = [
     id: 10,
     question:
       'What type of HV circuit breaker uses no gas or oil and is most environmentally friendly?',
-    options: ['SF6 breaker', 'Oil circuit breaker', 'Vacuum circuit breaker', 'Air-blast breaker'],
+    options: [
+      'SF6 breaker',
+      'Oil circuit breaker',
+      'Vacuum circuit breaker',
+      'Air-blast breaker',
+    ],
     correctAnswer: 2,
     explanation:
       'Vacuum circuit breakers use no gas or oil — the arc is extinguished in a sealed vacuum bottle. They are the most environmentally friendly option and are increasingly replacing SF6 types.',
@@ -168,12 +213,12 @@ const quizQuestions = [
     id: 12,
     question: 'What advantage does a ring main configuration provide over a radial feeder?',
     options: [
-      'Lower cost',
-      'Simpler design',
       'Supply resilience if a cable section fails',
-      'Higher voltage capacity',
+      'Every 5 years or at change of tenancy',
+      'Buoyancy forces from density differences',
+      'To simulate mains failure for testing',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A ring main provides resilience because each substation can be fed from either direction. If one cable section is faulted, the ring can be split and supply maintained from the other side.',
   },

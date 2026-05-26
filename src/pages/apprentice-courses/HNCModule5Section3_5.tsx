@@ -31,9 +31,9 @@ const quickCheckQuestions = [
     id: 'final-measurement-purpose',
     question: 'What is the primary purpose of final measurement in a building services contract?',
     options: [
-      'To calculate profit margins',
-      'To establish the true extent of work executed',
       'To determine liquidated damages',
+      'To establish the true extent of work executed',
+      'To calculate profit margins',
       'To assess quality standards',
     ],
     correctIndex: 1,
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'retention-release',
     question: 'When is the second half of retention typically released?',
     options: [
-      'At practical completion',
+      'All workers to provide essential H&S awareness',
       'At the end of the defects liability period',
-      'When the final account is agreed',
-      'Six months after completion',
+      'To prevent fingers slipping onto live conductors',
+      'Maximum winding temperature of 155 degrees C',
     ],
     correctIndex: 1,
     explanation:
@@ -57,8 +57,13 @@ const quickCheckQuestions = [
     id: 'defects-liability',
     question:
       'What is the typical duration of a defects liability period in UK building contracts?',
-    options: ['3 months', '6 months', '12 months', '24 months'],
-    correctIndex: 2,
+    options: [
+      '3 months',
+      '6 months',
+      '24 months',
+      '12 months',
+    ],
+    correctIndex: 3,
     explanation:
       'The defects liability period (also called rectification period) is typically 12 months from practical completion under most UK standard form contracts, though this can vary by contract.',
   },
@@ -66,12 +71,12 @@ const quickCheckQuestions = [
     id: 'final-certificate',
     question: 'What does the issue of a Final Certificate signify?',
     options: [
-      'Work has started',
-      'Practical completion achieved',
+      'To provide protection against electric shock',
       'Final settlement of all financial matters',
-      'Planning permission granted',
+      'Temperature and voltage drop effects vary with load',
+      'Test date, next test date, and tester ID',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The Final Certificate represents the conclusive settlement of financial matters between the parties, confirming the final contract sum and releasing any remaining retention.',
   },
@@ -94,8 +99,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What percentage is typically held as retention in building services contracts?',
-    options: ['1-2%', '3-5%', '8-10%', '15-20%'],
-    correctAnswer: 1,
+    options: [
+      '8-10%',
+      '1-2%',
+      '3-5%',
+      '15-20%',
+    ],
+    correctAnswer: 2,
     explanation:
       'Retention is typically 3-5% of the contract sum in UK building contracts, with 5% being common. Half is released at practical completion and half at the end of the defects liability period.',
   },
@@ -104,12 +114,12 @@ const quizQuestions = [
     question:
       "A contractor's final account includes provisional sum expenditure of £45,000. The provisional sum allowed was £50,000. What adjustment is made?",
     options: [
-      'Add £45,000',
-      'Deduct £5,000',
+      'Certificate of Making Good Defects',
+      'Preliminary costs already paid',
+      'Depends on the contract terms',
       'Deduct £50,000 and add £45,000',
-      'No adjustment needed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The original provisional sum (£50,000) is omitted from the contract sum, and the actual expenditure (£45,000) is added. This results in a net credit of £5,000 to the employer.',
   },
@@ -118,12 +128,12 @@ const quizQuestions = [
     question:
       'Under JCT contracts, within what period must the contractor submit their final account documentation?',
     options: [
-      '1 month of practical completion',
-      '3 months of practical completion',
       '6 months of practical completion',
+      '3 months of practical completion',
+      '1 month of practical completion',
       '12 months of practical completion',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Under JCT contracts, the contractor must submit all documentation required for computing the final statement within 6 months of practical completion.',
   },
@@ -133,8 +143,8 @@ const quizQuestions = [
     options: [
       'Certificate of Practical Completion',
       'Certificate of Making Good Defects',
-      'Building Regulations Completion Certificate',
       'Performance Bond',
+      'Building Regulations Completion Certificate',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'In lump sum contracts, variations are valued using:',
     options: [
-      "Contractor's actual costs only",
+      'Identifying the specific unhelpful thought',
+      'Single insulation providing equivalent protection to double',
       'Contract rates where applicable, or fair rates where not',
-      'A fixed percentage of contract value',
-      'Market rates at tender date',
+      'Clear coordination between team members and other trades',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Variations are valued using contract rates where the work is similar to bill items, or fair rates and prices where the work differs significantly and contract rates do not apply.',
   },
@@ -158,11 +168,11 @@ const quizQuestions = [
     question: 'What is the purpose of a retention bond?',
     options: [
       "To guarantee the contractor's performance",
-      'To replace cash retention with a bank guarantee',
-      'To secure payment from the employer',
       'To guarantee completion dates',
+      'To secure payment from the employer',
+      'To replace cash retention with a bank guarantee',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A retention bond allows the contractor to receive payment in full without cash retention being held, replacing it with a bank or insurance company guarantee for the same amount.',
   },
@@ -170,7 +180,12 @@ const quizQuestions = [
     id: 8,
     question:
       'A £2.5m electrical installation contract has 5% retention. What is released at practical completion?',
-    options: ['£62,500', '£125,000', '£250,000', '£25,000'],
+    options: [
+      '£62,500',
+      '£250,000',
+      '£25,000',
+      '£125,000',
+    ],
     correctAnswer: 0,
     explanation:
       'Total retention is £2,500,000 x 5% = £125,000. Half is released at practical completion = £62,500. The remaining £62,500 is held until the end of the defects liability period.',
@@ -192,8 +207,13 @@ const quizQuestions = [
     id: 10,
     question:
       'The Final Certificate under JCT becomes conclusive evidence of certain matters after:',
-    options: ['14 days', '28 days', '6 months', '12 months'],
-    correctAnswer: 1,
+    options: [
+      '14 days',
+      '12 months',
+      '28 days',
+      '6 months',
+    ],
+    correctAnswer: 2,
     explanation:
       'Under JCT contracts, the Final Certificate becomes conclusive evidence of certain matters (including that the contractor has fulfilled obligations regarding materials and workmanship) after 28 days if neither party has raised disputes.',
   },
@@ -203,10 +223,10 @@ const quizQuestions = [
     options: [
       'Measured variations',
       'Fluctuations (if applicable)',
-      'Preliminary costs already paid',
       'Provisional sum adjustments',
+      'Preliminary costs already paid',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Preliminary costs that have already been paid through interim valuations are not adjusted again in the final account - they form part of the certified sums already paid.',
   },
@@ -214,12 +234,12 @@ const quizQuestions = [
     id: 12,
     question: 'During the defects liability period, who is responsible for insuring the works?',
     options: [
-      'Always the contractor',
-      'Always the employer',
       'Depends on the contract terms',
       'The contract administrator',
+      'Always the contractor',
+      'Always the employer',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Responsibility for insurance during the defects liability period depends on the contract terms. Under JCT, it typically transfers to the employer at practical completion for new works.',
   },

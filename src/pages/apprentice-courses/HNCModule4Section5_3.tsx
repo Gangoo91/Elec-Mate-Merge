@@ -33,20 +33,25 @@ const quickCheckQuestions = [
     id: 'rising-main',
     question: 'What is the primary advantage of a rising main busbar system over cable risers?',
     options: [
-      'Lower initial cost',
+      '450mm from floor level (accessibility guidance)',
+      'Unenforceable except where the payer is insolvent',
+      'They are significantly reduced',
       'Easier tap-off connections at each floor',
-      'No fire barriers required',
-      'Smaller physical size',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Rising mains allow standardised tap-off connections at each floor without the need to terminate heavy cables. This provides flexibility for future load changes and simplifies connections.',
   },
   {
     id: 'fire-barrier',
     question: 'How often must fire barriers be installed in vertical busbar risers?',
-    options: ['Every 5m', 'Every 10m', 'At each floor penetration', 'Only at top and bottom'],
-    correctIndex: 2,
+    options: [
+      'Provide safe systems of work',
+      'Investment-grade audit (Level 3)',
+      'Multi-function power meter',
+      'At each floor penetration',
+    ],
+    correctIndex: 3,
     explanation:
       'Fire barriers must be installed at each floor penetration to maintain the fire compartmentation of the building. This prevents fire and smoke spread through the riser void.',
   },
@@ -54,12 +59,12 @@ const quickCheckQuestions = [
     id: 'tap-off',
     question: 'What protection does a plug-in tap-off unit typically contain?',
     options: [
-      'No protection - connects directly',
-      'Fuse or circuit breaker',
-      'Surge protection only',
       'Earth fault protection only',
+      'Surge protection only',
+      'Fuse or circuit breaker',
+      'No protection - connects directly',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Tap-off units contain integral protection (fuse or MCB/MCCB) to protect the outgoing circuit. This provides isolation and overcurrent protection at the point of connection.',
   },
@@ -67,12 +72,12 @@ const quickCheckQuestions = [
     id: 'rating',
     question: 'A busbar system is rated at 1600A. What does this indicate?',
     options: [
-      'Maximum fault current',
       'Continuous current capacity',
+      'Maximum fault current',
       'Peak current only',
       'Neutral current capacity',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The busbar rating indicates the continuous current carrying capacity under specified conditions. This is the maximum sustained load current the system can carry without exceeding temperature limits.',
   },
@@ -83,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is busbar trunking?',
     options: [
-      'Underground cable protection',
+      'High-speed storage networking protocol commonly using fibre',
       'Prefabricated conductor system in protective housing',
-      'Type of cable tray',
-      'Transformer winding',
+      'Test date, next test date, and tester ID',
+      'Where cables pass through fire-rated walls, floors and partitions',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,8 +101,13 @@ const quizQuestions = [
     id: 2,
     question:
       'Which type of busbar system is most commonly used for vertical distribution in multi-storey buildings?',
-    options: ['Lighting trunking', 'Rising main busbar', 'Sandwich busbar', 'Overhead busbar'],
-    correctAnswer: 1,
+    options: [
+      'Sandwich busbar',
+      'Lighting trunking',
+      'Rising main busbar',
+      'Overhead busbar',
+    ],
+    correctAnswer: 2,
     explanation:
       'Rising main busbars run vertically through buildings, typically in dedicated risers, allowing floor-by-floor tap-off connections for distribution boards on each level.',
   },
@@ -105,20 +115,25 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of a bus section unit in busbar systems?',
     options: [
-      'To increase current capacity',
-      'To provide isolation between sections',
       'To connect to transformers only',
+      'To increase current capacity',
       'To reduce installation cost',
+      'To provide isolation between sections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Bus section units allow isolation of portions of the busbar run for maintenance or fault isolation without shutting down the entire system. They contain switches or circuit breakers.',
   },
   {
     id: 4,
     question: 'What conductor material is typically used for high-current busbar systems?',
-    options: ['Steel only', 'Copper or aluminium', 'Bronze only', 'Brass'],
-    correctAnswer: 1,
+    options: [
+      'Copper or aluminium',
+      'Steel only',
+      'Bronze only',
+      'Brass',
+    ],
+    correctAnswer: 0,
     explanation:
       'Copper and aluminium are used for busbar conductors. Copper has higher conductivity but aluminium is lighter and cheaper. Selection depends on current, space and cost requirements.',
   },
@@ -126,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why must busbar joints be carefully torqued during installation?',
     options: [
-      'To prevent noise',
+      'One complete positive and negative alternation',
       'To ensure low-resistance connections and prevent overheating',
-      'To meet aesthetic requirements',
-      'To reduce installation time',
+      'Fire hood or intumescent cover fitted where required',
+      'Calculating optimal start times to reach target temperatures',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the typical application for lighting busbar trunking?',
     options: [
-      'Supplying distribution boards',
+      'BRUKL (Building Regulations UK Part L)',
+      'Logical sequence covering all relevant areas systematically',
       'Feeding multiple luminaires along a linear run',
-      'Main incoming supply',
-      'Motor control centres',
+      'They vary with the square of the load current (I squared R)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Lighting trunking provides a continuous supply along its length with multiple tap-off points for luminaires. It's commonly used in warehouses, retail and industrial lighting installations.",
   },
@@ -152,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'What protection is required where busbar trunking passes through fire barriers?',
     options: [
-      'No special protection needed',
+      'Stop high-risk activities, provide shelter, monitor conditions',
+      'Annually or when systems change significantly',
+      'The bill of quantities or material schedule',
       'Fire-rated collars or seals to maintain compartmentation',
-      'Additional earth bonding only',
-      'Increased IP rating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Fire barriers around busbar penetrations must maintain the fire rating of the compartment. Purpose-made fire-rated collars or intumescent seals are used to close gaps when fire occurs.',
   },
@@ -165,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the advantage of sandwich-type busbar construction?',
     options: [
-      'Lower cost only',
       'Compact size with good heat dissipation',
-      'Higher fault rating',
-      'Easier installation',
+      'A competent person scheme for electrical work',
+      'Annually or as per manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommendations',
+      'Failed battery or charging circuit fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Sandwich construction places conductors close together separated by insulation, providing compact dimensions and good natural heat dissipation through the enclosure surface.',
   },
@@ -178,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'How are tap-off units typically connected to busbar trunking?',
     options: [
-      'Permanent welded connection',
+      '4mA baseline allows fault detection',
       'Plug-in connection through access opening',
-      'Cable gland connection',
-      'Bolted terminal only',
+      'Individual room temperature control',
+      'Process material adhering to sensor surfaces',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +207,10 @@ const quizQuestions = [
     question:
       'What derating factor must be considered for busbar systems at elevated ambient temperatures?',
     options: [
-      'No derating needed',
-      'Increased rating by 10%',
+      'Initial verification (inspection and testing)',
+      'Life safety and emergency systems',
       'Reduced rating per manufacturer data',
-      'Only affects aluminium systems',
+      'At least 3 out of 4 faults',
     ],
     correctAnswer: 2,
     explanation:

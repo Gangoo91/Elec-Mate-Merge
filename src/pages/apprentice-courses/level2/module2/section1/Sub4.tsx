@@ -35,7 +35,12 @@ const checks = [
   {
     id: 'prefix-mA-to-A',
     question: 'Convert 30 mA into amperes.',
-    options: ['0.0003 A', '0.003 A', '0.03 A', '3 A'],
+    options: [
+      '3 A',
+      '0.003 A',
+      '0.03 A',
+      '0.0003 A',
+    ],
     correctIndex: 2,
     explanation:
       'Milli means ÷ 1000. 30 ÷ 1000 = 0.03 A. That is the standard RCD trip current — same value, two ways of writing it.',
@@ -57,8 +62,13 @@ const checks = [
   {
     id: 'prefix-kW-to-W',
     question: 'A 7.5 kW shower runs at 230 V. What is its power in watts (W)?',
-    options: ['75 W', '750 W', '7,500 W', '75,000 W'],
-    correctIndex: 2,
+    options: [
+      '7,500 W',
+      '75,000 W',
+      '750 W',
+      '75 W',
+    ],
+    correctIndex: 0,
     explanation:
       'Kilo means × 1000. 7.5 kW × 1000 = 7,500 W. That gives you ~32.6 A draw at 230 V — exactly why showers need a dedicated MCB and a thicker cable.',
   },
@@ -68,15 +78,25 @@ const quizQuestions = [
   {
     id: 1,
     question: "What does the prefix 'kilo' (k) mean?",
-    options: ['÷ 100', '÷ 1,000', '× 1,000', '× 1,000,000'],
-    correctAnswer: 2,
+    options: [
+      '÷ 100',
+      '× 1,000',
+      '÷ 1,000',
+      '× 1,000,000',
+    ],
+    correctAnswer: 1,
     explanation:
       "Kilo = × 1,000. Anywhere a domestic load is rated in kW you're seeing this prefix — kettle 2 kW, oven 3 kW, shower 9.5 kW. Drop the kilo and you'd have 2,000 / 3,000 / 9,500 W everywhere, which gets clumsy on cert sheets fast. Same multiplier whatever the base unit (kV, kΩ, kA).",
   },
   {
     id: 2,
     question: 'How many milliamps make up one amp?',
-    options: ['10 mA', '100 mA', '1,000 mA', '1,000,000 mA'],
+    options: [
+      '1,000,000 mA',
+      '10 mA',
+      '1,000 mA',
+      '100 mA',
+    ],
     correctAnswer: 2,
     explanation:
       "Milli means ÷ 1,000, so 1 A = 1,000 mA. To convert FROM amps TO milliamps you multiply by 1,000.",
@@ -84,16 +104,26 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Convert 2.4 kW into watts.',
-    options: ['24 W', '240 W', '2,400 W', '24,000 W'],
-    correctAnswer: 2,
+    options: [
+      '240 W',
+      '24 W',
+      '24,000 W',
+      '2,400 W',
+    ],
+    correctAnswer: 3,
     explanation:
       '2.4 × 1,000 = 2,400 W. Convert to base units before plugging into Ohm/power formulas — keeps the maths consistent.',
   },
   {
     id: 4,
     question: 'A capacitor is marked 470 µF. What is that in farads (F)?',
-    options: ['0.047 F', '0.00047 F', '0.000047 F', '0.0000047 F'],
-    correctAnswer: 1,
+    options: [
+      '0.00047 F',
+      '0.047 F',
+      '0.000047 F',
+      '0.0000047 F',
+    ],
+    correctAnswer: 0,
     explanation:
       'Micro means ÷ 1,000,000. 470 ÷ 1,000,000 = 0.00047 F. Capacitors are always quoted in µF, nF or pF because the actual farad is huge.',
   },
@@ -108,16 +138,26 @@ const quizQuestions = [
   {
     id: 6,
     question: "Which of these is the largest current?",
-    options: ['500 µA', '50 mA', '0.5 A', '5,000 mA'],
-    correctAnswer: 3,
+    options: [
+      '500 µA',
+      '50 mA',
+      '5,000 mA',
+      '0.5 A',
+    ],
+    correctAnswer: 2,
     explanation:
       'Convert all to amps: 500 µA = 0.0005 A; 50 mA = 0.05 A; 0.5 A = 0.5 A; 5,000 mA = 5 A. Five amps is the biggest by a clear mile.',
   },
   {
     id: 7,
     question: 'On an insulation tester showing 250 MΩ, what is the reading in ohms?',
-    options: ['250,000 Ω', '2,500,000 Ω', '250,000,000 Ω', '25 Ω'],
-    correctAnswer: 2,
+    options: [
+      '250,000 Ω',
+      '2,500,000 Ω',
+      '25 Ω',
+      '250,000,000 Ω',
+    ],
+    correctAnswer: 3,
     explanation:
       '250 × 1,000,000 = 250,000,000 Ω (250 megohms). That is excellent insulation — well above the 1 MΩ minimum acceptance from BS 7671 Table 64.',
   },
@@ -125,8 +165,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A submeter records 3.6 kWh. The supply ran for exactly 2 hours. What was the average power draw in W?',
-    options: ['180 W', '1,800 W', '7,200 W', '720 W'],
-    correctAnswer: 1,
+    options: [
+      '1,800 W',
+      '7,200 W',
+      '180 W',
+      '720 W',
+    ],
+    correctAnswer: 0,
     explanation:
       'Energy = power × time. 3.6 kWh ÷ 2 h = 1.8 kW = 1,800 W. Always convert kWh and kW into matching units before doing the sum.',
   },

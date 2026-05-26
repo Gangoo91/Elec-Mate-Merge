@@ -41,12 +41,12 @@ const checks = [
     id: 'wahr-definition-check',
     question: 'How do the Work at Height Regulations 2005 define "working at height"?',
     options: [
-      'Anything above two metres',
+      'To prevent disorientation and ensure safe evacuation',
+      'Multi-core cables clipped direct to a non-metallic surface in still air.',
       'Anywhere you could fall a distance liable to cause personal injury',
-      'Roof work and scaffold only',
-      'Anything above your own head height',
+      'A formal instruction to change the scope, specification, or timing of works',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "There’s no magic number. If you could fall and hurt yourself — even a metre off a podium step — the Regs apply. That’s why ladder falls in domestic jobs still get prosecuted.",
   },
@@ -56,8 +56,8 @@ const checks = [
     options: [
       'Plan, provide, train',
       'Avoid, prevent, mitigate',
-      'Assess, isolate, protect',
       'Inspect, install, monitor',
+      'Assess, isolate, protect',
     ],
     correctIndex: 1,
     explanation:
@@ -67,12 +67,12 @@ const checks = [
     id: 'confined-standby-check',
     question: 'A mate goes down a manhole to dress some cables. What’s the standby person’s job?',
     options: [
-      'Go in with him in case he needs a hand',
       'Stay outside, keep contact, raise the alarm — don’t enter to rescue',
       'Wait at the van and check on the radio every 20 mins',
+      'Go in with him in case he needs a hand',
       'Test the atmosphere once at the start, then crack on with other work',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Reg 5 of the Confined Spaces Regs requires emergency arrangements. The standby person stays out, keeps comms, raises the alarm. Most confined-space deaths are people who went in to rescue without proper kit.",
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     question:
       'Under the Work at Height Regulations 2005, when do the Regs kick in?',
     options: [
-      'Above 2 metres',
-      'Above 1.8 metres on a ladder',
+      'Device ID (and possibly IP addresses or node IDs)',
       'Anywhere a fall could cause personal injury',
-      'Only on construction sites',
+      'Gather information, analyse, hypothesise, test, rectify',
+      'Neutral current flow and voltage asymmetry',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "There’s no height threshold. If a fall could hurt someone, you’re working at height — even on a hop-up changing a downlight.",
   },
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: 'What’s the correct hierarchy under WAHR 2005?',
     options: [
-      'PPE first, then guardrails, then skip the work',
+      'Precautionary statements advising on handling, storage, and emergency response',
+      'Zinc oxide fume from the galvanised coating, which can cause metal fume fever',
       'Avoid working at height → prevent the fall (collective) → mitigate the fall (personal)',
-      'Assess → install → inspect',
-      'Harness → helmet → high-vis',
+      'Competent person scheme membership or building control notification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Always start by asking 'do I even need to be up there?' Use poles, drop the fitting down, design out the work. If you must go up, use a tower or MEWP. Harness only when you can’t prevent the fall.",
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'What’s the right ladder angle, in trade terms?',
     options: [
-      '1 out for every 3 up',
-      '1 out for every 4 up (about 75°)',
       '1 out for every 5 up',
+      '1 out for every 3 up',
       'Bolt upright against the wall',
+      '1 out for every 4 up (about 75°)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The 1:4 rule. Roughly 75°. Too shallow and the feet kick out. Too steep and the top falls back. Most modern ladders have an angle indicator on the stile — use it.",
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'A leaning ladder is being used for short, light work. How long is "short"?',
     options: [
-      'Up to 5 minutes',
       'Up to 30 minutes',
+      'Up to 5 minutes',
       'Up to a full shift',
       'No time limit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "HSE’s LA455 guidance: max 30 minutes at one position for a leaning ladder. Anything longer needs a tower, podium or MEWP. If you’re halfway through and the kettle goes on, you’re probably over the limit.",
   },
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which of these is a confined space under the 1997 Regulations?',
     options: [
-      'Any room without windows',
+      'Removed safely from the platform and lowered to the ground',
       'Any space substantially enclosed where there’s a foreseeable specified risk',
-      'Only sewers and tanks',
-      'Anywhere below ground level',
+      'Hydrogen produced using renewable electricity through electrolysis of water',
+      'Occupational asthma caused by a known respiratory sensitiser',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: 'Normal air is about 21% oxygen. At what level does it become a danger?',
     options: [
-      'Below 20.9%',
+      'BS EN 60947-6-1 for transfer switching equipment',
+      'PEEL: Point, Evidence, Explain, Link',
       'Below 19.5% (deficient) or above 23.5% (enriched)',
-      'Below 15% only',
-      'Only below 10%',
+      'Joining two scaffold tubes end to end to extend their length',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Below 19.5% you start to get drowsy and uncoordinated — well before you collapse. Above 23.5% normally non-flammable stuff catches fire dangerously easy. Multi-gas detectors alarm at both ends.",
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'What’s the law on ladder pre-use checks?',
     options: [
-      'Inspected once a year by the supervisor',
+      'A workplace organisation method: Sort, Set in order, Shine, Standardise, Sustain',
+      'LEDs use up to 80-90% less energy than incandescent lamps, last significantly longer, and produce less waste heat',
+      'Seal off the area with polythene sheeting and warning signs, and set up a decontamination unit',
       'Visual pre-use check by the user, plus a recorded detailed inspection at intervals (typically every 3–12 months)',
-      'No check needed if it looks fine',
-      'PAT-tested every 3 months',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "WAHR Reg 12 plus PUWER 1998. You eyeball it before each use — stiles, rungs, feet, locking bars. The company keeps a recorded inspection log. No record = the supervisor can’t prove the kit was fit for use.",
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'Three of these are duties under the Confined Spaces Regs 1997. Which is NOT?',
     options: [
+      'Carry out the work alone to keep numbers down',
+      'Have suitable emergency arrangements before entry',
       'Avoid entry if the work can be done another way',
       'Have a safe system of work',
-      'Have suitable emergency arrangements before entry',
-      'Carry out the work alone to keep numbers down',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       "Regs 4, 4(2) and 5: avoid entry if you can, have a safe system if you can’t, and rescue arrangements ready BEFORE anyone goes in. Working alone in a confined space is a textbook bad idea — you need a standby person and comms.",
   },

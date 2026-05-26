@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'What does a Type B distribution board designation indicate according to BS EN 61439-3?',
     options: [
-      'A board with basic insulation only',
       'A board designed for use by ordinary persons (non-skilled)',
-      'A board with IP65 rating',
-      'A board for three-phase supplies only',
+      'To provide evidence of compliance and ensure safety',
+      'Claims arising from design work and certification advice',
+      'Explaining repair made, any limitations, and operating instructions',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Type B distribution boards (DBO) are designed for use by ordinary persons (non-skilled) and must have all live parts behind a barrier or enclosure that requires a tool to remove. Type A boards are for skilled persons only.',
   },
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'According to BS 7671, which circuits should NOT share a common enclosure without appropriate barriers?',
     options: [
-      'Lighting and socket circuits',
+      'Single-phase and three-phase circuits',
       'Ring final circuits and radial circuits',
       'SELV/PELV circuits and circuits exceeding 50V AC',
-      'Single-phase and three-phase circuits',
+      'Lighting and socket circuits',
     ],
     correctIndex: 2,
     explanation:
@@ -55,8 +55,13 @@ const quickCheckQuestions = [
     id: 'ip-rating',
     question:
       'What minimum IP rating is typically required for a distribution board installed in an external location?',
-    options: ['IP2X', 'IP20', 'IP44', 'IP65'],
-    correctIndex: 3,
+    options: [
+      'IP2X',
+      'IP44',
+      'IP65',
+      'IP20',
+    ],
+    correctIndex: 2,
     explanation:
       'External distribution boards typically require IP65 rating minimum (dust tight and protected against water jets from any direction). IP44 may be acceptable in sheltered locations, but IP65 provides better protection for exposed external installations.',
   },
@@ -64,8 +69,13 @@ const quickCheckQuestions = [
     id: 'spare-capacity',
     question:
       'What is the recommended minimum spare capacity when designing a new distribution board installation?',
-    options: ['5%', '10%', '20%', '30%'],
-    correctIndex: 2,
+    options: [
+      '5%',
+      '10%',
+      '30%',
+      '20%',
+    ],
+    correctIndex: 3,
     explanation:
       'Industry best practice recommends a minimum of 20% spare capacity (spare ways) in distribution boards to accommodate future circuit additions without the need for board replacement or additional enclosures.',
   },
@@ -76,8 +86,13 @@ const quizQuestions = [
     id: 1,
     question:
       'According to BS EN 61439-3, what is the maximum rated current for a distribution board classified as a DBO?',
-    options: ['63A', '125A', '250A', '400A'],
-    correctAnswer: 2,
+    options: [
+      '63A',
+      '250A',
+      '125A',
+      '400A',
+    ],
+    correctAnswer: 1,
     explanation:
       'BS EN 61439-3 specifies that distribution boards for operation by ordinary persons (DBO) have a maximum rated current of 250A. Boards exceeding this are classified differently and require professional operation.',
   },
@@ -85,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: "What does the 'X' in an IP rating indicate?",
     options: [
-      'Maximum protection level',
-      'Extended protection',
+      'Gradual voltage increase to test voltage',
+      'BS EN 61537 and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions',
       'No specific requirement for that digit',
-      'Explosion proof',
+      '100–120 per minute, depth around 5–6 cm',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'When designing distribution board layouts, circuits should be arranged so that:',
     options: [
-      'All MCBs are the same rating',
       'Higher rated circuits are at the bottom',
-      'Circuits are grouped by function with clear labelling',
+      'All MCBs are the same rating',
       'Three-phase circuits are always on the left side',
+      'Circuits are grouped by function with clear labelling',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Best practice requires circuits to be logically grouped by function (lighting, power, specialist loads) with clear labelling. This aids maintenance, fault finding, and ensures safe isolation of specific areas or systems.',
   },
@@ -111,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the purpose of a busbar chamber within a distribution board?',
     options: [
-      'To provide additional cable termination space',
-      'To house the incoming supply and main switch',
       'To distribute incoming supply to outgoing circuit protective devices',
-      'To contain the earth bar only',
+      'Circuits are grouped by function with clear labelling',
+      'Loads should be distributed across phases to minimise neutral current',
+      'Nominal current and type of protective device, circuit designation, and points served',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The busbar chamber houses the busbars that distribute the incoming supply to all outgoing circuit protective devices. It must be adequately rated for the prospective fault current and properly shrouded for safety.',
   },
@@ -124,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'BS 7671 requires that distribution board circuit charts must include:',
     options: [
-      'The installation date only',
+      'Entry positions must allow adequate bending radii and heat dissipation',
       'Nominal current and type of protective device, circuit designation, and points served',
-      "Only the electrician's contact details",
-      'Cable colours used throughout',
+      'The need to avoid danger and minimise inconvenience in the event of a fault',
+      'To distribute incoming supply to outgoing circuit protective devices',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,11 +167,11 @@ const quizQuestions = [
       "What is the significance of a distribution board's form of separation (Form 1, 2, 3, or 4)?",
     options: [
       "It indicates the board's voltage rating",
-      'It defines the level of internal segregation between functional units',
-      'It shows the maximum number of circuits',
       'It indicates the enclosure material type',
+      'It shows the maximum number of circuits',
+      'It defines the level of internal segregation between functional units',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Forms of separation (Forms 1-4) define the degree of internal segregation between functional units, busbars, and terminals. Higher form numbers provide greater separation, reducing risks during maintenance and improving safety.',
   },
@@ -164,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'When selecting a distribution board location, which factor is LEAST important?',
     options: [
-      'Accessibility for operation and maintenance',
-      'Proximity to main earthing terminal',
       "The board manufacturer's brand reputation",
       'Environmental conditions and required IP rating',
+      'Accessibility for operation and maintenance',
+      'Proximity to main earthing terminal',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'While quality is important, brand reputation is not a technical installation factor. Key considerations are accessibility, earthing arrangements, environmental conditions, cable routing, and compliance with building regulations.',
   },
@@ -178,10 +193,10 @@ const quizQuestions = [
     question:
       'According to BS 7671:2018+A4:2026 Regulation 314.1, what must be considered when dividing an installation into circuits at a distribution board?',
     options: [
-      'Only the cable colours used',
+      'It defines the level of internal segregation between functional units',
       'The need to avoid danger and minimise inconvenience in the event of a fault',
-      'That all circuits must be the same rating',
-      "The installation company's standard practices",
+      'To distribute incoming supply to outgoing circuit protective devices',
+      'Loads should be distributed across phases to minimise neutral current',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,12 +207,12 @@ const quizQuestions = [
     question:
       'What documentation must be provided with a completed distribution board installation?',
     options: [
-      "Only the manufacturer's data sheet",
+      'To protect internal components from ingress of solid objects and moisture',
+      'Loads should be distributed across phases to minimise neutral current',
       'Circuit chart, test results, and warning labels as required by BS 7671',
-      'Only the electrical installation certificate',
-      'A photograph of the completed installation',
+      'The need to avoid danger and minimise inconvenience in the event of a fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A completed installation requires: circuit chart/schedule (Reg 514.9.1), appropriate warning labels, test results recorded on the electrical installation certificate, and operating instructions where necessary.',
   },
@@ -206,12 +221,12 @@ const quizQuestions = [
     question:
       'What is the primary purpose of selecting an appropriate IP rating for a distribution board?',
     options: [
-      'To ensure the board matches other equipment aesthetically',
+      'Circuits are grouped by function with clear labelling',
+      'Loads should be distributed across phases to minimise neutral current',
+      'To distribute incoming supply to outgoing circuit protective devices',
       'To protect internal components from ingress of solid objects and moisture',
-      'To reduce the installation cost',
-      'To simplify cable termination',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "IP ratings define the level of protection against ingress of solid objects (first digit) and moisture (second digit). Selecting the appropriate rating ensures the board's internal components remain protected in the intended installation environment.",
   },
@@ -220,12 +235,12 @@ const quizQuestions = [
     question:
       'When designing a three-phase distribution board, what must be considered regarding load balancing?',
     options: [
-      'All single-phase loads can be connected to one phase',
       'Loads should be distributed across phases to minimise neutral current',
-      'Only the red phase should carry lighting loads',
       'Load balancing is only required for industrial installations',
+      'All single-phase loads can be connected to one phase',
+      'Only the red phase should carry lighting loads',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Loads should be distributed evenly across all three phases to minimise neutral current and prevent overloading of individual phases. Unbalanced loads can cause excessive neutral currents and voltage imbalances.',
   },

@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'According to the inverse square law, if you double the distance from a light source, the illuminance becomes:',
     options: [
-      'Half the original value',
       'One quarter of the original value',
-      'One eighth of the original value',
-      'Unchanged',
+      'RF interference and spectrum management',
+      'Electricity at Work Regulations 1989',
+      'Continuing Professional Development',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The inverse square law states that illuminance is inversely proportional to the square of the distance (E = I/d²). Doubling the distance means d² becomes 4 times larger, so illuminance becomes 1/4 of the original value.',
   },
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'cosine-correction',
     question: 'When does cosine correction become essential in point illuminance calculations?',
     options: [
-      'Only for vertical surfaces',
+      'Signs of damage, deterioration, overheating, or unsafe conditions',
       'When the light ray strikes the surface at an angle other than perpendicular',
-      'Only for outdoor lighting',
-      'When using LED luminaires',
+      'Industry developments and new technology requirements',
+      'Record results and confirm whether that section is sound',
     ],
     correctIndex: 1,
     explanation:
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary advantage of using software like DIALux over manual calculations?',
     options: [
-      'It eliminates the need to understand lighting theory',
+      'Every time they are required to operate a type of MEWP they have not used before',
       'It can handle complex geometries, reflections, and multiple luminaires simultaneously',
-      'It always produces accurate results without verification',
-      'It reduces the cost of luminaires',
+      'Equipment shall be of sufficient strength and capability for its purpose',
+      'Maintain contact with the ladder using two hands and one foot, or two feet and one hand, at all times',
     ],
     correctIndex: 1,
     explanation:
@@ -68,12 +68,12 @@ const quickCheckQuestions = [
     id: 'isolux-diagram',
     question: 'An isolux diagram displays:',
     options: [
+      'Cable routes for lighting circuits',
+      'The spectral output of light sources',
       'Luminaire positions on a floor plan',
       'Contour lines connecting points of equal illuminance',
-      'The spectral output of light sources',
-      'Cable routes for lighting circuits',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'An isolux diagram shows contour lines (similar to topographical maps) where each line connects points of equal illuminance. This visualisation helps identify uniformity, dark spots, and over-lit areas in a lighting design.',
   },
@@ -84,7 +84,12 @@ const quizQuestions = [
     id: 1,
     question:
       'A luminaire with intensity of 2000 cd is mounted 3 metres directly above a point. What is the illuminance at that point?',
-    options: ['667 lux', '222 lux', '6000 lux', '111 lux'],
+    options: [
+      '667 lux',
+      '222 lux',
+      '6000 lux',
+      '111 lux',
+    ],
     correctAnswer: 1,
     explanation:
       'Using E = I/d², where I = 2000 cd and d = 3 m: E = 2000/3² = 2000/9 = 222 lux. This is a direct application of the inverse square law for a point directly below the luminaire.',
@@ -93,8 +98,13 @@ const quizQuestions = [
     id: 2,
     question:
       'For a point not directly below a luminaire, the correct formula including cosine correction is:',
-    options: ['E = I × cosθ / d²', 'E = I × cos³θ / h²', 'E = I / (d × cosθ)', 'E = I × sinθ / h²'],
-    correctAnswer: 1,
+    options: [
+      'E = I / (d × cosθ)',
+      'E = I × cosθ / d²',
+      'E = I × cos³θ / h²',
+      'E = I × sinθ / h²',
+    ],
+    correctAnswer: 2,
     explanation:
       'The complete point-by-point formula is E = I × cos³θ / h², where θ is the angle from nadir, h is the mounting height, and the cos³θ term accounts for both the cosine law and the increased distance at an angle.',
   },
@@ -102,8 +112,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A luminaire (I = 1500 cd) is mounted at 4m height. Calculate the illuminance at a horizontal point 3m away from directly below.',
-    options: ['93.75 lux', '48 lux', '61.4 lux', '75 lux'],
-    correctAnswer: 1,
+    options: [
+      '61.4 lux',
+      '93.75 lux',
+      '75 lux',
+      '48 lux',
+    ],
+    correctAnswer: 3,
     explanation:
       'Using E = I × cos³θ / h²: First find d = √(4² + 3²) = 5m, cosθ = h/d = 4/5 = 0.8, cos³θ = 0.512. Then E = 1500 × 0.512 / 16 = 768/16 = 48 lux.',
   },
@@ -111,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the main limitation of manual point-by-point calculations?',
     options: [
-      'They are always inaccurate',
-      'They cannot be verified',
       'They do not account for inter-reflected light from room surfaces',
-      'They require expensive equipment',
+      'The source can be treated as a point source relative to the distance',
+      'The spacing and resolution of illuminance calculations across a surface',
+      'For task areas, emergency lighting verification, or complex room geometries',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Manual point-by-point calculations typically only consider direct light from luminaires. They do not easily account for light reflected from walls, ceilings, and floors, which can significantly contribute to total illuminance, especially in rooms with light-coloured surfaces.',
   },
@@ -124,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'In DIALux software, the calculation grid determines:',
     options: [
-      'The colour temperature of luminaires',
+      'For task areas, emergency lighting verification, or complex room geometries',
       'The spacing and resolution of illuminance calculations across a surface',
-      'The electrical circuit layout',
-      'The maintenance factor',
+      'They do not account for inter-reflected light from room surfaces',
+      'The source can be treated as a point source relative to the distance',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,7 +152,12 @@ const quizQuestions = [
     id: 6,
     question:
       'When verifying a lighting design, what uniformity ratio is typically required for office general lighting to BS EN 12464-1?',
-    options: ['U₀ ≥ 0.3', 'U₀ ≥ 0.4', 'U₀ ≥ 0.6', 'U₀ ≥ 0.8'],
+    options: [
+      'U₀ ≥ 0.3',
+      'U₀ ≥ 0.4',
+      'U₀ ≥ 0.6',
+      'U₀ ≥ 0.8',
+    ],
     correctAnswer: 2,
     explanation:
       'BS EN 12464-1 requires a minimum uniformity ratio (U₀ = Emin/Eav) of 0.6 for general office lighting. This ensures that the darkest areas receive at least 60% of the average illuminance, preventing excessive contrast.',
@@ -146,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'The inverse square law applies most accurately when:',
     options: [
-      'The luminaire is very close to the calculation point',
+      'They do not account for inter-reflected light from room surfaces',
+      'For task areas, emergency lighting verification, or complex room geometries',
+      'The spacing and resolution of illuminance calculations across a surface',
       'The source can be treated as a point source relative to the distance',
-      'The room has highly reflective surfaces',
-      'Multiple luminaires are present',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The inverse square law assumes a point source. It applies accurately when the distance to the calculation point is at least five times the maximum dimension of the luminous area of the luminaire. Very close distances or large luminaires require different calculation methods.',
   },
@@ -159,20 +179,25 @@ const quizQuestions = [
     id: 8,
     question: 'Relux and DIALux both use which fundamental method to calculate illuminance?',
     options: [
-      'Lumen method only',
       'Radiosity and ray tracing algorithms',
-      'Simple averaging',
-      'Empirical lookup tables',
+      'When insulation resistance is low',
+      'Above 50 V AC up to 1000 V AC',
+      'To maintain battery charge',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Modern lighting design software uses radiosity (for diffuse inter-reflections) and ray tracing (for specular reflections and complex geometries) algorithms. These mathematically model how light bounces between surfaces, providing accurate results for complex spaces.',
   },
   {
     id: 9,
     question: 'When calculating illuminance on a vertical surface, which formula applies?',
-    options: ['E = I × cos²θ × sinθ / h²', 'E = I × cos³θ / h²', 'E = I / d²', 'E = I × sinθ / d²'],
-    correctAnswer: 0,
+    options: [
+      'Building thermal decay rate',
+      'E = I × cos²θ × sinθ / h²',
+      'After second fix completion',
+      'BS 5266-1 and BS EN 50172',
+    ],
+    correctAnswer: 1,
     explanation:
       'For vertical surfaces, the formula is E = I × cos²θ × sinθ / h², where θ is measured from the vertical axis through the luminaire. The sinθ term accounts for the angle of incidence on the vertical plane.',
   },
@@ -180,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'In an isolux diagram, closely spaced contour lines indicate:',
     options: [
-      'Uniform illuminance across the area',
+      'Their employer or, for health and safety matters, the HSE',
+      'The rate of change of magnetic flux linkage',
       'A rapid change in illuminance (steep gradient)',
-      'Low illuminance levels',
-      'High colour rendering',
+      'Completing detailed M&E specifications',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Like topographical maps, closely spaced isolux contours indicate a steep gradient - illuminance is changing rapidly over a short distance. This might indicate the edge of a spotlight beam or the boundary between lit and unlit areas.',
   },
@@ -193,8 +218,13 @@ const quizQuestions = [
     id: 11,
     question:
       'What maintenance factor should typically be applied to lighting calculations for a clean office environment?',
-    options: ['0.5', '0.6', '0.8', '1.0'],
-    correctAnswer: 2,
+    options: [
+      '0.5',
+      '0.6',
+      '1.0',
+      '0.8',
+    ],
+    correctAnswer: 3,
     explanation:
       'For clean office environments with regular maintenance, a maintenance factor of 0.8 is typical. This accounts for lamp lumen depreciation, luminaire dirt depreciation, and room surface depreciation over the maintenance period.',
   },
@@ -202,12 +232,12 @@ const quizQuestions = [
     id: 12,
     question: 'When should point-by-point calculations be used instead of the lumen method?',
     options: [
-      'For quick preliminary estimates',
-      'When uniformity is not important',
       'For task areas, emergency lighting verification, or complex room geometries',
-      'Only when software is unavailable',
+      'The source can be treated as a point source relative to the distance',
+      'The spacing and resolution of illuminance calculations across a surface',
+      'They do not account for inter-reflected light from room surfaces',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Point-by-point calculations are essential when specific illuminance values at particular locations matter - task areas, emergency escape routes, outdoor floodlighting, or rooms with irregular shapes where the lumen method's assumptions break down.",
   },

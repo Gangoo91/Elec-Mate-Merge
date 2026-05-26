@@ -32,28 +32,38 @@ const quickCheckQuestions = [
     id: 'phase-angle-def',
     question: 'What does a phase angle of +30 degrees indicate?',
     options: [
-      'Current lags voltage by 30 degrees',
       'Current leads voltage by 30 degrees',
+      'Current lags voltage by 30 degrees',
       'Voltage and current are in phase',
       'The frequency is 30Hz',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A positive phase angle indicates that the quantity leads the reference. So +30 degrees means current leads voltage by 30 degrees, as seen in capacitive circuits.',
   },
   {
     id: 'inductor-phase',
     question: 'In a pure inductor, by how much does current lag voltage?',
-    options: ['0 degrees', '45 degrees', '90 degrees', '180 degrees'],
-    correctIndex: 2,
+    options: [
+      '45 degrees',
+      '90 degrees',
+      '180 degrees',
+      '0 degrees',
+    ],
+    correctIndex: 1,
     explanation:
       'In a pure inductor, current lags voltage by exactly 90 degrees (or pi/2 radians). This is because the induced EMF opposes changes in current, causing a quarter-cycle delay.',
   },
   {
     id: 'phasor-length',
     question: 'What does the length of a phasor represent?',
-    options: ['Frequency', 'Phase angle', 'Peak or RMS magnitude', 'Angular velocity'],
-    correctIndex: 2,
+    options: [
+      'Frequency',
+      'Phase angle',
+      'Angular velocity',
+      'Peak or RMS magnitude',
+    ],
+    correctIndex: 3,
     explanation:
       'The length (magnitude) of a phasor represents the peak or RMS value of the sinusoidal quantity. The angle represents the phase, and all phasors rotate at the same angular frequency.',
   },
@@ -61,10 +71,10 @@ const quickCheckQuestions = [
     id: 'capacitor-phase',
     question: 'In a capacitive circuit, which statement is correct?',
     options: [
-      'Current lags voltage',
-      'Current leads voltage',
-      'Current and voltage are in phase',
       'Voltage leads current by 180 degrees',
+      'Current leads voltage',
+      'Current lags voltage',
+      'Current and voltage are in phase',
     ],
     correctIndex: 1,
     explanation:
@@ -76,16 +86,26 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the angular frequency (omega) of a 50Hz AC supply?',
-    options: ['50 rad/s', '100 rad/s', '157 rad/s', '314 rad/s'],
-    correctAnswer: 3,
+    options: [
+      '50 rad/s',
+      '314 rad/s',
+      '157 rad/s',
+      '100 rad/s',
+    ],
+    correctAnswer: 1,
     explanation:
       'Angular frequency omega = 2 times pi times f = 2 times 3.14159 times 50 = 314.16 rad/s. This represents how fast the phasor rotates.',
   },
   {
     id: 2,
     question: 'A voltage is expressed as v = 325 sin(314t + 30 degrees). What is the RMS voltage?',
-    options: ['325V', '230V', '163V', '460V'],
-    correctAnswer: 1,
+    options: [
+      '163V',
+      '325V',
+      '230V',
+      '460V',
+    ],
+    correctAnswer: 2,
     explanation:
       'The peak voltage Vm = 325V. RMS = Vm divided by root 2 = 325 / 1.414 = 230V. The phase angle (30 degrees) does not affect the magnitude.',
   },
@@ -93,16 +113,26 @@ const quizQuestions = [
     id: 3,
     question:
       'Two phasors are 90 degrees apart and have magnitudes of 3 and 4 units. What is the magnitude of their phasor sum?',
-    options: ['1 unit', '5 units', '7 units', '12 units'],
-    correctAnswer: 1,
+    options: [
+      '7 units',
+      '1 unit',
+      '12 units',
+      '5 units',
+    ],
+    correctAnswer: 3,
     explanation:
       'When phasors are 90 degrees apart, use Pythagoras: magnitude = root(3 squared + 4 squared) = root(9 + 16) = root 25 = 5 units.',
   },
   {
     id: 4,
     question: 'In the expression v = Vm sin(omega t + phi), what does phi represent?',
-    options: ['Peak voltage', 'Angular frequency', 'Phase angle at t=0', 'Time period'],
-    correctAnswer: 2,
+    options: [
+      'Phase angle at t=0',
+      'Angular frequency',
+      'Peak voltage',
+      'Time period',
+    ],
+    correctAnswer: 0,
     explanation:
       'Phi is the phase angle at t=0, measured in degrees or radians. It indicates where the waveform starts relative to a reference sine wave.',
   },
@@ -110,12 +140,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the phase relationship between voltage and current in a pure resistor?',
     options: [
-      'Current leads by 90 degrees',
       'Current lags by 90 degrees',
       'They are in phase (0 degrees)',
       'Current leads by 45 degrees',
+      'Current leads by 90 degrees',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'In a pure resistor, voltage and current are in phase - they reach their peaks and zero crossings at the same instant. Phase angle = 0 degrees.',
   },
@@ -124,20 +154,25 @@ const quizQuestions = [
     question:
       'A motor draws 20A at 0.8 power factor lagging. What is the phase angle between voltage and current?',
     options: [
-      '36.87 degrees lagging',
-      '53.13 degrees lagging',
       '36.87 degrees leading',
+      '53.13 degrees lagging',
+      '36.87 degrees lagging',
       '0 degrees',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Power factor = cos(phi), so phi = arccos(0.8) = 36.87 degrees. Since it is lagging, current lags voltage by 36.87 degrees (inductive load).',
   },
   {
     id: 7,
     question: 'Which mnemonic helps remember the phase relationships in inductors and capacitors?',
-    options: ['OHM', 'CIVIL', 'WAPITI', 'SOHCAHTOA'],
-    correctAnswer: 1,
+    options: [
+      'OHM',
+      'SOHCAHTOA',
+      'WAPITI',
+      'CIVIL',
+    ],
+    correctAnswer: 3,
     explanation:
       "CIVIL: in a Capacitor (C), I leads V; in an Inductor (L), V leads I. The middle letters spell 'IV' and 'VI' showing the leading quantity.",
   },
@@ -145,8 +180,13 @@ const quizQuestions = [
     id: 8,
     question:
       'Two voltages V1 = 100V at 0 degrees and V2 = 100V at 60 degrees are added. What is the resultant magnitude?',
-    options: ['100V', '141V', '173V', '200V'],
-    correctAnswer: 2,
+    options: [
+      '173V',
+      '200V',
+      '100V',
+      '141V',
+    ],
+    correctAnswer: 0,
     explanation:
       'Using the formula for phasor addition: V = root(V1 squared + V2 squared + 2 times V1 times V2 times cos(theta)) = root(10000 + 10000 + 20000 times 0.5) = root 30000 = 173V.',
   },
@@ -154,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'A 7.5kW motor has high starting current. Adding a capacitor bank would:',
     options: [
-      'Increase the starting current further',
+      'Mastery experiences — succeeding at a task yourself',
       'Reduce the phase angle, improving power factor',
-      'Increase the phase angle',
-      'Have no effect on phase relationships',
+      'Installation certificate with test results and schedules',
+      'Dim lights, especially at the end of the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -169,19 +209,24 @@ const quizQuestions = [
       'On a phasor diagram, if voltage is the reference (at 0 degrees), where would you draw current for an RL circuit?',
     options: [
       'Ahead of voltage (anti-clockwise)',
+      'Exactly on the voltage phasor',
       'Behind voltage (clockwise)',
       'At 90 degrees leading',
-      'Exactly on the voltage phasor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'In an RL circuit, current lags voltage due to the inductance. On a phasor diagram with anti-clockwise rotation, lagging means the current phasor is drawn clockwise from (behind) the voltage reference.',
   },
   {
     id: 11,
     question: 'What is the period of one complete rotation of a phasor at 50Hz?',
-    options: ['10ms', '20ms', '50ms', '100ms'],
-    correctAnswer: 1,
+    options: [
+      '10ms',
+      '100ms',
+      '50ms',
+      '20ms',
+    ],
+    correctAnswer: 3,
     explanation:
       'Period T = 1/f = 1/50 = 0.02 seconds = 20ms. This is the time for one complete cycle of the AC waveform or one full rotation of the phasor.',
   },
@@ -189,8 +234,13 @@ const quizQuestions = [
     id: 12,
     question:
       'For a series RLC circuit at resonance, what is the phase angle between supply voltage and current?',
-    options: ['90 degrees leading', '90 degrees lagging', '45 degrees', '0 degrees'],
-    correctAnswer: 3,
+    options: [
+      '0 degrees',
+      '45 degrees',
+      '90 degrees leading',
+      '90 degrees lagging',
+    ],
+    correctAnswer: 0,
     explanation:
       'At resonance, XL = XC, so the reactive components cancel. The circuit behaves as pure resistance, and voltage and current are in phase (0 degrees).',
   },

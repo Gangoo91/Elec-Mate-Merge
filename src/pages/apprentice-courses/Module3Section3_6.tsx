@@ -72,8 +72,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which PPE is essential when cutting metal trunking with a grinder?',
-    options: ['Safety glasses or face shield', 'Earplugs', 'Dust mask', 'All of the above'],
-    correctAnswer: 3,
+    options: [
+      'Safety glasses or face shield',
+      'All of the above',
+      'Dust mask',
+      'Earplugs',
+    ],
+    correctAnswer: 1,
     explanation:
       'Grinding metal produces sparks (eye protection), noise (hearing protection), and metal particles (respiratory protection), requiring all listed PPE.',
   },
@@ -81,12 +86,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the main function of insulated gloves?',
     options: [
-      'Improve grip',
+      'Modulating valve actuator',
+      'Specific locations of air leakage paths',
       'Protect against electric shock',
-      'Keep hands warm',
-      'Prevent cuts from sharp metal',
+      'Any safety-critical fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Insulated gloves are specifically designed and rated to protect against electric shock when working on live electrical circuits.',
   },
@@ -101,15 +106,25 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Give one example of respiratory protection used by electricians.',
-    options: ['Safety glasses', 'Dust mask', 'Hard hat', 'Gloves'],
-    correctAnswer: 1,
+    options: [
+      'Dust mask',
+      'Safety glasses',
+      'Hard hat',
+      'Gloves',
+    ],
+    correctAnswer: 0,
     explanation:
       'Dust masks, half-face respirators, and full-face respirators are all examples of respiratory protection equipment used by electricians.',
   },
   {
     id: 5,
     question: 'Which type of footwear is generally required on construction sites?',
-    options: ['Trainers', 'Safety boots with toe caps', 'Sandals', 'Rubber slippers'],
+    options: [
+      'Cavity fixings or toggle bolts',
+      'Safety boots with toe caps',
+      'V_line = V_phase x sqrt(3)',
+      'If = kVA × 100 / (√3 × V × Z%)',
+    ],
     correctAnswer: 1,
     explanation:
       'Safety boots with steel or composite toe caps protect against dropped tools and provide slip resistance required on construction sites.',
@@ -118,12 +133,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why is high-visibility clothing important in certain environments?',
     options: [
-      'It looks professional',
+      'Isolate immediately and investigate',
+      'Criminal prosecution, including fines and imprisonment',
       'Improves visibility to reduce collision risk',
-      "It's waterproof",
-      'It provides electrical insulation',
+      'Update risk assessments and method statements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'High-visibility clothing makes workers more visible to vehicle operators and machinery operators, reducing collision risks.',
   },
@@ -132,19 +147,24 @@ const quizQuestions = [
     question: 'Name one maintenance step for PPE.',
     options: [
       'Ignore manufacturer instructions',
-      'Cleaning after use and proper storage',
-      'Use damaged equipment until replacement',
       'Store in damp conditions',
+      'Use damaged equipment until replacement',
+      'Cleaning after use and proper storage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regular cleaning, proper storage in dry conditions, and following manufacturer maintenance guidelines are essential for PPE longevity.',
   },
   {
     id: 8,
     question: 'Which regulation requires employers to provide and maintain suitable PPE in the UK?',
-    options: ['BS 7671', 'PPE at Work Regulations 1992', 'COSHH', 'LOLER'],
-    correctAnswer: 1,
+    options: [
+      'PPE at Work Regulations 1992',
+      'Up to 1000V AC or 1500V DC',
+      'Analog signals (0-10V or 4-20mA)',
+      'At a Pearson VUE test centre',
+    ],
+    correctAnswer: 0,
     explanation:
       'The PPE at Work Regulations 1992 (as amended) require employers to provide and maintain suitable PPE where risks cannot be controlled by other means.',
   },

@@ -35,11 +35,11 @@ const AM2Module1Section3 = () => {
       question: 'How is the AM2 assessment marked?',
       options: [
         'Percentage scoring with 80% pass mark',
-        'Graded A-F like a university exam',
         'Competent or Not Yet Competent on each criterion',
+        'Graded A-F like a university exam',
         'Points-based with weighted sections',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'The AM2 uses competence-based assessment. Assessors judge each criterion as Competent or Not Yet Competent using objective Yes/No marking, not percentage scores.',
     },
@@ -47,10 +47,10 @@ const AM2Module1Section3 = () => {
       id: 2,
       question: 'Which of these would result in an automatic fail?',
       options: [
-        'Forgetting to label one circuit',
-        'Missing one fault in fault-finding',
-        'Unsafe isolation procedure',
         'Taking slightly longer than expected',
+        'Forgetting to label one circuit',
+        'Unsafe isolation procedure',
+        'Missing one fault in fault-finding',
       ],
       correctAnswer: 2,
       explanation:
@@ -69,12 +69,12 @@ const AM2Module1Section3 = () => {
       id: 4,
       question: 'In fault diagnosis, how many faults must you normally identify to pass?',
       options: [
-        'All 4 faults',
         'At least 3 out of 4 faults',
-        'At least 2 out of 4 faults',
-        'Only 1 fault',
+        '30 minutes on Friday afternoon',
+        'Within 24 hours of the request',
+        'By pressing the test button only',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'You typically need to identify at least 3 out of 4 faults to pass the fault diagnosis section.',
     },
@@ -84,8 +84,8 @@ const AM2Module1Section3 = () => {
       options: [
         'To save time during assessment',
         'To check consistency of quality across all work',
-        "Because they can't check everything",
         'To make the assessment easier',
+        "Because they can't check everything",
       ],
       correctAnswer: 1,
       explanation:

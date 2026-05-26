@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     id: 'bim-definition',
     question: 'What does BIM stand for in construction?',
     options: [
-      'Building Information Model',
       'Building Integrated Management',
       'Basic Installation Method',
       'Built Infrastructure Mapping',
+      'Building Information Model',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'BIM stands for Building Information Modelling/Model - a digital representation of the physical and functional characteristics of a facility.',
   },
@@ -47,12 +47,12 @@ const quickCheckQuestions = [
     id: 'lod-meaning',
     question: 'What does LOD (Level of Development) define?',
     options: [
-      'The cost of the model',
+      'Equipment doesn\\\\\\\\\\\\\\\'t cause or suffer from electromagnetic interference',
+      'That the tower is vertical (plumb) and not leaning to any side',
       'The completeness and reliability of model element information',
-      'Only the visual detail',
-      'The software version used',
+      'Squarely face the person, Open posture, Lean forward, Eye contact, Relax',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'LOD defines how complete and reliable the information is for each model element at different project stages, from conceptual to as-built.',
   },
@@ -60,12 +60,12 @@ const quickCheckQuestions = [
     id: 'cobie-purpose',
     question: 'What is the purpose of COBie?',
     options: [
-      '3D visualisation',
+      'At 12 months and optionally at 3 years post-occupation',
+      'Continuity, insulation resistance, and polarity',
       'Structured data exchange for facility management',
-      'Cost estimation',
-      'Project scheduling',
+      'It has an angled (8°) physical contact end-face',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'COBie (Construction Operations Building Information Exchange) provides a structured format for exchanging facility management data from design through to operation.',
   },
@@ -73,12 +73,12 @@ const quickCheckQuestions = [
     id: 'cde-function',
     question: 'What is a Common Data Environment (CDE)?',
     options: [
-      'A CAD software package',
       'A shared digital space for project information management',
-      'A physical document storage room',
-      'A BIM model viewer',
+      'Check network connectivity and signal strength',
+      'Commitment — aligning with the goals of the group or organisation',
+      'Likelihood of harm occurring and the severity of consequences',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A CDE is a shared digital platform where all project information is stored, managed and exchanged according to defined processes and workflows.',
   },
@@ -88,7 +88,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which international standard covers BIM information management?',
-    options: ['BS 7671', 'ISO 19650', 'BS EN 61082', 'ISO 9001'],
+    options: [
+      'BS 7671',
+      'ISO 19650',
+      'BS EN 61082',
+      'ISO 9001',
+    ],
     correctAnswer: 1,
     explanation:
       "ISO 19650 is the international standard for information management using BIM, replacing the UK's BS/PAS 1192 series.",
@@ -96,7 +101,12 @@ const quizQuestions = [
   {
     id: 2,
     question: "What LOD level typically represents 'for construction' information?",
-    options: ['LOD 100', 'LOD 200', 'LOD 350/400', 'LOD 500'],
+    options: [
+      'LOD 500',
+      'LOD 100',
+      'LOD 350/400',
+      'LOD 200',
+    ],
     correctAnswer: 2,
     explanation:
       'LOD 350/400 represents detailed design for construction with accurate geometry, connections and specified products. LOD 500 is as-built verification.',
@@ -105,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'What information does COBie capture for electrical equipment?',
     options: [
-      'Only the 3D geometry',
+      'Diversity factors based on simultaneous use probability',
+      'Those awaiting full card while meeting requirements',
+      'Credit for relevant previous learning and experience',
       'Equipment attributes, maintenance requirements, warranty information',
-      'Just the specification clauses',
-      'Only the manufacturer name',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'COBie captures equipment attributes (ratings, model numbers), maintenance requirements, warranty information, location data and other operational information.',
   },
@@ -118,19 +128,24 @@ const quizQuestions = [
     id: 4,
     question: "What is a 'federated model' in BIM?",
     options: [
-      'A government-owned model',
       'Multiple discipline models combined for coordination',
-      'A model stored on multiple servers',
-      'An encrypted model',
+      'Installed lighting power per unit floor area (W/m²)',
+      'It provides logical progression and prevents missing faults',
+      'Photo ID, a pen (if paper-based), permitted calculator, and water',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A federated model combines separate discipline models (architectural, structural, MEP) to enable coordination, clash detection and overall project review.',
   },
   {
     id: 5,
     question: 'What software is commonly used for MEP BIM modelling?',
-    options: ['Microsoft Word', 'Autodesk Revit MEP', 'Adobe Photoshop', 'Microsoft Excel'],
+    options: [
+      'Microsoft Word',
+      'Autodesk Revit MEP',
+      'Microsoft Excel',
+      'Adobe Photoshop',
+    ],
     correctAnswer: 1,
     explanation:
       'Autodesk Revit MEP is the most widely used BIM software for mechanical, electrical and plumbing design in the UK construction industry.',
@@ -139,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of clash detection in BIM?',
     options: [
-      'To check spelling errors',
+      'Authorised staff can view and control BMS functions off-site',
+      'All possible causes including connected loads, wiring faults, moisture ingress and the RCD itself',
       'To identify spatial conflicts between building elements before construction',
-      'To verify electrical calculations',
-      'To check colour schemes',
+      'To accommodate thermal expansion of water and maintain system pressure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Clash detection identifies where building elements from different disciplines occupy the same space, allowing conflicts to be resolved before construction.',
   },
@@ -152,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: "What does 'Work in Progress' (WIP) mean in CDE terminology?",
     options: [
-      'Final approved information',
+      'An element violating required clearance or access zones',
+      'To prevent the scaffold twisting when viewed from above',
+      'A near-extreme summer for overheating assessment',
       'Information being developed, not ready for sharing',
-      'Archived documents',
-      'Published for construction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "WIP is information currently being developed that is not yet ready for sharing with other team members. It remains within the originator's control.",
   },
@@ -165,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'What electrical data might be embedded in a BIM luminaire object?',
     options: [
-      'Only the 3D shape',
       'Wattage, lumen output, IP rating, emergency duration, manufacturer data',
-      'Just the price',
-      'Only the colour',
+      'Disconnected from all sources of electrical energy and unable to become live unintentionally',
+      'To avoid confusion and ensure each repair is verified',
+      'Protecting internal components from environment and handling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BIM objects contain rich data: power rating, efficacy, lumen output, colour temperature, IP rating, emergency specifications, manufacturer product data and more.',
   },
@@ -178,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: "What is an Employer's Information Requirements (EIR)?",
     options: [
-      'A payroll document',
+      "To reduce overwhelm and focus on the next step",
       "The client's BIM requirements for the project",
-      'Staff qualifications',
-      'Building regulations',
+      "With supervision, PPE, GS38 leads, and controlled area",
+      "Adjusting activity timing to avoid resource overallocation",
     ],
     correctAnswer: 1,
     explanation:
@@ -191,12 +206,12 @@ const quizQuestions = [
     id: 10,
     question: 'Why is digital handover important for building operations?',
     options: [
-      'It looks impressive',
+      'Prepare, shut down, isolate, lock out/tag out, verify isolation, perform work',
+      'Routes, assembly points, responsibilities, special needs, communication methods',
       'It provides structured data for facilities management systems',
-      'It is only required for government projects',
-      'It replaces the need for maintenance',
+      'Actual energy output vs theoretical maximum',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Digital handover provides structured, verified data that can be imported into FM systems, enabling efficient building operation and maintenance.',
   },

@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is a milestone in project planning?',
     options: [
-      'A stone marker',
+      'Cost reduction and voltage sharing',
       'A key checkpoint showing project progress',
-      'A deadline',
-      'A problem',
+      '2000 metres (campus) / 3000 metres (building)',
+      '1 unit on paper = 50 units in real life',
     ],
     correctIndex: 1,
     explanation:
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should timescales allow extra time for delays?',
     options: [
-      'To waste time',
+      'Selling price £1,190, client pays £1,071',
+      'BS 7671 and Part P requirements',
       'To account for unexpected delays',
-      'To look professional',
-      'To charge more',
+      'VAr (volt-amperes reactive)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Timescales should include buffer time to account for unexpected delays like weather, material shortages, or unforeseen issues.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Give one risk of setting unrealistic deadlines.',
     options: [
-      'Better quality work',
+      'Backward-curved or backward-inclined blades',
+      'Voltage drop and connections',
+      'Solar radiation tables based on clear sky models',
       'Mistakes and unsafe working practices',
-      'Higher profits',
-      'Faster completion',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Unrealistic deadlines lead to rushing, which causes mistakes, unsafe working practices, and often results in costly rework.',
   },
@@ -73,12 +73,12 @@ const Module5Section3_2 = () => {
       id: 2,
       question: 'What is a milestone?',
       options: [
-        'A budget review',
+        'To ensure accuracy and avoid cumulative errors',
+        'Clean all contact surfaces, remake the joint properly',
         'A key checkpoint showing project progress',
-        'A tool inspection',
-        'A safety meeting',
+        'Shops, offices, and business premises',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'A milestone is a key checkpoint in a project that shows progress towards completion.',
     },
@@ -86,12 +86,12 @@ const Module5Section3_2 = () => {
       id: 3,
       question: 'Give one example of a milestone in electrical installation.',
       options: [
-        'Ordering materials',
+        'The lampholder or luminaire',
+        'Protected Extra Low Voltage',
+        'The construction phase begins',
         'Completion of containment',
-        'Tool inspection',
-        'Site handover',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Examples of milestones include completion of containment, cable installation, final fix, or testing.',
     },
@@ -100,9 +100,9 @@ const Module5Section3_2 = () => {
       question: 'Why should you allow extra time in timescales?',
       options: [
         'To account for unexpected delays',
-        'To work slower',
-        'To increase costs',
-        'To confuse workers',
+        'Frequency rating and performance',
+        'Behavioural safety observation',
+        'Hacksaw or metal cutting saw',
       ],
       correctAnswer: 0,
       explanation:
@@ -118,16 +118,26 @@ const Module5Section3_2 = () => {
     {
       id: 6,
       question: 'Name one risk of setting unrealistic timescales.',
-      options: ['Better quality', 'Mistakes and rework', 'Lower costs', 'Happy workers'],
-      correctAnswer: 1,
+      options: [
+        'Better quality',
+        'Lower costs',
+        'Mistakes and rework',
+        'Happy workers',
+      ],
+      correctAnswer: 2,
       explanation:
         'Unrealistic timescales can lead to mistakes, unsafe work, stress, or costly rework.',
     },
     {
       id: 7,
       question: 'How often should timescales be reassessed?',
-      options: ['Never', 'Weekly or as needed', 'Only at project end', 'Once a year'],
-      correctAnswer: 1,
+      options: [
+        'Never',
+        'Once a year',
+        'Only at project end',
+        'Weekly or as needed',
+      ],
+      correctAnswer: 3,
       explanation:
         'Timescales should be reassessed weekly and adjusted when site conditions change.',
     },
@@ -135,12 +145,12 @@ const Module5Section3_2 = () => {
       id: 8,
       question: 'Who usually sets project timescales?',
       options: [
-        'Individual electricians',
         'Site manager or supervisor',
         'The client only',
+        'Individual electricians',
         'Material suppliers',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Project timescales are usually set by the site manager or supervisor based on project requirements.',
     },
@@ -148,10 +158,10 @@ const Module5Section3_2 = () => {
       id: 9,
       question: 'What should you do if you know a milestone cannot be met?',
       options: [
-        'Ignore it',
+        'Customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s pet name and birthday.',
         'Inform the supervisor immediately',
-        'Work overtime alone',
-        'Wait until deadline',
+        'Reduce current or resistance',
+        'Multimeter with data logging capability',
       ],
       correctAnswer: 1,
       explanation:
@@ -161,12 +171,12 @@ const Module5Section3_2 = () => {
       id: 10,
       question: 'How do milestones help manage progress?',
       options: [
-        'They reduce costs',
+        'Cable insulation damage leading to faults',
+        'Different qualification and competence levels',
         'They provide checkpoints to track and measure progress',
-        'They eliminate delays',
-        'They guarantee success',
+        'Maintain adequate clearance or use heat-resistant cables',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Milestones provide clear checkpoints to track and measure progress throughout the project.',
     },

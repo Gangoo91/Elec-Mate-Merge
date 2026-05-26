@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'energy-monitoring',
     question: 'What is the primary purpose of energy sub-metering in a building management system?',
     options: [
-      'To reduce the number of utility meters',
+      'LED drivers can draw high in-rush current at switch-on, potentially tripping MCBs or causing contact welding in switches',
+      'In a semi-seated or W-position (knees raised towards chest) initially, NOT laid flat immediately',
       'To allocate energy consumption to specific systems or tenants and identify saving opportunities',
-      'To replace the main utility meter',
-      'To measure voltage quality only',
+      'Learning and productivity are not mutually exclusive \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 well-planned learning during normal work benefits both',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Sub-metering enables consumption to be allocated to specific building systems (HVAC, lighting, lifts) or tenant areas. This granular data identifies energy waste, supports tenant billing, and prioritises efficiency improvements.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'fdd-purpose',
     question: 'What does Fault Detection and Diagnostics (FDD) software primarily analyse?',
     options: [
-      'Electrical wiring diagrams only',
+      'They present complex control systems as easy-to-read graphics and summaries',
+      'Reactive current still flows through all cables between loads and central capacitors',
       'BMS trend data and operational patterns to identify system faults and inefficiencies',
-      'Building structural integrity',
-      'Fire alarm system performance',
+      'Because power failure may occur without fire, and fire may occur without triggering alarms immediately',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'FDD software analyses BMS trend data, setpoints, and operational patterns using rule-based or machine learning algorithms to automatically detect equipment faults, control sequences that deviate from design intent, and energy waste.',
   },
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'continuous-commissioning',
     question: 'How does continuous commissioning (CCx) differ from initial commissioning?',
     options: [
-      'It only occurs during building handover',
-      'It is a one-time activity',
       'It is an ongoing process to maintain optimal performance throughout building life',
-      'It focuses only on documentation',
+      'Ib ≤ In ≤ Iz, with Vd, I²R and Zs all separately verified within their respective limits.',
+      'It prevents mistakes, improves coordination, and reduces risks of accidents',
+      'When a live conductor makes contact with earth or exposed conductive parts',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Continuous commissioning (CCx) is an ongoing process that uses monitoring data to continuously verify and optimise building performance. Unlike initial commissioning at handover, CCx addresses performance degradation and operational changes throughout the building lifecycle.',
   },
@@ -67,11 +67,11 @@ const quickCheckQuestions = [
     question: 'What does a Display Energy Certificate (DEC) measure in the UK?',
     options: [
       'Predicted energy performance based on design',
-      'Actual measured operational energy use over 12 months',
-      'Theoretical maximum efficiency',
       'Renewable energy generation only',
+      'Theoretical maximum efficiency',
+      'Actual measured operational energy use over 12 months',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A DEC shows the actual operational energy use of a public building over the previous 12 months, measured in kWh/m²/year and converted to a rating from A to G. This differs from an EPC which shows predicted performance.',
   },
@@ -83,11 +83,11 @@ const quizQuestions = [
     question: 'Which metering hierarchy level typically monitors individual air handling units?',
     options: [
       'Level 1 - Main incoming supply',
-      'Level 2 - Building or zone level',
       'Level 3 - System or end-use level',
+      'Level 2 - Building or zone level',
       'Level 4 - Equipment or circuit level',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Level 3 sub-metering monitors specific systems or end-uses such as individual AHUs, chiller plants, or lighting circuits. This level provides the granularity needed to identify system-specific inefficiencies and verify retrofit savings.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'What is the recommended interval for BMS trend logging to support effective energy analysis?',
     options: [
-      '1-minute intervals for all points',
+      'BMS, utility meters, weather data, occupancy systems, and IoT sensors',
+      'Simultaneous heating and cooling operation',
       '15-minute intervals aligned with half-hourly utility data',
-      'Hourly intervals only',
-      'Daily totals only',
+      'Energy impact, comfort impact, and equipment risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '15-minute trend intervals align with UK half-hourly utility metering and provide sufficient resolution for energy analysis whilst managing data storage requirements. Critical points may warrant shorter intervals; less critical points may use longer intervals.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'A BMS dashboard shows cooling energy significantly higher than predicted. The most likely FDD rule to trigger would detect:',
     options: [
-      'Low lighting levels',
+      'Scatter plot with regression line',
+      'Energy impact, comfort impact, and equipment risk',
+      'Cumulative Sum (CUSUM) analysis',
       'Simultaneous heating and cooling operation',
-      'Fire alarm activation',
-      'Lift motor overload',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Simultaneous heating and cooling is a common fault detectable by FDD rules. When heating and cooling systems operate concurrently in the same zone (due to conflicting setpoints or faulty controls), significant energy is wasted fighting against each other.',
   },
@@ -124,20 +124,25 @@ const quizQuestions = [
     question:
       'Which analytics technique compares current building performance against a baseline model adjusted for weather?',
     options: [
-      'Simple trending',
       'Cumulative Sum (CUSUM) analysis',
-      'Alarm logging',
-      'Equipment scheduling',
+      'kWh/m²/year (energy use intensity)',
+      'Daily or weekly for key metrics',
+      'Scatter plot with regression line',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'CUSUM analysis compares actual consumption against a weather-adjusted baseline model, accumulating the differences over time. This technique quickly identifies when performance deviates from expected patterns, even when daily variations might mask the change.',
   },
   {
     id: 5,
     question: 'The NABERS rating system originated in which country?',
-    options: ['United Kingdom', 'United States', 'Australia', 'Canada'],
-    correctAnswer: 2,
+    options: [
+      'United States',
+      'Australia',
+      'Canada',
+      'United Kingdom',
+    ],
+    correctAnswer: 1,
     explanation:
       'NABERS (National Australian Built Environment Rating System) was developed in Australia and has been adapted for use in other countries including the UK (NABERS UK). It rates actual building performance based on measured operational data rather than design predictions.',
   },
@@ -145,7 +150,12 @@ const quizQuestions = [
     id: 6,
     question:
       'What percentage energy saving is typically achievable through continuous commissioning of an existing building?',
-    options: ['1-5%', '5-15%', '10-30%', '50-70%'],
+    options: [
+      '1-5%',
+      '5-15%',
+      '10-30%',
+      '50-70%',
+    ],
     correctAnswer: 2,
     explanation:
       'Continuous commissioning typically achieves 10-30% energy savings in existing buildings by identifying and correcting operational issues, optimising setpoints, and ensuring systems operate as intended. Savings depend on building age, complexity, and existing maintenance quality.',
@@ -153,8 +163,13 @@ const quizQuestions = [
   {
     id: 7,
     question: 'Which FDD approach uses predefined logical rules based on engineering knowledge?',
-    options: ['Machine learning FDD', 'Neural network FDD', 'Rule-based FDD', 'Statistical FDD'],
-    correctAnswer: 2,
+    options: [
+      'Machine learning FDD',
+      'Neural network FDD',
+      'Statistical FDD',
+      'Rule-based FDD',
+    ],
+    correctAnswer: 3,
     explanation:
       "Rule-based FDD uses expert-defined logical rules such as 'if outdoor air temperature is below 15°C and chiller is running, flag as potential fault'. These rules are transparent and easy to understand, though they require engineering expertise to develop.",
   },
@@ -162,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'A building analytics platform integrates data from which sources?',
     options: [
-      'BMS only',
-      'Utility meters only',
       'BMS, utility meters, weather data, occupancy systems, and IoT sensors',
-      'Fire alarm systems only',
+      'Designated routes, barriers, crossing points, traffic management',
+      'To ensure optimal connection integrity and prevent overheating',
+      'A conductive part of equipment that can be touched and may become live under fault',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Modern building analytics platforms integrate multiple data sources including BMS, utility sub-meters, weather feeds, occupancy/access control, IoT sensors, and maintenance systems. This holistic view enables comprehensive performance analysis and cross-system optimisation.',
   },
@@ -176,10 +191,10 @@ const quizQuestions = [
     question:
       'The UK Display Energy Certificate uses which metric to express building energy performance?',
     options: [
-      'kW peak demand',
+      'Scatter plot with regression line',
       'kWh/m²/year (energy use intensity)',
-      'Percentage efficiency',
-      'Carbon intensity only',
+      'Simultaneous heating and cooling operation',
+      'Cumulative Sum (CUSUM) analysis',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +205,10 @@ const quizQuestions = [
     question:
       'Which visualisation technique best shows how energy consumption varies with outdoor temperature?',
     options: [
-      'Pie chart',
-      'Bar chart of monthly totals',
+      'Daily or weekly for key metrics',
+      'Cumulative Sum (CUSUM) analysis',
       'Scatter plot with regression line',
-      'Single number display',
+      'Simultaneous heating and cooling operation',
     ],
     correctAnswer: 2,
     explanation:
@@ -203,12 +218,12 @@ const quizQuestions = [
     id: 11,
     question: 'Automated fault detection typically prioritises faults by:',
     options: [
-      'Alphabetical order',
-      'Date discovered only',
+      'Adequate temporary lighting for safe working',
+      'Motor circuits and equipment with moderate inrush current',
+      'Both reduce touch voltages and provide fault path',
       'Energy impact, comfort impact, and equipment risk',
-      'Random selection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Effective FDD systems prioritise faults by their impact - energy cost, occupant comfort, and equipment degradation risk. This ensures maintenance resources address the most significant issues first, maximising return on corrective action investment.',
   },
@@ -217,12 +232,12 @@ const quizQuestions = [
     question:
       'What is the recommended frequency for reviewing BMS energy dashboards in a well-managed building?',
     options: [
-      'Annually during audits',
-      'Monthly at minimum',
       'Daily or weekly for key metrics',
       'Only when problems are reported',
+      'Annually during audits',
+      'Monthly at minimum',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Effective energy management requires regular dashboard review - daily for critical metrics, weekly for trends, and monthly for detailed analysis. Frequent review enables rapid detection of issues before they cause significant energy waste or equipment damage.',
   },

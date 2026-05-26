@@ -32,7 +32,12 @@ const quickCheckQuestions = [
   {
     id: 'rcd-types',
     question: 'Which RCD type is required for circuits supplying variable speed drives?',
-    options: ['Type AC', 'Type A', 'Type F', 'Type B'],
+    options: [
+      'Type AC',
+      'Type A',
+      'Type F',
+      'Type B',
+    ],
     correctIndex: 2,
     explanation:
       'Type F RCDs are designed for circuits with variable speed drives (VSDs). They detect composite waveforms that include high-frequency components, which Type AC and Type A may not sense correctly.',
@@ -40,8 +45,13 @@ const quickCheckQuestions = [
   {
     id: 'additional-protection',
     question: 'According to BS 7671, what is the maximum RCD rating for additional protection?',
-    options: ['10mA', '30mA', '100mA', '300mA'],
-    correctIndex: 1,
+    options: [
+      '30mA',
+      '100mA',
+      '10mA',
+      '300mA',
+    ],
+    correctIndex: 0,
     explanation:
       'Regulation 415.1 requires RCDs with IΔn ≤ 30mA for additional protection against electric shock. This applies to socket outlets ≤32A, mobile equipment outdoors, and cables in walls without protection.',
   },
@@ -49,12 +59,12 @@ const quickCheckQuestions = [
     id: 'tt-system-rcd',
     question: 'In a TT system, why are RCDs essential for earth fault protection?',
     options: [
-      'Lower installation cost',
-      'Higher fault currents',
+      'General assessment covering similar activities that can be adapted',
       'High earth electrode resistance limits fault current',
-      'They are not essential',
+      'Incorrect reading due to viewing scale at an angle',
+      'Fire-resistant, LSZH, or MICC cable where required',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'TT systems have high earth fault loop impedance due to earth electrode resistance. Fault currents may be too low to operate overcurrent devices quickly enough. RCDs detect the imbalance and trip regardless of fault current magnitude.',
   },
@@ -62,12 +72,12 @@ const quickCheckQuestions = [
     id: 'time-delayed-rcd',
     question: 'What is the purpose of a time-delayed (Type S) RCD?',
     options: [
-      'Faster operation',
+      'Verify the circuit now meets regulatory requirements',
+      'Investigate further and consider remedial action',
+      'The art and science of teaching children',
       'To allow discrimination with downstream RCDs',
-      'Higher sensitivity',
-      'To reduce nuisance tripping from surges',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Time-delayed (selective) RCDs have an intentional delay (typically 150-500ms) to allow downstream instantaneous RCDs to operate first, achieving discrimination in the earth fault protection system.',
   },
@@ -78,12 +88,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does a Type AC RCD detect?',
     options: [
-      'AC residual currents only (sinusoidal)',
       'AC and pulsating DC residual currents',
+      'AC residual currents only (sinusoidal)',
       'Smooth DC residual currents',
       'High-frequency residual currents',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Type AC RCDs only detect sinusoidal AC residual currents. They may not operate correctly with DC components, making them unsuitable for circuits with electronic equipment that can produce pulsating DC faults.',
   },
@@ -91,8 +101,13 @@ const quizQuestions = [
     id: 2,
     question:
       'According to BS 7671, RCDs for socket outlets rated up to 20A in domestic premises must have:',
-    options: ['IΔn ≤ 100mA', 'IΔn ≤ 30mA', 'IΔn ≤ 10mA', 'No RCD requirement'],
-    correctAnswer: 1,
+    options: [
+      'IΔn ≤ 10mA',
+      'IΔn ≤ 100mA',
+      'IΔn ≤ 30mA',
+      'No RCD requirement',
+    ],
+    correctAnswer: 2,
     explanation:
       'Regulation 411.3.3 requires additional protection by RCDs with IΔn ≤ 30mA for socket-outlets with rated current ≤ 32A intended for general use. This provides protection against direct contact in case of basic protection failure.',
   },
@@ -100,16 +115,26 @@ const quizQuestions = [
     id: 3,
     question:
       'In a TN-S system, what is the maximum Zs for a 32A Type B MCB with 0.4s disconnection?',
-    options: ['0.72Ω', '1.15Ω', '1.37Ω (A4:2026)', '1.44Ω (pre-A4)'],
-    correctAnswer: 2,
+    options: [
+      '1.15Ω',
+      '0.72Ω',
+      '1.44Ω (pre-A4)',
+      '1.37Ω (A4:2026)',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS 7671:2018+A4:2026 Table 41.3 gives 1.37Ω for B32 at 230V — the older 1.44Ω figure is the pre-A4 value before Cmin = 0.95 was applied to U0. Use 1.37Ω on current designs and verification.',
   },
   {
     id: 4,
     question: 'For TT systems, the product RA × IΔn must not exceed:',
-    options: ['25V', '50V', '120V', '230V'],
-    correctAnswer: 1,
+    options: [
+      '50V',
+      '25V',
+      '120V',
+      '230V',
+    ],
+    correctAnswer: 0,
     explanation:
       'Regulation 411.5.3 requires RA × IΔn ≤ 50V in TT systems, where RA is the sum of earth electrode and protective conductor resistances. This limits touch voltage during an earth fault.',
   },
@@ -117,24 +142,39 @@ const quizQuestions = [
     id: 5,
     question:
       'Under BS 7671:2018+A4:2026, what is the maximum operating time for a general 30mA RCD at the AC test current of IΔn?',
-    options: ['40ms', '130ms', '300ms', '500ms'],
-    correctAnswer: 2,
+    options: [
+      '130ms',
+      '300ms',
+      '500ms',
+      '40ms',
+    ],
+    correctAnswer: 1,
     explanation:
       'A4:2026 redrafted Reg 643.3 and deleted Table 3A — the verification test is now a single AC test at rated residual operating current (IΔn), with a 300ms maximum operating time for a general (instantaneous) RCD. The older 5×IΔn test (which had a 40ms limit) is no longer required for compliance.',
   },
   {
     id: 6,
     question: 'Type A RCDs detect:',
-    options: ['AC only', 'AC and pulsating DC', 'Smooth DC only', 'High-frequency only'],
-    correctAnswer: 1,
+    options: [
+      'AC only',
+      'Smooth DC only',
+      'AC and pulsating DC',
+      'High-frequency only',
+    ],
+    correctAnswer: 2,
     explanation:
       "Type A RCDs detect sinusoidal AC and pulsating DC residual currents. They're suitable for most modern electronic equipment which may produce pulsating DC earth faults through rectifier circuits.",
   },
   {
     id: 7,
     question: 'What is the minimum operating time for a time-delayed (Type S) RCD at IΔn?',
-    options: ['40ms', '130ms', '300ms', '500ms'],
-    correctAnswer: 1,
+    options: [
+      '40ms',
+      '500ms',
+      '300ms',
+      '130ms',
+    ],
+    correctAnswer: 3,
     explanation:
       "Type S (selective) RCDs have a minimum non-operating time of 130ms at IΔn, ensuring they don't operate before downstream instantaneous RCDs. Maximum operating time is typically 500ms at IΔn.",
   },
@@ -142,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'When is a 300mA RCD typically used instead of 30mA?',
     options: [
-      'Socket outlet protection',
       'Fire protection for fixed equipment',
-      'Bathroom circuits',
-      'Outdoor equipment',
+      'Control of Substances Hazardous to Health',
+      'Visitor sign-in / fire register',
+      'Accuracy and compliance with regulations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "300mA RCDs provide fire protection by detecting earth fault currents before they generate enough heat to cause a fire. They're used for fixed equipment where 30mA additional protection isn't required.",
   },
@@ -168,10 +208,10 @@ const quizQuestions = [
     id: 10,
     question: 'Which RCD type is required for EV charging circuits according to BS 7671?',
     options: [
-      'Type AC',
-      'Type A',
+      'Signing the EIC construction declaration.',
+      'All batteries are in one location for servicing',
       'Type B or Type A with additional DC protection',
-      'Any type is acceptable',
+      'To confirm system meets design and regulatory requirements',
     ],
     correctAnswer: 2,
     explanation:

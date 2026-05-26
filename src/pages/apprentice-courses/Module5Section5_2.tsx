@@ -22,8 +22,13 @@ const quickCheckQuestions = [
   {
     id: '1',
     question: 'Who is your first point of contact for instructions on site?',
-    options: ['Site Manager', 'Client', 'Supervisor/Foreman', 'Another tradesperson'],
-    correctIndex: 2,
+    options: [
+      'Client',
+      'Supervisor/Foreman',
+      'Another tradesperson',
+      'Site Manager',
+    ],
+    correctIndex: 1,
     explanation:
       'Supervisors and foremen are your immediate point of contact for daily instructions, task allocation, and guidance on site.',
   },
@@ -31,12 +36,12 @@ const quickCheckQuestions = [
     id: '2',
     question: 'What is the best way to avoid miscommunication with your supervisor?',
     options: [
-      'Assume you understand',
+      'Fire resistant cable (FP200)',
+      'Stop immediately and investigate the cause',
       'Repeat back instructions to confirm',
-      'Ask another tradesperson',
-      'Guess the meaning',
+      'Use appropriate PPE and procedures',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Repeating back instructions ensures both parties understand what is required and helps prevent costly mistakes.',
   },
@@ -44,12 +49,12 @@ const quickCheckQuestions = [
     id: '3',
     question: 'If another trade gives you conflicting instructions, what should you do?',
     options: [
+      'Argue with the other tradesperson',
       'Follow the most recent instruction',
       'Choose the easiest option',
       'Report it to your supervisor/foreman',
-      'Argue with the other tradesperson',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Conflicting instructions should always be resolved through your supervisor/foreman to maintain clear communication chains and prevent disputes.',
   },
@@ -59,8 +64,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Who is your first point of contact for instructions on site?',
-    options: ['Site Manager', 'Client Representative', 'Supervisor/Foreman', 'Another Apprentice'],
-    correctAnswer: 2,
+    options: [
+      'Site Manager',
+      'Supervisor/Foreman',
+      'Client Representative',
+      'Another Apprentice',
+    ],
+    correctAnswer: 1,
     explanation:
       'Supervisors and foremen are your immediate point of contact for daily instructions, task allocation, and site guidance.',
   },
@@ -68,12 +78,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the main role of a foreman on a construction site?',
     options: [
-      'To manage project budgets',
+      'Approved contractors can receive payments with 0% CIS deduction',
+      'Make safe immediately and inform the person in control',
       'To allocate tasks, oversee work quality, and enforce safety',
-      'To handle client communications',
-      'To order materials only',
+      'Analysing circuits with multiple sources by considering one source at a time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Foremen are responsible for day-to-day operations including task allocation, quality control, and safety enforcement.',
   },
@@ -82,12 +92,12 @@ const quizQuestions = [
     question:
       "True or False: It's acceptable to start a new task without clarifying unclear instructions.",
     options: [
-      'True - it shows initiative',
-      'False - always clarify first',
       'True - if the deadline is tight',
+      'True - it shows initiative',
       'False - but only for complex tasks',
+      'False - always clarify first',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Never start work with unclear instructions. Always clarify to prevent mistakes, delays, and safety issues.',
   },
@@ -95,12 +105,12 @@ const quizQuestions = [
     id: 4,
     question: "What should you do if you don't understand an instruction?",
     options: [
-      'Guess what was meant',
-      'Ask a colleague instead',
       'Ask questions and repeat back to confirm',
-      'Start work and adjust as needed',
+      'To prevent parallel paths affecting readings',
+      'Concept design (RIBA Stage 2)',
+      'Cannot determine - need split data',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Always ask questions and repeat back instructions to ensure clear understanding and prevent costly mistakes.',
   },
@@ -110,8 +120,8 @@ const quizQuestions = [
     options: [
       'Guessing instructions when unsure',
       'Recording key details and instructions',
-      'Arguing with other trades directly',
       'Ignoring toolbox talks',
+      'Arguing with other trades directly',
     ],
     correctAnswer: 1,
     explanation:
@@ -121,12 +131,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of toolbox talks?',
     options: [
-      'To discuss project budgets',
+      'To improve commutation and reduce brush sparking',
+      'Clearly state the danger and urgency of repair',
       'To share safety information and site updates',
-      'To plan weekend activities',
-      'To order materials',
+      'Combining channels for increased bandwidth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Toolbox talks are brief meetings to share safety information, site updates, and important project communications.',
   },
@@ -136,10 +146,10 @@ const quizQuestions = [
     options: [
       'Follow the most recent instruction',
       'Choose the easiest option',
-      'Report it to your supervisor/foreman',
       'Ignore both instructions',
+      'Report it to your supervisor/foreman',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Conflicting instructions should be resolved through proper channels to maintain clear communication and prevent errors.',
   },
@@ -147,12 +157,12 @@ const quizQuestions = [
     id: 8,
     question: 'True or False: Written records are not needed if you have verbal instructions.',
     options: [
-      'True - verbal is sufficient',
       'False - written records provide important backup',
       'True - only for simple tasks',
+      'True - verbal is sufficient',
       'False - but only for complex projects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Written records provide backup, clarification, and legal protection. They complement verbal instructions.',
   },
@@ -161,11 +171,11 @@ const quizQuestions = [
     question: 'What is a simple technique to avoid miscommunication?',
     options: [
       'Speak louder',
-      'Use technical jargon',
       'Repeat back instructions',
+      'Use technical jargon',
       'Assume understanding',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Repeating back instructions ensures both parties understand what is required and helps identify any misunderstandings immediately.',
   },
@@ -174,11 +184,11 @@ const quizQuestions = [
     question: 'Who enforces safety rules and gives guidance at task level?',
     options: [
       'Client Representative',
+      'Material Suppliers',
       'Supervisor/Foreman',
       'Other Apprentices',
-      'Material Suppliers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Supervisors and foremen are responsible for enforcing safety rules and providing task-level guidance to ensure safe working practices.',
   },

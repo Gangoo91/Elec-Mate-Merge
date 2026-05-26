@@ -5,10 +5,10 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'What is the main focus of BMS in commercial offices?',
     options: [
-      'Safety and emergency response',
-      'Energy efficiency, comfort, and productivity',
-      'Security and access control',
       'Fire detection and suppression',
+      'Energy efficiency, comfort, and productivity',
+      'Safety and emergency response',
+      'Security and access control',
     ],
     correctAnswer: 1,
     explanation:
@@ -32,11 +32,11 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     question: 'Why is BMS critical in healthcare facilities?',
     options: [
       'To reduce energy costs only',
-      'For safety, reliability, and patient comfort',
-      'To control visitor access',
       'To manage staff schedules',
+      'To control visitor access',
+      'For safety, reliability, and patient comfort',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In healthcare facilities, BMS is critical for safety, reliability, and patient comfort, particularly in maintaining strict air quality standards and ensuring critical systems remain operational.',
   },
@@ -44,12 +44,12 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 4,
     question: 'What role does BMS play in hospital operating theatres?',
     options: [
-      'Controls lighting brightness only',
-      'Manages staff access cards',
       'Maintains strict air quality standards and ventilation',
-      'Schedules surgical procedures',
+      'Energy efficiency, comfort, and productivity',
+      'Through remote monitoring and predictive maintenance',
+      'For safety, reliability, and patient comfort',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'In operating theatres, BMS maintains strict air quality standards through controlled ventilation and humidity, which is essential for infection control and patient safety.',
   },
@@ -57,10 +57,10 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 5,
     question: 'Give one benefit of BMS in retail environments.',
     options: [
-      'Automatic inventory management',
+      'It automatically prioritised critical systems like operating theatres and ICU',
       'Customer comfort and cost savings through optimised lighting and temperature',
-      'Price adjustment based on demand',
-      'Social media integration',
+      'Maintains strict air quality standards and ventilation',
+      'Because regulations and priorities differ between healthcare, retail, and commercial environments',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,12 +70,12 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 6,
     question: 'How can BMS integrate with security systems in retail?',
     options: [
-      'By controlling cash registers',
+      'Customer comfort and cost savings through optimised lighting and temperature',
+      'Maintains strict air quality standards and ventilation',
       'Through lighting scenes and monitoring systems to prevent theft',
-      'By tracking customer purchases',
-      'Through social media monitoring',
+      'It automatically prioritised critical systems like operating theatres and ICU',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BMS can integrate with security systems through coordinated lighting scenes and monitoring systems that help prevent theft and improve overall safety in retail environments.',
   },
@@ -83,12 +83,12 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 7,
     question: 'Name one industrial facility where BMS is commonly applied.',
     options: [
-      'Small residential homes',
-      'Car parks only',
+      'For safety, reliability, and patient comfort',
+      'Energy efficiency, comfort, and productivity',
+      'Universities, schools, and airports',
       'Factories and manufacturing plants',
-      'Garden centres',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Factories and manufacturing plants commonly use BMS to monitor energy use of production lines and control HVAC systems in large industrial spaces.',
   },
@@ -97,9 +97,9 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     question: 'What other type of public facility benefits from BMS?',
     options: [
       'Universities, schools, and airports',
-      'Small corner shops',
-      'Private garages',
-      'Garden sheds',
+      'Factories and manufacturing plants',
+      'For safety, reliability, and patient comfort',
+      'Energy efficiency, comfort, and productivity',
     ],
     correctAnswer: 0,
     explanation:
@@ -109,10 +109,10 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'Why must electricians be aware of sector-specific requirements?',
     options: [
-      'To charge higher fees',
+      'Acceptable — Icn 6kA exceeds Ipf 4.2kA, satisfying Reg 432.1 breaking capacity requirement',
       'Because regulations and priorities differ between healthcare, retail, and commercial environments',
-      'To work fewer hours',
-      'To avoid working with other trades',
+      'Learners anticipate the pattern and dismiss the positives as insincere padding around the real message',
+      'Cable ducts, distribution board cupboards in basements, underground chambers, and switch rooms with restricted ventilation',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,12 +122,12 @@ export const bmsModule1Section4QuizQuestions: QuizQuestion[] = [
     id: 10,
     question: "In the real-world example, how did the hospital's BMS respond during a power cut?",
     options: [
-      'It shut down all systems to save power',
+      'Because regulations and priorities differ between healthcare, retail, and commercial environments',
+      'Customer comfort and cost savings through optimised lighting and temperature',
       'It automatically prioritised critical systems like operating theatres and ICU',
-      'It only maintained lighting systems',
-      'It required manual intervention to function',
+      'Through lighting scenes and monitoring systems to prevent theft',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "During the power cut, the hospital's BMS automatically prioritised critical systems such as operating theatres and intensive care units whilst notifying staff through alarms and maintaining safe conditions until full power was restored.",
   },

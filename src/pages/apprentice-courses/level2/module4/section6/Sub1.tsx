@@ -40,12 +40,12 @@ const checks = [
     question:
       'You need to confirm the CPC continuity of a 32 A radial circuit feeding a single far-end socket. Cable run is short and accessible at both ends. Which method is most efficient?',
     options: [
-      'R2-only with a wander lead from the MET to the socket — every time.',
+      'A person must have the specific training, knowledge, and experience relevant to the particular task they are performing',
+      'Gather information — symptoms, history, when the fault occurred, what changed',
       'R1+R2 loop method: link line and CPC at the socket, measure end-to-end at the consumer unit.',
-      'No need to test — visual inspection covered it.',
-      'Use a 500 V insulation tester between line and CPC.',
+      'Information about the structure needed for future construction work, maintenance, and demolition',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'R1+R2 is the standard method on a final circuit because it gives you both the line + CPC end-to-end resistance in one reading — useful later when comparing measured Zs to Table 41.3. R2-only with a wander lead is reserved for bonding conductors (where there is no L conductor to loop with) and for cases where you cannot reach both ends of the run from the same point. Insulation testers are 500 V DC — they would damage equipment and are the wrong instrument for continuity work.',
   },
@@ -53,7 +53,12 @@ const checks = [
     id: 'm4-s6-sub1-table-413-b32',
     question:
       'BS 7671 A4:2026 Table 41.3 — Type B 32 A MCB at U₀ = 230 V, 0.4 s disconnection on a TN system. What is the maximum permitted Zs?',
-    options: ['1.44 Ω', '2.19 Ω', '1.37 Ω', '0.87 Ω'],
+    options: [
+      '0.87 Ω',
+      '2.19 Ω',
+      '1.37 Ω',
+      '1.44 Ω',
+    ],
     correctIndex: 2,
     explanation:
       'A4:2026 Table 41.3 — Type B 32 A = 1.37 Ω. (The older 17th/A2 era value of 1.44 Ω is obsolete — never quote it on a new test result.) Your measured Zs at the far end of the circuit must come in below 1.37 Ω, and BS 7671 method requires applying the 0.8 multiplier when comparing measured (cold cable) values to the table — so the practical measured ceiling is 1.37 × 0.8 = 1.10 Ω.',
@@ -63,12 +68,12 @@ const checks = [
     question:
       'You measure the continuity of a 10 mm² main bonding conductor from the MET to the gas service clamp. The reading is 0.04 Ω. Pass or fail?',
     options: [
-      'Fail — must be exactly zero.',
+      'Deducting costs from a subcontractor\\\\\\\\\\\\\\\'s payment for work they should have done or damage they caused',
+      'Decline — provide a proper VAT invoice (or zero-VAT invoice if not registered) for tax compliance and to protect the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s warranty rights',
+      'Guide them to a designated refuge and ensure the fire service is informed of their location',
       'Pass — comfortably below the 0.05 Ω rule of thumb for main bonding continuity, and well within any sensible acceptance limit.',
-      'Fail — bonding must be under 0.01 Ω.',
-      'Cannot say without a separate insulation test.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'For main bonding the practical rule of thumb taught on site (and in the IET Guidance Note 3) is < 0.05 Ω for a sensibly short bonding run. 0.04 Ω passes. There is no single BS 7671 numerical limit for bonding continuity — the regulation says it must be of negligible resistance and prove a continuous low-impedance path. As long as you can demonstrate that, with the leads nulled and a calibrated low-resistance ohmmeter, the reading is acceptable.',
   },
@@ -92,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: 'What instrument do you use for the R1+R2 continuity test?',
     options: [
-      '500 V DC insulation resistance tester.',
-      'Loop impedance tester on the live setting.',
+      'Assess the task and reduce the risk to the lowest level reasonably practicable',
+      'Events specified in Schedule 2, such as collapse of scaffolding, electrical incidents causing fire, or explosion',
       'Low-resistance ohmmeter (continuity range of an MFT — typically resolution down to 0.01 Ω, with leads nulled).',
-      'Multimeter on the 200 Ω AC range.',
+      'Systems for distribution of electricity to the public and equipment of electricity suppliers (covered by the ESQCR)',
     ],
     correctAnswer: 2,
     explanation:
@@ -105,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'You are about to start the R1+R2 test on a kitchen ring final. Step one is to:',
     options: [
-      'Energise the consumer unit and read the live voltage.',
+      'Two cables (one in from the previous socket, one out to the next) land in the same terminal — typical for a ring final or a daisy-chained radial.',
+      'Isolate both the DC side (PV array isolator) and AC side (inverter and AC isolator), and be aware that PV panels generate DC voltage whenever exposed to light',
+      'The original hormonal claims have been debated in replication studies, but the finding that expansive postures can increase subjective feelings of confidence has more support',
       'Verify safe isolation, then disconnect the line and CPC from the protective device at the consumer unit so the circuit is electrically isolated from the rest of the installation.',
-      'Bridge L to N at the far socket.',
-      'Set the MFT to the 500 V insulation range.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Continuity is a dead test. After verifying safe isolation per the JIB sequence, you disconnect the line and CPC of the circuit from their terminals at the consumer unit so your reading captures only the circuit you are testing, not parallel paths through other circuits or via bonding loops. Forgetting this gives a falsely low reading because the meter sees multiple paths to earth.',
   },
@@ -118,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'For a circuit protected by a 32 A Type B RCBO on a TN-C-S supply, you measure R1+R2 at the far socket = 0.45 Ω. Ze previously measured at the MET = 0.30 Ω. Compute Zs and decide pass/fail against the A4:2026 Table 41.3 limit using the 0.8 method.',
     options: [
-      'Zs = 0.15 Ω. Pass.',
       'Zs = 0.75 Ω. Pass — 0.75 Ω is below the corrected limit of 1.37 × 0.8 = 1.10 Ω.',
-      'Zs = 0.75 Ω. Fail — exceeds 0.5 Ω.',
-      'Cannot calculate without phase rotation data.',
+      'Identify hazards, check compliance, monitor safety standards',
+      'The buoyancy-driven air movement due to temperature difference',
+      'Before first use and then at intervals not exceeding 7 days',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Zs = Ze + (R1 + R2) = 0.30 + 0.45 = 0.75 Ω. A4:2026 Table 41.3 max Zs for Type B 32 A = 1.37 Ω. Apply the 0.8 multiplier for cold-cable test comparison: 1.37 × 0.8 = 1.096 Ω ≈ 1.10 Ω. 0.75 Ω is comfortably below 1.10 Ω → compliant. Worth recording the headroom (0.35 Ω) on the schedule of test results so any future periodic inspection can spot drift.',
   },
@@ -131,12 +136,12 @@ const quizQuestions = [
     id: 5,
     question: 'You measure the CPC continuity of a 1.5/1.0 mm² lighting circuit and get 0.00 Ω at the far light fitting. What is the most likely explanation?',
     options: [
-      'The circuit is perfectly installed.',
-      'You forgot to null the leads — the meter is reading lead resistance and subtracting it from the reading, which on a long run will not realistically come out at exactly 0.00 Ω.',
+      'EN 60903 (and IEC 60903). Classes 00 / 0 / 1 / 2 / 3 / 4 by AC voltage rating: 500V / 1,000V / 7,500V / 17,000V / 26,500V / 36,000V. Visual inspection before each use. Periodic dielectric testing (typically 6-monthly per IEC 60903).',
       'You forgot to disconnect the CPC from the earth bar — your meter is reading the parallel path through the earth bar and main bonding rather than the circuit CPC alone, masking a possible break in the circuit CPC.',
-      'The cable is undersized.',
+      'To create realistic expectations about progress, disruption, timeline, and finish quality, reducing the gap between expectation and reality that causes complaints',
+      'The advance guardrail system must be lowered in the correct sequence before each frame section is removed, following the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specific AGR dismantling procedure',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A genuinely zero reading on a 1.5/1.0 mm² lighting circuit run is implausible — even a 5 m run gives R1+R2 ≈ 0.15 Ω. 0.00 Ω almost always means the meter has found a parallel path through the main earthing terminal and bonding back to the far end via another circuit. Always disconnect the CPC at the consumer unit before testing so your meter sees only the circuit you are testing. Suspect zero readings: re-test with the CPC properly isolated from the bar.',
   },
@@ -144,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'When testing the continuity of a main bonding conductor from the MET to the gas service:',
     options: [
-      'Disconnect both ends of the bonding conductor first.',
+      'Segregating the work area with barriers/signage, scheduling noisy or dust-creating tasks outside occupied hours where possible, and using dust extraction and low-voltage 110 V CTE tools or RCD-protected 230 V supply',
+      'Consistent professional competence — safe working practices, systematic approaches, clear communication, sound technical knowledge, and the ability to explain your reasoning and reflect on your work',
       'Connect one MFT lead to the MET clamp and the other to the bonding clamp at the gas service — read directly. The reading proves end-to-end resistance of the conductor including both clamps. Acceptance: < 0.05 Ω as a practical rule of thumb.',
-      'Run a 500 V insulation test between the bonding conductor and earth.',
-      'Use a loop impedance tester from the gas pipe back to the MET.',
+      'The type and composition of each circuit, the points of utilisation served, the number and size of conductors, the type of wiring, and the protective, isolation and switching devices.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'For bonding continuity you do not normally disconnect the conductor — the test reads resistance through the in-place clamps which is exactly what matters in service. Read directly between the MET clamp and the bonding clamp at the service. < 0.05 Ω passes for a typical short main bonding run; if it reads higher, check the clamp tightness, the tag length and whether the clamp is on bare metal not paint.',
   },
@@ -157,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'A4:2026 Table 41.3 max Zs values are presented differently to legacy texts. Which statement is correct?',
     options: [
-      'You must multiply the table value by 0.95 yourself before comparing to your measured Zs.',
-      'Table 41.3 max Zs values in A4:2026 are now published with the Cmin factor (0.95) already applied — you don\'t multiply by 0.95 yourself. Use the table value directly, then apply the 0.8 measured-vs-calculated correction (e.g. B32 max Zs = 1.37 Ω → 1.10 Ω corrected).',
-      'A4:2026 abolished the Cmin factor entirely.',
-      'Cmin and the 0.8 temperature factor are the same number applied twice.',
+      'The load should be carefully reviewed: while 225 kg is technically within the 230 kg SWL, the margin of only 5 kg leaves no allowance for additional items such as PPE, drinks, or unforeseen materials, and the task should be reassessed to determine if the load can be reduced',
+      'That no person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger unless they possess such knowledge or experience, or are under appropriate supervision',
+      'Carry out visual inspection (cable condition, connector pins, enclosure integrity, ventilation), electrical testing (earth continuity, insulation resistance, RCD operation, loop impedance), verify smart functionality (communication, scheduling, firmware version), and check the control pilot signal is within specification',
+      'Table 41.3 max Zs values in A4:2026 are now published with the Cmin factor (0.95) already applied — you don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t multiply by 0.95 yourself. Use the table value directly, then apply the 0.8 measured-vs-calculated correction (e.g. B32 max Zs = 1.37 Ω → 1.10 Ω corrected).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Table 41.3 max Zs values in A4:2026 are now published with the Cmin factor (0.95) already applied — you don\'t multiply by 0.95 yourself. The 0.8 figure that appears in some legacy texts is a separate temperature correction (Ct), not Cmin. Always use Table 41.3 directly: B32 max Zs = 1.37 Ω, with the 0.8 Ct correction giving 1.10 Ω at the measured-vs-calculated threshold. The net effect compared to older A2 figures is that several rows came down a few percent (B32 from 1.44 Ω to 1.37 Ω, B16 from 2.87 Ω to 2.73 Ω) — quote the A4:2026 value on every new schedule of test results.',
   },
@@ -170,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'Order of dead tests in the BS 7671 sequence (a common exam question):',
     options: [
-      'Insulation, continuity, polarity, ring, earth electrode.',
       'Continuity of CPCs (including bonding) → continuity of ring final → insulation resistance → polarity → earth electrode resistance (TT only). Then live tests.',
-      'Polarity, continuity, insulation, ring.',
-      'Functional, polarity, insulation, continuity.',
+      'Earthing and bonding connections that are not part of a circuit and may not be obviously necessary (e.g., main bonding conductors, supplementary bonding), to prevent their removal by uninformed persons',
+      'The total number of outstanding (uncompleted) maintenance work orders, which indicates whether the maintenance team has sufficient resources to keep up with demand',
+      'Anchor it to a consistent portable cue such as starting the van engine, with the admin app pre-loaded and a tiny first step like logging one item',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The dead-test sequence per BS 7671 Section 643 (and IET GN3): continuity of protective conductors first, ring final continuity second, insulation resistance third, polarity fourth, earth electrode resistance fifth (TT only). The order matters because each test verifies the integrity needed for the next: an insulation test on a circuit with a broken CPC is meaningless because there is no return path to read against. Live tests (Ze, PFC, Zs at far end, RCD trip times) come after first energisation.',
   },

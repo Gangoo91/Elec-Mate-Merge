@@ -1,6 +1,4 @@
 import React from 'react';
-import { Phone, MapPin, UserCheck, Shield, AlertTriangle } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { MethodStatementData } from '@/types/method-statement';
 
 interface EmergencyContactsCardProps {
@@ -11,36 +9,35 @@ interface ContactRowProps {
   role: string;
   name?: string;
   phone?: string;
-  icon: React.ReactNode;
 }
 
-const ContactRow: React.FC<ContactRowProps> = ({ role, name, phone, icon }) => {
+const ContactRow: React.FC<ContactRowProps> = ({ role, name, phone }) => {
   if (!name && !phone) return null;
-
   return (
-    <div className="flex items-center justify-between py-3 border-b border-white/[0.05] last:border-0">
-      <div className="flex items-center gap-3 min-w-0">
-        <div className="w-9 h-9 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-          {icon}
-        </div>
-        <div className="min-w-0">
-          <p className="text-[10px] uppercase tracking-wider text-white font-medium">{role}</p>
-          <p className="text-sm font-semibold text-white truncate">{name || 'TBC'}</p>
-        </div>
+    <div className="py-3 flex items-baseline gap-4">
+      <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 w-28 sm:w-32 shrink-0">
+        {role}
+      </span>
+      <div className="flex-1 min-w-0 flex items-baseline justify-between gap-3">
+        <span className="text-[14px] font-medium text-white truncate">{name || 'TBC'}</span>
+        {phone && (
+          <a
+            href={`tel:${phone}`}
+            className="text-[12px] font-semibold text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation tabular-nums shrink-0"
+          >
+            {phone}
+          </a>
+        )}
       </div>
-      {phone && (
-        <a
-          href={`tel:${phone}`}
-          className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-elec-yellow/10 text-elec-yellow text-sm font-semibold touch-manipulation active:scale-95 transition-transform"
-        >
-          <Phone className="h-4 w-4" />
-          <span className="hidden sm:inline">Call</span>
-        </a>
-      )}
     </div>
   );
 };
 
+/**
+ * Emergency contacts — editorial. No icons, no card chrome.
+ * Eyebrow header + row-per-contact + tel: links rendered as tap-to-call
+ * inline numbers. 999 sits as its own emphasised row.
+ */
 export function EmergencyContactsCard({ methodData }: EmergencyContactsCardProps) {
   const hasAnyContact =
     methodData.siteManagerName ||
@@ -49,89 +46,74 @@ export function EmergencyContactsCard({ methodData }: EmergencyContactsCardProps
     methodData.assemblyPoint;
 
   return (
-    <div className="bg-white/[0.03] border border-white/[0.08] rounded-xl overflow-hidden">
-      {/* Header */}
-      <div className="px-4 py-3 border-b border-white/[0.08] flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <AlertTriangle className="h-4 w-4 text-amber-500" />
-          <h3 className="text-sm font-semibold text-white">Emergency Contacts</h3>
+    <section className="space-y-4">
+      <div className="flex items-baseline justify-between gap-3">
+        <div className="space-y-1">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+            Emergency contacts
+          </div>
+          <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
+            Who to call.
+          </h3>
         </div>
-        <Badge className="bg-amber-500/10 text-amber-500 border-0 text-[10px]">
-          Safety Critical
-        </Badge>
+        <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-amber-400 shrink-0">
+          Safety critical
+        </span>
       </div>
 
-      {/* Contacts List */}
-      <div className="px-4">
+      <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
         <ContactRow
-          role="Site Manager"
+          role="Site manager"
           name={methodData.siteManagerName}
           phone={methodData.siteManagerPhone}
-          icon={<UserCheck className="h-4 w-4 text-elec-yellow" />}
         />
-
         <ContactRow
-          role="First Aider"
+          role="First aider"
           name={methodData.firstAiderName}
           phone={methodData.firstAiderPhone}
-          icon={<Shield className="h-4 w-4 text-green-400" />}
         />
-
         <ContactRow
-          role="Safety Officer"
+          role="Safety officer"
           name={methodData.safetyOfficerName}
           phone={methodData.safetyOfficerPhone}
-          icon={<Shield className="h-4 w-4 text-amber-400" />}
         />
-      </div>
 
-      {/* Emergency Services - Always visible */}
-      <div className="mx-4 mb-4 mt-2 p-3 rounded-xl bg-red-500/10 border border-red-500/20">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
-              <Phone className="h-5 w-5 text-red-400" />
-            </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-wider text-red-400/70 font-medium">
-                Emergency Services
-              </p>
-              <p className="text-lg font-bold text-red-400">999</p>
-            </div>
-          </div>
-          <a
-            href="tel:999"
-            className="px-4 py-2 rounded-lg bg-red-500 text-white text-sm font-bold touch-manipulation active:scale-95 transition-transform"
-          >
-            Call 999
-          </a>
-        </div>
-      </div>
-
-      {/* Assembly Point */}
-      {methodData.assemblyPoint && (
-        <div className="mx-4 mb-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-          <div className="flex items-start gap-3">
-            <div className="w-9 h-9 rounded-lg bg-amber-500/20 flex items-center justify-center shrink-0">
-              <MapPin className="h-4 w-4 text-amber-400" />
-            </div>
-            <div>
-              <p className="text-[10px] uppercase tracking-wider text-amber-400/70 font-medium">
-                Assembly Point
-              </p>
-              <p className="text-sm font-semibold text-white">{methodData.assemblyPoint}</p>
-            </div>
+        {/* 999 — editorial row with red accent on the number */}
+        <div className="py-3 flex items-baseline gap-4">
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-red-400 w-28 sm:w-32 shrink-0">
+            Emergency
+          </span>
+          <div className="flex-1 min-w-0 flex items-baseline justify-between gap-3">
+            <span className="text-[14px] font-medium text-white">
+              Police / fire / ambulance
+            </span>
+            <a
+              href="tel:999"
+              className="text-[14px] font-bold tabular-nums text-red-400 hover:text-red-300 transition-colors touch-manipulation"
+            >
+              999
+            </a>
           </div>
         </div>
-      )}
+
+        {methodData.assemblyPoint && (
+          <div className="py-3 flex items-baseline gap-4">
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 w-28 sm:w-32 shrink-0">
+              Assembly point
+            </span>
+            <span className="text-[14px] font-medium text-white flex-1 min-w-0">
+              {methodData.assemblyPoint}
+            </span>
+          </div>
+        )}
+      </div>
 
       {!hasAnyContact && (
-        <div className="px-4 pb-4">
-          <p className="text-xs text-white text-center py-2">
-            Complete emergency contact details before starting work
-          </p>
-        </div>
+        <p className="text-[12.5px] text-white/55 leading-relaxed">
+          Complete emergency contact details before starting work — these are embedded into the
+          cover page of the RAMS PDF.
+        </p>
       )}
-    </div>
+    </section>
   );
 }

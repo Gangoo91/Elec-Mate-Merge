@@ -45,12 +45,12 @@ const checks = [
     question:
       'A customer wants a 7 kW EV charger plus a 12 kW heat pump on a property with a 60 A single-phase main fuse and an existing 5 kWp PV install. What\'s the first design check?',
     options: [
-      'Just fit it — single-phase has plenty of capacity.',
       "Maximum demand calculation. Existing maximum demand (lighting, sockets, cooker, immersion, electric shower) plus heat pump (~32 A continuous) plus EV charger (~32 A continuous) plus PV reverse-protection MCB. The combined load can easily exceed 60 A. Solutions: (a) load-shedding via smart controls (heat pump derates when EV charges, or vice versa); (b) supply upgrade to 100 A or three-phase via DNO; (c) staggered loads (EV charges overnight, heat pump runs during day). The certified installer runs the MD calc and chooses the strategy. Without this check, the property's main fuse will blow first cold winter night with the EV charging.",
-      'Fit a bigger fuse.',
-      'Run two parallel cables.',
+      "The full life cycle is broken into modules: A1-A3 product stage (raw material supply, transport to factory, manufacturing); A4-A5 construction stage (transport to site, installation); B1-B7 use stage (use, maintenance, repair, replacement, refurbishment, operational energy and water use); C1-C4 end-of-life stage (deconstruction, transport, waste processing, disposal); and D benefits and loads beyond the system boundary (recycling and recovery beyond end of life). Different EPDs cover different module sets — A1-A3 cradle-to-gate is the most common minimum; A1-C4 plus D is the most complete cradle-to-grave with recycling credits.",
+      "Section 712 'Solar photovoltaic (PV) power supply systems' is the special-installations chapter of BS 7671 (Part 7) covering electrical requirements for PV installations. It applies to PV not connected to public distribution, PV in parallel with public distribution, and PV as an alternative to public distribution. Topics include array DC voltage and isolation, DC and AC overcurrent protection, additional protection by RCD, equipotential bonding of array frames, signage and labelling, anti-islanding requirements, and PV-specific inspection and test. The technical content was extensively revised and expanded in BS 7671:2018+A4:2026.",
+      "Customer name and address; installer name and MCS certification number; install date; technology and rating (e.g. 5 kWp PV with 10 kWh battery); manufacturer and model details for the major components; performance estimate (annual generation kWh, SCOP, etc.); MCS Installation Standard reference (e.g. MIS 3002 v6.0); Workmanship Warranty period and what it covers; aftercare contact details. The certificate is the customer's proof of MCS-certified installation, used for BUS grant, SEG enrolment, manufacturer warranty registration and future house sale.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Maximum demand is one of the most-missed checks on environmental tech retrofit because the historical baseline assumed gas heating and petrol cars. Electrification fundamentally changes the property's electrical load profile. The DNO main fuse capacity is the hard physical limit; supply upgrade is a DNO-managed process with weeks-to-months lead time. The MCS heat-pump and EV install packs include MD calc; non-MCS installs that skip it produce nuisance fuse blows.",
   },
@@ -59,12 +59,12 @@ const checks = [
     question:
       'A customer asks "when will my new heat pump be running and how warm will the house be?". The MCS designer hasn\'t finished the heat-loss calc and the property has marginal insulation. What\'s the responsible answer?',
     options: [
-      'Tell them next Tuesday at 21°C — sounds right.',
+      "WEEE removed during install or repair must be segregated from general waste and routed to an Approved Authorised Treatment Facility (AATF) for recovery and recycling. The waste producer (you or your employer) holds the Duty of Care under the Environmental Protection Act 1990 to ensure the waste is properly described, transferred to an authorised waste carrier, and accompanied by a waste transfer note that is retained for at least two years. Many electrical wholesalers operate as WEEE collection points under the Distributor Take-Back Scheme.",
+      "A PCR is a published rulebook that defines the methodology for preparing an EPD for a specific product category — for example installation cable, luminaires, switchgear or insulation. It specifies the functional unit (e.g. one metre of cable of given specification), the system boundary, the data requirements, the calculation methodology and the reporting format. All manufacturers preparing EPDs for that product category follow the same PCR, ensuring like-for-like comparability across competing products. PCRs are managed by EPD programme operators such as EPD International, IBU and INIES.",
       "Don't quote firm numbers until the MCS heat-loss calc and emitter sizing are done. The certified designer's pack will give the realistic flow temperature, SCOP estimate and indoor design temperatures the system will deliver. If insulation is marginal, the calc may recommend fabric upgrades first to bring the heat-loss within sensible heat-pump capacity. Quoting numbers off the cuff before the design is finished is how customers end up with mismatched expectations and disappointed reviews. The right answer: 'the design pack will give us the firm numbers — let me get back to you'.",
-      'Promise tropical temperatures.',
-      'Tell them it will fail.',
+      "Sole trader = an individual who trades on their own account, with no separate legal entity between them and the business. You and the business are legally one. Tax: register with HMRC for Self Assessment; profits taxed as your personal income (income tax + Class 2/4 National Insurance). Liability: unlimited — your personal assets (house, car, savings) are at risk for business debts. Simplest form to set up; most common starting point for a one-person electrical firm.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Heat-pump customer satisfaction is dominated by setting realistic expectations at design stage. The MCS heat-loss calc, emitter survey and SCOP estimate are the honest numbers — quoting before they're done sets the customer up for disappointment when reality differs. As an apprentice your role is to refer the customer to the certified designer for firm answers, not to invent them.",
   },
@@ -73,12 +73,12 @@ const checks = [
     question:
       'A customer wants an ASHP outdoor unit on the front-facing wall of their detached house, 1 m from the boundary with the neighbour. They\'re not in a conservation area. What\'s the planning position?',
     options: [
-      'Permitted Development always covers ASHP — fit it.',
+      "(1) Isolate the supply at the meter or cut-out if safely accessible (NOT by reaching into the burning CU). (2) Evacuate the area — yourself and any non-employees. (3) Use a CO2 or dry powder extinguisher ONLY if trained, the fire is small, the route to a safe exit is behind you, and you can do so without putting yourself at risk. (4) 999. (5) Stay outside; await fire service. Don't restore power. Preserve the scene.",
+      "Part P (Electrical Safety in Dwellings) requires certain types of electrical work in dwellings to be notified to Building Control — either via a registered competent-person scheme (NICEIC, NAPIT, etc.) or directly to the Local Authority. Notifiable work currently includes new circuits, consumer unit changes, and work in special locations (bathrooms / locations 700). Most environmental tech installs are notifiable — adding a PV inverter circuit, an EV charging circuit or a heat-pump dedicated radial all create new circuits and trigger Part P notification. Non-notifiable work (e.g. like-for-like socket replacement on an existing circuit) doesn't trigger Part P.",
       "Not always. ASHP outdoor units are covered by Permitted Development in England subject to several conditions, including: not on a flat roof; not on a wall facing or visible from a highway; minimum distance from boundary (often 1 m); MCS 020 sound-assessment compliance; and not in a conservation area / on a listed building. Front-facing wall placement may exclude PD; the certified installer runs the MCS 020 calc and the PD eligibility check. Where PD doesn't apply, full planning permission is required (8-week timeline). Don't fit until planning status is confirmed.",
-      'Just fit it and apologise to the neighbour.',
-      'Use a smaller unit and skip the rules.',
+      "A PCR is a published rulebook that defines the methodology for preparing an EPD for a specific product category — for example installation cable, luminaires, switchgear or insulation. It specifies the functional unit (e.g. one metre of cable of given specification), the system boundary, the data requirements, the calculation methodology and the reporting format. All manufacturers preparing EPDs for that product category follow the same PCR, ensuring like-for-like comparability across competing products. PCRs are managed by EPD programme operators such as EPD International, IBU and INIES.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "ASHP Permitted Development conditions are specific. Front-facing wall placement, conservation areas, listed buildings, flat roofs and proximity to boundaries can all knock out PD. Full planning takes 8 weeks; conservation-area consent can take longer. The customer needs to know the timeline implication before committing to an install date. The MCS-certified installer manages the PD / planning check; as an apprentice you should recognise the question.",
   },
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       'What\'s the first thing to check on any environmental tech retrofit before quoting an install date?',
     options: [
-      'The customer\'s mood.',
+      "Stay calm. Don't take it personally. Acknowledge the customer's frustration without agreeing with the substance ('I can see this isn't what you expected — I'm sorry it's frustrating'). Don't argue, don't explain at length, don't get defensive. Offer to call your supervisor immediately so they can come to site or speak to the customer directly. Document the interaction in your job pack — date, time, exact words, your response — and let the supervisor handle the conversation about scope and quality. Carry on with the work in a non-confrontational way until the supervisor arrives.",
       "The site's electrical supply capacity. Maximum demand calculation including the new load — heat pumps draw 30-40 A continuous, EV chargers 30-40 A continuous, batteries import-charge at significant rates. Combined with existing loads, properties on 60 A or 80 A main fuses can quickly exceed capacity. The DNO main fuse is the hard limit; upgrades are DNO-managed processes with weeks-to-months lead time. Without this check, the install commissions then trips the main fuse on the first cold winter night.",
-      'The colour of the front door.',
-      'Whether the customer has a dog.',
+      "Net 30 (payment within 30 days of invoice) is the standard UK commercial default — backed by the Late Payment of Commercial Debts Act. For domestic work, 7-14 days or 'on completion' is more common. Some sub-contracts on commercial work specify Net 60 or Net 90, which strains cash flow — push back on long terms during contract negotiation. Always state payment terms clearly on the invoice.",
+      "Because PV arrays are unique — you cannot switch them off. As long as light hits the panels, the array generates DC voltage at the inverter terminals. The DC isolator gives the installer (and emergency responders) a means of breaking that DC circuit before working on the inverter or the strings. AC isolators downstream of the inverter only break the inverter-to-grid path; they do not de-energise the DC side. A4:2026 has refined the DC isolation requirements alongside the broader Section 712 update — typically the isolator is sited adjacent to the inverter on the DC entry side, accessible without disturbing the panel array.",
     ],
     correctAnswer: 1,
     explanation:
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       'Why does the MCS heat-loss calculation need to come before the heat-pump emitter design?',
     options: [
-      'It doesn\'t — both can be done in parallel.',
+      "Both theories share autonomy as a core element. SDT\\\\\\\\\\\\\\\\\\\\\\\\'s \\\\\\\"competence\\\\\\\" maps closely to Pink\\\\\\\\\\\\\\\\\\\\\\\\'s \\\\\\\"mastery\\\\\\\" (both involve developing skills and feeling effective). The integration comes through recognising that Pink\\\\\\\\\\\\\\\\\\\\\\\\'s \\\\\\\"purpose\\\\\\\" and SDT\\\\\\\\\\\\\\\\\\\\\\\\'s \\\\\\\"relatedness\\\\\\\" both address connection to something beyond the self — purpose through meaning, relatedness through people. Together they form a five-factor model: autonomy, mastery/competence, purpose, relatedness, and intrinsic engagement",
+      "Self-Awareness: notice your own stress response to the urgent call and any defensive thoughts (\\\\\\\"my installation was fine\\\\\\\"). Self-Regulation: manage the stress, resist defensiveness, and stay calm and professional. Motivation: connect to your core purpose — client safety and quality of service. Empathy: genuinely understand the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s fear (they do not have technical knowledge; to them, buzzing = danger) and validate it. Social Skills: communicate reassuringly (\\\\\\\"I understand this is worrying — you are right to call\\\\\\\"), ask clear diagnostic questions, arrange a prompt visit, and follow up after resolution to rebuild confidence. Every domain contributes to the response",
       "Because the heat-loss calc determines what flow temperature the system will run at, which in turn determines what size emitters (radiators / underfloor) the property needs. If the existing radiators are small (sized for 70-80°C flow from a gas boiler) and the heat-loss calc shows the property needs 8 kW design heat output, the radiators may need to grow to deliver 8 kW at 45°C flow. Emitter design is downstream of heat-loss calc. Skipping the calc and reusing existing radiators is the headline cause of disappointing UK heat-pump SCOP figures.",
-      'Because the calculator is in metric units.',
-      'Because the calc takes 6 months.',
+      "Reg 3 puts the duty on EVERY employer, every self-employed person, and every employee — including apprentices — engaged in any work activity covered by the Regulations. The employee duty is to co-operate with the employer in complying with EAWR, AND to comply themselves with EAWR insofar as the matters relate to things within the employee's control. So an apprentice has a personal EAWR duty, not just an employer-mediated one.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Heat-loss → flow temperature → emitter size is the chain. Each link depends on the previous. MCS MIS 3005 specifies the heat-loss calc methodology (room-by-room) and the emitter sizing rules. Customer-facing satisfaction depends on the system being right-sized; the calc is what gets it right.",
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     question:
       'What\'s the typical DNO supply upgrade timeline and what triggers it?',
     options: [
-      'Same-day service.',
+      "The Standard Assessment Procedure (SAP) is the methodology for calculating the energy performance of dwellings under Part L of the Building Regulations. It produces a SAP rating (1-100+) and a regulated CO₂ emissions figure that must beat the Target Emission Rate (TER). PV, heat pumps, MVHR, smart controls and fabric measures all feed into the SAP calculation. The MCS-certified installer's design pack typically includes the system's contribution to the SAP score; that contribution is what gets the building Building Regs sign-off.",
+      "A document prepared by the principal contractor before the construction phase starts, setting out the health and safety arrangements for the site (welfare, induction, site rules, hazard controls, emergency procedures, monitoring). Required for any project where there is more than one contractor; the depth of the plan scales with the project size and risk profile. Sub-contractors are entitled to relevant extracts on induction.",
+      "Stage 1: customer raises concern with the firm (often verbally). Stage 2: written complaint logged, investigated, response within agreed timeframe (typically 14-28 days). Stage 3: if unresolved, escalate to senior person (or independent reviewer in larger firms). Stage 4: if still unresolved, signpost to ADR / scheme complaint procedure / Trading Standards. Document each stage in writing.",
       "Triggered when the property's existing supply capacity (typically 60 A or 80 A single-phase main fuse) is inadequate for the new combined load. Heat pump + EV charger + existing baseline can easily exceed this. DNO-managed process: customer / installer applies, DNO surveys, costs the work (cable upsize, possibly cut-out / meter replacement, possibly main-fuse upgrade), customer pays, work scheduled. Timeline 4-12 weeks for simple upgrades, longer for cable changes or three-phase conversions. Customer needs to factor this into the install date.",
-      'No upgrade ever needed.',
-      'Done by the customer.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Supply upgrades are a real timeline issue on environmental tech retrofits. Three-phase conversions for properties with no three-phase service can require new cable from the DNO substation. Customer-facing expectation management on the timeline is essential.",
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     question:
       'What does "trade coordination" mean on a typical heat-pump retrofit?',
     options: [
-      'A weekly trade-union meeting.',
       "Sequencing the trades that need to interact on the install: F-Gas-certified engineer for refrigerant; plumber for the wet system, cylinder, controls; electrician for supply, isolation, controls integration; sometimes a builder for cylinder cupboard alteration; sometimes a roofer / builder for outdoor unit mounting. Each trade has a sequence dependency — the electrical first-fix has to be ready before the F-Gas engineer commissions; the plumbing has to be charged and pressurised before the heat pump runs. Project management of the trade sequence is the certified installer's responsibility; as the apprentice you respect the sequence and don't get ahead.",
-      'Trading skills with apprentices.',
-      'Selling tools.',
+      "Phase sequence test confirms the order of phase rotation (L1, L2, L3 or A, B, C in correct sequence) on three-phase supplies. Wrong sequence reverses the rotation of three-phase induction motors and pumps — can cause damage to driven plant and wrong direction of conveyors / lifts. Tested with a phase rotation indicator (Fluke 9040, Megger PRMA1) — three probe leads, instrument indicates correct or reversed sequence. Required at three-phase commissioning and after any maintenance that may have disturbed phase identification (e.g. cable replacement, supply transformer changes).",
+      "REPAIRABLE: cable terminations, accessory faceplates, individual lampholders, switch modules, dimmer cores, individual MCBs / RCBOs (within a CU), circuit cables (mid-run patch with junction box). REPLACEMENT-ONLY (typically): consumer units (sealed enclosures, integrated busbar), transformers and ballasts (factory-sealed), most LED drivers (sealed pots), AFDDs (electronic devices), most modern accessories (one-piece moulded). The boundary is usually 'is the failed item a single field-replaceable unit?'. Sealed devices are replacement-only; assembled devices with field-accessible components are repairable.",
+      "Battery hazards are different from AC hazards: (1) DC shock — once your hand is on a DC busbar, your muscles can't release because there's no zero-crossing — DC at 60 V upward is treated as a let-go hazard; (2) hydrogen gas — lead-acid cells gas during charge, hydrogen accumulates in poorly-ventilated rooms, explosive at 4% LEL — battery rooms have forced ventilation for this reason; (3) electrolyte — sulphuric acid contact with skin / eyes — face shield, acid-resistant gloves, eye-wash station; (4) thermal runaway — a damaged or shorted cell can catch fire, with toxic fumes; (5) short-circuit current — a 100 Ah lead-acid string can deliver 5–10 kA short-circuit, enough to weld a spanner.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Multi-trade coordination is one of the under-appreciated complexities of heat-pump retrofit. The MCS-certified installer is normally the lead trade managing the sequence. Electrical first-fix is typically done before the wet plumbing pressure test and before the F-Gas commissioning; ignoring the sequence creates rework.",
   },
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       'What\'s the role of a site survey before any environmental tech install?',
     options: [
-      'It\'s optional paperwork.',
+      "Three layers of protection. (1) The MWC test results show the circuit was electrically sound at the time of hand-back — measured Zs, IR, R1+R2, RCD trip-time all within BS 7671 limits. If the fault has since recurred, the cause is post-rectification (new fault, customer modification, environmental change, latent equipment failure) not the rectification itself. (2) The signed Designer / Constructor / Inspector panels evidence competence and the firm's QA process. (3) The customer's signed receipt evidences hand-back acceptance. Without the certificate, the firm has no defence to a 'your rectification was wrong' claim and may have to redo the work free of charge or face legal action. The certificate is insurance for the firm and proof of competence for the customer.",
       "Confirms the install is feasible and identifies the realistic scope. For PV: roof orientation, pitch, condition, shading, structural capacity, route from roof to inverter, route from inverter to consumer unit. For heat pumps: building heat-loss assessment, emitter survey, supply capacity, outdoor unit location, indoor cylinder space, smart controls feasibility. For EV charging: parking position, supply capacity, route to charge point, earthing arrangement (PME or TT). For MVHR: airtightness assessment, ductwork routes, unit location. Without a survey the install can't be designed; without the design the customer can't be quoted accurately. The MCS-certified installer normally completes the survey.",
-      'A survey is just for new-build.',
-      'Surveys waste time.',
+      "Reduce → reuse → recycle → recover → dispose. Reduce: keep equipment in service longer (annual maintenance prevents premature replacement). Reuse: reusable batteries (some EV battery cells are repurposed for second-life storage), reusable mounting hardware. Recycle: copper cabling, aluminium frames, steel components — established waste streams. Recover: refrigerant recovery (mandated), some plastics. Dispose: hazardous components (lithium-ion batteries, refrigerants, electronic boards) via authorised waste carriers under the Hazardous Waste Regulations and WEEE Regulations. The hierarchy is set out in the Waste (England and Wales) Regulations 2011 implementing the EU Waste Framework Directive.",
+      "The training-provider tutor first — they have responsibility for the quality of the apprentice's training experience and the authority to intervene with the employer. The apprenticeship agreement is a tripartite document (apprentice, employer, training provider) and the training provider can hold the employer to account on training delivery. If that doesn't resolve it, the apprentice can raise a formal grievance with the employer under the ACAS Code, escalate to ACAS conciliation, and ultimately to an employment tribunal.",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       'When does an EV charging install trigger the need to convert from PME (TN-C-S) to TT earthing at the charge point?',
     options: [
-      'Always.',
+      "When the inspector believes a specific activity involves or will involve a risk of SERIOUS personal injury. The notice prohibits the activity (immediately, or from a stated time) until the risk has been remedied. Like an Improvement Notice, it can be appealed to an Employment Tribunal within 21 days — but the appeal does NOT suspend the notice (unlike an Improvement Notice). The activity must stop while the appeal is heard.",
+      "Pregnancy and maternity (s.18). The Act prohibits unfavourable treatment of women because of pregnancy or maternity leave during the 'protected period' (broadly, from the start of pregnancy to the end of maternity leave). This is a separate category to sex discrimination — pregnancy / maternity claims don't need a male comparator. It's one of the most enforced parts of the Act and a leading source of Employment Tribunal awards.",
       "Whenever the chosen EV charger doesn't include integrated open-PEN protection. Section 722 of BS 7671 (significantly amended in A4:2026) requires that the PEN-fault risk on PME supplies is managed — either by the charger's built-in open-PEN protection function, or by providing a TT earth electrode for the EV chassis at the charge point. Most modern chargers from major manufacturers include the open-PEN protection function, simplifying the install. Where they don't, the local TT electrode is the fallback. The certified installer reads the charger spec and chooses the architecture.",
-      'Never — PME is fine for EV.',
-      'Only on Tuesdays.',
+      "CPS-registered firms can self-certify notifiable Part P work and issue compliance certificates direct to the Local Authority on the homeowner's behalf. The LABC route requires a Building Notice or Building Regulations application before work starts, plus an LABC inspection during/after work — typically £150-300 per job and several weeks of LABC scheduling delay. Self-certification removes the cost and the delay.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "PEN-fault risk management on EV charging is a Section 722 specific issue. The choice of charger drives the install architecture — chargers with built-in open-PEN protection are easier to install; chargers without need a TT electrode and the associated earth-electrode test compliance.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'What\'s the customer-facing implication of a G99 grid-connection application?',
     options: [
-      'No implication — it\'s instant.',
+      "Because the standard's enforcement and interpretation hinges on the precise definitions. 'Exposed-conductive-part' (a conductive part of equipment that can be touched and which is liable to become live in fault conditions) and 'extraneous-conductive-part' (a conductive part liable to introduce a potential, generally Earth, not forming part of the electrical installation) are different categories with different bonding rules. Mis-classify one as the other and you mis-bond, you fail the EICR, you potentially leave the customer unprotected. Definitions ARE the technical content.",
+      "Plain English + cost. Example: 'Your kitchen circuit can't handle the load you're putting on it. There are three options. (1) Cheap — rearrange your appliances so you don't run kettle, microwave and toaster at the same time. £0 cost; reduced convenience. (2) Medium — add a dedicated socket for the kettle on a separate circuit. £450 cost; same convenience. (3) Expensive — rewire the kitchen for full modern capacity. £2,500 cost; future-proofed. Each option is safe; they differ on cost and convenience. Which fits your situation best?'. Customer makes the commercial decision; you've explained the technical position; the firm has a defensible record.",
+      "Decline. Most firms have a drug-and-alcohol policy that prohibits consumption during working hours, including any time you're still in uniform, on customer premises or driving the van. Even if the working day is officially over, you're still representing the firm and you may have to drive. The policy protects the customer (no impaired work), the firm (no insurance issues, no reputational damage) and you (no DR10 driving conviction).",
       "The install can't commission until the DNO has approved the G99 application. Approval timeline 2-12 weeks depending on local network conditions. Customer needs to know this up front — booking holiday around an install date that depends on G99 approval is a recipe for disappointment. The MCS-certified installer normally manages the application and provides timeline expectations. As the apprentice you should never quote a commission date for a G99 install without confirmation from the certified installer.",
-      'Customer pays the DNO directly.',
-      'Customer becomes a DNO employee.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "G99 timeline is the most common cause of slipped install dates on larger PV / battery installs. Customer-facing expectation management on the timeline is essential. G98 fast-track installs have no DNO timeline impact.",
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       'Why does prefabrication off-site reduce material wastage and is it relevant to environmental tech installs?',
     options: [
-      'It doesn\'t reduce wastage.',
       "Prefabrication off-site (e.g. pre-terminating SWA tails to length, pre-building consumer units, pre-assembling cable trays in a workshop) reduces on-site cuts and offcuts. Off-site cutting can be measured precisely; on-site cuts under time pressure tend to leave more wastage. Less waste = lower material cost = smaller skip = less environmental impact. Relevant to environmental tech because: (a) the customer is by definition committed to sustainability so resource-efficient installation matches their values; (b) the trade is increasingly held to evidence-based environmental claims; (c) it's a 2357 Unit 312 AC 2.1 explicit requirement. Plus prefabrication gives faster on-site install times.",
-      'Prefabrication is illegal.',
-      'It applies only to cars.',
+      "Possibly yes. Heavy usage accelerates wear on the input components (relays in IR/loop test stages, current transformers in clamp meters, switches and connectors). The calibration interval is set assuming 'normal' use; heavy use justifies a shorter interval. Also — any incident (drop, exposure to wet, exposure to heat above operating temperature, fault current through the instrument, blown fuse) is grounds for an interim calibration regardless of date. The general principle: calibration is a confidence interval, not a guarantee — use intelligence about how the instrument has been treated to decide if early re-calibration is justified.",
+      "Three categories. (1) AC-side faults — supply voltage out of spec, grid frequency out of spec, lost neutral, RCD trip on the AC isolator. THESE ARE YOUR JOB — measure the AC supply at the inverter terminals, check the AC isolator and the dedicated RCBO, confirm the inverter is seeing a healthy AC supply within its spec. (2) DC-side faults — string voltage out of spec, isolation fault on a string, broken module. Diagnose with the MFT in PV mode (Megger MFT1741+ has PV functions, Kewtech KT64+ similar) — IR test on the DC string at the inverter's DC isolator, open-circuit voltage check on the string. (3) Inverter-internal faults (firmware, MPPT failure, internal IGBT fault) — the manufacturer's warranty / service engineer's job. The L3 apprentice rules out (1) and (2), then escalates (3) with documented test evidence.",
+      "Six essential references. (1) BS 7671:2018+A4:2026 itself (paper or PDF on the laptop/phone) — particularly Chapter 4 (Protection), Chapter 5 (Selection), Chapter 6 (Testing), Appendix 6 (Forms). (2) IET Guidance Note 3 (current edition) for testing methods and result interpretation. (3) IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th Edition, 2026) for equipment-side work. (4) HSE GS38 for proving-dead instruments. (5) Manufacturer data sheets for the devices being replaced (downloaded ahead of the visit to the laptop). (6) The site's as-built drawings + Schedule of Test Results from the original EIC / EICR. The L3 apprentice doesn't memorise any of this; the L3 apprentice KNOWS where to look it up in 30 seconds when the question arises on site.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Prefabrication is one of the practical methods cited in 2357 Unit 312 ELTP02 AC 2.1 ('demonstrate prefabrication and installation methods which can help to reduce material wastage'). For environmental tech installs the customer's value alignment matches the practice. Major commercial PV installs increasingly use pre-assembled DC string sub-frames; domestic installs benefit from pre-terminated SWA, pre-built CU, pre-cut cable runs.",
   },

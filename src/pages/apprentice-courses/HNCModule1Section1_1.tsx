@@ -35,7 +35,12 @@ const quickCheckQuestions = [
     id: 'section2-duty',
     question:
       'Under Section 2 of HSWA 1974, who has the primary duty to ensure health, safety and welfare at work?',
-    options: ['Employees', 'Employers', 'The HSE', 'Local authorities'],
+    options: [
+      'Employees',
+      'Employers',
+      'Local authorities',
+      'The HSE',
+    ],
     correctIndex: 1,
     explanation:
       'Section 2 places the primary duty on employers to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all their employees.',
@@ -44,12 +49,12 @@ const quickCheckQuestions = [
     id: 'section7-employee',
     question: 'Under Section 7, what must employees do regarding health and safety?',
     options: [
-      'Only follow written instructions',
       'Take reasonable care for themselves and others',
-      'Report to the HSE directly',
-      'Provide their own PPE',
+      'To hydraulically decouple primary and secondary circuits',
+      'At least 5 minutes (check manufacturer\\\\\\\\\\\\\\\'s data)',
+      'Adjusting activity timing to avoid resource overallocation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Section 7 requires employees to take reasonable care for their own health and safety and that of others who may be affected by their acts or omissions at work.',
   },
@@ -57,7 +62,12 @@ const quickCheckQuestions = [
     id: 'improvement-notice',
     question:
       'What is the maximum timeframe typically given to comply with an HSE Improvement Notice?',
-    options: ['24 hours', '7 days', '21 days minimum', '6 months'],
+    options: [
+      '24 hours',
+      '7 days',
+      '21 days minimum',
+      '6 months',
+    ],
     correctIndex: 2,
     explanation:
       'An Improvement Notice must allow at least 21 days for compliance, giving the duty holder time to rectify the contravention. Appeals must also be lodged within 21 days.',
@@ -67,11 +77,11 @@ const quickCheckQuestions = [
     question: "What does 'SFARP' mean in health and safety law?",
     options: [
       'Safety First And Risk Prevention',
-      'So Far As Reasonably Practicable',
-      'Standard For Acceptable Risk Practice',
       'Safe Framework And Regulatory Procedure',
+      'Standard For Acceptable Risk Practice',
+      'So Far As Reasonably Practicable',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "'So Far As Reasonably Practicable' (SFARP) means balancing the risk against the cost, time and effort needed to control it. If grossly disproportionate, the measure may not be required.",
   },
@@ -82,10 +92,10 @@ const quizQuestions = [
     id: 1,
     question: 'The Health and Safety at Work Act 1974 is primarily which type of legislation?',
     options: [
-      'Absolute - no exceptions allowed',
+      'Store safely for future reference',
       'Enabling - provides framework for regulations',
-      'Advisory - guidance only',
-      'Voluntary - self-regulation',
+      'True power divided by apparent power (cos φ)',
+      'Both options above are partly correct.',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +106,12 @@ const quizQuestions = [
     question:
       'Under Section 2, what must employers provide to employees regarding health and safety?',
     options: [
-      'Only verbal instructions',
+      'Section 2(2)(a) - safe plant and systems of work',
+      'When there is risk of serious personal injury',
       'Information, instruction, training and supervision',
-      'Insurance certificates only',
-      'Annual safety reviews',
+      'No - only employers with 5 or more employees',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section 2(2)(c) requires employers to provide such information, instruction, training and supervision as is necessary to ensure, so far as is reasonably practicable, the health and safety at work of employees.',
   },
@@ -109,12 +119,12 @@ const quizQuestions = [
     id: 3,
     question: 'Section 3 of HSWA 1974 places duties on employers regarding which group?',
     options: [
-      'Employees only',
-      'Directors and managers only',
+      'Health and Safety Executive (HSE)',
+      'No - only employers with 5 or more employees',
+      'Information, instruction, training and supervision',
       'Non-employees who may be affected by the work',
-      'HSE inspectors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Section 3 requires employers to conduct their undertaking in such a way as to ensure, so far as is reasonably practicable, that persons not in their employment (visitors, contractors, public) are not exposed to risks.',
   },
@@ -122,12 +132,12 @@ const quizQuestions = [
     id: 4,
     question: "What is the employee's duty under Section 7(a) of HSWA 1974?",
     options: [
-      'To provide their own safety equipment',
       'To take reasonable care for their own health and safety and that of others',
-      'To write risk assessments',
-      'To report directly to the HSE',
+      'Require contraventions to be remedied within a specified time',
+      'They must balance risk reduction against cost, time and effort',
+      'Intentionally or recklessly interfere with safety provisions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 7(a) requires every employee to take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work.',
   },
@@ -135,12 +145,12 @@ const quizQuestions = [
     id: 5,
     question: 'What power does an HSE inspector have under an Improvement Notice?',
     options: [
-      'Immediate site closure',
-      'Criminal prosecution only',
+      'Section 2(2)(a) - safe plant and systems of work',
       'Require contraventions to be remedied within a specified time',
-      'Impose unlimited fines on the spot',
+      'Information, instruction, training and supervision',
+      'No - only employers with 5 or more employees',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'An Improvement Notice requires the duty holder to remedy a contravention within a specified period (minimum 21 days). It does not require immediate cessation of work unless the risk is imminent.',
   },
@@ -148,12 +158,12 @@ const quizQuestions = [
     id: 6,
     question: 'When can an HSE inspector issue a Prohibition Notice?',
     options: [
-      'For any minor breach',
+      'Health and Safety Executive (HSE)',
+      'Information, instruction, training and supervision',
       'When there is risk of serious personal injury',
-      'Only after a formal investigation',
-      'Only with court approval',
+      'No - only employers with 5 or more employees',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A Prohibition Notice can be issued when the inspector believes activities involve, or will involve, a risk of serious personal injury. It can take immediate effect and stop the dangerous activity.',
   },
@@ -161,8 +171,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the maximum prison sentence for certain offences under HSWA 1974 in the Crown Court?',
-    options: ['6 months', '1 year', '2 years', 'Unlimited'],
-    correctAnswer: 2,
+    options: [
+      '6 months',
+      '1 year',
+      'Unlimited',
+      '2 years',
+    ],
+    correctAnswer: 3,
     explanation:
       'Certain offences under HSWA 1974, when tried in the Crown Court, can result in up to 2 years imprisonment. This applies to breaches where there is a failure to comply with improvement or prohibition notices.',
   },
@@ -172,9 +187,9 @@ const quizQuestions = [
       'For building services work, which Section 2 duty is most relevant to electrical installation safety?',
     options: [
       'Section 2(2)(a) - safe plant and systems of work',
-      'Section 2(2)(b) - safe handling of substances',
       'Section 2(2)(d) - safe working environment',
       'Section 2(2)(e) - welfare facilities',
+      'Section 2(2)(b) - safe handling of substances',
     ],
     correctAnswer: 0,
     explanation:
@@ -184,10 +199,10 @@ const quizQuestions = [
     id: 9,
     question: 'Under Section 8, what must employees NOT do?',
     options: [
-      'Report safety concerns',
+      'Require contraventions to be remedied within a specified time',
       'Intentionally or recklessly interfere with safety provisions',
-      'Refuse to work in unsafe conditions',
-      'Request safety equipment',
+      'They must balance risk reduction against cost, time and effort',
+      'Section 2(2)(a) - safe plant and systems of work',
     ],
     correctAnswer: 1,
     explanation:
@@ -210,12 +225,12 @@ const quizQuestions = [
     id: 11,
     question: 'Which body is primarily responsible for enforcing HSWA 1974 on construction sites?',
     options: [
-      'Local authority environmental health',
+      'When circumstances change',
+      'STOP all work immediately',
+      'To avoid damage from high test voltages',
       'Health and Safety Executive (HSE)',
-      'Building control',
-      'Police',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Health and Safety Executive (HSE) is the primary enforcing authority for construction sites and most workplaces. Local authorities enforce in retail, offices, hotels and catering premises.',
   },
@@ -224,12 +239,12 @@ const quizQuestions = [
     question:
       'A building services firm employs 6 people. Are they required to have a written health and safety policy?',
     options: [
-      'Yes - all employers must have one',
       'No - only employers with 5 or more employees',
-      'Only if they work on construction sites',
       'Only if requested by a client',
+      'Yes - all employers must have one',
+      'Only if they work on construction sites',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Section 2(3) requires employers with 5 or more employees to prepare a written statement of their health and safety policy and bring it to the attention of employees.',
   },

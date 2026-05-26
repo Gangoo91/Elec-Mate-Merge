@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary factor that determines the severity of an electric shock injury?',
     options: [
-      'The voltage of the supply',
+      'Induction burn from proximity to high-frequency conductors',
       'The magnitude of current flowing through the body and its duration',
-      'Whether the supply is AC or DC',
-      'The type of footwear being worn',
+      'Never miss twice in a row; get back on track immediately',
+      'Ensuring cables and equipment survive fault conditions',
     ],
     correctIndex: 1,
     explanation:
@@ -28,16 +28,26 @@ const quickCheckQuestions = [
     id: 'let-go-threshold',
     question:
       'At approximately what AC current level does a person lose the ability to release a conductor (the let-go threshold)?',
-    options: ['1 mA', '5 mA', '10 mA', '50 mA'],
-    correctIndex: 2,
+    options: [
+      '50 mA',
+      '10 mA',
+      '1 mA',
+      '5 mA',
+    ],
+    correctIndex: 1,
     explanation:
       'The let-go threshold for AC current is approximately 10 mA for most adults. Above this level, involuntary muscle contraction prevents the person from releasing the conductor, greatly increasing the duration of exposure and the risk of fatal injury. For women and children, the threshold may be lower — around 6-8 mA.',
   },
   {
     id: 'arc-flash-temp',
     question: 'What temperature can an arc flash reach at its core?',
-    options: ['Up to 1,000 °C', 'Up to 5,000 °C', 'Up to 20,000 °C', 'Up to 100,000 °C'],
-    correctIndex: 2,
+    options: [
+      'Up to 1,000 °C',
+      'Up to 20,000 °C',
+      'Up to 5,000 °C',
+      'Up to 100,000 °C',
+    ],
+    correctIndex: 1,
     explanation:
       'An arc flash can reach temperatures of up to 20,000 °C at its core — approximately four times the surface temperature of the sun. At these temperatures, copper conductors vaporise instantly, creating a superheated plasma and a pressure wave that can cause devastating blast injuries in addition to severe burns.',
   },
@@ -45,8 +55,13 @@ const quickCheckQuestions = [
     id: 'voltage-bands',
     question:
       'Under BS 7671:2018+A3:2024, what is the upper limit of Band I (extra-low voltage) for AC?',
-    options: ['12 V', '25 V', '50 V', '120 V'],
-    correctIndex: 2,
+    options: [
+      '50 V',
+      '12 V',
+      '120 V',
+      '25 V',
+    ],
+    correctIndex: 0,
     explanation:
       'Band I (extra-low voltage) for AC is defined as not exceeding 50 V AC (or 120 V ripple-free DC) under BS 7671. Above 50 V AC, the voltage is considered sufficient to drive a dangerous current through the human body under normal conditions, which is why 50 V AC is the recognised threshold for danger.',
   },
@@ -57,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following best describes the mechanism of electric shock?',
     options: [
-      'Electricity burns the skin on contact, causing pain',
+      'Ensuring photos are clear, well-lit, captioned with your role, and taken with permission',
       'Current flows through the body between two points at different potential, disrupting normal biological function',
-      'Voltage causes direct damage to nerve endings',
-      'Magnetic fields from the conductor cause tissue heating',
+      'Same dead-polarity test as a standard socket (line at LINE terminal); functional check via charging a known device confirms output polarity',
+      'There is no set minimum — readings should be taken to confirm the atmosphere is safe',
     ],
     correctAnswer: 1,
     explanation:
@@ -71,10 +86,10 @@ const quizQuestions = [
     question:
       'A current of 30 mA AC flowing through the chest for more than a few seconds is most likely to cause:',
     options: [
-      'A mild tingling sensation',
-      'Muscular pain but no lasting injury',
-      'Ventricular fibrillation (cardiac arrest)',
       'Localised skin burns only',
+      'A mild tingling sensation',
+      'Ventricular fibrillation (cardiac arrest)',
+      'Muscular pain but no lasting injury',
     ],
     correctAnswer: 2,
     explanation:
@@ -84,12 +99,12 @@ const quizQuestions = [
     id: 3,
     question: "The 'hand-to-hand' current pathway is particularly dangerous because:",
     options: [
-      'The hands have low skin resistance',
-      'The current path crosses the heart',
       'Both hands will be burned',
+      'The hands have low skin resistance',
       'It causes the strongest muscle contraction',
+      'The current path crosses the heart',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The hand-to-hand pathway is extremely dangerous because the current flows directly across the chest, passing through the heart. This gives the highest probability of causing ventricular fibrillation. The hand-to-foot pathway also crosses the heart but typically with a slightly lower percentage of current through the cardiac region.',
   },
@@ -97,12 +112,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following is NOT a recognised type of electrical burn?',
     options: [
-      'Contact burn from touching a live conductor',
+      'Induction burn from proximity to high-frequency conductors',
       'Arc burn from radiant heat of an electrical arc',
       'Flash burn from the ultraviolet radiation of an arc',
-      'Induction burn from proximity to high-frequency conductors',
+      'Contact burn from touching a live conductor',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       "The three recognised types of electrical burn are contact burns (current flowing through tissue at the point of contact), arc burns (from the intense radiant heat of an electrical arc), and flash burns (from the ultraviolet and infrared radiation produced by an arc). 'Induction burn' is not a recognised classification of electrical burn injury.",
   },
@@ -110,7 +125,12 @@ const quizQuestions = [
     id: 5,
     question:
       'According to UK statistics, approximately how many people are killed by electricity at work each year?',
-    options: ['1-2', '5-10', '50-60', 'Over 100'],
+    options: [
+      '1-2',
+      '5-10',
+      'Over 100',
+      '50-60',
+    ],
     correctAnswer: 1,
     explanation:
       'HSE statistics show that approximately 5-10 people are killed by electricity at work in the UK each year, with around 1,000 reportable electrical injuries. While the numbers are relatively low compared to other causes, electrical incidents have a very high fatality-to-injury ratio, meaning that when something goes wrong, the consequences are often fatal.',
@@ -121,26 +141,36 @@ const quizQuestions = [
     options: [
       'Up to 100 Pa (similar to a strong breeze)',
       'Up to 1,000 Pa (similar to a gust of wind)',
-      'Up to 100 kPa (similar to being hit by a car)',
       'Up to 70,000 Pa with forces exceeding 200 kg/m²',
+      'Up to 100 kPa (similar to being hit by a car)',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Arc flash blast waves can generate pressures exceeding 70,000 Pa (approximately 10 psi) with forces that can throw a person across a room, rupture eardrums, and cause serious blunt-force trauma. The rapid expansion of vaporised copper can increase pressure by a factor of 67,000 within milliseconds. This is why arc flash is often more dangerous than the electrical shock itself.',
   },
   {
     id: 7,
     question: 'Under BS 7671:2018+A3:2024, Band II (low voltage) for AC ranges from:',
-    options: ['0 V to 50 V', '50 V to 600 V', '50 V to 1000 V', '600 V to 1000 V'],
-    correctAnswer: 2,
+    options: [
+      '0 V to 50 V',
+      '50 V to 600 V',
+      '600 V to 1000 V',
+      '50 V to 1000 V',
+    ],
+    correctAnswer: 3,
     explanation:
       'Band II (low voltage) for AC is defined as exceeding 50 V but not exceeding 1000 V AC (or exceeding 120 V but not exceeding 1500 V ripple-free DC). This covers the standard 230 V single-phase and 400 V three-phase supplies found in most domestic, commercial and industrial installations in the UK.',
   },
   {
     id: 8,
     question: 'Electrical fires account for approximately what percentage of all fires in the UK?',
-    options: ['Less than 5%', 'Approximately 14-20%', 'Approximately 50%', 'Over 70%'],
-    correctAnswer: 1,
+    options: [
+      'Approximately 14-20%',
+      'Approximately 50%',
+      'Less than 5%',
+      'Over 70%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Electrical faults are responsible for approximately 14-20% of all fires in the UK, making electricity one of the most significant causes of fire. Common electrical causes include overloaded circuits, deteriorated insulation, loose connections causing arcing, and faulty appliances. Proper installation, maintenance and periodic inspection are critical fire prevention measures.',
   },
@@ -148,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which secondary injury is MOST commonly associated with electric shock at height?',
     options: [
-      'Hearing loss from arc flash noise',
+      'Induction burn from proximity to high-frequency conductors',
       'Falls caused by involuntary muscle contraction or startle response',
-      'Chemical burns from battery electrolyte',
-      'Crush injuries from falling equipment',
+      'Employers, self-employed persons and employees — all who may be affected',
+      'Up to 70,000 Pa with forces exceeding 200 kg/m²',
     ],
     correctAnswer: 1,
     explanation:
@@ -161,12 +191,12 @@ const quizQuestions = [
     id: 10,
     question: 'At 50 Hz AC, the body is particularly vulnerable because:',
     options: [
-      '50 Hz causes maximum skin heating',
+      'Falls caused by involuntary muscle contraction or startle response',
+      'Touching a 230 V live conductor with wet hands while standing on a damp concrete floor',
       '50 Hz is close to the frequency range that most effectively causes ventricular fibrillation',
-      '50 Hz penetrates deeper into the body than higher frequencies',
-      '50 Hz causes the strongest sensation of pain',
+      'Employers, self-employed persons and employees — all who may be affected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The human heart is most vulnerable to frequencies in the range of 15-100 Hz, and 50 Hz falls squarely within this danger zone. At this frequency, the risk of ventricular fibrillation is at its maximum for a given current level. Higher frequencies (above 1 kHz) tend to cause more surface heating but less cardiac disruption, while DC requires roughly 3-4 times the current to cause the same fibrillation risk.',
   },
@@ -174,12 +204,12 @@ const quizQuestions = [
     id: 11,
     question: 'The Electricity at Work Regulations 1989 place duties on:',
     options: [
-      'Employers only',
+      'Falls caused by involuntary muscle contraction or startle response',
+      'Touching a 230 V live conductor with wet hands while standing on a damp concrete floor',
+      '50 Hz is close to the frequency range that most effectively causes ventricular fibrillation',
       'Employers, self-employed persons and employees — all who may be affected',
-      'Electrical contractors only',
-      'The Health and Safety Executive',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The EAWR 1989 place duties on employers, self-employed persons and employees. Regulation 3 makes it clear that duties extend to all persons at work, including employees who must cooperate with their employer and not place themselves or others at risk. This means that as a maintenance technician, you have personal legal duties under the EAWR.',
   },
@@ -188,12 +218,12 @@ const quizQuestions = [
     question:
       'Which of the following scenarios presents the HIGHEST immediate risk of fatal electrocution?',
     options: [
-      'Touching a 230 V live conductor with dry hands while wearing insulated boots on a dry wooden floor',
       'Touching a 230 V live conductor with wet hands while standing on a damp concrete floor',
-      'Working near a 12 V battery in a dry environment',
       'Using a double-insulated power tool on a 230 V supply',
+      'Touching a 230 V live conductor with dry hands while wearing insulated boots on a dry wooden floor',
+      'Working near a 12 V battery in a dry environment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Wet hands and damp concrete drastically reduce body resistance (from around 100 kΩ dry skin to as low as 1 kΩ wet), while the concrete floor provides a good earth return path. Under these conditions, 230 V could drive a current of 230 mA through the body — far exceeding the 30 mA ventricular fibrillation threshold. This scenario represents a very high risk of fatal electrocution.',
   },

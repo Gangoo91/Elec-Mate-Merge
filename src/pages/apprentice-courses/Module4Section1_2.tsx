@@ -25,7 +25,12 @@ const Module4Section1_2 = () => {
       id: 1,
       question:
         'What is the maximum horizontal safe zone distance from a wall corner according to BS 7671?',
-      options: ['100 mm', '150 mm', '200 mm', '250 mm'],
+      options: [
+        '100 mm',
+        '150 mm',
+        '200 mm',
+        '250 mm',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 specifies 150mm as the maximum horizontal safe zone distance from a wall corner.',
@@ -43,20 +48,25 @@ const Module4Section1_2 = () => {
       id: 3,
       question: 'Name one factor that affects cable route selection.',
       options: [
-        'Weather conditions only',
+        'Batteries require replacement every 3–5 years',
+        'You lose marks and paperwork is incomplete',
+        'Thoughts, feelings, and behaviours',
         'Safety, accessibility, aesthetics, or compliance',
-        'Cable colour only',
-        'Installation speed only',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Multiple factors affect route selection including safety, accessibility, aesthetics, and regulatory compliance.',
     },
     {
       id: 4,
       question: 'How often should twin and earth cables be fixed vertically?',
-      options: ['Every 200mm', 'Every 300mm', 'Every 500mm', 'Every 600mm'],
-      correctAnswer: 1,
+      options: [
+        'Every 300mm',
+        'Every 200mm',
+        'Every 500mm',
+        'Every 600mm',
+      ],
+      correctAnswer: 0,
       explanation:
         'Twin and earth cables should typically be fixed every 300mm when run vertically.',
     },
@@ -64,10 +74,10 @@ const Module4Section1_2 = () => {
       id: 5,
       question: 'Give one example of a hazard that could damage a cable.',
       options: [
-        'Correct installation',
+        'To contain and protect cables and wiring',
         'Heat, sharp edges, or mechanical impact',
-        'Proper support',
-        'Safe zones',
+        'A break in continuity of the conductor',
+        'Red with white asbestos warning',
       ],
       correctAnswer: 1,
       explanation:
@@ -77,31 +87,36 @@ const Module4Section1_2 = () => {
       id: 6,
       question: 'What should be done before drilling fixing points?',
       options: [
-        'Start drilling immediately',
+        'The battery is ageing and has lost capacity',
+        'Hydraulic benders or specialised forming equipment',
         'Check for hidden services with a detector',
-        'Use the largest drill bit',
-        'Drill without marking',
+        'Insulated tools, gloves, mats, footwear',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation: 'Always check for hidden services using a cable/pipe detector before drilling.',
     },
     {
       id: 7,
       question: 'Which type of fixing is best for masonry walls?',
-      options: ['Cable ties only', 'Masonry anchors or wall plugs', 'Adhesive tape', 'Wire hooks'],
-      correctAnswer: 1,
+      options: [
+        'Burn gel sachets and trauma dressings',
+        '6 metres (or as specified by the DNO)',
+        'Miswired polarity on the RS-485 bus',
+        'Masonry anchors or wall plugs',
+      ],
+      correctAnswer: 3,
       explanation: 'Masonry anchors or wall plugs provide secure fixing points in masonry walls.',
     },
     {
       id: 8,
       question: 'Why is route efficiency important in electrical installation?',
       options: [
-        "It doesn't matter",
         'Reduces material use, voltage drop, and installation time',
-        'Makes cables look better',
-        'Increases cable length',
+        'Risk of shock when maintaining equipment that appears off',
+        'To act as shock absorbers between vertebrae',
+        '"They\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re planning to complete the first fix by Friday."',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Efficient routes reduce material costs, minimise voltage drop, and reduce installation time.',
     },
@@ -112,8 +127,13 @@ const Module4Section1_2 = () => {
     {
       id: 'safe-zone-check',
       question: 'What is the maximum distance from a wall corner that is considered a safe zone?',
-      options: ['100mm', '150mm', '200mm', '250mm'],
-      correctIndex: 1,
+      options: [
+        '150mm',
+        '100mm',
+        '200mm',
+        '250mm',
+      ],
+      correctIndex: 0,
       explanation:
         'BS 7671 specifies that cables can be run within 150mm of a wall corner as part of safe zones.',
     },
@@ -121,12 +141,12 @@ const Module4Section1_2 = () => {
       id: 'hazard-check',
       question: 'Why should you avoid routing cables near heating pipes?',
       options: [
-        'It looks untidy',
         'Heat can damage cable insulation and reduce lifespan',
-        "It's harder to install",
-        'Cables will be too cold',
+        'Record results circuit-by-circuit as you go',
+        'A licensed asbestos removal contractor',
+        'Occupational asthma (respiratory sensitiser)',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Heat from pipes can damage cable insulation, reduce current carrying capacity, and shorten cable life.',
     },
@@ -134,10 +154,10 @@ const Module4Section1_2 = () => {
       id: 'marking-check',
       question: 'Give one method for marking a cable route accurately.',
       options: [
-        'Guessing the route',
+        'To prevent condensation forming on the beam surfaces',
         'Using chalk lines, laser levels, or string lines',
-        'Drawing with permanent marker',
-        'No marking needed',
+        'Current capacity vs. rated capacity',
+        'Higher temperature increases conductivity',
       ],
       correctIndex: 1,
       explanation:

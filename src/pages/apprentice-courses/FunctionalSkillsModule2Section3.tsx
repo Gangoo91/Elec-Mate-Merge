@@ -28,10 +28,10 @@ const FunctionalSkillsModule2Section3 = () => {
       question:
         'A homeowner is worried about the cost of a full rewire. What is the best approach to this conversation?',
       options: [
-        'Tell them they have no choice — it has to be done',
+        'Place the pads in the normal position but ensure the pad is at least 8 cm (approximately 3 inches) from the device',
         'Explain the safety reasons, outline the work involved, and offer to break it into phases if possible',
-        'Reduce your price to avoid an argument',
-        'Tell them to get other quotes and come back',
+        'Sickness absence rates, EAP utilisation, staff survey results, and number of MHFA interactions',
+        'Access to the work, drawings, certs to date and the ability to ask questions of the installer',
       ],
       correctAnswer: 1,
       explanation:
@@ -42,10 +42,10 @@ const FunctionalSkillsModule2Section3 = () => {
       question:
         'During a site meeting, a project manager asks you to confirm that your first-fix work will be complete by Friday. You are not sure you can meet this deadline. What should you do?',
       options: [
-        'Say yes to avoid conflict, then explain later if you cannot finish',
-        'Refuse to commit to any date',
+        'Certificates may be invalid and legal compliance cannot be demonstrated',
+        'The responsible person (usually the employer or building owner)',
         'Be honest about the situation, explain what is achievable, and discuss any obstacles',
-        'Blame other trades for the delay',
+        'Check for services, drill pilot hole, and drill from both sides to prevent breakout',
       ],
       correctAnswer: 2,
       explanation:
@@ -56,12 +56,12 @@ const FunctionalSkillsModule2Section3 = () => {
       question:
         'A client telephones to report that their RCD keeps tripping. You cannot visit until tomorrow. What information should you gather during the call?',
       options: [
-        'Just their address — you will investigate when you arrive',
+        'DR ABC — Danger, Response, Airway, Breathing, Circulation. Call 999. Start CPR if not breathing. Send for an AED.',
+        'Document the incident in writing, including date, time, witnesses, and exact language used, and raise it through the appropriate channels',
+        'To systematically identify hazards in the design, evaluate the associated risks, and record the measures taken to eliminate, reduce, or communicate those risks',
         'When it started, which RCD is tripping, whether they have noticed any patterns, and whether any new appliances have been connected',
-        'Their credit card details to take payment in advance',
-        'Tell them to hold the RCD in the on position with tape',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Gathering information over the phone helps you prepare for the visit and may even help the client in the meantime. Asking about timing, patterns, and any changes to the installation gives you a starting point for your investigation. Never advise a client to override a safety device.',
     },
@@ -70,12 +70,12 @@ const FunctionalSkillsModule2Section3 = () => {
       question:
         'You need to explain to a homeowner why their consumer unit needs replacing. Which explanation is most appropriate?',
       options: [
-        'Your fuseboard is ancient — it could catch fire any day',
         'The current consumer unit does not provide the level of protection required by current regulations. A new unit with RCDs will protect you and your family from electric shock and reduce the risk of electrical fire.',
-        'I cannot certify the work without a new one, so you have to pay for it',
-        'Everyone else on your street has had theirs done',
+        'PUWER governs the safe provision, use and maintenance of all the equipment a maintenance technician uses daily — from hand tools to test instruments to access equipment',
+        'Uses the words precisely. "There\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s a hazard here" means something has potential to cause harm — useful for hazard identification. "There\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s a high risk" means likelihood × severity is concerning — useful for control prioritisation. Mixing the terms loses clarity.',
+        'Identify areas to probe with questions — particularly KSBs where evidence appears weaker — to verify your understanding and competence through discussion',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'The best explanation is honest, factual, and focuses on the benefit to the client (safety). It avoids scare tactics, avoids making the client feel pressured, and uses language they can understand. Mentioning RCDs and their purpose helps the client understand the value of the upgrade.',
     },
@@ -84,10 +84,10 @@ const FunctionalSkillsModule2Section3 = () => {
       question:
         'A plumber on site has accidentally drilled through one of your cables. How should you handle this?',
       options: [
-        'Shout at the plumber in front of the other trades',
+        'Intrinsic motivation comes from internal satisfaction; extrinsic comes from external rewards',
         'Report the damage to the site manager, assess the situation calmly, arrange a repair, and discuss how to prevent it happening again',
-        "Ignore it — it is the plumber's problem",
-        'Fix the cable and say nothing to avoid conflict',
+        'To identify, quantify, and evaluate the potential ecological effects of a development, and to recommend avoidance, mitigation, and compensation measures',
+        'A completed work order, updated test records, permit to work cancellation, and confirmation that all safety interlocks have been tested and are operative',
       ],
       correctAnswer: 1,
       explanation:
@@ -98,10 +98,10 @@ const FunctionalSkillsModule2Section3 = () => {
       question:
         'When presenting at a toolbox talk about safe isolation, what is the most important thing to remember?',
       options: [
-        'Use as much technical jargon as possible to sound knowledgeable',
-        'Read directly from BS 7671 word for word',
+        'Creating systems where learning from failure is valued, feedback is normalised, and development pathways are transparent',
+        'A separate metallic conductor (the supply cable sheath or a dedicated earth conductor) from the supply',
         'Speak clearly, use practical demonstrations, and check that everyone understands before finishing',
-        'Keep it under two minutes so people can get back to work quickly',
+        'Higher conflict, poor communication, increased staff turnover, more safety incidents, and reduced productivity',
       ],
       correctAnswer: 2,
       explanation:
@@ -112,12 +112,12 @@ const FunctionalSkillsModule2Section3 = () => {
       question:
         'A client complains that the light fittings you installed are not the ones they chose. You check and discover you installed the correct fittings as specified on the order. How should you respond?',
       options: [
-        'Tell them they are wrong and show them the order',
+        'With an insulation resistance tester (megohmmeter) at a test voltage appropriate to the circuit voltage (typically 500 V DC for circuits up to 500 V)',
+        'The likelihood of transient overvoltages and the consequences of equipment damage (type of wiring, value of equipment, nature of occupancy)',
+        'Co-operate with the principal contractor, comply with site rules, and report any health and safety concerns',
         'Listen to their concern, show them the specification they approved, and work together to find a solution if they are unhappy',
-        'Replace the fittings at your own cost to avoid a bad review',
-        'Tell them to speak to your office and refuse to discuss it on site',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "Even when you have done nothing wrong, the professional approach is to listen first, acknowledge the client's concern, and then calmly present the facts. Showing them the approved specification (which they signed) in a non-confrontational way usually resolves the issue. If they are still unhappy, working together on a solution maintains the relationship.",
     },
@@ -126,12 +126,12 @@ const FunctionalSkillsModule2Section3 = () => {
       question:
         'What is the most effective way to communicate with trades who speak English as a second language on a multi-trade site?',
       options: [
-        'Speak very loudly and slowly',
         'Use clear, simple language, avoid slang and idioms, supplement verbal instructions with diagrams or written notes, and confirm understanding',
-        'Only communicate through their supervisor',
-        'Use hand gestures instead of words',
+        'A bank of interconnected high-pressure air cylinders that provide an extended, continuous supply of breathing air to airline BA users',
+        '5-30 minutes, to ensure the normal supply has genuinely stabilised and is not experiencing intermittent faults that would cause repeated transfers',
+        'Report as soon as you become aware the injury meets the criteria, within 15 days of becoming aware',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Clear, simple language combined with visual aids (diagrams, written notes, colour-coded labels) is the most effective approach. Confirming understanding by asking the person to repeat the key points back to you ensures the message has been received correctly. Speaking loudly does not help if the language is unclear.',
     },

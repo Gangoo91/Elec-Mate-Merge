@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'pid-purpose-check',
     question: 'What is the primary purpose of a piping and instrumentation diagram (P&ID)?',
     options: [
-      'To show the physical layout of pipes in a building',
       'To show the functional relationship between piping, instrumentation and control equipment in a process system',
-      'To list all the pipe sizes in the installation',
-      'To show only the electrical wiring',
+      'Load characteristics, fault levels, discrimination requirements, and environmental conditions',
+      'To confirm whether the scaffold complies with standard configurations or needs bespoke design',
+      'To enable safe evacuation of premises in the event of failure of the normal supply',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A P&ID shows the functional relationship between all the process equipment (vessels, pumps, heat exchangers), the piping that connects them, and the instrumentation and controls that monitor and regulate the process. It is the primary reference document for understanding how a process system operates.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'instrument-tag-check',
     question: "An instrument tag number such as 'TT-101' on a P&ID indicates:",
     options: [
-      'A telephone terminal in area 101',
       'A temperature transmitter, identified as loop number 101',
-      'A test terminal on panel 101',
-      'A timer with 101-second delay',
+      'Failed internal electronics or connection issues',
+      'Balance voltage drop, current-carrying capacity, and installation costs',
+      'The Environmental Permitting (England and Wales) Regulations 2016',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Instrument tag numbers follow the ISA 5.1 / BS EN 62424 convention. The first letter indicates the measured variable (T = temperature), the second letter indicates the function (T = transmit). The number identifies the specific control loop (101). So TT-101 is a temperature transmitter in loop 101.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'control-valve-check',
     question: 'On a P&ID, a control valve with a pneumatic actuator is shown with:',
     options: [
-      'A simple line across the pipe',
       'A valve symbol with an actuator symbol on top, indicating the actuator type (pneumatic, electric, hydraulic) and failure mode',
-      'A circle only',
-      'No symbol — it is listed in a table',
+      'Stop them if safe, report immediately to your supervisor and the principal contractor; record what you saw',
+      'It is a non-statutory British Standard — not law, but widely regarded as the benchmark for compliance with the EAWR',
+      'To achieve a 31% reduction in CO2 emissions for new homes compared to previous standards',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Control valves on P&IDs are shown with the valve body symbol plus the actuator type above it. The failure mode (fail-open, fail-closed, fail-in-place) is indicated by notation such as FC (fail-closed) or FO (fail-open). This is essential for understanding what happens during a power or air supply failure.',
   },
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'pid-electrical-link',
     question: "How does a P&ID relate to the electrical maintenance technician's work?",
     options: [
-      'It does not — P&IDs are only for process engineers',
+      'It depends — a separate file may be appropriate for each structure if the structures will have different owners, but a single file may suffice for a single development retained by one owner',
+      'Activate the system from a different manual call point each week, using a different zone on a rota basis, and confirm the alarm sounds',
       'The P&ID identifies all instrumentation, actuators and control equipment that the electrician must maintain, and links to the electrical drawings via instrument tag numbers',
-      'It shows the cable routes for instrumentation cables',
-      'It replaces the need for electrical single-line diagrams',
+      'A target to reduce emissions consistent with limiting global warming to 1.5°C, set in line with the latest climate science, validated by the Science Based Targets initiative (SBTi)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'For a maintenance technician, the P&ID identifies every instrument, actuator and motor in the process system. The tag numbers on the P&ID cross-reference to instrument datasheets, loop diagrams, electrical drawings and the CMMS. When fault-finding a process issue, the P&ID shows which instruments and actuators are involved.',
   },
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'The letters in an ISA 5.1 instrument tag identify:',
     options: [
-      'The physical location of the instrument',
+      'Emergency procedures including appropriate first aid, and warning and communication systems',
       'The measured variable and the instrument function (e.g., FT = flow transmitter, PI = pressure indicator)',
-      'The manufacturer and model number',
-      'The cable type connected to the instrument',
+      'To define quality standards, procedures, and responsibilities for the project',
+      'To reduce the rate of water vapour diffusion into the building fabric, reducing interstitial condensation risk',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,12 +82,12 @@ const quizQuestions = [
     id: 2,
     question: 'On a P&ID, a circle with a horizontal line through the middle represents:',
     options: [
-      'A pump',
+      'Location, type, condition, pressure gauge reading (if applicable), seal integrity, and any damage or obstruction',
+      'To enable safe shutdown of critical systems and safe evacuation during power failures',
       'An instrument mounted in the field (below the line) vs in the control room (above the line)',
-      'A pipe cap',
-      'A drain point',
+      'To convert technical data into actionable information for decision-making',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The circle (balloon) symbol represents an instrument. A horizontal line through the middle indicates the instrument is mounted on the main control panel. A circle without a line indicates a field-mounted instrument. A dashed line indicates mounting on a local panel. This tells the maintenance technician where to find the instrument.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 3,
     question: 'A dashed line on a P&ID typically represents:',
     options: [
-      'A process pipe',
+      'An instrument mounted in the field (below the line) vs in the control room (above the line)',
+      'A safety-critical function with a defined Safety Integrity Level, requiring specific testing and maintenance procedures',
+      'A duty/standby pump arrangement where P-201A is the duty pump and P-201B is the standby, providing redundancy',
       'An electrical signal, pneumatic signal, or instrument connection (depending on the line style)',
-      'A structural beam',
-      'A fence or boundary',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'P&IDs use different line styles to distinguish between process piping (solid heavy lines), electrical signals (dashed lines), pneumatic signals (lines with crosses), and hydraulic signals (dashed lines with dots). Understanding these line conventions is essential for tracing signal paths from instruments to controllers.',
   },
@@ -108,12 +108,12 @@ const quizQuestions = [
     id: 4,
     question: "The term 'control loop' on a P&ID refers to:",
     options: [
-      'A circular pipe route',
       'The complete system of sensor, controller and final control element that measures a process variable, compares it to a setpoint, and adjusts the process accordingly',
-      'A wire loop for testing',
-      'A maintenance inspection route',
+      'Representation of process control engineering in P&ID diagrams, including instrument identification and graphic symbols',
+      'The electrician must maintain the electric actuator, its power supply, control wiring, limit switches and position feedback signals',
+      'The detailed wiring connections for a single instrument loop, including terminal numbers, cable references, and junction box details',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A control loop consists of: a sensor/transmitter (measures the process variable), a controller (compares measurement to setpoint and calculates correction), and a final control element (typically a control valve or VSD-driven motor) that adjusts the process. The P&ID shows all these elements and their connections.',
   },
@@ -122,10 +122,10 @@ const quizQuestions = [
     question:
       'A motor-operated valve (MOV) on a P&ID is important for electrical maintenance because:',
     options: [
-      'It does not require any electrical maintenance',
+      'Maintenance technicians must be able to interpret technical drawings including process diagrams to understand the systems they maintain',
       'The electrician must maintain the electric actuator, its power supply, control wiring, limit switches and position feedback signals',
-      'It only needs mechanical maintenance',
-      'MOVs are not shown on P&IDs',
+      'The detailed wiring connections for a single instrument loop, including terminal numbers, cable references, and junction box details',
+      'A safety-critical function with a defined Safety Integrity Level, requiring specific testing and maintenance procedures',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +135,12 @@ const quizQuestions = [
     id: 6,
     question: "A P&ID shows a pump with the tag 'P-201A/B'. This indicates:",
     options: [
-      'Two different types of pump',
+      'An instrument mounted in the field (below the line) vs in the control room (above the line)',
+      'An electrical signal, pneumatic signal, or instrument connection (depending on the line style)',
       'A duty/standby pump arrangement where P-201A is the duty pump and P-201B is the standby, providing redundancy',
-      'A pump that runs at two speeds',
-      'A pump in building A connected to a pump in building B',
+      'Representation of process control engineering in P&ID diagrams, including instrument identification and graphic symbols',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The A/B suffix indicates a duty/standby arrangement — two identical pumps where one runs (duty) and the other is on standby, ready to start automatically if the duty pump fails. This is common for critical process services. The electrician maintains both pump motors and the auto-changeover control system.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'An interlock shown on a P&ID (e.g., low oil pressure trips the compressor) is relevant to electrical maintenance because:',
     options: [
-      'Interlocks are purely mechanical',
+      'Understand the process flow, identify which instruments and control elements are involved, and determine the expected cause-and-effect relationships',
+      'A duty/standby pump arrangement where P-201A is the duty pump and P-201B is the standby, providing redundancy',
+      'A safety-critical function with a defined Safety Integrity Level, requiring specific testing and maintenance procedures',
       'The interlock logic is implemented through electrical/electronic circuits that the maintenance technician must understand, test and maintain',
-      'Interlocks are only relevant during commissioning',
-      'The P&ID does not show interlocks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Process interlocks are typically implemented through electrical/electronic circuits — hardwired safety relays, PLC logic, or safety instrumented systems (SIS). The P&ID shows what the interlock does functionally; the electrical drawings and PLC programmes show how it is implemented. The maintenance technician must understand both for effective fault-finding and testing.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 8,
     question: 'When fault-finding a process control issue, the P&ID is used to:',
     options: [
-      'Identify the cable sizes involved',
       'Understand the process flow, identify which instruments and control elements are involved, and determine the expected cause-and-effect relationships',
-      'Calculate the pipe pressure',
-      'Determine the maintenance budget',
+      'The electrician must maintain the electric actuator, its power supply, control wiring, limit switches and position feedback signals',
+      'The complete system of sensor, controller and final control element that measures a process variable, compares it to a setpoint, and adjusts the process accordingly',
+      'A duty/standby pump arrangement where P-201A is the duty pump and P-201B is the standby, providing redundancy',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The P&ID shows you the complete picture: what the process should be doing, which instruments are measuring it, which controller is regulating it, and which actuator is adjusting it. When a process variable is out of range, the P&ID helps you identify every element in the control loop that could be causing the problem.',
   },
@@ -175,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'BS EN 62424 relates to:',
     options: [
-      'Electrical wiring regulations',
+      'The detailed wiring connections for a single instrument loop, including terminal numbers, cable references, and junction box details',
       'Representation of process control engineering in P&ID diagrams, including instrument identification and graphic symbols',
-      'Fire alarm system design',
-      'Structural steelwork specifications',
+      'The electrician must maintain the electric actuator, its power supply, control wiring, limit switches and position feedback signals',
+      'An instrument mounted in the field (below the line) vs in the control room (above the line)',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       "A safety instrumented function (SIF) shown on a P&ID with an 'SIL' rating indicates:",
     options: [
-      'A standard instrument loop',
+      'An instrument mounted in the field (below the line) vs in the control room (above the line)',
+      'A duty/standby pump arrangement where P-201A is the duty pump and P-201B is the standby, providing redundancy',
       'A safety-critical function with a defined Safety Integrity Level, requiring specific testing and maintenance procedures',
-      'A simple indicator light',
-      'A spare instrument location',
+      'Maintenance technicians must be able to interpret technical drawings including process diagrams to understand the systems they maintain',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Safety instrumented functions (SIFs) are safety-critical loops with a defined SIL (Safety Integrity Level) rating per BS EN 61511. They have mandatory proof-test intervals, specific maintenance requirements, and documented test procedures. As a maintenance technician, you must follow these procedures exactly and record all test results.',
   },
@@ -202,12 +202,12 @@ const quizQuestions = [
     id: 11,
     question: 'A loop diagram differs from a P&ID in that it shows:',
     options: [
-      'The complete process plant layout',
+      'An electrical signal, pneumatic signal, or instrument connection (depending on the line style)',
+      'A safety-critical function with a defined Safety Integrity Level, requiring specific testing and maintenance procedures',
+      'Understand the process flow, identify which instruments and control elements are involved, and determine the expected cause-and-effect relationships',
       'The detailed wiring connections for a single instrument loop, including terminal numbers, cable references, and junction box details',
-      'All the instruments on the site',
-      'Only the process piping',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A loop diagram (or instrument loop drawing) shows the complete wiring detail for one specific instrument loop — from the field instrument through junction boxes, cable marshalling, to the control system I/O. It includes terminal numbers, cable references, and signal types. It is the instrument equivalent of an electrical wiring diagram.',
   },
@@ -216,12 +216,12 @@ const quizQuestions = [
     question:
       'Understanding P&IDs is important for an electrical maintenance technician under ST1426 because:',
     options: [
-      'P&IDs are only for chemical engineers',
       'Maintenance technicians must be able to interpret technical drawings including process diagrams to understand the systems they maintain',
-      'It is not relevant to ST1426',
-      'Only to satisfy academic requirements',
+      'The complete system of sensor, controller and final control element that measures a process variable, compares it to a setpoint, and adjusts the process accordingly',
+      'A safety-critical function with a defined Safety Integrity Level, requiring specific testing and maintenance procedures',
+      'Understand the process flow, identify which instruments and control elements are involved, and determine the expected cause-and-effect relationships',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 requires maintenance technicians to interpret technical drawings and documentation relevant to their work. In process industries (manufacturing, water treatment, HVAC, food production), P&IDs are fundamental documents. Understanding them enables effective fault-finding, safe isolation planning, and informed communication with process engineers.',
   },

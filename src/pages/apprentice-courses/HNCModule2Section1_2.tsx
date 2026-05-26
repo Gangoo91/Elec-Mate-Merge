@@ -32,8 +32,13 @@ const quickCheckQuestions = [
   {
     id: 'newton-cooling',
     question: "What does Newton's Law of Cooling state about heat transfer rate?",
-    options: ['Q = kA(ΔT/L)', 'Q = hA(Ts - T∞)', 'Q = εσAT⁴', 'Q = mcΔT'],
-    correctIndex: 1,
+    options: [
+      'Q = hA(Ts - T∞)',
+      'Q = kA(ΔT/L)',
+      'Q = εσAT⁴',
+      'Q = mcΔT',
+    ],
+    correctIndex: 0,
     explanation:
       "Newton's Law of Cooling states Q = hA(Ts - T∞), where h is the heat transfer coefficient, A is the surface area, and (Ts - T∞) is the temperature difference between the surface and the surrounding fluid.",
   },
@@ -41,10 +46,10 @@ const quickCheckQuestions = [
     id: 'natural-convection',
     question: 'What drives natural (free) convection?',
     options: [
-      'External fans or pumps',
+      'Steam from cooking or shower areas affecting detectors',
       'Density differences due to temperature gradients',
-      'Electromagnetic forces',
-      'Pressure differences from compressors',
+      'Three — Operatives, Specialists, and Managers & Professionals',
+      'Access dates, duration, completion dates, and dependencies',
     ],
     correctIndex: 1,
     explanation:
@@ -56,18 +61,23 @@ const quickCheckQuestions = [
     options: [
       'Panel radiators on walls',
       'Solar chimney ventilation',
-      'Fan coil units',
       'Trombe walls',
+      'Fan coil units',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Fan coil units use forced convection where a fan actively moves air across heating or cooling coils. Panel radiators, solar chimneys and Trombe walls rely primarily on natural convection.',
   },
   {
     id: 'h-value',
     question: 'What is the typical heat transfer coefficient (h) for forced air convection?',
-    options: ['5-25 W/m²K', '25-250 W/m²K', '500-10,000 W/m²K', '50,000-100,000 W/m²K'],
-    correctIndex: 1,
+    options: [
+      '500-10,000 W/m²K',
+      '50,000-100,000 W/m²K',
+      '5-25 W/m²K',
+      '25-250 W/m²K',
+    ],
+    correctIndex: 3,
     explanation:
       'Forced air convection typically has h values of 25-250 W/m²K. Natural convection in air is lower (5-25 W/m²K), while water-based systems have much higher values (500-10,000 W/m²K for forced water convection).',
   },
@@ -79,11 +89,11 @@ const quizQuestions = [
     question: 'What is convection?',
     options: [
       'Heat transfer through direct molecular contact in solids',
-      'Heat transfer by electromagnetic waves',
       'Heat transfer by fluid motion (liquid or gas)',
+      'Heat transfer by electromagnetic waves',
       'Heat transfer through a vacuum',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Convection is heat transfer that occurs through the bulk movement of fluids (liquids or gases). It combines diffusion with advection (bulk fluid motion).',
   },
@@ -91,7 +101,12 @@ const quizQuestions = [
     id: 2,
     question:
       'A radiator surface at 70°C transfers heat to room air at 20°C. If h = 10 W/m²K and the surface area is 2m², what is the heat transfer rate?',
-    options: ['100W', '500W', '1000W', '1400W'],
+    options: [
+      '1400W',
+      '100W',
+      '1000W',
+      '500W',
+    ],
     correctAnswer: 2,
     explanation: 'Using Q = hA(Ts - T∞): Q = 10 × 2 × (70 - 20) = 10 × 2 × 50 = 1000W',
   },
@@ -99,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the primary mechanism that creates natural convection currents?',
     options: [
-      'Pressure from mechanical fans',
-      'Buoyancy forces from density differences',
       'Electromagnetic radiation',
+      'Pressure from mechanical fans',
       'Phase change of refrigerants',
+      'Buoyancy forces from density differences',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Natural convection is driven by buoyancy forces. Heated fluid becomes less dense and rises, while cooler, denser fluid sinks. This creates circulation patterns without mechanical assistance.',
   },
@@ -113,12 +128,12 @@ const quizQuestions = [
     question:
       'Why do forced convection systems typically have higher heat transfer rates than natural convection?',
     options: [
-      'They operate at higher temperatures',
-      'They use better insulation',
       'Higher fluid velocities increase the heat transfer coefficient',
-      'They use different fluids',
+      'The thermal resistance of the air layer adjacent to a surface (Rsi, Rso)',
+      'They transfer heat primarily by convection (50-70%)',
+      'Water has higher thermal conductivity and specific heat capacity',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Forced convection achieves higher heat transfer rates because the increased fluid velocity enhances mixing and reduces the thermal boundary layer thickness, significantly increasing the heat transfer coefficient (h).',
   },
@@ -126,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is surface film resistance in building heat transfer calculations?',
     options: [
-      'The resistance of surface paint to heat flow',
+      'They transfer heat primarily by convection (50-70%)',
       'The thermal resistance of the air layer adjacent to a surface (Rsi, Rso)',
-      'The resistance of insulation materials',
-      'The resistance of the wall structure',
+      'Temperature difference between inside and outside creating buoyancy-driven airflow',
+      'Higher fluid velocities increase the heat transfer coefficient',
     ],
     correctAnswer: 1,
     explanation:
@@ -141,11 +156,11 @@ const quizQuestions = [
       'What are typical internal and external surface resistances used in UK U-value calculations?',
     options: [
       'Rsi = 0.04 m²K/W, Rso = 0.13 m²K/W',
-      'Rsi = 0.13 m²K/W, Rso = 0.04 m²K/W',
       'Rsi = 0.25 m²K/W, Rso = 0.25 m²K/W',
+      'Rsi = 0.13 m²K/W, Rso = 0.04 m²K/W',
       'Rsi = 0.10 m²K/W, Rso = 0.10 m²K/W',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Standard values are Rsi = 0.13 m²K/W (internal) and Rso = 0.04 m²K/W (external). The external value is lower because higher wind speeds increase the heat transfer coefficient, reducing thermal resistance.',
   },
@@ -153,20 +168,25 @@ const quizQuestions = [
     id: 7,
     question:
       'A heating coil transfers 5kW with a surface area of 0.5m² and temperature difference of 40K. What is the heat transfer coefficient?',
-    options: ['50 W/m²K', '100 W/m²K', '250 W/m²K', '500 W/m²K'],
-    correctAnswer: 2,
+    options: [
+      '50 W/m²K',
+      '100 W/m²K',
+      '500 W/m²K',
+      '250 W/m²K',
+    ],
+    correctAnswer: 3,
     explanation: 'Rearranging Q = hAΔT: h = Q/(AΔT) = 5000/(0.5 × 40) = 5000/20 = 250 W/m²K',
   },
   {
     id: 8,
     question: 'Which statement about panel radiators is correct?',
     options: [
-      'They transfer heat primarily by radiation (>70%)',
       'They transfer heat primarily by convection (50-70%)',
       'They only work with forced air circulation',
+      'They transfer heat primarily by radiation (>70%)',
       'They require fan assistance to operate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Despite the name 'radiator', panel radiators transfer 50-70% of their heat output by natural convection and only 30-50% by radiation. The fins create channels that enhance convective air flow.",
   },
@@ -174,12 +194,12 @@ const quizQuestions = [
     id: 9,
     question: "In a naturally ventilated building, what causes the 'stack effect'?",
     options: [
-      'Wind pressure on the building facade',
-      'Mechanical extract fans at roof level',
+      'The thermal resistance of the air layer adjacent to a surface (Rsi, Rso)',
       'Temperature difference between inside and outside creating buoyancy-driven airflow',
-      'Pressure from the HVAC system',
+      'Higher fluid velocities increase the heat transfer coefficient',
+      'Water has higher thermal conductivity and specific heat capacity',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The stack effect is caused by the temperature difference between inside and outside air. Warmer indoor air is less dense and rises, creating a pressure difference that draws in cooler air at lower levels and exhausts warmer air at higher levels.',
   },
@@ -187,12 +207,12 @@ const quizQuestions = [
     id: 10,
     question: 'Why is the heat transfer coefficient for water convection much higher than for air?',
     options: [
-      'Water is hotter than air',
+      'The thermal resistance of the air layer adjacent to a surface (Rsi, Rso)',
+      'Higher fluid velocities increase the heat transfer coefficient',
       'Water has higher thermal conductivity and specific heat capacity',
-      'Water flows faster than air',
-      'Water has lower viscosity',
+      'Temperature difference between inside and outside creating buoyancy-driven airflow',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Water has approximately 25 times higher thermal conductivity and 4 times higher volumetric heat capacity than air. This allows water to transfer heat much more effectively, resulting in h values 20-100 times higher than air.',
   },
@@ -202,11 +222,11 @@ const quizQuestions = [
       'A fan coil unit increases air velocity from 0.5 m/s to 3 m/s over the heating coil. What effect does this have?',
     options: [
       'Heat transfer decreases due to reduced contact time',
-      'Heat transfer coefficient increases, improving heat output',
-      'No change - temperature difference determines heat transfer',
       'Heat transfer only changes if coil temperature changes',
+      'No change - temperature difference determines heat transfer',
+      'Heat transfer coefficient increases, improving heat output',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Increasing air velocity increases the heat transfer coefficient (h) by enhancing mixing and reducing the thermal boundary layer. This significantly increases the heat transfer rate from the coil to the air, improving the unit's heating capacity.",
   },
@@ -214,8 +234,13 @@ const quizQuestions = [
     id: 12,
     question:
       'What is the relationship between surface film resistance (R) and heat transfer coefficient (h)?',
-    options: ['R = h × A', 'R = 1/h', 'R = h/A', 'R = h²'],
-    correctAnswer: 1,
+    options: [
+      'R = 1/h',
+      'R = h²',
+      'R = h × A',
+      'R = h/A',
+    ],
+    correctAnswer: 0,
     explanation:
       'Surface film resistance R = 1/h (m²K/W). This inverse relationship means higher heat transfer coefficients result in lower thermal resistance. For example, if h = 25 W/m²K, then R = 1/25 = 0.04 m²K/W.',
   },

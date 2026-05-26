@@ -50,6 +50,7 @@ interface EICTabContentProps {
   onGenerateCertificate: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
+  onJumpToTab?: (tab: EICTabValue) => void;
 }
 
 const EICTabContent: React.FC<EICTabContentProps> = ({
@@ -61,6 +62,7 @@ const EICTabContent: React.FC<EICTabContentProps> = ({
   onGenerateCertificate,
   onSaveDraft,
   canGenerateCertificate = true,
+  onJumpToTab,
 }) => {
   const isMobile = useIsMobile();
 
@@ -117,6 +119,7 @@ const EICTabContent: React.FC<EICTabContentProps> = ({
             onGenerateCertificate={onGenerateCertificate}
             onSaveDraft={onSaveDraft}
             canGenerateCertificate={canGenerateCertificate}
+            onJumpToTab={onJumpToTab}
           />
           <EICTabNavigation {...tabNavigationProps} showGenerate />
         </div>

@@ -16,12 +16,12 @@ const Module7Section2_3 = () => {
       id: 1,
       question: 'What is an earth fault?',
       options: [
+        'They immediately disconnect the supply when operated',
         'When a live conductor makes contact with earth or exposed conductive parts',
-        'When neutral and line conductors touch',
-        'When current flows through the protective conductor normally',
-        'When RCD operates correctly',
+        'On-site in an accessible location near the fire panel or site office',
+        'Adjusting airflows to achieve design air quantities at all terminals',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'An earth fault occurs when a live conductor makes contact with earth or exposed conductive parts, creating a dangerous condition.',
     },
@@ -29,12 +29,12 @@ const Module7Section2_3 = () => {
       id: 2,
       question: 'What happens if a line conductor touches exposed earthed metalwork?',
       options: [
-        'Nothing happens',
+        'Ensure metalwork is at earth potential',
+        'Report it immediately to your supervisor',
         'The metalwork becomes live and dangerous',
-        'The circuit becomes more efficient',
-        'Only the RCD will be affected',
+        'VAV (Variable Air Volume) box',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'When a line conductor touches exposed earthed metalwork, that metalwork becomes live, creating a serious shock risk.',
     },
@@ -42,12 +42,12 @@ const Module7Section2_3 = () => {
       id: 3,
       question: 'How is leakage current different from a full earth fault?',
       options: [
-        'Leakage current is much larger',
+        'A power quality analyser or power factor meter',
+        'Areas of higher thermal conductivity creating heat flow paths',
+        'Legally required inspection of specific equipment or systems',
         'Leakage current is a small, unintended flow to earth',
-        'Leakage current only occurs in old installations',
-        'There is no difference',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Leakage current is a small, unintended current that flows continuously through insulation or damp conditions, while earth faults usually involve higher currents.',
     },
@@ -55,12 +55,12 @@ const Module7Section2_3 = () => {
       id: 4,
       question: 'What risk do earth faults pose to people?',
       options: [
-        'No risk if protective devices work',
         'Electric shock from exposed metalwork becoming live',
-        'Only equipment damage',
-        'Reduced energy efficiency',
+        'A 22 mm copper incoming water service pipe',
+        'Specific training and assessment by the employer',
+        'Cancel the permit and reapply for a new one',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Earth faults pose a serious risk of electric shock as exposed metalwork can become live and dangerous to touch.',
     },
@@ -68,10 +68,10 @@ const Module7Section2_3 = () => {
       id: 5,
       question: 'What risk do leakage currents pose to installations?',
       options: [
-        'No risk at all',
+        'Commissioning engineers and controls specialists',
         'Nuisance tripping of RCDs and potential overheating',
-        'Improved safety',
-        'Better energy efficiency',
+        'To verify battery capacity and autonomy',
+        'Fibre with gradually changing refractive index across the core',
       ],
       correctAnswer: 1,
       explanation:
@@ -80,7 +80,12 @@ const Module7Section2_3 = () => {
     {
       id: 6,
       question: 'Which device detects current imbalance caused by leakage?',
-      options: ['MCB', 'Fuse', 'RCD', 'Isolator'],
+      options: [
+        'MCB',
+        'Fuse',
+        'RCD',
+        'Isolator',
+      ],
       correctAnswer: 2,
       explanation:
         'RCDs (Residual Current Devices) monitor current balance between live and neutral and trip if leakage to earth is detected.',
@@ -97,12 +102,12 @@ const Module7Section2_3 = () => {
       id: 8,
       question: 'What can cause leakage currents in electrical installations?',
       options: [
-        'Perfect insulation',
         'Leakage currents from damp conditions or equipment filters',
-        'Correct earthing',
-        'Low resistance conductors',
+        'When a conductor is broken or disconnected, stopping current flow',
+        'Remains outside to maintain communication and initiate rescue',
+        'Level 3 Diploma in Installing Electrotechnical Systems',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Leakage currents from damp conditions, equipment filters, or deteriorating insulation can cause nuisance RCD tripping.',
     },
@@ -122,8 +127,13 @@ const Module7Section2_3 = () => {
     {
       id: 10,
       question: 'Which BS 7671 part covers selection and erection of RCDs?',
-      options: ['Part 411', 'Part 531', 'Part 514', 'Part 522'],
-      correctAnswer: 1,
+      options: [
+        'Part 411',
+        'Part 522',
+        'Part 531',
+        'Part 514',
+      ],
+      correctAnswer: 2,
       explanation:
         'BS 7671 Part 531 covers the selection and erection of devices for protection against electric shock, including RCDs.',
     },

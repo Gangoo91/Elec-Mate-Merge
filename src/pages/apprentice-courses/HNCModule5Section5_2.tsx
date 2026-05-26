@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'initial-verification',
     question: 'What must be completed before any electrical installation is energised?',
     options: [
-      'Client sign-off only',
+      'Building control approval',
       'Initial verification testing',
       'Final account payment',
-      'Building control approval',
+      'Client sign-off only',
     ],
     correctIndex: 1,
     explanation:
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'dead-testing',
     question: 'Which tests must be carried out with the supply disconnected (dead testing)?',
     options: [
-      'Voltage drop only',
-      'Prospective fault current only',
+      'To maintain light output and performance',
+      'AHU shutdown and access door release',
       'Continuity and insulation resistance',
-      'Earth loop impedance only',
+      'Variable speed drive (VSD)',
     ],
     correctIndex: 2,
     explanation:
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'eic-purpose',
     question: 'What is the purpose of an Electrical Installation Certificate (EIC)?',
     options: [
-      'To request DNO connection',
+      'Integration with mechanical ventilation and air quality systems',
+      'Reasonable care and skill, at a reasonable price',
+      'Viewing the measurement scale at an angle',
       'To certify initial verification of a new installation',
-      'To record periodic inspection findings',
-      'To approve design only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The EIC certifies that a new installation, or addition/alteration to an existing installation, has been designed, constructed, inspected and tested in accordance with BS 7671.',
   },
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'test-sequence',
     question: 'Why is the correct sequence of testing important?',
     options: [
-      'To save time only',
+      'Carry out full initial verification style testing',
       'To ensure earlier tests validate later test results',
-      'To satisfy insurance requirements',
-      'To reduce equipment costs',
+      'The minimum base dimension (the shorter side)',
+      'To simulate mains failure for testing',
     ],
     correctIndex: 1,
     explanation:
@@ -85,7 +85,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'According to BS 7671, what is the minimum insulation resistance for a 230V circuit?',
-    options: ['0.5 megohms', '1.0 megohm', '2.0 megohms', '10 megohms'],
+    options: [
+      '0.5 megohms',
+      '1.0 megohm',
+      '2.0 megohms',
+      '10 megohms',
+    ],
     correctAnswer: 1,
     explanation:
       'For circuits up to and including 500V, BS 7671 Table 61 requires a minimum insulation resistance of 1.0 megohm when tested at 500V DC.',
@@ -94,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'What must be disconnected before carrying out insulation resistance testing?',
     options: [
-      'Nothing - test with all equipment connected',
-      'Only lighting circuits',
+      'After all other tests are satisfactory and supply is energised',
+      'To verify protection settings, interlocks and control circuits operate correctly',
       'Electronic equipment, surge protective devices, and voltage-sensitive devices',
-      'Only socket outlets',
+      'The person responsible for the design of the installation',
     ],
     correctAnswer: 2,
     explanation:
@@ -107,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'When testing ring final circuit continuity, what confirms the ring is complete?',
     options: [
-      'High resistance reading',
-      'Equal readings at each socket',
+      'Electronic equipment, surge protective devices, and voltage-sensitive devices',
+      'The person responsible for the design of the installation',
+      'After all other tests are satisfactory and supply is energised',
       'Resistance at mid-point approximately equal to end-to-end values',
-      'Zero resistance throughout',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'With cross-connected leads at the distribution board, readings at each socket should be substantially the same and approximately equal to the initial end-to-end measurement. This confirms the ring is continuous.',
   },
@@ -120,20 +125,25 @@ const quizQuestions = [
     id: 4,
     question: 'What document must accompany every new electrical installation?',
     options: [
-      'Minor Works Certificate',
-      'EICR',
       'Electrical Installation Certificate (EIC)',
-      'Domestic Installation Certificate only',
+      'Sinusoidal AC residual current only',
+      'Mixing RCD-protected and non-protected neutrals',
+      'Electric vehicle charging and smart appliances',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'An Electrical Installation Certificate (EIC) must be issued for every new installation. It includes design, construction and inspection/test schedules, signed by the responsible persons.',
   },
   {
     id: 5,
     question: 'What is the maximum permitted Zs for a 32A Type B MCB on a TN-S system?',
-    options: ['0.69 ohms', '1.09 ohms', '1.37 ohms', '2.19 ohms'],
-    correctAnswer: 2,
+    options: [
+      '1.09 ohms',
+      '1.37 ohms',
+      '2.19 ohms',
+      '0.69 ohms',
+    ],
+    correctAnswer: 1,
     explanation:
       'For a 32A Type B MCB, the maximum Zs from BS 7671:2018+A4:2026 Table 41.3 is 1.37 ohms (Cmin = 0.95 applied; the 0.8 factor for ambient measurement gives a field test maximum of approximately 1.10 ohms).',
   },
@@ -141,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'When should RCD operation be tested during commissioning?',
     options: [
-      'Only at final inspection',
-      'During dead testing phase',
+      'To verify protection settings, interlocks and control circuits operate correctly',
+      'PSCC/PFC and Ze are within design parameters',
       'After all other tests are satisfactory and supply is energised',
-      'Before insulation resistance testing',
+      'Resistance at mid-point approximately equal to end-to-end values',
     ],
     correctAnswer: 2,
     explanation:
@@ -154,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of functional testing during switchgear commissioning?',
     options: [
-      'To check cable colours only',
+      'To allow systematic fault identification and prevent cascading failures',
+      'Resistance at mid-point approximately equal to end-to-end values',
+      'After all other tests are satisfactory and supply is energised',
       'To verify protection settings, interlocks and control circuits operate correctly',
-      'To measure insulation resistance only',
-      'To confirm nameplate details',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Functional testing verifies that protection relays operate at correct settings, mechanical and electrical interlocks function properly, and control/indication circuits perform as designed.',
   },
@@ -167,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'Who must sign Schedule 1 (design) of an Electrical Installation Certificate?',
     options: [
-      'The installing electrician only',
-      'The client',
       'The person responsible for the design of the installation',
-      'Any competent person',
+      'Resistance at mid-point approximately equal to end-to-end values',
+      'PSCC/PFC and Ze are within design parameters',
+      'To allow systematic fault identification and prevent cascading failures',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Schedule 1 must be signed by the person responsible for the design, confirming it complies with BS 7671. This may be different from the installer if design and installation are by separate parties.',
   },
@@ -180,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'What documentation should be provided for LV switchgear commissioning?',
     options: [
-      'Visual inspection only',
+      'To verify protection settings, interlocks and control circuits operate correctly',
       'Test certificates, relay settings, protection coordination studies and as-built drawings',
-      'Manufacturer catalogues only',
-      'Installation photographs only',
+      'Resistance at mid-point approximately equal to end-to-end values',
+      'To allow systematic fault identification and prevent cascading failures',
     ],
     correctAnswer: 1,
     explanation:
@@ -194,12 +204,12 @@ const quizQuestions = [
     question:
       'Before energising a new installation, what must be verified regarding the DNO supply?',
     options: [
-      'Only the meter serial number',
+      'A pre-programmed combination of lighting settings',
+      'Mathematical compensation for non-linear sensor response',
       'PSCC/PFC and Ze are within design parameters',
-      'The supply cable colour only',
-      'Nothing - just connect',
+      'To reduce electromagnetic interference (EMI)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The prospective short circuit current (PSCC) and external earth fault loop impedance (Ze) must be verified to confirm the installation protective devices are adequate and discrimination is maintained.',
   },
@@ -207,8 +217,13 @@ const quizQuestions = [
     id: 11,
     question:
       'What is the trip time requirement for a 30mA RCD at 5 times rated residual current (150mA)?',
-    options: ['40ms maximum', '200ms maximum', '300ms maximum', '1 second maximum'],
-    correctAnswer: 0,
+    options: [
+      '1 second maximum',
+      '200ms maximum',
+      '300ms maximum',
+      '40ms maximum',
+    ],
+    correctAnswer: 3,
     explanation:
       "When tested at 5 times the rated residual current (5 x 30mA = 150mA), a general-use RCD must trip within 40ms. This tests the RCD's ability to provide supplementary protection against electric shock.",
   },
@@ -216,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'Why is phased energisation recommended for large installations?',
     options: [
-      'To save electricity costs',
       'To allow systematic fault identification and prevent cascading failures',
-      'To satisfy insurance only',
-      'It is not recommended',
+      'Electronic equipment, surge protective devices, and voltage-sensitive devices',
+      'To verify protection settings, interlocks and control circuits operate correctly',
+      'The person responsible for the design of the installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Phased energisation allows faults to be identified and isolated to specific sections, prevents overloading during initial energisation, and enables systematic verification of each section before proceeding.',
   },

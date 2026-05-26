@@ -29,20 +29,25 @@ const Module7Section5_3 = () => {
       id: 2,
       question: 'Why must test leads be fused?',
       options: [
-        'To improve measurement accuracy',
+        'The type of electrical system the equipment is rated for',
+        'Reported the damaged probes and got compliant replacements',
         'To protect the user from high fault currents if a short circuit occurs',
-        'To extend the life of the test equipment',
-        'To comply with insurance requirements',
+        'False - homemade or modified test equipment must never be used',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Fused leads with high-breaking capacity (HBC) fuses protect the user from dangerous fault currents during short circuit conditions.',
     },
     {
       id: 3,
       question: 'How much exposed metal is permitted at a probe tip under GS38?',
-      options: ['No more than 1 mm', 'No more than 2 mm', 'No more than 4 mm', 'No more than 6 mm'],
-      correctAnswer: 1,
+      options: [
+        'No more than 4 mm',
+        'No more than 1 mm',
+        'No more than 6 mm',
+        'No more than 2 mm',
+      ],
+      correctAnswer: 3,
       explanation:
         'GS38 requires that only 2 mm of exposed metal should be visible at the probe tip to reduce risk of accidental contact with live parts.',
     },
@@ -50,12 +55,12 @@ const Module7Section5_3 = () => {
       id: 4,
       question: 'What is the purpose of finger guards on probes?',
       options: [
-        'To improve grip on the probe',
         'To prevent fingers from slipping forward onto live conductors',
-        'To protect the probe from damage',
-        'To identify different probe types',
+        'To protect the user from high fault currents if a short circuit occurs',
+        'False - homemade or modified test equipment must never be used',
+        'The type of electrical system the equipment is rated for',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         "Finger guards prevent the user's fingers from accidentally sliding forward and making contact with live conductors during testing.",
     },
@@ -65,8 +70,8 @@ const Module7Section5_3 = () => {
       options: [
         'To reduce electrical noise in measurements',
         'To provide protection against cuts, abrasion, and heat',
-        'To improve flexibility of the leads',
         'To meet colour coding requirements',
+        'To improve flexibility of the leads',
       ],
       correctAnswer: 1,
       explanation:
@@ -77,11 +82,11 @@ const Module7Section5_3 = () => {
       question: 'What do CAT II, CAT III, and CAT IV ratings indicate?',
       options: [
         'The accuracy class of the instrument',
-        'The type of electrical system the equipment is rated for',
         "The manufacturer's quality grade",
+        'The type of electrical system the equipment is rated for',
         'The calibration frequency required',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Category ratings (CAT II, III, IV) indicate the type and severity of electrical environment the test equipment is designed to safely operate in.',
     },
@@ -89,12 +94,12 @@ const Module7Section5_3 = () => {
       id: 7,
       question: 'True or False: Homemade or modified test leads are acceptable if they work.',
       options: [
-        'True - if they function correctly',
+        'To provide protection against cuts, abrasion, and heat',
+        'To protect the user from high fault currents if a short circuit occurs',
+        'The type of electrical system the equipment is rated for',
         'False - homemade or modified test equipment must never be used',
-        'True - if approved by a supervisor',
-        'False - only for apprentices, qualified electricians can use them',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'GS38 explicitly prohibits the use of homemade or modified test equipment as they cannot guarantee compliance with safety standards.',
     },
@@ -102,12 +107,12 @@ const Module7Section5_3 = () => {
       id: 8,
       question: 'What regulation underpins the need for GS38 compliance?',
       options: [
-        'BS 7671 Wiring Regulations',
-        'Building Regulations Part P',
         'Electricity at Work Regulations 1989',
         'Health and Safety at Work Act 1974',
+        'BS 7671 Wiring Regulations',
+        'Building Regulations Part P',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'The Electricity at Work Regulations 1989 provide the legal framework that makes GS38 compliance a legal expectation for safe working.',
     },
@@ -116,11 +121,11 @@ const Module7Section5_3 = () => {
       question: 'In the real-world example, what fault occurred due to non-compliant probes?',
       options: [
         'Electric shock to the electrician',
-        'Incorrect readings leading to misdiagnosis',
         'Short circuit causing flashover and burns',
+        'Incorrect readings leading to misdiagnosis',
         'Damage to the test instrument',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'The long, exposed metal tips on non-compliant probes slipped and created a short circuit, causing a flashover that resulted in burns and equipment damage.',
     },

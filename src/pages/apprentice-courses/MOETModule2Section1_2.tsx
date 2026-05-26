@@ -14,7 +14,12 @@ const quickCheckQuestions = [
     id: 'ohms-law-triangle',
     question:
       "Using Ohm's Law, what current flows through a 23 ohm resistor connected to a 230 V supply?",
-    options: ['0.1 A', '5 A', '10 A', '253 A'],
+    options: [
+      '253 A',
+      '5 A',
+      '10 A',
+      '0.1 A',
+    ],
     correctIndex: 2,
     explanation:
       "Using Ohm's Law: I = V / R = 230 / 23 = 10 A. This is a typical calculation you would perform when checking whether a load is drawing the correct current — for example, verifying a heater element is functioning correctly by comparing measured current against the calculated value.",
@@ -23,16 +28,26 @@ const quickCheckQuestions = [
     id: 'series-voltage',
     question:
       'Three resistors of 10, 20 and 30 ohms are connected in series across a 120 V supply. What is the total current in the circuit?',
-    options: ['12 A', '6 A', '2 A', '0.5 A'],
-    correctIndex: 2,
+    options: [
+      '12 A',
+      '6 A',
+      '0.5 A',
+      '2 A',
+    ],
+    correctIndex: 3,
     explanation:
       'In a series circuit, total resistance = R1 + R2 + R3 = 10 + 20 + 30 = 60 ohms. Total current = V / Rt = 120 / 60 = 2 A. In a series circuit, this same current flows through every component — it is the same at every point in the circuit.',
   },
   {
     id: 'parallel-resistance',
     question: 'Two 100 ohm resistors are connected in parallel. What is the total resistance?',
-    options: ['200 ohms', '100 ohms', '50 ohms', '25 ohms'],
-    correctIndex: 2,
+    options: [
+      '50 ohms',
+      '200 ohms',
+      '25 ohms',
+      '100 ohms',
+    ],
+    correctIndex: 0,
     explanation:
       'For two equal resistors in parallel: Rt = R / n = 100 / 2 = 50 ohms. Using the formula: 1/Rt = 1/R1 + 1/R2 = 1/100 + 1/100 = 2/100, so Rt = 100/2 = 50 ohms. The total resistance of a parallel combination is always less than the smallest individual resistance.',
   },
@@ -40,7 +55,12 @@ const quickCheckQuestions = [
     id: 'watts-law',
     question:
       "A motor draws 15 A from a 400 V three-phase supply. Using the single-phase form of Watt's Law (P = V x I), what is the apparent power per phase?",
-    options: ['26.7 W', '415 W', '6000 W', '6000 VA'],
+    options: [
+      '415 W',
+      '26.7 W',
+      '6000 W',
+      '6000 VA',
+    ],
     correctIndex: 3,
     explanation:
       'Per phase: P = V x I = 400 x 15 = 6000 VA (volt-amperes). Note we use VA (not watts) because this gives the apparent power. The true power in watts depends on the power factor. For a motor with a typical power factor of 0.85, the true power would be 6000 x 0.85 = 5100 W per phase.',
@@ -64,7 +84,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A 2 kW heater is connected to a 230 V supply. What current does it draw?',
-    options: ['0.115 A', '4.6 A', '8.7 A', '460 A'],
+    options: [
+      '460 A',
+      '0.115 A',
+      '8.7 A',
+      '4.6 A',
+    ],
     correctAnswer: 2,
     explanation:
       "Using Watt's Law rearranged: I = P / V = 2000 / 230 = 8.7 A. This is a common calculation for determining the current drawn by appliances to select the correct fuse rating or circuit breaker.",
@@ -72,8 +97,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'In a series circuit, which quantity remains the same through all components?',
-    options: ['Voltage', 'Resistance', 'Current', 'Power'],
-    correctAnswer: 2,
+    options: [
+      'Resistance',
+      'Voltage',
+      'Power',
+      'Current',
+    ],
+    correctAnswer: 3,
     explanation:
       'In a series circuit, the current is the same at every point because there is only one path for current to flow. The voltage divides across the components in proportion to their resistances, and each component may dissipate different amounts of power.',
   },
@@ -81,16 +111,26 @@ const quizQuestions = [
     id: 4,
     question:
       'Three resistors of 4, 6 and 12 ohms are connected in series. What is the total resistance?',
-    options: ['2 ohms', '7.3 ohms', '12 ohms', '22 ohms'],
-    correctAnswer: 3,
+    options: [
+      '22 ohms',
+      '7.3 ohms',
+      '12 ohms',
+      '2 ohms',
+    ],
+    correctAnswer: 0,
     explanation:
       'In a series circuit, total resistance is the sum of individual resistances: Rt = R1 + R2 + R3 = 4 + 6 + 12 = 22 ohms. Series resistance is always greater than the largest individual resistance.',
   },
   {
     id: 5,
     question: 'In a parallel circuit, which quantity is the same across all branches?',
-    options: ['Current', 'Resistance', 'Voltage', 'Power'],
-    correctAnswer: 2,
+    options: [
+      'Resistance',
+      'Voltage',
+      'Power',
+      'Current',
+    ],
+    correctAnswer: 1,
     explanation:
       'In a parallel circuit, the voltage across each branch is the same because they are all connected between the same two points. The current divides between the branches — more current flows through the branch with the lower resistance.',
   },
@@ -98,8 +138,13 @@ const quizQuestions = [
     id: 6,
     question:
       'Two resistors of 6 ohms and 12 ohms are connected in parallel. What is the combined resistance?',
-    options: ['4 ohms', '6 ohms', '9 ohms', '18 ohms'],
-    correctAnswer: 0,
+    options: [
+      '9 ohms',
+      '6 ohms',
+      '4 ohms',
+      '18 ohms',
+    ],
+    correctAnswer: 2,
     explanation:
       'Using the product-over-sum formula for two resistors in parallel: Rt = (R1 x R2) / (R1 + R2) = (6 x 12) / (6 + 12) = 72 / 18 = 4 ohms. Note that 4 ohms is less than the smaller resistor (6 ohms), confirming the parallel combination has less resistance than either branch alone.',
   },
@@ -107,8 +152,13 @@ const quizQuestions = [
     id: 7,
     question:
       'Using P = I squared x R, what power is dissipated in a cable with 0.5 ohm resistance carrying 20 A?',
-    options: ['10 W', '40 W', '200 W', '400 W'],
-    correctAnswer: 2,
+    options: [
+      '10 W',
+      '40 W',
+      '400 W',
+      '200 W',
+    ],
+    correctAnswer: 3,
     explanation:
       'P = I squared x R = 20 squared x 0.5 = 400 x 0.5 = 200 W. This represents the heat generated in the cable. This is a critical calculation in maintenance — excessive I squared R losses lead to cable overheating and potential fire risk, which is why cable sizing must account for current-carrying capacity.',
   },
@@ -116,8 +166,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A 230 V supply feeds two 100 ohm resistors in series. What voltage appears across each resistor?',
-    options: ['23 V', '115 V', '230 V', '460 V'],
-    correctAnswer: 1,
+    options: [
+      '115 V',
+      '230 V',
+      '23 V',
+      '460 V',
+    ],
+    correctAnswer: 0,
     explanation:
       'In a series circuit, voltage divides in proportion to resistance. Since both resistors are equal (100 ohms each), the voltage divides equally: 230 / 2 = 115 V across each. This is the voltage divider principle — the voltage across each component is proportional to its share of the total resistance.',
   },
@@ -126,19 +181,24 @@ const quizQuestions = [
     question:
       'A maintenance technician measures 230 V across a motor but only 0.5 A of current. The motor nameplate states 4.5 A. What does this suggest?',
     options: [
-      'The motor is operating normally at light load',
-      'The supply voltage is too high',
+      'The body\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s automatic survival response to perceived danger',
       'There may be a high-resistance fault in the circuit or motor windings',
-      'The measurement instrument is faulty',
+      'Approximately the same (should be r1+rn)/4 or (r1+r2)/4',
+      'Degree-level qualification plus professional development review',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "If the voltage is correct (230 V) but the current is significantly lower than expected (0.5 A vs 4.5 A nameplate), Ohm's Law tells us the resistance must be much higher than normal: R = V/I = 230/0.5 = 460 ohms, compared to the expected R = 230/4.5 = 51 ohms. This points to a high-resistance fault — possibly a broken winding, corroded connection, or open-circuit phase.",
   },
   {
     id: 10,
     question: 'Which formula correctly relates power to voltage and resistance?',
-    options: ['P = V x R', 'P = V / R', 'P = V squared / R', 'P = R squared / V'],
+    options: [
+      'P = V x R',
+      'P = V / R',
+      'P = V squared / R',
+      'P = R squared / V',
+    ],
     correctAnswer: 2,
     explanation:
       'P = V squared / R is derived from substituting I = V/R into P = IV: P = V x (V/R) = V squared / R. This form is particularly useful when you know the supply voltage and the resistance of a load, such as calculating the power output of a heating element.',
@@ -147,7 +207,12 @@ const quizQuestions = [
     id: 11,
     question:
       'A 12 V supply feeds a parallel circuit with branches drawing 2 A, 3 A and 1 A respectively. What is the total current from the supply?',
-    options: ['1 A', '2 A', '3 A', '6 A'],
+    options: [
+      '1 A',
+      '2 A',
+      '3 A',
+      '6 A',
+    ],
     correctAnswer: 3,
     explanation:
       "In a parallel circuit, the total current is the sum of the branch currents: It = I1 + I2 + I3 = 2 + 3 + 1 = 6 A. This is Kirchhoff's Current Law — the total current entering a junction equals the total current leaving it. This principle is used when calculating the total load on a distribution board.",
@@ -157,12 +222,12 @@ const quizQuestions = [
     question:
       'A heating element has a resistance of 19.3 ohms when cold but increases to 22.1 ohms when hot. At 230 V, what is the difference in current between cold and hot conditions?',
     options: [
-      'Approximately 0.7 A',
       'Approximately 1.5 A',
-      'Approximately 2.8 A',
       'Approximately 11.9 A',
+      'Approximately 0.7 A',
+      'Approximately 2.8 A',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cold current: I = V/R = 230/19.3 = 11.9 A. Hot current: I = V/R = 230/22.1 = 10.4 A. Difference = 11.9 - 10.4 = 1.5 A. This demonstrates why heating elements draw more current when first switched on (inrush) and why protective devices must be selected to accommodate this initial surge without nuisance tripping.',
   },

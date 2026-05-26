@@ -38,20 +38,25 @@ const checks = [
     question:
       'You’re reducing a network that has parallel branches in the middle of a series chain. Which do you reduce first?',
     options: [
-      'Always start with the series part',
+      'To prevent stress on electrical connections from cable movement',
+      'To verify that the protective conductor can withstand fault currents',
+      'Tell the appointed first aider so the bottle is replaced before the next person needs it',
       'Reduce the parallel sections first, then add the series resistors to the result',
-      'Always start with the largest resistor',
-      'Pick the side closest to the supply',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Collapse the parallel sections to a single equivalent resistance first, then you’ve got a clean series chain to add up. Doing it the other way round leaves you with a mess.',
   },
   {
     id: 'two-equal-parallel-shortcut',
     question: 'Two equal 200 Ω resistors in parallel give a total of…',
-    options: ['400 Ω', '200 Ω', '100 Ω', '50 Ω'],
-    correctIndex: 2,
+    options: [
+      '400 Ω',
+      '100 Ω',
+      '200 Ω',
+      '50 Ω',
+    ],
+    correctIndex: 1,
     explanation:
       'Two equal Rs in parallel = R ÷ 2. So 200 ÷ 2 = 100 Ω. Quick mental shortcut for spot calcs.',
   },
@@ -59,8 +64,13 @@ const checks = [
     id: 'mixed-network-total',
     question:
       'Two 10 Ω resistors in parallel, then in series with a 5 Ω resistor. What is the total resistance?',
-    options: ['25 Ω', '15 Ω', '10 Ω', '20 Ω'],
-    correctIndex: 2,
+    options: [
+      '10 Ω',
+      '20 Ω',
+      '25 Ω',
+      '15 Ω',
+    ],
+    correctIndex: 0,
     explanation:
       'Parallel pair first: (10 × 10) ÷ (10 + 10) = 5 Ω. Then add the series 5 Ω: 5 + 5 = 10 Ω total.',
   },
@@ -86,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'For two resistors in parallel, the equivalent resistance is…',
     options: [
+      'R₁ − R₂',
       'R₁ + R₂',
       '(R₁ × R₂) ÷ (R₁ + R₂)',
-      'R₁ − R₂',
       'R₁ × R₂',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'Product over sum is the two-resistor parallel shortcut. Always less than the smallest branch.',
   },
   {
@@ -99,12 +109,12 @@ const quizQuestions = [
     question:
       'When reducing a complex series-parallel network, the recommended order of operations is…',
     options: [
-      'Series first, then parallel',
-      'Parallel first, then series',
       'Largest resistor first, smallest last',
+      'Series first, then parallel',
       'Whichever side has the supply',
+      'Parallel first, then series',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Collapse the parallel sections to single equivalent resistors, which leaves a clean series chain to add up. Easier to track and harder to mess up.',
   },
@@ -112,15 +122,25 @@ const quizQuestions = [
     id: 4,
     question:
       'Three resistors: 20 Ω and 30 Ω in parallel, then in series with 10 Ω. Total resistance?',
-    options: ['60 Ω', '22 Ω', '15 Ω', '50 Ω'],
-    correctAnswer: 1,
+    options: [
+      '22 Ω',
+      '60 Ω',
+      '15 Ω',
+      '50 Ω',
+    ],
+    correctAnswer: 0,
     explanation: 'Parallel pair: (20 × 30) ÷ (20 + 30) = 600 ÷ 50 = 12 Ω. Then series: 12 + 10 = 22 Ω.',
   },
   {
     id: 5,
     question: 'A voltage divider with a 12 V supply, R₁ = 4 Ω, R₂ = 8 Ω. Voltage across R₂?',
-    options: ['4 V', '6 V', '8 V', '12 V'],
-    correctAnswer: 2,
+    options: [
+      '6 V',
+      '8 V',
+      '12 V',
+      '4 V',
+    ],
+    correctAnswer: 1,
     explanation:
       'V₂ = Vs × R₂ ÷ Rt = 12 × 8 ÷ (4 + 8) = 12 × 8 ÷ 12 = 8 V. The bigger resistor takes the bigger share.',
   },
@@ -128,7 +148,12 @@ const quizQuestions = [
     id: 6,
     question:
       'Current divider: 3 A total flowing into a parallel pair of 6 Ω and 12 Ω. Current through the 6 Ω branch?',
-    options: ['1 A', '1.5 A', '2 A', '3 A'],
+    options: [
+      '1 A',
+      '1.5 A',
+      '2 A',
+      '3 A',
+    ],
     correctAnswer: 2,
     explanation:
       'Lower resistance carries more current. I(6 Ω) = Itotal × R(other) ÷ (R(6) + R(other)) = 3 × 12 ÷ (6 + 12) = 36 ÷ 18 = 2 A.',
@@ -137,16 +162,26 @@ const quizQuestions = [
     id: 7,
     question:
       'You collapse a network and end up with Rt = 75 Ω across a 12 V supply. What is the total current?',
-    options: ['0.16 A', '0.625 A', '6.25 A', '900 A'],
-    correctAnswer: 0,
+    options: [
+      '900 A',
+      '0.625 A',
+      '6.25 A',
+      '0.16 A',
+    ],
+    correctAnswer: 3,
     explanation: 'I = V ÷ R = 12 ÷ 75 = 0.16 A. Every reduction problem ends with one Ohm’s law calc.',
   },
   {
     id: 8,
     question:
       'Three identical 30 Ω resistors all in parallel. What is the equivalent resistance?',
-    options: ['90 Ω', '30 Ω', '15 Ω', '10 Ω'],
-    correctAnswer: 3,
+    options: [
+      '10 Ω',
+      '15 Ω',
+      '90 Ω',
+      '30 Ω',
+    ],
+    correctAnswer: 0,
     explanation: 'Identical parallel resistors: Rt = R ÷ n = 30 ÷ 3 = 10 Ω.',
   },
 ];

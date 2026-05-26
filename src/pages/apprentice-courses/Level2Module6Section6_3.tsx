@@ -17,22 +17,22 @@ const Level2Module6Section6_3 = () => {
     {
       question: 'What risk does a loose connection create when the circuit is under load?',
       options: [
-        'Overheating and potential fire risk',
         'Causes lights to flicker only',
-        'No risk if readings are acceptable',
         'Reduces power consumption',
+        'Overheating and potential fire risk',
+        'No risk if readings are acceptable',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'Loose connections create high resistance, which causes heating under load. This can lead to overheating, insulation damage, and fire risk.',
     },
     {
       question: 'What test result would typically indicate damaged or deteriorated insulation?',
       options: [
-        'High earth fault loop impedance',
-        'Low insulation resistance reading',
-        'Perfect continuity readings',
         'Zero voltage readings',
+        'Low insulation resistance reading',
+        'High earth fault loop impedance',
+        'Perfect continuity readings',
       ],
       correctAnswer: 1,
       explanation:
@@ -41,24 +41,24 @@ const Level2Module6Section6_3 = () => {
     {
       question: 'Why is reversed polarity considered such a serious defect?',
       options: [
+        'It causes electrical noise',
         'It increases the electricity bill',
         "Equipment remains live when switched 'off'",
-        'It causes electrical noise',
         "It's only a cosmetic issue",
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Reversed polarity means switching is in the neutral conductor, leaving equipment live even when switched off, creating a serious shock risk.',
     },
     {
       question: 'What might a very high Zs reading suggest about the earthing arrangement?',
       options: [
-        'Extra sockets have been added',
         'Missing or undersized protective conductor',
-        'Good insulation resistance',
-        'Low load on the circuit',
+        'Continuity and earth fault loop impedance tests',
+        'Low insulation resistance values',
+        'False - switching must be in the line conductor',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'High Zs readings often indicate missing, disconnected, or undersized protective conductors, preventing safe disconnection during faults.',
     },
@@ -69,12 +69,12 @@ const Level2Module6Section6_3 = () => {
       id: 1,
       question: 'What type of test often reveals loose connections?',
       options: [
+        'Overheating and potential fire risk',
         'Continuity and earth fault loop impedance tests',
-        'Visual inspection only',
-        'Voltage measurements',
-        'Power consumption tests',
+        'Low insulation resistance reading',
+        'Equipment remains live when switched off',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'Loose connections show up as abnormally high resistance values in continuity and Zs testing.',
     },
@@ -82,12 +82,12 @@ const Level2Module6Section6_3 = () => {
       id: 2,
       question: 'What danger can loose connections cause under load?',
       options: [
+        'Circuit breaker nuisance tripping',
         'Reduced efficiency only',
         'Overheating and fire risk',
-        'Circuit breaker nuisance tripping',
         'Voltage fluctuations',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'High resistance from loose connections causes heating under load, potentially leading to fire.',
     },
@@ -95,12 +95,12 @@ const Level2Module6Section6_3 = () => {
       id: 3,
       question: 'What test result suggests damaged or deteriorated insulation?',
       options: [
-        'High continuity readings',
-        'Low insulation resistance values',
         'Perfect polarity results',
+        'High continuity readings',
         'High voltage readings',
+        'Low insulation resistance values',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Damaged insulation shows as low insulation resistance, typically below the 1 MΩ minimum.',
     },
@@ -123,8 +123,8 @@ const Level2Module6Section6_3 = () => {
       options: [
         'Increased power consumption',
         'Equipment remains live when switched off',
-        'Reduced equipment lifespan',
         'Electrical noise interference',
+        'Reduced equipment lifespan',
       ],
       correctAnswer: 1,
       explanation:
@@ -135,11 +135,11 @@ const Level2Module6Section6_3 = () => {
       question: 'True or False: A switch connected in the neutral is acceptable practice.',
       options: [
         'True - neutral switching is standard',
-        'False - switching must be in the line conductor',
         'True - if properly labeled',
+        'False - switching must be in the line conductor',
         'False - only for three-phase circuits',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Switches must always be in the line conductor to ensure equipment is properly isolated when switched off.',
     },
@@ -147,12 +147,12 @@ const Level2Module6Section6_3 = () => {
       id: 7,
       question: 'What might high Zs readings indicate about the earthing system?',
       options: [
-        'Excellent earth connection',
+        'Low insulation resistance reading',
+        'Equipment remains live when switched \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+        'Overheating and potential fire risk',
         'Missing or inadequate protective conductors',
-        'Normal system operation',
-        'Low earth resistance',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'High Zs readings suggest problems with protective conductor continuity or earth connection quality.',
     },
@@ -160,12 +160,12 @@ const Level2Module6Section6_3 = () => {
       id: 8,
       question: 'Why must all CPCs be correctly connected?',
       options: [
-        'To reduce installation costs',
         'For protective device operation during faults',
-        'To improve power factor',
-        'For aesthetic appearance',
+        'Equipment remains live when switched off',
+        'Overheating and potential fire risk',
+        'Continuity and earth fault loop impedance tests',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Protective conductors must be correctly connected to ensure protective devices can safely disconnect during earth faults.',
     },
@@ -173,10 +173,10 @@ const Level2Module6Section6_3 = () => {
       id: 9,
       question: 'What should an electrician do if they find a common defect during testing?',
       options: [
-        'Ignore minor defects',
+        'Overheating and potential fire risk',
         'Record clearly and investigate thoroughly',
-        'Continue with energising',
-        'Leave for next inspection',
+        'Missing or inadequate protective conductors',
+        'Continuity and earth fault loop impedance tests',
       ],
       correctAnswer: 1,
       explanation:
@@ -187,11 +187,11 @@ const Level2Module6Section6_3 = () => {
       question: 'In the real-world example, what defect was discovered in the socket circuits?',
       options: [
         'Loose connections',
+        'Wrong socket type',
         'Missing CPC connections',
         'Incorrect cable size',
-        'Wrong socket type',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The example showed missing protective conductor connections in socket outlets, which would prevent safe disconnection during faults.',
     },

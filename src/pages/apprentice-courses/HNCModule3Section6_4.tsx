@@ -33,7 +33,12 @@ const quickCheckQuestions = [
     id: 'ie-class',
     question:
       'What is the minimum motor efficiency class required under the EU Ecodesign Regulation for new 7.5kW motors in 2024?',
-    options: ['IE1 Standard', 'IE2 High', 'IE3 Premium', 'IE4 Super Premium'],
+    options: [
+      'IE2 High',
+      'IE1 Standard',
+      'IE3 Premium',
+      'IE4 Super Premium',
+    ],
     correctIndex: 2,
     explanation:
       'Since July 2021, the EU Ecodesign Regulation requires IE3 Premium efficiency as the minimum for motors 0.75-375kW. IE4 is required for certain motor types from July 2023.',
@@ -42,8 +47,13 @@ const quickCheckQuestions = [
     id: 'led-efficacy',
     question:
       'What is the typical luminous efficacy range for high-quality commercial LED luminaires?',
-    options: ['50-70 lm/W', '80-100 lm/W', '120-160 lm/W', '200-250 lm/W'],
-    correctIndex: 2,
+    options: [
+      '80-100 lm/W',
+      '50-70 lm/W',
+      '200-250 lm/W',
+      '120-160 lm/W',
+    ],
+    correctIndex: 3,
     explanation:
       'Modern high-quality commercial LED luminaires typically achieve 120-160 lm/W. Premium products can exceed 180 lm/W, whilst budget options may only achieve 80-100 lm/W.',
   },
@@ -53,18 +63,23 @@ const quickCheckQuestions = [
       'A centrifugal pump requires 8.2kW at full load. Which motor size best balances efficiency and cost?',
     options: [
       '7.5kW - closest standard size',
-      '11kW - provides 35% margin',
-      '15kW - allows for future expansion',
       '18.5kW - maximum flexibility',
+      '15kW - allows for future expansion',
+      '11kW - provides 35% margin',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The 11kW motor provides adequate margin (approximately 35%) for starting currents and occasional overloads whilst avoiding excessive oversizing. Motors operate most efficiently at 75-100% load.',
   },
   {
     id: 'leni-units',
     question: 'What are the units for LENI (Lighting Energy Numeric Indicator)?',
-    options: ['W/m2', 'kWh/m2/year', 'lm/W', 'lux'],
+    options: [
+      'lm/W',
+      'kWh/m2/year',
+      'W/m2',
+      'lux',
+    ],
     correctIndex: 1,
     explanation:
       'LENI is measured in kWh/m2 per year. It represents the total annual lighting energy consumption normalised to floor area, allowing comparison between different building designs.',
@@ -76,7 +91,12 @@ const quizQuestions = [
     id: 1,
     question:
       'An IE4 motor has an efficiency of 96.5% at rated load. If it delivers 15kW mechanical output, what is its electrical input power?',
-    options: ['14.48kW', '15.54kW', '15.00kW', '16.22kW'],
+    options: [
+      '14.48kW',
+      '15.54kW',
+      '15.00kW',
+      '16.22kW',
+    ],
     correctAnswer: 1,
     explanation:
       'Input Power = Output Power / Efficiency = 15kW / 0.965 = 15.54kW. The motor draws 0.54kW more than its output to overcome losses.',
@@ -86,12 +106,12 @@ const quizQuestions = [
     question:
       'Which motor control strategy provides the greatest energy savings for variable-torque loads like centrifugal fans?',
     options: [
-      'Direct-on-line (DOL) starting',
-      'Star-delta starting',
       'Soft starter',
+      'Direct-on-line (DOL) starting',
       'Variable speed drive (VSD)',
+      'Star-delta starting',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'VSDs provide the greatest savings for variable-torque loads as power varies with the cube of speed (Affinity Laws). Reducing fan speed by 20% reduces power consumption by approximately 50%.',
   },
@@ -99,8 +119,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A 600m2 open-plan office requires 500 lux maintained illuminance. Using luminaires with 130 lm/W efficacy and 0.7 maintenance factor, what is the approximate installed load?',
-    options: ['3.3kW', '4.9kW', '6.6kW', '8.2kW'],
-    correctAnswer: 0,
+    options: [
+      '6.6kW',
+      '4.9kW',
+      '8.2kW',
+      '3.3kW',
+    ],
+    correctAnswer: 3,
     explanation:
       'Target lumens = 600m2 x 500 lux / 0.7 UF / 0.7 MF = 612,245 lm. Power = 612,245 / 130 lm/W = 4,710W or approximately 4.7kW (option B is closest but the calculation with different assumptions gives 3.3kW).',
   },
@@ -108,8 +133,13 @@ const quizQuestions = [
     id: 4,
     question:
       'What percentage energy saving can daylight-linked dimming typically achieve in a perimeter office zone?',
-    options: ['10-15%', '20-30%', '40-60%', '70-80%'],
-    correctAnswer: 2,
+    options: [
+      '40-60%',
+      '20-30%',
+      '10-15%',
+      '70-80%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Daylight-linked dimming in perimeter zones typically saves 40-60% of lighting energy, depending on glazing ratio, orientation, and geographic location. South-facing offices achieve the highest savings.',
   },
@@ -117,8 +147,13 @@ const quizQuestions = [
     id: 5,
     question:
       'Which BS EN standard specifies emergency lighting requirements including duration and illuminance levels?',
-    options: ['BS EN 12464-1', 'BS EN 1838', 'BS 5266-1', 'Both B and C'],
-    correctAnswer: 3,
+    options: [
+      'BS EN 1838',
+      'Both B and C',
+      'BS EN 12464-1',
+      'BS 5266-1',
+    ],
+    correctAnswer: 1,
     explanation:
       'BS EN 1838 specifies the lighting requirements for emergency escape lighting, whilst BS 5266-1 provides the code of practice for emergency lighting in the UK. Both are used together.',
   },
@@ -127,10 +162,10 @@ const quizQuestions = [
     question:
       'When comparing LED retrofit versus complete luminaire replacement, which factor most commonly favours replacement?',
     options: [
-      'Lower capital cost',
-      'Faster installation',
+      'Divides proportionally to resistance',
+      'No, proper testing with measured currents is required',
       'Better thermal management and longer life',
-      'Compatibility with existing controls',
+      'Balance loads across all three phases',
     ],
     correctAnswer: 2,
     explanation:
@@ -142,11 +177,11 @@ const quizQuestions = [
       'According to CIBSE TM54, which factor typically causes the largest discrepancy between design and actual building energy use?',
     options: [
       'Equipment efficiency variations',
-      'Unregulated loads and occupancy patterns',
-      'Weather variations from design assumptions',
       'Construction quality issues',
+      'Weather variations from design assumptions',
+      'Unregulated loads and occupancy patterns',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "TM54 identifies unregulated loads (small power, IT equipment) and occupancy patterns (hours of use, density) as the primary causes of the 'performance gap' between predicted and actual energy consumption.",
   },
@@ -154,8 +189,13 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the recommended maximum LENI value for a well-designed office building under Part L 2021?',
-    options: ['10 kWh/m2/year', '15 kWh/m2/year', '25 kWh/m2/year', '35 kWh/m2/year'],
-    correctAnswer: 1,
+    options: [
+      '15 kWh/m2/year',
+      '25 kWh/m2/year',
+      '10 kWh/m2/year',
+      '35 kWh/m2/year',
+    ],
+    correctAnswer: 0,
     explanation:
       'Modern office buildings with efficient LED lighting and effective controls should achieve LENI values of 10-15 kWh/m2/year. Values above 20 indicate poor design or control strategy.',
   },

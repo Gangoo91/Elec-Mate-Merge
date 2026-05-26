@@ -21,6 +21,7 @@ import { Progress } from '@/components/ui/progress';
 import { ExamDesktopSidebar } from '@/components/apprentice-courses/ExamDesktopSidebar';
 import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayout';
 import { getRandomQuestions, AM2Question } from '@/data/apprentice-courses/am2/questionBank';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 import { toast } from 'sonner';
 import useSEO from '@/hooks/useSEO';
 
@@ -46,7 +47,10 @@ const AM2Module8 = () => {
 
   // Start exam - 30 questions matching real AM2 theory exam
   const startExam = () => {
-    const questions = getRandomQuestions(30, { basic: 0.35, intermediate: 0.45, advanced: 0.2 });
+    const questions = shuffleAllQuestionOptions(
+      getRandomQuestions(30, { basic: 0.35, intermediate: 0.45, advanced: 0.2 }),
+      createShuffleSalt()
+    );
     setExamQuestions(questions);
     setSelectedAnswers(new Array(30).fill(-1));
     setCurrentQuestion(0);

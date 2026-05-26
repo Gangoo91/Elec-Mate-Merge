@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'chiller-types',
     question: 'What is the main advantage of water-cooled chillers over air-cooled chillers?',
     options: [
-      'Lower initial cost',
-      'No water consumption',
+      'To reduce voltage drop and heating',
+      'Safe use of electrical test equipment',
       'Higher efficiency and better COP',
-      'Simpler installation',
+      'Tool finance for diagnostic equipment',
     ],
     correctIndex: 2,
     explanation:
@@ -49,12 +49,12 @@ const quickCheckQuestions = [
     id: 'primary-secondary',
     question: 'What is the purpose of a bypass in a primary-secondary pumping system?',
     options: [
-      'To increase system pressure',
+      'Switch off and lock out electrical supplies, close isolation valves, and vent trapped pressure',
+      'He assumed the breaker was faulty instead of recognising a possible short circuit',
       'To allow variable secondary flow whilst maintaining constant primary flow',
-      'To reduce energy consumption',
-      'To improve water quality',
+      'Identifying the gap between current competence and required competence',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The bypass (decoupler) allows the primary circuit to maintain constant flow through the chillers whilst the secondary circuit varies flow to match load. When secondary flow is less than primary, excess water bypasses through the decoupler.',
   },
@@ -62,8 +62,13 @@ const quickCheckQuestions = [
     id: 'pipe-velocity',
     question:
       'What is the recommended maximum water velocity in chilled water distribution pipework?',
-    options: ['0.5 m/s', '1.5 m/s', '3.0 m/s', '5.0 m/s'],
-    correctIndex: 2,
+    options: [
+      '5.0 m/s',
+      '0.5 m/s',
+      '1.5 m/s',
+      '3.0 m/s',
+    ],
+    correctIndex: 3,
     explanation:
       'CIBSE recommends maximum velocities of 1.5-3.0 m/s for chilled water distribution mains to limit noise and erosion. Higher velocities increase pump energy and can cause noise issues, particularly near occupied spaces.',
   },
@@ -74,8 +79,13 @@ const quizQuestions = [
     id: 1,
     question:
       'What is the typical COP (Coefficient of Performance) range for a modern water-cooled centrifugal chiller at full load?',
-    options: ['2.5-3.5', '4.0-5.0', '5.5-7.0', '8.0-10.0'],
-    correctAnswer: 2,
+    options: [
+      '2.5-3.5',
+      '5.5-7.0',
+      '4.0-5.0',
+      '8.0-10.0',
+    ],
+    correctAnswer: 1,
     explanation:
       'Modern water-cooled centrifugal chillers achieve COPs of 5.5-7.0 at full load design conditions. This high efficiency is due to the effective heat rejection via cooling towers and optimised compressor design.',
   },
@@ -83,12 +93,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the purpose of a cooling tower approach temperature?',
     options: [
+      'The difference between air inlet and outlet temperatures',
       'The difference between entering and leaving water temperatures',
       'The difference between leaving water temperature and wet bulb temperature',
-      'The difference between air inlet and outlet temperatures',
       'The difference between design and actual performance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Approach temperature is the difference between the leaving water temperature and the ambient wet bulb temperature. A typical approach is 3-5K. Lower approach means larger, more expensive towers but better chiller performance.',
   },
@@ -97,12 +107,12 @@ const quizQuestions = [
     question:
       'In a primary-secondary system, what happens when the secondary flow exceeds the primary flow?',
     options: [
-      'The system shuts down',
-      'Water flows backwards through the bypass',
+      'Knowledge, Skills, and Attitudes',
+      'Only the epidermis (outer layer of skin)',
+      'The MEP coordinator or BIM manager',
       'Warm return water mixes with chilled supply',
-      'Pump cavitation occurs',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "When secondary flow exceeds primary flow, warm return water is drawn through the bypass and mixes with the chilled water supply. This raises the supply temperature and reduces cooling capacity - a condition called 'low delta T syndrome'.",
   },
@@ -111,12 +121,12 @@ const quizQuestions = [
     question:
       'What is the main advantage of a variable primary flow (VPF) system over primary-secondary?',
     options: [
-      'Lower chiller cost',
       'Elimination of secondary pumps and reduced energy consumption',
-      'Simpler controls',
-      'Better water quality',
+      'To separate the chilled water circuit from the condenser water circuit',
+      'To vary flow to terminal units based on load',
+      'To prevent freezing in exposed pipework or during free cooling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'VPF systems eliminate the secondary pumps entirely, reducing capital cost and pump energy. However, they require chillers capable of handling variable flow and more sophisticated controls to manage minimum flow requirements.',
   },
@@ -127,8 +137,8 @@ const quizQuestions = [
     options: [
       '10-20% of design flow',
       '30-50% of design flow',
-      '60-80% of design flow',
       '90-100% of design flow',
+      '60-80% of design flow',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,8 +148,13 @@ const quizQuestions = [
     id: 6,
     question:
       'What pressure drop per metre run is typically used for preliminary chilled water pipe sizing?',
-    options: ['50-100 Pa/m', '150-300 Pa/m', '400-600 Pa/m', '800-1000 Pa/m'],
-    correctAnswer: 1,
+    options: [
+      '50-100 Pa/m',
+      '400-600 Pa/m',
+      '150-300 Pa/m',
+      '800-1000 Pa/m',
+    ],
+    correctAnswer: 2,
     explanation:
       'CIBSE recommends a pressure drop of 150-300 Pa/m for preliminary pipe sizing. This provides a balance between pipe cost (smaller pipes = higher pressure drop) and pump energy (higher pressure drop = more pump energy).',
   },
@@ -147,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of a plate heat exchanger in a free cooling system?',
     options: [
-      'To increase system pressure',
+      'To prevent freezing in exposed pipework or during free cooling',
+      'The difference between entering and leaving water temperatures',
+      'Elimination of secondary pumps and reduced energy consumption',
       'To separate the chilled water circuit from the condenser water circuit',
-      'To improve water quality',
-      'To reduce noise',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The plate heat exchanger separates the clean chilled water circuit from the potentially contaminated condenser water circuit whilst allowing heat transfer for free cooling. This protects the chilled water system from cooling tower water quality issues.',
   },
@@ -160,8 +175,13 @@ const quizQuestions = [
     id: 8,
     question:
       'At what ambient wet bulb temperature can free cooling typically begin to contribute to a chilled water system?',
-    options: ['Below 20°C WB', 'Below 15°C WB', 'Below 10°C WB', 'Below 5°C WB'],
-    correctAnswer: 2,
+    options: [
+      'Below 10°C WB',
+      'Below 5°C WB',
+      'Below 20°C WB',
+      'Below 15°C WB',
+    ],
+    correctAnswer: 0,
     explanation:
       'Free cooling can typically begin when ambient wet bulb drops below approximately 10°C, as this allows cooling tower water to approach the required chilled water temperatures. Full free cooling (chillers off) may be possible below 5°C WB.',
   },
@@ -182,10 +202,10 @@ const quizQuestions = [
     id: 10,
     question: 'Why is glycol sometimes added to chilled water systems?',
     options: [
-      'To improve heat transfer',
-      'To prevent biological growth',
+      'Return water temperature too close to supply, reducing system capacity',
+      'To vary flow to terminal units based on load',
       'To prevent freezing in exposed pipework or during free cooling',
-      'To reduce pumping energy',
+      'Elimination of secondary pumps and reduced energy consumption',
     ],
     correctAnswer: 2,
     explanation:
@@ -196,12 +216,12 @@ const quizQuestions = [
     question:
       'What is the purpose of two-port control valves in a variable flow chilled water system?',
     options: [
-      'To maintain constant flow through terminal units',
+      'Pre-agreed terms, pricing and streamlined ordering',
+      'File or ream to remove sharp edges',
+      'A persistent fault still exists on the circuit',
       'To vary flow to terminal units based on load',
-      'To balance the system',
-      'To prevent reverse flow',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Two-port valves modulate flow to terminal units (FCUs, AHU coils) based on cooling demand. As valves close, system pressure rises and VSDs on pumps reduce speed, saving significant pump energy compared to constant flow systems.',
   },
@@ -209,12 +229,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is low delta T syndrome and why is it problematic?',
     options: [
-      'Excessive temperature drop causing freezing',
       'Return water temperature too close to supply, reducing system capacity',
-      'High pressure drop across control valves',
-      'Excessive noise in pipework',
+      'To control pump speed to maintain required pressure at the index circuit',
+      'To separate the chilled water circuit from the condenser water circuit',
+      'Elimination of secondary pumps and reduced energy consumption',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Low delta T syndrome occurs when the return water temperature is too close to the supply temperature (e.g., 3K instead of 6K). This reduces the cooling capacity per unit of water flow, requiring more chillers and pumps to operate and wasting energy.',
   },
@@ -223,10 +243,10 @@ const quizQuestions = [
     question:
       'What is the purpose of a differential pressure sensor in a variable speed pumping system?',
     options: [
-      'To measure flow rate',
+      'The difference between entering and leaving water temperatures',
       'To control pump speed to maintain required pressure at the index circuit',
-      'To detect leaks',
-      'To measure water quality',
+      'To prevent freezing in exposed pipework or during free cooling',
+      'To separate the chilled water circuit from the condenser water circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -236,10 +256,10 @@ const quizQuestions = [
     id: 14,
     question: 'What is the typical fill material used in modern induced draught cooling towers?',
     options: [
-      'Wooden slats',
-      'Metal plates',
+      'Regular maintenance and monitoring',
+      'General office administration',
       'PVC or polypropylene film or splash fill',
-      'Ceramic tiles',
+      'To provide earth fault protection',
     ],
     correctAnswer: 2,
     explanation:

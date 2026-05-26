@@ -41,16 +41,26 @@ const checks = [
   {
     id: 'electrical-power-check',
     question: 'A 3 kW immersion heater runs from a 230 V supply. What current does it draw?',
-    options: ['7 A', '13 A', '20 A', '30 A'],
-    correctIndex: 1,
+    options: [
+      '7 A',
+      '20 A',
+      '13 A',
+      '30 A',
+    ],
+    correctIndex: 2,
     explanation:
       "I = P ÷ V = 3000 ÷ 230 ≈ 13 A. That's why immersion heaters land on a dedicated 16 A or 20 A radial — comfortably above 13 A but not so big the cable goes silly.",
   },
   {
     id: 'electrical-units-check',
     question: 'You read 0.05 Ω on a low-resistance ohmmeter testing a CPC. What unit is that in?',
-    options: ['Megohms', 'Ohms', 'Milliohms', 'Microhms'],
-    correctIndex: 1,
+    options: [
+      'Ohms',
+      'Megohms',
+      'Milliohms',
+      'Microhms',
+    ],
+    correctIndex: 0,
     explanation:
       "Ohms — but tiny. 0.05 Ω is the same as 50 mΩ. A clean R1+R2 reading on a short cable run looks like this. Anything much bigger means a poor connection somewhere.",
   },
@@ -58,8 +68,13 @@ const checks = [
     id: 'three-phase-line-voltage-check',
     question:
       "On a UK 400 V three-phase supply, what voltage would you expect to read between any phase and neutral?",
-    options: ['400 V', '230 V', '110 V', '0 V'],
-    correctIndex: 1,
+    options: [
+      '230 V',
+      '0 V',
+      '400 V',
+      '110 V',
+    ],
+    correctIndex: 0,
     explanation:
       "230 V phase-to-neutral, 400 V phase-to-phase. The relationship is V_line = √3 × V_phase (400 ≈ 1.732 × 230). Same supply, two different voltages depending on which two terminals you probe across.",
   },
@@ -70,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does the volt (V) measure?',
     options: [
-      'The current flowing through a circuit',
+      'Any machinery, appliance, apparatus, tool or installation used at work',
       'The potential difference (electrical pressure) between two points',
-      'The opposition to current flow',
-      'The rate of energy transfer',
+      'The proportion of light emitted in different directions',
+      'An engineering control because it physically prevents the hazard',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,16 +97,26 @@ const quizQuestions = [
   {
     id: 2,
     question: 'In what unit is electric current measured?',
-    options: ['Volts (V)', 'Amperes (A)', 'Ohms (Ω)', 'Coulombs (C)'],
-    correctAnswer: 1,
+    options: [
+      'Ohms (Ω)',
+      'Volts (V)',
+      'Amperes (A)',
+      'Coulombs (C)',
+    ],
+    correctAnswer: 2,
     explanation:
       "Amperes — almost always shortened to amps. The ampere is one of the seven SI base units and the only electrical one.",
   },
   {
     id: 3,
     question: 'What is the standard UK single-phase nominal supply voltage?',
-    options: ['110 V', '230 V', '240 V', '400 V'],
-    correctAnswer: 1,
+    options: [
+      '240 V',
+      '110 V',
+      '400 V',
+      '230 V',
+    ],
+    correctAnswer: 3,
     explanation:
       "230 V (with a permitted tolerance of −6%/+10% under ESQCR). UK harmonised down from 240 V to align with European 230 V.",
   },
@@ -99,7 +124,12 @@ const quizQuestions = [
     id: 4,
     question:
       "A 12 V control transformer secondary draws 250 mA powering a contactor coil. What is the apparent power on the secondary, in watts?",
-    options: ['3 W', '30 W', '300 W', '3,000 W'],
+    options: [
+      '3 W',
+      '30 W',
+      '300 W',
+      '3,000 W',
+    ],
     correctAnswer: 0,
     explanation:
       'Convert before you multiply: 250 mA = 0.25 A. P = V × I = 12 × 0.25 = 3 W. Forget the prefix and you get 3,000 W — a 1000× error that would have you sizing the wrong transformer entirely.',
@@ -109,10 +139,10 @@ const quizQuestions = [
     question:
       "On an insulation resistance test, the result is shown as 'OL' or '>200 MΩ'. What does that mean?",
     options: [
-      'The cable is faulty',
+      "Both civil and criminal proceedings can run independently",
       "The insulation is so good the meter can't measure it",
-      'The meter is broken',
-      'You have not connected the leads',
+      "By providing 24/7 remote monitoring and quick response to issues",
+      "The ratio of true power to apparent power (cos φ)",
     ],
     correctAnswer: 1,
     explanation:
@@ -121,8 +151,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'A 13 A plug top fuse will safely carry which of these loads?',
-    options: ['A 3 kW kettle (~13 A)', 'A 7 kW shower (~30 A)', 'A 9 kW oven (~39 A)', 'None of these'],
-    correctAnswer: 0,
+    options: [
+      'A 9 kW oven (~39 A)',
+      'A 7 kW shower (~30 A)',
+      'A 3 kW kettle (~13 A)',
+      'None of these',
+    ],
+    correctAnswer: 2,
     explanation:
       'A 3 kW kettle pulls ~13 A — right at the fuse limit but acceptable for an appliance designed for it. Showers and ovens need their own dedicated MCB-protected circuits, not a 13 A plug.',
   },
@@ -130,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which is more dangerous to a person — voltage or current?',
     options: [
-      'Voltage — higher voltage always kills',
+      'The employer who provides the work equipment',
+      'Competent persons including supervisors, safety representatives, managers',
+      'Adjusting environmental settings based on security system status',
       'Current — even small currents through the heart can be fatal',
-      'They are equally dangerous',
-      'Neither, electricity is safe',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Current does the damage — voltage just provides the push. Currents as low as 30 mA across the chest can stop the heart. That is exactly why RCDs are set to trip at 30 mA.',
   },
@@ -143,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'What does a typical UK ring final circuit cable need to be sized for?',
     options: [
-      '13 A (the plug fuse)',
-      '20 A (a generic radial)',
       'The total connected load, with diversity, up to the 32 A MCB rating',
-      'Whatever the customer wants',
+      'Mandatory for all machinery unless the E-stop would not reduce risk',
+      'Reduce emotional intensity so productive conversation can occur',
+      'Likelihood: almost certain (5), Severity: catastrophic (5) — Score 25',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Cable is sized for the protective device (32 A MCB on a standard ring) and the install method, with diversity applied. 2.5 mm² T&E covers a typical ring; thicker cables for more demanding installs.',
   },

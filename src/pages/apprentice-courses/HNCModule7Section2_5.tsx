@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'Which UPS topology provides the highest level of protection with zero transfer time?',
     options: [
-      'Offline (standby) UPS',
-      'Line-interactive UPS',
+      'Visual inspection and testing',
       'Online double conversion UPS',
-      'Hybrid UPS',
+      'Use UV-resistant cable or conduit',
+      'National Building Specification',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Online double conversion UPS provides continuous power conditioning with zero transfer time because the load is always powered from the inverter. The mains supply charges the batteries and powers the rectifier, but the load never experiences any break in supply during mains failure.',
   },
@@ -41,7 +41,12 @@ const quickCheckQuestions = [
     id: 'ups-sizing',
     question:
       'A server room has a 15 kW load at 0.9 power factor. What minimum UPS kVA rating is required?',
-    options: ['13.5 kVA', '15 kVA', '16.7 kVA', '18 kVA'],
+    options: [
+      '15 kVA',
+      '13.5 kVA',
+      '16.7 kVA',
+      '18 kVA',
+    ],
     correctIndex: 2,
     explanation:
       'kVA = kW ÷ Power Factor = 15 ÷ 0.9 = 16.67 kVA. The UPS must be rated for apparent power (kVA) not just real power (kW). A 20 kVA UPS would typically be selected to provide headroom for future expansion and avoid running at full capacity.',
@@ -49,8 +54,13 @@ const quickCheckQuestions = [
   {
     id: 'battery-technology',
     question: 'What is the typical design life of VRLA batteries in a UPS application?',
-    options: ['3-5 years', '5-10 years', '10-15 years', '15-20 years'],
-    correctIndex: 1,
+    options: [
+      '3-5 years',
+      '15-20 years',
+      '10-15 years',
+      '5-10 years',
+    ],
+    correctIndex: 3,
     explanation:
       'VRLA (Valve Regulated Lead Acid) batteries typically have a design life of 5-10 years, depending on environmental conditions and maintenance. High ambient temperatures significantly reduce battery life - for every 10°C above 20°C, battery life is halved.',
   },
@@ -58,12 +68,12 @@ const quickCheckQuestions = [
     id: 'bypass-function',
     question: 'What is the primary purpose of a maintenance bypass switch in a UPS system?',
     options: [
-      'To increase UPS efficiency',
       'To enable UPS servicing without disrupting the load',
-      'To reduce battery charging time',
-      'To provide additional power capacity',
+      'To allow the client to verify system performance',
+      'The Control of Asbestos Regulations 2012',
+      'An approved body for electrical contractor registration',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A maintenance bypass switch allows the UPS to be isolated for servicing, testing, or replacement while maintaining continuous power to the critical load through a direct mains connection. This is essential for high-availability installations.',
   },
@@ -86,8 +96,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the typical transfer time of a line-interactive UPS?',
-    options: ['0 ms (no transfer)', '2-4 ms', '5-12 ms', '15-25 ms'],
-    correctAnswer: 1,
+    options: [
+      '5-12 ms',
+      '0 ms (no transfer)',
+      '2-4 ms',
+      '15-25 ms',
+    ],
+    correctAnswer: 2,
     explanation:
       'Line-interactive UPS systems have a typical transfer time of 2-4ms, faster than offline UPS (5-12ms) but not zero like online double conversion. The autotransformer provides voltage regulation without switching.',
   },
@@ -95,8 +110,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Calculate the autonomy time for a 10 kVA UPS with a 120 Ah battery bank at 192V DC and 80% discharge depth, powering an 8 kW load.',
-    options: ['15 minutes', '23 minutes', '28 minutes', '35 minutes'],
-    correctAnswer: 1,
+    options: [
+      '28 minutes',
+      '15 minutes',
+      '35 minutes',
+      '23 minutes',
+    ],
+    correctAnswer: 3,
     explanation:
       'Battery capacity = 192V × 120Ah = 23,040 Wh. Usable capacity at 80% DOD = 18,432 Wh. Autonomy = 18,432 ÷ 8,000W = 2.3 hours = 138 minutes. However, accounting for inverter efficiency (~90%), actual autonomy ≈ 23 minutes. Real-world calculation requires battery discharge curves.',
   },
@@ -104,19 +124,24 @@ const quizQuestions = [
     id: 4,
     question: 'What advantage does lithium-ion technology offer over VRLA in UPS applications?',
     options: [
-      'Lower initial cost',
       'Higher energy density and longer cycle life',
-      'No monitoring required',
-      'Compatible with all existing UPS systems',
+      'To transfer load to mains if UPS fails or is overloaded',
+      'Continuous double conversion with zero transfer time',
+      'Bypass mode with monitoring for improved efficiency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Lithium-ion batteries offer 2-3 times higher energy density, 10+ year lifespan, faster recharge times, and better performance at higher temperatures compared to VRLA. However, they require sophisticated BMS and have higher initial costs.',
   },
   {
     id: 5,
     question: 'Which component in an online double conversion UPS converts AC mains to DC?',
-    options: ['Inverter', 'Rectifier/charger', 'Static bypass switch', 'Output transformer'],
+    options: [
+      'Inverter',
+      'Rectifier/charger',
+      'Output transformer',
+      'Static bypass switch',
+    ],
     correctAnswer: 1,
     explanation:
       'The rectifier/charger converts incoming AC mains to DC, which charges the batteries and feeds the inverter. This dual function ensures batteries remain charged while providing continuous DC supply for double conversion.',
@@ -125,12 +150,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of an automatic static bypass in a UPS?',
     options: [
-      'To improve efficiency during light loads',
+      'Higher energy density and longer cycle life',
+      'Unity power factor input drawing minimal reactive current',
       'To transfer load to mains if UPS fails or is overloaded',
-      'To reduce harmonic distortion',
-      'To provide isolation for battery maintenance',
+      'Bypass mode with monitoring for improved efficiency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The automatic static bypass uses semiconductor switches to transfer the load to raw mains supply within microseconds if the UPS experiences a fault, overload, or inverter failure. This protects the load from complete power loss.',
   },
@@ -141,10 +166,10 @@ const quizQuestions = [
     options: [
       'Single UPS with bypass',
       'Parallel redundant (N+1)',
-      '2N configuration',
       'Distributed redundant',
+      '2N configuration',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       '2N configuration uses two independent UPS systems, each capable of supporting the full load, with automatic transfer between them. This provides the highest availability as either system can fail completely without affecting the load.',
   },
@@ -152,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: "What does 'True Online' UPS topology mean?",
     options: [
-      'Internet-connected monitoring capability',
       'Continuous double conversion with zero transfer time',
-      'Real-time cloud backup',
-      'Online ordering for replacement parts',
+      'To transfer load to mains if UPS fails or is overloaded',
+      'Unity power factor input drawing minimal reactive current',
+      'Higher energy density and longer cycle life',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "True Online refers to double conversion topology where the load continuously receives power from the inverter. The term distinguishes it from line-interactive systems sometimes marketed as 'online' but which have transfer times.",
   },
@@ -165,8 +190,13 @@ const quizQuestions = [
     id: 9,
     question:
       'What is the recommended ambient temperature range for VRLA batteries to achieve rated design life?',
-    options: ['10-15°C', '15-20°C', '20-25°C', '25-30°C'],
-    correctAnswer: 2,
+    options: [
+      '10-15°C',
+      '20-25°C',
+      '15-20°C',
+      '25-30°C',
+    ],
+    correctAnswer: 1,
     explanation:
       'VRLA batteries are rated for design life at 20-25°C. For every 10°C increase above 25°C, battery life is approximately halved. Data centre battery rooms typically maintain 20-22°C for optimal battery longevity.',
   },
@@ -175,12 +205,12 @@ const quizQuestions = [
     question:
       'What function does a Battery Management System (BMS) perform in a lithium-ion UPS installation?',
     options: [
-      'Only monitors state of charge',
+      'Emergency circuits must be kept separate from normal supply',
+      'Risk remaining after control measures have been implemented',
       'Controls charging, monitors cell balance, temperature, and provides protection',
-      'Replaces the need for a rectifier',
-      'Eliminates the requirement for cooling',
+      'Soil and groundwater contamination from spills and drips during refuelling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The BMS is essential for lithium-ion batteries, controlling charge/discharge rates, monitoring individual cell voltages and temperatures, balancing cells, and providing protection against overcharge, overdischarge, and thermal runaway.',
   },
@@ -188,12 +218,12 @@ const quizQuestions = [
     id: 11,
     question: "A UPS specification states 'Input power factor: 0.99'. What does this indicate?",
     options: [
-      'The UPS output power factor',
+      'Higher energy density and longer cycle life',
+      'Continuous double conversion with zero transfer time',
+      'Bypass mode with monitoring for improved efficiency',
       'Unity power factor input drawing minimal reactive current',
-      'The maximum load power factor supported',
-      'Battery charging efficiency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Input power factor of 0.99 indicates the UPS draws current almost in phase with voltage, minimising reactive power demand and harmonic distortion on the mains supply. Modern UPS use active PFC (Power Factor Correction) to achieve this.',
   },
@@ -201,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is ECO mode operation in a modern UPS?',
     options: [
-      'Environmentally friendly battery chemistry',
-      'Reduced output voltage for energy saving',
       'Bypass mode with monitoring for improved efficiency',
       'Lower charging current for battery preservation',
+      'Environmentally friendly battery chemistry',
+      'Reduced output voltage for energy saving',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'ECO mode bypasses double conversion during normal operation, routing power through the static bypass for 97-99% efficiency instead of 90-94%. The UPS monitors mains quality and transfers to inverter if problems are detected.',
   },

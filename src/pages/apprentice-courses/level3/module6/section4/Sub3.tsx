@@ -39,8 +39,13 @@ const checks = [
     id: 'ca-pick',
     question:
       "A 70 °C T&E cable runs through a plant room where the survey shows ambient air at 45 °C. From BS 7671 Appendix 4 Table 4B1, what is Ca?",
-    options: ['1.00', '0.94', '0.79', '0.71'],
-    correctIndex: 2,
+    options: [
+      '1.00',
+      '0.79',
+      '0.94',
+      '0.71',
+    ],
+    correctIndex: 1,
     explanation:
       "Table 4B1, 70 °C cable, 45 °C ambient: Ca = 0.79. The same temperature against a 90 °C thermosetting cable would give Ca ≈ 0.87 (the higher operating ceiling provides more thermal headroom). Always read the column matching your cable type.",
   },
@@ -49,12 +54,12 @@ const checks = [
     question:
       "Six final-circuit cables are bunched touching in a single layer along a 12 m route in a sub-floor void. From BS 7671 Appendix 4 Table 4C1, what Cg applies, and does it apply to the whole 12 m or only the bunched section?",
     options: [
-      'Cg = 0.80, applies only at the entry point.',
+      "To identify hazards, estimate risk and determine the required risk reduction measures",
+      "Welcome back, identify any ongoing health needs, confirm fitness for normal duties and discuss any reasonable adjustments",
       "Cg = 0.57, applies to the entire 12 m of bunched run because the cables are touching for that length.",
-      'Cg = 1.00, no derate needed.',
-      'Cg = 0.65, applies to half the run.',
+      "To provide legal evidence of compliance and demonstrate ongoing maintenance",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Table 4C1 for six multi-core cables touching, single layer, gives Cg = 0.57 (different sources rounded slightly). The grouping derate applies wherever the cables are touching for a meaningful length — 12 m is well above the trivial-grouping threshold from Note 14 of Appendix 4 §5.1. The whole bunched section sees the derate, and because that is the worst section, the entire cable is sized on Cg = 0.57.",
   },
@@ -63,10 +68,10 @@ const checks = [
     question:
       'You have selected Method 103 (cable totally enclosed in thermal insulation) for the worst section of a run. Should you also apply Ci = 0.5 from any separate table on top of the Method 103 column?',
     options: [
-      'Yes — always apply Ci to be safe.',
+      "The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day",
       "No — the in-insulation derate is already built into Method 103 tabulated values; applying Ci on top is double-counting and over-engineers the cable.",
-      'Only if ambient is also above 30 °C.',
-      'Yes, but only on lighting circuits.',
+      "From the level below: fit frames, fit bracing, fit platform with trap, climb through trap, fit guardrails from inside the trap opening",
+      "Type (rod / plate / mat), accessibility for measurement (test link), corrosion, label per Reg 514.13.1, and a measured Ra giving compliant Zs at the furthest point",
     ],
     correctIndex: 1,
     explanation:
@@ -80,10 +85,10 @@ const quizQuestions = [
     question:
       "Where in BS 7671 do you find the Ca correction factor for ambient temperature, and which column do you use for a 70 °C thermoplastic cable?",
     options: [
-      'Table 41.3, the column marked PVC.',
+      'As a last resort when other control measures are not sufficient',
       'Table 4B1, the column for 70 °C general purpose thermoplastic insulation.',
-      'Table 4D5, anywhere in the table.',
-      'Appendix 11.',
+      'Common applications like ring finals, radials, and lighting circuits',
+      'Electrocution — electricity can arc across gaps and does not require direct contact',
     ],
     correctAnswer: 1,
     explanation:
@@ -93,8 +98,13 @@ const quizQuestions = [
     id: 2,
     question:
       "Six 70 °C T&E cables are clipped direct, single layer, touching, on a wall. From Table 4C1 the grouping factor Cg ≈ 0.57. If each cable carries Ib = 20 A, what is the minimum tabulated It each cable must clear (Ca = 1.0, Ci = 1.0)?",
-    options: ['20 A', '≈35.1 A', '120 A', '11.4 A'],
-    correctAnswer: 1,
+    options: [
+      '120 A',
+      '20 A',
+      '≈35.1 A',
+      '11.4 A',
+    ],
+    correctAnswer: 2,
     explanation:
       "Required It ≥ Ib / (Ca × Cg × Ci) = 20 / (1.0 × 0.57 × 1.0) = 20 / 0.57 = 35.09 A. You then look up Table 4D5 in the matching method column and pick the smallest CSA whose tabulated It is at least 35.1 A.",
   },
@@ -103,12 +113,12 @@ const quizQuestions = [
     question:
       "What does Ca actually represent physically?",
     options: [
-      'A safety margin for unforeseen conditions.',
+      "No-blame reporting; easy reporting mechanism; structured analysis (5-whys, root cause); feedback to team; visible changes in practice; trend tracking; celebrate reporting (the act, not the near-miss); leadership modelling.",
+      "Surface-mounted wiring additions in occupied buildings (offices, retail, healthcare) where chasing walls or lifting floors is impractical, providing a neat, accessible containment for small numbers of cables",
+      "Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown",
       "The ratio between the thermal headroom available at the actual ambient temperature and the thermal headroom available at the 30 °C reference — a hotter ambient leaves less room for the cable to dissipate heat, so the cable can carry less current.",
-      'A correction for the cable’s age.',
-      'A discount for short cables.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Ca is a thermal-headroom ratio. At the 30 °C reference baseline a 70 °C cable has 40 °C of headroom; at 40 °C ambient it has only 30 °C of headroom. The ratio of those headrooms (allowing for the underlying heat-balance maths) gives Ca = 0.87 for that case. It is physics, not a margin.",
   },
@@ -117,12 +127,12 @@ const quizQuestions = [
     question:
       "Cg = 0.5 is given for ten cables grouped together touching in a single layer. What does that 0.5 mean in practical terms?",
     options: [
-      "Each cable can carry 50 percent more current.",
       "Each cable can carry half the current it would if it were on its own — the heat each cable produces warms its neighbours, so collectively they all run hotter than a single cable would.",
-      "Five out of ten cables are unsafe.",
-      "The cable group needs RCD protection.",
+      "Ib = P / (V x cos φ) — real power divided by the product of voltage and power factor. The motor or inductive load draws apparent power = P / cos φ, and line current carries apparent power.",
+      "Modern fire-resistant cables — silicone-rubber or insulating-tape construction with a stainless-steel screen. Easier to install than MICC, lower cost, BS 5839 compliant for fire alarm and emergency lighting circuits.",
+      "Stop. The MS can’t be followed as written. Either get key access (call building manager), find an alternative isolation point in the MS, or pause the work until tomorrow",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Grouping derates because grouped cables share heat. Each cable produces I²R waste heat; if surrounded by other current-carrying cables, that heat is harder to shed because the surrounding air is already warm with everyone else’s heat. The result: every cable in the group runs hotter for the same current, so each must carry less current to stay below the temperature limit.",
   },
@@ -131,12 +141,12 @@ const quizQuestions = [
     question:
       "Ci is the in-thermal-insulation correction. For Methods 100–103 you should:",
     options: [
-      'Always apply Ci on top of the tabulated value.',
-      'Apply Ci only at the entry point.',
+      "Every time they are required to operate a type of MEWP they have not used before",
       "Not apply Ci at all — it is already built into the Method 100–103 tabulated It values.",
-      'Apply Ci = 0.5 every time.',
+      "IP44 minimum (IP54/IP55 in dustier or wetter areas) per Reg 705.512.2",
+      "The process of restoring the building and its systems to a safe and operational condition after a fire",
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "The in-insulation derate for Methods 100–103 is folded into the tabulated value by the standard. Applying a separate Ci on top is the single most common error in apprentice work. Read the Method 100/101/102/103 column and apply only Ca and Cg from there.",
   },
@@ -144,8 +154,13 @@ const quizQuestions = [
     id: 6,
     question:
       "Stacking factors: Ca = 0.91, Cg = 0.80, Ci = 1.0 (no insulation). The combined derate is:",
-    options: ['0.91 + 0.80 + 1.0 = 2.71', '0.91 × 0.80 × 1.0 = 0.728', '0.91 − 0.20 = 0.71', 'Just 0.80 (only the worst factor counts).'],
-    correctAnswer: 1,
+    options: [
+      '0.91 + 0.80 + 1.0 = 2.71',
+      '0.91 − 0.20 = 0.71',
+      '0.91 × 0.80 × 1.0 = 0.728',
+      'Just 0.80 (only the worst factor counts).',
+    ],
+    correctAnswer: 2,
     explanation:
       "Correction factors stack multiplicatively. Combined derate = product of all applicable factors = 0.91 × 0.80 × 1.0 = 0.728. The cable’s effective Iz = It × 0.728. You then test Iz against In to verify Reg 433.1.1.",
   },
@@ -154,12 +169,12 @@ const quizQuestions = [
     question:
       "Two cables grouped touching for 0.6 m at the consumer-unit entry zone, then running on their own for the rest of a 30 m route. Note 14 of BS 7671 Appendix 4 §5.1 tells you:",
     options: [
-      "Apply the full Cg for the entire 30 m.",
+      "A temporary pond where sediment-laden water is held to allow suspended solids to settle out before discharge",
+      "Have a phased return with gradually increasing demands, regular check-ins, and clear boundaries to prevent relapse",
+      "Professional responsibility, technical competence, and the ability to communicate complex technical information to support decision-making",
       "Apply no Cg — grouping under about 1 m of run is treated as trivial because the cables cool quickly past the brief touching zone.",
-      'Apply Cg only on weekends.',
-      'You cannot install grouped cables briefly.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Note 14 in Appendix 4 §5.1 lets you ignore very brief grouping (typically under about 1 m) on the basis that the cable cools quickly once it leaves the bunched section. Many designers still apply Cg as a conservative margin in this case — it is good practice but not mandatory. Ask the local inspector for their preference if you are unsure.",
   },
@@ -167,8 +182,13 @@ const quizQuestions = [
     id: 8,
     question:
       "A cable carries Ib = 32 A. The install gives Ca = 0.94, Cg = 0.65, Ci = 1.0. The required tabulated It from BS 7671 Appendix 4 must be at least:",
-    options: ['32 A', '≈20.96 A', '≈52.39 A', '≈49.23 A'],
-    correctAnswer: 2,
+    options: [
+      '≈52.39 A',
+      '≈49.23 A',
+      '32 A',
+      '≈20.96 A',
+    ],
+    correctAnswer: 0,
     explanation:
       "Required It ≥ Ib / (Ca × Cg × Ci) = 32 / (0.94 × 0.65 × 1.0) = 32 / 0.611 = 52.39 A. The cable’s tabulated CCC in the relevant Reference Method column must be at least 52.39 A. For 70 °C T&E in Method C, that means stepping up to 10 mm² (Method C It ≈ 64 A, so Iz = 64 × 0.611 = 39.1 A — passes for In = 32 A).",
   },

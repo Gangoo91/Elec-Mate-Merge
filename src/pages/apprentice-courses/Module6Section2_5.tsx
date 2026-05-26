@@ -16,10 +16,10 @@ const Module6Section2_5 = () => {
       id: 1,
       question: 'What is the main reason for labelling circuits?',
       options: [
-        'To look professional',
+        'Line and neutral should be similar, earth may be higher',
         'Safety – so circuits can be identified and isolated quickly',
-        'To reduce costs',
-        'To impress clients',
+        'Initial contribution of 4-6 times full load current, decaying rapidly',
+        'To melt and fuse the glass fibre ends together',
       ],
       correctAnswer: 1,
       explanation:
@@ -28,20 +28,25 @@ const Module6Section2_5 = () => {
     {
       id: 2,
       question: 'Which regulation requires circuits to be identifiable?',
-      options: ['BS 5839', 'BS 7671', 'BS 6423', 'BS 1362'],
-      correctAnswer: 1,
+      options: [
+        'BS 6423',
+        'BS 5839',
+        'BS 7671',
+        'BS 1362',
+      ],
+      correctAnswer: 2,
       explanation: 'BS 7671 (IET Wiring Regulations) requires all circuits to be identifiable.',
     },
     {
       id: 3,
       question: 'Name two places where labels are required.',
       options: [
-        'Only on distribution boards',
+        'To ensure consistency and clarity',
+        'Elimination, reduction, information provision',
+        'Accurate temperature measurement',
         'Distribution boards and protective devices',
-        'Only on isolators',
-        'Only on cables',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Labels are required on distribution boards, protective devices, isolators, and cables (on larger projects).',
     },
@@ -49,12 +54,12 @@ const Module6Section2_5 = () => {
       id: 4,
       question: 'What should be included in a distribution board schedule?',
       options: [
-        'Only circuit numbers',
         'Circuit reference, description, device rating, RCD/RCBO protection',
-        'Only device ratings',
-        'Only descriptions',
+        'Measure end-to-end resistance of each conductor (L, N, E)',
+        'The total energy let-through during fault clearance',
+        'Scheduled updates with testing and rollback capability',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'A DB schedule must include circuit reference, load description, device rating, and RCD/RCBO protection details.',
     },
@@ -69,8 +74,13 @@ const Module6Section2_5 = () => {
     {
       id: 6,
       question: 'What type of labels are preferred for durability?',
-      options: ['Handwritten labels', 'Printed labels', 'Pencil markings', 'Temporary stickers'],
-      correctAnswer: 1,
+      options: [
+        'Handwritten labels',
+        'Pencil markings',
+        'Printed labels',
+        'Temporary stickers',
+      ],
+      correctAnswer: 2,
       explanation:
         'Printed labels are preferred as they are more durable and legible than handwritten alternatives.',
     },
@@ -78,12 +88,12 @@ const Module6Section2_5 = () => {
       id: 7,
       question: 'What risk is created by poor labelling?',
       options: [
-        'Increased costs',
+        'To assess the overall condition when full inspection is impractical',
+        'BS EN IEC 60900 (1000V AC / 1500V DC rated)',
+        'Structured cabling and network infrastructure',
         'Isolating the wrong circuit and creating safety hazards',
-        'Longer installation time',
-        'Client complaints',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Poor labelling can lead to isolating the wrong circuit, creating serious safety hazards.',
     },
@@ -91,12 +101,12 @@ const Module6Section2_5 = () => {
       id: 8,
       question: 'Who is responsible for updating circuit labels after changes?',
       options: [
-        'The client',
         'The electrician carrying out the work',
-        'The inspector',
-        'The building owner',
+        'Carefully to prevent damage',
+        'Prescriptive specification',
+        'Loud machinery on a building site',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'The electrician performing modifications must update all relevant labelling immediately.',
     },
@@ -104,10 +114,10 @@ const Module6Section2_5 = () => {
       id: 9,
       question: 'Where should the circuit schedule be fixed?',
       options: [
-        'In the office files only',
+        'Withdrawing from social activities and isolating yourself',
         'Inside or adjacent to the distribution board',
-        'On the wall nearby',
-        'In the client handbook',
+        'Criminal prosecution, including fines and imprisonment',
+        'Comprehensive logging and diagnostic capabilities',
       ],
       correctAnswer: 1,
       explanation:
@@ -117,12 +127,12 @@ const Module6Section2_5 = () => {
       id: 10,
       question: 'In the real-world example, what happened due to poor labelling?',
       options: [
-        'Power was lost to the whole building',
+        'The maximum concentration of an airborne substance averaged over a reference period',
+        'More labour-intensive and harder to modify later',
         'Emergency lighting was isolated by mistake, creating a safety risk',
-        'The fire alarm stopped working',
-        'All circuits were damaged',
+        'Confirmation that the message has been received and understood as intended',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Emergency lighting was accidentally isolated instead of classroom lighting, creating a safety risk during evacuation drills.',
     },

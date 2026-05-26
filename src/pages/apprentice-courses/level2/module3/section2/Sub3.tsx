@@ -74,12 +74,12 @@ const checks = [
     question:
       "On a layout drawing, two pendant lights are wired to a single switch position drawn as a rectangle with a slash and the number '2' next to it. What does the '2' mean?",
     options: [
-      'Two-gang switch (two switches in one plate)',
       'Two-way switch (one of a pair on a stairwell circuit)',
-      '2 amp switch rating',
-      '2-pole switch (switching both line and neutral)',
+      'To prevent short circuits and maintain safety',
+      'When circumstances change, after incidents, or periodically',
+      'No — nobody should ever be on the tower while it is being moved',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Two-way switch — one of a matched pair, typically used on stairwells, hallways or any room with two entry points so you can switch the same light from either end. Don't confuse with two-gang (which is two physically separate switches in one faceplate, drawn differently) or two-pole (which is a different symbol again).",
   },
@@ -88,12 +88,12 @@ const checks = [
     question:
       "A cable is drawn as a single line on a layout diagram with three small slashes through it. What does that mean?",
     options: [
-      'Three-phase cable (three line conductors)',
+      'Clearly marked as \\\\\\\\\\\\\\\'Emergency Lighting Circuits Only\\\\\\\\\\\\\\\'',
+      'The processing of raw sensor signals to make them suitable for the control system',
+      'A mandatory inspection for AC systems over 12kW, assessing efficiency and sizing',
       'A cable with three conductors total (e.g. line, neutral and CPC)',
-      'Three cables run together in the same containment',
-      "It's a damaged section of cable",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The slashes count the conductors in the cable. Three slashes = three conductors (typically L + N + CPC for a single-phase circuit). Five slashes would indicate a three-phase + neutral + CPC cable. It's a quick way to indicate cable composition without drawing every core.",
   },
@@ -107,12 +107,12 @@ const quizQuestions = [
     question:
       'A symbol on a board diagram shows a circle with the letters MCB inside and "B32" written next to it. What does B32 mean?',
     options: [
-      '32-amp breaker, Type B trip curve',
       '32 mm² cable, terminal type B',
+      '32-amp breaker, Type B trip curve',
       "32 V rated, manufacturer's code B",
       '32-position breaker in slot B',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'B = Type B trip curve (3-5 × In, suitable for resistive loads and standard domestic). 32 = rated current in amps. On a single-line diagram you read it as "Type B, 32 amps" — most common rating for ring final circuits and heavy domestic loads.',
   },
@@ -120,7 +120,12 @@ const quizQuestions = [
     id: 2,
     question:
       'On a UK installation drawing, a protective conductor (CPC / earth) is conventionally drawn as which colour?',
-    options: ['Brown', 'Blue', 'Green/Yellow', 'Black'],
+    options: [
+      'Black',
+      'Brown',
+      'Green/Yellow',
+      'Blue',
+    ],
     correctAnswer: 2,
     explanation:
       'Green/Yellow has been the protective conductor identification since the harmonised colours came in. On a colour drawing you\'ll see green/yellow stripes on the CPC; on a mono drawing it might be labelled "PE" or "CPC" or shown with a distinctive symbol or hatching.',
@@ -130,12 +135,12 @@ const quizQuestions = [
     question:
       'A symbol on a layout shows a circle with a horizontal line through the middle and two terminals coming out the top. It is labelled "FCU 13A". What is it?',
     options: [
-      'Fused Connection Unit, 13 amp',
-      'Floor-Cable Unit, 13 amp',
       'Fused Conduit Union, 13 amp',
+      'Floor-Cable Unit, 13 amp',
       'Fixed Cable Underground, 13 amp',
+      'Fused Connection Unit, 13 amp',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'FCU = Fused Connection Unit — the spurred-off accessory that holds a 13 A BS 1362 fuse and feeds a fixed appliance (boiler, towel rail, heater) from a ring final or radial. Switched and unswitched variants exist.',
   },
@@ -144,12 +149,12 @@ const quizQuestions = [
     question:
       'On a board diagram you see a symbol showing a circuit-breaker and below it the marking "30 mA" with a small Δ (delta) or testing button. What kind of device is this?',
     options: [
-      'A 30 mA ammeter',
       'A residual current device (RCD) with 30 mA residual operating current',
-      'A 30 mA fuse',
-      'A 30 amp circuit-breaker',
+      'The tendency to underestimate the time needed to complete tasks',
+      'Benefits greatly from hands-on electrical experience',
+      'Approved requires AM2s assessment, Installation requires AM2e',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "30 mA refers to the residual operating current — the trip threshold for a residual current device used for additional protection (typically against electric shock). Don't confuse mA (residual current rating for an RCD/RCBO) with A (the load current rating of an MCB/RCBO).",
   },
@@ -160,8 +165,8 @@ const quizQuestions = [
     options: [
       'Audio Frequency Detection Device',
       'Arc Fault Detection Device',
-      'Alternating Frequency Damper Device',
       'Automatic Fuse Disconnect Device',
+      'Alternating Frequency Damper Device',
     ],
     correctAnswer: 1,
     explanation:
@@ -173,11 +178,11 @@ const quizQuestions = [
       'A pair of horizontal lines, one solid and one dashed, drawn close together with no other components — what does this typically represent on an electrical drawing?',
     options: [
       'A capacitor',
-      'A battery',
       'A cable junction',
+      'A battery',
       'A two-conductor cable shown in cross-section',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Two parallel lines — one long, one short — is the standard battery cell symbol. Multiple cells stacked = a multi-cell battery. The longer line is the positive terminal, the shorter line is the negative.",
   },
@@ -186,12 +191,12 @@ const quizQuestions = [
     question:
       'BS 7671:2018+A4:2026 introduced regulation 514.9.2. What does it require regarding diagrams and symbols?',
     options: [
-      'All diagrams must be in colour',
+      'It provides mobile-optimised access to tax information, payment deadlines, and National Insurance record',
+      'Build genuine rapport through professionalism, reliability, clear communication and authentic common ground',
+      'They are internationally standardised so workers from any background can recognise the meaning instantly',
       'Diagrams, charts and information notices shall comply with the applicable standards specified',
-      'All diagrams must be on A3 paper',
-      'All diagrams must be witnessed by two electricians',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "514.9.2 (new in A4:2026) requires diagrams, charts and information/instruction notices to comply with the applicable standards — symbols per IEC 60617 (the modern continuation of BS EN 60617), notices per BS EN 60073 / 60446. Home-made symbols don't comply.",
   },
@@ -200,12 +205,12 @@ const quizQuestions = [
     question:
       'You see a symbol on a layout showing a downward-pointing triangle with two vertical lines extending below it. It\'s placed in the corridor of an office. What is it?',
     options: [
-      'A standard luminaire',
-      'A wall socket',
       'An emergency luminaire',
       'A smoke detector',
+      'A standard luminaire',
+      'A wall socket',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "An emergency luminaire (the triangle pointing down with the additional marking — often an 'M' for maintained or 'NM' for non-maintained inside or alongside). Emergency lighting symbols on layouts are deliberately distinct from standard luminaires so the emergency layout is unambiguous.",
   },

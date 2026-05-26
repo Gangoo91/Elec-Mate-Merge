@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'Under GS38, which features must a voltage indicator have for safe use on low voltage systems?',
     options: [
-      'A backlit display and auto-ranging capability',
+      'A document that records identified hazards associated with a design, the risk level, and the measures taken to eliminate or reduce those risks',
+      'Because some energy always converts into "less useful" forms like heat, sound and friction',
+      'The adiabatic equation: S = sqrt(I squared t) / k, where S is cross-sectional area, I is fault current, t is disconnection time and k is a material constant',
       'Fused test leads with finger guards, a maximum tip exposure of 4 mm, and a proving unit or known supply for verification',
-      'Bluetooth connectivity for remote monitoring',
-      'A CE mark and instruction manual',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'GS38 requires voltage indicators to have fused test leads with shrouded connectors, finger guards or barriers on probes limiting exposed tip to 4 mm maximum, and the ability to be proved against a known source before and after use. These features prevent accidental contact with live parts and verify the instrument is functioning correctly.',
   },
@@ -28,8 +28,13 @@ const quickCheckQuestions = [
     id: 'insulation-resistance-test',
     question:
       'When performing an insulation resistance test on a 230 V circuit, the standard test voltage is:',
-    options: ['230 V DC', '500 V DC', '1000 V DC', '250 V AC'],
-    correctIndex: 1,
+    options: [
+      '250 V AC',
+      '230 V DC',
+      '500 V DC',
+      '1000 V DC',
+    ],
+    correctIndex: 2,
     explanation:
       'For circuits rated up to 500 V (which includes standard 230 V single-phase and 400 V three-phase LV systems), BS 7671 Table 6.1 specifies a test voltage of 500 V DC. The minimum acceptable insulation resistance is 1 megohm (1 MΩ), although higher values are expected in healthy installations.',
   },
@@ -38,12 +43,12 @@ const quickCheckQuestions = [
     question:
       'When using a clamp meter to measure current in a three-phase motor circuit, you must clamp around:',
     options: [
-      'All three phase conductors together',
-      'One individual phase conductor at a time',
       'The earth conductor only',
       'The supply cable including the armour',
+      'One individual phase conductor at a time',
+      'All three phase conductors together',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'To measure the current in a single phase, the clamp must surround only that one conductor. If you clamp around all three phases together in a balanced circuit, the magnetic fields cancel and the reading will be zero (or close to zero). Measuring each phase individually also allows you to detect phase imbalance — a key diagnostic indicator.',
   },
@@ -52,12 +57,12 @@ const quickCheckQuestions = [
     question:
       'For fault finding on an industrial control panel operating at 415 V, the minimum CAT rating for your multimeter should be:',
     options: [
-      'CAT I — protected electronic equipment',
-      'CAT II — single-phase socket outlet level',
       'CAT III — distribution level (fixed installation)',
-      'CAT IV — origin of supply',
+      'They are metal and within the building',
+      'Voltage between simultaneously accessible parts during a fault',
+      'To stop current leaking out and to prevent shock',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Industrial control panels are connected to the fixed installation wiring (distribution level), requiring a minimum of CAT III rated instruments. CAT III instruments are designed to withstand the higher prospective fault currents and voltage transients present at distribution level. Using an underrated instrument risks explosive failure during a fault.',
   },
@@ -69,10 +74,10 @@ const quizQuestions = [
     question:
       'The purpose of proving a voltage indicator before and after use (as required by GS38) is to:',
     options: [
-      'Calibrate the instrument for the specific voltage',
+      "Mental health awareness, training and support across the construction sector",
       "Confirm the instrument is functioning correctly and that a 'dead' reading can be trusted",
-      'Charge the internal battery',
-      'Reset the instrument to factory settings',
+      "Automatic lighting control based on detecting presence or absence of people",
+      "Wash the graze under the tap, dry it, use ONE plaster, and tell the first aider you used one so it gets replaced",
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +87,10 @@ const quizQuestions = [
     id: 2,
     question: 'An insulation resistance reading of 0.5 MΩ on a 230 V circuit indicates:',
     options: [
-      'Excellent insulation — well above the minimum',
-      'A pass — the circuit meets the minimum requirement',
-      'A fail — the insulation resistance is below the minimum 1 MΩ required by BS 7671',
       'The reading is meaningless without a continuity test',
+      'Excellent insulation — well above the minimum',
+      'A fail — the insulation resistance is below the minimum 1 MΩ required by BS 7671',
+      'A pass — the circuit meets the minimum requirement',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,12 +100,12 @@ const quizQuestions = [
     id: 3,
     question: 'When measuring DC voltage with a multimeter, selecting the AC range will:',
     options: [
-      'Give the same reading as the DC range',
+      'A fail — the insulation resistance is below the minimum 1 MΩ required by BS 7671',
+      'Distorted or non-sinusoidal AC waveforms, such as the output of a variable speed drive',
+      'The overvoltage withstand capability appropriate to the measurement location in the installation',
       'Give a reading of zero or a misleading reading, potentially missing a DC voltage',
-      'Damage the multimeter',
-      'Automatically switch to the correct range',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A multimeter set to AC will not correctly measure DC voltage. True-RMS AC meters may display zero or a misleading low reading when measuring DC. This is a common cause of misdiagnosis — always verify you have selected the correct function (AC or DC) before taking a reading. On a variable speed drive output, for example, the voltage is neither pure AC nor pure DC.',
   },
@@ -109,12 +114,12 @@ const quizQuestions = [
     question:
       'A continuity test on a cable shows 0.2 Ω on one core and OL (over limit / open circuit) on another. This indicates:',
     options: [
-      'Both cores are healthy',
       'The first core is continuous and the second core has a break (open circuit)',
-      'The multimeter needs new batteries',
-      'The cable is too long to test',
+      'A fail — the insulation resistance is below the minimum 1 MΩ required by BS 7671',
+      'Give a reading of zero or a misleading reading, potentially missing a DC voltage',
+      'Distorted or non-sinusoidal AC waveforms, such as the output of a variable speed drive',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A low resistance reading (0.2 Ω) confirms continuity — the conductor is intact. An OL (over-limit) reading means the resistance is effectively infinite, indicating an open circuit — the conductor is broken. This is a definitive diagnosis of a cable fault requiring repair or replacement.',
   },
@@ -122,10 +127,10 @@ const quizQuestions = [
     id: 5,
     question: 'Before connecting an insulation resistance tester to a circuit, you must ensure:',
     options: [
-      'The circuit is energised so the test is realistic',
+      'GS38 — with fused leads, finger guards and maximum 4 mm exposed tip',
       'The circuit is isolated, proved dead, and all sensitive electronic equipment is disconnected',
-      'All loads are connected and operating',
-      'The ambient temperature is exactly 20°C',
+      'The total impedance of the earth fault loop from the point of test back to the supply transformer',
+      'The overvoltage withstand capability appropriate to the measurement location in the installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +140,12 @@ const quizQuestions = [
     id: 6,
     question: 'An earth loop impedance test measures:',
     options: [
-      'The resistance of the earth electrode only',
+      'The overvoltage withstand capability appropriate to the measurement location in the installation',
+      'A fail — the insulation resistance is below the minimum 1 MΩ required by BS 7671',
       'The total impedance of the earth fault loop from the point of test back to the supply transformer',
-      'The insulation resistance between live conductors and earth',
-      'The prospective fault current at the origin of the installation',
+      'Give a reading of zero or a misleading reading, potentially missing a DC voltage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Earth loop impedance (Zs) is the total impedance of the earth fault current path: from the point of test, through the circuit protective conductor, back through the main earthing terminal, the supply company's earth return, and the transformer winding. This value determines whether protective devices will operate within the required disconnection time stated in BS 7671.",
   },
@@ -148,12 +153,12 @@ const quizQuestions = [
     id: 7,
     question: 'A true-RMS multimeter is necessary when measuring:',
     options: [
-      'Pure DC voltages only',
+      'The circuit is isolated, proved dead, and all sensitive electronic equipment is disconnected',
+      'Moisture absorption in the insulation — the polarisation index indicates deterioration',
+      'The correct phase sequence (L1-L2-L3) at the equipment terminals',
       'Distorted or non-sinusoidal AC waveforms, such as the output of a variable speed drive',
-      'Battery voltage',
-      'Continuity on a dead circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'True-RMS meters accurately measure the heating effect of any waveform, including distorted and non-sinusoidal signals. Average-responding meters (cheaper models) only read accurately on pure sine waves. Variable speed drive outputs, electronic lighting loads and switched-mode power supplies produce non-sinusoidal waveforms that require true-RMS measurement.',
   },
@@ -162,12 +167,12 @@ const quizQuestions = [
     question:
       'When using a clamp meter on a single-phase circuit, clamping around both the line and neutral conductors together will read:',
     options: [
-      'The full load current',
-      'Double the load current',
       'Approximately zero (or the earth leakage current if present)',
-      'The neutral current only',
+      'The correct phase sequence (L1-L2-L3) at the equipment terminals',
+      'GS38 — with fused leads, finger guards and maximum 4 mm exposed tip',
+      'The first core is continuous and the second core has a break (open circuit)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'In a healthy single-phase circuit, the current in the line conductor equals the current in the neutral conductor but flows in the opposite direction. When clamped together, the magnetic fields cancel, reading approximately zero. Any reading indicates an imbalance — earth leakage current flowing via the earth conductor. This technique is used to measure leakage current without disconnecting the circuit.',
   },
@@ -175,10 +180,10 @@ const quizQuestions = [
     id: 9,
     question: 'The CAT (Category) rating of a test instrument relates to:',
     options: [
-      'The accuracy of the instrument',
+      'The total impedance of the earth fault loop from the point of test back to the supply transformer',
       'The overvoltage withstand capability appropriate to the measurement location in the installation',
-      'The country of manufacture',
-      'The warranty period',
+      'Give a reading of zero or a misleading reading, potentially missing a DC voltage',
+      'Moisture absorption in the insulation — the polarisation index indicates deterioration',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,12 +194,12 @@ const quizQuestions = [
     question:
       'During insulation resistance testing, a reading that starts high and gradually decreases over 60 seconds suggests:',
     options: [
-      'Normal healthy insulation',
+      'The correct phase sequence (L1-L2-L3) at the equipment terminals',
+      'The overvoltage withstand capability appropriate to the measurement location in the installation',
       'Moisture absorption in the insulation — the polarisation index indicates deterioration',
-      'A short circuit',
-      'The tester battery is low',
+      'The total impedance of the earth fault loop from the point of test back to the supply transformer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Healthy insulation typically shows a reading that stabilises or increases over time as the capacitive charging current diminishes. A reading that starts high but decreases suggests moisture or contamination in the insulation that is gradually providing a conductive path. The ratio of the 10-minute reading to the 1-minute reading (polarisation index) is used to assess insulation condition.',
   },
@@ -202,12 +207,12 @@ const quizQuestions = [
     id: 11,
     question: 'A phase rotation meter is used during fault finding to verify:',
     options: [
-      'The voltage between phases',
+      'GS38 — with fused leads, finger guards and maximum 4 mm exposed tip',
+      'Give a reading of zero or a misleading reading, potentially missing a DC voltage',
+      'A fail — the insulation resistance is below the minimum 1 MΩ required by BS 7671',
       'The correct phase sequence (L1-L2-L3) at the equipment terminals',
-      'The insulation resistance of each phase',
-      'The power factor of the load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A phase rotation meter confirms the phase sequence at the point of measurement. Correct phase rotation is essential for three-phase motors (determines direction of rotation), three-phase rectifiers, and some electronic equipment. Phase reversal can occur after maintenance work where connections have been disturbed, causing motors to run backwards.',
   },
@@ -217,9 +222,9 @@ const quizQuestions = [
       'When selecting test leads for a multimeter being used at distribution board level, the leads must comply with:',
     options: [
       'GS38 — with fused leads, finger guards and maximum 4 mm exposed tip',
-      'BS 1363 — the standard for 13 A plugs',
-      'BS EN 60529 — IP ratings for enclosures',
-      'No specific standard applies to test leads',
+      'Approximately zero (or the earth leakage current if present)',
+      'Give a reading of zero or a misleading reading, potentially missing a DC voltage',
+      'A fail — the insulation resistance is below the minimum 1 MΩ required by BS 7671',
     ],
     correctAnswer: 0,
     explanation:

@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     id: 'part-l-purpose',
     question: 'What is the primary purpose of Building Regulations Approved Document Part L?',
     options: [
-      'Fire safety',
+      'Lower back pain and spinal disorders',
+      'Check documentation and plan tests',
       'Conservation of fuel and power',
-      'Structural integrity',
-      'Electrical safety',
+      'Better device coverage and reliability',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Part L (Conservation of fuel and power) sets requirements for energy efficiency in new and existing buildings, including fabric performance, fixed building services, and on-site energy generation.',
   },
@@ -47,12 +47,12 @@ const quickCheckQuestions = [
     id: 'ter-ber',
     question: 'For compliance with Part L, what must be demonstrated about TER and BER?',
     options: [
-      'TER must equal BER',
       'BER must be less than TER',
-      'TER must be less than BER',
       'They are unrelated',
+      'TER must equal BER',
+      'TER must be less than BER',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The Building Emission Rate (BER) must be less than or equal to the Target Emission Rate (TER). This demonstrates that the actual building design produces fewer CO₂ emissions than the notional reference building.',
   },
@@ -60,12 +60,12 @@ const quickCheckQuestions = [
     id: 'sub-metering',
     question: 'Under Part L, when is sub-metering required for a new non-domestic building?',
     options: [
-      'Never required',
       'Buildings over 500m²',
-      'Buildings over 1000m²',
+      'Never required',
       'All buildings regardless of size',
+      'Buildings over 1000m²',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Part L requires sub-metering for non-domestic buildings with a total useful floor area greater than 1000m². This enables monitoring of energy use by end-use category (lighting, heating, cooling, etc.).',
   },
@@ -75,10 +75,10 @@ const quickCheckQuestions = [
     options: [
       'The building meets minimum standards',
       'Very poor energy performance',
-      'Very efficient energy performance',
       'The building is exempt from requirements',
+      'Very efficient energy performance',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "DEC ratings run from A (most efficient) to G (least efficient). An 'A' rating indicates the building's operational energy performance is significantly better than the typical benchmark for that building type.",
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does Part L Volume 2 specifically cover?',
     options: [
-      'New dwellings only',
+      'Short circuit causing flashover and burns',
       'New buildings other than dwellings',
-      'Existing dwellings only',
-      'Conservation areas',
+      'Supply air temperature control',
+      'Scalability and flexibility',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,16 +101,26 @@ const quizQuestions = [
   {
     id: 2,
     question: 'The Target Fabric Energy Efficiency (TFEE) rate is measured in which units?',
-    options: ['kWh/m²/year', 'W/m²K', 'kgCO₂/m²/year', 'lux/W'],
-    correctAnswer: 0,
+    options: [
+      'kgCO₂/m²/year',
+      'lux/W',
+      'kWh/m²/year',
+      'W/m²K',
+    ],
+    correctAnswer: 2,
     explanation:
       'TFEE is expressed in kWh/m²/year and represents the maximum fabric energy demand for space heating and cooling. This ensures good thermal performance regardless of heating system efficiency.',
   },
   {
     id: 3,
     question: 'Which CIBSE guide specifically addresses sustainability in building services?',
-    options: ['CIBSE Guide A', 'CIBSE Guide F', 'CIBSE Guide L', 'CIBSE Guide M'],
-    correctAnswer: 2,
+    options: [
+      'CIBSE Guide F',
+      'CIBSE Guide A',
+      'CIBSE Guide M',
+      'CIBSE Guide L',
+    ],
+    correctAnswer: 3,
     explanation:
       'CIBSE Guide L: Sustainability covers the environmental design of buildings including energy efficiency, carbon emissions, and sustainable building services strategies.',
   },
@@ -118,8 +128,13 @@ const quizQuestions = [
     id: 4,
     question:
       'Under BS 7671, which regulation specifically addresses maximum demand and diversity?',
-    options: ['Regulation 132.5', 'Regulation 311.1', 'Regulation 433.1', 'Regulation 525.1'],
-    correctAnswer: 1,
+    options: [
+      'Regulation 311.1',
+      'Regulation 132.5',
+      'Regulation 433.1',
+      'Regulation 525.1',
+    ],
+    correctAnswer: 0,
     explanation:
       'Regulation 311.1 requires assessment of maximum demand, taking into account diversity where applicable. This is essential for efficient sizing of supplies and reduces oversizing waste.',
   },
@@ -127,8 +142,13 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the minimum BREEAM rating required for new public buildings under government procurement?',
-    options: ['Pass', 'Good', 'Very Good', 'Excellent'],
-    correctAnswer: 3,
+    options: [
+      'Good',
+      'Excellent',
+      'Pass',
+      'Very Good',
+    ],
+    correctAnswer: 1,
     explanation:
       "UK government procurement requires new public buildings to achieve BREEAM 'Excellent' rating. This ensures high environmental performance across energy, water, materials, and other categories.",
   },
@@ -136,12 +156,12 @@ const quizQuestions = [
     id: 6,
     question: 'For buildings over 1000m², Part L requires sub-metering by which categories?',
     options: [
-      'Floor by floor only',
+      'Frequency rating and performance',
+      'Extensive experience and specialist knowledge',
       'End-use category (lighting, heating, etc.)',
-      'Per room only',
-      'Main incomer only',
+      'Ensure safe isolation and verify circuits are dead',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Sub-metering must enable at least 90% of estimated annual energy consumption to be assigned to end-use categories: heating, hot water, cooling, ventilation, lighting, small power, and other major loads.',
   },
@@ -150,12 +170,12 @@ const quizQuestions = [
     question:
       'Which document must be provided to the building control body before work commences on a new non-domestic building?',
     options: [
-      'Design stage BRUKL output',
+      'Completion certificate',
       'As-built calculations only',
       'EPC certificate',
-      'Completion certificate',
+      'Design stage BRUKL output',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'A design stage BRUKL (Building Regulations UK Part L) output document must be submitted showing predicted compliance. As-built calculations are required at completion to confirm actual compliance.',
   },
@@ -163,8 +183,13 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the maximum circuit watts loss (CWL) allowed under Part L for LED lighting circuits?',
-    options: ['2 W/m²', '3 W/m²', '5 W/m²', 'No specific limit - varies by space type'],
-    correctAnswer: 3,
+    options: [
+      'No specific limit - varies by space type',
+      'Hot spots indicating problems',
+      'Before using any chemical products or materials',
+      'Timing, conditions, frequency, and triggering events',
+    ],
+    correctAnswer: 0,
     explanation:
       'Part L specifies maximum lighting efficacy requirements (lamp-circuit lumens per circuit watt) rather than fixed W/m² limits. Requirements vary by space type and are detailed in the Non-Domestic Building Services Compliance Guide.',
   },
@@ -172,8 +197,13 @@ const quizQuestions = [
     id: 9,
     question:
       'How often must a Display Energy Certificate (DEC) be renewed for a building over 1000m²?',
-    options: ['Every year', 'Every 5 years', 'Every 7 years', 'Every 10 years'],
-    correctAnswer: 0,
+    options: [
+      'Every 5 years',
+      'Every year',
+      'Every 7 years',
+      'Every 10 years',
+    ],
+    correctAnswer: 1,
     explanation:
       'DECs for buildings over 1000m² must be renewed annually based on actual metered energy consumption data. Smaller public buildings (250-1000m²) require renewal every 10 years.',
   },
@@ -181,7 +211,12 @@ const quizQuestions = [
     id: 10,
     question:
       "In BREEAM assessments, what percentage weighting does 'Energy' typically receive in the overall score?",
-    options: ['5%', '10%', '15-19%', '25-30%'],
+    options: [
+      '5%',
+      '10%',
+      '15-19%',
+      '25-30%',
+    ],
     correctAnswer: 2,
     explanation:
       'Energy typically has a weighting of 15-19% in BREEAM assessments (varies by building type). It is one of the most significant categories alongside Health & Wellbeing and Management.',

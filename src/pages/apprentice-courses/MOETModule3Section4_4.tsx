@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'led-efficacy',
     question: 'What is luminous efficacy and how is it measured?',
     options: [
-      'The brightness of a lamp measured in watts',
+      'Planned, appropriately supervised and carried out in a safe manner',
+      'An engineering control because it physically prevents the hazard',
+      'Suitable and sufficient, and recorded in writing where the employer has 5 or more employees',
       'The ratio of luminous flux (lumens) to power consumed (watts), measured in lm/W',
-      'The colour temperature of the light output',
-      'The lifespan of the lamp in hours',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Luminous efficacy is the ratio of luminous flux (measured in lumens) to the electrical power consumed (measured in watts), expressed as lm/W. It is the primary measure of how efficiently a light source converts electrical energy into visible light. Modern LED lamps achieve efficacies of 100-200 lm/W, compared with approximately 15 lm/W for incandescent lamps.',
   },
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'cct',
     question: 'A colour temperature of 4000 K would be described as:',
     options: [
-      'Warm white (yellowish)',
-      'Cool white (neutral)',
-      'Daylight (bluish-white)',
       'Ultra-warm (amber)',
+      'Cool white (neutral)',
+      'Warm white (yellowish)',
+      'Daylight (bluish-white)',
     ],
     correctIndex: 1,
     explanation:
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'cri',
     question: 'What does a CRI (Colour Rendering Index) of 90 indicate?',
     options: [
-      'The lamp is 90% efficient',
+      'To prevent harmonic resonance by shifting the resonant frequency below dominant harmonics',
+      'After physical damage, unusual readings, failed checks, repairs, or exposure to extremes',
+      'Arc fault detection devices (AFDD) in certain circumstances',
       'The lamp renders colours very accurately compared to a reference light source',
-      'The lamp has a colour temperature of 90 K',
-      'The lamp will last 90,000 hours',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A CRI of 90 indicates excellent colour rendering — objects illuminated by this lamp will appear very close to their true colours as seen under a reference light source (natural daylight or incandescent lamp, depending on the colour temperature). CRI ranges from 0 to 100, with 80+ considered good for general use and 90+ considered excellent for colour-critical applications.',
   },
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'mercury-disposal',
     question: 'Why must fluorescent lamps be disposed of as hazardous waste?',
     options: [
-      'They contain lead in the glass',
+      'To reduce starting current and starting torque',
+      'Zero transfer time - continuous power conditioning',
       'They contain mercury vapour which is toxic',
-      'They are radioactive',
-      'They contain asbestos',
+      'Electronic equipment and equipment with low insulation',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Fluorescent lamps (tubes and CFLs) contain mercury vapour, which is a toxic heavy metal. When a fluorescent lamp breaks, mercury vapour is released. Under the WEEE Regulations and Hazardous Waste Regulations, fluorescent lamps must be collected separately and recycled through specialist contractors who can safely recover the mercury. They must never be placed in general waste.',
   },
@@ -69,15 +69,25 @@ const quizQuestions = [
     id: 1,
     question:
       'Compared to a 100 W incandescent lamp, an LED lamp producing the same luminous flux (approximately 1,500 lumens) typically consumes:',
-    options: ['80-90 W', '40-60 W', '10-15 W', '1-2 W'],
-    correctAnswer: 2,
+    options: [
+      '80-90 W',
+      '10-15 W',
+      '40-60 W',
+      '1-2 W',
+    ],
+    correctAnswer: 1,
     explanation:
       'An LED lamp producing approximately 1,500 lumens (equivalent to a 100 W incandescent) typically consumes only 10-15 W, representing an energy saving of 85-90%. This dramatic improvement in efficacy is the primary driver for the widespread adoption of LED technology in both new installations and retrofit applications.',
   },
   {
     id: 2,
     question: 'What is the typical rated life of a quality commercial LED luminaire?',
-    options: ['5,000 hours', '10,000-15,000 hours', '50,000-100,000 hours', '500,000 hours'],
+    options: [
+      '500,000 hours',
+      '5,000 hours',
+      '50,000-100,000 hours',
+      '10,000-15,000 hours',
+    ],
     correctAnswer: 2,
     explanation:
       'Quality commercial LED luminaires typically have a rated life of 50,000-100,000 hours (L70), meaning the LED will produce at least 70% of its initial light output at the rated hour point. At 12 hours per day operation, 50,000 hours equates to approximately 11 years. This significantly exceeds the life of fluorescent (15,000-20,000 hours) and incandescent (1,000-2,000 hours) lamps.',
@@ -86,12 +96,12 @@ const quizQuestions = [
     id: 3,
     question: 'An LED driver performs which function?',
     options: [
-      'Increases the light output of the LED',
+      'The colour temperature (CCT) to be adjusted, for example from warm white to cool white',
+      'Fluorescent tubes and compact fluorescent lamps (due to mercury content)',
+      'LEDs have significantly longer life, reducing lamp replacement frequency and maintenance costs',
       'Converts the mains AC supply to the regulated DC current required by the LED',
-      'Controls the colour temperature of the LED',
-      'Provides emergency battery backup',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An LED driver converts the mains AC supply (230 V, 50 Hz) to the regulated DC current required by the LED module. LEDs are current-driven devices — they require a constant current (typically 350 mA, 500 mA or 700 mA) at a specific voltage. The driver also provides power factor correction, surge protection and, in dimmable versions, the interface for dimming control (DALI, 1-10 V, etc.).',
   },
@@ -100,12 +110,12 @@ const quizQuestions = [
     question:
       'When retrofitting LED lamps into existing fluorescent luminaires, what must be considered regarding the existing control gear?',
     options: [
-      'Nothing — LED lamps are direct replacements in all cases',
       'The existing ballast must be bypassed or the LED tube must be compatible with the existing ballast type',
-      'The luminaire must always be completely replaced',
-      'Only the starter needs to be replaced',
+      'The point at which the LED output has depreciated to 70% of its initial lumens',
+      'The colour temperature (CCT) to be adjusted, for example from warm white to cool white',
+      'Converts the mains AC supply to the regulated DC current required by the LED',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "LED retrofit tubes are available in several types: those that work with the existing magnetic ballast (with starter replacement), those that work with existing electronic ballasts, and those that require the ballast to be bypassed (direct mains connection). Using the wrong type can cause flickering, reduced lamp life, overheating or failure. Always check compatibility and follow the manufacturer's instructions.",
   },
@@ -113,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: "The 'L70' rating of an LED indicates:",
     options: [
-      'The LED operates at 70% power',
+      'The total installation cost by the annual energy cost saving',
       'The point at which the LED output has depreciated to 70% of its initial lumens',
-      'The LED has a CRI of 70',
-      'The LED operates at 70°C maximum',
+      'Converts the mains AC supply to the regulated DC current required by the LED',
+      'Fluorescent tubes and compact fluorescent lamps (due to mercury content)',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,10 +137,10 @@ const quizQuestions = [
     question:
       'Which lighting control strategy typically provides the greatest energy saving in a daylit office?',
     options: [
-      'Manual switching only',
-      'Time-clock scheduling',
+      'Tabulated current-carrying capacity of a cable',
+      'Conduct a detailed baseline carbon assessment',
       'Daylight-linked dimming with occupancy sensing',
-      'Constant-output lighting',
+      'Separate neutral and earth conductors from source',
     ],
     correctAnswer: 2,
     explanation:
@@ -141,11 +151,11 @@ const quizQuestions = [
     question: 'A simple payback calculation for an LED retrofit project divides:',
     options: [
       'The total energy saving by the installation cost',
-      'The total installation cost by the annual energy cost saving',
-      'The lamp life by the number of lamps',
       'The wattage reduction by the electricity tariff',
+      'The lamp life by the number of lamps',
+      'The total installation cost by the annual energy cost saving',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Simple payback period = Total installation cost / Annual energy cost saving. For example, if an LED retrofit costs £10,000 and saves £4,000 per year in energy costs, the simple payback period is 2.5 years. More sophisticated calculations also consider maintenance cost savings (fewer lamp replacements), carbon reduction, and the time value of money (discounted payback or NPV).',
   },
@@ -154,12 +164,12 @@ const quizQuestions = [
     question:
       'Smart lighting systems using IoT (Internet of Things) can provide which additional benefit beyond energy saving?',
     options: [
-      'Increased light output from each luminaire',
       'Space utilisation data, occupancy analytics and environmental monitoring',
-      'Reduced installation costs',
-      'Elimination of the need for emergency lighting',
+      'The colour temperature (CCT) to be adjusted, for example from warm white to cool white',
+      'Converts the mains AC supply to the regulated DC current required by the LED',
+      'The point at which the LED output has depreciated to 70% of its initial lumens',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IoT-enabled smart lighting systems incorporate sensors that collect data on occupancy patterns, space utilisation, temperature, humidity and air quality. This data can be used for facilities management, workspace planning, HVAC optimisation and compliance monitoring. The luminaire becomes a platform for building intelligence, not just a light source. Maintenance teams can receive real-time fault notifications.',
   },
@@ -168,10 +178,10 @@ const quizQuestions = [
     question:
       'What is the primary advantage of LED technology for maintenance compared to fluorescent?',
     options: [
-      'LEDs are cheaper to purchase',
+      'Space utilisation data, occupancy analytics and environmental monitoring',
       'LEDs have significantly longer life, reducing lamp replacement frequency and maintenance costs',
-      'LEDs do not require any electrical connection',
-      'LEDs can be disposed of in general waste',
+      'The point at which the LED output has depreciated to 70% of its initial lumens',
+      'Converts the mains AC supply to the regulated DC current required by the LED',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,10 +192,10 @@ const quizQuestions = [
     question:
       'Under the WEEE Regulations, which of the following lamps must be recycled through a specialist waste stream?',
     options: [
-      'LED lamps only',
-      'Incandescent lamps only',
+      'Converts the mains AC supply to the regulated DC current required by the LED',
+      'The total installation cost by the annual energy cost saving',
       'Fluorescent tubes and compact fluorescent lamps (due to mercury content)',
-      'Halogen lamps only',
+      'The point at which the LED output has depreciated to 70% of its initial lumens',
     ],
     correctAnswer: 2,
     explanation:
@@ -195,12 +205,12 @@ const quizQuestions = [
     id: 11,
     question: 'Tunable white LED technology allows:',
     options: [
-      'The LED to change between different colours (red, green, blue)',
+      'The point at which the LED output has depreciated to 70% of its initial lumens',
+      'Fluorescent tubes and compact fluorescent lamps (due to mercury content)',
+      'LEDs have significantly longer life, reducing lamp replacement frequency and maintenance costs',
       'The colour temperature (CCT) to be adjusted, for example from warm white to cool white',
-      'The LED to operate at different voltages',
-      'The CRI to be increased above 100',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Tunable white LED technology allows the colour temperature (CCT) to be adjusted across a range, typically from warm white (2700 K) to cool white (6500 K). This is achieved by mixing the output of warm and cool LED arrays. Tunable white systems are used in healthcare, education and workplaces to support circadian rhythm (human-centric lighting) and to adapt the lighting to different tasks and times of day.',
   },
@@ -209,12 +219,12 @@ const quizQuestions = [
     question:
       'When specifying LED luminaires for a retrofit project, which parameter should be matched to the existing installation to maintain visual consistency?',
     options: [
-      'The wattage of the existing lamps',
       'The colour temperature (CCT) and colour rendering index (CRI)',
-      'The physical size of the ballast',
-      'The manufacturer of the existing luminaires',
+      'Daylight-linked dimming with occupancy sensing',
+      'The total installation cost by the annual energy cost saving',
+      'Converts the mains AC supply to the regulated DC current required by the LED',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When retrofitting, the colour temperature (CCT) and CRI of the replacement LEDs should be matched to the existing installation to maintain visual consistency. Mismatched CCT creates an obviously different light appearance. Wattage is not the correct parameter to match — you should match the lumen output (lumens) not the power consumption (watts), as LEDs produce far more lumens per watt than the lamps they replace.',
   },

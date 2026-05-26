@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'cibse-code-m-purpose',
     question: 'What is the primary purpose of CIBSE Code M?',
     options: [
-      'To specify equipment ratings',
       'To provide guidance on commissioning building services',
-      'To define electrical installation standards',
-      'To set energy efficiency targets',
+      'Openings are on opposite or adjacent walls with clear internal paths',
+      'Need to convert 30 minutes to 0.5 hours first',
+      'Shock protection, overcurrent protection, fire prevention',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'CIBSE Code M (Commissioning Management) provides comprehensive guidance on the commissioning of building services systems to ensure they operate as designed.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'cmp-responsibility',
     question: 'Who is typically responsible for producing the Commissioning Management Plan?',
     options: [
-      'The building owner',
       'The commissioning manager',
       'The main contractor',
+      'The building owner',
       'The equipment manufacturer',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The commissioning manager is responsible for producing and maintaining the Commissioning Management Plan, coordinating all commissioning activities across different building services disciplines.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'commissioning-prerequisite',
     question: 'Which of the following is a pre-requisite for commissioning HVAC systems?',
     options: [
-      'Final decoration complete',
-      'Building handed over',
+      'For circuits where 30mA would nuisance trip',
       'Electrical supplies energised and tested',
-      'All furniture installed',
+      'Overload — the circuit is carrying too much current',
+      'Using a voltage indicator or socket tester',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Electrical supplies must be energised and tested before HVAC commissioning can begin, as the systems require power to operate during the commissioning process.',
   },
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'witness-testing',
     question: 'What is the purpose of witness testing during commissioning?',
     options: [
-      'To train maintenance staff',
+      'To hold 30% of gross income for tax obligations',
       'To allow the client to verify system performance',
-      'To identify design faults',
-      'To complete snagging lists',
+      'Square root of 2 times magnitude at 45 degrees',
+      'The Health & Safety at Work Act 1974',
     ],
     correctIndex: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'At what project stage should the Commissioning Management Plan first be produced?',
     options: [
-      'After practical completion',
-      'During construction phase',
+      'Prosecution and imprisonment',
+      'Isolate and de-energise the circuit',
       'At design stage (RIBA Stage 3-4)',
-      'During handover',
+      'The total loss through a connection point',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,16 +111,26 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the recommended minimum notice period for witness testing?',
-    options: ['24 hours', '48 hours', '7 days', '14 days'],
-    correctAnswer: 2,
+    options: [
+      '48 hours',
+      '24 hours',
+      '14 days',
+      '7 days',
+    ],
+    correctAnswer: 3,
     explanation:
       "CIBSE Code M recommends a minimum of 7 days notice for witness testing to allow the client's representative adequate time to arrange attendance and prepare.",
   },
   {
     id: 4,
     question: 'Which document records all commissioning results for handover?',
-    options: ['Building Log Book', 'Commissioning Record', 'O&M Manual', 'As-built drawings'],
-    correctAnswer: 1,
+    options: [
+      'Commissioning Record',
+      'Building Log Book',
+      'O&M Manual',
+      'As-built drawings',
+    ],
+    correctAnswer: 0,
     explanation:
       'The Commissioning Record documents all test results, settings, and commissioning data. This forms part of the handover documentation package alongside O&M manuals and as-built drawings.',
   },
@@ -128,8 +138,13 @@ const quizQuestions = [
     id: 5,
     question:
       'What percentage of commissioning time should typically be allowed for snagging and re-commissioning?',
-    options: ['5-10%', '10-15%', '15-25%', '25-35%'],
-    correctAnswer: 2,
+    options: [
+      '10-15%',
+      '15-25%',
+      '25-35%',
+      '5-10%',
+    ],
+    correctAnswer: 1,
     explanation:
       'Industry guidance suggests allowing 15-25% of total commissioning time for addressing snags and re-commissioning activities, as issues inevitably arise during the process.',
   },
@@ -138,11 +153,11 @@ const quizQuestions = [
     question: 'For a phased handover, commissioning should be planned to:',
     options: [
       'Complete all systems at once at the end',
-      'Match the phasing of building occupation',
       'Prioritise electrical systems first',
+      'Match the phasing of building occupation',
       'Follow alphabetical order of systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Commissioning programmes must align with phased handover requirements, completing and demonstrating systems in each phase before that area is occupied.',
   },
@@ -150,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the role of commissioning specialists in the commissioning process?',
     options: [
-      'To design the building services systems',
+      'Match the phasing of building occupation',
+      'Electrical installation certificates and test results',
+      'The main construction programme and all trade programmes',
       'To carry out independent testing and balancing',
-      'To manufacture equipment',
-      'To approve planning applications',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Commissioning specialists are independent third parties who carry out testing, adjusting, and balancing of systems. Their independence provides quality assurance.',
   },
@@ -163,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'Static completion of a system means:',
     options: [
-      'The system has been commissioned',
       'Physical installation is complete but not powered',
       'The system has failed commissioning',
+      'The system has been commissioned',
       'The system is operating at reduced capacity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Static completion means the physical installation is complete, including all connections and containment, but the system has not yet been powered or commissioned.',
   },
@@ -176,8 +191,13 @@ const quizQuestions = [
     id: 9,
     question:
       'Which building services system typically requires the longest commissioning duration?',
-    options: ['Lighting controls', 'Fire alarm', 'BMS and controls', 'Hot water systems'],
-    correctAnswer: 2,
+    options: [
+      'Lighting controls',
+      'BMS and controls',
+      'Fire alarm',
+      'Hot water systems',
+    ],
+    correctAnswer: 1,
     explanation:
       'Building Management Systems (BMS) and controls typically require the longest commissioning duration due to the complexity of integrating multiple systems, optimising control strategies, and seasonal commissioning requirements.',
   },
@@ -186,12 +206,12 @@ const quizQuestions = [
     question:
       'What documentation must be available before commissioning an electrical distribution system?',
     options: [
-      'Only the circuit diagrams',
+      'Match the phasing of building occupation',
+      'To carry out independent testing and balancing',
       'Electrical installation certificates and test results',
-      'Equipment warranties only',
-      'Maintenance contracts',
+      'The main construction programme and all trade programmes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Before commissioning electrical distribution systems, electrical installation certificates (EIC) and test results must be available to confirm the installation is safe and compliant with BS 7671.',
   },
@@ -199,12 +219,12 @@ const quizQuestions = [
     id: 11,
     question: 'Seasonal commissioning refers to:',
     options: [
-      'Commissioning only in summer months',
+      'Physical installation is complete but not powered',
+      'Electrical installation certificates and test results',
+      'The main construction programme and all trade programmes',
       'Commissioning heating and cooling systems in their respective seasons',
-      'Annual recommissioning of all systems',
-      'Commissioning during mild weather only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Seasonal commissioning involves testing heating systems during cold weather and cooling systems during warm weather to verify performance under actual load conditions.',
   },
@@ -212,12 +232,12 @@ const quizQuestions = [
     id: 12,
     question: 'A commissioning schedule should interface with:',
     options: [
-      'Only the electrical installation programme',
       'The main construction programme and all trade programmes',
-      "The architect's design programme only",
-      "The client's business plan",
+      'Electrical installation certificates and test results',
+      'Match the phasing of building occupation',
+      'To carry out independent testing and balancing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The commissioning schedule must interface with the main construction programme and all trade programmes to ensure pre-requisites are complete and resources are coordinated.',
   },

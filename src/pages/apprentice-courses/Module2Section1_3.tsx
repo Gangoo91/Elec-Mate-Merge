@@ -17,24 +17,39 @@ const quickCheckQuestions = [
   {
     id: 'units-voltage',
     question: 'What unit is used to measure electrical pressure?',
-    options: ['Amperes (A)', 'Volts (V)', 'Ohms (Ω)', 'Watts (W)'],
-    correctIndex: 1,
+    options: [
+      'Ohms (Ω)',
+      'Amperes (A)',
+      'Watts (W)',
+      'Volts (V)',
+    ],
+    correctIndex: 3,
     explanation:
       "Volts (V) measure electrical pressure or potential difference - the 'push' that makes current flow through a circuit.",
   },
   {
     id: 'units-energy',
     question: 'Which unit appears on UK electricity bills?',
-    options: ['kW (kilowatts)', 'kWh (kilowatt-hours)', 'A (amperes)', 'Ω (ohms)'],
-    correctIndex: 1,
+    options: [
+      'kW (kilowatts)',
+      'A (amperes)',
+      'Ω (ohms)',
+      'kWh (kilowatt-hours)',
+    ],
+    correctIndex: 3,
     explanation:
       'kWh (kilowatt-hours) is the unit of energy used for billing - it measures how much electrical energy is consumed over time.',
   },
   {
     id: 'units-prefixes',
     question: "What does 'milli' mean in electrical units?",
-    options: ['× 1,000', '÷ 1,000', '× 1,000,000', '÷ 1,000,000'],
-    correctIndex: 1,
+    options: [
+      '× 1,000',
+      '÷ 1,000,000',
+      '× 1,000,000',
+      '÷ 1,000',
+    ],
+    correctIndex: 3,
     explanation: 'Milli (m) means divide by 1,000. So 500mA = 0.5A, and 30mA = 0.03A.',
   },
 ];
@@ -43,32 +58,52 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What unit is used to measure electrical power?',
-    options: ['Volts (V)', 'Amperes (A)', 'Watts (W)', 'Ohms (Ω)'],
-    correctAnswer: 2,
+    options: [
+      'Volts (V)',
+      'Watts (W)',
+      'Amperes (A)',
+      'Ohms (Ω)',
+    ],
+    correctAnswer: 1,
     explanation:
       'Watts (W) is the unit used to measure electrical power, representing the rate at which electrical energy is converted to other forms of energy.',
   },
   {
     id: 2,
     question: 'What is the unit for resistance?',
-    options: ['Amperes (A)', 'Ohms (Ω)', 'Volts (V)', 'Watts (W)'],
-    correctAnswer: 1,
+    options: [
+      'Volts (V)',
+      'Amperes (A)',
+      'Ohms (Ω)',
+      'Watts (W)',
+    ],
+    correctAnswer: 2,
     explanation:
       'Ohms (Ω) is the unit for electrical resistance, measuring how much a material opposes the flow of electric current.',
   },
   {
     id: 3,
     question: 'What does kWh stand for?',
-    options: ['Kilovolt-hours', 'Kilowatt-hours', 'Kilo-watt-hertz', 'Kiloamp-hours'],
-    correctAnswer: 1,
+    options: [
+      'Kilo-watt-hertz',
+      'Kilovolt-hours',
+      'Kiloamp-hours',
+      'Kilowatt-hours',
+    ],
+    correctAnswer: 3,
     explanation:
       'kWh stands for kilowatt-hours, which is the unit of energy used by electricity companies for billing - it measures how much electrical energy is consumed over time.',
   },
   {
     id: 4,
     question: 'Which is larger: 500mA or 1A?',
-    options: ['500mA', '1A', 'They are equal', 'Cannot determine'],
-    correctAnswer: 1,
+    options: [
+      '1A',
+      '500mA',
+      'They are equal',
+      'Cannot determine',
+    ],
+    correctAnswer: 0,
     explanation:
       '1A is larger. 500mA = 0.5A, so 1A is twice as large as 500mA. Remember: 1000mA = 1A.',
   },
@@ -84,29 +119,49 @@ const quizQuestions = [
     id: 6,
     question:
       'A heater is rated at 2.4 kW on a 230 V supply. Approximately what current will it draw?',
-    options: ['10 A', '13 A', '32 A', '2.4 A'],
-    correctAnswer: 0,
+    options: [
+      '32 A',
+      '13 A',
+      '10 A',
+      '2.4 A',
+    ],
+    correctAnswer: 2,
     explanation:
       'I = P ÷ V = 2400 W ÷ 230 V ≈ 10.4 A. The closest answer is 10 A, though in practice it would draw about 10.4A.',
   },
   {
     id: 7,
     question: 'Convert 0.02 kΩ to Ω.',
-    options: ['20 Ω', '200 Ω', '2 Ω', '0.2 Ω'],
-    correctAnswer: 0,
+    options: [
+      '0.2 Ω',
+      '200 Ω',
+      '2 Ω',
+      '20 Ω',
+    ],
+    correctAnswer: 3,
     explanation: '0.02 kΩ × 1000 = 20 Ω. Remember kilo means × 1000.',
   },
   {
     id: 8,
     question: 'An RCD is rated 30 mA. What is this in amperes?',
-    options: ['0.03 A', '3 A', '0.3 A', '0.003 A'],
+    options: [
+      '0.03 A',
+      '0.3 A',
+      '0.003 A',
+      '3 A',
+    ],
     correctAnswer: 0,
     explanation: '30 mA = 0.03 A (milli = 1/1000, so 30 ÷ 1000 = 0.03).',
   },
   {
     id: 9,
     question: 'Which prefix represents the largest value?',
-    options: ['kilo (k)', 'mega (M)', 'milli (m)', 'micro (μ)'],
+    options: [
+      'kilo (k)',
+      'mega (M)',
+      'milli (m)',
+      'micro (μ)',
+    ],
     correctAnswer: 1,
     explanation:
       'Mega (M) = × 1,000,000, kilo (k) = × 1,000, milli (m) = ÷ 1,000, micro (μ) = ÷ 1,000,000.',
@@ -115,12 +170,12 @@ const quizQuestions = [
     id: 10,
     question: 'Why must electricians understand units clearly?',
     options: [
-      "It's only needed for calculations",
+      'Drawing a regular income from your invested pot',
+      'Design documentation and operating sequences',
       'For safety, component selection, and testing',
-      "It's not important for apprentices",
-      'Only for passing exams',
+      'A gross breach of duty of care by senior management',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Understanding units is essential for selecting correct components, interpreting test results, ensuring safety, and avoiding costly mistakes on installations.',
   },

@@ -27,8 +27,13 @@ const quickCheckQuestions = [
     id: 'fan-type-selection',
     question:
       'Which fan type is most suitable for high-pressure ductwork systems with significant resistance?',
-    options: ['Axial fan', 'Centrifugal fan', 'Propeller fan', 'Cross-flow fan'],
-    correctIndex: 1,
+    options: [
+      'Cross-flow fan',
+      'Axial fan',
+      'Centrifugal fan',
+      'Propeller fan',
+    ],
+    correctIndex: 2,
     explanation:
       'Centrifugal fans are best suited for high-pressure systems due to their ability to generate higher static pressures. The curved blades accelerate air outward, creating the pressure needed to overcome significant ductwork resistance. Axial fans are better for high-volume, low-pressure applications.',
   },
@@ -38,11 +43,11 @@ const quickCheckQuestions = [
       'According to the fan laws, if fan speed is doubled, what happens to the power consumption?',
     options: [
       'It doubles (2x)',
-      'It quadruples (4x)',
       'It increases eightfold (8x)',
+      'It quadruples (4x)',
       'It remains the same',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The third fan law states that power varies with the cube of the speed ratio (P2 = P1 × (n2/n1)³). Doubling the speed means power increases by 2³ = 8 times. This is why even small speed reductions via VSDs achieve significant energy savings.',
   },
@@ -76,10 +81,10 @@ const quizQuestions = [
     question:
       'Which blade configuration on a centrifugal fan provides the highest efficiency for clean air applications?',
     options: [
-      'Forward-curved blades',
+      'Volt-free contacts or BACnet/Modbus',
       'Backward-curved or backward-inclined blades',
-      'Radial blades',
-      'Paddle blades',
+      'No F-gas qualified installer required for installation',
+      'During the design stage (RIBA Stage 2)',
     ],
     correctAnswer: 1,
     explanation:
@@ -89,8 +94,13 @@ const quizQuestions = [
     id: 2,
     question:
       'According to the fan laws, if fan speed is reduced by 50%, the volume flow rate will:',
-    options: ['Reduce by 25%', 'Reduce by 50%', 'Reduce by 75%', 'Reduce by 87.5%'],
-    correctAnswer: 1,
+    options: [
+      'Reduce by 75%',
+      'Reduce by 25%',
+      'Reduce by 50%',
+      'Reduce by 87.5%',
+    ],
+    correctAnswer: 2,
     explanation:
       'The first fan law states that volume flow rate varies directly with speed (Q2 = Q1 × n2/n1). A 50% speed reduction means flow reduces to 50% of original. This linear relationship is the basis for variable speed fan control strategies.',
   },
@@ -98,12 +108,12 @@ const quizQuestions = [
     id: 3,
     question: "What does the term 'stall' mean in relation to axial fans?",
     options: [
-      'The fan has reached maximum speed',
+      'Parabolic - pressure proportional to flow squared',
+      'Higher efficiency across the speed range, especially at part load',
+      'Reduced mass flow rate due to lower air density',
       'Airflow separation from the blades causing unstable operation',
-      'The motor has overheated',
-      'The fan bearings have failed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Stall occurs when airflow separates from the fan blades due to operating at excessively high pressures. This causes turbulence, noise, vibration, and reduced performance. Axial fans are particularly susceptible and must not operate in the stall region.',
   },
@@ -111,12 +121,12 @@ const quizQuestions = [
     id: 4,
     question: 'The system resistance curve on a pressure-volume graph follows which relationship?',
     options: [
-      'Linear - pressure proportional to flow',
       'Parabolic - pressure proportional to flow squared',
+      'Linear - pressure proportional to flow',
       'Exponential - pressure increases exponentially with flow',
       'Constant - pressure independent of flow',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'System resistance follows the square law: ΔP = kQ². As airflow doubles, the pressure drop quadruples. This parabolic relationship is fundamental to understanding how fans interact with ductwork systems and why the duty point exists.',
   },
@@ -125,10 +135,10 @@ const quizQuestions = [
     question:
       'What is the primary advantage of EC (electronically commutated) motors over AC induction motors for fans?',
     options: [
-      'Lower initial purchase cost',
+      'Airflow separation from the blades causing unstable operation',
       'Higher efficiency across the speed range, especially at part load',
-      'Simpler installation without additional controls',
-      'No requirement for protective devices',
+      'Parabolic - pressure proportional to flow squared',
+      'They combine characteristics of axial and centrifugal fans',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,10 +149,10 @@ const quizQuestions = [
     question:
       'Under ErP (Energy-related Products) Lot 6, which component efficiency is regulated for fans?',
     options: [
-      'Impeller efficiency only',
-      'Motor efficiency only',
+      'Flow increases but less than double due to system curve',
+      'Motor power (W) ÷ airflow (l/s)',
       'Complete fan unit efficiency including motor',
-      'Ductwork system efficiency',
+      'Reduced mass flow rate due to lower air density',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'A fan with a steep characteristic curve is better suited for:',
     options: [
-      'Systems with varying resistance (damper control)',
+      'Open discharge applications',
       'Systems with constant resistance',
       'Systems requiring maximum flow at all times',
-      'Open discharge applications',
+      'Systems with varying resistance (damper control)',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Fans with steep curves maintain relatively stable airflow despite changes in system resistance. This makes them ideal for systems with variable resistance such as damper-controlled VAV systems, where flow stability is important despite pressure changes.',
   },
@@ -165,8 +175,13 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the minimum Fan Efficiency Grade (FEG) typically required under current ErP regulations?',
-    options: ['FEG 50', 'FEG 60', 'FEG 67', 'FEG 75'],
-    correctAnswer: 2,
+    options: [
+      'FEG 67',
+      'FEG 75',
+      'FEG 50',
+      'FEG 60',
+    ],
+    correctAnswer: 0,
     explanation:
       'ErP regulations typically mandate minimum FEG67, meaning the fan must achieve at least 67% of the efficiency of an ideal reference fan at the same duty point. Higher grades (FEG71, FEG85) indicate better performance above minimum requirements.',
   },
@@ -188,11 +203,11 @@ const quizQuestions = [
     question: 'Specific Fan Power (SFP) is calculated as:',
     options: [
       'Motor power (W) × airflow (l/s)',
+      'Pressure (Pa) × airflow (l/s)',
       'Motor power (W) ÷ airflow (l/s)',
       'Airflow (l/s) ÷ motor power (W)',
-      'Pressure (Pa) × airflow (l/s)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SFP = total fan power (W) ÷ airflow (l/s), expressed as W/(l/s). It measures the energy efficiency of the complete ventilation system including fans, drives, and controls. Lower SFP values indicate more efficient systems.',
   },
@@ -201,11 +216,11 @@ const quizQuestions = [
     question: 'Which statement about mixed-flow fans is correct?',
     options: [
       'They can only be used for exhaust applications',
-      'They combine characteristics of axial and centrifugal fans',
-      'They are less efficient than both axial and centrifugal fans',
       'They cannot be used with variable speed drives',
+      'They are less efficient than both axial and centrifugal fans',
+      'They combine characteristics of axial and centrifugal fans',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mixed-flow fans combine axial and centrifugal design principles, providing moderate pressure capability with compact dimensions. They offer a compromise between the high flow of axial fans and the pressure generation of centrifugal fans.',
   },
@@ -213,12 +228,12 @@ const quizQuestions = [
     id: 12,
     question: 'What effect does increasing air temperature have on fan performance?',
     options: [
-      'No effect - fans are temperature independent',
       'Reduced mass flow rate due to lower air density',
-      'Increased pressure due to thermal expansion',
       'Increased motor efficiency',
+      'No effect - fans are temperature independent',
+      'Increased pressure due to thermal expansion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Higher temperatures reduce air density, which decreases the mass flow rate even though volumetric flow remains constant. Fan power consumption also reduces slightly, but the useful work (moving a certain mass of air) is diminished.',
   },
@@ -227,12 +242,12 @@ const quizQuestions = [
     question:
       'In a twin-fan arrangement operating in parallel, what happens to the system duty point compared to single fan operation?',
     options: [
-      'Pressure doubles, flow remains the same',
-      'Flow approximately doubles at the same pressure',
-      'Both pressure and flow double',
+      'Systems with varying resistance (damper control)',
       'Flow increases but less than double due to system curve',
+      'Higher efficiency across the speed range, especially at part load',
+      'Airflow separation from the blades causing unstable operation',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'Parallel fans theoretically double available flow at any given pressure. However, because system resistance increases with the square of flow, the actual combined duty point delivers increased flow but significantly less than double.',
   },
@@ -240,12 +255,12 @@ const quizQuestions = [
     id: 14,
     question: 'The purpose of inlet guide vanes on a centrifugal fan is to:',
     options: [
-      'Increase maximum fan speed',
+      'Higher efficiency across the speed range, especially at part load',
+      'They combine characteristics of axial and centrifugal fans',
       'Provide pre-rotation to regulate airflow and improve part-load efficiency',
-      'Reduce noise at full load',
-      'Prevent motor overload during start-up',
+      'Airflow separation from the blades causing unstable operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Inlet guide vanes create a pre-swirl in the airflow entering the impeller, which reduces the work done by the fan and hence the power consumed. This provides efficient flow control compared to outlet dampers, especially at moderate part loads.',
   },

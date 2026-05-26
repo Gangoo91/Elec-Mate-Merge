@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'ecm-definition',
     question: 'What is an Energy Conservation Measure (ECM)?',
     options: [
-      'Any building maintenance activity',
+      'Providing a benchmark to help interpret biological monitoring results for groups of workers',
+      'Both when RCD protection and disconnection times criteria are met',
       'A specific action that reduces energy consumption while maintaining service levels',
-      'A renewable energy installation only',
-      'A regulatory compliance requirement',
+      'People follow the behaviour of others, especially in uncertainty',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'An ECM is a specific, identifiable action that reduces energy consumption or cost while maintaining or improving the required level of service, comfort, or productivity in a building.',
   },
@@ -44,8 +44,13 @@ const quickCheckQuestions = [
     id: 'simple-payback',
     question:
       'A lighting upgrade costs £12,000 and saves £3,000 annually. What is the simple payback period?',
-    options: ['3 years', '4 years', '5 years', '6 years'],
-    correctIndex: 1,
+    options: [
+      '3 years',
+      '6 years',
+      '5 years',
+      '4 years',
+    ],
+    correctIndex: 3,
     explanation:
       'Simple payback = Initial cost ÷ Annual savings = £12,000 ÷ £3,000 = 4 years. This means the investment will be recovered through energy savings in 4 years.',
   },
@@ -53,12 +58,12 @@ const quickCheckQuestions = [
     id: 'ipmvp-purpose',
     question: 'What is the primary purpose of the IPMVP protocol?',
     options: [
-      'To design energy systems',
+      'Anticipate future error and reduce overshoot',
+      'The zero or minimum value of the measured range',
       'To standardise measurement and verification of energy savings',
-      'To calculate carbon emissions',
-      'To specify equipment ratings',
+      'Tracking peak power demand to manage electricity costs and capacity',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The International Performance Measurement and Verification Protocol (IPMVP) provides standardised methods for determining energy and water savings from efficiency projects, ensuring consistent and credible verification.',
   },
@@ -66,12 +71,12 @@ const quickCheckQuestions = [
     id: 'rebound-effect',
     question: "What is the 'rebound effect' in energy efficiency?",
     options: [
-      'Equipment bouncing back to original settings',
+      'It detects current leaking to earth and disconnects within milliseconds',
+      'Using the hierarchy of control: eliminate, substitute, engineer, administrate, PPE',
       'Increased energy use due to behavioural changes after efficiency improvements',
-      'Energy prices returning to normal',
-      'Temporary increase during commissioning',
+      'Treat it as a medical emergency — call 999, as this may be a TIA and requires urgent assessment',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The rebound effect occurs when energy efficiency improvements lead to behavioural changes that partially offset savings - for example, occupants setting thermostats higher after insulation upgrades because heating is now 'cheaper'.",
   },
@@ -82,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which ECM category typically offers the shortest payback period?',
     options: [
-      'Building fabric improvements',
-      'Plant replacement',
+      'LED ≈ 100 lm/W, GLS ≈ 12 lm/W',
       'Controls and operational improvements',
-      'Renewable energy systems',
+      'Installation has its own earth electrode',
+      'Fail, pass, and distinction',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Controls and operational improvements (such as BMS optimisation, scheduling adjustments, and setpoint changes) typically offer the shortest payback as they require minimal capital investment while delivering immediate savings.',
   },
@@ -95,8 +100,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A VSD installation costs £8,000, saves £2,400 per year, and has a 12-year lifespan. Using a 6% discount rate, the NPV factor for 12 years is 8.384. What is the NPV?',
-    options: ['£12,122', '£20,122', '£28,800', '£-8,000'],
-    correctAnswer: 0,
+    options: [
+      '£28,800',
+      '£-8,000',
+      '£12,122',
+      '£20,122',
+    ],
+    correctAnswer: 2,
     explanation:
       'NPV = (Annual savings × NPV factor) - Initial cost = (£2,400 × 8.384) - £8,000 = £20,122 - £8,000 = £12,122. A positive NPV indicates the investment is financially worthwhile.',
   },
@@ -105,12 +115,12 @@ const quizQuestions = [
     question:
       'Which IPMVP option is most appropriate for verifying savings from a lighting retrofit in a single zone?',
     options: [
+      'NPV accounts for the time value of money',
+      'Changed occupant behaviour and comfort expectations',
+      'Capital, energy, maintenance, and disposal costs',
       'Option A: Retrofit Isolation - Key Parameter Measurement',
-      'Option B: Retrofit Isolation - All Parameter Measurement',
-      'Option C: Whole Facility',
-      'Option D: Calibrated Simulation',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       "Option A is suitable for lighting retrofits where the key parameter (power) can be easily measured while other factors (hours of use) are estimated from operational schedules. It's the most cost-effective approach for isolated measures.",
   },
@@ -118,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'In life cycle costing, which costs are typically included?',
     options: [
-      'Capital cost only',
       'Capital, energy, maintenance, and disposal costs',
-      'Energy costs only',
-      'Capital and energy costs only',
+      'Short payback, low risk, high energy savings',
+      'Option A: Retrofit Isolation - Key Parameter Measurement',
+      'Changed occupant behaviour and comfort expectations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Life cycle costing (LCC) includes all costs over the asset's lifespan: capital (purchase and installation), operational (energy and consumables), maintenance (servicing and repairs), and end-of-life (disposal or replacement).",
   },
@@ -133,8 +143,8 @@ const quizQuestions = [
     options: [
       'Long payback, low risk, complex implementation',
       'Short payback, low risk, high energy savings',
-      'Long payback, high risk, high energy savings',
       'Short payback, high risk, simple implementation',
+      'Long payback, high risk, high energy savings',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,12 +155,12 @@ const quizQuestions = [
     question:
       'What baseline adjustment is typically required when verifying savings from HVAC improvements?',
     options: [
-      'No adjustment needed',
+      'NPV accounts for the time value of money',
+      'Capital, energy, maintenance, and disposal costs',
       'Adjustment for weather (heating/cooling degree days)',
-      'Adjustment for equipment age only',
-      'Adjustment for electricity prices',
+      'Option A: Retrofit Isolation - Key Parameter Measurement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'HVAC energy consumption varies significantly with weather. Baseline adjustments using heating and cooling degree days normalise consumption data, allowing fair comparison between pre- and post-retrofit periods regardless of weather differences.',
   },
@@ -158,8 +168,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A building has annual energy costs of £50,000. An ECM bundle with 25% savings potential costs £75,000. What is the simple payback?',
-    options: ['1.5 years', '3 years', '6 years', '25 years'],
-    correctAnswer: 2,
+    options: [
+      '1.5 years',
+      '3 years',
+      '25 years',
+      '6 years',
+    ],
+    correctAnswer: 3,
     explanation:
       'Annual savings = £50,000 × 25% = £12,500. Simple payback = £75,000 ÷ £12,500 = 6 years. This indicates a medium-term investment typically acceptable for building fabric or plant measures.',
   },
@@ -167,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which factor most commonly causes the rebound effect in commercial buildings?',
     options: [
-      'Equipment degradation',
       'Changed occupant behaviour and comfort expectations',
-      'Incorrect installation',
-      'Utility rate increases',
+      'Adjustment for weather (heating/cooling degree days)',
+      'Capital, energy, maintenance, and disposal costs',
+      'Use equivalent annual cost (EAC) to compare different lifespans',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The rebound effect in commercial buildings often results from occupants changing behaviour - such as leaving equipment running longer or adjusting setpoints - when they perceive energy is 'cheaper' or 'greener' after efficiency improvements.",
   },
@@ -194,11 +209,11 @@ const quizQuestions = [
     question: 'IPMVP Option C (Whole Facility) measurement is most appropriate when:',
     options: [
       'Installing a single LED luminaire',
+      'Testing a new control strategy in one zone',
       'Multiple interacting ECMs are implemented simultaneously',
       'Verifying a specific motor replacement',
-      'Testing a new control strategy in one zone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Option C uses whole-facility metering and is appropriate when multiple ECMs interact or when individual measurement is impractical. It compares total facility consumption before and after improvements, adjusted for independent variables.',
   },
@@ -209,10 +224,10 @@ const quizQuestions = [
     options: [
       'LED lighting installation',
       'VSD retrofit on pumps',
-      'Adjusting BMS time schedules',
       'Solar PV installation',
+      'Adjusting BMS time schedules',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'No-cost ECMs require no financial investment - they involve operational changes like adjusting schedules, setpoints, or procedures. BMS schedule optimisation is a classic no-cost measure that can yield significant savings immediately.',
   },
@@ -221,12 +236,12 @@ const quizQuestions = [
     question:
       'What discount rate consideration is important when comparing ECM options across different equipment lifespans?',
     options: [
-      'Always use 0% discount rate',
       'Use equivalent annual cost (EAC) to compare different lifespans',
-      'Ignore lifespan differences',
-      'Only compare equipment with identical lifespans',
+      'Adjustment for weather (heating/cooling degree days)',
+      'Option A: Retrofit Isolation - Key Parameter Measurement',
+      'Capital, energy, maintenance, and disposal costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Equivalent Annual Cost (EAC) converts NPV into an annual cost figure, enabling fair comparison between options with different lifespans. Without EAC, short-lifespan options may appear cheaper when they're actually more expensive per year.",
   },

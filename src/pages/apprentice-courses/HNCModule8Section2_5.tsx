@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'In the equal friction method of duct sizing, what parameter is kept constant throughout the duct system?',
     options: [
-      'Air velocity',
-      'Duct cross-sectional area',
       'Pressure drop per unit length',
-      'Volume flow rate',
+      'Double-shielded or armoured cables',
+      'Better performance in diffuse light',
+      'Motor continuity testing stage',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The equal friction method maintains a constant pressure drop per unit length (typically 1 Pa/m) throughout the duct system. This simplifies balancing as each branch experiences proportional pressure losses regardless of path length.',
   },
@@ -41,7 +41,12 @@ const quickCheckQuestions = [
     id: 'dw144-class',
     question:
       'According to DW/144, what leakage class is typically specified for low-pressure ductwork in commercial buildings?',
-    options: ['Class A', 'Class B', 'Class C', 'Class D'],
+    options: [
+      'Class B',
+      'Class A',
+      'Class C',
+      'Class D',
+    ],
     correctIndex: 2,
     explanation:
       'Class C is the standard leakage class for low-pressure ductwork in commercial buildings per DW/144. Class A is the tightest (high-pressure systems), while Class D has the highest allowable leakage (used only where leakage is acceptable).',
@@ -50,7 +55,12 @@ const quickCheckQuestions = [
     id: 'fire-damper-rating',
     question:
       'What is the minimum integrity rating required for fire dampers in standard applications?',
-    options: ['E30', 'E60', 'E90', 'E120'],
+    options: [
+      'E90',
+      'E60',
+      'E30',
+      'E120',
+    ],
     correctIndex: 1,
     explanation:
       'Fire dampers must provide a minimum E60 integrity rating (60 minutes) in standard applications. Higher ratings (E90, E120, ES120) may be required depending on the fire compartmentation strategy and building regulations.',
@@ -60,12 +70,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary advantage of circular ductwork compared to rectangular ductwork of equal cross-sectional area?',
     options: [
-      'Lower material cost',
-      'Easier to fabricate',
       'Lower pressure drop and better airflow',
-      'Simpler to install in ceiling voids',
+      'NHS Talking Therapies (formerly IAPT)',
+      'Applied - total is less than 50 × individual ADMD',
+      'A load with unequal current draw on each phase',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Circular ducts have lower pressure drop than equivalent rectangular ducts because they have a smaller perimeter-to-area ratio, reducing frictional losses. They also promote more uniform airflow with less turbulence at the duct walls.',
   },
@@ -76,7 +86,12 @@ const quizQuestions = [
     id: 1,
     question:
       'What is the typical design pressure drop per metre used in the equal friction sizing method for low-velocity systems?',
-    options: ['0.5 Pa/m', '1.0 Pa/m', '2.0 Pa/m', '5.0 Pa/m'],
+    options: [
+      '0.5 Pa/m',
+      '1.0 Pa/m',
+      '2.0 Pa/m',
+      '5.0 Pa/m',
+    ],
     correctAnswer: 1,
     explanation:
       'The equal friction method typically uses 1.0 Pa/m for low-velocity comfort systems. This provides a good balance between duct size (cost) and fan energy consumption. Higher values (1.5-2.0 Pa/m) may be used where space is limited.',
@@ -86,10 +101,10 @@ const quizQuestions = [
     question:
       'In the velocity reduction method of duct sizing, what happens to duct velocity as air travels further from the fan?',
     options: [
-      'Velocity increases',
-      'Velocity remains constant',
-      'Velocity decreases in steps',
       'Velocity fluctuates randomly',
+      'Velocity increases',
+      'Velocity decreases in steps',
+      'Velocity remains constant',
     ],
     correctAnswer: 2,
     explanation:
@@ -100,12 +115,12 @@ const quizQuestions = [
     question:
       'What is the hydraulic diameter used for when calculating pressure drop in rectangular ducts?',
     options: [
+      'To isolate vibration and prevent transmission through ductwork',
+      'To prevent spread of smoke between fire compartments during fire conditions',
+      'Noise is proportional to velocity to the power of 5-6',
       'Converting rectangular duct dimensions to equivalent circular diameter',
-      'Measuring the physical height of the duct',
-      'Calculating the weight of the duct material',
-      'Determining the acoustic properties',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Hydraulic diameter (Dh = 4A/P where A is area and P is perimeter) converts rectangular duct dimensions to an equivalent circular diameter for pressure drop calculations. This allows the use of circular duct friction charts for rectangular ducts.',
   },
@@ -114,12 +129,12 @@ const quizQuestions = [
     question:
       'According to DW/144, what is the maximum allowable air leakage rate for Class C ductwork at 400 Pa test pressure?',
     options: [
-      '0.009 × p^0.65 (L/s per m²)',
       '0.027 × p^0.65 (L/s per m²)',
+      '0.009 × p^0.65 (L/s per m²)',
       '0.081 × p^0.65 (L/s per m²)',
       '0.243 × p^0.65 (L/s per m²)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Class C ductwork allows maximum leakage of 0.027 × p^0.65 L/s per m² of duct surface area, where p is the test pressure in Pa. At 400 Pa, this equates to approximately 1.32 L/s per m² of duct surface.',
   },
@@ -127,7 +142,12 @@ const quizQuestions = [
     id: 5,
     question:
       'What material thickness is typically specified for galvanised steel rectangular ductwork up to 450mm in the longest dimension?',
-    options: ['0.5mm', '0.7mm', '0.8mm', '1.0mm'],
+    options: [
+      '0.5mm',
+      '0.7mm',
+      '1.0mm',
+      '0.8mm',
+    ],
     correctAnswer: 1,
     explanation:
       'DW/144 specifies 0.7mm galvanised steel for rectangular ducts up to 450mm. Larger ducts require thicker material: 0.8mm up to 750mm, 1.0mm up to 1000mm, and 1.2mm for larger sizes to maintain structural integrity.',
@@ -136,12 +156,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of a smoke damper in HVAC ductwork systems?',
     options: [
-      'To reduce noise transmission through ducts',
+      'To isolate vibration and prevent transmission through ductwork',
+      'Converting rectangular duct dimensions to equivalent circular diameter',
       'To prevent spread of smoke between fire compartments during fire conditions',
-      'To control airflow volume to different zones',
-      'To filter particulates from the air',
+      'Noise is proportional to velocity to the power of 5-6',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Smoke dampers prevent the spread of smoke through ductwork between fire compartments. They are activated by smoke detectors and close to maintain tenable conditions in escape routes. Combined fire/smoke dampers provide both fire integrity and smoke control.',
   },
@@ -151,10 +171,10 @@ const quizQuestions = [
     options: [
       'Noise is proportional to velocity',
       'Noise is proportional to velocity squared',
-      'Noise is proportional to velocity to the power of 5-6',
       'There is no relationship between velocity and noise',
+      'Noise is proportional to velocity to the power of 5-6',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Aerodynamic noise generation in ductwork is proportional to velocity raised to the power of 5-6. This means doubling the velocity can increase noise by 15-18 dB. This is why velocity limits are critical in noise-sensitive applications.',
   },
@@ -162,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'What type of acoustic attenuator is most commonly used in HVAC ductwork?',
     options: [
-      'Active noise cancellation units',
       'Lined duct sections (splitter attenuators)',
-      'Resonance chambers',
-      'Mass-loaded vinyl wraps',
+      'Device may fail to interrupt the fault safely',
+      'Prove dead with approved voltage indicator',
+      'It can bulge or herniate, pressing on nearby nerves',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Splitter attenuators (lined duct sections with acoustic absorbent material) are the most common type used in HVAC systems. They absorb sound energy as air passes through, typically providing 10-25 dB attenuation depending on length and design.',
   },
@@ -175,7 +195,12 @@ const quizQuestions = [
     id: 9,
     question:
       'What is the aspect ratio limit typically recommended for rectangular ductwork to maintain efficient airflow?',
-    options: ['2:1', '4:1', '6:1', '8:1'],
+    options: [
+      '2:1',
+      '4:1',
+      '6:1',
+      '8:1',
+    ],
     correctAnswer: 1,
     explanation:
       'Aspect ratios (width:height) should not exceed 4:1 for efficient airflow. Higher aspect ratios increase friction losses, make balancing difficult, and increase material usage. Where space permits, aspect ratios of 2:1 or lower are preferred.',
@@ -184,8 +209,13 @@ const quizQuestions = [
     id: 10,
     question:
       'At what pressure classification does ductwork transition from low-pressure to medium-pressure according to DW/144?',
-    options: ['250 Pa', '500 Pa', '1000 Pa', '1500 Pa'],
-    correctAnswer: 1,
+    options: [
+      '250 Pa',
+      '1500 Pa',
+      '500 Pa',
+      '1000 Pa',
+    ],
+    correctAnswer: 2,
     explanation:
       'DW/144 classifies ductwork as low-pressure up to 500 Pa, medium-pressure from 500-1000 Pa, and high-pressure above 1000 Pa. Higher pressure classifications require tighter construction standards, better sealing, and more robust supports.',
   },
@@ -193,12 +223,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the primary purpose of flexible duct connections at air handling units?',
     options: [
-      'To reduce installation cost',
+      'To prevent spread of smoke between fire compartments during fire conditions',
+      'Converting rectangular duct dimensions to equivalent circular diameter',
+      'Noise is proportional to velocity to the power of 5-6',
       'To isolate vibration and prevent transmission through ductwork',
-      'To allow for thermal expansion only',
-      'To improve airflow distribution',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Flexible connections (anti-vibration connectors) isolate mechanical vibration from fans and motors, preventing transmission through the rigid ductwork system. This reduces structure-borne noise and protects duct joints from fatigue failure.',
   },
@@ -207,12 +237,12 @@ const quizQuestions = [
     question:
       'When designing ductwork, what minimum distance from a bend should flow measurement stations be located?',
     options: [
-      '1 duct diameter',
-      '2-3 duct diameters',
       '5-10 duct diameters',
       'No minimum distance required',
+      '1 duct diameter',
+      '2-3 duct diameters',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Flow measurement stations should be located 5-10 duct diameters downstream and 2-3 diameters upstream of disturbances (bends, dampers, branches) to ensure uniform velocity profiles and accurate measurements.',
   },
@@ -220,10 +250,10 @@ const quizQuestions = [
     id: 13,
     question: 'What is the function of turning vanes in ductwork?',
     options: [
-      'To increase airflow velocity',
+      'Converting rectangular duct dimensions to equivalent circular diameter',
       'To reduce pressure drop and improve airflow through bends',
-      'To filter the air',
-      'To create turbulence for better mixing',
+      'Pressure decay or flow rate measurement test',
+      'Lined duct sections (splitter attenuators)',
     ],
     correctAnswer: 1,
     explanation:
@@ -233,12 +263,12 @@ const quizQuestions = [
     id: 14,
     question: 'What test is performed to verify ductwork airtightness per DW/143?',
     options: [
-      'Smoke pencil test only',
+      'Lined duct sections (splitter attenuators)',
+      'Noise is proportional to velocity to the power of 5-6',
       'Pressure decay or flow rate measurement test',
-      'Visual inspection only',
-      'Acoustic testing',
+      'To reduce pressure drop and improve airflow through bends',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'DW/143 specifies pressure testing methods: either measuring pressure decay over time or measuring the airflow required to maintain test pressure. Both methods quantify leakage rate against the specified class limits.',
   },

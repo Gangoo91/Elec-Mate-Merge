@@ -27,6 +27,7 @@ import {
 } from '@/data/apprentice-courses/level2/mixed/questionBank';
 import { ExamDesktopSidebar } from '@/components/apprentice-courses/ExamDesktopSidebar';
 import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayout';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 
 const Level2Module8MockExam8 = () => {
   useSEO(
@@ -51,7 +52,10 @@ const Level2Module8MockExam8 = () => {
 
   // Initialize exam
   const startExam = () => {
-    const questions = getRandomQuestions(60, { basic: 35, intermediate: 45, advanced: 20 });
+    const questions = shuffleAllQuestionOptions(
+      getRandomQuestions(60, { basic: 35, intermediate: 45, advanced: 20 }),
+      createShuffleSalt()
+    );
     setExamQuestions(questions);
     setSelectedAnswers({});
     setCurrentQuestion(0);

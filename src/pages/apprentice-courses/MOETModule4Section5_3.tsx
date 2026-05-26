@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'efli-purpose',
     question: 'What is the primary purpose of earth fault loop impedance (Zs) testing?',
     options: [
-      'To measure the voltage at the furthest point of the circuit',
+      'No, they\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re a member of the public — but HASAWA s.3 still requires you to manage the impact of your work on them; talk to them politely and adjust working methods if reasonable',
+      'A clearly identified DC isolator adjacent to the battery, an AC isolator at the inverter, plus emergency means of disconnection labelled and accessible',
       'To verify that the earth fault loop impedance is low enough for the protective device to disconnect the supply within the maximum time specified by BS 7671 in the event of an earth fault',
-      'To check the insulation resistance of the cable',
-      'To measure the current-carrying capacity of the earth conductor',
+      'A written or electronic record covering: tower identification, location, date, configuration, defects found, actions taken, and the inspector\\\\\\\\\\\\\\\'s details',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Earth fault loop impedance testing verifies that the total impedance of the fault current path is low enough to ensure sufficient fault current flows to operate the protective device within the maximum disconnection time specified by BS 7671. For socket outlet circuits in TN systems, this is 0.4 seconds; for fixed equipment circuits, it is 5 seconds.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'efli-components',
     question: 'The earth fault loop impedance (Zs) consists of which components?',
     options: [
-      'Only the resistance of the circuit protective conductor',
       'The external earth fault loop impedance (Ze) plus the resistance of the line conductor (R1) and the circuit protective conductor (R2): Zs = Ze + (R1+R2)',
-      'The supply voltage divided by the load current',
-      'The insulation resistance between line and earth',
+      'When more than one contractor is, or is reasonably foreseeable to be, working on the project at the same time — the client must appoint one in writing',
+      'Safe working practices, systematic approach, correct use of tools/instruments, workmanship quality, communication, and professional behaviours',
+      'For work that does not include the provision of a new circuit, such as adding a socket outlet to an existing circuit',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The total earth fault loop impedance (Zs) is the sum of the external earth fault loop impedance (Ze — from the supply transformer, distribution network, and return path to the transformer) and the internal impedance of the circuit (R1+R2 — the line conductor and circuit protective conductor). Both components must be as low as possible to ensure adequate fault current.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'efli-ze-measurement',
     question: 'How is the external earth fault loop impedance (Ze) measured?',
     options: [
-      'At any socket outlet on the installation',
       "At the origin of the installation with the main earthing conductor disconnected from the earthing terminal, to exclude the influence of the installation's earthing arrangement",
-      "By reading the value from the electricity supplier's meter",
-      'By calculating it from the cable size and route length',
+      "AC systems as additional protection in the event of failure of the provision for basic protection and/or the provision for fault protection or carelessness by users.",
+      "It is unreasonable in all the circumstances to make the conductor dead AND it is reasonable to work live AND suitable precautions are taken — all three tests must be met",
+      "To locate asbestos-containing materials that could be disturbed or damaged during normal occupancy, including foreseeable maintenance, and to assess their condition",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Ze is measured at the origin of the installation (typically the main switch or consumer unit) with the main earthing conductor disconnected from the main earthing terminal. This isolates the measurement from the installation's own earthing arrangement (earth electrodes, bonding conductors), giving the true external impedance. The installation must be isolated from the supply during this measurement for safety.",
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     question:
       'Why should the measured Zs not exceed 80% of the maximum tabulated value in BS 7671?',
     options: [
-      'Because the instrument is only 80% accurate',
       'Because conductor resistance increases with temperature during a fault, and supply impedance varies, so a margin is needed to ensure the protective device operates within the required time under all conditions',
-      'Because 20% of the fault current flows through the earth',
-      'Because BS 7671 always requires a 20% safety factor on all measurements',
+      'Ensure that temporary works (such as formwork, falsework, and temporary propping) are designed, erected, and dismantled safely, with appropriate checks and supervision',
+      'To maintain ecological connectivity by including features such as hedgehog gaps (13cm x 13cm) that allow small mammals to move between gardens and habitats',
+      'Connected load, applied diversity factors per block with citations, after-diversity demand per block, per-phase consolidation, and a single-figure consolidated MD that the supply is sized against — all on the face of the schedule with the assumptions stated.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The maximum Zs values tabulated in BS 7671 assume conductor temperatures under fault conditions (typically 70-80°C or higher). Measurements taken with test instruments are at ambient temperature, where conductor resistance is lower. Additionally, supply impedance varies with network load conditions. The 80% rule (or correction factor of 0.8) ensures that even when conductors are hot and supply impedance is at its highest, the Zs will still be within the maximum permitted value.',
   },
@@ -84,8 +84,13 @@ const quizQuestions = [
     id: 2,
     question:
       'The maximum disconnection time for a socket outlet circuit in a TN system under BS 7671 is:',
-    options: ['0.2 seconds', '0.4 seconds', '5 seconds', '10 seconds'],
-    correctAnswer: 1,
+    options: [
+      '5 seconds',
+      '0.2 seconds',
+      '0.4 seconds',
+      '10 seconds',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 7671 requires a maximum disconnection time of 0.4 seconds for circuits supplying socket outlets and portable equipment in TN systems. This shorter time is required because users are likely to be in direct contact with earthed equipment (via the plug and cord) when a fault occurs, creating a higher risk of electric shock.',
   },
@@ -94,12 +99,12 @@ const quizQuestions = [
     question:
       'In a TT earthing system, earth fault loop impedance is typically much higher than in a TN system because:',
     options: [
-      'TT systems use smaller cables',
+      'Arrangements that enable the principal contractor and workers to cooperate effectively in developing, promoting and checking health and safety measures',
+      'Use written communication (printed schedule + email), face them clearly when speaking so they can lip-read, and offer to use a BSL interpreter for complex discussions',
+      'Is a phenomenon where high voltage difference between the PV cells and the earthed frame causes leakage currents through the encapsulant, degrading cell performance over time — particularly in high-humidity environments',
       'The return path for fault current includes the resistance of the mass of earth between the installation earth electrode and the supply transformer earth, which is much higher than a metallic return path',
-      'TT systems operate at a lower voltage',
-      'TT systems do not require earth fault protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "In a TT system, the fault current return path is through the mass of earth — from the installation's earth electrode through the ground to the supply transformer's earth electrode. The resistance of this earth path is typically much higher (often 20 Ω or more) than the metallic return path in a TN system (typically less than 1 Ω). This is why TT systems almost always require RCD protection rather than relying on overcurrent devices for earth fault disconnection.",
   },
@@ -107,12 +112,12 @@ const quizQuestions = [
     id: 4,
     question: 'A live earth fault loop impedance test instrument works by:',
     options: [
-      'Applying a high-voltage pulse between line and earth',
       'Briefly connecting a known resistance between line and earth to draw a fault current, measuring the resulting voltage drop, and calculating the impedance from V/I',
-      'Measuring the static resistance between line and earth with the circuit de-energised',
-      'Injecting a signal into the earth conductor and measuring the return',
+      'The return path for fault current includes the resistance of the mass of earth between the installation earth electrode and the supply transformer earth, which is much higher than a metallic return path',
+      'Unsatisfactory — 1.85 Ω exceeds 80% of the tabulated maximum (0.8 × 2.30 = 1.84 Ω), indicating that under fault conditions the impedance may exceed the maximum permitted value',
+      'Use a non-trip or low-current earth loop test mode if available, or accept the trip and reset the RCD after testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A live Zs test instrument briefly connects a known resistance between line and earth, causing a controlled fault current to flow around the earth fault loop. The instrument measures the voltage drop caused by this current and calculates the loop impedance using Ohm's law (Z = V/I). The test is conducted on the energised circuit and typically lasts only a few milliseconds to minimise the risk of tripping RCDs.",
   },
@@ -121,10 +126,10 @@ const quizQuestions = [
     question:
       'Which protective device type requires the lowest earth fault loop impedance for a given rating?',
     options: [
-      'Type B MCB (trips at 3-5 times rated current)',
+      'Criminal and civil liability possible',
       'Type D MCB (trips at 10-20 times rated current)',
-      'BS 88-2 fuse (HRC fuse)',
-      'BS 3036 fuse (rewirable fuse)',
+      'The process of measuring quantities from drawings for pricing',
+      'How refractive index varies across the fibre cross-section',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,8 +139,13 @@ const quizQuestions = [
     id: 6,
     question:
       'If the measured Ze is 0.35 Ω and the calculated R1+R2 for a circuit is 0.42 Ω, the expected Zs at the furthest point is:',
-    options: ['0.35 Ω', '0.77 Ω', '0.42 Ω', '0.07 Ω'],
-    correctAnswer: 1,
+    options: [
+      '0.35 Ω',
+      '0.42 Ω',
+      '0.77 Ω',
+      '0.07 Ω',
+    ],
+    correctAnswer: 2,
     explanation:
       'Zs = Ze + (R1+R2) = 0.35 + 0.42 = 0.77 Ω. This calculated value can be used to verify the live Zs measurement — the two should agree within reasonable tolerance. If the measured Zs is significantly different from the calculated value, this indicates a measurement error, an incorrect Ze value, or a problem with the circuit conductors.',
   },
@@ -144,12 +154,12 @@ const quizQuestions = [
     question:
       'During a periodic inspection, the measured Zs at a socket outlet is 1.85 Ω. The circuit is protected by a 20 A Type B MCB (maximum tabulated Zs = 2.30 Ω). The result is:',
     options: [
-      'Satisfactory — 1.85 Ω is below the tabulated maximum of 2.30 Ω',
+      'Due to supply impedance variations, parallel earth paths through bonding conductors and other circuits, or inaccurate R1+R2 measurements',
+      'Briefly connecting a known resistance between line and earth to draw a fault current, measuring the resulting voltage drop, and calculating the impedance from V/I',
+      'The return path for fault current includes the resistance of the mass of earth between the installation earth electrode and the supply transformer earth, which is much higher than a metallic return path',
       'Unsatisfactory — 1.85 Ω exceeds 80% of the tabulated maximum (0.8 × 2.30 = 1.84 Ω), indicating that under fault conditions the impedance may exceed the maximum permitted value',
-      'Cannot be determined without additional information',
-      'Satisfactory — only values above 3.0 Ω are a concern',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Applying the 80% rule: 2.30 × 0.8 = 1.84 Ω. The measured value of 1.85 Ω exceeds this limit, meaning that under fault conditions (when conductor temperatures are elevated), the actual Zs may exceed the maximum tabulated value and the MCB may not disconnect within the required time. This should be recorded as unsatisfactory and remedial action recommended.',
   },
@@ -158,12 +168,12 @@ const quizQuestions = [
     question:
       'When testing Zs on a circuit protected by an RCD, the test instrument may cause the RCD to trip. The technician should:',
     options: [
-      'Bypass the RCD during testing',
       'Use a non-trip or low-current earth loop test mode if available, or accept the trip and reset the RCD after testing',
-      'Avoid testing Zs on RCD-protected circuits',
-      'Replace the RCD with a higher-rated device',
+      'To provide a formal documented procedure ensuring work is carried out safely on high-risk activities',
+      'Stop them if safe, report immediately to your supervisor and the principal contractor; record what you saw',
+      'Fixed monthly payments, milestone billing, or a retainer that provides predictability while maintaining your rate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Modern test instruments often include a non-trip or two-wire earth loop impedance test mode that reduces the test current below the RCD operating threshold. If this mode is not available, the technician should warn affected persons, conduct the test (which will trip the RCD), and reset the RCD afterwards. Bypassing the RCD is not acceptable as it removes fault protection.',
   },
@@ -172,10 +182,10 @@ const quizQuestions = [
     question:
       'Prospective fault current (Ipf) is related to earth fault loop impedance by the formula:',
     options: [
-      'Ipf = Zs × V',
+      '0.4 seconds for socket outlet circuits (or portable equipment), 5 seconds for fixed equipment',
       'Ipf = V / Zs (where V is the nominal voltage and Zs is the earth fault loop impedance)',
-      'Ipf = Zs / V',
-      'Ipf = V² / Zs',
+      'To record labour, materials, and plant for work done outside the contract scope',
+      'An electronic device that controls motor speed by varying the frequency of power supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -185,12 +195,12 @@ const quizQuestions = [
     id: 10,
     question: 'A measured Ze of 0.8 Ω in a TN-C-S (PME) system is:',
     options: [
-      'Normal and expected',
+      'Briefly connecting a known resistance between line and earth to draw a fault current, measuring the resulting voltage drop, and calculating the impedance from V/I',
+      'The return path for fault current includes the resistance of the mass of earth between the installation earth electrode and the supply transformer earth, which is much higher than a metallic return path',
       'Higher than the typical maximum expected value of 0.35 Ω for a TN-C-S supply, indicating a possible problem with the supply neutral-earth connection that should be reported to the DNO',
-      'Lower than expected',
-      'Impossible to achieve in a TN-C-S system',
+      'Due to supply impedance variations, parallel earth paths through bonding conductors and other circuits, or inaccurate R1+R2 measurements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'For a TN-C-S (PME) supply, the typical maximum Ze is 0.35 Ω. A reading of 0.8 Ω is significantly higher than expected and may indicate a problem with the supply neutral-earth conductor, a poor connection at the supply intake, or a high-impedance supply network. This should be reported to the distribution network operator (DNO) for investigation, as it affects the safety of the entire installation.',
   },
@@ -199,12 +209,12 @@ const quizQuestions = [
     question:
       'Why might the measured Zs at a socket outlet differ from the calculated value (Ze + R1+R2)?',
     options: [
-      'Because Zs measurements are always inaccurate',
+      'Briefly connecting a known resistance between line and earth to draw a fault current, measuring the resulting voltage drop, and calculating the impedance from V/I',
+      'Use a non-trip or low-current earth loop test mode if available, or accept the trip and reset the RCD after testing',
+      'Unsatisfactory — 1.85 Ω exceeds 80% of the tabulated maximum (0.8 × 2.30 = 1.84 Ω), indicating that under fault conditions the impedance may exceed the maximum permitted value',
       'Due to supply impedance variations, parallel earth paths through bonding conductors and other circuits, or inaccurate R1+R2 measurements',
-      'Because the test instrument adds its own impedance to the reading',
-      'Because temperature has no effect on impedance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The measured Zs may differ from the calculated value for several reasons: supply impedance varies with network load conditions (measured Ze may have changed), parallel earth paths through bonding conductors and other circuits' CPCs can reduce the apparent impedance, or the R1+R2 measurement may have been taken at a different temperature. Reasonable agreement between measured and calculated values provides confidence in both measurements.",
   },
@@ -213,12 +223,12 @@ const quizQuestions = [
     question:
       'For a distribution circuit supplying a sub-distribution board, the maximum disconnection time in a TN system is:',
     options: [
-      '0.2 seconds',
-      '0.4 seconds',
       '5 seconds',
       'No disconnection time is required for distribution circuits',
+      '0.2 seconds',
+      '0.4 seconds',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'BS 7671 permits a maximum disconnection time of 5 seconds for distribution circuits (circuits supplying distribution boards rather than final circuits supplying equipment directly). This longer time is acceptable because distribution circuits do not directly supply equipment that users are likely to touch. The Zs values for 5-second disconnection are correspondingly higher than those for 0.4-second disconnection.',
   },

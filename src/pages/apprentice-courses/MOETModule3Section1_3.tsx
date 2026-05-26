@@ -15,9 +15,9 @@ const quickCheckQuestions = [
     question:
       'Under Amendment 2 to BS 7671, what enclosure material is required for domestic consumer units?',
     options: [
-      'PVC plastic',
-      'Non-combustible (metallic)',
       'Fire-retardant plastic',
+      'Non-combustible (metallic)',
+      'PVC plastic',
       'Any material is acceptable',
     ],
     correctIndex: 1,
@@ -28,16 +28,26 @@ const quickCheckQuestions = [
     id: 'spare-ways',
     question:
       'What is the recommended minimum spare capacity (spare ways) when specifying a distribution board?',
-    options: ['5%', '10%', '20%', '50%'],
-    correctIndex: 2,
+    options: [
+      '10%',
+      '50%',
+      '5%',
+      '20%',
+    ],
+    correctIndex: 3,
     explanation:
       'A minimum of 20% spare ways is recommended when specifying distribution boards. This allows for future circuit additions without needing to replace the entire board — a common and costly issue in older installations.',
   },
   {
     id: 'rcd-test-freq',
     question: 'How often does the standard RCD notice advise testing the device?',
-    options: ['Monthly', 'Quarterly', 'Six-monthly', 'Annually'],
-    correctIndex: 1,
+    options: [
+      'Monthly',
+      'Six-monthly',
+      'Quarterly',
+      'Annually',
+    ],
+    correctIndex: 2,
     explanation:
       "The standard RCD notice states 'Test quarterly' (every three months). Regular testing by pressing the test button verifies the mechanical trip mechanism is functioning correctly and the device will disconnect the supply in the event of an earth fault.",
   },
@@ -45,8 +55,13 @@ const quickCheckQuestions = [
     id: 'spd-lead-length',
     question:
       'What is the recommended maximum combined lead length for SPD connections to maintain effectiveness?',
-    options: ['100 mm', '500 mm', '1000 mm', '2000 mm'],
-    correctIndex: 1,
+    options: [
+      '2000 mm',
+      '100 mm',
+      '500 mm',
+      '1000 mm',
+    ],
+    correctIndex: 2,
     explanation:
       "SPD connections should ideally have a combined lead length of less than 500 mm. Longer cable runs increase inductance, which reduces the SPD's ability to clamp transient overvoltages effectively.",
   },
@@ -59,35 +74,50 @@ const quizQuestions = [
       'What enclosure material does Amendment 2 to BS 7671 require for domestic consumer units?',
     options: [
       'High-impact PVC',
-      'Fire-retardant plastic',
       'Non-combustible (metallic)',
+      'Fire-retardant plastic',
       'Any BS-approved material',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Amendment 2 requires non-combustible (metallic) enclosures for consumer units in domestic premises to reduce fire risk from internal arcing faults.',
   },
   {
     id: 2,
     question: 'Which BS 7671 Regulation covers labelling and identification requirements?',
-    options: ['Regulation 411', 'Regulation 514', 'Regulation 537', 'Regulation 612'],
-    correctAnswer: 1,
+    options: [
+      'Regulation 537',
+      'Regulation 411',
+      'Regulation 514',
+      'Regulation 612',
+    ],
+    correctAnswer: 2,
     explanation:
       'Regulation 514 of BS 7671 covers labelling, identification marks, warning notices and diagrams for electrical installations.',
   },
   {
     id: 3,
     question: 'What is the recommended minimum percentage of spare ways in a distribution board?',
-    options: ['5%', '10%', '20%', '30%'],
-    correctAnswer: 2,
+    options: [
+      '10%',
+      '5%',
+      '30%',
+      '20%',
+    ],
+    correctAnswer: 3,
     explanation:
       'A minimum of 20% spare ways is recommended to allow for future circuit additions without requiring board replacement.',
   },
   {
     id: 4,
     question: 'Which type of SPD is most commonly installed at distribution boards?',
-    options: ['Type 1', 'Type 2', 'Type 3', 'Type 4'],
-    correctAnswer: 1,
+    options: [
+      'Type 2',
+      'Type 1',
+      'Type 3',
+      'Type 4',
+    ],
+    correctAnswer: 0,
     explanation:
       'Type 2 SPDs are the most commonly installed, placed at distribution boards to protect against switching surges and indirect lightning effects.',
   },
@@ -95,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a split-load consumer unit?',
     options: [
-      'A unit with two separate enclosures',
+      'Power is the rate of energy use (kW); energy is power over time (kWh)',
       'A unit where the busbars are divided into RCD-protected and non-RCD sections',
-      'A unit with separate LV and ELV sections',
-      'A unit split across two phases',
+      'Using laminated cores with insulation between laminations',
+      'Way number, description, device type/rating, cable size, phase and area served',
     ],
     correctAnswer: 1,
     explanation:
@@ -107,16 +137,26 @@ const quizQuestions = [
   {
     id: 6,
     question: 'How often does the standard RCD notice advise the user to test the device?',
-    options: ['Monthly', 'Quarterly', 'Six-monthly', 'Annually'],
-    correctAnswer: 1,
+    options: [
+      'Monthly',
+      'Six-monthly',
+      'Quarterly',
+      'Annually',
+    ],
+    correctAnswer: 2,
     explanation:
       "The standard RCD notice states 'Test quarterly' (every three months) by pressing the built-in test button.",
   },
   {
     id: 7,
     question: 'What is the maximum recommended combined lead length for SPD connections?',
-    options: ['200 mm', '500 mm', '1000 mm', 'No limit'],
-    correctAnswer: 1,
+    options: [
+      '200 mm',
+      'No limit',
+      '1000 mm',
+      '500 mm',
+    ],
+    correctAnswer: 3,
     explanation:
       'A combined lead length of less than 500 mm is recommended to minimise inductance and maintain SPD effectiveness.',
   },
@@ -125,12 +165,12 @@ const quizQuestions = [
     question:
       'In a three-phase distribution board, how are the busbars typically arranged for single-pole ways?',
     options: [
-      'All ways on L1',
-      'Alternating L1-L2 only',
       'Repeating L1-L2-L3 pattern',
       'Random phase allocation',
+      'All ways on L1',
+      'Alternating L1-L2 only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The busbars are arranged in a repeating L1-L2-L3 pattern so that adjacent single-pole ways are on different phases, allowing balanced loading by distributing circuits evenly.',
   },
@@ -138,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'What trend is replacing split-load consumer units in modern installations?',
     options: [
-      'Larger RCDs',
+      'Correct on/off times as programmed',
       'Full RCBO protection for each circuit',
-      'Removing RCD protection entirely',
-      'Double-pole MCBs',
+      'Carbonised paths from surface contamination',
+      'The British Standards Institution (BSI)',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +191,12 @@ const quizQuestions = [
     id: 10,
     question: 'What information must a circuit schedule include?',
     options: [
-      'Way number and circuit description only',
+      'High anxiety with physical symptoms such as trembling and nausea',
+      'PDF/A format, standardised file naming, and regular format migration',
       'Way number, description, device type/rating, cable size, phase and area served',
-      'Device brand name and cost',
-      'Installation date only',
+      'BMS setpoint and schedule adjustment based on actual use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A complete circuit schedule includes the way number, circuit description, protective device type and rating, cable size and type, phase allocation, and the area or zone served.',
   },
@@ -164,12 +204,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the purpose of blanking plates in a distribution board?',
     options: [
-      'To improve appearance',
+      'Upsizing the neutral conductor relative to the lines',
+      'Multiples of fundamental frequency causing distortion',
+      'They consume the most energy in a building',
       'To maintain the IP rating and prevent access to live parts',
-      'To balance the phase loading',
-      'To reduce harmonic distortion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Blanking plates cover unused ways to maintain the enclosure's IP rating and prevent accidental contact with live busbars. A missing blanking plate compromises the safety of the entire board.",
   },
@@ -177,12 +217,12 @@ const quizQuestions = [
     id: 12,
     question: 'Where should a Type 1 SPD be installed?',
     options: [
-      'At socket outlets',
-      'Close to sensitive equipment',
       'At the origin of the installation (main switchboard)',
-      'In the consumer unit only',
+      'By opening and closing to regulate air passage through ducts',
+      'Very low temperatures (near absolute zero)',
+      'Modern PVC window frames installed in 2020',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Type 1 SPDs are installed at the origin of the installation, typically the main switchboard, and are designed to handle direct lightning current. They are required where an external lightning protection system is fitted.',
   },

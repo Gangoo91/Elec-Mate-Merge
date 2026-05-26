@@ -33,28 +33,38 @@ const quickCheckQuestions = [
     id: 'star-neutral',
     question: 'In a star-connected system, where is the neutral point located?',
     options: [
-      'At each load terminal',
+      'Roger Fisher, William Ury and Bruce Patton',
+      'Upgrading transceivers on existing fibres',
+      'To control motor speed and reduce energy consumption',
       'At the junction of all three phase windings',
-      'Between any two phases',
-      'At the supply transformer only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'In star connection, all three phase windings connect at a common junction point - this is the star point or neutral point. It provides the reference for phase voltages and allows the 4-wire distribution system.',
   },
   {
     id: 'delta-wires',
     question: 'How many conductors are used in a delta-connected three-phase system?',
-    options: ['2 wires', '3 wires', '4 wires', '5 wires'],
-    correctIndex: 1,
+    options: [
+      '5 wires',
+      '2 wires',
+      '3 wires',
+      '4 wires',
+    ],
+    correctIndex: 2,
     explanation:
       'Delta connection has no neutral point, so only 3 line conductors are required. This makes delta suitable for balanced three-phase loads like motors, but not for single-phase loads.',
   },
   {
     id: 'line-phase-voltage',
     question: 'In a star-connected system with 400V line voltage, what is the phase voltage?',
-    options: ['400V', '230V', '692V', '133V'],
-    correctIndex: 1,
+    options: [
+      '400V',
+      '692V',
+      '230V',
+      '133V',
+    ],
+    correctIndex: 2,
     explanation:
       'In star connection, VL = VP x root3, so VP = VL / root3 = 400 / 1.732 = 230V. This is why UK three-phase supplies give both 400V (line) and 230V (phase) from the same source.',
   },
@@ -62,10 +72,10 @@ const quickCheckQuestions = [
     id: 'star-delta-starting',
     question: 'Why is star-delta starting used for large motors?',
     options: [
-      'It increases motor speed',
-      'It reduces starting current to one-third',
       'It eliminates the need for a neutral',
+      'It reduces starting current to one-third',
       'It reverses motor direction',
+      'It increases motor speed',
     ],
     correctIndex: 1,
     explanation:
@@ -78,12 +88,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main advantage of star connection in distribution systems?',
     options: [
-      'Higher line voltage available',
-      'No neutral conductor required',
+      'The height from the ground to the top of the working platform',
       'Provides both line and phase voltages for different loads',
-      'Lower cable costs',
+      'Cannot be inadvertently re-energised by others',
+      'At the furthest point from the distribution board',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Star connection provides access to both 400V (line-to-line) for three-phase equipment and 230V (phase-to-neutral) for single-phase loads, making it ideal for mixed building loads.',
   },
@@ -91,8 +101,13 @@ const quizQuestions = [
     id: 2,
     question:
       'In a delta-connected motor, what is the relationship between line and phase current?',
-    options: ['IL = IP', 'IL = IP x root3', 'IL = IP / root3', 'IL = 3 x IP'],
-    correctAnswer: 1,
+    options: [
+      'IL = IP / root3',
+      'IL = IP',
+      'IL = IP x root3',
+      'IL = 3 x IP',
+    ],
+    correctAnswer: 2,
     explanation:
       'In delta connection, IL = IP x root3 (approximately 1.732). The line current is higher than the phase current because it combines currents from two phase windings.',
   },
@@ -100,8 +115,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A three-phase transformer has 400V applied to its delta-connected primary. What voltage appears across each primary winding?',
-    options: ['230V', '400V', '692V', '133V'],
-    correctAnswer: 1,
+    options: [
+      '692V',
+      '230V',
+      '133V',
+      '400V',
+    ],
+    correctAnswer: 3,
     explanation:
       'In delta connection, VP = VL. Each winding is connected directly across two line conductors, so the full 400V line voltage appears across each winding.',
   },
@@ -109,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: 'Why must the neutral in a star system be properly earthed?',
     options: [
-      'To increase power factor',
       'To provide fault current path and stabilise phase voltages',
-      'To reduce cable sizes',
-      'To enable delta connection',
+      'Contact burns, arc burns, and flash burns',
+      'Both voltage and frequency differences affect operation',
+      'A plug adapter allowing remote control and monitoring of connected devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Earthing the neutral provides a low-impedance path for earth fault currents (enabling protection to operate) and stabilises phase voltages under unbalanced load conditions.',
   },
@@ -123,28 +143,38 @@ const quizQuestions = [
     question:
       'What happens to motor starting torque when using star-delta starting compared to direct-on-line?',
     options: [
-      'Torque increases by a factor of 3',
       'Torque remains the same',
       'Torque reduces to approximately one-third',
       'Torque reduces to approximately half',
+      'Torque increases by a factor of 3',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Starting torque is proportional to voltage squared. In star, voltage is reduced by root3, so torque = (1/root3)squared = 1/3 of DOL torque. This may be insufficient for high-inertia loads.',
   },
   {
     id: 6,
     question: 'Which transformer connection provides a neutral on the secondary side?',
-    options: ['Delta-delta', 'Delta-star', 'Star-delta', 'Both delta-delta and star-delta'],
-    correctAnswer: 1,
+    options: [
+      'Delta-delta',
+      'Star-delta',
+      'Delta-star',
+      'Both delta-delta and star-delta',
+    ],
+    correctAnswer: 2,
     explanation:
       'Delta-star (Dy) connection is commonly used for distribution transformers. The delta primary eliminates third harmonic issues while the star secondary provides a neutral for single-phase loads.',
   },
   {
     id: 7,
     question: 'A 30kW motor runs at 400V in delta. What is the phase current in each winding?',
-    options: ['25A', '43.3A', '75A', '129.9A'],
-    correctAnswer: 1,
+    options: [
+      '25A',
+      '129.9A',
+      '75A',
+      '43.3A',
+    ],
+    correctAnswer: 3,
     explanation:
       'Line current IL = P / (root3 x VL x pf) = 30000 / (1.732 x 400 x 1) = 43.3A. In delta, IP = IL / root3 = 43.3 / 1.732 = 25A per winding (assuming pf = 1).',
   },
@@ -152,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the vector group designation Dyn11 indicating?',
     options: [
-      'Delta primary, star secondary with neutral, 30 degrees lag',
       "Delta primary, star secondary with neutral, 330 degrees (11 o'clock) phase shift",
-      'Star primary, delta secondary, 11kV rating',
-      'Delta connection with 11 windings',
+      "Related to phase conductor size per Table 54.7 or calculation",
+      "Be individually removable so other employees cannot access personal data",
+      "Understanding normal operation and basic troubleshooting",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Dyn11 means: D = delta primary, y = star secondary, n = neutral brought out, 11 = secondary leads primary by 330 degrees (11 x 30 degrees, like 11 o'clock position).",
   },
@@ -165,8 +195,13 @@ const quizQuestions = [
     id: 9,
     question:
       'In building services, which configuration is typically used for the main distribution transformer?',
-    options: ['Delta-delta (Dd)', 'Star-star (Yy)', 'Delta-star (Dyn11)', 'Zig-zag (Zn)'],
-    correctAnswer: 2,
+    options: [
+      'Delta-delta (Dd)',
+      'Delta-star (Dyn11)',
+      'Star-star (Yy)',
+      'Zig-zag (Zn)',
+    ],
+    correctAnswer: 1,
     explanation:
       'Dyn11 is standard for UK distribution transformers. It provides: delta primary (blocks third harmonics), star secondary with neutral (enables single-phase loads), and 30 degree phase shift.',
   },
@@ -174,10 +209,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the minimum star-delta changeover time for a typical motor starter?',
     options: [
-      'Instantaneous (no delay)',
-      '0.5-1 second (closed transition)',
+      'A fracture other than to fingers, thumbs and toes',
+      'Compact size with good heat dissipation',
       '5-10 seconds (after motor reaches speed)',
-      '30 seconds minimum',
+      'On a straight line between the two states',
     ],
     correctAnswer: 2,
     explanation:

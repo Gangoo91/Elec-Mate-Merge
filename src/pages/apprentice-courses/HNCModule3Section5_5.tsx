@@ -32,8 +32,13 @@ const quickCheckQuestions = [
   {
     id: 'sync-speed',
     question: 'What is the synchronous speed of a 4-pole machine on a 50Hz supply?',
-    options: ['1000 rev/min', '1500 rev/min', '3000 rev/min', '750 rev/min'],
-    correctIndex: 1,
+    options: [
+      '1500 rev/min',
+      '1000 rev/min',
+      '3000 rev/min',
+      '750 rev/min',
+    ],
+    correctIndex: 0,
     explanation:
       'Using ns = 120f/p: ns = (120 x 50) / 4 = 1500 rev/min. The rotor runs at exactly this speed with no slip.',
   },
@@ -41,12 +46,12 @@ const quickCheckQuestions = [
     id: 'overexcitation',
     question: 'What happens when a synchronous motor is over-excited?',
     options: [
-      'It draws lagging current',
-      'It draws leading current',
       'It runs faster',
+      'It draws lagging current',
       'It stalls',
+      'It draws leading current',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Over-excitation causes the motor to draw leading current, making it appear capacitive. This is how synchronous condensers correct lagging power factor.',
   },
@@ -54,12 +59,12 @@ const quickCheckQuestions = [
     id: 'damper-windings',
     question: 'What is the primary purpose of damper windings in a synchronous machine?',
     options: [
-      'To increase efficiency',
       'To damp hunting oscillations',
-      'To reduce starting current',
       'To improve power factor',
+      'To increase efficiency',
+      'To reduce starting current',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Damper windings (amortisseur windings) damp out hunting oscillations and provide starting torque. They only carry current during transient conditions.',
   },
@@ -67,12 +72,12 @@ const quickCheckQuestions = [
     id: 'pmsm-advantage',
     question: 'What is a key advantage of permanent magnet synchronous motors (PMSMs)?',
     options: [
-      'Lower cost',
+      'Voltage source in series with resistance',
+      'Longer range and faster setup',
       'No rotor losses (higher efficiency)',
-      'Simpler construction',
-      'Higher starting torque',
+      'Expressing numbers as powers of 10',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'PMSMs have no rotor copper losses since there are no field windings. This results in higher efficiency, particularly important for variable speed drives.',
   },
@@ -82,7 +87,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the synchronous speed formula for an AC machine?',
-    options: ['ns = 60f/p', 'ns = 120f/p', 'ns = f/p', 'ns = 120p/f'],
+    options: [
+      'ns = 60f/p',
+      'ns = 120f/p',
+      'ns = f/p',
+      'ns = 120p/f',
+    ],
     correctAnswer: 1,
     explanation:
       'The synchronous speed formula is ns = 120f/p, where f is frequency (Hz), p is number of poles, and ns is in rev/min. The factor 120 converts from Hz to rev/min (60 seconds x 2 because speed relates to pole pairs).',
@@ -90,7 +100,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A 6-pole synchronous generator operates at 50Hz. What is its speed?',
-    options: ['500 rev/min', '750 rev/min', '1000 rev/min', '1500 rev/min'],
+    options: [
+      '1500 rev/min',
+      '500 rev/min',
+      '1000 rev/min',
+      '750 rev/min',
+    ],
     correctAnswer: 2,
     explanation:
       'Using ns = 120f/p = (120 x 50) / 6 = 1000 rev/min. The generator must be driven at exactly this speed to produce 50Hz output.',
@@ -99,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'How does a synchronous motor differ from an induction motor at steady state?',
     options: [
-      'It runs at higher than synchronous speed',
+      'To verify voltage at load is within acceptable limits',
+      'Different light modes (paths) arriving at different times',
+      'A reference cable at the far end for loss measurement',
       'It runs at exactly synchronous speed with zero slip',
-      'It requires less maintenance',
-      'It has higher starting torque',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A synchronous motor runs at exactly synchronous speed with zero slip because the rotor is locked to the rotating magnetic field. Induction motors always have some slip to induce rotor current.',
   },
@@ -112,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is a synchronous condenser used for?',
     options: [
-      'Converting AC to DC',
-      'Frequency conversion',
       'Power factor correction',
+      'Frequency conversion',
+      'Converting AC to DC',
       'Voltage transformation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A synchronous condenser is an unloaded synchronous motor used solely for power factor correction. When over-excited, it draws leading current to correct lagging power factor from inductive loads.',
   },
@@ -125,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: "Why can't a synchronous motor self-start?",
     options: [
-      'It has no rotor windings',
+      'Temperature, humidity, air movement, and radiant temperature',
       'The rotating field reverses too quickly for the heavy rotor to follow',
-      'It requires DC excitation first',
-      'The air gap is too large',
+      'By trained personnel to evacuate people who cannot use stairs independently',
+      'At least every 14 months, or every 6 months for certain specified processes',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,7 +152,12 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What determines the power factor of a synchronous motor?',
-    options: ['Supply voltage', 'Mechanical load', 'Field excitation current', 'Number of poles'],
+    options: [
+      'Supply voltage',
+      'Mechanical load',
+      'Field excitation current',
+      'Number of poles',
+    ],
     correctAnswer: 2,
     explanation:
       'The field excitation current determines power factor. Under-excitation causes lagging pf, normal excitation gives unity pf, and over-excitation gives leading pf. This is shown by the V-curves.',
@@ -147,11 +167,11 @@ const quizQuestions = [
     question: "What is 'hunting' in a synchronous machine?",
     options: [
       'Speed variation due to load changes',
-      'Oscillation of rotor about its equilibrium position',
-      'Variation in excitation current',
       'Searching for synchronous speed',
+      'Variation in excitation current',
+      'Oscillation of rotor about its equilibrium position',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hunting is the oscillation of the rotor about its equilibrium position, caused by sudden load changes or supply variations. Damper windings are fitted to suppress these oscillations.',
   },
@@ -159,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'In a synchronous generator (alternator), what determines the output frequency?',
     options: [
-      'Load current',
-      'Excitation voltage',
       'Rotational speed and number of poles',
-      'Power factor',
+      'They provide high output from a compact size',
+      'Supply air temperature control',
+      'f = 1/(2 x pi x sqrt(L x C))',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Output frequency f = (p x n) / 120, where p is poles and n is speed in rev/min. For 50Hz output with 4 poles, the prime mover must maintain exactly 1500 rev/min.',
   },
@@ -173,11 +193,11 @@ const quizQuestions = [
     question: 'What type of motor is commonly used in modern variable speed HVAC drives?',
     options: [
       'Wound rotor induction motor',
-      'Synchronous reluctance motor',
       'Permanent magnet synchronous motor (PMSM)',
+      'Synchronous reluctance motor',
       'Single-phase induction motor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "PMSMs are widely used in modern VSD applications due to their high efficiency, compact size, and excellent controllability. They're common in chillers, AHU fans, and pump drives.",
   },
@@ -186,10 +206,10 @@ const quizQuestions = [
     question:
       'For a standby generator in a building, what must be controlled when paralleling with the grid?',
     options: [
-      'Only voltage',
-      'Only frequency',
+      'Immediately after the work is carried out',
+      'Visual, audible, electrical, and thermal symptoms',
       'Voltage, frequency, phase sequence, and phase angle',
-      'Only power factor',
+      'Designing infrastructure that can adapt to changing requirements',
     ],
     correctAnswer: 2,
     explanation:

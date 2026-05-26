@@ -628,10 +628,10 @@ const sections = [
 export default function MaxDemandGuidePage() {
   return (
     <GuideTemplate
-      title="Max Demand Calculation UK | BS 7671 Diversity Factors + ADMD"
-      description="Calculate max demand for UK electrical installations using BS 7671 diversity factors. Worked examples for domestic, commercial, and three-phase."
+      title="How to Calculate Max Demand: BS 7671 Diversity Table + ADMD"
+      description="How to calculate max demand for UK installations: BS 7671 diversity factors, ADMD method, worked examples for domestic, commercial + three-phase. Free guide."
       datePublished="2025-03-15"
-      dateModified="2026-05-19"
+      dateModified="2026-05-24"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

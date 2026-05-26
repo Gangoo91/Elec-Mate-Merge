@@ -34,8 +34,13 @@ const quickCheckQuestions = [
     id: 'insulation-minimum',
     question:
       'What is the minimum acceptable insulation resistance for a motor winding tested at 500V DC?',
-    options: ['0.5 MΩ', '1 MΩ', '5 MΩ', '10 MΩ'],
-    correctIndex: 1,
+    options: [
+      '0.5 MΩ',
+      '5 MΩ',
+      '1 MΩ',
+      '10 MΩ',
+    ],
+    correctIndex: 2,
     explanation:
       'The minimum acceptable insulation resistance is 1 MΩ when tested at 500V DC. Values below this indicate degraded insulation requiring investigation. BS 7671 specifies this as the minimum for circuits up to 500V.',
   },
@@ -43,10 +48,10 @@ const quickCheckQuestions = [
     id: 'vibration-bearing',
     question: 'Which vibration frequency pattern typically indicates bearing wear in a motor?',
     options: [
-      '1× running speed',
+      '50Hz electrical frequency',
       '2× running speed',
       'High-frequency random pattern',
-      '50Hz electrical frequency',
+      '1× running speed',
     ],
     correctIndex: 2,
     explanation:
@@ -65,12 +70,12 @@ const quickCheckQuestions = [
     id: 'mcsa-purpose',
     question: 'What does Motor Current Signature Analysis (MCSA) primarily detect?',
     options: [
-      'Insulation breakdown',
+      'To prevent accidental contact with hidden services',
+      'It allows contractor innovation while meeting required standards',
       'Mechanical faults through current spectrum analysis',
-      'Earth fault current',
-      'Power factor',
+      'Team familiarity, licensing, and project requirements',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'MCSA detects mechanical faults (broken rotor bars, eccentricity, bearing defects) by analysing the frequency spectrum of the motor supply current. Mechanical issues create characteristic sidebands around the supply frequency.',
   },
@@ -81,7 +86,12 @@ const quizQuestions = [
     id: 1,
     question:
       'At what test voltage should insulation resistance testing be performed for a 400V three-phase motor?',
-    options: ['250V DC', '500V DC', '1000V DC', '2500V DC'],
+    options: [
+      '250V DC',
+      '500V DC',
+      '1000V DC',
+      '2500V DC',
+    ],
     correctAnswer: 1,
     explanation:
       "For circuits rated up to 500V, insulation resistance testing should be performed at 500V DC. Higher test voltages (1000V or above) are used for HV equipment. The test voltage should not exceed the circuit's rated voltage by more than a factor of two.",
@@ -90,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'What does a Polarisation Index (PI) value of less than 1.5 indicate?',
     options: [
-      'Excellent insulation condition',
-      'Acceptable insulation condition',
-      'Contaminated or moisture-affected insulation',
       'Normal operating temperature',
+      'Excellent insulation condition',
+      'Contaminated or moisture-affected insulation',
+      'Acceptable insulation condition',
     ],
     correctAnswer: 2,
     explanation:
@@ -103,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the primary purpose of winding resistance measurement?',
     options: [
-      'To determine insulation quality',
+      '50mm minimum insulation with perimeter strip',
+      'Adjusting artificial lighting based on available natural light',
+      'Polarity testing with appropriate test instruments',
       'To detect turn-to-turn faults and connection problems',
-      'To measure motor efficiency',
-      'To calculate power factor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Winding resistance measurement detects turn-to-turn faults, open windings, and poor connections. An imbalance greater than 2% between phases in a three-phase motor indicates a potential problem requiring investigation.',
   },
@@ -117,12 +127,12 @@ const quizQuestions = [
     question:
       'In vibration analysis, what does a dominant vibration at 2× line frequency (100Hz in the UK) typically indicate?',
     options: [
-      'Mechanical imbalance',
-      'Bearing wear',
       'Electrical problems such as broken rotor bars or air gap eccentricity',
-      'Misalignment',
+      'Enhanced protection and frequent inspection schedules',
+      'Ask for clarification immediately before starting work',
+      'Preventive maintenance based on usage patterns and manufacturer recommendations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Vibration at 2× line frequency (100Hz) indicates electrical problems such as broken rotor bars, air gap eccentricity, or unbalanced magnetic pull. Mechanical imbalance typically shows at 1× running speed.',
   },
@@ -131,12 +141,12 @@ const quizQuestions = [
     question:
       'What temperature classification would indicate immediate action is required during thermographic inspection?',
     options: [
-      'Delta-T 1-10°C above ambient',
       'Delta-T 10-25°C above ambient',
-      'Delta-T 25-40°C above ambient',
       'Delta-T greater than 40°C above ambient',
+      'Delta-T 1-10°C above ambient',
+      'Delta-T 25-40°C above ambient',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'A temperature rise greater than 40°C above ambient is critical and requires immediate action. This indicates a serious fault such as a high-resistance connection, overloaded conductor, or failing component that could lead to fire or equipment failure.',
   },
@@ -144,8 +154,13 @@ const quizQuestions = [
     id: 6,
     question:
       "What bearing fault produces a characteristic 'BPFO' frequency in vibration analysis?",
-    options: ['Inner race defect', 'Outer race defect', 'Rolling element defect', 'Cage defect'],
-    correctAnswer: 1,
+    options: [
+      'Inner race defect',
+      'Rolling element defect',
+      'Outer race defect',
+      'Cage defect',
+    ],
+    correctAnswer: 2,
     explanation:
       'BPFO (Ball Pass Frequency Outer) is produced by outer race defects. BPFI indicates inner race defects. These frequencies are calculated from bearing geometry and shaft speed, enabling specific fault identification.',
   },
@@ -153,8 +168,13 @@ const quizQuestions = [
     id: 7,
     question:
       'According to BS EN 60034-1, what is the maximum allowable winding temperature rise for Class F insulation?',
-    options: ['80°C', '105°C', '125°C', '155°C'],
-    correctAnswer: 2,
+    options: [
+      '80°C',
+      '105°C',
+      '155°C',
+      '125°C',
+    ],
+    correctAnswer: 3,
     explanation:
       'Class F insulation permits a maximum winding temperature rise of 105°C above a 40°C ambient, giving a maximum winding temperature of 145°C. However, many motors use Class F insulation with Class B temperature rise (80°C) for extended life.',
   },
@@ -162,8 +182,13 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the recommended inspection interval for critical motor bearings in continuous operation?',
-    options: ['Weekly', 'Monthly', 'Quarterly', 'Annually'],
-    correctAnswer: 2,
+    options: [
+      'Quarterly',
+      'Annually',
+      'Weekly',
+      'Monthly',
+    ],
+    correctAnswer: 0,
     explanation:
       'Critical motor bearings in continuous operation should be inspected quarterly using vibration analysis or other predictive techniques. More frequent monitoring may be required based on operating conditions or if trending indicates deterioration.',
   },
@@ -185,12 +210,12 @@ const quizQuestions = [
     question:
       'What is the primary purpose of a planned preventive maintenance (PPM) schedule for electrical machines?',
     options: [
-      'To comply with warranty requirements only',
+      'High task direction, low relationship support',
+      'Equipment condition, environment, technique',
       'To prevent unexpected failures and extend equipment life',
-      'To reduce energy consumption',
-      'To satisfy insurance requirements only',
+      'Trip time and operating current of the RCD',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'PPM schedules are designed to prevent unexpected failures, extend equipment life, and optimise maintenance costs. While they may help with warranty and insurance compliance, the primary purpose is reliability and lifecycle cost optimisation.',
   },

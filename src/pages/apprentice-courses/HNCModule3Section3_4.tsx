@@ -32,8 +32,13 @@ const quickCheckQuestions = [
   {
     id: 'fundamental-frequency',
     question: 'What is the fundamental frequency of the UK mains supply?',
-    options: ['25 Hz', '50 Hz', '60 Hz', '100 Hz'],
-    correctIndex: 1,
+    options: [
+      '100 Hz',
+      '60 Hz',
+      '25 Hz',
+      '50 Hz',
+    ],
+    correctIndex: 3,
     explanation:
       'The UK mains supply operates at 50 Hz fundamental frequency. All harmonic frequencies are multiples of this (e.g., 3rd harmonic = 150 Hz, 5th harmonic = 250 Hz).',
   },
@@ -42,12 +47,12 @@ const quickCheckQuestions = [
     question:
       'Why are triplen harmonics (3rd, 9th, 15th) particularly problematic in three-phase systems?',
     options: [
-      'They cause motors to overheat',
+      'Mandatory energy and carbon reporting for qualifying large UK companies',
+      'It can be monitored without interfering with traffic wavelengths',
       'They add in the neutral conductor rather than cancelling',
-      'They trip RCDs',
-      'They only affect single-phase loads',
+      'Gap between design predictions and actual operational energy use',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'In a balanced three-phase system, triplen harmonics (multiples of 3) are zero-sequence currents that add arithmetically in the neutral conductor, potentially causing it to carry up to 1.73 times the phase current.',
   },
@@ -55,7 +60,12 @@ const quickCheckQuestions = [
     id: 'thd-limit',
     question:
       'What is the typical maximum THD voltage limit for LV public supply under Engineering Recommendation G5/5?',
-    options: ['2%', '5%', '8%', '10%'],
+    options: [
+      '10%',
+      '5%',
+      '8%',
+      '2%',
+    ],
     correctIndex: 1,
     explanation:
       'Engineering Recommendation G5/5 limits total harmonic voltage distortion to 5% at the point of common coupling for LV supplies. Individual harmonics have lower limits depending on their order.',
@@ -63,8 +73,13 @@ const quickCheckQuestions = [
   {
     id: 'vsd-harmonics',
     question: 'Which harmonic orders are predominantly produced by a 6-pulse variable speed drive?',
-    options: ['2nd, 4th, 6th', '3rd, 9th, 15th', '5th, 7th, 11th, 13th', 'All odd harmonics'],
-    correctIndex: 2,
+    options: [
+      '2nd, 4th, 6th',
+      '3rd, 9th, 15th',
+      'All odd harmonics',
+      '5th, 7th, 11th, 13th',
+    ],
+    correctIndex: 3,
     explanation:
       'A 6-pulse VSD produces characteristic harmonics of order 6n plus or minus 1 (i.e., 5th, 7th, 11th, 13th, etc.). The 5th and 7th harmonics are typically the largest.',
   },
@@ -74,7 +89,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the peak voltage of a 230V RMS sinusoidal supply?',
-    options: ['230V', '325V', '400V', '460V'],
+    options: [
+      '230V',
+      '325V',
+      '400V',
+      '460V',
+    ],
     correctAnswer: 1,
     explanation:
       'Peak voltage = RMS x square root of 2. So 230V x 1.414 = 325V. This peak-to-peak swing is important when considering insulation stress and electronic component ratings.',
@@ -83,8 +103,13 @@ const quizQuestions = [
     id: 2,
     question:
       'Which waveform type has harmonic content that decreases proportionally to the harmonic order?',
-    options: ['Square wave', 'Triangular wave', 'Sawtooth wave', 'Pure sinusoid'],
-    correctAnswer: 1,
+    options: [
+      'Sawtooth wave',
+      'Square wave',
+      'Triangular wave',
+      'Pure sinusoid',
+    ],
+    correctAnswer: 2,
     explanation:
       "A triangular wave's harmonic amplitudes decrease as 1/n squared (where n is harmonic order), giving it lower THD than a square wave. Square waves decrease only as 1/n.",
   },
@@ -92,8 +117,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A waveform has a fundamental component of 100A and a 5th harmonic of 20A. What is the THD due to this harmonic alone?',
-    options: ['5%', '10%', '20%', '25%'],
-    correctAnswer: 2,
+    options: [
+      '10%',
+      '5%',
+      '25%',
+      '20%',
+    ],
+    correctAnswer: 3,
     explanation:
       'THD for a single harmonic = (harmonic current / fundamental current) x 100% = (20/100) x 100% = 20%. Total THD would include all harmonics in the calculation.',
   },
@@ -102,12 +132,12 @@ const quizQuestions = [
     question:
       'What neutral conductor sizing is typically required for circuits supplying significant non-linear loads?',
     options: [
+      'Double the phase conductor size',
       'Same as phase conductors',
       '1.5 times phase conductor size',
-      'Double the phase conductor size',
       'Half the phase conductor size',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'For circuits with significant triplen harmonic content (e.g., LED lighting, IT equipment), the neutral may need to be doubled in size as triplen harmonics add in the neutral rather than cancel.',
   },
@@ -115,8 +145,13 @@ const quizQuestions = [
     id: 5,
     question:
       'Which IEEE standard specifically addresses harmonic limits for electrical installations?',
-    options: ['IEEE 519', 'IEEE 1547', 'IEEE 1159', 'IEEE 446'],
-    correctAnswer: 0,
+    options: [
+      'IEEE 1547',
+      'IEEE 519',
+      'IEEE 446',
+      'IEEE 1159',
+    ],
+    correctAnswer: 1,
     explanation:
       "IEEE 519 'Recommended Practice for Harmonic Control in Electric Power Systems' defines harmonic current and voltage distortion limits at the point of common coupling.",
   },
@@ -124,10 +159,10 @@ const quizQuestions = [
     id: 6,
     question: 'What effect do harmonics have on transformer operation?',
     options: [
-      'Improved efficiency',
-      'Reduced losses',
+      'It causes terminal voltage to drop under load',
+      'Inspect and clean connector end-faces',
       'Increased heating due to eddy currents',
-      'Lower magnetising current',
+      'A competent person within the organisation',
     ],
     correctAnswer: 2,
     explanation:
@@ -139,18 +174,23 @@ const quizQuestions = [
     options: [
       'Three-phase motors',
       'Resistive heaters',
-      'LED lighting with SMPS drivers',
       'Incandescent lamps',
+      'LED lighting with SMPS drivers',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'LED luminaires with switch-mode power supply drivers are significant sources of 3rd harmonic current. While individual units may comply with EN 61000-3-2, large installations aggregate these harmonics.',
   },
   {
     id: 8,
     question: 'What is the form factor of a pure sinusoidal waveform?',
-    options: ['1.0', '1.11', '1.414', '1.732'],
-    correctAnswer: 1,
+    options: [
+      '1.11',
+      '1.414',
+      '1.0',
+      '1.732',
+    ],
+    correctAnswer: 0,
     explanation:
       'Form factor = RMS value / average value = 0.707Vpk / 0.637Vpk = 1.11 for a pure sinusoid. Different form factors indicate non-sinusoidal waveforms and affect true-RMS meter accuracy.',
   },
@@ -159,10 +199,10 @@ const quizQuestions = [
     question:
       'According to IEC 61000-3-2, what is the purpose of Class A, B, C, and D equipment categories?',
     options: [
-      'Power factor correction requirements',
+      'To induce voltage and current in the rotor conductors',
       'Harmonic emission limits by equipment type',
-      'Voltage tolerance requirements',
-      'Fault current ratings',
+      'Line to neutral fault (short circuit)',
+      'Pre-agreed terms, pricing and streamlined ordering',
     ],
     correctAnswer: 1,
     explanation:
@@ -173,10 +213,10 @@ const quizQuestions = [
     question:
       'What is the primary advantage of using an active harmonic filter over a passive filter?',
     options: [
-      'Lower cost',
-      'Simpler installation',
+      'To verify earth fault loop impedance will be within limits',
+      'Both voltage and frequency differences affect operation',
       'Adaptive response to changing load conditions',
-      'Higher power losses',
+      'Multiply by 1.2 (temperature correction)',
     ],
     correctAnswer: 2,
     explanation:

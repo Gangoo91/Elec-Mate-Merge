@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'qc1',
     question: 'What is the primary function of a control valve?',
     options: [
-      'To measure process variables',
       'To regulate the flow of fluid in response to a control signal',
-      'To generate the control signal',
-      'To display process data',
+      'When cables pass through or are surrounded by thermal insulation',
+      'By trained personnel to evacuate people who cannot use stairs independently',
+      'To allow safe shutdown of dangerous processes',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A control valve is the final control element that physically adjusts fluid flow in the pipeline in response to the controller output signal.',
   },
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'qc2',
     question: "What does 'fail-safe' mean for a control valve actuator?",
     options: [
-      'The valve never fails',
+      'Use certified equipment and follow specific installation procedures',
       'The valve moves to a predetermined safe position on loss of signal or power',
-      'The valve locks in its current position',
-      'The valve sends an alarm signal',
+      'To document defects requiring remediation before handover',
+      'No notification required if installer is registered with competent person scheme',
     ],
     correctIndex: 1,
     explanation:
@@ -39,7 +39,12 @@ const quickCheckQuestions = [
   {
     id: 'qc3',
     question: 'What is the standard pneumatic control signal range?',
-    options: ['0-10 V DC', '4-20 mA', '3-15 psi (0.2-1.0 bar)', '0-5 V DC'],
+    options: [
+      '0-10 V DC',
+      '0-5 V DC',
+      '3-15 psi (0.2-1.0 bar)',
+      '4-20 mA',
+    ],
     correctIndex: 2,
     explanation:
       'The traditional pneumatic control signal is 3-15 psi (0.2-1.0 bar), where 3 psi represents 0% and 15 psi represents 100% of the valve travel.',
@@ -48,12 +53,12 @@ const quickCheckQuestions = [
     id: 'qc4',
     question: 'What does Cv (or Kv) represent for a control valve?',
     options: [
-      'The valve cost value',
+      'The existing fluorescent ballast must be bypassed or removed, and the circuit verified for compatibility with the LED driver',
+      'An addition or alteration that does NOT extend an existing circuit by adding a new one',
+      'The speed of the rotating magnetic field, determined by supply frequency and number of poles',
       'The flow coefficient -- the volume of water that will flow through the valve at a given pressure drop',
-      "The valve's control voltage",
-      'The cavitation value',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Cv is the flow coefficient representing the number of US gallons per minute of water at 60 degrees F that flows through the valve with a 1 psi pressure drop. Kv is the metric equivalent.',
   },
@@ -63,7 +68,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which type of control valve body is best suited for throttling applications?',
-    options: ['Ball valve', 'Globe valve', 'Butterfly valve', 'Gate valve'],
+    options: [
+      'Ball valve',
+      'Globe valve',
+      'Butterfly valve',
+      'Gate valve',
+    ],
     correctAnswer: 1,
     explanation:
       'Globe valves provide excellent throttling characteristics with a linear relationship between stem position and flow, and are the most common choice for modulating control.',
@@ -72,12 +82,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the characteristic curve of a valve?',
     options: [
-      'The shape of the valve body',
+      'Digital communication, diagnostics, auto-calibration, and valve performance monitoring',
+      'Large-diameter, low-pressure applications where cost and weight are important',
       'The relationship between valve stem position (travel) and flow rate',
-      'The pressure rating of the valve',
-      "The valve's response time curve",
+      'It operates near its closed position where control is poor and wear increases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The characteristic curve (inherent flow characteristic) describes how the flow through the valve changes as the stem moves from closed to fully open.',
   },
@@ -85,12 +95,12 @@ const quizQuestions = [
     id: 3,
     question: 'An equal-percentage valve characteristic means:',
     options: [
-      'Equal flow at all positions',
+      'The relationship between valve stem position (travel) and flow rate',
+      'It operates near its closed position where control is poor and wear increases',
+      'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
       'Equal increments of stem travel produce equal percentage changes in flow',
-      'The valve is always 50% open',
-      'Flow is directly proportional to stem position',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'With an equal-percentage characteristic, each unit of stem travel produces the same percentage change in flow relative to the current flow rate, giving a logarithmic curve.',
   },
@@ -98,12 +108,12 @@ const quizQuestions = [
     id: 4,
     question: 'What type of actuator uses instrument air to position the valve?',
     options: [
-      'Electric actuator',
-      'Hydraulic actuator',
       'Pneumatic diaphragm actuator',
+      'Hydraulic actuator',
+      'Electric actuator',
       'Manual handwheel',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Pneumatic diaphragm actuators use compressed instrument air (typically 3-15 psi or 0.2-1.0 bar) acting on a flexible diaphragm to position the valve stem.',
   },
@@ -111,10 +121,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a positioner on a control valve?',
     options: [
-      'A bracket that holds the valve in place',
+      'Digital communication, diagnostics, auto-calibration, and valve performance monitoring',
       'A device that compares the control signal with the actual valve position and adjusts the actuator output accordingly',
-      'A sensor that measures process flow',
-      'A safety device that limits valve travel',
+      'Formation and collapse of vapour bubbles due to pressure dropping below vapour pressure, causing damage',
+      'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,12 +134,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is cavitation in a control valve?',
     options: [
-      'Air entering the pipeline',
+      'Large-diameter, low-pressure applications where cost and weight are important',
+      'It operates near its closed position where control is poor and wear increases',
       'Formation and collapse of vapour bubbles due to pressure dropping below vapour pressure, causing damage',
-      'The valve vibrating at its resonant frequency',
-      'Sediment building up inside the valve',
+      'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Cavitation occurs when the local pressure drops below the fluid's vapour pressure (forming bubbles) and then recovers above it (bubbles collapse violently), causing erosion damage to valve internals.",
   },
@@ -137,12 +147,12 @@ const quizQuestions = [
     id: 7,
     question: 'A fail-closed valve with a pneumatic actuator would use:',
     options: [
-      'Air-to-open (spring-to-close) configuration',
+      'Manual override only',
       'Air-to-close (spring-to-open) configuration',
       'Double-acting cylinder with no spring',
-      'Manual override only',
+      'Air-to-open (spring-to-close) configuration',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'For fail-closed operation, the spring pushes the valve closed and air pressure opens it. On loss of air, the spring returns the valve to the closed (safe) position.',
   },
@@ -151,12 +161,12 @@ const quizQuestions = [
     question:
       'What advantage does a smart valve positioner provide over a conventional positioner?',
     options: [
-      'Lower cost',
       'Digital communication, diagnostics, auto-calibration, and valve performance monitoring',
-      'Faster response only',
-      'It eliminates the need for an actuator',
+      'The relationship between valve stem position (travel) and flow rate',
+      'Equal increments of stem travel produce equal percentage changes in flow',
+      'It operates near its closed position where control is poor and wear increases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Smart positioners use digital technology (HART, Foundation Fieldbus, Profibus PA) to provide auto-calibration, diagnostic data, partial stroke testing, and remote configuration capabilities.',
   },
@@ -164,10 +174,10 @@ const quizQuestions = [
     id: 9,
     question: 'When would you select a butterfly valve for control applications?',
     options: [
-      'High-pressure steam throttling',
+      'It operates near its closed position where control is poor and wear increases',
       'Large-diameter, low-pressure applications where cost and weight are important',
-      'Very small flow rates requiring precise control',
-      'Corrosive slurry applications',
+      'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
+      'Digital communication, diagnostics, auto-calibration, and valve performance monitoring',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,12 +187,12 @@ const quizQuestions = [
     id: 10,
     question: 'What happens if a control valve is significantly oversized for the application?',
     options: [
-      'It will operate more efficiently',
+      'The relationship between valve stem position (travel) and flow rate',
+      'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
       'It operates near its closed position where control is poor and wear increases',
-      'There is no practical effect',
-      'The valve will fail to open',
+      'Digital communication, diagnostics, auto-calibration, and valve performance monitoring',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An oversized valve operates near its closed position where small changes in stem position cause large flow changes. This makes precise control difficult, increases wear on the seat and plug, and reduces the effective rangeability of the loop.',
   },
@@ -190,20 +200,25 @@ const quizQuestions = [
     id: 11,
     question: 'What is partial stroke testing (PST) used for?',
     options: [
-      "Testing the valve's maximum flow capacity",
+      'The relationship between valve stem position (travel) and flow rate',
+      'Equal increments of stem travel produce equal percentage changes in flow',
+      'Digital communication, diagnostics, auto-calibration, and valve performance monitoring',
       'Verifying that a safety shut-off valve is not stuck by partially moving it during operation',
-      "Measuring the valve's Cv",
-      'Adjusting the positioner calibration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PST is a diagnostic technique for safety shut-off valves where the valve is partially moved (typically 10-20% of travel) during operation to verify it is not stuck. The smart positioner monitors the response and reports pass/fail.',
   },
   {
     id: 12,
     question: 'Which standard covers control valve sizing calculations?',
-    options: ['BS 7671', 'IEC 61131-3', 'ISA-75.01 / IEC 60534-2-1', 'ISO 9001'],
-    correctAnswer: 2,
+    options: [
+      'ISA-75.01 / IEC 60534-2-1',
+      'Using waste to generate energy',
+      'Investment cost ÷ Annual savings',
+      '6 months of practical completion',
+    ],
+    correctAnswer: 0,
     explanation:
       'ISA-75.01 and IEC 60534-2-1 are the industry standards for control valve sizing calculations, covering flow equations for incompressible and compressible fluids.',
   },

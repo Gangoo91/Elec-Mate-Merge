@@ -44,12 +44,12 @@ const checks = [
     question:
       'You arrive at a property to swap the consumer unit. The DNO cut-out has a wire-and-lead seal across the fuse holder. The customer says "just pull the fuse, I won’t tell anyone". What do you do?',
     options: [
-      'Cut the seal and pull the fuse — the customer has consented',
       'Refuse to break the seal. Phone 105 and arrange for the DNO (or a MOP under their authority) to attend and isolate the supply',
-      'Pull the meter tails out of the cut-out instead',
-      'Work live on the consumer unit',
+      'Lead: hours of pre-installation planning per job; Lag: percentage of installations passing first inspection',
+      'It provides a systematic method for identifying and labelling equipment, components, and signals on drawings and in the field',
+      'To be trained, equipped, and immediately available to effect rescue of any person who becomes incapacitated in the confined space',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The DNO seal is a legal device. Breaking it without authorisation is an offence (theft of electricity if the supply is later abstracted) and a breach of every electrical scheme membership condition. Customer consent doesn’t override either. Always go through the DNO or a MOP with delegated authority.',
   },
@@ -58,12 +58,12 @@ const checks = [
     question:
       'The Main Earthing Terminal (MET) on a typical TN-C-S installation is located:',
     options: [
-      'Inside the secondary substation transformer',
-      'On the cut-out — it’s the DNO’s earth',
+      'It introduces powers to ban or restrict specific single-use plastic items and create extended producer responsibility schemes',
+      'Standard or Enhanced fire-resistant cable (e.g. FP200 / Firetuf), separation from other circuits, and fire-rated supports/clips that survive collapse temperatures',
+      'A person with sufficient training, knowledge, and experience to understand the hazards and necessary precautions',
       'In or close to the consumer’s installation, with the earthing conductor connecting it to the supplier’s earth terminal at the cut-out',
-      'On the roof of the property',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The MET is the customer’s — sits in or near the consumer unit, takes the earthing conductor up to the supplier’s earth terminal on the cut-out. From the MET fan out the protective conductors (CPCs and bonding) into the installation. On TN-C-S the earth comes from the supply neutral; on TN-S it’s a separate sheath earth; on TT it’s your own electrode.',
   },
@@ -72,12 +72,12 @@ const checks = [
     question:
       'The service cable that runs from the secondary substation (or a joint box in the street) to the cut-out at the property is owned by:',
     options: [
-      'The customer',
-      'The MOP (Meter Operator)',
       'The DNO (Distribution Network Operator)',
-      'The energy supplier',
+      'Prioritise by safety risk, then operational impact',
+      'A to G (with A being most efficient)',
+      'At both the control unit and outlet',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The service cable is part of the DNO network — they install it, own it, and maintain it. It typically enters the property through an under-floor sleeve or external wall and terminates at the cut-out. Damage to the service cable is reported to the DNO on 105. The customer’s ownership starts at the consumer side of the meter.',
   },
@@ -89,12 +89,12 @@ const quizQuestions = [
     question:
       'In the UK supply chain from generator to consumer, the substation that steps voltage down from the transmission system (400/275 kV) to the distribution system (typically 132 kV or 33 kV) is called:',
     options: [
-      'The grid supply point (GSP)',
       'The primary substation',
+      'The grid supply point (GSP)',
       'The secondary substation',
       'The grid exit point',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'GSP = the boundary between transmission and distribution. NGET (or SPT/SHET) on one side, the DNO on the other. From the GSP, the DNO takes power onwards through primary substations (33/11 kV) and secondary substations (11 kV / 400 V).',
   },
@@ -103,10 +103,10 @@ const quizQuestions = [
     question:
       'A pole-mounted transformer (PMT) on a wooden pole in a rural area typically converts:',
     options: [
-      '400 kV to 11 kV',
-      '33 kV to 400 V three-phase',
+      'The coupling between two magnetically linked coils',
+      'In the reverse order to assembly (top down)',
       '11 kV to 400 V three-phase / 230 V single-phase',
-      '230 V to 12 V',
+      '0.30 - at the lower acceptable limit',
     ],
     correctAnswer: 2,
     explanation:
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       'The fuse inside the DNO cut-out on a typical UK domestic property is:',
     options: [
-      'A BS 88 industrial fuse',
+      'Continuity of protective conductors, continuity of ring final conductors, insulation resistance, polarity',
+      'Two controllers running the same program, with automatic switchover if one fails',
+      '35°C generally for floors regularly walked on barefoot (warmer permitted in border zones)',
       'A BS 1361 (or HRC) fuse, sealed by the DNO, sized at typically 60 A, 80 A or 100 A',
-      'A standard BS 3036 rewireable fuse',
-      'An MCB',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 1361 (or its successor BS 88-3) is the standard cartridge fuse used in DNO cut-outs. The fuse is sealed inside the cut-out housing — only authorised personnel may break the seal to access it. Common ratings: 60 A (older properties), 80 A, 100 A (modern standard).',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       'On a TN-C-S (PME) supply, the consumer’s earth comes from:',
     options: [
-      'A buried earth electrode at the property',
       'The supplier’s combined neutral and earth (PEN) conductor, separated into N and PE at the cut-out',
-      'The metal water pipe at the kitchen sink',
-      'The lightning protection system',
+      'Inhale sharply while covering the filters to check the mask draws inward against the face',
+      'To ensure electrical supplies match equipment needs and controls integrate',
+      'Collapse of the sides, contact with underground services, flooding, falling into the excavation, and hazardous atmospheres',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TN-C-S (Protective Multiple Earthing, PME) takes the earth from the same conductor that carries the supply neutral. The PEN conductor is split into a separate N and PE at the cut-out — and the PE goes to the customer’s MET via the supplier’s earth terminal. Most modern UK domestic supplies are TN-C-S.',
   },
@@ -147,8 +147,8 @@ const quizQuestions = [
     options: [
       'A = MET, B = consumer unit',
       'A = cut-out, B = electricity meter',
-      'A = primary substation, B = MET',
       'A = secondary substation, B = cut-out',
+      'A = primary substation, B = MET',
     ],
     correctAnswer: 1,
     explanation:
@@ -159,10 +159,10 @@ const quizQuestions = [
     question:
       'Which of the following is correctly described as part of the DNO’s assets (not the customer’s, and not the MOP’s)?',
     options: [
-      'The electricity meter',
-      'The consumer unit',
+      'One person should be designated as the coordinator, giving clear verbal commands',
+      'The tower loses structural rigidity and could collapse or rack (parallelogram) under load or wind',
       'The cut-out, the service cable from the substation, the secondary transformer feeding the street',
-      'The meter tails between meter and consumer unit',
+      'Apparent power (VA) is greater than true power (W) for reactive loads',
     ],
     correctAnswer: 2,
     explanation:
@@ -173,12 +173,12 @@ const quizQuestions = [
     question:
       'A property has a TT supply (no DNO earth provided). What does this mean in practice for the electrician designing the installation?',
     options: [
-      'No protective earth is needed',
+      'Circuit protection devices that detect dangerous electrical arcing (series and parallel arcs) in final circuits and disconnect the supply before the arc can cause a fire',
+      'Make substantial pension contributions now (gaining 40% relief) while building tax-efficient ISA savings to provide flexible retirement income below allowance taper threshold',
+      'It provides a loop for the feet to stand in, allowing the worker to periodically straighten their legs and restore blood circulation while awaiting rescue',
       'The customer needs to install an earth electrode (rod or mat) and the installation must use RCD protection because the loop impedance is too high to rely on overcurrent protection alone for ADS',
-      'The supply is illegal in the UK',
-      'The supply must run at 12 V SELV',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'TT means the DNO doesn’t supply an earth — typical of older overhead-supplied rural properties. The installation must have its own earth electrode at the MET, and because the earth fault loop impedance through the soil is much higher than via a TN-S sheath or a TN-C-S PEN, RCDs (typically 100 mA on the supply side and 30 mA on final circuits) provide fault protection by automatic disconnection. See §4 of this module for the full earthing systems coverage.',
   },
@@ -187,12 +187,12 @@ const quizQuestions = [
     question:
       'An electrician is asked by a customer "where exactly does my electricity start?" Most accurate electrician answer:',
     options: [
-      '"At the socket on your wall"',
-      '"At the consumer unit"',
       '"At the secondary substation transformer at the end of your street, where 11 kV is converted to 400 V three-phase / 230 V single-phase, then a service cable feeds your cut-out"',
-      '"At a power station somewhere in the UK"',
+      'They are substantially enclosed with limited access, and may contain hazardous atmospheres from decomposing material or leaked services',
+      'To recognise your emotions as they occur and understand their impact on your thoughts, decisions, and interactions with others',
+      'A fixed or portable arm-and-base system that provides an anchor point above a confined space entry, functioning similarly to a tripod but suited to spaces where a tripod cannot be positioned',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The most useful real-world answer for a customer: the supply ‘starts’ for them at the secondary substation, which feeds their service cable, which terminates at their cut-out. The transmission/generation side is true but invisible to the customer. The cut-out is where ‘their’ electricity arrives at their wall.',
   },

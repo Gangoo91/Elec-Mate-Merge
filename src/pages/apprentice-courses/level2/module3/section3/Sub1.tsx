@@ -39,8 +39,13 @@ const checks = [
     id: 'ring-evidence-check',
     question:
       'Two line conductors at the MCB, two at the neutral bar and two at the earth bar — what circuit shape is this?',
-    options: ['Radial', 'Ring final', 'FCU spur', 'Lighting loop-in'],
-    correctIndex: 1,
+    options: [
+      'Radial',
+      'FCU spur',
+      'Ring final',
+      'Lighting loop-in',
+    ],
+    correctIndex: 2,
     explanation:
       'Two-of-everything at the protective device is the classic ring-final fingerprint — the cable leaves and returns to the same MCB or RCBO. Radials land a single conductor at each terminal.',
   },
@@ -48,8 +53,13 @@ const checks = [
     id: 'spur-rule-check',
     question:
       'How many unfused single 13 A socket spurs are permitted off any one point on a 2.5 mm² ring final?',
-    options: ['Zero — all spurs must be fused', 'One', 'Two', 'Unlimited, provided total load < 32 A'],
-    correctIndex: 1,
+    options: [
+      'Zero — all spurs must be fused',
+      'Unlimited, provided total load < 32 A',
+      'Two',
+      'One',
+    ],
+    correctIndex: 3,
     explanation:
       'On-Site Guide / BS 7671 433.1.204 — one unfused spur per teed-off point on a 2.5 mm² ring (one single or one twin). Beyond that, hang it off an FCU and the 13 A fuse polices the spur cable.',
   },
@@ -57,7 +67,12 @@ const checks = [
     id: 'shower-csa-check',
     question:
       'A 9.5 kW electric shower at 230 V draws roughly 41 A. The smallest cable typically picked for a short clipped-direct run is:',
-    options: ['2.5 mm² T&E', '4 mm² T&E', '6 mm² T&E', '10 mm² T&E'],
+    options: [
+      '2.5 mm² T&E',
+      '4 mm² T&E',
+      '6 mm² T&E',
+      '10 mm² T&E',
+    ],
     correctIndex: 2,
     explanation:
       '6 mm² T&E clipped direct is rated around 47 A — comfortable for a 9.5 kW shower on a 40 A or 45 A MCB. 2.5 and 4 mm² won’t carry it, 10 mm² is over-size for a short run. We’ll do the proper Iz/derate calc in Sub3.',
@@ -70,10 +85,10 @@ const quizQuestions = [
     question:
       'A radial final circuit is best described as:',
     options: [
-      'A circuit looping out and back to the same protective device',
+      'Detecting short circuits and cross-faults in the input wiring by sending test pulses',
       'A circuit with a single cable going from the consumer unit to the last accessory, with branches off as needed',
-      'A circuit fed from two protective devices in parallel',
-      'A switched-live-only circuit feeding a fixed appliance',
+      'Ib <= In <= Iz, where Ib is design current and Iz is cable current-carrying capacity',
+      'Equipment with rated current up to 16 A per phase (Class A, B, C, D equipment)',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,12 +99,12 @@ const quizQuestions = [
     question:
       'A 32 A ring final circuit wired in 2.5 mm² T&E to BS 7671 must comply with 433.1.204. Which protective devices are permitted?',
     options: [
-      'Only BS EN 60898 Type B MCBs',
+      'The employer (or self-employed person, or person in control of the premises)',
+      'Installing sensors, relays, and control circuits for system integration',
       'BS 88, BS 3036, BS EN 60898, BS EN 60947-2 or BS EN 61009-1 RCBO at 30 A or 32 A',
-      'Any RCD without overcurrent protection',
-      'Only BS 88 fuses at 30 A',
+      'A standardised phrase that describes the nature and severity of the hazard posed by a substance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 433.1.204 names the device families and the 30 A or 32 A ratings. RCBOs (BS EN 61009-1) are the modern domestic norm because they combine overload, fault current and 30 mA earth-fault protection in one module.',
   },
@@ -97,8 +112,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A standard 6 A or 10 A lighting circuit is most commonly wired in:',
-    options: ['1.0 mm² T&E', '1.5 mm² T&E', '2.5 mm² T&E', '4 mm² T&E'],
-    correctAnswer: 1,
+    options: [
+      '2.5 mm² T&E',
+      '1.0 mm² T&E',
+      '4 mm² T&E',
+      '1.5 mm² T&E',
+    ],
+    correctAnswer: 3,
     explanation:
       '1.5 mm² T&E is the workhorse for domestic lighting circuits — comfortable Iz on a 6 A or 10 A circuit and gives some headroom for voltage drop on long runs. 1.0 mm² is permitted but tighter; 2.5 mm² is over-size for typical lighting loads.',
   },
@@ -106,8 +126,13 @@ const quizQuestions = [
     id: 4,
     question:
       'A 7 kW EV charge point on a single-phase supply is closest to:',
-    options: ['16 A', '20 A', '32 A', '45 A'],
-    correctAnswer: 2,
+    options: [
+      '32 A',
+      '20 A',
+      '16 A',
+      '45 A',
+    ],
+    correctAnswer: 0,
     explanation:
       'I = P ÷ V = 7000 ÷ 230 ≈ 30.4 A. Round up to a standard 32 A protective device on its own dedicated radial — usually 6 mm² T&E clipped direct with a Type A or Type B RCD per the charger manufacturer.',
   },
@@ -116,10 +141,10 @@ const quizQuestions = [
     question:
       'In a 3-plate (loop-in) lighting installation, the permanent line, neutral and switched-line all terminate at:',
     options: [
-      'The luminaire itself',
+      'Conductor resistance and current',
       'The ceiling rose / loop-in box',
-      'The light switch',
-      'The consumer unit busbar',
+      'Face shield and hearing protection',
+      '4000K-5000K (neutral to cool white)',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,11 +156,11 @@ const quizQuestions = [
       'A spur off a ring final feeds two double sockets via a 13 A switched FCU. What polices the spur cable from the ring?',
     options: [
       'Nothing — it relies on the ring MCB',
-      'The 13 A fuse inside the FCU',
       'The RCD on the consumer unit',
+      'The 13 A fuse inside the FCU',
       'The ring conductor itself, by self-limitation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Once you hang an FCU off the ring, the 13 A BS 1362 fuse inside the FCU protects the downstream spur cable. That’s why you can run as many sockets as you like off an FCU spur — they’re collectively protected at 13 A, not at the 32 A of the ring.',
   },
@@ -144,12 +169,12 @@ const quizQuestions = [
     question:
       'A heat-only domestic boiler with a 3 A internal fuse is wired:',
     options: [
-      'Off the cooker circuit',
-      'On its own dedicated 16 A radial',
+      'The thermal resistance of the air layer adjacent to a surface (Rsi, Rso)',
+      'Both lamp depreciation and luminaire/room dirt accumulation',
+      'Logged, assigned owners, target dates set, and verified closed',
       'Off a switched FCU on the ring final, with the 3 A fuse inside the FCU',
-      'On a separate ring final',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Boilers are almost always fed from a switched FCU on the ring, with a 3 A or 5 A BS 1362 fuse inside the FCU per the manufacturer’s instructions. Provides local isolation, fuse protection sized to the appliance, and meets the unswitched-load requirement.',
   },
@@ -158,12 +183,12 @@ const quizQuestions = [
     question:
       'Which type of final circuit is required to be on its own dedicated radial under all common UK domestic designs?',
     options: [
-      'A 32 A socket-outlet ring',
-      'A 6 A lighting circuit',
       'A 9.5 kW electric shower',
       'A single fused-spur to a doorbell transformer',
+      'A 32 A socket-outlet ring',
+      'A 6 A lighting circuit',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Showers are always on their own dedicated radial (no other loads sharing the circuit) sized for the appliance — typically 32–45 A protective device, 6 or 10 mm² T&E. Manufacturer instructions and the MIs almost always require this.',
   },

@@ -34,8 +34,13 @@ const checks = [
   {
     id: 'capacitance-units',
     question: 'What is the unit of capacitance?',
-    options: ['Henry (H)', 'Ohm (Ω)', 'Farad (F)', 'Volt (V)'],
-    correctIndex: 2,
+    options: [
+      'Henry (H)',
+      'Ohm (Ω)',
+      'Volt (V)',
+      'Farad (F)',
+    ],
+    correctIndex: 3,
     explanation:
       'The farad. 1 F = 1 coulomb of charge stored per 1 volt across the plates. Most real capacitors are micro-, nano- or picofarads — a 1 F cap is huge.',
   },
@@ -43,7 +48,12 @@ const checks = [
     id: 'time-constant',
     question:
       'A 100 µF capacitor charges through a 10 kΩ resistor. What is the time constant τ?',
-    options: ['1 ms', '10 ms', '100 ms', '1 second'],
+    options: [
+      '1 ms',
+      '10 ms',
+      '100 ms',
+      '1 second',
+    ],
     correctIndex: 3,
     explanation:
       'τ = R × C = 10,000 × 0.0001 = 1 second. After 1τ the cap reaches 63% of the supply; after roughly 5τ (5 seconds here) it’s essentially fully charged.',
@@ -52,10 +62,10 @@ const checks = [
     id: 'motor-cap-job',
     question: 'What is a motor-start (or motor-run) capacitor doing on a single-phase induction motor?',
     options: [
-      'Storing energy for emergency use.',
+      'Socket outlets rated up to 32 A and mobile equipment rated up to 32 A used outdoors',
       'Phase-shifting the start winding so the motor sees a rotating magnetic field and produces starting torque.',
-      'Filtering radio interference.',
-      'Smoothing the DC supply to the motor.',
+      'Evacuating the fire floor first then adjacent floors sequentially; used in tall buildings',
+      'Carry out a general risk assessment covering all workplace risks, including those from hazardous substances',
     ],
     correctIndex: 1,
     explanation:
@@ -68,10 +78,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does a capacitor store?',
     options: [
-      'Magnetic energy in a coil.',
+      'Small additions like extra socket',
       'Charge in an electric field between two plates.',
-      'Heat energy.',
-      'Sound energy.',
+      'Reduces current and therefore I²R losses',
+      'Between a line and a common neutral point',
     ],
     correctAnswer: 1,
     explanation:
@@ -80,8 +90,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'The defining equation for capacitance is:',
-    options: ['V = IR', 'C = Q/V', 'P = VI', 'F = ma'],
-    correctAnswer: 1,
+    options: [
+      'P = VI',
+      'V = IR',
+      'C = Q/V',
+      'F = ma',
+    ],
+    correctAnswer: 2,
     explanation:
       'Capacitance C (in farads) equals the charge Q (in coulombs) stored per unit voltage V across the plates. Bigger plates or a thinner dielectric = more charge stored per volt = higher capacitance.',
   },
@@ -89,27 +104,37 @@ const quizQuestions = [
     id: 3,
     question: 'When you first connect a capacitor to a DC supply through a resistor, what happens?',
     options: [
-      'It conducts forever like a resistor.',
+      'Each light gets full voltage and works independently',
+      'Where there is risk of head injury from falling objects or impact',
+      'Separation distances, interference prevention, and shared containment systems',
       'Current flows briefly while the capacitor charges, then drops to zero.',
-      'It blocks current entirely from the start.',
-      'It generates a voltage.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A discharged cap looks like a short circuit at the moment of connection — full current flows. As it charges, the voltage across it rises, the current falls, and once it’s fully charged, no DC current flows.',
   },
   {
     id: 4,
     question: 'After one time constant τ (= R × C), a charging capacitor reaches roughly what percentage of supply voltage?',
-    options: ['20%', '37%', '63%', '100%'],
-    correctAnswer: 2,
+    options: [
+      '63%',
+      '37%',
+      '20%',
+      '100%',
+    ],
+    correctAnswer: 0,
     explanation:
       'After 1τ the cap reaches 1 − 1/e ≈ 63.2% of supply. After 5τ it’s within 1% of fully charged — for practical purposes, “done”.',
   },
   {
     id: 5,
     question: 'After one time constant τ, a discharging capacitor falls to roughly what percentage of starting voltage?',
-    options: ['20%', '37%', '63%', '100%'],
+    options: [
+      '20%',
+      '37%',
+      '100%',
+      '63%',
+    ],
     correctAnswer: 1,
     explanation:
       'Mirror image of charging. After 1τ the cap falls to 1/e ≈ 36.8% of where it started; after 5τ it’s essentially flat. Same physics either way.',
@@ -118,12 +143,12 @@ const quizQuestions = [
     id: 6,
     question: 'What does a smoothing capacitor do after a rectifier?',
     options: [
-      'Increases the AC voltage.',
+      'Show empathy and adjust expectations temporarily while maintaining core safety and competence standards',
+      'By wearing high-visibility vests or armbands, often in a distinct colour',
       'Holds charge between rectifier pulses, filling in the gaps to give a steadier DC voltage.',
-      'Converts AC to DC.',
-      'Limits the load current.',
+      'Do not induce vomiting; call 999, keep the casualty calm, and try to identify the product',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The rectifier’s output is pulsating DC. The capacitor charges up to the peak of each pulse, then discharges slowly into the load between pulses. Bigger cap = less ripple voltage = smoother DC.',
   },
@@ -131,12 +156,12 @@ const quizQuestions = [
     id: 7,
     question: 'You replace a faulty motor-run capacitor on a single-phase compressor. The new cap is the same µF but a lower voltage rating. Is that OK?',
     options: [
-      'Yes — voltage rating is just for reference.',
+      'The existing ballast must be bypassed or the LED tube must be compatible with the existing ballast type',
+      'They provide timestamped, tamper-evident proof that both parties agreed to the terms',
+      'Step out of the content, restore safety by establishing Mutual Purpose and Mutual Respect, then return to the issue',
       'No — voltage rating must equal or exceed the original. Underrated caps fail (often explosively) under mains-side stress.',
-      'Yes, as long as it’s the same physical size.',
-      'Only on three-phase motors.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Capacitor voltage rating is a maximum, not a guideline. Use a lower-rated cap and the dielectric breaks down — at best it dies quickly, at worst it explodes hot oil out of the can. Always match or exceed the original spec.',
   },
@@ -144,12 +169,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why does BS 7671 require capacitors over a certain size to discharge automatically when isolated?',
     options: [
-      'For energy efficiency.',
       'Because a charged capacitor can hold a dangerous voltage long after the supply is removed — a hidden shock hazard for whoever opens the unit next.',
-      'To reduce harmonics.',
-      'It doesn’t.',
+      'All the KSBs that the evidence genuinely demonstrates, including knowledge applied, skills used, and behaviours exhibited during the activity',
+      'A fire where the rate of burning is limited by the available oxygen supply rather than by the fuel available',
+      'Load-sensing or proximity detection systems that prevent or warn of potential entrapment between the platform and surrounding structures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Capacitors don’t care that you’ve turned the supply off. A 30 µF motor-run cap charged to 400 V can hold that voltage for minutes — long enough to belt the next person who opens the cover. Safe isolation means proving stored charge has been bled off, too.',
   },

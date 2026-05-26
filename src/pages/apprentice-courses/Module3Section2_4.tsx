@@ -66,8 +66,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which open containment method offers the highest load capacity?',
-    options: ['Cable basket', 'Cable tray', 'Ladder system', 'PVC trunking'],
-    correctAnswer: 2,
+    options: [
+      'Cable basket',
+      'Ladder system',
+      'Cable tray',
+      'PVC trunking',
+    ],
+    correctAnswer: 1,
     explanation:
       'Ladder systems provide extremely high load capacity for long spans and heavy power cables, typically 150-500 kg/m.',
   },
@@ -75,12 +80,12 @@ const quizQuestions = [
     id: 2,
     question: 'Why are cable baskets popular for data installations?',
     options: [
-      'Low cost and easy to cut',
-      'Highest load capacity',
       'Can be buried underground',
       'Provide better EMC shielding',
+      'Low cost and easy to cut',
+      'Highest load capacity',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Cable baskets are lightweight, quick to install, and easy to cut to length on site, making them ideal for data cabling.',
   },
@@ -96,12 +101,12 @@ const quizQuestions = [
     id: 4,
     question: 'Name one advantage of perforated cable trays over solid trays.',
     options: [
-      'Lower cost',
       'Improved airflow and easier fixing options',
-      'Better weather protection',
-      'Higher load capacity',
+      'NAPIT, NICEIC, ELECSA, or Stroma',
+      'IT earthing systems and supplementary bonding',
+      'Earth fault return path for each circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Perforated designs allow better airflow for cooling and make fixing cables easier with multiple fixing points.',
   },
@@ -109,10 +114,10 @@ const quizQuestions = [
     id: 5,
     question: 'What must be done at sharp edges where cables exit metal containment?',
     options: [
-      'Paint edges',
+      'An open circuit or break in the conductor',
       'File smooth or fit protective grommets',
-      'Wrap cables in tape',
-      'Avoid using that exit',
+      'Extensive experience and specialist knowledge',
+      'Unacceptable - exceeds breaking capacity',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,12 +127,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the typical support spacing for heavy-duty cable ladders?',
     options: [
-      'Every 500mm',
+      'Accurately price work for profitability',
+      'Missed alerts due to system misconfiguration',
       'Every 1.5-3 metres depending on load',
-      'Every 5 metres',
-      'Support spacing is not critical',
+      'Protection against indirect contact',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Support spacing for cable ladders typically ranges from 1.5-3 metres depending on the load and cable ladder specification.',
   },
@@ -136,12 +141,12 @@ const quizQuestions = [
     question:
       'According to BS EN 61537, what is required for cable management systems in fire escape routes?',
     options: [
-      'Any material is acceptable',
+      'Ignoring — making no effort to listen at all',
+      'It requires preparation and deepens understanding',
+      'True - false values can cause section failure',
       'Enhanced fire performance requirements',
-      'Only PVC systems allowed',
-      'No specific requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 61537 requires enhanced fire performance for cable management systems in escape routes to maintain safety during evacuation.',
   },
@@ -149,12 +154,12 @@ const quizQuestions = [
     id: 8,
     question: 'What earthing requirement applies to metallic cable management systems?',
     options: [
-      'Earthing is optional',
-      'Only the first section needs earthing',
       'All metallic sections must be earthed to maintain continuity',
-      'Earthing is only required outdoors',
+      'Automated control sequences and emergency override function',
+      'Breaking capacity ≥ Ipf at installation point',
+      'Look for creative solutions where both parties get something they value',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'All metallic sections of cable management systems must be properly earthed to maintain electrical safety and continuity.',
   },

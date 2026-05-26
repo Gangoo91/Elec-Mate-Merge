@@ -35,12 +35,12 @@ const quickCheckQuestions = [
     id: 'coshh-definition',
     question: 'What does COSHH stand for?',
     options: [
-      'Control of Substances Hazardous to Health',
-      'Classification of Substances Harmful to Health',
       'Control of Safety Hazards on Highways',
+      'Classification of Substances Harmful to Health',
+      'Control of Substances Hazardous to Health',
       'Compliance of Substances and Health Hazards',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'COSHH stands for Control of Substances Hazardous to Health. These regulations (2002) require employers to control exposure to hazardous substances to prevent ill health in the workplace.',
   },
@@ -48,20 +48,25 @@ const quickCheckQuestions = [
     id: 'control-hierarchy',
     question: 'In the hierarchy of control measures, what should be considered first?',
     options: [
-      'Personal protective equipment',
-      'Engineering controls',
       'Elimination or substitution',
+      'Personal protective equipment',
       'Administrative controls',
+      'Engineering controls',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Elimination (removing the hazard entirely) or substitution (replacing with a less hazardous substance) should always be considered first. PPE should only be used as a last resort when other controls are not reasonably practicable.',
   },
   {
     id: 'ghs-pictogram',
     question: 'Which GHS pictogram indicates a substance is harmful to the environment?',
-    options: ['Skull and crossbones', 'Flame', 'Dead fish and tree', 'Exclamation mark'],
-    correctIndex: 2,
+    options: [
+      'Dead fish and tree',
+      'Flame',
+      'Skull and crossbones',
+      'Exclamation mark',
+    ],
+    correctIndex: 0,
     explanation:
       'The GHS pictogram showing a dead fish and tree indicates environmental hazards. This warns that the substance is dangerous to aquatic life and should not be released into drains or watercourses.',
   },
@@ -69,12 +74,12 @@ const quickCheckQuestions = [
     id: 'health-surveillance',
     question: 'When is health surveillance required under COSHH?',
     options: [
-      'For all workers using any chemicals',
-      'Only for workers using carcinogens',
+      'The centre of the space is left in darkness, creating trip hazards and panic',
+      'Bearing failure (mechanical) or insulation breakdown (electrical)',
+      'To provide safe holding areas and guide occupants to staircases during lift failures',
       'When there is a reasonable likelihood of disease related to exposure',
-      'Only when requested by employees',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Health surveillance is required when there is a reasonable likelihood that an identifiable disease or adverse health effect may be related to the exposure, and valid techniques exist for detecting the disease or effect.',
   },
@@ -87,11 +92,11 @@ const quizQuestions = [
       'Under COSHH 2002, which of the following is NOT classified as a hazardous substance?',
     options: [
       'Soldering flux fumes',
-      'Refrigerant gases',
       'Untreated wood shavings',
+      'Refrigerant gases',
       'Cement dust',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Untreated natural wood is not classified as hazardous under COSHH (though hardwood dust is). Soldering flux produces harmful fumes, refrigerants can displace oxygen and cause cold burns, and cement dust is alkaline and causes skin and respiratory irritation.',
   },
@@ -99,12 +104,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the Workplace Exposure Limit (WEL) for?',
     options: [
+      'The maximum number of workers exposed to a substance',
       'The maximum time a worker can spend in a hazardous area',
       'The maximum concentration of a hazardous substance in workplace air',
-      'The maximum number of workers exposed to a substance',
       'The minimum ventilation rate required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Workplace Exposure Limits (WELs) set the maximum concentration of airborne substances averaged over a reference period (usually 8 hours or 15 minutes for short-term limits). They are published in HSE document EH40.',
   },
@@ -112,12 +117,12 @@ const quizQuestions = [
     id: 3,
     question: 'A COSHH assessment must be reviewed:',
     options: [
-      'Every 12 months regardless of circumstances',
-      'Only when an incident occurs',
+      'Replacing solvent-based adhesive with water-based',
+      'The maximum concentration of a hazardous substance in workplace air',
+      'To detect early signs of work-related ill health',
       'When there is reason to suspect it is no longer valid',
-      'Only when new substances are introduced',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'COSHH assessments must be reviewed when there is reason to suspect they are no longer valid - this includes changes to work processes, new information about hazards, incidents, or ill health reports. Regular review is good practice, but the legal trigger is when validity is in doubt.',
   },
@@ -126,12 +131,12 @@ const quizQuestions = [
     question:
       'Which refrigerant type poses the greatest environmental concern for ozone depletion?',
     options: [
-      'HFCs (hydrofluorocarbons)',
       'HCFCs (hydrochlorofluorocarbons)',
+      'HFCs (hydrofluorocarbons)',
       'Natural refrigerants (CO2, ammonia)',
       'HFOs (hydrofluoroolefins)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'HCFCs contain chlorine which depletes the ozone layer. While being phased out under the Montreal Protocol, they may still be found in older systems. HFCs have zero ODP but high GWP. Natural refrigerants and HFOs have minimal environmental impact.',
   },
@@ -139,10 +144,10 @@ const quizQuestions = [
     id: 5,
     question: 'What information must be included in Section 8 of a Safety Data Sheet?',
     options: [
-      'First aid measures',
+      'Local exhaust ventilation (fume extraction)',
       'Exposure controls and personal protection',
-      'Ecological information',
-      'Physical and chemical properties',
+      'HCFCs (hydrochlorofluorocarbons)',
+      'To detect early signs of work-related ill health',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,11 +158,11 @@ const quizQuestions = [
     question: 'When working with soldering flux, which control measure is most appropriate?',
     options: [
       'Working near an open window',
-      'Local exhaust ventilation (fume extraction)',
       'Respiratory protective equipment only',
+      'Local exhaust ventilation (fume extraction)',
       'Limiting work to 4 hours per day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Local exhaust ventilation (LEV) captures fumes at source before they enter the breathing zone. It is the preferred engineering control for soldering operations. Natural ventilation is inadequate, RPE should be a last resort, and time limits alone don't prevent exposure.",
   },
@@ -166,11 +171,11 @@ const quizQuestions = [
     question: "Under CLP Regulations, what does the signal word 'Danger' indicate?",
     options: [
       'A minor hazard requiring attention',
-      'A more severe hazard category',
-      'The substance is flammable',
       'The substance requires special disposal',
+      'The substance is flammable',
+      'A more severe hazard category',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Under CLP (Classification, Labelling and Packaging), 'Danger' is the signal word for more severe hazard categories, while 'Warning' is used for less severe hazards. The signal word provides an immediate indication of hazard severity.",
   },
@@ -179,12 +184,12 @@ const quizQuestions = [
     question:
       'What is the primary health risk from prolonged exposure to silica dust in construction?',
     options: [
-      'Contact dermatitis',
       'Silicosis and lung cancer',
       'Hearing loss',
+      'Contact dermatitis',
       'Musculoskeletal disorders',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Respirable crystalline silica (RCS) causes silicosis - an irreversible lung disease - and is a known carcinogen causing lung cancer. It is generated when cutting, drilling, or grinding concrete, brick, or stone - common activities in building services installation.',
   },
@@ -192,10 +197,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which document provides details of Workplace Exposure Limits in the UK?',
     options: [
-      'COSHH Regulations 2002',
+      'A more severe hazard category',
       'EH40 Workplace Exposure Limits',
-      'The CLP Regulation',
-      'BS 7671',
+      'HCFCs (hydrochlorofluorocarbons)',
+      'Silicosis and lung cancer',
     ],
     correctAnswer: 1,
     explanation:
@@ -219,12 +224,12 @@ const quizQuestions = [
     id: 11,
     question: 'Which of these is an example of substitution as a control measure?',
     options: [
-      'Using extraction equipment',
+      'Not use it and report it to the supervisor',
+      'Local exhaust ventilation (fume extraction)',
+      'Exposure controls and personal protection',
       'Replacing solvent-based adhesive with water-based',
-      'Wearing respiratory protection',
-      'Limiting exposure time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Substitution means replacing a hazardous substance with a less hazardous alternative. Replacing solvent-based products with water-based versions eliminates volatile organic compound (VOC) exposure. This is higher in the hierarchy than engineering controls or PPE.',
   },
@@ -232,12 +237,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the purpose of COSHH health surveillance records?',
     options: [
-      'To monitor worker productivity',
       'To detect early signs of work-related ill health',
-      'To track PPE usage',
-      'To record training completion',
+      'Local exhaust ventilation (fume extraction)',
+      'Not use it and report it to the supervisor',
+      'When there is reason to suspect it is no longer valid',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Health surveillance aims to detect early signs of work-related ill health so action can be taken before serious harm occurs. Records must be kept for at least 40 years as some occupational diseases have long latency periods.',
   },

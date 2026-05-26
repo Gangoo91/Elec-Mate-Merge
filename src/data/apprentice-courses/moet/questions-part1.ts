@@ -16,10 +16,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'What is the primary purpose of a permit to work system in an industrial environment?',
     options: [
-      'To record attendance of maintenance personnel on site',
+      'Refuse to commence work until safe isolation has been completed and verified',
       'To provide a formal documented procedure ensuring work is carried out safely on high-risk activities',
-      'To allocate budget for maintenance tasks',
-      'To schedule planned preventive maintenance activities',
+      'To take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions',
+      'The equipment identity, nature of work, hazards identified, precautions required, and signatures of issuer and recipient',
     ],
     correctAnswer: 1,
     explanation:
@@ -34,12 +34,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'When carrying out safe isolation of an electrical circuit, what is the correct sequence of steps?',
     options: [
-      'Lock off, identify circuit, prove dead, test instrument',
+      'An electrical burn requiring hospital treatment, or any electrical incident causing loss of consciousness',
+      'It is a non-statutory British Standard, but is referenced by statutory regulations such as EAWR 1989 as a means of compliance',
       'Identify circuit, obtain permission, isolate, lock off, prove dead using a proven test instrument',
-      'Switch off, remove fuses, start work immediately',
-      'Test with a multimeter, switch off, apply lock',
+      'Direct On Line - starting current is typically 6 to 8 times full load current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The correct safe isolation procedure follows a strict sequence: identify the circuit to be worked on, obtain permission/permit, isolate the supply, apply lock-off devices and warning labels, prove the test instrument on a known live source, verify the circuit is dead, then prove the test instrument again. This is critical for compliance with the Electricity at Work Regulations 1989.',
     section: 'Safe Isolation',
@@ -52,12 +52,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'Under a lock-out/tag-out (LOTO) procedure, who is authorised to remove a personal safety lock?',
     options: [
-      'Any qualified electrician on site',
-      'The site manager or shift supervisor',
+      'It is not legally binding but failure to follow it can be used as evidence of non-compliance in court',
+      'To provide a low-impedance path for fault current, enabling protective devices to operate and disconnect the supply quickly',
+      'To ensure, so far as is reasonably practicable, the health, safety and welfare at work of all employees',
       'Only the person who applied the lock, unless a formally documented override procedure is followed',
-      'The permit issuer alone',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Personal safety locks must only be removed by the individual who applied them. This ensures that no one can inadvertently re-energise a circuit while the person is still working on it. Override procedures exist for emergencies but require formal authorisation, documentation, and verification that the area is clear.',
     section: 'LOTO',
@@ -70,12 +70,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'A maintenance technician is asked to work on a 415 V motor starter. The permit to work has been issued but the circuit has not yet been isolated. What should the technician do?',
     options: [
-      'Proceed with caution using insulated tools',
       'Refuse to commence work until safe isolation has been completed and verified',
       'Ask a colleague to hold a voltage indicator while they work',
+      'Proceed with caution using insulated tools',
       'Begin work and isolate the circuit when convenient',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Under Regulation 14 of the Electricity at Work Regulations 1989, no person shall work on or near live conductors unless it is unreasonable for them to be dead, suitable precautions are taken, and it is reasonable in all circumstances. A 415 V motor starter must be isolated before work commences. The technician has a legal duty to refuse unsafe work.',
     section: 'Electrical Safety',
@@ -88,10 +88,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'What information must be clearly stated on a permit to work for electrical maintenance?',
     options: [
-      'Only the name of the person doing the work',
+      'Only the person who applied the lock, unless a formally documented override procedure is followed',
       'The equipment identity, nature of work, hazards identified, precautions required, and signatures of issuer and recipient',
-      'A generic risk assessment reference number',
-      'The cost estimate for the maintenance task',
+      'To provide a low-impedance path for fault current, enabling protective devices to operate and disconnect the supply quickly',
+      'A separate metallic conductor (usually the cable sheath) provided by the distributor throughout the distribution system',
     ],
     correctAnswer: 1,
     explanation:
@@ -108,12 +108,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'According to the hierarchy of risk control, what is the preferred approach to managing an electrical hazard?',
     options: [
+      'Display warning signs and rely on worker experience',
       'Provide personal protective equipment (PPE) to all workers',
       'Eliminate the hazard at source, or substitute with something less hazardous',
       'Provide training and safe systems of work only',
-      'Display warning signs and rely on worker experience',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The hierarchy of control (as defined in the Management of Health and Safety at Work Regulations 1999) prioritises: elimination, substitution, engineering controls, administrative controls, and PPE as the last resort. For electrical hazards, this means isolating the supply (elimination) is always preferred over relying on PPE such as arc flash suits.',
     section: 'Risk Assessment',
@@ -128,10 +128,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     options: [
       'Category 1 (minimum 4 cal/cm²)',
       'Category 2 (minimum 8 cal/cm²)',
-      'Category 3 (minimum 25 cal/cm²)',
       'No arc flash PPE is required at 400 V',
+      'Category 3 (minimum 25 cal/cm²)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'With an incident energy of 10 cal/cm², Category 2 arc flash PPE (rated at minimum 8 cal/cm²) would not provide sufficient protection. Category 3 (rated at minimum 25 cal/cm²) would be required to provide adequate protection above the calculated incident energy. Arc flash risk exists at any voltage where sufficient fault current is available.',
     section: 'PPE',
@@ -144,12 +144,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       "When conducting a risk assessment for electrical maintenance work, which regulation requires the assessment to be 'suitable and sufficient'?",
     options: [
-      'Electricity at Work Regulations 1989',
       'Management of Health and Safety at Work Regulations 1999',
+      'Electricity at Work Regulations 1989',
       'Provision and Use of Work Equipment Regulations 1998',
       'Personal Protective Equipment at Work Regulations 2022',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Regulation 3 of the Management of Health and Safety at Work Regulations 1999 requires employers to carry out a 'suitable and sufficient' risk assessment. While EAWR 1989 covers electrical safety specifically, the duty to formally assess risk comes from MHSWR 1999.",
     section: 'Risk Assessment',
@@ -162,10 +162,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'What class of electrical protective gloves would be required for work on a 1000 V AC system?',
     options: [
-      'Class 00 (max 500 V AC)',
+      'Class 2 (max 17000 V AC)',
       'Class 0 (max 1000 V AC)',
       'Class 1 (max 7500 V AC)',
-      'Class 2 (max 17000 V AC)',
+      'Class 00 (max 500 V AC)',
     ],
     correctAnswer: 1,
     explanation:
@@ -179,10 +179,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 10,
     question: 'What is the legal status of an Approved Code of Practice (ACoP) in the UK?',
     options: [
-      'It has the same legal force as an Act of Parliament',
-      'It is advisory only with no legal standing',
+      'The total current entering the node equals the total current leaving the node',
+      'To provide a formal documented procedure ensuring work is carried out safely on high-risk activities',
       'It is not legally binding but failure to follow it can be used as evidence of non-compliance in court',
-      'It only applies to self-employed persons',
+      'To detect an imbalance between line and neutral current, indicating earth leakage, and disconnect the supply',
     ],
     correctAnswer: 2,
     explanation:
@@ -199,12 +199,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       "Under Section 2 of the Health and Safety at Work Act 1974, what is the employer's general duty?",
     options: [
-      'To eliminate all risks in the workplace',
+      'To provide a formal documented procedure ensuring work is carried out safely on high-risk activities',
+      'Identify circuit, obtain permission, isolate, lock off, prove dead using a proven test instrument',
+      'An electrical burn requiring hospital treatment, or any electrical incident causing loss of consciousness',
       'To ensure, so far as is reasonably practicable, the health, safety and welfare at work of all employees',
-      'To provide PPE to all visitors',
-      'To conduct weekly safety inspections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Section 2(1) of HSWA 1974 places a general duty on every employer to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all employees. This includes provision of safe plant, safe systems of work, information, training, and supervision.',
     section: 'HSWA 1974',
@@ -217,12 +217,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'Regulation 4(3) of the Electricity at Work Regulations 1989 requires that every work activity on or near an electrical system shall be carried out in such a manner as not to give rise to what?',
     options: [
-      'Excessive noise levels',
       'Danger, so far as is reasonably practicable',
-      'Environmental pollution',
-      'Damage to company property',
+      'Category 3 (minimum 25 cal/cm²)',
+      'V_rms = V_pk / root(2), approximately 0.707 x V_pk',
+      'Current lags voltage by 90 degrees',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 4(3) of EAWR 1989 states that every work activity, including operation, use and maintenance of a system and work near a system, shall be carried out in such a manner as not to give rise, so far as is reasonably practicable, to danger. This is a fundamental requirement covering all electrical work.',
     section: 'EAWR 1989',
@@ -234,8 +234,13 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 13,
     question:
       'Which regulation within EAWR 1989 specifically addresses working on or near live conductors?',
-    options: ['Regulation 4', 'Regulation 12', 'Regulation 14', 'Regulation 16'],
-    correctAnswer: 2,
+    options: [
+      'Regulation 4',
+      'Regulation 14',
+      'Regulation 12',
+      'Regulation 16',
+    ],
+    correctAnswer: 1,
     explanation:
       'Regulation 14 of EAWR 1989 states that no person shall be engaged in work on or near a live conductor unless: (a) it is unreasonable in all circumstances for it to be dead, (b) it is reasonable in all the circumstances for the person to be at work on or near it while live, and (c) suitable precautions are taken to prevent injury.',
     section: 'EAWR 1989',
@@ -247,12 +252,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 14,
     question: 'Under HSWA 1974, what duty does Section 7 place on employees?',
     options: [
-      'To provide their own safety equipment',
+      'It is not legally binding but failure to follow it can be used as evidence of non-compliance in court',
+      'To improve the power factor by providing leading reactive current to offset the lagging reactive current drawn by inductive loads',
       'To take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions',
-      'To write risk assessments for all their tasks',
-      'To report all accidents to the HSE directly',
+      'An electrical burn requiring hospital treatment, or any electrical incident causing loss of consciousness',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Section 7 of HSWA 1974 requires every employee to take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work. Employees must also cooperate with their employer to enable compliance with statutory duties.',
     section: 'HSWA 1974',
@@ -265,12 +270,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'The Provision and Use of Work Equipment Regulations 1998 (PUWER) require that work equipment is suitable for its intended purpose. How does this apply to a voltage indicating device used for proving dead?',
     options: [
-      'Any multimeter can be used for proving dead',
+      'It is not legally binding but failure to follow it can be used as evidence of non-compliance in court',
+      'To detect an imbalance between line and neutral current, indicating earth leakage, and disconnect the supply',
+      'A separate metallic conductor (usually the cable sheath) provided by the distributor throughout the distribution system',
       'The device must comply with GS 38, be in calibration, and be proved on a known live source before and after use',
-      'Only devices purchased in the last year may be used',
-      'The device only needs to be tested annually',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PUWER requires work equipment to be suitable, maintained, and used by trained people. For voltage indicating devices, HSE Guidance Note GS 38 specifies requirements including fused test leads, finger guards, and proving units. The device must be proved on a known live source before and after testing to confirm it is functioning correctly.',
     section: 'PUWER 1998',
@@ -283,12 +288,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'Under RIDDOR 2013, which of the following electrical incidents must be reported to the HSE?',
     options: [
-      'A minor electric shock with no injury requiring hospital treatment',
       'An electrical burn requiring hospital treatment, or any electrical incident causing loss of consciousness',
-      'A blown fuse in a distribution board',
-      'A failed PAT test result',
+      'The equipment identity, nature of work, hazards identified, precautions required, and signatures of issuer and recipient',
+      'To improve the power factor by providing leading reactive current to offset the lagging reactive current drawn by inductive loads',
+      'Eliminate the hazard at source, or substitute with something less hazardous',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Under RIDDOR 2013 (Reporting of Injuries, Diseases and Dangerous Occurrences Regulations), electrical injuries requiring hospital treatment, loss of consciousness from electric shock, or dangerous occurrences involving electrical short circuits or overloads causing fire or explosion must be reported to the HSE.',
     section: 'RIDDOR',
@@ -302,10 +307,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 17,
     question: 'What is the legal status of BS 7671:2018+A3:2024 (the IET Wiring Regulations)?',
     options: [
-      'It is a statutory regulation that carries criminal penalties',
+      'The device must comply with GS 38, be in calibration, and be proved on a known live source before and after use',
       'It is a non-statutory British Standard, but is referenced by statutory regulations such as EAWR 1989 as a means of compliance',
-      'It only applies to domestic installations',
-      'It has no connection to any legislation',
+      'To detect an imbalance between line and neutral current, indicating earth leakage, and disconnect the supply',
+      'To provide a formal documented procedure ensuring work is carried out safely on high-risk activities',
     ],
     correctAnswer: 1,
     explanation:
@@ -319,8 +324,13 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 18,
     question:
       'What does BS 7671 require regarding the maximum disconnection time for a 230 V final circuit not exceeding 32 A?',
-    options: ['5 seconds', '0.4 seconds', '0.2 seconds', '1 second'],
-    correctAnswer: 1,
+    options: [
+      '5 seconds',
+      '0.2 seconds',
+      '0.4 seconds',
+      '1 second',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 7671 Table 41.1 requires a maximum disconnection time of 0.4 seconds for final circuits not exceeding 63 A in a TN system at 230 V. This ensures rapid disconnection of the supply in the event of a fault to limit the duration of electric shock to a safe level.',
     section: 'BS 7671',
@@ -333,12 +343,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'Under Regulation 12 of EAWR 1989, what must be ensured about the means of cutting off the supply and isolation of electrical equipment?',
     options: [
-      'A verbal instruction to switch off is sufficient',
+      'To take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions',
+      'To provide a formal documented procedure ensuring work is carried out safely on high-risk activities',
+      'A separate metallic conductor (usually the cable sheath) provided by the distributor throughout the distribution system',
       'Suitable means shall be available for cutting off the supply and for isolation, and these must be capable of being secured in the OFF position',
-      'Only the site manager needs to know where isolators are located',
-      'Isolation is only required for circuits above 1000 V',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 12 of EAWR 1989 requires that where necessary to prevent danger, suitable means shall be available for cutting off the supply and isolating any electrical equipment. The means of isolation must be capable of being secured to prevent inadvertent re-energisation, which is the basis for lock-off procedures.',
     section: 'EAWR 1989',
@@ -351,12 +361,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'A maintenance technician discovers a colleague has received an electric shock and is still in contact with the live source. What is the correct first action?',
     options: [
-      'Pull them away from the source immediately with bare hands',
       'Isolate the electrical supply if it can be done quickly and safely, or use a non-conducting object to separate them from the source',
-      'Call an ambulance and wait for them to arrive',
-      'Apply CPR while they are still in contact with the source',
+      'To improve the power factor by providing leading reactive current to offset the lagging reactive current drawn by inductive loads',
+      'A separate metallic conductor (usually the cable sheath) provided by the distributor throughout the distribution system',
+      'It is not legally binding but failure to follow it can be used as evidence of non-compliance in court',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The first priority is to remove the danger by isolating the supply if this can be done quickly and safely. If not, use a dry non-conducting object (such as a wooden broom handle) to separate the casualty from the live source. Never touch the casualty directly while they are in contact with the live source as you may also receive a shock.',
     section: 'Emergency Response',
@@ -374,7 +384,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 21,
     question:
       'A 415 V three-phase motor draws a line current of 25 A at a power factor of 0.85. What is the total power consumed?',
-    options: ['10.375 kW', '15.27 kW', '17.97 kW', '25.5 kW'],
+    options: [
+      '10.375 kW',
+      '15.27 kW',
+      '17.97 kW',
+      '25.5 kW',
+    ],
     correctAnswer: 1,
     explanation:
       'Three-phase power is calculated using P = root(3) x V_L x I_L x pf. So P = 1.732 x 415 x 25 x 0.85 = 15,270 W or approximately 15.27 kW. This formula applies to balanced three-phase loads and is essential knowledge for maintenance technicians sizing cables and protective devices.',
@@ -388,12 +403,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       "According to Kirchhoff's Current Law (KCL), what is true at any junction (node) in an electrical circuit?",
     options: [
-      'The voltage across all components is equal',
+      'Refuse to commence work until safe isolation has been completed and verified',
+      'Eliminate the hazard at source, or substitute with something less hazardous',
       'The total current entering the node equals the total current leaving the node',
-      'The resistance at the node is always zero',
-      'Power is neither created nor destroyed at the node',
+      'To provide a formal documented procedure ensuring work is carried out safely on high-risk activities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Kirchhoff's Current Law states that the algebraic sum of currents at any node in a circuit is zero, meaning the total current flowing into a node equals the total current flowing out. This is fundamental to analysing parallel circuits and distribution boards in maintenance work.",
     section: "Kirchhoff's Laws",
@@ -405,8 +420,13 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 23,
     question:
       'A circuit has three resistors in parallel: 10 ohm, 20 ohm, and 30 ohm. What is the total resistance of the parallel combination?',
-    options: ['60 ohm', '5.45 ohm', '20 ohm', '6.67 ohm'],
-    correctAnswer: 1,
+    options: [
+      '20 ohm',
+      '60 ohm',
+      '6.67 ohm',
+      '5.45 ohm',
+    ],
+    correctAnswer: 3,
     explanation:
       'For resistors in parallel: 1/R_total = 1/R1 + 1/R2 + 1/R3 = 1/10 + 1/20 + 1/30 = 6/60 + 3/60 + 2/60 = 11/60. Therefore R_total = 60/11 = 5.45 ohm. The total resistance of a parallel combination is always less than the smallest individual resistance.',
     section: 'Electrical Theory',
@@ -419,12 +439,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       "Kirchhoff's Voltage Law (KVL) states that around any closed loop in a circuit, what is the sum of all voltages?",
     options: [
-      'Equal to the supply voltage',
       'Equal to zero',
+      'Equal to the supply voltage',
       'Equal to the total current multiplied by total resistance',
       'Always positive',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Kirchhoff's Voltage Law states that the algebraic sum of all voltages around any closed loop in a circuit equals zero. This means the sum of voltage drops across components equals the sum of voltage sources in the loop. This principle is essential for fault finding on series circuits.",
     section: "Kirchhoff's Laws",
@@ -436,7 +456,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 25,
     question:
       'A 230 V single-phase heater has a resistance of 26.5 ohm. What current does it draw?',
-    options: ['6.10 A', '8.68 A', '10.00 A', '2.00 kW'],
+    options: [
+      '6.10 A',
+      '8.68 A',
+      '10.00 A',
+      '2.00 kW',
+    ],
     correctAnswer: 1,
     explanation:
       "Using Ohm's Law: I = V / R = 230 / 26.5 = 8.68 A. Ohm's Law (V = IR) is the most fundamental relationship in electrical engineering and is used constantly in maintenance work for calculating expected currents, checking measured values, and sizing components.",
@@ -450,12 +475,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'What is the relationship between peak voltage (V_pk) and RMS voltage (V_rms) for a sinusoidal AC waveform?',
     options: [
-      'V_rms = V_pk x 2',
+      'Danger, so far as is reasonably practicable',
+      'Discrimination (selectivity or coordination)',
       'V_rms = V_pk / root(2), approximately 0.707 x V_pk',
-      'V_rms = V_pk x root(2)',
-      'V_rms = V_pk / 2',
+      'Management of Health and Safety at Work Regulations 1999',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'For a sinusoidal waveform, V_rms = V_pk / root(2) = 0.707 x V_pk. The UK mains voltage of 230 V is an RMS value; the peak voltage is 230 x 1.414 = 325.3 V. RMS (root mean square) represents the equivalent DC voltage that would produce the same heating effect in a resistive load.',
     section: 'AC Theory',
@@ -471,11 +496,11 @@ export const questionsPart1: StandardMockQuestion[] = [
       'In a three-phase star-connected system, what is the relationship between line voltage and phase voltage?',
     options: [
       'V_line = V_phase',
-      'V_line = root(3) x V_phase',
-      'V_line = V_phase / root(3)',
       'V_line = 3 x V_phase',
+      'V_line = V_phase / root(3)',
+      'V_line = root(3) x V_phase',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In a star (wye) connection, V_line = root(3) x V_phase. For the UK supply: V_phase = 230 V, V_line = 230 x 1.732 = 400 V (approximately 415 V historically). Understanding star and delta relationships is essential for maintenance technicians working with three-phase industrial equipment.',
     section: 'AC Theory',
@@ -487,8 +512,13 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 28,
     question:
       'A single-phase transformer has a primary winding of 1000 turns and a secondary winding of 50 turns. If the primary voltage is 11 kV, what is the secondary voltage?',
-    options: ['230 V', '550 V', '415 V', '110 V'],
-    correctAnswer: 1,
+    options: [
+      '550 V',
+      '230 V',
+      '415 V',
+      '110 V',
+    ],
+    correctAnswer: 0,
     explanation:
       'Using the transformer turns ratio: V2/V1 = N2/N1. Therefore V2 = V1 x (N2/N1) = 11000 x (50/1000) = 550 V. Transformer ratios are fundamental to understanding power distribution in industrial settings, from the incoming HV supply through to utilisation voltage.',
     section: 'Transformers',
@@ -500,10 +530,10 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 29,
     question: "What is the primary function of a transformer's core?",
     options: [
-      'To conduct electrical current between windings',
+      'An electrical burn requiring hospital treatment, or any electrical incident causing loss of consciousness',
       'To provide a low-reluctance path for magnetic flux, enabling efficient energy transfer between windings',
-      'To act as a heat sink for the windings',
-      'To provide structural support for the windings only',
+      'To improve the power factor by providing leading reactive current to offset the lagging reactive current drawn by inductive loads',
+      'Only the person who applied the lock, unless a formally documented override procedure is followed',
     ],
     correctAnswer: 1,
     explanation:
@@ -536,12 +566,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'A capacitor bank is connected to an industrial installation. What is its primary purpose?',
     options: [
-      'To increase the supply voltage',
+      'The device must comply with GS 38, be in calibration, and be proved on a known live source before and after use',
+      'The equipment identity, nature of work, hazards identified, precautions required, and signatures of issuer and recipient',
+      'It is a non-statutory British Standard, but is referenced by statutory regulations such as EAWR 1989 as a means of compliance',
       'To improve the power factor by providing leading reactive current to offset the lagging reactive current drawn by inductive loads',
-      'To store energy for emergency lighting',
-      'To reduce harmonic distortion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Power factor correction capacitors provide leading reactive current (kVAr) that offsets the lagging reactive current drawn by inductive loads such as motors and transformers. This improves the power factor towards unity, reducing the total current drawn from the supply, which reduces losses and avoids reactive power charges from the electricity supplier.',
     section: 'AC Theory',
@@ -553,8 +583,13 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 32,
     question:
       'What is the impedance of a series RL circuit with resistance of 30 ohm and inductive reactance of 40 ohm?',
-    options: ['70 ohm', '50 ohm', '10 ohm', '35 ohm'],
-    correctAnswer: 1,
+    options: [
+      '50 ohm',
+      '70 ohm',
+      '10 ohm',
+      '35 ohm',
+    ],
+    correctAnswer: 0,
     explanation:
       'Impedance in a series RL circuit is calculated using Z = root(R² + X_L²) = root(30² + 40²) = root(900 + 1600) = root(2500) = 50 ohm. This is a Pythagorean relationship because resistance and reactance are 90 degrees apart in the impedance triangle.',
     section: 'AC Theory',
@@ -565,7 +600,12 @@ export const questionsPart1: StandardMockQuestion[] = [
   {
     id: 33,
     question: 'What is the frequency of the UK mains electrical supply?',
-    options: ['60 Hz', '50 Hz', '55 Hz', '45 Hz'],
+    options: [
+      '60 Hz',
+      '50 Hz',
+      '55 Hz',
+      '45 Hz',
+    ],
     correctAnswer: 1,
     explanation:
       'The UK mains frequency is 50 Hz (50 cycles per second), as specified in the Electricity Safety, Quality and Continuity Regulations 2002 (ESQCR). The frequency is maintained within tight limits by the National Grid. Motor speeds, transformer design, and protective relay settings are all dependent on the supply frequency.',
@@ -580,8 +620,13 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 34,
     question:
       'What is the synchronous speed of a 4-pole induction motor connected to a 50 Hz supply?',
-    options: ['3000 rpm', '1500 rpm', '750 rpm', '1000 rpm'],
-    correctAnswer: 1,
+    options: [
+      '3000 rpm',
+      '750 rpm',
+      '1500 rpm',
+      '1000 rpm',
+    ],
+    correctAnswer: 2,
     explanation:
       'Synchronous speed n_s = (120 x f) / p, where f is frequency and p is the number of poles. n_s = (120 x 50) / 4 = 1500 rpm. The actual rotor speed of an induction motor will be slightly less than synchronous speed due to slip, which is necessary for torque production. A typical 4-pole motor might run at 1450-1480 rpm.',
     section: 'Motors',
@@ -593,12 +638,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 35,
     question: 'What is the purpose of earthing (grounding) in an electrical installation?',
     options: [
-      'To improve the power factor of the installation',
+      'An electrical burn requiring hospital treatment, or any electrical incident causing loss of consciousness',
+      'The device must comply with GS 38, be in calibration, and be proved on a known live source before and after use',
+      'To improve the power factor by providing leading reactive current to offset the lagging reactive current drawn by inductive loads',
       'To provide a low-impedance path for fault current, enabling protective devices to operate and disconnect the supply quickly',
-      'To reduce the electricity bill',
-      'To increase the voltage available at the load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The primary purpose of earthing is to provide a low-impedance path for fault current to flow back to the source, enabling protective devices (fuses, circuit breakers, RCDs) to detect the fault and disconnect the supply quickly. This limits the touch voltage and duration of exposure, protecting people from electric shock. BS 7671 Chapter 41 covers this requirement.',
     section: 'Earthing',
@@ -610,12 +655,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 36,
     question: 'In a TN-S earthing system, what provides the earth fault return path?',
     options: [
-      'The general mass of earth',
       'A separate metallic conductor (usually the cable sheath) provided by the distributor throughout the distribution system',
-      'A local earth electrode at the installation',
-      'The neutral conductor',
+      'To provide a low-impedance path for fault current, enabling protective devices to operate and disconnect the supply quickly',
+      'Isolate the electrical supply if it can be done quickly and safely, or use a non-conducting object to separate them from the source',
+      'To take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "In a TN-S (Terra-Neutral-Separate) system, the earth and neutral are separate conductors throughout. The earth fault return path is provided by a separate metallic conductor, typically the lead sheath or steel wire armour of the distributor's cable. This provides a reliable, low-impedance earth fault path independent of soil conditions.",
     section: 'Earthing',
@@ -646,12 +691,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'What is the purpose of a residual current device (RCD) in an electrical installation?',
     options: [
-      'To protect against overload current only',
+      'The device must comply with GS 38, be in calibration, and be proved on a known live source before and after use',
+      'To improve the power factor by providing leading reactive current to offset the lagging reactive current drawn by inductive loads',
       'To detect an imbalance between line and neutral current, indicating earth leakage, and disconnect the supply',
-      'To protect against short circuit current only',
-      'To regulate the supply voltage',
+      'Refuse to commence work until safe isolation has been completed and verified',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An RCD monitors the balance between current flowing in the line conductor and current returning via the neutral. Any difference (residual current) indicates that current is leaking to earth, possibly through a person. When the residual current exceeds the rated sensitivity (e.g., 30 mA for additional protection against electric shock), the RCD trips and disconnects the supply.',
     section: 'Protection',
@@ -664,12 +709,12 @@ export const questionsPart1: StandardMockQuestion[] = [
     question:
       'What type of protective device discrimination ensures that only the device nearest to a fault operates, leaving upstream supplies intact?',
     options: [
-      'Back-up protection',
+      'V_rms = V_pk / root(2), approximately 0.707 x V_pk',
+      'Category 3 (minimum 25 cal/cm²)',
+      'Danger, so far as is reasonably practicable',
       'Discrimination (selectivity or coordination)',
-      'Time grading only',
-      'Current limiting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Discrimination (also called selectivity or coordination) ensures that the protective device closest to the fault operates first, isolating only the faulty circuit while maintaining supply to healthy circuits. This is achieved through a combination of time grading, current grading, and the use of manufacturers' discrimination tables. It is essential for maintaining plant availability.",
     section: 'Protection',
@@ -681,8 +726,13 @@ export const questionsPart1: StandardMockQuestion[] = [
     id: 40,
     question:
       'A three-phase delta-connected motor has a line voltage of 400 V. What is the voltage across each motor winding?',
-    options: ['230 V', '400 V', '692 V', '133 V'],
-    correctAnswer: 1,
+    options: [
+      '400 V',
+      '230 V',
+      '692 V',
+      '133 V',
+    ],
+    correctAnswer: 0,
     explanation:
       'In a delta connection, each winding is connected directly between two line conductors, so the voltage across each winding equals the line voltage. Therefore V_phase = V_line = 400 V. In contrast, in a star connection, V_phase = V_line / root(3) = 230 V. Understanding this is critical when checking motor winding connections during maintenance.',
     section: 'Motors',

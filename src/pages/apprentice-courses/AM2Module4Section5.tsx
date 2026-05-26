@@ -52,20 +52,25 @@ const AM2Module4Section5 = () => {
       id: 'rcd-non-compliance',
       question: 'If an RCD fails to trip within limits at 1×IΔn, is that a non-compliance?',
       options: [
-        'No, as long as the manual test button works',
         'Yes — it must be recorded as failing BS 7671 requirements',
-        'Only if it fails by more than 50%',
-        'It depends on the installation type',
+        'Have it professionally repaired and recalibrated',
+        'Tax, insurance, and business legal requirements',
+        'Vapour bubble formation causing measurement errors and equipment damage',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Any RCD that fails to trip within BS 7671 specified times at 1×IΔn (A4:2026: the 5×IΔn test is deleted) is non-compliant and must be recorded as such.',
     },
     {
       id: 'minimum-insulation',
       question: "What's the minimum acceptable insulation resistance value in AM2?",
-      options: ['0.5 MΩ', '1 MΩ', '2 MΩ', '200 MΩ'],
-      correctIndex: 1,
+      options: [
+        '1 MΩ',
+        '200 MΩ',
+        '0.5 MΩ',
+        '2 MΩ',
+      ],
+      correctIndex: 0,
       explanation:
         'The minimum acceptable insulation resistance for most circuits is 1 MΩ as specified in BS 7671. Values below this indicate insulation failure.',
     },
@@ -84,10 +89,10 @@ const AM2Module4Section5 = () => {
       id: 1,
       question: 'Define a non-compliance in electrical installation terms.',
       options: [
-        'Any electrical fault',
+        "Minimise and batch shallow work; protect time for deep work",
         "Any part that doesn't meet BS 7671, manufacturer's instructions, or specification",
-        'Only safety-critical faults',
-        'Minor workmanship issues only',
+        "System operation, maintenance requirements, emergency procedures, and documentation location",
+        "Work from supply to load, isolating sections systematically",
       ],
       correctAnswer: 1,
       explanation:
@@ -97,10 +102,10 @@ const AM2Module4Section5 = () => {
       id: 2,
       question: 'Give one example of a visual non-compliance.',
       options: [
-        'High Zs reading',
-        'RCD trip time too slow',
+        '1.2m x 1.8m or 1.8m x 1.8m',
+        'Record it as non-compliant',
         'Exposed copper or unsleeved CPC',
-        'Low insulation resistance',
+        'Low‑use corridors and stores',
       ],
       correctAnswer: 2,
       explanation:
@@ -109,8 +114,13 @@ const AM2Module4Section5 = () => {
     {
       id: 3,
       question: "What's the minimum acceptable insulation resistance in AM2?",
-      options: ['0.5 MΩ', '1 MΩ', '2 MΩ', '10 MΩ'],
-      correctAnswer: 1,
+      options: [
+        '2 MΩ',
+        '0.5 MΩ',
+        '10 MΩ',
+        '1 MΩ',
+      ],
+      correctAnswer: 3,
       explanation:
         'BS 7671 specifies a minimum insulation resistance of 1 MΩ for most electrical circuits. Values below this indicate insulation failure.',
     },
@@ -118,19 +128,24 @@ const AM2Module4Section5 = () => {
       id: 4,
       question: 'What does it mean if socket polarity is reversed?',
       options: [
-        "Socket won't work",
         'Live and neutral conductors are connected incorrectly',
-        'Earth is missing',
-        'Voltage is too low',
+        'Piezoresistive silicon strain gauge on a diaphragm',
+        'Investigate the cause before resetting',
+        'To prevent recurrence of the same fault',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Reversed polarity means the live and neutral conductors are swapped, which can create safety hazards as switches may not isolate the live conductor.',
     },
     {
       id: 5,
       question: "What's the maximum trip time at 1×IΔn for a 30 mA RCD (A4:2026)?",
-      options: ['40 ms', '300 ms', '1000 ms', 'No limit'],
+      options: [
+        '40 ms',
+        '300 ms',
+        'No limit',
+        '1000 ms',
+      ],
       correctAnswer: 1,
       explanation:
         'At 1×IΔn (30mA), a general-purpose RCD must trip within 300ms. A4:2026 deleted the 5×IΔn test from the verification routine.',
@@ -138,7 +153,12 @@ const AM2Module4Section5 = () => {
     {
       id: 6,
       question: 'Under A4:2026, which RCD verification test was deleted?',
-      options: ['1×IΔn', '½×IΔn', '5×IΔn', 'Manual test button'],
+      options: [
+        '1×IΔn',
+        '½×IΔn',
+        '5×IΔn',
+        'Manual test button',
+      ],
       correctAnswer: 2,
       explanation:
         'A4:2026 deleted the 5×IΔn AC test. RCDs are now verified by a single AC test at 1×IΔn plus the manual test button.',
@@ -148,11 +168,11 @@ const AM2Module4Section5 = () => {
       question: 'If a Zs result is higher than BS 7671 maximum, what must you do?',
       options: [
         'Ignore it if close',
-        'Record it as non-compliant',
-        'Test again and hope for better result',
         'Adjust the reading',
+        'Test again and hope for better result',
+        'Record it as non-compliant',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Any Zs reading that exceeds BS 7671 maximum values for the protective device must be recorded as non-compliant.',
     },
@@ -168,10 +188,10 @@ const AM2Module4Section5 = () => {
       id: 9,
       question: "What's the correct way to report a missing CPC?",
       options: [
-        "Write 'earth missing'",
+        "Battery Energy Storage Systems (BESS)",
         "Write 'CPC not connected at socket outlet'",
-        "Don't record minor issues",
-        "Just mark as 'fault'",
+        "Motor continuity testing stage",
+        "The starter motor and battery bank",
       ],
       correctAnswer: 1,
       explanation:

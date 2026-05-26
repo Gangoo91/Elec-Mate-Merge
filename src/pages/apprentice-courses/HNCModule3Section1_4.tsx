@@ -33,9 +33,9 @@ const quickCheckQuestions = [
     id: 'parallel-voltage',
     question: 'In a parallel circuit, what happens to voltage across each branch?',
     options: [
-      'It divides equally between branches',
-      'It is the same across all branches',
       'It depends on resistance values',
+      'It is the same across all branches',
+      'It divides equally between branches',
       'It increases with each branch',
     ],
     correctIndex: 1,
@@ -46,7 +46,12 @@ const quickCheckQuestions = [
     id: 'parallel-current',
     question:
       'Three identical 100 ohm resistors are connected in parallel. What is the total resistance?',
-    options: ['300 ohms', '100 ohms', '33.3 ohms', '50 ohms'],
+    options: [
+      '300 ohms',
+      '100 ohms',
+      '33.3 ohms',
+      '50 ohms',
+    ],
     correctIndex: 2,
     explanation:
       'For identical resistors in parallel: RT = R/n = 100/3 = 33.3 ohms. Alternatively: 1/RT = 1/100 + 1/100 + 1/100 = 3/100, so RT = 100/3 = 33.3 ohms',
@@ -55,7 +60,12 @@ const quickCheckQuestions = [
     id: 'current-divider',
     question:
       'A 10A current divides between two parallel branches: 30 ohms and 60 ohms. What current flows through the 30 ohm branch?',
-    options: ['3.33A', '5A', '6.67A', '10A'],
+    options: [
+      '10A',
+      '5A',
+      '6.67A',
+      '3.33A',
+    ],
     correctIndex: 2,
     explanation:
       'Using the current divider rule: I1 = IT x (R2/(R1+R2)) = 10 x (60/(30+60)) = 10 x (60/90) = 6.67A. More current flows through the lower resistance path.',
@@ -64,12 +74,12 @@ const quickCheckQuestions = [
     id: 'lighting-circuit',
     question: 'Why are lighting circuits wired in parallel rather than series?',
     options: [
-      "It's cheaper to install",
+      'Growing opportunities in building automation',
+      'Mastery experiences &mdash; successfully completing a task yourself',
+      'To provide accountability and traceability',
       'Each lamp gets full voltage and operates independently',
-      'It uses less cable',
-      'Series wiring is not allowed',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Parallel wiring ensures each lamp receives full supply voltage (230V) and operates independently - if one lamp fails, others continue working. Series wiring would divide voltage and cause all lamps to fail if one breaks.',
   },
@@ -81,18 +91,23 @@ const quizQuestions = [
     question: 'What is the defining characteristic of a parallel circuit?',
     options: [
       'Components share the same current',
-      'Components are connected end-to-end',
       'Components share the same voltage',
+      'Components are connected end-to-end',
       'Total resistance equals the sum of all resistors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'In a parallel circuit, all components are connected across the same two points, so they all share the same voltage. Current divides between branches.',
   },
   {
     id: 2,
     question: 'Calculate the total resistance of 20 ohm and 30 ohm resistors in parallel.',
-    options: ['50 ohms', '25 ohms', '12 ohms', '10 ohms'],
+    options: [
+      '10 ohms',
+      '50 ohms',
+      '12 ohms',
+      '25 ohms',
+    ],
     correctAnswer: 2,
     explanation:
       'Using product over sum: RT = (20 x 30)/(20 + 30) = 600/50 = 12 ohms. The parallel combination is always less than the smallest individual resistor.',
@@ -101,8 +116,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A ring final circuit has two parallel 2.5mm squared cable paths. What is the effective cable size?',
-    options: ['2.5mm squared', '5mm squared', '1.25mm squared', '3.75mm squared'],
-    correctAnswer: 1,
+    options: [
+      '1.25mm squared',
+      '2.5mm squared',
+      '3.75mm squared',
+      '5mm squared',
+    ],
+    correctAnswer: 3,
     explanation:
       'With two parallel cable paths, the effective cross-sectional area doubles: 2.5mm squared + 2.5mm squared = 5mm squared, giving the ring final its higher current capacity.',
   },
@@ -110,16 +130,26 @@ const quizQuestions = [
     id: 4,
     question:
       'What happens to total circuit resistance when another resistor is added in parallel?',
-    options: ['It increases', 'It decreases', 'It stays the same', 'It doubles'],
-    correctAnswer: 1,
+    options: [
+      'It decreases',
+      'It increases',
+      'It stays the same',
+      'It doubles',
+    ],
+    correctAnswer: 0,
     explanation:
       'Adding parallel paths always decreases total resistance because current has more routes to flow through. More paths = less overall opposition to current.',
   },
   {
     id: 5,
     question: 'A 230V supply feeds three parallel 1kW heaters. What is the total supply current?',
-    options: ['4.35A', '8.7A', '13A', '39A'],
-    correctAnswer: 2,
+    options: [
+      '8.7A',
+      '13A',
+      '39A',
+      '4.35A',
+    ],
+    correctAnswer: 1,
     explanation:
       'Total power = 3 x 1kW = 3kW. Total current I = P/V = 3000/230 = 13A. Each heater draws 4.35A, and these add together for the supply current.',
   },
@@ -127,7 +157,12 @@ const quizQuestions = [
     id: 6,
     question:
       'Using the current divider rule, if IT = 12A flows into 40 ohm and 80 ohm in parallel, what current flows through the 40 ohm resistor?',
-    options: ['4A', '6A', '8A', '12A'],
+    options: [
+      '4A',
+      '6A',
+      '8A',
+      '12A',
+    ],
     correctAnswer: 2,
     explanation:
       'I1 = IT x (R2/(R1+R2)) = 12 x (80/(40+80)) = 12 x (80/120) = 8A. The lower resistance carries the larger current (inverse relationship).',
@@ -135,7 +170,12 @@ const quizQuestions = [
   {
     id: 7,
     question: 'What is the equivalent resistance of four 100 ohm resistors in parallel?',
-    options: ['400 ohms', '100 ohms', '50 ohms', '25 ohms'],
+    options: [
+      '400 ohms',
+      '100 ohms',
+      '50 ohms',
+      '25 ohms',
+    ],
     correctAnswer: 3,
     explanation:
       'For n identical resistors in parallel: RT = R/n = 100/4 = 25 ohms. This is a useful shortcut for identical resistors.',
@@ -145,12 +185,12 @@ const quizQuestions = [
     question:
       'In a distribution board, why are final circuits connected in parallel rather than series?',
     options: [
-      'To share the load equally',
       'To ensure each circuit gets full voltage and can be individually protected',
-      'To reduce cable costs',
-      'Series connection is prohibited by regulations',
+      'Be honest about the situation, explain what is achievable, and discuss any obstacles',
+      'Contract rates where applicable, or fair rates where not',
+      'Rapid voltage fluctuations causing visible light variation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Parallel connection ensures each final circuit receives full supply voltage (230V) and can be individually protected by its own MCB. Fault in one circuit doesn't affect others.",
   },
@@ -158,8 +198,13 @@ const quizQuestions = [
     id: 9,
     question:
       'A lighting circuit has 8 luminaires, each drawing 0.5A at 230V. What is the circuit current?',
-    options: ['0.5A', '2A', '4A', '8A'],
-    correctAnswer: 2,
+    options: [
+      '0.5A',
+      '4A',
+      '2A',
+      '8A',
+    ],
+    correctAnswer: 1,
     explanation:
       'In parallel, currents add: IT = 8 x 0.5A = 4A. Each luminaire gets full voltage and draws its rated current, with all currents combining at the supply.',
   },
@@ -167,7 +212,12 @@ const quizQuestions = [
     id: 10,
     question:
       'Two cables supply a distribution board: each has 0.1 ohm resistance. What is the effective supply resistance?',
-    options: ['0.2 ohms', '0.1 ohms', '0.05 ohms', '0.15 ohms'],
+    options: [
+      '0.2 ohms',
+      '0.1 ohms',
+      '0.05 ohms',
+      '0.15 ohms',
+    ],
     correctAnswer: 2,
     explanation:
       'Parallel cables: RT = (R x R)/(R + R) = (0.1 x 0.1)/(0.1 + 0.1) = 0.01/0.2 = 0.05 ohms. Or for identical resistors: RT = R/n = 0.1/2 = 0.05 ohms',

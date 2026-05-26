@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'overload-class',
     question: 'What does an overload relay Class 10 rating indicate?',
     options: [
+      '10 minute cooling time',
       'Maximum current rating of 10A',
       'Trips within 10 seconds at 7.2× FLC',
       '10% tolerance on settings',
-      '10 minute cooling time',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Class 10 indicates the relay will trip within 10 seconds when exposed to 7.2 times full load current. This is standard for general motor applications. Class 20 and 30 provide longer trip times for motors with heavy starting loads.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'phase-failure',
     question: 'What is single-phasing and why is it dangerous for motors?',
     options: [
-      'Loss of neutral connection causing overvoltage',
+      'The patch may block energy delivery and cause a skin burn',
+      'Installations with variable speed drives and switched mode power supplies',
+      'That the earth conductor is complete from origin to final point',
       'Loss of one phase causing remaining windings to carry excess current',
-      'Phase reversal causing motor to run backwards',
-      'Phase imbalance of less than 5%',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Single-phasing occurs when one phase is lost. The motor attempts to continue running on two phases, causing the remaining windings to carry up to 173% of normal current. This rapidly overheats the motor and can cause winding failure within minutes.',
   },
@@ -53,9 +53,9 @@ const quickCheckQuestions = [
     id: 'thermistor-type',
     question: 'How does a PTC thermistor respond to rising temperature?',
     options: [
-      'Resistance decreases linearly',
-      'Resistance increases sharply above trip point',
       'Resistance remains constant until failure',
+      'Resistance increases sharply above trip point',
+      'Resistance decreases linearly',
       'Resistance oscillates with temperature',
     ],
     correctIndex: 1,
@@ -66,12 +66,12 @@ const quickCheckQuestions = [
     id: 'earth-fault',
     question: 'What is the purpose of earth fault protection on a motor circuit?',
     options: [
-      'To protect against overloading',
+      'Assign addresses systematically and label devices permanently',
+      'Take reasonable care for yourself and others, and cooperate with the system',
       'To detect current flowing to earth indicating insulation failure',
-      'To prevent phase reversal',
-      'To monitor supply voltage',
+      'As soon as practicable before the construction phase begins',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Earth fault protection detects current flowing to earth, which indicates insulation breakdown. This is critical for safety as it prevents electric shock hazards and fires. BS 7671 requires earth fault protection for motor circuits, typically using RCDs or dedicated earth fault relays.',
   },
@@ -95,10 +95,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the advantage of electronic overload relays over thermal types?',
     options: [
-      'Lower cost',
-      'Simpler installation',
+      'All of the above may apply depending on requirements',
+      'Current at or above locked rotor current for extended period',
       'Adjustable trip class and more accurate protection',
-      'No power supply required',
+      'To force investigation of the trip cause before restart',
     ],
     correctAnswer: 2,
     explanation:
@@ -107,8 +107,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What current level typically trips a Class 10 overload relay within 10 seconds?',
-    options: ['1.05 times FLC', '1.5 times FLC', '7.2 times FLC', '10 times FLC'],
-    correctAnswer: 2,
+    options: [
+      '1.5 times FLC',
+      '1.05 times FLC',
+      '10 times FLC',
+      '7.2 times FLC',
+    ],
+    correctAnswer: 3,
     explanation:
       "Class 10 relays trip within 10 seconds at 7.2 times full load current. At lower overload levels, trip times are longer - for example, at 1.5× FLC, a Class 10 relay may take several minutes to trip, matching the motor's thermal capacity.",
   },
@@ -116,20 +121,25 @@ const quizQuestions = [
     id: 4,
     question: 'Why is phase sequence (rotation) protection important for some motor applications?',
     options: [
-      'It prevents overloading',
       'It ensures correct rotation direction for pumps, fans and conveyors',
-      'It reduces starting current',
-      'It improves power factor',
+      'Current at or above locked rotor current for extended period',
+      'To force investigation of the trip cause before restart',
+      'Adjustable trip class and more accurate protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Phase sequence protection ensures the motor rotates in the correct direction. Incorrect rotation can damage pumps (running dry), fans (reversed airflow), lifts (dangerous operation), and conveyors (product damage). Phase sequence relays prevent starting if phases are incorrectly connected.',
   },
   {
     id: 5,
     question: 'What is the typical response temperature for PTC thermistors in motor windings?',
-    options: ['50°C - 70°C', '80°C - 100°C', '120°C - 155°C', '180°C - 200°C'],
-    correctAnswer: 2,
+    options: [
+      '80°C - 100°C',
+      '120°C - 155°C',
+      '180°C - 200°C',
+      '50°C - 70°C',
+    ],
+    correctAnswer: 1,
     explanation:
       "PTC thermistors for motor protection typically have response temperatures between 120°C and 155°C, matched to the motor's insulation class. Class F insulation (155°C max) motors use 150°C thermistors to provide protection before insulation damage occurs.",
   },
@@ -151,12 +161,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the difference between NTC and PTC thermistors in motor protection?',
     options: [
-      'NTC resistance increases with temperature, PTC decreases',
+      'It ensures correct rotation direction for pumps, fans and conveyors',
+      'Current at or above locked rotor current for extended period',
+      'A device suitable for the motor starting current characteristics',
       'NTC resistance decreases with temperature, PTC increases sharply at trip point',
-      'NTC is for AC motors, PTC is for DC motors',
-      'NTC provides faster response than PTC',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'NTC (Negative Temperature Coefficient) thermistors have decreasing resistance as temperature rises - used for continuous temperature monitoring. PTC thermistors have sharply increasing resistance at a specific trip point - used for over-temperature protection switching.',
   },
@@ -165,12 +175,12 @@ const quizQuestions = [
     question:
       'What is the typical earth fault current setting for motor circuits in commercial installations?',
     options: [
-      '30mA (personnel protection)',
-      '100mA - 300mA (fire protection)',
-      '500mA - 1A (equipment protection)',
       'All of the above may apply depending on requirements',
+      'It ensures correct rotation direction for pumps, fans and conveyors',
+      'Adjustable trip class and more accurate protection',
+      'A device suitable for the motor starting current characteristics',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Earth fault settings vary by application: 30mA provides personnel protection, 100-300mA provides fire protection for fixed equipment, and higher settings may be used where nuisance tripping must be avoided. BS 7671 specifies requirements based on circuit type and location.',
   },
@@ -179,11 +189,11 @@ const quizQuestions = [
     question: 'What protection does a motor protection relay (MPR) typically NOT provide?',
     options: [
       'Overload protection',
-      'Phase failure protection',
       'Short-circuit protection',
+      'Phase failure protection',
       'Stall protection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Motor protection relays typically provide overload, phase failure, phase imbalance, earth fault, and stall protection, but NOT short-circuit protection. Short-circuit protection requires fast-acting fuses or MCCBs rated for fault current interruption upstream of the MPR.',
   },
@@ -191,12 +201,12 @@ const quizQuestions = [
     id: 10,
     question: 'What indicates a motor is stalling according to protection relay criteria?',
     options: [
-      'Current below 50% FLC',
+      'It ensures correct rotation direction for pumps, fans and conveyors',
+      'Adjustable trip class and more accurate protection',
       'Current at or above locked rotor current for extended period',
-      'Speed above synchronous speed',
-      'Power factor above 0.95',
+      'All of the above may apply depending on requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A stalled motor draws locked rotor current (typically 6-8× FLC) but produces no rotation. Stall protection detects this condition - high current with no speed signal or extended high current duration - and trips the motor before thermal damage occurs.',
   },
@@ -205,12 +215,12 @@ const quizQuestions = [
     question:
       'According to BS 7671, what type of protective device is required for motor circuits?',
     options: [
-      'Only MCBs are permitted',
-      'Only fuses are permitted',
+      'Current at or above locked rotor current for extended period',
+      'All of the above may apply depending on requirements',
+      'It ensures correct rotation direction for pumps, fans and conveyors',
       'A device suitable for the motor starting current characteristics',
-      'RCDs only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "BS 7671 requires protective devices suitable for the motor's characteristics. This includes type D MCBs or motor-rated MCCBs that can withstand starting currents (typically 6-8× FLC) without nuisance tripping, combined with separate overload protection.",
   },
@@ -218,12 +228,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the purpose of the manual reset function on overload relays?',
     options: [
-      'To test the relay operation',
       'To force investigation of the trip cause before restart',
-      'To reduce relay cost',
-      'To provide faster motor restart',
+      'All of the above may apply depending on requirements',
+      'A device suitable for the motor starting current characteristics',
+      'Adjustable trip class and more accurate protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Manual reset requires an operator to physically reset the relay before the motor can restart. This forces investigation of why the overload occurred, preventing automatic restart that could damage an overheated motor or indicate a persistent fault condition.',
   },

@@ -443,7 +443,6 @@ export async function formatEicJson(
         insulation_resistance: test.insulationResistance || 'N/A',
         insulation_live_neutral: test.insulationLiveNeutral || 'N/A',
         insulation_live_earth: test.insulationLiveEarth || 'N/A',
-        insulation_neutral_earth: test.insulationNeutralEarth || 'N/A',
         polarity: test.polarity || 'N/A',
         zs: test.zs || 'N/A',
         max_zs: test.maxZs || 'N/A',
@@ -583,12 +582,16 @@ export async function formatEicJson(
 
     declarations: {
       additional_notes: formData.additionalNotes || '',
+      // "Inspected By" section removed from UI — fall back to the Inspector
+      // fields from Section C so the PDF "inspected_by" block stays populated.
       inspected_by: {
-        name: formData.inspectedByName || '',
-        signature: formData.inspectedBySignature || '',
-        for_on_behalf_of: formData.inspectedByForOnBehalfOf || '',
-        position: formData.inspectedByPosition || '',
-        address: formData.inspectedByAddress || '',
+        name: formData.inspectedByName || formData.inspectorName || '',
+        signature: formData.inspectedBySignature || formData.inspectorSignature || '',
+        for_on_behalf_of: formData.inspectedByForOnBehalfOf || formData.inspectorCompany || '',
+        position: formData.inspectedByPosition || formData.inspectorQualifications || '',
+        address:
+          formData.inspectedByAddress ||
+          `${formData.inspectorAddress || ''}${formData.inspectorPostcode ? ', ' + formData.inspectorPostcode : ''}`,
         cp_scheme: formData.inspectedByCpSchemeNA
           ? 'N/A'
           : formData.inspectedByCpScheme ||

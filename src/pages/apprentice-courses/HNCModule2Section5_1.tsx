@@ -33,8 +33,13 @@ const quickCheckQuestions = [
     id: 'solar-constant',
     question:
       "What is the approximate value of the solar constant (irradiance outside Earth's atmosphere)?",
-    options: ['500 W/m²', '1000 W/m²', '1367 W/m²', '2000 W/m²'],
-    correctIndex: 2,
+    options: [
+      '2000 W/m²',
+      '1367 W/m²',
+      '1000 W/m²',
+      '500 W/m²',
+    ],
+    correctIndex: 1,
     explanation:
       "The solar constant is approximately 1367 W/m², representing the solar irradiance on a surface perpendicular to the sun's rays at the mean Earth-Sun distance, outside the atmosphere.",
   },
@@ -42,8 +47,13 @@ const quickCheckQuestions = [
     id: 'solar-altitude',
     question:
       'At solar noon in summer in the UK (latitude 52°N), approximately what is the maximum solar altitude?',
-    options: ['38°', '52°', '61.5°', '90°'],
-    correctIndex: 2,
+    options: [
+      '38°',
+      '90°',
+      '52°',
+      '61.5°',
+    ],
+    correctIndex: 3,
     explanation:
       'Maximum altitude = 90° - latitude + declination. At summer solstice: 90° - 52° + 23.5° = 61.5°. The sun is never directly overhead in the UK.',
   },
@@ -51,7 +61,12 @@ const quickCheckQuestions = [
     id: 'diffuse-radiation',
     question:
       'What percentage of total radiation on a heavily overcast day in the UK is typically diffuse?',
-    options: ['10-20%', '30-40%', '50-60%', 'Nearly 100%'],
+    options: [
+      '10-20%',
+      '50-60%',
+      '30-40%',
+      'Nearly 100%',
+    ],
     correctIndex: 3,
     explanation:
       'On heavily overcast days, nearly all solar radiation reaching the ground is diffuse (scattered by clouds). Direct beam radiation is effectively zero under complete cloud cover.',
@@ -60,8 +75,13 @@ const quickCheckQuestions = [
     id: 'glazing-shgc',
     question:
       'A window with SHGC (Solar Heat Gain Coefficient) of 0.4 and area 3m² receives 500 W/m² irradiance. What is the solar heat gain?',
-    options: ['200W', '400W', '600W', '1500W'],
-    correctIndex: 2,
+    options: [
+      '200W',
+      '400W',
+      '1500W',
+      '600W',
+    ],
+    correctIndex: 3,
     explanation:
       'Solar heat gain = Irradiance × Area × SHGC = 500 × 3 × 0.4 = 600W. The SHGC represents the fraction of incident solar energy that enters as heat.',
   },
@@ -85,12 +105,12 @@ const quizQuestions = [
     id: 2,
     question: 'What causes the variation in solar declination throughout the year?',
     options: [
-      'The elliptical orbit of Earth around the Sun',
+      "It can bulge or herniate, pressing on nearby nerves",
+      "Breathe in for 4, hold for 4, out for 4, hold for 4",
       "The tilt of Earth's axis at 23.5° to the orbital plane",
-      'Atmospheric absorption variations',
-      'Changes in the solar constant',
+      "Both a 6 kW reduction and 50% improvement",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The 23.5° tilt of Earth's axis relative to its orbital plane causes the sun's declination to vary from +23.5° (summer solstice) to -23.5° (winter solstice), creating seasons.",
   },
@@ -98,8 +118,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the typical peak solar irradiance on a horizontal surface in the UK on a clear summer day?',
-    options: ['400-500 W/m²', '600-700 W/m²', '800-900 W/m²', '1000-1100 W/m²'],
-    correctAnswer: 2,
+    options: [
+      '600-700 W/m²',
+      '400-500 W/m²',
+      '1000-1100 W/m²',
+      '800-900 W/m²',
+    ],
+    correctAnswer: 3,
     explanation:
       'UK peak horizontal irradiance on clear summer days is typically 800-900 W/m². This is less than the solar constant due to atmospheric absorption and the sun not being directly overhead.',
   },
@@ -107,16 +132,26 @@ const quizQuestions = [
     id: 4,
     question:
       'For a south-facing vertical window in the UK, when does maximum solar gain typically occur?',
-    options: ['Summer midday', 'Winter midday', 'Spring/autumn equinox', 'Summer morning/evening'],
-    correctAnswer: 1,
+    options: [
+      'Winter midday',
+      'Summer midday',
+      'Spring/autumn equinox',
+      'Summer morning/evening',
+    ],
+    correctAnswer: 0,
     explanation:
       'South-facing vertical surfaces receive maximum direct radiation when the sun is low in winter. In summer, the high sun angle means less radiation strikes vertical surfaces directly.',
   },
   {
     id: 5,
     question: "What is the 'air mass' (AM) value at solar noon when the sun is at 30° altitude?",
-    options: ['AM 1.0', 'AM 1.5', 'AM 2.0', 'AM 3.0'],
-    correctAnswer: 2,
+    options: [
+      'AM 1.5',
+      'AM 2.0',
+      'AM 3.0',
+      'AM 1.0',
+    ],
+    correctAnswer: 1,
     explanation:
       'Air mass = 1/sin(altitude) = 1/sin(30°) = 1/0.5 = 2.0. This means solar radiation passes through twice the atmosphere compared to when the sun is directly overhead (AM 1.0).',
   },
@@ -125,11 +160,11 @@ const quizQuestions = [
     question: 'Which factor does NOT affect the solar heat gain through a window?',
     options: [
       'Solar Heat Gain Coefficient (SHGC)',
-      'Glass U-value',
       'Angle of incidence',
+      'Glass U-value',
       'External shading devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'U-value relates to conductive heat transfer (temperature difference driven), not solar heat gain. SHGC, incidence angle, and shading directly affect how much solar radiation enters as heat.',
   },
@@ -139,11 +174,11 @@ const quizQuestions = [
       'What is the typical annual solar irradiation (kWh/m²) on a south-facing surface tilted at latitude angle in southern UK?',
     options: [
       '500-700 kWh/m²/year',
-      '900-1100 kWh/m²/year',
-      '1200-1400 kWh/m²/year',
       '1500-1700 kWh/m²/year',
+      '1200-1400 kWh/m²/year',
+      '900-1100 kWh/m²/year',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Southern UK receives approximately 900-1100 kWh/m²/year on optimally tilted south-facing surfaces. This is important for PV and solar thermal system sizing.',
   },
@@ -151,12 +186,12 @@ const quizQuestions = [
     id: 8,
     question: 'The CIBSE solar cooling load calculation uses which primary dataset?',
     options: [
+      'Solar radiation tables based on clear sky models',
+      'Test Reference Year (TRY) data',
       'Actual weather data from nearest station',
       'Design Summer Year (DSY) data',
-      'Test Reference Year (TRY) data',
-      'Solar radiation tables based on clear sky models',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'CIBSE Guide A provides solar radiation tables based on clear sky models for cooling load calculations. TRY and DSY data are used for dynamic thermal simulation.',
   },
@@ -164,8 +199,13 @@ const quizQuestions = [
     id: 9,
     question:
       'What percentage of incident solar radiation on clear single glazing is typically transmitted?',
-    options: ['50-55%', '65-70%', '80-85%', '90-95%'],
-    correctAnswer: 2,
+    options: [
+      '50-55%',
+      '80-85%',
+      '65-70%',
+      '90-95%',
+    ],
+    correctAnswer: 1,
     explanation:
       'Clear single glazing transmits approximately 80-85% of incident solar radiation at normal incidence. The remainder is reflected (8-10%) and absorbed (5-10%).',
   },
@@ -175,11 +215,11 @@ const quizQuestions = [
       'Why does diffuse radiation have a significant heating effect even on north-facing facades?',
     options: [
       'It has higher energy content than direct radiation',
+      'It penetrates glass more easily',
       'It comes from all directions in the sky hemisphere',
       'It is not attenuated by the atmosphere',
-      'It penetrates glass more easily',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Diffuse radiation arrives from the entire sky dome, not just the sun's direction. Even north-facing surfaces receive diffuse radiation from the sky hemisphere, contributing to solar gains.",
   },
@@ -187,8 +227,13 @@ const quizQuestions = [
     id: 11,
     question:
       'What is the typical g-value (total solar energy transmittance) of solar control double glazing?',
-    options: ['0.15-0.25', '0.30-0.45', '0.55-0.65', '0.70-0.80'],
-    correctAnswer: 1,
+    options: [
+      '0.15-0.25',
+      '0.70-0.80',
+      '0.55-0.65',
+      '0.30-0.45',
+    ],
+    correctAnswer: 3,
     explanation:
       'Solar control glazing typically has g-values of 0.30-0.45, reducing solar heat gain while maintaining reasonable light transmission. Standard double glazing has g-values around 0.70-0.75.',
   },
@@ -196,8 +241,13 @@ const quizQuestions = [
     id: 12,
     question:
       'At what time does true solar noon occur in London (longitude 0°) during British Summer Time?',
-    options: ['11:00', '12:00', '13:00', 'It varies with the equation of time'],
-    correctAnswer: 3,
+    options: [
+      'It varies with the equation of time',
+      'A suitable site induction',
+      'Apply temperature correction factor',
+      'No continuity - open circuit',
+    ],
+    correctAnswer: 0,
     explanation:
       'True solar noon varies throughout the year due to the equation of time (±16 minutes). During BST, clock noon is already 1 hour ahead, so solar noon is typically around 13:00-13:15.',
   },

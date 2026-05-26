@@ -39,7 +39,12 @@ const checks = [
     id: 'l3-m3-2-6-rc-tau',
     question:
       'A 100 μF capacitor charging through a 10 kΩ resistor. Time constant τ:',
-    options: ['10 ms', '100 ms', '1 s', '10 s'],
+    options: [
+      '10 ms',
+      '100 ms',
+      '1 s',
+      '10 s',
+    ],
     correctIndex: 2,
     explanation:
       'τ = RC = 10 000 × 100 × 10⁻⁶ = 1.0 s. After one time constant, capacitor reaches 63 % of final voltage; after 5τ it\'s effectively fully charged.',
@@ -47,8 +52,13 @@ const checks = [
   {
     id: 'l3-m3-2-6-rl-tau',
     question: 'A 0.5 H inductor in series with 100 Ω. Time constant τ_L:',
-    options: ['5 ms', '50 ms', '5 s', '0.005 s'],
-    correctIndex: 0,
+    options: [
+      '0.005 s',
+      '50 ms',
+      '5 s',
+      '5 ms',
+    ],
+    correctIndex: 3,
     explanation:
       'τ = L/R = 0.5 / 100 = 0.005 s = 5 ms. Inductor current rises to 63 % of final value in 5 ms; effectively final after 25 ms.',
   },
@@ -56,8 +66,13 @@ const checks = [
     id: 'l3-m3-2-6-charge',
     question:
       'A 12 V supply charges a capacitor through R = 1 kΩ, C = 1000 μF. Voltage across the cap after one time constant:',
-    options: ['4.4 V', '7.6 V', '12 V', '0 V'],
-    correctIndex: 1,
+    options: [
+      '0 V',
+      '4.4 V',
+      '7.6 V',
+      '12 V',
+    ],
+    correctIndex: 2,
     explanation:
       'After 1τ, V = V_max × (1 − e⁻¹) = 12 × 0.632 = 7.58 V ≈ 7.6 V. After 2τ → 10.4 V. After 5τ → ~11.92 V (near full).',
   },
@@ -67,30 +82,50 @@ const quizQuestions = [
   {
     id: 1,
     question: 'The time constant τ for an RC circuit equals:',
-    options: ['R / C', 'R × C', 'R + C', 'C / R'],
+    options: [
+      'R / C',
+      'R × C',
+      'R + C',
+      'C / R',
+    ],
     correctAnswer: 1,
     explanation: 'τ = RC, with R in ohms and C in farads, gives τ in seconds.',
   },
   {
     id: 2,
     question: 'The time constant τ for an RL circuit equals:',
-    options: ['R × L', 'L / R', 'R / L', 'L + R'],
-    correctAnswer: 1,
+    options: [
+      'R / L',
+      'R × L',
+      'L / R',
+      'L + R',
+    ],
+    correctAnswer: 2,
     explanation: 'τ = L / R for an inductor in series with R.',
   },
   {
     id: 3,
     question:
       'After one time constant, a charging capacitor reaches what percentage of final voltage?',
-    options: ['37 %', '50 %', '63 %', '99 %'],
-    correctAnswer: 2,
+    options: [
+      '50 %',
+      '37 %',
+      '99 %',
+      '63 %',
+    ],
+    correctAnswer: 3,
     explanation:
       'V(τ) = V_max × (1 − e⁻¹) = V_max × 0.632. So 63.2 % at one time constant. At 5τ, you\'re at 99.3 % — effectively full.',
   },
   {
     id: 4,
     question: 'After one time constant, a discharging capacitor falls to what fraction of initial?',
-    options: ['37 %', '50 %', '63 %', '13 %'],
+    options: [
+      '37 %',
+      '50 %',
+      '63 %',
+      '13 %',
+    ],
     correctAnswer: 0,
     explanation:
       'V(τ) = V_0 × e⁻¹ = V_0 × 0.368. So 36.8 % left after one time constant.',
@@ -99,10 +134,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why does opening a contactor coil produce a spark?',
     options: [
-      'Static electricity',
+      'A detailed assessment focused on a particular activity or operation',
       'The collapsing magnetic field induces a high voltage that arcs across the opening contacts',
-      'Resistance increases on opening',
-      'Voltage rises with frequency',
+      'Members of the public could walk into the tower, attempt to climb it, or be struck by falling objects',
+      'For a sensitive performance discussion or a heated disagreement that needs de-escalation',
     ],
     correctAnswer: 1,
     explanation:
@@ -112,7 +147,12 @@ const quizQuestions = [
     id: 6,
     question:
       'For practical purposes, a capacitor is considered fully charged after how many time constants?',
-    options: ['1', '2', '5', '10'],
+    options: [
+      '1',
+      '2',
+      '5',
+      '10',
+    ],
     correctAnswer: 2,
     explanation:
       "After 5τ, V ≈ 99.3 % of V_max — close enough to call it fully charged.",
@@ -121,16 +161,26 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the energy stored in a 470 μF capacitor charged to 100 V?',
-    options: ['0.47 J', '2.35 J', '4.7 J', '47 J'],
-    correctAnswer: 1,
+    options: [
+      '0.47 J',
+      '47 J',
+      '4.7 J',
+      '2.35 J',
+    ],
+    correctAnswer: 3,
     explanation: 'W = ½CV² = 0.5 × 470 × 10⁻⁶ × 10 000 = 2.35 J. Discharge through you would hurt.',
   },
   {
     id: 8,
     question:
       'A capacitor across an AC contactor coil acts as a:',
-    options: ['Power supply', 'Snubber to suppress switch-off transients', 'Heater', 'Frequency converter'],
-    correctAnswer: 1,
+    options: [
+      'Snubber to suppress switch-off transients',
+      'A storage tank that previously held chemicals',
+      'For compliance and future maintenance reference',
+      'BS 7671 IET Wiring Regulations',
+    ],
+    correctAnswer: 0,
     explanation:
       'The cap (often with a small series resistor — RC snubber) absorbs the energy in the inductance when the contacts open, preventing arcing and contact erosion.',
   },

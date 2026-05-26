@@ -1,605 +1,556 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  Pullquote,
+  DiagramPlaceholder,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Commercial EV Charging Systems - Renewable Energy Module 6 Section 3';
-const DESCRIPTION =
-  'Master commercial EV charging installations including three-phase systems, load management, network infrastructure, and multi-charger deployments for workplaces and public locations.';
-
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    id: 'com-ev-qc1',
-    question: 'What is the typical power rating for a commercial three-phase AC charger?',
-    options: ['7.4 kW', '11-22 kW', '50 kW', '150 kW'],
-    correctIndex: 1,
-    explanation:
-      'Commercial three-phase AC chargers typically operate at 11 kW (16A) or 22 kW (32A) per phase, providing faster charging than single-phase whilst avoiding the complexity of DC infrastructure.',
-  },
-  {
-    id: 'com-ev-qc2',
-    question: 'What communication protocol is commonly used for commercial charger management?',
-    options: ['Modbus', 'OCPP', 'BACnet', 'KNX'],
-    correctIndex: 1,
-    explanation:
-      'OCPP (Open Charge Point Protocol) is the industry standard for charger-to-backend communication, enabling remote monitoring, load management, and billing integration.',
-  },
-  {
-    id: 'com-ev-qc3',
-    question: 'What is the primary purpose of static load management?',
+    id: 'm6s3-rcd-architecture',
+    question:
+      'Reg 722.531.2 / 722.531.3.101 sets the RCD architecture for EV circuits. Which two architectures satisfy the regulation?',
     options: [
-      'Increase charging speed',
-      'Limit total site power consumption',
-      'Reduce equipment costs',
-      'Simplify installation',
+      'Just Type AC',
+      '(1) Type B RCD per BS EN 62423 or BS EN 60947-2 on the EV final circuit. OR (2) Type A RCD (BS EN 61008 / 61009) combined with an RDC-DD (Residual Direct Current — Detecting Device) per BS EN IEC 62955 with a 6 mA DC threshold integrated into the wallbox. Both architectures detect the smooth DC fault current that a transformerless EV charging station could produce',
+      'Type AC plus any 30 mA RCD',
+      'No RCD required',
     ],
     correctIndex: 1,
     explanation:
-      'Static load management divides available power capacity among chargers to prevent exceeding the site supply limit, ensuring safe operation without triggering supply protection.',
+      'Reg 722.531.2 (and 722.531.3.101 for the exception) sets two acceptable architectures. (1) Type B RCD: the RCD on the EV circuit detects AC + pulsating DC + smooth DC fault currents directly. Per BS EN 62423 or BS EN 60947-2. (2) Type A + RDC-DD: a Type A RCD (detects AC + pulsating DC) combined with an RDC-DD (6 mA DC residual current detector per BS EN IEC 62955) integrated into the wallbox. The RDC-DD detects smooth DC fault current that Type A would miss, and signals the wallbox to disconnect. Both architectures cover the same fault profile; choice is typically cost-driven — Type A + RDC-DD often cheaper because the RDC-DD is built into the wallbox.',
+  },
+  {
+    id: 'm6s3-rdc-dd-threshold',
+    question:
+      'What is the trigger threshold of an RDC-DD per BS EN IEC 62955?',
+    options: [
+      '30 mA AC',
+      '6 mA DC — the RDC-DD detects smooth DC residual current at 6 mA threshold, triggering disconnection. This complements a Type A RCD (which handles AC and pulsating DC) so that smooth DC fault currents are also covered without needing a more expensive Type B RCD',
+      '100 mA DC',
+      '300 mA AC',
+    ],
+    correctIndex: 1,
+    explanation:
+      'BS EN IEC 62955 defines the RDC-DD with a 6 mA DC residual current threshold. The 6 mA threshold is set low enough to detect smooth DC faults before they desensitise the upstream Type A RCD. When the RDC-DD trips, it operates the contactor inside the wallbox to disconnect the EV from the supply. Combined with a Type A RCD upstream (handling AC + pulsating DC at 30 mA), the Type A + RDC-DD architecture covers the same fault profile as a single Type B RCD at lower kit cost. UK 2025-26 install reality: many wallboxes (PodPoint, Wallbox Pulsar Plus, EO Mini Pro 3) ship with integrated 6 mA RDC-DD as standard.',
+  },
+  {
+    id: 'm6s3-type-b-cost',
+    question:
+      'Why is Type A + RDC-DD often preferred over standalone Type B RCD in UK 2025-26 domestic EV installs?',
+    options: [
+      'No reason',
+      'Type B RCD is ~3-5× the cost of Type A. Where the wallbox includes an integrated 6 mA RDC-DD (per BS EN IEC 62955), a Type A RCD upstream provides the same fault profile coverage as Type B at lower install cost. The RDC-DD is part of the wallbox kit (no separate purchase); the upstream RCD/RCBO is a standard Type A. Both architectures satisfy Reg 722.531',
+      'Type B is dangerous',
+      'Type B is only for industrial',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Type B RCD is significantly more expensive than Type A (~3-5×). The Type A + RDC-DD architecture costs less because: (1) the RDC-DD is integrated into the wallbox and adds modest cost to the wallbox SKU; (2) the upstream RCD/RCBO can be a standard Type A device, which is cheap and widely stocked. Both architectures cover the same fault profile (AC + pulsating DC handled by Type A; smooth DC handled by RDC-DD). The choice is essentially economic. Many UK 2025-26 wallboxes (PodPoint Solo, EO Mini Pro 3, Wallbox Pulsar) ship with integrated RDC-DD. Cert evidence bundle records the architecture chosen and the manufacturer DoC for the RDC-DD.',
+  },
+  {
+    id: 'm6s3-afdd-exception',
+    question:
+      'Reg 722.421.1.7.201 — AFDD requirement and exception. What does it say?',
+    options: [
+      'AFDD always required',
+      'EV circuits generally need AFDD per the Section 421 requirements, BUT there is an exception in 722.421.1.7.201: where the EV charging equipment conforms to BS EN 61851 series AND incorporates socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2, the AFDD requirement is waived. Both conformities (61851 AND 62196-2) needed simultaneously for the exception to apply',
+      'AFDD never needed',
+      'AFDD only for three-phase',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Reg 722.421.1.7.201 — AFDD requirement exception for EV circuits. Standard rule: AFDD per Section 421 / Reg 421.1.7. EV exception: where the charging equipment conforms to BS EN 61851 series AND has socket-outlets / vehicle connectors per BS EN IEC 62196-2, AFDD is not required. The exception recognises that the protective electronics integrated into BS EN 61851-compliant wallboxes already address the arc-fault profile. Both conformities needed simultaneously (conjunctive exception); manufacturer DoC must declare both. Cert evidence bundle records the exception with the manufacturer DoC reference.',
   },
 ];
 
 const quizQuestions = [
   {
-    id: 1,
-    question: 'What is dynamic load management in EV charging?',
+    question:
+      'A UK domestic 7 kW Mode 3 wallbox install. The wallbox includes integrated 6 mA RDC-DD per BS EN IEC 62955. Which upstream RCD is correct?',
     options: [
-      'Fixed power allocation to each charger',
-      'Real-time power adjustment based on site demand',
-      'Time-scheduled charging',
-      'User-selected power levels',
+      'Type AC',
+      'Type A RCD (or Type A RCBO) on the dedicated EV final circuit. The wallbox’s integrated RDC-DD handles smooth DC fault detection at 6 mA threshold. Type A handles AC and pulsating DC at 30 mA. Combined coverage matches the Type B fault profile at lower kit cost. Cert evidence bundle records the architecture choice and the wallbox manufacturer DoC',
+      'Type B always',
+      'No RCD',
     ],
     correctAnswer: 1,
     explanation:
-      'Dynamic load management monitors total site demand in real-time and adjusts charging power to maximise EV charging within available supply headroom.',
+      'Wallbox with integrated RDC-DD → Type A upstream RCD is sufficient. The Type A + RDC-DD architecture per Reg 722.531 covers AC + pulsating DC (Type A) and smooth DC (RDC-DD). Many UK 2025-26 wallboxes (PodPoint Solo, EO Mini Pro 3, Wallbox Pulsar Plus) include RDC-DD as standard. Cost saving vs Type B is significant (~£100-200 on the kit). Cert evidence bundle records the wallbox DoC citing RDC-DD per BS EN IEC 62955 + the upstream Type A RCD selection.',
   },
   {
-    id: 2,
-    question: 'What supply capacity is typically required for a 50 kW DC rapid charger?',
-    options: ['Single-phase 32A', 'Three-phase 32A', 'Three-phase 63A', 'Three-phase 100A+'],
-    correctAnswer: 3,
-    explanation:
-      'A 50 kW DC charger requires approximately 80A three-phase supply (accounting for efficiency losses), meaning 100A or higher supply is typically needed with headroom.',
-  },
-  {
-    id: 3,
-    question: 'What is the purpose of RFID authentication at commercial chargers?',
+    question:
+      'A customer’s preferred wallbox does NOT include an integrated RDC-DD. The installer needs to provide equivalent fault coverage. What is the upstream protection?',
     options: [
-      'To measure energy consumption',
-      'To control who can access charging and enable billing',
-      'To adjust charging power',
-      'To communicate with the vehicle',
+      'Type AC RCD',
+      'Type B RCD on the EV circuit (BS EN 62423 or BS EN 60947-2). Type B detects AC + pulsating DC + smooth DC fault currents directly, providing the complete fault profile coverage that Reg 722.531 requires for an EV circuit without integrated RDC-DD',
+      'Type A RCD',
+      'No RCD needed',
     ],
     correctAnswer: 1,
     explanation:
-      'RFID cards identify users for access control and billing purposes, enabling operators to restrict charging to authorised users and allocate costs appropriately.',
+      'Wallbox without integrated RDC-DD → Type B RCD upstream provides the complete fault profile. Type B per BS EN 62423 (RCD with integral overcurrent protection — RCBO equivalent) or BS EN 60947-2 (circuit-breaker integrating Type B residual current). Type B costs more than Type A (~3-5×) but provides the smooth-DC detection that the RDC-DD-less wallbox lacks. Cert evidence bundle records Type B selection and the rationale (wallbox doesn’t include RDC-DD).',
   },
   {
-    id: 4,
-    question: 'What cable type is typically used for commercial EV charging submains?',
-    options: ['Twin and earth', 'SWA (Steel Wire Armoured)', 'Flex cable', 'Mineral insulated'],
-    correctAnswer: 1,
-    explanation:
-      'SWA cable is standard for commercial installations, providing mechanical protection for underground and surface routes. It is suitable for indoor and outdoor use.',
-  },
-  {
-    id: 5,
-    question: 'What is a charging cluster in commercial installations?',
+    question:
+      'An installer fits a Type AC RCD on a Mode 3 EV charging circuit (transformerless wallbox, no RDC-DD). EICR three years later — what code applies?',
     options: [
-      'A single charger with multiple outlets',
-      'A group of chargers sharing power infrastructure',
-      'A charging station design',
-      'A billing arrangement',
+      'Pass',
+      'C2 — potential danger. Type AC RCD only detects sinusoidal AC residual current; it is BLIND to smooth DC fault current that a transformerless EV wallbox can produce. In a smooth-DC fault condition, the Type AC RCD will not operate, ADS is not achieved, and the customer is exposed to shock risk. Reg 712.411.3.2.1.2 and Reg 722.531 require Type B (or Type A + RDC-DD)',
+      'C3 — improvement recommended',
+      'No issue',
     ],
     correctAnswer: 1,
     explanation:
-      'A charging cluster groups multiple chargers that share power distribution and load management, reducing infrastructure costs and simplifying installation.',
+      'Type AC RCD on a transformerless EV wallbox = Code C2 (potential danger). The Type AC RCD only detects AC residual current; it cannot detect smooth DC fault current that a transformerless wallbox could produce in fault conditions. ADS would fail for that fault profile. Reg 712.411.3.2.1.2 and Reg 722.531 both require Type B OR Type A + RDC-DD. Coding: C2 (urgent remediation, not immediate danger — the fault profile is real but the probability of an actual smooth DC fault in any given install year is low). EICR is unsatisfactory; remediation = replace Type AC with Type B, or upgrade wallbox to one with integrated RDC-DD + retain Type A.',
   },
   {
-    id: 6,
-    question: 'What regulation applies to accessible EV charging installations?',
+    question:
+      'Reg 722.421.1.7.201 AFDD exception — what conformities must the EV charging equipment satisfy for the exception to apply?',
     options: [
-      'Part P only',
-      'The Equality Act and BS 8300',
-      'Part L only',
-      'No specific regulations',
+      'BS EN 61851 only',
+      'Both BS EN 61851 series AND BS EN IEC 62196-2 (the Type 2 connector standard). The exception is conjunctive — BOTH conformities required simultaneously. Manufacturer DoC must declare both. If only one is declared, AFDD per Section 421 is still required',
+      'BS EN 62196-2 only',
+      'No exception exists',
     ],
     correctAnswer: 1,
     explanation:
-      'The Equality Act requires reasonable adjustments for disabled users, and BS 8300 provides design guidance. Accessible bays with appropriate clearances are required for public charging.',
+      'Reg 722.421.1.7.201 is a conjunctive exception — BOTH BS EN 61851 series AND BS EN IEC 62196-2 conformities required simultaneously. The regulation’s wording links them with AND: "where the EV charging equipment conforms to BS EN 61851 series and incorporates socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2". UK 2025-26 reality: every reputable wallbox brand declares both (they use Type 2 connectors per 62196-2 and conform to 61851-1 + -22). The exception is the standard route; AFDD is rarely fitted on UK domestic EV circuits. Cert evidence bundle records both DoC references.',
   },
   {
-    id: 7,
-    question: 'What is the typical efficiency of a commercial DC fast charger?',
-    options: ['75-80%', '85-90%', '92-95%', '98-99%'],
-    correctAnswer: 2,
-    explanation:
-      'Modern DC fast chargers achieve 92-95% efficiency under optimal conditions. Losses occur in AC-DC conversion, cable resistance, and cooling systems.',
-  },
-  {
-    id: 8,
-    question: 'What is payment terminal integration in commercial EV charging?',
+    question:
+      'The Control Pilot (CP) wire in a Mode 3 install — what does it actually do?',
     options: [
-      'Using RFID cards only',
-      'Enabling contactless card payments at the charger',
-      'Monthly invoicing',
-      'Free charging only',
+      'Carries power',
+      'Carries a low-voltage signal (typically ±12 V PWM duty-cycle modulated) between the wallbox and the vehicle. Communicates: vehicle plugged in, ready to charge, current limit announcement, charging in progress, error states. The CP signal coordinates the wallbox’s contactor closure with the vehicle’s readiness; without a healthy CP, the wallbox does not close the contactor and no power flows to the vehicle',
+      'Carries earth',
+      'Carries neutral',
     ],
     correctAnswer: 1,
     explanation:
-      'Payment terminal integration allows users to pay via contactless bank cards directly at the charger, improving accessibility for non-network users.',
+      'CP = Control Pilot. ±12 V PWM signal between wallbox and vehicle per BS EN 61851-1 / IEC 61851-1. Function: (1) vehicle plug detection (CP-PE voltage changes from 12 V open-circuit to 9 V when vehicle plugged in); (2) PWM duty cycle announces max available current from wallbox (e.g. 53% duty = 32 A available); (3) vehicle confirms ready-to-charge by transitioning to lower CP voltage; (4) wallbox closes the contactor; (5) charging progresses, CP continues to monitor; (6) any fault or unplug triggers contactor open. Section 6.6 covers CP/PP signalling in depth.',
   },
   {
-    id: 9,
-    question: 'What consideration is important for depot charging of commercial fleets?',
+    question:
+      'Why does the Type B + RDC-DD requirement specifically apply to TRANSFORMERLESS EV wallboxes?',
     options: [
-      'Maximum charging speed',
-      'Sequential charging schedules based on departure times',
-      'Public access',
-      'Payment integration',
+      'No reason',
+      'Transformerless wallboxes lack the galvanic isolation between AC supply and DC charging circuits that a transformer-isolated design provides. In fault conditions, a transformerless wallbox can feed smooth DC residual current back into the AC supply, which is invisible to Type AC and Type A RCDs. Type B or Type A + RDC-DD are needed to detect that smooth DC fault. Where the manufacturer declares the wallbox is designed not to feed DC fault currents (rare exception), Type AC / A may suffice',
+      'Transformerless are cheaper',
+      'Only legal in commercial sites',
     ],
     correctAnswer: 1,
     explanation:
-      'Fleet depot charging benefits from smart scheduling that prioritises vehicles based on departure times, ensuring each vehicle is ready when needed whilst managing power demand.',
-  },
-  {
-    id: 10,
-    question: 'What network connectivity option is most reliable for commercial EV chargers?',
-    options: ['WiFi only', '4G cellular only', 'Wired Ethernet', 'Bluetooth'],
-    correctAnswer: 2,
-    explanation:
-      'Wired Ethernet provides the most reliable connectivity for commercial installations, avoiding WiFi interference issues and cellular coverage gaps. Cellular backup is often recommended.',
+      'Transformerless EV chargers lack the AC/DC galvanic isolation that an internal isolating transformer provides. In a fault on the DC side (e.g. insulation failure between DC bus and a touchable part), smooth DC current can flow back into the AC supply through the absence of the transformer barrier. Type AC and Type A RCDs cannot detect smooth DC residual current. Type B (or Type A + RDC-DD per BS EN IEC 62955) covers the smooth-DC profile. The exception in Reg 712.411.3.2.1.2: manufacturer can declare in writing that the wallbox is designed not to feed DC fault currents into the AC supply; with that declaration, Type AC / A is acceptable. UK 2025-26: most modern wallboxes ARE transformerless; the Type B or Type A + RDC-DD architecture is the standard.',
   },
 ];
 
 const faqs = [
   {
-    question: 'How many chargers can I install on a 100A three-phase supply?',
+    question: 'Is Type F RCD acceptable for an EV circuit?',
     answer:
-      'With static load management, approximately 6-8 x 22kW chargers could share a 100A supply, with power divided equally. With dynamic load management, more chargers can be installed as power adjusts based on actual usage. Always calculate based on diversity factors and other site loads.',
+      'Type F covers AC + pulsating DC + high-frequency residual current (relevant for frequency converters / VFDs). EV wallboxes don\'t typically produce the high-frequency residual that Type F is designed for. Type F is NOT a substitute for Type B or Type A + RDC-DD on an EV circuit — the smooth-DC profile is what matters. UK 2025-26 install: stick with Type A + RDC-DD or Type B per Reg 722.531. Cert evidence bundle records the specific RCD type and BS EN reference.',
   },
   {
-    question: 'What network infrastructure do commercial chargers need?',
+    question: 'How does the RDC-DD inside the wallbox actually trigger disconnection?',
     answer:
-      'Commercial chargers typically require Ethernet connectivity for reliability, with 4G cellular backup recommended. A managed network switch should connect to the site network or dedicated internet connection. Consider VLAN separation for security. WiFi-only installations may experience reliability issues.',
+      'The RDC-DD is a 6 mA DC residual current detector integrated into the wallbox electronics. On detecting 6 mA DC residual, it operates the wallbox’s internal contactor (the same contactor that switches the EV circuit on and off during normal charging). The wallbox enters a fault state and displays an error code. Some wallboxes auto-recover after the fault clears; others require manual reset. Manufacturer-specific behaviour. The upstream Type A RCD does NOT operate (the fault was DC; Type A can\'t see it); the disconnection is purely from the wallbox’s internal contactor opening.',
   },
   {
-    question: 'Do commercial installations require DNO approval?',
+    question: 'What\'s the actual cost difference: Type B RCBO vs Type A RCBO + RDC-DD-equipped wallbox?',
     answer:
-      'Installations above 16A per phase require DNO notification at minimum. Larger installations may require formal application and potentially network reinforcement. For DC rapid chargers or multiple AC chargers, engage with the DNO early in the project planning phase.',
+      'Typical UK 2025-26 prices: Type A RCBO ~£25-40; Type B RCBO ~£100-200 (~3-5× more). Wallboxes WITH integrated RDC-DD cost roughly £30-80 more than the same wallbox WITHOUT RDC-DD. So Type A + integrated RDC-DD path costs ~£25 + £50 (incremental wallbox cost) = ~£75. Type B path costs ~£150 (Type B RCBO) + £0 (wallbox without RDC-DD). Type A + RDC-DD path saves ~£50-75 per install. At install volume, this adds up. Cert evidence bundle records the architecture; either is compliant.',
   },
   {
-    question: 'What are the Building Regulations requirements for workplace charging?',
+    question: 'Are there any scenarios where AFDD IS required on an EV circuit?',
     answer:
-      'Part S requires new non-residential buildings with 10+ parking spaces to have charging infrastructure, with one charger installed and cable routes for future chargers. Major renovations trigger similar requirements. Scotland and Wales have equivalent regulations.',
+      'Reg 722.421.1.7.201 conditional exception: BOTH BS EN 61851 conformity AND BS EN IEC 62196-2 conformity must be declared. If either is missing or the wallbox doesn\'t use a Type 2 connector (rare but possible for some industrial / legacy connectors), AFDD per Section 421 / Reg 421.1.7 may still apply. Also for general circuits feeding the wallbox where the wallbox itself isn\'t the load-end device — e.g. a sub-circuit feeding multiple wallboxes via a distribution board. Cert evidence bundle records the AFDD decision.',
   },
   {
-    question: 'How do I size the supply for a car park with 20 charging bays?',
+    question: 'How is RDC-DD verified at commissioning?',
     answer:
-      'Calculate maximum simultaneous demand using realistic diversity factors (typically 50-70% for workplace charging). With dynamic load management, you might size for 10-14 simultaneous charges at full power. Consider future expansion and allow headroom for additional chargers.',
-  },
-  {
-    question: 'What ongoing costs should clients expect for commercial charging?',
-    answer:
-      'Ongoing costs include electricity supply, network/backend service fees (typically per charger per month), maintenance contracts, payment processing fees if applicable, and potentially demand charges from the DNO. Help clients budget appropriately.',
+      'Manufacturer-defined test sequence. Most wallboxes have a built-in self-test mode that simulates a 6 mA DC fault to verify the RDC-DD operates and the contactor opens. Some wallboxes include this in the commissioning workflow alongside the OPDD test. The installer triggers the test, observes the wallbox enters fault state, verifies the contactor opened, resets. Cert evidence bundle records the test result. For third-party verification (EICR or audit), the same self-test mode can be re-run periodically.',
   },
 ];
 
-const RenewableEnergyModule6Section3 = () => {
-  useSEO(TITLE, DESCRIPTION);
+export default function RenewableEnergyModule6Section3() {
+  const navigate = useNavigate();
+
+  useSEO({
+    title: 'RCD architecture & RDC-DD | Renewable Energy 6.3 | Elec-Mate',
+    description:
+      'EV circuit RCD architecture per Reg 722.531.2: Type B (BS EN 62423 / 60947-2) OR Type A + RDC-DD (BS EN IEC 62955 6 mA DC). AFDD exception per Reg 722.421.1.7.201 for BS EN 61851 + 62196-2 conforming kit.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Minimal Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('../renewable-energy-module-6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="/electrician/upskilling/renewable-energy-module-6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Link>
-          </Button>
-        </div>
+            <ArrowLeft className="h-4 w-4" /> Module 6
+          </button>
+
+          <PageHero
+            eyebrow="Module 6 · Section 3 · BS 7671:2018+A4:2026 · Reg 722.531 + 722.421"
+            title="RCD architecture & RDC-DD — Reg 722.531"
+            description="Two acceptable RCD architectures per Reg 722.531: Type B (BS EN 62423 / 60947-2) OR Type A combined with RDC-DD (BS EN IEC 62955 6 mA DC). Why transformerless wallboxes need smooth-DC detection. AFDD conjunctive exception per Reg 722.421.1.7.201."
+            tone="yellow"
+          />
+
+          <TLDR
+            points={[
+              'Reg 722.531 sets the RCD architecture for an EV circuit. Two acceptable paths: (1) Type B RCD per BS EN 62423 or BS EN 60947-2, or (2) Type A RCD + RDC-DD per BS EN IEC 62955.',
+              'Type B RCD: detects AC + pulsating DC + smooth DC fault currents directly. Costs ~3-5× more than Type A. Used where the wallbox lacks integrated RDC-DD.',
+              'Type A + RDC-DD architecture: Type A (cheap, widely stocked) detects AC and pulsating DC at 30 mA; RDC-DD (built into the wallbox) detects smooth DC at 6 mA. Combined, the same fault profile as Type B at lower kit cost.',
+              'BS EN IEC 62955 defines the RDC-DD with a 6 mA DC threshold. The RDC-DD operates the wallbox’s internal contactor on detection — upstream Type A RCD does NOT operate; disconnection is from within the wallbox.',
+              'Why this architecture matters: transformerless EV wallboxes can feed smooth DC fault current back into the AC supply. Type AC and Type A RCDs cannot detect smooth DC. Type B or Type A + RDC-DD covers the gap.',
+              'Reg 722.421.1.7.201 AFDD conjunctive exception — where the EV charging equipment conforms to BOTH BS EN 61851 series AND BS EN IEC 62196-2 (Type 2 connector), AFDD per Section 421 is NOT required. Both conformities needed simultaneously.',
+              'UK 2025-26 reality: many wallboxes (PodPoint Solo, EO Mini Pro 3, Wallbox Pulsar Plus, MyEnergi Zappi) ship with integrated RDC-DD as standard. Type A + integrated RDC-DD is the dominant economic architecture.',
+              'Cost comparison: Type B RCBO ~£150 vs Type A RCBO + RDC-DD-equipped wallbox ~£75 incremental. Saving ~£50-75 per install on the Type A + RDC-DD path; cert evidence bundle records the architecture chosen.',
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              'Apply Reg 722.531 to select the correct RCD architecture for an EV circuit: Type B OR Type A + RDC-DD.',
+              'Verify Type B RCD conformity to BS EN 62423 or BS EN 60947-2 via manufacturer markings + DoC.',
+              'Verify RDC-DD conformity to BS EN IEC 62955 + 6 mA DC threshold via wallbox manufacturer DoC.',
+              'Explain why transformerless EV wallboxes require Type B or Type A + RDC-DD architecture (smooth DC fault profile).',
+              'Apply the manufacturer-declaration exception (Reg 712.411.3.2.1.2) — Type AC / A acceptable where the wallbox is declared not to feed DC fault currents.',
+              'Apply Reg 722.421.1.7.201 conjunctive AFDD exception — BS EN 61851 series AND BS EN IEC 62196-2 conformities both required.',
+              'Code EICR findings: Type AC RCD on transformerless wallbox = C2; missing RDC-DD or Type B where transformerless wallbox demands one = C2; missing AFDD where exception conditions not met = C3 / FI.',
+              'Document architecture choice in cert evidence bundle — RCD type, manufacturer DoC, BS EN reference, AFDD position, RDC-DD presence and test result.',
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <Pullquote>
+            Type B is one device. Type A + RDC-DD is two devices that do the same job. Same fault coverage, different cost.
+          </Pullquote>
+
+          <ContentEyebrow>Why EV circuits need smooth-DC detection</ContentEyebrow>
+
+          <ConceptBlock
+            title="The smooth-DC fault profile on transformerless wallboxes"
+            plainEnglish="Modern UK 2025-26 EV wallboxes are overwhelmingly TRANSFORMERLESS — no internal isolating transformer between the AC supply input and the DC charging-side electronics. The transformerless design is more efficient and smaller, but it lacks the galvanic isolation that a transformer-isolated design provides. In fault conditions, smooth DC fault current can flow from the DC side back into the AC supply."
+            onSite="Standard Type AC RCD only detects AC residual current. Type A detects AC + pulsating DC. Neither sees smooth DC. The lost protection on a smooth-DC fault means ADS can fail — Reg 722.531 requires the upgraded architecture to cover the gap."
+          >
+            <p>The smooth-DC fault scenario:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Wallbox is transformerless</strong> — no
+                galvanic isolation between AC input and DC electronics. UK 2025-26
+                default
+              </li>
+              <li>
+                <strong className="text-white">Internal DC fault</strong> — insulation
+                failure between the wallbox’s DC bus and a touchable conductive
+                part; or between vehicle-side DC and chassis
+              </li>
+              <li>
+                <strong className="text-white">Smooth DC current flows</strong> — the
+                fault current pattern is smooth DC (steady-state DC, not pulsating).
+                Visible to a smooth-DC-sensitive detector
+              </li>
+              <li>
+                <strong className="text-white">Type AC RCD blind</strong> — Type AC
+                operates only on sinusoidal AC residual current. Smooth DC: zero
+                response
+              </li>
+              <li>
+                <strong className="text-white">Type A RCD blind</strong> — Type A
+                handles AC + pulsating DC. Smooth DC: zero response
+              </li>
+              <li>
+                <strong className="text-white">Type B detects directly</strong> — Type
+                B is specifically designed to handle the full waveform set: AC,
+                pulsating DC, smooth DC. Single device covers all cases
+              </li>
+              <li>
+                <strong className="text-white">RDC-DD detects directly</strong> — a
+                separate 6 mA DC residual detector inside the wallbox; on
+                detection, opens the wallbox contactor. Combined with upstream Type
+                A: same coverage as Type B
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 722.531 — RCD architecture for EV circuits"
+            clause="Where a PCE does not provide at least simple separation between AC and DC sides, and no transformer winding separation exists and the manufacturer does not state Type B is unnecessary, the RCD shall be Type B in accordance with BS EN 62423 or BS EN 60947-2. Alternative: Type A RCD combined with RDC-DD per BS EN IEC 62955 integrated within the EV charging equipment."
+            meaning="Reg 722.531 lays out the two acceptable RCD architectures for EV circuits. Type B alone covers the full fault profile (AC + pulsating DC + smooth DC). Type A + RDC-DD combines a cheap Type A upstream RCD with an integrated 6 mA DC detector inside the wallbox — same coverage at lower kit cost. The exception (manufacturer declares no DC fault current possible) is rare in UK 2025-26 since most wallboxes are transformerless. Cert evidence bundle records the architecture choice + BS EN references + manufacturer DoC."
+          />
+
+          <InlineCheck {...inlineChecks[0]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>The two architectures in practice</ContentEyebrow>
+
+          <Pullquote>
+            Type B = one expensive device. Type A + RDC-DD = two cheaper devices. UK 2025-26 default = Type A + integrated RDC-DD.
+          </Pullquote>
+
+          <ConceptBlock
+            title="Architecture 1 — Type B RCD upstream"
+            plainEnglish="A single Type B RCD (typically as a Type B RCBO on the dedicated EV final circuit in the consumer unit) provides the complete fault profile coverage. Type B detects AC, pulsating DC, and smooth DC fault currents at the configured threshold (typically 30 mA for ADS additional protection)."
+            onSite="Single device, single test, single failure mode. Slightly more expensive in kit terms but simpler to commission and maintain. Used where the wallbox doesn’t include integrated RDC-DD, or where the installer prefers a single-device architecture for clarity."
+          >
+            <p>Type B details:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Standards</strong> — BS EN 62423
+                (RCD with integral overcurrent — i.e. RCBO equivalent) or BS EN
+                60947-2 (general circuit-breaker with integrated Type B residual
+                current detection)
+              </li>
+              <li>
+                <strong className="text-white">Detection</strong> — AC sinusoidal
+                + pulsating DC + smooth DC residual currents. Sensitive to 6 mA
+                DC component within the overall threshold
+              </li>
+              <li>
+                <strong className="text-white">Threshold</strong> — typically 30 mA
+                for the ADS additional protection on a Mode 3 EV circuit. Some
+                three-phase commercial installs use 100 mA / 300 mA upstream
+                with 30 mA at the wallbox-side
+              </li>
+              <li>
+                <strong className="text-white">Cost</strong> — ~3-5× a Type A RCBO
+                of equivalent current rating. UK 2025-26 Type B RCBO ~£150-200
+              </li>
+              <li>
+                <strong className="text-white">Testing</strong> — requires Type
+                B-capable RCD test instrument (Megger MFT1731, Fluke 1664 FC,
+                Kewtech KT64DL or equivalent). Older Type AC / A-only testers
+                cannot correctly verify Type B
+              </li>
+              <li>
+                <strong className="text-white">When to choose</strong> — wallbox
+                model doesn’t include integrated RDC-DD; commercial sites with
+                high-volume EV charging; installer preference for single-device
+                architecture; specific manufacturer recommendation
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Architecture 2 — Type A + RDC-DD (UK 2025-26 dominant)"
+            plainEnglish="Type A RCD (or Type A RCBO) on the upstream EV final circuit; the wallbox includes a 6 mA DC RDC-DD per BS EN IEC 62955. Type A handles AC + pulsating DC; RDC-DD handles smooth DC. Combined coverage matches Type B at lower kit cost."
+            onSite="The dominant UK 2025-26 architecture because most wallboxes (PodPoint, Wallbox Pulsar, EO Mini Pro, MyEnergi Zappi etc.) include integrated RDC-DD as standard. Cost saving of ~£50-75 per install vs Type B. Cert evidence bundle records both the upstream Type A and the wallbox’s RDC-DD DoC."
+          >
+            <p>Type A + RDC-DD details:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Type A standards</strong> — BS EN
+                61008 (RCD without overcurrent) or BS EN 61009 (RCBO with
+                integral overcurrent). Both detect AC + pulsating DC residual
+                currents
+              </li>
+              <li>
+                <strong className="text-white">RDC-DD standard</strong> — BS EN IEC
+                62955 — specifically defines the 6 mA DC threshold device
+                integrated into EV charging equipment
+              </li>
+              <li>
+                <strong className="text-white">Mechanism</strong> — Type A
+                operates on AC + pulsating DC at 30 mA (separately from the
+                RDC-DD). RDC-DD operates on smooth DC at 6 mA inside the
+                wallbox. RDC-DD operation opens the wallbox’s internal
+                contactor — upstream Type A doesn’t need to operate (the
+                fault was smooth DC, invisible to Type A)
+              </li>
+              <li>
+                <strong className="text-white">Test sequence</strong> — Type A
+                tested via standard RCD tester at install. RDC-DD tested via
+                the wallbox’s built-in self-test mode (manufacturer-defined;
+                simulates 6 mA DC fault). Cert evidence bundle records both
+                tests
+              </li>
+              <li>
+                <strong className="text-white">Cost</strong> — Type A RCBO ~£25-40;
+                incremental wallbox cost for integrated RDC-DD ~£30-80. Total
+                architecture cost ~£75 vs Type B at ~£150
+              </li>
+              <li>
+                <strong className="text-white">Common brands with integrated
+                  RDC-DD (UK 2025-26)</strong> — PodPoint Solo, EO Mini Pro 3,
+                Wallbox Pulsar Plus, MyEnergi Zappi, Hypervolt, Andersen,
+                Ohme. Verify via DoC on the specific model
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <DiagramPlaceholder
+            caption="Two-architecture comparison diagram. Left: Type B RCBO architecture — single Type B RCBO in CU, EV circuit, wallbox (no integrated DC detector). Type B detects AC + pulsating DC + smooth DC at 30 mA. Right: Type A + RDC-DD architecture — Type A RCBO in CU, EV circuit, wallbox (with integrated 6 mA RDC-DD per BS EN IEC 62955). Type A handles AC + pulsating DC at 30 mA; RDC-DD inside wallbox handles smooth DC at 6 mA. Both architectures cover the same fault profile. Annotations: Type B kit cost ~£150 vs Type A + RDC-DD-equipped wallbox incremental ~£75."
+            filename="renewable/m6s3-rcd-architectures.png"
+          />
+
+          <InlineCheck {...inlineChecks[1]} />
+
+          <InlineCheck {...inlineChecks[2]} />
+
+          <SectionRule />
+
+          <ContentEyebrow>AFDD and the Reg 722.421.1.7.201 exception</ContentEyebrow>
+
+          <ConceptBlock
+            title="AFDD — Arc Fault Detection Device — and the EV exception"
+            plainEnglish="Section 421 / Reg 421.1.7 generally requires AFDD (Arc Fault Detection Device) on AC final circuits in dwellings to detect series and parallel arc faults. EV circuits in 2025-26 frequently invoke the Reg 722.421.1.7.201 exception that waives the AFDD requirement under specific conditions."
+            onSite="Most UK 2025-26 EV installs invoke the exception — the wallbox’s BS EN 61851 conformity + the Type 2 connector’s BS EN IEC 62196-2 conformity collectively satisfy the regulatory carve-out. Cert evidence bundle records the exception with both DoC references."
+          >
+            <p>How the exception works:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">General rule</strong> — Section
+                421 / Reg 421.1.7 requires AFDD on AC final circuits in
+                dwellings (with various carve-outs and conditions). EV
+                circuits in dwellings would fall under this general
+                requirement
+              </li>
+              <li>
+                <strong className="text-white">Reg 722.421.1.7.201
+                  exception</strong> — where the EV charging equipment
+                conforms to BS EN 61851 series AND incorporates
+                socket-outlets or vehicle connectors conforming to BS EN IEC
+                62196-2, AFDD is NOT required on the EV circuit
+              </li>
+              <li>
+                <strong className="text-white">Conjunctive
+                  exception</strong> — BOTH conformities required
+                simultaneously. Manufacturer DoC must declare both. If only
+                BS EN 61851 declared, or only BS EN IEC 62196-2 declared,
+                exception doesn’t apply and AFDD is needed
+              </li>
+              <li>
+                <strong className="text-white">Why the exception
+                  exists</strong> — BS EN 61851-compliant wallboxes
+                integrate electronic protection that addresses the same
+                arc-fault profile that AFDD detects. The exception
+                recognises this without forcing a duplicate device
+              </li>
+              <li>
+                <strong className="text-white">UK 2025-26 reality</strong> —
+                virtually all reputable wallbox brands declare both
+                conformities. The exception is the standard route; AFDD
+                rarely fitted on UK domestic EV circuits. Where the
+                installer is uncertain about the wallbox’s declarations,
+                fitting AFDD is the conservative choice
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence
+                  bundle</strong> — records the AFDD decision: exception
+                invoked with both DoC references, OR AFDD fitted with
+                Section 421 compliance
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 722.421.1.7.201 — AFDD exception for EV circuits"
+            clause="Where the EV charging equipment conforms to BS EN 61851 series and incorporates socket-outlets or vehicle connectors conforming to BS EN IEC 62196-2, the requirement to provide AFDD per Section 421 / Reg 421.1.7 is waived."
+            meaning="Conjunctive exception — both BS EN 61851 series conformity AND BS EN IEC 62196-2 conformity required simultaneously. Most UK 2025-26 wallboxes declare both (61851-1 + -22 for AC; 62196-2 for the Type 2 connector). The exception applies; AFDD not required. Where either conformity is missing, AFDD per Section 421 still required. Cert evidence bundle records both DoC references and the AFDD decision."
+          />
+
+          <InlineCheck {...inlineChecks[3]} />
+
+          <SectionRule />
+
+          <Scenario
+            title="UK suburban customer — PodPoint Solo install"
+            situation="Customer wants a 7 kW Mode 3 wallbox. Chose PodPoint Solo — UK 2025-26 popular budget wallbox. PodPoint Solo DoC declares: BS EN 61851-1 + BS EN 61851-22 conformity (AC charging station); BS EN IEC 62196-2 conformity (Type 2 connector); BS EN IEC 62955 integrated 6 mA RDC-DD; BS EN IEC 62752 ICCPD (the in-cable detection device standard); OPDD per Reg 722.411.4(d)."
+            whatToDo="Architecture decision: Type A + RDC-DD (PodPoint Solo includes integrated RDC-DD per BS EN IEC 62955). Upstream: Type A RCBO 32 A on dedicated CU way. AFDD: exception invoked per Reg 722.421.1.7.201 (both BS EN 61851 and BS EN IEC 62196-2 conformities declared on the DoC). Earthing-tree: route (d) OPDD (PodPoint Solo includes OPDD). Cert evidence bundle entries: PodPoint Solo DoC (citing 61851 + 62196-2 + 62955 + OPDD); Type A RCBO selection; AFDD exception rationale; commissioning RDC-DD self-test result; commissioning OPDD self-test result. Total install cost on the protection layer: ~£75 (Type A RCBO + incremental PodPoint cost vs Type B alternative)."
+            whyItMatters="Bread-and-butter UK 2025-26 install. The PodPoint Solo (and similar wallboxes from EO, Wallbox, MyEnergi etc.) ship with the full protection stack integrated — RDC-DD, OPDD, BS EN 61851 conformity, BS EN IEC 62196-2 connector. The installer’s job is to verify the DoC, select the matching upstream Type A RCBO, and document the architecture in the cert evidence bundle. This is the dominant UK 2025-26 path; Sections 6.2 (earthing), 6.3 (RCD architecture), 6.6 (connector/signalling) all converge on the wallbox DoC as the verification source."
+          />
+
+          <Scenario
+            title="Customer-supplied legacy wallbox without RDC-DD"
+            situation="Customer bought a wallbox second-hand from a friend — older model (2018 vintage) that doesn’t include integrated RDC-DD. Customer wants the installer to fit it."
+            whatToDo="Architecture decision: Type B RCBO on the upstream EV circuit (older wallbox without RDC-DD requires the single-device Type B path). Verify Type B RCBO conformity to BS EN 62423 (or BS EN 60947-2 if integrated breaker). Cost: ~£150 for the Type B RCBO vs ~£25 for a Type A — customer pays the £125 difference because of the older wallbox choice. AFDD: check the older wallbox’s DoC — if it declares BS EN 61851 + BS EN IEC 62196-2, exception still applies; if not, AFDD per Section 421 required. Earthing-tree: check the older wallbox for OPDD — if present, route (d); if not, route (c) TT electrode required. Customer education: explain that the older wallbox shifts the install to a more expensive protection architecture; offer to swap to a current model with integrated RDC-DD + OPDD if the customer prefers. Cert evidence bundle: Type B RCBO selection rationale + older wallbox limitations + customer-informed-decision sign-off."
+            whyItMatters="Customer-supplied or legacy wallbox installs are real edge cases. The installer’s job is to identify what protective architecture the wallbox supports natively and add the upstream protection that completes the picture. Older wallboxes without integrated RDC-DD shift the cost to Type B upstream; older wallboxes without OPDD shift the cost to TT electrode. Customer must understand the trade-off — they’re saving wallbox cost but paying it back in install cost. Cert evidence bundle records the decisions."
+          />
+
+          <CommonMistake
+            title="Fitting a Type AC RCD on a transformerless EV wallbox install"
+            whatHappens="Installer reuses a Type AC RCD from existing stock (or doesn’t check the wallbox’s transformerless / RDC-DD status). The customer’s EV install runs fine in normal operation. Two years later, an internal insulation failure in the wallbox’s DC electronics creates a smooth DC fault. The Type AC RCD doesn’t see it. ADS fails; the touchable parts of the wallbox cabinet are now at hazardous potential. EICR at year 5 catches the Type AC error — C2 (potential danger) coding; customer pays for the remediation."
+            doInstead="Check the wallbox’s transformerless status and RDC-DD inclusion BEFORE quoting. Transformerless without RDC-DD = Type B upstream. Transformerless with integrated RDC-DD = Type A upstream is fine. The £100 cost of the wrong RCD now is much cheaper than the £400+ remediation cost two years later. Cert evidence bundle records the wallbox DoC + the matching upstream RCD selection. Reg 722.531 + Reg 712.411.3.2.1.2 both apply."
+          />
+
+          <CommonMistake
+            title="Forgetting the AFDD conjunctive exception requires BOTH conformities"
+            whatHappens="Installer assumes the Reg 722.421.1.7.201 AFDD exception applies because the wallbox declares BS EN 61851 conformity — skips the AFDD. Doesn’t check the BS EN IEC 62196-2 declaration. Wallbox in question uses a proprietary connector (rare but possible on some specialist commercial / fleet installs); BS EN IEC 62196-2 NOT declared. Exception doesn’t apply; AFDD required per Section 421 / Reg 421.1.7 and is missing."
+            doInstead="Verify BOTH conformities on the wallbox DoC before invoking the exception. Manufacturer DoC must explicitly cite BS EN 61851 series AND BS EN IEC 62196-2. If either is missing or unclear, ask the manufacturer for clarification OR fit the AFDD as the conservative path. Cert evidence bundle records both DoC references with page / paragraph references. Section 421 AFDD costs ~£50-100 — modest relative to the exception’s documentation burden."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'Reg 722.531 sets the RCD architecture for EV circuits — two acceptable paths: Type B RCD per BS EN 62423 / 60947-2, or Type A + RDC-DD per BS EN IEC 62955.',
+              'Type B RCD detects AC + pulsating DC + smooth DC at 30 mA threshold. Single device; covers the full transformerless wallbox fault profile.',
+              'Type A + RDC-DD architecture: Type A upstream (AC + pulsating DC at 30 mA) + RDC-DD integrated in wallbox (smooth DC at 6 mA per BS EN IEC 62955). Combined coverage matches Type B at lower kit cost.',
+              'Why this matters: transformerless wallboxes can feed smooth DC fault current back into the AC supply. Type AC and Type A RCDs are BLIND to smooth DC. Type B or RDC-DD covers the gap.',
+              'Cost comparison: Type B RCBO ~£150; Type A RCBO + RDC-DD-equipped wallbox incremental ~£75. UK 2025-26 default is Type A + integrated RDC-DD because most wallboxes (PodPoint, Wallbox, EO, MyEnergi etc.) include RDC-DD as standard.',
+              'RDC-DD operates the wallbox’s internal contactor on detection; upstream Type A RCD does NOT operate (the fault was smooth DC, invisible to Type A). Cert evidence bundle records both layers.',
+              'Reg 712.411.3.2.1.2 manufacturer-declaration exception — Type AC / A acceptable where the wallbox is declared not to feed DC fault currents into the AC supply. Rare in UK 2025-26 (most wallboxes ARE transformerless).',
+              'Reg 722.421.1.7.201 AFDD conjunctive exception — BOTH BS EN 61851 series AND BS EN IEC 62196-2 conformities required simultaneously. Most UK 2025-26 wallboxes meet both; AFDD rarely fitted on EV circuits.',
+              'Code EICR findings: Type AC on transformerless wallbox = C2 (potential danger, urgent remediation). Missing RDC-DD where wallbox doesn’t support it AND Type A upstream = C2. Missing AFDD where exception doesn’t apply = C3 / FI.',
+              'Cert evidence bundle: wallbox DoC (citing all standards including 61851 + 62196-2 + 62955 if integrated RDC-DD), upstream RCD type and BS EN reference, AFDD decision (exception invoked or device fitted), commissioning test results for both Type A and integrated RDC-DD.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <Quiz questions={quizQuestions} title="Section 3 · Knowledge check" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-6-section-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Section 2
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Earthing tree — PME-on-EV, TN-S, TT, OPDD
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-6-section-4')
+              }
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                6.4 Cable, RCBO & dedicated final circuit
+              </div>
+            </button>
+          </div>
+        </PageFrame>
       </div>
-
-      {/* Main Content */}
-      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {/* Centered Title */}
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-            <Zap className="h-4 w-4" />
-            <span>Module 6 Section 3</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-            Commercial EV Charging Systems
-          </h1>
-          <p className="text-white">Multi-Charger Installations &amp; Load Management</p>
-        </header>
-
-        {/* Quick Summary Boxes */}
-        <div className="grid sm:grid-cols-2 gap-4 mb-12">
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Power:</strong> 11-22 kW three-phase AC typical
-              </li>
-              <li>
-                <strong>Load Management:</strong> Static or dynamic power sharing
-              </li>
-              <li>
-                <strong>Connectivity:</strong> OCPP via Ethernet, cellular backup
-              </li>
-              <li>
-                <strong>Accessibility:</strong> BS 8300 compliant bays required
-              </li>
-            </ul>
-          </div>
-          <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
-            <ul className="text-sm text-white space-y-1">
-              <li>
-                <strong>Spot:</strong> Available supply capacity, network infrastructure
-              </li>
-              <li>
-                <strong>Use:</strong> Load management calculations, OCPP configuration
-              </li>
-              <li>
-                <strong>Apply:</strong> Design scalable commercial charging solutions
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Learning Outcomes */}
-        <section className="mb-12">
-          <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
-          <div className="grid sm:grid-cols-2 gap-2">
-            {[
-              'Design multi-charger installations with appropriate load management',
-              'Size electrical infrastructure for commercial charging demands',
-              'Specify network and communication requirements',
-              'Understand OCPP and backend integration',
-              'Apply accessibility requirements for public charging',
-              'Plan maintenance and support arrangements',
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span>{item}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 mb-12" />
-
-        {/* Section 1: Commercial Charging Applications */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">01</span>
-            Commercial Charging Applications
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Commercial EV charging encompasses various applications, each with different
-              requirements for power levels, user management, and operational considerations.
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Workplace Charging</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>6-8 hour dwell times suit 7-22 kW</li>
-                  <li>User authentication for cost allocation</li>
-                  <li>Solar integration for daytime charging</li>
-                  <li>Salary sacrifice scheme integration</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">Public Destination</p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>1-4 hour dwell times suit 7-22 kW</li>
-                  <li>Public payment options required</li>
-                  <li>Accessible bays for disabled users</li>
-                  <li>Clear signage and wayfinding</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fleet Depot Charging</p>
-              <p className="text-sm text-white">
-                Commercial vehicle fleets return to base for overnight charging. Requirements
-                include scheduled charging based on departure times, integration with fleet
-                management systems, and cost allocation to vehicles/departments.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: Load Management Strategies */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">02</span>
-            Load Management Strategies
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Load management enables multiple chargers to operate within limited supply capacity,
-              maximising charging provision without expensive infrastructure upgrades.
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-6 my-6">
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Static Load Management
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>Fixed allocation: 100A / 4 chargers = 25A each</li>
-                  <li>Configured in charger settings</li>
-                  <li>No real-time monitoring required</li>
-                  <li>Suitable for simple installations</li>
-                </ul>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                  Dynamic Load Management
-                </p>
-                <ul className="text-sm text-white space-y-1">
-                  <li>CT clamps monitor site consumption</li>
-                  <li>Chargers adjust to available capacity</li>
-                  <li>Priority settings for key chargers</li>
-                  <li>Enables more chargers on limited supply</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Electrical Infrastructure Design */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">03</span>
-            Electrical Infrastructure Design
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Commercial installations require careful electrical design to ensure adequate
-              capacity, appropriate protection, and cost-effective distribution architecture.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Distribution Architecture Options
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Radial feeds:</strong> Individual cables to each charger from distribution
-                  board
-                </li>
-                <li>
-                  <strong>Feeder pillar:</strong> Local distribution point reducing cable runs
-                </li>
-                <li>
-                  <strong>Busbar system:</strong> Flexible tap-off for charger connections
-                </li>
-                <li>
-                  <strong>Power unit:</strong> Centralised conversion sharing power to multiple
-                  outputs
-                </li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">DNO Engagement</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Review existing supply capacity and maximum demand</li>
-                <li>Contact DNO early for large installations</li>
-                <li>Consider dedicated EV supply for larger projects</li>
-                <li>Allow 12-24 months for network reinforcement if needed</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Network and Backend Systems */}
-        <section className="mb-10 mt-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">04</span>
-            Network and Backend Systems
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Commercial chargers require robust network connectivity for management, billing, and
-              smart charging features.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">OCPP Communication</p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>OCPP 1.6:</strong> Widely supported, JSON or SOAP messaging
-                </li>
-                <li>
-                  <strong>OCPP 2.0.1:</strong> Enhanced security, smart charging features
-                </li>
-                <li>Enables remote monitoring, configuration, firmware updates</li>
-                <li>Supports multiple backend providers for flexibility</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Network Infrastructure Requirements
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Ethernet (preferred): Cat6 cabling to each charger</li>
-                <li>Managed switch with VLAN capability</li>
-                <li>Dedicated or shared internet with QoS</li>
-                <li>4G cellular backup for redundancy</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 5: User Experience and Accessibility */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-            <span className="text-elec-yellow/80 text-sm font-normal">05</span>
-            User Experience and Accessibility
-          </h2>
-          <div className="text-white space-y-4 leading-relaxed">
-            <p>
-              Public and workplace charging must be accessible to all users. Design considerations
-              extend beyond electrical requirements.
-            </p>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Accessible Charging Bays (BS 8300)
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Minimum 3.6m wide bays for wheelchair access</li>
-                <li>Level access to charger controls</li>
-                <li>Controls at accessible height (750-1200mm)</li>
-                <li>Clear space for cable management</li>
-              </ul>
-            </div>
-
-            <div className="my-6">
-              <p className="text-sm font-medium text-elec-yellow/80 mb-2">
-                Payment and Authentication Options
-              </p>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>RFID cards:</strong> Network membership for regular users
-                </li>
-                <li>
-                  <strong>Contactless payment:</strong> Bank card terminals for ad-hoc users
-                </li>
-                <li>
-                  <strong>Mobile apps:</strong> QR code scanning to initiate sessions
-                </li>
-                <li>
-                  <strong>Plug &amp; Charge:</strong> Automatic authentication (vehicle-dependent)
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Practical Guidance */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Practical Guidance</h2>
-
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
-                When Project Planning
-              </h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Engage with DNO early in the process</li>
-                <li>Confirm network connectivity options</li>
-                <li>Understand client operational requirements</li>
-                <li>Build in contingency for supply delays</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">When Future-Proofing</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>Install larger cable sizes for potential upgrades</li>
-                <li>Include spare ducting for expansion</li>
-                <li>Select OCPP-compliant equipment for flexibility</li>
-                <li>Consider how installation might scale</li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
-              <ul className="text-sm text-white space-y-1 ml-4">
-                <li>
-                  <strong>Late DNO engagement</strong> - can cause major delays
-                </li>
-                <li>
-                  <strong>Ignoring accessibility</strong> - legal requirement for public sites
-                </li>
-                <li>
-                  <strong>WiFi-only connectivity</strong> - reliability issues common
-                </li>
-                <li>
-                  <strong>No maintenance plan</strong> - commercial chargers need support
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        {/* FAQs */}
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold text-white mb-6">Common Questions</h2>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="pb-4 border-b border-white/5 last:border-0">
-                <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Divider */}
-        <hr className="border-white/5 my-12" />
-
-        {/* Quiz */}
-        <section className="mb-10">
-          <Quiz title="Test Your Knowledge" questions={quizQuestions} />
-        </section>
-
-        {/* Navigation */}
-        <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../section-2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous
-            </Link>
-          </Button>
-          <Button
-            size="lg"
-            className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="../section-4">
-              Next Section
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </nav>
-      </article>
     </div>
   );
-};
-
-export default RenewableEnergyModule6Section3;
+}

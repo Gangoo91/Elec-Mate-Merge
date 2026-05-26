@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'iso-9001-focus',
     question: 'What is the primary focus of ISO 9001:2015?',
     options: [
-      'Environmental management',
+      'The circuit with the greatest resistance to flow',
+      'At the time of work or as soon as practical afterwards',
       'Customer satisfaction through consistent quality',
-      'Health and safety compliance',
-      'Financial auditing',
+      'Detailed system configuration records and change logs',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'ISO 9001:2015 focuses on customer satisfaction by ensuring organisations consistently deliver products and services that meet customer and regulatory requirements through effective quality management.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'pdca-cycle',
     question: 'What does PDCA stand for in quality management?',
     options: [
+      'Plan, Document, Correct, Analyse',
       'Process, Design, Check, Approve',
       'Plan, Do, Check, Act',
       'Prepare, Document, Control, Audit',
-      'Plan, Document, Correct, Analyse',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'PDCA (Plan-Do-Check-Act) is the fundamental cycle for continual improvement in quality management, providing a systematic approach to problem-solving and process improvement.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'document-control',
     question: 'What is the purpose of document control in a QMS?',
     options: [
-      'To reduce paperwork',
       'To ensure only current, approved documents are used',
-      'To archive historical records',
-      'To limit access to information',
+      'To prevent total system failure from a single fault',
+      'Hot spots indicating high resistance joints or overloading',
+      'Leakage currents can flow, creating safety hazards',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Document control ensures that only current, approved versions of procedures, drawings, and specifications are in use. This prevents errors caused by outdated or incorrect documentation.',
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'ncr-purpose',
     question: 'What is the primary purpose of a Non-Conformance Report (NCR)?',
     options: [
-      'To blame individuals for mistakes',
+      'Data centre infrastructure and telecommunications standards',
+      'HSG264 — Asbestos: The Survey Guide',
+      'Shows original installation details and test baselines',
       'To record and manage deviations from requirements',
-      'To reduce project costs',
-      'To satisfy regulatory inspectors',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'NCRs formally record instances where work, materials, or processes deviate from specified requirements, enabling proper investigation, correction, and prevention of recurrence.',
   },
@@ -85,7 +85,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'ISO 9001:2015 is structured around how many clauses?',
-    options: ['7 clauses', '10 clauses', '12 clauses', '15 clauses'],
+    options: [
+      '7 clauses',
+      '10 clauses',
+      '12 clauses',
+      '15 clauses',
+    ],
     correctAnswer: 1,
     explanation:
       'ISO 9001:2015 contains 10 clauses. Clauses 1-3 cover scope, references, and terms. Clauses 4-10 contain the requirements: Context, Leadership, Planning, Support, Operation, Performance Evaluation, and Improvement.',
@@ -93,8 +98,13 @@ const quizQuestions = [
   {
     id: 2,
     question: "Which clause of ISO 9001:2015 addresses 'Leadership'?",
-    options: ['Clause 4', 'Clause 5', 'Clause 6', 'Clause 7'],
-    correctAnswer: 1,
+    options: [
+      'Clause 6',
+      'Clause 4',
+      'Clause 5',
+      'Clause 7',
+    ],
+    correctAnswer: 2,
     explanation:
       'Clause 5 addresses Leadership, requiring top management to demonstrate commitment, establish quality policy, and assign organisational roles and responsibilities.',
   },
@@ -102,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: "What does 'risk-based thinking' mean in ISO 9001:2015?",
     options: [
-      'Only focusing on high-risk activities',
+      'Monitoring and measuring results against objectives',
+      'Any information the organisation determines necessary for QMS effectiveness',
+      'Ongoing effort to enhance products, services, and processes',
       'Proactively identifying and addressing risks and opportunities',
-      'Avoiding all risks in projects',
-      'Creating risk registers for auditors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Risk-based thinking requires organisations to proactively identify potential risks and opportunities throughout their processes, taking action to prevent or reduce undesired effects and enhance desired outcomes.',
   },
@@ -115,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: "In the PDCA cycle, what happens during the 'Check' phase?",
     options: [
-      'Implementing the planned changes',
       'Monitoring and measuring results against objectives',
+      'Implementing the planned changes',
       'Making corrections to the process',
       'Planning the improvement strategy',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The 'Check' phase involves monitoring and measuring the results of implemented changes against planned objectives to determine if the expected improvements were achieved.",
   },
@@ -128,12 +138,12 @@ const quizQuestions = [
     id: 5,
     question: 'A controlled document must include which of the following?',
     options: [
+      'Installation not matching approved drawings',
       'Revision number, approval status, and distribution list',
-      'Only the document title',
-      "Author's personal contact details",
-      'Estimated cost of implementation',
+      'A document describing the QMS scope, processes, and procedures',
+      'Monitoring and measuring results against objectives',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Controlled documents require revision/version numbers, approval status (who approved and when), and controlled distribution to ensure only authorised persons have current versions.',
   },
@@ -141,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: "What is the difference between a 'corrective action' and a 'preventive action'?",
     options: [
-      'They are the same thing',
+      'A document describing the QMS scope, processes, and procedures',
+      'Any information the organisation determines necessary for QMS effectiveness',
       'Corrective addresses existing problems; preventive stops potential problems',
-      'Preventive is mandatory; corrective is optional',
-      'Corrective is for safety; preventive is for quality',
+      'Revision number, approval status, and distribution list',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Corrective action addresses the root cause of an existing non-conformance to prevent recurrence. Preventive action identifies potential problems before they occur and implements measures to prevent them.',
   },
@@ -156,10 +166,10 @@ const quizQuestions = [
     options: [
       'A trained auditor from another department',
       'An external consultant',
-      'The person responsible for that process',
       'A member of the quality team',
+      'The person responsible for that process',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Auditors must be independent of the area being audited to ensure objectivity. The person responsible for a process cannot objectively audit their own work.',
   },
@@ -167,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: "What is a 'Quality Manual' in a QMS?",
     options: [
-      'A list of all company employees',
       'A document describing the QMS scope, processes, and procedures',
-      'A record of all non-conformances',
-      'A training register for quality staff',
+      'Proactively identifying and addressing risks and opportunities',
+      'Revision number, approval status, and distribution list',
+      'Monitoring and measuring results against objectives',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A Quality Manual is a top-level document that describes the scope of the QMS, references procedures, and explains how the organisation addresses quality requirements. Note: ISO 9001:2015 no longer mandates a Quality Manual.',
   },
@@ -180,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: "What is 'continual improvement' in quality management?",
     options: [
-      'Making one major change per year',
+      'A document describing the QMS scope, processes, and procedures',
       'Ongoing effort to enhance products, services, and processes',
-      'Fixing problems only when auditors identify them',
-      'Replacing all equipment regularly',
+      'Corrective addresses existing problems; preventive stops potential problems',
+      'Any information the organisation determines necessary for QMS effectiveness',
     ],
     correctAnswer: 1,
     explanation:
@@ -194,11 +204,11 @@ const quizQuestions = [
     question: 'In building services, what would typically trigger an NCR?',
     options: [
       'A minor change to cable route approved by the client',
+      'Using a different brand of approved equivalent material',
       'Installation not matching approved drawings',
       'Completing work ahead of schedule',
-      'Using a different brand of approved equivalent material',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Installation not matching approved drawings is a deviation from specified requirements and would trigger an NCR. The NCR process ensures the deviation is assessed, corrected if necessary, and lessons learned.',
   },
@@ -206,12 +216,12 @@ const quizQuestions = [
     id: 11,
     question: 'How often should a QMS be reviewed by management?',
     options: [
-      'Only when problems occur',
+      'A document describing the QMS scope, processes, and procedures',
+      'Revision number, approval status, and distribution list',
+      'Ongoing effort to enhance products, services, and processes',
       'At planned intervals (typically annually minimum)',
-      'Every five years',
-      'Only before certification audits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'ISO 9001 requires management review at planned intervals. Most organisations conduct reviews annually at minimum, though more frequent reviews may be appropriate for complex projects or changing circumstances.',
   },
@@ -219,12 +229,12 @@ const quizQuestions = [
     id: 12,
     question: "What is the role of 'documented information' in ISO 9001:2015?",
     options: [
-      'Only records required by law',
       'Any information the organisation determines necessary for QMS effectiveness',
-      'Marketing materials for customers',
-      'Personal employee records',
+      'Revision number, approval status, and distribution list',
+      'A document describing the QMS scope, processes, and procedures',
+      'Proactively identifying and addressing risks and opportunities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Documented information includes documents and records that the organisation determines are necessary for the effectiveness of the QMS, plus those required by ISO 9001 itself.',
   },

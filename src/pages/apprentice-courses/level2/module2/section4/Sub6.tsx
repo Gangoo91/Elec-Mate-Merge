@@ -39,12 +39,12 @@ const checks = [
     question:
       'On site, what visual clue most reliably says “this is a series circuit”?',
     options: [
-      'Multiple junction boxes around the property',
+      'A standardised document reporting verified environmental impacts of a product',
+      'Asbestos fibres from asbestos-containing tiles, adhesives, or backing materials',
       'A single chain — one cable in, one cable out at each component, no branching',
-      'Two conductors at each MCB terminal',
-      'Separate fuse for every load',
+      'Preventive maintenance based on usage patterns and manufacturer recommendations',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Series wiring is a daisy chain — single line through every component in turn, no branching. If you can see junction boxes splitting the supply to different loads, that’s parallel.',
   },
@@ -52,8 +52,13 @@ const checks = [
     id: 'kvl-loop-check',
     question:
       'A loop has a 24 V battery, R₁ drops 8 V, R₂ drops 10 V. By Kirchhoff’s voltage law, what does R₃ drop?',
-    options: ['2 V', '6 V', '14 V', '24 V'],
-    correctIndex: 1,
+    options: [
+      '6 V',
+      '2 V',
+      '14 V',
+      '24 V',
+    ],
+    correctIndex: 0,
     explanation:
       'KVL — drops add to the supply. 8 + 10 + R₃ = 24, so R₃ = 6 V. One-line sanity check on every series problem.',
   },
@@ -62,12 +67,12 @@ const checks = [
     question:
       'You meet a network with R₁ in series with [R₂ parallel R₃]. What’s the FIRST step in finding the total resistance?',
     options: [
-      'Add R₁ to R₂ first',
+      'Significantly increases temperature requiring derating',
+      'At the lowest recommended level as specified by the manufacturer',
+      '"Do as I do" is more powerful than "do as I say"',
       'Reduce R₂ parallel R₃ to a single equivalent resistor first',
-      'Always start with the largest resistor',
-      'Pick the side closest to the supply',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Parallel sections collapse first. (R₂ × R₃) ÷ (R₂ + R₃) gives one equivalent. Then add R₁ in series. Going the other way round leaves a parallel block dangling and the maths gets ugly.',
   },
@@ -79,18 +84,23 @@ const quizQuestions = [
   {
     id: 1,
     question: 'A single path for current with no branching tells you the circuit is…',
-    options: ['A radial', 'Parallel', 'A ring final', 'Series'],
-    correctAnswer: 3,
+    options: [
+      'A radial',
+      'Series',
+      'A ring final',
+      'Parallel',
+    ],
+    correctAnswer: 1,
     explanation: 'One path = series. Same current flows through every component, no exceptions.',
   },
   {
     id: 2,
     question: 'You can recognise a parallel circuit by…',
     options: [
-      'A single cable between every load',
-      'Every load failing when one fails',
+      'Circulating currents induced in the iron core',
+      'Correct direction change and mechanical/electrical interlock',
       'Each load operating independently of the others',
-      'Always being a ring',
+      'Consider test conditions and environment',
     ],
     correctAnswer: 2,
     explanation:
@@ -100,15 +110,25 @@ const quizQuestions = [
     id: 3,
     question:
       'A 12 V supply with R₁ = 100 Ω, R₂ = 200 Ω, R₃ = 300 Ω all in series. The total current is…',
-    options: ['0.02 A', '0.06 A', '0.12 A', '1.0 A'],
-    correctAnswer: 0,
+    options: [
+      '0.12 A',
+      '0.06 A',
+      '1.0 A',
+      '0.02 A',
+    ],
+    correctAnswer: 3,
     explanation: 'Rt = 100 + 200 + 300 = 600 Ω. I = 12 ÷ 600 = 0.02 A (20 mA).',
   },
   {
     id: 4,
     question: 'Two resistors of 6 Ω and 12 Ω wired in parallel give an equivalent resistance of…',
-    options: ['18 Ω', '4 Ω', '6 Ω', '2 Ω'],
-    correctAnswer: 1,
+    options: [
+      '4 Ω',
+      '18 Ω',
+      '6 Ω',
+      '2 Ω',
+    ],
+    correctAnswer: 0,
     explanation: 'Rt = (6 × 12) ÷ (6 + 12) = 72 ÷ 18 = 4 Ω. Less than the smaller branch, as always.',
   },
   {
@@ -118,8 +138,8 @@ const quizQuestions = [
     options: [
       'A radial spur',
       'A ring final circuit',
-      'A series circuit',
       'A three-phase circuit',
+      'A series circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,10 +150,10 @@ const quizQuestions = [
     question:
       'Before opening accessories to trace circuit branches, the FIRST thing you do is…',
     options: [
-      'Pull the main fuse',
-      'Disconnect CPCs to avoid tripping the RCD',
+      'To ensure, so far as is reasonably practicable, the health, safety and welfare at work of all employees',
+      'A tangible or intangible output produced as a result of project work',
       'Carry out safe isolation — prove the tester on a known live source, isolate, lock-off, test dead',
-      'Increase the breaker rating to stop nuisance trips',
+      'Hazard identification, risk evaluation, control measures, review processes',
     ],
     correctAnswer: 2,
     explanation:
@@ -143,8 +163,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A 24 V supply feeds a series leg of R₁ = 150 Ω + R₂ = 450 Ω, sat in parallel with R₃ = 120 Ω. Total resistance?',
-    options: ['100 Ω', '720 Ω', '600 Ω', '120 Ω'],
-    correctAnswer: 0,
+    options: [
+      '120 Ω',
+      '720 Ω',
+      '600 Ω',
+      '100 Ω',
+    ],
+    correctAnswer: 3,
     explanation:
       'Series leg: 150 + 450 = 600 Ω. Parallel with 120 Ω: (600 × 120) ÷ (600 + 120) = 72000 ÷ 720 = 100 Ω.',
   },
@@ -152,8 +177,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A 230 V kettle element has resistance ≈ 26.5 Ω. The power it dissipates is approximately…',
-    options: ['8.7 W', '870 W', '2.0 kW', '26.5 kW'],
-    correctAnswer: 2,
+    options: [
+      '2.0 kW',
+      '26.5 kW',
+      '8.7 W',
+      '870 W',
+    ],
+    correctAnswer: 0,
     explanation: 'P = V² ÷ R = 230² ÷ 26.5 = 52900 ÷ 26.5 ≈ 1996 W ≈ 2 kW. Bang on for a domestic kettle.',
   },
 ];

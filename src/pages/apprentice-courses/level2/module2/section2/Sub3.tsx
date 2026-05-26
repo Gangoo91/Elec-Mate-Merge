@@ -33,8 +33,13 @@ const checks = [
   {
     id: 'lever-classes-check',
     question: 'A pair of pliers is which class of lever?',
-    options: ['Class 1 (fulcrum in the middle)', 'Class 2 (load in the middle)', 'Class 3 (effort in the middle)', 'None — pliers aren’t a lever'],
-    correctIndex: 0,
+    options: [
+      'None — pliers aren’t a lever',
+      'Class 2 (load in the middle)',
+      'Class 3 (effort in the middle)',
+      'Class 1 (fulcrum in the middle)',
+    ],
+    correctIndex: 3,
     explanation:
       'Pliers are two class 1 levers joined at the pivot. The pivot (fulcrum) is in the middle, your hand is the effort, the wire is the load. Same as a seesaw or a crowbar.',
   },
@@ -42,8 +47,13 @@ const checks = [
     id: 'pulley-ma-check',
     question:
       'A block-and-tackle hoist has 4 rope segments supporting the load. Roughly what mechanical advantage does it give?',
-    options: ['1', '2', '4', '8'],
-    correctIndex: 2,
+    options: [
+      '4',
+      '8',
+      '2',
+      '1',
+    ],
+    correctIndex: 0,
     explanation:
       'MA ≈ number of supporting rope segments. With 4 segments, the effort needed is roughly load ÷ 4 — but you have to pull 4× the rope length to lift the load 1 unit.',
   },
@@ -52,11 +62,11 @@ const checks = [
     question: 'A 12-tooth driver gear meshes with a 36-tooth driven gear. What happens?',
     options: [
       'The driven turns 3× faster with 1/3 the torque',
-      'The driven turns at the same speed but with 3× the torque',
       'The driven turns 3× slower with 3× the torque',
       'Nothing — the teeth have to match exactly to engage',
+      'The driven turns at the same speed but with 3× the torque',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Ratio = driven ÷ driver = 36 ÷ 12 = 3:1. Driven turns 3× slower (you traded speed) and 3× the torque (you gained turning force). Energy in still equals energy out (minus losses).',
   },
@@ -69,10 +79,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is a simple machine?',
     options: [
-      'A complex piece of factory kit',
+      'It enables you to anticipate, prepare for, and manage your responses to known stressors',
       'A device that changes the size, direction or speed of a force to do useful work',
-      'Anything with an electric motor',
-      'A machine that has only one moving part',
+      'Automatic ventilation adjustment based on occupancy or air quality sensors',
+      'A full inspection by a competent person before the tower is used again',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +92,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is mechanical advantage (MA)?',
     options: [
-      'The total weight a machine can lift',
-      'How fast the machine works',
+      'Pilot wire integrity and in-cable control box function',
+      'To prevent a single fault from disabling all emergency lighting',
       'The ratio of load to effort — how much the machine multiplies your force',
-      'The efficiency of the machine',
+      'Hazard, design decisions, residual risks, information for others',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,16 +105,26 @@ const quizQuestions = [
     id: 3,
     question:
       'In a class 1 lever (e.g. a crowbar), the fulcrum is between the effort and the load. True or false?',
-    options: ['True', 'False', 'Only if the load is heavier than the effort', 'Only with metal levers'],
-    correctAnswer: 0,
+    options: [
+      'Only if the load is heavier than the effort',
+      'False',
+      'Only with metal levers',
+      'True',
+    ],
+    correctAnswer: 3,
     explanation:
       'Class 1: fulcrum in the middle. Class 2: load in the middle. Class 3: effort in the middle. Get the order right.',
   },
   {
     id: 4,
     question: 'Which everyday object is a class 2 lever?',
-    options: ['A pair of scissors', 'A wheelbarrow', 'A spoon flicking peas', 'A seesaw'],
-    correctAnswer: 1,
+    options: [
+      'A wheelbarrow',
+      'A pair of scissors',
+      'A spoon flicking peas',
+      'A seesaw',
+    ],
+    correctAnswer: 0,
     explanation:
       'Wheelbarrow: wheel = fulcrum, load (the soil) is in the middle, effort (your hands on the handles) is at the far end. Class 2 levers always multiply your force, MA > 1.',
   },
@@ -112,12 +132,12 @@ const quizQuestions = [
     id: 5,
     question: 'A single fixed pulley (the wheel hangs from above and you pull down) gives…',
     options: [
-      'MA of 4',
-      'MA of 2',
+      'Minimise and batch shallow work; protect time for deep work',
       'MA of about 1 — it just changes the direction of the force',
-      'MA of less than 1',
+      'It increases the current for a given real power, stressing infrastructure',
+      'The Principal Contractor (who co-ordinates all trades)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A single fixed pulley doesn’t multiply force — it just lets you pull down (more comfortable) instead of lifting up. To get a real MA you need a movable pulley or a block-and-tackle.',
   },
@@ -125,10 +145,10 @@ const quizQuestions = [
     id: 6,
     question: 'In a gear train, which gear is the "driver"?',
     options: [
-      'The bigger one',
-      'The smaller one',
+      'Prove the tester works on a known live source',
+      'First 10A at 100%, remainder at 50%',
       'The one connected to the motor or input shaft',
-      'The one with the most teeth',
+      'To identify obvious faults safely before applying power',
     ],
     correctAnswer: 2,
     explanation:
@@ -138,12 +158,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why does a drill have a gearbox between the motor and the chuck?',
     options: [
-      'To make the drill heavier',
+      'Avoid danger, minimise inconvenience, and meet safety requirements',
+      'Rapid voltage fluctuations causing visible light variation',
+      'Eliminate the need for hazardous manual handling entirely',
       'To trade some motor speed for more torque (turning force) at the chuck',
-      'To stop the motor running too cold',
-      'To convert AC to DC',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Motors are happiest spinning fast with low torque. A masonry hole needs lots of torque, not lots of speed. Reduction gearing (often planetary) turns one into the other. The "1/2" speed setting on your drill is engaging extra reduction.',
   },
@@ -151,7 +171,12 @@ const quizQuestions = [
     id: 8,
     question:
       'You can lift a 200 N load with 50 N of effort using a pulley system. What MA does it give, and how far do you have to pull the rope to lift the load 1 m?',
-    options: ['MA 4, pull 4 m', 'MA 4, pull 1 m', 'MA 0.25, pull 1 m', 'MA 2, pull 2 m'],
+    options: [
+      'MA 4, pull 4 m',
+      'MA 0.25, pull 1 m',
+      'MA 2, pull 2 m',
+      'MA 4, pull 1 m',
+    ],
     correctAnswer: 0,
     explanation:
       'MA = load ÷ effort = 200 ÷ 50 = 4. You traded distance for force, so you have to pull 4× the rope length. Energy in (50 N × 4 m = 200 J) = energy out (200 N × 1 m = 200 J). No magic.',

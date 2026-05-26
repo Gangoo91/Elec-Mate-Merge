@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'led-operation',
     question: 'How does an LED produce light?',
     options: [
-      'By heating a filament',
+      'A blue circular sign (e.g., \\\\\\\\\\\\\\\'Hard hats must be worn\\\\\\\\\\\\\\\')',
+      'They must be isolated, locked out, tagged out, and proved dead',
       'By electroluminescence when current flows through a semiconductor junction',
-      'By exciting gas molecules',
-      'By phosphorescent coating alone',
+      'The first option might seem correct but a later option may be more complete or accurate',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'LEDs produce light through electroluminescence - when current flows through the p-n junction of a semiconductor, electrons recombine with holes and release energy as photons (light).',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'Why do most LED luminaires use constant current drivers rather than constant voltage?',
     options: [
-      'Constant current drivers are cheaper',
+      'When the general public holds negative attitudes, beliefs, and stereotypes about people with mental health problems',
+      '"Can they do it but won\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019t, or do they want to but can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019t?"',
       'LED forward voltage varies with temperature, making current control essential for consistent output',
-      'Constant voltage drivers are too large',
-      'Building regulations require constant current',
+      'Because Level 1 is quick, easy, and cheap to measure, while higher levels require more time, effort, and planning',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'LED forward voltage changes with temperature and manufacturing variations. Constant current drivers maintain consistent light output regardless of these voltage variations, ensuring stable illumination and preventing thermal runaway.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'thermal-management',
     question: 'What is the primary reason thermal management is critical for LED performance?',
     options: [
-      'To prevent electrical shock',
       'Because heat reduces LED lifetime, efficacy, and causes colour shift',
-      'To comply with IP ratings',
-      'To reduce flicker',
+      'Temporary manual control mode for system setup and testing',
+      'A relatively high level of arousal, as the task requires less cognitive effort',
+      'Ordering materials before you need them on site, based on the job plan',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Excessive junction temperature accelerates LED degradation, reduces luminous efficacy, and causes colour temperature shift. Every 10°C increase above optimal operating temperature can halve LED lifetime.',
   },
@@ -67,12 +67,12 @@ const quickCheckQuestions = [
     id: 'l70-definition',
     question: 'What does L70 lifetime mean for an LED luminaire?',
     options: [
-      '70% of luminaires will fail by this time',
+      'Review all explanations and identify knowledge gaps',
+      'That they are fitted at the correct height (950mm minimum), secured and undamaged',
       'The time until light output depreciates to 70% of initial lumens',
-      '70 hours of continuous operation',
-      '70,000 hours minimum rated life',
+      'An unlimited fine and/or up to two years\\\\\\\' imprisonment',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'L70 indicates the time (usually in hours) until the LED light output has depreciated to 70% of its initial lumen value. This is the industry standard metric for LED useful lifetime.',
   },
@@ -82,7 +82,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the typical forward voltage of a single white LED chip?',
-    options: ['0.7V (like a standard diode)', '2.8V to 3.5V', '12V DC', '230V AC'],
+    options: [
+      '0.7V (like a standard diode)',
+      '2.8V to 3.5V',
+      '12V DC',
+      '230V AC',
+    ],
     correctAnswer: 1,
     explanation:
       'White LEDs typically have a forward voltage of 2.8V to 3.5V depending on the specific chip technology and drive current. This is why multiple LEDs are wired in series strings.',
@@ -91,28 +96,38 @@ const quizQuestions = [
     id: 2,
     question: 'Which driver type would be most appropriate for a 48V LED tape installation?',
     options: [
+      'DALI driver only',
       'Constant current driver',
       'Constant voltage driver',
-      'DALI driver only',
       'No driver required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'LED tape typically uses constant voltage drivers (commonly 12V or 24V DC, with 48V for longer runs). The tape has built-in current limiting resistors, so the driver maintains stable voltage.',
   },
   {
     id: 3,
     question: 'A 50W LED downlight has an efficacy of 130 lm/W. What is its light output?',
-    options: ['50 lumens', '130 lumens', '6,500 lumens', '2.6 lumens'],
-    correctAnswer: 2,
+    options: [
+      '130 lumens',
+      '50 lumens',
+      '2.6 lumens',
+      '6,500 lumens',
+    ],
+    correctAnswer: 3,
     explanation:
       'Luminous efficacy (lm/W) × Power (W) = Light output (lumens). Therefore 130 lm/W × 50W = 6,500 lumens.',
   },
   {
     id: 4,
     question: 'What component in a white LED converts blue light to white light?',
-    options: ['The semiconductor die', 'Phosphor coating', 'The heat sink', 'The lens optic'],
-    correctAnswer: 1,
+    options: [
+      'Phosphor coating',
+      'The semiconductor die',
+      'The heat sink',
+      'The lens optic',
+    ],
+    correctAnswer: 0,
     explanation:
       'White LEDs typically use a blue LED chip coated with yellow phosphor. The phosphor absorbs some blue light and re-emits it as yellow/green wavelengths, which combines with the remaining blue to produce white light.',
   },
@@ -120,12 +135,12 @@ const quizQuestions = [
     id: 5,
     question: 'An LED luminaire is rated L80B10. What does B10 indicate?',
     options: [
+      'To reduce the drive current to dim the LED output',
       '10% of luminaires will have failed completely by L80 hours',
-      'Brightness reduces by 10%',
-      '10 year warranty',
-      '10% power factor',
+      'May cause flickering, audible buzzing, reduced lifetime, or driver failure',
+      'Fidelity Index of 90, indicating good colour rendering accuracy',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'B10 means that by the stated L80 hours, 10% of a large sample of luminaires will have failed catastrophically (not just depreciated). It is a reliability metric alongside the lumen maintenance figure.',
   },
@@ -133,12 +148,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is thermal runaway in LED systems?',
     options: [
-      'When the heat sink becomes too large',
+      'To ensure protection against both overloads and electric shock without nuisance tripping',
+      'System design drawings, emergency lighting logbook, and commissioning certificate',
       'A self-reinforcing cycle where heat increases current, causing more heat, leading to failure',
-      'When the driver overheats',
-      'Normal operating behaviour',
+      'A full inspection by a competent person must be carried out before the tower is used',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Thermal runaway occurs because LED forward voltage decreases as temperature rises. With constant voltage drive, this causes increased current, generating more heat, further reducing voltage - a destructive cycle that can destroy the LED.',
   },
@@ -148,11 +163,11 @@ const quizQuestions = [
       'Which colour temperature would be most appropriate for an office environment under UK lighting guidance?',
     options: [
       '2700K warm white',
-      '4000K neutral white',
-      '6500K daylight',
       'Any temperature is acceptable',
+      '6500K daylight',
+      '4000K neutral white',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'For office environments, 4000K neutral white is typically recommended as it provides good colour rendering for tasks while maintaining a comfortable atmosphere. 2700K is often too warm, and 6500K can appear harsh for extended periods.',
   },
@@ -160,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the purpose of a constant current reduction (CCR) dimmer with LED drivers?',
     options: [
-      'To increase power factor',
       'To reduce the drive current to dim the LED output',
-      'To convert AC to DC',
-      'To provide emergency lighting',
+      'HSG264 — Asbestos: The Survey Guide',
+      'The purpose used, conditions of use, and any foreseeable risk',
+      'Cable types, sizes, routes, and protective device coordination',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'CCR dimmers work by reducing the current supplied to the LED driver, which in turn reduces the drive current to the LEDs, dimming the light output. This is commonly used with 1-10V dimming systems.',
   },
@@ -173,12 +188,12 @@ const quizQuestions = [
     id: 9,
     question: 'A luminaire specification states TM-30-18 Rf=90. What does this indicate?',
     options: [
-      '90% efficient',
-      '90mm diameter reflector',
+      '10% of luminaires will have failed completely by L80 hours',
       'Fidelity Index of 90, indicating good colour rendering accuracy',
-      '90 degree beam angle',
+      'Higher power density and more uniform light output from a single point source',
+      'To reduce the drive current to dim the LED output',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'TM-30-18 is the IES method for evaluating colour rendition. Rf (Fidelity Index) measures how accurately colours are rendered compared to a reference illuminant. Rf=90 indicates excellent colour accuracy (scale 0-100).',
   },
@@ -187,12 +202,12 @@ const quizQuestions = [
     question:
       'What is the main advantage of a chip-on-board (COB) LED compared to surface mount device (SMD) LEDs?',
     options: [
-      'Lower cost',
+      '10% of luminaires will have failed completely by L80 hours',
+      'A self-reinforcing cycle where heat increases current, causing more heat, leading to failure',
       'Higher power density and more uniform light output from a single point source',
-      'Better colour options',
-      'No driver required',
+      'May cause flickering, audible buzzing, reduced lifetime, or driver failure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'COB LEDs have multiple LED dies mounted directly onto a substrate without individual packaging, creating a dense, high-power single light source. This produces uniform light ideal for spotlights and reduces optical complexity.',
   },
@@ -200,12 +215,12 @@ const quizQuestions = [
     id: 11,
     question: 'Why is in-rush current a consideration when specifying LED lighting circuits?',
     options: [
-      'It affects light output',
+      'A preliminary roost assessment followed by dusk emergence and/or dawn re-entry surveys if potential is identified',
+      'Personal relationship bias \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 the mentor may unconsciously assess the apprentice more favourably',
+      'Engulfment by free-flowing grain, oxygen depletion from grain respiration, and dust explosion risk',
       'LED drivers can draw high in-rush current at switch-on, potentially tripping MCBs or causing contact welding in switches',
-      'It increases energy consumption',
-      'It only affects emergency lighting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'LED driver capacitors cause high in-rush currents at switch-on (often 20-50× steady state). This can trip MCBs rated too close to running current, weld switch contacts, or cause nuisance tripping. Circuit design must account for aggregate in-rush.',
   },
@@ -214,12 +229,12 @@ const quizQuestions = [
     question:
       "An LED driver is marked as 'non-dimmable'. What happens if connected to a dimmer switch?",
     options: [
-      'It will dim normally',
       'May cause flickering, audible buzzing, reduced lifetime, or driver failure',
-      'Nothing - it simply will not dim',
-      'It will work but at reduced efficiency',
+      'A self-reinforcing cycle where heat increases current, causing more heat, leading to failure',
+      'Fidelity Index of 90, indicating good colour rendering accuracy',
+      '10% of luminaires will have failed completely by L80 hours',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Non-dimmable drivers are not designed to handle the chopped waveform from dimmers. This can cause visible flicker, audible noise from the driver, overheating, and premature failure. Always match driver type to control method.',
   },

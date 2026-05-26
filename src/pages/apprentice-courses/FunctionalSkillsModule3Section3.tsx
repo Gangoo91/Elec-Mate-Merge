@@ -27,7 +27,12 @@ const FunctionalSkillsModule3Section3 = () => {
       id: 1,
       question:
         'Which of the following is a popular electrical certification app used by UK electricians?',
-      options: ['Instagram', 'Certsure / NICEIC Certification Portal', 'Spotify', 'TikTok'],
+      options: [
+        '25-35 litres per second per kW',
+        'Certsure / NICEIC Certification Portal',
+        'They must be locked (brakes engaged)',
+        'It determines the direction of motor rotation',
+      ],
       correctAnswer: 1,
       explanation:
         'Certsure (the parent company of NICEIC and ELECSA) provides a digital certification portal that allows registered electricians to create, manage, and submit electrical certificates electronically. iCertifi is another popular option. These purpose-built apps replace handwritten paper certificates with professional digital documents.',
@@ -37,12 +42,12 @@ const FunctionalSkillsModule3Section3 = () => {
       question:
         'When annotating a PDF of a wiring diagram on site, which tool would you most commonly use?',
       options: [
-        'A paintbrush tool for artistic effects',
+        'Dangerous high voltages develop that can damage insulation and harm personnel',
+        'Moving desks and computers within a finished office',
         'A highlighter and text comment tool to mark areas needing attention',
-        'A music embedding tool',
-        'A video recording tool',
+        'Check for hidden services and structural elements',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Highlighter and text comment tools are the most practical for annotating wiring diagrams and electrical drawings. You can highlight areas of concern, add text notes about observations or required changes, and draw attention to specific circuits. These annotations can be shared with colleagues and clients as part of your documentation.',
     },
@@ -51,12 +56,12 @@ const FunctionalSkillsModule3Section3 = () => {
       question:
         'What metadata should you ensure is enabled on site photographs taken for compliance documentation?',
       options: [
-        'Instagram filters',
+        'Safety interlocks and fan proving',
+        'Brushes wear, sparking, RFI emission',
+        'Supply disruption if the sole supplier fails',
         'Date, time, and GPS location stamps',
-        'Artistic borders',
-        'Background music',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Date, time, and GPS location metadata embedded in photographs provides verifiable evidence of when and where the photo was taken. This is crucial for compliance documentation — it proves you were on site at the recorded time and that the photograph accurately represents the installation at that specific point in the project.',
     },
@@ -65,12 +70,12 @@ const FunctionalSkillsModule3Section3 = () => {
       question:
         'What is the primary purpose of Building Information Modelling (BIM) in electrical work?',
       options: [
-        'Creating marketing materials for your business',
         "A 3D digital representation of a building's physical and functional characteristics, including electrical systems",
-        'Editing holiday photographs',
-        'Playing simulation games',
+        "Have multiple language subtitles, use clear visuals, avoid colloquialisms, and include a short comprehension check at the end",
+        "Two insulated (brown and blue) conductors plus a bare CPC, all enclosed in a PVC outer sheath",
+        "A witness testimony from a qualified assessor who directly observed the apprentice performing the task",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'BIM creates a detailed 3D digital model of a building that includes all systems — structural, mechanical, electrical, and plumbing. For electricians, BIM allows you to see exactly where cables, containment, distribution boards, and outlets are positioned relative to other building elements, reducing clashes and rework on site.',
     },
@@ -78,10 +83,10 @@ const FunctionalSkillsModule3Section3 = () => {
       id: 5,
       question: 'Which feature makes digital signatures legally valid in the UK?',
       options: [
-        'They must be written in blue ink',
+        'The designer/contractor who signs the design certificate',
         'They comply with the Electronic Communications Act 2000 and eIDAS regulations',
-        'They must include a photograph of the signer',
-        'They are only valid if printed on paper',
+        'It requires a balance between the level of risk and the cost, time, and effort of reducing it',
+        'Regulation 4(1) — construction of systems to prevent danger',
       ],
       correctAnswer: 1,
       explanation:
@@ -92,12 +97,12 @@ const FunctionalSkillsModule3Section3 = () => {
       question:
         'What is the main advantage of using a project management app like Trello or Monday.com for electrical projects?',
       options: [
-        'It replaces the need for electrical qualifications',
+        'Ask relevant follow-up questions to deepen understanding and show continued interest',
+        'Electric shock or arc flash to the second person if they assume the system is dead — potentially fatal',
         'It provides visibility of task progress, deadlines, and team responsibilities in one place',
-        'It automatically completes electrical calculations',
-        'It generates electrical certificates',
+        'Work only under a permit issued to a competent person, follow its conditions exactly and never extend it',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Project management apps centralise all project information — tasks, deadlines, assigned team members, progress status, and file attachments — in a single accessible location. This visibility prevents tasks from being forgotten, enables better coordination between team members, and provides clients with progress updates.',
     },
@@ -106,12 +111,12 @@ const FunctionalSkillsModule3Section3 = () => {
       question:
         'When taking site photographs for documentation, what framing technique ensures the photo is useful?',
       options: [
-        'Always use portrait mode with artistic blur',
+        'Raising awareness, addressing stigma, and improving mental health support in the UK construction industry',
+        'Apps automatically calculate test result pass/fail criteria and reduce human error',
+        '"It sounds like you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re feeling overwhelmed by the amount of work that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s been added to your schedule."',
         'Take a wide establishing shot first, then close-up detail shots with identifiable reference points',
-        'Only photograph in black and white for a professional look',
-        'Use the maximum zoom at all times',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Professional documentation photography follows a systematic approach: start with a wide establishing shot that shows the location context (which room, where on the wall), then take progressively closer shots showing specific details. Include reference points (cable labels, circuit numbers, adjacent fittings) so the photograph can be understood without additional context.',
     },
@@ -119,8 +124,13 @@ const FunctionalSkillsModule3Section3 = () => {
       id: 8,
       question:
         'Which electrical design software is commonly used by UK electrical engineers and designers?',
-      options: ['Microsoft Paint', 'Amtech ProDesign or Trimble ID', 'Notepad', 'Calculator'],
-      correctAnswer: 1,
+      options: [
+        'Amtech ProDesign or Trimble ID',
+        'Asbestos Mines of South Africa',
+        '300-600mm apart depending on size',
+        'Plug earth pin to appliance earth',
+      ],
+      correctAnswer: 0,
       explanation:
         'Amtech ProDesign (now part of ETAP) and Trimble ID (formerly Cymap) are industry-standard electrical design software packages used extensively in the UK. They perform cable sizing, voltage drop calculations, discrimination studies, and generate distribution board schedules compliant with BS 7671. These tools are widely used by consultancies and design-and-build contractors.',
     },

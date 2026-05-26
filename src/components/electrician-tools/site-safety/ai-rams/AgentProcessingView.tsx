@@ -1,8 +1,21 @@
-import React, { useState, useMemo } from 'react';
+/**
+ * Agent Processing View
+ *
+ * Editorial streaming surface for the AI RAMS Generator. Mirrors
+ * `CostEstimateStream` so the swap to results feels like a continuation,
+ * not a transition. Two specialists run in sequence: the H&S agent
+ * (hazards + controls + PPE) and the Installer agent (method statement).
+ *
+ * Phase 5 will subscribe to a `rams_partials` realtime channel and stream
+ * each hazard / method step into the live feed below the stage list.
+ */
+
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Wrench, CheckCircle, Clock, XCircle, Sparkles, Loader2 } from 'lucide-react';
-import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+import { supabase } from '@/integrations/supabase/client';
 
 interface AgentStep {
   name: string;
@@ -13,6 +26,8 @@ interface AgentStep {
 }
 
 interface AgentProcessingViewProps {
+  /** Backend job id — drives the rams_partials realtime subscription. */
+  jobId?: string | null;
   overallProgress: number;
   currentStep: string;
   elapsedTime: number;
@@ -27,7 +42,39 @@ interface AgentProcessingViewProps {
   installerAgentStatus?: string;
 }
 
+/** Known partial stages, in display order. */
+const PARTIAL_STAGES = [
+  { key: 'rag', label: 'Grounded' },
+  { key: 'hazards', label: 'Hazards' },
+  { key: 'ppe', label: 'PPE' },
+  { key: 'emergency', label: 'Emergency' },
+  { key: 'steps', label: 'Steps' },
+  { key: 'tools', label: 'Tools' },
+  { key: 'materials', label: 'Materials' },
+  { key: 'tips', label: 'Tips' },
+  { key: 'mistakes', label: 'Mistakes' },
+  { key: 'finalise', label: 'Finalised' },
+] as const;
+
+const AGENT_META: Record<string, { label: string; description: string }> = {
+  'health-safety': {
+    label: 'Health & Safety',
+    description: 'Identifying hazards, scoring risk, specifying control measures.',
+  },
+  installer: {
+    label: 'Method Statement',
+    description: 'Building the step-by-step installation procedure.',
+  },
+};
+
+const formatTime = (seconds: number): string => {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+};
+
 export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
+  jobId,
   overallProgress,
   currentStep,
   elapsedTime,
@@ -35,335 +82,356 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
   agentSteps,
   onCancel,
   isCancelling = false,
+  jobDescription,
   hsAgentProgress = 0,
   installerAgentProgress = 0,
 }) => {
   const [showCancelDialog, setShowCancelDialog] = useState(false);
+  const [partials, setPartials] = useState<Map<string, any>>(new Map());
 
-  // Calculate real progress from actual agent progress
-  const displayProgress = useMemo(() => {
-    const hsContribution = (hsAgentProgress / 100) * 50;
-    const installerContribution = (installerAgentProgress / 100) * 50;
-    const calculatedProgress = hsContribution + installerContribution;
+  // Local elapsed counter — ticks every second so the time-based progress
+  // creep advances visibly even when no server-side progress update lands.
+  // Stops once both agents complete to avoid runaway re-renders on results.
+  const bothComplete = agentSteps.every((s) => s.status === 'complete');
+  const [liveElapsed, setLiveElapsed] = useState<number>(elapsedTime);
+  useEffect(() => {
+    setLiveElapsed((prev) => Math.max(prev, elapsedTime));
+  }, [elapsedTime]);
+  useEffect(() => {
+    if (bothComplete) return;
+    const id = setInterval(() => setLiveElapsed((t) => t + 1), 1000);
+    return () => clearInterval(id);
+  }, [bothComplete]);
 
-    const bothComplete = agentSteps.every((step) => step.status === 'complete');
-    if (bothComplete || overallProgress >= 100) {
-      return 100;
-    }
+  // Realtime subscription to rams_partials. Initial fetch catches anything
+  // inserted before the channel opened; then we listen for INSERT/UPDATE
+  // for the duration of the run.
+  useEffect(() => {
+    if (!jobId) return;
 
-    return Math.min(Math.round(calculatedProgress), 95);
-  }, [hsAgentProgress, installerAgentProgress, agentSteps, overallProgress]);
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase
+        .from('rams_partials')
+        .select('stage, payload, created_at')
+        .eq('job_id', jobId);
+      if (cancelled || !data) return;
+      setPartials((prev) => {
+        const next = new Map(prev);
+        (data as any[]).forEach((row) => next.set(row.stage, row.payload));
+        return next;
+      });
+    })();
 
+    const channel = supabase
+      .channel(`rams-partials-${jobId}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'rams_partials',
+          filter: `job_id=eq.${jobId}`,
+        },
+        (payload: any) => {
+          const row = payload.new;
+          setPartials((prev) => new Map(prev).set(row.stage, row.payload));
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'rams_partials',
+          filter: `job_id=eq.${jobId}`,
+        },
+        (payload: any) => {
+          const row = payload.new;
+          setPartials((prev) => new Map(prev).set(row.stage, row.payload));
+        }
+      )
+      .subscribe();
+
+    return () => {
+      cancelled = true;
+      supabase.removeChannel(channel);
+    };
+  }, [jobId]);
+
+  // Derived live counts from partials. Falls back to 0 until each stage
+  // lands. Drives the 3-stat strip + the live feed below.
+  const liveHazardCount = (partials.get('hazards')?.count as number | undefined) ?? 0;
+  const liveStepCount = (partials.get('steps')?.count as number | undefined) ?? 0;
+  const liveRagFacets =
+    ((partials.get('rag')?.bs7671FacetCount as number | undefined) ?? 0) +
+    ((partials.get('rag')?.safetyFacetCount as number | undefined) ?? 0) +
+    ((partials.get('rag')?.practicalCount as number | undefined) ?? 0);
+
+  // Display progress combines real server progress with a time-based creep so
+  // the bar walks 0→95% smoothly even while both OpenAI calls are mid-flight.
+  // The exponential curve asymptotes at 95% with the half-life tuned so the
+  // bar passes 50% around 35s, 80% around 80s, and reaches 90% by 120s.
+  const calculatedProgress =
+    (hsAgentProgress / 100) * 50 + (installerAgentProgress / 100) * 50;
+  const serverProgress = Math.max(calculatedProgress, overallProgress);
+  const timeCreep = 95 * (1 - Math.exp(-liveElapsed / 50));
+  const displayProgress = bothComplete
+    ? 100
+    : Math.min(Math.round(Math.max(serverProgress, timeCreep)), 95);
   const isComplete = displayProgress >= 100;
 
-  const formatTime = (seconds: number): string => {
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return mins + ':' + secs.toString().padStart(2, '0');
-  };
-
-  const getAgentIcon = (name: string) => {
-    switch (name) {
-      case 'health-safety':
-        return Shield;
-      case 'installer':
-        return Wrench;
-      default:
-        return Sparkles;
-    }
-  };
-
-  const getAgentTitle = (name: string) => {
-    switch (name) {
-      case 'health-safety':
-        return 'H&S Agent';
-      case 'installer':
-        return 'Install Planner';
-      default:
-        return name;
-    }
-  };
-
-  const getAgentDescription = (name: string, status: string) => {
-    if (status === 'complete') return 'Complete';
-    if (status === 'pending') return 'Waiting...';
-    switch (name) {
-      case 'health-safety':
-        return 'Analysing hazards...';
-      case 'installer':
-        return 'Creating procedures...';
-      default:
-        return 'Processing...';
-    }
-  };
-
   return (
-    <div className="min-h-[100dvh] bg-elec-dark flex flex-col overflow-hidden relative">
-      {/* Background Glow */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[300px] h-[300px] rounded-full bg-elec-yellow/5 blur-[60px]"
-          animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.3, 0.15] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      </div>
+    <div className="space-y-7 sm:space-y-10 pb-12">
+      <div className="space-y-7 sm:space-y-10">
+        {/* HERO */}
+        <section className="space-y-3">
+          <Eyebrow>{isComplete ? 'RAMS GENERATED' : 'STREAMING RAMS'}</Eyebrow>
+          <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold tracking-tight leading-[1.05] text-white">
+            <span className="text-elec-yellow">{displayProgress}%</span>{' '}
+            <span className="text-white">{isComplete ? 'complete.' : 'generated.'}</span>
+          </h2>
+          <p className="text-[14px] sm:text-[15px] leading-relaxed text-white/85 max-w-2xl">
+            {currentStep ||
+              (isComplete
+                ? 'Your risk assessment and method statement are ready for review.'
+                : 'Two specialists are reading the brief, identifying hazards and building the method statement.')}
+          </p>
+        </section>
 
-      {/* Main Content - Full width with compact padding */}
-      <div className="relative z-10 flex-1 flex flex-col justify-evenly px-3 py-4 w-full">
-        {/* Header Section - Compact */}
-        <div className="text-center space-y-2">
-          {/* Animated Icon - Smaller */}
-          <div className="flex justify-center">
-            <div className="relative">
-              <motion.div
-                className="absolute inset-0 rounded-full border border-elec-yellow/20"
-                style={{ width: 56, height: 56, margin: -4 }}
-                animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.7, 0.4] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <motion.div
-                className={cn(
-                  'w-12 h-12 rounded-full flex items-center justify-center',
-                  isComplete ? 'bg-green-500/10' : 'bg-elec-yellow/10'
-                )}
-                animate={{ scale: [1, 1.03, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                {isComplete ? (
-                  <CheckCircle className="h-6 w-6 text-green-400" />
-                ) : (
-                  <Sparkles className="h-6 w-6 text-elec-yellow" />
-                )}
-              </motion.div>
-              {!isComplete && (
-                <motion.div
-                  className="absolute inset-0 rounded-full bg-elec-yellow/20"
-                  animate={{ scale: [1, 1.3], opacity: [0.3, 0] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  style={{ width: 48, height: 48 }}
-                />
-              )}
-            </div>
-          </div>
-
-          <div>
-            <h2 className="text-lg font-bold text-white">
-              {isComplete ? 'Complete!' : 'Generating RAMS'}
-            </h2>
-            <p className="text-[10px] text-white mt-0.5">
-              {isComplete ? 'Document ready' : 'AI agents working'}
-            </p>
-          </div>
-        </div>
-
-        {/* Progress Section */}
-        <div className="space-y-2">
-          {/* Large Percentage - Slightly smaller */}
-          <div className="text-center">
-            <motion.span
-              className={cn(
-                'text-4xl font-bold tabular-nums',
-                isComplete ? 'text-green-400' : 'text-elec-yellow'
-              )}
-              key={displayProgress}
-              initial={{ scale: 1.05 }}
-              animate={{ scale: 1 }}
-            >
+        {/* Live progress */}
+        <section className="space-y-2">
+          <div className="flex items-baseline justify-between gap-4">
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+              Pipeline
+            </span>
+            <span className="text-[24px] sm:text-[28px] font-semibold tabular-nums text-white">
               {displayProgress}
-            </motion.span>
-            <span
-              className={cn(
-                'text-xl font-bold',
-                isComplete ? 'text-green-400/60' : 'text-elec-yellow/60'
-              )}
-            >
-              %
+              <span className="text-white/60">%</span>
             </span>
           </div>
-
-          {/* Progress Bar */}
-          <div className="relative">
-            <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-              <motion.div
-                className={cn(
-                  'h-full rounded-full relative',
-                  isComplete
-                    ? 'bg-gradient-to-r from-green-500 via-green-400 to-green-500'
-                    : 'bg-gradient-to-r from-elec-yellow/80 via-elec-yellow to-elec-yellow/80'
-                )}
-                style={{ width: `${displayProgress}%` }}
-                transition={{ duration: 0.5 }}
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                  animate={{ x: ['-100%', '200%'] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
-                />
-              </motion.div>
-            </div>
-            <div
+          <div className="relative h-px bg-white/[0.06] overflow-hidden">
+            <motion.div
               className={cn(
-                'absolute -bottom-1 left-0 h-3 blur-md rounded-full transition-all duration-300',
-                isComplete ? 'bg-green-500/30' : 'bg-elec-yellow/30'
+                'absolute inset-y-0 left-0',
+                isComplete ? 'bg-emerald-400' : 'bg-elec-yellow'
               )}
-              style={{ width: `${displayProgress}%` }}
+              animate={{ width: `${Math.max(displayProgress, 2)}%` }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
             />
           </div>
-
-          {/* Time Stats */}
-          <div className="flex items-center justify-center gap-4 text-xs text-white">
-            <span className="flex items-center gap-1">
-              <Clock className="w-3 h-3" />
-              <span className="tabular-nums">{formatTime(elapsedTime)}</span>
+          <div className="flex items-baseline justify-between gap-4 pt-1">
+            <span className="text-[11px] text-white/60 tabular-nums">
+              Elapsed {formatTime(liveElapsed)}
             </span>
-            {!isComplete && (
-              <>
-                <span className="text-white">•</span>
-                <span className="tabular-nums">~{formatTime(estimatedTimeRemaining)} left</span>
-              </>
+            {!isComplete && estimatedTimeRemaining > 0 && (
+              <span className="text-[11px] text-white/60 tabular-nums">
+                ~{formatTime(estimatedTimeRemaining)} remaining
+              </span>
             )}
           </div>
+        </section>
 
-          {/* Stage Dots */}
-          <div className="flex items-center justify-center gap-2">
-            {agentSteps.map((agent) => (
-              <motion.div
-                key={agent.name}
-                className={cn(
-                  'h-1.5 rounded-full transition-all duration-500',
-                  agent.status === 'complete' && 'w-12 bg-green-500',
-                  agent.status === 'processing' && 'w-16 bg-elec-yellow',
-                  agent.status === 'pending' && 'w-6 bg-white/10'
-                )}
-                animate={agent.status === 'processing' ? { opacity: [0.7, 1, 0.7] } : {}}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              />
-            ))}
+        {/* Live numbers strip — driven by rams_partials realtime channel.
+            Hazards / steps counts fill in as each agent finishes its pass;
+            facets count appears once RAG completes. Escapes the
+            orchestrator's mobile padding for edge-to-edge hairlines. */}
+        <section className="-mx-4 sm:mx-0 grid grid-cols-3 gap-px bg-black sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]">
+          <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-6 sm:py-5">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+              {liveHazardCount > 0 ? 'Hazards' : 'Risk assessment'}
+            </div>
+            <div className="mt-1 text-[15px] sm:text-[17px] font-semibold tabular-nums text-elec-yellow">
+              {liveHazardCount > 0 ? liveHazardCount : `${hsAgentProgress}%`}
+            </div>
           </div>
-        </div>
+          <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-6 sm:py-5">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+              {liveStepCount > 0 ? 'Steps' : 'Method statement'}
+            </div>
+            <div className="mt-1 text-[15px] sm:text-[17px] font-semibold tabular-nums text-white">
+              {liveStepCount > 0 ? liveStepCount : `${installerAgentProgress}%`}
+            </div>
+          </div>
+          <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-6 sm:py-5">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+              {liveRagFacets > 0 ? 'Grounded by' : 'Elapsed'}
+            </div>
+            <div className="mt-1 text-[15px] sm:text-[17px] font-semibold tabular-nums text-white">
+              {liveRagFacets > 0 ? liveRagFacets : formatTime(liveElapsed)}
+            </div>
+          </div>
+        </section>
 
-        {/* Agent Cards - Compact */}
-        <div className="space-y-1.5">
-          {agentSteps.map((agent) => {
-            const Icon = getAgentIcon(agent.name);
-            const isActive = agent.status === 'processing';
-            const isAgentComplete = agent.status === 'complete';
-            const isPending = agent.status === 'pending';
-            const realProgress =
-              agent.name === 'health-safety' ? hsAgentProgress : installerAgentProgress;
-
-            return (
-              <motion.div
-                key={agent.name}
-                className={cn(
-                  'p-2.5 rounded-xl border transition-all duration-300',
-                  isActive && 'bg-elec-yellow/5 border-elec-yellow/20',
-                  isAgentComplete && 'bg-green-500/5 border-green-500/20',
-                  isPending && 'bg-white/[0.02] border-white/[0.08] opacity-50'
-                )}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                <div className="flex items-center gap-2.5">
-                  {/* Icon */}
-                  <div
-                    className={cn(
-                      'w-9 h-9 rounded-lg flex items-center justify-center shrink-0',
-                      isActive && 'bg-elec-yellow/10',
-                      isAgentComplete && 'bg-green-500/10',
-                      isPending && 'bg-white/5'
-                    )}
-                  >
-                    {isAgentComplete ? (
-                      <CheckCircle className="w-4 h-4 text-green-400" />
-                    ) : isActive ? (
-                      <Loader2 className="w-4 h-4 text-elec-yellow animate-spin" />
-                    ) : (
-                      <Icon className="w-4 h-4 text-white" />
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <h3
-                        className={cn(
-                          'font-semibold text-xs truncate',
-                          isActive && 'text-elec-yellow',
-                          isAgentComplete && 'text-green-400',
-                          isPending && 'text-white'
-                        )}
-                      >
-                        {getAgentTitle(agent.name)}
-                      </h3>
-                      {isActive && (
-                        <span className="text-[10px] font-medium text-elec-yellow tabular-nums bg-elec-yellow/10 px-1.5 py-0.5 rounded">
-                          {realProgress}%
-                        </span>
+        {/* Live feed — each rams_partials row lights up a chip as the
+            pipeline progresses. Mirrors CostEstimateStream's live materials
+            list but compact since RAMS partials are summaries not items. */}
+        {partials.size > 0 && (
+          <section className="space-y-3">
+            <div className="flex items-baseline justify-between gap-3">
+              <Eyebrow>LIVE FEED</Eyebrow>
+              <span className="text-[11px] text-white/60 tabular-nums">
+                {partials.size} of {PARTIAL_STAGES.length}
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <AnimatePresence>
+                {PARTIAL_STAGES.filter((s) => partials.has(s.key)).map((s) => {
+                  const payload = partials.get(s.key) ?? {};
+                  const detail =
+                    s.key === 'hazards'
+                      ? `${payload.count ?? 0}`
+                      : s.key === 'steps'
+                        ? `${payload.count ?? 0}`
+                        : s.key === 'rag'
+                          ? `${(payload.bs7671FacetCount ?? 0) + (payload.safetyFacetCount ?? 0) + (payload.practicalCount ?? 0)}`
+                          : s.key === 'ppe' || s.key === 'emergency' || s.key === 'tools' || s.key === 'materials' || s.key === 'tips' || s.key === 'mistakes'
+                            ? `${payload.count ?? 0}`
+                            : null;
+                  return (
+                    <motion.div
+                      key={s.key}
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="inline-flex items-center gap-2 h-8 px-3 rounded-xl bg-[hsl(0_0%_10%)] border border-emerald-500/30 text-[11.5px]"
+                    >
+                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                      <span className="font-medium text-white">{s.label}</span>
+                      {detail !== null && (
+                        <span className="text-emerald-400 tabular-nums">{detail}</span>
                       )}
-                      {isAgentComplete && (
-                        <span className="text-[10px] font-medium text-green-400 bg-green-500/10 px-1.5 py-0.5 rounded">
-                          ✓
-                        </span>
-                      )}
-                    </div>
-                    <p
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
+          </section>
+        )}
+
+        {/* Stage cards — Done / Live / Queued */}
+        <section className="space-y-4">
+          <div className="flex items-baseline justify-between gap-3">
+            <Eyebrow>STAGES</Eyebrow>
+            <span className="text-[11px] text-white/60 tabular-nums">
+              {agentSteps.filter((s) => s.status === 'complete').length} of {agentSteps.length}
+            </span>
+          </div>
+          <div className="space-y-3">
+            {agentSteps.map((agent, idx) => {
+              const meta = AGENT_META[agent.name] ?? {
+                label: agent.name,
+                description: '',
+              };
+              const realProgress =
+                agent.name === 'health-safety' ? hsAgentProgress : installerAgentProgress;
+              const isStageComplete = agent.status === 'complete';
+              const isActive = agent.status === 'processing';
+              const isPending = agent.status === 'pending';
+
+              return (
+                <div
+                  key={agent.name}
+                  className={cn(
+                    'bg-[hsl(0_0%_10%)] border rounded-2xl p-4 sm:p-5 transition-colors',
+                    isStageComplete
+                      ? 'border-emerald-500/30'
+                      : isActive
+                        ? 'border-elec-yellow/40'
+                        : 'border-white/[0.08] opacity-60'
+                  )}
+                >
+                  <div className="flex items-baseline gap-3">
+                    <span
                       className={cn(
-                        'text-[10px] mt-0.5',
-                        isActive && 'text-white',
-                        isAgentComplete && 'text-green-400/40',
-                        isPending && 'text-white'
+                        'text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums shrink-0',
+                        isStageComplete
+                          ? 'text-emerald-400'
+                          : isActive
+                            ? 'text-elec-yellow'
+                            : 'text-white/40'
                       )}
                     >
-                      {getAgentDescription(agent.name, agent.status)}
-                    </p>
-
-                    {/* Inline Progress Bar */}
-                    {isActive && (
-                      <div className="mt-1.5 w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full bg-elec-yellow rounded-full"
-                          style={{ width: `${realProgress}%` }}
-                          transition={{ duration: 0.3 }}
-                        />
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <div
+                        className={cn(
+                          'text-[14.5px] font-semibold tracking-tight flex items-center gap-2',
+                          isStageComplete
+                            ? 'text-emerald-400'
+                            : isActive
+                              ? 'text-elec-yellow'
+                              : 'text-white/70'
+                        )}
+                      >
+                        <span>{meta.label}</span>
+                        {isActive && (
+                          <span className="inline-block h-2 w-2 rounded-full bg-elec-yellow animate-pulse" />
+                        )}
                       </div>
-                    )}
+                      <div className="mt-1 text-[12.5px] leading-snug text-white/65">
+                        {agent.currentStep || meta.description}
+                      </div>
+                      {/* Per-agent progress bar — only when active */}
+                      {isActive && realProgress > 0 && (
+                        <div className="mt-3 h-px bg-white/[0.06] overflow-hidden">
+                          <motion.div
+                            className="h-full bg-elec-yellow"
+                            animate={{ width: `${realProgress}%` }}
+                            transition={{ duration: 0.4, ease: 'easeOut' }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                    <span
+                      className={cn(
+                        'text-[10.5px] uppercase tracking-[0.18em] font-semibold shrink-0 tabular-nums',
+                        isStageComplete
+                          ? 'text-emerald-400'
+                          : isActive
+                            ? 'text-elec-yellow'
+                            : 'text-white/30'
+                      )}
+                    >
+                      {isStageComplete
+                        ? 'Done'
+                        : isActive
+                          ? `${realProgress}%`
+                          : isPending
+                            ? 'Queued'
+                            : ''}
+                    </span>
                   </div>
                 </div>
-              </motion.div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        </section>
 
-        {/* Cancel Button - Compact */}
+        {/* Cancel — discrete, below the fold */}
         {onCancel && !isComplete && (
-          <button
-            onClick={() => setShowCancelDialog(true)}
-            disabled={isCancelling}
-            className="w-full py-3 min-h-[48px] text-xs text-white hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-1.5 touch-manipulation active:scale-[0.98]"
-          >
-            {isCancelling ? (
-              <>
-                <Loader2 className="w-3 h-3 animate-spin" />
-                Cancelling...
-              </>
-            ) : (
-              <>
-                <XCircle className="w-3 h-3" />
-                Cancel
-              </>
-            )}
-          </button>
+          <div className="pt-2 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowCancelDialog(true)}
+              disabled={isCancelling}
+              className="text-[12.5px] font-medium text-white/55 hover:text-red-400 transition-colors touch-manipulation disabled:opacity-50"
+            >
+              {isCancelling ? 'Cancelling…' : 'Cancel generation'}
+            </button>
+          </div>
         )}
       </div>
 
       <ConfirmationDialog
         open={showCancelDialog}
         onOpenChange={setShowCancelDialog}
-        title="Cancel RAMS Generation?"
-        description="This will stop the generation and cannot be undone."
-        confirmText="Yes, Cancel"
-        cancelText="Continue"
+        title="Cancel RAMS generation?"
+        description="This stops the current run. Your draft is kept locally so you can edit and try again."
+        confirmText="Yes, cancel"
+        cancelText="Keep going"
         onConfirm={() => {
           setShowCancelDialog(false);
           onCancel?.();

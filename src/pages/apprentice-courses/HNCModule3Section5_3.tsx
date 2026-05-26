@@ -36,8 +36,8 @@ const quickCheckQuestions = [
     options: [
       'Higher voltage output',
       'Smaller size and lower cost',
-      'Better voltage regulation',
       'Easier maintenance',
+      'Better voltage regulation',
     ],
     correctIndex: 1,
     explanation:
@@ -47,12 +47,12 @@ const quickCheckQuestions = [
     id: 'dyn11-meaning',
     question: 'What does the vector group designation Dyn11 indicate?',
     options: [
-      'Delta primary, star secondary with neutral, 30° lag',
-      'Star primary, delta secondary, 330° phase shift',
       'Delta primary, star secondary with neutral, 330° lead',
+      'Star primary, delta secondary, 330° phase shift',
       'Star primary, star secondary, zero phase shift',
+      'Delta primary, star secondary with neutral, 30° lag',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Dyn11 indicates Delta (D) primary, star (y) secondary with neutral (n) brought out. The '11' means the secondary voltage leads the primary by 330° (11 × 30°), equivalent to 30° lag.",
   },
@@ -60,10 +60,10 @@ const quickCheckQuestions = [
     id: 'parallel-operation',
     question: 'Which is NOT a requirement for parallel operation of transformers?',
     options: [
-      'Same voltage ratio',
       'Same vector group',
-      'Identical kVA ratings',
       'Same percentage impedance',
+      'Identical kVA ratings',
+      'Same voltage ratio',
     ],
     correctIndex: 2,
     explanation:
@@ -74,12 +74,12 @@ const quickCheckQuestions = [
     question:
       'What is the main advantage of an auto-transformer compared to a double-wound transformer?',
     options: [
-      'Better isolation',
       'Smaller size for given VA rating',
-      'Higher voltage capability',
-      'Lower fault level',
+      'P = sqrt(3) x V_L x I_L x cos(phi)',
+      'Upsize CSA or shorten run',
+      'AC, pulsating DC, and smooth DC',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Auto-transformers have a single winding serving both primary and secondary, requiring less copper and iron. They are significantly smaller and cheaper for voltage ratios close to 1:1, but provide no electrical isolation.',
   },
@@ -90,7 +90,12 @@ const quizQuestions = [
     id: 1,
     question:
       'In a three-phase core-type transformer, how many limbs does the magnetic core typically have?',
-    options: ['Two limbs', 'Three limbs', 'Four limbs', 'Six limbs'],
+    options: [
+      'Two limbs',
+      'Three limbs',
+      'Four limbs',
+      'Six limbs',
+    ],
     correctAnswer: 1,
     explanation:
       'A three-phase core-type transformer has three limbs, one for each phase. The windings for each phase are wound on their respective limb, and magnetic flux flows through the common yokes.',
@@ -98,7 +103,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the phase displacement between primary and secondary in a Yy0 transformer?',
-    options: ['30°', '180°', '0°', '330°'],
+    options: [
+      '330°',
+      '30°',
+      '0°',
+      '180°',
+    ],
     correctAnswer: 2,
     explanation:
       "The '0' in Yy0 indicates zero phase displacement (0 × 30° = 0°). Both primary and secondary are star-connected with their line voltages in phase.",
@@ -106,8 +116,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Which vector group is most commonly used for distribution transformers in the UK?',
-    options: ['Yy0', 'Dd0', 'Dyn11', 'Yd1'],
-    correctAnswer: 2,
+    options: [
+      'Dd0',
+      'Yy0',
+      'Yd1',
+      'Dyn11',
+    ],
+    correctAnswer: 3,
     explanation:
       'Dyn11 is the standard for UK distribution transformers. The delta primary allows third harmonic currents to circulate, while the star secondary provides a neutral for single-phase loads. The 30° phase shift helps with parallel operation.',
   },
@@ -115,12 +130,12 @@ const quizQuestions = [
     id: 4,
     question: 'What happens if transformers with different vector groups are paralleled?',
     options: [
-      'Reduced efficiency',
       'Excessive circulating currents and possible damage',
-      'Unequal load sharing',
-      'Reduced voltage regulation',
+      'Very small diameter tubing for blown fibre installation',
+      'Using compressed air to clean dust from surfaces',
+      'As part of routine maintenance records',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Paralleling transformers with different vector groups creates a phase difference between their secondary voltages, causing large circulating currents that can damage windings and trip protective devices.',
   },
@@ -128,8 +143,13 @@ const quizQuestions = [
     id: 5,
     question:
       'For an auto-transformer with 400V input and 230V output, what percentage of the load current passes through the common winding?',
-    options: ['42.5%', '57.5%', '100%', '170%'],
-    correctAnswer: 0,
+    options: [
+      '57.5%',
+      '42.5%',
+      '170%',
+      '100%',
+    ],
+    correctAnswer: 1,
     explanation:
       'In an auto-transformer, only the difference between input and output current flows in the series winding. With a 400:230 ratio, the common winding carries (400-230)/400 = 42.5% of the load current, making it smaller than an equivalent two-winding transformer.',
   },
@@ -138,11 +158,11 @@ const quizQuestions = [
     question: 'What is the purpose of the Scott connection?',
     options: [
       'To convert three-phase to single-phase',
-      'To convert three-phase to two-phase',
       'To provide voltage regulation',
+      'To convert three-phase to two-phase',
       'To eliminate harmonics',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Scott connection uses two single-phase transformers to convert a three-phase supply to a two-phase (90° displaced) supply. It was historically used for two-phase motor drives and is still used in some railway electrification systems.',
   },
@@ -150,12 +170,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the primary function of a neutral earthing transformer (NET)?',
     options: [
-      'To step down voltage for lighting',
+      'Planning, coordinating, and delivering electrical projects',
+      'Prove the circuit would be safe after rectification',
+      'Actuator wired to wrong digital output',
       'To provide an earth reference for unearthed systems',
-      'To improve power factor',
-      'To suppress harmonics',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A neutral earthing transformer creates an artificial neutral point for earthing in systems where the supply transformer has no accessible neutral (e.g., delta secondary). This provides earth fault protection capability.',
   },
@@ -163,12 +183,12 @@ const quizQuestions = [
     id: 8,
     question: 'In a shell-type three-phase transformer, how are the phase windings arranged?',
     options: [
-      'On separate magnetic cores',
-      'On a common three-limbed core',
-      'All windings on a single central limb',
       'Each phase surrounded by its own magnetic circuit',
+      'Check status indicator shows device is functional',
+      'High task direction, low relationship support',
+      'To ensure only the protective device nearest the fault operates',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'In a shell-type transformer, each phase winding is surrounded by its own portion of the magnetic core (shell), providing better magnetic shielding and mechanical support. This construction is used for high-power transformers.',
   },
@@ -177,12 +197,12 @@ const quizQuestions = [
     question:
       'What happens to the neutral current in a Dyn transformer supplying unbalanced single-phase loads?',
     options: [
-      'It circulates in the delta primary',
-      'It flows to earth',
-      'It cannot be accommodated',
+      'The employer (or self-employed person)',
       'It returns through the neutral conductor',
+      '24 hours maximum as per BS 5266-1',
+      'Cloud-based collaboration with real-time syncing',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       "The 'n' in Dyn indicates the neutral is brought out from the star secondary. Unbalanced currents return through this neutral. The corresponding zero-sequence currents circulate within the delta primary, preventing upstream flow.",
   },
@@ -192,11 +212,11 @@ const quizQuestions = [
       'For a 500 kVA transformer to be installed in a commercial building basement, which cooling method would typically be specified?',
     options: [
       'ONAN (oil natural, air natural)',
+      'OFAF (oil forced, air forced)',
       'AN (air natural) dry-type',
       'ONAF (oil natural, air forced)',
-      'OFAF (oil forced, air forced)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'For indoor installation in occupied buildings, dry-type (AN or AF) transformers are preferred due to fire safety. Oil-filled transformers require fire-resistant chambers, bunding, and fire suppression systems, making them less suitable for basements.',
   },

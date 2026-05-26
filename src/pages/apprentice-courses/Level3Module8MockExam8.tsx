@@ -36,6 +36,7 @@ import useSEO from '@/hooks/useSEO';
 import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayout';
 import { ExamDesktopSidebar } from '@/components/apprentice-courses/ExamDesktopSidebar';
 import { MockExamQuestionPanel } from '@/components/apprentice-courses/MockExamQuestionPanel';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 import {
   getRandomQuestions,
   getCategoryBreakdown,
@@ -70,7 +71,10 @@ const Level3Module8MockExam8 = () => {
 
   // Start exam
   const startExam = () => {
-    const questions = getRandomQuestions(EXAM_CONFIG.totalQuestions);
+    const questions = shuffleAllQuestionOptions(
+      getRandomQuestions(EXAM_CONFIG.totalQuestions),
+      createShuffleSalt()
+    );
     setExamQuestions(questions);
     setSelectedAnswers(new Array(EXAM_CONFIG.totalQuestions).fill(-1));
     setCurrentQuestion(0);

@@ -148,7 +148,12 @@ const quickCheckQuestions = [
   {
     id: 'cable-selection',
     question: 'What is the most critical factor when selecting cable for underground installation?',
-    options: ['Cost', 'Mechanical protection', 'Colour', 'Flexibility'],
+    options: [
+      'Cost',
+      'Mechanical protection',
+      'Colour',
+      'Flexibility',
+    ],
     correctIndex: 1,
     explanation:
       'Mechanical protection is essential for underground cables to prevent damage from soil pressure, digging, and environmental factors.',
@@ -158,19 +163,24 @@ const quickCheckQuestions = [
     question: 'Why might you need to upsize a cable when installing over thermal insulation?',
     options: [
       'For easier installation',
-      'Due to temperature derating effects',
       'To meet voltage drop requirements',
+      'Due to temperature derating effects',
       'For mechanical strength',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Thermal insulation reduces a cable's ability to dissipate heat, requiring derating or upsizing to maintain safe current capacity.",
   },
   {
     id: 'environmental-factors',
     question: 'Which environmental factor is most damaging to standard PVC cable sheaths?',
-    options: ['Cold temperatures', 'UV radiation', 'High humidity', 'Wind'],
-    correctIndex: 1,
+    options: [
+      'High humidity',
+      'Wind',
+      'UV radiation',
+      'Cold temperatures',
+    ],
+    correctIndex: 2,
     explanation:
       'UV radiation from sunlight causes PVC degradation, making UV-resistant cables or physical protection necessary for outdoor installations.',
   },
@@ -180,8 +190,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which cable type is most suitable for direct burial in domestic gardens?',
-    options: ['Twin and Earth', 'PVC flex', 'Steel Wire Armoured (SWA)', 'Cat6 data cable'],
-    correctAnswer: 2,
+    options: [
+      'Safety monitoring and control',
+      'Steel Wire Armoured (SWA)',
+      'Visual inspection and testing',
+      'At least 3 out of 4 faults',
+    ],
+    correctAnswer: 1,
     explanation:
       'SWA cable provides the mechanical protection required for direct burial applications and meets BS 7671 requirements.',
   },
@@ -190,35 +205,50 @@ const quizQuestions = [
     question:
       'When installing cables over thermal insulation, what adjustment is typically required?',
     options: [
-      'Use smaller cable size',
+      'Exceeding pulling tension limits',
+      '12 litres per second per person',
       'Increase cable size for derating',
-      'Use different colours',
-      'Install faster',
+      'A transformer that increases voltage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Thermal insulation reduces heat dissipation, requiring cable derating or upsizing to maintain safe current capacity.',
   },
   {
     id: 3,
     question: 'What type of cable should be used for a portable appliance connection?',
-    options: ['Twin and Earth', 'SWA cable', 'Flexible cord', 'Singles in conduit'],
-    correctAnswer: 2,
+    options: [
+      'SWA cable',
+      'Twin and Earth',
+      'Singles in conduit',
+      'Flexible cord',
+    ],
+    correctAnswer: 3,
     explanation:
       'Portable appliances require flexible cords that can withstand repeated movement without conductor damage.',
   },
   {
     id: 4,
     question: 'For outdoor installations exposed to sunlight, which cable feature is essential?',
-    options: ['High current capacity', 'UV resistance', 'Low cost', 'Bright colours'],
-    correctAnswer: 1,
+    options: [
+      'UV resistance',
+      'High current capacity',
+      'Low cost',
+      'Bright colours',
+    ],
+    correctAnswer: 0,
     explanation:
       'UV resistance prevents degradation of cable sheaths when exposed to sunlight over extended periods.',
   },
   {
     id: 5,
     question: 'In high-temperature environments, which cable characteristic is most important?',
-    options: ['Flexibility', 'Heat resistance', 'Low impedance', 'Small size'],
+    options: [
+      'Flexibility',
+      'Heat resistance',
+      'Small size',
+      'Low impedance',
+    ],
     correctAnswer: 1,
     explanation:
       'Heat-resistant insulation maintains integrity and safety at elevated temperatures where standard PVC would fail.',
@@ -226,8 +256,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Which cable type is required for computer network installations?',
-    options: ['Twin and Earth', 'Cat6 twisted pair', 'Alarm cable', 'Speaker wire'],
-    correctAnswer: 1,
+    options: [
+      'Twin and Earth',
+      'Alarm cable',
+      'Cat6 twisted pair',
+      'Speaker wire',
+    ],
+    correctAnswer: 2,
     explanation:
       'Cat6 twisted pair cable is specifically designed for high-speed data transmission and network applications.',
   },
@@ -236,20 +271,25 @@ const quizQuestions = [
     question:
       'What is the primary consideration when selecting cable for bathroom underfloor heating?',
     options: [
-      'Low cost',
+      'Web portals with secure login',
+      'Over-stripped insulation exposing copper',
+      'The sale was delayed and additional costs occurred',
       'Heat resistance and moisture protection',
-      'Easy installation',
-      'High flexibility',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Bathroom underfloor heating requires heat-resistant cables with moisture protection for safe, long-term operation.',
   },
   {
     id: 8,
     question: 'Which installation method requires the highest level of mechanical protection?',
-    options: ['Clipped to walls', 'In plastic trunking', 'Direct burial', 'In ceiling voids'],
-    correctAnswer: 2,
+    options: [
+      'Direct burial',
+      'In ceiling voids',
+      'Clipped to walls',
+      'In plastic trunking',
+    ],
+    correctAnswer: 0,
     explanation:
       'Direct burial exposes cables to soil pressure, potential digging damage, and environmental hazards requiring maximum protection.',
   },
@@ -257,10 +297,10 @@ const quizQuestions = [
     id: 9,
     question: 'When would you select LSZH cable over standard PVC?',
     options: [
-      'For cost savings',
+      'Earth fault loop impedance and RCD operation',
       'In escape routes and public buildings',
-      'For better flexibility',
-      'For higher current capacity',
+      'Safe vehicle movements and driver competence',
+      'Proper tooling and technique',
     ],
     correctAnswer: 1,
     explanation:
@@ -270,12 +310,12 @@ const quizQuestions = [
     id: 10,
     question: 'What factor determines the minimum burial depth for underground cables?',
     options: [
-      'Cable size',
+      '2 extinguishers per floor (Class A rated)',
+      'Power sum equal level far end crosstalk',
       'Location and risk of mechanical damage',
-      'Installation cost',
-      'Cable colour',
+      'To avoid confusion and keep communication clear',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Burial depth is determined by the location (gardens vs roads) and potential for mechanical damage from activities above.',
   },

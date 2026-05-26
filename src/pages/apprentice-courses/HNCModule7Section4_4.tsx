@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'scene-controller-definition',
     question: 'What is the primary function of a scene controller in a lighting system?',
     options: [
-      'To provide emergency lighting',
       'To store and recall preset lighting configurations',
-      'To measure energy consumption',
       'To replace individual light switches',
+      'To provide emergency lighting',
+      'To measure energy consumption',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A scene controller stores multiple preset lighting configurations (scenes) and allows users to recall them with a single button press, coordinating multiple luminaires, dimming levels, and colour settings simultaneously.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'tunable-white-purpose',
     question: 'What does tunable white lighting allow users to adjust?',
     options: [
-      'Only the brightness level',
+      'To provide independent verification that systems meet specification',
+      'Staff can respond instantly from any location',
+      'Incorrect connection of line and neutral conductors',
       'The correlated colour temperature (CCT) from warm to cool white',
-      'The RGB colour output',
-      'The emergency lighting duration',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Tunable white (also called tuneable white or CCT adjustable) allows adjustment of correlated colour temperature, typically ranging from warm white (2700K) to cool white (6500K), whilst maintaining white light output.',
   },
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'circadian-lighting-aim',
     question: 'What is the primary aim of circadian lighting design?',
     options: [
-      'To reduce energy consumption',
       'To align artificial lighting with natural daylight patterns to support human biological rhythms',
-      'To provide maximum illumination at all times',
-      'To eliminate the need for daylight',
+      'Providing path for fault current to enable protective device operation',
+      'Omitting safety-critical steps such as safe isolation, failing to prove dead, or not wearing appropriate PPE',
+      'Person with sufficient training, experience and knowledge to prevent danger',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Circadian (human-centric) lighting aims to support the body's natural circadian rhythm by varying colour temperature and intensity throughout the day, mimicking natural daylight patterns to improve wellbeing, alertness, and sleep quality.",
   },
@@ -66,12 +66,12 @@ const quickCheckQuestions = [
     id: 'well-standard-lighting',
     question: 'What aspect of lighting does the WELL Building Standard primarily address?',
     options: [
-      'Energy efficiency ratings',
       'Human health and wellbeing through lighting design',
-      'Emergency lighting requirements',
-      'Cable sizing calculations',
+      'The ratio of inertial forces to viscous forces',
+      'The success rate rises to approximately 95%',
+      'Suitable for hollow walls where back access is unavailable',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The WELL Building Standard focuses on human health and wellbeing, with lighting requirements addressing circadian lighting design, visual comfort, glare control, and melanopic equivalent daylight illuminance (EML) to support occupant health.',
   },
@@ -95,8 +95,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What CCT range is typically provided by tunable white luminaires?',
-    options: ['1000K to 2000K', '2700K to 6500K', '8000K to 10000K', 'Fixed at 4000K'],
-    correctAnswer: 1,
+    options: [
+      '8000K to 10000K',
+      '1000K to 2000K',
+      '2700K to 6500K',
+      'Fixed at 4000K',
+    ],
+    correctAnswer: 2,
     explanation:
       'Tunable white luminaires typically offer CCT adjustment from 2700K (warm white) to 6500K (cool daylight), covering the range most useful for architectural and human-centric lighting applications.',
   },
@@ -104,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'RGB colour changing systems use which primary colours to create mixed colours?',
     options: [
-      'Cyan, Magenta, Yellow',
-      'Red, Green, Blue',
       'Red, Yellow, Blue',
+      'Cyan, Magenta, Yellow',
       'White, Black, Grey',
+      'Red, Green, Blue',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'RGB systems use additive colour mixing with Red, Green, and Blue LEDs. By varying the intensity of each colour channel, a wide gamut of colours can be produced through additive colour mixing.',
   },
@@ -117,12 +122,12 @@ const quizQuestions = [
     id: 4,
     question: 'What advantage does RGBW have over standard RGB?',
     options: [
-      'Lower cost',
       'Better quality white light and improved colour rendering',
-      'Fewer control channels required',
-      'Higher energy consumption',
+      'Cool white (5000K-6500K) to promote alertness',
+      'Lunch service, dinner service, cleaning, and closed',
+      'To control the transition speed between current and new lighting states',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'RGBW adds a dedicated White LED channel, producing cleaner, more efficient white light with better colour rendering compared to mixing RGB to create white. This is particularly important for spaces requiring both saturated colours and high-quality white light.',
   },
@@ -130,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is melanopic equivalent daylight illuminance (EML)?',
     options: [
-      'A measure of energy consumption',
+      'On distorted or non-sinusoidal waveforms (drives, SMPS, LED drivers)',
       'A metric quantifying the biological effectiveness of light on circadian rhythms',
-      'The colour rendering index of a light source',
-      'The total lumen output of a luminaire',
+      'To confirm safety interlocks prevent dangerous situations',
+      'Make it invisible, unattractive, difficult, and unsatisfying',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,11 +150,11 @@ const quizQuestions = [
       'For circadian lighting, what CCT should generally be used in the morning and midday?',
     options: [
       'Warm white (2700K) to promote relaxation',
-      'Cool white (5000K-6500K) to promote alertness',
       'Amber (1800K) to simulate sunset',
+      'Cool white (5000K-6500K) to promote alertness',
       'The same CCT throughout the day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Morning and midday periods benefit from cool white (5000K-6500K) rich in blue wavelengths to suppress melatonin, increase alertness, and synchronise the circadian rhythm with daytime activity patterns.',
   },
@@ -159,11 +164,11 @@ const quizQuestions = [
       "What is the WELL Building Standard's minimum melanopic EML requirement for workspaces during daytime?",
     options: [
       '50 equivalent lux',
-      '150 equivalent lux at the eye',
-      '200 equivalent lux',
       '500 equivalent lux',
+      '200 equivalent lux',
+      '150 equivalent lux at the eye',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The WELL Building Standard requires a minimum of 150 melanopic equivalent lux (now melanopic EDI) measured vertically at eye level for at least 4 hours per day in regularly occupied spaces to support circadian health.',
   },
@@ -171,12 +176,12 @@ const quizQuestions = [
     id: 8,
     question: 'In a DALI-2 system, how are scene presets typically stored?',
     options: [
-      'In the scene controller only',
       'In each individual DALI driver/ballast',
-      'On a central server',
-      'In the building management system',
+      'Insulated gloves and safety glasses',
+      'Determines testing approach and safety measures',
+      'Regulations 411.3.1.1 and 411.3.1.2',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'DALI-2 systems store scene presets in each individual driver/ballast. Scene commands broadcast to a group cause each device to recall its stored value for that scene, enabling fast response without individual commands to each device.',
   },
@@ -184,7 +189,12 @@ const quizQuestions = [
     id: 9,
     question:
       'What protocol is commonly used for professional architectural colour changing installations?',
-    options: ['Simple on/off switching', 'DMX512', 'Standard dimming only', 'Bluetooth only'],
+    options: [
+      'Simple on/off switching',
+      'DMX512',
+      'Standard dimming only',
+      'Bluetooth only',
+    ],
     correctAnswer: 1,
     explanation:
       'DMX512 is the industry standard for professional colour changing and architectural lighting, providing 512 channels of control per universe. It enables precise control of RGB/RGBW luminaires, moving lights, and complex lighting effects.',
@@ -194,11 +204,11 @@ const quizQuestions = [
     question: 'Which wavelength of light has the greatest impact on circadian rhythm regulation?',
     options: [
       'Red light (630-700nm)',
+      'Infrared light (&gt;700nm)',
       'Blue light (460-490nm)',
       'Green light (520-560nm)',
-      'Infrared light (&gt;700nm)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Blue light wavelengths (particularly around 480nm) have the strongest effect on melanopsin-containing intrinsically photosensitive retinal ganglion cells (ipRGCs), which regulate circadian rhythms and melatonin suppression.',
   },
@@ -206,12 +216,12 @@ const quizQuestions = [
     id: 11,
     question: 'A restaurant scene controller might include which specific scenes?',
     options: [
-      'Manufacturing, warehouse, and loading',
+      'Better quality white light and improved colour rendering',
+      'In each individual DALI driver/ballast',
+      'Cool white (5000K-6500K) to promote alertness',
       'Lunch service, dinner service, cleaning, and closed',
-      'Emergency only',
-      'Maximum brightness only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Restaurant scene controllers typically include: lunch service (brighter, cooler), dinner service (dimmer, warmer for ambience), cleaning (full brightness for hygiene inspection), and closed (security lighting only).',
   },
@@ -219,12 +229,12 @@ const quizQuestions = [
     id: 12,
     question: "What is the purpose of the 'fade time' parameter in scene recall?",
     options: [
-      'To specify how long the scene remains active',
       'To control the transition speed between current and new lighting states',
-      'To set the emergency lighting duration',
-      'To define the daylight harvesting response',
+      'Lunch service, dinner service, cleaning, and closed',
+      'Better quality white light and improved colour rendering',
+      'A metric quantifying the biological effectiveness of light on circadian rhythms',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fade time controls how gradually the lighting transitions from the current state to the recalled scene. Slow fades (several seconds) create smooth, unobtrusive transitions; instant changes (0s fade) are used for presentations or alerts.',
   },

@@ -29,12 +29,12 @@ const Module6Section1_3 = () => {
       id: 2,
       question: 'What must be carried out before energising any new system?',
       options: [
-        'Visual inspection only',
+        'It accounts for lead resistance and provides best accuracy',
+        'Absorption of current by the insulation (polarisation)',
         'Initial verification (inspection and testing)',
-        'Periodic inspection',
-        'Risk assessment',
+        'Competent persons, supervisors, and experienced workers',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Initial verification, which includes both inspection and testing, must be completed before any new electrical system is energised.',
     },
@@ -42,12 +42,12 @@ const Module6Section1_3 = () => {
       id: 3,
       question: 'What certificate is usually issued for small alterations?',
       options: [
-        'Electrical Installation Certificate (EIC)',
         'Electrical Installation Condition Report (EICR)',
-        'Minor Works Certificate',
+        'Electrical Installation Certificate (EIC)',
         'Compliance Certificate',
+        'Minor Works Certificate',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'A Minor Works Certificate is typically issued for small alterations and additions to existing installations.',
     },
@@ -63,7 +63,12 @@ const Module6Section1_3 = () => {
     {
       id: 5,
       question: 'Give one example of when testing is required for fault diagnosis.',
-      options: ['Annual maintenance', 'Tripping RCD', 'New meter installation', 'Property sale'],
+      options: [
+        'Annual maintenance',
+        'Tripping RCD',
+        'Property sale',
+        'New meter installation',
+      ],
       correctAnswer: 1,
       explanation:
         'Testing is required for fault diagnosis when issues like tripping RCDs, flickering lights, or overheating cables occur.',
@@ -72,12 +77,12 @@ const Module6Section1_3 = () => {
       id: 6,
       question: 'How often should domestic dwellings be periodically inspected under BS 7671?',
       options: [
-        'Every 5 years',
+        'It could cause fire, injury or death in real work',
+        'Potential danger and legal liability',
         'Every 10 years or on change of occupancy',
-        'Every 15 years',
-        'Only when faults occur',
+        'Standard first fix electrical installation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Domestic dwellings should be inspected every 10 years or on change of occupancy according to BS 7671.',
     },
@@ -85,12 +90,12 @@ const Module6Section1_3 = () => {
       id: 7,
       question: 'How often should commercial installations be inspected?',
       options: [
-        'Every 3 years',
+        'Isolated system with no intentional connection to earth',
+        'Remove from service and tag as defective',
+        'In divided by 0.725 (approximately 1.38 times In)',
         'Every 5 years (or sooner depending on risk)',
-        'Every 10 years',
-        'Every 12 years',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Commercial installations should typically be inspected every 5 years, or more frequently depending on the risk assessment.',
     },
@@ -98,12 +103,12 @@ const Module6Section1_3 = () => {
       id: 8,
       question: 'What is the outcome of a periodic inspection and test?',
       options: [
-        'Electrical Installation Certificate (EIC)',
-        'Minor Works Certificate',
         'Electrical Installation Condition Report (EICR)',
-        'Compliance Report',
+        'Reduce capacity for adverse conditions',
+        'Dynamically assigning upstream time slots based on demand',
+        'Arc flash protection due to high energy levels',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'An Electrical Installation Condition Report (EICR) is the outcome of a periodic inspection and test of an existing installation.',
     },
@@ -111,10 +116,10 @@ const Module6Section1_3 = () => {
       id: 9,
       question: 'Why must alterations be tested before being put into service?',
       options: [
-        'To comply with insurance requirements',
+        'Numerical values allow future comparisons and trend analysis',
         'To ensure the new work has not compromised the safety of the installation',
-        'To update the electrical drawings',
-        'To calculate the electrical load',
+        'Protection from electrical arc blast and thermal energy',
+        'Verifying compliance with regulations through inspection and testing',
       ],
       correctAnswer: 1,
       explanation:
@@ -123,8 +128,13 @@ const Module6Section1_3 = () => {
     {
       id: 10,
       question: 'What is the first step before carrying out any electrical testing?',
-      options: ['Notify the DNO', 'Safe isolation', 'Visual inspection', 'Continuity testing'],
-      correctAnswer: 1,
+      options: [
+        'Notify the DNO',
+        'Continuity testing',
+        'Safe isolation',
+        'Visual inspection',
+      ],
+      correctAnswer: 2,
       explanation:
         'Safe isolation is the first and most critical step before carrying out any electrical testing to ensure safety.',
     },

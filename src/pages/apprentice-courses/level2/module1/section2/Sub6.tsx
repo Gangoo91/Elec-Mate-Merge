@@ -50,12 +50,12 @@ const checks = [
     question:
       "You're an apprentice. Your supervisor isn't on site. The customer wants you to lift a 1980s ceiling tile to run a new fire-alarm cable. You don't know if the tile is asbestos. What's the right call right now?",
     options: [
-      "Lift the tile carefully — if you're gentle it's fine.",
       "Stop, don't disturb the tile, ring the supervisor, ask the dutyholder for the asbestos register before any work happens above the ceiling.",
-      "Take a photo, send it to the supervisor, then crack on.",
-      "Cut a small piece off so the supervisor can see what type it is.",
+      "Gently warm the affected area by placing it in warm (not hot) water at around 37–39°C, and do not rub or apply direct heat",
+      "A schematic shows the functional relationship between components using standard symbols, while a wiring diagram shows the physical routing and connections of cables and conductors",
+      "MTBF, MTTR, PM schedule compliance, backlog levels, first-time fix rate and maintenance cost per asset",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Stop, isolate the area, escalate. CAR 2012 Reg 5 says you don't disturb a material that may contain asbestos until an assessment has been done. The dutyholder for any non-domestic building is legally required to hold an asbestos register and produce it on request — that's where you find out whether the tile is AIB. 'Lifting carefully' is still 'disturbing' in the eyes of the regulator.",
   },
@@ -64,12 +64,12 @@ const checks = [
     question:
       "You spot an obvious safety breach by your supervisor — they've removed your lock-off because the customer's complaining. You raise it; they tell you to drop it. Under HASAWA s.7 and MHSWR Reg 14, what do you do next?",
     options: [
-      'Drop it — they outrank you, that\'s the end of it.',
+      "Lead by example, set expectations, schedule clean-up periods (end-of-day, after disruptive work), provide skips and bins, intervene when issues seen. Housekeeping is one of the easiest hazard reductions and one of the most consistently overlooked.",
+      "Public-sector procurement, larger commercial clients and lenders increasingly require credible carbon reporting, MCS competence and waste-hierarchy compliance — without these you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re locked out of growing markets like heat pumps, EV, PV and battery",
+      "A break somewhere in the line conductor of the ring — a loose terminal in a back-box, a damaged cable inside a void, or a cable not actually returned to the CU. Investigate before going any further.",
       "Escalate above the supervisor — your own employer's safety contact, the principal contractor on site, your scheme provider's helpline. Note the conversation (time, name, what was said). Your s.7 personal duty isn't discharged just because someone above you said 'drop it'.",
-      "Walk off site without telling anyone.",
-      "Ring the HSE directly straight away.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Section 7 of HASAWA puts a personal duty on YOU to take reasonable care AND to co-operate with the employer's safety arrangements. If your immediate supervisor has overridden a control, the escalation chain is: supervisor → your own employer / line manager → principal contractor on site → scheme provider helpline → HSE as last resort. Walking off without notifying anyone leaves the hazard live for the next person. The HSE is a real route, but you give the firm a chance to fix it first.",
   },
@@ -78,12 +78,12 @@ const checks = [
     question:
       "Which of these is NOT a typical place to find asbestos-containing materials in a UK pre-2000 building?",
     options: [
-      "Suspended ceiling tiles (AIB).",
+      "PVC twin-and-earth cable installed in 2018.",
       "Lagging on old central-heating pipework.",
       "Vinyl floor tiles and the bitumen adhesive under them.",
-      "PVC twin-and-earth cable installed in 2018.",
+      "Suspended ceiling tiles (AIB).",
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       "Asbestos was banned in the UK in 1999. Anything manufactured after that date — including modern PVC T&E — is not an ACM. The other three are textbook ACM locations in pre-2000 buildings: AIB tiles, pipe lagging (often chrysotile or amosite), and floor tiles plus their black bitumen backing/adhesive.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       "Under the Control of Asbestos Regulations 2012, who holds the legal duty to manage asbestos in a non-domestic building?",
     options: [
-      "The electrical contractor doing the work.",
+      "Continuity of protective conductors, continuity of ring final conductors, insulation resistance, polarity",
+      "Without delay (telephone notification expected for fatalities and specified injuries) + F2508 within 10 days.",
       "The dutyholder — usually the building owner or whoever has responsibility for maintenance and repair (often via the lease).",
-      "The HSE.",
-      "Whoever last touched the building.",
+      "Give them the written brief in advance, allow processing time, follow up one-to-one in a quiet area for questions",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "CAR 2012 Reg 4 places the duty to manage asbestos squarely on the dutyholder — the person or organisation with responsibility for the maintenance and repair of the non-domestic premises. They have to keep an asbestos register, share it with anyone who might disturb the fabric (you), and have a written management plan. As an apprentice you ASK FOR the register; you're not expected to produce one.",
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     question:
       "You arrive on site and the dutyholder can't produce an asbestos register for the area you're about to drill into. Right call?",
     options: [
-      "Crack on — no register means no asbestos.",
+      "The installation is in a corrosive environment (chemical plants, swimming pools) or where a non-metallic, non-magnetic containment is required",
+      "Express your concerns clearly and specifically — identify the areas you feel underprepared in and request additional support or time to address them before the gateway is opened",
+      "Zone 0, Zone 1 and Zone 2 for gases/vapours; Zone 20, Zone 21 and Zone 22 for dusts — based on the frequency and duration of the explosive atmosphere",
       "Stop. Don't disturb the fabric. Treat the material as 'presumed asbestos' until a sample has been analysed by an accredited lab, or until the dutyholder produces the register and confirms it's clean.",
-      "Drill a small test hole to see what comes out.",
-      "Call the HSE before doing anything.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "No register doesn't mean no asbestos — it means no information. HSE guidance (HSG264 and the Asbestos Essentials a0 sheet) is clear: in pre-2000 buildings without a clean survey, the material is treated as presumed ACM until proven otherwise. The dutyholder has to commission the survey and the analysis; you don't sample yourself. Calling HSE is rarely the first step — usually you escalate internally first.",
   },
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       "Which of these asbestos types was the most heavily used in the UK and is the one most commonly encountered in pre-2000 building fabric?",
     options: [
-      "Crocidolite (blue).",
-      "Amosite (brown).",
       "Chrysotile (white).",
+      "Amosite (brown).",
+      "Crocidolite (blue).",
       "Tremolite (clear).",
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Chrysotile (white) was the workhorse — cement sheets, textured coatings (like Artex), gaskets, brake linings, vinyl floor tiles, electrical insulation backing boards. Amosite (brown) is most commonly found in AIB ceiling tiles and pipe insulation. Crocidolite (blue) is the most dangerous fibre but was banned earliest (1985). VISUAL identification is unreliable — only lab analysis gives you the type.",
   },
@@ -153,10 +153,10 @@ const quizQuestions = [
     question:
       "What does the HSE Asbestos Essentials task sheet 'a0' cover?",
     options: [
-      "The list of licensed asbestos removal contractors in the UK.",
+      "A tool lanyard or tether should be used to prevent the power tool from falling if dropped",
       "Work with asbestos that does NOT need a licence — the basic precautions and which task sheets (a1–a40) cover specific jobs.",
-      "Penalty fines for breaching CAR 2012.",
-      "How to obtain an asbestos sample legally.",
+      "Projects lasting longer than 30 working days with more than 20 workers at any one time, or exceeding 500 person-days",
+      "The person who has the duty to maintain or repair the premises, or who has control of the premises",
     ],
     correctAnswer: 1,
     explanation:
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       "You suspect a ceiling tile in a 1970s school is AIB. The supervisor says 'just lift one corner so I can see the back, then we'll decide.' Right call?",
     options: [
-      "Lift it carefully so the supervisor can have a quick look.",
+      "They accurately represent what was actually installed (not just what was designed), providing reliable information for maintenance planning, fault-finding and modification",
+      "Compile a proportionate file including the asbestos management survey/R&D survey data, as-built structural drawings showing concealed steelwork, details of the unusual pipework and heating system, and a register of residual risks",
       "Stop. Lifting the tile is disturbance — even a corner. Don't touch it. Refer to the dutyholder's asbestos register; if there isn't one, demand a survey is commissioned before any work above the ceiling continues.",
-      "Suggest cutting a small sample to send to a lab.",
-      "Lift it but wear nitrile gloves to be safe.",
+      "Discarded smoking materials (cigarettes, matches, lighters) remain a fire cause, particularly in areas with poor housekeeping, near flammable materials, or where smoking policies are not enforced",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "'Just lifting a corner' to inspect AIB is the textbook way junior tradespeople expose themselves and everyone else in the room to airborne fibres. Disturbance is disturbance. CAR 2012 Reg 5 requires an assessment BEFORE any work that could disturb ACMs. The supervisor asking you to do it doesn't transfer the liability — HASAWA s.7 is still on you personally. Escalate.",
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       "Under MHSWR 1999 Regulation 14, what is your duty as an employee when you spot a serious and imminent danger or a shortcoming in the employer's safety arrangements?",
     options: [
-      "Nothing — that's the supervisor's job.",
+      "Disconnecting the installation main earthing conductor at the MET, then loop-testing between supply L and the disconnected MET earth — with main switch OFF and circuits isolated for safety",
+      "Team members felt safe to take interpersonal risks — to speak up, ask questions, admit mistakes, and propose ideas without fear of punishment or humiliation",
+      "BS 7671 (the source standard). The OSG is a trusted simplification bounded by stated assumptions. Where install conditions exceed the OSG assumptions, go back to BS 7671 Appendix 4 directly.",
       "Inform your employer (or someone with responsibility for H&S) of the danger or shortcoming AND co-operate to enable the employer to comply with their statutory duties.",
-      "Call HSE first.",
-      "Walk off site immediately.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "MHSWR Reg 14(2) puts the legal duty on every employee to inform the employer (or another employee with H&S responsibility) of any work situation representing a serious and immediate danger AND any shortcoming in the employer's protection arrangements. That's the legal hook for raising it up the chain — and protects you from being treated as the cause of a problem you flagged.",
   },
@@ -195,12 +195,12 @@ const quizQuestions = [
     question:
       "After raising a concern with your supervisor and being told to 'drop it', what's the most defensible thing to do BESIDES re-raising it?",
     options: [
-      "Forget about it — you've done your bit.",
       "Make a written, dated note (your phone is fine) of who you spoke to, what you said, and what they said. Then escalate to the next level above (your own employer, the principal contractor, your scheme provider).",
-      "Tell the customer about it.",
-      "Leave site without telling anyone.",
+      "It is made in accordance with Regulation 526.3 — for example, a compression joint to a manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions, a brazed/welded joint, or a connection forming part of equipment that complies with its product standard",
+      "A near-miss is an unplanned event that did not result in injury, damage, or loss but had the potential to do so — near-miss reporting is vital because it identifies hazards before they cause harm, enabling proactive risk management",
+      "Heat stress, falls through ceiling between joists, contact with hot pipes/cables, glass fibre/asbestos exposure, restricted access for emergency egress",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Documenting the conversation (time, name, what was said) is what turns a verbal escalation into something you can later prove you did. It discharges your s.7 / Reg 14 duty even if the supervisor later denies the conversation happened. Then you escalate up — silence is what makes the prosecution stick to you as well.",
   },

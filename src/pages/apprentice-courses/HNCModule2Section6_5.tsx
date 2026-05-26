@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'commissioning-purpose',
     question: 'What is the primary purpose of commissioning?',
     options: [
-      'To complete paperwork',
-      'To verify systems perform as designed',
       'To train maintenance staff',
+      'To complete paperwork',
       'To satisfy planning conditions',
+      'To verify systems perform as designed',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Commissioning verifies that installed systems perform according to design intent, achieving specified capacities, efficiencies, and control responses. It bridges the gap between installation and operation.',
   },
@@ -46,8 +46,13 @@ const quickCheckQuestions = [
     id: 'bms-integration',
     question:
       'Which protocol is most commonly used for BMS integration of multiple building services?',
-    options: ['Modbus only', 'BACnet', 'Bluetooth', 'WiFi'],
-    correctIndex: 1,
+    options: [
+      'WiFi',
+      'Bluetooth',
+      'BACnet',
+      'Modbus only',
+    ],
+    correctIndex: 2,
     explanation:
       "BACnet (Building Automation and Control Network) is the ISO standard protocol for building services integration, allowing different manufacturers' equipment to communicate on a common network.",
   },
@@ -55,10 +60,10 @@ const quickCheckQuestions = [
     id: 'log-book-content',
     question: 'A building log book should contain:',
     options: [
-      'Architectural drawings only',
+      'All live conductors (line and neutral) connected together',
       'Operating and maintenance instructions for all systems',
-      'Tenant contact details',
-      'Planning permission documents',
+      'Exposed parts may become live under fault conditions',
+      'Stop the source, contain the spill, report to the Environment Agency',
     ],
     correctIndex: 1,
     explanation:
@@ -67,8 +72,13 @@ const quickCheckQuestions = [
   {
     id: 'soft-landings',
     question: 'Soft Landings extended aftercare typically lasts:',
-    options: ['1 month', '6 months', '3 years', '10 years'],
-    correctIndex: 2,
+    options: [
+      '3 years',
+      '6 months',
+      '1 month',
+      '10 years',
+    ],
+    correctIndex: 0,
     explanation:
       'The Soft Landings framework specifies a 3-year aftercare period with regular reviews, allowing building performance to be monitored, optimised, and issues resolved as they emerge in actual operation.',
   },
@@ -80,10 +90,10 @@ const quizQuestions = [
     question:
       "BSRIA BG6 'A Design Framework for Building Services' recommends coordination meetings at which stage?",
     options: [
-      'Only at tender stage',
+      'A log book recording all tests, inspections, and defects',
       'Throughout design, construction, and commissioning',
-      'Only during commissioning',
-      'After practical completion',
+      'To provide brief on-site safety briefings on specific topics',
+      'Category III — serious, irreversible or fatal risks',
     ],
     correctAnswer: 1,
     explanation:
@@ -93,12 +103,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which document typically defines commissioning responsibilities and procedures?',
     options: [
+      "Architect's specification",
       'Building Regulations Approved Document L',
       'CIBSE Commissioning Codes',
-      "Architect's specification",
       'Health and Safety file',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CIBSE Commissioning Codes (A for Air systems, W for Water, R for Refrigeration, etc.) define standard procedures, acceptable tolerances, and documentation requirements for commissioning.',
   },
@@ -106,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: "What is 'witness testing' in commissioning?",
     options: [
+      'COBie data and digital asset information',
+      'Buildings requiring an EPC under Part L',
+      'Equipment schedules, maintenance procedures, and spare parts',
       'Testing in the presence of the design team or client',
-      'Testing individual components',
-      'Testing by a single witness',
-      'Legal documentation of tests',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Witness testing involves demonstrations of system performance in the presence of the client, design team, or commissioning manager to verify critical parameters meet specification.',
   },
@@ -119,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: 'The Building Log Book (CIBSE TM31) is required for:',
     options: [
-      'All buildings',
       'Buildings requiring an EPC under Part L',
-      'Domestic buildings only',
-      'Historic buildings only',
+      'Corrosion inhibitor and biocide treatment',
+      'After all dead tests and PFC measurement',
+      'The ratio of minimum to average illuminance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Part L requires a building log book for non-domestic buildings to facilitate energy-efficient operation. TM31 provides guidance on content and format.',
   },
@@ -132,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: "What is 'seasonal commissioning'?",
     options: [
-      'Commissioning only in summer',
+      'Equipment schedules, maintenance procedures, and spare parts',
       'Testing systems under both heating and cooling conditions',
-      'Annual recommissioning',
-      'Commissioning seasonal equipment',
+      'To ensure electrical supplies match equipment needs and controls integrate',
+      'BMS setpoint and schedule adjustment based on actual use',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'BIM Level 2 requires handover of:',
     options: [
-      'Paper drawings only',
+      'Evaluate against expected service life',
+      'Personnel, tools, materials, and time requirements',
       'COBie data and digital asset information',
-      'BIM models only with no data',
-      'Verbal instructions',
+      'All of the listed verifications',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BIM Level 2 (now UK BIM Framework) requires structured data handover using COBie (Construction Operations Building Information Exchange) format for asset management.',
   },
@@ -158,20 +168,25 @@ const quizQuestions = [
     id: 7,
     question: 'System optimisation during the first year typically includes:',
     options: [
-      'Major equipment replacement',
+      'A list of defects and incomplete items to be rectified',
+      'Testing in the presence of the design team or client',
+      'Equipment schedules, maintenance procedures, and spare parts',
       'BMS setpoint and schedule adjustment based on actual use',
-      'Architectural modifications',
-      'Changing the design intent',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'First-year optimisation involves fine-tuning BMS control strategies, adjusting schedules to match actual occupancy, and optimising setpoints - not changing fundamental design or equipment.',
   },
   {
     id: 8,
     question: 'CIBSE Code W covers commissioning of:',
-    options: ['Windows', 'Water distribution systems', 'Wireless controls', 'Weather stations'],
-    correctAnswer: 1,
+    options: [
+      'Water distribution systems',
+      'May require modified procedures',
+      '6 months of practical completion',
+      'Introduction, body, conclusion',
+    ],
+    correctAnswer: 0,
     explanation:
       'CIBSE Commissioning Code W covers water distribution systems including heating, chilled water, and condenser water pipework - flow rates, balancing, and pressure testing.',
   },
@@ -179,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'What information should O&M manuals contain?',
     options: [
-      'Design calculations only',
+      'To ensure electrical supplies match equipment needs and controls integrate',
       'Equipment schedules, maintenance procedures, and spare parts',
-      'Tender documents',
-      'Meeting minutes',
+      'Testing systems under both heating and cooling conditions',
+      'A list of defects and incomplete items to be rectified',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,20 +207,25 @@ const quizQuestions = [
     id: 10,
     question: 'Why is coordination between mechanical and electrical services critical?',
     options: [
-      'To reduce paperwork',
+      'Testing systems under both heating and cooling conditions',
+      'Equipment schedules, maintenance procedures, and spare parts',
       'To ensure electrical supplies match equipment needs and controls integrate',
-      'To minimise site visits',
-      'To satisfy planning requirements',
+      'A list of defects and incomplete items to be rectified',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "M&E coordination ensures electrical supplies (capacity, protection, phase) match mechanical equipment; control interfaces work correctly; and cable routes don't clash with ductwork/pipework.",
   },
   {
     id: 11,
     question: "The 'defects liability period' typically lasts:",
-    options: ['1 week', '6 months', '12 months', '5 years'],
-    correctAnswer: 2,
+    options: [
+      '1 week',
+      '6 months',
+      '5 years',
+      '12 months',
+    ],
+    correctAnswer: 3,
     explanation:
       'The standard defects liability period is 12 months from practical completion, during which the contractor must rectify defects at their cost. This period is essential for seasonal commissioning.',
   },
@@ -213,12 +233,12 @@ const quizQuestions = [
     id: 12,
     question: "What is a 'snagging list'?",
     options: [
-      'A list of design changes',
       'A list of defects and incomplete items to be rectified',
-      'A commissioning record',
-      'A maintenance schedule',
+      'COBie data and digital asset information',
+      'Testing in the presence of the design team or client',
+      'Buildings requiring an EPC under Part L',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A snagging list documents defects, incomplete works, and items not meeting specification, compiled during inspections prior to or after practical completion for contractor rectification.',
   },

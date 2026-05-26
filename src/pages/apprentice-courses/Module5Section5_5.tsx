@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the main purpose of a toolbox talk?',
     options: [
-      'To discuss project delays',
+      '10% of normal lighting with a minimum of 15 lux',
       'To provide short, focused safety updates',
-      'To plan lunch breaks',
-      'To check attendance',
+      'To ensure continued safety over time',
+      'A delivery note listing contents',
     ],
     correctIndex: 1,
     explanation:
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'True or False: Attendance at toolbox talks is optional.',
     options: [
-      'True - they are just suggestions',
-      'False',
-      'True - only for supervisors',
       "True - if you've heard it before",
+      'True - only for supervisors',
+      'False',
+      'True - they are just suggestions',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'False - toolbox talks are mandatory safety briefings that all workers must attend.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What should you do if instructions given in a meeting are unclear?',
     options: [
-      'Guess what they mean',
+      'Any person for whom a construction project is carried out',
+      'Line charts with historical comparison',
+      'The safety function is still performed despite the fault',
       'Ask questions or confirm with your supervisor',
-      'Ignore them and continue',
-      'Wait until the next meeting',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'You should always ask questions or confirm with your supervisor if instructions are unclear - never guess or assume.',
   },
@@ -73,12 +73,12 @@ const Module5Section5_5 = () => {
       id: 2,
       question: 'True or False: Attendance at toolbox talks is optional.',
       options: [
+        'True - only for new workers',
         'True - they are voluntary',
         'False',
-        'True - only for new workers',
         "True - if you're experienced",
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'False - toolbox talks are mandatory safety briefings that all workers must attend as they are legal requirements for site safety.',
     },
@@ -86,12 +86,12 @@ const Module5Section5_5 = () => {
       id: 3,
       question: 'What should you do if instructions given in a meeting are unclear?',
       options: [
-        'Guess what they mean and continue',
-        'Ask questions or confirm with your supervisor',
         'Ignore unclear instructions',
+        'Guess what they mean and continue',
         'Wait until someone else asks',
+        'Ask questions or confirm with your supervisor',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'You should always ask questions or confirm with your supervisor if instructions are unclear - never guess or assume what is meant.',
     },
@@ -99,12 +99,12 @@ const Module5Section5_5 = () => {
       id: 4,
       question: 'Name one responsibility when attending a site meeting.',
       options: [
-        'Bring your own refreshments',
         'Arrive on time and be prepared',
+        'Bring your own refreshments',
         'Take photos of the presentation',
         'Sit at the back',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Key responsibilities include arriving on time, being prepared, listening carefully, taking notes, and following up on actions.',
     },
@@ -112,10 +112,10 @@ const Module5Section5_5 = () => {
       id: 5,
       question: 'What is a common mistake to avoid in meetings?',
       options: [
-        'Taking notes',
+        'Signing the EIC construction declaration.',
         'Not paying attention or ignoring instructions',
-        'Asking questions',
-        'Sitting near the front',
+        'Reduce actual fault current by fast operation before peak',
+        'Visual, audible, electrical, and thermal symptoms',
       ],
       correctAnswer: 1,
       explanation:
@@ -126,11 +126,11 @@ const Module5Section5_5 = () => {
       question: 'Who is responsible for acting on instructions from a briefing?',
       options: [
         'Only the supervisor',
-        'Each individual worker',
         'Only senior tradespeople',
+        'Each individual worker',
         'The safety officer',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Each individual worker is responsible for understanding and acting on instructions given in briefings and meetings.',
     },
@@ -138,12 +138,12 @@ const Module5Section5_5 = () => {
       id: 7,
       question: 'What might happen if you miss a toolbox talk?',
       options: [
-        "Nothing - they're not important",
+        'To verify voltage at load is within acceptable limits',
+        'Storing energy as heat or cold for later use in heating or cooling systems',
+        'Reduce friction by preparing in advance and starting very small',
         'You could miss critical safety information and risk accidents',
-        "You'll get a longer lunch break",
-        'Someone will tell you later',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Missing toolbox talks means you could miss critical safety information about new hazards, procedures, or exclusion zones.',
     },
@@ -151,12 +151,12 @@ const Module5Section5_5 = () => {
       id: 8,
       question: 'Why are safety topics often repeated in meetings?',
       options: [
-        "Supervisors forget what they've said",
         'To reinforce safe habits and update new workers',
-        'To fill time in meetings',
-        "Because workers don't listen",
+        'The person who carried out inspection and testing',
+        'To ensure good air quality and prevent drowsiness',
+        'The current intended to flow under normal conditions',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Repetition reinforces safe habits and ensures new workers are updated on all safety procedures and requirements.',
     },
@@ -164,10 +164,10 @@ const Module5Section5_5 = () => {
       id: 9,
       question: 'What should you bring to a meeting to record details?',
       options: [
-        'Your phone camera only',
+        '1.5 times the rating of protective device',
         'Notebook or phone (if permitted)',
-        'Voice recorder',
-        'Nothing - just remember',
+        'Voltage rise at the point of connection',
+        'Likelihood × Severity = Risk level',
       ],
       correctAnswer: 1,
       explanation:
@@ -176,8 +176,13 @@ const Module5Section5_5 = () => {
     {
       id: 10,
       question: 'Which type of meeting covers wider project progress and coordination?',
-      options: ['Daily briefings', 'Formal site meetings', 'Toolbox talks', 'Safety briefings'],
-      correctAnswer: 1,
+      options: [
+        'Daily briefings',
+        'Safety briefings',
+        'Formal site meetings',
+        'Toolbox talks',
+      ],
+      correctAnswer: 2,
       explanation:
         'Formal site meetings cover wider project progress, coordination between trades, and future planning beyond daily activities.',
     },

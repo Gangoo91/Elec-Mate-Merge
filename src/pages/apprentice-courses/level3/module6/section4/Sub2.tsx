@@ -41,12 +41,12 @@ const checks = [
     question:
       "A 70 °C T&E radial is clipped direct to the joists in a ceiling void with the joists on edge. Which Reference Method applies?",
     options: [
-      'Method A — the cable is enclosed.',
-      'Method B — in conduit.',
+      'The equivalent DC voltage that would produce the same heating effect',
+      'Likelihood of harm occurring and the severity of consequences',
+      'To prevent further injury, reduce pain, and minimise blood loss',
       'Method C — clipped direct to a non-metallic surface in still air.',
-      'Method 102 — surrounded by insulation on one side only.',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Joists with the cable clipped to them and air around the cable is a textbook Method C install — single layer, free convection on three sides, the timber joist providing only minor heat-sinking. Method 102 would only apply if loft insulation were laid touching the cable on one side. Method A and B both require an enclosure.",
   },
@@ -55,12 +55,12 @@ const checks = [
     question:
       "A 1.5 mm² lighting circuit runs across a loft floor totally buried in 200 mm of mineral-wool insulation for the entire run. Which method applies?",
     options: [
-      'Method 100 — cable surrounded by thermal insulation, length under 0.5 m.',
+      'Method 103 — cable totally enclosed in thermal insulation, length 0.5 m or longer.',
       'Method 101 — cable surrounded by thermal insulation, length 0.5 m or longer.',
       'Method 102 — cable on one side of a thermally insulated wall.',
-      'Method 103 — cable totally enclosed in thermal insulation, length 0.5 m or longer.',
+      'Method 100 — cable surrounded by thermal insulation, length under 0.5 m.',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       "Method 103 covers cables totally enclosed in thermal insulation for runs of 0.5 m or longer — the most punishing of the four insulation methods because the cable cannot shed heat in any direction. Method 100 is for short total enclosures (under 0.5 m). Method 101 is for cables in contact with insulation on one face. Method 102 is for cables embedded in insulation on more than one face but not totally enclosed.",
   },
@@ -69,10 +69,10 @@ const checks = [
     question:
       'A 25 m circuit has 22 m clipped direct (Method C, It ≈ 47 A at 6 mm²) and 3 m totally buried in loft insulation (Method 103, It ≈ 29 A at 6 mm²). The required tabulated It for the cable selection comes from which method?',
     options: [
-      'Method C — the longest section wins.',
-      "Average of the two — it spends most of its time in Method C.",
+      'Provides a single dashboard for all building systems enabling quick issue identification',
+      'That the worker has appropriate supervision, instructions and information to carry out the work safely',
       'Method 103 — the worst section governs because the cable will reach its temperature limit there first.',
-      'Whichever gives a smaller It so the calc is conservative.',
+      'Additional loads and forces not accounted for in the tower\\\\\\\'s design can cause structural failure or overturning',
     ],
     correctIndex: 2,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     question:
       "How many Reference Methods does BS 7671 Appendix 4 actually publish in everyday use, and what is the structural division between A–G and 100–103?",
     options: [
-      'Just A and B — the others are deprecated.',
+      "Verification of all drive parameters against the commissioning record, including motor nameplate data, acceleration/deceleration ramps, speed limits, protection settings, control interface configuration, and a test run at various speeds to confirm correct operation",
       "A through G cover non-insulation install methods (clipped, in conduit, in trunking, in cable tray, buried, free air); 100–103 cover the cases where the cable is in thermal insulation. The two families exist because in-insulation derating is built into the tabulated value rather than applied as a separate Ci.",
-      "A through Z, with new methods added each year.",
-      "Only the insulation methods matter — the rest are advisory.",
+      "Explicit consent, given freely, in writing, in advance — separate from the consent to do the work. The customer must be able to refuse without it affecting the work, and to withdraw consent later. Legitimate interest is sometimes used but is harder to defend for marketing because the customer's reasonable expectation is that you photograph for the job, not for advertising.",
+      "Restock immediately. Notify the firm\\\\\\\\'s person responsible for kit maintenance. Do not continue to use the kit until restocked. Update the kit\\\\\\\\'s contents log. The kit must be ready for the NEXT incident, which could happen this afternoon.",
     ],
     correctAnswer: 1,
     explanation:
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: "Method A in BS 7671 Appendix 4 describes which install configuration?",
     options: [
-      'Clipped direct.',
+      "To ensure equipment neither emits nor is affected by electromagnetic interference",
+      "To indicate which protocols are being converted and ensure proper maintenance",
       "A single insulated conductor in conduit in a thermally insulated wall.",
-      "Multi-core cables clipped direct.",
-      "Free air.",
+      "Tripping before prospective fault current reaches peak",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Method A: single insulated conductor in conduit in a thermally insulated wall — the worst of the conduit-in-wall cases because the wall insulation reduces heat dissipation. Used for boxed-out commercial walls, plasterboard partitions with insulation, and any conduit run buried in masonry that has been overclad with insulation.",
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: "Method C describes which install?",
     options: [
-      'Cable in conduit.',
-      'Single-core cable in trunking.',
+      'The evidence is relevant to the specific NVQ unit and criteria being assessed',
+      'It can create shadows and hot spots affecting uniformity',
+      'Widespread urticarial rash, swollen tongue, wheezing, and rapidly falling blood pressure',
       'Multi-core cables clipped direct to a non-metallic surface in still air.',
-      'Cable on a perforated cable tray.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Method C: multi-core cables clipped direct to a non-metallic surface (timber joist, plasterboard, plaster wall) in still air. The bread-and-butter domestic install for T&E. Higher CCC than Methods A or B because the cable can convect freely on most of its surface.",
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'Method E is for cables installed in free air. Why does it generally give a higher tabulated CCC than Method C, even for the same cable?',
     options: [
-      'Method E is for armoured cable, which carries more current.',
       "Method E (cable on a cable ladder, single-layer, with at least one cable diameter spacing) allows free convection on all sides, which is more efficient cooling than Method C's clipped-against-a-surface arrangement.",
-      "Method E is for thermosetting cable only.",
-      "There is no real difference.",
+      "A poor power factor increases current draw for the same real power, causing overheating in cables and equipment, increased losses, higher electricity costs from reactive power charges, and may indicate failing capacitors that need replacement during maintenance",
+      "Allows third-party devices and energy management systems to access real-time energy consumption data from the smart meter via the ZigBee Home Area Network — enabling automated energy management, tariff optimisation and demand-side response",
+      "The installation uses a TN-S earthing arrangement with a separate neutral and earth, requiring the neutral to be switched along with the three phases to prevent neutral current circulating between sources",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Method E is the most efficient cooling environment in the everyday catalogue — spaced single-layer on a ladder or perforated tray, with air free to circulate around the entire cable surface. Method C ties the cable to a wall or joist, which removes one face from convective cooling. The thermal headroom difference shows up as a higher It value in Method E.",
   },
@@ -140,12 +140,12 @@ const quizQuestions = [
     question:
       "Method 102 in BS 7671 Appendix 4 covers which install?",
     options: [
-      'Cable on a cable tray.',
-      'Cable in free air.',
+      'Emotional exhaustion impairs concentration, cynicism reduces teamwork and communication, and reduced efficacy leads to poor decision-making — all increasing safety risks',
       'Cable in contact with a thermally conductive wall on one face, with insulation on more than one other face but not totally enclosed.',
-      'Cable in a steel conduit.',
+      'A knowledge test, a practical assessment, and a professional discussion supported by a portfolio of evidence',
+      'To check that the arrangements set out in the construction phase plan are being implemented, that risks are being controlled, and to identify areas for improvement',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Method 102 covers the partial-enclosure case — cable embedded in insulation on more than one face but not totally surrounded. Common in modern construction where T&E sits in studwork between layers of mineral wool, with air space at the top and bottom of the run. It derates between Method 101 and Method 103, reflecting the partial heat-shedding capacity.",
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     question:
       "A cable runs through three different environments along its length. The CCC calc must use:",
     options: [
-      'The Reference Method of the longest section.',
+      'It causes delays, false readings, and requires extensive fault-finding',
+      'A device suitable for the motor starting current characteristics',
       'The Reference Method of the worst section — the section with the lowest tabulated CCC.',
-      "The average of the three methods' CCC values.",
-      'Whichever method gives the largest CSA.',
+      'BS 5266-8 (EN 50172) (Emergency lighting testing and monitoring)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Worst section governs. Cables fail at their hottest point first — if any section of the run cannot dissipate heat fast enough at the design current, the entire cable is non-compliant. You must size for the worst install method on the route.",
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     question:
       "A 6 mm² T&E with tabulated It = 47 A in Method C drops to It ≈ 29 A in Method 103. The percentage reduction tells you what about cables in thermal insulation?",
     options: [
-      "Method 103 cables are made of different copper.",
+      "A duty to cooperate with their employer and other persons so far as is necessary to enable compliance with health and safety requirements",
+      "That all rungs are present, undamaged, free from grease or debris, and that the access route is clear of obstructions",
+      "Flaming combustion is no longer supported, though smouldering may continue and hot, unburned pyrolysis gases accumulate",
       "Burying a cable in insulation removes about 38 percent of its CCC because heat cannot escape — the same conductor with the same insulation cooks at much lower current.",
-      "BS 7671 is too conservative on Method 103.",
-      'The cable is rated lower because of vibration in the insulation.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Total enclosure in thermal insulation reduces effective heat dissipation dramatically — the air gap that would normally allow convection is replaced by a layer that is specifically designed to resist heat flow. The CCC drops by roughly a third to a half depending on CSA. That is why Method 103 is the most punishing column in the table and the most common driver of size-up decisions.",
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       "When sizing a sub-main on SWA (Steel Wire Armoured) cable buried in the ground, which Reference Method and which additional correction factor apply?",
     options: [
-      'Method C, Ca only.',
       "Method D (direct buried) or method C if in a duct, plus a soil-thermal-resistivity correction factor from Table 4B3.",
-      "Method E, no extra correction.",
-      "Method 103, Ci only.",
+      "To provide a low-reluctance path for magnetic flux, enabling efficient energy transfer between windings",
+      "Vague terms like \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"approximately\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"if required\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\", \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"as necessary\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" without further definition",
+      "Filtering facepieces, half/full face masks, powered respirators, breathing apparatus",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Buried SWA uses Method D (direct contact with soil) or a duct method (typically Method C with a duct correction). Soil thermal resistivity varies with soil type and moisture; BS 7671 Table 4B3 publishes the correction. Damp clay carries heat better than dry sand, so the same cable buried in clay carries more current than the same cable buried in sand.",
   },

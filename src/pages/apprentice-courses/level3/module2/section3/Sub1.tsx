@@ -47,10 +47,10 @@ const checks = [
     question:
       'On a domestic PV install you see two strings of 8 panels each going into a single MPPT input on the inverter. Each panel is rated 400 W at 40 V Voc, 10 A Isc. What does that tell you about the DC voltage at the inverter input on a cold sunny morning?',
     options: [
-      'Just 40 V — same as one panel.',
+      "Customer name and address; installer name and MCS certification number; install date; technology and rating (e.g. 5 kWp PV with 10 kWh battery); manufacturer and model details for the major components; performance estimate (annual generation kWh, SCOP, etc.); MCS Installation Standard reference (e.g. MIS 3002 v6.0); Workmanship Warranty period and what it covers; aftercare contact details. The certificate is the customer's proof of MCS-certified installation, used for BUS grant, SEG enrolment, manufacturer warranty registration and future house sale.",
       "Around 320 V at Vmp (8 panels × 40 V each in series), and the open-circuit voltage on a cold morning could push that toward 380-400 V due to the temperature coefficient of Voc (typically -0.3% per °C above 25°C). Strings put cells in series — voltages add. Two strings paralleled at the same MPPT contributes 20 A combined Isc but the same string voltage. The inverter's max DC input voltage spec must exceed the worst-case cold-morning Voc with margin. The DC isolator at the array must be rated for that voltage.",
-      '5 V — domestic PV is always low-voltage SELV.',
-      'It depends on the AC frequency.',
+      "Both can be held liable. The individual harasser is personally liable under s.110 (helping a discriminatory act). The employer is vicariously liable under s.109 for acts done by the employee 'in the course of employment'. The employer's defence is to show they took 'all reasonable steps' to prevent the conduct — i.e. proper policies, training, monitoring and enforcement. A claimant can name both the individual and the employer in the same claim.",
+      "Panels are warrantied 25 years and often deliver useful output well beyond. Inverters are warrantied 5-12 years depending on type (string inverters typically 10-12 years; microinverters often 25 years). Most domestic PV systems will need at least one inverter replacement during the 25-year panel lifetime. The replacement is straightforward — disconnect old, fit replacement of compatible spec, recommission, update the EIC. The cost should be factored into the system's whole-life economic case rather than treated as a surprise.",
     ],
     correctIndex: 1,
     explanation:
@@ -61,12 +61,12 @@ const checks = [
     question:
       'A customer asks you to install an 8 kWp PV array with a single-phase 7 kW inverter. What\'s the DNO notification path?',
     options: [
-      'No notification needed — small systems are exempt.',
+      "Construction site practice (HSE INDG291 and CDM-driven site rules) requires reduced low-voltage 110 V CTE (centre-tapped earthed) supplies for portable tools — fed by a site transformer. The voltage to earth is 55 V on each leg, which dramatically reduces shock energy if a tool fault develops. 230 V tools are not banned by statute but are considered the wrong tool for the construction environment under PUWER Reg 4 — and most principal contractors enforce 110 V as a site rule.",
+      "Old radiators were sized for 70-80°C flow temperature from a gas boiler. To deliver the same heat output at lower flow temperature, the radiators need to be larger. If you ask a heat pump to drive undersized old radiators at 70-80°C flow, the temperature lift is much bigger than at 35-40°C flow — so the COP drops sharply. SCOP reflects the actual flow temperature the system runs at across the heating season. Properly designed heat-pump retrofits include a radiator survey and upsize plan, or convert to underfloor where possible.",
       "ENA Engineering Recommendation G99 — the 7 kW inverter exceeds the 16 A per phase G98 fast-track limit (3.68 kW at 230 V single-phase). G99 is a pre-installation application to the DNO, who will confirm or reject the connection based on the local network capacity. The application is normally submitted by the MCS-certified installer using the standard G99 application form. Without the G99 approval the DNO can require disconnection. G98 (notification within 28 days of commissioning) only applies to inverters at or below 16 A per phase per inverter.",
-      'G83 — that\'s still the current rec.',
-      'Building Regs Part P only.',
+      "The multimeter has 10 MΩ input impedance and will read induced voltages and 'phantom' voltages that aren't a real source — it can show 30–80 V on a dead conductor that has nothing dangerous on it, leading you to assume the circuit is live when it isn't (a false positive). The two-pole tester has low input impedance (typically a few kΩ) and 'loads' the circuit — phantom voltages collapse to zero, real sources hold. GS38 specifically prefers two-pole testers for proving dead because the low impedance gives an unambiguous answer.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The 16 A per phase boundary is the practical line. A single-phase 16 A export = 230 V × 16 A = 3.68 kW. Most 4 kW inverters sit just below this (deliberately). Anything bigger needs G99 pre-approval. G99 can take weeks to months depending on network constraints; the customer needs to know the timeline before the installer commits to a fitting date. G98 / G99 replaced the older G83 / G59 in 2019 and now apply to all parallel-connected generators — PV, battery storage, micro-CHP, micro-wind.",
   },
@@ -75,12 +75,12 @@ const checks = [
     question:
       'A 10-panel string runs across a roof and one panel sits in partial shadow from a chimney each afternoon. What\'s the realistic effect on the string output?',
     options: [
-      'No effect — only the shaded panel loses output.',
+      "MCS-certified installers belong to an MCS umbrella scheme (NICEIC, NAPIT, ELECSA, Stroma, BBA HAPAS, etc.) — the umbrella scheme audits the installer, validates competence, processes commissioning certificates, and runs the customer-facing complaints framework. The umbrella scheme issues the MCS Commissioning Certificate based on the install pack the installer submits. MCS sits over the umbrella schemes — it is the standards body, not the certifying body. Without an active MCS umbrella scheme membership, the installer cannot issue MCS Commissioning Certificates, and the customer cannot claim Smart Export Guarantee tariff or Boiler Upgrade Scheme grant. The L3 apprentice will work under an MCS-certified installer's competence; you do not yet hold MCS certification yourself.",
+      "Section 722 of BS 7671 (Electric vehicle charging installations) is the regulation anchor. It applies in addition to the rest of BS 7671 and covers the supply, the charging point, the protective measures (especially the PEN-fault and additional protection requirements), the cable rating and the means of isolation. A4:2026 has refined Section 722 alongside the broader updates around TN-C-S systems (now PNB) and AFDD requirements.",
       "Without bypass diodes or panel-level optimisation, the shaded panel limits the current through the entire string — like a kink in a hose. A 30% shade on one panel can drop the whole string output by 30% or more. Bypass diodes within each panel partially mitigate this by allowing current to bypass the affected substring. Panel-level optimisation (Tigo / SolarEdge / micro-inverter architecture) goes further — each panel runs at its own MPP regardless of neighbours. For a string-heavy install with predictable shading, the design choice of optimisers vs plain string matters more than the panel choice.",
-      'The shaded panel produces extra heat and damages the string.',
-      'The whole string disconnects automatically.',
+      "Five-step. (1) VERIFY the reading — repeat the test; check leads / instrument condition; compare with second instrument if available. (2) IDENTIFY the failure mode — what does the unsatisfactory reading indicate (insulation breakdown, HRJ, polarity error, RCD slow trip)? (3) MAKE SAFE — isolate the affected circuit / component; label / signage if you'll be away from site. (4) DOCUMENT — record the failed reading, the verification, the action, on the job sheet AND inform customer in writing if Code 1 (Danger Present). (5) RECTIFY OR ESCALATE — fix if within competence; escalate to supervisor / specialist if not. Never leave a Code 1 fault unactioned even if outside the original call-out scope.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Shading is the headline real-world performance issue on UK roofs — chimneys, dormers, neighbouring trees, satellite dishes. The MCS Yield Calculator includes a shading factor based on the array's site survey. Where shading is hard to avoid, panel-level optimisation is usually specified at design stage. As an apprentice you don't choose the architecture but you should recognise the difference between a plain-string and an optimised installation when you see them on a roof.",
   },
@@ -92,10 +92,10 @@ const quizQuestions = [
     question:
       'What\'s the basic chain of equipment on a typical UK domestic PV install, from sunlight to the consumer unit?',
     options: [
-      'Just panels and a meter.',
+      "Generators (PV, wind, micro-CHP) put energy into the system that wasn't there before from the user's point of view. Demand-reduction tech (LED lighting, smart controls, MVHR, insulation) makes the existing energy do more useful work. From a carbon perspective the cheapest watt is the one you don't use — demand reduction usually has a shorter payback than generation. From a Building Regs perspective both count toward Part L compliance via the SAP / SBEM calculation.",
       "Sunlight → silicon cells → DC voltage in panel → DC string conductors (panels in series) → DC string isolator at the array → inverter (MPPT, DC-AC conversion) → AC isolator at the inverter → MID-compliant generation meter → AC isolator at the consumer unit (or directly into a dedicated MCB) → consumer unit / DNO supply. Earth-bonding of the array frame to MET; labels at each isolator; manufacturer's signage at the meter position. Battery storage adds a DC battery and BMS in parallel with the inverter (hybrid topology) or a separate AC-coupled battery inverter.",
-      'Inverter, then panels, then sun.',
-      'Panels → battery → grid only.',
+      "Test instruments drift over time — components age, shock and vibration cause small errors. A drifted instrument produces wrong test results that fail BS 7671 Chapter 61 verification. Annual calibration to a UKAS-traceable standard (with a calibration certificate) is the standard requirement. NICEIC, NAPIT and ELECSA all check for in-date calibration certificates at scheme audit; an out-of-date instrument used to demonstrate compliance invalidates the certificate it was used to produce.",
+      "AVERAGING — measures the average of the rectified waveform and multiplies by a form factor (1.11 for sine wave) to give 'RMS equivalent'. Accurate for pure sine waves; under-reads for distorted waves (LED drivers, VFDs, switching power supplies). TRUE RMS — measures the actual heating effect of the waveform, accurate for any wave shape. For modern installations heavy with electronic loads (LEDs, VFDs, IT equipment), TRMS is essential — average-reading instruments can under-read by 20–40% on harmonic-rich circuits and miss nuisance-trip-causing voltage spikes.",
     ],
     correctAnswer: 1,
     explanation:
@@ -106,12 +106,12 @@ const quizQuestions = [
     question:
       'Why does the inverter in a grid-tied PV install need to "follow" the grid, and what happens if the grid fails?',
     options: [
-      'It doesn\'t need to follow the grid — it dictates the frequency.',
+      "Because the install is a long-lived asset that will outlast the original installer's involvement. Notices communicate critical information — main earth location, RCD test interval, mixed supplies, isolator function — to whoever interacts with the install in future, including the customer in an emergency, the next electrician on a fault visit, and the EICR engineer in five years' time. The labels are how the install talks to people when the original installer isn't there.",
+      "You can't make someone seek help, but you can keep listening, keep checking in, and keep signposting gently. Suggest the Lighthouse Club 24/7 helpline (0345 605 1956) — confidential, no referral needed, no qualifying period. Mention Samaritans (116 123). Mention Mates in Mind resources. Don't break their confidence without asking, but if you genuinely believe they're at imminent risk of harm to themselves, the right thing is to call 999 or take them to A&E — that's a safeguarding step, not a betrayal. Look after yourself too — supporting a peer can be heavy. The same charities are available to you.",
       "A grid-tied (parallel-connected) inverter synchronises its output voltage and frequency to the grid using the grid as its reference. When the grid fails, the inverter must disconnect (anti-islanding protection) — it cannot legally continue exporting into a dead network because that would put live voltage onto cables that the DNO has isolated for fault repair, putting linespeople at risk. ENA G98/G99 specifies the loss-of-mains detection settings (vector shift, ROCOF, voltage and frequency limits). Without backup hardware, when the grid drops the PV stops — the customer's house goes dark even with sun on the roof.",
-      'It runs on its own internal clock.',
-      'It generates DC only.',
+      "Same as PV — durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit, at the main isolation, at the inverter and at any DC isolators. Wind connections fall under the same ENA G98 (≤16 A per phase) or G99 (&gt;16 A per phase) framework as PV. The DNO needs to know the installation exists; the maintainer who turns up to a fault call needs to know there's a parallel generator.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Anti-islanding is a safety-critical function. It's tested at commissioning and verified at periodic inspection. Customers who want backup operation (lights stay on in a power cut) need either a hybrid inverter with islanded operation, or a separate ATS-and-battery arrangement. The MCS installer specifies and configures both; the apprentice should recognise the limitation when explaining to customers why their PV isn't giving them backup.",
   },
@@ -120,12 +120,12 @@ const quizQuestions = [
     question:
       'What\'s the safe approach to the DC side of a PV array if you have to work near it?',
     options: [
-      'Cover the panels and assume the DC is dead.',
+      "All charge points sold for use in domestic and workplace settings in Great Britain must be 'smart' — capable of being scheduled, default off-peak charging hours pre-set, randomised delay function (to avoid grid spikes when half a million chargers turn on at midnight), data privacy / cybersecurity baseline, and a 'safety provision' that disconnects on certain fault detections. Compliance is a condition of sale; the installer should fit a unit that the manufacturer has self-certified as Regulations-compliant. The apprentice does not need to verify each technical clause but should recognise that any new domestic install is using a smart-compliant unit.",
+      "Six fault-specific categories on top of the generic shock + arc + burn list: (1) hidden parallel paths and borrowed neutrals, (2) induced voltages from adjacent live circuits, (3) capacitive / inductive stored energy in equipment, (4) compromised protective conductors (CPC missing or high-resistance), (5) compromised supply earthing (open PEN, lost main earth), (6) unverified circuit identification (the breaker label says 'lights' but actually feeds the boiler). All six are present BECAUSE the system is in fault — the fault itself created or revealed the hazard.",
+      "PPE Regs Reg 7 places a duty on the employer to maintain (and replace) PPE. The corresponding duty on the employee under Reg 10 is to use the PPE in accordance with training and to report any loss of, or obvious defect in, the PPE. Damaged PPE doesn't provide the rated protection — a cracked safety glass lens, a dust mask with a broken strap, a hi-vis with the reflective material peeling off — all need to be taken out of service and replaced before use.",
       "Treat the DC side as live until proven dead with a meter rated for the voltage. The DC isolator at the array end and the DC isolator at the inverter end must both be operated and locked-off, then verify dead with a meter at both ends of the string. Even with the inverter AC-side isolated and switched off, the array continues to generate as long as light hits the panels. Covering the panels reduces but does not eliminate the DC output. Inverter manufacturer's instructions usually require a dwell time after isolation to allow internal capacitors to discharge.",
-      'Snip the DC cable and check for spark.',
-      'Just isolate the AC side and you\'re fine.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "PV is the most under-rated electrocution risk in the trade. The DC voltages are non-trivial (300-600 V is typical), the DC arc behaviour is different from AC (no zero-crossing means an arc keeps going once started), and the source is essentially impossible to switch off — you can only isolate the conductors. Always work to a safe-isolation procedure with a tested meter, and treat the DC side as a separate isolation problem from the AC side.",
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       'On a UK domestic PV install, which document covers installer competence and which document covers the electrical design?',
     options: [
-      'Both are covered by Building Regs Part L.',
       "MCS MIS 3002 is the installer-competence and installation-quality standard for solar PV. BS 7671 Section 712 is the electrical-design standard for the wiring, protection, isolation and labelling. Both apply on every install. MIS 3002 references BS 7671 explicitly for the electrical detail; BS 7671 applies regardless of whether the install is MCS-certified. MCS certification is required if the customer wants Smart Export Guarantee payments; BS 7671 compliance is required because it's the electrical regulation.",
-      'BS 7671 Section 722.',
-      'CSCS card.',
+      "The RAMS is the documented safe system of work for the task. Substituting a step ladder for a podium is a deviation from the documented control. Either the podium gets sourced, or the RAMS gets formally amended and re-signed before any work proceeds. Verbally working around the document leaves you outside the safe system of work — and outside any legal protection if something goes wrong. WAHR 2005 Reg 6 puts the duty on the employer to use the most suitable equipment.",
+      "You don't have to break the circuit — the clamp meter senses the magnetic field around the conductor and reads the current without electrical contact. Faster, safer (no need to disconnect), and possible on energised circuits without isolation. Standard for measuring load currents at distribution boards, on submains, on motor circuits, and for energy auditing. Most modern clamp meters also have voltage and continuity functions, making them effectively a multimeter + clamp in one.",
+      "The certificate references the edition in force on the date of installation (e.g. BS 7671:2018+A4:2026). Subsequent amendments don't make the install non-compliant retrospectively, but they DO change what's required for any future addition / alteration / EICR you do on the same installation. Periodic inspection (EICR) is carried out to the standard in force at the time of the inspection — so a 2026 install will be EICR'd against whatever amendment is current in 2031.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "MIS 3002 is the most recent revision of the MCS PV installation standard — covers site survey, design, installation quality, commissioning, handover and labelling. Section 712 is the BS 7671 chapter for PV electrical design. The two standards work together: MIS 3002 says 'comply with BS 7671'; BS 7671 Section 712 provides the electrical detail. Section 712 was extensively revised in the A4:2026 amendment.",
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       'What\'s the practical effect of orientation and pitch on UK PV yield?',
     options: [
-      'No effect at UK latitudes.',
+      "The multimeter has 10 MΩ input impedance and will read induced voltages and 'phantom' voltages that aren't a real source — it can show 30–80 V on a dead conductor that has nothing dangerous on it, leading you to assume the circuit is live when it isn't (a false positive). The two-pole tester has low input impedance (typically a few kΩ) and 'loads' the circuit — phantom voltages collapse to zero, real sources hold. GS38 specifically prefers two-pole testers for proving dead because the low impedance gives an unambiguous answer.",
       "Significant. A south-facing roof at 30-40° pitch is the optimal UK orientation, posting 100% of reference yield. East-facing or west-facing roofs typically produce 80-85% of optimal. North-facing produces 50-65% (still positive but with much longer payback). Steeper pitches favour winter performance; shallower pitches favour summer performance. Flat roofs get an A-frame mount to set a target pitch and azimuth. The MCS Yield Calculator handles all of this — produces the kWh figure for the SAP and the customer handover.",
-      'Pitch matters but orientation doesn\'t.',
-      'East-facing always beats south-facing in the UK.',
+      "No. EAWR Reg 14(c) requires 'suitable precautions including where necessary the provision of suitable protective equipment'. The risk being 'low' doesn't dispense with the precaution — it informs which precaution. For 230 V live work, Class 0 insulated gloves (rated 1000 V AC) plus insulated tools are the standard precaution. The senior is exposing both themselves and the firm to liability under EAWR (failure to take suitable precautions) and HSWA Section 7 (employee duty to take reasonable care of own and others' safety). The apprentice's defence: 'I followed the firm's PPE matrix' — so make sure there IS one and it specifies gloves for live work.",
+      "Durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit / meter, at the main isolation, at the inverter and at the DC isolators. The Distribution Network Operator's emergency contacts. The PV system identification (kWp rating, inverter manufacturer/model). The signage requirements come from BS 7671 Section 712, MCS MIS 3002 and the DNO's G98/G99 connection conditions. A future maintainer who turns up to a 'normal' fault call must know there's a generator on the property.",
     ],
     correctAnswer: 1,
     explanation:
@@ -162,12 +162,12 @@ const quizQuestions = [
     question:
       'Why are dual-MPPT inverters often preferred over single-MPPT for UK domestic installs?',
     options: [
-      'They produce more power per panel.',
+      "Pre-Construction Information is the H&S information that the Client (with help from the Principal Designer) provides to designers and contractors before they start on the project. It covers the site (location, existing structures, services, ground conditions), the project (description, programme, key dates, design assumptions), the relevant H&S information (asbestos surveys, condition reports, environmental risks) and the Client's H&S file from any previous works.",
+      "Fluorescent tubes (mercury-containing, EWC 20 01 21* — the asterisk denotes hazardous), oil-filled transformers and capacitors containing PCBs (EWC 16 02 09*), batteries containing lead, mercury or cadmium (EWC 16 06 01* and similar), asbestos-cement consumer unit backplates from older installations (EWC 17 06 05*), and waste oils. The asterisk in the EWC code is the marker for absolute hazardous waste.",
       "They allow two independent strings to run at their own MPP. A roof with both an east-facing and a west-facing slope gets one string per slope, each tracked independently — the east string MPPs in the morning, the west string MPPs in the afternoon, and the inverter combines the AC outputs. Without dual-MPPT, mixing east and west panels in one string forces a compromise MPP that wastes 10-20% of the available energy. Many domestic UK installs benefit from dual-MPPT given typical roof geometries.",
-      'They fit through the loft hatch.',
-      'They run at lower DC voltage.',
+      "Coaching focuses on individual development (asking \\\\\\\"what do you want to become?\\\\\\\" and helping bridge the gap through challenging assignments and feedback), while affiliative focuses on team harmony and emotional bonds (asking \\\\\\\"how is everyone feeling?\\\\\\\" and strengthening connections). Coaching is most appropriate for developing potential; affiliative is most appropriate for healing rifts or building morale",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Dual-MPPT inverters are now standard on most domestic units. The cost premium over single-MPPT is small and the design flexibility is significant. As an apprentice you should recognise the inverter spec sheet's MPPT count — it tells you how many independent string groups the design can use.",
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     question:
       'What signage is required at the consumer unit / meter position on a PV-installed property?',
     options: [
-      'No signage required.',
+      "Three steps. (1) MINIMISE the damage during the work — score around the tile carefully; remove only the affected tile(s); save them for re-fit if intact. (2) MAKE SAFE the tile area — no exposed substrate, no sharp edges, no water-ingress path. (3) BRIEF THE CUSTOMER — explain what tiles were affected; recommend a tiler for re-fit (referrals are good business); document the damage on the job sheet. The electrician doesn't normally re-tile (specialist trade with tile-cutting tools, adhesives, grout) but is responsible for minimising damage AND informing the customer.",
+      "Because EAWR is the trade-specific instrument made under HASAWA's enabling powers (s.15) — but HASAWA's general duties (s.2, s.3, s.7) sit underneath the EAWR breach as the broader safe-system / personal-duty obligations. Charging both gives the prosecution two routes to conviction and lets the court assess culpability across both the specific technical reg AND the broader systems-of-work failure.",
+      "(a) To use any machinery, equipment, dangerous substance, transport equipment, means of production or safety device provided in accordance with any training in the use of that equipment and the instructions respecting that use; AND (b) to inform the employer of any work situation which a person with the training and instruction given to them would reasonably consider represented a serious and immediate danger to health and safety, AND of any matter which a person with the training given would reasonably consider represented a shortcoming in the employer's protection arrangements.",
       "Durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit / meter, at the main isolation, at the inverter and at the DC isolators. The Distribution Network Operator's emergency contacts. The PV system identification (kWp rating, inverter manufacturer/model). The signage requirements come from BS 7671 Section 712, MCS MIS 3002 and the DNO's G98/G99 connection conditions. A future maintainer who turns up to a 'normal' fault call must know there's a generator on the property.",
-      'A post-it note on the cylinder.',
-      'A coloured ribbon on the panel.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Signage saves lives. A maintainer arriving to investigate a fault and finding a 'just a normal property' assumption can put themselves at risk if they don't know the inverter is feeding a parallel supply. The MCS Code of Practice specifies the durable label format; BS 7671 Section 712 references the requirement; the DNO's connection conditions reinforce it.",
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'What\'s the realistic carbon and financial payback for a UK domestic PV install?',
     options: [
-      'Carbon payback in 30 years; financial in 50.',
       "Carbon payback for typical UK PV is 1-3 years (the time taken for operating CO₂ savings to offset the manufacturing CO₂ cost). Financial payback depends on system cost, self-consumption, export tariff and electricity price — typically 6-12 years for a standalone PV install in 2026, often shorter if a battery is added (improves self-consumption from 25-40% to 70-90%). After payback the system continues for the rest of its 25-year warranted life essentially as free energy. The carbon case is much stronger than the financial case in isolation; together they make PV the dominant UK domestic environmental tech.",
-      'There is no payback.',
-      'Financial payback is always under 1 year.',
+      "Two reasons. (1) Auditability — readings are stored against a circuit ID and timestamp, providing tamper-evident evidence at scheme audit and dispute. (2) Cert generation — test results download directly into certificate software (NICEIC PartnerNet, NAPIT, custom firm software, Elec-Mate) and auto-populate the EIC / EICR test schedule, eliminating transcription errors. The combination saves the time previously spent hand-writing and double-checking test schedules.",
+      "Pregnancy and maternity (s.18). The Act prohibits unfavourable treatment of women because of pregnancy or maternity leave during the 'protected period' (broadly, from the start of pregnancy to the end of maternity leave). This is a separate category to sex discrimination — pregnancy / maternity claims don't need a male comparator. It's one of the most enforced parts of the Act and a leading source of Employment Tribunal awards.",
+      "Six triggers. (1) Cost decision &gt; £500 (budget threshold typically defined by firm policy). (2) Code 1 / Code 2 EICR finding requiring engineering judgment on coding. (3) Engineering compromise that may not be straightforward compliance. (4) Customer dispute about scope or quality. (5) Specialist work outside L3 competence (HV, three-phase plant, BMS, fire alarm signal-only work). (6) Anything you're not sure about. Escalation is competence, not weakness — the EAWR Reg 16 'competent person' duty includes knowing where your competence stops. The supervisor is paid to make the harder calls.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Carbon payback figures come from manufacturer LCA studies and academic reviews (typically 1-3 years on UK grid mix). Financial payback figures shifted in 2022-2023 with electricity price spikes — at 30p/kWh import the payback shortens significantly. The MCS install handover includes a Performance Estimate that gives the customer realistic numbers; the apprentice should reinforce these, not over-promise.",
   },

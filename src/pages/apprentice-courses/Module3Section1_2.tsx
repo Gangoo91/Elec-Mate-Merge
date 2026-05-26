@@ -20,7 +20,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'What colour is the neutral conductor in modern T&E cable?',
-    options: ['Black', 'Blue', 'Brown', 'Green/Yellow'],
+    options: [
+      'Black',
+      'Blue',
+      'Brown',
+      'Green/Yellow',
+    ],
     correctAnswer: 1,
     explanation:
       'The neutral conductor in modern T&E cable is blue (changed from black in 2004 harmonisation).',
@@ -29,10 +34,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Name one limitation of T&E cable in outdoor installations.',
     options: [
-      'Too expensive',
-      'Cannot carry enough current',
+      'Strip cable sheath 25-30mm',
+      'Where risk of mechanical damage exists',
       'Not suitable for direct burial',
-      'Wrong colour coding',
+      'Sleeve it green/yellow',
     ],
     correctAnswer: 2,
     explanation:
@@ -42,12 +47,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What is the purpose of sleeving the bare earth conductor?',
     options: [
-      'To increase current capacity',
-      'For identification and safety',
       'To reduce voltage drop',
+      'To increase current capacity',
       'To improve flexibility',
+      'For identification and safety',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The bare CPC must be sleeved green/yellow at terminations for proper identification and to prevent accidental contact.',
   },
@@ -57,15 +62,25 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What colour is the live conductor in modern T&E cable?',
-    options: ['Brown', 'Red', 'Blue', 'Black'],
-    correctAnswer: 0,
+    options: [
+      'Red',
+      'Brown',
+      'Blue',
+      'Black',
+    ],
+    correctAnswer: 1,
     explanation:
       'The live conductor in modern T&E cable is brown (changed from red in 2004 harmonisation).',
   },
   {
     id: 2,
     question: 'Which size of T&E is most commonly used for a domestic socket ring circuit?',
-    options: ['1.0 mm²', '1.5 mm²', '2.5 mm²', '4.0 mm²'],
+    options: [
+      '4.0 mm²',
+      '1.0 mm²',
+      '2.5 mm²',
+      '1.5 mm²',
+    ],
     correctAnswer: 2,
     explanation:
       '2.5 mm² T&E is the standard size for domestic socket ring circuits, providing adequate current capacity for typical loads.',
@@ -82,19 +97,24 @@ const quizQuestions = [
     id: 4,
     question: 'What must be done to the CPC before connecting it to a terminal?',
     options: [
-      'Trim it shorter than other conductors',
       'Sleeve it green/yellow',
+      'Trim it shorter than other conductors',
       'Twist it with neutral conductor',
       'Leave it bare',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The bare CPC must be sleeved with green/yellow identification sleeve at all terminations.',
   },
   {
     id: 5,
     question: 'Which part of the T&E cable provides basic mechanical protection?',
-    options: ['CPC', 'Outer PVC sheath', 'Neutral conductor', 'Insulation tape'],
+    options: [
+      'CPC',
+      'Outer PVC sheath',
+      'Insulation tape',
+      'Neutral conductor',
+    ],
     correctAnswer: 1,
     explanation:
       'The outer PVC sheath provides basic mechanical protection for the internal conductors.',
@@ -104,19 +124,24 @@ const quizQuestions = [
     question: 'Why must sharp bends be avoided when installing T&E?',
     options: [
       'To prevent voltage drop',
-      'To avoid damaging the insulation',
       'To improve aesthetics only',
+      'To avoid damaging the insulation',
       'To make clipping easier',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Sharp bends can damage the conductor insulation, potentially causing short circuits or earth faults.',
   },
   {
     id: 7,
     question: 'What is the maximum clip spacing for T&E cable on horizontal runs?',
-    options: ['200mm', '300mm', '400mm', '500mm'],
-    correctAnswer: 1,
+    options: [
+      '200mm',
+      '500mm',
+      '400mm',
+      '300mm',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS 7671 requires cable clips at maximum 300mm spacing for horizontal runs of T&E cable.',
   },
@@ -124,19 +149,24 @@ const quizQuestions = [
     id: 8,
     question: 'Where must T&E cable be installed inside conduit or trunking?',
     options: [
-      'All domestic installations',
-      'Only in bathrooms',
       'Where risk of mechanical damage exists',
-      'Only for high current circuits',
+      'To avoid damaging the insulation',
+      'Not suitable for direct burial',
+      'For identification and safety',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'T&E must be protected with conduit or trunking where there is risk of mechanical damage, such as exposed runs in workshops.',
   },
   {
     id: 9,
     question: 'What size clips should be used for 2.5 mm² T&E cable?',
-    options: ['6mm clips', '8mm clips', '10mm clips', '12mm clips'],
+    options: [
+      '6mm clips',
+      '8mm clips',
+      '10mm clips',
+      '12mm clips',
+    ],
     correctAnswer: 1,
     explanation:
       '2.5 mm² T&E cable requires 8mm clips with 4.0mm screws for proper support and installation.',
@@ -144,16 +174,26 @@ const quizQuestions = [
   {
     id: 10,
     question: 'When stripping T&E cable, what is the typical conductor strip length required?',
-    options: ['5-8mm', '10-12mm', '15-20mm', '25-30mm'],
-    correctAnswer: 1,
+    options: [
+      '5-8mm',
+      '25-30mm',
+      '10-12mm',
+      '15-20mm',
+    ],
+    correctAnswer: 2,
     explanation:
       'Individual conductor insulation should typically be stripped 10-12mm for most terminations.',
   },
   {
     id: 11,
     question: 'How close to terminations and accessories must T&E cable be clipped?',
-    options: ['Within 100mm', 'Within 150mm', 'Within 200mm', 'Within 300mm'],
-    correctAnswer: 1,
+    options: [
+      'Within 100mm',
+      'Within 300mm',
+      'Within 200mm',
+      'Within 150mm',
+    ],
+    correctAnswer: 3,
     explanation:
       'T&E cable must be clipped within 150mm of terminations and accessories to provide adequate support.',
   },
@@ -161,12 +201,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the first step when terminating T&E cable at a socket outlet?',
     options: [
-      'Connect the live conductor',
       'Strip cable sheath 25-30mm',
-      'Test the circuit',
       'Install the faceplate',
+      'Connect the live conductor',
+      'Test the circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The first step is to strip the cable sheath 25-30mm and individual conductors 12mm to prepare for termination.',
   },

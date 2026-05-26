@@ -32,8 +32,13 @@ const quickCheckQuestions = [
   {
     id: 'third-harmonic-freq',
     question: 'What is the frequency of the 3rd harmonic in a 50Hz UK supply system?',
-    options: ['100Hz', '150Hz', '200Hz', '250Hz'],
-    correctIndex: 1,
+    options: [
+      '100Hz',
+      '250Hz',
+      '200Hz',
+      '150Hz',
+    ],
+    correctIndex: 3,
     explanation:
       'The 3rd harmonic frequency = 3 × fundamental frequency = 3 × 50Hz = 150Hz. Harmonic frequencies are integer multiples of the fundamental frequency.',
   },
@@ -42,20 +47,25 @@ const quickCheckQuestions = [
     question:
       'In a balanced three-phase system with non-linear loads, which harmonics add together in the neutral conductor?',
     options: [
-      'All odd harmonics',
-      'All even harmonics',
+      'To ensure insulation against electric shock',
+      'Location-based automation triggers',
+      'Public Interest Disclosure Act 1998',
       'Triplen harmonics (3rd, 9th, 15th)',
-      '5th and 7th harmonics only',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Triplen harmonics (3rd, 9th, 15th, 21st, etc.) are zero-sequence harmonics that add arithmetically in the neutral conductor rather than cancelling. This can cause neutral currents up to 1.73 times the phase current.',
   },
   {
     id: 'vsd-harmonics',
     question: 'A 6-pulse Variable Speed Drive (VSD) primarily produces which dominant harmonics?',
-    options: ['3rd and 9th', '5th and 7th', '2nd and 4th', '11th and 13th'],
-    correctIndex: 1,
+    options: [
+      '3rd and 9th',
+      '11th and 13th',
+      '2nd and 4th',
+      '5th and 7th',
+    ],
+    correctIndex: 3,
     explanation:
       'A standard 6-pulse VSD produces harmonics of order h = (6n ± 1), where n = 1, 2, 3... This gives 5th, 7th, 11th, 13th, etc. The 5th and 7th are typically the most significant.',
   },
@@ -63,12 +73,12 @@ const quickCheckQuestions = [
     id: 'k-rated-transformer',
     question: 'What is the primary purpose of a K-rated transformer?',
     options: [
-      'Reduce voltage drop',
+      'They only operate with the correct key',
+      'The ratio of true power to apparent power',
+      'Habits reduce reliance on willpower by making behaviour automatic',
       'Withstand additional heating from harmonic currents',
-      'Provide galvanic isolation',
-      'Improve power factor',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "K-rated transformers are designed with additional thermal capacity to handle the increased I²R heating caused by harmonic currents. The K-factor indicates the transformer's ability to serve non-linear loads.",
   },
@@ -92,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: 'Why do single-phase electronic loads predominantly produce odd harmonics?',
     options: [
+      'Because the rectifier uses two diodes',
       'Because AC current flows in one direction',
       'Because they have symmetrical positive and negative half-cycles',
-      'Because the rectifier uses two diodes',
       'Because the supply voltage is sinusoidal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Most electronic loads draw current symmetrically on positive and negative half-cycles. This half-wave symmetry in the time domain results in only odd harmonics being present in the frequency spectrum.',
   },
@@ -105,7 +115,12 @@ const quizQuestions = [
     id: 3,
     question:
       'In a 400V three-phase system with 100A per phase of triplen harmonic current, what could the neutral current theoretically reach?',
-    options: ['0A', '100A', '173A', '300A'],
+    options: [
+      '173A',
+      '0A',
+      '100A',
+      '300A',
+    ],
     correctAnswer: 3,
     explanation:
       'Triplen harmonics are zero-sequence and add arithmetically in the neutral. With 100A of triplen harmonic current per phase, the neutral current could reach 3 × 100A = 300A.',
@@ -114,20 +129,25 @@ const quizQuestions = [
     id: 4,
     question: 'What is Total Harmonic Distortion (THD)?',
     options: [
-      'The sum of all harmonic frequencies',
-      'The ratio of the fundamental to total current',
       'The RMS value of all harmonics expressed as a percentage of the fundamental',
-      'The peak voltage of the distorted waveform',
+      'Be connected through an RCD and comply with the relevant product standard',
+      'Use non-damaging, removable marking methods and seek conservation advice',
+      'To enable HSE and local authorities to identify workplace risks and investigate serious accidents',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'THD is calculated as √(I₂² + I₃² + I₄² + ...)/I₁ × 100%, representing the total harmonic content as a percentage of the fundamental component.',
   },
   {
     id: 5,
     question: 'Which type of filter is most commonly used to reduce 5th harmonic distortion?',
-    options: ['High-pass filter', 'Low-pass filter', 'Tuned passive filter', 'Band-stop filter'],
-    correctAnswer: 2,
+    options: [
+      'Low-pass filter',
+      'Tuned passive filter',
+      'Band-stop filter',
+      'High-pass filter',
+    ],
+    correctAnswer: 1,
     explanation:
       'Tuned passive filters are designed to provide a low-impedance path at a specific harmonic frequency, diverting that harmonic current away from the supply. They are commonly tuned to the 5th harmonic (250Hz).',
   },
@@ -135,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'What effect do harmonics have on energy meter accuracy?',
     options: [
-      'No effect - meters measure true RMS',
+      'Diagrams, schedules, and manufacturer documentation',
+      'They use analog signals without digital feedback capability',
       'Older meters may under-read actual energy consumption',
-      'All meters over-read by exactly 10%',
-      'Meters become more accurate with harmonics',
+      'The reason and limitation in the report',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Traditional electromechanical meters were designed for sinusoidal waveforms and may not accurately measure energy in harmonic-rich environments. Modern electronic meters typically handle harmonics better, but verification may be required.',
   },
@@ -151,10 +171,10 @@ const quizQuestions = [
     options: [
       'Neutral must always be twice the phase conductor size',
       'Neutral can be reduced to 50% of phase conductor size',
-      'Neutral may need to be oversized due to triplen harmonic currents',
       'Neutral conductor is not required for harmonic loads',
+      'Neutral may need to be oversized due to triplen harmonic currents',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'BS 7671 Regulation 523.6.3 addresses neutral current in harmonic-rich circuits. Where third harmonic current exceeds 15% of the fundamental, the neutral conductor may need to be larger than the phase conductors.',
   },
@@ -162,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the primary advantage of using a 12-pulse VSD over a 6-pulse VSD?',
     options: [
-      'Lower cost',
       'Elimination of 5th and 7th harmonics',
-      'Higher efficiency',
-      'Simpler installation',
+      'To keep runs straight and symmetrical',
+      'Some faults only appear under load conditions',
+      'Manual handling injuries from cable drums',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A 12-pulse VSD produces harmonics of order h = (12n ± 1), eliminating the 5th, 7th, 17th, 19th harmonics. The lowest significant harmonics are the 11th and 13th, which are smaller in magnitude.',
   },
@@ -175,8 +195,13 @@ const quizQuestions = [
     id: 9,
     question:
       'What is the typical K-factor rating recommended for a transformer supplying a data centre with high harmonic loads?',
-    options: ['K-1', 'K-4', 'K-13', 'K-30'],
-    correctAnswer: 2,
+    options: [
+      'K-1',
+      'K-13',
+      'K-4',
+      'K-30',
+    ],
+    correctAnswer: 1,
     explanation:
       'Data centres with servers, UPS systems, and IT equipment typically require K-13 rated transformers. K-4 is suitable for light harmonic loads, while K-20 or higher may be needed for extremely non-linear loads.',
   },
@@ -184,8 +209,13 @@ const quizQuestions = [
     id: 10,
     question:
       'Which harmonic can cause overheating of three-phase motors due to negative sequence effects?',
-    options: ['3rd harmonic', '5th harmonic', '7th harmonic', '9th harmonic'],
-    correctAnswer: 1,
+    options: [
+      '3rd harmonic',
+      '9th harmonic',
+      '5th harmonic',
+      '7th harmonic',
+    ],
+    correctAnswer: 2,
     explanation:
       'The 5th harmonic creates a negative sequence component that produces a reverse rotating magnetic field in motors. This opposes the fundamental field, causing additional heating, vibration, and reduced torque.',
   },

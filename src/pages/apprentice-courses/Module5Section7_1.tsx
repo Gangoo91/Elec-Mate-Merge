@@ -23,7 +23,12 @@ const quickCheckQuestions = [
     id: 1,
     question:
       'Which wiring regulation standard requires proper documentation of electrical installations?',
-    options: ['BS 5266', 'BS 7671', 'ISO 14001', 'BS 6004'],
+    options: [
+      'ISO 14001',
+      'BS 7671',
+      'BS 6004',
+      'BS 5266',
+    ],
     correctIndex: 1,
     explanation:
       'BS 7671 is the UK wiring regulations standard that requires proper documentation of all electrical installations to prove compliance.',
@@ -32,12 +37,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What is the main purpose of inspection and test records?',
     options: [
-      'To provide an installation design',
-      'To prove safety and compliance',
-      'To track project costs',
       'To record material usage',
+      'To track project costs',
+      'To prove safety and compliance',
+      'To provide an installation design',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Inspection and test records provide essential proof that installations are safe and comply with BS 7671 requirements.',
   },
@@ -45,12 +50,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'When should documentation be completed?',
     options: [
-      'At the end of the project',
-      'Weekly',
+      'Stop work and develop alternative safe methods',
+      'High-frequency random pattern',
+      'Listen, Empathise, Ask, Paraphrase, Summarise',
       'Immediately after the work is carried out',
-      'Monthly',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Documentation should always be completed immediately after work is carried out to ensure accuracy and prevent loss of important details.',
   },
@@ -64,7 +69,12 @@ const Module5Section7_1 = () => {
       id: 1,
       question:
         'Which wiring regulation standard requires proper documentation of electrical installations?',
-      options: ['BS 5266', 'BS 7671', 'ISO 14001', 'BS 6004'],
+      options: [
+        'BS 5266',
+        'BS 7671',
+        'ISO 14001',
+        'BS 6004',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 is the UK wiring regulations standard that requires proper documentation of all electrical installations to prove compliance.',
@@ -74,12 +84,12 @@ const Module5Section7_1 = () => {
       question:
         'Which certificate is used for small alterations or additions to electrical systems?',
       options: [
+        'Fire Safety Certificate',
         'Installation Certificate',
         'Minor Works Certificate',
-        'Fire Safety Certificate',
         'Compliance Certificate',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Minor Works Certificates are specifically designed for documenting small alterations, additions, or replacements to existing electrical installations.',
     },
@@ -87,12 +97,12 @@ const Module5Section7_1 = () => {
       id: 3,
       question: 'What is the main purpose of inspection and test records?',
       options: [
-        'To provide an installation design',
-        'To prove safety and compliance',
         'To track project costs',
+        'To provide an installation design',
         'To record equipment deliveries',
+        'To prove safety and compliance',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Inspection and test records provide essential proof that installations are safe, properly installed, and comply with BS 7671 requirements.',
     },
@@ -100,12 +110,12 @@ const Module5Section7_1 = () => {
       id: 4,
       question: 'What is a RAMS document used for?',
       options: [
-        'Recording site deliveries',
         'Health and safety planning',
+        'Recording site deliveries',
         'Checking circuit continuity',
         'Material specifications',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'RAMS (Risk Assessments and Method Statements) are used for health and safety planning, identifying hazards and control measures.',
     },
@@ -113,10 +123,10 @@ const Module5Section7_1 = () => {
       id: 5,
       question: 'What is a site diary or work log used for?',
       options: [
-        'Recording testing only',
+        'Embodied carbon coefficients for construction materials',
         'Recording daily progress, incidents, and variations',
-        'Recording equipment stock',
-        'Recording client meetings',
+        'Disconnect or short out neon indicators',
+        'Lower conductivity and connection issues',
       ],
       correctAnswer: 1,
       explanation:
@@ -126,10 +136,10 @@ const Module5Section7_1 = () => {
       id: 6,
       question: 'What is one key consequence of poor record keeping?',
       options: [
-        'Reduced installation time',
-        'Better site communication',
+        'Too many devices on a single bus segment',
+        'Non-invasive current measurement',
         'Increased risk of legal and safety issues',
-        'Lower material costs',
+        'Refractive index difference at glass-air interface',
       ],
       correctAnswer: 2,
       explanation:
@@ -139,12 +149,12 @@ const Module5Section7_1 = () => {
       id: 7,
       question: 'When should documentation be completed?',
       options: [
-        'At the end of the project',
-        'Weekly',
+        'Complete installation and test details',
+        'Remove or control any element of the fire triangle',
+        'Reducing system sizes through fabric-first approach',
         'Immediately after the work is carried out',
-        'Monthly',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Documentation should always be completed immediately after work is carried out to ensure accuracy and prevent loss of important details.',
     },
@@ -152,12 +162,12 @@ const Module5Section7_1 = () => {
       id: 8,
       question: 'Why are accurate records important for future maintenance?',
       options: [
-        'They allow reuse of old materials',
         'They help electricians quickly understand the system',
-        'They reduce paperwork',
-        'They eliminate testing requirements',
+        'Luminaires, distribution boards, and test points',
+        'The final installation differs from original design',
+        'Energy efficiency, comfort, and productivity',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Accurate records help future electricians quickly understand the installation without guesswork, making maintenance safer and more efficient.',
     },
@@ -165,10 +175,10 @@ const Module5Section7_1 = () => {
       id: 9,
       question: 'Who is responsible for ensuring accurate records are kept?',
       options: [
-        'The apprentice only',
+        'Future cable capacity and pulling requirements',
         'The site manager and responsible electricians',
-        'The client only',
-        'The supplier only',
+        'Complex or high-risk electrical work',
+        'It overlaps with other work packages to ensure coverage',
       ],
       correctAnswer: 1,
       explanation:
@@ -178,12 +188,12 @@ const Module5Section7_1 = () => {
       id: 10,
       question: 'In the real-world scenario, what problem occurred due to missing records?',
       options: [
+        'Convert AC to DC to AC at a new frequency',
+        '10A plus 30% of remainder over 10A plus socket allowance',
         'The client failed an audit and the project was delayed',
-        'The cables overheated',
-        'The client refused to pay',
-        'The materials were stolen',
+        'Zone classification and equipment suitability for each zone',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'Missing records led to duplicated work, missed faults, compliance audit failure, and costly project delays.',
     },

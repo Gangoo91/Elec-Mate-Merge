@@ -32,7 +32,12 @@ const quickCheckQuestions = [
   {
     id: 'overload-protection',
     question: 'Which BS 7671 regulation covers overload protection requirements?',
-    options: ['Regulation 432', 'Regulation 433', 'Regulation 434', 'Regulation 435'],
+    options: [
+      'Regulation 432',
+      'Regulation 433',
+      'Regulation 434',
+      'Regulation 435',
+    ],
     correctIndex: 1,
     explanation:
       'Regulation 433 specifies the requirements for overload protection. It states that devices must prevent conductors from carrying currents that would cause their temperature to exceed safe limits.',
@@ -41,12 +46,12 @@ const quickCheckQuestions = [
     id: 'short-circuit-time',
     question: 'What determines the maximum disconnection time for short-circuit protection?',
     options: [
-      'Cable length',
-      'Protective device rating',
+      'Investigate voltage drop and circuit loading',
+      '30mA RCD protection provided',
+      'Higher illuminance and intercom visibility',
       'Cable conductor thermal limit (k²S²)',
-      'Supply voltage',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The disconnection time must not exceed t = (k²S²)/I², ensuring the thermal limit of the cable conductor is not exceeded during a short-circuit fault.',
   },
@@ -54,20 +59,25 @@ const quickCheckQuestions = [
     id: 'adiabatic-equation',
     question: 'What does the adiabatic equation t = k²S²/I² calculate?',
     options: [
-      'Voltage drop',
+      'JCT Design and Build Contract (DB)',
+      'Loud noise from machinery',
       'Maximum fault clearance time',
-      'Cable current capacity',
-      'Loop impedance',
+      'Test instrument safety requirements',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The adiabatic equation calculates the maximum time a conductor can withstand fault current before its temperature exceeds safe limits. k is the conductor constant, S is cross-sectional area, I is fault current.',
   },
   {
     id: 'automatic-disconnection',
     question: 'For a TN system with a 32A final circuit, what is the maximum disconnection time?',
-    options: ['0.1s', '0.2s', '0.4s', '5s'],
-    correctIndex: 2,
+    options: [
+      '5s',
+      '0.4s',
+      '0.2s',
+      '0.1s',
+    ],
+    correctIndex: 1,
     explanation:
       'BS 7671 Table 41.1 specifies 0.4s maximum disconnection time for TN systems for final circuits not exceeding 32A. This ensures safety in case of earth faults.',
   },
@@ -92,10 +102,10 @@ const quizQuestions = [
     question:
       'According to Regulation 433.1, the operating current of an overload device must not exceed:',
     options: [
-      '1.2 times the cable current-carrying capacity (Iz)',
-      '1.35 times In',
-      '1.45 times Iz',
       '2.0 times Ib',
+      '1.2 times the cable current-carrying capacity (Iz)',
+      '1.45 times Iz',
+      '1.35 times In',
     ],
     correctAnswer: 2,
     explanation:
@@ -105,9 +115,14 @@ const quizQuestions = [
     id: 3,
     question:
       "What is the 'k' value for PVC-insulated copper conductors in the adiabatic equation?",
-    options: ['76', '115', '143', '176'],
-    correctIndex: 1,
-    correctAnswer: 1,
+    options: [
+      '143',
+      '76',
+      '115',
+      '176',
+    ],
+    correctIndex: 3,
+    correctAnswer: 0,
     explanation:
       'For PVC-insulated copper conductors, k = 115. This value accounts for the thermal properties of both the copper conductor and PVC insulation.',
   },
@@ -116,20 +131,25 @@ const quizQuestions = [
     question:
       'Why must the breaking capacity of a protective device exceed the prospective fault current?',
     options: [
-      'To ensure faster disconnection',
       'To prevent device damage and safely interrupt faults',
+      'To ensure faster disconnection',
       'To reduce cable sizing requirements',
       'To comply with energy efficiency regulations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "If a device's breaking capacity is less than the prospective fault current, it cannot safely interrupt the fault and may be destroyed, creating a dangerous situation (fire, explosion, sustained arcing).",
   },
   {
     id: 5,
     question: 'In a TT system, what is the maximum disconnection time for a 20A final circuit?',
-    options: ['0.2s', '0.4s', '1.0s', '5.0s'],
-    correctAnswer: 0,
+    options: [
+      '0.4s',
+      '0.2s',
+      '5.0s',
+      '1.0s',
+    ],
+    correctAnswer: 1,
     explanation:
       'BS 7671 Table 41.1 specifies 0.2s for TT systems for final circuits up to 32A. TT systems require faster disconnection due to higher earth fault loop impedances.',
   },
@@ -137,12 +157,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of back-up protection in a distribution system?',
     options: [
-      'To protect against lightning surges',
+      'Installing fibre units into pre-installed tubes using air pressure',
+      'The one connected to the motor or input shaft',
       'To provide protection if the primary device fails to operate',
-      'To balance loads across phases',
-      'To monitor energy consumption',
+      'Chemical splash goggles to EN 166 with \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'3\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' marking for liquid droplets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Back-up protection (Reg 434.5) ensures that if a downstream device fails to clear a fault, the upstream device will operate. This is typically achieved through discrimination coordination.',
   },
@@ -151,11 +171,11 @@ const quizQuestions = [
     question: 'What does Regulation 434.5.1 specify regarding short-circuit protection?',
     options: [
       'Protection must be provided at every cable joint',
-      'A device may protect several circuits if adequate capacity exists',
-      'Only MCBs are permitted for short-circuit protection',
       'Short-circuit protection must be tested annually',
+      'Only MCBs are permitted for short-circuit protection',
+      'A device may protect several circuits if adequate capacity exists',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 434.5.1 permits a single device to provide short-circuit protection for several circuits, provided its characteristics are appropriate for protecting all downstream cables.',
   },
@@ -163,8 +183,13 @@ const quizQuestions = [
     id: 8,
     question:
       'Calculate the maximum fault clearance time for a 4mm² copper/PVC cable with 3kA fault current.',
-    options: ['0.29s', '0.59s', '1.18s', '2.36s'],
-    correctAnswer: 1,
+    options: [
+      '0.59s',
+      '1.18s',
+      '0.29s',
+      '2.36s',
+    ],
+    correctAnswer: 0,
     explanation:
       'Using t = k²S²/I²: t = (115² × 4²) / (3000²) = (13225 × 16) / 9000000 = 0.024s. Wait - recalculating: t = (115 × 4)² / 3000² = 460² / 9000000 = 211600/9000000 = 0.024s. Actually for k=115, S=4, I=3000: t = (k×S/I)² = (115×4/3000)² = 0.024s. The question may expect different method. Using t=k²S²/I²: (115²×16)/9000000 = 0.023s approximately.',
   },
@@ -172,10 +197,10 @@ const quizQuestions = [
     id: 9,
     question: 'When can overload protection be omitted according to BS 7671?',
     options: [
-      'For any circuit under 16A',
+      'Higher resistance than copper and thermal expansion issues',
       'When the supply cannot produce overload currents',
-      'In domestic installations only',
-      'For circuits using steel-wire-armoured cables',
+      'Career goals, skill gaps, and industry developments',
+      'They limit toxic smoke in the event of a fire',
     ],
     correctAnswer: 1,
     explanation:
@@ -184,8 +209,13 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What is the relationship between Ib, In, and Iz for proper circuit protection?',
-    options: ['Ib ≥ In ≥ Iz', 'Ib ≤ In ≤ Iz', 'In ≤ Ib ≤ Iz', 'Iz ≤ In ≤ Ib'],
-    correctAnswer: 1,
+    options: [
+      'Ib ≥ In ≥ Iz',
+      'Iz ≤ In ≤ Ib',
+      'Ib ≤ In ≤ Iz',
+      'In ≤ Ib ≤ Iz',
+    ],
+    correctAnswer: 2,
     explanation:
       'The fundamental protective device coordination rule: Design current (Ib) ≤ Device rating (In) ≤ Cable capacity (Iz). This ensures the device protects the cable from overload whilst being able to carry the design current.',
   },

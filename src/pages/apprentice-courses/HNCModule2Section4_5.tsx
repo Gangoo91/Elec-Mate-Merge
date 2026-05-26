@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'control-hierarchy',
     question: 'Which is the most effective approach in the noise control hierarchy?',
     options: [
-      'Hearing protection for occupants',
-      'Sound barriers in the transmission path',
       'Reduction at source',
+      'Hearing protection for occupants',
       'Absorption in the receiving room',
+      'Sound barriers in the transmission path',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Source control is most effective because it eliminates the problem at origin. Path control and receiver protection are secondary measures when source control is insufficient or impractical.',
   },
@@ -46,8 +46,13 @@ const quickCheckQuestions = [
     id: 'mass-law',
     question:
       'According to the mass law, doubling the surface mass of a partition increases its sound reduction by approximately:',
-    options: ['3 dB', '6 dB', '10 dB', '20 dB'],
-    correctIndex: 1,
+    options: [
+      '6 dB',
+      '3 dB',
+      '10 dB',
+      '20 dB',
+    ],
+    correctIndex: 0,
     explanation:
       'The mass law predicts approximately 6 dB increase in transmission loss for each doubling of surface mass. Heavy constructions provide better sound insulation than light ones.',
   },
@@ -68,12 +73,12 @@ const quickCheckQuestions = [
     id: 'vibration-isolation',
     question: 'What is the purpose of anti-vibration mounts beneath rotating machinery?',
     options: [
-      'To reduce airborne noise directly',
       'To prevent structure-borne noise transmission',
+      'To reduce airborne noise directly',
       'To improve machine efficiency',
       'To meet electrical safety requirements',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Anti-vibration mounts isolate machinery vibration from the building structure, preventing structure-borne sound transmission which can radiate as noise in distant rooms.',
   },
@@ -97,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which source control measure would reduce fan noise most effectively?',
     options: [
-      'Installing a silencer downstream',
+      'To prevent build-up of reverberant sound inside',
+      'Noise radiating through duct walls into surrounding spaces',
       'Selecting a fan operating at its best efficiency point',
-      'Adding absorption to the plant room',
-      'Increasing duct velocity',
+      'Diminishing returns - each doubling gives less benefit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Fans are quietest when operating at their best efficiency point (BEP). Oversized or undersized fans running away from BEP generate significantly more noise. Good selection is the primary noise control.',
   },
@@ -110,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: "What is 'breakout noise' in ductwork?",
     options: [
-      'Noise escaping through duct joints',
+      'A frequency where insulation drops due to panel resonance',
+      'Diminishing returns - each doubling gives less benefit',
+      'Installing flexible connections to ductwork',
       'Noise radiating through duct walls into surrounding spaces',
-      'Noise generated at duct fittings',
-      'Noise at air terminals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Breakout noise occurs when sound inside the duct radiates through the duct walls into adjacent spaces. It is significant with thin-walled ducts near noise-sensitive areas.',
   },
@@ -124,12 +129,12 @@ const quizQuestions = [
     question:
       'A sound barrier must break the line of sight between source and receiver. What additional reduction comes from increasing barrier height?',
     options: [
-      'Unlimited - taller is always better',
       'Diminishing returns - each doubling gives less benefit',
-      'None - only line of sight matters',
-      'Linear - each metre gives equal benefit',
+      'Noise generated at fittings, dampers, and terminals',
+      'Converting sound energy to heat in porous material',
+      'Higher sound reduction at most frequencies',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Barrier attenuation follows diminishing returns. The first break of line of sight gives the most benefit (typically 5-10 dB). Additional height gives smaller improvements due to diffraction effects.',
   },
@@ -138,10 +143,10 @@ const quizQuestions = [
     question:
       'What is the main advantage of a double-leaf partition over a single-leaf of the same total mass?',
     options: [
-      'Lower cost',
+      'Noise generated at fittings, dampers, and terminals',
       'Higher sound reduction at most frequencies',
-      'Better fire resistance',
-      'Easier installation',
+      'Selecting a fan operating at its best efficiency point',
+      'To prevent build-up of reverberant sound inside',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +156,12 @@ const quizQuestions = [
     id: 6,
     question: 'An absorptive silencer achieves attenuation primarily by:',
     options: [
-      'Reflecting sound back to source',
+      'Sound transmission through shared ductwork between rooms',
+      'Noise radiating through duct walls into surrounding spaces',
       'Converting sound energy to heat in porous material',
-      'Creating destructive interference',
-      'Increasing duct velocity',
+      'Selecting a fan operating at its best efficiency point',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Absorptive silencers contain porous materials (mineral wool, acoustic foam) that convert sound energy to heat through friction as sound waves pass through. This provides broadband attenuation.',
   },
@@ -164,12 +169,12 @@ const quizQuestions = [
     id: 7,
     question: "What is the 'coincidence dip' in partition sound insulation?",
     options: [
-      'A frequency where insulation improves',
+      'Selecting a fan operating at its best efficiency point',
+      'Installing flexible connections to ductwork',
+      'Noise radiating through duct walls into surrounding spaces',
       'A frequency where insulation drops due to panel resonance',
-      'The lowest audible frequency blocked',
-      'The point where mass law fails',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The coincidence dip occurs when sound wavelength in air matches bending waves in the panel, causing increased transmission. It typically occurs in the 1-4 kHz range depending on panel properties.',
   },
@@ -177,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which of these is an example of path control in building services?',
     options: [
-      'Selecting quieter equipment',
-      'Providing hearing protection',
       'Installing flexible connections to ductwork',
       'Sound masking in open plan offices',
+      'Selecting quieter equipment',
+      'Providing hearing protection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Flexible connections (canvas, rubber) prevent vibration transmission along ductwork - a path control measure. Quieter equipment is source control; PPE and masking are receiver-based.',
   },
@@ -190,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why are acoustic enclosures typically lined internally with absorptive material?',
     options: [
-      'For thermal insulation',
+      'Converting sound energy to heat in porous material',
       'To prevent build-up of reverberant sound inside',
-      'For fire protection',
-      'To reduce weight',
+      'Noise generated at fittings, dampers, and terminals',
+      'Higher sound reduction at most frequencies',
     ],
     correctAnswer: 1,
     explanation:
@@ -205,11 +210,11 @@ const quizQuestions = [
       'What type of silencer would you specify for a domestic boiler flue with pulsating combustion noise?',
     options: [
       'Absorptive silencer',
+      'No silencer needed',
       'Reactive silencer',
       'Active noise control',
-      'No silencer needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reactive silencers (expansion chambers, resonators) are effective for low frequency pulsating noise from combustion equipment. They work by creating acoustic impedance mismatches rather than absorption.',
   },
@@ -218,11 +223,11 @@ const quizQuestions = [
     question: 'What is crosstalk in building acoustics?',
     options: [
       'Speech interference from adjacent rooms',
-      'Sound transmission through shared ductwork between rooms',
-      'Noise from telecommunications equipment',
       'Reverberation between parallel walls',
+      'Noise from telecommunications equipment',
+      'Sound transmission through shared ductwork between rooms',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Crosstalk occurs when sound travels between rooms through shared ductwork, acting as an acoustic 'short circuit' bypassing partition insulation. It requires attenuators or duct routing solutions.",
   },
@@ -230,12 +235,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is regenerated noise in ductwork systems?',
     options: [
-      'Noise from the fan',
       'Noise generated at fittings, dampers, and terminals',
-      'Breakout noise',
-      'Structure-borne noise',
+      'Diminishing returns - each doubling gives less benefit',
+      'Selecting a fan operating at its best efficiency point',
+      'A frequency where insulation drops due to panel resonance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regenerated noise is created at ductwork components (bends, dampers, grilles) by turbulence as air flows through. High velocities cause excessive regenerated noise - limiting velocity is essential.',
   },

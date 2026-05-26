@@ -43,12 +43,12 @@ const checks = [
     question:
       'A B32 RCBO clears in 0.1 s on a TN-C-S fault of 800 A. The CPC is 2.5 mm² copper, 70 °C thermoplastic insulation, k = 115. Does the CPC survive the fault?',
     options: [
-      'No — kS²/I² works out to ~0.13 and the device clears in 0.1 s, which is below — fail.',
+      'Carry out a general risk assessment covering all workplace risks, including those from hazardous substances',
+      'Embodied carbon relates to the materials and construction; operational carbon relates to energy used during the building\\\\\\\\\\\\\\\'s life',
       'Yes — minimum CSA needed is √(I²t)/k = √(800² × 0.1)/115 = √64000/115 = 252.98/115 ≈ 2.20 mm². 2.5 mm² is above 2.20 — pass.',
-      'Yes — any CPC above 1.5 mm² always passes.',
-      'You cannot tell without measuring Zs.',
+      'Cease assembly work, secure the partially built tower if possible, and do not resume until conditions improve',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reg 543.1.3 gives S ≥ √(I²t)/k. Plug in: I = 800 A, t = 0.1 s, k = 115. I²t = 800 × 800 × 0.1 = 64 000 A²s. √64 000 = 252.98. Divide by 115 = 2.20 mm². The minimum CPC CSA is 2.20 mm²; the installed 2.5 mm² is above that. The CPC survives. Note that the t value is the device’s actual operating time at the fault current (read from Appendix 3 time/current curves in BS 7671 A4:2026, formerly Appendix 14), not the maximum permitted disconnection time.',
   },
@@ -57,12 +57,12 @@ const checks = [
     question:
       'You are sizing a separate copper CPC sleeved in green/yellow PVC, run loose alongside thermoplastic singles. Conductor temperature limit at the start of the fault is 70 °C, final temperature 160 °C. Which k value from Table 43.1 do you use?',
     options: [
-      'k = 143 (separate bare copper CPC not in contact with cable insulation, 200 °C final).',
       'k = 115 (copper CPC, 70 °C thermoplastic insulation in contact, 160 °C final).',
-      'k = 76 (steel CPC).',
+      'k = 143 (separate bare copper CPC not in contact with cable insulation, 200 °C final).',
       'k = 226 (copper line conductor at 70 °C with 90 °C thermosetting).',
+      'k = 76 (steel CPC).',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Table 43.1 splits k values by conductor material, by insulation type and by whether the conductor is bare or insulated. The "PVC sleeved CPC" case is treated as PVC-insulated (the sleeve is the relevant thermal barrier), so the 70 °C thermoplastic row gives k = 115. Bare copper not in contact with combustible material gets k = 143 (higher final temperature allowed). Picking the wrong k can change your minimum CSA by 25 percent.',
   },
@@ -71,12 +71,12 @@ const checks = [
     question:
       'You have a Zs at the end of a circuit of 0.85 Ω on a 230 V supply. The protective device is a Type B 32 A MCB. What If do you use, and roughly what t do you read off the time/current characteristic for the adiabatic check?',
     options: [
-      'If = 230 / 0.85 = 270 A; t ≈ 5 s (the maximum permitted disconnection time).',
+      'Because different gases have different densities — lighter gases rise to the top and heavier gases sink to the bottom, so a single-level reading may miss dangerous concentrations',
+      'Diagrams, charts and information notices shall comply with the applicable standards specified — non-standard symbols are a non-conformance the designer needs to fix',
       'If = U0 × Cmin / Zs = 230 × 0.95 / 0.85 = 257 A; t = the actual operating time of the B32 at 257 A — comfortably in the magnetic region (Ia for B-curve = 5×In = 160 A), so t < 0.1 s.',
-      'If = 32 A (the device rating); t = 0.4 s.',
-      'If = 230 × √3 / 0.85 = 469 A; t = 0.4 s.',
+      'After energising, that the supply polarity (line vs neutral) is as expected and consistent with dead-test polarity verification at all accessories',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'For the adiabatic check you use the actual prospective fault current, applying Cmin (0.95 in BS 7671 A4:2026) to U0 to give the worst-case fault voltage. If = 230 × 0.95 / 0.85 = 257 A. For a B-curve MCB the magnetic instantaneous trip range is 3–5 × In. At In = 32 A that is 96–160 A. 257 A is well above the upper bound, so the device is in its magnetic region and operates in well under 0.1 s. Use the manufacturer-published time/current curve (or BS 7671 Appendix 3, formerly Appendix 14 pre-A4) for the actual time, not the worst-case 0.4 s ceiling.',
   },
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the BS 7671 Reg 543.1.3 adiabatic equation, and what does each variable mean?',
     options: [
-      'V = IR — voltage drop across the conductor.',
+      'Use the SBI model in a private setting: describe the specific situation, the behaviour you observed, and the impact on safety, then agree corrective action together',
       'S = √(I²t) / k, where S is the minimum CPC CSA in mm², I is the prospective fault current in amps, t is the device operating time in seconds at that current, and k is the material/insulation constant from Table 43.1.',
-      'P = I²R — heat dissipation only.',
-      'Zs = Ze + (R1 + R2) — earth fault loop impedance only.',
+      'That the meter is set to the correct voltage range (AC or DC), the test leads are in the correct sockets (not the current socket), the probes comply with GS38, and the meter category rating is appropriate for the circuit',
+      'Insulated probes with maximum 4 mm exposed metal tip, finger barriers, fused leads where applicable, double insulation, and certified for the rated voltage of the test (CAT III / CAT IV depending on application).',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'Why is the line-conductor CCC calculation not enough — why do we need a separate CPC adiabatic check?',
     options: [
-      'Because line conductors and CPCs are different materials.',
+      'Eye Movement Desensitisation and Reprocessing — a therapy in which the person recalls traumatic memories while engaging in bilateral stimulation (typically guided eye movements), helping the brain reprocess the memory so it becomes less distressing',
+      'They must not tamper with, remove, or bypass the meter without authority from the energy supplier — the meter is the property of the metering company, and interference is a criminal offence under the Theft Act 1968 and Electricity Act 1989',
       'Because the line conductor only ever carries the design current Ib for hours on end (steady state), but the CPC briefly carries a fault current that can be many tens of times Ib for a fraction of a second. The two thermal regimes are completely different.',
-      'Because the regulations say so.',
-      'Because the CPC has higher resistance.',
+      'An abstraction licence from the Environment Agency (or Natural Resources Wales/SEPA in Scotland), planning permission, and DNO connection approval under G98 or G99 — plus Fish and Environmental Impact assessments for the watercourse',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The line conductor’s CCC (steady state) is a "how long does it take to cook at Ib" question. The CPC’s adiabatic check is a "can it survive a brief fault at If for t seconds without melting the insulation or destroying its thermal stability" question. Different physics, different equation. A 1.5 mm² CPC routinely passes CCC for a 16 A circuit but can fail adiabatic if the device is slow to clear or the fault current is high.',
   },
@@ -113,20 +113,25 @@ const quizQuestions = [
     id: 3,
     question: 'In the equation S = √(I²t)/k, where does the "t" value come from?',
     options: [
-      'The maximum permitted disconnection time from Table 41.1 (0.4 s for a TN final circuit at U0 = 230 V).',
+      'Never look into a fibre or coupler — laser radiation can damage the retina; use a fibre detector card or scope; dispose of glass shards safely',
+      'Provide an honest, measured response based on your findings, explaining any issues in plain language along with the actions being taken to address them',
+      'The total amount of combustible material within a space, expressed as an equivalent mass of wood per unit floor area (kg/m² or MJ/m²)',
       'The actual operating time of the protective device at the actual prospective fault current, read from the manufacturer’s time/current curve or from BS 7671 Appendix 3 (formerly Appendix 14).',
-      'Always 5 s.',
-      'Always 0.1 s.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Reg 543.1.3 t is the actual operating time, not the maximum permitted disconnection time. For a B32 MCB on a fault current well into the magnetic region, the actual t is typically under 10 ms; using the 0.4 s ceiling would massively oversize the CPC. The maximum permitted disconnection time from Table 41.1 is the ADS gate (Sub 5.2); the adiabatic check uses the real t at the real If.',
   },
   {
     id: 4,
     question: 'What value of k applies to a copper CPC inside a thermoplastic (PVC) insulated cable at the start temperature of 70 °C?',
-    options: ['k = 76', 'k = 115', 'k = 143', 'k = 226'],
-    correctAnswer: 1,
+    options: [
+      'k = 115',
+      'k = 76',
+      'k = 143',
+      'k = 226',
+    ],
+    correctAnswer: 0,
     explanation:
       'Table 43.1 in BS 7671 gives k = 115 for a copper conductor with 70 °C thermoplastic (PVC) insulation (initial temperature 70 °C, final temperature 160 °C). For 90 °C thermosetting (XLPE) the k rises to 143. For bare copper not in contact with combustible materials it is 143 (final 200 °C). For aluminium the values are roughly two-thirds of the copper figures.',
   },
@@ -134,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'You compute the minimum CPC at S = 1.32 mm². The actual installed CPC is 1.5 mm². What is the right call?',
     options: [
-      'Reject — 1.5 mm² is borderline.',
+      'Date, time, location, what happened, who was involved, immediate action, and proposed corrective/preventive action',
       'Accept — 1.5 mm² ≥ 1.32 mm² so the adiabatic equation passes. Document the calc on the design sheet.',
-      'Always size to 4 mm² minimum for safety.',
-      'You cannot install a CPC smaller than the line conductor.',
+      'A chemical reaction caused by the passage of an electric current through a conducting liquid',
+      'The site manager (or their nominee) — covers site rules, hazards, emergency procedures, welfare and reporting routes',
     ],
     correctAnswer: 1,
     explanation:
@@ -147,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the relationship between the adiabatic check and the ADS disconnection time check?',
     options: [
-      'They are the same check.',
+      'Broad questions first allow the witness to recall events in their own way without being influenced by specific prompts, preserving the accuracy and completeness of their account',
+      'A project which includes or is intended to include construction work and includes all planning, design, management or other work involved in a project until the end of the construction phase',
       'They are independent. ADS asks "does the device clear in time to limit shock voltage?" The adiabatic asks "given the device’s actual clearing time at the actual fault current, will the CPC survive the energy let-through?" Both must pass.',
-      'You only need to do one.',
-      'The adiabatic replaces ADS in BS 7671 A4:2026.',
+      'Compile a proportionate file including the asbestos management survey/R&D survey data, as-built structural drawings showing concealed steelwork, details of the unusual pipework and heating system, and a register of residual risks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'ADS (Sub 5.2 / Reg 411.3.2) is about persons — clear the fault before the touch voltage causes harm. Adiabatic (Reg 543.1.3) is about the protective conductor surviving so it remains a protective conductor for the next fault. A device can clear within the ADS time but the adiabatic still fail if the CPC is undersized — and vice versa for unusual cable choices. Run both gates independently.',
   },
@@ -161,12 +166,12 @@ const quizQuestions = [
     question:
       'For a 32 A radial socket circuit on TN-C-S with measured Zs = 1.20 Ω, supply at U0 = 230 V, B32 RCBO, what is the prospective fault current you use in the adiabatic check, and where do you read the operating time?',
     options: [
-      'I = 32 A; t = 0.4 s.',
+      'Connect L of leg 1 (outgoing) to N of leg 2 (incoming) at the CU. The cross-connection forces measured current around the full loop in both directions when the meter is connected at any socket. Equivalent: link the line from one end of the ring to the neutral from the other.',
+      'EN 397 (industrial helmets, general purpose) or EN 12492 (mountaineering / rope access — sometimes used for working at height with chinstrap). Date of manufacture marked underneath; typical service life 5 years from manufacture or 3 years from first use, whichever shorter (per manufacturer).',
+      'The earthing conductor in TT runs to a buried earth electrode and must comply with Table 54.1 minimum sizes for buried conductors (e.g. 25 mm² Cu unprotected, 16 mm² Cu protected against corrosion only). 16 mm² unprotected Cu in soil corrodes and undersizes the run.',
       'I = U0 × Cmin / Zs = 230 × 0.95 / 1.20 = 182 A; t read from the B-curve characteristic at 182 A — within the magnetic instantaneous range (Ia ≈ 160 A for B32), so t ≈ 0.04 s. Calculate S = √(182² × 0.04) / 115 = √(1325) / 115 = 36.4 / 115 = 0.32 mm².',
-      'I = 230 / 1.20 = 192 A; t = 5 s.',
-      'I = √3 × 230 / 1.20 = 332 A; t = 0.1 s.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Apply Cmin = 0.95 to U0. I = 230 × 0.95 / 1.20 = 182 A. A B-curve magnetic trip range is 3–5 × In, so for B32 that is 96–160 A. 182 A is just above the upper bound — the device is in instantaneous mode, t ≈ 30–50 ms in practice. Plug into Reg 543.1.3: S = √(I²t)/k = √(182 × 182 × 0.04) / 115 = √1325 / 115 = 0.32 mm². Any reasonable CPC (1.0 mm² or above) passes this check by a comfortable margin.',
   },
@@ -175,12 +180,12 @@ const quizQuestions = [
     question:
       'A TT installation has a measured Zs of 200 Ω on a 230 V supply. The device is a 30 mA Type AC RCD with operating time of 0.04 s at 30 mA × 5 = 150 mA. The CPC is 1.5 mm² copper PVC, k = 115. Does the adiabatic check pass?',
     options: [
-      'No — 200 Ω Zs is too high for the adiabatic to ever pass.',
       'Yes — If = 230 × 0.95 / 200 = 1.09 A. S = √(1.09² × 0.04) / 115 = √(0.0475) / 115 = 0.218 / 115 = 0.0019 mm². The CPC needed is essentially zero; 1.5 mm² is hugely oversized for the adiabatic on a TT system. RCD operation, not CPC adiabatic, is the binding constraint on TT.',
-      'Yes — but only if you upsize the CPC to 4 mm².',
-      'You cannot do an adiabatic check on TT.',
+      'Explain that an EICR has minimum content requirements set by BS 7671 Part 6, GN3 and BPG4 — sampling can be agreed but the sampling itself must be representative and the limitations recorded in writing. Walk the customer through what an EICR can and cannot exclude. If they still want sub-minimum work, decline and document the refusal.',
+      'A copy of the EICR to be given to existing tenants within 28 days, new tenants before occupation, and to the local authority on request — Electrical Safety Standards in the Private Rented Sector Regs 2020',
+      'Waste that does not undergo any significant physical, chemical, or biological transformations, will not dissolve or burn, and does not adversely affect other materials it comes into contact with — such as clean bricks, concrete, and tiles',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'On a TT system the loop impedance is dominated by the soil resistance of the earth electrodes; the fault current is small (often a few amps) and an RCD is required to clear the fault, not an MCB. The adiabatic check on the CPC therefore typically passes by a huge margin. The binding constraint on TT is RCD operation within the disconnection time (Reg 411.5.3) plus RA × IΔn ≤ 50 V (Reg 411.5.3 acceptance test). Adiabatic almost never governs on TT.',
   },

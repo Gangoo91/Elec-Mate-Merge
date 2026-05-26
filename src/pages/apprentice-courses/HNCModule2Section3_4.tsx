@@ -32,8 +32,13 @@ const quickCheckQuestions = [
   {
     id: 'sensible-heating',
     question: 'During sensible heating, which property remains constant?',
-    options: ['Dry bulb temperature', 'Relative humidity', 'Moisture content (g/kg)', 'Enthalpy'],
-    correctIndex: 2,
+    options: [
+      'Dry bulb temperature',
+      'Moisture content (g/kg)',
+      'Relative humidity',
+      'Enthalpy',
+    ],
+    correctIndex: 1,
     explanation:
       'Sensible heating adds heat without adding or removing moisture. The moisture content (g/kg) stays constant while dry bulb temperature increases and RH decreases.',
   },
@@ -41,12 +46,12 @@ const quickCheckQuestions = [
     id: 'dehumidification',
     question: 'What must happen for dehumidification to occur at a cooling coil?',
     options: [
-      'Coil must be above room temperature',
+      "That the switch operates and makes/breaks the circuit",
+      "Waste and Resources Action Programme",
+      "To minimise neutral current and prevent overloading",
       "Coil surface must be below the air's dew point",
-      'Air velocity must exceed 3 m/s',
-      'Refrigerant must be R410A',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Dehumidification only occurs when the coil surface temperature is below the dew point of the incoming air, causing water vapour to condense on the coil surface.',
   },
@@ -55,18 +60,23 @@ const quickCheckQuestions = [
     question: 'In adiabatic humidification (evaporative cooling), what happens to enthalpy?',
     options: [
       'Enthalpy increases significantly',
-      'Enthalpy decreases significantly',
       'Enthalpy remains approximately constant',
       'Enthalpy becomes zero',
+      'Enthalpy decreases significantly',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'In adiabatic humidification, sensible heat from the air provides the latent heat for evaporation. Total enthalpy remains nearly constant while dry bulb drops and moisture content rises.',
   },
   {
     id: 'mixing-ratio',
     question: 'When mixing 2 kg/s of air at 30°C with 3 kg/s at 20°C, the mixed temperature is:',
-    options: ['22°C', '24°C', '25°C', '26°C'],
+    options: [
+      '25°C',
+      '24°C',
+      '22°C',
+      '26°C',
+    ],
     correctIndex: 1,
     explanation:
       'Mixed temperature = (2×30 + 3×20)/(2+3) = (60+60)/5 = 120/5 = 24°C. The mixture is weighted toward the larger mass flow.',
@@ -91,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: 'The sensible heat ratio (SHR) is defined as:',
     options: [
+      'Sensible heat / Latent heat',
       'Latent heat / Total heat',
       'Sensible heat / Total heat',
-      'Sensible heat / Latent heat',
       'Total heat / Sensible heat',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SHR = Sensible heat / Total heat = Qs / (Qs + QL). A high SHR (near 1.0) indicates mostly temperature change; a low SHR indicates significant moisture removal.',
   },
@@ -104,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'On a psychrometric chart, sensible cooling appears as:',
     options: [
-      'Vertical movement downward',
-      'Horizontal movement to the left',
       'Diagonal movement toward saturation',
+      'Vertical movement downward',
       'Circular path',
+      'Horizontal movement to the left',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Sensible cooling moves the state point horizontally to the left (lower dry bulb, same moisture content). RH increases but no moisture is removed.',
   },
@@ -117,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'Steam humidification on a psychrometric chart appears as:',
     options: [
-      'Horizontal line to the right',
       'Vertical line upward (nearly)',
+      'Horizontal line to the right',
       'Diagonal along wet bulb line',
       'Horizontal line to the left',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Steam humidification adds moisture with minimal temperature change, appearing as a near-vertical line upward. Some sensible heat may be added depending on steam temperature.',
   },
@@ -130,12 +140,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the primary advantage of adiabatic (evaporative) humidification?',
     options: [
+      'Vertical line upward (nearly)',
       'No energy input required beyond fan power',
-      'Adds heat to the air',
-      'Works at any humidity level',
-      'Removes contaminants',
+      'It heats the air while removing moisture',
+      'On a straight line between the two states',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       "Adiabatic humidification uses the air's sensible heat for evaporation, requiring no external heating energy. It is energy-efficient but limited by saturation.",
   },
@@ -144,27 +154,37 @@ const quizQuestions = [
     question: 'Cooling with dehumidification requires the coil to operate:',
     options: [
       'Above the air dew point',
-      'Below the air dew point',
       'At exactly the air dew point',
+      'Below the air dew point',
       'At any temperature below dry bulb',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "For dehumidification, the coil surface must be below the entering air's dew point. Only then will moisture condense from the air onto the coil.",
   },
   {
     id: 7,
     question: 'The sensible heat equation for air is:',
-    options: ['Qs = ṁ × g × hfg', 'Qs = ṁ × cp × ΔT', 'Qs = ṁ × Δg', 'Qs = V̇ × ΔP'],
-    correctAnswer: 1,
+    options: [
+      'Qs = ṁ × g × hfg',
+      'Qs = V̇ × ΔP',
+      'Qs = ṁ × Δg',
+      'Qs = ṁ × cp × ΔT',
+    ],
+    correctAnswer: 3,
     explanation:
       'Qs = ṁ × cp × ΔT where ṁ is mass flow (kg/s), cp is specific heat (1.005 kJ/kg·K for air), and ΔT is temperature change (K or °C).',
   },
   {
     id: 8,
     question: 'The latent heat equation for humidification/dehumidification is:',
-    options: ['QL = ṁ × cp × ΔT', 'QL = ṁ × Δg × hfg', 'QL = V̇ × Δρ', 'QL = ṁ × Δh'],
-    correctAnswer: 1,
+    options: [
+      'QL = ṁ × Δg × hfg',
+      'QL = V̇ × Δρ',
+      'QL = ṁ × cp × ΔT',
+      'QL = ṁ × Δh',
+    ],
+    correctAnswer: 0,
     explanation:
       'QL = ṁ × Δg × hfg where Δg is change in moisture content (kg/kg) and hfg is latent heat of vaporisation (~2501 kJ/kg at 0°C, or ~2450 kJ/kg at typical conditions).',
   },
@@ -186,12 +206,12 @@ const quizQuestions = [
     question:
       'Chemical dehumidification (desiccant) differs from cooling coil dehumidification because:',
     options: [
-      'It cools the air more',
+      'On a straight line between the two states',
+      'Vertical line upward (nearly)',
       'It heats the air while removing moisture',
-      'It does not change moisture content',
-      'It requires lower energy',
+      'Raise temperature without adding moisture',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Desiccant dehumidification absorbs moisture and releases the heat of absorption, warming the air. The process moves diagonally down-right on the chart (lower g, higher T).',
   },
@@ -199,12 +219,12 @@ const quizQuestions = [
     id: 11,
     question: 'Reheat after cooling coil dehumidification is used to:',
     options: [
-      'Increase the moisture content',
+      'No energy input required beyond fan power',
+      'Horizontal movement to the left',
+      'Vertical line upward (nearly)',
       'Raise temperature without adding moisture',
-      'Further reduce humidity',
-      'Increase air velocity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'After dehumidification, air may be too cold for comfort. Reheat raises the dry bulb temperature (sensible heating) while maintaining the low moisture content achieved at the coil.',
   },
@@ -212,12 +232,12 @@ const quizQuestions = [
     id: 12,
     question: 'An air conditioning process with SHR = 0.7 means:',
     options: [
-      '70% of the load is latent',
       '70% of the load is sensible',
-      'The air is 70% saturated',
       'Temperature change is 70°C',
+      '70% of the load is latent',
+      'The air is 70% saturated',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'SHR = 0.7 means 70% of the total cooling load is sensible (temperature reduction) and 30% is latent (moisture removal).',
   },

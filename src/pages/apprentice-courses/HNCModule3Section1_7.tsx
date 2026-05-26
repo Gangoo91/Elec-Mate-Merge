@@ -32,15 +32,25 @@ const quickCheckQuestions = [
   {
     id: 'emergency-duration',
     question: 'What is the minimum maintained duration for emergency lighting in most UK premises?',
-    options: ['1 hour', '2 hours', '3 hours', '4 hours'],
-    correctIndex: 2,
+    options: [
+      '4 hours',
+      '3 hours',
+      '1 hour',
+      '2 hours',
+    ],
+    correctIndex: 1,
     explanation:
       'BS 5266 specifies 3-hour maintained duration as standard for most premises, allowing safe evacuation and emergency services operations.',
   },
   {
     id: 'fire-alarm-standby',
     question: 'What is the minimum standby battery capacity required for a fire alarm system?',
-    options: ['12 hours', '24 hours', '48 hours', '72 hours'],
+    options: [
+      '72 hours',
+      '24 hours',
+      '48 hours',
+      '12 hours',
+    ],
     correctIndex: 1,
     explanation:
       'BS 5839-1 requires minimum 24 hours standby followed by 30 minutes alarm condition for Category L/P systems.',
@@ -48,16 +58,26 @@ const quickCheckQuestions = [
   {
     id: 'bms-voltage',
     question: 'What is the standard control voltage for BMS sensors and actuators?',
-    options: ['12V DC', '24V DC', '48V DC', '230V AC'],
-    correctIndex: 1,
+    options: [
+      '12V DC',
+      '48V DC',
+      '24V DC',
+      '230V AC',
+    ],
+    correctIndex: 2,
     explanation:
       '24V DC is the industry standard for building management system controls, providing a safe low voltage whilst sufficient for powering sensors and small actuators.',
   },
   {
     id: 'ups-topology',
     question: 'Which UPS topology provides zero transfer time to battery?',
-    options: ['Standby (offline)', 'Line-interactive', 'Online double conversion', 'Rotary UPS'],
-    correctIndex: 2,
+    options: [
+      'Standby (offline)',
+      'Online double conversion',
+      'Line-interactive',
+      'Rotary UPS',
+    ],
+    correctIndex: 1,
     explanation:
       'Online double conversion UPS continuously powers the load from the inverter, so there is no transfer time when mains fails - the load never sees any interruption.',
   },
@@ -68,16 +88,26 @@ const quizQuestions = [
     id: 1,
     question:
       'A self-contained emergency luminaire has a 3.6V NiCd battery rated at 4Ah. What is the stored energy?',
-    options: ['1.2Wh', '7.2Wh', '14.4Wh', '43.2Wh'],
-    correctAnswer: 2,
+    options: [
+      '1.2Wh',
+      '14.4Wh',
+      '7.2Wh',
+      '43.2Wh',
+    ],
+    correctAnswer: 1,
     explanation:
       'Energy = Voltage × Capacity = 3.6V × 4Ah = 14.4Wh. This is the total energy available for the emergency duration.',
   },
   {
     id: 2,
     question: 'An emergency luminaire draws 6W. What battery capacity is needed for 3 hours?',
-    options: ['2Ah at 6V', '3Ah at 6V', '6Ah at 3V', 'All would work'],
-    correctAnswer: 3,
+    options: [
+      '6Ah at 3V',
+      '2Ah at 6V',
+      'All would work',
+      '3Ah at 6V',
+    ],
+    correctAnswer: 2,
     explanation:
       'Energy required = 6W × 3h = 18Wh. This could be 2Ah×6V=12Wh (not enough), 3Ah×6V=18Wh (minimum), or 6Ah×3V=18Wh. Allow 20% margin.',
   },
@@ -85,16 +115,26 @@ const quizQuestions = [
     id: 3,
     question:
       'A fire alarm circuit uses 1.5mm² cable for 200m. What is the loop resistance at 20°C?',
-    options: ['2.4Ω', '4.8Ω', '9.7Ω', '12.1Ω'],
-    correctAnswer: 1,
+    options: [
+      '9.7Ω',
+      '2.4Ω',
+      '12.1Ω',
+      '4.8Ω',
+    ],
+    correctAnswer: 3,
     explanation:
       'Loop resistance = 2 × length × resistance per metre = 2 × 200m × 12.1mΩ/m = 4.84Ω ≈ 4.8Ω',
   },
   {
     id: 4,
     question: 'What maximum loop resistance is typically permitted on fire alarm circuits?',
-    options: ['20Ω', '40Ω', '100Ω', '500Ω'],
-    correctAnswer: 1,
+    options: [
+      '40Ω',
+      '20Ω',
+      '100Ω',
+      '500Ω',
+    ],
+    correctAnswer: 0,
     explanation:
       'Most fire alarm panels specify maximum 40Ω loop resistance for reliable device communication and detection.',
   },
@@ -102,14 +142,24 @@ const quizQuestions = [
     id: 5,
     question:
       'A 24V DC BMS circuit supplies sensors drawing 500mA total. What is the power consumption?',
-    options: ['6W', '12W', '24W', '48W'],
+    options: [
+      '6W',
+      '12W',
+      '48W',
+      '24W',
+    ],
     correctAnswer: 1,
     explanation: 'P = V × I = 24V × 0.5A = 12W. This helps size the power supply and cable.',
   },
   {
     id: 6,
     question: 'What voltage drop is typically acceptable on BMS sensor circuits?',
-    options: ['1%', '3%', '5%', '10%'],
+    options: [
+      '1%',
+      '3%',
+      '5%',
+      '10%',
+    ],
     correctAnswer: 2,
     explanation:
       'BMS circuits typically allow 5% voltage drop (1.2V on 24V circuits) to ensure sensors and actuators operate reliably at minimum voltage.',
@@ -117,7 +167,12 @@ const quizQuestions = [
   {
     id: 7,
     question: 'A UPS has 40 × 12V batteries in series. What is the DC bus voltage?',
-    options: ['120V DC', '240V DC', '400V DC', '480V DC'],
+    options: [
+      '120V DC',
+      '240V DC',
+      '400V DC',
+      '480V DC',
+    ],
     correctAnswer: 3,
     explanation: 'Total voltage = Number of batteries × Battery voltage = 40 × 12V = 480V DC',
   },
@@ -125,15 +180,25 @@ const quizQuestions = [
     id: 8,
     question:
       'Fire alarm standby batteries rated 24V, 7Ah. System quiescent current is 200mA. What is standby time?',
-    options: ['12 hours', '24 hours', '35 hours', '48 hours'],
-    correctAnswer: 2,
+    options: [
+      '35 hours',
+      '48 hours',
+      '12 hours',
+      '24 hours',
+    ],
+    correctAnswer: 0,
     explanation:
       'Standby time = Capacity / Current = 7Ah / 0.2A = 35 hours. Exceeds the minimum 24-hour requirement.',
   },
   {
     id: 9,
     question: 'Which standard covers emergency lighting design and installation?',
-    options: ['BS 7671', 'BS 5266', 'BS 5839', 'BS EN 60947'],
+    options: [
+      'BS 7671',
+      'BS 5266',
+      'BS 5839',
+      'BS EN 60947',
+    ],
     correctAnswer: 1,
     explanation:
       'BS 5266 covers emergency lighting design, installation, and maintenance. BS 5839 covers fire detection and alarm systems.',
@@ -142,7 +207,12 @@ const quizQuestions = [
     id: 10,
     question:
       'A generator starting battery is 24V with 500CCA. What circuit protection is typical?',
-    options: ['10A fuse', '60A fuse', '100A fuse', 'No protection needed'],
+    options: [
+      '10A fuse',
+      '60A fuse',
+      '100A fuse',
+      'No protection needed',
+    ],
     correctAnswer: 2,
     explanation:
       'Starting circuits need heavy-duty protection due to high inrush currents. 100A-200A fuses are typical for generator starting batteries.',

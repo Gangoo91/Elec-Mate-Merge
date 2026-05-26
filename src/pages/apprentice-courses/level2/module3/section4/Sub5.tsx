@@ -42,11 +42,11 @@ const checks = [
       'Which equation correctly defines Zs for a final circuit on a TN system?',
     options: [
       'Zs = Ze − (R1 + R2)',
-      'Zs = Ze + (R1 + R2)',
       'Zs = Ze × (R1 + R2)',
+      'Zs = Ze + (R1 + R2)',
       'Zs = Ze ÷ (R1 + R2)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Zs = Ze + (R1 + R2). Ze is the supply-side impedance (substation transformer back to your MET via the DNO supply); R1+R2 is the installation-side impedance (line conductor + CPC of the final circuit). Add them — they’re in series in the fault loop.',
   },
@@ -54,8 +54,13 @@ const checks = [
     id: 'm3-s4-sub5-table-413',
     question:
       'A Type B 32 A MCB protects a final circuit on a TN-C-S system. From BS 7671 Table 41.3, what is the maximum Zs for a 0.4 s disconnection at U₀ = 230 V?',
-    options: ['7.28 Ω', '4.37 Ω', '1.37 Ω', '0.42 Ω'],
-    correctIndex: 2,
+    options: [
+      '7.28 Ω',
+      '4.37 Ω',
+      '0.42 Ω',
+      '1.37 Ω',
+    ],
+    correctIndex: 3,
     explanation:
       'Table 41.3 — Type B MCB to BS EN 60898 at U₀ = 230 V: B6 = 7.28 Ω, B10 = 4.37 Ω, B16 = 2.73 Ω, B20 = 2.19 Ω, B32 = 1.37 Ω, B40 = 1.09 Ω. The 32 A row gives 1.37 Ω. Same circuit on Type C 32 A would be 0.68 Ω (lower because Type C trips at 10× In rather than 5× In).',
   },
@@ -64,12 +69,12 @@ const checks = [
     question:
       'A Type B 32 A circuit on TN-C-S has measured Ze = 0.35 Ω. Table 41.3 max Zs = 1.37 Ω. What is the maximum allowable measured R1+R2 if you correct the Table 41.3 value by the 0.8 factor for cable temperature at the time of test?',
     options: [
-      '0.75 Ω',
+      '0.45 Ω',
       '1.02 Ω',
       '1.37 Ω',
-      '0.45 Ω',
+      '0.75 Ω',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Apply the 0.8 rule (BS 7671 method to correct Table 41 maximum Zs values from operating temperature down to test ambient ~20 °C): max permitted measured Zs = 1.37 × 0.8 = 1.096 Ω ≈ 1.10 Ω. Subtract Ze: max R1+R2 = 1.10 − 0.35 = 0.75 Ω. If your test reads above this, the circuit doesn’t comply at 0.4 s disconnection on a worst-case hot-cable scenario.',
   },
@@ -81,10 +86,10 @@ const quizQuestions = [
     question:
       'What does Ze represent?',
     options: [
-      'The total earth fault loop impedance of the circuit.',
+      'To show where a relay coil on one page has its associated contacts shown on other pages, enabling the technician to trace the complete circuit',
       'The earth fault loop impedance external to the installation — substation transformer + supply cable + DNO earth path back to source. Measured at the MET with the installation isolated.',
-      'The internal CPC resistance.',
-      'The earth electrode resistance only.',
+      'Because different gases have different densities — lighter gases rise to the top and heavier gases sink to the bottom, so a single-level reading may miss dangerous concentrations',
+      'A rapid combustion of fine combustible dust particles dispersed in air within an enclosed space, occurring in industries such as flour mills, woodworking, and grain storage',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,12 +100,12 @@ const quizQuestions = [
     question:
       'On a final circuit, R1+R2 represents:',
     options: [
-      'The supply-side impedance.',
+      'Prevents the door from being opened while the main switch is in the ON position, and prevents the switch from being turned ON while the door is open',
+      'Hazards going unreported, isolation of the new starter, and slower integration into the team — a missed induction is a real cost',
       'The line conductor resistance (R1) plus the CPC resistance (R2) for the circuit, end to end — the installation-side portion of the earth fault loop.',
-      'The neutral conductor resistance.',
-      'Two separate resistance values measured at different times.',
+      'A client for whom a construction project is being carried out which is not in the course or furtherance of a business',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'R1 = resistance of the line conductor from MCB out to the furthest accessory. R2 = resistance of the CPC over the same run. Add them: R1+R2 is the installation-side contribution to Zs. Measured at initial verification by a low-resistance ohmmeter with the line and CPC linked at one end.',
   },
@@ -109,12 +114,12 @@ const quizQuestions = [
     question:
       'A circuit shows the following at the consumer unit: Ze = 0.35 Ω (TN-C-S), R1+R2 measured = 0.62 Ω. What is Zs and is it compliant for a Type B 32 A MCB? (Apply the 0.8 rule to Table 41.3 max Zs of 1.37 Ω.)',
     options: [
-      'Zs = 0.27 Ω. Compliant.',
+      'Fire hazards, people at risk, control measures needed',
+      'The 10-minute reading by the 1-minute reading',
+      'Correctly rated socket outlets with RCD protection at pitch',
       'Zs = 0.97 Ω. Compliant — 0.97 ≤ 1.10 (corrected max).',
-      'Zs = 0.97 Ω. Non-compliant.',
-      'Zs = 5.32 Ω. Non-compliant.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Zs = Ze + R1+R2 = 0.35 + 0.62 = 0.97 Ω. Corrected Table 41.3 max for Type B 32 A = 1.37 × 0.8 = 1.10 Ω. 0.97 ≤ 1.10 → compliant. The 0.4 s disconnection time will be met when the cable is at operating temperature.',
   },
@@ -123,12 +128,12 @@ const quizQuestions = [
     question:
       'Which protective device family relies on Table 41.3 (overcurrent devices) for max Zs?',
     options: [
-      'RCDs only.',
       'MCBs to BS EN 60898 (Types B, C and D), and similar overcurrent devices to BS EN 61009-1 (RCBOs) at U₀ = 230 V.',
-      'AFDDs only.',
-      'Surge protective devices.',
+      'Clarify scope, refine details, and agree final terms without fundamentally changing the tender',
+      'To give a brief, focused safety briefing on a specific hazard relevant to the day\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s work',
+      'Any period of time during which design or preparatory work is carried out for a project and which may continue during the construction phase',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Table 41.3 covers overcurrent devices (MCBs and the overcurrent portion of RCBOs) — Types B, C, D at the various current ratings. Table 41.5 separately covers RCDs as the protective device. RCBOs typically need to satisfy both: Table 41.3 for the magnetic-trip portion and Table 41.5 for the residual-current portion.',
   },
@@ -137,10 +142,10 @@ const quizQuestions = [
     question:
       'On a TT installation, an MCB cannot ordinarily satisfy the Table 41.3 max Zs because:',
     options: [
-      'TT supplies are higher voltage.',
+      'The likelihood that harm from a specific hazard will occur, combined with the severity of the harm. Risk = function of likelihood × severity. Modified by the population exposed and the controls in place.',
       'Ze on a TT system is typically 21 Ω or higher (electrode + soil + remote substation electrode), which exceeds the Table 41.3 max Zs for any practical MCB rating. RCDs are required for fault protection — Table 41.5 then applies.',
-      'MCBs aren’t allowed on TT.',
-      'The disconnection time is only 5 s.',
+      'A brief simulated mains failure to confirm each luminaire illuminates, followed by verification that the charging indicator shows normal operation after mains restoration',
+      'A three-step end-to-end measurement of r1, rn and r2, followed by cross-connection of the line/neutral loops and the line/cpc loops, with readings at each socket expected to be approximately constant and equal to (r1 + rn)/4 (and similarly for L–cpc)',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +156,12 @@ const quizQuestions = [
     question:
       'You measure Zs at the furthest socket on a 50 m radial circuit and the value is 0.6 Ω higher than your calculated R1+R2 + Ze. What is the most likely cause?',
     options: [
-      'The cable is undersized.',
+      'Training managers to recognise signs of presenteeism, promoting flexible working, reviewing workload management, enhancing EAP promotion, and creating a culture where taking time off for mental health is supported',
+      'Investigate, isolate the affected circuit, find the fault (often an issue with a fixed appliance or wiring damage), repair, retest. Do NOT proceed to the next test stage on the failed circuit until the fault is resolved.',
       'A poor termination somewhere along the circuit — a loose neutral block, a poorly tightened CPC, or a corroded joint adding extra resistance to the fault loop. Check every termination, retest after re-making.',
-      'The MCB is too small.',
-      'The customer’s appliance is at fault.',
+      'A common-mode transient (lightning, switching surge) reaching the equipment via mains, data cable or earth — investigate SPDs, data isolation, surge events',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A persistent 0.6 Ω discrepancy between measured Zs and (Ze + calculated R1+R2) almost always points to a loose or corroded joint. Common culprits: the circuit’s outgoing terminal at the consumer unit, a junction box hidden in a void, a back-box terminal where the previous electrician didn’t torque the screw. Always trace from CU outwards, re-make any joint that doesn’t pass a wiggle test.',
   },
@@ -165,12 +170,12 @@ const quizQuestions = [
     question:
       'Why does the BS 7671 method apply a 0.8 multiplier (or its equivalent) when comparing measured Zs to Table 41.3 max Zs?',
     options: [
-      'For luck.',
+      'A non-compliance with BS 7671 because when the switch is open the line conductor remains live to the load — anyone working on the load thinks it is dead but the line is still energised. Reg 643.6(a) requires single-pole switches in the line.',
+      'Immediately prohibit use of the scaffold, tag it as unsafe, investigate who made the modifications and why, have the scaffold redesigned or returned to its approved configuration by a competent scaffolder, and re-inspect before permitting reuse',
+      'I = U0 × Cmin / Zs = 230 × 0.95 / 1.20 = 182 A; t read from the B-curve characteristic at 182 A — within the magnetic instantaneous range (Ia ≈ 160 A for B32), so t ≈ 0.04 s. Calculate S = √(182² × 0.04) / 115 = √(1325) / 115 = 36.4 / 115 = 0.32 mm².',
       'Table 41.3 values are calculated assuming the cable is at its maximum operating temperature. Tests are normally performed when the cable is at ambient (~20 °C) where its resistance is lower. The 0.8 factor (Cmin / temperature correction) corrects the Table value down to a measured-temperature comparison.',
-      'Because the loop tester is inaccurate.',
-      'To allow for voltage drop.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Conductor resistance rises with temperature. Table 41.3 max Zs values assume cables at full operating temperature (typically 70 °C for PVC). On test, the cable is much cooler and reads lower than it would when in service. The 0.8 multiplier (sometimes seen as a Cmin factor of 0.95 combined with temperature correction) brings the table value down to what the meter should read at test temperature so you’re comparing like with like.',
   },
@@ -179,12 +184,12 @@ const quizQuestions = [
     question:
       'A long thin cable (e.g. 1.5 mm² T&E run 30 m back to the CU) is showing a high R1+R2. The protective device is a Type B 16 A. Table 41.3 max Zs = 2.73 Ω. Ze = 0.35 Ω. The corrected max permitted measured Zs is 2.73 × 0.8 = 2.18 Ω. R1+R2 measured = 1.95 Ω. Does the circuit comply?',
     options: [
-      'Yes — 0.35 + 1.95 = 2.30 Ω which is below 2.73 Ω.',
       'No — measured Zs = 0.35 + 1.95 = 2.30 Ω, which exceeds the corrected max of 2.18 Ω. The cable is too long/thin for this MCB rating; either uprate the cable to 2.5 mm², or reduce the run, or change the device.',
-      'Yes — RCDs make compliance automatic.',
-      'No — only because Ze is too high.',
+      'Per HSE GS38 — prove the voltage indicator on a known live source BEFORE the test, confirm absence of voltage on the test point, then prove on a known live source AFTER. Three-step prove-test-prove sequence ensures the indicator was working at the moment of test.',
+      'Removal from your electrical scheme membership (NICEIC / NAPIT / ELECSA / SELECT), potential criminal prosecution if abstraction is alleged, and personal civil liability for any damage. Career-altering.',
+      'You forgot to disconnect the CPC from the earth bar — your meter is reading the parallel path through the earth bar and main bonding rather than the circuit CPC alone, masking a possible break in the circuit CPC.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Zs = 0.35 + 1.95 = 2.30 Ω. Corrected Table 41.3 max for B16 = 2.73 × 0.8 = 2.18 Ω. 2.30 > 2.18 → non-compliant. The cable will warm in service, R1+R2 will rise further, and you can’t guarantee 0.4 s disconnection. Solutions: thicker cable (drops R1+R2), shorter run if feasible, or downsize to B10 (smaller MCB needs less fault current to trip but increases nuisance tripping risk). RCBO with a 30 mA residual is a separate fix for additional protection but doesn’t solve the overcurrent disconnection time — you still need to satisfy Table 41.3 for the magnetic-trip portion.',
   },

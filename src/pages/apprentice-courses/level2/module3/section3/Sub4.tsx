@@ -38,8 +38,13 @@ const checks = [
     id: 'mcb-type-check',
     question:
       'A small workshop with 3-phase induction motors that draw heavy starting currents — which MCB type best avoids nuisance trips on inrush?',
-    options: ['Type B (3–5× In)', 'Type C (5–10× In)', 'Type D (10–20× In)', 'No MCB — fuses only'],
-    correctIndex: 2,
+    options: [
+      'No MCB — fuses only',
+      'Type D (10–20× In)',
+      'Type B (3–5× In)',
+      'Type C (5–10× In)',
+    ],
+    correctIndex: 1,
     explanation:
       'Type D — magnetic trip at 10 to 20 × In. Used where heavy inrush currents (motor starting, large transformer energising) would nuisance-trip a Type B or C. Trade-off — higher Zs requirement to ensure thermal disconnection.',
   },
@@ -48,12 +53,12 @@ const checks = [
     question:
       'A modern EV charger or solar PV inverter draws a residual current with DC components. Which RCD type is appropriate at the AC side?',
     options: [
-      'Type AC',
-      'Type A (with 6 mA DC tolerance)',
       'Type B (full DC sensitivity)',
-      'No RCD required',
+      'ISA-75.01 / IEC 60534-2-1',
+      'Colour temperature and RGB control',
+      '(Full flush + Reduced flush) / 3',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Type B RCDs are sensitive to AC, pulsing DC and smooth DC residual currents. Required where the load can produce smooth DC fault currents the upstream RCD wouldn’t see — EV chargers without internal Type A+6 mA DC detection, large PV inverters, variable speed drives. Type A handles AC + pulsing DC + small (6 mA) DC.',
   },
@@ -62,12 +67,12 @@ const checks = [
     question:
       'BS 7671 421.1.7 (the AFDD regulation) recommends AFDDs in dwellings on:',
     options: [
-      'All circuits',
-      'Lighting only',
+      'So they can be corrected before commissioning',
       'AC final circuits supplying socket-outlets ≤ 32 A',
-      'Only the main switch',
+      'Information being developed, not ready for sharing',
+      'Creating gaps in illumination with excessive spacing',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'AFDDs are recommended for AC final circuits supplying socket-outlets ≤ 32 A in dwellings (per BS 7671 Reg 421.1.7). The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care homes, supporting fire-safety guidance treats them as effectively required practice.',
   },
@@ -78,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'A BS 88 series HRC fuse has its main advantage over a BS EN 60898 MCB in:',
     options: [
-      'Lower cost per unit',
+      'To record identified risks, their likelihood, impact, and mitigation measures',
       'Higher breaking capacity (typically 80 kA+ vs 6–10 kA for domestic MCBs)',
-      'Resettable after a fault',
-      'Built-in residual current detection',
+      'At the lowest recommended level as specified by the manufacturer',
+      'When there is reason to suspect it is no longer valid',
     ],
     correctAnswer: 1,
     explanation:
@@ -90,8 +95,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A BS EN 60898 Type C MCB has its magnetic trip threshold at:',
-    options: ['3 to 5 × In', '5 to 10 × In', '10 to 20 × In', '20 to 50 × In'],
-    correctAnswer: 1,
+    options: [
+      '10 to 20 × In',
+      '3 to 5 × In',
+      '5 to 10 × In',
+      '20 to 50 × In',
+    ],
+    correctAnswer: 2,
     explanation:
       'Type C MCBs trip magnetically at 5 to 10 × In. Used for moderate inrush loads — fluorescent banks, small motors, transformer energising. Type B (3–5×) is for general resistive / household; Type D (10–20×) for heavy inrush like welders and induction motors.',
   },
@@ -99,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'An RCBO (BS EN 61009-1) provides:',
     options: [
-      'Overload protection only',
-      'Earth-fault protection only',
+      'To verify low resistance connection between MET and extraneous-conductive-parts',
+      'Batching similar tasks reduces attention residue by minimising context switches',
+      'When work is performed by registered competent person scheme members',
       'Combined overload, fault current and residual current (earth-fault) protection in a single module',
-      'Surge protection only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'RCBO = Residual Current Breaker with Overload. Combines an MCB (overload + short-circuit) with an RCD (residual / earth-fault) into one DIN module. Standard domestic kit now — gives every circuit its own 30 mA RCD without the all-circuits-trip-together problem of a shared RCD.',
   },
@@ -113,12 +123,12 @@ const quizQuestions = [
     question:
       'A standard domestic socket circuit on a TN-S system would typically use which RCD type for additional protection?',
     options: [
-      'Type AC',
       'Type A (sensitive to AC + pulsing DC up to 6 mA)',
-      'Type B (full DC)',
-      'No RCD required',
+      'To convert millivolts (mV) into volts (V).',
+      'Independent assessment of competence',
+      'Both the client (or Responsible Person) and the installer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Type A is the modern domestic standard — covers AC waveforms AND pulsing DC residual currents (which Type AC misses). Type AC is no longer recommended for new installs because most modern equipment (LED drivers, computer power supplies) produces some DC residual.',
   },
@@ -126,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'A Type 1 SPD installed at the origin of an installation primarily protects against:',
     options: [
-      'Switching transients within the building',
+      'To provide controlled pulling force for long or difficult cable runs',
       'Direct lightning strike currents (10/350 µs waveform) and equipotential bonding',
-      'Slow temperature changes',
-      'Electromagnetic noise from variable speed drives',
+      'Smaller, lighter, cheaper, and more efficient for small voltage changes',
+      'Responding appropriately to whatever comes your way, then returning to calm',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,12 +150,12 @@ const quizQuestions = [
     question:
       'Reg 421.1.7 (BS 7671:2018+A4:2026) recommends AFDDs in dwellings on:',
     options: [
-      'All final circuits',
+      'Provide evidence of ongoing professional development',
+      'Delays, poor workmanship, or failed inspections',
       'AC final circuits supplying socket-outlets ≤ 32 A',
-      'Lighting circuits only',
-      'Three-phase circuits only',
+      'Direct sunlight or heat sources affecting the sensor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 421.1.7 recommends AFDDs for AC final circuits supplying socket-outlets ≤ 32 A in dwellings. The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care homes, supporting fire-safety guidance treats them as effectively required practice.',
   },
@@ -154,12 +164,12 @@ const quizQuestions = [
     question:
       'BS 7671 411.3.3 requires additional protection by 30 mA RCD on socket-outlets up to 32 A in:',
     options: [
-      'All installations without exception',
+      'In appropriate containers, in designated areas, with incompatible substances segregated',
+      'Ensure a construction phase plan has been drawn up by the contractor or principal contractor',
+      'A fire door is a door assembly designed to resist fire for a specified period — FD30 resists fire for 30 minutes and FD60 for 60 minutes',
       'All installations, with an exception for non-dwellings where a documented risk assessment determines it is not necessary',
-      'Only outdoor sockets',
-      'Only sockets above 1.5 m height',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Revised 411.3.3 applies to socket-outlets ≤ 32 A. Exception: in non-dwellings, a documented risk assessment can determine RCD additional protection isn’t necessary. Domestic dwellings have no such opt-out — all sockets ≤ 32 A get 30 mA RCD additional protection.',
   },
@@ -167,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'BS 7671 443.4.1 requires SPD protection where:',
     options: [
-      'It’s always optional',
       'The consequence of an overvoltage could result in serious injury, loss of life, failure of a safety service, or significant financial / data loss',
-      'Only inside data centres',
-      'Only in three-phase installations',
+      'Each person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s share should be reduced by at least one-third compared to their equal mathematical share',
+      'Repetitive manual labour often creates physical strain without the cardiovascular and mental health benefits of varied, voluntary exercise',
+      'The notice must be in writing, specify the ground(s) for suspension (non-payment of a sum due), allow at least 7 days before suspension takes effect, and identify the date payment was due',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 443.4.1 mandates SPDs where the consequence of an overvoltage could result in (a) serious injury or loss of life, (b) failure of a safety service, or (c) significant financial or data loss. For other cases SPDs are still required unless the owner declares the risk acceptable in writing.',
   },

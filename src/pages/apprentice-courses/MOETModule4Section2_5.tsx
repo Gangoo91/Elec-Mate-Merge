@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'When taking an oil sample from a gearbox for analysis, the most important consideration is:',
     options: [
-      'Using the largest sample bottle available',
+      'Safety helmet, safety footwear, gloves and high-visibility clothing as appropriate to the site',
+      'A broad arm sling supporting the arm on the injured side, with the hand slightly higher than the elbow',
+      'Optimise what is working and kill what is not &mdash; make small, strategic adjustments rather than dramatic changes',
       'Taking the sample from a consistent, representative location while the equipment is at operating temperature',
-      'Taking the sample immediately after an oil change',
-      'Filtering the sample before sending to the laboratory',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Consistent sampling location and technique are critical for meaningful trending. The sample must be representative of the oil circulating in the system — taken from a mid-stream location, not from the drain plug or surface. The equipment should be at normal operating temperature to ensure contaminants are suspended. Filtering the sample would remove the very particles you are trying to analyse.',
   },
@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'An oil analysis report shows elevated levels of iron and chromium particles in a gearbox oil sample. This most likely indicates:',
     options: [
-      'Normal oil degradation',
-      'Water contamination',
+      'Difficulty in searching records, risk of loss or damage, and inability to perform automated trend analysis',
       'Wear of steel gears and bearings — the iron and chromium come from the gear and bearing materials',
-      'Incorrect oil grade being used',
+      'Cherry-red colouration of the skin, along with headache and confusion',
+      'The device must comply with GS 38, be in calibration, and be proved on a known live source before and after use',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Different metals in wear debris indicate which components are wearing. Iron typically comes from gears, shafts and rolling element bearings. Chromium often accompanies iron from hardened steel components. Copper and tin indicate bronze bush or cage wear. Aluminium may come from bearing shells. The pattern of metals helps identify which specific component is deteriorating.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     id: 'transformer-oil-dga',
     question: 'Dissolved gas analysis (DGA) of transformer oil can detect:',
     options: [
-      'The colour of the transformer',
       'Internal faults such as overheating, arcing and partial discharge by analysing gases dissolved in the oil',
-      'The external ambient temperature',
-      "The transformer's power rating",
+      'Folders by client name, with subfolders for quotes, certificates, photos, and invoices',
+      'A daily contemporaneous record of weather, deliveries, visitors, instructions received and progress',
+      'The ratio of insulation resistance at 10 minutes to the value at 1 minute, indicating insulation condition',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'DGA is the most important diagnostic test for oil-filled transformers. Internal faults generate specific gases: hydrogen indicates partial discharge, acetylene indicates arcing, ethylene indicates severe overheating, and carbon monoxide/dioxide indicate cellulose (paper insulation) degradation. The pattern and quantity of gases allow diagnosis of the fault type and severity.',
   },
@@ -58,10 +58,10 @@ const quizQuestions = [
     id: 1,
     question: 'Oil analysis is classified as which type of maintenance approach?',
     options: [
-      'Reactive maintenance',
+      'Detection sensitivity and alarm functionality',
       'Condition-based predictive maintenance',
-      'Time-based preventive maintenance only',
-      'Design-out maintenance',
+      'The Health and Safety Executive (HSE)',
+      'No energy input required beyond fan power',
     ],
     correctAnswer: 1,
     explanation:
@@ -71,12 +71,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which test measures the acidity of lubricating oil and indicates oxidation?',
     options: [
+      'Flash point test',
       'Viscosity test',
       'Total acid number (TAN)',
-      'Flash point test',
       'Specific gravity test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Total acid number (TAN) measures the concentration of acidic compounds in the oil, primarily formed through oxidation. Rising TAN indicates the oil is degrading and acidic by-products may corrode metal surfaces. A significant increase in TAN from the baseline indicates the oil needs changing or the cause of accelerated oxidation needs investigation.',
   },
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 3,
     question: 'Water contamination in lubricating oil is harmful because:',
     options: [
-      "It improves the oil's cooling properties",
+      'The dielectric strength — the voltage at which the oil breaks down and conducts electricity',
+      'Can detect and characterise larger wear particles (above 10 microns) that spectrometry misses',
+      'Quantify the number and size distribution of solid contaminant particles in the oil',
       'It promotes corrosion, reduces film strength, accelerates oxidation and causes hydrogen embrittlement of bearings',
-      'It has no significant effect on equipment',
-      "It only affects the oil's colour",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Even small amounts of water in oil are extremely damaging. Water promotes rust and corrosion of metal surfaces, reduces the oil film strength (leading to metal-to-metal contact), accelerates chemical oxidation of the oil, and can cause hydrogen embrittlement of bearing steels. For rolling element bearings, as little as 0.1% water can halve the bearing life.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 4,
     question: 'Ferrography differs from spectrometric oil analysis because it:',
     options: [
-      'Is cheaper and faster',
       'Can detect and characterise larger wear particles (above 10 microns) that spectrometry misses',
-      'Only measures oil viscosity',
-      'Does not require an oil sample',
+      'It promotes corrosion, reduces film strength, accelerates oxidation and causes hydrogen embrittlement of bearings',
+      'The number and size distribution of solid particles per millilitre of oil',
+      'Annually for critical transformers, with increased frequency if gas levels are rising',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Spectrometric analysis (ICP/AES) is excellent for detecting dissolved metals and small particles (below approximately 8-10 microns) but misses larger particles. Ferrography separates wear particles magnetically, allowing visual examination of particle size, shape and composition under a microscope. Large, abnormal particles indicate advanced wear — exactly when spectrometry may understate the severity.',
   },
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 5,
     question: 'For transformer oil, the breakdown voltage test (BDV) measures:',
     options: [
-      "The oil's viscosity",
+      'It promotes corrosion, reduces film strength, accelerates oxidation and causes hydrogen embrittlement of bearings',
       'The dielectric strength — the voltage at which the oil breaks down and conducts electricity',
-      "The oil's flash point",
-      'The dissolved gas content',
+      'Annually for critical transformers, with increased frequency if gas levels are rising',
+      'Can detect and characterise larger wear particles (above 10 microns) that spectrometry misses',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 6,
     question: 'The ISO cleanliness code (e.g., ISO 4406:21/18/15) refers to:',
     options: [
-      "The oil's chemical composition",
+      'Condition monitoring and predictive maintenance strategies',
+      'Water contamination — water emulsified in the oil gives a milky appearance',
       'The number and size distribution of solid particles per millilitre of oil',
-      "The oil's temperature rating",
-      "The manufacturer's quality certification",
+      'The dielectric strength — the voltage at which the oil breaks down and conducts electricity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The ISO 4406 cleanliness code quantifies particle contamination using three numbers representing the count of particles larger than 4 microns, 6 microns and 14 microns per millilitre. Lower numbers indicate cleaner oil. Target cleanliness levels depend on the equipment — hydraulic servo valves need very clean oil (e.g., 16/14/11), while gearboxes may tolerate higher levels (e.g., 20/18/15).',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'An oil sample from a motor bearing housing shows a milky white appearance. The most likely cause is:',
     options: [
-      'Normal oil condition',
+      'The number and size distribution of solid particles per millilitre of oil',
+      'Condition monitoring and predictive maintenance strategies',
+      'Annually for critical transformers, with increased frequency if gas levels are rising',
       'Water contamination — water emulsified in the oil gives a milky appearance',
-      'Excessive wear metals',
-      'Oil additive depletion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A milky or cloudy appearance is a classic visual indicator of water contamination. The water has emulsified with the oil, creating a suspension that appears milky. This level of contamination (typically above 0.1% water) is severely damaging to bearings and gears. The source of water ingress must be identified and eliminated, and the oil changed.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     question:
       'In dissolved gas analysis of transformer oil, the presence of acetylene (C2H2) typically indicates:',
     options: [
-      'Normal transformer operation',
-      'Low-temperature overheating of cellulose insulation',
       'High-energy arcing within the transformer',
       'External contamination of the oil',
+      'Normal transformer operation',
+      'Low-temperature overheating of cellulose insulation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Acetylene is generated only at very high temperatures (above 700 degrees C), which occur during electrical arcing. Its presence in transformer oil is always significant and indicates an internal arcing fault that requires urgent investigation. Even small amounts of acetylene should be treated seriously, as arcing can lead to catastrophic transformer failure.',
   },
@@ -164,10 +164,10 @@ const quizQuestions = [
     id: 9,
     question: 'How often should transformer oil samples typically be taken for DGA?',
     options: [
-      'Only when a fault is suspected',
+      'Can detect and characterise larger wear particles (above 10 microns) that spectrometry misses',
       'Annually for critical transformers, with increased frequency if gas levels are rising',
-      'Every five years',
-      'Only during commissioning',
+      'Quantify the number and size distribution of solid contaminant particles in the oil',
+      'The dielectric strength — the voltage at which the oil breaks down and conducts electricity',
     ],
     correctAnswer: 1,
     explanation:
@@ -177,12 +177,12 @@ const quizQuestions = [
     id: 10,
     question: 'Viscosity is the most important physical property of a lubricant because:',
     options: [
-      "It determines the oil's colour",
+      'A document that sets out how waste will be managed on a construction site, including waste types, quantities, and disposal routes',
+      'Citizens Advice offers free guidance on consumer and employment rights, while the FSB provides legal advice, mediation support, and business guidance for members',
       'It determines the oil film thickness that separates moving surfaces — too thin and metal contact occurs, too thick and energy is wasted',
-      "It affects the oil's smell",
-      'It determines how quickly the oil can be changed',
+      'Referencing a specification rather than listing items creates ambiguity if the specification is later disputed or modified',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Viscosity is the measure of a fluid's resistance to flow and is the single most important property of a lubricant. It determines the thickness of the oil film that separates moving metal surfaces. If viscosity is too low, the film breaks down and metal-to-metal contact causes wear. If too high, excessive friction generates heat and wastes energy. Viscosity changes over time indicate oxidation, contamination or thermal degradation.",
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     id: 11,
     question: 'Particle counting in oil analysis is used to:',
     options: [
-      "Measure the oil's chemical composition",
+      'The dielectric strength — the voltage at which the oil breaks down and conducts electricity',
+      'Annually for critical transformers, with increased frequency if gas levels are rising',
+      'Water contamination — water emulsified in the oil gives a milky appearance',
       'Quantify the number and size distribution of solid contaminant particles in the oil',
-      "Determine the oil's flash point",
-      'Measure dissolved gases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Particle counting measures the concentration of solid particles in different size ranges. This is reported as an ISO cleanliness code. Trending particle counts reveals whether contamination is increasing (ingression exceeding filtration) or decreasing. A sudden increase may indicate a developing component failure releasing wear debris or a seal failure allowing external contamination.',
   },
@@ -204,12 +204,12 @@ const quizQuestions = [
     question:
       'Under ST1426, oil and fluid analysis knowledge supports which maintenance competence?',
     options: [
-      'Electrical installation design',
       'Condition monitoring and predictive maintenance strategies',
-      'Commercial tendering',
-      'Fire safety management',
+      'High-energy arcing within the transformer',
+      'Water contamination — water emulsified in the oil gives a milky appearance',
+      'The number and size distribution of solid particles per millilitre of oil',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 requires maintenance technicians to understand condition monitoring techniques as part of predictive maintenance strategies. Oil and fluid analysis is one of the key condition monitoring methods alongside vibration analysis, thermal imaging and electrical testing.',
   },

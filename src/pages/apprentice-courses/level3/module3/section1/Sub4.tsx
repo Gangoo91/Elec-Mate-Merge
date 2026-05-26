@@ -39,15 +39,25 @@ const checks = [
     id: 'l3-m3-1-4-energy',
     question:
       "A 3 kW immersion heater runs for 2 hours. How much energy does it consume in kWh?",
-    options: ['1.5 kWh', '5 kWh', '6 kWh', '60 kWh'],
-    correctIndex: 2,
+    options: [
+      '1.5 kWh',
+      '5 kWh',
+      '60 kWh',
+      '6 kWh',
+    ],
+    correctIndex: 3,
     explanation: 'Energy = power × time = 3 kW × 2 h = 6 kWh.',
   },
   {
     id: 'l3-m3-1-4-joules',
     question: 'Convert 6 kWh into joules.',
-    options: ['6000 J', '21 600 J', '21.6 × 10⁶ J', '6 × 10⁹ J'],
-    correctIndex: 2,
+    options: [
+      '6000 J',
+      '21.6 × 10⁶ J',
+      '21 600 J',
+      '6 × 10⁹ J',
+    ],
+    correctIndex: 1,
     explanation:
       '1 kWh = 1000 W × 3600 s = 3.6 × 10⁶ J. So 6 kWh = 6 × 3.6 × 10⁶ = 21.6 × 10⁶ J = 21.6 MJ.',
   },
@@ -55,7 +65,12 @@ const checks = [
     id: 'l3-m3-1-4-eff',
     question:
       'A 5 kW (output) motor runs at 87 % efficiency at full load. What is the input power?',
-    options: ['4.35 kW', '5.0 kW', '5.75 kW', '6.0 kW'],
+    options: [
+      '4.35 kW',
+      '6.0 kW',
+      '5.75 kW',
+      '5.0 kW',
+    ],
     correctIndex: 2,
     explanation:
       'P_in = P_out / η = 5000 / 0.87 = 5747 W ≈ 5.75 kW. Always size the supply for the input.',
@@ -66,16 +81,26 @@ const quizQuestions = [
   {
     id: 1,
     question: '1 kWh in joules is approximately:',
-    options: ['1000 J', '3 600 J', '3.6 × 10⁶ J', '3.6 × 10⁹ J'],
-    correctAnswer: 2,
+    options: [
+      '1000 J',
+      '3.6 × 10⁶ J',
+      '3 600 J',
+      '3.6 × 10⁹ J',
+    ],
+    correctAnswer: 1,
     explanation: '1 kWh = 1000 W × 3600 s = 3 600 000 J = 3.6 MJ.',
   },
   {
     id: 2,
     question:
       "A 9 kW shower runs for 10 minutes. Energy consumed:",
-    options: ['0.9 kWh', '1.5 kWh', '90 kWh', '9 kJ'],
-    correctAnswer: 1,
+    options: [
+      '90 kWh',
+      '0.9 kWh',
+      '1.5 kWh',
+      '9 kJ',
+    ],
+    correctAnswer: 2,
     explanation:
       '10 minutes = 1/6 hour. E = P × t = 9 × (1/6) = 1.5 kWh. (Equivalently, 5.4 MJ.)',
   },
@@ -83,16 +108,26 @@ const quizQuestions = [
     id: 3,
     question:
       'A motor draws 12 A at 230 V single phase, power factor 0.85. Input power is:',
-    options: ['1.62 kW', '2.35 kW', '2.76 kW', '5.41 kW'],
-    correctAnswer: 1,
+    options: [
+      '2.76 kW',
+      '1.62 kW',
+      '5.41 kW',
+      '2.35 kW',
+    ],
+    correctAnswer: 3,
     explanation: 'P = V × I × pf = 230 × 12 × 0.85 = 2346 W ≈ 2.35 kW.',
   },
   {
     id: 4,
     question:
       'Same motor outputs 1.9 kW mechanical. Efficiency =',
-    options: ['65 %', '75 %', '81 %', '95 %'],
-    correctAnswer: 2,
+    options: [
+      '81 %',
+      '75 %',
+      '65 %',
+      '95 %',
+    ],
+    correctAnswer: 0,
     explanation:
       'η = output / input × 100 = 1900 / 2346 × 100 ≈ 81 %.',
   },
@@ -100,16 +135,26 @@ const quizQuestions = [
     id: 5,
     question:
       'A 100 W LED lamp replaces a 500 W halogen for 1000 hours. Energy saved:',
-    options: ['100 kWh', '300 kWh', '400 kWh', '500 kWh'],
-    correctAnswer: 2,
+    options: [
+      '300 kWh',
+      '400 kWh',
+      '500 kWh',
+      '100 kWh',
+    ],
+    correctAnswer: 1,
     explanation:
       'Saved power = 400 W. Over 1000 h = 400 kWh. At ~30 p/kWh, that is roughly £120 saved.',
   },
   {
     id: 6,
     question: 'Instantaneous power in DC equals:',
-    options: ['VI cos φ', 'V × I', 'VI / R', 'V²I'],
-    correctAnswer: 1,
+    options: [
+      'VI cos φ',
+      'VI / R',
+      'V × I',
+      'V²I',
+    ],
+    correctAnswer: 2,
     explanation:
       'DC has no phase angle. P = V × I directly. Power factor (cos φ) only appears in AC.',
   },
@@ -117,8 +162,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A 3 kW heater on a 230 V supply draws what current?',
-    options: ['7.2 A', '13.0 A', '15.0 A', '23.0 A'],
-    correctAnswer: 1,
+    options: [
+      '7.2 A',
+      '23.0 A',
+      '15.0 A',
+      '13.0 A',
+    ],
+    correctAnswer: 3,
     explanation:
       'I = P / V = 3000 / 230 = 13.04 A. That is why typical immersion circuits are wired in 2.5 mm² with a 16 A protective device or 6.0 mm² for 9 kW showers at ~39 A.',
   },
@@ -126,12 +176,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why is a heating element near 100 % efficient but a motor only ~85-90 %?',
     options: [
-      'Heaters are made of better metal',
       'A heater turns ALL its electrical energy into the desired output (heat); a motor wastes some as heat instead of motion',
-      'Motors run on AC',
-      'Heaters use less current',
+      'That the conductor is correctly sized, securely connected with a BS 951 clamp, correctly labelled, and has continuity to the MET',
+      'The change in secondary voltage from no-load to full-load, expressed as a percentage',
+      'Calculation from supply transformer impedance and cable parameters; OR use of DNO declared values (e.g. 16kA at typical urban supply origin)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Heaters intentionally turn electrical energy into heat — efficiency from a useful-output perspective is ~100 %. Motors want motion; the heat in their windings is loss, hence efficiency under 100 %.',
   },

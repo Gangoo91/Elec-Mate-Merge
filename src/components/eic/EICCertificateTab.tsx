@@ -19,6 +19,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useInspectorProfiles } from '@/hooks/useInspectorProfiles';
+import EICValidationPanel from './EICValidationPanel';
+import type { EICTabId } from '@/hooks/useEICValidation';
 
 interface EICCertificateTabProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,6 +31,7 @@ interface EICCertificateTabProps {
   onGenerateCertificate: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate: boolean;
+  onJumpToTab?: (tab: EICTabId) => void;
 }
 
 const SectionTitle = ({ title }: { title: string }) => (
@@ -40,23 +43,36 @@ const SectionTitle = ({ title }: { title: string }) => (
 
 const CollapsibleSection = ({
   title,
-  icon: Icon,
   isOpen,
   onToggle,
   children,
 }: {
   title: string;
-  icon: React.ElementType;
+  icon?: React.ElementType;
   isOpen: boolean;
   onToggle: () => void;
   children: React.ReactNode;
 }) => (
   <div className="space-y-3">
-    <div className="border-b border-white/[0.06] pb-1">
-      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-      <h3 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h3>
-    </div>
-    <div>{children}</div>
+    <button
+      type="button"
+      onClick={onToggle}
+      className="w-full text-left touch-manipulation"
+    >
+      <div className="border-b border-white/[0.06] pb-1">
+        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+        <div className="flex items-center justify-between">
+          <h3 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h3>
+          <ChevronDown
+            className={cn(
+              'h-4 w-4 text-white/60 transition-transform',
+              isOpen && 'rotate-180'
+            )}
+          />
+        </div>
+      </div>
+    </button>
+    {isOpen && <div>{children}</div>}
   </div>
 );
 
@@ -67,6 +83,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   onGenerateCertificate,
   onSaveDraft,
   canGenerateCertificate,
+  onJumpToTab,
 }) => {
   const isMobile = useIsMobile();
   const haptic = useHaptic();
@@ -74,7 +91,8 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   const { companyProfile } = useCompanyProfile();
   const { getDefaultProfile } = useInspectorProfiles();
   const [openSections, setOpenSections] = useState({
-    reportAuthorised: true,
+    // Auto-loaded from profile on mount — keep collapsed until user wants to edit.
+    reportAuthorised: false,
     compliance: true,
   });
 
@@ -261,6 +279,9 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
 
   return (
     <div className="space-y-4">
+      {/* Pre-flight validation summary — surfaces what's missing before user taps Generate */}
+      <EICValidationPanel formData={formData} onJumpToTab={onJumpToTab} />
+
       {/* Report Authorised For Issue By */}
       <CollapsibleSection
         title="Report Authorisation"
@@ -405,44 +426,6 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
           />
         </div>
       </div>
-
-      {/* Validation Summary */}
-      {allComplete ? (
-        <div className="border border-green-500/30 bg-green-500/10 rounded-lg p-4">
-          <div className="flex gap-3">
-            <CheckCircle className="h-5 w-5 text-green-400 shrink-0 mt-0.5" />
-            <div>
-              <p className="text-sm font-medium text-green-300 mb-0.5">Certificate Ready</p>
-              <p className="text-xs text-white">
-                All sections complete. You can now generate the EIC.
-              </p>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="border border-amber-500/30 bg-amber-500/10 rounded-lg p-4">
-          <div className="flex gap-3">
-            <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
-            <div>
-              <p className="text-sm font-medium text-amber-300 mb-1.5">Incomplete Sections</p>
-              <ul className="space-y-1">
-                {!isReportAuthorisedComplete && (
-                  <li className="text-xs text-white flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                    Complete authorisation with name, date, and signature
-                  </li>
-                )}
-                {!isComplianceComplete && (
-                  <li className="text-xs text-white flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                    Confirm BS 7671 compliance declaration
-                  </li>
-                )}
-              </ul>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Certificate Actions */}
       <EICCertificateActions

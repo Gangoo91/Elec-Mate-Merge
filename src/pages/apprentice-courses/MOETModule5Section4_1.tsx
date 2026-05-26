@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'open-vs-closed',
     question: 'What is the fundamental difference between open loop and closed loop control?',
     options: [
-      'Open loop uses digital signals; closed loop uses analogue signals',
-      'Closed loop uses feedback from the process output to adjust the input; open loop does not',
       'Open loop is more accurate than closed loop in all situations',
       'Closed loop systems cannot be used in industrial environments',
+      'Closed loop uses feedback from the process output to adjust the input; open loop does not',
+      'Open loop uses digital signals; closed loop uses analogue signals',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The defining characteristic of closed loop control is the feedback path: the process output is measured by a sensor, compared with the desired setpoint, and the error signal is used to adjust the controller output. Open loop control has no feedback — the output is not measured, so the controller cannot compensate for disturbances or changes in the process.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'setpoint-error',
     question: "In a closed loop control system, what is the 'error signal'?",
     options: [
-      'A fault indication from the controller hardware',
       'The difference between the setpoint and the measured process variable',
       'The maximum output the controller can deliver',
       'An alarm triggered when a sensor fails',
+      'A fault indication from the controller hardware',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The error signal (also called deviation) is the difference between the desired value (setpoint) and the actual measured value (process variable). The controller uses this error signal to determine the corrective action needed. When the error is zero, the process is at setpoint and no correction is required.',
   },
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'feedforward-purpose',
     question: 'What is the main advantage of feedforward control over pure feedback control?',
     options: [
-      'It is cheaper to implement',
+      'Material specifications, test results, compliance standards, and batch numbers',
       'It can take corrective action before a disturbance affects the process output',
-      'It does not require any sensors',
-      'It eliminates the need for a controller',
+      'To allow current flow in the rotor by relative motion between field and rotor',
+      'Phase to earth, and phase to phase on all combinations',
     ],
     correctIndex: 1,
     explanation:
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'control-element',
     question: "Which component in a control loop is the 'final control element'?",
     options: [
-      'The sensor that measures the process variable',
-      'The controller that calculates the output signal',
+      'To record defects or incomplete items requiring correction before handover',
+      'Brief them on progress, allow them to witness the remaining duration test',
+      'That it meets the essential health and safety requirements set out in UK/EU regulations',
       'The device that physically adjusts the process, such as a control valve or variable speed drive',
-      'The setpoint dial on the operator interface',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The final control element is the device that directly manipulates the process to bring the controlled variable towards setpoint. Common examples include control valves (adjusting flow), variable speed drives (adjusting motor speed), heating elements (adjusting temperature) and dampers (adjusting airflow). It receives the controller output signal and converts it into physical action.',
   },
@@ -70,10 +70,10 @@ const quizQuestions = [
     question:
       'A domestic toaster that runs for a fixed time regardless of bread colour is an example of:',
     options: [
-      'Closed loop control with feedback',
+      'Supply air temperature control',
       'Open loop control without feedback',
-      'Cascade control',
-      'Feedforward control',
+      'Transit time difference of sound waves',
+      'Electrical boxes and conduits',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,8 +83,13 @@ const quizQuestions = [
     id: 2,
     question:
       'In a closed loop temperature control system, the sensor measures 48 degrees C and the setpoint is 50 degrees C. The error signal is:',
-    options: ['-2 degrees C', '+2 degrees C', '48 degrees C', '50 degrees C'],
-    correctAnswer: 1,
+    options: [
+      '48 degrees C',
+      '-2 degrees C',
+      '+2 degrees C',
+      '50 degrees C',
+    ],
+    correctAnswer: 2,
     explanation:
       'Error = Setpoint minus Process Variable = 50 - 48 = +2 degrees C. A positive error means the process is below setpoint, so the controller will increase its output to raise the temperature.',
   },
@@ -92,9 +97,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is NOT a component of a basic control loop?',
     options: [
-      'Sensor/transmitter',
-      'Controller',
-      'Final control element',
+      'A fixed ratio between two process variables',
+      'The setpoint for the secondary controller',
+      'The actual measured value of the controlled condition',
       'Programmable logic controller (PLC) in every case',
     ],
     correctAnswer: 3,
@@ -106,12 +111,12 @@ const quizQuestions = [
     question:
       'A thermostat that switches a heater fully on below setpoint and fully off above setpoint is using which control mode?',
     options: [
-      'Proportional control',
       'On-off (bang-bang) control',
+      'Proportional control',
       'Integral control',
       'Derivative control',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'On-off control (also called bang-bang control) is the simplest control mode. The output is either 100% or 0% depending on whether the process variable is below or above setpoint. It is cheap and simple but causes oscillation around the setpoint, with the process variable cycling above and below the desired value.',
   },
@@ -119,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'In a cascade control arrangement, the output of the primary controller becomes:',
     options: [
-      'The feedback signal for the sensor',
+      'A fixed ratio between two process variables',
       'The setpoint for the secondary controller',
-      'The alarm threshold',
-      'The process variable',
+      'Programmable logic controller (PLC) in every case',
+      'The actual measured value of the controlled condition',
     ],
     correctAnswer: 1,
     explanation:
@@ -132,8 +137,13 @@ const quizQuestions = [
     id: 6,
     question:
       'A 4-20 mA signal representing 0-100% of a process variable has a current reading of 12 mA. What percentage does this represent?',
-    options: ['30%', '50%', '60%', '75%'],
-    correctAnswer: 1,
+    options: [
+      '30%',
+      '60%',
+      '50%',
+      '75%',
+    ],
+    correctAnswer: 2,
     explanation:
       'The 4-20 mA range spans 16 mA (20 - 4 = 16). At 12 mA, the signal is 8 mA above the zero (12 - 4 = 8). Percentage = (8 / 16) x 100 = 50%. This standard signal range is used because a live zero of 4 mA allows detection of cable breaks (0 mA indicates a fault, not a zero reading).',
   },
@@ -141,20 +151,25 @@ const quizQuestions = [
     id: 7,
     question: "What does 'dead time' mean in process control?",
     options: [
-      'The time when the controller is switched off',
+      'Hazardous waste (mercury content) — segregate, store upright in a labelled container and consign to a permitted carrier',
+      'Charging for the most power used in a billing period, not just total consumption',
+      'To confirm work is complete, the area is safe, and controls can be removed',
       'The delay between a change in controller output and the first measurable effect on the process variable',
-      'The time taken to calibrate a sensor',
-      'The period between maintenance shutdowns',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Dead time (also called transport delay or pure delay) is the time elapsed between a change being made at the final control element and the sensor first detecting a change in the process variable. It is caused by physical transport of material or energy through the process and cannot be eliminated — it can only be compensated for in the controller tuning.',
   },
   {
     id: 8,
     question: 'Which control strategy measures a disturbance before it affects the process output?',
-    options: ['Feedback control', 'On-off control', 'Feedforward control', 'Manual control'],
-    correctAnswer: 2,
+    options: [
+      'Feedforward control',
+      'Manual control',
+      'Feedback control',
+      'On-off control',
+    ],
+    correctAnswer: 0,
     explanation:
       'Feedforward control measures the disturbance variable directly and takes corrective action before the disturbance reaches the process output. For example, in a heat exchanger, a feedforward system might measure the incoming fluid temperature and adjust the steam valve before the outlet temperature changes.',
   },
@@ -162,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: "The 'process variable' in a control loop is:",
     options: [
-      'The desired value set by the operator',
+      'A fixed ratio between two process variables',
       'The actual measured value of the controlled condition',
-      'The output signal from the controller',
-      'The type of controller used',
+      'Programmable logic controller (PLC) in every case',
+      'The setpoint for the secondary controller',
     ],
     correctAnswer: 1,
     explanation:
@@ -175,12 +190,12 @@ const quizQuestions = [
     id: 10,
     question: 'Why is the 4-20 mA standard preferred over 0-20 mA for industrial process signals?',
     options: [
-      'It uses less electrical power',
+      'The employer, or in relation to premises not connected with work, the person who has control of the premises',
+      'The scaffold must NOT be used — it is incomplete, dangerous, or condemned',
       'The live zero at 4 mA allows differentiation between a true zero reading and a cable fault',
-      'It is compatible with digital signals only',
-      'It produces a stronger electromagnetic field',
+      'Ensure clear vision of the steps, use handrails where possible, and take one step at a time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "With 4-20 mA, a reading of 0 mA is never a valid signal — it always indicates a fault such as a broken cable, loose connection or failed transmitter. With 0-20 mA, a zero reading could mean either a genuine zero process value or a fault, making fault detection impossible. This 'live zero' principle is fundamental to industrial instrumentation safety.",
   },
@@ -189,11 +204,11 @@ const quizQuestions = [
     question: 'In ratio control, the controller maintains:',
     options: [
       'A constant process variable regardless of load',
-      'A fixed ratio between two process variables',
-      'Equal pressure across a control valve',
       'A fixed controller output signal',
+      'Equal pressure across a control valve',
+      'A fixed ratio between two process variables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Ratio control maintains a predetermined ratio between two variables. A common example is maintaining the correct fuel-to-air ratio in a burner system: as the fuel flow changes, the air flow is automatically adjusted to maintain the correct combustion ratio. The ratio can be adjusted by the operator to optimise the process.',
   },
@@ -202,12 +217,12 @@ const quizQuestions = [
     question:
       'Under ST1426, understanding process control principles is important for maintenance technicians because:',
     options: [
-      'They only work on domestic heating systems',
       'They need to diagnose faults in automated systems, understand control strategies and communicate with instrumentation engineers',
-      'Process control is only relevant to chemical engineers',
-      'It is optional knowledge not assessed in the EPA',
+      'A calibration check box (e.g. resistance check unit, test box) at intervals — and at each suspected damage event — to confirm continued accuracy between calibrations',
+      'Safe approach distances and safe working practices near electricity distribution network equipment',
+      'Suitable means shall be available for cutting off the supply and for isolation, and these must be capable of being secured in the OFF position',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 requires maintenance technicians to understand the principles of control systems so they can diagnose faults in automated plant, interpret control system documentation, carry out basic tuning and calibration, and work effectively with instrumentation and control engineers. This knowledge is assessed in the end-point assessment.',
   },

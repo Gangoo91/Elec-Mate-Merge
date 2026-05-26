@@ -43,8 +43,13 @@ const checks = [
     id: 'l3-m3-2-3-grip',
     question:
       "Right-hand grip rule: thumb points in the direction of conventional current. Fingers curl in the direction of:",
-    options: ['The voltage', 'The magnetic field', 'The force on the conductor', 'The induced EMF'],
-    correctIndex: 1,
+    options: [
+      'The voltage',
+      'The induced EMF',
+      'The force on the conductor',
+      'The magnetic field',
+    ],
+    correctIndex: 3,
     explanation:
       'Grip the conductor with the right hand, thumb in the direction of conventional current flow. Fingers curl around the conductor showing the direction of the magnetic field lines.',
   },
@@ -52,8 +57,13 @@ const checks = [
     id: 'l3-m3-2-3-fleming-l',
     question:
       "Fleming's left-hand rule applies to:",
-    options: ['Generators', 'Motors', 'Transformers', 'Induction'],
-    correctIndex: 1,
+    options: [
+      'Motors',
+      'Induction',
+      'Generators',
+      'Transformers',
+    ],
+    correctIndex: 0,
     explanation:
       "FBI for the LEFT hand: First finger = field, seCond = current, thumB = motion (force). Used for MOTORS where current in a field produces motion.",
   },
@@ -61,8 +71,13 @@ const checks = [
     id: 'l3-m3-2-3-emf',
     question:
       'A coil of 200 turns has flux changing at 0.05 Wb/s. Induced EMF magnitude:',
-    options: ['0.25 V', '4 V', '10 V', '100 V'],
-    correctIndex: 2,
+    options: [
+      '100 V',
+      '10 V',
+      '0.25 V',
+      '4 V',
+    ],
+    correctIndex: 1,
     explanation:
       "Faraday's law: |EMF| = N × dΦ/dt = 200 × 0.05 = 10 V.",
   },
@@ -72,22 +87,37 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Magnetic flux is measured in:',
-    options: ['Tesla', 'Weber', 'Henry', 'Coulomb'],
+    options: [
+      'Tesla',
+      'Weber',
+      'Henry',
+      'Coulomb',
+    ],
     correctAnswer: 1,
     explanation: 'Weber (Wb) is total flux. Tesla (T) is flux density (Wb/m²).',
   },
   {
     id: 2,
     question: 'Like magnetic poles:',
-    options: ['Attract', 'Repel', 'No effect', 'Cancel out'],
-    correctAnswer: 1,
+    options: [
+      'No effect',
+      'Attract',
+      'Repel',
+      'Cancel out',
+    ],
+    correctAnswer: 2,
     explanation: 'Like poles repel; unlike poles attract. Same as charges in electrostatics.',
   },
   {
     id: 3,
     question: "Fleming's right-hand rule applies to:",
-    options: ['Motors', 'Generators (induced EMF)', 'Transformers', 'Capacitors'],
-    correctAnswer: 1,
+    options: [
+      'Transformers',
+      'Motors',
+      'Capacitors',
+      'Generators (induced EMF)',
+    ],
+    correctAnswer: 3,
     explanation:
       "Right hand for generators: First finger = field, seCond finger = current direction (induced), thumB = motion. The CAUSE of the EMF is the motion.",
   },
@@ -95,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: "What does Faraday's law state?",
     options: [
-      'Force = current × field × length',
       'Induced EMF is proportional to the rate of change of flux linkage',
-      'Magnetic field is perpendicular to current',
-      'Resistance changes with temperature',
+      'Zone classification and equipment suitability for each zone',
+      'It transfers significantly increased wind loads into the building structure',
+      'Broken conductor, open circuit, or disconnection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "EMF = −N × dΦ/dt. The faster the flux changes, and the more turns, the bigger the EMF. The minus sign is Lenz's law (the EMF opposes the change).",
   },
@@ -109,10 +139,10 @@ const quizQuestions = [
     question:
       "Lenz's law states the direction of induced EMF is such that:",
     options: [
-      'It increases the flux change',
+      'Standard 1.5mm² mains cable or dedicated 5-core DALI cable',
       'It opposes the change in flux that produced it',
-      "It's always positive",
-      "It's perpendicular to the field",
+      'Electronic equipment and surge protective devices',
+      'Insulation resistance between conductors',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'A solenoid produces a magnetic field that:',
     options: [
-      'Spirals around the wires',
+      'To reduce I²R transmission losses by reducing current for the same power',
+      'Use code FI and recommend specialist investigation',
       'Resembles a bar magnet, with north and south poles at the ends',
-      'Is uniform in all directions',
-      'Has no defined poles',
+      'Directional signs indicating route to follow to reach final exits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The solenoid concentrates the field along its axis, with field lines emerging from one end (N) and entering the other (S) — same external-field shape as a bar magnet.',
   },
@@ -135,8 +165,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A simple loop generator rotates in a magnetic field. The output waveform is:',
-    options: ['Square wave', 'Triangular', 'Sinusoidal', 'DC'],
-    correctAnswer: 2,
+    options: [
+      'Square wave',
+      'Triangular',
+      'DC',
+      'Sinusoidal',
+    ],
+    correctAnswer: 3,
     explanation:
       'As the loop rotates, the rate of flux cutting varies as sin(θ), so the induced EMF is a sine wave. A 50 Hz alternator turns this into the UK 230 V mains.',
   },
@@ -144,8 +179,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A 4-pole alternator running at 1500 rev/min produces what frequency?',
-    options: ['25 Hz', '50 Hz', '100 Hz', '200 Hz'],
-    correctAnswer: 1,
+    options: [
+      '50 Hz',
+      '100 Hz',
+      '25 Hz',
+      '200 Hz',
+    ],
+    correctAnswer: 0,
     explanation:
       'f = (P × N) / 120 where P = number of poles, N = rev/min. f = (4 × 1500) / 120 = 50 Hz. (Equivalently: each pole pair makes one cycle per rev; 1500/60 × 2 = 50.)',
   },

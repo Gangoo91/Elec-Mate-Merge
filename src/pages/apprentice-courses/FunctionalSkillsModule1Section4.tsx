@@ -16,7 +16,12 @@ const FunctionalSkillsModule1Section4 = () => {
       id: 1,
       question:
         'Five insulation resistance readings are: 200, 250, 300, 350 and 400 MΩ. What is the mean?',
-      options: ['250 MΩ', '300 MΩ', '350 MΩ', '275 MΩ'],
+      options: [
+        '250 MΩ',
+        '300 MΩ',
+        '350 MΩ',
+        '275 MΩ',
+      ],
       correctAnswer: 1,
       explanation:
         'Mean = sum ÷ count = (200 + 250 + 300 + 350 + 400) ÷ 5 = 1,500 ÷ 5 = 300 MΩ. The mean gives a useful average for comparing test results over time.',
@@ -25,8 +30,13 @@ const FunctionalSkillsModule1Section4 = () => {
       id: 2,
       question:
         'An energy monitoring bar chart shows the following daily consumption: Mon 42 kWh, Tue 55 kWh, Wed 38 kWh, Thu 61 kWh, Fri 54 kWh. What is the range?',
-      options: ['23 kWh', '19 kWh', '50 kWh', '61 kWh'],
-      correctAnswer: 0,
+      options: [
+        '50 kWh',
+        '61 kWh',
+        '23 kWh',
+        '19 kWh',
+      ],
+      correctAnswer: 2,
       explanation:
         'Range = highest value − lowest value = 61 − 38 = 23 kWh. A large range suggests significant variation in energy use across the week.',
     },
@@ -34,8 +44,13 @@ const FunctionalSkillsModule1Section4 = () => {
       id: 3,
       question:
         'Seven R1+R2 readings (in Ω) are: 0.28, 0.31, 0.29, 0.35, 0.30, 0.29, 0.32. What is the median?',
-      options: ['0.29 Ω', '0.30 Ω', '0.31 Ω', '0.32 Ω'],
-      correctAnswer: 1,
+      options: [
+        '0.31 Ω',
+        '0.29 Ω',
+        '0.32 Ω',
+        '0.30 Ω',
+      ],
+      correctAnswer: 3,
       explanation:
         'Arrange in order: 0.28, 0.29, 0.29, 0.30, 0.31, 0.32, 0.35. With 7 values, the median is the 4th value = 0.30 Ω. The median is less affected by the outlier (0.35) than the mean.',
     },
@@ -43,8 +58,13 @@ const FunctionalSkillsModule1Section4 = () => {
       id: 4,
       question:
         'A pie chart shows the causes of electrical incidents on a construction site: Cable damage 35%, Overloads 25%, Earth faults 20%, Other 20%. If there were 80 incidents total, how many were caused by cable damage?',
-      options: ['35', '28', '25', '40'],
-      correctAnswer: 1,
+      options: [
+        '28',
+        '35',
+        '25',
+        '40',
+      ],
+      correctAnswer: 0,
       explanation:
         '35% of 80 = 0.35 × 80 = 28 incidents. Pie charts show proportions and are useful for identifying the most common causes to target for improvement.',
     },
@@ -52,8 +72,13 @@ const FunctionalSkillsModule1Section4 = () => {
       id: 5,
       question:
         'An electricity meter reads 34,560 kWh on 1st March and 35,840 kWh on 1st April. How many kWh were consumed in March?',
-      options: ['1,280 kWh', '1,180 kWh', '70,400 kWh', '1,380 kWh'],
-      correctAnswer: 0,
+      options: [
+        '1,180 kWh',
+        '1,280 kWh',
+        '1,380 kWh',
+        '70,400 kWh',
+      ],
+      correctAnswer: 1,
       explanation:
         'Consumption = final reading − initial reading = 35,840 − 34,560 = 1,280 kWh. Always subtract the earlier reading from the later one.',
     },
@@ -61,8 +86,13 @@ const FunctionalSkillsModule1Section4 = () => {
       id: 6,
       question:
         "A line graph shows a circuit's voltage over 24 hours. The maximum voltage was 242 V (at 3 AM) and the minimum was 218 V (at 6 PM). What is the voltage variation?",
-      options: ['24 V', '460 V', '230 V', '12 V'],
-      correctAnswer: 0,
+      options: [
+        '230 V',
+        '460 V',
+        '24 V',
+        '12 V',
+      ],
+      correctAnswer: 2,
       explanation:
         'Voltage variation = maximum − minimum = 242 − 218 = 24 V. This exceeds the permitted +10%/−6% tolerance band (207 V to 253 V), so while within limits, the variation is significant.',
     },
@@ -70,8 +100,13 @@ const FunctionalSkillsModule1Section4 = () => {
       id: 7,
       question:
         'Ten RCD trip time readings (in ms) are: 18, 22, 19, 21, 25, 20, 18, 23, 19, 20. What is the mode?',
-      options: ['20 ms', '18 ms and 19 ms', '18 ms, 19 ms and 20 ms', '21 ms'],
-      correctAnswer: 2,
+      options: [
+        '20 ms',
+        '18 ms and 19 ms',
+        '21 ms',
+        '18 ms, 19 ms and 20 ms',
+      ],
+      correctAnswer: 3,
       explanation:
         'Count each value: 18 appears twice, 19 appears twice, 20 appears twice, all others once. There are three modes (18, 19 and 20 ms) — this is called trimodal data.',
     },
@@ -79,7 +114,12 @@ const FunctionalSkillsModule1Section4 = () => {
       id: 8,
       question:
         'A data table shows quarterly energy costs: Q1 £3,250, Q2 £2,980, Q3 £2,760, Q4 £3,410. What is the total annual energy cost and which quarter had the lowest spend?',
-      options: ['£12,400 — Q3', '£12,400 — Q2', '£12,000 — Q3', '£12,400 — Q1'],
+      options: [
+        '£12,400 — Q3',
+        '£12,000 — Q3',
+        '£12,400 — Q1',
+        '£12,400 — Q2',
+      ],
       correctAnswer: 0,
       explanation:
         'Total = £3,250 + £2,980 + £2,760 + £3,410 = £12,400. The lowest quarterly spend was Q3 at £2,760 — likely due to longer daylight hours reducing lighting and heating demand.',

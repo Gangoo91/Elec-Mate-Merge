@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'appointed-vs-first-aider',
     question: 'What is the key difference between an appointed person and a qualified first aider?',
     options: [
-      'An appointed person earns more money than a first aider',
+      'Cables can’t shed heat properly (Cg derate worsens), pulling new cables becomes very difficult, and the original CCC calculation may now be non-compliant with 433.1.1',
+      'A breakdown in relationships including disputes, grievances, and dissatisfaction that affects productivity and wellbeing',
       'An appointed person takes charge of first aid arrangements but is not trained to provide treatment; a first aider holds a qualification and can provide first aid',
-      'There is no difference — the terms are interchangeable',
-      'An appointed person can only work on construction sites',
+      'Discourage the disposal of waste to landfill by increasing costs, thereby encouraging waste reduction, reuse, and recycling',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'An appointed person is designated to take charge of first aid arrangements (calling 999, maintaining the first aid kit, managing the situation) but is not formally trained to provide first aid treatment. A qualified first aider holds a valid FAW (3-day) or EFAW (1-day) certificate and is trained to provide hands-on first aid treatment. Every workplace must have at least an appointed person.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'Which factors should be considered in a first aid needs assessment for an electrical maintenance workplace?',
     options: [
-      'Only the number of employees and the size of the building',
+      '1 lux for at least 3 hours after supply failure, with uniformity max-to-min not exceeding 40:1.',
+      'The team leader assigns positions, the person at the top bears more weight, and clear commands are used throughout with the route checked beforehand',
       'The nature of hazards, number of workers, location, shift patterns, history of incidents and distance from emergency services',
-      'Only whether there is a hospital within 5 miles',
-      'The age profile of employees only',
+      'When there is reason to believe it is no longer valid or there has been a significant change',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A first aid needs assessment must consider all relevant factors: the nature of the work and associated hazards (electric shock, arc flash, burns, falls), the number of workers (including contractors), the layout and location of the workplace, shift patterns and lone working, the history of accidents and incidents, and the proximity of emergency medical services.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'aed-awareness',
     question: 'Who is legally permitted to use an AED (automated external defibrillator)?',
     options: [
-      'Only qualified doctors and paramedics',
-      'Only trained first aiders with a current FAW certificate',
+      'Graphical symbols used in electrical and electronic schematic and wiring diagrams',
       'Anyone — AEDs are designed to be used by members of the public with no training',
-      'Only persons who have completed a specific AED operator course',
+      'They ensure safe, efficient, and future-proof installations',
+      'Name/address of installer, installation date, type of earthing system',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'AEDs are designed to be used by anyone, including members of the public with no formal training. The device provides voice and visual prompts, analyses the heart rhythm automatically, and will only deliver a shock if a shockable rhythm is detected. While training improves confidence and speed of use, lack of training is never a reason not to use an AED in a cardiac arrest emergency.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'What additional first aid consideration applies to lone workers carrying out electrical maintenance?',
     options: [
-      'Lone workers do not need first aid provision as they are on their own',
+      'C2 (potentially dangerous) — broken PEN risk in prohibited environments creates touch voltage hazard; inspector recommends conversion to TT',
+      'Description of work, location, hazards identified, precautions required, authorisation signatures, time validity, and cancellation procedure',
       'They must carry a personal first aid kit and have a means of summoning emergency help (mobile phone, personal alarm, check-in system)',
-      'Lone workers are exempt from first aid regulations',
-      'They must always have a paramedic on standby',
+      'The conductor material, insulation type, installation method, ambient temperature, grouping, and thermal insulation proximity',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Lone workers must carry a personal first aid kit appropriate to the risks they face and have a reliable means of summoning help. This includes a charged mobile phone with signal, a personal alarm or man-down device, and a check-in/welfare monitoring system. The first aid needs assessment must specifically address lone working arrangements.',
   },
@@ -83,7 +83,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A First Aid at Work (FAW) certificate is valid for:',
-    options: ['1 year', '2 years', '3 years', '5 years'],
+    options: [
+      '5 years',
+      '1 year',
+      '3 years',
+      '2 years',
+    ],
     correctAnswer: 2,
     explanation:
       'FAW and EFAW certificates are valid for 3 years. First aiders must attend a requalification course before their certificate expires to maintain their qualification. If the certificate lapses, the person is no longer a qualified first aider. Annual refresher training is strongly recommended (though not mandatory) to maintain skills between requalification courses.',
@@ -92,12 +97,12 @@ const quizQuestions = [
     id: 3,
     question: 'The difference between FAW and EFAW qualifications is:',
     options: [
+      'In clearly signed, accessible locations where they can be reached within 3-5 minutes of a cardiac arrest',
+      'The emergency services have clear access to the site, gates are unlocked and someone meets the ambulance',
+      'Providing adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
       'FAW is a 3-day course covering a full range of first aid; EFAW is a 1-day course covering life-saving skills only',
-      'FAW is for construction sites only; EFAW is for offices',
-      'FAW is a refresher course; EFAW is the initial qualification',
-      'There is no difference — they cover the same content',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'First Aid at Work (FAW) is a comprehensive 3-day course covering life-saving techniques, treatment of injuries and illnesses, management of unconscious casualties, and use of AEDs. Emergency First Aid at Work (EFAW) is a 1-day course covering basic life-saving skills only — CPR, treatment of choking, basic wound care, and recognition of life-threatening conditions.',
   },
@@ -107,9 +112,9 @@ const quizQuestions = [
       'When calling 999 for an electric shock casualty on a construction site, you should ensure:',
     options: [
       'The emergency services have clear access to the site, gates are unlocked and someone meets the ambulance',
-      'All work on site stops until the ambulance arrives',
-      'The site manager calls instead, as they have more authority',
-      'You call 111 first for advice before calling 999',
+      'FAW is a 3-day course covering a full range of first aid; EFAW is a 1-day course covering life-saving skills only',
+      'The principal contractor or site operator, who coordinates first aid provision for the whole site',
+      'Providing adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
     ],
     correctAnswer: 0,
     explanation:
@@ -119,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'AEDs (automated external defibrillators) should ideally be located:',
     options: [
-      "In the site manager's locked office for security",
+      'FAW is a 3-day course covering a full range of first aid; EFAW is a 1-day course covering life-saving skills only',
       'In clearly signed, accessible locations where they can be reached within 3-5 minutes of a cardiac arrest',
-      'In the first aid room only, as they require medical supervision',
-      'In the vehicle of the most senior person on site',
+      'Regularly, and whenever there is a significant change in the workplace, workforce or work activities',
+      'The emergency services have clear access to the site, gates are unlocked and someone meets the ambulance',
     ],
     correctAnswer: 1,
     explanation:
@@ -133,12 +138,12 @@ const quizQuestions = [
     question:
       'Information that should be provided to paramedics when they arrive at an electric shock incident includes:',
     options: [
-      "The casualty's home address and next of kin only",
+      'The principal contractor or site operator, who coordinates first aid provision for the whole site',
+      'The emergency services have clear access to the site, gates are unlocked and someone meets the ambulance',
       'Voltage level, duration of contact, current pathway, whether the casualty lost consciousness, and any CPR/AED treatment given',
-      'The serial number of the electrical equipment involved',
-      "The name of the electrical contractor's insurance company",
+      'FAW is a 3-day course covering a full range of first aid; EFAW is a 1-day course covering life-saving skills only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Paramedics need clinical information to guide their treatment: the voltage level (LV/HV), estimated duration of contact, the current pathway through the body (hand-to-hand, hand-to-foot), whether consciousness was lost, details of any CPR performed (how long, compressions only or with breaths), any AED shocks delivered, and the time of the incident.',
   },
@@ -146,12 +151,12 @@ const quizQuestions = [
     id: 7,
     question: 'Mental health first aid in the workplace involves:',
     options: [
-      'Diagnosing mental health conditions and prescribing medication',
+      'The emergency services have clear access to the site, gates are unlocked and someone meets the ambulance',
+      'FAW is a 3-day course covering a full range of first aid; EFAW is a 1-day course covering life-saving skills only',
+      'Personal first aid kit, reliable communications, welfare check-in system, personal alarm/man-down device, and emergency response times',
       'Providing initial support to someone experiencing a mental health crisis, listening non-judgementally and guiding them towards professional help',
-      'Forcing someone to discuss their personal problems',
-      "Only the employer's occupational health team can provide this",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mental health first aiders provide initial support to colleagues experiencing mental health difficulties or crises. This includes recognising signs of distress, listening non-judgementally, providing reassurance, and guiding the person towards appropriate professional help (GP, counsellor, EAP). They do not diagnose or treat — just as physical first aiders stabilise until professional help arrives.',
   },
@@ -160,12 +165,12 @@ const quizQuestions = [
     question:
       'For a lone worker carrying out electrical maintenance in a remote location, the first aid needs assessment should consider:',
     options: [
-      'Only the standard first aid kit contents',
       'Personal first aid kit, reliable communications, welfare check-in system, personal alarm/man-down device, and emergency response times',
-      'The nearest pub where they can get help',
-      'Whether they have a car to drive themselves to hospital',
+      'FAW is a 3-day course covering a full range of first aid; EFAW is a 1-day course covering life-saving skills only',
+      'The emergency services have clear access to the site, gates are unlocked and someone meets the ambulance',
+      'Providing adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Lone workers face additional risks because there is no one nearby to help if they are injured. The assessment must consider: a personal first aid kit appropriate to the risks, reliable mobile phone signal (or alternative communications), a welfare check-in system with escalation procedures, a personal alarm or man-down device, and realistic emergency response times for the location.',
   },
@@ -173,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'A first aid needs assessment should be reviewed:',
     options: [
-      'Only when the HSE inspects the premises',
+      'The emergency services have clear access to the site, gates are unlocked and someone meets the ambulance',
       'Regularly, and whenever there is a significant change in the workplace, workforce or work activities',
-      'Every 10 years as part of a general review',
-      'Only if someone complains about the first aid provision',
+      'FAW is a 3-day course covering a full range of first aid; EFAW is a 1-day course covering life-saving skills only',
+      'Voltage level, duration of contact, current pathway, whether the casualty lost consciousness, and any CPR/AED treatment given',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,12 +192,12 @@ const quizQuestions = [
     question:
       'On a multi-contractor site, responsibility for first aid coordination typically lies with:',
     options: [
-      'Each individual contractor for their own employees only',
+      'Voltage level, duration of contact, current pathway, whether the casualty lost consciousness, and any CPR/AED treatment given',
+      'The emergency services have clear access to the site, gates are unlocked and someone meets the ambulance',
       'The principal contractor or site operator, who coordinates first aid provision for the whole site',
-      'The local authority',
-      'No one — each person is responsible for themselves',
+      'FAW is a 3-day course covering a full range of first aid; EFAW is a 1-day course covering life-saving skills only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'On multi-contractor sites (particularly construction sites under CDM 2015), the principal contractor is responsible for coordinating first aid provision, ensuring adequate coverage across the site, and communicating first aid arrangements to all contractors. Individual contractors may supplement with their own provision, but overall coordination must be managed centrally.',
   },
@@ -200,12 +205,12 @@ const quizQuestions = [
     id: 11,
     question: "If an AED is used on a casualty and it advises 'no shock', you should:",
     options: [
-      'Assume the person is dead and stop all treatment',
+      'The principal contractor or site operator, who coordinates first aid provision for the whole site',
+      'Providing adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
+      'Regularly, and whenever there is a significant change in the workplace, workforce or work activities',
       'Continue CPR immediately and follow the AED prompts — it will re-analyse every 2 minutes',
-      'Remove the AED pads and try a different AED',
-      'Turn off the AED and rely on CPR alone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "If the AED advises 'no shock', it means the heart rhythm is not shockable at that moment — but the casualty still needs CPR. Continue chest compressions and rescue breaths immediately. Leave the AED pads attached — the AED will re-analyse the rhythm every 2 minutes and will advise a shock if the rhythm changes to a shockable one. Do not turn off the AED.",
   },
@@ -214,12 +219,12 @@ const quizQuestions = [
     question:
       "Under the Health and Safety (First-Aid) Regulations 1981, the employer's duty includes:",
     options: [
-      'Providing first aid training to every employee',
       'Providing adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
-      'Employing a full-time doctor on every site',
-      'Providing free private healthcare to all employees',
+      'In clearly signed, accessible locations where they can be reached within 3-5 minutes of a cardiac arrest',
+      'Voltage level, duration of contact, current pathway, whether the casualty lost consciousness, and any CPR/AED treatment given',
+      'Continue CPR immediately and follow the AED prompts — it will re-analyse every 2 minutes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Health and Safety (First-Aid) Regulations 1981 require employers to provide 'adequate and appropriate' first aid equipment, facilities and personnel. What is adequate depends on the first aid needs assessment. The regulations do not specify exact numbers of first aiders — this is determined by the assessment considering the nature of the work, the hazards, the number of workers and the location.",
   },

@@ -33,7 +33,12 @@ const quickCheckQuestions = [
     id: 'escape-route-lux',
     question:
       'What is the minimum illuminance required on the centre line of an escape route to BS 5266?',
-    options: ['0.2 lux', '0.5 lux', '1 lux', '2 lux'],
+    options: [
+      '0.2 lux',
+      '0.5 lux',
+      '1 lux',
+      '2 lux',
+    ],
     correctIndex: 2,
     explanation:
       'BS 5266 requires a minimum of 1 lux on the centre line of escape routes up to 2m wide. For wider routes, 50% of the route width must be illuminated to at least 1 lux.',
@@ -41,8 +46,13 @@ const quickCheckQuestions = [
   {
     id: 'standard-duration',
     question: 'What is the standard minimum duration for emergency lighting in most UK buildings?',
-    options: ['1 hour', '2 hours', '3 hours', '4 hours'],
-    correctIndex: 2,
+    options: [
+      '1 hour',
+      '2 hours',
+      '4 hours',
+      '3 hours',
+    ],
+    correctIndex: 3,
     explanation:
       '3 hours is the standard minimum emergency lighting duration for most buildings in the UK. This allows time for evacuation and search by emergency services. Shorter durations (1 hour) may be acceptable where immediate evacuation is possible.',
   },
@@ -50,10 +60,10 @@ const quickCheckQuestions = [
     id: 'maintained-definition',
     question: "What does 'maintained' emergency lighting mean?",
     options: [
-      'Luminaires require maintenance annually',
+      'Luminaires include self-test function',
       'Luminaires operate continuously on mains and battery',
       'Luminaires have extended battery life',
-      'Luminaires include self-test function',
+      'Luminaires require maintenance annually',
     ],
     correctIndex: 1,
     explanation:
@@ -62,7 +72,12 @@ const quickCheckQuestions = [
   {
     id: 'open-area-illuminance',
     question: 'What minimum illuminance is required for open area (anti-panic) emergency lighting?',
-    options: ['0.2 lux', '0.5 lux', '1 lux', '5 lux'],
+    options: [
+      '0.2 lux',
+      '0.5 lux',
+      '5 lux',
+      '1 lux',
+    ],
     correctIndex: 1,
     explanation:
       'Open area (anti-panic) lighting requires 0.5 lux minimum at floor level. This lower level is acceptable as people are not following defined routes, but need sufficient light to orientate themselves and move safely.',
@@ -73,7 +88,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the primary UK standard for emergency lighting design?',
-    options: ['BS 7671', 'BS 5266', 'BS EN 60598', 'BS EN 1838'],
+    options: [
+      'BS 7671',
+      'BS 5266',
+      'BS EN 60598',
+      'BS EN 1838',
+    ],
     correctAnswer: 1,
     explanation:
       'BS 5266 is the primary UK standard for emergency lighting. Part 1 covers code of practice, and it references BS EN 1838 for photometric requirements. BS 7671 covers electrical installation, not emergency lighting design specifically.',
@@ -82,8 +102,13 @@ const quizQuestions = [
     id: 2,
     question:
       'What is the maximum spacing between emergency luminaires on an escape route (2m wide)?',
-    options: ['20m', '30m', '40m', 'Depends on luminaire output'],
-    correctAnswer: 3,
+    options: [
+      'Serpentine and amphibole groups',
+      'Clamp meter to measure load current',
+      'Depends on luminaire output',
+      'Up to 1000V AC or 1500V DC',
+    ],
+    correctAnswer: 2,
     explanation:
       "Spacing depends on the luminaire's emergency output and distribution. Manufacturers provide spacing tables for their products. Maximum spacing is determined by maintaining 1 lux minimum on the centre line throughout the route.",
   },
@@ -91,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which locations require emergency lighting to BS 5266?',
     options: [
-      'Only stairways and corridors',
-      'Only areas with no natural light',
+      'Investigate, rectify, and retest before certification',
+      'To avoid confusion and ensure each repair is verified',
+      'Continuous background fresh air when windows are closed',
       'All escape routes and specified safety features',
-      'Only exit points',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Emergency lighting is required on all escape routes, open areas over 60m², at exit signs, fire fighting equipment, call points, lift cars, disabled refuges, first aid points, and other specified locations.',
   },
@@ -117,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: 'When is maintained emergency lighting required?',
     options: [
-      'In all commercial buildings',
+      'Results, conditions, and observations',
       'Where normal lighting may be dimmed or switched off',
-      'Only in healthcare buildings',
-      'Where battery duration exceeds 3 hours',
+      'Insulated tools, gloves, mats, footwear',
+      'Circuit cannot complete and lamp will not illuminate',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,28 +155,38 @@ const quizQuestions = [
     id: 6,
     question: 'What is high-risk task area emergency lighting designed for?',
     options: [
-      'Areas with high fire risk',
+      'Document conditions found and repairs made',
+      'Immediately upon completion of installation',
       'Areas where sudden loss of light creates danger',
-      'Plant rooms only',
-      'Areas requiring 24/7 operation',
+      'Dwellings including houses, flats, and communal areas',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'High-risk task area lighting provides illumination where sudden darkness would create immediate danger, such as operating machinery, working at height, or handling hazardous materials. It requires higher illuminance (10% of normal, minimum 15 lux).',
   },
   {
     id: 7,
     question: 'What minimum illuminance is required for high-risk task area emergency lighting?',
-    options: ['1 lux', '5 lux', '10% of normal illuminance, minimum 15 lux', '50 lux'],
-    correctAnswer: 2,
+    options: [
+      'Meets European safety standards',
+      'To save time and maintain momentum',
+      'P = (2π × n × T) / 60 where n is RPM',
+      '10% of normal illuminance, minimum 15 lux',
+    ],
+    correctAnswer: 3,
     explanation:
       'High-risk task areas require 10% of the normal task illuminance, with a minimum of 15 lux on the task area. This enables safe shutdown of potentially dangerous processes.',
   },
   {
     id: 8,
     question: 'What is the minimum colour rendering index (Ra) required for emergency lighting?',
-    options: ['Ra 20', 'Ra 40', 'Ra 60', 'Ra 80'],
-    correctAnswer: 1,
+    options: [
+      'Ra 40',
+      'Ra 60',
+      'Ra 20',
+      'Ra 80',
+    ],
+    correctAnswer: 0,
     explanation:
       'Emergency lighting requires minimum Ra 40 (CRI). This is lower than normal lighting requirements because the primary purpose is safe evacuation, not accurate colour perception. Most modern LED emergency luminaires exceed this.',
   },
@@ -159,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'How should emergency lighting be designed for disabled refuges?',
     options: [
-      'Same as corridors (1 lux)',
+      'Low coercivity (soft magnetic material)',
       'Higher illuminance and intercom visibility',
-      'No specific requirement',
-      'Flashing beacon only',
+      'Heavy series leakage reactance to limit weld current',
+      'Aluminium or copper bars short-circuited by end rings',
     ],
     correctAnswer: 1,
     explanation:
@@ -172,12 +207,12 @@ const quizQuestions = [
     id: 10,
     question: 'What testing regime is required for emergency lighting to BS 5266?',
     options: [
-      'Annual full duration test only',
+      'Self-certify notifiable electrical work',
+      'To provide a known voltage source to verify tester operation',
       'Monthly function test, annual full duration test',
-      'Weekly function test only',
-      'Six-monthly inspection',
+      'Heavy series leakage reactance to limit weld current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 5266 requires monthly function tests (brief operation check) and annual full duration tests (3 hour or specified duration). Records must be maintained. Self-test systems can automate function testing.',
   },

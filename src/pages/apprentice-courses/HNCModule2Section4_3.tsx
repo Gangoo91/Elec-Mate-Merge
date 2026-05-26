@@ -33,20 +33,25 @@ const quickCheckQuestions = [
     id: 'efficacy-definition',
     question: 'What does lamp efficacy measure?',
     options: [
-      'Total light output in lumens',
+      'RTD (Resistance Temperature Detector)',
+      'To prevent damage from the high test voltage',
+      'The body\\\\\\\\\\\\\\\'s automatic survival response to perceived danger',
       'Lumens produced per watt of electrical power (lm/W)',
-      'Lamp life in hours',
-      'Colour temperature in Kelvin',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Efficacy (lm/W) measures how efficiently a lamp converts electrical power into light. Higher efficacy means more light for less energy - a key factor in building services energy efficiency.',
   },
   {
     id: 'led-efficacy',
     question: 'What is the typical efficacy range for modern LED luminaires?',
-    options: ['40-60 lm/W', '80-100 lm/W', '100-150 lm/W', '200-250 lm/W'],
-    correctIndex: 2,
+    options: [
+      '80-100 lm/W',
+      '40-60 lm/W',
+      '200-250 lm/W',
+      '100-150 lm/W',
+    ],
+    correctIndex: 3,
     explanation:
       'Modern LED luminaires typically achieve 100-150 lm/W efficacy, with premium products exceeding 160 lm/W. This is significantly higher than fluorescent (80-100 lm/W) or discharge lamps.',
   },
@@ -54,10 +59,10 @@ const quickCheckQuestions = [
     id: 'l70-life',
     question: 'What does L70 rated life mean for an LED product?',
     options: [
-      '70% of lamps will have failed',
+      '70,000 hours of operation',
       'Light output has fallen to 70% of initial',
       'The lamp operates at 70% power',
-      '70,000 hours of operation',
+      '70% of lamps will have failed',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +72,10 @@ const quickCheckQuestions = [
     id: 'fluorescent-operation',
     question: 'How does a fluorescent lamp produce light?',
     options: [
-      'A heated filament glows white hot',
+      'High personal spending coincides with reduced business income',
       'UV radiation from mercury discharge excites phosphor coating',
-      'Direct LED semiconductor emission',
-      'Heating of a metal halide mixture',
+      'Minimum optical power required for acceptable BER',
+      'Each lamp gets full voltage and operates independently',
     ],
     correctIndex: 1,
     explanation:
@@ -82,16 +87,26 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which lamp type currently offers the highest efficacy for general lighting?',
-    options: ['T5 fluorescent', 'Metal halide', 'LED', 'Compact fluorescent'],
-    correctAnswer: 2,
+    options: [
+      'T5 fluorescent',
+      'LED',
+      'Metal halide',
+      'Compact fluorescent',
+    ],
+    correctAnswer: 1,
     explanation:
       'LED technology now offers the highest efficacy for general lighting applications, typically 100-150+ lm/W compared to fluorescent (80-100 lm/W) and metal halide (80-100 lm/W).',
   },
   {
     id: 2,
     question: 'A 45W LED luminaire produces 5400 lumens. What is its efficacy?',
-    options: ['90 lm/W', '120 lm/W', '135 lm/W', '180 lm/W'],
-    correctAnswer: 1,
+    options: [
+      '135 lm/W',
+      '90 lm/W',
+      '120 lm/W',
+      '180 lm/W',
+    ],
+    correctAnswer: 2,
     explanation:
       'Efficacy = Lumens / Watts = 5400 / 45 = 120 lm/W. This is typical of good quality modern LED luminaires.',
   },
@@ -99,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the main advantage of T5 over T8 fluorescent tubes?',
     options: [
-      'Lower initial cost',
+      'LED (with compatible driver)',
+      'DALI (Digital Addressable Lighting Interface)',
+      'High-pressure sodium or metal halide',
       'Higher efficacy and smaller diameter',
-      'Longer lamp life',
-      'Better colour rendering',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'T5 tubes (16mm diameter) offer higher efficacy (~100 lm/W vs ~90 lm/W) than T8 (26mm) and allow more compact luminaire designs. However, both are being superseded by LED.',
   },
@@ -112,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'Why do discharge lamps like metal halide require control gear?',
     options: [
-      'To change the colour temperature',
       'To limit current and provide starting voltage',
-      'To improve colour rendering',
-      'To reduce lamp life',
+      'Higher efficacy and smaller diameter',
+      'High-pressure sodium or metal halide',
+      'Mercury content requiring specialist disposal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Discharge lamps have negative resistance characteristics - without current limiting ballast, they would draw increasing current until destruction. Control gear also provides high starting voltage.',
   },
@@ -125,12 +140,12 @@ const quizQuestions = [
     id: 5,
     question: 'What is the typical rated life of quality LED luminaires (L70)?',
     options: [
-      '10,000-20,000 hours',
       '25,000-35,000 hours',
       '50,000-100,000 hours',
       '150,000+ hours',
+      '10,000-20,000 hours',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Quality LED luminaires typically have L70 rated life of 50,000-100,000 hours. Premium products may exceed this. This far exceeds fluorescent (15,000-25,000h) and HID (10,000-20,000h).',
   },
@@ -139,12 +154,12 @@ const quizQuestions = [
     question:
       'Which lamp type would traditionally be used for high-bay industrial lighting at 10m+ mounting height?',
     options: [
-      'T8 fluorescent',
+      'Mercury content requiring specialist disposal',
+      'To limit current and provide starting voltage',
       'High-pressure sodium or metal halide',
-      'Compact fluorescent',
-      'Incandescent',
+      'Higher efficacy and smaller diameter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'High-bay applications traditionally used HID lamps (HPS or MH) for their high lumen output and ability to project light over long distances. LED high-bay is now the preferred choice for new installations.',
   },
@@ -152,19 +167,24 @@ const quizQuestions = [
     id: 7,
     question: 'What causes the delay in metal halide lamps reaching full light output?',
     options: [
-      'Ballast warm-up time',
+      'Both higher rating AND time delay allow downstream to operate first',
+      'Elimination or substitution with a less hazardous substance',
+      'Normal operation, foreseeable faults, and misuse',
       'Time for metal halides to vaporise and reach operating temperature',
-      'Phosphor activation',
-      'LED driver stabilisation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Metal halide lamps require several minutes (3-5 min typically) for the metal halide compounds to vaporise and the arc tube to reach operating temperature and pressure.',
   },
   {
     id: 8,
     question: 'What is the efficacy of a typical 100W incandescent lamp?',
-    options: ['10-15 lm/W', '40-50 lm/W', '80-90 lm/W', '100+ lm/W'],
+    options: [
+      '10-15 lm/W',
+      '80-90 lm/W',
+      '100+ lm/W',
+      '40-50 lm/W',
+    ],
     correctAnswer: 0,
     explanation:
       'Incandescent lamps have very low efficacy (10-15 lm/W) as most energy is converted to heat rather than light. This is why they have been phased out for general lighting under energy regulations.',
@@ -173,12 +193,12 @@ const quizQuestions = [
     id: 9,
     question: 'Which lamp type is most suitable for dimming in a commercial building?',
     options: [
-      'High-pressure sodium',
-      'Metal halide',
+      '50,000-100,000 hours',
       'LED (with compatible driver)',
-      'Compact fluorescent',
+      'High-pressure sodium or metal halide',
+      'Lumen maintenance (Lx)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'LED (with DALI or 1-10V dimmable drivers) offers the best dimming performance - smooth dimming to low levels, instant response, and maintained efficacy. HID lamps cannot be dimmed effectively.',
   },
@@ -186,12 +206,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the primary environmental concern with fluorescent lamp disposal?',
     options: [
-      'High energy consumption',
+      'Higher efficacy and smaller diameter',
+      'To limit current and provide starting voltage',
       'Mercury content requiring specialist disposal',
-      'UV radiation hazard',
-      'Heat generation',
+      'DALI (Digital Addressable Lighting Interface)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Fluorescent lamps contain mercury (2-5mg typically) which is hazardous waste. WEEE regulations require proper disposal through licensed waste handlers. This is a consideration in whole-life assessments.',
   },
@@ -199,16 +219,26 @@ const quizQuestions = [
     id: 11,
     question:
       'What LED specification indicates how much light output falls within a certain time period?',
-    options: ['CRI', 'CCT', 'Lumen maintenance (Lx)', 'Power factor'],
-    correctAnswer: 2,
+    options: [
+      'CRI',
+      'CCT',
+      'Power factor',
+      'Lumen maintenance (Lx)',
+    ],
+    correctAnswer: 3,
     explanation:
       'Lumen maintenance ratings (L70, L80, L90) indicate the percentage of initial lumens remaining at rated life hours. L70 at 50,000h means 70% output remains at 50,000 hours.',
   },
   {
     id: 12,
     question: 'Which control protocol is most commonly specified for commercial LED dimming?',
-    options: ['PWM', '0-10V only', 'DALI (Digital Addressable Lighting Interface)', 'DMX'],
-    correctAnswer: 2,
+    options: [
+      'DALI (Digital Addressable Lighting Interface)',
+      'High-pressure sodium or metal halide',
+      'To limit current and provide starting voltage',
+      'Higher efficacy and smaller diameter',
+    ],
+    correctAnswer: 0,
     explanation:
       "DALI is the standard protocol for commercial building lighting control, offering individual luminaire addressing, status feedback, and integration with BMS systems. It's specified in most commercial projects.",
   },

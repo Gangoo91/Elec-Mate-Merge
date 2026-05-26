@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'What is the primary function of an MVHR (Mechanical Ventilation with Heat Recovery) system?',
     options: [
-      'To cool incoming air in summer',
+      'The raw mains supply, filtered by a basic surge suppressor',
       'To recover heat from exhaust air and transfer it to supply air',
-      'To filter pollutants from outdoor air',
-      'To provide humidity control only',
+      'Secure connections, adequate size, accessibility, and correct labelling',
+      'Work sequence, safety measures, resource requirements, and quality controls',
     ],
     correctIndex: 1,
     explanation:
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'plate-exchanger-type',
     question: 'In a cross-flow plate heat exchanger, the air streams:',
     options: [
-      'Mix directly together',
+      'Upload files to a shared cloud storage folder and send the link',
+      'UPS engineer present and backup power arrangements',
       'Pass through each other at 90 degrees without mixing',
-      'Flow in the same direction',
-      'Share a common filter',
+      'To reduce heat demand and allow lower flow temperatures',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'In cross-flow plate heat exchangers, the extract and supply air streams pass at 90 degrees to each other, separated by thin plates. Heat transfers through the plates by conduction, but the air streams never mix - maintaining indoor air quality.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'thermal-wheel-operation',
     question: 'How does a thermal wheel (rotary heat exchanger) transfer heat?',
     options: [
-      'Through refrigerant pipes',
+      'Carbon stored in bio-based materials like timber',
+      'To verify that safety management systems are effective',
       'By rotating a matrix between exhaust and supply air streams',
-      'Using a pumped water circuit',
-      'Through direct air mixing',
+      'Parallel earth paths through bonding or water pipes',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A thermal wheel consists of a rotating matrix (typically aluminium honeycomb) that passes alternately through the warm exhaust air stream (absorbing heat) and the cool supply air stream (releasing heat). Rotation speed is typically 10-20 rpm.',
   },
@@ -68,12 +68,12 @@ const quickCheckQuestions = [
     question:
       'Why do run-around coil systems typically have lower efficiency than plate heat exchangers?',
     options: [
-      'They use more electricity',
+      'The point where escape routes terminate at a place of ultimate safety',
+      'Appropriate type, mounting, and cable connections',
       'Heat transfer occurs twice - air to liquid, then liquid to air',
-      'They require larger ductwork',
-      'They cannot operate in cold weather',
+      'At intervals not exceeding 6 months (quarterly recommended for domestic)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Run-around coils require double heat transfer: from exhaust air to the glycol solution, then from the glycol to supply air. Each transfer stage has associated losses, resulting in typical efficiencies of 45-55% compared to 70-90% for plate exchangers.',
   },
@@ -84,7 +84,12 @@ const quizQuestions = [
     id: 1,
     question:
       'What minimum heat recovery efficiency does Building Regulations Part L typically require for new dwellings?',
-    options: ['50%', '70%', '85%', '95%'],
+    options: [
+      '50%',
+      '70%',
+      '85%',
+      '95%',
+    ],
     correctAnswer: 1,
     explanation:
       'Building Regulations Approved Document L requires MVHR systems to achieve a minimum heat recovery efficiency of approximately 70% (varying by specific application) to meet energy efficiency targets. High-performance units can achieve 90%+ efficiency.',
@@ -93,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which type of heat recovery device can transfer both sensible and latent heat?',
     options: [
-      'Cross-flow plate heat exchanger',
-      'Counter-flow plate heat exchanger',
-      'Thermal wheel with hygroscopic coating',
       'Run-around coil system',
+      'Cross-flow plate heat exchanger',
+      'Thermal wheel with hygroscopic coating',
+      'Counter-flow plate heat exchanger',
     ],
     correctAnswer: 2,
     explanation:
@@ -106,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of a summer bypass in an MVHR system?',
     options: [
-      'To increase airflow in summer',
+      'Ability to connect non-adjacent air streams with zero cross-contamination',
+      'Supply and extract temperature measurement under steady-state conditions',
+      'Transfer of pollutants or odours from exhaust to supply air stream',
       'To prevent unwanted heat recovery when outdoor air is cooler than indoor air',
-      'To reduce noise levels',
-      'To filter pollen',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A summer bypass allows fresh air to enter directly without passing through the heat exchanger. This prevents the system from recovering heat when outdoor air is cooler than indoor air (free cooling opportunity), improving summer comfort and reducing cooling loads.',
   },
@@ -119,24 +124,39 @@ const quizQuestions = [
     id: 4,
     question:
       'At what outdoor temperature is frost protection typically required for heat recovery systems?',
-    options: ['Below 10°C', 'Below 5°C', 'Below 0°C to -5°C', 'Below -10°C only'],
-    correctAnswer: 2,
+    options: [
+      'Below 0°C to -5°C',
+      'Below 5°C',
+      'Below 10°C',
+      'Below -10°C only',
+    ],
+    correctAnswer: 0,
     explanation:
       'Frost protection is typically required when outdoor temperatures fall below 0°C to -5°C. At these temperatures, moisture in the warm exhaust air can condense and freeze on the cold surfaces of the heat exchanger, blocking airflow and reducing efficiency.',
   },
   {
     id: 5,
     question: 'Which frost protection method involves temporarily reducing supply airflow?',
-    options: ['Pre-heater', 'Defrost cycle', 'Supply air modulation', 'Recirculation'],
-    correctAnswer: 2,
+    options: [
+      'Defrost cycle',
+      'Supply air modulation',
+      'Recirculation',
+      'Pre-heater',
+    ],
+    correctAnswer: 1,
     explanation:
       'Supply air modulation reduces the supply airflow temporarily, allowing the exhaust air to warm up the heat exchanger surfaces and melt any ice formation. This is energy-efficient but can temporarily reduce ventilation rates during cold periods.',
   },
   {
     id: 6,
     question: 'What is the typical specific fan power (SFP) limit for MVHR systems under Part L?',
-    options: ['0.5 W/(l/s)', '1.0 W/(l/s)', '1.5 W/(l/s)', '2.0 W/(l/s)'],
-    correctAnswer: 1,
+    options: [
+      '0.5 W/(l/s)',
+      '1.5 W/(l/s)',
+      '1.0 W/(l/s)',
+      '2.0 W/(l/s)',
+    ],
+    correctAnswer: 2,
     explanation:
       'Building Regulations Part L typically limits specific fan power for MVHR systems to around 1.0 W/(l/s) for domestic installations. This ensures that the energy saved through heat recovery is not offset by excessive fan energy consumption.',
   },
@@ -144,8 +164,13 @@ const quizQuestions = [
     id: 7,
     question:
       'In a run-around coil system, what fluid is typically used in the connecting pipework?',
-    options: ['Pure water', 'Refrigerant R410A', 'Water with glycol antifreeze', 'Thermal oil'],
-    correctAnswer: 2,
+    options: [
+      'Frequency rating and performance',
+      'By danger level and urgency',
+      'Below about 50Ω (depending on meter)',
+      'Water with glycol antifreeze',
+    ],
+    correctAnswer: 3,
     explanation:
       'Run-around coil systems use a water/glycol mixture (typically 30-40% glycol) to prevent freezing in cold weather. The glycol also provides corrosion protection for the pipework and coils.',
   },
@@ -153,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the main advantage of run-around coils over other heat recovery methods?',
     options: [
-      'Higher efficiency',
-      'Lower cost',
       'Ability to connect non-adjacent air streams with zero cross-contamination',
-      'No moving parts',
+      'Transfer of pollutants or odours from exhaust to supply air stream',
+      'Supply and extract temperature measurement under steady-state conditions',
+      'To prevent unwanted heat recovery when outdoor air is cooler than indoor air',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Run-around coils can connect extract and supply air streams that are physically separated (different parts of a building) with absolutely no possibility of cross-contamination. This makes them ideal for hospitals, laboratories, and industrial applications.',
   },
@@ -167,10 +192,10 @@ const quizQuestions = [
     question:
       'Counter-flow plate heat exchangers achieve higher efficiency than cross-flow because:',
     options: [
-      'They have larger surface area',
+      'Transfer of pollutants or odours from exhaust to supply air stream',
       'The air streams maintain maximum temperature difference throughout',
-      'They use thinner plates',
-      'They operate at higher pressures',
+      'Ability to connect non-adjacent air streams with zero cross-contamination',
+      'To prevent unwanted heat recovery when outdoor air is cooler than indoor air',
     ],
     correctAnswer: 1,
     explanation:
@@ -180,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'Heat pipe heat exchangers operate on which principle?',
     options: [
-      'Forced convection',
+      'True power divided by apparent power (cos φ)',
+      'To operate systems under load to identify early failures',
       'Evaporation and condensation of a working fluid',
-      'Conduction through solid metal',
-      'Natural convection only',
+      'Converting curved sensor response to linear output',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Heat pipes contain a working fluid that evaporates in the warm exhaust air stream (absorbing latent heat), rises to the supply air section, condenses (releasing heat), and returns by gravity or capillary action. This passive process is highly efficient.',
   },
@@ -193,12 +218,12 @@ const quizQuestions = [
     id: 11,
     question: 'What commissioning test should verify MVHR heat recovery performance?',
     options: [
-      'Sound level measurement only',
+      'To prevent unwanted heat recovery when outdoor air is cooler than indoor air',
+      'Transfer of pollutants or odours from exhaust to supply air stream',
+      'Ability to connect non-adjacent air streams with zero cross-contamination',
       'Supply and extract temperature measurement under steady-state conditions',
-      'Duct leakage test only',
-      'Filter pressure drop test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Heat recovery efficiency is verified by measuring supply and extract air temperatures at the unit under steady-state conditions. The formula: Efficiency = (T_supply_out - T_supply_in) / (T_extract_in - T_supply_in) x 100%',
   },
@@ -206,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is cross-contamination in the context of heat recovery systems?',
     options: [
-      'Mixing of supply and return ductwork',
       'Transfer of pollutants or odours from exhaust to supply air stream',
-      'Incorrect wiring connections',
-      'Filter blockage',
+      'Supply and extract temperature measurement under steady-state conditions',
+      'Evaporation and condensation of a working fluid',
+      'To prevent unwanted heat recovery when outdoor air is cooler than indoor air',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cross-contamination occurs when pollutants, odours, or pathogens from the exhaust air stream leak or transfer into the supply air stream. Plate heat exchangers typically have very low leakage (<1%), while thermal wheels may have 2-5% carryover.',
   },
@@ -219,7 +244,12 @@ const quizQuestions = [
     id: 13,
     question:
       'For a dwelling with 100 l/s ventilation rate and MVHR at 85% efficiency, approximately how much heating power is saved when outdoor temperature is 0°C and indoor is 21°C?',
-    options: ['1.0 kW', '2.1 kW', '3.0 kW', '4.5 kW'],
+    options: [
+      '3.0 kW',
+      '2.1 kW',
+      '4.5 kW',
+      '1.0 kW',
+    ],
     correctAnswer: 1,
     explanation:
       'Heat saved = Volume flow x Air density x Specific heat x Temperature difference x Efficiency. Q = 0.1 m³/s x 1.2 kg/m³ x 1.0 kJ/kgK x 21K x 0.85 = 2.14 kW. This represents significant heating energy savings.',
@@ -229,11 +259,11 @@ const quizQuestions = [
     question: 'Which Building Regulation document covers ventilation requirements including MVHR?',
     options: [
       'Part E - Resistance to sound',
-      'Part F - Ventilation',
       'Part J - Heat producing appliances',
+      'Part F - Ventilation',
       'Part M - Access',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Approved Document F covers ventilation requirements for buildings, including minimum ventilation rates, system types, and commissioning requirements. Part L covers the energy efficiency aspects including heat recovery efficiency requirements.',
   },

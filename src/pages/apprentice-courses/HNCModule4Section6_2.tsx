@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'single-line-purpose',
     question: 'What is the primary purpose of a single-line diagram?',
     options: [
-      'Show exact cable routes',
+      'Occupational asthma (respiratory sensitiser)',
       'Represent the power distribution hierarchy',
-      'Detail individual circuit wiring',
-      'Show equipment dimensions',
+      'Construction Design and Management',
+      'A multifunction tester or continuity tester',
     ],
     correctIndex: 1,
     explanation:
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'schematic-use',
     question: 'When would you use a schematic diagram rather than a layout drawing?',
     options: [
-      'To show equipment locations',
       'To explain control logic and circuit operation',
+      'To show equipment locations',
       'To calculate cable lengths',
       'To coordinate with architects',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Schematic diagrams explain how circuits work and the logical connections between components, particularly useful for control systems, rather than physical locations.',
   },
@@ -59,12 +59,12 @@ const quickCheckQuestions = [
     id: 'bs-en-61082',
     question: 'What does BS EN 61082 cover?',
     options: [
-      'Cable sizing calculations',
+      'Insulation resistance between all circuits and earth',
+      '\\\\\\\\\\\\\\\'Danger\\\\\\\\\\\\\\\' or \\\\\\\\\\\\\\\'Warning\\\\\\\\\\\\\\\' indicating the severity of hazard',
       'Preparation of documents in electrotechnology',
-      'Earthing requirements',
-      'Emergency lighting design',
+      'A loose or broken neutral — extremely dangerous',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BS EN 61082 covers the preparation of documents used in electrotechnology, including drawing standards, symbols, and documentation practices.',
   },
@@ -72,12 +72,12 @@ const quickCheckQuestions = [
     id: 'cad-layers',
     question: 'Why is layer management important in CAD electrical drawings?',
     options: [
-      'It makes drawings look better',
       'It organises information for coordination and output control',
-      'It is only required for BIM projects',
-      'It reduces file size',
+      'Correct colour coding or marking as per BS 7671',
+      'Yes, if they result from work activity and require hospital treatment',
+      'To improve contact resistance at joints and protect against oxidation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Layer management organises different types of information (circuits, equipment, annotations) allowing selective display, coordination with other disciplines, and controlled output.',
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What information is typically shown on a single-line diagram?',
     options: [
-      'Physical cable routes and containment',
+      'Supply separation, battery autonomy, testing provisions, and maintenance access',
       'Protective device ratings, cable sizes and distribution hierarchy',
-      'Individual socket outlet locations',
-      'Luminaire mounting heights',
+      'Touching exposed metalwork that has become live due to a fault',
+      'Flow increases but less than doubles at the operating point',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,8 +100,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which standard governs graphical symbols for electrical diagrams?',
-    options: ['BS 7671', 'BS EN 60617', 'BS 5266', 'BS EN 12464'],
-    correctAnswer: 1,
+    options: [
+      'BS 5266',
+      'BS 7671',
+      'BS EN 60617',
+      'BS EN 12464',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS EN 60617 (IEC 60617) provides graphical symbols for use in electrical diagrams, ensuring consistent representation across the industry.',
   },
@@ -109,20 +114,25 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of a layout drawing?',
     options: [
-      'Show circuit theory',
+      'Open circuit — a break in the circuit path',
+      'Format the cells as "Text" before entering the data',
+      'Understanding the customer\\\\\\\\\\\\\\\'s lifestyle and needs',
       'Show the physical location of equipment on floor plans',
-      'Calculate fault currents',
-      'Define specification clauses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Layout drawings show the physical location of electrical equipment (socket outlets, luminaires, distribution boards) on floor plans, coordinated with architectural backgrounds.',
   },
   {
     id: 4,
     question: 'What scale is typically used for electrical layout drawings?',
-    options: ['1:10', '1:50 or 1:100', '1:500', '1:1'],
-    correctAnswer: 1,
+    options: [
+      '1:50 or 1:100',
+      '1:10',
+      '1:500',
+      '1:1',
+    ],
+    correctAnswer: 0,
     explanation:
       'Electrical layout drawings typically use 1:50 or 1:100 scale, matching architectural plans for coordination. Larger scales (1:20, 1:10) may be used for plant rooms.',
   },
@@ -130,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does a wiring diagram show that a schematic does not?',
     options: [
-      'Circuit logic',
+      'Selecting a fan operating at its best efficiency point',
       'Terminal numbers and actual wire connections',
-      'Equipment ratings',
-      'Design philosophy',
+      'In steel conduit with proper earthing',
+      'Even profitable businesses can fail without cash',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,11 +154,11 @@ const quizQuestions = [
     question: 'Which CAD layer naming convention is commonly used in UK construction?',
     options: [
       'Random abbreviations',
-      'BS 1192 / AEC (UK) layer naming',
       'American AIA standards',
+      'BS 1192 / AEC (UK) layer naming',
       'Manufacturer-specific names',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 1192 and AEC (UK) guidelines provide standardised layer naming conventions ensuring consistency and enabling coordination across disciplines.',
   },
@@ -156,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of the drawing title block?',
     options: [
-      'Decorative purposes only',
+      'Exceeding 50V AC or 120V DC but not exceeding 1000V AC or 1500V DC',
+      'To prevent energy waste and ensure safety functions aren\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t permanently disabled',
+      'Avoid working at height, prevent falls, mitigate falls',
       'Provide project, drawing identification, revision and approval information',
-      'Show the company logo',
-      'List material quantities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The title block provides essential drawing information including project details, drawing number, revision status, scale, date, and approval signatures.',
   },
@@ -169,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'How should revisions be managed on electrical drawings?',
     options: [
-      'Delete old information completely',
       'Use revision clouds, updated revision table, and maintain drawing history',
-      'Issue new drawing numbers each time',
-      'Only update the date',
+      'Yes — Regulation 5(1) requires both to be appointed in writing',
+      'Focus on the topics and concepts where your review identified gaps or weak understanding',
+      'Oxygen depletion from SF₆ gas leaks, electrical arc flash, and restricted egress',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Revisions should be clearly marked with clouds, logged in a revision table with descriptions, and previous versions archived for audit trail.',
   },
@@ -182,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is a reflected ceiling plan (RCP)?',
     options: [
-      'A plan showing floor details',
+      'False triggering from heat sources or incorrect positioning',
       'A plan showing ceiling-mounted items as if looking up',
-      'A 3D model view',
-      'A section through the ceiling',
+      'Properly installed, mounted, and adjusted',
+      'The design current of the cooker after applying diversity',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'Why should electrical drawings reference the specification?',
     options: [
-      'It is a legal requirement',
+      'Use alternative measuring methods and reference points',
+      'Poor housekeeping, uneven surfaces, inadequate lighting, unsuitable footwear',
       'To link graphical information to quality and performance requirements',
-      'To reduce the number of drawings',
-      'To eliminate the need for schedules',
+      'One person at each end, both on the same side, communicating clearly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Cross-referencing ensures users understand that drawings show 'what and where', while specifications define 'how and to what standard', working together as a complete package.",
   },

@@ -41,12 +41,12 @@ const checks = [
     question:
       'A three-bed dwelling has the following nameplate connected loads: 9.5 kW shower, 7 kW cooker, 3 kW immersion heater, two 32 A ring finals (assume 7.36 kW each at full nameplate), 1.6 kW lighting, 7 kW EV charger. What is the connected load and the typical maximum demand at 230 V single-phase?',
     options: [
-      'Connected = 42.8 kW (186 A); Max demand = 42.8 kW.',
       'Connected = 42.8 kW (186 A); Max demand = around 70 A after applying typical IET OSG Table A1 dwelling diversity (load-management EV reduces further).',
-      'Connected = 70 kW; Max demand = 35 kW.',
-      'Both are 9.5 kW — only the largest single load matters.',
+      'To provide short, focused briefings on specific health and safety topics relevant to the current work activities, reinforcing safe practices and raising awareness of specific hazards',
+      'To systematically verify that all electrical systems and equipment operate safely, correctly, and to their design specification before being placed into normal service',
+      'The location, date, details of the scaffold, name and position of the inspector, and details of any defects found',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Connected load = sum of nameplate ratings = 42.8 kW = 186 A at 230 V. Without diversity, the supply would need to be 200 A — way beyond a typical 100 A domestic service. Apply OSG Table A1 typical dwelling diversity: 100 percent of largest cooking load + 30 percent of remainder; full shower (no diversity); 30 percent of largest ring final + 40 percent of remainder; immersion 100 percent if uncontrolled; 100 percent EV (or load-managed via OZEV-compliant charger to share the supply). Result is typically around 60-75 A after diversity — comfortably within a 100 A service. The number that matters for cable and device sizing is the maximum demand, not the connected load.",
   },
@@ -55,12 +55,12 @@ const checks = [
     question:
       'Where do the diversity factors used on a design pack legitimately come from?',
     options: [
-      'The designer’s gut feel.',
+      'A 10-digit Unique Taxpayer Reference issued by HMRC when you register for Self Assessment as a self-employed individual. You need it to file your annual tax return and for all HMRC correspondence. Apply within 3 months of starting trade.',
+      'At regular intervals throughout the apprenticeship, with a formal final review before the EPA gateway decision — typically at least quarterly throughout and a dedicated gateway readiness review 2-3 months before the planned EPA date',
       'IET On-Site Guide Table A1 (typical dwelling), IET Guidance Note 1 Section 7 (broader installations), manufacturer-specific data for special loads, and project-specific measurement data on existing installations.',
-      'BS 7671 itself — there is a single diversity table.',
-      'Industry custom only.',
+      'A planned lifting operation (Reg 8), using equipment with a current thorough examination report (Reg 9), marked with the SWL (Reg 7), with adequate strength (Reg 4)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "BS 7671 does not give numerical diversity factors — it requires the designer to apply them but leaves the source open. The IET OSG Table A1 is the recognised dwelling reference. IET GN1 Section 7 covers broader installation types (offices, retail, industrial). Manufacturer data is essential for special loads (heat pumps, EV chargers, induction hobs, IT loads with high crest factor). Project-specific data (utility meter records over 12 months) trumps the tables for an existing installation. Document the source on every diversity assumption.",
   },
@@ -69,12 +69,12 @@ const checks = [
     question:
       'The Ib (design current) on a final circuit is the:',
     options: [
-      'Sum of nameplate currents of every accessory on the circuit.',
+      'The bouncing motion destabilises the handler, requiring constant balance adjustments that increase muscle fatigue and injury risk',
+      'Identifying the vital few causes that account for the majority of failures (the 80/20 rule), allowing resources to be focused where they will have the greatest impact',
+      'No person shall work on or near live conductors unless unreasonable to dead, reasonable to work live, and suitable precautions taken',
       'Maximum demand current expected on that circuit after diversity has been applied — the value used in Reg 433.1.1 to satisfy Ib less than or equal to In less than or equal to Iz.',
-      'In rating of the protective device.',
-      'Iz of the cable.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Ib is the design current — the maximum demand expected on the circuit after diversity. Reg 433.1.1 stacks: Ib (load) less than or equal to In (device rating) less than or equal to Iz (cable CCC). Confusing Ib with the connected load oversizes the device and cable; confusing it with In undersizes them. Always derive Ib from the diversity calc and document it on the design pack.",
   },
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 Reg 311.1 requires the designer to:',
     options: [
-      'Use the connected load as the design current.',
+      'The CDM Regulations 2007 and the Construction (Health, Safety and Welfare) Regulations 1996',
       'Determine the maximum demand of the installation, having due regard to diversity, before sizing cables and protective devices.',
-      'Use whatever the customer asks for.',
-      'Wait for the EICR to give the demand.',
+      'It should be displayed prominently on the tower so users can see the current inspection status',
+      'Generating a precise 4-20 mA signal to simulate a transmitter output for testing receivers, controllers, and recorders',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 2,
     question: 'Why does diversity exist as a design concept?',
     options: [
-      'Because cables are expensive.',
+      'A formal documented control system used before any work involving open flames, sparks, or high temperatures (welding, cutting, grinding, brazing) to ensure fire prevention measures are in place',
+      'Where a specific risk assessment demonstrates that the particular task, equipment, and location are suitable for the actual conditions — for example, an enclosed MEWP in a sheltered courtyard',
       'Because not every appliance runs at full nameplate load simultaneously — the realistic peak demand is materially lower than the sum of nameplate ratings, and supply infrastructure is sized for the realistic peak.',
-      'Because BS 7671 is permissive.',
-      'Because installers want smaller cables.',
+      'Test each circuit individually to identify which circuit(s) have low insulation resistance, as the overall reading is the parallel combination of all circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Diversity reflects statistical reality. A dwelling does not run shower, cooker, immersion, washing machine, dishwasher, EV charger and heat pump at full load all at once. The peak demand is typically 30-50 percent of the nameplate sum for dwellings, 40-70 percent for typical commercial. Diversity factors codify this for design use.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: 'A typical IET OSG Table A1 diversity entry for a domestic ring final says:',
     options: [
-      '100 percent of the rated current of every ring final.',
+      'Honestly communicate genuine constraints: "My next available start is 6 weeks out, but I could fit you in sooner if we confirm by Friday"',
+      'It depends on the specific risk assessment; however, best practice target for initial casualty retrieval from a vertical space is typically within 5 minutes',
+      'The interlock logic is implemented through electrical/electronic circuits that the maintenance technician must understand, test and maintain',
       '100 percent of the largest ring final + 40 percent of the next + 30 percent of any remaining rings (or similar — the exact wording depends on the OSG edition).',
-      '50 percent of all rings.',
-      'No diversity allowed on rings.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Domestic ring final diversity is typically: largest at full demand; subsequent rings at lower percentage. The exact percentages have changed across OSG editions; check the current OSG. The principle: realistic load on multiple rings is highly correlated only on the busiest ring at peak, while others run at much lower demand simultaneously.",
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     id: 4,
     question: 'For a domestic cooker circuit, OSG diversity typically allows:',
     options: [
-      '100 percent of nameplate.',
       'First 10 A at full demand + 30 percent of remaining nameplate + 5 A for the cooker socket if integrated. Result for a 7 kW (30 A) cooker = around 16 A typical demand.',
-      '50 percent of nameplate.',
-      'Cooker has no diversity.',
+      'REACH deals with the registration, evaluation, authorisation, and restriction of chemicals placed on the market, while COSHH deals with workplace exposure controls',
+      'Disconnect the supply within the time stated in Reg 411.3.2.2 (typically 0.4 s for a final circuit at 230 V) once a low-impedance line-to-earth fault produces sufficient fault current through the loop.',
+      'The HSE can issue improvement notices, prohibition notices, and prosecute offenders, which may result in unlimited fines and/or imprisonment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Cooker diversity is one of the OSG’s most-used entries because cooker nameplates are large but actual peak draw (all rings + oven + grill) rarely happens. The 10 A + 30 percent + 5 A formula reflects realistic kitchen behaviour. Verify against the current OSG edition for exact wording.",
   },
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: 'Diversity factors for an EV charger should:',
     options: [
-      'Always apply 50 percent diversity.',
+      '(1) Eliminate — could the work be done quieter? (2) Substitute — manual torque wrench? (3) Engineer — quieter tool, sound-absorbing barriers? (4) Administrative — limit duration, exclude others from area. (5) PPE — ear defenders LAST. Noise at Work Regs 2005 require risk assessment at 80dB action level.',
       'Default to 100 percent (no diversity) for a single domestic EV charger because charging sessions tend to coincide with peak domestic demand (evenings); use load-managed (OZEV-compliant) charger or DSR-compliant control to claw back diversity if needed.',
-      'Apply same diversity as a ring final.',
-      'EV diversity is always negligible.',
+      'All timing parameters (mains failure to gen start, gen start to stable output, stable output to load transfer, retransfer delay), voltage and frequency readings from both sources, and any abnormalities in the mechanical operation',
+      'Shadowing commercial electricians (vicarious experience), completing small commercial tasks under supervision (mastery experience), and managing anxiety about the transition (emotional regulation)',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 6,
     question: 'For a small commercial office, IET GN1 typically gives:',
     options: [
-      '100 percent of all loads.',
+      'The client must provide pre-construction information as soon as is practicable to every designer and contractor appointed or being considered for appointment',
+      'Corrosive substances — cause skin burns, eye damage, corrosive to metals. Includes strong acids and bases. Splash exposure or eye contact requires immediate eye-wash / shower response.',
       'Differentiated factors per load type — full demand on lighting and lift; 50-75 percent on office socket outlets; 100 percent on mechanical services; specific factor for IT depending on crest factor and PSU oversizing.',
-      'Single 50 percent factor for all.',
-      'No diversity for commercial work.',
+      'Create a mapping document or matrix that lists each KSB from the apprenticeship standard and clearly references the specific portfolio evidence that demonstrates achievement of each one',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Commercial diversity is more nuanced than domestic. Lighting tends to be on at full demand for the working day. Office socket outlets typically peak at 50-75 percent because not every desk is fully loaded simultaneously. Lifts can be sized at 100 percent peak (call coincidence) or with start-current allowance. IT crest factor (modern PSUs are typically 1.4-1.6) means apparent load may be higher than calculated active load — size for the apparent value.",
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 7,
     question: 'When you apply diversity, the design current Ib at the supply is:',
     options: [
-      'The sum of all final-circuit Ib values without further diversity.',
+      'Eliminate → Substitute → Engineering controls → Administrative controls → PPE. PPE is the LAST line. The hierarchy applies across H&S regs (COSHH Reg 7, MHSWR ACOP, HSG48).',
+      'The ratio between the thermal headroom available at the actual ambient temperature and the thermal headroom available at the 30 °C reference — a hotter ambient leaves less room for the cable to dissipate heat, so the cable can carry less current.',
+      'Yes — apprentices are employees and EL applies to them in full. The Apprenticeship Agreement (under the Apprenticeships, Skills, Children and Learning Act 2009) is a specific form of employment contract. From the day the apprentice starts you must have EL in place covering them.',
       'The diversified maximum demand at the origin — typically less than the sum of final-circuit Ib values, because final circuits do not all peak simultaneously. IET GN1 has worked examples for the supply-level diversity stack.',
-      'The supply fuse rating.',
-      'The sum of nameplate ratings.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Diversity applies at multiple levels. Final circuit Ib is the diversified peak on that circuit. Sub-main Ib is the diversified peak across the circuits it feeds. Origin Ib is the diversified peak across all sub-mains. At each level the diversity factor is typically lower than the sum below it — this is statistical coincidence working at scale.",
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     id: 8,
     question: 'Documenting the diversity assumptions in the design pack should:',
     options: [
-      'Be a verbal note to the customer.',
       'Be a discrete diversity calculation page showing each load category, the connected load, the diversity factor applied, the source of the factor (OSG, GN1, manufacturer, project data), and the resulting design current Ib.',
-      'Be embedded in the cable schedule.',
-      'Not be necessary.',
+      'A classification code assigned to waste based on its hazardous characteristics (e.g., HP1 Explosive, HP3 Flammable, HP5 Toxic, HP14 Ecotoxic) used to determine waste handling requirements',
+      'Training 50 MHFAs distributed across all sites, covering all shift patterns, with a mix of roles and seniority levels, supported by Mental Health Champions on each site',
+      'Information about the existing site, including ground conditions, existing structures, hazardous substances (such as asbestos), and any relevant survey results',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The diversity calc is the most-audited part of the design pack because it is where most installation oversize (waste) and undersize (failure) errors live. A discrete page makes it easy to audit. Show category, connected load, diversity factor, source citation, and resulting Ib. The same page lives at supply level, sub-main level and final-circuit level.",
   },

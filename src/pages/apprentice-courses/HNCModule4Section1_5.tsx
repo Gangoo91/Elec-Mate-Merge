@@ -33,8 +33,13 @@ const quickCheckQuestions = [
     id: 'growth-allowance',
     question:
       'What is a typical growth allowance for new commercial building electrical installations?',
-    options: ['5-10%', '15-20%', '20-30%', '40-50%'],
-    correctIndex: 2,
+    options: [
+      '15-20%',
+      '20-30%',
+      '40-50%',
+      '5-10%',
+    ],
+    correctIndex: 1,
     explanation:
       '20-30% growth allowance is typically recommended for commercial buildings to accommodate future load increases, technology changes, and tenant requirements.',
   },
@@ -43,11 +48,11 @@ const quickCheckQuestions = [
     question: 'BS 7671 recommends spare ways in distribution boards for:',
     options: [
       'Aesthetic purposes',
-      'Future circuit additions',
-      'Improving power factor',
       'Reducing harmonics',
+      'Improving power factor',
+      'Future circuit additions',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Spare ways (typically 20-30% of total ways) allow for future circuit additions without replacing distribution boards, reducing disruption and cost.',
   },
@@ -55,7 +60,12 @@ const quickCheckQuestions = [
     id: 'ev-allowance',
     question:
       'For a new office building, what EV charging allowance per parking space is typically considered?',
-    options: ['0.5-1 kVA', '2-4 kVA', '7-22 kVA per space', '50 kVA total'],
+    options: [
+      '0.5-1 kVA',
+      '2-4 kVA',
+      '50 kVA total',
+      '7-22 kVA per space',
+    ],
     correctIndex: 1,
     explanation:
       '2-4 kVA per parking space (with smart charging/load management) is typical for workplace EV provision, though this depends on expected utilisation and charging strategy.',
@@ -64,12 +74,12 @@ const quickCheckQuestions = [
     id: 'technology-change',
     question: 'When planning for technology changes, which approach is most appropriate?',
     options: [
-      'Install maximum capacity now',
+      'At least 12 months to capture seasonal variations',
+      'Planning to maintain operations during and after emergencies',
       'Design for flexibility with adequate spare capacity',
-      'Wait until technology settles',
-      'Only consider current requirements',
+      'Compression, condensation, expansion, evaporation',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Design for flexibility allows adaptation to technology changes. Adequate spare capacity in infrastructure (cable routes, switchgear, supply) enables future upgrades without major works.',
   },
@@ -93,10 +103,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which element is typically most difficult to upgrade later?',
     options: [
-      'Distribution boards',
-      'Final circuits',
+      'Size, type, route, and condition',
+      'Clarity, accuracy, legibility',
       'Main cable routes and risers',
-      'Light fittings',
+      'Before any electrical testing',
     ],
     correctAnswer: 2,
     explanation:
@@ -107,12 +117,12 @@ const quizQuestions = [
     question:
       'A building is designed with 500 kVA supply capacity. What maximum demand should be used for initial loads?',
     options: [
-      '500 kVA (use full capacity)',
       '400-425 kVA (15-20% spare)',
-      '350-400 kVA (20-30% spare)',
+      '500 kVA (use full capacity)',
       '250 kVA (50% spare)',
+      '350-400 kVA (20-30% spare)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Initial loads should typically be 70-80% of supply capacity, leaving 20-30% for growth. A 500 kVA supply should serve 350-400 kVA initial demand.',
   },
@@ -120,12 +130,12 @@ const quizQuestions = [
     id: 4,
     question: 'For a new residential development, EV charging provision should consider:',
     options: [
-      'Only current EV ownership rates',
       'Building Regulations requirements and future EV adoption',
-      'Installing maximum chargers immediately',
-      'Ignoring EV as a temporary trend',
+      'L1, L2, L3 (with N for neutral and PE for protective earth)',
+      'HMRC refunds the £5,000 overpayment after filing the tax return',
+      'Equipment limitations for high current pulses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Building Regulations now require EV infrastructure in new buildings. Design should consider 2030/2035 petrol/diesel phase-out targets and likely EV adoption growth.',
   },
@@ -133,10 +143,10 @@ const quizQuestions = [
     id: 5,
     question: "What is 'future-proofing' in electrical installation design?",
     options: [
-      'Over-engineering everything',
+      'Dispose of properly according to waste regulations',
       'Designing infrastructure that can adapt to changing requirements',
-      'Using the most expensive equipment',
-      'Installing the largest possible supply',
+      'Metallic (ferrous and non-ferrous) materials only',
+      'Resume CPR immediately for 2 minutes before the AED re-analyses',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,12 +156,12 @@ const quizQuestions = [
     id: 6,
     question: 'Heat pump adoption is driving increased electrical demand because:',
     options: [
-      'Heat pumps are inefficient',
+      'Carry out safe isolation: isolate, lock off, prove dead, and display warning notices',
+      'Listen respectfully — they may have observed something useful — then explain your professional assessment politely',
       'Replacing gas heating with electric heat pumps significantly increases electricity demand',
-      'Heat pumps require three-phase supply',
-      'Heat pumps produce harmonics',
+      'Partial discharge or corona discharge — electrical breakdown producing ozone from oxygen in the air',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Decarbonisation means replacing gas boilers with electric heat pumps. Even with COP of 3-4, this adds significant winter electrical demand, often doubling or trebling dwelling electricity use.',
   },
@@ -159,8 +169,13 @@ const quizQuestions = [
     id: 7,
     question:
       'When sizing spare ways in distribution boards, what percentage is typically recommended?',
-    options: ['5-10%', '10-15%', '20-30%', '50%'],
-    correctAnswer: 2,
+    options: [
+      '5-10%',
+      '10-15%',
+      '50%',
+      '20-30%',
+    ],
+    correctAnswer: 3,
     explanation:
       '20-30% spare ways is typical best practice, allowing for future circuit additions, circuit splits, and unforeseen requirements without replacing distribution boards.',
   },
@@ -169,12 +184,12 @@ const quizQuestions = [
     question:
       'Which factor has most significantly increased office small power allowances in recent years?',
     options: [
-      'Paper shredders',
-      'Electric kettles',
       'IT equipment density and personal devices',
-      'Desk fans',
+      'Both operational and embodied carbon emissions',
+      'Design to industry benchmarks with flexibility',
+      'Short-circuit AND earth fault conditions',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'IT equipment density (multiple monitors, docking stations, personal devices) has significantly increased desk-level power demand, though this is partially offset by more efficient equipment.',
   },
@@ -183,12 +198,12 @@ const quizQuestions = [
     question:
       'For a speculative office development (unknown tenant), what approach to electrical design is appropriate?',
     options: [
-      'Design for minimum loads',
-      'Wait for tenant confirmation',
+      'Support roles assisting qualified electricians',
       'Design to industry benchmarks with flexibility',
-      'Install only lighting circuits',
+      'Guaranteeing you will pass the actual EPA',
+      'Test quarterly or recommended test frequency',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Speculative developments should be designed to CIBSE/BCO benchmarks with flexibility for tenant fit-out. Infrastructure (risers, main distribution) should accommodate reasonable tenant variation.',
   },
@@ -196,12 +211,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the main challenge with battery energy storage system (BESS) provision?',
     options: [
-      'Battery technology is unreliable',
+      'Controlled breathing, lowering your voice, and maintaining open body language',
+      'Risks should be weighed against the cost, time, and effort of reducing them',
       'Space, weight, ventilation, and connection capacity requirements',
-      'Batteries are not permitted in buildings',
-      'BESS only works with renewable generation',
+      'Incorrect polarity can damage components or prevent proper operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BESS requires significant space, structural support for weight, ventilation/fire suppression, and electrical capacity for charging. Future-proofing should consider where BESS might be located.',
   },

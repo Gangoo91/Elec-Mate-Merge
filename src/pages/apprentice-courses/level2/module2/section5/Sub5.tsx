@@ -39,12 +39,12 @@ const checks = [
     question:
       'A single rectangular coil rotates at a steady speed between two magnetic poles. The voltage across its ends is:',
     options: [
-      'Constant DC',
-      'A sawtooth wave',
       'A sine wave',
+      'A sawtooth wave',
+      'Constant DC',
       'A square wave',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The flux through the coil changes as the cosine of the angle (Φ = BA cosθ). The induced EMF is the rate of change — which is sinusoidal. Spin a coil at constant speed = sine wave out, every time.',
   },
@@ -53,12 +53,12 @@ const checks = [
     question:
       'A generator uses two SLIP RINGS (continuous metal rings, one per coil end). What does the output look like?',
     options: [
+      'No output at all',
       'Pure DC',
       'Pulsating DC (always positive)',
       'AC sine wave',
-      'No output at all',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Slip rings keep each end of the coil permanently connected to the same brush. Result: AC. A SPLIT-RING (commutator) swaps the connection every half-turn to produce DC. Same coil, two different output styles.',
   },
@@ -66,7 +66,12 @@ const checks = [
     id: 'peak-emf-formula',
     question:
       'A 100-turn coil of area 0.01 m² rotates at 314 rad/s in a 0.5 T field. Approximate peak EMF?',
-    options: ['157 V', '50 V', '314 V', '500 V'],
+    options: [
+      '157 V',
+      '50 V',
+      '314 V',
+      '500 V',
+    ],
     correctIndex: 0,
     explanation:
       'EMF_peak = N × B × A × ω = 100 × 0.5 × 0.01 × 314 = 157 V. (ω = 2πf, so 314 rad/s ≈ 50 Hz — one revolution per 20 ms, the UK mains rate.)',
@@ -78,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why does a coil rotating at constant speed in a magnetic field produce a sine wave?',
     options: [
-      'Because magnets only work for sine waves',
+      'Internal thermal mass moderates temperature swings and reduces peak loads',
       'Because the rate of change of flux through the coil varies sinusoidally with the angle',
-      'Because the wire is curved',
-      'Because of friction',
+      'Appropriate mechanical protection such as conduit or trunking',
+      'To record labour, materials, and plant for work done outside the contract scope',
     ],
     correctAnswer: 1,
     explanation:
@@ -91,20 +96,25 @@ const quizQuestions = [
     id: 2,
     question: 'When is the induced EMF in a rotating coil at its MAXIMUM?',
     options: [
-      'When the coil is parallel to the field',
-      'When the coil is perpendicular to the field',
       'When the coil is at 45° to the field',
       'When the coil is stationary',
+      'When the coil is parallel to the field',
+      'When the coil is perpendicular to the field',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'When the coil sides cut the field lines at right angles — that is, when the coil PLANE is parallel to the field. At that moment dΦ/dt is greatest, so EMF is at its peak.',
   },
   {
     id: 3,
     question: 'What component is used to take AC out of a rotating coil?',
-    options: ['Commutator (split ring)', 'Slip rings', 'Diode bridge', 'Capacitor'],
-    correctAnswer: 1,
+    options: [
+      'Diode bridge',
+      'Commutator (split ring)',
+      'Capacitor',
+      'Slip rings',
+    ],
+    correctAnswer: 3,
     explanation:
       'Two slip rings — one continuous metal ring per coil end. Brushes ride on the rings to deliver AC to the external circuit. A split-ring commutator would convert the AC to pulsating DC.',
   },
@@ -125,8 +135,13 @@ const quizQuestions = [
   {
     id: 5,
     question: 'A generator coil spins at 50 revolutions per second. Its angular velocity ω is:',
-    options: ['50 rad/s', '100 rad/s', '157 rad/s', '314 rad/s'],
-    correctAnswer: 3,
+    options: [
+      '100 rad/s',
+      '314 rad/s',
+      '50 rad/s',
+      '157 rad/s',
+    ],
+    correctAnswer: 1,
     explanation:
       'ω = 2π × f = 2π × 50 ≈ 314 rad/s. UK mains generators spin at this electrical angular velocity to deliver the 50 Hz waveform.',
   },
@@ -148,8 +163,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A single-loop generator produces 10 V peak. What would 100 identical loops in series produce?',
-    options: ['10 V peak', '100 V peak', '1000 V peak', 'No change'],
-    correctAnswer: 2,
+    options: [
+      '10 V peak',
+      '100 V peak',
+      'No change',
+      '1000 V peak',
+    ],
+    correctAnswer: 3,
     explanation:
       'EMF scales linearly with N (number of turns). 100 turns in series → 100 × 10 V = 1000 V peak. That’s why every real generator has many turns per coil — you can’t spin a single loop fast enough to make useful voltage.',
   },
@@ -157,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'How is the 50 Hz UK mains frequency actually produced at the power station?',
     options: [
-      'A timer in the cable',
       'A 2-pole alternator spinning at 3000 rpm, or a 4-pole alternator at 1500 rpm, etc.',
-      'Three separate sine wave generators',
-      'It’s a rounded-up number — the real value is variable',
+      'They prove the circuit between two test points, confirming complete circuit',
+      'After completing full GS38 procedure and posting warning notices',
+      'To check if the wearer can detect the test aerosol through the facepiece, indicating a leak',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'f = (poles × rpm) / 120. A 2-pole machine at 3000 rpm gives 50 Hz. A 4-pole at 1500 rpm gives 50 Hz. The grid keeps it within ±1% by balancing generation and demand in real time.',
   },

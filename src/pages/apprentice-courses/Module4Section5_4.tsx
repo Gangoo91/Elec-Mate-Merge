@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the primary purpose of a ferrule on a flexible cable?',
     options: [
-      'To provide strain relief',
-      'To prevent strand separation',
       'To identify the cable',
+      'To prevent strand separation',
       'To protect insulation',
+      'To provide strain relief',
     ],
     correctIndex: 1,
     explanation:
@@ -27,7 +27,12 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'Name the colour coding for CPC sleeving.',
-    options: ['Blue', 'Brown', 'Green/Yellow', 'Black'],
+    options: [
+      'Black',
+      'Brown',
+      'Green/Yellow',
+      'Blue',
+    ],
     correctIndex: 2,
     explanation:
       'BS 7671 requires CPC conductors to be identified with green/yellow sleeving for safety and identification purposes.',
@@ -36,12 +41,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why should metallic glands often be earthed?',
     options: [
+      'To meet colour requirements',
+      'To reduce installation cost',
       'To improve conductivity',
       'To prevent them becoming live in a fault',
-      'To reduce installation cost',
-      'To meet colour requirements',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Metallic glands must be earthed to prevent them becoming live during fault conditions, ensuring safety.',
   },
@@ -52,10 +57,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the function of a ferrule?',
     options: [
-      'Mechanical strain relief',
+      'To protect yourself and ensure consistent team understanding',
       'Prevent strand separation in flexible conductors',
-      'Provide earth continuity',
-      'Seal against moisture',
+      'Thermal imaging camera or IR thermometer',
+      'No harmful effects during normal operation including switching',
     ],
     correctAnswer: 1,
     explanation:
@@ -64,15 +69,25 @@ const quizQuestions = [
   {
     id: 2,
     question: 'True or False: You can reuse a crimp terminal if it looks undamaged.',
-    options: ['True', 'False', 'Only if tested first', 'Only for low current applications'],
-    correctAnswer: 1,
+    options: [
+      'Only if tested first',
+      'True',
+      'False',
+      'Only for low current applications',
+    ],
+    correctAnswer: 2,
     explanation:
       'False – once deformed during crimping, terminals cannot provide secure contact again and must not be reused.',
   },
   {
     id: 3,
     question: 'Name one type of crimp terminal.',
-    options: ['Ring crimp', 'Spade crimp', 'Butt crimp', 'All of the above'],
+    options: [
+      'Butt crimp',
+      'Ring crimp',
+      'Spade crimp',
+      'All of the above',
+    ],
     correctAnswer: 3,
     explanation:
       'Ring, spade, and butt crimps are all common types of crimp terminals used for different connection purposes.',
@@ -80,8 +95,13 @@ const quizQuestions = [
   {
     id: 4,
     question: 'What rating must an outdoor gland meet to be weatherproof?',
-    options: ['IP44', 'IP54', 'IP65', 'IP68'],
-    correctAnswer: 3,
+    options: [
+      'IP68',
+      'IP54',
+      'IP65',
+      'IP44',
+    ],
+    correctAnswer: 0,
     explanation:
       'IP68 provides protection against dust ingress and continuous immersion in water, suitable for outdoor/wet locations.',
   },
@@ -89,20 +109,25 @@ const quizQuestions = [
     id: 5,
     question: 'Why is correct conductor sizing important for ferrules?',
     options: [
+      'The tendency to underestimate the time needed to complete tasks',
       'To ensure secure mechanical grip and good electrical contact',
-      'To prevent overheating',
-      'To comply with colour coding',
-      'To reduce installation time',
+      'The tower must not be used until the defect is rectified by a competent person',
+      'Yes, they complement MCBs and RCDs as additional protection',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Correct sizing ensures the ferrule grips the conductor securely and provides good electrical contact without damage.',
   },
   {
     id: 6,
     question: 'Which type of gland is commonly used for armoured cables?',
-    options: ['Plastic gland', 'Metallic gland', 'Rubber gland', 'Composite gland'],
-    correctAnswer: 1,
+    options: [
+      'Plastic gland',
+      'Rubber gland',
+      'Metallic gland',
+      'Composite gland',
+    ],
+    correctAnswer: 2,
     explanation:
       'Metallic glands are used with armoured cables to provide mechanical retention and earth continuity through the armour.',
   },
@@ -110,20 +135,25 @@ const quizQuestions = [
     id: 7,
     question: 'Give one reason why metallic glands must be earthed.',
     options: [
-      'To prevent it becoming live in a fault',
+      'To meet colour coding requirements',
       'To improve conductivity',
       'To reduce installation cost',
-      'To meet colour coding requirements',
+      'To prevent it becoming live in a fault',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Metallic glands must be earthed to prevent them becoming live during fault conditions, ensuring safety.',
   },
   {
     id: 8,
     question: 'What tool should always be used for crimping?',
-    options: ['Standard pliers', 'Wire strippers', 'Ratchet crimping tool', 'Side cutters'],
-    correctAnswer: 2,
+    options: [
+      'Ratchet crimping tool',
+      'Side cutters',
+      'Standard pliers',
+      'Wire strippers',
+    ],
+    correctAnswer: 0,
     explanation:
       'Ratchet crimping tools provide the correct compression force and cannot be released until proper crimp is achieved.',
   },

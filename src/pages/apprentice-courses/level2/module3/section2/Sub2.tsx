@@ -45,12 +45,12 @@ const checks = [
     question:
       "Your supervisor hands you a drawing showing the consumer unit feeding three sub-mains, each going to a separate distribution board, with a battery backup off the second DB. No conductor sizes, no terminations — just boxes and arrows. What kind of drawing is it?",
     options: [
-      'Wiring diagram',
       'Block diagram',
+      'Wiring diagram',
       'Schematic diagram',
       'Layout drawing',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Block diagram. Boxes for each major part of the system, arrows showing how power/signal flows between them, no detail on individual conductors. It's the 30,000-foot view — the first drawing you look at to understand what the system IS before you read anything else.",
   },
@@ -59,12 +59,12 @@ const checks = [
     question:
       "A circuit diagram and a wiring diagram differ in one fundamental way. Which is it?",
     options: [
-      'Circuit diagrams use colour, wiring diagrams use black-and-white',
       "Circuit diagrams show function (the logic of how it works); wiring diagrams show physical connection (every conductor between every terminal)",
-      'Circuit diagrams are for AC, wiring diagrams are for DC',
-      'Circuit diagrams are computer-generated, wiring diagrams are hand-drawn',
+      "Improvement recommended — does not represent immediate or potential danger but improvement would contribute to safety",
+      "They need a starting buffer, as early months may earn less than £3,000 before later months compensate",
+      "The electrician must maintain the electric actuator, its power supply, control wiring, limit switches and position feedback signals",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Function vs physical. A circuit diagram shows the logic — how the components interact electrically, drawn for clarity (e.g. a 2-way lighting circuit with the strappers crossed for understanding). A wiring diagram shows the actual physical wiring — every cable, every terminal, the way the install is really laid out. You read circuit diagrams to understand; you wire from wiring diagrams.",
   },
@@ -73,12 +73,12 @@ const checks = [
     question:
       "What's the difference between an 'as-designed' drawing and an 'as-built' drawing?",
     options: [
-      "Nothing — they're the same thing",
+      'Before any testing — Reg 642 places visual inspection ahead of Reg 643 testing in Part 6 sequence.',
+      'A don\\\\\\\\\\\\\\\'t/do statement that addresses concerns about your intentions and confirms your actual purpose',
       'As-designed = before the job. As-built = updated to show what was actually installed (including any deviations)',
-      'As-designed is for residential, as-built is for commercial',
-      "As-built drawings don't need a scale",
+      'How well and how often the contractor communicates progress, problems and costs — the technical work is assumed to be competent',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "As-designed is the drawing the designer issued at the start. As-built (sometimes called 'red-line' or 'record drawing') is the drawing marked up to show what was ACTUALLY installed — including the variations that happened on site (cable rerouted around an unexpected beam, socket moved 200 mm, etc). The as-built is the document handed over at completion and is what future maintenance relies on.",
   },
@@ -91,7 +91,12 @@ const quizQuestions = [
     id: 1,
     question:
       "You're trying to understand how a star-delta motor starter works conceptually — the sequence of contactor operations and the timer logic. Which drawing type gives you that fastest?",
-    options: ['Wiring diagram', 'Schematic diagram', 'Layout drawing', 'Block diagram'],
+    options: [
+      'Wiring diagram',
+      'Schematic diagram',
+      'Layout drawing',
+      'Block diagram',
+    ],
     correctAnswer: 1,
     explanation:
       "Schematic. It's drawn for understanding the function — components in their logical positions, control wiring spread out for clarity, sequence easy to follow. The wiring diagram would show the same circuit but with every physical cable drawn between the actual terminals — much harder to follow if you're trying to learn how it works.",
@@ -100,7 +105,12 @@ const quizQuestions = [
     id: 2,
     question:
       "An electrician on site is fault-finding a faulty contactor and needs to know which terminals connect to which control wires. Which drawing should they reach for?",
-    options: ['Block diagram', 'Schematic diagram', 'Wiring diagram', 'Layout drawing'],
+    options: [
+      'Layout drawing',
+      'Block diagram',
+      'Wiring diagram',
+      'Schematic diagram',
+    ],
     correctAnswer: 2,
     explanation:
       "Wiring diagram. It maps every conductor to every termination — exactly what you need when you've got a meter on the panel and you're trying to trace a fault. The schematic shows the logic; the wiring diagram shows the physical reality.",
@@ -109,8 +119,13 @@ const quizQuestions = [
     id: 3,
     question:
       "A floor plan drawing shows a kitchen with sockets marked at six positions on the wall. The drawing has a scale of 1:50 and a key in the bottom corner. What kind of drawing is this?",
-    options: ['Wiring diagram', 'Schematic', 'Layout drawing (floor plan)', 'Block diagram'],
-    correctAnswer: 2,
+    options: [
+      'Underestimating requirements',
+      'Sustainable Drainage Systems',
+      'All electronic components',
+      'Layout drawing (floor plan)',
+    ],
+    correctAnswer: 3,
     explanation:
       "Layout drawing (floor plan). It shows where things go physically in the building, drawn to scale. It does NOT show how they're wired — that's the wiring diagram's job. A layout shows position; a wiring diagram shows electrical connection.",
   },
@@ -118,8 +133,13 @@ const quizQuestions = [
     id: 4,
     question:
       "BS 3939 used to be the British Standard for electrical drawing symbols. What replaced it?",
-    options: ['BS 7671', 'BS EN 60617 (now superseded by IEC 60617)', 'BS 5266', 'BS 1363'],
-    correctAnswer: 1,
+    options: [
+      'BS EN 60617 (now superseded by IEC 60617)',
+      'From day one, applied equally to everyone',
+      '1/R_total = 1/R1 + 1/R2 + 1/R3',
+      'Starting current which can be 6-8 times full load',
+    ],
+    correctAnswer: 0,
     explanation:
       "BS 3939 was withdrawn in favour of BS EN 60617, the European-aligned graphical symbol set. BS EN 60617 has been withdrawn as a printed standard; the symbols are now maintained centrally as the IEC 60617 online database, which BSI references — and the 60617 number is what you'll hear quoted on UK sites and in the C&G syllabus.",
   },
@@ -128,12 +148,12 @@ const quizQuestions = [
     question:
       "Which of these statements about as-built drawings is TRUE?",
     options: [
-      "They're optional and rarely produced",
-      "They're produced before the install starts",
+      'Matching task types to your natural energy levels throughout the day',
       'They reflect the final installed state including any site variations and are part of the handover',
-      "They're only required on commercial jobs over £100k",
+      'Batching similar tasks reduces attention residue by minimising context switches',
+      'Fire-rated circuits, high-temperature environments and applications requiring exceptional mechanical protection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "As-builts are the record of what was actually installed and are part of the handover pack on any job of substance. They're how the next electrician in five years' time understands what's behind the wall.",
   },
@@ -143,11 +163,11 @@ const quizQuestions = [
       "A drawing shows just the general principle of how a fire alarm system is laid out on a single floor — call points, sounders and the panel — without any specific cable types or terminal numbers. The intent is for the apprentice to understand the system, not wire it. What type of drawing is this MOST LIKELY?",
     options: [
       'Wiring diagram (every conductor shown)',
-      'Schematic diagram (function-focused)',
       'Block diagram (boxes and flows)',
+      'Schematic diagram (function-focused)',
       "Manufacturer's installation instruction",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Schematic. It's showing the system's function and layout for understanding, not the every-conductor detail of a wiring diagram and not the boxes-and-arrows abstraction of a block diagram. Schematics sit between the two.",
   },
@@ -156,12 +176,12 @@ const quizQuestions = [
     question:
       "A new regulation in BS 7671:2018+A4:2026 (514.9.2) clarified an expectation about drawings and charts on installations. What does it require?",
     options: [
-      "Drawings must be supplied in PDF format",
+      'There is no set minimum — readings should be taken to confirm the atmosphere is safe',
+      'Redundancy — two independent channels monitor the E-stop, detecting single faults',
+      'Below the front view, because you look down onto the object and the view falls below',
       'Diagrams, charts and information notices shall comply with the applicable standards specified',
-      'Drawings must be replaced every five years',
-      'Drawings must be hand-drawn for legal validity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "514.9.2 (new in A4:2026) requires diagrams, charts and notices to comply with the applicable standards — symbols per IEC 60617, notices per BS EN 60073/60446 etc. It nailed down what 'a proper drawing' means.",
   },
@@ -170,12 +190,12 @@ const quizQuestions = [
     question:
       "When a drawing is updated DURING a job to show a routing change (a sub-main is rerouted around a beam that wasn't on the original drawing), what's the conventional way of marking it?",
     options: [
-      'Erase the old route and redraw',
-      "Print a fresh drawing — don't mark the old one",
       "Red-line the change on the working drawing — that becomes the basis for the as-built",
-      'Email the change to head office, no change to drawing',
+      "Dangerous high voltages develop that can damage insulation and harm personnel",
+      "Dust-tight and protected against high-pressure, high-temperature wash-down",
+      "It's vague and may cause misunderstandings or incorrect action",
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Red-lining (literally marking the change in red pen on the working drawing) is the traditional convention. The red-lined drawing then gets formally updated into the as-built before handover. The principle is that nothing happens on site without leaving a record.",
   },

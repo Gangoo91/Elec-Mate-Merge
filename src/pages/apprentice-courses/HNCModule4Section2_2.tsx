@@ -32,15 +32,25 @@ const quickCheckQuestions = [
     id: 'vd-limit-power',
     question:
       'What is the maximum permitted voltage drop for power circuits from the origin to the load?',
-    options: ['3%', '4%', '5%', '6%'],
-    correctIndex: 2,
+    options: [
+      '4%',
+      '5%',
+      '6%',
+      '3%',
+    ],
+    correctIndex: 1,
     explanation:
       'BS 7671 permits a maximum 5% voltage drop for power circuits (11.5V at 230V). This can be split between the supply and final circuit, typically 2.5% each.',
   },
   {
     id: 'vd-limit-lighting',
     question: 'What is the maximum permitted voltage drop for lighting circuits?',
-    options: ['3%', '4%', '5%', '6%'],
+    options: [
+      '3%',
+      '4%',
+      '5%',
+      '6%',
+    ],
     correctIndex: 0,
     explanation:
       'Lighting circuits have a tighter 3% limit (6.9V at 230V) to prevent visible flicker and dimming, particularly important for discharge lamps.',
@@ -63,10 +73,10 @@ const quickCheckQuestions = [
     question:
       'For three-phase circuits, why is the voltage drop formula different from single-phase?',
     options: [
-      'Cables are longer',
-      'Current flows in three conductors',
+      '1.5 kN applied over a 100 mm x 100 mm area',
+      'Visual inspection and safety check',
       'No neutral current in balanced loads',
-      'Higher voltage is used',
+      'Unit conversions and formula rearrangement',
     ],
     correctIndex: 2,
     explanation:
@@ -92,15 +102,25 @@ const quizQuestions = [
     id: 2,
     question:
       'A 30m single-phase circuit carries 25A using 4mm² cable (mV/A/m = 11). What is the voltage drop?',
-    options: ['5.5V', '8.25V', '11V', '16.5V'],
-    correctAnswer: 1,
+    options: [
+      '11V',
+      '5.5V',
+      '8.25V',
+      '16.5V',
+    ],
+    correctAnswer: 2,
     explanation: 'Vd = (11 × 25 × 30) / 1000 = 8250 / 1000 = 8.25V',
   },
   {
     id: 3,
     question: 'For a 230V single-phase circuit, 5% voltage drop equals:',
-    options: ['9.2V', '11.5V', '13.8V', '23V'],
-    correctAnswer: 1,
+    options: [
+      '13.8V',
+      '9.2V',
+      '23V',
+      '11.5V',
+    ],
+    correctAnswer: 3,
     explanation:
       '5% of 230V = 0.05 × 230 = 11.5V. This is the maximum permitted drop for power circuits.',
   },
@@ -109,9 +129,9 @@ const quizQuestions = [
     question: 'Why might motor starting cause excessive voltage drop?',
     options: [
       'Motors draw 6-8 times full load current during starting',
-      'Motors generate back-EMF',
-      'Motor cables are always undersized',
-      'Power factor is always unity',
+      'The designer, installer, and verifier/commissioning engineer',
+      'Isolate the circuit and report immediately',
+      'Move to a clean area away from the contamination',
     ],
     correctAnswer: 0,
     explanation:
@@ -123,8 +143,8 @@ const quizQuestions = [
     options: [
       'It decreases proportionally',
       'It increases proportionally',
-      'It remains constant',
       'It increases exponentially',
+      'It remains constant',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +155,12 @@ const quizQuestions = [
     question:
       'For long cable runs exceeding voltage drop limits, which solution is most cost-effective?',
     options: [
-      'Use a larger cable size',
-      'Reduce the load',
       'Use higher supply voltage',
+      'Reduce the load',
+      'Use a larger cable size',
       'Install multiple parallel cables',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       "Increasing cable size reduces resistance and therefore voltage drop. While more expensive per metre, it's usually more cost-effective than parallel runs or voltage conversion.",
   },
@@ -149,11 +169,11 @@ const quizQuestions = [
     question: 'In three-phase balanced systems, the voltage drop formula uses:',
     options: [
       'Single-phase mV/A/m values',
-      'Three-phase mV/A/m values from tables',
-      'Single-phase values multiplied by 3',
       'Single-phase values divided by √3',
+      'Single-phase values multiplied by 3',
+      'Three-phase mV/A/m values from tables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 provides separate mV/A/m columns for three-phase circuits. These values are typically √3/2 (0.866) times the single-phase values.',
   },
@@ -161,8 +181,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A cable has mV/A/m values of 4.4 (r) and 0.165 (x). At power factor 0.8, the effective mV/A/m is:',
-    options: ['3.52', '3.62', '4.57', '4.4'],
-    correctAnswer: 1,
+    options: [
+      '3.62',
+      '4.57',
+      '3.52',
+      '4.4',
+    ],
+    correctAnswer: 0,
     explanation:
       'mV/A/m = (r × cos φ) + (x × sin φ) = (4.4 × 0.8) + (0.165 × 0.6) = 3.52 + 0.099 = 3.62 mV/A/m',
   },
@@ -171,10 +196,10 @@ const quizQuestions = [
     question:
       'What is the purpose of the voltage drop limit being split between mains and final circuits?',
     options: [
-      'To reduce cable sizes',
+      'The highest risk of work-related stress and associated illness',
       'To allow design flexibility while maintaining total compliance',
-      'To increase circuit length',
-      'To reduce installation costs',
+      'Component tolerances, temperature, and parasitic effects',
+      'Presence of livestock, dust, moisture, and corrosive atmospheres',
     ],
     correctAnswer: 1,
     explanation:
@@ -184,8 +209,13 @@ const quizQuestions = [
     id: 10,
     question:
       'For a 50m three-phase circuit with 40A load using 10mm² cable (mV/A/m = 3.8 3φ), the voltage drop is:',
-    options: ['3.8V', '7.6V', '19V', '76V'],
-    correctAnswer: 1,
+    options: [
+      '3.8V',
+      '76V',
+      '7.6V',
+      '19V',
+    ],
+    correctAnswer: 2,
     explanation:
       'Vd = (3.8 × 40 × 50) / 1000 = 7600 / 1000 = 7.6V. At 400V line voltage, this is 1.9% - well within limits.',
   },

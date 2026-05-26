@@ -26,6 +26,7 @@ import {
 } from '@/data/apprentice-courses/level2/module1/questionBank';
 import { ExamDesktopSidebar } from '@/components/apprentice-courses/ExamDesktopSidebar';
 import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayout';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 
 const Level2Module8MockExam1 = () => {
   useSEO(
@@ -45,7 +46,10 @@ const Level2Module8MockExam1 = () => {
 
   const startExam = () => {
     // Get 60 random questions from Module 1 question bank (C&G 2365-02 spec)
-    const selectedQuestions = getRandomQuestions(60);
+    const selectedQuestions = shuffleAllQuestionOptions(
+      getRandomQuestions(60),
+      createShuffleSalt()
+    );
 
     setExamQuestions(selectedQuestions);
     setSelectedAnswers({});

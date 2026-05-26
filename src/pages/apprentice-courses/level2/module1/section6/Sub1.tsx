@@ -43,12 +43,12 @@ const checks = [
     question:
       'You walk into the cupboard and your second-year is locked onto a live tail. What is your FIRST action?',
     options: [
-      'Grab him and pull him clear',
-      'Shout for help, then start CPR',
       'Hit the main switch — isolate the supply',
       'Call 999 first and wait for paramedics',
+      'Grab him and pull him clear',
+      'Shout for help, then start CPR',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Isolation comes before everything. While the current’s flowing, he’s a live conductor. Touching him puts you in the circuit and the supervisor ends up with two casualties instead of one. Drop the supply first, then assess, then call 999.',
   },
@@ -56,12 +56,12 @@ const checks = [
     id: 'dr-abc-order-check',
     question: 'In the DR ABC primary survey, what does the first D stand for?',
     options: [
+      'Diagnose — work out what kind of shock it was',
       'Defibrillator — fetch the AED',
       'Danger — make the scene safe before approaching',
-      'Diagnose — work out what kind of shock it was',
       'Drugs — check whether they’ve taken anything',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'D = Danger. Before you touch the casualty, look at the scene. Is the supply still live? Is there a tool resting on the conductor? Is anything going to fall? Make it safe FIRST. Then Response, Airway, Breathing, Circulation.',
   },
@@ -70,12 +70,12 @@ const checks = [
     question:
       'A casualty is unconscious but breathing normally after a shock. What position do you put them in?',
     options: [
-      'Flat on their back, head tilted up',
-      'Sitting upright against a wall',
+      'The effective diameter of the light-carrying region',
+      'Achieve Chartered Engineer (CEng) status within five years',
+      'Protect themselves and deliver what\\\\\\\\\\\\\\\'s agreed',
       'Recovery position — on their side, top knee bent forward',
-      'Lying face down, head turned to the side',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Recovery position keeps the airway open and lets vomit, blood or saliva drain out instead of choking them. On their side, top leg bent at 90°, top arm cushioning the head. Stay with them, monitor breathing, wait for paramedics.',
   },
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: 'What do you tell the 999 operator FIRST about an electrical incident?',
     options: [
-      'Just give the address and hang up',
+      'Escape route lighting at pedestrian walkways and exits',
+      'The control circuit fuse is incorrectly rated for the contactor coil inrush current',
       'Say it’s an electrical injury and confirm the supply is now isolated',
-      'Try to describe the cable type',
-      'Wait for them to ask questions',
+      'Badgers and their setts are protected under the Protection of Badgers Act 1992',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Telling them it’s an electrical injury changes the response — paramedics bring cardiac monitoring because heart rhythm issues can develop hours later. Confirming isolation tells them it’s safe to enter the scene.',
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'Why is "isolate first, treat second" drilled into every electrician from day one?',
     options: [
-      'It looks more professional',
+      'Find every programme location where a specific address or tag is used',
+      'Cable route coordination, power supply planning, and interface requirements',
+      'A new interoperability standard unifying smart home ecosystems',
       'A live casualty is a live conductor — touch them and you join the circuit',
-      'It’s in the company handbook',
-      'Paramedics insist on it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Current keeps flowing through them as long as the supply’s on. Touch them and the current finds a new path through you too. Two casualties, twice the rescue, half the chance. Isolate first — every time.',
   },
@@ -129,12 +129,12 @@ const quizQuestions = [
     question:
       'You can’t safely reach the isolation point — the casualty is hung up on a HV overhead line. What now?',
     options: [
-      'Use a metal pole to push them off',
-      'Pour water to short it out',
       'Stay back, call 999 and the DNO, do not approach until the line is confirmed dead',
-      'Climb up and try to free them',
+      'To make suitable arrangements for managing the project to ensure health and safety',
+      'Power loss increases with the square of current, causing heating',
+      'All employers must make a suitable and sufficient assessment of risks to employees and others',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'HV is not yours to isolate. Step voltages around a fallen line can kill you metres away. Stay back at least 10 m, call 999 and the DNO (national emergency: 105). The line stays live until the DNO confirms otherwise.',
   },
@@ -142,12 +142,12 @@ const quizQuestions = [
     id: 5,
     question: 'How often do you give chest compressions during adult CPR?',
     options: [
-      'About 30 per minute',
       '60 per minute, in time with your watch',
       '100–120 per minute, depth around 5–6 cm',
       'As fast as you can, no rhythm needed',
+      'About 30 per minute',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       '100–120 compressions per minute, 5–6 cm deep, on the centre of the chest. Standard CPR ratio is 30 compressions then 2 rescue breaths if you’re trained. Hands-only CPR is fine if you’re not — keep going until paramedics take over.',
   },
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why use the recovery position for an unconscious casualty who IS breathing?',
     options: [
-      'It looks more comfortable',
+      'Appropriate guards, a dead man\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s switch, and is properly maintained',
+      'Confirm isolation is effective and circuit is safe to work on',
       'It keeps the airway clear and lets fluids drain so they don’t choke',
-      'It restarts the heart',
-      'It speeds up recovery time',
+      'Negotiating terms and conditions and supporting members',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'On their back they can choke on vomit, blood or their own tongue. On their side, gravity keeps the airway open and drains anything in the mouth. Top leg bent stops them rolling onto their face.',
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     question:
       'A mate took a shock through one hand, jumped clear, and says they feel fine. What do you do?',
     options: [
-      'Send them back to work — no harm done',
+      'Section 443 (with installation rules in 534)',
+      'To provide a known voltage source to prove a voltage indicator',
+      'Identifying the root cause of a problem by asking "why" repeatedly',
       'Get them checked at hospital, even if they say they’re fine',
-      'Just write it in the accident book',
-      'Tell them to go home and rest',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Electrical contact can cause cardiac rhythm issues that show up minutes or hours later, plus deep tissue burns under unimpressive skin entry points. Any electric shock that needed isolating gets a hospital check. No exceptions.',
   },
@@ -183,12 +183,12 @@ const quizQuestions = [
     question:
       'You’ve treated the casualty, paramedics have taken them. What about the scene?',
     options: [
-      'Tidy up so the boss doesn’t see it',
-      'Get back to work — job has to finish today',
       'Leave the scene as it is, lock off the supply, photograph it, and tell the supervisor',
-      'Pull the cable out so it can’t happen again',
+      'Hazard identification, first aid measures, handling and storage, exposure controls, and disposal information',
+      'Possess such knowledge and experience, or be under appropriate supervision',
+      'To prevent loose strands causing faults and ensure secure terminations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Preserve the scene. The investigation needs to see what happened — what was energised, what isolation was in place, where tools were resting. Lock off the supply so nobody re-energises anything. Photos help the report later.',
   },

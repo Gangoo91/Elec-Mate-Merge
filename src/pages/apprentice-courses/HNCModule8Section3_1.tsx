@@ -28,19 +28,24 @@ const quickCheckQuestions = [
     question:
       'What are the four main stages of the vapour compression refrigeration cycle in order?',
     options: [
-      'Compression, condensation, expansion, evaporation',
-      'Evaporation, compression, condensation, expansion',
       'Condensation, expansion, evaporation, compression',
       'Expansion, evaporation, compression, condensation',
+      'Evaporation, compression, condensation, expansion',
+      'Compression, condensation, expansion, evaporation',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'The vapour compression cycle follows: Compression (low pressure vapour to high pressure vapour), Condensation (high pressure vapour to high pressure liquid), Expansion (high pressure liquid to low pressure liquid), Evaporation (low pressure liquid to low pressure vapour). This cycle continuously removes heat from the evaporator and rejects it at the condenser.',
   },
   {
     id: 'refrigerant-gwp',
     question: 'Which refrigerant has the lowest Global Warming Potential (GWP)?',
-    options: ['R410A (GWP 2088)', 'R32 (GWP 675)', 'R134a (GWP 1430)', 'R290 Propane (GWP 3)'],
+    options: [
+      'R410A (GWP 2088)',
+      'R32 (GWP 675)',
+      'R134a (GWP 1430)',
+      'R290 Propane (GWP 3)',
+    ],
     correctIndex: 3,
     explanation:
       'R290 (propane) has a GWP of only 3, making it the most environmentally friendly option. However, it is highly flammable (A3 classification) and requires special safety measures. R32 (GWP 675) is a popular lower-GWP alternative to R410A (GWP 2088) in split systems.',
@@ -50,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'Which compressor type is most commonly used in domestic and light commercial air conditioning systems?',
     options: [
-      'Reciprocating compressor',
-      'Scroll compressor',
       'Screw compressor',
+      'Reciprocating compressor',
       'Centrifugal compressor',
+      'Scroll compressor',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Scroll compressors dominate domestic and light commercial AC due to their quiet operation, high efficiency, fewer moving parts and reliability. Reciprocating compressors are used in smaller systems, screw compressors in large commercial applications, and centrifugal in industrial chillers.',
   },
@@ -64,12 +69,12 @@ const quickCheckQuestions = [
     question:
       'Under F-Gas regulations, what is the minimum charge requiring an F-Gas certificate to handle refrigerants?',
     options: [
+      'Check with joiners or plumbers',
+      'Output (V1 × I1 = V2 × I2)',
       'Any amount requires certification',
-      '5 kg or more',
-      '10 kg or more',
-      'Only systems over 50 kW',
+      'EV chargers, solar PV, or heat pumps',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'F-Gas regulations require anyone handling fluorinated refrigerants (HFCs) to hold an appropriate F-Gas certificate, regardless of the charge amount. This applies to installation, maintenance, servicing, recovery and leak checking activities. The regulations aim to reduce emissions of potent greenhouse gases.',
   },
@@ -82,11 +87,11 @@ const quizQuestions = [
       'In a P-h (pressure-enthalpy) diagram, which process is represented by a vertical line?',
     options: [
       'Evaporation at constant pressure',
-      'Isentropic compression',
       'Throttling through expansion device',
+      'Isentropic compression',
       'Condensation at constant pressure',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Throttling through an expansion device is an isenthalpic (constant enthalpy) process, represented by a vertical line on a P-h diagram. The refrigerant drops in pressure without changing enthalpy because no work is done and minimal heat is transferred during this rapid expansion.',
   },
@@ -94,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the primary function of the condenser in a refrigeration system?',
     options: [
-      'To increase refrigerant pressure',
-      'To absorb heat from the cooled space',
+      'ATEX compliant equipment and charge limits in occupied spaces',
+      'Cooling the liquid refrigerant below its saturation temperature',
       'To reject heat from the refrigerant to the surroundings',
-      'To reduce refrigerant pressure',
+      'To ensure only vapour enters the compressor',
     ],
     correctAnswer: 2,
     explanation:
@@ -107,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'R32 refrigerant is classified as A2L. What does this classification indicate?',
     options: [
-      'Non-flammable, high toxicity',
-      'Lower flammability, lower toxicity',
       'Highly flammable, non-toxic',
+      'Non-flammable, high toxicity',
       'Non-flammable, non-toxic',
+      'Lower flammability, lower toxicity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A2L indicates lower flammability and lower toxicity. The 'A' means lower toxicity (occupational exposure limit &gt;400 ppm), '2' indicates flammable, and 'L' denotes lower flammability (burning velocity &lt;10 cm/s). R32 requires special handling but is safer than A3 (highly flammable) refrigerants like R290.",
   },
@@ -120,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the purpose of superheat in a refrigeration system?',
     options: [
-      'To increase system efficiency',
       'To ensure only vapour enters the compressor',
+      'To increase system efficiency',
       'To reduce condensing temperature',
       'To increase cooling capacity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Superheat ensures that only dry vapour (no liquid) enters the compressor. Liquid refrigerant entering the compressor causes 'liquid slugging' which can severely damage compressor valves and bearings. Typical superheat is 5-10K above saturation temperature at evaporator pressure.",
   },
@@ -133,12 +138,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which expansion device automatically adjusts to maintain constant superheat?',
     options: [
-      'Capillary tube',
-      'Fixed orifice',
+      'Lower flammability, lower toxicity',
       'Thermostatic expansion valve (TXV)',
-      'Manual expansion valve',
+      'Sealing, lubrication, and cooling',
+      'To ensure only vapour enters the compressor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A thermostatic expansion valve (TXV or TEV) uses a sensing bulb to measure suction line temperature and automatically adjusts refrigerant flow to maintain constant superheat regardless of load conditions. Capillary tubes and fixed orifices cannot adjust to changing conditions.',
   },
@@ -146,8 +151,13 @@ const quizQuestions = [
     id: 6,
     question:
       'Under the EU F-Gas Regulation phase-down, what is the GWP limit for single split AC systems containing less than 3 kg from 2025?',
-    options: ['GWP &lt;2500', 'GWP &lt;750', 'GWP &lt;150', 'No GWP limit applies'],
-    correctAnswer: 1,
+    options: [
+      'GWP &lt;2500',
+      'GWP &lt;150',
+      'GWP &lt;750',
+      'No GWP limit applies',
+    ],
+    correctAnswer: 2,
     explanation:
       'From January 2025, single split AC systems containing less than 3 kg of refrigerant must use refrigerants with GWP &lt;750. This effectively bans R410A (GWP 2088) in new equipment in this category, pushing the market towards R32 (GWP 675) and other lower-GWP alternatives.',
   },
@@ -155,8 +165,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the typical coefficient of performance (COP) for a modern air-cooled split system in cooling mode?',
-    options: ['1.0 - 1.5', '2.5 - 4.0', '6.0 - 8.0', '10.0 - 15.0'],
-    correctAnswer: 1,
+    options: [
+      '1.0 - 1.5',
+      '10.0 - 15.0',
+      '6.0 - 8.0',
+      '2.5 - 4.0',
+    ],
+    correctAnswer: 3,
     explanation:
       'Modern air-cooled split systems typically achieve COPs of 2.5-4.0 in cooling mode, meaning they move 2.5-4 kW of heat for every 1 kW of electrical input. Higher efficiency units and water-cooled systems can achieve COPs of 5-6. Heat pumps in heating mode often achieve COPs of 3-5.',
   },
@@ -164,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which compressor type uses two spiral-shaped scrolls to compress refrigerant?',
     options: [
-      'Reciprocating compressor',
-      'Rotary vane compressor',
       'Scroll compressor',
       'Screw compressor',
+      'Reciprocating compressor',
+      'Rotary vane compressor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Scroll compressors use two interleaving spiral scrolls - one fixed, one orbiting. As the orbiting scroll moves, pockets of refrigerant are progressively compressed from the outer edge toward the centre discharge port. This design provides smooth, quiet operation with minimal vibration.',
   },
@@ -177,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is subcooling in a refrigeration system?',
     options: [
-      'Cooling below the evaporating temperature',
+      'ATEX compliant equipment and charge limits in occupied spaces',
       'Cooling the liquid refrigerant below its saturation temperature',
-      'Reducing superheat at the compressor inlet',
-      'Cooling the compressor motor',
+      'Both stay relatively constant as heat is absorbed',
+      'Precise control via BMS integration and wider operating range',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'R290 (propane) refrigerant requires which safety classification considerations?',
     options: [
-      'Standard installation - no special requirements',
+      'Cooling the liquid refrigerant below its saturation temperature',
+      'To ensure only vapour enters the compressor',
       'ATEX compliant equipment and charge limits in occupied spaces',
-      'Only for outdoor installation',
-      'Requires oxygen monitoring only',
+      'To reject heat from the refrigerant to the surroundings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'R290 is classified A3 (highly flammable), requiring ATEX compliant electrical equipment in equipment rooms, charge limits in occupied spaces (typically 150g for direct systems), leak detection, and adequate ventilation. Despite restrictions, R290 is increasingly used due to its GWP of only 3 and excellent thermodynamic properties.',
   },
@@ -203,12 +218,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the main advantage of an electronic expansion valve (EEV) over a TXV?',
     options: [
-      'Lower cost',
-      'No moving parts',
+      'To reject heat from the refrigerant to the surroundings',
+      'To ensure only vapour enters the compressor',
+      'Both stay relatively constant as heat is absorbed',
       'Precise control via BMS integration and wider operating range',
-      'Works without electricity',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Electronic expansion valves offer precise stepper motor or pulse-width modulation control, BMS integration capability, wider operating range, and faster response to load changes. They enable sophisticated control strategies like optimised superheat and can adapt to variable speed compressor systems.',
   },
@@ -216,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'In a screw compressor, what is the function of the oil injection?',
     options: [
-      'Lubrication only',
       'Sealing, lubrication, and cooling',
-      'Preventing liquid slugging',
       'Increasing discharge pressure',
+      'Lubrication only',
+      'Preventing liquid slugging',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Oil in screw compressors performs three critical functions: sealing the clearances between rotors for efficient compression, lubricating the rotors and bearings, and cooling the compressed gas to prevent overheating. An oil separator removes oil from the discharge gas before the condenser.',
   },
@@ -230,12 +245,12 @@ const quizQuestions = [
     question:
       'What happens to refrigerant pressure and temperature during the evaporation process?',
     options: [
-      'Both increase',
-      'Pressure increases, temperature stays constant',
+      'To reject heat from the refrigerant to the surroundings',
       'Both stay relatively constant as heat is absorbed',
-      'Both decrease',
+      'Precise control via BMS integration and wider operating range',
+      'To ensure only vapour enters the compressor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'During evaporation, the refrigerant absorbs latent heat from the cooled space while changing from liquid to vapour. Pressure and temperature remain relatively constant (at saturation conditions) until all liquid has evaporated. Only then does temperature increase as superheat develops.',
   },
@@ -243,8 +258,13 @@ const quizQuestions = [
     id: 14,
     question:
       'What is the maximum leak check interval for systems containing 50-500 tonnes CO2 equivalent under F-Gas regulations?',
-    options: ['Monthly', 'Quarterly', 'Every 6 months', 'Annually'],
-    correctAnswer: 3,
+    options: [
+      'Monthly',
+      'Quarterly',
+      'Annually',
+      'Every 6 months',
+    ],
+    correctAnswer: 2,
     explanation:
       'Systems containing 50-500 tonnes CO2 equivalent must be leak checked at least annually. Systems with 500+ tonnes require 6-monthly checks, unless automatic leak detection is fitted (which extends intervals). CO2 equivalent = refrigerant charge (kg) x GWP.',
   },

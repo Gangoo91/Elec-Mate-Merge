@@ -44,12 +44,12 @@ const Level2Module6Section6_4 = () => {
       question:
         'If multiple circuits fail insulation resistance tests, what should be your priority action?',
       options: [
+        'Lower the test voltage',
         'Test other properties',
         'Investigate the root cause',
-        'Lower the test voltage',
         'Issue the certificate anyway',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Multiple failures suggest a systematic problem (like moisture ingress) that needs investigation before individual circuit corrections.',
     },
@@ -57,12 +57,12 @@ const Level2Module6Section6_4 = () => {
       id: 3,
       question: 'When is it acceptable to energise a circuit that has failed testing?',
       options: [
-        'If the customer needs power',
         'After working hours',
-        'Never until all tests pass',
+        'If the customer needs power',
         "If it's only a minor failure",
+        'Never until all tests pass',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'It is never acceptable to energise a circuit that has failed testing. This violates BS 7671 and could create dangerous conditions.',
     },
@@ -70,12 +70,12 @@ const Level2Module6Section6_4 = () => {
       id: 4,
       question: 'What documentation is required when corrective action has been taken?',
       options: [
-        'Just update the test results',
         'Record details of fault found and action taken',
-        'No documentation needed',
-        'Only note the retest results',
+        'The person in control of the electrical work',
+        'Further investigate and correct the underlying cause',
+        'To prove the correction was effective',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Full documentation must include details of the fault found, corrective action taken, and evidence that retesting confirms the problem is resolved.',
     },
@@ -83,12 +83,12 @@ const Level2Module6Section6_4 = () => {
       id: 5,
       question: 'Who is responsible for ensuring corrective action is completed before energising?',
       options: [
-        'The customer',
-        'Building control',
+        'Further investigate and correct the underlying cause',
         'The person in control of the electrical work',
-        'The electricity supplier',
+        'Record details of fault found and action taken',
+        'Yes, if protective devices are fitted',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'The person in control of the electrical work is legally responsible for ensuring all defects are corrected before energising any circuit.',
     },
@@ -96,10 +96,10 @@ const Level2Module6Section6_4 = () => {
       id: 6,
       question: 'If a retest still shows failure after corrective action, what should you do?',
       options: [
-        'Accept it as close enough',
-        'Try a different test method',
+        'Record new readings with date and signature',
+        'Yes, if protective devices are fitted',
         'Further investigate and correct the underlying cause',
-        'Energise anyway',
+        'The person in control of the electrical work',
       ],
       correctAnswer: 2,
       explanation:
@@ -111,11 +111,11 @@ const Level2Module6Section6_4 = () => {
         'What could happen if you energise a circuit without proper retesting after repairs?',
       options: [
         'Nothing if the repair looked good',
-        'Potential danger and legal liability',
-        'Just equipment damage',
         'Minor inconvenience only',
+        'Just equipment damage',
+        'Potential danger and legal liability',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Energising without proper verification could create dangerous conditions and result in legal liability under EAWR 1989.',
     },
@@ -123,12 +123,12 @@ const Level2Module6Section6_4 = () => {
       id: 8,
       question: 'How should test results be updated after successful corrective action?',
       options: [
-        'Overwrite the original readings',
         'Record new readings with date and signature',
-        "Just note 'corrected'",
-        'Keep separate informal records',
+        'The person in control of the electrical work',
+        'Further investigate and correct the underlying cause',
+        'Potential danger and legal liability',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'New test results should be properly recorded with date and signature to provide a complete audit trail of the corrective action.',
     },
@@ -136,10 +136,10 @@ const Level2Module6Section6_4 = () => {
       id: 9,
       question: 'What is the main purpose of retesting after corrective action?',
       options: [
-        'To satisfy the customer',
+        'Never until all tests pass',
         'To prove the correction was effective',
-        'To fill in paperwork',
-        'To use expensive test equipment',
+        'Investigate the root cause',
+        'Potential danger and legal liability',
       ],
       correctAnswer: 1,
       explanation:
@@ -152,10 +152,10 @@ const Level2Module6Section6_4 = () => {
       options: [
         'Yes, if clearly labelled',
         'No, never under any circumstances',
-        'Only with special permission',
         'Yes, if protective devices are fitted',
+        'Only with special permission',
       ],
-      correctAnswer: 3,
+      correctAnswer: 2,
       explanation:
         'Partially completed installations may be energised for testing if protective devices are in place and appropriate safety measures are taken.',
     },

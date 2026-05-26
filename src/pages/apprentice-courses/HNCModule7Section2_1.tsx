@@ -28,11 +28,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of BS 5266-1?',
     options: [
       'To specify general lighting levels',
-      'To provide recommendations for emergency escape lighting',
       'To define fire alarm installation requirements',
+      'To provide recommendations for emergency escape lighting',
       'To regulate standby power systems',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BS 5266-1 is the British Standard that provides recommendations for the emergency escape lighting of premises. It covers design, installation, wiring, and servicing of emergency lighting systems to ensure safe evacuation during power failure.',
   },
@@ -40,8 +40,13 @@ const quickCheckQuestions = [
     id: 'escape-route-lux',
     question:
       'What is the minimum illuminance required on the centre line of an escape route up to 2m wide?',
-    options: ['0.5 lux', '1 lux', '5 lux', '10 lux'],
-    correctIndex: 1,
+    options: [
+      '0.5 lux',
+      '5 lux',
+      '1 lux',
+      '10 lux',
+    ],
+    correctIndex: 2,
     explanation:
       'BS 5266-1 requires a minimum of 1 lux at floor level on the centre line of a defined escape route up to 2m wide. The central band must be at least half the route width, with a minimum of 0.5 lux at the edges.',
   },
@@ -49,10 +54,10 @@ const quickCheckQuestions = [
     id: 'maintained-definition',
     question: 'What defines a maintained emergency luminaire?',
     options: [
-      'It only operates during mains failure',
+      'It ensures consistent, accurate data that can be used in calculations and comparisons',
       'Its lamp operates continuously during normal and emergency conditions',
-      'It requires monthly maintenance',
-      'It has a minimum 3-hour duration',
+      'Consulting, training, inspection, or reduced-hours roles',
+      'The current level up to which discrimination is guaranteed',
     ],
     correctIndex: 1,
     explanation:
@@ -62,8 +67,13 @@ const quickCheckQuestions = [
     id: 'high-risk-task',
     question:
       'What percentage of normal task illuminance is required for high-risk task areas during emergency lighting operation?',
-    options: ['1%', '5%', '10%', '50%'],
-    correctIndex: 2,
+    options: [
+      '1%',
+      '5%',
+      '50%',
+      '10%',
+    ],
+    correctIndex: 3,
     explanation:
       'High-risk task areas require emergency lighting to provide at least 10% of the normal task illuminance, with a minimum of 15 lux. This ensures potentially dangerous activities can be safely terminated.',
   },
@@ -74,16 +84,26 @@ const quizQuestions = [
     id: 1,
     question:
       'According to BS 5266-1, what is the minimum duration for emergency lighting in most premises?',
-    options: ['30 minutes', '1 hour', '2 hours', '3 hours'],
-    correctAnswer: 2,
+    options: [
+      '30 minutes',
+      '2 hours',
+      '1 hour',
+      '3 hours',
+    ],
+    correctAnswer: 1,
     explanation:
       'BS 5266-1 specifies a minimum 1-hour duration for most premises. However, 3 hours is required for sleeping accommodation, premises not evacuated immediately, or where recharge may take longer than normal working hours.',
   },
   {
     id: 2,
     question: 'What illuminance is required in open areas greater than 60m2?',
-    options: ['0.2 lux', '0.5 lux', '1 lux', '5 lux'],
-    correctAnswer: 1,
+    options: [
+      '1 lux',
+      '0.2 lux',
+      '0.5 lux',
+      '5 lux',
+    ],
+    correctAnswer: 2,
     explanation:
       'Open areas (anti-panic areas) greater than 60m2 require a minimum of 0.5 lux at floor level across the core area, excluding a 0.5m border around the perimeter.',
   },
@@ -91,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: 'At what height should escape route signs be illuminated to a minimum luminance?',
     options: [
-      '1.8m above floor level',
-      '2.0m above floor level',
       '2.5m above floor level',
+      '1.8m above floor level',
       'At the ceiling',
+      '2.0m above floor level',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Exit signs should be positioned at least 2.0m above floor level. BS 5266-1 requires signs to have a minimum luminance of 2 cd/m2 for internally illuminated signs.',
   },
@@ -105,12 +125,12 @@ const quizQuestions = [
     question:
       'What is the maximum spacing between emergency luminaires on an escape route, as a general rule?',
     options: [
-      'Equal to the mounting height',
-      'Twice the mounting height',
       'Four times the mounting height',
-      '10 metres',
+      '2.0m above floor level',
+      'Open area (anti-panic) lighting',
+      'Central battery system',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'As a general rule, luminaire spacing should not exceed four times the mounting height above floor level on escape routes. This ensures adequate uniformity of illumination along the route.',
   },
@@ -121,8 +141,8 @@ const quizQuestions = [
     options: [
       'Self-contained system',
       'Central battery system',
-      'Maintained system',
       'Slave luminaire system',
+      'Maintained system',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,8 +151,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the uniformity ratio requirement for open area (anti-panic) lighting?',
-    options: ['40:1 maximum', '20:1 maximum', '10:1 maximum', 'No requirement'],
-    correctAnswer: 0,
+    options: [
+      '10:1 maximum',
+      '20:1 maximum',
+      '40:1 maximum',
+      'No requirement',
+    ],
+    correctAnswer: 2,
     explanation:
       'The ratio of maximum to minimum illuminance in open areas must not exceed 40:1. This prevents dark spots that could cause panic or falls during evacuation.',
   },
@@ -141,12 +166,12 @@ const quizQuestions = [
     question:
       'Emergency lighting must reach what percentage of required illuminance within how many seconds?',
     options: [
-      '50% within 5 seconds',
+      '100% within 60 seconds',
       '50% within 10 seconds',
       '100% within 5 seconds',
-      '100% within 60 seconds',
+      '50% within 5 seconds',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Emergency lighting must reach 50% of required illuminance within 5 seconds and full required illuminance within 60 seconds. This ensures immediate basic visibility during the critical initial evacuation phase.',
   },
@@ -154,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'Where must emergency lighting be provided according to BS 5266-1?',
     options: [
-      'Only at exit doors',
-      'Only on main corridors',
       'At all safety signs, changes of level, and intersection points',
-      'Only in high-risk areas',
+      'Plan cable routes to avoid conflicts and coordinate power supplies for equipment',
+      'Both employers and employees with duties under the regulations',
+      'To verify the installation remains safe for continued use',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Emergency lighting must illuminate all escape routes, exit doors, safety signs, stairs, changes of direction, intersection points, final exits, first aid points, fire-fighting equipment, and call points.',
   },
@@ -180,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'A combined emergency luminaire provides:',
     options: [
-      'Only emergency lighting',
+      'Heat, moisture, and mechanical stress',
+      'Training, written procedures, drills, signs, induction',
       'Normal and emergency lighting from separate lamps',
-      'Both maintained and non-maintained operation',
-      'Lighting and fire alarm functions',
+      'The maximum current a conductor can carry safely',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A combined emergency luminaire contains separate lamps for normal lighting and emergency lighting. The emergency lamp may be maintained or non-maintained, while the normal lighting lamp operates from mains supply.',
   },
@@ -193,8 +218,13 @@ const quizQuestions = [
     id: 11,
     question:
       'What is the minimum recharge period before a subsequent emergency must not result in a duration below specification?',
-    options: ['4 hours', '12 hours', '24 hours', '48 hours'],
-    correctAnswer: 2,
+    options: [
+      '4 hours',
+      '12 hours',
+      '48 hours',
+      '24 hours',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS 5266-1 requires that after a full rated discharge, the system must be capable of providing rated duration again after a maximum 24-hour recharge period.',
   },
@@ -202,8 +232,13 @@ const quizQuestions = [
     id: 12,
     question:
       'For a high-risk task area with normal illumination of 500 lux, what minimum emergency illuminance is required?',
-    options: ['5 lux', '15 lux', '50 lux', '100 lux'],
-    correctAnswer: 2,
+    options: [
+      '50 lux',
+      '100 lux',
+      '5 lux',
+      '15 lux',
+    ],
+    correctAnswer: 0,
     explanation:
       'High-risk task areas require 10% of normal task illuminance, which would be 50 lux (10% of 500 lux). Since this exceeds the minimum requirement of 15 lux, the 50 lux figure applies.',
   },

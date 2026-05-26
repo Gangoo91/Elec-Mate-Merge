@@ -21,11 +21,11 @@ const Level2Module6Section6_2 = () => {
       question: 'What does a reading of 0.5 MΩ on an insulation resistance test indicate?',
       options: [
         'Perfect insulation',
-        'Acceptable reading',
         'Below minimum requirements',
+        'Acceptable reading',
         'Equipment malfunction',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'A reading of 0.5 MΩ is below the minimum requirement of 1 MΩ for most installations and indicates a potential problem.',
     },
@@ -33,20 +33,25 @@ const Level2Module6Section6_2 = () => {
       id: 2,
       question: "If a continuity test shows 'OL' or infinity, what does this mean?",
       options: [
-        'Perfect continuity',
+        'Well above 1 MΩ (typically 10+ MΩ)',
+        'Investigate and rectify the fault',
         'No continuity - open circuit',
-        'Low resistance',
-        'High current',
+        'Below minimum requirements',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "'OL' (over limit) or infinity readings indicate no continuity - an open circuit where current cannot flow.",
     },
     {
       id: 3,
       question: 'What is considered a good insulation resistance reading?',
-      options: ['Below 1 MΩ', 'Exactly 1 MΩ', 'Well above 1 MΩ (typically 10+ MΩ)', 'Any reading'],
-      correctAnswer: 2,
+      options: [
+        'Poor connections or damaged conductors',
+        'Investigate the cause before proceeding',
+        'Below minimum requirements',
+        'Well above 1 MΩ (typically 10+ MΩ)',
+      ],
+      correctAnswer: 3,
       explanation:
         'While 1 MΩ is the minimum, good insulation typically shows readings well above this, often 10 MΩ or higher.',
     },
@@ -55,12 +60,12 @@ const Level2Module6Section6_2 = () => {
       question:
         'A loop impedance reading of 2.5 Ω on a 32A circuit with 1.44 Ω maximum - what action is needed?',
       options: [
-        'Accept the installation',
         'Investigate and rectify the fault',
-        'Increase the fuse rating',
-        'Ignore the reading',
+        'Below minimum requirements',
+        'Poor connections or damaged conductors',
+        'Well above 1 MΩ (typically 10+ MΩ)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'The reading exceeds the maximum permitted value, so the fault must be investigated and corrected before the circuit can be energised.',
     },
@@ -68,12 +73,12 @@ const Level2Module6Section6_2 = () => {
       id: 5,
       question: "What should you do if test readings don't match your expectations?",
       options: [
-        'Ignore them',
         'Change the readings',
         'Investigate and retest',
         'Guess what they should be',
+        'Ignore them',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Unexpected readings should always be investigated and retested to ensure accuracy and identify any potential problems.',
     },
@@ -81,12 +86,12 @@ const Level2Module6Section6_2 = () => {
       id: 6,
       question: 'What does a high continuity reading suggest about circuit protective conductors?',
       options: [
-        'Excellent condition',
+        'The RCD trips within the specified time limits',
+        'Well above 1 MΩ (typically 10+ MΩ)',
         'Poor connections or damaged conductors',
-        'Perfect earthing',
-        'Low impedance path',
+        'Investigate the cause before proceeding',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'High continuity readings indicate resistance in the protective conductor path, suggesting loose connections, corrosion, or broken conductors.',
     },
@@ -94,12 +99,12 @@ const Level2Module6Section6_2 = () => {
       id: 7,
       question: 'Why is reversed polarity always considered a fail?',
       options: [
-        'It looks unprofessional',
+        "Lower than individual readings due to parallel paths",
+        "Progressively throughout construction with staged reviews",
+        "Room proportions, surface reflectances, and luminaire distribution",
         "It can leave live conductors energised when switches are 'off'",
-        'It uses more electricity',
-        'It affects the meter reading',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "Reversed polarity is dangerous because it can leave live conductors energised even when switches are in the 'off' position, creating serious shock hazards.",
     },
@@ -107,12 +112,12 @@ const Level2Module6Section6_2 = () => {
       id: 8,
       question: 'For an RCD test, what indicates a pass result?',
       options: [
-        'The RCD never trips',
         'The RCD trips within the specified time limits',
-        'The RCD trips immediately',
-        'The reading shows infinity',
+        'Poor connections or damaged conductors',
+        'Investigate and rectify the fault',
+        'Well above 1 MΩ (typically 10+ MΩ)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'An RCD must trip within specified time limits (typically 30ms for 30mA RCDs) when the correct test current is applied.',
     },
@@ -135,12 +140,12 @@ const Level2Module6Section6_2 = () => {
       question:
         'According to BS 7671, what is the consequence of energising a circuit that has failed testing?',
       options: [
-        'Nothing if it works initially',
+        'Investigate the cause before proceeding',
+        'It can leave live conductors energised when switches are \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
         'Potential danger to users and breach of regulations',
-        'Just a warning from Building Control',
-        'Reduced equipment lifespan',
+        'Poor connections or damaged conductors',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Energising a circuit that has failed testing breaches BS 7671 and EAWR 1989, potentially creating dangerous conditions and legal liability.',
     },

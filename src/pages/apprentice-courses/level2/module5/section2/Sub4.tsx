@@ -42,10 +42,10 @@ const checks = [
     question:
       "How many 'protected characteristics' does the Equality Act 2010 define, and roughly what are they?",
     options: [
-      "Three — age, sex, race.",
+      "The handover pack — a single document (paper or digital) listing every piece of equipment installed with the manufacturer's part number, the serial number, the warranty period and a link to the user manual. Plus contact details for in-warranty service and the firm's after-care number.",
       "Nine — age, disability, gender reassignment, marriage and civil partnership, pregnancy and maternity, race, religion or belief, sex, and sexual orientation. The Act treats these nine characteristics as the legally protected categories. Discrimination, harassment or victimisation BECAUSE OF a protected characteristic is unlawful — at recruitment, in work, on training, in pay, in dismissal.",
-      "Five — age, sex, race, religion, sexuality.",
-      "Twenty — anything anyone could feel discriminated about.",
+      "Following BS 7671 raises a presumption that the underlying statutory duty (EAWR Reg 4) has been met. The legal logic: HSR25 (HSE's guidance to EAWR) cites BS 7671 as a means of demonstrating EAWR compliance. So evidence of BS 7671 compliance = evidence of EAWR compliance, by reference. Departing from BS 7671 is allowed but flips the burden — you have to prove your alternative method was at least as safe.",
+      "The Electrical Contractors' Association — the trade association for electrical contractors in England, Wales and Northern Ireland. Founded 1901. ECA membership is a quality mark for the contractor; ECA also lobbies on behalf of the industry, runs technical events, publishes guidance and runs the JIB jointly with the trade union (Unite).",
     ],
     correctIndex: 1,
     explanation:
@@ -56,12 +56,12 @@ const checks = [
     question:
       "An apprentice with dyslexia struggles to read the dense, small-print Risk Assessment Method Statement (RAMS) document on the morning brief. The supervisor is pushing them to 'just sign it and get on with it'. What's the reasonable-adjustment route under the Equality Act?",
     options: [
-      "Tough it out — that's how everyone learns.",
       "Equality Act 2010 s.20 places a duty on the employer to make 'reasonable adjustments' for disabled workers. Dyslexia is a recognised disability under s.6 / Schedule 1. Reasonable adjustments here could include: large-print or reformatted RAMS, screen-reader access, an audio briefing of the key points, more time to read, or a one-to-one walk-through. The apprentice asks (in writing if possible) for a specific adjustment; the employer is obliged to consider it and provide it unless it would be unreasonable. 'Sign and crack on' is not the lawful response.",
-      "Resign and find another firm.",
-      "Pretend to read it.",
+      "Stop, raise the conflict politely, and ask for the change in writing. The method statement is the documented safe system of work. A verbal instruction to depart from it needs a documented reason, ideally a revised method statement signed off by whoever owns the original. If the supervisor refuses to put it in writing, that itself is a red flag — escalate via your employer's safety route. HASAWA s.7 makes you personally responsible for following the safe system; 'I was told to' is not a defence to a prosecution.",
+      "C1 is the most serious EICR code — Danger Present, immediate action required. The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 (and equivalent regulations in Wales / Scotland / NI) require landlords to act on C1 findings within 28 days, and IMMEDIATELY where the danger is live-and-present. The rectification, certificate (MWC), Schedule of Remedial Works closing the C1, and confirmation back to the landlord need to be turned around within the regulation timeline. A landlord who fails to act on a C1 within 28 days faces a fine of up to £30,000 per breach. The L3 apprentice's job is to do the work, document it, and ensure the landlord has the proof of closure to file.",
+      "Dedicated radial circuit, typically 32 A or 40 A on a Type C (or D) MCB, in 6 mm² T&E or SWA depending on installation method and length. RCD per BS 7671 Section 411.3.3 / 415.1 — type per manufacturer's instruction (often Type A or Type B / RDC-DD). Local rotary or DP isolator outdoors at the unit. Smart controls integration via dedicated low-voltage cable. Cyclic-rated cable selection — heat pumps run for hours not minutes. Manufacturer's bonding requirements where the chassis forms an extraneous-conductive part.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Reasonable adjustments under s.20 are one of the most practical parts of the Equality Act for an apprentice. Dyslexia, dyspraxia, ADHD, ASD, hearing impairment, mobility impairment — all are recognised disabilities under s.6 / Schedule 1 if the impairment has a substantial and long-term adverse effect on day-to-day activities. The duty is on the employer to provide reasonable adjustments — not on the apprentice to 'tough it out'. The first step is a written request specifying the adjustment needed; if the employer refuses without a defensible reason, the apprentice has potential claims for failure to make reasonable adjustments and (depending on the facts) disability discrimination.",
   },
@@ -70,12 +70,12 @@ const checks = [
     question:
       "On a fit-out, a colleague repeatedly makes 'jokes' about another worker's accent and visible religious dress. The other worker says nothing but visibly tenses up. The colleague says 'it's just banter, they don't mind'. What does the law actually say?",
     options: [
-      "Nothing — it's just banter, no problem.",
       "Equality Act s.26 defines harassment as unwanted conduct related to a relevant protected characteristic that has the purpose OR EFFECT of violating the recipient's dignity, or creating an intimidating, hostile, degrading, humiliating or offensive environment for them. The test is largely about the impact on the recipient, not the intention of the speaker. 'It's just banter' and 'they didn't complain' are not defences. The colleague is committing harassment under the Act, the employer is potentially liable for failing to prevent it, and both could face Employment Tribunal claims.",
-      "Only a problem if the worker makes a formal complaint.",
-      "Only a problem in offices — building sites are different.",
+      "Healthcare-estate electrical work covers complex critical-care and medical-equipment electrical environments — UPS systems, medical IT (isolated power) circuits, theatres, ICU, MRI suites. Specific HTM (Health Technical Memorandum) standards apply alongside BS 7671. Pay is typically NHS Agenda for Change Band 5-7 (£28-45k) plus on-call for technician/senior-technician grades. Lifestyle: stable, contracted hours plus rota.",
+      "Mates in Mind (mental health awareness in construction), the Lighthouse Construction Industry Charity (financial, physical and mental wellbeing support for construction workers and their families), the Electrical Industries Charity (EIC — financial and welfare support for electrical industry workers and their families). Both Lighthouse Club and EIC run helplines and offer practical support including financial grants, mental health support and bereavement counselling.",
+      "Three locations. (1) SWA gland terminations — the brass gland's earth path through the armour to the gland body is critical and often poorly made (insufficient compression on the armour, missing earth tag, paint between gland and box). Causes intermittent earth faults. (2) Compound seal at gland — over years the seal hardens / shrinks, water ingress to the cable cores. (3) The cable run itself only when physically damaged (forklift impact, settlement, vermin). Brand patterns: CMP industrial glands and Pratley sealing compound are the trade standard; cheap gland kits (Vinco, generic OEM) often fail at the earth-tag connection.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The s.26 harassment test is deliberately broad — it covers the EFFECT on the recipient, not just the intent of the speaker. So 'I didn't mean it that way' isn't a defence if the conduct had a degrading or offensive effect. The recipient's silence isn't consent — many people don't complain because they fear consequences. Sites with a 'banter culture' that touches on protected characteristics are sites that are accumulating Tribunal exposure. The employer's defence (under s.109) requires showing they 'took all reasonable steps' to prevent the conduct — which means policy + training + active enforcement, not 'we hung up a poster'.",
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       "What is the Equality Act 2010 and what's its purpose?",
     options: [
-      "A health and safety regulation.",
+      "Three layers — pre-use visual inspection by the operative every shift (cable, plug, casing, guard, switch, brushes for corded tools); periodic in-service inspection (formal visual check by a competent person); and PAT (Portable Appliance Testing) on the documented site interval. Sub 1.3 covers this in detail. The point: PUWER Reg 5 isn't 'PAT once a year'. It's an ongoing duty with multiple layers.",
       "A consolidated Act of Parliament that brings together earlier UK anti-discrimination legislation (Race Relations Act, Sex Discrimination Act, Disability Discrimination Act and others) into a single framework. It defines nine protected characteristics, prohibits direct and indirect discrimination, harassment and victimisation, and places a duty on employers (and others) to make reasonable adjustments for disabled people. Enforced through Employment Tribunals (workplace) and County Courts (services).",
-      "A trade union.",
-      "A British Standard.",
+      "Someone trained to recognise the early signs of mental health difficulty in colleagues, listen non-judgementally, provide initial support and signpost to professional help. Standard 2-day training course (delivered by Mates in Mind, MHFA England and others) costs around £150-300. Many UK construction firms now have one or more Mental Health First Aiders on staff alongside physical First Aiders.",
+      "Make a contemporaneous note in your own records — date, time, location, what was said, by whom, who else was present, your response. Keep the note factual and unemotional. Don't share with the co-worker (it's your private record at this stage). If the conflict continues and you escalate, the contemporaneous notes are your evidence base and they carry significant weight because they were written at the time, not from memory weeks later.",
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     question:
       "What's the difference between 'direct discrimination' and 'indirect discrimination' under the Equality Act?",
     options: [
-      "There's no difference.",
+      "Research suggests neurodivergence — dyslexia, ADHD, and autism — may be more common in trade roles than the general population. Some studies suggest dyslexia at materially higher rates in trade and creative industries (the visual-spatial reasoning associated with dyslexia is often a strength in hands-on work). ADHD and autism prevalence in the trade is also frequently reported as elevated. The Equality Act 2010 reasonable-adjustments duty (s.20) applies where the condition has a substantial and long-term effect, and Sub 5.2 covers the practical adjustments in detail.",
+      "Leather (heat-resistant) gloves rather than synthetic, eye protection rated for thermal hazards (EN 166 with thermal-hazard marking is preferable), long sleeves of natural fibre (synthetics melt onto skin), a fire blanket or extinguisher within arm's reach, and clearance of combustible materials from the work area. On commercial premises a hot-works permit is usually required as an admin control on top of the PPE — see Sub 5 of this section.",
       "Direct discrimination (s.13) is treating someone less favourably BECAUSE OF a protected characteristic — e.g. refusing to hire someone because they're female. Indirect discrimination (s.19) is applying a 'provision, criterion or practice' that looks neutral but puts people sharing a protected characteristic at a particular disadvantage and can't be objectively justified — e.g. requiring all apprentices to be over 6ft tall would indirectly discriminate against women on average. Both are unlawful.",
-      "Indirect discrimination is legal.",
-      "Direct discrimination only applies to race.",
+      "Production stop-times. Industrial sites typically run continuous or shift-based production, and electrical work that requires isolation has to fit within scheduled outages or planned shutdowns. The prep includes coordinating with plant operations, integrating with the site lockout/tagout system, observing any ATEX zones in process plants, and often working out-of-hours so the production line isn't affected.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The two work together. Direct discrimination targets the individual because of their characteristic. Indirect discrimination is more subtle — a seemingly neutral rule that disproportionately disadvantages people of a particular characteristic. The defence to indirect (but not direct) discrimination is 'objective justification' — the employer can show the rule is a proportionate means of achieving a legitimate aim. Most workplace discrimination claims fall into the indirect category because direct discrimination is increasingly recognised as obviously unlawful and people don't do it openly.",
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       "What's 'victimisation' under the Equality Act 2010 s.27?",
     options: [
-      "Being made fun of.",
+      "Section 135 amends the Defective Premises Act 1972: extends the limitation period for claims relating to dwellings from 6 years to 30 years for retrospective claims (work completed before BSA commencement) and 15 years for prospective claims (work after commencement). Significantly extends contractor liability for residential work in particular.",
+      "At least 6 years — set by the Limitation Act 1980 for defending civil claims, and required by most contractor schemes (NICEIC, NAPIT, ELECSA) as a condition of registration. UK GDPR Article 5(1)(e) (storage limitation) is satisfied because there's a clear, justifiable reason for the retention period.",
+      "Only when (a) you're trained in extinguisher use; (b) the fire is small (waste-bin sized); (c) you can identify the correct extinguisher class for the fire; (d) the route to a safe exit is behind you (you don't have to pass the fire to escape); (e) you can do so without risking yourself; (f) someone else has called 999 or is doing so. Otherwise EVACUATE.",
       "Treating someone less favourably because they have done a 'protected act' — typically making a discrimination complaint, supporting someone else's complaint, or giving evidence in a discrimination case. Victimisation is unlawful even if the original complaint was unsuccessful, provided it was made in good faith. The protection extends to apprentices, ex-employees and anyone else covered by the Act.",
-      "A type of bullying that's outside the Act.",
-      "Only relevant in courtrooms.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Victimisation under s.27 protects the right to raise a discrimination complaint without retaliation. Without this protection, the entire Act's enforcement mechanism would collapse — people wouldn't complain because the consequences of complaining would be worse than the original discrimination. So the law explicitly catches the punishment-for-complaining behaviour and treats it as a separate unlawful act in itself. An apprentice who raises a discrimination concern and is then disciplined, demoted or sacked has a victimisation claim independent of the underlying discrimination claim.",
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       "Which protected characteristic gets specific additional protections during pregnancy and maternity leave under the Equality Act?",
     options: [
-      "Religion.",
       "Pregnancy and maternity (s.18). The Act prohibits unfavourable treatment of women because of pregnancy or maternity leave during the 'protected period' (broadly, from the start of pregnancy to the end of maternity leave). This is a separate category to sex discrimination — pregnancy / maternity claims don't need a male comparator. It's one of the most enforced parts of the Act and a leading source of Employment Tribunal awards.",
-      "Marriage and civil partnership.",
-      "Age.",
+      "Three. (1) Test readings — pre-rectification (the failed reading) and post-rectification (the corrected reading), with timestamps and instrument IDs. (2) Functional test outcomes — what was tested, what worked, any anomalies. (3) Customer hand-back record — what was demonstrated, what documentation provided, customer's signed acceptance. The records become the diagnostic narrative on the job sheet — defensible audit trail of what was found, what was done, what was verified.",
+      "Apprentice (graded by year of apprenticeship) → on completion of Level 3 + AM2/E + 18th Ed → Electrician → with additional experience and competence demonstration → Approved Electrician → with further design / fault-finding competence → Technician. Each grade unlocks higher pay (set by the JIB National Working Rules) and a wider scope of work the operative can carry out unsupervised on JIB-affiliated sites.",
+      "A formal recognition that you hold the specialist solar PV competence — typically gained by passing AM2S (the Solar PV variant of AM2) or by completing an MCS-approved PV installer course alongside time-served PV installation experience. The endorsement allows you to work on PV installations under MCS-registered firms.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Pregnancy and maternity is the eighth protected characteristic and gets its own dedicated section because it sits awkwardly with the standard 'comparator' approach used elsewhere in the Act. You don't need to compare a pregnant woman to a non-pregnant man — the question is just whether she was treated unfavourably because of pregnancy or maternity. Claims are common around demotion, exclusion from training, pay reduction, dismissal during or just after maternity leave. For a small electrical contractor it's an area where ignorance frequently turns into a costly Tribunal award.",
   },
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       "Under Equality Act s.20, what does the 'duty to make reasonable adjustments' actually require an employer to do?",
     options: [
-      "Nothing in particular.",
+      "A genuine shift to: \\\\\\\"This is the most challenging situation I have faced, but I now have a clear action plan to address the specific issues. I have identified three process improvements that will prevent recurrence. I feel motivated to apply these lessons, and this experience will make me a significantly more capable project manager\\\\\\\" — with the motivation to act matching the new belief",
       "Where a 'provision, criterion or practice', a physical feature, or a lack of an auxiliary aid puts a disabled person at a substantial disadvantage compared with others, the employer must take such steps as it is reasonable to take to avoid the disadvantage. Three sub-duties — adjust the practice, adjust the physical feature, provide the auxiliary aid. The duty is anticipatory in some contexts (services) and reactive in employment (kicks in when the employer knows or ought reasonably to know).",
-      "Only build wheelchair ramps.",
-      "Only paying for medical treatment.",
+      "Ask the manufacturer directly via their technical support or sustainability team — most major UK cable and accessory manufacturers publish EPDs on their website or supply on request. If the manufacturer does not publish an EPD for that product, that fact alone is relevant to the project specifier because the spec called for EPD-backed products. The right action is to flag the missing EPD to the project specifier and either source an EPD-backed equivalent from another manufacturer or request a written derogation from the spec. Documenting the search and the decision protects the contractor against later challenge.",
+      "Functional literacy — able to navigate a coordinated model, read electrical objects with their attached information, raise and respond to clashes, contribute electrical content via either Revit (if competent) or by working with a BIM technician who imports the L3 designer's content into Revit, and understand the CDE and ISO 19650 roles. Full Revit authoring skill is a specialist add-on.",
     ],
     correctAnswer: 1,
     explanation:
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       "What's the standard remedy in an Employment Tribunal for a successful discrimination, harassment or victimisation claim under the Equality Act?",
     options: [
-      "A written apology only.",
+      "3 V — pass. Calculation: Ra x I delta n = 100 x 0.030 = 3 V. The acceptance criterion (Reg 411.5.3(b)) is Ra x I delta n less than or equal to 50 V (the conventional touch-voltage limit). 3 V is well within 50 V — the RCD will operate well before the touch-voltage approaches dangerous level. For the same Ra with a 100 mA RCD: 100 x 0.100 = 10 V — still pass. With a 300 mA RCD: 100 x 0.300 = 30 V — still pass but tighter. The Ra x I delta n calculation is the TT-specific acceptance test.",
+      "Three separate containers. New batteries in their original packaging or a dedicated lithium-safe storage box, separated from the others. Used but undamaged batteries in a metal container with terminals taped or with cell-tray separation to prevent short circuits. The damaged battery in a separate fire-resistant container (vermiculite, sand or a purpose-made Li-ion bag), stored away from the van interior and away from other batteries, and returned to a battery recycling collection point as soon as practical. Never stack damaged with undamaged.",
       "The Tribunal can order: (a) compensation (uncapped — covers financial loss AND injury to feelings, with the Vento bands setting brackets for the injury-to-feelings element), (b) a declaration of the rights of the parties, and (c) recommendations for the employer to take steps to obviate or reduce the adverse effect on the claimant. Aggravated and exemplary damages are also available in particularly serious cases. The compensation is paid by the employer (often vicariously liable for individual perpetrators) but individual perpetrators can also be named and held liable.",
-      "Just a small fine paid to the government.",
-      "The complainant has to leave the country.",
+      "A manufacturer-specific EPD reports the actual life-cycle impacts of a specific product manufactured at a specific factory by a specific producer. An industry-average EPD reports the average impacts across all members of an industry association making a similar product. Manufacturer-specific EPDs allow real comparison between competing products; industry-average EPDs only allow comparison between product categories. BREEAM gives more weight to manufacturer-specific EPDs because they reward producers that genuinely outperform their peers, not those that simply benefit from a category average.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Equality Act remedies are uncapped, unlike many unfair-dismissal awards. The Vento bands (most recently updated April 2025) set the injury-to-feelings brackets — Lower band ~£1,200 to ~£12,100, Middle band ~£12,100 to ~£36,400, Upper band ~£36,400 to ~£60,700, with exceptional cases above. On top of that, financial loss (lost wages, pension, future earning capacity) is uncapped. Vicarious liability under s.109 makes the employer liable for the acts of its employees done in the course of employment — unless the employer can show they took all reasonable steps to prevent the conduct.",
   },
@@ -173,12 +173,12 @@ const quizQuestions = [
     question:
       "Who is responsible if a colleague harasses another worker on site under Equality Act s.26?",
     options: [
-      "Only the harasser personally.",
+      "The supervision is appropriate when the supervisor is themselves competent for the task, has direct visibility of the work AND the trainee, can intervene before a danger materialises, and the degree of supervision is matched to BOTH the task danger AND the trainee's experience level. A second-year on socket extensions is light supervision; a first-year on a CU change is direct, hands-on supervision throughout. Token oversight from elsewhere on site doesn't meet the regulation.",
+      "Hazardous Waste under EWC code 20 01 21* (the asterisk denotes hazardous). Fluorescent tubes contain mercury vapour — typically 3–5 mg in a 5-foot T8, less in modern T5 and CFL. Mercury is acutely toxic if inhaled and persistent in the environment. Producers of hazardous waste who generate over 500 kg / year must register with the Environment Agency; under that threshold the firm is exempt but still has the Duty of Care to use a licensed carrier and disposal route. Consignment Notes accompany the waste and are kept for three years.",
+      "Cooperate (HASAWA s.7 + CDM Reg 15). Confirm your name and role. Direct the inspector to the senior person on site (supervisor, contracts manager, site manager). Answer factual questions truthfully — interfering with an inspector is a separate offence under HASAWA s.33. If asked technical questions outside your competence, say so honestly. Do not speculate or guess. Notify your firm immediately.",
       "Both can be held liable. The individual harasser is personally liable under s.110 (helping a discriminatory act). The employer is vicariously liable under s.109 for acts done by the employee 'in the course of employment'. The employer's defence is to show they took 'all reasonable steps' to prevent the conduct — i.e. proper policies, training, monitoring and enforcement. A claimant can name both the individual and the employer in the same claim.",
-      "Only the employer if there's a written policy.",
-      "Nobody — banter is exempt from the Act.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The dual liability is what gives the Act its teeth. Without vicarious liability, employers would be incentivised to ignore harassment by employees. Without personal liability, perpetrators would face no consequences. The 'all reasonable steps' defence is real but demanding — courts are sceptical of policies that exist on paper but aren't enforced. Training that's never refreshed, complaints that aren't investigated, repeat offenders left in place — all undermine the defence. For a small electrical contractor this means having an active equality policy, refresher training and a clear complaints route, not just a one-off induction handout.",
   },
@@ -187,12 +187,12 @@ const quizQuestions = [
     question:
       "Where does the apprentice's responsibility under the Equality Act actually sit?",
     options: [
-      "Nowhere — only the employer is bound.",
       "Personally bound under s.110 (helping someone else commit an unlawful act, e.g. participating in harassment) and as a witness who is duty-bound to co-operate with internal investigations. The apprentice's reputational and legal exposure grows if they participate in or condone discriminatory or harassing behaviour. The apprentice also has a route to RAISE concerns — internal complaints procedure, ACAS conciliation, Employment Tribunal claim — and is protected against victimisation under s.27 for raising them in good faith.",
-      "Only if the apprentice is over 25.",
-      "Only on weekends.",
+      "At L2 you sat firmly inside Reg 15 (worker). At L3 you start carrying weight inside Reg 9 (contractor) — you may run a small job alone, you may be the senior trade on site, your firm may be 'the Contractor' for a domestic job where the homeowner is the client. Recognising that the contractor duties apply to your firm (and to your conduct as the firm's representative) is the planning-duty step.",
+      "The charge point installation typically includes a notice label identifying the supply origin, the protective device that isolates it, the type of earthing arrangement (TN-C-S with PEN-fault protection or TT with a local electrode) and any special instructions for emergency isolation. Section 722 and the IET Code of Practice both specify the labelling. The customer should be able to point to the means of isolation and the maintenance log; the next electrician arriving on site (perhaps years later) should be able to identify the install configuration without disassembling anything. The label is not decorative — it is a maintenance and safety document.",
+      "Day-rate: customer pays an agreed daily (or hourly) rate for time spent plus materials at agreed markup. Risk on time-overrun sits with the customer. Fixed-price: you quote a single all-in price for the defined scope. Risk on time-overrun sits with you. Customers typically prefer fixed-price (predictable budget); contractors typically prefer day-rate (no overrun risk). Practical compromise: fixed-price for well-defined scopes, day-rate for variable or fault-finding work.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Apprentices are workers under the Act and have both protections and responsibilities. Protections — they cannot be discriminated against, harassed or victimised because of a protected characteristic. Responsibilities — they cannot themselves be perpetrators or knowing participants in unlawful conduct, and they have a duty to engage honestly with internal investigations. The 'banter trap' catches apprentices who join in with discriminatory jokes thinking it's harmless — it isn't, in law or in their firm's disciplinary policy.",
   },

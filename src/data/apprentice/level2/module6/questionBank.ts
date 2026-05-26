@@ -18,12 +18,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_1_01',
     question: 'What is the primary purpose of electrical inspection and testing?',
     options: [
-      'To reduce installation costs',
       'To ensure electrical safety',
+      'To reduce installation costs',
       'To speed up installation',
       'To comply with insurance requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The primary purpose is to ensure electrical safety by verifying installations meet required standards and operate safely.',
     section: '6.1.1',
@@ -34,10 +34,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_1_02',
     question: 'Which regulation requires electrical installations to be inspected and tested?',
     options: [
-      'Building Regulations',
+      'Proper stress testing of insulation',
       'EAWR (Electricity at Work Regulations)',
-      'CDM Regulations',
-      'COSHH Regulations',
+      'Appropriate qualifications and competence',
+      'Temperature, humidity, and other relevant factors',
     ],
     correctAnswer: 1,
     explanation:
@@ -51,11 +51,11 @@ export const module6QuestionBank: Question[] = [
     question: 'What does EAWR stand for?',
     options: [
       'Electrical Application Work Regulations',
-      'Electricity at Work Regulations',
       'Electrical Assessment Work Requirements',
+      'Electricity at Work Regulations',
       'Electrical Authority Work Rules',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'EAWR stands for Electricity at Work Regulations 1989, which govern electrical safety in workplaces.',
     section: '6.1.2',
@@ -65,8 +65,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_1_1_04',
     question: 'Which standard provides the requirements for electrical installations in the UK?',
-    options: ['BS 7671', 'BS 5499', 'BS 6231', 'BS 3871'],
-    correctAnswer: 0,
+    options: [
+      'BS 3871',
+      'BS 5499',
+      'BS 6231',
+      'BS 7671',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS 7671 (IET Wiring Regulations) provides the UK standard for electrical installations.',
     section: '6.1.2',
@@ -77,12 +82,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_1_05',
     question: 'When must an electrical installation be tested?',
     options: [
-      'Only when faults are reported',
-      'Only during new installations',
       'After any alterations or additions',
+      'Only during new installations',
+      'Only when faults are reported',
       'Only every 5 years',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Testing is required after new work, alterations, additions, and periodically to ensure continued safety.',
     section: '6.1.3',
@@ -93,10 +98,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_1_06',
     question: 'What is the main difference between inspection and testing?',
     options: [
-      "Testing requires instruments, inspection doesn't",
+      'Check switch connections and outlets',
       'Inspection is visual, testing uses instruments',
-      'There is no difference',
-      'Testing is done first',
+      'Results, conditions, and observations',
+      'Test from main earth to bonded items',
     ],
     correctAnswer: 1,
     explanation:
@@ -109,10 +114,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_1_07',
     question: 'Can a Level 2 electrician sign off electrical installation certificates?',
     options: [
-      'Yes, for all work',
-      'Yes, but only for minor works',
+      'Conditions affect readings',
+      'Discharge circuit and reconnect equipment',
       'No, they cannot sign certificates',
-      'Only under supervision',
+      'Ensure ring integrity and safety',
     ],
     correctAnswer: 2,
     explanation:
@@ -125,12 +130,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_2_01',
     question: 'Which document contains the detailed requirements for electrical installations?',
     options: [
-      'EAWR',
+      'All outlets and switches',
+      'Results, conditions, and equipment used',
+      'Visual inspection of leads and probes',
       'BS 7671 IET Wiring Regulations',
-      'Building Regulations',
-      'Health and Safety at Work Act',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 (IET Wiring Regulations) contains the detailed technical requirements for electrical installations.',
     section: '6.1.2',
@@ -140,8 +145,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_1_2_02',
     question: 'What is the consequence of not complying with BS 7671?',
-    options: ['Fine only', 'Potential safety risks', 'Nothing happens', 'Work must be redone'],
-    correctAnswer: 1,
+    options: [
+      'Fine only',
+      'Nothing happens',
+      'Potential safety risks',
+      'Work must be redone',
+    ],
+    correctAnswer: 2,
     explanation:
       'Non-compliance with BS 7671 can result in unsafe installations posing risks to life and property.',
     section: '6.1.2',
@@ -152,12 +162,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_3_01',
     question: 'When should testing be carried out on a new installation?',
     options: [
+      'After commissioning',
       'After energisation',
       'Before energisation',
       'During installation',
-      'After commissioning',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Testing must be carried out before energisation to ensure the installation is safe to energise.',
     section: '6.1.3',
@@ -168,12 +178,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_3_02',
     question: 'What triggers the need for testing during alterations?',
     options: [
+      'All outlets and switches',
+      'Against BS 7671 requirements',
+      'Before any electrical testing',
       'Any change to the installation',
-      'Only major changes',
-      'Only new circuits',
-      'Only when requested',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Any alteration to an electrical installation requires appropriate testing to ensure safety.',
     section: '6.1.3',
@@ -199,8 +209,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_1_4_02',
     question: 'Which comes first in the inspection and testing process?',
-    options: ['Testing', 'Inspection', 'Both together', 'Depends on the installation'],
-    correctAnswer: 1,
+    options: [
+      'Inspection',
+      'Testing',
+      'Both together',
+      'Depends on the installation',
+    ],
+    correctAnswer: 0,
     explanation:
       'Inspection (visual examination) always comes before testing in the formal process.',
     section: '6.1.4',
@@ -211,12 +226,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_5_01',
     question: 'What level of supervision is required for Level 2 electricians conducting tests?',
     options: [
-      'No supervision needed',
       'Competent person supervision',
-      'Any qualified person',
-      'Self-supervision',
+      'Complete electrical path',
+      'Clear, understandable language',
+      'Always include appropriate units',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Level 2 electricians must work under the supervision of a competent person when conducting tests.',
     section: '6.1.5',
@@ -227,12 +242,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_5_02',
     question: 'Can Level 2 electricians interpret test results independently?',
     options: [
-      'Yes, for all tests',
       'Yes, for basic tests only',
       'No, requires supervision',
+      'Yes, for all tests',
       'Only for continuity tests',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Level 2 electricians should have supervision when interpreting test results to ensure accuracy.',
     section: '6.1.5',
@@ -243,12 +258,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_6_01',
     question: 'What documentation must be available during inspection and testing?',
     options: [
-      'Installation drawings only',
-      'Test certificates only',
+      'Disconnect electronic equipment',
+      'Higher temperature increases resistance',
+      'Protective conductors (earth)',
       'Previous certificates and drawings',
-      'None required',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Previous certificates, drawings, and relevant documentation provide essential reference information.',
     section: '6.1.6',
@@ -259,12 +274,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_6_02',
     question: 'Why are schematic diagrams important for testing?',
     options: [
-      'Not important',
+      'Provides valuable supporting evidence',
+      'Any change to the installation',
       'Show circuit layouts and connections',
-      'Only for cost estimation',
-      'Legal requirement only',
+      'BS 7671 IET Wiring Regulations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Schematic diagrams help understand circuit configurations and testing requirements.',
     section: '6.1.6',
@@ -276,11 +291,11 @@ export const module6QuestionBank: Question[] = [
     question: 'How does BS 7671 relate to the EAWR in terms of legal compliance?',
     options: [
       'BS 7671 supersedes EAWR',
-      'EAWR references BS 7671 as good practice',
       'They are completely separate',
+      'EAWR references BS 7671 as good practice',
       'BS 7671 is mandatory law',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'EAWR sets the legal requirement, while BS 7671 provides the recognised standard for compliance.',
     section: '6.1.2',
@@ -292,12 +307,12 @@ export const module6QuestionBank: Question[] = [
     question:
       'What are the legal implications if an electrical installation causes injury due to inadequate testing?',
     options: [
-      'No legal implications',
-      'Civil liability only',
+      'Frequent tripping or damage',
+      'Secure mounting and condition',
+      'Detailed records with locations',
       'Criminal liability under EAWR',
-      'Insurance claim only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Under EAWR, inadequate electrical work can result in criminal prosecution for breaches of duty.',
     section: '6.1.2',
@@ -308,12 +323,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_INT_01',
     question: 'What can a Level 2 electrician do regarding testing?',
     options: [
-      'Design test procedures',
+      'EAWR (Electricity at Work Regulations)',
+      'Provide evidence of electrical compliance',
       'Conduct basic tests under supervision',
-      'Sign test certificates',
-      'Approve test results',
+      'Consider test conditions and environment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Level 2 electricians can conduct basic tests but must work under appropriate supervision.',
     section: '6.1.5',
@@ -324,12 +339,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_INT_02',
     question: 'Why is periodic inspection and testing important?',
     options: [
-      'To find new faults',
+      'Gnaw marks and stripped insulation',
+      'Before any electrical testing',
+      'Voltage, current, resistance',
       'To ensure continued safety over time',
-      'To meet insurance requirements',
-      'To update certificates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Periodic testing ensures installations remain safe as they age and deteriorate over time.',
     section: '6.1.3',
@@ -340,12 +355,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_INT_03',
     question: 'What happens if an installation fails a test?',
     options: [
-      'It must be disconnected immediately',
       'Remedial work is required',
+      'It must be disconnected immediately',
       'It can continue operating',
       'A new certificate is issued',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Failed tests require remedial work to correct defects before the installation can be considered safe.',
     section: '6.1.3',
@@ -356,12 +371,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_BAS_01',
     question: "What is meant by 'competent person' in electrical work?",
     options: [
-      'Anyone with tools',
+      'After any alterations or additions',
+      'Clearly and systematically',
+      'Long enough for stable reading',
       'Person with knowledge and experience',
-      'Licensed electrician only',
-      'Company director',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A competent person has the necessary knowledge, experience and training to prevent danger.',
     section: '6.1.5',
@@ -371,8 +386,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_1_BAS_02',
     question: 'How often should domestic installations be inspected?',
-    options: ['Every year', 'Every 10 years typically', 'Never', 'Every month'],
-    correctAnswer: 1,
+    options: [
+      'Every year',
+      'Never',
+      'Every 10 years typically',
+      'Every month',
+    ],
+    correctAnswer: 2,
     explanation:
       'Domestic installations typically require inspection every 10 years, though this can vary.',
     section: '6.1.3',
@@ -382,7 +402,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_1_BAS_03',
     question: 'What is the purpose of electrical regulations?',
-    options: ['Increase costs', 'Protect people and property', 'Create work', 'Generate paperwork'],
+    options: [
+      'Complete electrical path',
+      'Protect people and property',
+      'Investigate and possibly retest',
+      'Ensure protective device operation',
+    ],
     correctAnswer: 1,
     explanation:
       'Electrical regulations exist to protect people and property from electrical hazards.',
@@ -393,8 +418,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_1_BAS_04',
     question: 'Who can carry out electrical inspection and testing?',
-    options: ['Anyone', 'Competent qualified persons', 'Building inspectors', 'Property owners'],
-    correctAnswer: 1,
+    options: [
+      'Competent qualified persons',
+      'Remedial work is required',
+      'Evidence of compliance',
+      'Looking for obvious defects',
+    ],
+    correctAnswer: 0,
     explanation:
       'Only competent qualified persons should carry out electrical inspection and testing.',
     section: '6.1.5',
@@ -405,12 +435,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_BAS_05',
     question: 'What should be done before starting any electrical testing?',
     options: [
-      'Start immediately',
+      'Test conditions, environment, and standards',
+      'Investigate and rectify faults',
+      'Isolate circuit and disconnect loads',
       'Check documentation and plan tests',
-      'Call supervisor',
-      'Test equipment only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Always check available documentation and plan the testing sequence before starting.',
     section: '6.1.6',
@@ -420,7 +450,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_1_INT_04',
     question: 'What factors affect the frequency of periodic inspection?',
-    options: ['Cost only', 'Environment and usage', 'Convenience', 'Weather'],
+    options: [
+      'Cost only',
+      'Environment and usage',
+      'Convenience',
+      'Weather',
+    ],
     correctAnswer: 1,
     explanation:
       'Environmental conditions and usage patterns affect deterioration rates and inspection frequency.',
@@ -432,12 +467,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_INT_05',
     question: 'Why must testing be done before energising new installations?',
     options: [
-      'Legal requirement only',
+      'Secure mounting and labelling',
+      'Affects product compliance requirements',
       'Ensure safety before live operation',
-      'Cost saving',
-      'Time management',
+      'Looking for obvious defects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Testing before energising ensures the installation is safe and won't cause harm when powered up.",
     section: '6.1.3',
@@ -448,12 +483,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_INT_06',
     question: 'What role does risk assessment play in inspection and testing?',
     options: [
-      'No role',
+      'Test conditions and circuit details',
+      'Investigate and retest if necessary',
+      'Visual inspection of leads and probes',
       'Determines testing approach and safety measures',
-      'Only for insurance',
-      'Legal paperwork only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Risk assessment determines the appropriate testing approach and necessary safety measures.',
     section: '6.1.1',
@@ -464,12 +499,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_BAS_06',
     question: 'What is the relationship between inspection and testing?',
     options: [
-      "They're the same thing",
+      'Before insulation resistance testing',
+      'Evaluate against expected service life',
       'Inspection comes first, then testing',
-      'Testing comes first',
-      "They're unrelated",
+      'Previous certificates and drawings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Inspection (visual examination) is carried out first, followed by instrument testing.',
     section: '6.1.4',
@@ -479,8 +514,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_1_BAS_07',
     question: 'What equipment is needed for visual inspection?',
-    options: ['Multimeter', 'Test instruments', 'Eyes and torch', 'Computer'],
-    correctAnswer: 2,
+    options: [
+      'Multimeter',
+      'Eyes and torch',
+      'Test instruments',
+      'Computer',
+    ],
+    correctAnswer: 1,
     explanation:
       'Visual inspection only requires eyes and adequate lighting (torch) to examine the installation.',
     section: '6.1.4',
@@ -490,8 +530,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_1_BAS_08',
     question: 'What information should be recorded during inspection?',
-    options: ['Nothing', 'Defects and observations', 'Time only', 'Weather conditions'],
-    correctAnswer: 1,
+    options: [
+      'Defects and observations',
+      'Nothing',
+      'Time only',
+      'Weather conditions',
+    ],
+    correctAnswer: 0,
     explanation:
       'All defects, observations, and relevant findings should be recorded during inspection.',
     section: '6.1.6',
@@ -502,12 +547,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_ADV_03',
     question: 'How do environmental conditions affect inspection and testing requirements?',
     options: [
-      'No effect',
       'May require modified procedures',
-      'Only affects equipment',
-      'Only affects timing',
+      'Sharp bends and damage risks',
+      'Small additions or alterations',
+      'Criminal liability under EAWR',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Harsh environments may require modified inspection procedures and more frequent testing.',
     section: '6.1.3',
@@ -518,12 +563,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_1_INT_07',
     question: "What is the significance of 'duty holder' in electrical safety?",
     options: [
-      'No significance',
       'Person responsible for electrical safety',
-      'Insurance term',
-      'Legal job title',
+      'Competence varies with work complexity',
+      'Gnaw marks and stripped insulation',
+      'After any alterations or additions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The duty holder is responsible for ensuring electrical systems are maintained safely.',
     section: '6.1.2',
@@ -536,12 +581,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_1_01',
     question: 'What should be checked during visual inspection of cables?',
     options: [
-      'Voltage rating only',
+      'Safety and accurate measurements',
+      'On all circuits before energising',
+      'Risk of earth faults and shock',
       'Physical damage and correct routing',
-      'Current capacity only',
-      'Installation date',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Visual inspection should check for physical damage, correct routing, and proper installation methods.',
     section: '6.2.1',
@@ -551,8 +596,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_1_02',
     question: 'What type of damage should be looked for on cable insulation?',
-    options: ['Age only', 'Cuts, nicks, or burns', 'Colour fading', 'Dust accumulation'],
-    correctAnswer: 1,
+    options: [
+      'Age only',
+      'Colour fading',
+      'Cuts, nicks, or burns',
+      'Dust accumulation',
+    ],
+    correctAnswer: 2,
     explanation:
       'Physical damage like cuts, nicks, or burns can compromise insulation and create safety hazards.',
     section: '6.2.1',
@@ -563,12 +613,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_1_03',
     question: 'During visual inspection, what should be checked at accessories?',
     options: [
+      'Provides valuable supporting evidence',
       'Correct mounting and secure connections',
-      'Operating temperature',
-      'Electrical measurements',
-      'Internal components',
+      'Corrosion, loose connections, damage',
+      'Discharge circuit and reconnect equipment',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Visual inspection checks mounting security, visible connections, and signs of overheating or damage.',
     section: '6.2.1',
@@ -578,8 +628,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_1_04',
     question: 'What should be checked on cable supports and fixings?',
-    options: ['Only spacing', 'Security and suitability', 'Colour only', 'Nothing specific'],
-    correctAnswer: 1,
+    options: [
+      'Security and suitability',
+      'Only spacing',
+      'Colour only',
+      'Nothing specific',
+    ],
+    correctAnswer: 0,
     explanation:
       'Cable supports must be secure and suitable for the cable type and installation method.',
     section: '6.2.1',
@@ -590,12 +645,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_1_05',
     question: 'When inspecting cable routing, what should be avoided?',
     options: [
+      'Complete electrical path',
+      'Compare with previous results',
+      'Frequent tripping or damage',
       'Sharp bends and damage risks',
-      'Straight runs',
-      'Proper supports',
-      'Adequate clearances',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation: 'Sharp bends can damage cables and routing should avoid potential damage risks.',
     section: '6.2.1',
     difficulty: 'basic',
@@ -605,12 +660,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_1_06',
     question: 'What indicates overheating in electrical equipment?',
     options: [
-      'Clean surfaces',
+      'Looking for obvious defects',
+      'Safely and accessibly',
       'Burn marks or discolouration',
-      'Normal operation',
-      'Good connections',
+      'Insulation resistance tester',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Burn marks, discolouration, or melting indicate dangerous overheating conditions.',
     section: '6.2.1',
@@ -621,10 +676,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_1_07',
     question: 'What cable installation methods require specific inspection points?',
     options: [
-      'Surface only',
+      'Burn marks or loose terminals',
       'All methods have specific requirements',
-      'Concealed only',
-      'Underground only',
+      'Cross-check with different methods where possible',
+      'Check integrity and compliance',
     ],
     correctAnswer: 1,
     explanation:
@@ -637,12 +692,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_1_08',
     question: 'How should cable entry points be inspected?',
     options: [
-      'Ignored',
       'Check for proper sealing and protection',
-      'Visual only',
-      'Measure dimensions',
+      'Secure connections and conductor size',
+      'Motors may have lower acceptable limits',
+      'Compare with previous results',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'Cable entry points must have proper sealing, protection, and strain relief.',
     section: '6.2.1',
     difficulty: 'basic',
@@ -652,12 +707,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_1_09',
     question: 'What signs indicate rodent damage to cables?',
     options: [
-      'Clean cuts',
+      'Accurate measurement of low resistances',
+      'Follow manufacturer instructions',
+      'Investigate and rectify faults',
       'Gnaw marks and stripped insulation',
-      'Colour change',
-      'Normal appearance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Rodent damage shows as gnaw marks and stripped insulation, creating safety hazards.',
     section: '6.2.1',
@@ -669,9 +724,9 @@ export const module6QuestionBank: Question[] = [
     question: 'What should be checked at consumer units during visual inspection?',
     options: [
       'Secure mounting and labelling',
-      'Internal wiring only',
-      'External appearance only',
-      'Nothing specific',
+      'Must verify ring integrity',
+      'Higher values are better',
+      'Stop and check equipment',
     ],
     correctAnswer: 0,
     explanation:
@@ -684,10 +739,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_2_02',
     question: 'Why is circuit labelling important?',
     options: [
-      'Legal requirement only',
+      'Results, conditions, and equipment used',
       'Safe identification and isolation',
-      'Aesthetics',
-      'Cost reduction',
+      'Calculate and record where significant',
+      'Length, cross-sectional area, material',
     ],
     correctAnswer: 1,
     explanation:
@@ -699,8 +754,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_2_03',
     question: 'What protection should be provided at consumer units?',
-    options: ['None required', 'Appropriate covers and barriers', 'Paint only', 'Signage only'],
-    correctAnswer: 1,
+    options: [
+      'Circuit details and test conditions',
+      'Coordinate to ensure safety',
+      'Appropriate covers and barriers',
+      'Investigate cause of variation',
+    ],
+    correctAnswer: 2,
     explanation:
       'Consumer units need appropriate covers and barriers to prevent accidental contact.',
     section: '6.2.2',
@@ -711,12 +771,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_2_04',
     question: 'What should be checked on the main earthing terminal?',
     options: [
-      'Colour only',
+      'Special precautions to prevent damage',
+      'Ensure protective device operation',
+      'Corrosion, loose connections, damage',
       'Secure connections and accessibility',
-      'Size only',
-      'Nothing specific',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The main earthing terminal must have secure connections and be properly accessible.',
     section: '6.2.2',
@@ -727,12 +787,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_2_05',
     question: 'How should RCD operation indicators be checked?',
     options: [
-      'Test button operation',
       'Visual indicators',
-      'Electrical testing only',
       'Not checked',
+      'Test button operation',
+      'Electrical testing only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'During visual inspection, check RCD indicators and labels; functional testing comes later.',
     section: '6.2.2',
@@ -742,8 +802,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_3_01',
     question: 'What should be checked on socket outlets during inspection?',
-    options: ['Secure mounting and condition', 'Colour only', 'Age only', 'Brand only'],
-    correctAnswer: 0,
+    options: [
+      'Operation and mounting',
+      'Secure mounting and condition',
+      'May require different standards',
+      'Stop and check equipment',
+    ],
+    correctAnswer: 1,
     explanation: 'Socket outlets must be securely mounted and in good condition without damage.',
     section: '6.2.3',
     difficulty: 'basic',
@@ -753,12 +818,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_3_02',
     question: 'What indicates a faulty connection at an accessory?',
     options: [
-      'Normal operation',
       'Burn marks or loose terminals',
-      'Clean appearance',
-      'Proper mounting',
+      'Weather protection and UV resistance',
+      'Test conditions and circuit details',
+      'Show circuit layouts and connections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'Burn marks or loose terminals indicate faulty connections that pose fire risks.',
     section: '6.2.3',
     difficulty: 'intermediate',
@@ -767,8 +832,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_3_03',
     question: 'What should be checked on socket outlet earth terminals?',
-    options: ['Nothing', 'Secure connection and cleanliness', 'Colour only', 'Brand marking'],
-    correctAnswer: 1,
+    options: [
+      'To ensure continued safety over time',
+      'Check integrity and compliance',
+      'Small additions or alterations',
+      'Secure connection and cleanliness',
+    ],
+    correctAnswer: 3,
     explanation: 'Earth terminals must be securely connected and free from corrosion or damage.',
     section: '6.2.3',
     difficulty: 'basic',
@@ -778,12 +848,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_3_04',
     question: 'How should socket outlet mounting be assessed?',
     options: [
-      'Visual only',
+      'Special precautions to prevent damage',
+      'EAWR (Electricity at Work Regulations)',
       'Check security and box condition',
-      'Measure heights',
-      'Count sockets',
+      'All outlets and switches',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Check that sockets are securely mounted and mounting boxes are in good condition.',
     section: '6.2.3',
@@ -793,8 +863,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_4_01',
     question: 'What should be checked on lighting switches?',
-    options: ['Operation and mounting', 'Brightness only', 'Colour only', 'Age only'],
-    correctAnswer: 0,
+    options: [
+      'Colour only',
+      'Brightness only',
+      'Operation and mounting',
+      'Age only',
+    ],
+    correctAnswer: 2,
     explanation: 'Switches must operate correctly and be securely mounted without damage.',
     section: '6.2.4',
     difficulty: 'basic',
@@ -804,12 +879,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_4_02',
     question: 'What is a common fault found in ceiling roses?',
     options: [
-      'Correct connections',
+      'Small additions or alterations',
+      'Inspection comes first, then testing',
+      'Frequent tripping or damage',
       'Overloading with heavy fittings',
-      'Proper support',
-      'Good condition',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Ceiling roses can be overloaded with heavy light fittings beyond their design capacity.',
     section: '6.2.4',
@@ -819,8 +894,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_4_03',
     question: 'What should be inspected at light fittings?',
-    options: ['Lamp type only', 'Secure mounting and condition', 'Brightness', 'Brand'],
-    correctAnswer: 1,
+    options: [
+      'Secure mounting and condition',
+      'Before insulation resistance testing',
+      'Live to earth and between conductors',
+      'Ensure ring integrity and safety',
+    ],
+    correctAnswer: 0,
     explanation:
       'Light fittings must be securely mounted and in good condition with proper connections.',
     section: '6.2.4',
@@ -830,7 +910,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_4_04',
     question: 'How should flexible cords to portable equipment be inspected?',
-    options: ['Not inspected', 'Check for damage and strain relief', 'Length only', 'Colour only'],
+    options: [
+      'All methods have specific requirements',
+      'Check for damage and strain relief',
+      'Compare with previous results',
+      'Voltage, current, resistance',
+    ],
     correctAnswer: 1,
     explanation:
       'Flexible cords must be inspected for damage and proper strain relief arrangements.',
@@ -841,8 +926,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_5_01',
     question: 'What earth arrangements should be checked?',
-    options: ['Earth electrode connections', 'Nothing specific', 'Colour only', 'Size only'],
-    correctAnswer: 0,
+    options: [
+      'Temperature and humidity',
+      'Evidence of compliance',
+      'On all circuits before energising',
+      'Earth electrode connections',
+    ],
+    correctAnswer: 3,
     explanation:
       'Earth arrangements including electrode connections must be secure and properly maintained.',
     section: '6.2.5',
@@ -853,12 +943,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_5_02',
     question: 'Why are earth connections critical for safety?',
     options: [
-      'Cost reduction',
+      'Investigate and retest',
+      'Optimise accuracy and safety',
       'Provide fault current path',
-      'Appearance',
-      'Legal requirement only',
+      'Detailed records with locations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Earth connections provide a safe path for fault currents to operate protective devices.',
     section: '6.2.5',
@@ -868,7 +958,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_5_03',
     question: 'What should be checked on equipotential bonding?',
-    options: ['Colour only', 'Secure connections and conductor size', 'Length only', 'Nothing'],
+    options: [
+      'Voltage, current, resistance',
+      'Secure connections and conductor size',
+      'Burn marks or discolouration',
+      'Condition, insulation, and connections',
+    ],
     correctAnswer: 1,
     explanation:
       'Bonding connections must be secure and conductors must be adequate size for the installation.',
@@ -880,12 +975,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_5_04',
     question: 'How should earth electrode connections be inspected?',
     options: [
-      'Not accessible',
       'Check accessibility and condition',
-      'Visual from distance',
-      'Not important',
+      'Isolate circuit and disconnect equipment',
+      'Safety and accurate measurements',
+      'Future reference and safety',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Earth electrode connections should be accessible and in good condition for inspection.',
     section: '6.2.5',
@@ -895,7 +990,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_6_01',
     question: 'What should be checked on protective devices?',
-    options: ['Correct type and rating', 'Colour only', 'Age only', 'Brand only'],
+    options: [
+      'Correct type and rating',
+      'Colour only',
+      'Age only',
+      'Brand only',
+    ],
     correctAnswer: 0,
     explanation:
       'Protective devices must be the correct type and rating for the circuits they protect.',
@@ -907,10 +1007,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_6_02',
     question: 'What indicates a problem with an MCB?',
     options: [
-      'Normal operation',
+      'Provide fault current path',
       'Frequent tripping or damage',
-      'Correct rating',
-      'Proper mounting',
+      'Low resistance (ohms)',
+      'Check for damage and strain relief',
     ],
     correctAnswer: 1,
     explanation:
@@ -923,12 +1023,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_6_03',
     question: 'How should fuse carriers be inspected?',
     options: [
-      'Not inspected',
+      'Accurate measurement of low resistances',
+      'Secure mounting and condition',
       'Check condition and correct fuse wire',
-      'Visual only',
-      'Electrical test only',
+      'Provides valuable supporting evidence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Fuse carriers must be in good condition with correct fuse wire or cartridge fuses.',
     section: '6.2.6',
@@ -938,8 +1038,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_6_04',
     question: 'What should be checked on isolation switches?',
-    options: ['Operation and security', 'Colour only', 'Brand only', 'Age only'],
-    correctAnswer: 0,
+    options: [
+      'Colour only',
+      'Brand only',
+      'Age only',
+      'Operation and security',
+    ],
+    correctAnswer: 3,
     explanation:
       'Isolation switches must operate correctly and be securely mounted with clear labelling.',
     section: '6.2.6',
@@ -949,7 +1054,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_ADV_01',
     question: 'How should fire barriers and sealing be assessed during inspection?',
-    options: ['Not relevant', 'Check integrity and compliance', 'Visual only', 'Not inspected'],
+    options: [
+      'Correct type and rating',
+      'Check integrity and compliance',
+      'Longer cables may show lower readings',
+      'Affects product compliance requirements',
+    ],
     correctAnswer: 1,
     explanation: 'Fire barriers and sealing must maintain their integrity to prevent fire spread.',
     section: '6.2.1',
@@ -960,12 +1070,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_ADV_02',
     question: 'What considerations apply to inspection in hazardous areas?',
     options: [
-      'Same as normal areas',
       'Special procedures and equipment certification',
-      'Not possible',
-      'Visual only',
+      'Small additions like extra socket',
+      'Check for damage and strain relief',
+      'After any alterations or additions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'Hazardous areas require special inspection procedures and certified equipment.',
     section: '6.2.6',
     difficulty: 'advanced',
@@ -975,10 +1085,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_INT_01',
     question: 'What documentation should accompany visual inspection findings?',
     options: [
-      'None required',
+      'To ensure continued safety over time',
       'Detailed records with locations',
-      'Brief notes only',
-      'Photographs only',
+      'Prove the circuit is dead',
+      'Check documentation and plan tests',
     ],
     correctAnswer: 1,
     explanation:
@@ -991,12 +1101,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_INT_02',
     question: 'How should deterioration due to environmental conditions be assessed?',
     options: [
-      'Not considered',
       'Evaluate against expected service life',
-      'Visual only',
-      'Not important',
+      'Proper stress testing of insulation',
+      'Digital with appropriate safety rating',
+      'In appropriate conditions to prevent damage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Deterioration should be assessed against expected service life in the specific environment.',
     section: '6.2.1',
@@ -1006,8 +1116,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_INT_03',
     question: 'What accessibility issues should be considered during inspection?',
-    options: ['Not relevant', 'Safe access for maintenance', 'Cost only', 'Time only'],
-    correctAnswer: 1,
+    options: [
+      'Remedial work is required',
+      'Investigate cause of variation',
+      'Frequent tripping or damage',
+      'Safe access for maintenance',
+    ],
+    correctAnswer: 3,
     explanation: 'Installations should be accessible for safe maintenance and future inspection.',
     section: '6.2.2',
     difficulty: 'intermediate',
@@ -1016,8 +1131,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_BAS_01',
     question: 'What tools are typically needed for visual inspection?',
-    options: ['Multimeter', 'Torch and basic tools', 'Computer', 'Test instruments'],
-    correctAnswer: 1,
+    options: [
+      'Torch and basic tools',
+      'Multimeter',
+      'Computer',
+      'Test instruments',
+    ],
+    correctAnswer: 0,
     explanation:
       'Visual inspection typically requires good lighting (torch) and basic tools for access.',
     section: '6.2.1',
@@ -1027,7 +1147,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_BAS_02',
     question: 'When should visual inspection be carried out?',
-    options: ['After testing', 'Before any electrical testing', 'During installation', 'Never'],
+    options: [
+      'No, requires supervision',
+      'Before any electrical testing',
+      'Burn marks or discolouration',
+      'Small additions like extra socket',
+    ],
     correctAnswer: 1,
     explanation:
       'Visual inspection should always be carried out before any electrical testing begins.',
@@ -1039,12 +1164,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_BAS_03',
     question: 'What is the purpose of checking cable identification?',
     options: [
-      'Aesthetics',
+      'To ensure continued safety over time',
+      'Each has advantages for different applications',
       'Safe working and circuit identification',
-      'Legal requirement',
-      'Cost control',
+      'Check compliance and integration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Proper cable identification ensures safe working and correct circuit identification.',
     section: '6.2.1',
@@ -1054,8 +1179,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_BAS_04',
     question: 'What should be done if dangerous conditions are found during inspection?',
-    options: ['Continue inspection', 'Make safe immediately', 'Note for later', 'Ignore'],
-    correctAnswer: 1,
+    options: [
+      'Continue inspection',
+      'Ignore',
+      'Note for later',
+      'Make safe immediately',
+    ],
+    correctAnswer: 3,
     explanation: 'Dangerous conditions must be made safe immediately to prevent harm.',
     section: '6.2.1',
     difficulty: 'basic',
@@ -1064,8 +1194,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_BAS_05',
     question: 'How should inspection findings be prioritised?',
-    options: ['By cost', 'By safety risk level', 'By convenience', 'By age'],
-    correctAnswer: 1,
+    options: [
+      'By safety risk level',
+      'By cost',
+      'By convenience',
+      'By age',
+    ],
+    correctAnswer: 0,
     explanation:
       'Inspection findings should be prioritised by their safety risk level and urgency.',
     section: '6.2.6',
@@ -1075,8 +1210,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_INT_04',
     question: 'What special considerations apply to outdoor installations?',
-    options: ['None', 'Weather protection and UV resistance', 'Cost only', 'Appearance only'],
-    correctAnswer: 1,
+    options: [
+      'Investigate cause of variation',
+      'Calculate and record where significant',
+      'Weather protection and UV resistance',
+      'High humidity decreases resistance',
+    ],
+    correctAnswer: 2,
     explanation:
       'Outdoor installations require proper weather protection and UV-resistant materials.',
     section: '6.2.1',
@@ -1086,7 +1226,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_2_INT_05',
     question: 'How should modifications to original installations be assessed?',
-    options: ['Not relevant', 'Check compliance and integration', 'Visual only', 'Ignore'],
+    options: [
+      'Long enough for stable reading',
+      'Check compliance and integration',
+      'Between points being tested',
+      'Ensure circuits isolated',
+    ],
     correctAnswer: 1,
     explanation:
       'Modifications should be assessed for compliance and proper integration with original installation.',
@@ -1098,12 +1243,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_2_INT_06',
     question: 'What impact does building use change have on electrical inspection?',
     options: [
-      'None',
       'May require different standards',
-      'Cost increase only',
-      'Time increase only',
+      'Finger guards and fused leads',
+      'Between points being tested',
+      'Conduct basic tests under supervision',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Change in building use may require the installation to meet different standards or requirements.',
     section: '6.2.2',
@@ -1117,11 +1262,11 @@ export const module6QuestionBank: Question[] = [
     question: 'What is a multimeter used for?',
     options: [
       'Voltage measurements only',
-      'Multiple electrical measurements',
       'Insulation testing only',
+      'Multiple electrical measurements',
       'Continuity testing only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A multimeter can measure voltage, current, resistance, and other electrical parameters.',
     section: '6.3.1',
@@ -1132,12 +1277,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_1_02',
     question: 'What safety check must be performed before using test equipment?',
     options: [
-      'Check for calibration date',
+      'Evaluate against expected service life',
+      'Results, conditions, and equipment used',
+      'Can significantly affect some measurements',
       'Visual inspection of leads and probes',
-      'Check battery level',
-      'Test on known live source',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Visual inspection of test leads and probes is essential to ensure they are safe to use.',
     section: '6.3.1',
@@ -1148,12 +1293,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_1_03',
     question: 'What type of multimeter is most suitable for electrical testing?',
     options: [
-      'Analogue only',
       'Digital with appropriate safety rating',
-      'Any multimeter',
-      'Pocket multimeter',
+      'To ensure continued safety over time',
+      'Investigate and rectify fault',
+      'Check for damage and strain relief',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Digital multimeters with appropriate safety ratings (CAT III/IV) are preferred for electrical testing.',
     section: '6.3.1',
@@ -1164,10 +1309,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_1_04',
     question: 'What measurements can a basic multimeter perform?',
     options: [
-      'Voltage only',
+      'Check integrity and compliance',
       'Voltage, current, resistance',
-      'Insulation resistance',
-      'Earth loop impedance',
+      'Investigate and rectify faults',
+      'Circuit details and test conditions',
     ],
     correctAnswer: 1,
     explanation:
@@ -1180,10 +1325,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_2_01',
     question: 'What does GS38 cover?',
     options: [
-      'Electrical installation standards',
+      'Calibration certificates and user manuals',
       'Test instrument safety requirements',
-      'Cable specifications',
-      'Circuit protection',
+      'Can give false high readings',
+      'Secure mounting and condition',
     ],
     correctAnswer: 1,
     explanation: 'GS38 covers the safety requirements for electrical test equipment and leads.',
@@ -1195,12 +1340,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_2_02',
     question: 'What does GS38 require for test probe design?',
     options: [
-      'Any design acceptable',
       'Finger guards and fused leads',
-      'Colour coding only',
-      'Long probes',
+      'Compare with previous results',
+      'Secure mounting and labelling',
+      'Low resistance (ohms)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'GS38 requires finger guards and fused test leads to prevent accidental contact and limit fault current.',
     section: '6.3.2',
@@ -1211,12 +1356,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_2_03',
     question: 'Why are fused test leads important?',
     options: [
-      'Legal requirement only',
+      'Ensure ring integrity and safety',
+      'Isolate circuit and disconnect loads',
+      'Against BS 7671 requirements',
       'Limit fault current in case of errors',
-      'Cost reduction',
-      'Easier handling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Fused test leads limit fault current if probes are accidentally connected across supply.',
     section: '6.3.2',
@@ -1226,8 +1371,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_3_3_01',
     question: 'What is the maximum exposed tip length allowed on test probes under GS38?',
-    options: ['2mm', '4mm', '6mm', '8mm'],
-    correctAnswer: 1,
+    options: [
+      '4mm',
+      '2mm',
+      '6mm',
+      '8mm',
+    ],
+    correctAnswer: 0,
     explanation:
       'GS38 limits exposed probe tips to 4mm maximum to reduce the risk of accidental contact.',
     section: '6.3.3',
@@ -1237,8 +1387,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_3_3_02',
     question: 'What CAT rating should test equipment have for domestic installations?',
-    options: ['CAT I', 'CAT II', 'CAT III', 'CAT IV'],
-    correctAnswer: 2,
+    options: [
+      'CAT I',
+      'CAT III',
+      'CAT II',
+      'CAT IV',
+    ],
+    correctAnswer: 1,
     explanation:
       'CAT III rating is appropriate for domestic electrical installations and distribution boards.',
     section: '6.3.3',
@@ -1249,12 +1404,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_3_03',
     question: 'What does CAT rating indicate?',
     options: [
-      'Accuracy only',
+      'Compare with previous results',
+      'Record all test points and results',
       'Safety level for electrical environments',
-      'Price category',
-      'Manufacturer category',
+      'Calculate and record where significant',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CAT ratings indicate the safety level and transient withstand capability for different electrical environments.',
     section: '6.3.3',
@@ -1266,11 +1421,11 @@ export const module6QuestionBank: Question[] = [
     question: 'What must be done before any electrical testing?',
     options: [
       'Check test equipment',
-      'Prove the circuit is dead',
-      'Notify the client',
       'Complete paperwork',
+      'Notify the client',
+      'Prove the circuit is dead',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The circuit must be proven dead using appropriate testing procedures before any work begins.',
     section: '6.3.4',
@@ -1280,8 +1435,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_3_4_02',
     question: 'What sequence should be followed when proving dead?',
-    options: ['Test only', 'Prove-test-prove', 'Test-prove-test', 'Prove only'],
-    correctAnswer: 1,
+    options: [
+      'Test only',
+      'Prove only',
+      'Prove-test-prove',
+      'Test-prove-test',
+    ],
+    correctAnswer: 2,
     explanation:
       'The safe sequence is prove tester working, test circuit dead, prove tester still working.',
     section: '6.3.4',
@@ -1292,10 +1452,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_4_03',
     question: 'Why must test equipment be proved before and after use?',
     options: [
-      'Legal requirement only',
+      'Finger guards and fused leads',
       'Ensure equipment is functioning correctly',
-      'Cost control',
-      'Time management',
+      'All methods have specific requirements',
+      'Conduct basic tests under supervision',
     ],
     correctAnswer: 1,
     explanation:
@@ -1308,12 +1468,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_5_01',
     question: 'What safety precautions apply when testing live circuits?',
     options: [
-      'No precautions needed',
+      'Issue corrected certificates',
+      'Disconnect electronic equipment',
       'Use appropriate PPE and procedures',
-      'Work alone',
-      'Rush the work',
+      'Security and suitability',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Live circuit testing requires appropriate PPE, procedures, and safety precautions.',
     section: '6.3.5',
@@ -1323,8 +1483,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_3_5_02',
     question: 'When should live testing be avoided?',
-    options: ['Never', 'Whenever possible', 'On low voltage only', 'On high voltage only'],
-    correctAnswer: 1,
+    options: [
+      'Never',
+      'On high voltage only',
+      'On low voltage only',
+      'Whenever possible',
+    ],
+    correctAnswer: 3,
     explanation:
       'Live testing should be avoided whenever possible and only done when absolutely necessary.',
     section: '6.3.5',
@@ -1337,8 +1502,8 @@ export const module6QuestionBank: Question[] = [
     options: [
       'Voltage measurement',
       'Testing insulation effectiveness',
-      'Current measurement',
       'Continuity testing',
+      'Current measurement',
     ],
     correctAnswer: 1,
     explanation: 'Insulation resistance testers check the effectiveness of electrical insulation.',
@@ -1349,8 +1514,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_3_6_02',
     question: 'What voltage does an insulation resistance tester typically use?',
-    options: ['12V', '230V', '500V or 1000V', '24V'],
-    correctAnswer: 2,
+    options: [
+      '500V or 1000V',
+      '230V',
+      '12V',
+      '24V',
+    ],
+    correctAnswer: 0,
     explanation: 'IR testers typically use 500V or 1000V DC to stress test the insulation.',
     section: '6.3.6',
     difficulty: 'intermediate',
@@ -1360,12 +1530,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_7_01',
     question: 'What is a low resistance ohmmeter used for?',
     options: [
-      'High resistance measurement',
       'Continuity testing of protective conductors',
-      'Voltage measurement',
-      'Current measurement',
+      'Visual inspection of leads and probes',
+      'Each has advantages for different applications',
+      'Use appropriate PPE and procedures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Low resistance ohmmeters accurately measure very low resistances in protective conductors.',
     section: '6.3.7',
@@ -1376,10 +1546,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_7_02',
     question: 'Why is high test current important in low resistance testing?',
     options: [
-      'Legal requirement',
+      'Secure mounting and labelling',
       'Overcomes contact resistance',
-      'Faster testing',
-      'Cost reduction',
+      'Record all test points and results',
+      'Issue corrected certificates',
     ],
     correctAnswer: 1,
     explanation:
@@ -1392,12 +1562,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_8_01',
     question: 'What safety equipment should be used during electrical testing?',
     options: [
-      'Hard hat only',
+      'Enhanced safety measures and suitable equipment',
+      'EIC for new work, EICR for existing installations',
+      'Cross-check with different methods where possible',
       'Appropriate PPE including gloves and eye protection',
-      'No special equipment',
-      'Normal clothing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Appropriate PPE including insulated gloves and eye protection should be used during testing.',
     section: '6.3.8',
@@ -1409,11 +1579,11 @@ export const module6QuestionBank: Question[] = [
     question: 'What should be done if test equipment fails during use?',
     options: [
       'Continue with different equipment',
-      'Stop testing and investigate',
       'Ignore the failure',
+      'Stop testing and investigate',
       'Use backup equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Testing should stop if equipment fails, and the failure should be investigated before continuing.',
     section: '6.3.8',
@@ -1423,7 +1593,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_3_BAS_01',
     question: 'What information should be recorded during testing?',
-    options: ['Results only', 'Results, conditions, and equipment used', 'Time only', 'Nothing'],
+    options: [
+      'Limit fault current in case of errors',
+      'Results, conditions, and equipment used',
+      'Can give false high readings',
+      'Special procedures and equipment certification',
+    ],
     correctAnswer: 1,
     explanation:
       'Complete records should include test results, test conditions, and equipment used.',
@@ -1434,8 +1609,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_3_BAS_02',
     question: 'How often should test equipment be calibrated?',
-    options: ['Never', 'According to manufacturer recommendations', 'Monthly', 'Weekly'],
-    correctAnswer: 1,
+    options: [
+      'According to manufacturer recommendations',
+      'Identify patterns and deterioration trends',
+      'Record and investigate the cause',
+      'Potential earth faults or deterioration',
+    ],
+    correctAnswer: 0,
     explanation:
       'Test equipment should be calibrated according to manufacturer recommendations to ensure accuracy.',
     section: '6.3.1',
@@ -1445,8 +1625,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_3_BAS_03',
     question: 'What should be checked on test leads before use?',
-    options: ['Colour only', 'Condition, insulation, and connections', 'Length only', 'Brand'],
-    correctAnswer: 1,
+    options: [
+      'Isolate circuit and disconnect loads',
+      'Secure mounting and labelling',
+      'EAWR references BS 7671 as good practice',
+      'Condition, insulation, and connections',
+    ],
+    correctAnswer: 3,
     explanation:
       'Test leads should be checked for damage, insulation integrity, and secure connections.',
     section: '6.3.2',
@@ -1456,8 +1641,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_3_BAS_04',
     question: 'Why is it important to use the correct test instrument?',
-    options: ['Cost control', 'Accurate and safe measurements', 'Speed', 'Convenience'],
-    correctAnswer: 1,
+    options: [
+      'Before insulation resistance testing',
+      'Check for damage and strain relief',
+      'Accurate and safe measurements',
+      'Complete electrical path',
+    ],
+    correctAnswer: 2,
     explanation:
       'Using the correct instrument ensures accurate measurements and safe testing procedures.',
     section: '6.3.1',
@@ -1468,12 +1658,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_INT_01',
     question: 'How do environmental conditions affect test equipment?',
     options: [
-      'No effect',
       'Can affect accuracy and safety',
-      'Only affects appearance',
-      'Only affects cost',
+      'Safely disconnect and store equipment',
+      'Disconnect electronic equipment',
+      'Electricity at Work Regulations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Temperature, humidity, and other conditions can affect instrument accuracy and safety.',
     section: '6.3.8',
@@ -1484,10 +1674,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_INT_02',
     question: 'What precautions are needed when testing in damp conditions?',
     options: [
-      'No special precautions',
+      'Check switch connections and outlets',
       'Enhanced safety measures and suitable equipment',
-      'Cannot test',
-      'Rush the work',
+      'Length, cross-sectional area, material',
+      'Show circuit layouts and connections',
     ],
     correctAnswer: 1,
     explanation:
@@ -1500,12 +1690,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_INT_03',
     question: 'How should test results be verified?',
     options: [
-      'Not necessary',
+      'EAWR (Electricity at Work Regulations)',
+      'Limit fault current in case of errors',
       'Cross-check with different methods where possible',
-      'Single test sufficient',
-      'Estimate',
+      'According to manufacturer recommendations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Test results should be verified by cross-checking with different methods where possible.',
     section: '6.3.1',
@@ -1516,12 +1706,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_INT_04',
     question: 'What factors can cause measurement errors?',
     options: [
-      'None',
+      'New installations and major alterations',
+      'Appropriate PPE including gloves and eye protection',
+      'Accurate measurement of low resistances',
       'Equipment condition, environment, technique',
-      'Only equipment',
-      'Only environment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Measurement errors can result from equipment condition, environmental factors, and testing technique.',
     section: '6.3.1',
@@ -1531,8 +1721,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_3_ADV_01',
     question: 'How should measurement uncertainty be considered in test results?',
-    options: ['Ignore it', 'Apply appropriate safety margins', 'Estimate roughly', 'Not relevant'],
-    correctAnswer: 1,
+    options: [
+      'Apply appropriate safety margins',
+      'Potential safety hazards',
+      'Investigate cause of variation',
+      'Isolate SPDs during testing',
+    ],
+    correctAnswer: 0,
     explanation:
       'Measurement uncertainty should be considered by applying appropriate safety margins to critical results.',
     section: '6.3.1',
@@ -1543,10 +1738,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_ADV_02',
     question: 'What considerations apply to testing equipment with electronic components?',
     options: [
-      'Same as normal testing',
+      'Carefully to prevent damage',
       'Special precautions to prevent damage',
-      'Cannot be tested',
-      'No precautions needed',
+      'Type, severity, and urgency',
+      'Check for damage and strain relief',
     ],
     correctAnswer: 1,
     explanation:
@@ -1559,10 +1754,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_BAS_05',
     question: 'What should be done if a test result seems incorrect?',
     options: [
-      'Accept it',
+      'Looking for obvious defects',
       'Investigate and retest if necessary',
-      'Ignore it',
-      'Estimate correct value',
+      'Sharp bends and damage risks',
+      'Check condition and correct fuse wire',
     ],
     correctAnswer: 1,
     explanation:
@@ -1575,12 +1770,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_BAS_06',
     question: 'What documentation should accompany test equipment?',
     options: [
-      'None needed',
       'Calibration certificates and user manuals',
-      'Purchase receipt only',
-      'Warranty card only',
+      'Secure connections and accessibility',
+      'Overloading with heavy fittings',
+      'Length, cross-sectional area, material',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Test equipment should have current calibration certificates and user manuals available.',
     section: '6.3.1',
@@ -1591,12 +1786,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_BAS_07',
     question: 'How should test equipment be stored?',
     options: [
-      'Anywhere convenient',
+      'Must understand system configurations',
+      'Check accessibility and condition',
+      'No, they cannot sign certificates',
       'In appropriate conditions to prevent damage',
-      'Outside',
-      'In damp areas',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Test equipment should be stored in appropriate conditions to prevent damage and maintain accuracy.',
     section: '6.3.1',
@@ -1607,12 +1802,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_BAS_08',
     question: 'What should be done before starting any testing sequence?',
     options: [
-      'Start immediately',
+      'Record and investigate the cause',
+      'To prove compliance with regulations',
       'Plan the testing sequence and safety measures',
-      'Call supervisor',
-      'Complete paperwork',
+      'Assess against current safety standards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Planning the testing sequence and safety measures is essential before starting any testing.',
     section: '6.3.8',
@@ -1623,12 +1818,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_INT_05',
     question: 'How do supply variations affect test results?',
     options: [
-      'No effect',
       'Can significantly affect some measurements',
-      'Only minor effects',
-      'Improves accuracy',
+      'Electrical Installation Certificate',
+      'Test instrument safety requirements',
+      'Conduct basic tests under supervision',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Supply voltage variations can significantly affect some test measurements and should be considered.',
     section: '6.3.1',
@@ -1639,10 +1834,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_INT_06',
     question: 'What precautions apply when testing circuits with surge protection devices?',
     options: [
-      'No special precautions',
+      'Enhanced safety measures and suitable equipment',
       'May need to isolate SPDs during testing',
-      'Cannot test',
-      'Normal procedures',
+      'On all circuits before energising',
+      'Secure mounting and labelling',
     ],
     correctAnswer: 1,
     explanation:
@@ -1654,7 +1849,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_3_BAS_09',
     question: 'What is the purpose of range selection on test instruments?',
-    options: ['Cost control', 'Optimise accuracy and safety', 'Speed testing', 'Show expertise'],
+    options: [
+      'Legal and insurance implications',
+      'Optimise accuracy and safety',
+      'Coordinate to ensure safety',
+      'Weather protection and UV resistance',
+    ],
     correctAnswer: 1,
     explanation:
       'Correct range selection optimises measurement accuracy and ensures safe operation.',
@@ -1665,8 +1865,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_3_BAS_10',
     question: 'How should test instruments be handled during use?',
-    options: ['Roughly', 'Carefully to prevent damage', 'Quickly', 'Any way convenient'],
-    correctAnswer: 1,
+    options: [
+      'Torch and basic tools',
+      'Before any electrical testing',
+      'Burn marks or loose terminals',
+      'Carefully to prevent damage',
+    ],
+    correctAnswer: 3,
     explanation:
       'Test instruments should be handled carefully to prevent damage and maintain accuracy.',
     section: '6.3.1',
@@ -1677,12 +1882,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_BAS_11',
     question: 'What should be done after completing testing?',
     options: [
-      'Leave equipment connected',
       'Safely disconnect and store equipment',
-      'Rush to next job',
-      'Leave for others',
+      'Inspection is visual, testing uses instruments',
+      'Competent person supervision',
+      'Competence varies with work complexity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Equipment should be safely disconnected and properly stored after completing testing.',
     section: '6.3.8',
@@ -1694,11 +1899,11 @@ export const module6QuestionBank: Question[] = [
     question: 'How should testing be coordinated with other trades?',
     options: [
       'Work independently',
-      'Coordinate to ensure safety',
       'No coordination needed',
+      'Coordinate to ensure safety',
       'Avoid other trades',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Testing should be coordinated with other trades to ensure safety and prevent interference.',
     section: '6.3.8',
@@ -1709,12 +1914,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_3_INT_08',
     question: 'What considerations apply to testing in occupied buildings?',
     options: [
-      'Same as empty buildings',
+      'Check switch connections and outlets',
+      'Ensure ring integrity and safety',
+      'Accurate measurement of low resistances',
       'Minimise disruption and ensure safety',
-      'Cannot test',
-      'No special considerations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Testing in occupied buildings requires minimising disruption while ensuring safety of occupants.',
     section: '6.3.8',
@@ -1743,12 +1948,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_1_02',
     question: 'Which conductors require continuity testing?',
     options: [
-      'Live conductors only',
       'Protective conductors (earth)',
-      'Neutral conductors only',
-      'All conductors',
+      'Earth electrode connections',
+      'Stop testing and investigate',
+      'Overloading with heavy fittings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Protective conductors (CPC - earth) must be tested to ensure effective earth fault protection.',
     section: '6.4.1',
@@ -1758,8 +1963,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_1_03',
     question: 'What instrument setting is used for continuity testing?',
-    options: ['Voltage', 'Low resistance (ohms)', 'High resistance', 'Current'],
-    correctAnswer: 1,
+    options: [
+      'Voltage',
+      'Current',
+      'High resistance',
+      'Low resistance (ohms)',
+    ],
+    correctAnswer: 3,
     explanation:
       'Continuity testing uses low resistance measurement to check for complete electrical paths.',
     section: '6.4.1',
@@ -1769,8 +1979,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_1_04',
     question: 'What is considered a satisfactory continuity reading?',
-    options: ['Infinite resistance', 'Very low resistance', 'High resistance', 'Medium resistance'],
-    correctAnswer: 1,
+    options: [
+      'Infinite resistance',
+      'High resistance',
+      'Very low resistance',
+      'Medium resistance',
+    ],
+    correctAnswer: 2,
     explanation: 'Satisfactory continuity shows very low resistance, typically less than 1 ohm.',
     section: '6.4.1',
     difficulty: 'basic',
@@ -1779,8 +1994,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_2_01',
     question: 'What instrument is used for continuity testing?',
-    options: ['Insulation resistance tester', 'Low resistance ohmmeter', 'Voltmeter', 'Ammeter'],
-    correctAnswer: 1,
+    options: [
+      'Insulation resistance tester',
+      'Voltmeter',
+      'Low resistance ohmmeter',
+      'Ammeter',
+    ],
+    correctAnswer: 2,
     explanation:
       'A low resistance ohmmeter is used to accurately measure the low resistance of protective conductors.',
     section: '6.4.2',
@@ -1791,12 +2011,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_2_02',
     question: 'Why is a low resistance ohmmeter preferred for CPC testing?',
     options: [
-      'Cost effective',
+      'EAWR (Electricity at Work Regulations)',
+      'High humidity decreases resistance',
+      'Competent person supervision',
       'Accurate measurement of low resistances',
-      'Easy to use',
-      'Legal requirement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Low resistance ohmmeters provide accurate measurements of the very low resistances in protective conductors.',
     section: '6.4.2',
@@ -1806,8 +2026,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_2_03',
     question: 'What current is typically used in low resistance ohmmeters?',
-    options: ['1mA', '10mA', '100mA or more', '1A'],
-    correctAnswer: 2,
+    options: [
+      '100mA or more',
+      '10mA',
+      '1mA',
+      '1A',
+    ],
+    correctAnswer: 0,
     explanation:
       'Low resistance ohmmeters use currents of 100mA or more to overcome contact resistance.',
     section: '6.4.2',
@@ -1818,12 +2043,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_3_01',
     question: 'What does polarity testing check?',
     options: [
-      'Voltage levels',
+      'All testing completed satisfactorily',
+      'Secure mounting and condition',
+      'Protective conductors (earth)',
       'Correct connection of live and neutral',
-      'Insulation resistance',
-      'Earth continuity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Polarity testing ensures live and neutral conductors are correctly connected.',
     section: '6.4.3',
     difficulty: 'basic',
@@ -1834,11 +2059,11 @@ export const module6QuestionBank: Question[] = [
     question: 'When should polarity be checked?',
     options: [
       'Only on single-phase circuits',
-      'On all circuits before energising',
       'Only on three-phase circuits',
+      'On all circuits before energising',
       'After energising only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Polarity must be checked on all circuits before energising to ensure safe operation.',
     section: '6.4.3',
@@ -1848,7 +2073,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_3_03',
     question: 'At what points should polarity be checked?',
-    options: ['Consumer unit only', 'All outlets and switches', 'Sockets only', 'Lights only'],
+    options: [
+      'Consumer unit only',
+      'All outlets and switches',
+      'Sockets only',
+      'Lights only',
+    ],
     correctAnswer: 1,
     explanation: 'Polarity must be checked at all outlets, switches, and control points.',
     section: '6.4.3',
@@ -1858,8 +2088,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_3_04',
     question: 'What happens if polarity is incorrect?',
-    options: ['Nothing', 'Potential safety hazards', 'Improved efficiency', 'Cost savings'],
-    correctAnswer: 1,
+    options: [
+      'Potential safety hazards',
+      'Nothing',
+      'Improved efficiency',
+      'Cost savings',
+    ],
+    correctAnswer: 0,
     explanation: 'Incorrect polarity can create serious safety hazards including shock risks.',
     section: '6.4.3',
     difficulty: 'intermediate',
@@ -1869,12 +2104,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_4_01',
     question: 'What is a ring circuit?',
     options: [
-      'A circular cable',
       'A circuit with two paths',
+      'A circular cable',
       'A protective circuit',
       'A lighting circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'A ring circuit has two paths from the distribution board to serve outlets.',
     section: '6.4.4',
     difficulty: 'basic',
@@ -1884,10 +2119,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_4_02',
     question: 'Why do ring circuits require special testing?',
     options: [
-      'Legal requirement only',
+      'On all circuits before energising',
       'Ensure ring integrity and safety',
-      'Cost control',
-      'Time management',
+      'Length, cross-sectional area, material',
+      'Stop and check equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -1899,7 +2134,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_5_01',
     question: 'What should be recorded for each continuity test?',
-    options: ['Nothing', 'Test result and location', 'Time only', 'Inspector name only'],
+    options: [
+      'Nothing',
+      'Test result and location',
+      'Time only',
+      'Inspector name only',
+    ],
     correctAnswer: 1,
     explanation: 'Each test should record the result value and the specific location tested.',
     section: '6.4.5',
@@ -1909,8 +2149,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_BAS_01',
     question: 'What preparation is needed before continuity testing?',
-    options: ['None', 'Isolate circuit and disconnect loads', 'Energise circuit', 'Connect loads'],
-    correctAnswer: 1,
+    options: [
+      'In appropriate conditions to prevent damage',
+      'Investigate cause of variation',
+      'Isolate circuit and disconnect loads',
+      'Visual inspection of leads and probes',
+    ],
+    correctAnswer: 2,
     explanation: 'Circuits must be isolated and loads disconnected before continuity testing.',
     section: '6.4.1',
     difficulty: 'basic',
@@ -1919,8 +2164,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_BAS_02',
     question: 'How should test leads be connected for continuity testing?',
-    options: ['Randomly', 'Between points being tested', 'To earth only', 'To live only'],
-    correctAnswer: 1,
+    options: [
+      'Temperature and humidity',
+      'Correct type and rating',
+      'Secure mounting and condition',
+      'Between points being tested',
+    ],
+    correctAnswer: 3,
     explanation:
       'Test leads should be connected between the specific points being tested for continuity.',
     section: '6.4.2',
@@ -1930,7 +2180,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_BAS_03',
     question: 'What is the typical acceptable resistance for a protective conductor?',
-    options: ['Less than 1 ohm', 'More than 10 ohms', 'Any value', 'Exactly 1 ohm'],
+    options: [
+      'Less than 1 ohm',
+      'Any value',
+      'More than 10 ohms',
+      'Exactly 1 ohm',
+    ],
     correctAnswer: 0,
     explanation:
       'Protective conductor resistance should typically be less than 1 ohm for most installations.',
@@ -1941,7 +2196,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_BAS_04',
     question: 'Why must circuits be isolated before continuity testing?',
-    options: ['Legal requirement', 'Safety and accurate measurements', 'Cost reduction', 'Speed'],
+    options: [
+      'Can give false high readings',
+      'Safety and accurate measurements',
+      'Test result and location',
+      'Before insulation resistance testing',
+    ],
     correctAnswer: 1,
     explanation:
       'Isolation ensures safety and prevents other paths affecting measurement accuracy.',
@@ -1952,8 +2212,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_INT_01',
     question: 'How can contact resistance affect continuity measurements?',
-    options: ['No effect', 'Can give false high readings', 'Improves accuracy', 'Reduces readings'],
-    correctAnswer: 1,
+    options: [
+      'Electrical Installation Certificate',
+      'Complete electrical path',
+      'Physical damage and correct routing',
+      'Can give false high readings',
+    ],
+    correctAnswer: 3,
     explanation:
       'Poor contact resistance at probe connections can give falsely high continuity readings.',
     section: '6.4.2',
@@ -1964,12 +2229,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_INT_02',
     question: 'What factors affect the resistance of protective conductors?',
     options: [
-      'Colour only',
+      'Secure mounting and labelling',
+      'Person with knowledge and experience',
       'Length, cross-sectional area, material',
-      'Age only',
-      'Installation method only',
+      'Clear, understandable language',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Conductor resistance depends on length, cross-sectional area, and material properties.',
     section: '6.4.1',
@@ -1980,10 +2245,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_INT_03',
     question: 'How should polarity be tested on lighting circuits?',
     options: [
-      'Not tested',
+      'Limit fault current in case of errors',
       'Check switch connections and outlets',
-      'Visual only',
-      'Assume correct',
+      'Circuit details and test conditions',
+      'Ensure protective device operation',
     ],
     correctAnswer: 1,
     explanation: 'Lighting circuit polarity should be checked at switches and light outlets.',
@@ -1995,12 +2260,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_INT_04',
     question: 'What special considerations apply to ring circuit testing?',
     options: [
-      'Same as radial circuits',
       'Must verify ring integrity',
-      'Not testable',
-      'Visual only',
+      'Check security and box condition',
+      'To all earth points',
+      'Ensure circuits isolated',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Ring circuits require special tests to verify the ring is complete and not broken.',
     section: '6.4.4',
@@ -2010,8 +2275,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_BAS_05',
     question: 'Where should the main earth terminal continuity be tested?',
-    options: ['Not tested', 'To all earth points', 'One point only', 'Visual only'],
-    correctAnswer: 1,
+    options: [
+      'Not tested',
+      'One point only',
+      'To all earth points',
+      'Visual only',
+    ],
+    correctAnswer: 2,
     explanation:
       'Main earth terminal continuity should be tested to all earthed points in the installation.',
     section: '6.4.1',
@@ -2021,8 +2291,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_BAS_06',
     question: 'What test voltage is used for polarity testing?',
-    options: ['High voltage', 'Low voltage from ohmmeter', 'Mains voltage', 'No voltage'],
-    correctAnswer: 1,
+    options: [
+      'Looking for obvious defects',
+      'Correct type and rating',
+      'Clear description and location',
+      'Low voltage from ohmmeter',
+    ],
+    correctAnswer: 3,
     explanation: 'Polarity testing uses low voltage from an ohmmeter or continuity tester.',
     section: '6.4.3',
     difficulty: 'basic',
@@ -2031,8 +2306,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_BAS_07',
     question: 'How should bonding conductor continuity be tested?',
-    options: ['Not tested', 'Test from main earth to bonded items', 'Visual only', 'Estimate'],
-    correctAnswer: 1,
+    options: [
+      'Test from main earth to bonded items',
+      'BS 7671 IET Wiring Regulations',
+      'Appropriate covers and barriers',
+      'Coordinate to ensure safety',
+    ],
+    correctAnswer: 0,
     explanation:
       'Bonding conductor continuity should be tested from the main earth terminal to bonded items.',
     section: '6.4.1',
@@ -2042,7 +2322,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_BAS_08',
     question: 'What should be done if continuity test fails?',
-    options: ['Ignore', 'Investigate and rectify fault', 'Retest only', 'Estimate value'],
+    options: [
+      'Safe access for maintenance',
+      'Investigate and rectify fault',
+      'Ensure safety before live operation',
+      'Frequent tripping or damage',
+    ],
     correctAnswer: 1,
     explanation: 'Failed continuity tests indicate faults that must be investigated and rectified.',
     section: '6.4.5',
@@ -2053,12 +2338,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_INT_05',
     question: 'How do temperature changes affect conductor resistance?',
     options: [
-      'No effect',
+      'May require modified procedures and criteria',
+      'Safety level for electrical environments',
+      'All testing completed satisfactorily',
       'Higher temperature increases resistance',
-      'Temperature decreases resistance',
-      'Random effect',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Conductor resistance generally increases with temperature for metallic conductors.',
     section: '6.4.1',
@@ -2069,12 +2354,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_INT_06',
     question: 'What precautions apply when testing circuits with electronic equipment?',
     options: [
-      'No precautions',
+      'Ensure ring integrity and safety',
+      'Age, environment, and original standards',
       'Disconnect electronic equipment',
-      'Use high voltage',
-      'Test with equipment connected',
+      'No, they cannot sign certificates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'Electronic equipment should be disconnected to prevent damage during testing.',
     section: '6.4.1',
     difficulty: 'intermediate',
@@ -2084,12 +2369,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_ADV_01',
     question: 'How should measurement uncertainty be considered in continuity testing?',
     options: [
-      'Ignore uncertainty',
+      'Safe identification and isolation',
+      'Finger guards and fused leads',
+      'Operation and security',
       'Apply safety factors to limits',
-      'Estimate roughly',
-      'Not relevant',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Measurement uncertainty should be considered by applying appropriate safety factors to acceptance limits.',
     section: '6.4.5',
@@ -2100,12 +2385,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_BAS_09',
     question: 'What is the purpose of testing earth fault loop impedance path continuity?',
     options: [
-      'Not important',
+      'Legal liability for the work',
+      'In appropriate conditions to prevent damage',
       'Ensure protective device operation',
-      'Cost control',
-      'Legal requirement only',
+      'Visual inspection of leads and probes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Earth fault loop path continuity ensures protective devices can operate effectively during faults.',
     section: '6.4.1',
@@ -2115,8 +2400,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_BAS_10',
     question: 'How should test results be compared with requirements?',
-    options: ['Not compared', 'Against BS 7671 limits', 'Personal judgment', 'Client requirements'],
-    correctAnswer: 1,
+    options: [
+      'Against BS 7671 limits',
+      'Not compared',
+      'Personal judgment',
+      'Client requirements',
+    ],
+    correctAnswer: 0,
     explanation: 'Test results should be compared against the limits specified in BS 7671.',
     section: '6.4.5',
     difficulty: 'basic',
@@ -2126,10 +2416,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_INT_07',
     question: 'What documentation should accompany continuity test results?',
     options: [
-      'None needed',
+      'Ensure safety before live operation',
       'Circuit details and test conditions',
-      'Time only',
-      'Inspector name only',
+      'Results, conditions, and observations',
+      'Discharge circuit and reconnect equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -2142,12 +2432,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_INT_08',
     question: 'How should continuity testing be sequenced with other tests?',
     options: [
-      'Last',
       'Before insulation resistance testing',
-      'During energised tests',
-      'Random order',
+      'Secure mounting and labelling',
+      'Clearly and systematically',
+      'Burn marks or loose terminals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'Continuity testing should be performed before insulation resistance testing.',
     section: '6.4.5',
     difficulty: 'intermediate',
@@ -2156,8 +2446,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_4_BAS_11',
     question: 'What safety measures apply during continuity testing?',
-    options: ['None needed', 'Ensure circuits isolated', 'Work live', 'Rush testing'],
-    correctAnswer: 1,
+    options: [
+      'Work live',
+      'None needed',
+      'Rush testing',
+      'Ensure circuits isolated',
+    ],
+    correctAnswer: 3,
     explanation: 'Circuits must be properly isolated and proved dead before continuity testing.',
     section: '6.4.1',
     difficulty: 'basic',
@@ -2167,12 +2462,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_BAS_12',
     question: 'How should inconsistent test results be handled?',
     options: [
+      'Average results',
       'Accept first result',
       'Investigate and retest',
-      'Average results',
       'Ignore differences',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Inconsistent results should be investigated and retesting performed to determine the correct value.',
     section: '6.4.5',
@@ -2183,12 +2478,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_INT_09',
     question: 'What factors can cause high resistance in protective conductors?',
     options: [
-      'Good connections only',
+      'Check accessibility and condition',
+      'Investigate cause of variation',
+      'Consider test conditions and environment',
       'Corrosion, loose connections, damage',
-      'Low temperature',
-      'Short length',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'High resistance can result from corrosion, loose connections, or physical damage to conductors.',
     section: '6.4.1',
@@ -2199,10 +2494,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_4_INT_10',
     question: 'How should polarity testing be documented?',
     options: [
-      'Not documented',
+      'Competent person supervision',
       'Record all test points and results',
-      'Brief notes only',
-      'Sketch only',
+      'Clear description and location',
+      'Higher values are better',
     ],
     correctAnswer: 1,
     explanation:
@@ -2216,12 +2511,12 @@ export const module6QuestionBank: Question[] = [
     question:
       'What considerations apply to continuity testing in installations with multiple earthing systems?',
     options: [
-      'Same as single systems',
+      'Test conditions, environment, and standards',
+      'Isolate SPDs during testing',
       'Must understand system configurations',
-      'Cannot test',
-      'Visual only',
+      'Disconnect electronic equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Multiple earthing systems require understanding of system configurations for proper testing.',
     section: '6.4.1',
@@ -2234,12 +2529,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_1_01',
     question: 'What is the purpose of insulation resistance testing?',
     options: [
-      'To measure current flow',
       'To check insulation effectiveness',
-      'To test continuity',
-      'To measure voltage',
+      'Digital with appropriate safety rating',
+      'Limit fault current in case of errors',
+      'EAWR (Electricity at Work Regulations)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Insulation resistance testing checks that insulation can effectively prevent unwanted current flow.',
     section: '6.5.1',
@@ -2250,10 +2545,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_1_02',
     question: 'What does poor insulation resistance indicate?',
     options: [
-      'Good condition',
+      'Appropriate covers and barriers',
       'Potential earth faults or deterioration',
-      'Normal operation',
-      'Cost savings',
+      'Document all results and reasons for retesting',
+      'Complete installation and test details',
     ],
     correctAnswer: 1,
     explanation:
@@ -2265,8 +2560,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_5_1_03',
     question: 'When should insulation resistance testing be performed?',
-    options: ['After energising', 'Before energising', 'During operation', 'Never'],
-    correctAnswer: 1,
+    options: [
+      'After energising',
+      'During operation',
+      'Before energising',
+      'Never',
+    ],
+    correctAnswer: 2,
     explanation: 'Insulation resistance testing must be performed before energising circuits.',
     section: '6.5.1',
     difficulty: 'basic',
@@ -2275,8 +2575,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_5_2_01',
     question: 'What voltage is typically used for insulation resistance testing on 230V circuits?',
-    options: ['230V', '500V', '1000V', '50V'],
-    correctAnswer: 1,
+    options: [
+      '230V',
+      '1000V',
+      '50V',
+      '500V',
+    ],
+    correctAnswer: 3,
     explanation:
       '500V DC is the standard test voltage for insulation resistance testing on 230V circuits.',
     section: '6.5.2',
@@ -2286,8 +2591,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_5_2_02',
     question: 'What type of voltage is used for insulation resistance testing?',
-    options: ['AC voltage', 'DC voltage', 'Either AC or DC', 'No voltage'],
-    correctAnswer: 1,
+    options: [
+      'AC voltage',
+      'Either AC or DC',
+      'DC voltage',
+      'No voltage',
+    ],
+    correctAnswer: 2,
     explanation:
       'DC voltage is used for insulation resistance testing to avoid capacitive effects.',
     section: '6.5.2',
@@ -2298,10 +2608,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_2_03',
     question: 'Why is the correct test voltage important?',
     options: [
-      'Cost control',
+      'Record all test points and results',
       'Proper stress testing of insulation',
-      'Speed of testing',
-      'Equipment protection',
+      'Use appropriate PPE and procedures',
+      'Electricity at Work Regulations',
     ],
     correctAnswer: 1,
     explanation:
@@ -2315,11 +2625,11 @@ export const module6QuestionBank: Question[] = [
     question: 'What precaution must be taken before insulation resistance testing?',
     options: [
       'Ensure circuit is energised',
-      'Disconnect electronic equipment',
       'Check earth continuity',
+      'Disconnect electronic equipment',
       'Measure voltage first',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Electronic equipment must be disconnected to prevent damage from the high test voltage.',
     section: '6.5.3',
@@ -2330,12 +2640,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_3_02',
     question: 'What equipment should be isolated before IR testing?',
     options: [
-      'Nothing',
+      'Safety level for electrical environments',
+      'Temperature, humidity, and other relevant factors',
+      'Result, location, conditions, and equipment used',
       'Electronic equipment and equipment with low insulation',
-      'Only computers',
-      'Only lights',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Electronic equipment and equipment with intentionally low insulation must be isolated.',
     section: '6.5.3',
@@ -2345,7 +2655,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_5_3_03',
     question: 'Why might electronic equipment be damaged by IR testing?',
-    options: ['High test voltage', 'Low test voltage', 'AC voltage', 'No risk'],
+    options: [
+      'High test voltage',
+      'Low test voltage',
+      'AC voltage',
+      'No risk',
+    ],
     correctAnswer: 0,
     explanation: 'The high DC test voltage can damage sensitive electronic components.',
     section: '6.5.3',
@@ -2355,7 +2670,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_5_4_01',
     question: 'What is the minimum acceptable insulation resistance for a 230V circuit?',
-    options: ['0.5 MΩ', '1.0 MΩ', '2.0 MΩ', '5.0 MΩ'],
+    options: [
+      '0.5 MΩ',
+      '1.0 MΩ',
+      '2.0 MΩ',
+      '5.0 MΩ',
+    ],
     correctAnswer: 1,
     explanation: 'BS 7671 requires a minimum of 1.0 MΩ for circuits up to 500V.',
     section: '6.5.4',
@@ -2365,7 +2685,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_5_4_02',
     question: 'What factors can affect insulation resistance readings?',
-    options: ['Temperature and humidity', 'Colour of cables', 'Age of building', 'Day of week'],
+    options: [
+      'Temperature and humidity',
+      'Colour of cables',
+      'Age of building',
+      'Day of week',
+    ],
     correctAnswer: 0,
     explanation:
       'Temperature and humidity significantly affect insulation resistance measurements.',
@@ -2377,12 +2702,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_4_03',
     question: 'How does temperature affect insulation resistance?',
     options: [
-      'No effect',
-      'Higher temperature increases resistance',
+      'Clear description and location',
+      'Isolate circuit and disconnect loads',
+      'Potential earth faults or deterioration',
       'Higher temperature decreases resistance',
-      'Only affects cables',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation: 'Higher temperatures generally decrease insulation resistance values.',
     section: '6.5.4',
     difficulty: 'intermediate',
@@ -2392,12 +2717,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_BAS_01',
     question: 'What safety precautions apply during IR testing?',
     options: [
-      'None needed',
+      'Motors may have lower acceptable limits',
+      'Equipment condition, environment, technique',
+      'Physical damage and correct routing',
       'Ensure isolation and discharge capacitance',
-      'Work live',
-      'Rush testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Circuits must be isolated and any stored charge discharged before and after IR testing.',
     section: '6.5.3',
@@ -2409,11 +2734,11 @@ export const module6QuestionBank: Question[] = [
     question: 'How should IR test results be interpreted?',
     options: [
       'Higher values are worse',
-      'Higher values are better',
       'All values acceptable',
+      'Higher values are better',
       'No interpretation needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'Higher insulation resistance values indicate better insulation condition.',
     section: '6.5.4',
     difficulty: 'basic',
@@ -2423,10 +2748,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_BAS_03',
     question: 'What should be done if IR readings are below acceptable limits?',
     options: [
-      'Ignore results',
+      'Always include appropriate units',
       'Investigate and rectify faults',
-      'Retest only',
-      'Accept lower values',
+      'Coordinate to ensure safety',
+      'Detailed records with locations',
     ],
     correctAnswer: 1,
     explanation: 'Low IR readings indicate faults that must be investigated and rectified.',
@@ -2438,12 +2763,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_BAS_04',
     question: 'Between which points should IR testing be carried out?',
     options: [
-      'Live conductors only',
       'Live to earth and between conductors',
-      'Earth only',
-      'Neutral only',
+      'Any change to the installation',
+      'Can give false high readings',
+      'According to manufacturer recommendations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IR testing should be carried out between live conductors and earth, and between live conductors.',
     section: '6.5.1',
@@ -2453,8 +2778,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_5_BAS_05',
     question: 'What instrument is used for insulation resistance testing?',
-    options: ['Multimeter', 'Insulation resistance tester', 'Continuity tester', 'Voltmeter'],
-    correctAnswer: 1,
+    options: [
+      'Gnaw marks and stripped insulation',
+      'Correct type and rating',
+      'Weather protection and UV resistance',
+      'Insulation resistance tester',
+    ],
+    correctAnswer: 3,
     explanation:
       'A dedicated insulation resistance tester is used to apply the required test voltage.',
     section: '6.5.2',
@@ -2465,12 +2795,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_INT_01',
     question: 'How long should the test voltage be applied during IR testing?',
     options: [
-      'Instantly',
+      'Safety and accurate measurements',
+      'To prove compliance with regulations',
       'Long enough for stable reading',
-      'Exactly 1 minute',
-      'As long as possible',
+      'By danger level and urgency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Test voltage should be applied long enough to achieve a stable reading, typically 15-60 seconds.',
     section: '6.5.2',
@@ -2481,12 +2811,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_INT_02',
     question: 'What effect does humidity have on insulation resistance?',
     options: [
-      'No effect',
+      'Stop testing and investigate',
+      'Competent person supervision',
+      'Clear, understandable language',
       'High humidity decreases resistance',
-      'High humidity increases resistance',
-      'Only affects outdoor cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'High humidity can significantly decrease insulation resistance readings.',
     section: '6.5.4',
     difficulty: 'intermediate',
@@ -2495,8 +2825,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_5_INT_03',
     question: 'How should IR testing be performed on circuits with surge protection?',
-    options: ['Normal testing', 'Isolate SPDs during testing', 'Cannot test', 'Use lower voltage'],
-    correctAnswer: 1,
+    options: [
+      'Isolate SPDs during testing',
+      'Immediate isolation',
+      'Coordinate to ensure safety',
+      'Optimise accuracy and safety',
+    ],
+    correctAnswer: 0,
     explanation: 'Surge protection devices should be isolated during IR testing to prevent damage.',
     section: '6.5.3',
     difficulty: 'intermediate',
@@ -2506,10 +2841,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_INT_04',
     question: 'What preparation is needed before IR testing?',
     options: [
-      'None',
+      'High humidity decreases resistance',
       'Isolate circuit and disconnect equipment',
-      'Energise circuit',
-      'Connect all loads',
+      'Clear description and location',
+      'Investigate and possibly retest',
     ],
     correctAnswer: 1,
     explanation:
@@ -2522,12 +2857,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_BAS_06',
     question: 'What happens if insulation resistance is too low?',
     options: [
-      'No problem',
+      'Clear, understandable language',
+      'Security and suitability',
       'Risk of earth faults and shock',
-      'Improved performance',
-      'Cost savings',
+      'Physical damage and correct routing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Low insulation resistance creates risks of earth faults, electric shock, and fire.',
     section: '6.5.1',
@@ -2538,10 +2873,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_BAS_07',
     question: 'How should the test equipment be set up for IR testing?',
     options: [
-      'Any connection',
+      'According to manufacturer recommendations',
       'Follow manufacturer instructions',
-      'Random setup',
-      'Quick connection',
+      'Sharp bends and damage risks',
+      'Earth electrode connections',
     ],
     correctAnswer: 1,
     explanation:
@@ -2554,12 +2889,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_BAS_08',
     question: 'What should be done after completing IR testing?',
     options: [
-      'Leave connected',
       'Discharge circuit and reconnect equipment',
-      'Move to next circuit',
-      'Energise immediately',
+      'Always include appropriate units',
+      'Protective conductors (earth)',
+      'Check compliance and integration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'Circuits should be discharged and equipment reconnected after IR testing.',
     section: '6.5.3',
     difficulty: 'basic',
@@ -2569,12 +2904,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_INT_05',
     question: 'How do cable length and construction affect IR readings?',
     options: [
-      'No effect',
+      'Isolate circuit and disconnect loads',
+      'Results, conditions, and observations',
       'Longer cables may show lower readings',
-      'Only affects voltage rating',
-      'Improves readings',
+      'Apply safety margins to account for uncertainty',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Longer cables and complex constructions may show lower IR readings due to cumulative leakage.',
     section: '6.5.4',
@@ -2585,12 +2920,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_INT_06',
     question: 'What documentation should accompany IR test results?',
     options: [
-      'None needed',
+      'Digital with appropriate safety rating',
+      'Coordinate to ensure safety',
+      'Can significantly affect some measurements',
       'Test conditions and circuit details',
-      'Time only',
-      'Weather conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'IR test results should be documented with test conditions, temperature, humidity, and circuit details.',
     section: '6.5.4',
@@ -2601,12 +2936,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_ADV_01',
     question: 'How should IR testing be modified for installations in harsh environments?',
     options: [
-      'Same as normal',
+      'Condition, insulation, and connections',
+      'Special procedures and equipment certification',
       'Consider environmental effects on acceptance criteria',
-      'Cannot test',
-      'Use different voltage',
+      'Equipment condition, environment, technique',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Harsh environments may require consideration of environmental effects on acceptable IR values.',
     section: '6.5.4',
@@ -2616,8 +2951,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_5_BAS_09',
     question: 'Why is it important to record environmental conditions during IR testing?',
-    options: ['Legal requirement', 'Conditions affect readings', 'Cost control', 'Time management'],
-    correctAnswer: 1,
+    options: [
+      'Need additional security measures',
+      'Overcomes contact resistance',
+      'Stop testing and investigate',
+      'Conditions affect readings',
+    ],
+    correctAnswer: 3,
     explanation:
       'Environmental conditions significantly affect IR readings and should be recorded for reference.',
     section: '6.5.4',
@@ -2627,7 +2967,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_5_BAS_10',
     question: 'What voltage should be used for IR testing on SELV circuits?',
-    options: ['500V', '250V', '1000V', '230V'],
+    options: [
+      '500V',
+      '250V',
+      '1000V',
+      '230V',
+    ],
     correctAnswer: 1,
     explanation:
       'SELV circuits should be tested at 250V DC to avoid over-stressing the insulation.',
@@ -2639,12 +2984,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_INT_07',
     question: 'How should IR results be compared between different test occasions?',
     options: [
-      'Direct comparison',
       'Consider test conditions and environment',
-      'Not compared',
-      'Average values',
+      'Higher temperature increases resistance',
+      'Long enough for stable reading',
+      'Clear description and location',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IR results should be compared considering differences in test conditions and environmental factors.',
     section: '6.5.4',
@@ -2655,10 +3000,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_INT_08',
     question: 'What special considerations apply to IR testing of motor circuits?',
     options: [
-      'Same as lighting circuits',
+      'Live to earth and between conductors',
       'Motors may have lower acceptable limits',
-      'Cannot test motors',
-      'Use higher voltage',
+      'Electricity at Work Regulations',
+      'Burn marks or loose terminals',
     ],
     correctAnswer: 1,
     explanation:
@@ -2671,12 +3016,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_BAS_11',
     question: 'What should be done if IR readings vary significantly during testing?',
     options: [
-      'Use first reading',
+      'No, they cannot sign certificates',
+      'Any change to the installation',
       'Investigate cause of variation',
-      'Average readings',
-      'Ignore variations',
+      'Test from main earth to bonded items',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Significant variations in IR readings should be investigated to determine the cause.',
     section: '6.5.4',
@@ -2687,12 +3032,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_5_ADV_02',
     question: 'How does dielectric absorption affect IR measurements?',
     options: [
-      'No effect',
+      'Before insulation resistance testing',
+      'Accurate measurement of low resistances',
+      'Longer cables may show lower readings',
       'Can cause time-dependent reading changes',
-      'Improves accuracy',
-      'Only affects new cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'Dielectric absorption can cause IR readings to change over time during the test.',
     section: '6.5.4',
     difficulty: 'advanced',
@@ -2703,12 +3048,12 @@ export const module6QuestionBank: Question[] = [
     question:
       'What factors should be considered when establishing acceptance criteria for older installations?',
     options: [
-      'Age only',
+      'Evaluate against expected service life',
+      'Clear, understandable language',
       'Age, environment, and original standards',
-      'Visual condition only',
-      'Cost of replacement',
+      'Temperature, humidity, and other relevant factors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Acceptance criteria for older installations should consider age, environment, and the standards in effect when installed.',
     section: '6.5.4',
@@ -2722,11 +3067,11 @@ export const module6QuestionBank: Question[] = [
     question: 'Why is accurate recording of test results important?',
     options: [
       'Legal compliance only',
-      'Future reference and safety',
-      'Cost calculations',
       'Insurance purposes',
+      'Cost calculations',
+      'Future reference and safety',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Accurate records provide evidence of safety compliance and reference for future work.',
     section: '6.6.1',
@@ -2736,8 +3081,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_6_1_02',
     question: 'What information should be included in test records?',
-    options: ['Results only', 'Results, conditions, and observations', 'Names only', 'Dates only'],
-    correctAnswer: 1,
+    options: [
+      'Plan the testing sequence and safety measures',
+      'Test conditions, environment, and standards',
+      'Results, conditions, and observations',
+      'Appropriate covers and barriers',
+    ],
+    correctAnswer: 2,
     explanation:
       'Complete records include test results, test conditions, and relevant observations.',
     section: '6.6.1',
@@ -2747,7 +3097,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_6_1_03',
     question: 'How long should test records be retained?',
-    options: ['1 year', 'Until next inspection', 'Permanently', 'No requirement'],
+    options: [
+      '1 year',
+      'Until next inspection',
+      'Permanently',
+      'No requirement',
+    ],
     correctAnswer: 1,
     explanation:
       'Test records should be retained until the next inspection to provide reference information.',
@@ -2759,12 +3114,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_2_01',
     question: 'How should test results be interpreted?',
     options: [
-      'Against manufacturer specifications',
       'Against BS 7671 requirements',
-      'Against previous results',
       'Against client requirements',
+      'Against manufacturer specifications',
+      'Against previous results',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation: 'Test results must be compared against the requirements specified in BS 7671.',
     section: '6.6.2',
     difficulty: 'basic',
@@ -2774,10 +3129,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_2_02',
     question: 'What should be done with borderline test results?',
     options: [
-      'Ignore them',
+      'Length, cross-sectional area, material',
       'Investigate and possibly retest',
-      'Accept them',
-      'Fail automatically',
+      'Earth electrode connections',
+      'Accurate and safe measurements',
     ],
     correctAnswer: 1,
     explanation:
@@ -2789,8 +3144,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_6_2_03',
     question: 'Where can acceptance criteria for test results be found?',
-    options: ['Manufacturer data', 'BS 7671', 'Local regulations', 'Personal judgment'],
-    correctAnswer: 1,
+    options: [
+      'Personal judgment',
+      'Manufacturer data',
+      'BS 7671',
+      'Local regulations',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 7671 provides the acceptance criteria for electrical installation test results.',
     section: '6.6.2',
@@ -2801,10 +3161,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_3_01',
     question: 'What action should be taken if a test result fails to meet requirements?',
     options: [
-      'Ignore the result',
+      'Check documentation and plan tests',
       'Record and investigate the cause',
-      'Repeat the test only',
-      'Proceed with energising',
+      'Electricity at Work Regulations',
+      'Safety level for electrical environments',
     ],
     correctAnswer: 1,
     explanation:
@@ -2816,8 +3176,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_6_3_02',
     question: 'What immediate action is required for dangerous defects?',
-    options: ['Continue testing', 'Immediate isolation', 'Note for later', 'Ignore'],
-    correctAnswer: 1,
+    options: [
+      'Immediate isolation',
+      'Continue testing',
+      'Note for later',
+      'Ignore',
+    ],
+    correctAnswer: 0,
     explanation: 'Dangerous defects require immediate isolation to prevent injury or damage.',
     section: '6.6.3',
     difficulty: 'basic',
@@ -2826,8 +3191,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_6_3_03',
     question: 'How should defects be categorised?',
-    options: ['By cost', 'By danger level and urgency', 'By location', 'By age'],
-    correctAnswer: 1,
+    options: [
+      'Check documentation and plan tests',
+      'Environment and usage',
+      'All outlets and switches',
+      'By danger level and urgency',
+    ],
+    correctAnswer: 3,
     explanation:
       'Defects should be categorised by their danger level and urgency for remedial action.',
     section: '6.6.3',
@@ -2838,12 +3208,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_BAS_01',
     question: 'What should be recorded for each test performed?',
     options: [
-      'Result only',
       'Result, location, conditions, and equipment used',
-      'Time only',
-      'Inspector name',
+      'EAWR (Electricity at Work Regulations)',
+      'Special procedures and equipment certification',
+      'Safely disconnect and store equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Complete test records should include results, locations, conditions, and equipment details.',
     section: '6.6.1',
@@ -2853,7 +3223,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_6_BAS_02',
     question: 'How should test results be presented?',
-    options: ['Randomly', 'Clearly and systematically', 'Brief notes only', 'Verbal only'],
+    options: [
+      'Temperature and humidity',
+      'Clearly and systematically',
+      'Always include appropriate units',
+      'Prove the circuit is dead',
+    ],
     correctAnswer: 1,
     explanation:
       'Test results should be presented clearly and systematically for easy interpretation.',
@@ -2865,12 +3240,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_BAS_03',
     question: 'What information helps in future fault diagnosis?',
     options: [
-      'Results only',
+      'Use appropriate PPE and procedures',
+      'Length, cross-sectional area, material',
       'Detailed records of conditions and observations',
-      'Names only',
-      'Dates only',
+      'Longer cables may show lower readings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Detailed records of test conditions and observations help in future fault diagnosis.',
     section: '6.6.1',
@@ -2881,12 +3256,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_BAS_04',
     question: 'How should measurement units be recorded?',
     options: [
-      'No units needed',
+      'No, requires supervision',
+      'Check for damage and strain relief',
+      'Ensure circuits isolated',
       'Always include appropriate units',
-      'Estimate units',
-      'Use any units',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation: 'All measurements should be recorded with appropriate units to avoid confusion.',
     section: '6.6.1',
     difficulty: 'basic',
@@ -2895,7 +3270,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_6_INT_01',
     question: 'How should test result trends be analysed?',
-    options: ['Not analysed', 'Compare with previous results', 'Ignore trends', 'Estimate trends'],
+    options: [
+      'Corrosion, loose connections, damage',
+      'Compare with previous results',
+      'Conduct basic tests under supervision',
+      'Check security and box condition',
+    ],
     correctAnswer: 1,
     explanation:
       'Test result trends should be analysed by comparing with previous results to identify deterioration.',
@@ -2907,12 +3287,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_INT_02',
     question: 'What factors should be considered when interpreting test results?',
     options: [
-      'Results only',
       'Test conditions, environment, and standards',
-      'Personal opinion',
-      'Cost implications',
+      'May require modified procedures and criteria',
+      'Ensure protective device operation',
+      'Isolate circuit and disconnect equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Test interpretation should consider test conditions, environmental factors, and applicable standards.',
     section: '6.6.2',
@@ -2923,12 +3303,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_INT_03',
     question: 'How should measurement accuracy be considered in result interpretation?',
     options: [
-      'Ignore accuracy',
+      'Check documentation and plan tests',
+      'Temperature, humidity, and other relevant factors',
+      'Complete installation and test details',
       'Consider instrument accuracy in borderline cases',
-      'Assume perfect accuracy',
-      'Estimate accuracy',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Instrument accuracy should be considered, especially when results are close to acceptance limits.',
     section: '6.6.2',
@@ -2939,12 +3319,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_BAS_05',
     question: 'What should be done if test equipment gives inconsistent results?',
     options: [
-      'Use any result',
       'Stop and check equipment',
+      'Use any result',
       'Average results',
       'Ignore differences',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Inconsistent results indicate equipment problems that must be investigated before continuing.',
     section: '6.6.2',
@@ -2954,7 +3334,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_6_BAS_06',
     question: 'How should defects found during testing be prioritised?',
-    options: ['By cost', 'By safety risk', 'By convenience', 'Randomly'],
+    options: [
+      'By cost',
+      'By safety risk',
+      'By convenience',
+      'Randomly',
+    ],
     correctAnswer: 1,
     explanation: 'Defects should be prioritised by their safety risk and potential consequences.',
     section: '6.6.3',
@@ -2964,8 +3349,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_6_BAS_07',
     question: 'What documentation should accompany defect reports?',
-    options: ['None needed', 'Clear description and location', 'Estimate only', 'Verbal report'],
-    correctAnswer: 1,
+    options: [
+      'Previous certificates and drawings',
+      'Future reference and safety',
+      'Clear description and location',
+      'Disconnect electronic equipment',
+    ],
+    correctAnswer: 2,
     explanation:
       'Defect reports should include clear descriptions, exact locations, and severity assessments.',
     section: '6.6.3',
@@ -2976,12 +3366,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_INT_04',
     question: 'How should repeat test results be handled?',
     options: [
-      'Use first result',
+      'Check for damage and strain relief',
+      'All methods have specific requirements',
       'Document all results and reasons for retesting',
-      'Average results',
-      'Use last result',
+      'Circuit details and test conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation: 'All test results should be documented along with reasons for retesting.',
     section: '6.6.1',
     difficulty: 'intermediate',
@@ -2991,10 +3381,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_INT_05',
     question: 'What role does photographic evidence play in defect recording?',
     options: [
-      'Not useful',
+      'Must verify ring integrity',
       'Provides valuable supporting evidence',
-      'Only for insurance',
-      'Legal requirement',
+      'Results, conditions, and equipment used',
+      'Small additions or alterations',
     ],
     correctAnswer: 1,
     explanation:
@@ -3007,12 +3397,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_BAS_08',
     question: 'How should test results be communicated to clients?',
     options: [
-      'Technical language only',
+      'Issue corrected certificates',
+      'Low resistance ohmmeter',
+      'Test from main earth to bonded items',
       'Clear, understandable language',
-      'Not communicated',
-      'Verbal only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Test results should be communicated in clear, understandable language appropriate for the client.',
     section: '6.6.2',
@@ -3022,8 +3412,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_6_BAS_09',
     question: 'What should be included in defect classification?',
-    options: ['Location only', 'Type, severity, and urgency', 'Cost only', 'Time to fix'],
-    correctAnswer: 1,
+    options: [
+      'Type, severity, and urgency',
+      'Risk of earth faults and shock',
+      'Ensure protective device operation',
+      'On all circuits before energising',
+    ],
+    correctAnswer: 0,
     explanation:
       'Defect classification should include type, severity level, and urgency for remedial action.',
     section: '6.6.3',
@@ -3034,12 +3429,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_INT_06',
     question: 'How should environmental conditions during testing be recorded?',
     options: [
-      'Not recorded',
       'Temperature, humidity, and other relevant factors',
-      'Weather only',
-      'Temperature only',
+      'EAWR (Electricity at Work Regulations)',
+      'Detailed records of conditions and observations',
+      'Inspection is visual, testing uses instruments',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Environmental conditions that can affect test results should be recorded for reference.',
     section: '6.6.1',
@@ -3050,12 +3445,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_BAS_10',
     question: 'What should be done with test records after completion?',
     options: [
-      'Discard them',
+      'Can affect accuracy and safety',
+      'Conditions affect readings',
       'Store safely for future reference',
-      'Give to client only',
-      'Keep at home',
+      'Prove the circuit is dead',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Test records should be stored safely and securely for future reference and legal purposes.',
     section: '6.6.1',
@@ -3066,10 +3461,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_ADV_01',
     question: 'How should statistical analysis be applied to large volumes of test data?',
     options: [
-      'Not applicable',
+      'All work and testing completed satisfactorily',
       'Identify patterns and deterioration trends',
-      'Random sampling',
-      'Visual inspection only',
+      'Safety level for electrical environments',
+      'May require different standards',
     ],
     correctAnswer: 1,
     explanation:
@@ -3082,12 +3477,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_INT_07',
     question: 'What considerations apply to digital vs. paper record keeping?',
     options: [
-      'No difference',
+      'Affects product compliance requirements',
+      'Show circuit layouts and connections',
+      'Can significantly affect some measurements',
       'Each has advantages for different applications',
-      'Digital always better',
-      'Paper always better',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Digital and paper records each have advantages depending on the application and requirements.',
     section: '6.6.1',
@@ -3098,12 +3493,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_INT_08',
     question: 'How should test result accuracy be validated?',
     options: [
-      'Not validated',
+      'All methods have specific requirements',
+      'According to manufacturer recommendations',
       'Cross-check with different methods where possible',
-      'Accept first result',
-      'Estimate accuracy',
+      'Proper stress testing of insulation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Test result accuracy should be validated by cross-checking with different methods where possible.',
     section: '6.6.2',
@@ -3113,7 +3508,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_6_BAS_11',
     question: 'What should be recorded if testing cannot be completed?',
-    options: ['Nothing', 'Reason for incomplete testing', 'Estimate results', 'Skip documentation'],
+    options: [
+      'Previous certificates and drawings',
+      'Reason for incomplete testing',
+      'Protect people and property',
+      'Investigate and rectify fault',
+    ],
     correctAnswer: 1,
     explanation: 'If testing cannot be completed, the reasons should be clearly recorded.',
     section: '6.6.1',
@@ -3124,12 +3524,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_6_ADV_02',
     question: 'How should measurement uncertainty be quantified and recorded?',
     options: [
-      'Not quantified',
       'Calculate and record where significant',
-      'Estimate roughly',
-      'Ignore uncertainty',
+      'Affects product compliance requirements',
+      'Appropriate qualifications and competence',
+      'Gnaw marks and stripped insulation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Measurement uncertainty should be calculated and recorded where it significantly affects result interpretation.',
     section: '6.6.2',
@@ -3142,12 +3542,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_1_01',
     question: 'Why is electrical certification required?',
     options: [
-      'To increase costs',
+      'Investigate and rectify fault',
+      'Clear description and location',
       'To prove compliance with regulations',
-      'To extend warranties',
-      'To meet planning requirements',
+      'Evaluate against expected service life',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Certification provides evidence that work complies with relevant standards and regulations.',
     section: '6.7.1',
@@ -3158,12 +3558,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_1_02',
     question: 'What legal purpose do electrical certificates serve?',
     options: [
+      'Planning permission',
+      'Insurance requirement',
       'Cost justification',
       'Evidence of compliance',
-      'Insurance requirement',
-      'Planning permission',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Certificates provide legal evidence that work complies with relevant standards and regulations.',
     section: '6.7.1',
@@ -3174,12 +3574,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_2_01',
     question: 'What does EIC stand for?',
     options: [
+      'Electrical Implementation Certificate',
       'Electrical Installation Certificate',
       'Electrical Inspection Certificate',
-      'Electrical Implementation Certificate',
       'Electrical Installation Check',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'EIC stands for Electrical Installation Certificate, issued for new installations.',
     section: '6.7.2',
@@ -3190,12 +3590,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_2_02',
     question: 'When is an Electrical Installation Certificate required?',
     options: [
-      'Minor alterations',
       'New installations and major alterations',
-      'Repairs only',
-      'Periodic inspections',
+      'May require different standards',
+      'Evaluate against expected service life',
+      'Live to earth and between conductors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EICs are required for new installations and major alterations to existing installations.',
     section: '6.7.2',
@@ -3206,12 +3606,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_2_03',
     question: 'What must be completed before issuing an EIC?',
     options: [
-      'Payment received',
+      'Equipment condition, environment, technique',
+      'Can affect accuracy and safety',
+      'Condition, insulation, and connections',
       'All testing completed satisfactorily',
-      'Client approval',
-      'Insurance notification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'All required testing must be completed satisfactorily before an EIC can be issued.',
     section: '6.7.2',
@@ -3222,12 +3622,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_3_01',
     question: 'What is a Minor Works Certificate used for?',
     options: [
-      'New installations',
       'Small additions or alterations',
-      'Periodic inspections',
       'Fault investigations',
+      'New installations',
+      'Periodic inspections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Minor Works Certificates are used for small additions, alterations, or replacements.',
     section: '6.7.3',
@@ -3238,10 +3638,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_3_02',
     question: 'What type of work requires a Minor Works Certificate?',
     options: [
-      'New consumer units',
+      'On all circuits before energising',
       'Small additions like extra socket',
-      'Complete rewires',
-      'Periodic inspections',
+      'Any change to the installation',
+      'Competent person supervision',
     ],
     correctAnswer: 1,
     explanation:
@@ -3254,12 +3654,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_4_01',
     question: 'Who can legally sign electrical certificates?',
     options: [
-      'Any electrician',
-      'Level 2 qualified persons',
+      'Determines testing approach and safety measures',
+      'Test instrument safety requirements',
+      'Plan the testing sequence and safety measures',
       'Competent persons with appropriate qualifications',
-      'Installation supervisors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Only appropriately qualified and competent persons can legally sign electrical certificates.',
     section: '6.7.4',
@@ -3270,10 +3670,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_4_02',
     question: 'What qualifications are needed to sign electrical certificates?',
     options: [
-      'Level 2 qualification',
-      'Any electrical qualification',
+      'Check compliance and integration',
+      'Ensure protective device operation',
       'Appropriate qualifications and competence',
-      'Company registration only',
+      'Calibration certificates and user manuals',
     ],
     correctAnswer: 2,
     explanation:
@@ -3286,10 +3686,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_4_03',
     question: 'What responsibility does signing a certificate create?',
     options: [
-      'None',
+      'Can give false high readings',
       'Legal liability for the work',
-      'Administrative duty only',
-      'Cost responsibility',
+      'Ensure ring integrity and safety',
+      'Investigate and possibly retest',
     ],
     correctAnswer: 1,
     explanation:
@@ -3301,7 +3701,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_7_BAS_01',
     question: 'What information must be included on electrical certificates?',
-    options: ['Names only', 'Complete installation and test details', 'Dates only', 'Costs only'],
+    options: [
+      'BS 7671 IET Wiring Regulations',
+      'Complete installation and test details',
+      'Reason for incomplete testing',
+      'Safe working and circuit identification',
+    ],
     correctAnswer: 1,
     explanation:
       'Electrical certificates must include complete installation details and all relevant test results.',
@@ -3312,8 +3717,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_7_BAS_02',
     question: 'How should certificates be stored?',
-    options: ['Anywhere', 'Safely and accessibly', 'With tools', 'Not stored'],
-    correctAnswer: 1,
+    options: [
+      'Safely and accessibly',
+      'Anywhere',
+      'With tools',
+      'Not stored',
+    ],
+    correctAnswer: 0,
     explanation: 'Certificates should be stored safely and remain accessible for future reference.',
     section: '6.7.1',
     difficulty: 'basic',
@@ -3322,8 +3732,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_7_BAS_03',
     question: 'What should be done if errors are found on issued certificates?',
-    options: ['Ignore errors', 'Issue corrected certificates', 'Cross out errors', 'Leave as is'],
-    correctAnswer: 1,
+    options: [
+      'Against BS 7671 limits',
+      'Environment and usage',
+      'Can affect accuracy and safety',
+      'Issue corrected certificates',
+    ],
+    correctAnswer: 3,
     explanation:
       'Errors on certificates should be corrected by issuing new, accurate certificates.',
     section: '6.7.2',
@@ -3334,12 +3749,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_INT_01',
     question: 'What is the difference between an EIC and an EICR?',
     options: [
-      'No difference',
       'EIC for new work, EICR for existing installations',
-      'Different colours',
-      'Different costs',
+      'Consider instrument accuracy in borderline cases',
+      'Circuit details and test conditions',
+      'Affects product compliance requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EICs are for new installations, EICRs (Electrical Installation Condition Reports) are for existing installations.',
     section: '6.7.2',
@@ -3349,7 +3764,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_7_INT_02',
     question: 'What happens if work is carried out without proper certification?',
-    options: ['Nothing', 'Legal and insurance implications', 'Cost savings', 'Faster completion'],
+    options: [
+      'May have additional requirements',
+      'Legal and insurance implications',
+      'Correct connection of live and neutral',
+      'Potential safety hazards',
+    ],
     correctAnswer: 1,
     explanation:
       'Work without proper certification can have serious legal and insurance implications.',
@@ -3361,12 +3781,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_BAS_04',
     question: 'Who should receive copies of electrical certificates?',
     options: [
-      'No one',
+      'Safety level for electrical environments',
+      'Between points being tested',
       'Client and relevant authorities',
-      'Electrician only',
-      'Insurance company only',
+      'Voltage, current, resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Copies should be provided to the client and any relevant authorities as required.',
     section: '6.7.1',
@@ -3376,7 +3796,12 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_7_BAS_05',
     question: 'How long should electrical certificates be retained?',
-    options: ['1 year', 'Life of installation', '5 years', 'Not retained'],
+    options: [
+      '1 year',
+      'Life of installation',
+      '5 years',
+      'Not retained',
+    ],
     correctAnswer: 1,
     explanation: 'Electrical certificates should be retained for the life of the installation.',
     section: '6.7.1',
@@ -3387,12 +3812,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_INT_03',
     question: 'What role do certificates play in building regulations compliance?',
     options: [
-      'No role',
+      'Inspection comes first, then testing',
+      'Results, conditions, and equipment used',
       'Provide evidence of electrical compliance',
-      'Only for planning',
-      'Insurance only',
+      'Gnaw marks and stripped insulation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Electrical certificates provide evidence of compliance with electrical aspects of building regulations.',
     section: '6.7.1',
@@ -3403,12 +3828,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_BAS_06',
     question: 'What should be checked before signing a certificate?',
     options: [
-      'Nothing',
       'All work and testing completed satisfactorily',
-      'Client payment',
-      'Time constraints',
+      'Appropriate qualifications and competence',
+      'Evaluate against expected service life',
+      'Minimise disruption and ensure safety',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'All work and testing must be completed satisfactorily and verified before signing certificates.',
     section: '6.7.4',
@@ -3419,12 +3844,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_INT_04',
     question: 'How do scheme provider requirements affect certification?',
     options: [
-      'No effect',
+      'Coordinate to ensure safety',
+      'Overcomes contact resistance',
+      'Finger guards and fused leads',
       'May have additional requirements',
-      'Reduce requirements',
-      'Optional compliance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Competent person scheme providers may have additional requirements beyond basic certification.',
     section: '6.7.4',
@@ -3435,8 +3860,13 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_BAS_07',
     question:
       "What action should be taken if someone asks you to sign a certificate for work you didn't supervise?",
-    options: ['Sign it anyway', 'Refuse to sign', 'Sign with conditions', 'Charge extra'],
-    correctAnswer: 1,
+    options: [
+      'Sign it anyway',
+      'Charge extra',
+      'Sign with conditions',
+      'Refuse to sign',
+    ],
+    correctAnswer: 3,
     explanation:
       "You should never sign certificates for work you didn't supervise or verify personally.",
     section: '6.7.4',
@@ -3448,12 +3878,12 @@ export const module6QuestionBank: Question[] = [
     question:
       'What are the implications of the Construction Products Regulation on electrical certification?',
     options: [
-      'No implications',
       'Affects product compliance requirements',
-      'Only affects cost',
-      'Simplifies certification',
+      'Issue corrected certificates',
+      'Limit fault current in case of errors',
+      'Safety level for electrical environments',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'CPR affects compliance requirements for electrical products used in construction.',
     section: '6.7.1',
@@ -3464,12 +3894,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_INT_05',
     question: 'How should digital certificates be managed compared to paper certificates?',
     options: [
-      'Same as paper',
       'Need additional security measures',
-      'Less important',
-      'No management needed',
+      'Ensure equipment is functioning correctly',
+      'Burn marks or discolouration',
+      'Secure mounting and condition',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Digital certificates require additional security measures to prevent unauthorised access or alteration.',
     section: '6.7.1',
@@ -3479,8 +3909,13 @@ export const module6QuestionBank: Question[] = [
   {
     id: 'M6_7_BAS_08',
     question: 'What should be done if a client loses their electrical certificate?',
-    options: ['Nothing can be done', 'Issue a duplicate copy', 'Start again', 'Refer to solicitor'],
-    correctAnswer: 1,
+    options: [
+      'Nothing can be done',
+      'Start again',
+      'Issue a duplicate copy',
+      'Refer to solicitor',
+    ],
+    correctAnswer: 2,
     explanation: 'Duplicate copies of certificates can be issued if the original is lost.',
     section: '6.7.1',
     difficulty: 'basic',
@@ -3490,10 +3925,10 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_7_BAS_09',
     question: 'What is the purpose of the schedule of test results?',
     options: [
-      'Legal requirement only',
+      'Type, severity, and urgency',
       'Provide detailed test data',
-      'Cost breakdown',
-      'Time recording',
+      'Before energisation',
+      'Low resistance (ohms)',
     ],
     correctAnswer: 1,
     explanation:
@@ -3509,12 +3944,12 @@ export const module6QuestionBank: Question[] = [
     question:
       "How does the concept of 'competent person' relate to different levels of electrical work?",
     options: [
-      'Anyone can do any work',
+      'EAWR (Electricity at Work Regulations)',
+      'Plan the testing sequence and safety measures',
       'Competence varies with work complexity',
-      'Only affects certification',
-      'No relationship',
+      'Earth electrode connections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Competence requirements scale with work complexity - more complex work needs higher qualifications.',
     section: '6.1.5',
@@ -3525,12 +3960,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_ADV_02',
     question: 'What factors determine the frequency of periodic inspection and testing?',
     options: [
-      'Fixed 5-year intervals',
+      'Live to earth and between conductors',
+      'Person responsible for electrical safety',
+      'EAWR references BS 7671 as good practice',
       'Installation type, environment, and usage',
-      'Cost considerations only',
-      'Client preference',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Inspection frequency depends on installation type, environment, usage patterns, and deterioration risks.',
     section: '6.1.3',
@@ -3541,12 +3976,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_ADV_03',
     question: 'How do environmental conditions affect testing procedures and acceptance criteria?',
     options: [
-      'No effect',
       'May require modified procedures and criteria',
-      'Only affects equipment choice',
-      'Only affects timing',
+      'Record and investigate the cause',
+      'Identify patterns and deterioration trends',
+      'Isolate circuit and disconnect loads',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Harsh environments may require modified testing procedures and potentially different acceptance criteria.',
     section: '6.5.4',
@@ -3558,10 +3993,10 @@ export const module6QuestionBank: Question[] = [
     question:
       'What are the implications of discovering non-compliance with earlier standards during inspection?',
     options: [
-      'Ignore if working',
+      'To ensure continued safety over time',
       'Assess against current safety standards',
-      'Automatic failure',
-      'Client choice',
+      'Apply safety factors to limits',
+      'Evaluate against expected service life',
     ],
     correctAnswer: 1,
     explanation:
@@ -3574,12 +4009,12 @@ export const module6QuestionBank: Question[] = [
     id: 'M6_ADV_05',
     question: 'How should measurement uncertainty be considered in test result evaluation?',
     options: [
-      'Ignore uncertainty',
+      'Determines testing approach and safety measures',
+      'New installations and major alterations',
       'Apply safety margins to account for uncertainty',
-      'Use exact values only',
-      'Estimate roughly',
+      'Safe working and circuit identification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Measurement uncertainty should be considered when evaluating results near acceptance limits.',
     section: '6.6.2',

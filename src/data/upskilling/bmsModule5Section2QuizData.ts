@@ -2,10 +2,10 @@ export const bmsModule5Section2QuizData = [
   {
     question: 'What is BACnet and why is it important in BMS?',
     options: [
-      'A proprietary building control system',
+      'It transfers significantly increased wind loads into the building structure',
       'An open protocol designed specifically for building automation',
-      'A type of electrical cable',
-      'A Windows-based software application',
+      'Aluminium or copper bars short-circuited by end rings',
+      'Failure of ties, overloading, or inadequate foundations',
     ],
     correctAnswer: 'An open protocol designed specifically for building automation',
   },
@@ -42,20 +42,20 @@ export const bmsModule5Section2QuizData = [
   {
     question: 'Why are termination resistors needed on RS-485 networks?',
     options: [
-      'To increase communication speed',
+      'Star wiring instead of daisy-chain topology',
       'To prevent signal reflections and communication errors',
-      'To reduce power consumption',
-      'To improve cable flexibility',
+      'An open protocol designed specifically for building automation',
+      'It needs IP addressing and VLAN planning',
     ],
     correctAnswer: 'To prevent signal reflections and communication errors',
   },
   {
     question: 'What type of cabling is typically used for BACnet/IP?',
     options: [
-      'Coaxial cable',
+      'Split pairs or incorrect termination',
       'Cat5e or higher Ethernet cable',
-      'Twisted pair telephone cable',
-      'Speaker wire',
+      'Record C2 and inform responsible person',
+      'The route with highest pressure drop',
     ],
     correctAnswer: 'Cat5e or higher Ethernet cable',
   },

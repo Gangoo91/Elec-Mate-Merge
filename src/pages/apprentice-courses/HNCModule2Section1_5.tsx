@@ -32,16 +32,26 @@ const quickCheckQuestions = [
   {
     id: 'psi-value-unit',
     question: 'What is the SI unit for linear thermal transmittance (psi value)?',
-    options: ['W/K', 'W/m²K', 'W/mK', 'mK/W'],
-    correctIndex: 2,
+    options: [
+      'W/mK',
+      'W/K',
+      'mK/W',
+      'W/m²K',
+    ],
+    correctIndex: 0,
     explanation:
       'Linear thermal transmittance (ψ - psi) is measured in W/mK (Watts per metre Kelvin). It represents the additional heat loss per metre length of the thermal bridge per degree temperature difference.',
   },
   {
     id: 'chi-value-unit',
     question: 'What is the SI unit for point thermal transmittance (chi value)?',
-    options: ['W/K', 'W/m²K', 'W/mK', 'mK/W'],
-    correctIndex: 0,
+    options: [
+      'W/mK',
+      'W/m²K',
+      'W/K',
+      'mK/W',
+    ],
+    correctIndex: 2,
     explanation:
       'Point thermal transmittance (χ - chi) is measured in W/K (Watts per Kelvin). It represents the additional heat loss at a single point per degree temperature difference.',
   },
@@ -49,8 +59,13 @@ const quickCheckQuestions = [
     id: 'condensation-risk',
     question:
       'At what relative humidity does surface condensation typically occur on cold surfaces?',
-    options: ['50%', '70%', '80%', '100%'],
-    correctIndex: 3,
+    options: [
+      '100%',
+      '80%',
+      '50%',
+      '70%',
+    ],
+    correctIndex: 0,
     explanation:
       'Condensation occurs when the relative humidity at a surface reaches 100% (saturation). However, to avoid mould growth risk, surface relative humidity should be kept below 80%.',
   },
@@ -58,12 +73,12 @@ const quickCheckQuestions = [
     id: 'acd-purpose',
     question: 'What is the primary purpose of Accredited Construction Details (ACDs)?',
     options: [
-      'To increase building costs',
       'To provide standardised solutions that minimise thermal bridging',
-      'To replace Building Regulations',
-      'To specify electrical installation methods',
+      'Determines if protective devices can safely interrupt fault current',
+      'When the load has handles or cut-outs that accommodate the fingers',
+      'Close fully when the air supply is lost, driven by the spring return',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'ACDs provide pre-calculated, standardised construction details with known psi values. Using ACDs ensures compliance with Part L and reduces the need for bespoke thermal bridge calculations.',
   },
@@ -74,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is a thermal bridge?',
     options: [
-      'A heating system component',
+      'CO₂ sensors near windows gave false low readings when windows opened',
       'An area of building fabric with higher thermal transmittance than surrounding elements',
-      'A type of thermal insulation',
-      'A ventilation duct',
+      'It must match system response requirements for proper control',
+      'A calibrated dry-block temperature source or liquid bath with a reference PRT (Platinum Resistance Thermometer)',
     ],
     correctAnswer: 1,
     explanation:
@@ -87,7 +102,12 @@ const quizQuestions = [
     id: 2,
     question:
       'A window-to-wall junction has a psi value of 0.05 W/mK. If the total perimeter is 12m and ΔT is 20K, what is the heat loss through this junction?',
-    options: ['0.6W', '6W', '12W', '60W'],
+    options: [
+      '60W',
+      '0.6W',
+      '12W',
+      '6W',
+    ],
     correctAnswer: 2,
     explanation:
       'Heat loss = ψ × L × ΔT = 0.05 W/mK × 12m × 20K = 12W. This is the additional heat loss beyond what is calculated from the window and wall U-values alone.',
@@ -96,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is NOT a common location for linear thermal bridges?',
     options: [
-      'Wall-to-floor junctions',
       'Window reveals',
-      'Centre of a cavity wall',
+      'Wall-to-floor junctions',
       'Lintels above openings',
+      'Centre of a cavity wall',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The centre of a properly constructed cavity wall is not typically a thermal bridge location. Thermal bridges occur at junctions, around openings, and where insulation continuity is broken.',
   },
@@ -109,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: 'What does the temperature factor (fRsi) indicate?',
     options: [
-      'The U-value of the building element',
       'The risk of surface condensation at a thermal bridge',
-      'The air permeability of the junction',
-      'The thermal mass of the wall',
+      'To account for supply voltage tolerance',
+      'Give up to 5 back blows between the shoulder blades',
+      'Test date, next test date, and tester ID',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The temperature factor (fRsi) indicates the ratio of temperature difference between the internal surface and outside air to the total temperature difference. Values below 0.75 indicate high condensation risk.',
   },
@@ -122,7 +142,12 @@ const quizQuestions = [
     id: 5,
     question:
       'A steel beam penetrating the thermal envelope has a chi value of 0.15 W/K. With an inside-outside temperature difference of 25K, what is the heat loss?',
-    options: ['0.375W', '3.75W', '6W', '37.5W'],
+    options: [
+      '0.375W',
+      '3.75W',
+      '37.5W',
+      '6W',
+    ],
     correctAnswer: 1,
     explanation:
       'Heat loss = χ × ΔT = 0.15 W/K × 25K = 3.75W. Point thermal bridges are calculated directly without considering length.',
@@ -131,7 +156,12 @@ const quizQuestions = [
     id: 6,
     question:
       'What is the minimum temperature factor (fRsi) required to avoid mould growth risk in UK residential buildings?',
-    options: ['0.65', '0.70', '0.75', '0.80'],
+    options: [
+      '0.65',
+      '0.70',
+      '0.75',
+      '0.80',
+    ],
     correctAnswer: 2,
     explanation:
       'BRE IP 1/06 recommends a minimum fRsi of 0.75 to avoid mould growth risk. This corresponds to keeping the surface temperature above the dew point at normal internal conditions.',
@@ -140,12 +170,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which building services element commonly creates point thermal bridges?',
     options: [
-      'Skirting boards',
+      'How efficiently time is being used against the plan',
+      'At origin, distribution boards, and where device ratings change',
+      'Supplement basic and fault protection',
       'Wall fixings for cable trays penetrating insulation',
-      'Surface-mounted conduit',
-      'Ceiling roses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Wall fixings, brackets, and supports that penetrate insulation create point thermal bridges. Each fixing provides a direct heat loss path through the thermal envelope.',
   },
@@ -153,7 +183,12 @@ const quizQuestions = [
     id: 8,
     question:
       'In SAP calculations, what y-value is used when Accredited Construction Details are adopted?',
-    options: ['y = 0.05', 'y = 0.08', 'y = 0.10', 'y = 0.15'],
+    options: [
+      'y = 0.05',
+      'y = 0.10',
+      'y = 0.15',
+      'y = 0.08',
+    ],
     correctAnswer: 0,
     explanation:
       'When ACDs are fully adopted, a y-value of 0.05 W/m²K can be used. The default y-value without detailed assessment is 0.15 W/m²K, so ACDs provide significant benefit.',
@@ -162,10 +197,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the primary cause of condensation at thermal bridges?',
     options: [
-      'High air movement',
+      'Installation certificate and relevant schedules',
       'Reduced surface temperature below dew point',
-      'Excessive heating',
-      'Low internal humidity',
+      'Leakage currents can flow, creating safety hazards',
+      'When there is more than one contractor on site',
     ],
     correctAnswer: 1,
     explanation:
@@ -176,12 +211,12 @@ const quizQuestions = [
     question:
       'Which mitigation strategy is most effective for cable tray penetrations through external walls?',
     options: [
-      'Using larger cables to increase heat dissipation',
+      'Offer flexibility and variety for some electricians',
+      'Building Regulations Compliance Certificate (BS 7671 certificate)',
       'Installing thermal break sleeves and sealing around penetrations',
-      'Leaving gaps for ventilation',
-      'Using metal conduit instead of tray',
+      'Verify all results are within limits and calculations are correct',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Thermal break sleeves (such as neoprene or EPDM) combined with proper sealing minimise both heat loss and air leakage at service penetrations. This maintains the thermal envelope integrity.',
   },

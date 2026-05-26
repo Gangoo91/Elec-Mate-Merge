@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'itp-definition',
     question: 'What is the primary purpose of an Inspection and Test Plan (ITP)?',
     options: [
-      'To replace quality management systems',
+      'Discourage the disposal of waste to landfill and encourage recycling and recovery',
+      'Willpower is a limited resource that gets depleted through use during the day',
       'To document inspection and verification stages throughout installation',
-      'To record final test results only',
-      'To schedule maintenance activities',
+      'Stop, reassess, amend the method statement if needed, and brief workers on changes',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'An ITP documents all inspection, testing, and verification stages throughout the installation process, ensuring quality requirements are met at each critical point before work proceeds.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'hold-point-def',
     question: 'What happens at a Hold Point in an ITP?',
     options: [
+      'Documentation is filed for later review',
+      'Work MUST stop until formal sign-off is obtained',
       'Work continues while inspection is arranged',
       'Contractor notifies client but proceeds',
-      'Work MUST stop until formal sign-off is obtained',
-      'Documentation is filed for later review',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'At a Hold Point, work must completely stop until the designated party (client, engineer, or authority) has inspected and formally signed off. Work cannot proceed without this approval.',
   },
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'witness-point-def',
     question: 'How does a Witness Point differ from a Hold Point?',
     options: [
-      'Witness Points are more important',
+      "1 megohm per kV of rated voltage, with a minimum of 1 megohm",
       "Work may proceed if the witness doesn't attend after notification",
-      "Witness Points don't require documentation",
-      'They are the same thing',
+      "Potential criminal liability and civil responsibility",
+      "Dust masks or respirators appropriate to the dust type",
     ],
     correctIndex: 1,
     explanation:
@@ -69,8 +69,13 @@ const quickCheckQuestions = [
   {
     id: 'notification-period',
     question: 'What is a typical notification period for Hold Points on MEP works?',
-    options: ['2 hours', '24-48 hours', '7 days', 'Same day'],
-    correctIndex: 1,
+    options: [
+      '24-48 hours',
+      'Same day',
+      '2 hours',
+      '7 days',
+    ],
+    correctIndex: 0,
     explanation:
       'Hold Points typically require 24-48 hours advance notification to allow the witnessing party to schedule attendance. Critical or complex inspections may require longer notice periods.',
   },
@@ -81,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which document forms the foundation for developing an ITP?',
     options: [
-      "The contractor's standard procedures",
+      'About 150-200g CO2/kWh (and falling)',
       'The project specification and quality requirements',
-      'Previous project ITPs',
-      "Manufacturer's installation guides",
+      'All three phases L1, L2, L3 and neutral',
+      'An overhead crane collapses, even though nobody is hurt',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,12 +100,12 @@ const quizQuestions = [
     question:
       'For a concealed cable installation, at what stage would a Hold Point typically be applied?',
     options: [
+      'At project completion',
       'After final fix',
       'Before concealment/covering',
-      'At project completion',
       'During cable delivery',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Hold Points for concealed work must occur before covering - once cables are plastered over or hidden, inspection becomes destructive. Pre-concealment inspection is critical.',
   },
@@ -108,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'Who typically signs off Hold Points on MEP installations?',
     options: [
-      'The installing electrician only',
-      'The project manager or designated engineer',
       'Health and safety officer',
+      'The installing electrician only',
       "The client's receptionist",
+      'The project manager or designated engineer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hold Points are typically signed off by the project manager, supervising engineer, or designated client representative who has authority to approve continuation of work.',
   },
@@ -122,9 +127,9 @@ const quizQuestions = [
     question: 'What documentation must be referenced in an ITP?',
     options: [
       'Applicable standards, specifications, and drawings',
-      "Contractor's profit margins",
-      'Staff holiday schedules',
-      'Competitor pricing',
+      'Rejecting signals common to both input lines',
+      'High stakes, opposing opinions, and strong emotions',
+      'Substantially enclosed and a foreseeable risk of serious injury',
     ],
     correctAnswer: 0,
     explanation:
@@ -135,12 +140,12 @@ const quizQuestions = [
     question:
       "A Witness Point notification states '48 hours notice required'. What does this mean?",
     options: [
-      'Work must wait 48 hours after notification',
       'The witness has 48 hours to inspect after notification',
       'If no attendance after 48 hours, contractor may proceed',
       'Documentation must be submitted within 48 hours',
+      'Work must wait 48 hours after notification',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "The notification period gives the witnessing party opportunity to attend. If they don't attend within the stated period after proper notification, the contractor may proceed with their own documentation.",
   },
@@ -148,12 +153,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which of these would typically be a Hold Point for main switchboard installation?',
     options: [
-      'Cable tray installation',
+      'Selecting open standards and quality components',
+      'P = (2π × n × T) / 60 where n is RPM',
       'Pre-energisation inspection and testing',
-      'Labelling completion',
-      'Drawing submission',
+      'The consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s incoming neutral conductor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Pre-energisation inspection is a critical Hold Point - once energised, the installation cannot be safely inspected in the same way. All testing and verification must be complete before power is applied.',
   },
@@ -161,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'What information must each ITP entry include?',
     options: [
+      'To enable safe and effective identification of escape routes leading to final exits',
+      'Specificity eliminates ambiguity about what to do and when you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve succeeded',
+      'Mentally noting points to return to later rather than jumping in immediately',
       'Activity, inspection stage, acceptance criteria, responsibility, and reference documents',
-      'Activity name only',
-      'Date completed only',
-      'Cost of inspection',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       "Each ITP entry must detail the activity, inspection stage, acceptance criteria, responsible parties, reference documents, record requirements, and whether it's a Hold or Witness Point.",
   },
@@ -174,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'How should non-conformances discovered at Hold Points be handled?',
     options: [
-      'Ignore and continue',
       'Record, rectify, and re-inspect before sign-off',
-      'Document for end of project review',
-      'Notify insurance company',
+      'To advise the employer on health and safety matters',
+      'kWh consumption correlated with occupancy patterns',
+      'It becomes critical - there are now two critical paths',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Non-conformances at Hold Points must be recorded on an NCR (Non-Conformance Report), rectified, and re-inspected before sign-off can be given. The Hold Point cannot be released until resolved.',
   },
@@ -188,11 +193,11 @@ const quizQuestions = [
     question: 'For fire alarm system installation, which phase would require the most Hold Points?',
     options: [
       'Material delivery',
-      'First fix cabling',
       'Testing and commissioning',
+      'First fix cabling',
       'Documentation handover',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Testing and commissioning of fire alarm systems requires multiple Hold Points: cause and effect testing, integration testing, witness testing with fire authority, and final certification.',
   },
@@ -200,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of linking ITPs to the project programme?',
     options: [
-      'To track contractor productivity',
+      'To verify continuity and identify breaks or interconnections in the ring',
+      'Training in spill response procedures, use of spill kits, appropriate PPE, and waste disposal',
       'To ensure inspection requirements are built into the schedule with adequate notice periods',
-      'To calculate bonus payments',
-      'To reduce inspection frequency',
+      'To prevent dark spots that could impair vision and cause disorientation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Linking ITPs to the programme ensures Hold Points are scheduled with adequate notification periods and that inspection resources are available when needed, preventing delays.',
   },

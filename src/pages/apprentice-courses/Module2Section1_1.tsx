@@ -15,19 +15,24 @@ const quickCheckQuestions = [
     id: 'electricity-definition',
     question: 'What is electricity?',
     options: [
-      'A type of metal wire',
       'The flow of electric charge through a circuit',
-      'A measurement tool',
-      'A safety device',
+      'BS EN 61537 and manufacturer\\\\\\\\\\\\\\\'s instructions',
+      'Communication errors, RCD trips, or contactor failures',
+      'A tax calculation from HMRC showing your annual income',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Electricity is the flow of electric charge (electrons) through a circuit, creating energy that can power devices and equipment.',
   },
   {
     id: 'electron-charge',
     question: 'What particles carry electric charge?',
-    options: ['Protons', 'Neutrons', 'Electrons', 'Atoms'],
+    options: [
+      'Neutrons',
+      'Protons',
+      'Electrons',
+      'Atoms',
+    ],
     correctIndex: 2,
     explanation:
       'Electrons are negatively charged particles that move through conductors to create electric current.',
@@ -36,12 +41,12 @@ const quickCheckQuestions = [
     id: 'ac-vs-dc',
     question: "What's the difference between AC and DC?",
     options: [
-      'AC is safer than DC',
-      'DC changes direction, AC flows one way',
+      'They cannot verify compliance due to limitations',
+      'Dressed neatly with no tangles',
+      'Materials compatibility and fire safety',
       'AC changes direction, DC flows one way',
-      "There's no difference",
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'AC (Alternating Current) changes direction many times per second, while DC (Direct Current) flows in one direction only.',
   },
@@ -52,19 +57,24 @@ const quizQuestions = [
     id: 1,
     question: 'What is electricity?',
     options: [
+      'Very small diameter tubing for blown fibre installation',
       'A form of energy created by the movement of electrons',
-      'A type of metal conductor',
-      'A measurement tool',
-      'A safety device',
+      'Domestic Class 2 double-insulated lighting',
+      'Verify RCD operation time and trip current',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Electricity is a form of energy created by the movement of tiny particles called electrons that carry electric charge.',
   },
   {
     id: 2,
     question: 'What particles carry electric charge?',
-    options: ['Protons', 'Neutrons', 'Electrons', 'Atoms'],
+    options: [
+      'Atoms',
+      'Protons',
+      'Electrons',
+      'Neutrons',
+    ],
     correctAnswer: 2,
     explanation:
       'Electrons are the particles that carry electric charge and their movement creates electric current.',
@@ -73,36 +83,51 @@ const quizQuestions = [
     id: 3,
     question: 'Which of these are sources of electricity?',
     options: [
+      'Assume RCD protection is compromised',
+      'Inside the bath or shower basin',
+      'Green and yellow bi-colour',
       'Power stations and solar panels',
-      'Cables and switches',
-      'Motors and lights',
-      'Fuses and circuit breakers',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Power stations, solar panels, batteries, and generators are all sources of electricity that produce electrical energy.',
   },
   {
     id: 4,
     question: 'What does DC stand for?',
-    options: ['Direct Cable', 'Direct Current', 'Domestic Current', 'Dual Current'],
-    correctAnswer: 1,
+    options: [
+      'Direct Current',
+      'Direct Cable',
+      'Domestic Current',
+      'Dual Current',
+    ],
+    correctAnswer: 0,
     explanation:
       'DC stands for Direct Current - electricity that flows in one direction only, like from a battery.',
   },
   {
     id: 5,
     question: 'What does AC stand for?',
-    options: ['Alternating Current', 'Automatic Current', 'Active Current', 'Available Current'],
-    correctAnswer: 0,
+    options: [
+      'Automatic Current',
+      'Alternating Current',
+      'Available Current',
+      'Active Current',
+    ],
+    correctAnswer: 1,
     explanation:
       'AC stands for Alternating Current - electricity that changes direction many times per second, like UK mains supply.',
   },
   {
     id: 6,
     question: 'What voltage is UK mains electricity?',
-    options: ['110V', '230V', '240V', '400V'],
-    correctAnswer: 1,
+    options: [
+      '110V',
+      '240V',
+      '230V',
+      '400V',
+    ],
+    correctAnswer: 2,
     explanation:
       'UK mains electricity is 230V AC, which is the standard voltage supplied to homes and most commercial buildings.',
   },
@@ -112,10 +137,10 @@ const quizQuestions = [
     options: [
       'Just a power source',
       'Just some wire',
-      'A complete circuit',
       'Just a load (like a lamp)',
+      'A complete circuit',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Electricity needs a complete circuit - a path from the power source, through the load (device), and back to the source.',
   },
@@ -123,12 +148,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which is an example of electrical energy being converted to light energy?',
     options: [
-      'A kettle boiling water',
-      'A fan spinning',
       'An LED lamp lighting up',
       'A doorbell ringing',
+      'A kettle boiling water',
+      'A fan spinning',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'An LED lamp converts electrical energy into light energy. Kettles make heat, fans create movement, and doorbells make sound.',
   },
@@ -136,10 +161,10 @@ const quizQuestions = [
     id: 9,
     question: "What happens if there's a break anywhere in an electrical circuit?",
     options: [
-      'The electricity flows faster',
+      'Practical installation, inspection, and testing scenarios',
       'Nothing works because the circuit is incomplete',
-      'Only half the devices work',
-      'The voltage doubles',
+      'To subtract lead resistance from readings',
+      'To advise the employer on health and safety matters',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,12 +174,12 @@ const quizQuestions = [
     id: 10,
     question: 'Why is it important for apprentice electricians to understand what electricity is?',
     options: [
-      "It's only needed for exams",
+      'Burn caused by electric arc/flash producing intense heat',
+      'When they have a mortgage or dependants who rely on their income',
       'It helps with material selection, safety, and fault finding',
-      "It's not really important for practical work",
-      'Only supervisors need to understand electricity',
+      'The supplier or manufacturer of the hazardous substance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Understanding electricity is fundamental for apprentices as it helps with choosing correct materials, working safely, and troubleshooting problems on site.',
   },

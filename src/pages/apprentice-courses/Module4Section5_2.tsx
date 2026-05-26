@@ -58,8 +58,13 @@ const quizQuestions = [
     id: 2,
     question:
       'True or False: The weight of a pendant fitting should be supported entirely by the electrical cable.',
-    options: ['True', 'False', 'Only for lightweight fittings', 'Only if using SWA cable'],
-    correctAnswer: 1,
+    options: [
+      'Only for lightweight fittings',
+      'True',
+      'False',
+      'Only if using SWA cable',
+    ],
+    correctAnswer: 2,
     explanation:
       'False – mechanical support must be provided separately from the electrical cable to prevent strain on connections and ensure safety.',
   },
@@ -67,28 +72,38 @@ const quizQuestions = [
     id: 3,
     question: 'Name two environments where enclosed light fittings are typically required.',
     options: [
-      'Bathrooms and dusty workshops',
-      'Living rooms and bedrooms',
       'Offices and corridors',
+      'Living rooms and bedrooms',
       'Gardens and patios',
+      'Bathrooms and dusty workshops',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Bathrooms, dusty workshops, and damp industrial areas require enclosed fittings with appropriate IP ratings for protection.',
   },
   {
     id: 4,
     question: 'What colour is the live conductor in modern UK lighting circuits?',
-    options: ['Blue', 'Brown', 'Green/yellow', 'Black'],
-    correctAnswer: 1,
+    options: [
+      'Brown',
+      'Blue',
+      'Green/yellow',
+      'Black',
+    ],
+    correctAnswer: 0,
     explanation:
       'Brown is the live conductor colour in modern UK wiring according to BS 7671 harmonised colours.',
   },
   {
     id: 5,
     question: 'Which BS 7671 section applies to bathroom lighting installations?',
-    options: ['Section 411', 'Section 522', 'Section 701', 'Section 415'],
-    correctAnswer: 2,
+    options: [
+      'Section 522',
+      'Section 701',
+      'Section 415',
+      'Section 411',
+    ],
+    correctAnswer: 1,
     explanation:
       'Section 701 covers special installations in locations containing a bath or shower, including specific lighting requirements.',
   },
@@ -96,12 +111,12 @@ const quizQuestions = [
     id: 6,
     question: 'What device prevents the cable from pulling out of a pendant fitting?',
     options: [
-      'Terminal block',
+      'To reduce harmonics fed back to the supply',
+      'A clear line of sight with no obstructions',
       'Cord grip or strain relief device',
-      'Junction box',
-      'Circuit breaker',
+      'Specific to the work being undertaken',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cord grips or strain relief devices prevent mechanical stress from being transferred to electrical connections.',
   },
@@ -109,12 +124,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why should pendant lighting be installed at least 2m above floor level in walkways?',
     options: [
-      'To improve light distribution',
+      'To convert millivolts (mV) into volts (V).',
+      'Provides precise angular measurements for complex layouts',
+      'To monitor system status and faults remotely',
       'To prevent head contact and ensure safe clearance',
-      'To save energy',
-      'To comply with fire regulations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Minimum 2m clearance prevents people from hitting their heads on pendants, ensuring safe passage in circulation areas.',
   },
@@ -122,12 +137,12 @@ const quizQuestions = [
     id: 8,
     question: 'Give one method for ensuring a pendant hangs centrally over a dining table.',
     options: [
-      'Estimate by eye',
       'Use a plumb line or laser pointer to check alignment',
-      'Measure from the walls only',
-      'Install without checking',
+      'The internal test resistor has failed but the RCD mechanism works',
+      'Cross-connect L1-N2, N1-L2 and E1-E2, then measure at each socket',
+      'To prevent memory corruption and upload failures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Using a plumb line or laser pointer ensures accurate central positioning over furniture for both function and aesthetics.',
   },

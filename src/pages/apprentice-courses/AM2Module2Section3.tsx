@@ -35,12 +35,12 @@ const AM2Module2Section3 = () => {
       id: 'socket-positioning',
       question: 'If a drawing shows a double socket at 300mm and you fit it at 400mm, do you pass?',
       options: [
-        "Yes, as long as it's professionally installed",
         'No - incorrect positioning loses marks',
+        "Yes, as long as it's professionally installed",
         'Yes, if client agrees to the change',
         "No, but only if it's more than 50mm out",
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Incorrect positioning = lost marks. AM2 drawings and specifications must be followed exactly - deviation leads to mark deduction regardless of workmanship quality.',
     },
@@ -49,12 +49,12 @@ const AM2Module2Section3 = () => {
       question:
         'If the spec calls for segregated trunking for ELV cabling but you run it with mains, what happens?',
       options: [
-        'Nothing, as long as cables are properly terminated',
-        'Minor mark deduction only',
+        'Warning of presence of more than one supply',
         'Fail for not following spec and breaching safety segregation',
-        'Warning but work can continue',
+        'Investigation to identify root cause before taking action',
+        'Steel toe-capped boots with anti-static soles',
       ],
-      correctIndex: 2,
+      correctIndex: 1,
       explanation:
         'Running ELV with mains violates both specification compliance and safety segregation requirements - this is a fail situation for both compliance and safety.',
     },
@@ -62,12 +62,12 @@ const AM2Module2Section3 = () => {
       id: 'cable-size-compliance',
       question: 'What happens if you use 2.5mm cable where the spec calls for 4mm?',
       options: [
-        'No problem if it passes inspection',
-        'Minor mark deduction for incorrect material',
         'Fail for non-compliance with specification',
+        'No problem if it passes inspection',
         'OK if you document the change',
+        'Minor mark deduction for incorrect material',
       ],
-      correctIndex: 2,
+      correctIndex: 0,
       explanation:
         'Using incorrect cable size is non-compliance with specification and fails current-carrying capacity requirements - this results in assessment failure.',
     },
@@ -76,11 +76,11 @@ const AM2Module2Section3 = () => {
       question: 'In AM2, what level of BS 7671 symbol knowledge is expected?',
       options: [
         'Basic knowledge of common symbols only',
-        'Fluent recognition of all standard electrical symbols',
-        'Symbols will be explained on drawings',
         'Symbol knowledge is not assessed',
+        'Symbols will be explained on drawings',
+        'Fluent recognition of all standard electrical symbols',
       ],
-      correctIndex: 1,
+      correctIndex: 3,
       explanation:
         'You must be fluent in BS 7671 electrical symbols - this is fundamental knowledge expected for AM2 assessment and professional practice.',
     },
@@ -88,12 +88,12 @@ const AM2Module2Section3 = () => {
       id: 'measurement-accuracy',
       question: 'Why is exact measurement crucial when following AM2 drawings?',
       options: [
-        'For aesthetic appearance only',
-        'To show attention to detail',
+        'Loss of RCD protection for affected circuits',
+        'Buildability input and early coordination is needed',
+        'Specific PPE required for each stage of the work',
         'Measurements in drawings are treated as exact requirements',
-        'Near enough is acceptable if professionally done',
       ],
-      correctIndex: 2,
+      correctIndex: 3,
       explanation:
         "AM2 drawings show exact measurements that must be followed precisely - 'near enough' leads to mark deduction as you're assessed on compliance, not just craftsmanship.",
     },
@@ -117,10 +117,10 @@ const AM2Module2Section3 = () => {
       id: 2,
       question: 'If the spec calls for 4mm cable but you install 2.5mm, what happens?',
       options: [
-        'Warning but work continues',
-        'Minor mark deduction',
+        'Not following drawings/specifications exactly',
+        'To show you can follow instructions precisely',
         'Fail for non-compliance with specification',
-        'OK if it still meets safety requirements',
+        'Installing socket 100mm higher than specified',
       ],
       correctAnswer: 2,
       explanation:
@@ -130,12 +130,12 @@ const AM2Module2Section3 = () => {
       id: 3,
       question: 'Why must socket heights match the drawing exactly?',
       options: [
-        'For aesthetic reasons only',
-        'To show you can follow instructions precisely',
         'Only approximate positioning is needed',
+        'For aesthetic reasons only',
         "Height doesn't matter if it's accessible",
+        'To show you can follow instructions precisely',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'AM2 assesses your ability to follow specifications exactly as you would in professional practice - precision demonstrates competency.',
     },
@@ -158,8 +158,8 @@ const AM2Module2Section3 = () => {
       options: [
         'Neatness - appearance matters most',
         'Following spec - compliance is paramount',
-        'Balance of both equally',
         'Assessor preference determines priority',
+        'Balance of both equally',
       ],
       correctAnswer: 1,
       explanation:
@@ -170,11 +170,11 @@ const AM2Module2Section3 = () => {
       question: 'True or false: Assessors allow small deviations in accessory positions:',
       options: [
         'True - small deviations are acceptable',
-        'False - exact positioning is required',
         'True - within 50mm tolerance',
+        'False - exact positioning is required',
         'True - if explained in writing',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'False - AM2 drawings show exact requirements. Any deviation from specified positions results in mark deduction.',
     },
@@ -182,12 +182,12 @@ const AM2Module2Section3 = () => {
       id: 7,
       question: "What's the main reason candidates fail this section?",
       options: [
-        'Poor tool selection',
-        'Slow working speed',
+        '+/-5mm tolerance for exact positioning',
+        'To show you can follow instructions precisely',
+        'False - exact positioning is required',
         'Not following drawings/specifications exactly',
-        'Inadequate safety equipment',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         "The main failure reason is not following drawings/specifications exactly - many assume 'close enough' is acceptable.",
     },
@@ -195,12 +195,12 @@ const AM2Module2Section3 = () => {
       id: 8,
       question: 'Why should you mark out before fixing accessories?',
       options: [
-        'To make the work look professional',
         'To ensure exact positioning as per drawings',
-        'To speed up installation process',
-        'To impress the assessor',
+        'Fail for non-compliance with specification',
+        '40% - it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the largest weighting',
+        'To show you can follow instructions precisely',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Marking out ensures accessories are positioned exactly as specified in drawings - preventing costly mistakes and mark deduction.',
     },
@@ -208,12 +208,12 @@ const AM2Module2Section3 = () => {
       id: 9,
       question: 'Give one example of misreading a drawing that could cost marks:',
       options: [
-        'Installing socket 100mm higher than specified',
         'Using neater cable routing than shown',
+        'Installing socket 100mm higher than specified',
         'Adding extra earth bonding',
         'Using better quality accessories',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'Installing accessories in wrong positions (even if neat and safe) loses marks as it shows failure to follow specifications.',
     },
@@ -222,11 +222,11 @@ const AM2Module2Section3 = () => {
       question: "What's the golden rule when working with AM2 specs?",
       options: [
         'Work as quickly as possible',
+        'Use professional judgement to improve design',
         'Follow drawings and specifications exactly',
         'Prioritise safety over specification',
-        'Use professional judgement to improve design',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The golden rule is to follow drawings and specifications exactly - AM2 assesses compliance, not design improvement or personal preference.',
     },
@@ -235,11 +235,11 @@ const AM2Module2Section3 = () => {
       question: 'What percentage of marks does specification compliance carry in NET assessment?',
       options: [
         "25% - it's one of many factors",
-        "40% - it's the largest weighting",
-        "60% - it's the most important",
         '15% - workmanship is more important',
+        "60% - it's the most important",
+        "40% - it's the largest weighting",
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Specification compliance carries 40% weighting in NET assessment - the largest single marking criteria, emphasising its critical importance.',
     },
@@ -248,9 +248,9 @@ const AM2Module2Section3 = () => {
       question: 'What tolerance do NET assessors typically allow for accessory positioning?',
       options: [
         '+/-5mm tolerance for exact positioning',
-        '+/-20mm tolerance if professionally installed',
-        "+/-50mm tolerance as long as it's functional",
         'No tolerance - exact positioning required',
+        "+/-50mm tolerance as long as it's functional",
+        '+/-20mm tolerance if professionally installed',
       ],
       correctAnswer: 0,
       explanation:

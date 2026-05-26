@@ -37,12 +37,12 @@ const AM2Module2Section2 = () => {
       id: 'rams-difference',
       question: "What's the difference between a risk assessment and a method statement?",
       options: [
-        'They are the same thing',
         'Risk assessment identifies hazards/controls; method statement describes safe working procedure',
-        'Risk assessment is for electrical work; method statement is for general work',
-        'Method statement identifies hazards; risk assessment describes procedures',
+        'Highly friable and can release large quantities of fibres when disturbed',
+        'Cleaning and maintaining heat exchanger surfaces on HVAC equipment',
+        'Test results, illumination status, legibility checks, and any maintenance performed',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Risk assessment identifies hazards and control measures, whilst method statement provides the step-by-step safe working procedure.',
     },
@@ -50,9 +50,9 @@ const AM2Module2Section2 = () => {
       id: 'ppe-specificity',
       question: "If you write 'use PPE' in RAMS, is it enough?",
       options: [
-        'Yes, it shows safety awareness',
-        'No, you must specify type and purpose',
         'Yes, if combined with other measures',
+        'No, you must specify type and purpose',
+        'Yes, it shows safety awareness',
         'Only if PPE is available on site',
       ],
       correctIndex: 1,
@@ -65,11 +65,11 @@ const AM2Module2Section2 = () => {
         'Which of these is the most important hazard to identify in electrical installation work?',
       options: [
         'Bad weather conditions',
-        'Electric shock and burns',
         'Traffic noise',
+        'Electric shock and burns',
         'Tool availability',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'Electric shock and burns are the primary hazards in electrical work that can cause serious injury or death, making them the most critical to identify and control.',
     },
@@ -77,12 +77,12 @@ const AM2Module2Section2 = () => {
       id: 'control-hierarchy',
       question: 'What is the correct hierarchy of control measures?',
       options: [
-        'PPE > Engineering > Administrative > Elimination',
         'Elimination > Substitution > Engineering > Administrative > PPE',
         'Administrative > PPE > Engineering > Elimination',
         'Engineering > PPE > Administrative > Substitution',
+        'PPE > Engineering > Administrative > Elimination',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'The hierarchy prioritises elimination (removing the hazard) first, followed by substitution, engineering controls, administrative controls, and PPE as the last resort.',
     },
@@ -107,10 +107,10 @@ const AM2Module2Section2 = () => {
       id: 1,
       question: "What's the difference between a risk assessment and a method statement?",
       options: [
-        'They are the same thing',
+        'Identifying the root cause of a problem by asking "why" repeatedly',
         'Risk assessment identifies hazards/controls; method statement describes safe working procedure',
-        'Risk assessment is for electrical work; method statement is for general work',
-        'Method statement identifies hazards; risk assessment describes procedures',
+        'To assist with evacuation, check designated areas are clear, and report to the assembly point',
+        'Habits that align with who you want to become, not just what you want to achieve',
       ],
       correctAnswer: 1,
       explanation:
@@ -120,10 +120,10 @@ const AM2Module2Section2 = () => {
       id: 2,
       question: 'Which regulations require safe planning of electrical work in the UK?',
       options: [
-        'Only EAWR 1989',
-        'Only MHSWR 1999',
+        'P = sqrt(3) x V_L x I_L x cos(phi)',
+        'Self-declaration without evidence',
         'Both MHSWR 1999 and EAWR 1989',
-        'Only BS7671',
+        'Support and protection for cables',
       ],
       correctAnswer: 2,
       explanation:
@@ -133,12 +133,12 @@ const AM2Module2Section2 = () => {
       id: 3,
       question: "True or false: Vague answers like 'be careful' score marks in RAMS.",
       options: [
-        'True - any safety awareness gets marks',
-        'False - specific, detailed entries are required',
         'True - if combined with other measures',
+        'True - any safety awareness gets marks',
         'False - only PPE entries get marks',
+        'False - specific, detailed entries are required',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "Vague entries like 'be careful' score no marks. Assessors require specific, detailed control measures.",
     },
@@ -146,12 +146,12 @@ const AM2Module2Section2 = () => {
       id: 4,
       question: 'Name three typical hazards in an AM2 installation task:',
       options: [
-        'Rain, wind, cold',
         'Electrical shock, manual handling, working at height',
-        'Time pressure, noise, lighting',
-        'Tools, materials, transport',
+        'Polarity testing with appropriate test instruments',
+        'Correct type, rating, and indicator status',
+        'Disconnected clamp or broken conductor',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Common AM2 hazards include electrical shock/burns, manual handling of equipment, and working at height (even low level).',
     },
@@ -159,10 +159,10 @@ const AM2Module2Section2 = () => {
       id: 5,
       question: 'Why must PPE be written specifically in RAMS?',
       options: [
-        'It looks more professional',
+        "A sequential terminal strip designator (e.g., X1, X2) followed by individual terminal numbers",
         "Generic 'use PPE' entries score no marks - type and purpose must be stated",
-        'To meet word count requirements',
-        'Only expensive PPE needs to be listed',
+        "With the handle approximately 1 metre to 1.1 metres from the floor",
+        "Carry out a suitable and sufficient fire risk assessment",
       ],
       correctAnswer: 1,
       explanation:
@@ -172,10 +172,10 @@ const AM2Module2Section2 = () => {
       id: 6,
       question: "Who should be considered under 'who may be harmed'?",
       options: [
-        'Only the electrician',
-        'Only building occupants',
+        'Damaging the cable sheath, leading to premature failure',
+        'Control circuit with voltage monitoring',
         'Self, colleagues, building occupants, public',
-        'Only people in the immediate work area',
+        'Insulation, protection and placing of conductors',
       ],
       correctAnswer: 2,
       explanation:
@@ -186,11 +186,11 @@ const AM2Module2Section2 = () => {
       question: 'Give one example of a control measure other than PPE:',
       options: [
         'Working faster to reduce exposure time',
-        'Isolation and lock-off procedures',
-        'Ignoring minor hazards',
         'Working alone to reduce risk to others',
+        'Ignoring minor hazards',
+        'Isolation and lock-off procedures',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Isolation and lock-off, warning signs, barriers, permits to work, supervision, and training are all control measures beyond PPE.',
     },
@@ -198,12 +198,12 @@ const AM2Module2Section2 = () => {
       id: 8,
       question: "What's the purpose of a method statement?",
       options: [
-        'To list all possible hazards',
         'To provide step-by-step safe working procedure',
         'To calculate project costs',
+        'To list all possible hazards',
         'To record accident details',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Method statements describe the logical sequence of work activities and how they will be carried out safely.',
     },
@@ -211,10 +211,10 @@ const AM2Module2Section2 = () => {
       id: 9,
       question: 'Why do generic/copy-paste RAMS answers fail?',
       options: [
-        "They're too long",
+        'Working at height, electrical hazards, manual handling, and site access',
         'Assessors want task-specific detail relevant to the actual work',
-        'They use technical language',
-        'They mention too many hazards',
+        'They provide recognised standards that can be used as evidence of good practice',
+        'Absorption of current by the insulation (polarisation)',
       ],
       correctAnswer: 1,
       explanation:
@@ -225,11 +225,11 @@ const AM2Module2Section2 = () => {
       question: 'What happens in AM2 if your RAMS is incomplete?',
       options: [
         'You get a warning but can continue',
+        "Nothing - it's optional",
         'You lose marks and may fail the assessment',
         'You get extra time to complete it',
-        "Nothing - it's optional",
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Incomplete or poor RAMS documentation will result in lost marks and can contribute to overall assessment failure.',
     },

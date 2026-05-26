@@ -40,10 +40,10 @@ const checks = [
     id: 'shock-current-vs-voltage-check',
     question: "What does the actual damage in an electric shock?",
     options: [
-      'The voltage on the conductor',
+      'Voltage variations during fault conditions',
       'The current that ends up flowing through your body',
-      'The frequency of the supply',
-      'The size of the cable',
+      'Harmonic current assessment at the point of connection',
+      'Removed from holders or switches left off',
     ],
     correctIndex: 1,
     explanation:
@@ -52,8 +52,13 @@ const checks = [
   {
     id: 'let-go-threshold-check',
     question: "Roughly what current makes 'let-go' impossible for most people?",
-    options: ['1 mA', '10 mA', '100 mA', '1 A'],
-    correctIndex: 1,
+    options: [
+      '10 mA',
+      '100 mA',
+      '1 A',
+      '1 mA',
+    ],
+    correctIndex: 0,
     explanation:
       "Around 10-15 mA your forearm muscles clamp shut and you can’t release the conductor. That’s why 30 mA RCDs are sized to trip well below the next threshold up — respiratory paralysis and fibrillation.",
   },
@@ -61,12 +66,12 @@ const checks = [
     id: 'shocked-mate-check',
     question: 'A mate is gripped to a live cable, can’t let go. What’s the FIRST move?',
     options: [
-      'Grab them and pull them off',
-      'Pour water on them',
+      'Ratchet mechanism ensuring complete crimp',
+      'Insulation breakdown in motor or cable to earth',
+      'Photovoltaic effect in a semiconductor p-n junction',
       'Isolate the supply at the breaker or main switch',
-      'Call 999 then pull them off',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Don’t touch them. The current’s still flowing — touching them makes you the second casualty. Get the supply off first. Then 999, then first aid. If you genuinely can’t isolate, use a non-conductive object (broom handle, dry timber) to break the contact.",
   },
@@ -79,10 +84,10 @@ const quizQuestions = [
     id: 1,
     question: 'What actually causes the damage in an electric shock?',
     options: [
-      'The voltage of the supply',
+      'Yes, including calibration date',
       'The current flowing through body tissue',
-      'The frequency only',
-      'The cable size',
+      'Information being developed, not ready for sharing',
+      'Carbonised paths from surface contamination',
     ],
     correctAnswer: 1,
     explanation:
@@ -91,16 +96,26 @@ const quizQuestions = [
   {
     id: 2,
     question: "Roughly what current is the 'let-go' threshold for most people?",
-    options: ['1–2 mA', '10–15 mA', '100 mA', '1 A'],
-    correctAnswer: 1,
+    options: [
+      '100 mA',
+      '1–2 mA',
+      '10–15 mA',
+      '1 A',
+    ],
+    correctAnswer: 2,
     explanation:
       "Around 10-15 mA. Below that you can usually pull away. Above it, the muscles in your forearm contract so hard you can’t release the conductor — and the longer you’re held on, the worse it gets.",
   },
   {
     id: 3,
     question: 'Which current path through the body is the most dangerous?',
-    options: ['Foot to foot', 'Hand to foot', 'Hand to hand across the chest', 'Forearm only'],
-    correctAnswer: 2,
+    options: [
+      'Bend-insensitive fibre standards',
+      'Immediate danger prevention',
+      'Global Warming Potential (GWP)',
+      'Hand to hand across the chest',
+    ],
+    correctAnswer: 3,
     explanation:
       "Hand-to-hand drives the current straight across the chest cavity and through the heart. Highest risk of ventricular fibrillation. It’s the reason you’ll hear electricians talk about 'one-handed working' near anything that might still be live.",
   },
@@ -108,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is ventricular fibrillation?',
     options: [
-      'A burn caused by an arc',
-      'Loss of feeling in the arm',
       'The heart twitching chaotically instead of pumping properly',
-      'A type of muscle spasm in the leg',
+      'Avoid, mitigate, compensate — applied in that order of preference',
+      'Ensure process fluid has minimum conductivity',
+      '1.37Ω (Ze + (R1+R2)×1.20 = 0.35 + 0.85×1.20 = 0.35 + 1.02 = 1.37Ω)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "The heart muscle stops beating in rhythm and just quivers. Blood stops moving. Brain damage starts within 3-7 minutes. It’s why a small fault current can be fatal — it’s not the burn that gets you, it’s the heart.",
   },
@@ -123,8 +138,8 @@ const quizQuestions = [
     options: [
       'Up to 50 V AC',
       'Above 50 V AC up to 1000 V AC',
-      'Above 1000 V AC up to 10 kV AC',
       'Anything above 10 kV AC',
+      'Above 1000 V AC up to 10 kV AC',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: "What’s the difference between direct contact and indirect contact?",
     options: [
-      'Direct = AC, indirect = DC',
+      'Increasing the resistance in the field circuit to reduce field current and flux, causing the motor to speed up above base speed',
+      'Workers know the practical requirements and comfort needed for effective use',
       'Direct = touching a live conductor; indirect = touching a metal part that’s become live through a fault',
-      'Direct = at home, indirect = at work',
-      'They mean the same thing',
+      'Badgers and their setts are protected under the Protection of Badgers Act 1992',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Direct = touching something meant to be live (a bare conductor). Indirect = touching something not meant to be live but that’s gone live through a fault (a metal enclosure). Basic protection deals with the first, ADS with the second.",
   },
@@ -148,11 +163,11 @@ const quizQuestions = [
     question: 'A colleague has been thrown clear of a 230 V cable and is awake but shaken. What now?',
     options: [
       'Send them home, no need to do anything',
-      'Get them checked at hospital and report it under RIDDOR',
-      'Just fill out the accident book',
       'Wait to see if symptoms develop over the next week',
+      'Just fill out the accident book',
+      'Get them checked at hospital and report it under RIDDOR',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Any electric shock that needs medical attention or causes loss of consciousness is RIDDOR-reportable. Internal damage from electrical contact can show up hours or days later — heart rhythm issues especially. Hospital, then report.",
   },
@@ -160,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'How does a 30 mA RCD protect against electric shock?',
     options: [
-      'It limits the voltage to a safe level',
       'It detects current leaking to earth and disconnects within milliseconds',
-      'It shuts off the supply if the cable overheats',
-      'It steps the voltage down to ELV',
+      'Safety advisor, CDM coordinator, or compliance roles',
+      'Green-sheathed twisted pair cable certified for KNX',
+      'Ensure safe access for future inspection and maintenance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "An RCD compares the current going out on the line with the current coming back on the neutral. If they don’t match (because some current is leaking to earth — through a person, for example), it cuts the supply, typically within 40 ms. 30 mA is set deliberately below the fibrillation threshold.",
   },

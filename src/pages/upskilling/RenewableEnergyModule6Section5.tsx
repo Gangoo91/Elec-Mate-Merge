@@ -1,542 +1,578 @@
-import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+  Pullquote,
+  DiagramPlaceholder,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'V2G and Smart Charging - Renewable Energy Module 6';
-const DESCRIPTION =
-  'Explore vehicle-to-grid technology, bidirectional charging, smart charging orchestration, and the role of EVs in grid services and renewable energy integration.';
-
-const quickCheckQuestions = [
+const inlineChecks = [
   {
-    id: 'v2g-qc1',
-    question: 'What is the primary difference between V2G and V2H?',
+    id: 'm6s5-ip-rating',
+    question:
+      'Outdoor 7 kW Mode 3 wallbox on a UK driveway — what minimum IP rating is appropriate?',
     options: [
-      'V2G uses AC, V2H uses DC',
-      'V2G exports to the grid, V2H powers only the home',
-      'V2H is faster than V2G',
-      'V2G is bidirectional, V2H is not',
+      'IP20',
+      'IP54 minimum, IP65 typical. The IP first digit covers solid object ingress (5 = dust-protected); second digit covers water ingress (4 = splashing water from any direction; 5 = jet water). Most UK 2025-26 wallboxes are rated IP54 or IP65 as factory standard. Outdoor exposed locations: IP65 preferred',
+      'IP00',
+      'IP10',
     ],
     correctIndex: 1,
     explanation:
-      'V2G (Vehicle-to-Grid) exports power to the public electricity grid, while V2H (Vehicle-to-Home) powers only the property, typically operating as a backup power source.',
+      'IP rating per BS EN 60529 sets ingress protection. First digit: solid object protection (0-6, where 5 = dust-protected, 6 = dust-tight). Second digit: water protection (0-9, where 4 = splashing, 5 = jets, 6 = powerful jets). UK outdoor domestic wallbox: IP54 acceptable minimum (most domestic wallboxes); IP65 preferred for exposed sites (windward walls, no overhang). Reg 522 external influences — designer determines the appropriate rating based on the actual site exposure. Cert evidence bundle records the wallbox IP rating from manufacturer DoC.',
   },
   {
-    id: 'v2g-qc2',
-    question: 'What ISO standard defines bidirectional charging communication?',
-    options: ['ISO 15118-1', 'ISO 15118-2', 'ISO 15118-20', 'ISO 61851'],
-    correctIndex: 2,
-    explanation:
-      'ISO 15118-20 extends the CCS communication protocol to support bidirectional power transfer, enabling V2G and V2H functionality with standardised communication.',
-  },
-  {
-    id: 'v2g-qc3',
-    question: 'What grid service involves rapid power adjustment to maintain 50Hz frequency?',
-    options: ['Peak shaving', 'Frequency response', 'Demand shifting', 'Load balancing'],
+    id: 'm6s5-ik-rating',
+    question:
+      'BS EN 62262:2002 +A1:2021 — what does the IK code measure?',
+    options: [
+      'Internal kitchen rating',
+      'Degrees of protection provided by enclosures for electrical equipment against external mechanical impacts. The IK code (0-10) rates impact energy resistance — IK00 (no protection) to IK10 (20 J of impact energy). Outdoor EV wallboxes typically rated IK08 (5 J) or IK10 (20 J)',
+      'Investment classification',
+      'Insulation kV rating',
+    ],
     correctIndex: 1,
     explanation:
-      'Frequency response services involve rapid power injection or absorption to help maintain grid frequency at 50Hz, responding to supply/demand imbalances within seconds.',
+      'IK code per BS EN 62262 rates mechanical impact protection. IK00 = no protection; IK01-IK06 = increasing low-impact levels; IK07 = 2 J; IK08 = 5 J; IK09 = 10 J; IK10 = 20 J. Outdoor EV wallboxes typically IK08 or IK10 — adequate for driveway / curtilage exposure. Reg 722.551.7.2 references BS EN 62262 for enclosure mechanical impact protection. Some wallboxes have separate IK ratings for the housing vs the connector socket. Cert evidence bundle records the IK rating from manufacturer DoC.',
   },
   {
-    id: 'v2g-qc4',
-    question: 'What is the typical export power capability of current V2G chargers?',
-    options: ['3.6 kW', '7-10 kW', '22 kW', '50 kW'],
+    id: 'm6s5-mounting-height',
+    question:
+      'What’s the typical mounting height for the Type 2 socket / connector on a UK domestic wallbox?',
+    options: [
+      '0.5 m above ground',
+      'Manufacturer-specified; typical range 1.0-1.4 m above the standing surface. Considerations: ergonomic plug-in height for adults; cable strain relief (the EV cable hangs in a loop, not in tension); accessibility for users with reduced mobility; protection from splash / road spray',
+      '2.5 m above ground',
+      'Whatever fits',
+    ],
     correctIndex: 1,
     explanation:
-      'Current V2G chargers typically support 7-10 kW bidirectional power, matching common single-phase domestic supply limits whilst providing meaningful grid services.',
+      'Manufacturer instructions are the primary source. Typical UK 2025-26 mounting heights: 1.0-1.4 m above the standing surface. Ergonomic plug-in height for typical adult users (waist height); avoids the customer kneeling to plug in. Cable strain relief: the loose cable hangs in a loop below the wallbox, not pulled tight from the socket. Accessibility: users with reduced mobility may need lower mounting (~0.9 m) per Equality Act considerations on commercial sites; less commonly applied to single-user domestic. Splash protection: keeps the socket above road spray during heavy rain. Cert evidence bundle records the mounting height + manufacturer instruction reference.',
+  },
+  {
+    id: 'm6s5-enclosure-glanding',
+    question:
+      'Cable entry into the outdoor wallbox enclosure — what is the typical glanding arrangement?',
+    options: [
+      'Tape the cable in place',
+      'Manufacturer-supplied IP-rated cable gland matched to the cable diameter (T+E flat profile needs a different gland to round SWA). The gland maintains the wallbox’s IP rating at the cable entry point — improperly glanded cable defeats the entire enclosure rating. Drainage and sealing per the manufacturer instructions',
+      'Push cable through any hole',
+      'Use silicone sealant',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Cable glanding is where many outdoor wallbox installs fail. The wallbox’s factory IP rating depends on the cable entries being properly glanded with IP-matching glands. T+E flat cable: needs a flat-profile gland or a converter (some wallbox manufacturers supply round-profile cable internally with a flat-to-round adapter at the wall-side). SWA round profile: standard IP-rated gland matched to cable diameter. Drainage: some wallbox enclosures have a designed drainage path; don’t block it. Manufacturer instructions are explicit — follow them. Cert evidence bundle records the glanding method + photographs.',
   },
 ];
 
 const quizQuestions = [
   {
-    id: 1,
-    question: "What is 'smart charging' in the context of EV infrastructure?",
+    question:
+      'A customer wants the wallbox mounted on a north-facing wall directly exposed to prevailing weather. What’s the IP / IK consideration?',
     options: [
-      'Faster charging technology',
-      'Automated scheduling and power adjustment based on signals',
-      'Wireless charging',
-      'Premium charging services',
+      'No consideration',
+      'Exposed north-facing wall = full driving-rain + wind-blown debris exposure. Specify IP65 (or higher) and IK10 (or higher) wallbox. Alternative: relocate to a more sheltered position (under eaves overhang, on a sheltered side wall) where IP54 / IK08 would be adequate. Reg 522 external influences drives the IP/IK selection',
+      'Use indoor wallbox',
+      'Wrap in plastic',
     ],
     correctAnswer: 1,
     explanation:
-      'Smart charging automatically adjusts when and how fast vehicles charge based on grid signals, tariffs, renewable availability, and user preferences.',
+      'Reg 522 external influences requires the designer to assess the actual site conditions. Exposed north-facing wall = high water exposure (driving rain), high mechanical risk (wind-blown debris, hail), variable temperature. IP65 / IK10 is the conservative spec for fully-exposed sites. Cheaper alternative: relocate the wallbox to a more sheltered position (under eaves, side wall) where the standard IP54 / IK08 wallbox is adequate — saves the cost of the upgrade. Customer-side considerations: cable routing to the new position; charging convenience. Cert evidence bundle records the IP/IK selection + the site exposure assessment.',
   },
   {
-    id: 2,
-    question: 'Which vehicles currently support V2G in the UK market?',
+    question:
+      'BS EN IEC 61439-7:2023 — which application does it specifically cover for the EV space?',
     options: [
-      'All electric vehicles',
-      'Only Tesla vehicles',
-      'Select models with CHAdeMO (Nissan Leaf) and some CCS vehicles',
-      'No vehicles support V2G yet',
-    ],
-    correctAnswer: 2,
-    explanation:
-      'V2G is currently supported by select vehicles including Nissan Leaf (CHAdeMO) and some newer CCS vehicles. Compatibility is expanding but not universal.',
-  },
-  {
-    id: 3,
-    question: 'What is demand response in smart charging?',
-    options: [
-      'Responding to customer charging requests',
-      'Adjusting charging based on grid operator signals',
-      'Faster response to plug-in events',
-      'Customer service response times',
+      'Hospital installations',
+      'Low-voltage switchgear and controlgear assemblies — Assemblies for specific applications such as marinas, camping sites, market squares, electric vehicle charging stations. Where multiple wallboxes are assembled into a charging-station enclosure (commercial / fleet / public sites), this standard applies to the assembly. UK 2025-26 domestic single wallbox usually NOT in BS EN IEC 61439-7 scope (each wallbox is a complete factory-built unit)',
+      'Solar PV inverters',
+      'Domestic socket-outlets',
     ],
     correctAnswer: 1,
     explanation:
-      'Demand response involves automatically reducing or shifting charging load in response to grid operator signals, helping balance supply and demand across the network.',
+      'BS EN IEC 61439-7:2023 covers low-voltage switchgear and controlgear assemblies for specific applications including EV charging stations. Relevant when multiple charging points are assembled into a single enclosure (e.g. commercial / fleet / public charging hubs). UK 2025-26 single-wallbox domestic install — each wallbox is a factory-built complete unit; 61439-7 typically not invoked directly. Section 722 still applies; the wallbox’s factory conformity (BS EN 61851 + 62196-2 + 62955) is the primary product standard. M7 covers commercial / public charging where 61439-7 becomes directly relevant.',
   },
   {
-    id: 4,
-    question: 'What regulation requires smart functionality in UK private EV chargers?',
+    question:
+      'A wallbox is mounted on an external garage wall, with the cable routed through the wall from the integral CU. What’s the wall penetration consideration?',
     options: [
-      'BS 7671',
-      'The Electric Vehicles (Smart Charge Points) Regulations 2021',
-      'Part P Building Regulations',
-      'G99 requirements',
+      'Drill any hole',
+      'Wall penetration through external wall: weather-resistant sleeve / conduit; downward-sloping drip loop on outside of the wall to prevent water tracking along the cable into the wall; cable seal at both interior and exterior sides of the wall; mechanical protection (steel sleeve or conduit) if the wall is hollow / low-density. Reg 522 + BS 5839 considerations for fire separation if the wall is fire-rated (party wall, garage-to-dwelling)',
+      'Just push through brick',
+      'Silicone everywhere',
     ],
     correctAnswer: 1,
     explanation:
-      'The Electric Vehicles (Smart Charge Points) Regulations 2021 mandate smart functionality for private charge points, enabling demand management and off-peak charging.',
+      'Wall penetration through an external wall has multiple considerations: (1) weather sealing — water can track along cable sheath if the entry isn’t sealed both sides; (2) mechanical protection — sleeve / conduit through hollow walls or thermoplastic blocks; (3) fire separation — if the wall is a fire-rated party wall (typical garage-to-dwelling), the penetration must be made good per the fire strategy / Approved Document B; (4) drip loop — the cable should slope downward on the outside before entering the wall to drain water away; (5) gland / seal at the wallbox entry. Cert evidence bundle records the wall penetration method + photographs.',
   },
   {
-    id: 5,
-    question: 'What is the economic benefit of participating in frequency response services?',
+    question:
+      'A customer’s wallbox is to be mounted on a wooden fence panel for ease of cabling. What’s the install consideration?',
     options: [
-      'Reduced electricity bills only',
-      'Payment for providing grid balancing services',
-      'Free electricity',
-      "No economic benefit - it's mandatory",
+      'Fine — just screw on',
+      'Wooden fence: typically not a stable enough mounting surface for a wallbox’s vibration and cable strain. Manufacturer instructions usually require a non-combustible solid backboard (cement board, masonry wall, fire-rated panel). Mount the wallbox on a proper backboard fixed to the fence post or wall, not directly to the fence panel. Reg 522 external influences considers structural stability',
+      'Use plastic anchors',
+      'No fixing needed',
     ],
     correctAnswer: 1,
     explanation:
-      'V2G participants can receive payments for providing frequency response and other grid services, potentially earning significant revenue from their vehicle battery capacity.',
+      'Wallbox mounting requires a stable, manufacturer-approved surface. Wooden fence panels typically lack the rigidity and fire performance for direct mounting. Solutions: (1) mount on a masonry wall behind the fence; (2) fix a non-combustible backboard (cement-fibre board, steel-faced panel) to fence posts (solid structural members) and mount the wallbox on the backboard; (3) move to a different location entirely. Manufacturer instructions are typically explicit about backboard requirements. Cert evidence bundle records the mounting method + backboard specification + photographs.',
   },
   {
-    id: 6,
-    question: 'What battery warranty concern exists with V2G operation?',
+    question:
+      'A wallbox is being installed on a brick wall using the manufacturer-supplied bracket. The fixings supplied are M6 wall plugs. What’s the install practice?',
     options: [
-      'No warranty concerns exist',
-      'Additional charge cycles may affect warranty terms',
-      'V2G always voids the warranty',
-      'Warranties are extended for V2G',
+      'Use any plug',
+      'Use the manufacturer-supplied fixings or equivalent rated for the wall material. M6 wall plugs into solid brick / blockwork: drill correct diameter pilot hole, clean dust, insert plug, drive screw. Plasterboard partition: cannot use brick plugs — use cavity / collapsible / through-fixings rated for the load. Hollow blocks: cavity fixings or longer screws into the next solid course. Reg 522 + manufacturer torque settings for the screws',
+      'No fixings needed',
+      'Glue with silicone',
     ],
     correctAnswer: 1,
     explanation:
-      'Some manufacturers have warranty concerns about additional V2G cycling. However, controlled V2G operation may cause minimal additional degradation, and some manufacturers now explicitly support V2G.',
+      'Fixings must match the wall material AND the manufacturer’s load specification. Solid brick / dense block: M6-M8 wall plugs as supplied. Plasterboard partition: cavity fixings (toggles, hollow-wall anchors) rated for the wallbox weight including cable load. Hollow concrete block: deeper fixings or through-bolts to a solid backing. Stone / mixed walls: drill carefully, may need resin / chemical fixings for reliable load. Wallbox manufacturer instructions usually specify the fixings or a minimum load rating. Cert evidence bundle records the fixing method + manufacturer reference.',
   },
   {
-    id: 7,
-    question: "What is 'time-of-use' tariff integration in smart charging?",
+    question:
+      'Where does Section 522 (external influences) interact with the wallbox install?',
     options: [
-      'Charging only at certain times',
-      'Automatic scheduling to charge during cheapest rate periods',
-      'Payment by the hour',
-      'Time-limited charging sessions',
+      'Not at all',
+      'Section 522 sets requirements for cables and other equipment in respect of external influences such as ambient temperature, presence of water, foreign solid bodies, corrosive substances, mechanical stresses, fauna, solar radiation. The outdoor wallbox install assesses each: water (IP rating), foreign solids (IP rating), mechanical impact (IK rating), corrosive atmospheres (coastal), solar radiation (UV-resistant SWA / specified plastics), animals (bird nests in cable trays, rodent damage). Cert evidence bundle records the external influences assessment',
+      'Only for indoor',
+      'Section 522 is about something else',
     ],
     correctAnswer: 1,
     explanation:
-      'Time-of-use integration automatically schedules charging during off-peak periods when electricity is cheapest, typically overnight, reducing charging costs significantly.',
-  },
-  {
-    id: 8,
-    question: 'What is solar matching in EV charging?',
-    options: [
-      'Using yellow-coloured chargers',
-      'Adjusting charge rate to match solar PV generation',
-      'Charging only on sunny days',
-      'Solar-powered charging stations',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Solar matching dynamically adjusts EV charging power to utilise available solar generation, maximising self-consumption and reducing grid import.',
-  },
-  {
-    id: 9,
-    question: 'What approval may be required for V2G export in the UK?',
-    options: [
-      'No approval required',
-      'DNO notification and potentially G98/G99 approval',
-      'Only manufacturer approval',
-      'Local authority planning permission',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'V2G systems that export to the grid require DNO notification and compliance with G98 (up to 16A per phase) or G99 (larger systems) connection standards.',
-  },
-  {
-    id: 10,
-    question: 'What is the expected market development for V2G by 2030?',
-    options: [
-      'V2G will be discontinued',
-      'Widespread adoption with millions of V2G-capable vehicles',
-      'No significant change expected',
-      'Only commercial fleets will use V2G',
-    ],
-    correctAnswer: 1,
-    explanation:
-      'Industry projections suggest widespread V2G adoption by 2030, with millions of vehicles capable of providing grid services, supported by standardisation and growing vehicle compatibility.',
+      'Section 522 of BS 7671 sets requirements for cables and equipment under external influences: ambient temperature (AA), presence of water (AD), presence of foreign solid bodies (AE), presence of corrosive substances (AF), mechanical stresses (AG), fauna (AL), solar radiation (AN). Outdoor wallbox: each category needs assessment. UK coastal install: corrosive atmosphere (AF code) drives stainless / galvanised hardware; UK rural install: fauna (rodent damage to exposed cabling); UK exposed installs: solar radiation degrades unprotected cable sheath. Cert evidence bundle records the assessment with the relevant Section 522 codes and the mitigations.',
   },
 ];
 
 const faqs = [
   {
-    question: 'Will V2G damage my EV battery?',
+    question: 'Can the wallbox be in direct sun on a south-facing wall?',
     answer:
-      'Research suggests that controlled V2G operation causes minimal additional battery degradation compared to normal driving. Smart V2G systems optimise cycles to minimise wear. Some studies show V2G can even extend battery life by maintaining optimal charge levels. However, check manufacturer warranty terms for your specific vehicle.',
+      'Manufacturer instructions are the primary source. Some wallboxes have explicit operating temperature ranges; direct sun on a south-facing wall in UK summer can reach surface temperatures 40-50°C. Wallboxes typically rated for -25°C to +50°C ambient. Practical UK 2025-26: south-facing wall mounting is acceptable for most wallbox models, but performance derating may apply in hot weather (wallbox throttles itself to protect internal electronics). Customer education: occasional summer throttling is normal and protects the kit. Cert evidence bundle records the wallbox operating temperature range from DoC.',
   },
   {
-    question: 'How much can I earn from V2G services?',
+    question: 'What about coastal installs — sea spray and corrosion?',
     answer:
-      'Earnings vary based on vehicle availability, battery capacity, and services provided. Current UK trials show potential earnings of 300-700 pounds per year for domestic V2G, with higher returns possible for commercial fleet participation. As the market develops, revenue streams may increase.',
+      'UK coastal sites (within ~1-5 km of coast, prevailing onshore wind) carry chloride-laden air that accelerates corrosion. Considerations: (1) wallbox housing material — manufacturer-specified for coastal use? Some brands have marine-grade variants; (2) cable gland material — stainless steel preferred over plain steel; (3) backboard / fixings — stainless / galvanised; (4) more frequent inspection intervals (annual rather than 5-year EICR for coastal sites). Reg 522 external influences (AF code — corrosive substances) drives the spec. Cert evidence bundle records the coastal site assessment + mitigations.',
   },
   {
-    question: 'Do I need a special electricity tariff for smart charging?',
+    question: 'Is a roof / awning over the wallbox required?',
     answer:
-      'While not mandatory, time-of-use or EV-specific tariffs maximise smart charging benefits. These tariffs offer significantly cheaper overnight rates (sometimes 5-7p/kWh vs 25p+ peak). Many suppliers offer dedicated EV tariffs with smart charging integration.',
+      'Not required if the wallbox IP rating is appropriate for the site exposure. A simple lean-to roof or porch overhang can shift the site exposure from "fully exposed" to "sheltered", potentially allowing a lower IP rating wallbox. UK 2025-26 typical: wallbox IP54-IP65 makes a separate roof unnecessary; customer aesthetic preferences sometimes drive a roof anyway. If a roof is fitted, ensure it doesn’t trap heat (south-facing wallbox under a small roof can overheat in summer) or impede the manufacturer’s required clearances around the wallbox.',
   },
   {
-    question: 'Can I use V2G as home backup power during outages?',
+    question: 'What\'s the typical cable route from indoor CU to outdoor wallbox?',
     answer:
-      'Yes, V2H (Vehicle-to-Home) functionality can provide backup power during grid outages. A typical EV battery (40-70 kWh) could power essential home loads for 1-3 days. The charger must support islanded operation and appropriate changeover switching is required for safety.',
+      'Common UK 2025-26 routes: (1) through external wall — drill hole with weather-resistant sleeve, drip loop, seal; (2) under floor + up through wall — for ground-floor CU; (3) overhead through loft + down external wall in conduit / SWA — common where CU is on the opposite side of the property. For each route: cable type (T+E indoor, SWA outdoor section), entry/exit sealing, mechanical protection (steel conduit or SWA armour), fire separation if the wall is fire-rated. Cert evidence bundle records the cable route with photographs.',
   },
   {
-    question: 'What happens if I need my car but it has been discharged by V2G?',
+    question: 'How is the wallbox-to-vehicle cable managed when not in use?',
     answer:
-      'V2G systems allow users to set minimum charge levels and departure times. The system ensures your vehicle has the required charge when needed. You can override V2G operation at any time if plans change.',
-  },
-  {
-    question: 'Is V2G compatible with all EVs?',
-    answer:
-      'Currently, V2G is only supported by specific vehicles. CHAdeMO-equipped Nissan Leafs have the longest V2G track record. CCS vehicles are gaining V2G capability as ISO 15118-20 is implemented. Check vehicle specifications and charger compatibility before planning V2G installations.',
+      'Manufacturer-supplied cable holster or hook is the typical UK 2025-26 standard. Tethered wallboxes (cable permanently attached to wallbox): integrated holster on the wallbox itself; cable wound back when not in use. Untethered wallboxes (socket on wallbox): cable lives in the vehicle’s boot; storage handled by customer. Customer education at handover: keep the cable up off wet ground when not connected; don’t allow vehicles to drive over the cable (mechanical damage); inspect cable annually for wear.',
   },
 ];
 
-const RenewableEnergyModule6Section5 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
+export default function RenewableEnergyModule6Section5() {
+  const navigate = useNavigate();
+
+  useSEO({
+    title: 'Outdoor install — IP, location, mounting | Renewable Energy 6.5 | Elec-Mate',
+    description:
+      'Outdoor UK 2025-26 wallbox install — IP rating selection (typical IP54 / IP65), IK code per BS EN 62262, mounting height and accessibility, cable routing and wall penetration, fixings, Reg 522 external influences assessment, BS EN 62208 enclosures, BS EN IEC 61439-7 EV assemblies.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 py-3 flex items-center gap-3">
-          <Link to="/electrician/upskilling/renewable-energy-module-6">
-            <Button variant="ghost" size="icon" className="text-white hover:bg-white/10">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-          </Link>
-          <span className="text-white font-medium truncate">V2G and Smart Charging</span>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            type="button"
+            onClick={() => navigate('../renewable-energy-module-6')}
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Module 6
+          </button>
 
-      {/* Hero Section */}
-      <div className="px-4 py-6 text-center">
-        <div className="inline-flex items-center gap-2 bg-elec-yellow/10 border border-elec-yellow/30 rounded-full px-3 py-1 mb-3">
-          <Zap className="w-4 h-4 text-elec-yellow" />
-          <span className="text-elec-yellow text-sm font-medium">Module 6 - Section 5</span>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">V2G and Smart Charging</h1>
-        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
-          Bidirectional charging technology and intelligent charging management for grid integration
-        </p>
-      </div>
+          <PageHero
+            eyebrow="Module 6 · Section 5 · BS 7671:2018+A4:2026 · Reg 522 + 722.551.7.2 + BS EN 62262"
+            title="Outdoor install — IP, location, mounting"
+            description="The practical physical install of the outdoor wallbox: IP rating per BS EN 60529, IK code per BS EN 62262, mounting height + accessibility, cable routing + wall penetration, Reg 522 external influences assessment, manufacturer instructions integration."
+            tone="yellow"
+          />
 
-      {/* Quick Summary */}
-      <div className="px-4 pb-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">In 30 Seconds:</span> V2G enables EVs
-              to export stored energy back to the grid for revenue
-            </p>
-          </div>
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Spot it:</span> CHAdeMO or CCS
-              connectors with bidirectional capability
-            </p>
-          </div>
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Use it:</span> Frequency response and
-              peak shaving grid services
-            </p>
-          </div>
-          <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3">
-            <p className="text-white text-sm">
-              <span className="font-semibold text-elec-yellow">Key Standard:</span> ISO 15118-20 for
-              bidirectional communication
-            </p>
-          </div>
-        </div>
-      </div>
+          <TLDR
+            points={[
+              'IP rating per BS EN 60529 — first digit solid object ingress (5 = dust-protected, 6 = dust-tight); second digit water ingress (4 = splashing, 5 = jets, 6 = powerful jets). UK outdoor wallbox typical: IP54 minimum, IP65 for exposed sites.',
+              'IK code per BS EN 62262:2002 +A1:2021 — mechanical impact protection. IK00 = no protection to IK10 = 20 J. Outdoor wallboxes typically IK08 (5 J) or IK10 (20 J).',
+              'Reg 522 external influences — designer assesses ambient temperature (AA), water (AD), foreign solid bodies (AE), corrosive substances (AF, coastal sites), mechanical stress (AG), fauna (AL), solar radiation (AN).',
+              'Mounting height: manufacturer-specified, typically 1.0-1.4 m above standing surface. Ergonomic plug-in height + cable strain relief + splash protection.',
+              'Mounting surface: non-combustible solid backboard (masonry / cement-fibre / steel-faced). NOT directly on wooden fence panels or unstable surfaces. Manufacturer instructions explicit.',
+              'Cable entry: IP-rated cable gland matched to cable diameter. T+E flat profile + SWA round profile have different glanding methods. Improper glanding defeats the wallbox’s IP rating.',
+              'Wall penetration: weather sleeve / conduit + drip loop on exterior side + seal at both interior and exterior + mechanical protection through hollow walls + fire separation made good if fire-rated wall (per Approved Document B).',
+              'BS EN 62208:2011 — empty enclosures for LV switchgear; BS EN IEC 61439-7:2023 — assemblies for specific applications including EV charging stations (relevant for commercial / public, less for single-wallbox domestic).',
+            ]}
+          />
 
-      {/* Learning Outcomes */}
-      <div className="px-4 pb-6">
-        <h2 className="text-lg font-semibold text-white mb-3">What You Will Learn</h2>
-        <div className="space-y-2">
-          {[
-            'Understand V2G, V2H, and V2L technology differences',
-            'Explain grid services that EVs can provide',
-            'Describe smart charging communication protocols',
-            'Identify regulatory requirements for bidirectional charging',
-            'Apply solar and tariff integration strategies',
-            'Assess V2G business cases and deployment considerations',
-          ].map((outcome, index) => (
-            <div key={index} className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white text-sm">{outcome}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+          <LearningOutcomes
+            outcomes={[
+              'Select IP rating per BS EN 60529 based on Reg 522 external influences assessment of the actual site exposure.',
+              'Select IK rating per BS EN 62262 for mechanical impact protection.',
+              'Apply Reg 522 external influences codes (AA, AD, AE, AF, AG, AL, AN) to the outdoor wallbox install assessment.',
+              'Choose mounting height per manufacturer instructions, balancing ergonomics, cable strain relief, splash protection and accessibility.',
+              'Specify the mounting surface — non-combustible solid backboard; manufacturer-approved fixings rated for the wall material.',
+              'Apply IP-rated cable glanding to maintain the wallbox’s factory IP rating at the cable entry.',
+              'Plan wall penetration with weather sleeve, drip loop, seal, mechanical protection, and fire separation where applicable.',
+              'Document the outdoor install in the cert evidence bundle — IP/IK ratings, mounting method, cable route, photographs.',
+            ]}
+            initialVisibleCount={3}
+          />
 
-      <div className="px-4 space-y-6 pb-8">
-        {/* Section 01 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">01</span>
-            <h2 className="text-xl font-semibold text-white">
-              Bidirectional Charging Technologies
-            </h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              Bidirectional charging transforms EVs from passive loads into active energy assets.
-              Several related technologies enable different use cases for exporting stored battery
-              energy.
-            </p>
-            <p>
-              <span className="text-white font-medium">V2G - Vehicle-to-Grid:</span> Exports power
-              from the vehicle battery to the public electricity grid. Enables participation in grid
-              balancing services and wholesale energy markets. Requires G98/G99 compliant inverter
-              and DNO notification. The charger must synchronise with grid frequency and voltage.
-            </p>
-            <p>
-              <span className="text-white font-medium">V2H - Vehicle-to-Home:</span> Powers the home
-              from the vehicle battery without exporting to the grid. Can operate during outages as
-              backup power if appropriately configured. Has simpler regulatory requirements than V2G
-              and reduces peak demand whilst maximising solar self-consumption.
-            </p>
-            <p>
-              <span className="text-white font-medium">V2L - Vehicle-to-Load:</span> Provides AC
-              power output directly from the vehicle, typically via an outlet in the vehicle or a
-              portable adapter. Useful for tools, camping, and emergency power. Built into some
-              vehicles like Hyundai Ioniq 5 and Ford F-150 Lightning, typically offering 2-3 kW
-              output capacity.
-            </p>
-          </div>
-        </section>
+          <Pullquote>
+            The IP rating only protects the wallbox if the install keeps it intact. Wrong glanding defeats the whole enclosure.
+          </Pullquote>
 
-        <InlineCheck questions={[quickCheckQuestions[0]]} />
+          <ContentEyebrow>IP and IK ratings — the physical-protection spec</ContentEyebrow>
 
-        {/* Section 02 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">02</span>
-            <h2 className="text-xl font-semibold text-white">Grid Services and Revenue Streams</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              EVs can provide valuable services to the electricity grid, generating revenue for
-              vehicle owners whilst helping to balance supply and demand across the network.
-            </p>
-            <p>
-              <span className="text-white font-medium">Frequency Response:</span> The grid frequency
-              must remain close to 50Hz. EVs can rapidly inject or absorb power to help maintain
-              frequency stability. Dynamic Containment provides sub-second response to frequency
-              deviations. Payments are based on availability and energy delivered.
-            </p>
-            <p>
-              <span className="text-white font-medium">Peak Demand Reduction:</span> Reducing grid
-              demand during peak periods (typically 4-7pm) eases network constraints. EVs can defer
-              or pause charging during peak periods, export stored energy during high-demand
-              periods, and participate in demand turn-up/turn-down programmes.
-            </p>
-            <p>
-              <span className="text-white font-medium">Arbitrage Opportunities:</span> Buying
-              electricity when cheap and selling when expensive creates arbitrage value. Charge
-              during overnight off-peak rates (5-10p/kWh), export during peak periods (15-30p/kWh).
-              This requires time-of-use tariff and export agreement, automated by V2G platform
-              algorithms.
-            </p>
-          </div>
-        </section>
+          <ConceptBlock
+            title="IP rating selection per BS EN 60529"
+            plainEnglish="IP (Ingress Protection) rating per BS EN 60529 is a two-digit code. First digit = solid object / dust protection (0-6). Second digit = water protection (0-9). Outdoor wallbox typical: IP54 (dust-protected, splashing water) for sheltered sites; IP65 (dust-tight, water jets) for fully exposed sites."
+            onSite="Read the wallbox’s factory IP rating from the manufacturer DoC. The IP rating only holds if the install preserves it — cable entries, mounting orientation, manufacturer instructions all matter. A factory IP65 wallbox with badly-glanded cable entry = effective IP30 or worse."
+          >
+            <p>IP rating interpretation:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">First digit (solids)</strong> —
+                0 = no protection; 4 = wires &gt; 1 mm; 5 = dust-protected
+                (limited ingress, no harmful deposit); 6 = dust-tight
+              </li>
+              <li>
+                <strong className="text-white">Second digit (water)</strong> —
+                0 = no protection; 4 = splashing from any direction; 5 = jets;
+                6 = powerful jets; 7 = temporary immersion; 8 = continuous
+                immersion
+              </li>
+              <li>
+                <strong className="text-white">UK outdoor wallbox
+                  typical</strong> — IP54 (5+4) for sheltered sites (under
+                eaves, side wall); IP65 (6+5) for exposed sites (windward,
+                no overhang); IP66 (6+6) for fully exposed marine or
+                industrial
+              </li>
+              <li>
+                <strong className="text-white">Where IP rating fails</strong>
+                — improper cable glanding, mounting orientation that allows
+                water pooling near vents, customer modifications (drilled
+                extra holes for cable routing), enclosure damage that
+                breaks the seal
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence bundle</strong>
+                — records the wallbox’s factory IP rating + the install’s
+                cable glanding + photographs showing the entry is properly
+                sealed
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        <InlineCheck questions={[quickCheckQuestions[1]]} />
+          <ConceptBlock
+            title="IK code per BS EN 62262:2002 +A1:2021"
+            plainEnglish="IK code rates the enclosure’s resistance to mechanical impact. IK00 = no protection. IK10 = 20 J impact energy resistance. Outdoor wallbox: typically IK08 (5 J) or IK10 (20 J) — adequate for normal domestic driveway / curtilage."
+            onSite="The IK rating matters for vandalism / accidental impact resistance. Driveway sites where vehicles can hit the wallbox: IK10 preferred. Side-of-house sites with no vehicle access: IK08 is fine. Some wallbox brands ship IK08 housing with IK10 protective cover available as accessory."
+          >
+            <p>IK code level summary:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">IK00-IK06</strong> — no
+                protection to 1 J. Not used for outdoor EV
+              </li>
+              <li>
+                <strong className="text-white">IK07</strong> — 2 J. Some
+                indoor-mounted wallboxes
+              </li>
+              <li>
+                <strong className="text-white">IK08</strong> — 5 J. Common
+                UK 2025-26 outdoor wallbox housing rating
+              </li>
+              <li>
+                <strong className="text-white">IK09</strong> — 10 J
+              </li>
+              <li>
+                <strong className="text-white">IK10</strong> — 20 J. Premium /
+                exposed-site wallboxes; some commercial / public charging kit
+              </li>
+              <li>
+                <strong className="text-white">Reg 722.551.7.2</strong>
+                cross-references BS EN 62262 for enclosure mechanical impact
+                protection; the designer selects the rating appropriate to
+                the site
+              </li>
+            </ul>
+          </ConceptBlock>
 
-        {/* Section 03 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">03</span>
-            <h2 className="text-xl font-semibold text-white">Smart Charging Implementation</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              Smart charging optimises when and how vehicles charge, balancing user needs, grid
-              constraints, and cost considerations through automated scheduling and power
-              management.
-            </p>
-            <p>
-              <span className="text-white font-medium">UK Regulatory Requirements:</span> The
-              Electric Vehicles (Smart Charge Points) Regulations 2021 require private charge points
-              to include off-peak default (8am-11pm charging disabled by default), demand response
-              capability, user override option, randomised delay to prevent simultaneous charging
-              spikes, and accurate metering.
-            </p>
-            <p>
-              <span className="text-white font-medium">Scheduling Strategies:</span> Time-of-use
-              optimisation automatically schedules charging for cheapest periods. Solar matching
-              charges when solar generation exceeds home load. Target SoC ensures vehicle is ready
-              by departure time. Grid response adjusts charging based on external signals.
-            </p>
-            <p>
-              <span className="text-white font-medium">Communication Standards:</span> OCPP handles
-              charger-to-backend communication. OpenADR enables demand response signalling. ISO
-              15118 manages vehicle-charger communication. OSCP (Open Smart Charging Protocol)
-              provides load management coordination.
-            </p>
-          </div>
-        </section>
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 · Reg 522 (external influences) + Reg 722.551.7.2 + BS EN 62208 / BS EN 62262 / BS EN IEC 61439-7"
+            clause="Wiring systems shall be selected and erected so as to be suitable for the external influences likely to be encountered (Section 522). Enclosures for EV charging equipment shall provide degrees of protection against external mechanical impacts per BS EN 62262 (IK code) and meet the general requirements of BS EN 62208 for LV switchgear enclosures. For assemblies (e.g. multi-wallbox commercial installs), BS EN IEC 61439-7:2023 covers assemblies for specific applications including EV charging stations."
+            meaning="The physical install regulations cluster around external-influences assessment and enclosure standards. UK 2025-26 domestic install: pick a wallbox with appropriate IP/IK; verify the install method preserves these ratings (cable glanding, mounting orientation, manufacturer instructions). Section 522 sets the framework; BS EN 60529 (IP) and BS EN 62262 (IK) supply the test methods; BS EN 62208 covers empty enclosures generally; BS EN IEC 61439-7 covers multi-charger assemblies (commercial / public, M7 scope). Cert evidence bundle records the IP/IK ratings + the install’s preservation of them + the Reg 522 site assessment."
+          />
 
-        <InlineCheck questions={[quickCheckQuestions[2]]} />
+          <InlineCheck {...inlineChecks[0]} />
 
-        {/* Section 04 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">04</span>
-            <h2 className="text-xl font-semibold text-white">V2G Installation Requirements</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              Installing V2G systems requires consideration of electrical infrastructure, regulatory
-              compliance, and vehicle compatibility beyond standard EV charging requirements.
-            </p>
-            <p>
-              <span className="text-white font-medium">Electrical Requirements:</span> A
-              bidirectional inverter with G98/G99 compliance is essential. Anti-islanding protection
-              ensures grid safety. Export metering may require smart meter upgrade. Appropriate
-              circuit protection for bidirectional power flow and earth fault monitoring for DC
-              systems are required.
-            </p>
-            <p>
-              <span className="text-white font-medium">Regulatory Compliance:</span> DNO
-              notification is required for any export capability. G98 applies to systems up to 16A
-              per phase. G99 is required for larger systems with full application. An export tariff
-              agreement with electricity supplier and grid services contract with aggregator or ESO
-              are needed.
-            </p>
-            <p>
-              <span className="text-white font-medium">Vehicle Compatibility:</span> V2G requires
-              vehicle support - not all EVs are capable. CHAdeMO vehicles include Nissan Leaf and
-              Mitsubishi Outlander PHEV. CCS with V2G is available on growing list including some
-              BMW and Hyundai models. Always check vehicle specification, software version, and
-              confirm manufacturer warranty covers V2G operation.
-            </p>
-          </div>
-        </section>
+          <InlineCheck {...inlineChecks[1]} />
 
-        <InlineCheck questions={[quickCheckQuestions[3]]} />
+          <SectionRule />
 
-        {/* Section 05 */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-elec-yellow/30">05</span>
-            <h2 className="text-xl font-semibold text-white">Renewable Energy Integration</h2>
-          </div>
-          <div className="space-y-3 text-white text-sm leading-relaxed">
-            <p>
-              EVs and smart/bidirectional charging play a key role in maximising renewable energy
-              utilisation, both at individual property level and across the wider grid.
-            </p>
-            <p>
-              <span className="text-white font-medium">Solar PV Integration:</span> Smart chargers
-              can maximise solar self-consumption through CT clamp monitoring of solar generation
-              and home load, automatic power adjustment to match surplus generation, minimum power
-              thresholds for efficient charging, and integration with solar inverter for coordinated
-              control.
-            </p>
-            <p>
-              <span className="text-white font-medium">Grid-Scale Renewable Support:</span> EVs help
-              accommodate variable renewable generation at grid scale through demand shifting
-              (charge when wind/solar generation is high), frequency support (balance
-              second-by-second fluctuations), curtailment reduction (absorb excess renewable
-              generation), and storage capacity (fleet batteries as distributed storage).
-            </p>
-            <p>
-              <span className="text-white font-medium">Future Outlook:</span> With millions of EVs
-              expected in the UK by 2030, the combined battery capacity represents substantial
-              flexible storage. Smart and bidirectional charging will be essential for integrating
-              this demand with renewable generation, potentially providing significant grid
-              balancing capacity.
-            </p>
-          </div>
-        </section>
+          <ContentEyebrow>Mounting and physical install</ContentEyebrow>
 
-        {/* Practical Guidance */}
-        <div className="bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/20 rounded-xl p-4">
-          <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
-            <Zap className="w-4 h-4 text-elec-yellow" />
-            Practical Guidance
-          </h3>
-          <div className="space-y-2 text-white text-sm">
-            <p>
-              <span className="text-white font-medium">Customer conversations:</span> Focus on
-              practical benefits - reduced bills through smart charging, potential revenue from grid
-              services, backup power capability. Be realistic about current limitations such as
-              vehicle compatibility and charger availability.
-            </p>
-            <p>
-              <span className="text-white font-medium">Installation considerations:</span> V2G
-              installations are more complex than standard EV charging. Ensure familiarity with
-              G98/G99 requirements, coordinate with DNO early, and verify vehicle compatibility
-              before committing to V2G-specific equipment.
-            </p>
-            <p>
-              <span className="text-white font-medium">Future-proofing:</span> Even where V2G is not
-              immediately planned, install infrastructure that can support future upgrades -
-              appropriate cable sizes, smart metering capability, and solar integration ready.
-            </p>
-          </div>
-        </div>
+          <Pullquote>
+            Non-combustible backboard, manufacturer fixings, IP-rated glanding. Get these three right and the rest follows.
+          </Pullquote>
 
-        {/* FAQs */}
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold text-white">Frequently Asked Questions</h2>
-          <div className="space-y-3">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
-                <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white text-sm">{faq.answer}</p>
+          <ConceptBlock
+            title="Mounting surface and backboard"
+            plainEnglish="Wallbox manufacturers specify the mounting surface. Universal standard: non-combustible (masonry, cement-fibre board, steel-faced panel). Direct mounting on wood, plastic, or thin plasterboard is generally not acceptable for fire safety + structural stability + manufacturer warranty."
+            onSite="Read the manufacturer install guide first. If the customer’s preferred mounting surface doesn’t qualify, add a non-combustible backboard fixed to the structural members of the wall (studs, masonry). The backboard takes the wallbox; the wall takes the backboard."
+          >
+            <p>Mounting surface options:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Solid masonry (brick /
+                  block)</strong> — direct mounting with manufacturer
+                supplied wall plugs. Most common UK 2025-26 domestic site
+              </li>
+              <li>
+                <strong className="text-white">Solid concrete</strong> —
+                concrete fixings (sleeve anchors, chemical resin). More
+                cost / time than brick
+              </li>
+              <li>
+                <strong className="text-white">Plasterboard partition</strong>
+                — cannot mount directly. Cavity fixings inadequate for the
+                wallbox load + vibration over time. Solution: cement-fibre
+                board backboard fixed to studs; wallbox mounts on the
+                board
+              </li>
+              <li>
+                <strong className="text-white">Stud-and-board (timber stud
+                  + plasterboard)</strong> — backboard onto studs, then
+                wallbox on the backboard. Studs must align with the
+                wallbox fixing points
+              </li>
+              <li>
+                <strong className="text-white">External timber / wooden
+                  fence</strong> — not acceptable for direct mounting.
+                Non-combustible backboard fixed to fence posts (solid
+                structural members), wallbox on the backboard. Or relocate
+                to a masonry wall
+              </li>
+              <li>
+                <strong className="text-white">Free-standing post</strong>
+                — pre-fabricated EV-charging-post enclosures available
+                from some manufacturers; concrete base + galvanised steel
+                post + wallbox + protective shroud. Common where no wall
+                is available
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence bundle</strong>
+                — records mounting surface + backboard if used +
+                manufacturer-approved fixings + photographs
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Mounting height and accessibility"
+            plainEnglish="Manufacturer instructions are the primary source. Typical UK 2025-26 mounting height: 1.0-1.4 m above the standing surface — the Type 2 socket / connector at ergonomic adult chest height. Considerations: ergonomic plug-in; cable strain relief; splash protection; accessibility for users with reduced mobility."
+            onSite="Mount at the manufacturer’s recommended height. If installing for a customer with reduced mobility (wheelchair user, limited reach), lower mounting (~0.9 m) makes plug-in easier. For commercial / public sites: Equality Act considerations may require accessible bays with specific mounting heights — covered in M7."
+          >
+            <p>Mounting height factors:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Ergonomic plug-in</strong> —
+                ~1.0-1.3 m for typical adult; user not kneeling or
+                stretching
+              </li>
+              <li>
+                <strong className="text-white">Cable strain relief</strong>
+                — cable hangs in a loop below the wallbox, not pulled
+                straight from the socket. Strain on the Type 2 connector
+                shortens its service life
+              </li>
+              <li>
+                <strong className="text-white">Splash protection</strong>
+                — socket above road-spray height during heavy rain. ~0.5
+                m too low risks dirt + splash
+              </li>
+              <li>
+                <strong className="text-white">Accessibility</strong> —
+                reduced mobility users: ~0.9 m. Equality Act applies on
+                commercial / public; less commonly applied domestic
+              </li>
+              <li>
+                <strong className="text-white">Cable management</strong> —
+                cable holster (tethered wallboxes) at appropriate height
+                so the cable doesn’t drag on the ground when stowed
+              </li>
+              <li>
+                <strong className="text-white">Cert evidence bundle</strong>
+                — records mounting height + manufacturer instruction
+                reference + customer-side accessibility considerations
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Cable routing and wall penetration"
+            plainEnglish="The cable route from the indoor CU to the outdoor wallbox is a discrete design exercise. UK 2025-26 typical routes: through external wall; under floor + up; loft + down. Each route has water sealing, mechanical protection, fire separation and aesthetic considerations."
+            onSite="Survey the cable route at quote stage. Identify wall penetrations, fire-rated wall crossings, hollow vs solid walls, accessibility for future maintenance. Specify cable type (T+E indoor, SWA outdoor section), conduit/sleeve where needed, gland method at each end."
+          >
+            <p>Wall penetration practice:</p>
+            <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">
+              <li>
+                <strong className="text-white">Through external wall</strong>
+                — drill correct diameter hole, insert weather sleeve
+                (typically grey PVC conduit length ~150 mm), drip-loop the
+                cable downward on the exterior side, seal both interior
+                and exterior with fire-rated mastic / silicone
+              </li>
+              <li>
+                <strong className="text-white">Drip loop on exterior</strong>
+                — cable forms a downward U on the outside before entering
+                the wall. Rainwater running along the cable drips off at
+                the bottom of the loop, NOT tracking into the wall
+              </li>
+              <li>
+                <strong className="text-white">Fire separation</strong> —
+                fire-rated walls (party walls, garage-to-dwelling) need
+                fire-rated mastic at the penetration. Approved Document B
+                governs the fire performance requirements
+              </li>
+              <li>
+                <strong className="text-white">Mechanical protection</strong>
+                — hollow walls: steel sleeve through cavity to prevent
+                rodent / accidental damage. Low-density blocks: steel
+                conduit. Mechanical impact zones (where ladders / garden
+                tools could hit cable): steel conduit
+              </li>
+              <li>
+                <strong className="text-white">Outdoor cable type</strong>
+                — 6 mm² SWA typical for the outdoor section; T+E indoor.
+                The transition between cable types happens at a junction
+                box or at the wallbox itself (some wallboxes accept either
+                directly)
+              </li>
+              <li>
+                <strong className="text-white">Glanding at the
+                  wallbox</strong> — IP-rated cable gland matched to
+                cable diameter. T+E flat cable needs flat-profile gland or
+                converter
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <DiagramPlaceholder
+            caption="Outdoor wallbox install cross-section. Left: indoor CU with dedicated EV way. Cable routes through external wall via weather sleeve. Drip loop on outside before entry to wall. Cable continues to wallbox on external masonry wall. Wallbox shows: IP65 housing, IK10 housing rating, Type 2 socket at 1.2 m mounting height, factory-supplied glanding at the cable entry. Annotations: Reg 522 external influences AD/AE/AG codes; BS EN 60529 IP rating; BS EN 62262 IK rating. Fire-rated mastic on party-wall penetrations per Approved Document B."
+            filename="renewable/m6s5-outdoor-cross-section.png"
+          />
+
+          <InlineCheck {...inlineChecks[2]} />
+
+          <InlineCheck {...inlineChecks[3]} />
+
+          <SectionRule />
+
+          <Scenario
+            title="UK suburban customer — sheltered driveway install"
+            situation="Midlands semi-detached, integral garage on the south side of the property, customer wants the wallbox on the external side of the garage wall. The position is sheltered by the garage roof overhang (1 m projection). Site exposure: sheltered. Cable run from interior CU: ~3 m through the integral garage internal wall, no fire-rated wall crossings, internal cable in trunking."
+            whatToDo="Reg 522 external influences assessment: AD3 (occasional splashing); AE3 (sized to small/medium objects, no significant solids); AG1 (low mechanical impact, no vehicle access likely). IP rating: IP54 wallbox sufficient (sheltered site). IK rating: IK08 sufficient. Cable: 6 mm² T+E in trunking from CU to internal garage wall; 1 m of 6 mm² SWA through wall to wallbox (mechanical protection + weather sleeve at penetration). Drip loop on external side. IP-rated gland at wallbox entry. Mounting: solid brick wall, manufacturer M6 wall plugs, mounting height 1.2 m to Type 2 socket. Manufacturer-supplied tethered cable on the wallbox. Cert evidence bundle: photographs of mounting + cable entry + drip loop; manufacturer DoC for IP54 / IK08 ratings; Reg 522 site assessment with code references."
+            whyItMatters="Bread-and-butter UK 2025-26 sheltered install. The sheltered site allows IP54 / IK08 (cheaper end of the wallbox spec). The integral garage cable route avoids fire-rated wall crossings (no Approved Document B fire separation work needed beyond standard practice). Cert evidence bundle is straightforward. Customer-side considerations met: ergonomic mounting height, cable strain relief, weather protection."
+          />
+
+          <Scenario
+            title="Fully-exposed coastal install"
+            situation="Customer in a Cornish coastal village, ~500 m from the sea. Property is detached with a north-facing wall facing the prevailing wind. No garage; the wallbox must be on the external wall, fully exposed to driving rain + sea-salt-laden air."
+            whatToDo="Reg 522 external influences: AD5 (heavy splash + driving rain); AE3-AE4 (foreign solids including salt deposits); AF3 (corrosive substances — coastal chloride); AG2 (medium mechanical risk — wind-blown debris); AN3 (high solar radiation, salt-air UV). Spec: IP65 minimum, IP66 preferred. IK10 housing. Marine-grade or coastal-specified wallbox model (some brands have explicit "coastal" SKUs with corrosion-resistant fasteners and seals). Cable: 6 mm² SWA throughout outdoor section (no T+E exposed). Stainless steel fixings + cable glands. Drip loop + double-seal at wall penetration. Mounting: solid masonry only; cement-fibre backboard if surface is unsuitable. Inspection interval: annual visual + 5-year EICR (more frequent than inland sites). Cert evidence bundle: detailed site exposure assessment per Reg 522 codes; marine-grade kit DoC; mitigations + photographs."
+            whyItMatters="Coastal installs are real edge cases in UK 2025-26. The chloride exposure accelerates corrosion of standard kit by 5-10× compared to inland sites. The investment in marine-grade kit + stainless fixings pays back in service life. Cert evidence bundle records the coastal assessment so the next inspector knows why the kit selection looks different from standard inland."
+          />
+
+          <CommonMistake
+            title="Mounting the wallbox directly on a wooden fence panel"
+            whatHappens="Customer asks for the wallbox on a fence next to the driveway because it’s the easiest cable route. Installer mounts it directly on the fence panel using long screws. Six months later, the fence flexes in wind; the wallbox housing cracks at the mounting points; water ingress starts; the customer’s install gets a Code C2 on EICR for compromised IP rating + structural mounting failure."
+            doInstead="Wallbox manufacturers explicitly require a non-combustible solid mounting surface. Wooden fence panels flex too much and aren’t fire-rated. Solutions: (1) mount on the masonry wall behind the fence (typical UK driveway has both fence and house wall); (2) fix a cement-fibre backboard to fence POSTS (solid structural members), not panels, then mount the wallbox on the backboard; (3) install a free-standing EV-charging post with concrete base. Cert evidence bundle records the mounting method + photographs."
+          />
+
+          <CommonMistake
+            title="Skipping the drip loop on the external cable entry"
+            whatHappens="Installer drills a wall hole at horizontal level with the wallbox and pushes the cable straight through. No drip loop on the outside. Rain runs along the cable, into the wall hole, and then along the cable inside the wall cavity. Three years later, the customer notices water staining on the interior wall, then a damp patch. Investigation reveals water has been tracking along the cable into the wall, soaked into the insulation, and started causing cosmetic damage to the interior."
+            doInstead="ALWAYS form a drip loop on the external side. The cable enters the wall ABOVE its exit point on the wallbox side, forms a downward U-shape on the outside, then enters the wall below the loop. Rainwater runs down the cable, drips off at the bottom of the loop, and never approaches the wall hole. Combine with: weather sleeve through the wall; sealant at both interior and exterior. The drip loop costs nothing extra at install but prevents long-term damp damage. Cert evidence bundle records the cable route + drip loop photograph."
+          />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              'IP rating per BS EN 60529 selected per Reg 522 external influences assessment. UK 2025-26 outdoor wallbox: IP54 sheltered, IP65 exposed, IP66 marine.',
+              'IK code per BS EN 62262 — mechanical impact protection. IK08 (5 J) typical UK outdoor; IK10 (20 J) for driveway / public sites where vehicle / debris impact possible.',
+              'Reg 522 external influences codes: AA (ambient temp), AD (water), AE (foreign solids), AF (corrosive — coastal), AG (mechanical), AL (fauna), AN (solar radiation).',
+              'Mounting height: manufacturer-specified, typically 1.0-1.4 m to the Type 2 socket. Ergonomic, cable strain relief, splash protection, accessibility.',
+              'Mounting surface: non-combustible solid (masonry / cement-fibre board / steel-faced panel). NOT direct on wooden fence panels, plasterboard, or unstable surfaces.',
+              'Fixings: manufacturer-supplied or equivalent rated. M6-M8 wall plugs in solid brick; cavity fixings inadequate for wallbox load; chemical resin for stone / mixed walls.',
+              'Cable glanding: IP-rated gland matched to cable diameter. T+E flat profile + SWA round profile have different glanding requirements. Improper gland defeats wallbox’s factory IP rating.',
+              'Wall penetration: weather sleeve through wall + drip loop on exterior + seal at both sides + fire-rated mastic for fire-rated walls (Approved Document B).',
+              'Outdoor cable section: 6 mm² SWA typical (mechanical protection + UV resistance). Indoor section: 6 mm² T+E. Transition at wallbox or junction box.',
+              'BS EN 62208 — empty enclosures for LV switchgear. BS EN IEC 61439-7:2023 — multi-wallbox assemblies (commercial / public, M7 scope).',
+              'Cert evidence bundle: IP/IK ratings + manufacturer DoC + Reg 522 site assessment + mounting method + cable route + photographs.',
+            ]}
+          />
+
+          <FAQ items={faqs} />
+
+          <Quiz questions={quizQuestions} title="Section 5 · Knowledge check" />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/upskilling/renewable-energy-module-6-section-4')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Section 4
               </div>
-            ))}
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Cable, RCBO & dedicated final circuit
+              </div>
+            </button>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/electrician/upskilling/renewable-energy-module-6-section-6')
+              }
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next section <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                6.6 Connector, CP/PP & dynamic load management
+              </div>
+            </button>
           </div>
-        </section>
-
-        {/* Quiz */}
-        <Quiz title="V2G and Smart Charging Quiz" questions={quizQuestions} />
-
-        {/* Bottom Navigation */}
-        <div className="flex justify-between items-center pt-4 border-t border-white/10">
-          <Link to="../section-4">
-            <Button variant="outline" className="border-white/20 text-white hover:bg-white/10">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Previous Section
-            </Button>
-          </Link>
-          <Link to="/study-centre/upskilling/renewable-energy-module-7-section-1">
-            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-              Next Module
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Button>
-          </Link>
-        </div>
+        </PageFrame>
       </div>
     </div>
   );
-};
-
-export default RenewableEnergyModule6Section5;
+}

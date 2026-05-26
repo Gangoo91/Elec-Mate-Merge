@@ -26,8 +26,13 @@ const FunctionalSkillsModule5Section1 = () => {
     {
       id: 1,
       question: 'How long is the Level 1 Functional Skills Maths exam typically?',
-      options: ['30 minutes', '1 hour', '1 hour 30 minutes', '2 hours'],
-      correctAnswer: 2,
+      options: [
+        '30 minutes',
+        '1 hour 30 minutes',
+        '1 hour',
+        '2 hours',
+      ],
+      correctAnswer: 1,
       explanation:
         'The Level 1 Functional Skills Maths exam is typically 1 hour 30 minutes, split between a non-calculator section (approximately 30 minutes) and a calculator section (approximately 60 minutes).',
     },
@@ -35,20 +40,25 @@ const FunctionalSkillsModule5Section1 = () => {
       id: 2,
       question: 'In a Level 1 English writing task, which of the following is most important?',
       options: [
+        'Writing as much as you can regardless of quality',
         'Using as many long words as possible',
         'Writing clearly with correct spelling, grammar, and punctuation',
-        'Writing as much as you can regardless of quality',
         'Using complex sentence structures throughout',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'At Level 1, clarity and accuracy are paramount. Assessors look for correct spelling, grammar, and punctuation alongside clear communication of ideas appropriate to the audience and purpose.',
     },
     {
       id: 3,
       question: 'A cable costs £2.45 per metre. How much would 12 metres cost?',
-      options: ['£24.50', '£29.40', '£28.40', '£30.00'],
-      correctAnswer: 1,
+      options: [
+        '£28.40',
+        '£24.50',
+        '£30.00',
+        '£29.40',
+      ],
+      correctAnswer: 3,
       explanation:
         '£2.45 multiplied by 12 = £29.40. Break it down: £2 x 12 = £24, then £0.45 x 12 = £5.40, giving a total of £24 + £5.40 = £29.40.',
     },
@@ -56,20 +66,25 @@ const FunctionalSkillsModule5Section1 = () => {
       id: 4,
       question: 'Which reading skill is assessed in the Level 1 English reading exam?',
       options: [
-        'Speed reading only',
         'Identifying main points, details, and understanding purpose',
-        'Memorising entire passages word for word',
-        'Only understanding technical vocabulary',
+        'Test certificates and maintenance records throughout operational life',
+        'Installation not matching approved drawings',
+        'During the design and planning stage, before construction begins',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Level 1 reading assesses your ability to identify main points, extract relevant details, and understand the purpose and audience of different texts. You must refer back to the text for your answers.',
     },
     {
       id: 5,
       question: 'What fraction of an hour is 45 minutes?',
-      options: ['1/2', '2/3', '3/4', '4/5'],
-      correctAnswer: 2,
+      options: [
+        '2/3',
+        '3/4',
+        '4/5',
+        '1/2',
+      ],
+      correctAnswer: 1,
       explanation:
         '45 minutes out of 60 minutes = 45/60 = 3/4 of an hour. This is a common conversion used in timesheets and job costing for electrical work.',
     },
@@ -77,20 +92,25 @@ const FunctionalSkillsModule5Section1 = () => {
       id: 6,
       question: "In the Level 1 ICT assessment, what does 'fitness for purpose' mean?",
       options: [
-        'The document looks attractive',
+        'Either end of previous day or first thing in morning',
+        'Flexible cables used and connections suitable for vibration',
         'The document is suitable for its intended audience and use',
-        'The document is as long as possible',
-        'The document uses every formatting tool available',
+        'HSE investigation, fines, or legal action',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Fitness for purpose means your document is appropriate for its intended audience and use. A safety notice should be clear and direct, whilst a formal letter should use professional language and layout.',
     },
     {
       id: 7,
       question: 'If a room is 4.5 m by 3.2 m, what is its area?',
-      options: ['7.7 m²', '14.4 m²', '15.4 m²', '14.04 m²'],
-      correctAnswer: 1,
+      options: [
+        '7.7 m²',
+        '14.04 m²',
+        '15.4 m²',
+        '14.4 m²',
+      ],
+      correctAnswer: 3,
       explanation:
         'Area = length x width = 4.5 x 3.2 = 14.4 m². Area calculations are essential for electrical work such as determining lighting layouts and cable run requirements.',
     },
@@ -98,12 +118,12 @@ const FunctionalSkillsModule5Section1 = () => {
       id: 8,
       question: 'Which time management strategy is most effective during an exam?',
       options: [
-        'Spend all your time on the first question to get it perfect',
-        'Skip the instructions and start answering immediately',
         'Allocate time per question based on marks available',
         'Answer questions in random order',
+        'Spend all your time on the first question to get it perfect',
+        'Skip the instructions and start answering immediately',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Allocating time based on marks available ensures you give appropriate attention to higher-value questions whilst still attempting every question on the paper.',
     },

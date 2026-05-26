@@ -32,24 +32,39 @@ const quickCheckQuestions = [
   {
     id: 'uk-peak-voltage',
     question: 'What is the peak voltage of the UK 230V RMS supply?',
-    options: ['230V', '253V', '325V', '400V'],
-    correctIndex: 2,
+    options: [
+      '325V',
+      '253V',
+      '230V',
+      '400V',
+    ],
+    correctIndex: 0,
     explanation:
       'UK supply is 230V RMS. Peak voltage = 230 x sqrt(2) = 230 x 1.414 = 325V. This is the maximum instantaneous voltage reached during each cycle.',
   },
   {
     id: 'rms-conversion',
     question: 'What is the RMS value of a sinusoidal waveform with a peak value of 100V?',
-    options: ['50V', '63.7V', '70.7V', '100V'],
-    correctIndex: 2,
+    options: [
+      '70.7V',
+      '100V',
+      '50V',
+      '63.7V',
+    ],
+    correctIndex: 0,
     explanation:
       'RMS = Peak x 0.707 (or Peak / sqrt(2)). Therefore: 100V x 0.707 = 70.7V RMS. This is the equivalent DC voltage that would produce the same heating effect.',
   },
   {
     id: 'form-factor',
     question: 'What is the form factor of a pure sinusoidal waveform?',
-    options: ['0.707', '1.0', '1.11', '1.414'],
-    correctIndex: 2,
+    options: [
+      '0.707',
+      '1.11',
+      '1.0',
+      '1.414',
+    ],
+    correctIndex: 1,
     explanation:
       'Form factor = RMS value / Average value = 0.707 / 0.637 = 1.11 for a pure sine wave. This ratio is used to verify waveform quality.',
   },
@@ -57,12 +72,12 @@ const quickCheckQuestions = [
     id: 'why-rms',
     question: 'Why are AC voltages quoted as RMS values rather than peak values?',
     options: [
-      'RMS values are easier to measure',
-      'RMS gives the equivalent DC heating effect',
       'Peak values are too high',
       'RMS is required by regulations',
+      'RMS gives the equivalent DC heating effect',
+      'RMS values are easier to measure',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'RMS (Root Mean Square) represents the equivalent DC value that would produce the same power dissipation in a resistive load. This makes power calculations straightforward: P = V squared / R works directly with RMS values.',
   },
@@ -85,7 +100,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A sinusoidal voltage has a peak value of 339V. What is its RMS value?',
-    options: ['169.5V', '216V', '240V', '339V'],
+    options: [
+      '339V',
+      '169.5V',
+      '240V',
+      '216V',
+    ],
     correctAnswer: 2,
     explanation:
       'RMS = Peak x 0.707 = 339 x 0.707 = 239.7V which is approximately 240V. This is approximately the historic UK supply voltage before harmonisation.',
@@ -95,20 +115,25 @@ const quizQuestions = [
     question:
       'What is the relationship between peak-to-peak voltage and peak voltage for a sinusoid?',
     options: [
-      'Peak-to-peak = Peak x sqrt(2)',
-      'Peak-to-peak = Peak x 2',
       'Peak-to-peak = Peak / 2',
+      'Peak-to-peak = Peak x sqrt(2)',
       'Peak-to-peak = Peak x 1.414',
+      'Peak-to-peak = Peak x 2',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Peak-to-peak voltage is exactly twice the peak voltage, as it measures from the negative peak to the positive peak. For UK mains: Vp-p = 325V x 2 = 650V.',
   },
   {
     id: 4,
     question: 'The average value of a sinusoidal waveform over a complete cycle is:',
-    options: ['0.637 x Peak', '0.707 x Peak', 'Zero', 'Equal to RMS'],
-    correctAnswer: 2,
+    options: [
+      'Zero',
+      '0.707 x Peak',
+      '0.637 x Peak',
+      'Equal to RMS',
+    ],
+    correctAnswer: 0,
     explanation:
       'Over a complete cycle, a sinusoid is symmetrical about zero, so positive and negative half-cycles cancel out. The average over one complete cycle is zero. The 0.637 factor applies to half-cycle average only.',
   },
@@ -117,10 +142,10 @@ const quizQuestions = [
     question:
       'A true RMS multimeter measures 230V on a distorted waveform. An average-responding meter reads 245V. What does this indicate?',
     options: [
-      'The meters are faulty',
+      'Reference Method E - on perforated cable tray',
       'The waveform has significant harmonic distortion',
-      'The voltage is fluctuating',
-      'Normal measurement variation',
+      'Low coercivity (soft magnetic material)',
+      'Daily or weekly log of completed work not yet invoiced',
     ],
     correctAnswer: 1,
     explanation:
@@ -129,7 +154,12 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the crest factor of a pure sinusoidal waveform?',
-    options: ['0.707', '1.11', '1.414', '2.0'],
+    options: [
+      '0.707',
+      '1.11',
+      '1.414',
+      '2.0',
+    ],
     correctAnswer: 2,
     explanation:
       'Crest factor = Peak / RMS = 1 / 0.707 = 1.414 (which equals sqrt(2)) for a pure sine wave. Higher crest factors indicate peakier waveforms.',
@@ -138,8 +168,13 @@ const quizQuestions = [
     id: 7,
     question:
       'An oscilloscope displays a 50Hz sinusoidal waveform. How many complete cycles appear in 40ms?',
-    options: ['1 cycle', '2 cycles', '4 cycles', '20 cycles'],
-    correctAnswer: 1,
+    options: [
+      '1 cycle',
+      '20 cycles',
+      '4 cycles',
+      '2 cycles',
+    ],
+    correctAnswer: 3,
     explanation:
       'Period T = 1/f = 1/50 = 20ms per cycle. In 40ms: 40/20 = 2 complete cycles will be displayed.',
   },
@@ -147,19 +182,24 @@ const quizQuestions = [
     id: 8,
     question: 'Why might equipment insulation be rated for 400V even when operating on 230V RMS?',
     options: [
-      'To allow for future voltage increases',
       'To withstand the 325V peak voltage with safety margin',
-      'Because 400V is the three-phase voltage',
-      'BS 7671 requirement',
+      'Heat-shrink, clip-on tags, or printed labels',
+      'To ensure the health, safety and welfare of all persons at work',
+      'At least three times the area of the outrigger foot',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Insulation must withstand peak voltage (325V) plus a safety margin for transients. Rating at 400V provides adequate clearance for the 325V peaks plus overvoltage conditions.',
   },
   {
     id: 9,
     question: 'Calculate the average value over a half-cycle for a waveform with Vpeak = 325V.',
-    options: ['163V', '207V', '230V', '325V'],
+    options: [
+      '163V',
+      '207V',
+      '230V',
+      '325V',
+    ],
     correctAnswer: 1,
     explanation:
       'Half-cycle average = 0.637 x Peak = 0.637 x 325 = 207V. This value is used in rectifier calculations but not for power calculations.',
@@ -168,7 +208,12 @@ const quizQuestions = [
     id: 10,
     question:
       'A building services engineer measures 400V between phases in a three-phase system. What is the peak line voltage?',
-    options: ['283V', '400V', '566V', '693V'],
+    options: [
+      '283V',
+      '400V',
+      '566V',
+      '693V',
+    ],
     correctAnswer: 2,
     explanation:
       'Peak = RMS x sqrt(2) = 400 x 1.414 = 566V. This is the maximum instantaneous voltage between any two phases.',
@@ -180,18 +225,23 @@ const quizQuestions = [
     options: [
       'Moving coil meter',
       'Average-responding digital meter',
-      'True RMS meter',
       'Peak-reading meter',
+      'True RMS meter',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'VSDs produce non-sinusoidal PWM outputs. True RMS meters calculate actual heating effect regardless of waveform, giving accurate readings. Average-responding meters assume sinusoidal waveforms and give incorrect results.',
   },
   {
     id: 12,
     question: 'The UK supply frequency is 50Hz. What is the angular frequency (omega)?',
-    options: ['50 rad/s', '100 pi rad/s', '314 rad/s', '628 rad/s'],
-    correctAnswer: 2,
+    options: [
+      '314 rad/s',
+      '628 rad/s',
+      '50 rad/s',
+      '100 pi rad/s',
+    ],
+    correctAnswer: 0,
     explanation:
       'Angular frequency omega = 2 x pi x f = 2 x pi x 50 = 314 rad/s (or 100 pi rad/s, both answers represent the same value).',
   },

@@ -5,10 +5,10 @@ export const earthFaultLoopQuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'What does Zs represent in electrical testing?',
     options: [
-      'Earth electrode resistance',
-      'Earth fault loop impedance',
-      'Source impedance',
       'Circuit resistance',
+      'Earth fault loop impedance',
+      'Earth electrode resistance',
+      'Source impedance',
     ],
     correctAnswer: 1,
     explanation:
@@ -30,15 +30,25 @@ export const earthFaultLoopQuizQuestions: QuizQuestion[] = [
   {
     id: 3,
     question: 'According to BS 7671, what is the typical maximum Zs value for a 32A Type B MCB?',
-    options: ['1.44Ω', '0.87Ω', '1.15Ω', '2.30Ω'],
-    correctAnswer: 0,
+    options: [
+      '2.30Ω',
+      '0.87Ω',
+      '1.15Ω',
+      '1.44Ω',
+    ],
+    correctAnswer: 3,
     explanation:
       'For a 32A Type B MCB, the maximum Zs value is typically 1.44Ω to ensure disconnection within the required time.',
   },
   {
     id: 4,
     question: 'What is the relationship between Zs and Ze?',
-    options: ['Zs = Ze + R1 + R2', 'Zs = Ze - R1 - R2', 'Zs = Ze × R1 × R2', 'Zs = Ze ÷ (R1 + R2)'],
+    options: [
+      'Zs = Ze + R1 + R2',
+      'Zs = Ze × R1 × R2',
+      'Zs = Ze - R1 - R2',
+      'Zs = Ze ÷ (R1 + R2)',
+    ],
     correctAnswer: 0,
     explanation:
       'Zs equals Ze plus R1 plus R2, where R1 is the line conductor resistance and R2 is the protective conductor resistance.',
@@ -47,10 +57,10 @@ export const earthFaultLoopQuizQuestions: QuizQuestion[] = [
     id: 5,
     question: 'Why is earth fault loop impedance testing critical for safety?',
     options: [
-      'To measure power consumption',
+      'Before connecting the main earthing conductor',
       'To ensure adequate fault current for protective device operation',
-      'To check voltage levels',
-      'To test insulation resistance',
+      'Line conductor, protective conductor, and neutral',
+      'Protective devices may not operate quickly enough',
     ],
     correctAnswer: 1,
     explanation:
@@ -60,12 +70,12 @@ export const earthFaultLoopQuizQuestions: QuizQuestion[] = [
     id: 6,
     question: 'When should Ze be measured in an installation?',
     options: [
-      'Only during initial verification',
+      'Protective devices may not operate quickly enough',
+      'Line conductor, protective conductor, and neutral',
       'Before connecting the main earthing conductor',
-      'After energising the installation',
-      'During periodic inspection only',
+      'Apply temperature correction factor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Ze should be measured before connecting the main earthing conductor to obtain an accurate external impedance reading.',
   },
@@ -73,12 +83,12 @@ export const earthFaultLoopQuizQuestions: QuizQuestion[] = [
     id: 7,
     question: 'What instrument correction should be applied to Zs readings?',
     options: [
-      'Add 10% to all readings',
+      'Correct connection of live and neutral',
+      '6 metres (or as specified by the DNO)',
+      'PASMA Photo ID Card (Towers for Users)',
       'Apply temperature correction factor',
-      'No correction needed',
-      'Subtract instrument resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Temperature correction should be applied to account for the increase in conductor resistance at maximum operating temperature.',
   },
@@ -86,12 +96,12 @@ export const earthFaultLoopQuizQuestions: QuizQuestion[] = [
     id: 8,
     question: 'In a TN-S system, what does the earth fault current path include?',
     options: [
-      'Line conductor, earth electrode, and neutral',
       'Line conductor, protective conductor, and neutral',
-      'Protective conductor only',
-      'Earth electrode and line conductor',
+      'Protective devices may not operate quickly enough',
+      'Before connecting the main earthing conductor',
+      'External earth fault loop impedance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'In a TN-S system, the earth fault current path includes the line conductor, protective conductor, and the neutral conductor back to the source.',
   },
@@ -99,10 +109,10 @@ export const earthFaultLoopQuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'What happens if Zs is too high?',
     options: [
-      'The circuit operates more efficiently',
+      'Apply temperature correction factor',
       'Protective devices may not operate quickly enough',
-      'Power consumption increases',
-      'Voltage drop decreases',
+      'External earth fault loop impedance',
+      'Line conductor, protective conductor, and neutral',
     ],
     correctAnswer: 1,
     explanation:
@@ -111,8 +121,13 @@ export const earthFaultLoopQuizQuestions: QuizQuestion[] = [
   {
     id: 10,
     question: 'Which regulation in BS 7671 covers earth fault loop impedance requirements?',
-    options: ['Regulation 411.4.5', 'Regulation 411.3.2', 'Regulation 543.1', 'Regulation 411.4.9'],
-    correctAnswer: 3,
+    options: [
+      'Regulation 411.4.5',
+      'Regulation 411.3.2',
+      'Regulation 411.4.9',
+      'Regulation 543.1',
+    ],
+    correctAnswer: 2,
     explanation:
       'Regulation 411.4.9 in BS 7671 specifies the requirements for earth fault loop impedance and maximum disconnection times.',
   },

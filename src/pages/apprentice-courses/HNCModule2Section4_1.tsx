@@ -32,15 +32,25 @@ const quickCheckQuestions = [
   {
     id: 'visible-spectrum',
     question: 'What is the approximate wavelength range of visible light?',
-    options: ['100-400nm', '380-780nm', '800-1200nm', '1000-2000nm'],
-    correctIndex: 1,
+    options: [
+      '800-1200nm',
+      '100-400nm',
+      '1000-2000nm',
+      '380-780nm',
+    ],
+    correctIndex: 3,
     explanation:
       'Visible light occupies the 380-780nm wavelength range within the electromagnetic spectrum. Below 380nm is ultraviolet, above 780nm is infrared.',
   },
   {
     id: 'colour-temp-warm',
     question: 'What colour temperature would you specify for a warm, relaxed atmosphere?',
-    options: ['2700K', '4000K', '5000K', '6500K'],
+    options: [
+      '2700K',
+      '5000K',
+      '4000K',
+      '6500K',
+    ],
     correctIndex: 0,
     explanation:
       '2700K provides warm white light with a yellowish appearance, ideal for relaxed environments like restaurants and lounges. Higher values produce cooler, bluer light.',
@@ -48,7 +58,12 @@ const quickCheckQuestions = [
   {
     id: 'cri-minimum',
     question: 'What is the minimum CRI typically specified for general office lighting?',
-    options: ['60', '70', '80', '90'],
+    options: [
+      '60',
+      '70',
+      '80',
+      '90',
+    ],
     correctIndex: 2,
     explanation:
       'CRI 80 (Ra80) is the minimum recommended for most interior applications. Critical colour tasks like printing may require CRI 90+.',
@@ -57,8 +72,13 @@ const quickCheckQuestions = [
     id: 'scotopic-vision',
     question:
       'Which type of vision predominates in low light levels below approximately 0.01 cd/m²?',
-    options: ['Photopic vision', 'Scotopic vision', 'Mesopic vision', 'Chromatic vision'],
-    correctIndex: 1,
+    options: [
+      'Chromatic vision',
+      'Photopic vision',
+      'Scotopic vision',
+      'Mesopic vision',
+    ],
+    correctIndex: 2,
     explanation:
       'Scotopic vision uses rod cells and operates at very low light levels (below 0.01 cd/m²). It provides no colour perception and lower acuity than photopic vision.',
   },
@@ -69,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is light?',
     options: [
-      'A form of heat radiation only',
+      'Class EN 131 Professional — suitable for trade use',
       'Electromagnetic radiation visible to the human eye',
-      'A type of sound wave',
-      'Ionising radiation from the sun',
+      'Different types have different instantaneous trip levels',
+      'Prove tester, test dead, prove tester',
     ],
     correctAnswer: 1,
     explanation:
@@ -81,7 +101,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which part of the eye contains photoreceptor cells responsible for vision?',
-    options: ['Cornea', 'Lens', 'Retina', 'Iris'],
+    options: [
+      'Iris',
+      'Cornea',
+      'Retina',
+      'Lens',
+    ],
     correctAnswer: 2,
     explanation:
       'The retina at the back of the eye contains rods and cones - the photoreceptor cells that convert light into electrical signals sent to the brain.',
@@ -89,8 +114,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the colour temperature of typical daylight at midday?',
-    options: ['2700K', '4000K', '5500-6500K', '8000K'],
-    correctAnswer: 2,
+    options: [
+      '4000K',
+      '2700K',
+      '8000K',
+      '5500-6500K',
+    ],
+    correctAnswer: 3,
     explanation:
       "Daylight at midday typically ranges from 5500K to 6500K, appearing as neutral to cool white. This is why 6500K is often called 'daylight' in lamp specifications.",
   },
@@ -110,8 +140,13 @@ const quizQuestions = [
   {
     id: 5,
     question: 'At what light level does vision transition from photopic to mesopic?',
-    options: ['0.001 cd/m²', '0.01 cd/m²', '3 cd/m²', '10 cd/m²'],
-    correctAnswer: 2,
+    options: [
+      '0.01 cd/m²',
+      '3 cd/m²',
+      '10 cd/m²',
+      '0.001 cd/m²',
+    ],
+    correctAnswer: 1,
     explanation:
       'Below approximately 3 cd/m², vision begins transitioning from photopic (cone-dominated) to mesopic (mixed rod-cone) vision. Full scotopic vision occurs below 0.01 cd/m².',
   },
@@ -120,19 +155,24 @@ const quizQuestions = [
     question: 'Which photoreceptor cells provide colour vision?',
     options: [
       'Rods only',
-      'Cones only',
       'Both rods and cones equally',
+      'Cones only',
       'Neither - colour is processed in the brain',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cones are responsible for colour vision (photopic vision). There are three types sensitive to red, green, and blue wavelengths. Rods provide only monochromatic vision.',
   },
   {
     id: 7,
     question: 'A lamp has a colour temperature of 4000K. How would this typically be described?',
-    options: ['Warm white', 'Cool white/neutral', 'Daylight', 'Very warm'],
-    correctAnswer: 1,
+    options: [
+      'Warm white',
+      'Very warm',
+      'Daylight',
+      'Cool white/neutral',
+    ],
+    correctAnswer: 3,
     explanation:
       "4000K is typically described as 'cool white' or 'neutral white'. It provides a balance between warm (2700-3000K) and daylight (5000K+) appearances.",
   },
@@ -140,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why is the S/P ratio important in lighting design?',
     options: [
-      'It determines energy efficiency',
       'It affects visual performance at mesopic light levels',
-      'It measures lamp lifespan',
-      'It indicates UV output',
+      'At all safety signs, changes of level, and intersection points',
+      'Ensure power is isolated and use appropriate IP-rated equipment',
+      'Identify the correct circuit using drawings/spec',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Scotopic/Photopic (S/P) ratio indicates how effective a light source is at mesopic light levels. Higher S/P ratios can improve visibility in peripheral vision and low-light areas.',
   },
@@ -153,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the Purkinje shift?',
     options: [
-      'A colour temperature adjustment',
+      'Substitute the substance with a less hazardous alternative',
       'Change in eye sensitivity towards blue at low light levels',
-      'Lens yellowing with age',
-      'Automatic brightness adjustment',
+      'Multiple methods: landline, mobile, radio, alarms',
+      'Inspection is visual, testing uses instruments',
     ],
     correctAnswer: 1,
     explanation:
@@ -165,24 +205,39 @@ const quizQuestions = [
   {
     id: 10,
     question: 'For critical colour matching tasks, what minimum CRI should be specified?',
-    options: ['CRI 70', 'CRI 80', 'CRI 90', 'CRI 95+'],
-    correctAnswer: 3,
+    options: [
+      'CRI 70',
+      'CRI 80',
+      'CRI 95+',
+      'CRI 90',
+    ],
+    correctAnswer: 2,
     explanation:
       'Critical colour matching (printing, textiles, paint matching) typically requires CRI 95+ to ensure accurate colour perception. Some applications specify individual R values (R9 for reds).',
   },
   {
     id: 11,
     question: 'What wavelength does the human eye perceive as brightest under photopic conditions?',
-    options: ['450nm (blue)', '507nm (blue-green)', '555nm (yellow-green)', '630nm (red)'],
-    correctAnswer: 2,
+    options: [
+      '450nm (blue)',
+      '507nm (blue-green)',
+      '630nm (red)',
+      '555nm (yellow-green)',
+    ],
+    correctAnswer: 3,
     explanation:
       'The photopic luminous efficiency function peaks at 555nm (yellow-green). This is why lumens are weighted towards this wavelength and why yellow-green appears brightest.',
   },
   {
     id: 12,
     question: 'Which CIBSE publication provides guidance on colour in interior lighting?',
-    options: ['LG1', 'LG3', 'LG7', 'TM10'],
-    correctAnswer: 2,
+    options: [
+      'LG7',
+      'TM10',
+      'LG1',
+      'LG3',
+    ],
+    correctAnswer: 0,
     explanation:
       "CIBSE LG7 'Office Lighting' and other Lighting Guides provide specific guidance on colour rendering and colour temperature for various applications.",
   },

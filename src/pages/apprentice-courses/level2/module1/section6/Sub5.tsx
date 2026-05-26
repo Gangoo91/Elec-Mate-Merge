@@ -51,12 +51,12 @@ const checks = [
     question:
       'A laptop charger is on fire on the bench — which extinguisher class do you grab?',
     options: [
-      'Water (red)',
-      'Foam (cream label)',
       'CO₂ (black label) — designed for live electrical fires',
-      'Class F wet chemical (yellow label)',
+      'The point moves horizontally to the right',
+      'After confirming supply and control circuits were correct',
+      'Dividing work into logical, sequential steps',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'CO₂ (black label) is the standard electrical extinguisher — non-conductive, leaves no residue, smothers the fire by displacing oxygen. Dry powder (blue label) also works but it goes everywhere and ruins the kit and any nearby electronics. Water and foam are conductive — never on live electrics.',
   },
@@ -65,11 +65,11 @@ const checks = [
     question: 'PASS is the four-step extinguisher technique. What does the first letter stand for?',
     options: [
       'Push the lever',
-      'Pull the safety pin',
       'Pump the handle three times',
+      'Pull the safety pin',
       'Position your feet',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'P = Pull the safety pin. A = Aim at the BASE of the fire (not the flames). S = Squeeze the handle. S = Sweep side to side. Pin first because it locks the handle until you pull it — squeeze before pulling and nothing happens.',
   },
@@ -77,12 +77,12 @@ const checks = [
     id: 'evac-stop-work-check',
     question: 'The fire alarm goes off. What is the right immediate action for an apprentice?',
     options: [
-      'Pack up tools, finish the bit you’re on, then leave',
-      'Investigate where the fire is so you can tell the supervisor',
       'Stop work immediately, leave by the nearest safe exit, go to the assembly point',
+      'Pack up tools, finish the bit you’re on, then leave',
       'Wait for the supervisor to confirm it’s real',
+      'Investigate where the fire is so you can tell the supervisor',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Stop work, leave by the nearest safe exit, go to the assembly point. Don’t pack up. Don’t investigate. Don’t wait for confirmation. Roll call at the assembly point identifies who is missing — that’s how the fire service knows whether to enter the building.',
   },
@@ -108,10 +108,10 @@ const quizQuestions = [
     id: 2,
     question: 'A chip pan is on fire in the canteen. Which class of fire is that?',
     options: [
-      'Class A — solids',
-      'Class B — flammable liquids',
-      'Class F — cooking oils and fats',
       'Class C — flammable gases',
+      'Class A — solids',
+      'Class F — cooking oils and fats',
+      'Class B — flammable liquids',
     ],
     correctAnswer: 2,
     explanation:
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'You see a small waste-bin fire of paper and cardboard in the corridor. The alarm hasn’t gone yet. Which extinguisher?',
     options: [
-      'CO₂ (black) — works on everything',
+      'It visualises processes and relationships between properties',
+      'Emergency activation that triggers all alarms and notifications',
+      'Using distribution boards or sub-boards as natural division points',
       'Water (red) or foam (cream) — Class A solid combustibles',
-      'Dry powder (blue) — wrap it round the bin',
-      'Class F (yellow)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Class A (solids — paper, wood, fabric, plastic) is what water and foam extinguishers are designed for. CO₂ would work but it’s overkill and the fire can re-ignite once the gas disperses. Hit the alarm first. Tackle only if it’s small (incipient stage), you’re trained, and you have a clear escape route behind you.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     id: 4,
     question: 'What does PASS stand for in fire-extinguisher use?',
     options: [
-      'Push, Aim, Sweep, Squeeze',
       'Pull (the pin), Aim (at the base), Squeeze (the handle), Sweep (side to side)',
-      'Position, Attack, Spray, Stand back',
-      'Pin, Activate, Spread, Stop',
+      'Combination of escape route and open area (anti-panic) lighting',
+      'Embodied carbon coefficients for construction materials',
+      'Record the exact measured value with appropriate units',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Pull pin. Aim at the BASE (not the flames). Squeeze the handle. Sweep side to side across the base. Universal mnemonic on every UK fire-awareness course.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     question:
       'A lithium-ion battery pack on a fit-out has gone into thermal runaway. What extinguisher is most appropriate?',
     options: [
-      'Water (red) — cools it down',
-      'CO₂ (black) — smothers the fire',
+      'Chronotype-aligned work scheduling &mdash; matching task difficulty to your natural energy cycles',
       'A specialist Li-ion extinguisher (e.g. AVD or copious water cooling); evacuate and call fire service if not contained',
-      'Dry powder (blue)',
+      'Places rigid, unrealistic demands on themselves or others — "I should never make mistakes"',
+      'To check if the wearer can detect the test aerosol through the facepiece, indicating a leak',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Lithium-ion fires self-oxidate (the cell releases its own oxygen) so smothering doesn’t work. Standard extinguishers can knock down flames temporarily but the cells will re-ignite. Specialist AVD (Aqueous Vermiculite Dispersion) or large volumes of cooling water are the recognised tactics. Get out and call 999 if the fire isn’t small and contained.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 6,
     question: 'When the alarm sounds, what should you take with you?',
     options: [
-      'Tools, phone, jacket — anything valuable',
+      'Diagnose mental health conditions or prescribe treatment',
+      'A planned series of deliveries from a framework agreement',
       'Phone for calling 999, but nothing that delays you',
-      'Your personal RAMS folder',
-      'Coffee — long wait at the assembly point',
+      'Manual handling injuries from cable drums',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Take only what you can grab without delay. A phone is fine, a jacket maybe. Don’t go back for tools, laptops, anything in the van. The HSE figure for fire deaths is dominated by people who delayed evacuation by going back — not by people who got out and stayed out.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     id: 7,
     question: 'After evacuating, where do you go?',
     options: [
-      'Home',
-      'The pub across the road',
+      'Podium steps provide an enclosed platform with guard rails, giving a larger and safer working area',
+      'At least every 7 days by a competent person, and after any event likely to have affected its stability',
+      'Start a new email with a new subject line reflecting the current topic',
       'The designated fire assembly point — and stay there until the roll call is done',
-      'Back to the van to wait it out',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Designated assembly point. Roll call confirms everyone is out. If you wander off, you’re assumed missing — and the fire service will go back into a burning building looking for you. Stay until you’re officially accounted for.',
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       'Who is responsible for ensuring fire safety arrangements are in place at a workplace under the Regulatory Reform (Fire Safety) Order 2005?',
     options: [
-      'The HSE',
-      'The local fire service',
       'The "responsible person" — usually the employer or person in control of the premises',
-      'Each individual worker',
+      'Smaller wheels may not distribute the load adequately and could sink into soft ground or damage flooring',
+      'To prevent the ladder from slipping, sliding, or falling — the primary cause of ladder-related accidents',
+      'Rotor-to-stator contact caused by bearing wear, shaft deflection or mounting problems',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'RRFSO 2005 puts the duty on the "responsible person" — typically the employer for a workplace, or whoever has control of the premises. They must complete a fire risk assessment, keep it up to date, provide alarms / extinguishers / signage / training, and have a documented evacuation plan.',
   },

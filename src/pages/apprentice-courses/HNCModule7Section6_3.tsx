@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'tns-system',
     question: 'In a TN-S earthing system, how is the means of earthing provided?',
     options: [
-      'Combined neutral and earth conductor',
+      'Through the building structure',
       'Earth electrode at the installation',
       'Separate metallic return path via supply cable sheath',
-      'Through the building structure',
+      'Combined neutral and earth conductor',
     ],
     correctIndex: 2,
     explanation:
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'tncs-pme',
     question: 'What is the alternative name for a TN-C-S earthing system in the UK?',
     options: [
-      'Terra Neutral',
+      'Supported by records and evidence',
+      'Standard Assessment Procedure',
       'Protective Multiple Earthing (PME)',
-      'Combined Earth System',
-      'Direct Earth Return',
+      'Prove dead yourself before starting work',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'TN-C-S is commonly known as Protective Multiple Earthing (PME) in the UK. The neutral conductor is earthed at multiple points along the distribution network, providing the means of earthing to consumers.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     question:
       'According to the adiabatic equation, what does k represent when calculating minimum cpc size?',
     options: [
-      'Fault current in amperes',
-      'Disconnection time in seconds',
       'A factor depending on conductor material and insulation',
-      'Cable length in metres',
+      'Lower current for same power → smaller cables, less I²R loss',
+      'Low-voltage DC, which an inverter then converts to 230 V AC at 50 Hz',
+      'Yes — 50 × 0.030 = 1.5 V, well inside the 50 V limit.',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'In the adiabatic equation S = √(I²t)/k, the k value is a factor that depends on the conductor material (copper or aluminium) and the type of insulation. For thermoplastic insulated copper, k = 115.',
   },
@@ -67,8 +67,13 @@ const quickCheckQuestions = [
     id: 'main-bonding',
     question:
       'What is the minimum cross-sectional area for main protective bonding conductors with a 25mm² supply neutral?',
-    options: ['6mm²', '10mm²', '16mm²', '25mm²'],
-    correctIndex: 1,
+    options: [
+      '16mm²',
+      '25mm²',
+      '10mm²',
+      '6mm²',
+    ],
+    correctIndex: 2,
     explanation:
       'Main protective bonding conductors must have a csa of not less than half the csa of the supply neutral, with a minimum of 6mm² and maximum requirement of 25mm². With a 25mm² neutral: 25 ÷ 2 = 12.5mm², so 16mm² would be required (next standard size up from 10mm²).',
   },
@@ -79,8 +84,13 @@ const quizQuestions = [
     id: 1,
     question:
       'In which earthing system does the DNO provide no means of earthing, requiring the installation of an earth electrode?',
-    options: ['TN-S', 'TN-C-S', 'TT', 'TN-C'],
-    correctAnswer: 2,
+    options: [
+      'TN-S',
+      'TT',
+      'TN-C-S',
+      'TN-C',
+    ],
+    correctAnswer: 1,
     explanation:
       'In a TT system, the DNO provides no means of earthing. The installation requires its own earth electrode to be installed, and protection is typically provided by RCDs due to the higher earth fault loop impedance.',
   },
@@ -88,20 +98,25 @@ const quizQuestions = [
     id: 2,
     question: "What does the designation 'TN' indicate about an earthing system?",
     options: [
-      'The neutral is not earthed',
+      'Metal gas, water, oil pipes, structural steel, and other services entering the building',
+      'Installations requiring high continuity of supply where a first fault should not cause disconnection',
       'The source is directly earthed and exposed-conductive-parts are connected to that earth',
-      'Two separate neutral conductors are used',
-      'The system uses an earth electrode',
+      'Earth electrode resistance test, typically less than 200Ω when using 30mA RCD protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'TN indicates: T = terra (source directly earthed at one point), N = neutral (exposed-conductive-parts connected to the earthed point of the source, i.e., the neutral). The earthing arrangement uses the supply neutral.',
   },
   {
     id: 3,
     question: 'What is the typical maximum earth fault loop impedance (Ze) for a TN-S system?',
-    options: ['0.35Ω', '0.8Ω', '21Ω', '200Ω'],
-    correctAnswer: 0,
+    options: [
+      '21Ω',
+      '0.8Ω',
+      '200Ω',
+      '0.35Ω',
+    ],
+    correctAnswer: 3,
     explanation:
       'The typical maximum Ze for a TN-S system is 0.35Ω. This low impedance is achieved because the fault return path is via the metallic cable sheath, providing a low-resistance connection back to the source.',
   },
@@ -110,12 +125,12 @@ const quizQuestions = [
     question:
       'Why must additional precautions be taken with PME supplies when providing earthing to outbuildings?',
     options: [
-      'The cable cost is higher',
       'Loss of the PEN conductor could result in dangerous voltages appearing on metalwork',
-      'The supply voltage is different',
-      'RCDs cannot be used',
+      'To reduce touch voltages by connecting simultaneously accessible metalwork in specific locations',
+      'The source is directly earthed and exposed-conductive-parts are connected to that earth',
+      'Installations requiring high continuity of supply where a first fault should not cause disconnection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'If the PEN (combined protective earth and neutral) conductor is lost in a PME system, dangerous voltages can appear on all metalwork connected to the PME earth. For outbuildings, TT earthing with an earth electrode is often required.',
   },
@@ -123,12 +138,12 @@ const quizQuestions = [
     id: 5,
     question: 'The main earthing terminal must be connected to which of the following?',
     options: [
-      'Only the circuit protective conductors',
-      'Only the main protective bonding conductors',
+      'Earth electrode resistance test, typically less than 200Ω when using 30mA RCD protection',
       'The means of earthing, all circuit cpcs, main bonding conductors, and functional earthing',
-      'Only the lightning protection system',
+      'To reduce touch voltages by connecting simultaneously accessible metalwork in specific locations',
+      'The source is directly earthed and exposed-conductive-parts are connected to that earth',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "The main earthing terminal (MET) is the central connection point for the installation's earthing arrangement. It must connect the means of earthing, all circuit protective conductors, main protective bonding conductors, and any functional earthing requirements.",
   },
@@ -136,7 +151,12 @@ const quizQuestions = [
     id: 6,
     question:
       'Using the adiabatic equation S = √(I²t)/k, calculate the minimum cpc size for a prospective fault current of 1500A, disconnection time of 0.4s, with k=115.',
-    options: ['4mm²', '6mm²', '8.25mm² (use 10mm²)', '10mm²'],
+    options: [
+      '4mm²',
+      '6mm²',
+      '8.25mm² (use 10mm²)',
+      '10mm²',
+    ],
     correctAnswer: 2,
     explanation:
       'S = √(I²t)/k = √(1500² × 0.4)/115 = √(2,250,000 × 0.4)/115 = √900,000/115 = 949/115 = 8.25mm². The next standard size up is 10mm².',
@@ -145,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of supplementary equipotential bonding?',
     options: [
-      'To replace main bonding conductors',
+      'Loss of the PEN conductor could result in dangerous voltages appearing on metalwork',
+      'Earth electrode resistance test, typically less than 200Ω when using 30mA RCD protection',
+      'The source is directly earthed and exposed-conductive-parts are connected to that earth',
       'To reduce touch voltages by connecting simultaneously accessible metalwork in specific locations',
-      'To provide a direct path for lightning currents',
-      'To increase the earth fault loop impedance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Supplementary bonding connects together simultaneously accessible exposed-conductive-parts and extraneous-conductive-parts within specific locations (e.g., bathrooms) to reduce touch voltages that could occur during a fault.',
   },
@@ -158,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which extraneous-conductive-parts require main protective bonding?',
     options: [
-      'Only metal water pipes',
       'Metal gas, water, oil pipes, structural steel, and other services entering the building',
-      'Only pipes within 3m of the consumer unit',
-      'All metal pipes regardless of material or location',
+      'To reduce touch voltages by connecting simultaneously accessible metalwork in specific locations',
+      'Installations requiring high continuity of supply where a first fault should not cause disconnection',
+      'The means of earthing, all circuit cpcs, main bonding conductors, and functional earthing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Main protective bonding is required for metal water pipes, gas installation pipes (within 600mm of the meter), oil pipes, structural steel, central heating and air conditioning systems, and any other metallic service entering the building.',
   },
@@ -172,10 +192,10 @@ const quizQuestions = [
     question:
       'For an earth electrode serving a TT installation, what test should be performed and what is the typical maximum acceptable resistance?',
     options: [
-      'Insulation resistance test, maximum 1MΩ',
+      'To reduce touch voltages by connecting simultaneously accessible metalwork in specific locations',
       'Earth electrode resistance test, typically less than 200Ω when using 30mA RCD protection',
-      'Continuity test, maximum 0.5Ω',
-      'Voltage drop test, maximum 5%',
+      'Loss of the PEN conductor could result in dangerous voltages appearing on metalwork',
+      'The source is directly earthed and exposed-conductive-parts are connected to that earth',
     ],
     correctAnswer: 1,
     explanation:
@@ -185,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is an IT earthing system primarily used for?',
     options: [
-      'Domestic installations',
+      'The means of earthing, all circuit cpcs, main bonding conductors, and functional earthing',
+      'Loss of the PEN conductor could result in dangerous voltages appearing on metalwork',
       'Installations requiring high continuity of supply where a first fault should not cause disconnection',
-      'Temporary construction sites',
-      'Swimming pool installations',
+      'To reduce touch voltages by connecting simultaneously accessible metalwork in specific locations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'IT systems have either an unearthed source or a source earthed through a high impedance. This means a first earth fault will not cause automatic disconnection, providing continuity of supply for critical processes like hospitals or manufacturing.',
   },
@@ -199,12 +219,12 @@ const quizQuestions = [
     question:
       'What is the maximum allowable resistance between main bonding conductors and extraneous-conductive-parts?',
     options: [
-      '0.05Ω',
+      'There is no specific maximum, just a sound electrical connection',
       '0.5Ω',
       '5Ω',
-      'There is no specific maximum, just a sound electrical connection',
+      '0.05Ω',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'The resistance of main protective bonding conductors should not exceed 0.05Ω (50 milliohms). This ensures an effective equipotential zone and allows adequate fault current to flow for protective device operation.',
   },
@@ -213,12 +233,12 @@ const quizQuestions = [
     question:
       'When using Table 54.7 of BS 7671 for cpc sizing, what determines the minimum cpc size?',
     options: [
-      'The length of the circuit only',
       'The cross-sectional area of the line conductor',
-      'The type of protective device only',
-      'The ambient temperature',
+      'Analyzing network topology and optimizing device placement',
+      'Engineering Recommendation G5/4-1',
+      'Single line diagrams, settings, and coordination curves',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Table 54.7 relates minimum cpc size to the cross-sectional area of the associated line conductor. For line conductors up to 16mm², cpc must be at least equal in size. Above 16mm², different ratios apply.',
   },

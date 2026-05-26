@@ -33,20 +33,25 @@ const quickCheckQuestions = [
     id: 'afdd-purpose',
     question: 'What is the primary purpose of an AFDD?',
     options: [
-      'Overload protection',
-      'Short-circuit protection',
+      'Power stations and solar panels',
       'Detection of dangerous arcing faults',
-      'Earth fault protection',
+      'States how long the quoted price remains valid',
+      'A clear line of sight with no obstructions',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'AFDDs detect dangerous arcing faults that may not be detected by MCBs, RCDs, or other conventional protection. These arcing faults can generate sufficient heat to cause fires whilst drawing currents below device trip thresholds.',
   },
   {
     id: 'afdd-standard',
     question: 'Which British Standard covers AFDDs?',
-    options: ['BS EN 60898', 'BS EN 61008', 'BS EN 62606', 'BS 7671'],
-    correctIndex: 2,
+    options: [
+      'BS EN 62606',
+      'BS 7671',
+      'BS EN 60898',
+      'BS EN 61008',
+    ],
+    correctIndex: 0,
     explanation:
       'BS EN 62606 specifies requirements for Arc Fault Detection Devices. It defines test methods, performance requirements, and marking for AFDDs used in AC circuits up to 240V and 63A.',
   },
@@ -54,12 +59,12 @@ const quickCheckQuestions = [
     id: 'afdd-arc-types',
     question: 'What types of arcing can AFDDs detect?',
     options: [
-      'Series arcs only',
       'Parallel arcs only',
-      'Both series and parallel arcs',
       'Earth fault arcs only',
+      'Series arcs only',
+      'Both series and parallel arcs',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'AFDDs detect both series arcs (within a single conductor, e.g., damaged cable) and parallel arcs (between conductors, e.g., L-N or L-E). Both types can cause fires if undetected.',
   },
@@ -67,9 +72,9 @@ const quickCheckQuestions = [
     id: 'bs7671-recommendation',
     question: 'According to BS 7671, where are AFDDs particularly recommended?',
     options: [
-      'Industrial installations only',
-      'Premises with sleeping accommodation',
       'Outdoor circuits only',
+      'Premises with sleeping accommodation',
+      'Industrial installations only',
       'Three-phase supplies only',
     ],
     correctIndex: 1,
@@ -83,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is a series arc fault?',
     options: [
-      'An arc between line and neutral conductors',
+      'Loss of earth potential equalisation, increasing shock risk',
       'An arc within a single conductor due to damage or poor connection',
-      'An arc between line and earth',
-      'An arc across multiple circuits',
+      'Flexible access to training at convenient times',
+      'Zero electrical resistance at very low temperatures',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: "Why can't MCBs reliably detect series arc faults?",
     options: [
+      'MCBs only detect DC faults',
       "They don't measure voltage",
       'The arc current may be less than the MCB rating',
-      'MCBs only detect DC faults',
       'Series arcs only occur in three-phase systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Series arcs are in the load current path, so arc current is limited by the load. A 5A load with a series arc still draws approximately 5A - well below MCB trip thresholds. The arc can generate temperatures over 3000°C whilst current remains normal.',
   },
@@ -109,20 +114,25 @@ const quizQuestions = [
     id: 3,
     question: 'How do AFDDs distinguish dangerous arcs from normal arcing (e.g., motor brushes)?',
     options: [
-      'By measuring temperature',
+      'Detecting leaks and optimizing airflow distribution',
+      'They prevent overcommitment and ensure each job receives proper attention',
+      'A miswired relay connecting the fire alarm output to the wrong BMS input',
       'By analysing high-frequency characteristics of the arc signature',
-      'By current magnitude only',
-      'They cannot distinguish - they trip on all arcs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'AFDDs analyse the high-frequency noise patterns superimposed on the AC waveform. Dangerous arcs have characteristic irregular, broadband noise signatures that differ from the regular, predictable arcing in motor brushes or switch contacts.',
   },
   {
     id: 4,
     question: 'What is the typical frequency range analysed by AFDDs for arc detection?',
-    options: ['50-60 Hz only', '1-10 kHz', '10 kHz to several MHz', 'Above 100 MHz'],
-    correctAnswer: 2,
+    options: [
+      '10 kHz to several MHz',
+      '1-10 kHz',
+      '50-60 Hz only',
+      'Above 100 MHz',
+    ],
+    correctAnswer: 0,
     explanation:
       'AFDDs typically analyse frequencies from about 10 kHz to several MHz. Arc faults produce broadband noise across this range with characteristic patterns that sophisticated algorithms can identify.',
   },
@@ -130,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'According to BS 7671 Regulation 421.1.7, in which locations are AFDDs recommended?',
     options: [
-      'All domestic installations',
+      'It provides mobile-optimised access to tax information, payment deadlines, and National Insurance record',
       'AC final circuits in buildings with sleeping accommodation, combustible construction, or irreplaceable goods',
-      'Only industrial motor circuits',
-      'Three-phase circuits only',
+      'Working without the latest safety briefing — and the firm cannot evidence training under HASAWA s.2(2)(c) for that worker',
+      'Administer a second auto-injector after 5 minutes if symptoms persist and a second device is available',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,8 +152,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the maximum rated current for AFDDs to BS EN 62606?',
-    options: ['16A', '32A', '40A', '63A'],
-    correctAnswer: 3,
+    options: [
+      '16A',
+      '32A',
+      '63A',
+      '40A',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS EN 62606 covers AFDDs for AC circuits with rated voltage up to 240V and rated current up to 63A. This covers most single-phase final circuits in building services.',
   },
@@ -151,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'Can AFDDs provide protection for circuits already protected by MCBs and RCDs?',
     options: [
-      'No, they must be used alone',
+      'Integrated security and monitoring systems',
+      'User authentication and encrypted communications',
+      'Review of actions from the previous meeting',
       'Yes, they complement MCBs and RCDs as additional protection',
-      'Only with MCBs, not RCDs',
-      'Only in TT systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'AFDDs provide complementary protection alongside MCBs and RCDs. Each protects against different hazards: MCBs for overcurrent, RCDs for earth faults, and AFDDs for arcing faults. Combined devices (AFDD+MCB or AFDD+RCBO) are available.',
   },
@@ -164,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which of these is NOT a typical cause of unwanted AFDD tripping?',
     options: [
-      'Universal motors (vacuum cleaners, power tools)',
-      'LED dimmer switches',
       'Purely resistive loads like heaters',
       'Some types of electronic equipment',
+      'Universal motors (vacuum cleaners, power tools)',
+      'LED dimmer switches',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Purely resistive loads produce clean, sinusoidal current draw without high-frequency components. Motors with brushes, dimmers with phase-cut switching, and some electronic equipment can produce signatures that early AFDDs may misidentify.',
   },
@@ -177,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'Where should an AFDD be installed in a circuit?',
     options: [
-      'At the load end of the circuit',
+      'It reduces lifespan and increases failure risk',
       'At the origin of the circuit (distribution board)',
-      'At any accessible point',
-      'Only at the consumer unit main switch',
+      'To accommodate thermal expansion and contraction',
+      'Remove or control any element of the fire triangle',
     ],
     correctAnswer: 1,
     explanation:

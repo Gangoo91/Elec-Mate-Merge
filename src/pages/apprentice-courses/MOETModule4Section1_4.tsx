@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'visual-inspection',
     question: 'What is the primary purpose of a visual inspection during PPM?',
     options: [
-      'To take photographs for the maintenance records',
+      'A set of IEEE 802.1 standards providing deterministic, low-latency communication over standard Ethernet infrastructure',
+      'Pass — within 300ms maximum for general-purpose 30mA RCD per BS EN 61008/61009 (and Reg 643.7.3 verification)',
       'To identify visible signs of deterioration, damage, overheating or unsafe conditions without the need for testing equipment',
-      'To check that equipment labels are correctly positioned',
-      'To count the number of circuits in a distribution board',
+      'Switch off and lock out electrical supplies, close isolation valves, and vent trapped pressure',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Visual inspection is the first and most important step in any maintenance routine. It identifies obvious signs of deterioration — discolouration from overheating, cracked insulation, water damage, corrosion, vermin damage, missing covers — that may indicate developing faults or safety hazards. Many serious issues can be detected by a trained eye before they require instruments to confirm.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'A thermographic survey of a distribution board reveals a hot spot of 85°C on one connection while surrounding connections are at 40°C. This indicates:',
     options: [
-      'Normal operation — connections always run at different temperatures',
+      'The method statement describes how to implement the controls identified in the risk assessment',
+      'The constant (σ = 5.67 × 10⁻⁸ W/m²K⁴) used to calculate radiant heat transfer from a surface',
+      'Schedule of Accessories, Schedule of Cables, Schedule of Luminaires, Circuit Chart (per-DB).',
       'A high-resistance connection that requires immediate investigation and likely re-torquing or replacement',
-      'The thermal camera is faulty',
-      'The circuit is not carrying enough current',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A temperature differential of 45°C above similar connections under similar load is a serious finding. It indicates a high-resistance joint, likely caused by a loose connection, corroded contact surface or insufficient contact area. This requires urgent attention as it represents a fire risk and will worsen over time.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'When trending insulation resistance readings over time, a steadily decreasing value indicates:',
     options: [
-      'The insulation is improving',
-      'The test instrument needs calibrating',
       'Progressive deterioration of the insulation, which may eventually lead to breakdown if not addressed',
-      'The cable is carrying more current',
+      'Prove the voltage indicator on a known live source, then re-test for dead, then prove the indicator again',
+      'Accuracy is how close to the true value; precision is how repeatable the readings are',
+      'The device can continue normal operation after interrupting at its ultimate breaking capacity',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'A steadily declining insulation resistance trend indicates progressive deterioration from factors such as moisture ingress, contamination, thermal ageing or mechanical damage. While a single reading may be acceptable, the trend reveals that the insulation is degrading and will eventually reach a point where it can no longer safely withstand the operating voltage.',
   },
@@ -56,12 +56,12 @@ const quickCheckQuestions = [
     question:
       'Under BS 5266-1, what is the required duration for the annual full-duration discharge test of emergency lighting?',
     options: [
-      '30 minutes for escape route luminaires',
-      '1 hour for all luminaires regardless of type',
       'The full rated duration of the system (typically 3 hours for most non-maintained systems)',
-      '15 minutes',
+      'A preset combination of light levels and colours for different activities or moods',
+      'The supplier’s combined neutral and earth (PEN) conductor, separated into N and PE at the cut-out',
+      'Squarely face the person, Open posture, Lean forward, Eye contact, Relax',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'BS 5266-1 requires an annual full-rated-duration test where the emergency lighting is operated for its full rated duration (typically 3 hours for non-maintained systems, 1 hour for some high-risk areas). This verifies that batteries can sustain the required illumination for the full design period. The monthly test is a short functional test only.',
   },
@@ -73,10 +73,10 @@ const quizQuestions = [
     question:
       'During a visual inspection of a distribution board, you notice a brown discolouration on the casing above one MCB. This most likely indicates:',
     options: [
-      'Normal ageing of the plastic',
+      'Through remote monitoring and predictive maintenance',
       'Overheating at the MCB connection or within the MCB itself',
-      'Paint overspray from decorating work',
-      'Water staining from a roof leak',
+      'Charge their employer for safety equipment or training',
+      'Raise their legs, ensure fresh air, and monitor them',
     ],
     correctAnswer: 1,
     explanation:
@@ -86,8 +86,13 @@ const quizQuestions = [
     id: 2,
     question:
       'The recommended test voltage for insulation resistance testing of a 400 V three-phase motor is:',
-    options: ['250 V DC', '500 V DC', '1,000 V DC', '5,000 V DC'],
-    correctAnswer: 1,
+    options: [
+      '1,000 V DC',
+      '250 V DC',
+      '500 V DC',
+      '5,000 V DC',
+    ],
+    correctAnswer: 2,
     explanation:
       'For equipment rated up to 500 V (which includes standard 400 V motors), the standard test voltage for insulation resistance testing is 500 V DC. The minimum acceptable insulation resistance value is 1 MΩ, though new or refurbished motors should achieve significantly higher values. Higher test voltages (1,000 V or 5,000 V) are used for HV equipment.',
   },
@@ -95,8 +100,13 @@ const quizQuestions = [
     id: 3,
     question:
       'The minimum acceptable insulation resistance for a 400 V installation circuit tested at 500 V DC is:',
-    options: ['0.5 MΩ', '1 MΩ', '2 MΩ', '10 MΩ'],
-    correctAnswer: 1,
+    options: [
+      '2 MΩ',
+      '0.5 MΩ',
+      '10 MΩ',
+      '1 MΩ',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS 7671 Table 61 specifies a minimum insulation resistance of 1 MΩ for circuits with nominal voltages above 50 V up to 500 V, tested at 500 V DC. However, in practice, values below 2 MΩ should be investigated, and a reading of exactly 1 MΩ on a large installation may indicate a specific fault on one circuit that is being masked by parallel paths.',
   },
@@ -104,12 +114,12 @@ const quizQuestions = [
     id: 4,
     question: 'When carrying out a thermographic survey of electrical switchgear, you should:',
     options: [
-      'Open all panel doors and remove all covers for maximum visibility',
       'Scan through infrared-transparent viewing windows where fitted, or scan with covers removed under a safe system of work with appropriate PPE',
-      'Only scan the outside of closed panels',
-      'Spray the equipment with water first to improve thermal contrast',
+      'Visual condition, bearing noise/vibration, winding temperature, insulation resistance, ventilation, coupling condition and foundation bolts',
+      'Activate the system from a different manual call point each week, using a different zone on a rota basis, and confirm the alarm sounds',
+      'Both the integral test button check and an instrument test measuring actual trip time and trip current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Thermographic surveys ideally use IR-transparent viewing windows fitted to panels, allowing scanning without opening covers. Where windows are not fitted, covers may need to be removed, requiring a safe system of work (risk assessment, appropriate PPE including arc flash protection) as the equipment must be energised and under load for the survey to be meaningful.',
   },
@@ -117,10 +127,10 @@ const quizQuestions = [
     id: 5,
     question: 'A motor inspection checklist should include:',
     options: [
-      'Only checking the nameplate data',
+      'Both the integral test button check and an instrument test measuring actual trip time and trip current',
       'Visual condition, bearing noise/vibration, winding temperature, insulation resistance, ventilation, coupling condition and foundation bolts',
-      'Only checking the motor is running',
-      'Only measuring the supply voltage',
+      'Activate the system from a different manual call point each week, using a different zone on a rota basis, and confirm the alarm sounds',
+      'Scan through infrared-transparent viewing windows where fitted, or scan with covers removed under a safe system of work with appropriate PPE',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,12 +140,12 @@ const quizQuestions = [
     id: 6,
     question: 'Under BS 5839-1, the weekly fire alarm test should:',
     options: [
-      'Test every detector and call point in the building',
+      'A statutory requirement for the responsible person to ensure fire detection and alarm systems are maintained in working order',
+      'A brief simulated mains failure to confirm each luminaire illuminates, followed by verification that the charging indicator shows normal operation after mains restoration',
       'Activate the system from a different manual call point each week, using a different zone on a rota basis, and confirm the alarm sounds',
-      'Only check that the control panel has power',
-      'Be carried out by the fire brigade',
+      'A temperature differential classification: <10°C = monitor, 10-35°C = plan repair, 35-75°C = repair urgently, >75°C = immediate action',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 5839-1 requires a weekly test by activating the alarm from a different manual call point each week, rotating through all call points over a period. The test verifies that the alarm sounds correctly, the control panel registers the activation, and any monitoring connections (e.g., to an alarm receiving centre) function. A different call point is used each week to ensure all are tested regularly.',
   },
@@ -143,12 +153,12 @@ const quizQuestions = [
     id: 7,
     question: 'Cable condition assessment during inspection should check for:',
     options: [
-      'Only the colour of the cable sheath',
+      'White powder deposits (from ozone attack on insulation), a sharp acrid smell, audible crackling or buzzing, and UV fluorescence',
+      'A temperature differential classification: <10°C = monitor, 10-35°C = plan repair, 35-75°C = repair urgently, >75°C = immediate action',
+      'A statutory requirement for the responsible person to ensure fire detection and alarm systems are maintained in working order',
       'Mechanical damage, heat damage, moisture ingress, UV degradation, correct support/fixings, adequate bending radii and identification',
-      'Only whether the cable is the correct size',
-      'Only the cable length',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cable inspection covers multiple degradation mechanisms: mechanical damage (crushing, abrasion, impact), heat damage (discolouration, brittleness near heat sources), moisture ingress (particularly at terminations), UV degradation (outdoor cables), correct support (sagging, missing clips), adequate bending radii (no sharp bends), and correct identification (labels, circuit marking).',
   },
@@ -156,12 +166,12 @@ const quizQuestions = [
     id: 8,
     question: 'The monthly emergency lighting function test requires:',
     options: [
-      'Running the system for its full rated duration',
       'A brief simulated mains failure to confirm each luminaire illuminates, followed by verification that the charging indicator shows normal operation after mains restoration',
-      'Only checking that the charging LED is lit on each unit',
-      'Replacing all batteries',
+      'Visual condition, bearing noise/vibration, winding temperature, insulation resistance, ventilation, coupling condition and foundation bolts',
+      'Mechanical damage, heat damage, moisture ingress, UV degradation, correct support/fixings, adequate bending radii and identification',
+      'A statutory requirement for the responsible person to ensure fire detection and alarm systems are maintained in working order',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The monthly test under BS 5266-1 involves a brief mains failure (either by operating the test switch or by switching off the relevant circuit) to confirm each emergency luminaire operates. Each luminaire is checked for illumination, then mains is restored and the charging indicator is verified. This test should last long enough to confirm operation but not so long as to significantly discharge the batteries.',
   },
@@ -169,10 +179,10 @@ const quizQuestions = [
     id: 9,
     question: 'When inspecting switchgear, signs of partial discharge include:',
     options: [
-      'Clean, shiny busbars',
+      'Visual condition, bearing noise/vibration, winding temperature, insulation resistance, ventilation, coupling condition and foundation bolts',
       'White powder deposits (from ozone attack on insulation), a sharp acrid smell, audible crackling or buzzing, and UV fluorescence',
-      'Oil on the floor beneath the switchgear',
-      'Normal operating temperature readings',
+      'A temperature differential classification: <10°C = monitor, 10-35°C = plan repair, 35-75°C = repair urgently, >75°C = immediate action',
+      'Scan through infrared-transparent viewing windows where fitted, or scan with covers removed under a safe system of work with appropriate PPE',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,12 +192,12 @@ const quizQuestions = [
     id: 10,
     question: 'RCD testing during PPM should include:',
     options: [
-      'Only pressing the integral test button',
+      'White powder deposits (from ozone attack on insulation), a sharp acrid smell, audible crackling or buzzing, and UV fluorescence',
+      'A statutory requirement for the responsible person to ensure fire detection and alarm systems are maintained in working order',
       'Both the integral test button check and an instrument test measuring actual trip time and trip current',
-      'Only an instrument test — the test button is unreliable',
-      'Visual inspection only',
+      'Mechanical damage, heat damage, moisture ingress, UV degradation, correct support/fixings, adequate bending radii and identification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Complete RCD testing requires both methods: the integral test button verifies the mechanical trip mechanism is free and the device trips, while the instrument test measures the actual trip time (which must be within the limits specified in BS 7671) and can also verify the trip current. The integral test alone does not confirm that the device will trip at the correct current or within the required time.',
   },
@@ -196,12 +206,12 @@ const quizQuestions = [
     question:
       'What severity classification system is commonly used for thermographic survey findings?',
     options: [
-      'Red, amber, green traffic light system',
+      'Scan through infrared-transparent viewing windows where fitted, or scan with covers removed under a safe system of work with appropriate PPE',
+      'Activate the system from a different manual call point each week, using a different zone on a rota basis, and confirm the alarm sounds',
+      'Visual condition, bearing noise/vibration, winding temperature, insulation resistance, ventilation, coupling condition and foundation bolts',
       'A temperature differential classification: <10°C = monitor, 10-35°C = plan repair, 35-75°C = repair urgently, >75°C = immediate action',
-      'Pass or fail only',
-      'Percentage of rated temperature',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The most widely used classification system for thermographic findings is based on the temperature differential (ΔT) between the anomaly and a reference point (similar connection under similar load). Typical thresholds: ΔT <10°C = monitor and trend; ΔT 10-35°C = plan repair within next maintenance window; ΔT 35-75°C = repair urgently; ΔT >75°C = take immediate action (may require emergency shutdown).',
   },
@@ -209,12 +219,12 @@ const quizQuestions = [
     id: 12,
     question: 'Under the Regulatory Reform (Fire Safety) Order 2005, fire alarm testing is:',
     options: [
-      'Optional for all premises',
       'A statutory requirement for the responsible person to ensure fire detection and alarm systems are maintained in working order',
-      'Only required in residential buildings',
-      'Only required once every five years',
+      'Visual condition, bearing noise/vibration, winding temperature, insulation resistance, ventilation, coupling condition and foundation bolts',
+      'Activate the system from a different manual call point each week, using a different zone on a rota basis, and confirm the alarm sounds',
+      'White powder deposits (from ozone attack on insulation), a sharp acrid smell, audible crackling or buzzing, and UV fluorescence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The RRO 2005 places a legal duty on the 'responsible person' (typically the employer or building occupier) to ensure that fire detection, alarm and emergency lighting systems are maintained in working order. This includes weekly alarm testing, monthly emergency lighting tests, quarterly inspections and annual servicing — all documented as evidence of compliance.",
   },

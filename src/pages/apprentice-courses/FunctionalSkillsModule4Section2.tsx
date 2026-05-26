@@ -25,8 +25,13 @@ const FunctionalSkillsModule4Section2 = () => {
       id: 1,
       question:
         'A circuit has a design current (Ib) of 28A. The protective device is a 32A MCB. The cable is grouped with 3 other circuits (Cg = 0.65) in an ambient of 40°C (Ca = 0.87). No thermal insulation (Ci = 1.0). What minimum tabulated rating (It) is needed?',
-      options: ['28A', '36.8A', '49.5A', '56.6A'],
-      correctAnswer: 3,
+      options: [
+        '28A',
+        '56.6A',
+        '49.5A',
+        '36.8A',
+      ],
+      correctAnswer: 1,
       explanation:
         'It = In / (Ca × Cg × Ci) = 32 / (0.87 × 0.65 × 1.0) = 32 / 0.5655 = 56.6A. You must use In (not Ib) in the formula because the cable must be able to carry the full rated current of the protective device under the installed conditions.',
     },
@@ -35,10 +40,10 @@ const FunctionalSkillsModule4Section2 = () => {
       question:
         'BS 7671 Table 4D current ratings assume reference conditions. What are those reference conditions?',
       options: [
-        '20°C ambient, single circuit, no insulation',
-        '25°C ambient, two circuits, standard insulation',
-        '30°C ambient, single circuit, no thermal insulation',
         '30°C ambient, four circuits, 100mm insulation',
+        '20°C ambient, single circuit, no insulation',
+        '30°C ambient, single circuit, no thermal insulation',
+        '25°C ambient, two circuits, standard insulation',
       ],
       correctAnswer: 2,
       explanation:
@@ -48,8 +53,13 @@ const FunctionalSkillsModule4Section2 = () => {
       id: 3,
       question:
         'A shower circuit uses 10.0mm² T&E cable with a run of 15m. The design current is 41.3A. The mV/A/m value is 4.4. What is the voltage drop?',
-      options: ['2.73V', '6.86V', '9.13V', '27.3V'],
-      correctAnswer: 0,
+      options: [
+        '9.13V',
+        '6.86V',
+        '27.3V',
+        '2.73V',
+      ],
+      correctAnswer: 3,
       explanation:
         'VD = mV/A/m × Ib × L / 1000 = 4.4 × 41.3 × 15 / 1000 = 2726 / 1000 = 2.73V. This is well within the 11.5V limit for a power circuit.',
     },
@@ -57,8 +67,13 @@ const FunctionalSkillsModule4Section2 = () => {
       id: 4,
       question:
         'What is the grouping correction factor (Cg) for 4 circuits enclosed in a single conduit?',
-      options: ['1.0', '0.65', '0.57', '0.50'],
-      correctAnswer: 1,
+      options: [
+        '0.65',
+        '1.0',
+        '0.57',
+        '0.50',
+      ],
+      correctAnswer: 0,
       explanation:
         'From BS 7671 Table 4C1, for 4 circuits bunched together or in a single conduit, Cg = 0.65. This means the cable can only carry 65% of its tabulated current rating when grouped with 3 other circuits.',
     },
@@ -66,8 +81,13 @@ const FunctionalSkillsModule4Section2 = () => {
       id: 5,
       question:
         'A cable passes through 150mm of thermal insulation in a ceiling. What Ci factor applies from Table 52.2?',
-      options: ['1.0', '0.89', '0.81', '0.55'],
-      correctAnswer: 2,
+      options: [
+        '0.89',
+        '0.81',
+        '0.55',
+        '1.0',
+      ],
+      correctAnswer: 1,
       explanation:
         'For cable enclosed in thermal insulation between 100mm and 200mm, Ci = 0.81 from BS 7671 Table 52.2. This significantly reduces the cable’s current-carrying capacity.',
     },
@@ -89,8 +109,13 @@ const FunctionalSkillsModule4Section2 = () => {
       id: 7,
       question:
         'A 6.0mm² T&E cable (Method C) has a tabulated rating of 47A. Ca = 0.94, Cg = 0.80, Ci = 1.0. What is the effective current-carrying capacity?',
-      options: ['35.3A', '39.5A', '44.2A', '47.0A'],
-      correctAnswer: 0,
+      options: [
+        '47.0A',
+        '39.5A',
+        '44.2A',
+        '35.3A',
+      ],
+      correctAnswer: 3,
       explanation:
         'Effective capacity = It × Ca × Cg × Ci = 47 × 0.94 × 0.80 × 1.0 = 47 × 0.752 = 35.3A. The cable can safely carry up to 35.3A under these installed conditions.',
     },
@@ -99,12 +124,12 @@ const FunctionalSkillsModule4Section2 = () => {
       question:
         'You are sizing cable for a 45A shower on a 15m run. After applying correction factors, you need It ≥ 56A. Which cable size from Table 4D2A (Method C) would you select?',
       options: [
-        '6.0mm² (47A)',
         '10.0mm² (64A)',
         '16.0mm² (85A)',
+        '6.0mm² (47A)',
         '4.0mm² (36A)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'The cable must have a tabulated rating ≥ 56A. 6.0mm² (47A) is too low. 10.0mm² (64A) exceeds 56A, so this is the minimum acceptable size. You would then check voltage drop to confirm suitability.',
     },

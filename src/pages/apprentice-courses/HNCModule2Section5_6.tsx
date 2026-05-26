@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'dew-point',
     question: 'At what condition does condensation occur on a surface?',
     options: [
-      'When air temperature reaches 0°C',
       'When surface temperature falls below air dew point',
-      'When relative humidity reaches 50%',
-      'When air pressure drops',
+      'RCD disconnects supply, RCM only monitors and alarms',
+      'Line voltage divided by √3 (approximately 230V)',
+      'EV chargers, solar PV, or heat pumps',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Condensation occurs when a surface temperature drops below the dew point of the adjacent air. At the dew point, the air is saturated (100% RH) and water vapour condenses into liquid.',
   },
@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     id: 'interstitial-location',
     question: 'Where does interstitial condensation typically occur in a wall?',
     options: [
-      'On the warm internal surface',
+      'V × I (the product of RMS voltage and current)',
       'At the outer edge of insulation or cold side',
-      'In the centre of dense materials',
-      'Only on glazing surfaces',
+      'To detect early signs of work-related ill health',
+      'A tester designed to test without tripping RCDs',
     ],
     correctIndex: 1,
     explanation:
@@ -59,20 +59,25 @@ const quickCheckQuestions = [
     id: 'vapour-barrier',
     question: 'Where should a vapour control layer (VCL) be positioned in a wall?',
     options: [
-      'On the cold (external) side of insulation',
       'On the warm (internal) side of insulation',
+      'On the cold (external) side of insulation',
       'In the middle of the wall',
       "Position doesn't matter",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'VCL should be on the warm side to prevent moisture-laden internal air penetrating the insulation before reaching its dew point. Placing it on the cold side would trap moisture.',
   },
   {
     id: 'part-l-u-value',
     question: 'What is the Part L 2021 maximum U-value for external walls in new dwellings?',
-    options: ['0.35 W/m²K', '0.26 W/m²K', '0.18 W/m²K', '0.15 W/m²K'],
-    correctIndex: 2,
+    options: [
+      '0.35 W/m²K',
+      '0.26 W/m²K',
+      '0.15 W/m²K',
+      '0.18 W/m²K',
+    ],
+    correctIndex: 3,
     explanation:
       'Part L 2021 limits external wall U-value to 0.18 W/m²K for new dwellings. This is more stringent than previous versions (0.30 W/m²K). Notional building uses 0.18 W/m²K.',
   },
@@ -83,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is dew point temperature?',
     options: [
-      'The temperature at which water boils',
+      'The input module provides (sources) current to the field device',
       'The temperature at which air becomes saturated with moisture',
-      'The temperature at which ice forms',
-      'The average daily temperature',
+      'Should influence role choices and career direction',
+      'Provides accurate level reference over long distances and around obstacles',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,8 +100,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the approximate vapour resistivity of plasterboard?',
-    options: ['5 MN.s/g.m', '45-60 MN.s/g.m', '100-200 MN.s/g.m', '1500 MN.s/g.m'],
-    correctAnswer: 1,
+    options: [
+      '100-200 MN.s/g.m',
+      '5 MN.s/g.m',
+      '45-60 MN.s/g.m',
+      '1500 MN.s/g.m',
+    ],
+    correctAnswer: 2,
     explanation:
       'Plasterboard has relatively low vapour resistivity (45-60 MN.s/g.m). By comparison, polythene VCL is 1500+ MN.s/g.m, and mineral wool is only 5 MN.s/g.m.',
   },
@@ -104,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which assessment method is used for interstitial condensation risk?',
     options: [
-      'SAP calculation',
+      'TN-S, TN-C-S (PME), TN-C-S (PNB), TT, IT',
+      'Trips at ½×IΔn or fails to trip at 1×IΔn',
+      'PAT testing and electrical safety',
       'Glaser method (BS EN ISO 13788)',
-      'TM52 overheating assessment',
-      'CIBSE admittance method',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Glaser method (Dewpoint method) in BS EN ISO 13788 analyses temperature and vapour pressure profiles through construction to identify condensation risk. More sophisticated methods include dynamic simulation.',
   },
@@ -117,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: "What causes 'thermal bridging' in building construction?",
     options: [
-      'Good insulation continuity',
-      'Gaps in the vapour barrier',
       'Areas of higher thermal conductivity creating heat flow paths',
-      'Excessive ventilation',
+      'Allows vapour to escape outward while preventing water ingress',
+      'Reduced thermal performance and potential structural damage',
+      'Assessing mould growth risk at thermal bridges',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Thermal bridges are areas where insulation is reduced or bypassed (steel lintels, window frames, junctions), creating localised paths of higher heat flow and cold internal surfaces.',
   },
@@ -130,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: "What is the 'temperature factor' (fRsi) used for?",
     options: [
-      'Calculating U-value',
+      'Lock-off procedures and verification testing',
       'Assessing mould growth risk at thermal bridges',
-      'Measuring air permeability',
-      'Determining heating system size',
+      'Minimum annual hours of recorded development',
+      'For legal compliance, safety tracking, and future reference',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,8 +152,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What Part L 2021 limiting U-value applies to new flat roofs?',
-    options: ['0.25 W/m²K', '0.18 W/m²K', '0.15 W/m²K', '0.11 W/m²K'],
-    correctAnswer: 3,
+    options: [
+      '0.25 W/m²K',
+      '0.18 W/m²K',
+      '0.11 W/m²K',
+      '0.15 W/m²K',
+    ],
+    correctAnswer: 2,
     explanation:
       'Part L 2021 limits flat roof U-value to 0.11 W/m²K for new dwellings. Pitched roofs with insulation between and over rafters also have 0.11 W/m²K limit.',
   },
@@ -152,11 +167,11 @@ const quizQuestions = [
     question: 'Why might excessive insulation cause summer overheating?',
     options: [
       'Insulation generates heat',
-      'Heat gains cannot escape, temperatures rise',
-      'Insulation reduces ventilation',
       'It has no effect on summer conditions',
+      'Insulation reduces ventilation',
+      'Heat gains cannot escape, temperatures rise',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'High insulation reduces heat loss in winter but also reduces ability to lose internal gains in summer. Combined with solar gains and low thermal mass, this can cause overheating.',
   },
@@ -164,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: "What is the purpose of a 'breather membrane' in a wall?",
     options: [
-      'Provides primary waterproofing',
       'Allows vapour to escape outward while preventing water ingress',
-      'Acts as a vapour barrier',
-      'Improves thermal insulation',
+      'Assessing mould growth risk at thermal bridges',
+      'Areas of higher thermal conductivity creating heat flow paths',
+      'Reduced thermal performance and potential structural damage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Breather membranes (vapour permeable but water resistant) on the cold side of insulation allow construction to dry outward while protecting against rain penetration. Essential for vapour-open wall build-ups.',
   },
@@ -178,11 +193,11 @@ const quizQuestions = [
     question: 'Which Building Regulations Part specifically addresses overheating in new homes?',
     options: [
       'Part L (Conservation of fuel and power)',
-      'Part F (Ventilation)',
       'Part O (Overheating)',
+      'Part F (Ventilation)',
       'Part C (Site preparation)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Part O (Overheating), introduced in 2021, specifically requires new residential buildings to demonstrate overheating risk is acceptable, using either simplified or dynamic assessment methods.',
   },
@@ -190,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the primary concern with moisture in insulation materials?',
     options: [
-      'Aesthetics only',
+      'Areas of higher thermal conductivity creating heat flow paths',
+      'Allows vapour to escape outward while preventing water ingress',
       'Reduced thermal performance and potential structural damage',
-      'Increased fire risk only',
-      'No significant concerns',
+      'Assessing mould growth risk at thermal bridges',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Moisture in insulation dramatically reduces thermal performance (water conducts heat 25× better than air), can cause decay of organic materials, corrosion of metals, and structural degradation.',
   },
@@ -203,12 +218,12 @@ const quizQuestions = [
     id: 11,
     question: "What is meant by 'accredited construction details'?",
     options: [
-      'Drawings approved by the architect',
+      'Allows vapour to escape outward while preventing water ingress',
+      'Areas of higher thermal conductivity creating heat flow paths',
+      'Reduced thermal performance and potential structural damage',
       'Pre-approved junction details that demonstrate thermal bridge compliance',
-      'Details listed in Building Regulations',
-      'Construction drawings signed by BCO',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Accredited construction details are pre-calculated junction details with known psi-values (thermal bridge losses). Using these simplifies Part L compliance by avoiding bespoke thermal bridge calculations.',
   },
@@ -216,8 +231,13 @@ const quizQuestions = [
     id: 12,
     question:
       'For Part L 2021 dwellings, what is the default value for thermal bridging (y-value)?',
-    options: ['0.05 W/m²K', '0.08 W/m²K', '0.15 W/m²K', '0.25 W/m²K'],
-    correctAnswer: 2,
+    options: [
+      '0.15 W/m²K',
+      '0.25 W/m²K',
+      '0.05 W/m²K',
+      '0.08 W/m²K',
+    ],
+    correctAnswer: 0,
     explanation:
       'The Part L default y-value is 0.15 W/m²K (added to elemental U-values). Using accredited details or thermal bridge calculations can achieve better values (0.05-0.08 typical with good details).',
   },

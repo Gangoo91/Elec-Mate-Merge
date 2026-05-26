@@ -44,12 +44,12 @@ const checks = [
     question:
       "You're working on a small electrical fault on the shop-floor of an independent newsagent. There's a near-miss — a colleague gets a small shock from poor isolation. Who is the enforcing authority for the H&S investigation?",
     options: [
-      "HSE — they enforce all H&S in the UK.",
+      "Unlimited fine on conviction in the Crown Court (no upper ceiling under HSWA framework); imprisonment in the most serious cases; disqualification from acting as a company director; significant civil claim from the bereaved family alongside the criminal proceedings; reputational impact ending the contractor's business.",
+      "Refuse the unsafe instruction and raise the concern with the supervisor or higher. HASAWA s.7 puts the personal duty on the apprentice — a direct order from a senior is not a defence to a s.7 prosecution. The Employment Rights Act 1996 s.44 also gives the apprentice statutory protection from victimisation for raising H&S concerns. Document the refusal and the reason in writing (text, email, app note) at the time.",
+      "The minimum hourly/weekly rate of pay, the holiday entitlement, the travel/lodging allowances, the categorisation (Adult Trainee → Labourer → Apprentice → Electrician → Approved Electrician → Technician), and the H&S handbook obligations. Grading is verified by JIB card.",
       "Local Authority — Environmental Health Officers from the local council. The Health and Safety (Enforcing Authority) Regulations 1998 split enforcement based on the main activity of the premises. Retail (shops, offices, hotels, restaurants, leisure) goes to the Local Authority. Higher-risk premises (factories, construction sites, hospitals, schools, mines) go to the HSE.",
-      "Police — all electrical incidents go to police first.",
-      "Building Control — they handle anything electrical.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The 1998 Enforcing Authority Regulations are the split-rules. Retail premises (newsagent, shop, hotel, office, restaurant, leisure) are Local Authority; factories, construction sites, hospitals, schools and similar higher-risk premises are HSE. The powers under HASAWA are the same — both can serve s.21 / s.22 notices, both can prosecute under s.33. So the practical experience for the firm and the apprentice is similar regardless of which enforcer turns up; the enforcer's name on the notice is what differs.",
   },
@@ -58,10 +58,10 @@ const checks = [
     question:
       "What's the difference between an Improvement Notice and a Prohibition Notice under HASAWA?",
     options: [
-      "There is no difference.",
+      "Refuse politely and escalate. Refrigerant top-up is a regulated F-Gas activity that requires individual F-Gas certification (Category I covers stationary refrigeration, AC and heat pumps) and is only legal when the company also holds an F-Gas company certificate. Doing the work uncertified exposes you, your employer and the customer to enforcement action and voids the manufacturer warranty. The correct answer is to document the request, decline, and rebook the F-Gas engineer.",
       "An Improvement Notice (s.21) is served when the inspector believes a Regulation has been breached and the duty-holder is given a period (minimum 21 days) to put it right. A Prohibition Notice (s.22) is served when the inspector believes there's a risk of SERIOUS PERSONAL INJURY from a specific activity — the activity must stop immediately or by a stated time. Failure to comply with either is a separate criminal offence; both appear on the public HSE Notices database.",
-      "An Improvement Notice is voluntary; a Prohibition Notice is mandatory.",
-      "Only the HSE can issue Improvement Notices; only Local Authorities issue Prohibition Notices.",
+      "Isolate AC and DC sides, lock-off, prove dead. Disconnect strings panel by panel. Remove panels using safe roof-access procedures. Recover the panels for recycling — established PV recycling streams in the UK take aluminium frames, glass, copper wiring and silicon cells separately. Inverter and any battery component handled as WEEE (electronics) and hazardous waste (battery) respectively. Roof penetrations made good. Update the EIC to reflect the removal. The MCS-certified installer (or successor) typically arranges the decommissioning chain through authorised waste carriers.",
+      "No. UK trade union density across the workforce is around 22% (ONS). In the electrical contracting trade union density is higher than the national average on traditional JIB-graded contractors, particularly large M&E firms working on infrastructure and big commercial. It's lower on smaller domestic-focused firms and on self-employed electricians. Union membership is a personal choice — many electricians never join, others see it as essential.",
     ],
     correctIndex: 1,
     explanation:
@@ -72,12 +72,12 @@ const checks = [
     question:
       "An apprentice cuts their hand badly on a metal trunking edge while pulling cable. They need stitches and are signed off by their GP for 10 working days. Is this RIDDOR-reportable, and who reports it?",
     options: [
-      "Not reportable — it's just a cut.",
       "Yes — reportable as an over-7-day incapacitation injury under RIDDOR 2013 Reg 4 / Reg 6. The 'responsible person' (usually the employer) makes the report. The clock is 10 working days from the day after the accident; the report goes to the HSE via the F2508 form on hse.gov.uk. The apprentice tells the supervisor; the firm's H&S contact files the report. Failure to report when required is itself a criminal offence under RIDDOR.",
-      "Reportable, but only the apprentice can file it.",
-      "Reportable, but only the customer can file it.",
+      "Significant career achievement and contribution to engineering practice — typically 10+ years senior engineering experience, evidence of leadership, technical contribution to the profession (publications, mentoring, committee work, etc.), and a Fellow's nomination process. CEng registration is typical alongside FIET. Annual subscription higher (£200-300/year). Fellowship is recognition of senior career standing.",
+      "A heat pump struggles in a poorly-insulated house with undersized radiators — it’s designed to deliver lots of low-temperature heat, not a little high-temperature heat. The realistic CoP will be poor (closer to 2 than 3), the running costs will surprise the customer, and the property may need insulation upgrades and rad-replacement first. Be honest before quoting.",
+      "Most electrical firms apply 15-30% markup on materials — covers handling, ordering admin, storage, working capital tied up in stock, and the value-added service of selecting the right materials. Some firms quote materials at trade price + markup; others at retail price (which already builds in markup vs trade price). Always be transparent with customers about which model you're using; they understand markup as the standard model.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "RIDDOR 2013 Reg 4 covers specified injuries (amputation, fracture other than fingers/toes/thumbs, etc.). Reg 6 covers over-7-day incapacitation — accidents that result in a worker being unable to do their normal work for more than 7 consecutive days (excluding the day of the accident, including weekends). A 10-day signed-off absence is squarely Reg 6. The 'responsible person' is the employer. The apprentice's job is to tell the supervisor at the time and again when the GP signs them off; the firm files the F2508. Late or missing reports are themselves criminal offences and they're a common HSE prosecution route on top of the underlying incident.",
   },
@@ -91,10 +91,10 @@ const quizQuestions = [
     question:
       "Which body is the primary enforcement authority for HASAWA on a construction site?",
     options: [
-      "Local Authority Environmental Health Officers.",
+      "Escalate above the supervisor — your own employer's safety contact, the principal contractor on site, your scheme provider's helpline. Note the conversation (time, name, what was said). Your s.7 personal duty isn't discharged just because someone above you said 'drop it'.",
       "The Health and Safety Executive (HSE). Construction sites are higher-risk premises under the Health and Safety (Enforcing Authority) Regulations 1998, so HSE inspectors take the lead. They enforce HASAWA, EAWR, CDM 2015, MHSWR, COSHH, RIDDOR and the rest of the workplace H&S regime on site.",
-      "Building Control.",
-      "The fire brigade.",
+      "Open (OL) when S2 toggle is in the L2 position; closed when toggled to L1. Test both positions and confirm the meter responds correctly to switch action — that proves the switching mechanism is wired to the line rather than the neutral.",
+      "Immediately prohibit use of the scaffold, tag it as unsafe, investigate who made the modifications and why, have the scaffold redesigned or returned to its approved configuration by a competent scaffolder, and re-inspect before permitting reuse",
     ],
     correctAnswer: 1,
     explanation:
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       "Which body enforces HASAWA in retail premises like an independent shop, an office or a hotel?",
     options: [
-      "The HSE always.",
+      "Partnership = two or more people trading together without forming a Ltd company. Partnership is governed by the Partnership Act 1890 (very old statute). Each partner has unlimited personal liability for partnership debts including those incurred by other partners. Tax: each partner files Self Assessment on their share of profits. Less common than sole trader (one-person) or Ltd (limited liability) because you get unlimited liability AND have to share decisions with another partner.",
+      "Carry out a more extensive visual survey to establish the installation arrangement (reverse engineering from observation), document the limitation on the report front sheet under Section D, agree the scope of inspection with the duty holder, and note \\\\\\\"no documentation available\\\\\\\" as a limitation against affected items on the schedule.",
       "The Local Authority — specifically the Environmental Health team of the local council. The Health and Safety (Enforcing Authority) Regulations 1998 allocate retail, office, leisure, residential care, places of worship and similar lower-risk premises to local-authority enforcement. EHOs have the same HASAWA powers as HSE inspectors — entry, inspection, notices, prosecution.",
-      "The Fire Service.",
-      "The Police.",
+      "PASS. BS 7671 643.7 maximum at I∆n for general-type RCD = 300 ms. A reading of 28 ms is well within limits and matches expected for a healthy modern RCD (typical 10–30 ms). The 1×IΔn test is also typically &lt;20 ms on a healthy device. If the trip-time was 250 ms (still passing) or 290 ms (still passing), it would be borderline and worth flagging. If 350 ms — fail.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The 1998 Enforcing Authority split is part of the H&S system. Local Authorities handle the lower-risk premises (where most of the public are present but the work activity is itself lower-hazard). HSE handles the higher-risk premises. Both have full HASAWA powers under s.20 (entry and inspection), s.21 (Improvement Notice), s.22 (Prohibition Notice) and s.33 (prosecution). For an electrician working across both kinds of premises, the practical day-to-day is the same; the name on any notice will be 'HSE' or 'XYZ Council Environmental Health'.",
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       "An HSE inspector arrives unannounced at a job site. What can they lawfully do under HASAWA s.20?",
     options: [
-      "Nothing without an appointment.",
+      "(1) Stop work immediately. (2) Don\\\\\\\\\\\\\\\\'t disturb further. (3) Vacate the area; close off if possible. (4) Inform the dutyholder, your supervisor, the principal contractor (where appointed). (5) Don\\\\\\\\\\\\\\\\'t start work again until survey confirms / licensed contractor takes over (depending on type / quantity). Document everything.",
+      "Risk Assessment = identifies hazards, evaluates risks, specifies controls. Method Statement = sets out the safe sequence of work, the people, the equipment, the controls in operation. RAMS is the combined document. RA tells you WHAT the risks are; MS tells you HOW to do the work safely.",
+      "Because it informs the supervisor\\\\\\\\\\\\\\\\'s framing — \\\\\\\\\\\\\\\"the consequence cascade isn\\\\\\\\\\\\\\\\'t hypothetical; it\\\\\\\\\\\\\\\\'s structured by the Sentencing Council guideline; here\\\\\\\\\\\\\\\\'s roughly where this incident would land\\\\\\\\\\\\\\\". Plus director liability under s.37 + Sentencing Council means the L3\\\\\\\\\\\\\\\\'s observations to senior management land with weight.",
       "Wide investigative powers — enter any premises (without warrant) at any reasonable time, take measurements / photographs / samples, inspect documents, require people to answer questions, take statements, take possession of articles or substances they think pose a risk, and seek a magistrate's warrant if entry is refused. Failure to co-operate is itself a separate criminal offence under s.33.",
-      "Only ask polite questions.",
-      "Only inspect with the company's permission.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "HASAWA s.20 gives inspectors deliberately broad investigative powers. They don't need a warrant to enter — they have right of entry by Act. They can compel answers, take samples, seize evidence and demand documents. Refusing to answer or obstructing the inspector is a separate criminal offence under HASAWA s.33. As an apprentice on site during an unannounced inspection, the right approach is co-operate fully, answer questions truthfully, and don't volunteer opinions — let the firm's H&S contact handle the substantive engagement once they arrive.",
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       "When does an Improvement Notice take effect, and what's the minimum compliance period?",
     options: [
-      "Immediate, 1 day.",
       "Effective from the date served (or the date specified on the notice). Minimum compliance period is 21 days — the inspector can specify a longer period if the remediation is more involved. The notice can be appealed to an Employment Tribunal within 21 days; appeal suspends the notice. If unappealed and uncomplied with, failure to comply is itself a criminal offence under HASAWA s.33.",
-      "Effective in 6 months.",
-      "Effective only when the company chooses.",
+      "Misuse depletes the kit (so it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s unavailable when needed); risks contamination (single-use items used multiple times); breaches infection control; may cause harm if used inappropriately (e.g. burn gel applied incorrectly). Restocking and proper use are both required by the 1981 Regs duty to provide ADEQUATE first aid.",
+      "Type 2 SPD at the consumer unit, supply-side of the main switch where possible, with 6 mm² copper PE to MET (Reg 534.4.10(a)), 2.5 mm² live connections (Reg 534.4.10(c)), conductor lengths under 0.5 m total (Reg 534.4.8), dedicated 25 A or 32 A MCB for SPD overcurrent protection, BS EN 61643 product standard.",
+      "The maximum rated current of the automatic disconnecting device in the functional bonding conductor shall be 3 A for arrays over 50 kW up to 100 kW. The full table of the same regulation specifies 1 A for arrays under 25 kW, 2 A for 25 to 50 kW, 3 A for 50 to 100 kW, 4 A for 100 to 250 kW and 5 A above 250 kW.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "21 days is the minimum compliance period to give the duty-holder a fair chance to fix the issue and to lodge an appeal if they think the notice is wrong. The Employment Tribunal hears appeals against H&S notices. In practice, most Improvement Notices are accepted and complied with — appeals are rare and rarely successful. The notice and any appeal outcome appear on the public HSE Notices database. For tender questionnaires that ask 'have you received any H&S notices in the last 5 years?', the answer is 'yes' for any notice on that database — which is why firms work hard to avoid them in the first place.",
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     question:
       "When is a Prohibition Notice (HASAWA s.22) appropriate, and what's the effect?",
     options: [
-      "Whenever the inspector wants.",
+      "Two-step measurement. (1) Measure the supply voltage at the consumer unit (or the origin of the circuit) under no-load — typically 235-245 V on UK 230 V supply. (2) Apply a known significant load at the furthest point of the circuit (e.g. plug in a 2 kW load — fan heater, kettle, test load resistor). Measure the voltage at the same point. Voltage drop = (no-load voltage) - (loaded voltage). Express as percentage of nominal: drop / 230 x 100. Compare against Reg 525 limits.",
       "When the inspector believes a specific activity involves or will involve a risk of SERIOUS personal injury. The notice prohibits the activity (immediately, or from a stated time) until the risk has been remedied. Like an Improvement Notice, it can be appealed to an Employment Tribunal within 21 days — but the appeal does NOT suspend the notice (unlike an Improvement Notice). The activity must stop while the appeal is heard.",
-      "For minor paperwork issues.",
-      "Only on weekends.",
+      "Plain English at slow pace, supplemented by visual demonstration where appropriate, written translated handouts (HSE provides multilingual safety leaflets), use of a bilingual co-worker as informal interpreter, back-briefing to confirm understanding ('show me what you'd do if you saw a fire'), and provision of safety signage and PPE labels in the relevant languages where the workforce is consistently multilingual. The duty under MHSWR Reg 10 is for information to be 'comprehensible' — that's a statutory standard, not a courtesy.",
+      "The Electrical Contractors' Association — the trade association for electrical contractors in England, Wales and Northern Ireland. Founded 1901. ECA membership is a quality mark for the contractor; ECA also lobbies on behalf of the industry, runs technical events, publishes guidance and runs the JIB jointly with the trade union (Unite).",
     ],
     correctAnswer: 1,
     explanation:
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       "RIDDOR 2013 — what's a 'specified injury' and how is it different from over-7-day incapacitation?",
     options: [
-      "There's no difference.",
+      "Each product's commissioning depends on the others being in a known state. The battery commissioning needs the inverter live; the inverter needs the PV strings energised; the EV charger's load management needs the CT clamp reading correctly; the heat pump's smart controller needs network access to the HEMS; the HEMS needs all four products visible before it can configure dispatch logic. Doing them in the wrong order produces commissioning faults that are hard to diagnose because each individual product 'works' but the integrated behaviour fails. The MCS-certified designer should provide a commissioning sequence; the apprentice follows it.",
+      "Refuse the unsafe instruction and raise the concern with the supervisor or higher. HASAWA s.7 puts the personal duty on the apprentice — a direct order from a senior is not a defence to a s.7 prosecution. The Employment Rights Act 1996 s.44 also gives the apprentice statutory protection from victimisation for raising H&S concerns. Document the refusal and the reason in writing (text, email, app note) at the time.",
       "Specified injuries (RIDDOR Reg 4) are the most serious named injuries — fatalities, fractures other than to fingers/toes/thumbs, amputations, loss of sight, scalpings, serious burns, crush injuries, unconsciousness from electric shock, and so on. They must be reported as soon as possible and within 10 days. Over-7-day incapacitation (Reg 6) is when a worker is off normal work for more than 7 consecutive days (excluding accident day, including weekends) — must be reported within 15 days. Different categories, different timeframes, both reportable.",
-      "Specified injuries are voluntary; over-7-day are mandatory.",
-      "Specified injuries only apply to apprentices.",
+      "Part P does NOT apply (Part P is dwellings-only). EAWR applies to the workplace electrical safety. The work needs an EIC or MEIWC for BS 7671 compliance and the contractor discharges EAWR duties through competent design and installation. No CPS upload required because Part P does not apply, but the contractor may still notify Building Control if other Building Regulations Parts are triggered (e.g. Part B fire safety, Part L energy efficiency).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "RIDDOR has multiple reporting categories — specified injuries (Reg 4, the most serious named list), over-7-day incapacitation (Reg 6), occupational diseases (Reg 8), dangerous occurrences (Reg 7) and gas incidents (Reg 11). Each has its own threshold and timeframe. An apprentice should know that ANY workplace injury serious enough to need medical attention is potentially reportable — the answer to 'is it RIDDOR?' is for the firm's H&S contact to decide, but the apprentice's job is to tell them at the time. Failure to report is a criminal offence in itself under RIDDOR Reg 12.",
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       "What's a 'dangerous occurrence' under RIDDOR 2013 — and is an electrical incident on a fixed installation likely to count?",
     options: [
-      "Only fires count.",
+      "The install can't commission until the DNO has approved the G99 application. Approval timeline 2-12 weeks depending on local network conditions. Customer needs to know this up front — booking holiday around an install date that depends on G99 approval is a recipe for disappointment. The MCS-certified installer normally manages the application and provides timeline expectations. As the apprentice you should never quote a commission date for a G99 install without confirmation from the certified installer.",
+      "A formal interview with two professional reviewers (qualified at IEng or CEng) who assess your portfolio of evidence against UK-SPEC. Typically 60-90 minutes. The reviewers ask probing questions on specific projects you cite, your decision-making process, your professional commitment evidence. Most applications pass; reviewers want to confirm you've evidenced the competences. Failed applications get specific feedback on what to strengthen.",
+      "The Environment Agency. The EA operates the consignment note tracking system, the waste carrier registration system, the environmental permit register and the public lookup tools. SEPA (Scotland), Natural Resources Wales (NRW) and the Northern Ireland Environment Agency (NIEA) cover the equivalent functions in their respective territories. Civil sanctions, variable monetary penalties and criminal prosecution are all available where breaches are detected, and the agencies publish enforcement bulletins regularly.",
       "RIDDOR Reg 7 specifies a list of 'dangerous occurrences' that must be reported even if no-one was hurt — they're near-misses with serious potential. The list (RIDDOR Schedule 2) includes electrical short circuits or overloads that cause a fire or explosion, certain types of plant collapse, scaffolding failure, dangerous occurrences in or near a pipeline, and so on. So yes — an electrical incident causing fire or explosion in a fixed installation is reportable as a dangerous occurrence even with no injury.",
-      "Dangerous occurrences are voluntary to report.",
-      "Only dangerous occurrences with fatalities are reportable.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The 'dangerous occurrences' regime exists because near-misses are the leading indicator of next month's actual injury or fatality. Reporting them gives the HSE the data to spot industry-wide problems and act before the next incident. For electrical work specifically, an installation fire, an explosion in switchgear, a serious failure of a cable termination — all reportable under Reg 7 even with no immediate injury. The firm's H&S contact files the F2508; the apprentice's job is to make sure the supervisor is told at the time so the report can be made.",
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       "After a serious electrical incident on a construction site, in what order do the enforcement and supporting bodies typically engage?",
     options: [
-      "Just the HSE comes.",
       "Multiple bodies. (1) Emergency services — ambulance / fire / police as appropriate at the time. (2) Police — investigate scene, especially in fatalities (corporate manslaughter / individual gross-negligence manslaughter potential). (3) HSE — H&S investigation (HASAWA, EAWR, CDM, MHSWR, RIDDOR). (4) Building Control — where there's a building-regs / structural angle. (5) DNO — if mains supply was involved (ESQCR). (6) Insurers — both the firm's and the client's. The HSE and police typically work in parallel, especially after fatal incidents.",
-      "Only the customer's solicitor.",
-      "Only Building Control.",
+      "Polarity test confirms that the line conductor is connected to the line terminal at every accessory and switching device, AND that switches break the line conductor (not the neutral). BS 7671 643.6 requires polarity verification at every accessory and at the origin. Failed polarity findings: switch breaks neutral instead of line (entire fitting remains live when off — common older-installation fault); reversed polarity at a socket (line and neutral swapped — appliances work but earth/neutral references are wrong); two-way switching wired wrong (intermittent operation). MFT has a polarity test mode; socket testers do polarity-only on 13A sockets.",
+      "Three. (1) Test readings — pre-rectification (the failed reading) and post-rectification (the corrected reading), with timestamps and instrument IDs. (2) Functional test outcomes — what was tested, what worked, any anomalies. (3) Customer hand-back record — what was demonstrated, what documentation provided, customer's signed acceptance. The records become the diagnostic narrative on the job sheet — defensible audit trail of what was found, what was done, what was verified.",
+      "Explain clearly that refrigerant work is restricted by law to F-Gas-certified persons under the F-Gas Regulation. If the unit feels less effective they should call the original installer or an F-Gas certified service company who will leak-test and re-charge as needed. Topping up a refrigerant circuit DIY is illegal, dangerous (some refrigerants are A2L mildly flammable and R-290 is A3 flammable), and would void the warranty. The cost of professional service is small relative to the cost of an uncovered failure.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Real incidents trigger a cascade of investigations, not a single one. The apprentice's role at the time is co-operate, answer truthfully, don't speculate. Statements taken at the time can become evidence in any subsequent prosecution — speculation or guesses dressed up as fact can return to haunt the firm and the individual. The firm's H&S manager and / or solicitors will typically engage with the formal investigation; the apprentice tells what they saw and did, without embellishment.",
   },

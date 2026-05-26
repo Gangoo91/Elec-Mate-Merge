@@ -15,18 +15,23 @@ const quickCheckQuestions = [
     question: 'What is the correct order of the waste hierarchy from most to least preferred?',
     options: [
       'Recycle, reuse, dispose, recover, reduce',
-      'Prevention, reduce, reuse, recycle, recover, dispose',
-      'Dispose, recover, recycle, reuse, reduce, prevent',
       'Reduce, prevent, dispose, recycle, reuse, recover',
+      'Dispose, recover, recycle, reuse, reduce, prevent',
+      'Prevention, reduce, reuse, recycle, recover, dispose',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The waste hierarchy, enshrined in the Waste (England and Wales) Regulations 2011, ranks waste management options from most to least preferred: prevention, reduction, reuse, recycling, other recovery (e.g., energy recovery), and disposal. Every decision you make on site should follow this order.',
   },
   {
     id: 'waste-transfer-note',
     question: 'How long must a waste transfer note be retained?',
-    options: ['6 months', '1 year', '2 years', '3 years'],
+    options: [
+      '6 months',
+      '1 year',
+      '2 years',
+      '3 years',
+    ],
     correctIndex: 2,
     explanation:
       'Under the Environmental Protection Act 1990 (Duty of Care Regulations), waste transfer notes must be retained for a minimum of 2 years. Hazardous waste consignment notes must be retained for a minimum of 3 years. These records provide an audit trail demonstrating lawful waste disposal.',
@@ -36,10 +41,10 @@ const quickCheckQuestions = [
     question:
       'What do the WEEE Regulations 2013 specifically require producers and distributors to do?',
     options: [
-      'Dispose of all electrical waste in general skips',
+      'Five: Ladder Diagram, Function Block Diagram, Structured Text, Instruction List and Sequential Function Chart',
       'Finance the collection, treatment, recovery and environmentally sound disposal of WEEE',
-      'Export all electrical waste to developing countries',
-      'Only recycle items that are less than 5 years old',
+      'Eliminate the substance from the process or substitute it with a non-sensitising alternative',
+      'Because power failure may occur without fire, and fire may occur without triggering alarms immediately',
     ],
     correctIndex: 1,
     explanation:
@@ -49,12 +54,12 @@ const quickCheckQuestions = [
     id: 'hazardous-waste',
     question: 'Which of the following electrical waste items is classified as hazardous waste?',
     options: [
-      'Copper cable offcuts',
-      'Plastic cable trunking',
+      'To confirm the design meets BS EN 61439',
       'Fluorescent tubes containing mercury',
-      'Steel conduit',
+      'Drop tube or rotary valve with fire protection',
+      'Authorised supervisors/managers only',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Fluorescent tubes contain mercury, a toxic heavy metal, and are classified as hazardous waste under the Hazardous Waste (England and Wales) Regulations 2005. They must be stored separately in designated containers, handled carefully to avoid breakage, and disposed of through a licensed hazardous waste carrier with a consignment note.',
   },
@@ -66,10 +71,10 @@ const quizQuestions = [
     question:
       "Under the Environmental Protection Act 1990, the 'duty of care' for waste applies to:",
     options: [
-      'Only the person who originally creates the waste',
+      'Squarely face the person, Open posture, Lean forward, Eye contact, Relax',
       'Anyone who produces, imports, carries, keeps, treats or disposes of controlled waste',
-      'Only licensed waste carriers',
-      'Only local authority waste departments',
+      'Because many DC loads (LEDs, electronics) are polarity sensitive',
+      'Test results, faults, repairs, replacements, and inspections',
     ],
     correctAnswer: 1,
     explanation:
@@ -80,10 +85,10 @@ const quizQuestions = [
     question:
       'Which level of the waste hierarchy should a maintenance technician consider first when dealing with old cable?',
     options: [
-      'Dispose of it in a general skip',
-      'Send it for energy recovery (incineration)',
+      'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
+      'Multiple categories depending on the specific item',
       'Consider whether the cable can be reused on another project',
-      'Recycle the copper content',
+      'Registration as a waste carrier with the Environment Agency',
     ],
     correctAnswer: 2,
     explanation:
@@ -93,12 +98,12 @@ const quizQuestions = [
     id: 3,
     question: 'What document must accompany hazardous waste when it leaves a site?',
     options: [
-      'A standard waste transfer note',
-      'A hazardous waste consignment note',
       'A delivery note from the supplier',
+      'A standard waste transfer note',
       'A risk assessment',
+      'A hazardous waste consignment note',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hazardous waste must be accompanied by a hazardous waste consignment note when it leaves a premises. This is a legal requirement under the Hazardous Waste (England and Wales) Regulations 2005. The consignment note contains detailed information about the waste type, quantity, hazard codes, and the transfer chain from producer to disposal facility.',
   },
@@ -107,12 +112,12 @@ const quizQuestions = [
     question:
       'PCB-containing equipment (such as old capacitors and transformers) requires special disposal because:',
     options: [
-      'PCBs are valuable and can be resold',
       'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
-      'PCBs are flammable and may cause fires in landfill',
-      'PCBs dissolve in water and contaminate drainage',
+      'Registration as a waste carrier with the Environment Agency',
+      'Discourage the disposal of waste to landfill and encourage recycling and recovery',
+      'Fluorescent tubes and other mercury-containing lamps',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Polychlorinated biphenyls (PCBs) are persistent organic pollutants — they do not break down in the environment, they accumulate in the food chain, and they are toxic to humans and wildlife. The POPs Regulations ban the use of PCBs and require that PCB-containing equipment is identified, registered and disposed of through specialist high-temperature incineration.',
   },
@@ -120,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the minimum requirement for a person or company to legally transport waste?',
     options: [
-      'A full HGV driving licence',
+      'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
       'Registration as a waste carrier with the Environment Agency',
-      'Membership of a trade association',
-      'A site waste management plan',
+      'Multiple categories depending on the specific item',
+      'Consider whether the cable can be reused on another project',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,10 +139,10 @@ const quizQuestions = [
     question:
       'Which of the following is the correct method for disposing of waste batteries from UPS systems?',
     options: [
-      'Place them in a general waste skip',
-      'Pour out the acid and recycle the lead casing separately',
+      'The Waste (England and Wales) Regulations 2011 and the Hazardous Waste Regulations 2005',
+      'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
       'Store them in a designated battery collection point and arrange collection by a specialist waste carrier',
-      'Return them to any electrical wholesaler',
+      'Discourage the disposal of waste to landfill and encourage recycling and recovery',
     ],
     correctAnswer: 2,
     explanation:
@@ -147,12 +152,12 @@ const quizQuestions = [
     id: 7,
     question: 'Landfill tax is designed to:',
     options: [
-      'Fund local council waste collection services',
+      'Registration as a waste carrier with the Environment Agency',
+      'Store them in a designated battery collection point and arrange collection by a specialist waste carrier',
+      'The Waste (England and Wales) Regulations 2011 and the Hazardous Waste Regulations 2005',
       'Discourage the disposal of waste to landfill and encourage recycling and recovery',
-      'Pay for the construction of new landfill sites',
-      'Subsidise waste carrier licence fees',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Landfill tax was introduced in 1996 to make landfill disposal more expensive, thereby encouraging businesses and individuals to reduce, reuse and recycle waste. The standard rate for 2024 is £103.70 per tonne, making it a significant cost driver that incentivises proper waste management planning.',
   },
@@ -161,12 +166,12 @@ const quizQuestions = [
     question:
       'When segregating waste on an electrical maintenance site, which of the following should be kept in a separate, sealed container?',
     options: [
-      'Cable offcuts and conduit',
-      'Cardboard packaging',
       'Fluorescent tubes and other mercury-containing lamps',
-      'Metal trunking and cable tray',
+      'Multiple categories depending on the specific item',
+      'Consider whether the cable can be reused on another project',
+      'Registration as a waste carrier with the Environment Agency',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Fluorescent tubes contain mercury and are classified as hazardous waste. They must be stored separately in sealed, clearly labelled containers to prevent breakage and mercury release. Broken lamps release mercury vapour which is harmful to health and the environment. Specialist lamp recycling containers (often called 'coffins') should be used.",
   },
@@ -174,10 +179,10 @@ const quizQuestions = [
     id: 9,
     question: 'A site waste management plan (SWMP) is used to:',
     options: [
-      'Replace the need for waste transfer notes',
+      'The Waste (England and Wales) Regulations 2011 and the Hazardous Waste Regulations 2005',
       'Forecast, manage and record all waste produced on a construction or maintenance project',
-      'Determine landfill tax liabilities only',
-      'Register the site with the Environment Agency',
+      'It is the most potent greenhouse gas known, with a global warming potential 23,500 times that of CO2',
+      'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,10 +195,10 @@ const quizQuestions = [
     options: [
       'Category 1 — Large household appliances',
       'Category 4 — Consumer equipment',
-      'Category 5 — Lighting equipment',
       'Multiple categories depending on the specific item',
+      'Category 5 — Lighting equipment',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Electrical maintenance waste falls across multiple WEEE categories: luminaires are Category 5 (lighting equipment), large switchgear may be Category 1 (large equipment), and monitoring/control instruments are Category 9. It is important to identify the correct WEEE category for each item to ensure it reaches the appropriate approved treatment facility.',
   },
@@ -202,12 +207,12 @@ const quizQuestions = [
     question:
       'What is the main environmental concern with SF6 gas used in some high-voltage switchgear?',
     options: [
-      'It is toxic to humans at low concentrations',
+      'The Waste (England and Wales) Regulations 2011 and the Hazardous Waste Regulations 2005',
+      'Store them in a designated battery collection point and arrange collection by a specialist waste carrier',
+      'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
       'It is the most potent greenhouse gas known, with a global warming potential 23,500 times that of CO2',
-      'It is flammable and poses a fire risk',
-      'It causes acid rain when released',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Sulphur hexafluoride (SF6) is the most potent greenhouse gas known to science, with a global warming potential 23,500 times greater than CO2 and an atmospheric lifetime of over 3,200 years. The F-Gas Regulations require that SF6 is recovered during maintenance and decommissioning of switchgear, and that certified technicians carry out the work.',
   },
@@ -216,12 +221,12 @@ const quizQuestions = [
     question:
       'Which regulation requires that waste oil from transformers is disposed of correctly?',
     options: [
-      'The Water Resources Act 1991 only',
       'The Waste (England and Wales) Regulations 2011 and the Hazardous Waste Regulations 2005',
-      'The Electricity at Work Regulations 1989',
-      'BS 7671 Wiring Regulations',
+      'Store them in a designated battery collection point and arrange collection by a specialist waste carrier',
+      'Discourage the disposal of waste to landfill and encourage recycling and recovery',
+      'Forecast, manage and record all waste produced on a construction or maintenance project',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Waste transformer oil is classified as hazardous waste under the Hazardous Waste Regulations 2005 and must be managed in accordance with the Waste (England and Wales) Regulations 2011. It must be stored in sealed, bunded containers, collected by a licensed hazardous waste carrier, and accompanied by a consignment note. The Oil Storage Regulations also apply to the storage of oils on site.',
   },

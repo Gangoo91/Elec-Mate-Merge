@@ -35,12 +35,12 @@ const quickCheckQuestions = [
     id: 'emergency-planning',
     question: 'What is the primary purpose of emergency planning?',
     options: [
-      'To satisfy insurance requirements',
       'To minimise harm and enable rapid, effective response',
-      'To create paperwork',
-      'To delegate responsibility',
+      'Solvents used for cleaning switchgear contacts',
+      'Analog signals such as 0-10V or 4-20mA',
+      'Disconnect or isolate SPDs before testing',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Emergency planning aims to minimise harm to people, property and the environment by ensuring everyone knows what to do before, during and after emergencies through planned, practised procedures.',
   },
@@ -49,19 +49,24 @@ const quickCheckQuestions = [
     question:
       'What is the minimum first aid provision for a low-risk workplace with 25-50 employees?',
     options: [
-      'Nothing required',
-      'First aid box only',
+      'Check individual switches and connections',
+      'An open circuit or break in the conductor',
+      'Mean Time To dangerous Failure',
       'Appointed person plus first aid box',
-      'First aider at work plus first aid box',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'For low-risk workplaces with 25-50 employees, minimum provision is an appointed person (to take charge of first aid arrangements) plus an adequately stocked first aid box. Higher risk or larger numbers require qualified first aiders.',
   },
   {
     id: 'fire-extinguisher',
     question: 'What colour band identifies a CO2 fire extinguisher?',
-    options: ['Red', 'Blue', 'Cream', 'Black'],
+    options: [
+      'Cream',
+      'Blue',
+      'Red',
+      'Black',
+    ],
     correctIndex: 3,
     explanation:
       'CO2 extinguishers have a black band. Red = water, cream = foam, blue = dry powder. CO2 is suitable for electrical fires and leaves no residue, making it ideal for building services switchrooms.',
@@ -71,12 +76,12 @@ const quickCheckQuestions = [
     question:
       'What is the first action when finding someone receiving an electric shock from a low voltage source?',
     options: [
-      'Pull them away immediately',
+      'Correct on/off times as programmed',
+      'When copper losses equal iron losses',
+      'Ring final circuit socket outlets',
       'Isolate the supply if safe to do so',
-      'Apply first aid',
-      'Wait for emergency services',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The first priority is to isolate the supply if it can be done quickly and safely. Never touch the casualty while they're still in contact with the electrical source. If isolation isn't possible, use non-conductive material to separate them.",
   },
@@ -100,8 +105,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'How often should fire evacuation drills be conducted in most workplaces?',
-    options: ['Once a year', 'Every 6 months minimum', 'Monthly', 'Only when new staff join'],
-    correctAnswer: 1,
+    options: [
+      'Monthly',
+      'Once a year',
+      'Every 6 months minimum',
+      'Only when new staff join',
+    ],
+    correctAnswer: 2,
     explanation:
       'Fire drills should be conducted at least every 6 months, or more frequently in high-risk premises or where staff turnover is high. Records must be kept of all drills.',
   },
@@ -109,12 +119,12 @@ const quizQuestions = [
     id: 3,
     question: "What is the role of a 'Fire Warden' or 'Fire Marshal'?",
     options: [
-      'To fight fires',
+      'During site induction before work begins',
+      'Evacuate, ventilate, and do not re-enter until safe',
+      'To account for all personnel and prevent re-entry',
       'To assist with evacuation and ensure areas are clear',
-      'To call the fire brigade only',
-      'To maintain fire extinguishers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Fire wardens/marshals assist with evacuation by directing people to exits, checking that their designated areas are clear, reporting to the assembly point, and liaising with emergency services.',
   },
@@ -122,12 +132,12 @@ const quizQuestions = [
     id: 4,
     question: "What first aid qualification is required to be a 'First Aider at Work'?",
     options: [
-      'No formal qualification needed',
       'Completion of HSE approved First Aid at Work course',
-      'Medical degree',
-      'One-day emergency aid certificate only',
+      'When the fire is too large or your escape route may be blocked',
+      '45m (or 25m if only one exit available)',
+      'Cool the burn with cool running water for at least 20 minutes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A First Aider at Work (FAW) must hold a valid certificate from an HSE approved First Aid at Work training course (usually 3 days). This is different from an Emergency First Aider (1 day course).',
   },
@@ -135,10 +145,10 @@ const quizQuestions = [
     id: 5,
     question: 'What should be included in an emergency plan?',
     options: [
-      'Fire procedures only',
+      'To assist with evacuation and ensure areas are clear',
       'All foreseeable emergencies, roles, actions, communications, and recovery',
-      'Contact numbers only',
-      'Insurance details',
+      'Location, nature of incident, number of casualties, current condition, hazards present',
+      'Cool the burn with cool running water for at least 20 minutes',
     ],
     correctAnswer: 1,
     explanation:
@@ -161,12 +171,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the maximum travel distance to an exit in a normal-risk premises?',
     options: [
-      '100m',
-      '60m (or 30m if only one exit available)',
+      'About 150-200g CO2/kWh (and falling)',
+      'Recorded values on test schedule/certificate',
+      'Small-scale generation located close to consumers',
       '45m (or 25m if only one exit available)',
-      'No limit specified',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "In normal-risk premises, maximum travel distance is 45m where alternative exits exist, or 25m if there's only one direction of travel. High-risk areas have shorter maximum distances.",
   },
@@ -174,12 +184,12 @@ const quizQuestions = [
     id: 8,
     question: 'What action should be taken if a refrigerant leak is detected in a plant room?',
     options: [
-      'Continue working with windows open',
       'Evacuate, ventilate, and do not re-enter until safe',
-      "Ignore if it's a small leak",
-      'Repair immediately without breathing apparatus',
+      '45m (or 25m if only one exit available)',
+      'Completion of HSE approved First Aid at Work course',
+      'Cool the burn with cool running water for at least 20 minutes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Refrigerant leaks can displace oxygen and may be toxic. Evacuate the area, increase ventilation from outside, do not re-enter until levels are confirmed safe, and only approach with appropriate RPE if essential.',
   },
@@ -187,10 +197,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of an emergency assembly point?',
     options: [
-      'To provide shelter during emergencies',
+      '45m (or 25m if only one exit available)',
       'To account for all personnel and prevent re-entry',
-      'To store emergency equipment',
-      'To meet with visitors',
+      'During site induction before work begins',
+      'To assist with evacuation and ensure areas are clear',
     ],
     correctAnswer: 1,
     explanation:
@@ -200,12 +210,12 @@ const quizQuestions = [
     id: 10,
     question: 'For an electrical burn, after ensuring safety, what is the first aid priority?',
     options: [
-      'Apply burn cream immediately',
+      'Completion of HSE approved First Aid at Work course',
+      'To assist with evacuation and ensure areas are clear',
       'Cool the burn with cool running water for at least 20 minutes',
-      'Cover with cotton wool',
-      'Burst any blisters',
+      'All foreseeable emergencies, roles, actions, communications, and recovery',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'After ensuring the casualty is safe from electrical contact, cool burns with cool running water for at least 20 minutes (ideally within 3 hours). Do not apply creams or burst blisters. Cover loosely and seek medical attention.',
   },
@@ -213,12 +223,12 @@ const quizQuestions = [
     id: 11,
     question: 'What information should be given when calling 999 for an electrical incident?',
     options: [
-      'Name and company only',
+      'Cool the burn with cool running water for at least 20 minutes',
+      'When the fire is too large or your escape route may be blocked',
+      'All foreseeable emergencies, roles, actions, communications, and recovery',
       'Location, nature of incident, number of casualties, current condition, hazards present',
-      'Time of incident only',
-      'Insurance policy number',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Provide: exact location, nature of the incident (electrical), number and condition of casualties, whether power is isolated, any ongoing hazards, access arrangements, and have someone meet the ambulance.',
   },
@@ -227,12 +237,12 @@ const quizQuestions = [
     question:
       'How should emergency procedures be communicated to temporary workers and contractors?',
     options: [
-      'Not required for short visits',
       'During site induction before work begins',
-      'Only if they ask',
-      'By email after they leave',
+      'To assist with evacuation and ensure areas are clear',
+      '45m (or 25m if only one exit available)',
+      'Completion of HSE approved First Aid at Work course',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'All workers, including temporary workers and contractors, must receive emergency procedure information during induction before starting work. This includes alarm sounds, exits, assembly points, and any specific hazards.',
   },

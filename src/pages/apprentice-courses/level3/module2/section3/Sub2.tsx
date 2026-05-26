@@ -44,12 +44,12 @@ const checks = [
     question:
       'A heat pump datasheet quotes "COP 4.5 at A7/W35". The customer says "so this thing pays for itself in two winters?". What\'s the honest reply?',
     options: [
-      'Yes, the COP figure is what they\'ll see year-round.',
+      "Loss of the ability to self-certify domestic notifiable work under Part P of the Building Regulations. Every notifiable job must then be notified to Local Authority Building Control (LABC) and inspected separately, which is slower and more expensive. Loss of the scheme membership badge that customers actively look for when choosing a contractor. Likely loss of insurance cover that depends on scheme membership. Significant reputational damage in trade directories and customer-facing search results. Many domestic contractors don't survive a scheme withdrawal.",
+      "AC, A, F or B — and a time-delayed device adds (S) suffix for devices to BS EN 61008, BS EN 61009 or BS EN 62423. So a time-delayed Type A device is recorded as \\\\\\\"A (S)\\\\\\\". The type code reflects the residual-current waveform sensitivity: AC = pure sinusoidal AC; A = AC + pulsating DC; F = A + composite (motor drives); B = A + F + smooth DC. Time-delayed (S) means selective tripping coordination — typically used as an upstream device with downstream non-delayed RCDs on individual circuits.",
+      "Safety Data Sheet — 16-section document supplied by the manufacturer / supplier covering identification, hazard ID, composition, first aid, fire fighting, accidental release, handling and storage, exposure controls and PPE, physical and chemical properties, stability and reactivity, toxicology, ecology, disposal, transport, regulation, other. The label gives headlines; the SDS gives the operational detail.",
       "COP 4.5 at A7/W35 is the manufacturer's number at outdoor 7°C and flow temperature 35°C — a mild day driving low-temperature underfloor heating. Real seasonal performance (SCOP) averages across the cold snaps and is typically 3.0-3.8 for properly designed UK installs, lower for marginal installs on undersized old radiators. The MCS-certified design produces the SCOP estimate based on the actual building heat loss and emitter design — that's the figure to discuss running costs with. Quoting COP as if it's SCOP overpromises and the customer feels misled when the bills come in.",
-      'No — heat pumps never pay back.',
-      'Yes — exactly two winters.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "COP at standard conditions and SCOP across a UK heating season are different numbers. The MCS standard requires SCOP to be calculated and disclosed on the design pack. As an apprentice working on the install you don't size the system, but you should reinforce the SCOP framing whenever a customer brings up the COP marketing number. The honest framing: 'COP at standard conditions is the lab number; SCOP is the year-round number — your design pack has the SCOP'.",
   },
@@ -58,12 +58,12 @@ const checks = [
     question:
       'You\'re first-fixing the supply for a 12 kW ASHP that the manufacturer schedule lists as "32 A 230 V single-phase, Type C MCB, sized for sustained continuous load". The unit will sit 25 m from the consumer unit, run via SWA buried in the ground. What\'s the design check?',
     options: [
-      'Pop a 2.5 mm² T&E in — it\'s only 32 A.',
+      "Three. (1) Field exposure limits — ICNIRP / HSE guidance on RF field strength; standby fields can couple to your body even when you're not in direct contact. (2) Pacemaker / metal implant warning — RF fields interfere with cardiac pacemakers and can heat metallic implants; warn anyone with implants to stay clear (signage at the equipment). (3) Capacitive discharge — RF tank circuits store significant energy in capacitor banks; isolation procedure includes wait period (manufacturer-specified, typically 5–15 minutes) for capacitor bleed before working near. The L3 apprentice doesn't typically commission RF equipment but does meet it on workshop sites; the precautions need to be respected.",
+      "Mains-borne electromagnetic interference (EMI) from the induction hob's switching electronics coupling into the LED driver in the hood. Induction hobs run an inverter at 20–100 kHz that puts harmonic content on the supply; cheap LED drivers without proper EMC filtering pick this up and modulate their output, causing the flicker. The buzz is the magnetic coupling to the hood's transformer / driver chassis. The hob is compliant (BS EN IEC 61000-3 EMC standards) and the hood is compliant individually, but together they're a cumulative EMC failure. Fix options: (1) replace the hood's driver with a higher-spec unit with better EMC filtering, (2) fit a mains filter on the hood circuit, (3) escalate to the hood manufacturer as a product compatibility complaint. NOT a wiring fault.",
+      "A self-sustaining exothermic chain reaction inside a Li-ion cell. Damage, overcharge, internal manufacturing defect or external heat triggers an internal short circuit, which generates heat, which decomposes the organic electrolyte, which generates more heat and flammable / toxic gas, which can ignite. Once the chain reaction has started in one cell the heat can propagate to neighbouring cells in the pack. The fire is intense, fast, and self-fuelling because the cell carries its own oxidiser within the cathode material.",
       "Size the cable for the sustained load, the installation method (Method D for buried SWA), the ambient temperature, the volt-drop over 25 m, and the protective device. A 32 A continuous load on Method D buried SWA typically lands at 6 mm² 2-core SWA with a 4 mm² CPC, depending on soil conditions and grouping. Volt-drop check: 32 A × 25 m × tabulated mV/A/m for 6 mm² (~7.3 mV) = 5.8 V = 2.5% — within the 3% Reg 525.1.1 limit for a power circuit. Type C MCB (or Type D) handles compressor inrush. Manufacturer's instructions confirm RCD type required (often Type B or RDC-DD per Section 411.3.3 / 415.1).",
-      'A 13 A spur off the kitchen ring final.',
-      '110 V CTE supply via a transformer.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Heat-pump cable sizing is a normal BS 7671 design exercise — but with three constraints to watch. Continuous load (heat pumps run for hours, not minutes — thermal capacity matters); inrush (compressor start-up — Type C or D MCB needed); volt-drop over distance (outdoor units are often 10-30 m from the CU). The manufacturer's installation instructions state the supply requirements; the electrician designs the supply to satisfy them and BS 7671. The MCS heat-pump design pack normally includes the electrical schedule.",
   },
@@ -72,10 +72,10 @@ const checks = [
     question:
       'On a heat-pump install the indoor unit is in place and the outdoor unit is bolted down. The customer asks if you can connect the refrigerant pipework "while you\'re here". What\'s the answer?',
     options: [
-      'Sure — just brazed copper, simple enough.',
+      "Notices must be 'clearly and durably marked' (Reg 514.13.1) and 'shall be securely fixed in a visible position'. The practical interpretation: typed/printed labels on durable substrate (BS 951 plates for earthing, laminated card for inside-CU notices), securely fixed (screwed, riveted, or industrial adhesive), readable from a normal stand-back distance. Hand-written sticky labels degrade fast and aren't compliant.",
       "No. Refrigerant work is restricted to F-Gas-certified personnel only, under the F-Gas Regulations (assimilated EU Regulation 517/2014, retained in UK law). Connecting refrigerant pipework, charging the system, recovering refrigerant — all require F-Gas certification, even for the small charges in domestic heat pumps. Working without certification is a criminal offence and invalidates the manufacturer's warranty. As the electrician your boundary is the electrical supply, isolation, controls and bonding — not the refrigerant circuit.",
-      'Yes, as long as you wear gloves.',
-      'Only if the customer signs a waiver.',
+      "Whenever they design, supply or commission an article (including a control panel, a bespoke distribution board, a prefabricated assembly) for use at work — they must ensure it is safe and without risks to health when properly used, and supply adequate information about safe use, installation and dismantling. So a contractor designing a one-off control panel for a commercial customer is captured by s.6 as well as by EAWR.",
+      "Ask the manufacturer directly via their technical support or sustainability team — most major UK cable and accessory manufacturers publish EPDs on their website or supply on request. If the manufacturer does not publish an EPD for that product, that fact alone is relevant to the project specifier because the spec called for EPD-backed products. The right action is to flag the missing EPD to the project specifier and either source an EPD-backed equivalent from another manufacturer or request a written derogation from the spec. Documenting the search and the decision protects the contractor against later challenge.",
     ],
     correctIndex: 1,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       'Describe the vapour-compression cycle that drives a heat pump in plain English.',
     options: [
-      'Resistive heating in a coil.',
+      "A dedicated earth electrode tester that is stakeless or clamp-type. Clamps around the earthing conductor and measures resistance via induced current — no need to drive auxiliary stakes into the soil. Quick and convenient for in-service testing where ground access is limited (e.g. urban TT installations on paved areas), but accuracy depends on the electrode being part of a multi-electrode system or having a parallel earth path.",
       "Refrigerant evaporates at low temperature in the outdoor coil (or ground loop), absorbing heat from the source. The compressor squeezes the resulting low-pressure vapour, raising its pressure and temperature. The hot high-pressure vapour condenses in the indoor heat exchanger, releasing heat into the wet heating system. The liquid refrigerant expands back to low pressure through the expansion valve and the cycle repeats. Electrical work drives the compressor; the heat in the wet system comes from outside, not from the electricity. Energy is conserved.",
-      'A flame burns the refrigerant.',
-      'A solar panel heats the water directly.',
+      "Ask her what helps — she'll know better than you. Common adjustments include extra time on written assessments, the option of a verbal or practical demonstration assessment instead of (or alongside) written, the briefing material provided in advance with key terms highlighted, audio versions where available, a large clear font and a coloured background overlay for some readers. Confirm with the assessor that the adjustment is in place. Equality Act 2010 s.20 puts the duty on the employer (and the assessing centre) to make reasonable adjustments where a provision, criterion or practice puts a disabled person at a substantial disadvantage.",
+      "The diary is the source from which NVQ portfolio entries are written up. The portfolio needs evidence of competence against specific units and learning outcomes — circuit installs, fault-finding, testing, customer interaction. The diary is where the contemporaneous record of those activities lives, with the level of detail needed to write up a portfolio entry months later. Portfolio entries written from a thin diary tend to be thin themselves.",
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     question:
       'What\'s the practical difference in source temperature between ASHP and GSHP, and how does it affect SCOP?',
     options: [
-      'No difference — both work the same.',
+      "Three sections. (1) PRE-WORK — photographs of any pre-existing damage to walls / floors / tiles / surfaces near the work area. Protects against 'you damaged that' disputes. (2) WORK SCOPE — what fabric was disturbed during the work (chasing, drilling, plasterboard cutting, tile removal). (3) RESTORATION — what make-good was done, what's outstanding for other trades, customer's acknowledgment. The photographs + scope + restoration record protects the firm from misunderstandings about what was done vs what was pre-existing.",
+      "Building Regulations Part L (Conservation of Fuel and Power) applies to new build, extensions and major renovations. Heat pump installs in those contexts must demonstrate compliance with the relevant Part L primary energy and carbon emissions targets, typically through SAP (Standard Assessment Procedure) for dwellings. The Future Homes Standard expected to bring fossil-fuel boilers off new-build from 2025 elevates heat pumps to the default route for new-build. MCS MIS 3005 sits alongside Part L — MCS proves the installer is competent, Part L sets the building energy targets, and the SAP calculation that informs Part L compliance uses MCS-style heat-loss and SCOP methodology.",
       "ASHP source is outdoor air, which in the UK varies from -10°C in cold spells to 25°C+ in summer. The cold-day source temperature drops the COP because the unit has a bigger temperature lift to make. GSHP source is the ground at 1-2 m depth (horizontal slinky) or at 50-150 m depth (borehole), which sits at a stable 8-12°C year-round. So GSHP doesn't suffer the cold-day SCOP penalty — typical SCOP 4.0-5.0 vs ASHP 2.8-3.8. The trade-off is GSHP capital cost (£20-35k vs £10-15k for ASHP) and constructability (boreholes / trenching).",
-      'GSHP runs cooler so its SCOP is lower.',
-      'ASHP only works in summer.',
+      "The MFT (Megger MFT1741+, Kewtech KT64+) injects different test currents based on the RCD type. Type AC test: pure sinusoidal AC at I∆n. Type A test: pure sinusoidal AC AT I∆n PLUS pulsating DC at 1.4× I∆n (because Type A must detect both). Type F test: all of the above PLUS composite multi-frequency. Type B test: all of the above PLUS smooth DC at twice I∆n. Selecting the wrong type on the MFT may show 'pass' on a Type B device (because you're only testing the AC capability, not the DC) — false confidence. Modern MFTs auto-detect or have explicit type selection.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The temperature lift is the headline efficiency driver. Smaller lift = higher COP. GSHP wins on stability of source temperature; ASHP wins on installation cost and disruption. Modern variable-speed inverter-driven ASHP units have closed the SCOP gap considerably — well-designed UK ASHP installs now post SCOP 3.5+ regularly. The 'GSHP is automatically better' framing is dated; the right answer is site-specific.",
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       'Why does heat pump SCOP suffer when the wet system is undersized old radiators?',
     options: [
-      'Old radiators waste heat to the wall behind them.',
+      "Test instruments drift over time — components age, shock and vibration cause small errors. A drifted instrument produces wrong test results that fail BS 7671 Chapter 61 verification. Annual calibration to a UKAS-traceable standard (with a calibration certificate) is the standard requirement. NICEIC, NAPIT and ELECSA all check for in-date calibration certificates at scheme audit; an out-of-date instrument used to demonstrate compliance invalidates the certificate it was used to produce.",
+      "Generators (PV, wind, micro-CHP) put energy into the system that wasn't there before from the user's point of view. Demand-reduction tech (LED lighting, smart controls, MVHR, insulation) makes the existing energy do more useful work. From a carbon perspective the cheapest watt is the one you don't use — demand reduction usually has a shorter payback than generation. From a Building Regs perspective both count toward Part L compliance via the SAP / SBEM calculation.",
+      "Tariff arbitrage. The system controller can charge the battery from the grid during the cheap window and discharge during the expensive window, regardless of solar. On a tariff with a 25-30 p/kWh spread between cheap and expensive rates, the arbitrage saves a few hundred pounds a year on top of the solar self-consumption benefit. Over a 10-15 year battery life this can roughly double the system's lifetime value compared to solar self-consumption alone. The G98/G99 notification covers grid charging if the system can also export.",
       "Old radiators were sized for 70-80°C flow temperature from a gas boiler. To deliver the same heat output at lower flow temperature, the radiators need to be larger. If you ask a heat pump to drive undersized old radiators at 70-80°C flow, the temperature lift is much bigger than at 35-40°C flow — so the COP drops sharply. SCOP reflects the actual flow temperature the system runs at across the heating season. Properly designed heat-pump retrofits include a radiator survey and upsize plan, or convert to underfloor where possible.",
-      'Old radiators are made of iron not steel.',
-      'They have rust inside.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Flow temperature is the SCOP killer when you get it wrong. The MCS heat-pump design methodology includes the room-by-room emitter sizing. Skipping the radiator survey and 'just plumbing it in' to the existing radiators is the main cause of disappointing real-world heat pump performance. As the electrician you don't size emitters but you should be alert when an install has skipped the radiator step.",
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       'What\'s the typical electrical interface for a 8-12 kW domestic ASHP?',
     options: [
-      'A 13 A plug socket.',
       "Dedicated radial circuit, typically 32 A or 40 A on a Type C (or D) MCB, in 6 mm² T&E or SWA depending on installation method and length. RCD per BS 7671 Section 411.3.3 / 415.1 — type per manufacturer's instruction (often Type A or Type B / RDC-DD). Local rotary or DP isolator outdoors at the unit. Smart controls integration via dedicated low-voltage cable. Cyclic-rated cable selection — heat pumps run for hours not minutes. Manufacturer's bonding requirements where the chassis forms an extraneous-conductive part.",
-      'A 30 A blue Commando socket.',
-      'A 16 A Type B MCB on a ring final.',
+      "Triggered when the property's existing supply capacity (typically 60 A or 80 A single-phase main fuse) is inadequate for the new combined load. Heat pump + EV charger + existing baseline can easily exceed this. DNO-managed process: customer / installer applies, DNO surveys, costs the work (cable upsize, possibly cut-out / meter replacement, possibly main-fuse upgrade), customer pays, work scheduled. Timeline 4-12 weeks for simple upgrades, longer for cable changes or three-phase conversions. Customer needs to factor this into the install date.",
+      "Larger commercial / institutional sites where heat demand is constant and high — hospitals, hotels, leisure centres, large care homes, schools with swimming pools. Engine-based CHP at 5-50 kWe scale generates electricity locally (offsetting expensive day-rate import) and the waste heat displaces a boiler load. Sized correctly, the heat-led design ensures the heat is always useful (the unit is sized to follow the property's baseload heat demand). Domestic micro-CHP is essentially over in new installs but commercial CHP remains a niche but live technology.",
+      "The ECA is a trade body — voluntary membership organisation representing contractors' commercial interests, providing technical / commercial / legal support, lobbying, training and standard-form contracts. The JIB is the joint employer/union body that sets pay, conditions and grading on JIB-affiliated jobs. ECA members typically apply JIB rules but the bodies are separate. SELECT plays a similar (but distinct) role for the contracting industry in Scotland.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The supply is sized for the unit's nameplate maximum — not the average. Manufacturer schedules are explicit on cable size, MCB type, RCD type. The local outdoor isolator is a maintenance-and-emergency interface, used by the F-Gas engineer. Inrush from compressor start-up justifies the Type C or Type D MCB; nuisance tripping is a textbook commissioning issue if Type B is fitted instead.",
   },
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       'When is a heat pump SCOP figure of 3.5 considered "good"?',
     options: [
-      'It\'s never good — heat pumps need SCOP 6+ to be worth fitting.',
+      "Roughly 60-100 GBP per AFDD-RCBO device times 10 circuits = 600-1000 GBP additional cost over standard RCBO-only protection. Labour is similar (each AFDD-RCBO replaces an RCBO, same install effort). Total upgrade premium for AFDD-protected CU vs RCBO-only typically 600-1200 GBP. Worth quoting on every domestic CU change as a \\\\\\\"premium fire-protection option\\\\\\\" — many customers will pay the premium when the value is explained.",
       "SCOP 3.5 is solid for a UK domestic ASHP install — it means each kWh of electricity delivers 3.5 kWh of heat. On a UK grid carbon intensity of ~200 gCO₂/kWh, that's roughly 57 gCO₂ per kWh of heat — about 3.7× cleaner than burning gas (which emits ~210 gCO₂ per useful kWh). Top-end UK ASHP installs reach SCOP 3.8-4.2; GSHP can reach SCOP 4.5-5.0+. SCOP under 2.8 suggests something is wrong (oversized unit, undersized emitters, poorly insulated property, high flow temperature).",
-      'SCOP doesn\'t matter — only COP.',
-      'Anything under 5 is a failure.',
+      "Construction (Design and Management) Regulations 2015 (CDM 2015), Statutory Instrument 2015/51. CDM 2015 covers ALL construction work, with extra duties triggered when the project is 'notifiable' (longer than 30 working days with more than 20 workers simultaneously, or exceeding 500 person-days). It sets duties for clients, principal designers, principal contractors, contractors and workers — including the apprentice's duty under Reg 8 to co-operate, take reasonable care and report defects.",
+      "Refuse the unsafe instruction and raise the concern with the supervisor or higher. HASAWA s.7 puts the personal duty on the apprentice — a direct order from a senior is not a defence to a s.7 prosecution. The Employment Rights Act 1996 s.44 also gives the apprentice statutory protection from victimisation for raising H&S concerns. Document the refusal and the reason in writing (text, email, app note) at the time.",
     ],
     correctAnswer: 1,
     explanation:
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       'What\'s the F-Gas certification framework and where does it apply?',
     options: [
-      'It\'s an EU-only rule — gone after Brexit.',
+      "The training-provider tutor first — they have responsibility for the quality of the apprentice's training experience and the authority to intervene with the employer. The apprenticeship agreement is a tripartite document (apprentice, employer, training provider) and the training provider can hold the employer to account on training delivery. If that doesn't resolve it, the apprentice can raise a formal grievance with the employer under the ACAS Code, escalate to ACAS conciliation, and ultimately to an employment tribunal.",
+      "A published document that confirms the supplier commitment to achieving net-zero by 2050, sets out the current annual emissions broken down by scope (with scope 3 covering at least the categories identified in the PPN 06/21 guidance), describes the environmental management measures in place, and is signed off by a director of the supplier organisation. The CRP must be published on the supplier website, updated at least annually, and provided as part of any in-scope tender submission. The format follows a standard template provided in the PPN 06/21 guidance.",
       "F-Gas Regulations (assimilated EU Regulation 517/2014, retained in UK law post-Brexit, with some divergence) require any work on systems containing fluorinated greenhouse gases (the refrigerants used in heat pumps and air conditioning) to be done by F-Gas-certified personnel. Connecting refrigerant pipework, charging, recovering refrigerant, leak testing — all require certification. The Environment Agency enforces in England; equivalents in the devolved nations. Working without certification is a criminal offence and invalidates manufacturer warranties.",
-      'It only applies to large commercial systems.',
-      'It only applies to ammonia systems.',
+      "Research suggests neurodivergence — dyslexia, ADHD, and autism — may be more common in trade roles than the general population. Some studies suggest dyslexia at materially higher rates in trade and creative industries (the visual-spatial reasoning associated with dyslexia is often a strength in hands-on work). ADHD and autism prevalence in the trade is also frequently reported as elevated. The Equality Act 2010 reasonable-adjustments duty (s.20) applies where the condition has a substantial and long-term effect, and Sub 5.2 covers the practical adjustments in detail.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "F-Gas applies to almost all common heat pump refrigerants (R32, R410A, R134a — all fluorinated). Newer natural-refrigerant heat pumps (R290 propane) sit outside F-Gas but bring their own competence requirements (BS EN 378, COSHH, gas-installer-style competencies). The trade-boundary on a heat-pump install is unambiguous: F-Gas certified for refrigerant; electrician for the electrical supply and controls; plumber for the wet system; MCS-certified designer signs off the installation.",
   },
@@ -173,12 +173,12 @@ const quizQuestions = [
     question:
       'Why does the outdoor unit of an ASHP sometimes need bonding to the MET?',
     options: [
-      'Just a cosmetic preference.',
+      "Three-step BS 7671 643.2.2 test. (1) Measure end-to-end resistance of L (r1), N (rn), CPC (r2) — disconnect at the DB. (2) Cross-connect L1 of one leg to N2 of the other leg, and N1 of one leg to L2 of the other leg, at the DB. (3) Measure resistance L–N at every socket on the ring — readings should all be within 0.05 Ω of each other (the geometric average of the ring) for a healthy ring. A socket showing wildly different reading is on a spur or the ring is broken at that point. The test physically confirms the ring topology, not just continuity.",
+      "Unwanted conduct related to a relevant protected characteristic (age, race, sex, gender reassignment, religion or belief, sexual orientation, disability, marriage and civil partnership, pregnancy and maternity) that has the purpose or effect of violating the person's dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment for them. Section 26 of the Act.",
+      "Advanced cultural empathy: understanding that safety communication styles must be adapted to cultural context. In high power-distance cultures, a peer raising concerns directly may be uncomfortable. In indirect communication cultures, blunt safety warnings may cause face-loss. The electrician must find a culturally appropriate way to communicate urgency without causing shame, possibly involving the site supervisor or using visual demonstration rather than direct verbal confrontation",
       "If the outdoor unit's metal chassis is in contact with the building structure or an extraneous-conductive part (e.g. a metal mounting bracket on a building's exposed steelwork), or if the unit forms part of an exposed-conductive-part of the electrical installation that requires equipotential bonding under BS 7671 Section 411 / 415, then bonding to the MET is required. The manufacturer's instructions usually state the bonding requirements explicitly. Don't bond unnecessarily but don't omit a needed bond.",
-      'Always bond — no exceptions.',
-      'Never bond — outdoor units are non-conductive.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Bonding decisions are application-specific. The general rule (Section 411.3.1.2 main bonding, Section 415.2 supplementary bonding) applies as it would for any extraneous-conductive part. An ASHP unit on an insulating mounting on a brick wall typically does not need a bond; the same unit on a steel-clad building's exterior may need one. The manufacturer's instructions plus the BS 7671 bonding logic decide.",
   },
@@ -187,12 +187,12 @@ const quizQuestions = [
     question:
       'A customer asks "can I just fit one of these myself?". What\'s the responsible answer?',
     options: [
-      'Yes — it\'s only plumbing and electrics.',
       "No, for several reasons. The refrigerant work requires F-Gas certification (criminal offence to do without). The Building Regulations Part L compliance pathway requires installation by an MCS-certified installer for the customer to claim Smart Export Guarantee or similar incentives. The Boiler Upgrade Scheme grant requires MCS sign-off. Manufacturer warranties typically require certified installation. The MCS install pack includes heat-loss calc, emitter sizing, SCOP estimate, electrical schedule, commissioning records — all required for the system to perform as designed. DIY heat-pump install is unsafe and uneconomic.",
-      'Yes, if they take a YouTube course first.',
-      'Only on Sundays.',
+      "SECR is a statutory disclosure regime introduced in 2019 under the Companies (Directors Report) and Limited Liability Partnerships (Energy and Carbon Report) Regulations 2018. It requires large UK companies (typically meeting two of: turnover above 36 million pounds, balance sheet above 18 million pounds, or above 250 employees) to disclose their UK energy use and associated greenhouse gas emissions in their annual report. The disclosure covers scope 1, scope 2 and a defined subset of scope 3 (business travel in employee-owned vehicles), along with intensity metrics and a narrative on energy efficiency actions taken.",
+      "The full life cycle is broken into modules: A1-A3 product stage (raw material supply, transport to factory, manufacturing); A4-A5 construction stage (transport to site, installation); B1-B7 use stage (use, maintenance, repair, replacement, refurbishment, operational energy and water use); C1-C4 end-of-life stage (deconstruction, transport, waste processing, disposal); and D benefits and loads beyond the system boundary (recycling and recovery beyond end of life). Different EPDs cover different module sets — A1-A3 cradle-to-gate is the most common minimum; A1-C4 plus D is the most complete cradle-to-grave with recycling credits.",
+      "Stop and verify before testing. Unusual supply arrangements suggest either (a) the property is genuinely TT (rural, older, or specifically designed) which may need different fault-diagnosis approach, OR (b) the customer's installation isn't what you expected from the booking (e.g. an older commercial site with three-phase supply you weren't briefed on). Either way, the test plan needs to match the actual supply. Escalate to supervisor if unsure; update the RAMS to reflect the actual installation; brief the customer if the work scope changes. Never just push ahead with the test plan you arrived with if it doesn't match what you find.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Heat pumps look like 'plumb a box, plug it in' but the design and certification chain is what makes them work. Without MCS sign-off the customer loses access to incentives, BUS grants and a properly designed system. Without F-Gas certification any refrigerant work is a criminal offence. The honest customer-facing answer is 'this is a multi-trade certified install — DIY isn't a viable route'.",
   },

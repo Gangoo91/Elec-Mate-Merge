@@ -14,8 +14,13 @@ const quickCheckQuestions = [
     id: 'slip-calculation',
     question:
       'A 4-pole induction motor operates on a 50Hz supply. The synchronous speed is 1,500 rev/min and the rotor runs at 1,440 rev/min. What is the slip?',
-    options: ['2%', '4%', '6%', '10%'],
-    correctIndex: 1,
+    options: [
+      '2%',
+      '10%',
+      '6%',
+      '4%',
+    ],
+    correctIndex: 3,
     explanation:
       'Slip = (Ns - Nr) / Ns x 100 = (1500 - 1440) / 1500 x 100 = 60/1500 x 100 = 4%. Typical full-load slip for a standard induction motor is between 3% and 6%. At no-load, slip is very small (less than 1%).',
   },
@@ -24,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'What is the PRIMARY advantage of a squirrel cage induction motor over a wound rotor motor?',
     options: [
-      'Higher starting torque',
-      'Variable speed capability',
+      'The effect of harmonic distortion on total power factor',
       'Robust construction, low maintenance, no brushes or slip rings',
-      'Better power factor at all loads',
+      'Class EN 131 Professional — suitable for trade use',
+      'Length of straight pipe giving the same pressure drop',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The squirrel cage rotor has no brushes, slip rings, or external rotor connections — it is essentially a set of aluminium or copper bars short-circuited by end rings. This makes it extremely robust, cheap to manufacture, and requires minimal maintenance. Over 90% of industrial motors are squirrel cage type.',
   },
@@ -38,10 +43,10 @@ const quickCheckQuestions = [
     question:
       'Which of the following is an early indication of bearing failure in an induction motor?',
     options: [
-      'Reduced supply voltage',
+      'Limit current and provide starting voltage',
       'Increased vibration levels and elevated bearing temperature',
-      'Tripping on earth fault',
-      'Reduced motor speed',
+      'You personally, the supervisor and the company — all three',
+      'Fire alarm testing begins unexpectedly during your installation work',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +59,10 @@ const quizQuestions = [
     id: 1,
     question: 'What creates the rotating magnetic field in a three-phase induction motor?',
     options: [
-      'The rotor windings energised through slip rings',
+      'Only one cable run is needed — both emitter and receiver are in the same housing',
       'Three-phase currents in the stator windings, displaced 120 degrees apart',
-      'A DC excitation current applied to the stator',
-      'Permanent magnets on the rotor',
+      'Excessive internal temperature due to inadequate thermal management',
+      'Category C2 - restricted distribution (second environment)',
     ],
     correctAnswer: 1,
     explanation:
@@ -66,8 +71,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'The synchronous speed of a 2-pole motor on a 50Hz supply is:',
-    options: ['1,500 rev/min', '3,000 rev/min', '750 rev/min', '1,000 rev/min'],
-    correctAnswer: 1,
+    options: [
+      '750 rev/min',
+      '1,500 rev/min',
+      '3,000 rev/min',
+      '1,000 rev/min',
+    ],
+    correctAnswer: 2,
     explanation:
       'Synchronous speed Ns = (120 x f) / p = (120 x 50) / 2 = 3,000 rev/min. A 2-pole motor has the highest synchronous speed. Adding more poles reduces the speed: 4-pole = 1,500, 6-pole = 1,000, 8-pole = 750 rev/min.',
   },
@@ -75,12 +85,12 @@ const quizQuestions = [
     id: 3,
     question: 'Why can an induction motor rotor NEVER reach synchronous speed?',
     options: [
-      'The supply voltage is too low',
-      'Friction prevents it from reaching full speed',
+      'Document your observation and suggestion, discuss it with your supervisor or team, and follow your organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s process for suggesting improvements',
+      'Because they generate extreme heat, sparks, and molten metal that can travel significant distances and ignite combustible materials',
+      'H&S basics, fire procedure, first aid, reporting routes, key policies (D&A, equality, IT, social media), site rules and named manager',
       'If the rotor reached synchronous speed, there would be no relative motion between rotor and stator field, so no EMF would be induced and no torque produced',
-      'The motor protection limits the speed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The induction motor operates on the principle of relative motion between the rotating stator field and the rotor. If the rotor reached synchronous speed, there would be no relative motion, no change of flux through the rotor bars, no induced EMF, no rotor current, and therefore no torque. The rotor must always 'slip' behind the field.",
   },
@@ -88,12 +98,12 @@ const quizQuestions = [
     id: 4,
     question: 'On a motor nameplate, the designation IP55 refers to:',
     options: [
-      "The motor's power rating",
-      "The motor's insulation class",
       'The degree of protection against solid objects (5) and water (5)',
-      "The motor's efficiency class",
+      'Details of the incident, actions taken, injuries, and lessons learned',
+      'Outdoor runs subject to wind/thermal expansion',
+      'Failed internal electronics or connection issues',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "IP (Ingress Protection) is defined by BS EN 60529. The first digit (5) means 'dust protected' and the second digit (5) means 'protected against water jets from any direction'. IP55 is a common rating for motors used in industrial and outdoor environments.",
   },
@@ -102,10 +112,10 @@ const quizQuestions = [
     question:
       'A single-phase capacitor-start motor uses a capacitor connected in series with the start winding to:',
     options: [
-      'Reduce the supply voltage during starting',
+      'To disconnect the start winding and capacitor once the motor reaches approximately 75% speed',
       'Create a phase displacement between the start and run windings, simulating a two-phase supply to produce starting torque',
-      'Improve the power factor at full load',
-      'Limit the starting current to safe levels',
+      'It has windings on the rotor connected to external resistance via slip rings and brushes',
+      'A blown fuse or open conductor on one phase, causing the motor to run on two phases with increased current and overheating',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,8 +124,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the typical full-load slip for a standard squirrel cage induction motor?',
-    options: ['0% — it runs at synchronous speed', '3% to 6%', '15% to 20%', '50%'],
-    correctAnswer: 1,
+    options: [
+      '0% — it runs at synchronous speed',
+      '15% to 20%',
+      '3% to 6%',
+      '50%',
+    ],
+    correctAnswer: 2,
     explanation:
       'Typical full-load slip for a standard squirrel cage motor is 3% to 6%. High-efficiency motors tend to have lower slip (closer to 3%). High-slip motors (used for intermittent loads like cranes) may have slip up to 10-15%.',
   },
@@ -123,12 +138,12 @@ const quizQuestions = [
     id: 7,
     question: 'A wound rotor induction motor differs from a squirrel cage motor because:',
     options: [
-      'It has more stator poles',
+      'Increased vibration, premature bearing failure, coupling wear, and increased energy consumption',
+      'The degree of protection against solid objects (5) and water (5)',
+      'To disconnect the start winding and capacitor once the motor reaches approximately 75% speed',
       'It has windings on the rotor connected to external resistance via slip rings and brushes',
-      'It uses permanent magnets on the rotor',
-      'It can only operate on single-phase supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The wound rotor has three-phase windings connected to external resistors through slip rings and brushes. This allows control of starting current and torque by varying the external resistance. As the motor accelerates, resistance is progressively reduced. Wound rotor motors are used for high-inertia loads requiring controlled starting.',
   },
@@ -136,12 +151,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which motor insulation class has a maximum operating temperature of 155 degrees C?',
     options: [
-      'Class A (105 degrees C)',
-      'Class B (130 degrees C)',
       'Class F (155 degrees C)',
       'Class H (180 degrees C)',
+      'Class A (105 degrees C)',
+      'Class B (130 degrees C)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Insulation classes define the maximum safe operating temperature: Class A = 105 degrees C, Class B = 130 degrees C, Class F = 155 degrees C, Class H = 180 degrees C. Most modern industrial motors use Class F insulation. Exceeding the temperature rating accelerates insulation degradation — the '10 degree rule' states that insulation life halves for every 10 degrees C above the rated temperature.",
   },
@@ -149,12 +164,12 @@ const quizQuestions = [
     id: 9,
     question: "What causes 'single phasing' in a three-phase motor, and what are its effects?",
     options: [
+      'To disconnect the start winding and capacitor once the motor reaches approximately 75% speed',
       'A blown fuse or open conductor on one phase, causing the motor to run on two phases with increased current and overheating',
-      'The motor running at synchronous speed',
-      'Excessive supply voltage on all three phases',
-      'A short circuit in the motor starter',
+      'Create a phase displacement between the start and run windings, simulating a two-phase supply to produce starting torque',
+      'Increased vibration, premature bearing failure, coupling wear, and increased energy consumption',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Single phasing occurs when one phase is lost (e.g., blown fuse, broken conductor, loose connection). The motor may continue to run but draws increased current on the remaining two phases, causing rapid overheating. A motor that is stationary will not start on single phase. This is why three-phase motors should be protected by overload relays on all three phases.',
   },
@@ -163,12 +178,12 @@ const quizQuestions = [
     question:
       'When performing an insulation resistance test on a motor, which tests should be carried out?',
     options: [
-      'Phase to earth only',
+      'By visually checking core colours at terminations',
+      'Common wiring faults like reversed polarity, missing earth',
       'Phase to earth, and phase to phase on all combinations',
-      'Phase to neutral only',
-      'Only a continuity test',
+      'The employer, with duties on employees to cooperate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A full motor IR test should include phase-to-earth (each phase to the motor frame) and phase-to-phase (between each pair of windings). This detects both earth faults and inter-winding insulation breakdown. Minimum acceptable value for a motor is typically 1 megohm per kV of rated voltage plus 1 megohm, though manufacturer's values should always be used.",
   },
@@ -177,12 +192,12 @@ const quizQuestions = [
     question:
       'What is the purpose of the centrifugal switch in a single-phase capacitor-start motor?',
     options: [
-      'To reverse the motor direction',
+      'They convert different protocol \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'languages\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' so systems can understand each other',
+      'Installing a new electrical distribution board in an existing factory',
+      'The inability to stand upright forces stooped or kneeling postures, dramatically increasing spinal loading',
       'To disconnect the start winding and capacitor once the motor reaches approximately 75% speed',
-      'To limit the running current',
-      'To protect against overload',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The centrifugal switch is mounted on the motor shaft and opens at approximately 75% of full speed, disconnecting the start winding and its capacitor from the circuit. The motor then continues to run on the main winding alone. A faulty centrifugal switch is a common failure — if it fails to open, the start winding overheats; if it fails to close, the motor will not restart.',
   },
@@ -190,12 +205,12 @@ const quizQuestions = [
     id: 12,
     question: 'Shaft misalignment between a motor and its driven load causes:',
     options: [
-      'Reduced supply voltage',
       'Increased vibration, premature bearing failure, coupling wear, and increased energy consumption',
-      'The motor to run at synchronous speed',
-      'Tripping on earth fault',
+      'To disconnect the start winding and capacitor once the motor reaches approximately 75% speed',
+      'Create a phase displacement between the start and run windings, simulating a two-phase supply to produce starting torque',
+      'It has windings on the rotor connected to external resistance via slip rings and brushes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Misalignment (angular, parallel, or axial) creates cyclic forces on the bearings and coupling, leading to excessive vibration, premature bearing and seal failure, coupling wear, and wasted energy. Laser alignment tools should be used during installation and after any maintenance that disturbs the alignment. Typical alignment tolerance is 0.05mm.',
   },

@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'inductive-principle',
     question: 'What is the operating principle of an inductive proximity sensor?',
     options: [
-      'It detects changes in light intensity reflected from a target',
+      'MHSWR 1999 Reg 19 — additional risk assessment for young persons, considering their inexperience and immaturity',
       'It generates a high-frequency electromagnetic field and detects the eddy current losses when a metallic target enters the field',
-      'It measures the capacitance between two plates separated by the target material',
-      'It uses ultrasonic sound waves to measure distance to the target',
+      'To provide early warning of hazardous gas levels and trigger alarms before dangerous concentrations are reached',
+      'LED drivers can draw high in-rush current at switch-on, potentially tripping MCBs or causing contact welding in switches',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'Which sensor type can detect non-metallic materials such as plastics, liquids and powders?',
     options: [
-      'Inductive proximity sensor',
-      'Magnetic reed switch',
-      'Capacitive proximity sensor',
       'Hall effect sensor',
+      'Inductive proximity sensor',
+      'Capacitive proximity sensor',
+      'Magnetic reed switch',
     ],
     correctIndex: 2,
     explanation:
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'npn-pnp-output',
     question: 'What is the difference between an NPN and PNP proximity sensor output?',
     options: [
-      'NPN sensors are more accurate than PNP sensors',
+      'A free software tool from the German IFA for calculating the achieved PL per ISO 13849-1',
+      'It uses the large quadriceps and gluteal muscles while reducing the moment arm on the lumbar spine',
       'NPN switches the load to the negative rail (sinking); PNP switches the load to the positive rail (sourcing)',
-      'NPN is used for AC circuits; PNP is used for DC circuits',
-      'There is no practical difference — the terms are interchangeable',
+      'The sender\\\\\\\\\\\\\\\'s email address has a slightly misspelt domain name (e.g. @edff-energy.co.uk instead of @edfenergy.com)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'NPN (sinking) sensors switch the load connection to the 0 V (negative) rail when activated — the load is connected between the sensor output and the positive supply. PNP (sourcing) sensors switch the load connection to the positive rail — the load is connected between the sensor output and the 0 V rail. PNP is more common in European and UK installations.',
   },
@@ -55,10 +55,10 @@ const quickCheckQuestions = [
     question:
       'In a through-beam photoelectric sensor arrangement, where are the emitter and receiver positioned?',
     options: [
-      'Both are housed in the same unit facing the target',
+      'A notice that immediately stops a dangerous work activity until the risk is adequately controlled',
       'The emitter and receiver face each other across the detection zone, and the target breaks the beam',
-      'The emitter is mounted above and the receiver below the target',
-      'They are both aimed at a reflector panel behind the target',
+      'Emergency contacts, site plans, hazard information, evacuation procedures',
+      'An RCBO combines overcurrent and earth fault protection in a single device, allowing individual circuit protection',
     ],
     correctIndex: 1,
     explanation:
@@ -70,8 +70,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'An inductive proximity sensor will reliably detect which of the following targets?',
-    options: ['A glass bottle', 'A cardboard box', 'A mild steel bracket', 'A polythene bag'],
-    correctAnswer: 2,
+    options: [
+      'A glass bottle',
+      'A mild steel bracket',
+      'A cardboard box',
+      'A polythene bag',
+    ],
+    correctAnswer: 1,
     explanation:
       'Inductive proximity sensors detect metallic targets only. They work by sensing eddy current losses in conductive materials. Mild steel (ferrous metal) provides the best detection range. Non-metallic materials such as glass, cardboard and plastic cannot be detected by inductive sensors.',
   },
@@ -79,7 +84,12 @@ const quizQuestions = [
     id: 2,
     question:
       'The rated sensing distance (Sn) of an inductive sensor is specified for which target material?',
-    options: ['Copper', 'Aluminium', 'Mild steel (Fe 360)', 'Stainless steel'],
+    options: [
+      'Stainless steel',
+      'Copper',
+      'Mild steel (Fe 360)',
+      'Aluminium',
+    ],
     correctAnswer: 2,
     explanation:
       'The rated sensing distance (Sn) is always specified for a standard target of mild steel (Fe 360) with defined dimensions (typically a square plate with side length equal to the sensor diameter or 3 times the sensing distance). For non-ferrous metals, a correction factor must be applied — typically 0.4 for copper and 0.3-0.5 for aluminium.',
@@ -89,12 +99,12 @@ const quizQuestions = [
     question:
       'A capacitive proximity sensor is installed to detect the level of a liquid inside a plastic tank. What does the sensor actually measure?',
     options: [
-      'The temperature of the liquid',
-      'The weight of the liquid pressing on the sensor face',
+      "Magnetic reed switch or Hall effect sensor detecting the piston's permanent magnet",
+      "The difference between the switch-on point and the switch-off point as the target approaches and then retreats",
+      "The environment contains dust, mist or steam that would block light",
       "The change in capacitance caused by the liquid's dielectric constant being higher than air",
-      'The electrical conductivity of the liquid',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The capacitive sensor measures the change in capacitance at its sensing face. The liquid has a dielectric constant significantly higher than air (water is approximately 80 versus 1 for air), which increases the capacitance and triggers the sensor. Sensitivity adjustment is critical to prevent false triggering through the tank wall.',
   },
@@ -104,9 +114,9 @@ const quizQuestions = [
       'A PNP (sourcing) proximity sensor is connected to a PLC digital input. Which statement is correct?',
     options: [
       'The PLC input must be configured for sinking (NPN-compatible) to work with a PNP sensor',
-      'The PLC input must be configured for sourcing to work with a PNP sensor',
-      'PNP sensors cannot be connected to PLCs',
-      'The PLC configuration does not matter',
+      'The change in capacitance caused by the liquid\\\\\\\\\\\\\\\'s dielectric constant being higher than air',
+      'Whether the sensor face is level with the mounting surface or protrudes from it',
+      'Position, speed and/or direction information by generating digital pulses proportional to shaft rotation',
     ],
     correctAnswer: 0,
     explanation:
@@ -116,12 +126,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which photoelectric sensing mode offers the longest detection range?',
     options: [
-      'Diffuse (direct reflection)',
       'Retro-reflective',
       'Through-beam (opposed)',
       'Background suppression',
+      'Diffuse (direct reflection)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Through-beam (opposed) mode provides the longest range — up to 60 m for some models. The emitter and receiver are separate units facing each other, giving a strong, focused signal. Retro-reflective typically reaches 10-15 m, whilst diffuse sensors are generally limited to 0.1-2 m depending on the target surface.',
   },
@@ -129,10 +139,10 @@ const quizQuestions = [
     id: 6,
     question: 'An ultrasonic proximity sensor is preferred over an optical sensor when:',
     options: [
-      'The detection range exceeds 50 m',
-      'The target is transparent glass or clear liquid',
+      'Only one cable run is needed — both emitter and receiver are in the same housing',
+      'Verify the supply voltage at the sensor terminals and check the LED indicator status',
       'The environment contains dust, mist or steam that would block light',
-      'Maximum switching speed is required',
+      'Magnetic reed switch or Hall effect sensor detecting the piston\\\\\\\\\\\\\\\'s permanent magnet',
     ],
     correctAnswer: 2,
     explanation:
@@ -143,12 +153,12 @@ const quizQuestions = [
     question:
       'A maintenance technician finds that an inductive proximity sensor is not detecting a target that is within the rated sensing distance. The first check should be:',
     options: [
-      'Replace the sensor immediately',
+      'Magnetic reed switch or Hall effect sensor detecting the piston\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s permanent magnet',
+      'The change in capacitance caused by the liquid\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s dielectric constant being higher than air',
+      'Only one cable run is needed — both emitter and receiver are in the same housing',
       'Verify the supply voltage at the sensor terminals and check the LED indicator status',
-      'Increase the sensitivity adjustment',
-      'Change the target material',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The first step in any sensor fault-finding is to verify that the sensor has the correct supply voltage at its terminals (typically 10-30 V DC) and to observe the built-in LED indicator. If the LED does not illuminate at all, the issue is likely a wiring or supply fault. If the LED illuminates but does not change state with the target, the sensor may be faulty or the target may be unsuitable.',
   },
@@ -156,12 +166,12 @@ const quizQuestions = [
     id: 8,
     question: "The 'hysteresis' specification of a proximity sensor describes:",
     options: [
-      'The maximum switching frequency of the sensor',
       'The difference between the switch-on point and the switch-off point as the target approaches and then retreats',
-      'The delay between the target entering the field and the output changing state',
-      'The temperature range over which the sensor operates',
+      'Position, speed and/or direction information by generating digital pulses proportional to shaft rotation',
+      'Only one cable run is needed — both emitter and receiver are in the same housing',
+      'Verify the supply voltage at the sensor terminals and check the LED indicator status',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Hysteresis is the difference between the operate point (target approaching) and the release point (target retreating). It prevents rapid on-off chatter when the target is near the switching threshold. Typical hysteresis values are 5-20 % of the sensing distance. Without hysteresis, output oscillation could damage relay contacts or cause erratic PLC behaviour.',
   },
@@ -170,10 +180,10 @@ const quizQuestions = [
     question:
       'A retro-reflective photoelectric sensor uses a reflector on the opposite side of the detection zone. The advantage over a through-beam arrangement is:',
     options: [
-      'Longer detection range',
+      'Whether the sensor face is level with the mounting surface or protrudes from it',
       'Only one cable run is needed — both emitter and receiver are in the same housing',
-      'Better detection of transparent objects',
-      'Higher switching frequency',
+      'The change in capacitance caused by the liquid\\\\\\\\\\\\\\\'s dielectric constant being higher than air',
+      'Verify the supply voltage at the sensor terminals and check the LED indicator status',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,10 +193,10 @@ const quizQuestions = [
     id: 10,
     question: 'An encoder mounted on a motor shaft provides:',
     options: [
-      'The temperature of the motor windings',
-      'The vibration frequency of the motor bearings',
+      'The PLC input must be configured for sinking (NPN-compatible) to work with a PNP sensor',
+      'Magnetic reed switch or Hall effect sensor detecting the piston\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s permanent magnet',
       'Position, speed and/or direction information by generating digital pulses proportional to shaft rotation',
-      'The torque output of the motor',
+      'The difference between the switch-on point and the switch-off point as the target approaches and then retreats',
     ],
     correctAnswer: 2,
     explanation:
@@ -196,12 +206,12 @@ const quizQuestions = [
     id: 11,
     question: "The 'flush' and 'non-flush' mounting styles of an inductive sensor refer to:",
     options: [
+      'Magnetic reed switch or Hall effect sensor detecting the piston\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s permanent magnet',
+      'The environment contains dust, mist or steam that would block light',
+      'The PLC input must be configured for sinking (NPN-compatible) to work with a PNP sensor',
       'Whether the sensor face is level with the mounting surface or protrudes from it',
-      'Whether the sensor has a cable or connector output',
-      'Whether the sensor is rated for washdown environments',
-      'The colour of the sensor housing',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'A flush-mounted sensor can be installed with its face level with the surrounding metal surface because it has a focused electromagnetic field. A non-flush sensor must protrude from the mounting surface with a free zone around the face. Non-flush sensors offer a longer sensing distance for a given diameter, but require more space. Flush mounting provides better mechanical protection.',
   },
@@ -210,12 +220,12 @@ const quizQuestions = [
     question:
       'Which proximity sensor technology would be most suitable for detecting the position of a pneumatic cylinder piston through a non-magnetic aluminium cylinder barrel?',
     options: [
-      'Standard inductive proximity sensor',
       "Magnetic reed switch or Hall effect sensor detecting the piston's permanent magnet",
-      'Capacitive proximity sensor',
-      'Ultrasonic proximity sensor',
+      "The PLC input must be configured for sinking (NPN-compatible) to work with a PNP sensor",
+      "Verify the supply voltage at the sensor terminals and check the LED indicator status",
+      "The change in capacitance caused by the liquid's dielectric constant being higher than air",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Pneumatic cylinders commonly have a permanent magnet embedded in the piston. Reed switches or Hall effect sensors are mounted externally on the cylinder barrel and detect the magnetic field through the non-magnetic aluminium wall. This is a clean, reliable and industry-standard method for cylinder position sensing.',
   },

@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'ghg-protocol',
     question: 'What is the primary purpose of the GHG Protocol?',
     options: [
-      'To regulate electricity prices',
+      'To set clear expectations, goals, boundaries, and review dates for the mentoring relationship',
+      'Comprehensive testing schedules and digital submission capability',
       'To provide a standardised framework for measuring and reporting greenhouse gas emissions',
-      'To design HVAC systems',
-      'To calculate electrical load requirements',
+      'Because the kilogram is the unit of mass; weight is a force, and force has its own unit',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The GHG Protocol provides a standardised framework for organisations to measure, manage, and report their greenhouse gas emissions. It is the most widely used international accounting standard for carbon emissions.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'scope-2-definition',
     question: 'Scope 2 emissions in the GHG Protocol refer to:',
     options: [
-      'Direct emissions from owned sources',
+      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013',
+      'Poor connections in protective conductor path',
       'Indirect emissions from purchased electricity, heat, and steam',
-      'All supply chain emissions',
-      'Emissions from employee commuting',
+      'Maintained in an efficient state, in efficient working order and in good repair',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Scope 2 covers indirect emissions from the generation of purchased electricity, steam, heating, and cooling consumed by the reporting organisation. For buildings, this is typically the largest emission source.',
   },
@@ -57,20 +57,25 @@ const quickCheckQuestions = [
     id: 'co2e-meaning',
     question: 'What does CO2e (carbon dioxide equivalent) represent?',
     options: [
-      'The actual mass of CO2 emitted',
       'A metric converting all GHGs to equivalent CO2 impact based on global warming potential',
-      'The cost of carbon offsets',
-      'Electricity consumption in kilowatt-hours',
+      'It allows appropriate response to the unexpected while maintaining focus on priorities',
+      'To evaluate risks by likelihood and impact to prioritise responses',
+      'It can move palletised loads of much greater weight with minimal effort',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'CO2e converts all greenhouse gases to their equivalent impact in terms of carbon dioxide, using their global warming potential (GWP). This allows different gases like methane and nitrous oxide to be compared on a common scale.',
   },
   {
     id: 'emission-factor-unit',
     question: 'What is the typical unit for UK grid electricity emission factors?',
-    options: ['kW/CO2', 'kgCO2e/kWh', 'tonnes/MW', 'CO2/year'],
-    correctIndex: 1,
+    options: [
+      'kW/CO2',
+      'CO2/year',
+      'tonnes/MW',
+      'kgCO2e/kWh',
+    ],
+    correctIndex: 3,
     explanation:
       'UK grid emission factors are expressed in kgCO2e/kWh (kilograms of carbon dioxide equivalent per kilowatt-hour). This allows direct calculation of emissions by multiplying energy consumption by the emission factor.',
   },
@@ -82,10 +87,10 @@ const quizQuestions = [
     question:
       'Which organisation publishes the most widely used greenhouse gas accounting standards?',
     options: [
-      'UK Government BEIS',
+      'Systems designed to fail in a safe condition',
       'World Resources Institute and WBCSD (GHG Protocol)',
-      'International Energy Agency',
-      'Carbon Trust',
+      'Only long enough to confirm operation (short duration)',
+      'Measure and check against the drawing',
     ],
     correctAnswer: 1,
     explanation:
@@ -95,8 +100,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A gas boiler in an office building produces direct combustion emissions. Which scope category applies?',
-    options: ['Scope 1', 'Scope 2', 'Scope 3', 'Scope 0'],
-    correctAnswer: 0,
+    options: [
+      'Scope 3',
+      'Scope 0',
+      'Scope 1',
+      'Scope 2',
+    ],
+    correctAnswer: 2,
     explanation:
       'Scope 1 covers direct emissions from sources owned or controlled by the organisation, including combustion of fuels in stationary equipment like boilers and furnaces.',
   },
@@ -105,12 +115,12 @@ const quizQuestions = [
     question:
       'An office building consumes 500,000 kWh of electricity annually. Using an emission factor of 0.207 kgCO2e/kWh, what are the Scope 2 emissions?',
     options: [
+      'Adapting to technical progress',
+      'Decreases UGR (better glare control)',
+      'Green and yellow bi-colour',
       '103,500 kgCO2e (103.5 tCO2e)',
-      '207,000 kgCO2e (207 tCO2e)',
-      '2,415,459 kgCO2e',
-      '50,000 kgCO2e',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Emissions = Consumption × Emission Factor = 500,000 kWh × 0.207 kgCO2e/kWh = 103,500 kgCO2e or 103.5 tonnes CO2e.',
   },
@@ -118,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following is NOT a Scope 3 emission category?',
     options: [
-      'Business travel by employees',
-      'Purchased goods and services',
       'Electricity consumed in owned buildings',
+      'Purchased goods and services',
+      'Business travel by employees',
       'Waste generated in operations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Electricity consumed in owned buildings is a Scope 2 emission (indirect from purchased energy). Scope 3 covers all other indirect emissions in the value chain including business travel, purchased goods, and waste.',
   },
@@ -131,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'The UK grid carbon intensity has been decreasing primarily due to:',
     options: [
-      'Increased coal generation',
+      'Large UK companies and LLPs meeting size thresholds',
       'Growth in renewable energy and phase-out of coal',
-      'Reduced electricity demand',
-      'Nuclear plant closures',
+      'Electricity consumed in owned buildings',
+      'Grid average emission factors for the region',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,8 +153,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the global warming potential (GWP) of methane (CH4) over 100 years?',
-    options: ['1', 'Approximately 28', 'Approximately 265', 'Approximately 1,000'],
-    correctAnswer: 1,
+    options: [
+      '1',
+      'Approximately 265',
+      'Approximately 28',
+      'Approximately 1,000',
+    ],
+    correctAnswer: 2,
     explanation:
       'Methane has a GWP of approximately 28 over 100 years, meaning 1 tonne of methane has the same warming effect as 28 tonnes of CO2. This is why methane leaks from gas systems are significant.',
   },
@@ -152,8 +167,13 @@ const quizQuestions = [
     id: 7,
     question:
       'For a building with both gas heating and electric cooling, the gas consumption would be reported under:',
-    options: ['Scope 1 only', 'Scope 2 only', 'Scope 3 only', 'Both Scope 1 and Scope 2'],
-    correctAnswer: 0,
+    options: [
+      'Both Scope 1 and Scope 2',
+      'Scope 2 only',
+      'Scope 3 only',
+      'Scope 1 only',
+    ],
+    correctAnswer: 3,
     explanation:
       'Gas combustion in on-site boilers is a direct emission (Scope 1). The electricity for cooling would be Scope 2. Gas consumption is always Scope 1 when burned on-site, regardless of the end use.',
   },
@@ -161,20 +181,25 @@ const quizQuestions = [
     id: 8,
     question: "The 'location-based' method for Scope 2 accounting uses:",
     options: [
-      'Supplier-specific emission factors',
       'Grid average emission factors for the region',
       'Renewable energy certificates',
+      'Supplier-specific emission factors',
       'Actual measured emissions at the power station',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Location-based Scope 2 accounting uses grid average emission factors for the geographic location where electricity is consumed, reflecting the average emissions intensity of the local grid.',
   },
   {
     id: 9,
     question: 'Which reporting framework requires disclosure of climate-related financial risks?',
-    options: ['GHG Protocol', 'SECR', 'TCFD', 'ISO 14064'],
-    correctAnswer: 2,
+    options: [
+      'GHG Protocol',
+      'TCFD',
+      'SECR',
+      'ISO 14064',
+    ],
+    correctAnswer: 1,
     explanation:
       'The Task Force on Climate-related Financial Disclosures (TCFD) framework requires organisations to disclose climate-related risks and opportunities, including governance, strategy, risk management, and metrics.',
   },
@@ -182,12 +207,12 @@ const quizQuestions = [
     id: 10,
     question: "A building's embodied carbon refers to emissions from:",
     options: [
-      'Day-to-day energy consumption',
+      'Scheduled updates with testing and rollback capability',
+      'Lights energised continuously, operating from normal and emergency supplies',
       'Manufacturing, transport, and installation of building materials and systems',
-      'Employee commuting',
-      'Waste disposal only',
+      'Fire panel relay outputs were wired to wrong BMS input terminals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Embodied carbon includes all emissions associated with manufacturing, transporting, and installing building materials and systems. For electrical installations, this includes cables, switchgear, and equipment.',
   },
@@ -195,12 +220,12 @@ const quizQuestions = [
     id: 11,
     question: 'Under SECR, which organisations must report energy and carbon information?',
     options: [
-      'All UK businesses',
+      'Electricity consumed in owned buildings',
+      'Grid average emission factors for the region',
+      'Growth in renewable energy and phase-out of coal',
       'Large UK companies and LLPs meeting size thresholds',
-      'Only public sector organisations',
-      'Only energy-intensive industries',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Streamlined Energy and Carbon Reporting (SECR) applies to large UK companies and LLPs meeting certain size thresholds (turnover, employees, or balance sheet). It requires disclosure of energy use and emissions in annual reports.',
   },
@@ -209,12 +234,12 @@ const quizQuestions = [
     question:
       'If the UK grid emission factor is 0.207 kgCO2e/kWh and a client switches to a 100% renewable tariff with REGOs, their Scope 2 market-based emissions become:',
     options: [
-      'The same (0.207 kgCO2e/kWh)',
       'Zero or near-zero',
-      'Double the grid factor',
       'Half the grid factor',
+      'The same (0.207 kgCO2e/kWh)',
+      'Double the grid factor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Under market-based Scope 2 accounting, electricity backed by Renewable Energy Guarantees of Origin (REGOs) can be reported as zero or near-zero emissions, as the renewable attributes are contractually claimed.',
   },

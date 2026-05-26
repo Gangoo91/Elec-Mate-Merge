@@ -44,12 +44,12 @@ const checks = [
     question:
       "A customer has an existing 4 kWp PV array fitted in 2018 with a string inverter. They want to add battery storage. Which topology is the installer most likely to specify and why?",
     options: [
-      "DC-coupled — replace the existing string inverter with a hybrid inverter and tie the battery to its DC bus.",
+      "Reg 543.3.201 — protective conductors up to and including 6 mm² shall be protected throughout by a covering at least equivalent to a single-core non-sheathed cable of voltage rating 450/750 V. The same insulation requirement extends to bonding conductors. Bare strap is only allowed where it forms part of a metallic conduit/enclosure used as the protective conductor itself.",
+      "A consolidated Act of Parliament that brings together earlier UK anti-discrimination legislation (Race Relations Act, Sex Discrimination Act, Disability Discrimination Act and others) into a single framework. It defines nine protected characteristics, prohibits direct and indirect discrimination, harassment and victimisation, and places a duty on employers (and others) to make reasonable adjustments for disabled people. Enforced through Employment Tribunals (workplace) and County Courts (services).",
+      "Cable cutters (or T+E shears) to crop the tail square; a stripper sized for 6/10 mm² to remove the green/yellow PVC; long-nose pliers to form the conductor into the clamp aperture OR a ratchet crimper to fit a bootlace ferrule (red for 10 mm², blue for 6 mm²) before insertion. Squared cut + clean strip + correct termination = 526.1 compliant.",
       "AC-coupled — leave the existing PV inverter in place and add a separate battery inverter on the AC side. The PV continues to feed the consumer unit at AC; the battery inverter charges from surplus AC and discharges back to AC when the property load exceeds PV output. Less efficient at one round-trip than DC-coupled (extra DC-AC-DC conversion), but lets the customer keep the existing PV install untouched and avoids a full re-commissioning of the PV system.",
-      "Off-grid — disconnect from the DNO and rely on PV plus battery alone.",
-      "Three-phase — convert the single-phase supply to three-phase first.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "AC-coupled retrofits dominate the UK retrofit market because they bolt onto an existing PV install without re-touching the PV side. DC-coupled is more efficient but requires a hybrid inverter to be specified at PV install time (or replacing the existing PV inverter, which is rarely cost-effective). The G98/G99 notification is reissued for the combined system because the export profile changes when batteries are added.",
   },
@@ -58,10 +58,10 @@ const checks = [
     question:
       "A customer asks why most modern domestic battery systems use LFP (lithium iron phosphate) cells rather than NMC (nickel manganese cobalt). What is the honest electrical-safety answer?",
     options: [
-      "LFP cells are cheaper to manufacture so installers fit them to maximise margin.",
+      "Stop, raise it in writing (text the supervisor or log it in the app). The RAMS specifies a podium for a reason — that is the documented control for the working-at-height risk on this task. Verbally swapping it out for a step ladder is an undocumented change to the safe system of work. Either the boxes get cleared and the podium gets used, or the RAMS gets formally amended and re-signed by everyone affected. WAHR 2005 Reg 6 puts the duty on the employer to use the most suitable equipment; verbally downgrading isn't a defence.",
       "LFP has a much higher thermal runaway threshold (around 270 degC vs around 150 degC for NMC) and a flatter, safer failure mode. In a fault scenario LFP releases far less energy and far less toxic gas. Energy density is lower (kWh per kg), so an LFP pack is physically larger than an NMC pack of equivalent capacity, but for a domestic wall-mounted unit space is rarely the binding constraint and the safety margin is worth the size penalty. UK insurers and the IET Code of Practice for Electrical Energy Storage Systems both lean strongly toward LFP for indoor domestic installations.",
-      "NMC has been banned by BS 7671.",
-      "LFP runs at higher voltages so works better with hybrid inverters.",
+      "Test instruments drift over time — components age, shock and vibration cause small errors. A drifted instrument produces wrong test results that fail BS 7671 Chapter 61 verification. Annual calibration to a UKAS-traceable standard (with a calibration certificate) is the standard requirement. NICEIC, NAPIT and ELECSA all check for in-date calibration certificates at scheme audit; an out-of-date instrument used to demonstrate compliance invalidates the certificate it was used to produce.",
+      "All batteries store DC. The difference is where the conversion happens. In DC-coupled, the PV array, the battery and the inverter share a common DC bus inside a hybrid inverter; PV energy charges the battery directly with one DC-DC conversion (high efficiency). In AC-coupled, the PV inverter is independent and converts PV DC to AC; a separate battery inverter then converts AC back to DC to charge, and DC back to AC to discharge — two extra conversions, lower round-trip efficiency, but easier to retrofit because the existing PV install stays untouched.",
     ],
     correctIndex: 1,
     explanation:
@@ -72,12 +72,12 @@ const checks = [
     question:
       "What does the battery management system (BMS) actually do and why does it matter for the electrical interface?",
     options: [
-      "It is a customer-facing app that shows the state of charge.",
+      "Phase sequence test confirms the order of phase rotation (L1, L2, L3 or A, B, C in correct sequence) on three-phase supplies. Wrong sequence reverses the rotation of three-phase induction motors and pumps — can cause damage to driven plant and wrong direction of conveyors / lifts. Tested with a phase rotation indicator (Fluke 9040, Megger PRMA1) — three probe leads, instrument indicates correct or reversed sequence. Required at three-phase commissioning and after any maintenance that may have disturbed phase identification (e.g. cable replacement, supply transformer changes).",
+      "Section 753 covers heating cables and embedded electric heating systems — including underfloor heating, ceiling heating, wall heating, surface heating, trace heating, and the supply-side electrical work for heat pumps where the heating element forms part of the system. Provisions cover protection against electric shock (ADS, additional RCD protection at 30 mA for various configurations), surface temperature limitation (753.423 / 753.424.201 — 80 degrees Celsius cap), heating-free areas (753.522), heat-resistant cabling (753.522.1.3), and equipotential bonding interactions in special locations (702.55 floor heating in pool areas).",
       "The BMS is the safety-critical electronic controller embedded in the battery pack. It monitors per-cell voltage, per-cell temperature, pack current and state of charge; it balances cells during charge to keep them within their safe operating envelope; it disconnects the pack via internal contactors if any parameter exits the safe range; and it communicates state to the inverter and to remote monitoring. Without a working BMS the pack is unsafe to charge or discharge. The electrical interface includes the power conductors AND the BMS comms cable to the inverter — both must be installed correctly per the manufacturer's instructions or the system will not commission.",
-      "The BMS is a network switch for smart home integration only.",
-      "The BMS is the inverter's internal cooling fan controller.",
+      "Dedicated 13 A or 16 A supply on a 6 A or 10 A MCB, in 1.5 mm² T&E to the unit location (utility room, loft, plant cupboard). Local DP isolator. Boost wiring from kitchens and bathrooms — sometimes via humidity sensors or PIR, sometimes via pull-cord switches in bathrooms or push-buttons in kitchens. Some units include a low-voltage commissioning interface (e.g. for installer-set air-flow rates). The unit's nameplate is typically 50-300 W on full load — modest demand. The bulk of the electrical work is the boost wiring network, not the unit supply.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The BMS is the difference between a safe lithium battery and a fire. Every domestic Li-ion pack ships with one built in; the apprentice's job is to make the comms link between the BMS and the inverter, route the power conductors per spec, and not bypass any of the manufacturer's protection. Most failed commissioning attempts trace back to the comms cable (wrong type, wrong polarity, wrong port) — read the install manual before crimping anything.",
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       "What is the difference between DC-coupled and AC-coupled battery storage in plain electrical terms?",
     options: [
-      "DC-coupled batteries store DC and AC-coupled batteries store AC.",
+      "Stop, talk it through with the joiner, and if you can't agree on the spot fetch your Foreman (or the joiner's Foreman, whichever is on site) to mediate. Trade clashes at first-fix are normal — the resolution is conversation first, then escalation to a Foreman who can re-sequence the work or adjust either trade's plan. The principle is co-operation under HASAWA s.7(b), not 'I was here first'.",
       "All batteries store DC. The difference is where the conversion happens. In DC-coupled, the PV array, the battery and the inverter share a common DC bus inside a hybrid inverter; PV energy charges the battery directly with one DC-DC conversion (high efficiency). In AC-coupled, the PV inverter is independent and converts PV DC to AC; a separate battery inverter then converts AC back to DC to charge, and DC back to AC to discharge — two extra conversions, lower round-trip efficiency, but easier to retrofit because the existing PV install stays untouched.",
-      "DC-coupled needs three-phase and AC-coupled needs single-phase.",
-      "DC-coupled batteries do not need a BMS.",
+      "Direct discrimination (s.13) is treating someone less favourably BECAUSE OF a protected characteristic — e.g. refusing to hire someone because they're female. Indirect discrimination (s.19) is applying a 'provision, criterion or practice' that looks neutral but puts people sharing a protected characteristic at a particular disadvantage and can't be objectively justified — e.g. requiring all apprentices to be over 6ft tall would indirectly discriminate against women on average. Both are unlawful.",
+      "When you see signs of abuse, neglect, undue pressure, vulnerability or risk that go beyond the scope of an electrical job. Report internally to your firm\\\\\\\\\\\\'s safeguarding lead (where one exists) or contracts manager; signpost to local authority adult/children\\\\\\\\\\\\'s social care if appropriate. Care Act 2014 (England) places statutory duties on local authorities; you don\\\\\\\\\\\\'t make the assessment but you can raise the concern.",
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     question:
       "What does kWh capacity mean in a domestic battery context and how does it differ from usable kWh?",
     options: [
-      "kWh capacity and usable kWh are the same number.",
+      "Are recommended by Reg 421.1.7 for AC final circuits supplying socket-outlets ≤ 32 A in dwellings — strengthened to a requirement in HRRBs under the Building Safety Act 2022, and treated as effectively required in HMOs / sleeping accommodation / care homes by fire-safety guidance. Not strictly required on this small commercial install, but a sensible fit on the IT rack and EV circuits.",
+      "Operative pre-use visual every shift — check the cutting edges aren't chipped or rolled, the pivot is tight, the handle insulation is intact (especially on VDE-rated drivers — any cracked or chipped insulation = take out of service). Periodic competent-person inspection — annually typical. No 'PAT' equivalent for non-powered hand tools, but the visual regime is just as important. PUWER applies to ALL work equipment, not just powered.",
       "Nameplate kWh is the total energy the cells could theoretically deliver. Usable kWh is what the BMS will actually let you cycle between the manufacturer's safe state-of-charge limits. Manufacturers commonly cap usable capacity at 80-95 percent of nameplate to extend cycle life; a 13.5 kWh nameplate Powerwall, for example, ships with 13.5 kWh usable but many other systems are quoted differently. Read the spec sheet — usable kWh is the number that determines how long the battery actually keeps the lights on, not the headline capacity.",
-      "Usable kWh is always twice the nameplate kWh.",
-      "Usable kWh only applies to lead-acid batteries.",
+      "An MID-compliant generation meter measures the total electrical output of the PV array. Required by Smart Export Guarantee (the supplier needs accurate metering to pay the export tariff) and increasingly by BUS / SEG-equivalent schemes for performance monitoring. At commissioning the meter is verified to read correctly (display zero before energising, increment as the inverter delivers, accumulate accurately over the first day's run). The customer can read the meter themselves to verify ongoing performance. The smart meter at the property handles the import / export reading for the supplier.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The depth-of-discharge (DoD) limit is part of how lithium chemistries achieve their cycle life — 6,000+ cycles for LFP at 80-90 percent DoD versus a few hundred for the same cells cycled to 100 percent. The customer's runtime calculation should always use usable kWh, not nameplate. Manufacturers' warranties typically commit to a residual capacity (e.g. 70 percent of nameplate) at end of warranty — this is the cycle-life guarantee in plain English.",
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       "Where in BS 7671 does the requirement framework for electrical energy storage systems sit?",
     options: [
-      "There is no BS 7671 coverage of batteries.",
+      "HRC fuses can interrupt very high prospective fault currents safely (1500 A or higher breaking capacity). Glass cartridges have ~35 A breaking capacity; on a high-PSCC circuit (UK domestic 6 kA, commercial 16 kA+) a glass fuse can rupture violently when fault current exceeds its breaking capacity — glass shards, hot metal, no current interruption. Fluke and Martindale lead sets use sand-filled HRC elements.",
+      "Explaining the situation in person, leading with the safety reason (\\\\\\\"I have found a section of wiring that does not meet current safety standards\\\\\\\"), showing the specific issue where possible, expressing empathy for the inconvenience (\\\\\\\"I understand this is not what you were expecting\\\\\\\"), presenting options rather than a single demand, and giving the client time to process before requiring a decision",
+      "The Apprentice, the College Tutor and the Workplace Mentor (with the Employer's training lead or HR sometimes attending as a fourth voice). The three-way review is the formal sit-down where progress is calibrated, gaps identified, and the next month's targets agreed. It's the structural mechanism that stops academic and practical sides drifting apart.",
       "Section 826 of BS 7671 covers Electrical Energy Storage Systems (EESS) and was added at the 18th Edition. It applies in addition to the rest of BS 7671 and to any product-specific standards (such as the IEC 62619 cell standard). The IET Code of Practice for Electrical Energy Storage Systems supplements Section 826 with practical guidance on siting, ventilation, fire separation, signage and emergency isolation. A4:2026 has refined parts of this framework as the technology has matured.",
-      "Section 712 of BS 7671 covers all PV and battery work as one combined section.",
-      "Section 411 of BS 7671 covers batteries because they are classed as ELV equipment.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Section 826 is the BS 7671 anchor; the IET Code of Practice for Electrical Energy Storage Systems (currently 2nd edition, 2020, with updated guidance for 2026) is the practical companion. MCS MIS 3012 governs the installer competence and product certification for Smart Export Guarantee eligibility. ENA G98 or G99 governs the grid connection. Four documents talk to each other on every BESS install.",
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       "A 5 kWh LFP wall-mounted battery is being fitted to a domestic garage. What are the headline siting considerations the apprentice should flag to the designer?",
     options: [
-      "Site it as close to the consumer unit as possible regardless of conditions.",
       "Cool, dry, ventilated location away from sources of ignition; not directly above or below escape routes; minimum clearances per the manufacturer's instructions for thermal management; not in a habitable room without a fire-rated enclosure or adequate fire separation; not in a loft (high temperature in summer, restricted access for emergency response); accessible for emergency isolation. The IET Code of Practice for Electrical Energy Storage Systems gives the framework. The manufacturer's installation manual is the binding instruction set; deviating from it voids the warranty and the BS 7671 compliance basis.",
-      "Mount it horizontally on the floor only.",
-      "Site it in the loft so the heat from the cells helps warm the property.",
+      "Where an offence under HASAWA is committed by a body corporate (a limited company) and is proved to have been committed with the consent or connivance of, or attributable to neglect on the part of, a director, manager, secretary or similar officer, that individual ALSO commits the offence and is liable to personal prosecution. Relevant once you become Approved Electrician, then a senior, then potentially a director — your personal liability scales with your role.",
+      "The Standard Assessment Procedure (SAP) is the methodology for calculating the energy performance of dwellings under Part L of the Building Regulations. It produces a SAP rating (1-100+) and a regulated CO₂ emissions figure that must beat the Target Emission Rate (TER). PV, heat pumps, MVHR, smart controls and fabric measures all feed into the SAP calculation. The MCS-certified installer's design pack typically includes the system's contribution to the SAP score; that contribution is what gets the building Building Regs sign-off.",
+      "Phase 1: Temporary avoiding (separate the parties to prevent escalation while you prepare). Phase 2: Accommodating toward emotional needs (acknowledge both parties' feelings before addressing content). Phase 3: Collaborating on the technical issue (bring both parties together to find the best technical solution). Phase 4: If collaboration stalls on minor points, compromising to maintain progress. This multi-phase approach addresses both the emotional and technical dimensions",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The fire-safety story drives most siting decisions. A garage attached to the property typically passes the test if it has adequate ventilation and is not directly under an escape route. A loft fails on temperature grounds (summer roof voids hit 50+ degC, well outside the cell's safe operating window) and on emergency access grounds (fire service cannot easily reach a loft battery). A habitable room (lounge, hall) usually needs fire-rated enclosure construction to satisfy the Code of Practice.",
   },
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       "What does the term thermal runaway mean in a lithium-ion context and why does it matter to the electrician?",
     options: [
-      "The battery overheats and shuts itself off.",
+      "The heat-loss calc determines the unit size, the flow temperature, the emitter design, the SCOP estimate and ultimately whether the customer is warm and the running costs match the quote. MCS MIS 3005 mandates a room-by-room heat-loss calculation per BS EN 12831 — fabric-by-fabric, with U-values for each wall / window / floor / roof element, ventilation losses by air change rate, design outdoor temperature for the location, design indoor temperature for each room. The result is the design heat load (kW) which sizes the unit. Skip it or fudge it and the system either oversizes (cycles inefficiently, premature compressor wear, poor SCOP) or undersizes (cannot meet load on cold days, customer freezes, complaint city). The L3 apprentice does not run the heat-loss calc but should recognise it as the foundation document of the whole install.",
       "Thermal runaway is a self-sustaining exothermic chemical reaction inside the cell. Once it starts in one cell (typically triggered by internal short circuit, mechanical damage, overcharge, or sustained over-temperature) the heat from that cell propagates to the next cell, which also enters runaway, and so on through the pack. The reaction releases flammable and toxic gases (including hydrogen fluoride and carbon monoxide) and can reach 600+ degC. Standard CO2 or dry-powder extinguishers do not stop a runaway battery — water is used to cool surrounding cells and limit propagation, but the cell itself burns until its energy is spent. This is why siting, fire separation and the BMS exist — to prevent and contain runaway.",
-      "Thermal runaway is a software bug in the BMS that resets it overnight.",
-      "Thermal runaway is the normal warm-up of a battery during fast charge.",
+      "Treat the DC side as live until proven dead with a meter rated for the voltage. The DC isolator at the array end and the DC isolator at the inverter end must both be operated and locked-off, then verify dead with a meter at both ends of the string. Even with the inverter AC-side isolated and switched off, the array continues to generate as long as light hits the panels. Covering the panels reduces but does not eliminate the DC output. Inverter manufacturer's instructions usually require a dwell time after isolation to allow internal capacitors to discharge.",
+      "The MCS-certified installer (or, for non-MCS installs, the contractor energising the system). The duty is set out in the Distribution Connection and Use of System Agreement (DCUSA) and is enforced via the licensee framework Ofgem oversees. Failure to notify is a breach of the connection conditions and can result in disconnection and loss of any export tariff. As an apprentice you do not sign the notification — but you should recognise that on the install team the duty has a named owner and a 28-day clock from energisation.",
     ],
     correctAnswer: 1,
     explanation:
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       "A customer with a 4 kWp PV array and 10 kWh battery is on a time-of-use tariff (cheap rate 02:00-06:00, expensive rate 16:00-19:00). How does the BESS deliver financial value beyond solar self-consumption?",
     options: [
-      "It does not — batteries only store solar.",
+      "A rotary cable stripper (Jokari Quadro, Knipex 16 95 02, BAHCO 4490) — sized to the SWA outer diameter, runs around the sheath cleanly and removes a length to expose the armour without scoring the inner cores. Stanley knives can do it but the risk of scoring the inner is high; rotary strippers are the standard. For the armour itself — separate tool (armour shears for smaller, angle grinder for bigger) covered in Sub 1.2.",
+      "Reportable diseases (Reg 8 + Schedule 3) are work-related ill-health diagnoses — carpal tunnel syndrome from repetitive work, occupational asthma, hand-arm vibration syndrome, certain cancers attributable to a known carcinogen at work. Reportable dangerous occurrences (Reg 7 + Schedule 2) are events that COULD have caused injury — collapse of lifting equipment, escape of dangerous substances, electrical short circuit causing 24+ hours plant stoppage, structural collapse, certain hazardous-area incidents.",
       "Tariff arbitrage. The system controller can charge the battery from the grid during the cheap window and discharge during the expensive window, regardless of solar. On a tariff with a 25-30 p/kWh spread between cheap and expensive rates, the arbitrage saves a few hundred pounds a year on top of the solar self-consumption benefit. Over a 10-15 year battery life this can roughly double the system's lifetime value compared to solar self-consumption alone. The G98/G99 notification covers grid charging if the system can also export.",
-      "It exports solar directly to the grid only when the price is highest.",
-      "It runs the heat pump during the day only.",
+      "Wood-pellet or wood-chip boilers and stoves. Burns sustainably-sourced biomass to drive a wet heating system. Counts as 'low-carbon' because the CO₂ released is offset by what the trees absorbed during growth (debated within the carbon accounting community). Fuel storage, ash handling and air-quality regulation (Clean Air Act zones; the Ecodesign Directive for new appliances) make biomass operationally heavier than gas or heat pumps. Best fit: rural off-gas-grid properties with space for a fuel store. Worst fit: urban smoke-control areas with poor PM2.5 ratings.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Time-of-use arbitrage has become the dominant economic case for UK domestic batteries in 2024-2026 as Octopus Agile, Cosy and similar tariffs spread. The PV self-consumption case alone struggles to pay back a battery in 10 years; add arbitrage and the payback drops into the 6-8 year range. The Smart Export Guarantee covers any grid export. As an apprentice you should recognise that the inverter and the controller settings (charge windows, export profiles, grid-charge enabling) carry as much value as the hardware spec.",
   },
@@ -173,12 +173,12 @@ const quizQuestions = [
     question:
       "What is the role of the EPS (emergency power supply) or backup function on a domestic BESS and what is its limitation?",
     options: [
-      "It allows the battery to keep the entire house running indefinitely during a power cut.",
+      "Cool, dry, ventilated location away from sources of ignition; not directly above or below escape routes; minimum clearances per the manufacturer's instructions for thermal management; not in a habitable room without a fire-rated enclosure or adequate fire separation; not in a loft (high temperature in summer, restricted access for emergency response); accessible for emergency isolation. The IET Code of Practice for Electrical Energy Storage Systems gives the framework. The manufacturer's installation manual is the binding instruction set; deviating from it voids the warranty and the BS 7671 compliance basis.",
+      "Two responsibilities. (1) Identify the option set — what are the realistic repair / replace / redesign options for the specific fault? (2) Quantify the trade-offs — cost, lead time, reliability for each option. The DECISION is typically made by the senior / supervisor for non-trivial cases, OR by the customer based on the apprentice's options brief. The apprentice doesn't normally commit the firm to a specific repair / replace path on their own initiative — escalation to senior is the L3 expectation for commercial-impact decisions.",
+      "BUS is the UK government grant scheme that contributes a fixed amount (currently £7,500) toward the cost of replacing a fossil-fuel boiler with a heat pump or biomass boiler. The customer applies via an MCS-certified installer who handles the application paperwork. Eligibility requires the install to be MCS-certified, the property to meet basic insulation standards (loft and cavity wall insulation where applicable), and the system to be designed per MCS MIS 3005. The grant does not change the electrical install — Section 753 (where applicable), general BS 7671, F-Gas boundary still apply. The L3 apprentice's wiring scope is unaffected; the customer's financial decision often is grant-dependent.",
       "EPS / backup is an optional inverter mode that lets the battery continue to feed selected circuits when the grid fails. Limitations: (1) the inverter must drop the grid connection cleanly first (anti-islanding) to keep DNO workers safe; (2) only the circuits wired to the backup output are powered, not the whole house; (3) the heat pump and EV charger usually exceed the backup inverter rating and are excluded; (4) the battery only runs for as long as its kWh lasts at the demand level; (5) PV charging during a cut depends on the inverter design — some hybrids can keep PV running off-grid, many cannot. Customers often expect 'whole-house indefinite backup' and get something much narrower; manage expectations early.",
-      "It bypasses the consumer unit entirely.",
-      "It is a 110 V CTE supply for power tools.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Backup is sold heavily but delivers narrowly. A typical domestic BESS backup output is a 16 A or 32 A circuit serving lighting, sockets, fridge and boiler controls — not the heat pump, oven or shower. The BS 7671 framework for stand-alone operation sits in Section 712 (where PV is involved) and Section 826 (for the EESS aspects). MCS MIS 3012 covers the backup-mode commissioning requirements.",
   },
@@ -187,12 +187,12 @@ const quizQuestions = [
     question:
       "Why does a battery installation always require notification to the DNO even when the property already has a notified PV array?",
     options: [
-      "It does not — once PV is notified the battery is automatically covered.",
       "Adding a battery changes the maximum potential export from the property and changes the inverter behaviour as seen from the network. ENA G98 (single-phase up to 16 A per phase) and G99 (above 16 A or three-phase) require the combined system to be notified. For a connect-and-notify install (G98) the installer notifies the DNO within 28 days of energising. For G99 the installer applies in advance and the DNO returns connection conditions before energising. The MCS-certified installer handles the paperwork; the apprentice should understand that the existing PV notification does not cover the added storage.",
-      "Notification is only required for off-grid systems.",
-      "Notification is only required for batteries above 100 kWh.",
+      "The IET CoP is the practical implementation guide that walks through how to apply Section 722 on a real install — supply assessment, earthing arrangement choice, protective device selection, cable sizing, isolation, labelling, commissioning. Currently in its 5th edition with regular updates to track BS 7671 amendments and OZEV regulation changes. Not legally mandatory in itself but referenced by reasonable-installer expectations and by MCS / OZEV scheme requirements. The apprentice should recognise it as a practical companion to Section 722 — Section 722 is the legal floor; the IET CoP is the practical playbook.",
+      "Multiple — typically one or more CT clamps on the main supply tails (live and sometimes neutral) feeding the EV charger's load management, the battery inverter's grid-export control, the HEMS's whole-property monitoring, and sometimes the heat pump's load-shifting logic. On a fully integrated install you may have 3-4 CT clamps in or near the consumer unit, each reading the same physical conductor and feeding a different consumer of that data. The apprentice's job is to install each clamp around the correct conductor in the correct orientation per the manufacturer's instructions for each consuming device.",
+      "Assessment of the risks from substances hazardous to health (Reg 6); prevention or control of exposure (Reg 7) using the hierarchy of control (eliminate, substitute, engineer, system of work, PPE); use and maintenance of control measures (Reg 8–9); monitoring of exposure (Reg 10); health surveillance where appropriate (Reg 11); information, instruction and training (Reg 12); arrangements for accidents, incidents and emergencies (Reg 13).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Every change to the generation or storage profile triggers a re-notification. The DNO needs to model the local network correctly — a property that previously exported 4 kW peak and now exports 7 kW (with battery support) changes the load on the local feeder. Most domestic BESS retrofits sit comfortably inside G98; larger installs and three-phase properties tip over into G99. A4:2026 has refined the BS 7671 references to G98/G99 alongside the technical updates.",
   },

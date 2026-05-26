@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'thd-definition',
     question: 'Total Harmonic Distortion (THD) measures:',
     options: [
-      'Total power consumption',
+      'Line voltage divided by √3 (approximately 230 V)',
+      'Before the building is occupied',
+      'Apply safe isolation to prove the circuit is dead',
       'Distortion of waveform from pure sine wave',
-      'Cable temperature rise',
-      'Voltage drop percentage',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'THD measures how much a waveform deviates from a pure sinusoidal shape, expressed as a percentage. Higher THD indicates more harmonic content.',
   },
@@ -59,12 +59,12 @@ const quickCheckQuestions = [
     id: 'g5-4-reference',
     question: 'Engineering Recommendation G5/4-1 sets limits for:',
     options: [
-      'Cable installation methods',
       'Harmonic voltage and current emissions',
-      'Earth fault loop impedance',
-      'RCD sensitivity',
+      'RCD (Residual Current Device)',
+      'They allow analysis of complex circuits',
+      'Verbal commitments from the design team',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'G5/4-1 is the UK standard that sets planning levels for harmonic voltage distortion and emission limits for harmonic currents from customer installations.',
   },
@@ -74,10 +74,10 @@ const quickCheckQuestions = [
     options: [
       '2nd, 4th, 6th',
       '3rd, 9th, 15th',
-      '5th, 7th, 11th, 13th',
       'All odd harmonics equally',
+      '5th, 7th, 11th, 13th',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       '6-pulse drives produce harmonics of order 6n±1 (5th, 7th, 11th, 13th...). The 5th and 7th are typically largest at around 20-30% of fundamental current.',
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What causes harmonic currents in building electrical systems?',
     options: [
-      'Resistive loads like heaters',
+      'To ensure all parties understand requirements before work commences',
       'Non-linear loads with rectifiers or switching power supplies',
-      'Motor starting current',
-      'Cable capacitance',
+      'Areas with specific equipment and protection requirements',
+      'Switching off supply for mechanical maintenance of non-electrical parts',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,7 +100,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'The 5th harmonic current has a frequency of:',
-    options: ['50Hz', '150Hz', '250Hz', '350Hz'],
+    options: [
+      '350Hz',
+      '50Hz',
+      '250Hz',
+      '150Hz',
+    ],
     correctAnswer: 2,
     explanation:
       'Harmonic frequency = harmonic order × fundamental frequency. 5th harmonic = 5 × 50Hz = 250Hz',
@@ -109,20 +114,25 @@ const quizQuestions = [
     id: 3,
     question: 'Why is neutral conductor sizing critical in harmonic-rich environments?',
     options: [
-      'Neutral carries less current with harmonics',
+      'An area made safe from electrical and other hazards during work',
+      'Acute stress is short-term; chronic stress is long-lasting and ongoing',
+      'Based on installation type, use, and condition found',
       'Triplen harmonics add in the neutral, potentially exceeding phase current',
-      'Harmonics only flow in the neutral',
-      'Neutral conductors filter harmonics',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Third harmonics and their multiples (triplen) are in phase across all three phases. They add rather than cancel in the neutral, potentially causing neutral current to exceed phase currents.',
   },
   {
     id: 4,
     question: 'What is the G5/4-1 planning level for THD voltage at LV?',
-    options: ['3%', '5%', '8%', '10%'],
-    correctAnswer: 1,
+    options: [
+      '5%',
+      '3%',
+      '8%',
+      '10%',
+    ],
+    correctAnswer: 0,
     explanation:
       'G5/4-1 sets the planning level for total harmonic voltage distortion at 5% for LV systems, with individual harmonic limits varying by order.',
   },
@@ -130,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'Cable derating for harmonics is required because:',
     options: [
-      'Harmonic currents flow to earth',
+      'By notifying building control before starting and arranging inspection',
       'Harmonics cause additional heating due to skin and proximity effects',
-      'Harmonics reduce cable insulation rating',
-      'It is a BS 7671 regulation requirement',
+      'Moisture absorption in the insulation — the polarisation index indicates deterioration',
+      'Unexpected twisting forces on the handler\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s spine as the load tilts',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,11 +154,11 @@ const quizQuestions = [
     question: 'An active harmonic filter works by:',
     options: [
       'Absorbing harmonics in resistors',
-      'Injecting equal and opposite harmonic currents',
       'Blocking harmonics with inductors',
+      'Injecting equal and opposite harmonic currents',
       'Converting harmonics to heat',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Active filters measure harmonic content and inject compensating currents that are equal in magnitude but opposite in phase, effectively cancelling the harmonics.',
   },
@@ -156,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which equipment is most sensitive to harmonic voltage distortion?',
     options: [
-      'Resistive heaters',
+      'Overheating and increased losses',
+      'Complete failure to trip at any test current',
+      'Digital contact signal (dry contact)',
       'Capacitor banks for power factor correction',
-      'Incandescent lighting',
-      'Manual motor starters',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Capacitors are very sensitive to harmonics as capacitive reactance decreases with frequency. Harmonic currents can cause overheating and premature failure of PFC capacitors.',
   },
@@ -169,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'A 12-pulse VSD compared to 6-pulse produces:',
     options: [
-      'The same harmonics but at higher magnitude',
       'Lower magnitude 5th and 7th harmonics',
       'Only even harmonics',
+      'The same harmonics but at higher magnitude',
       'No harmonics at all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '12-pulse drives use two 6-pulse bridges with 30° phase shift, cancelling 5th and 7th harmonics. First significant harmonics are 11th and 13th at reduced levels.',
   },
@@ -182,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'BS 7671 requires oversized neutral conductors when:',
     options: [
-      'Always in three-phase systems',
+      'Close doors, signal for help, stay low, await rescue',
       'Third harmonic content exceeds 15-33% depending on cable type',
-      'Power factor is below 0.9',
-      'Cables exceed 25m in length',
+      'To plan electrical work at appropriate times and avoid delays',
+      'Inspection stages, hold points, acceptance criteria, and responsible parties',
     ],
     correctAnswer: 1,
     explanation:
@@ -196,11 +206,11 @@ const quizQuestions = [
     question: 'What is the K-factor rating for transformers?',
     options: [
       'A measure of transformer efficiency',
+      'The short-circuit capacity',
       'A derating factor for harmonic loads',
       "The transformer's power factor",
-      'The short-circuit capacity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'K-factor is a transformer rating that indicates its ability to handle harmonic load currents. Higher K-factor (K4, K13, K20) means better harmonic tolerance without derating.',
   },

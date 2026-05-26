@@ -33,8 +33,13 @@ const quickCheckQuestions = [
     id: 'sedentary-heat',
     question:
       'What is the typical total heat emission from a sedentary office worker according to CIBSE Guide A?',
-    options: ['50W', '90W', '130W', '200W'],
-    correctIndex: 2,
+    options: [
+      '200W',
+      '50W',
+      '90W',
+      '130W',
+    ],
+    correctIndex: 3,
     explanation:
       'A sedentary office worker emits approximately 130W total (75W sensible, 55W latent). This varies with activity level - light office work is about 140W, walking slowly about 180W.',
   },
@@ -42,8 +47,13 @@ const quickCheckQuestions = [
     id: 'lighting-gain',
     question:
       'What power density (W/m²) would you typically use for modern LED office lighting heat gain?',
-    options: ['5-8 W/m²', '10-12 W/m²', '20-25 W/m²', '30-35 W/m²'],
-    correctIndex: 1,
+    options: [
+      '20-25 W/m²',
+      '5-8 W/m²',
+      '30-35 W/m²',
+      '10-12 W/m²',
+    ],
+    correctIndex: 3,
     explanation:
       'Modern LED office lighting typically uses 10-12 W/m². All electrical energy in lighting ultimately becomes heat (either directly or after being absorbed by surfaces), so this equals the heat gain.',
   },
@@ -51,7 +61,12 @@ const quickCheckQuestions = [
     id: 'equipment-diversity',
     question:
       'When calculating equipment heat gains in an open-plan office, what diversity factor is typically applied?',
-    options: ['0.3-0.5', '0.5-0.7', '0.7-0.9', '1.0 (no diversity)'],
+    options: [
+      '0.3-0.5',
+      '0.5-0.7',
+      '0.7-0.9',
+      '1.0 (no diversity)',
+    ],
     correctIndex: 1,
     explanation:
       'CIBSE recommends diversity factors of 0.5-0.7 for office equipment as not all equipment operates simultaneously at peak load. Without diversity, designs would be significantly oversized.',
@@ -62,11 +77,11 @@ const quickCheckQuestions = [
       'Which calculation method accounts for thermal mass effects when determining cooling load?',
     options: [
       'Steady-state heat loss',
-      'U-value calculation',
       'Dynamic thermal simulation',
+      'U-value calculation',
       'Degree-day method',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "Dynamic thermal simulation accounts for thermal mass, time lag, and varying conditions throughout the day. Steady-state calculations assume equilibrium and don't capture storage effects.",
   },
@@ -90,24 +105,39 @@ const quizQuestions = [
     id: 2,
     question:
       'A computer monitor rated at 65W has an electrical efficiency factor of 0.90. What is the heat gain to the space?',
-    options: ['58.5W', '65W', '72.2W', '6.5W'],
-    correctAnswer: 1,
+    options: [
+      '72.2W',
+      '58.5W',
+      '65W',
+      '6.5W',
+    ],
+    correctAnswer: 2,
     explanation:
       'All electrical energy consumed by equipment in a space becomes heat (conservation of energy). The 65W rating is the heat gain regardless of efficiency - efficiency affects how much useful light/work is produced.',
   },
   {
     id: 3,
     question: 'Which CIBSE Guide provides benchmark values for internal heat gains?',
-    options: ['CIBSE Guide A', 'CIBSE Guide B', 'CIBSE Guide F', 'CIBSE TM46'],
-    correctAnswer: 0,
+    options: [
+      'CIBSE Guide F',
+      'CIBSE Guide B',
+      'CIBSE TM46',
+      'CIBSE Guide A',
+    ],
+    correctAnswer: 3,
     explanation:
       'CIBSE Guide A (Environmental Design) provides comprehensive tables of internal heat gains from people, equipment, and lighting for various building types and activities.',
   },
   {
     id: 4,
     question: 'What is the typical small power heat gain allowance for a cellular office?',
-    options: ['10 W/m²', '15-20 W/m²', '25-30 W/m²', '40-50 W/m²'],
-    correctAnswer: 1,
+    options: [
+      '15-20 W/m²',
+      '10 W/m²',
+      '25-30 W/m²',
+      '40-50 W/m²',
+    ],
+    correctAnswer: 0,
     explanation:
       'CIBSE Guide A suggests 15-20 W/m² for cellular offices with typical IT equipment. Open-plan offices may use 20-25 W/m² due to higher equipment density.',
   },
@@ -115,12 +145,12 @@ const quizQuestions = [
     id: 5,
     question: 'For a steady-state heat loss calculation, which formula is correct?',
     options: [
-      'Q = U × A × (Ti - To)',
       'Q = U × A × (Ti + To)',
-      'Q = A × (Ti - To) / U',
+      'Q = U × A × (Ti - To)',
       'Q = U / A × (Ti - To)',
+      'Q = A × (Ti - To) / U',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Heat loss Q = U × A × ΔT, where U is thermal transmittance (W/m²K), A is area (m²), and ΔT is temperature difference (K or °C). This gives heat flow in Watts.',
   },
@@ -128,8 +158,13 @@ const quizQuestions = [
     id: 6,
     question:
       'What percentage of fluorescent lamp rated power is typically emitted as heat to the room space?',
-    options: ['20-25%', '40-50%', '70-80%', '100%'],
-    correctAnswer: 3,
+    options: [
+      '20-25%',
+      '40-50%',
+      '100%',
+      '70-80%',
+    ],
+    correctAnswer: 2,
     explanation:
       '100% of electrical power to lighting becomes heat. About 20-25% is light (which becomes heat when absorbed by surfaces), and 75-80% is direct heat. All energy ends as heat in the space.',
   },
@@ -138,11 +173,11 @@ const quizQuestions = [
     question: 'Which factor does NOT affect fabric heat loss in winter?',
     options: [
       'U-value of construction',
-      'Solar gains through glazing',
-      'Indoor-outdoor temperature difference',
       'Surface area of external elements',
+      'Indoor-outdoor temperature difference',
+      'Solar gains through glazing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Fabric heat loss depends on U-value, area, and temperature difference. Solar gains are separate heat gains (positive contribution) and don't affect conductive heat loss through the fabric.",
   },
@@ -150,8 +185,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A gym with 50 people exercising (200W/person) needs what sensible cooling capacity just for occupants?',
-    options: ['5 kW', '7 kW', '10 kW', 'Cannot determine - need split data'],
-    correctAnswer: 3,
+    options: [
+      'Cannot determine - need split data',
+      'Reactive components (inductors, capacitors)',
+      'CPC not connected properly at a socket',
+      'Reduced latency and improved privacy',
+    ],
+    correctAnswer: 0,
     explanation:
       'The 200W total includes both sensible and latent components. For exercising occupants, only about 35-40% is sensible heat. Need CIBSE data splitting sensible/latent for accurate cooling load.',
   },
@@ -159,20 +199,25 @@ const quizQuestions = [
     id: 9,
     question: "What is meant by 'peak coincident gains' in cooling load calculations?",
     options: [
-      'The maximum solar gain at any time',
-      'The sum of all individual maximum gains',
+      'Current-carrying conductor in a magnetic field experiences a force',
       'The total gains occurring simultaneously at a specific time',
-      'The average of all heat sources',
+      'Between 450 mm and 1200 mm above FFL — the "reach range".',
+      'Outputting fixed test signals for system testing',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Peak coincident gains are the total gains occurring at the same time, not the sum of individual peaks (which may occur at different times). This is the relevant value for sizing cooling plant.',
   },
   {
     id: 10,
     question: 'For a server room with 24/7 operation, what heat gain diversity would you apply?',
-    options: ['0.5', '0.7', '0.85', '1.0'],
-    correctAnswer: 3,
+    options: [
+      '0.5',
+      '0.7',
+      '1.0',
+      '0.85',
+    ],
+    correctAnswer: 2,
     explanation:
       'Server rooms typically run at full load continuously, so diversity is 1.0 (no reduction). Applying diversity to 24/7 critical loads would result in undersized cooling and potential equipment damage.',
   },
@@ -181,19 +226,24 @@ const quizQuestions = [
     question: "The 'admittance method' for cooling load calculation accounts for which phenomenon?",
     options: [
       'Air infiltration rates',
-      'Thermal storage in building fabric',
-      'Latent heat from occupants',
       'Ventilation heat exchange',
+      'Latent heat from occupants',
+      'Thermal storage in building fabric',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The admittance method (CIBSE Guide A) accounts for thermal storage in building elements, using admittance (Y-value) to determine how gains are absorbed and released over time.',
   },
   {
     id: 12,
     question: 'What is the typical occupancy density used for office cooling load calculations?',
-    options: ['5 m²/person', '8-12 m²/person', '15-20 m²/person', '25 m²/person'],
-    correctAnswer: 1,
+    options: [
+      '8-12 m²/person',
+      '25 m²/person',
+      '5 m²/person',
+      '15-20 m²/person',
+    ],
+    correctAnswer: 0,
     explanation:
       'CIBSE Guide A suggests 8-12 m²/person for general offices (10 m²/person is commonly used). Call centres may be 5-8 m²/person; executive offices 15-20 m²/person.',
   },

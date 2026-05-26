@@ -4,7 +4,6 @@ import InspectionStatsSummary from './InspectionStatsSummary';
 import InspectionChecklistCard from './InspectionChecklistCard';
 import DefectCodesReference from './DefectCodesReference';
 import DefectObservationsSection from './DefectObservationsSection';
-import OverallAssessmentCard from './OverallAssessmentCard';
 import { supabase } from '@/integrations/supabase/client';
 import { useEICRForm } from './eicr/EICRFormProvider';
 
@@ -545,9 +544,6 @@ const EICRInspectionChecklist = ({
         onUpdateObservation={updateDefectObservation}
         onRemoveObservation={removeDefectObservation}
       />
-
-      {/* Overall Assessment */}
-      <OverallAssessmentCard formData={formData} onUpdate={onUpdate} />
 
       {/* Reference Guide — at bottom for reference, not workflow */}
       <DefectCodesReference />

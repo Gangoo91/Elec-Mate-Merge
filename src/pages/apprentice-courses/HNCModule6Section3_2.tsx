@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'wat01-baseline',
     question: "What does the BREEAM water calculator compare a building's consumption against?",
     options: [
-      'EU Water Framework Directive limits',
       'A baseline building using standard fittings',
-      'Historic consumption data from similar buildings',
+      'EU Water Framework Directive limits',
       'Local water authority targets',
+      'Historic consumption data from similar buildings',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The BREEAM water calculator compares the assessed building's predicted water consumption against a notional baseline building fitted with standard sanitary components at specified flow rates and flush volumes.",
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'water-metering',
     question: 'What is the primary purpose of water metering in BREEAM assessments?',
     options: [
-      'To calculate water bills accurately',
       'To enable monitoring of consumption and identification of leaks',
       'To meet Building Regulations requirements',
       'To qualify for water company discounts',
+      'To calculate water bills accurately',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Water metering enables building occupants and managers to monitor consumption patterns, identify abnormal usage indicating leaks, and implement water management strategies to reduce consumption over time.',
   },
@@ -57,8 +57,13 @@ const quickCheckQuestions = [
     id: 'efficient-wc',
     question:
       "What maximum effective flush volume qualifies as 'best practice' for WCs under BREEAM?",
-    options: ['6.0 litres', '4.5 litres', '4.0 litres', '3.0 litres'],
-    correctIndex: 2,
+    options: [
+      '6.0 litres',
+      '4.0 litres',
+      '4.5 litres',
+      '3.0 litres',
+    ],
+    correctIndex: 1,
     explanation:
       'BREEAM best practice for WCs is an effective flush volume of 4.0 litres or less. The effective flush volume accounts for dual flush mechanisms using the formula: (full flush + reduced flush) / 3.',
   },
@@ -66,12 +71,12 @@ const quickCheckQuestions = [
     id: 'greywater-definition',
     question: 'Which water sources are classified as greywater for recycling purposes?',
     options: [
-      'Rainwater from roofs only',
-      'Water from WCs and urinals',
-      'Wastewater from basins, showers, and baths',
       'All wastewater including kitchen sinks',
+      'Wastewater from basins, showers, and baths',
+      'Water from WCs and urinals',
+      'Rainwater from roofs only',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Greywater is lightly contaminated wastewater from basins, showers, and baths. It excludes blackwater (WCs/urinals) and water from kitchen sinks which contains fats and food waste.',
   },
@@ -81,7 +86,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'How many BREEAM credits are available under Wat 01 (Water Consumption)?',
-    options: ['3 credits', '5 credits', '6 credits', '9 credits'],
+    options: [
+      '3 credits',
+      '5 credits',
+      '6 credits',
+      '9 credits',
+    ],
     correctAnswer: 1,
     explanation:
       'Wat 01 Water Consumption offers up to 5 credits based on the percentage improvement in water efficiency compared to the baseline building. Additional credits may be available through innovation.',
@@ -90,8 +100,13 @@ const quizQuestions = [
     id: 2,
     question:
       'What is the baseline flow rate for wash hand basin taps in the BREEAM water calculator?',
-    options: ['3 litres/minute', '6 litres/minute', '8 litres/minute', '12 litres/minute'],
-    correctAnswer: 1,
+    options: [
+      '8 litres/minute',
+      '3 litres/minute',
+      '6 litres/minute',
+      '12 litres/minute',
+    ],
+    correctAnswer: 2,
     explanation:
       'The BREEAM baseline flow rate for wash hand basin taps is 6 litres/minute. Best practice fittings achieve 4 litres/minute or less through flow restrictors or aerators.',
   },
@@ -99,8 +114,13 @@ const quizQuestions = [
     id: 3,
     question:
       'To achieve maximum credits for water consumption, what percentage improvement over baseline is required?',
-    options: ['25% improvement', '40% improvement', '55% improvement', '65% improvement'],
-    correctAnswer: 2,
+    options: [
+      '40% improvement',
+      '25% improvement',
+      '65% improvement',
+      '55% improvement',
+    ],
+    correctAnswer: 3,
     explanation:
       'Maximum credits (5 credits) require a 55% or greater improvement in water efficiency compared to the baseline building. The credit thresholds are graduated: 12.5% (1 credit), 25% (2 credits), 40% (3 credits), 50% (4 credits), 55% (5 credits).',
   },
@@ -108,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'What type of meter is required to achieve credits under Wat 02 (Water Monitoring)?',
     options: [
-      'Manual read meters only',
       'Pulsed output meters connected to BMS or data logger',
+      'Manual read meters only',
       'Standard utility meters with monthly readings',
       'Mechanical dial meters with quarterly inspections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Wat 02 requires pulsed output water meters connected to a BMS or data logging system capable of identifying abnormal consumption patterns and potential leaks through automated monitoring.',
   },
@@ -121,12 +141,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which BREEAM issue addresses leak detection systems?',
     options: [
-      'Wat 01 Water Consumption',
       'Wat 02 Water Monitoring',
       'Wat 03 Water Leak Detection',
       'Wat 04 Water Efficient Equipment',
+      'Wat 01 Water Consumption',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Wat 03 Water Leak Detection specifically addresses the installation of leak detection systems on the mains water supply to minimise water wastage from undetected leaks.',
   },
@@ -135,11 +155,11 @@ const quizQuestions = [
     question: 'What is the effective flush volume formula for dual flush WCs?',
     options: [
       '(Full flush + Reduced flush) / 2',
-      '(Full flush + Reduced flush) / 3',
       '(Full flush x 2 + Reduced flush) / 3',
+      '(Full flush + Reduced flush) / 3',
       'Full flush x 0.67',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The effective flush volume for dual flush WCs is calculated as (full flush volume + reduced flush volume) / 3. This formula accounts for typical usage patterns where the reduced flush is used more frequently.',
   },
@@ -148,12 +168,12 @@ const quizQuestions = [
     question:
       'For a non-domestic building, which areas must have sub-metering for full Wat 02 credits?',
     options: [
-      'WCs only',
-      'Kitchen and WCs',
+      'The competent person who carried out the inspection.',
+      'Automatically dimming artificial lighting in response to available natural light',
+      'Tendency for AC current to flow near the conductor surface',
       'All major water uses including WCs, kitchens, and any process uses',
-      'External irrigation only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Full Wat 02 credits require sub-metering of all major water uses including WCs/washrooms, kitchens/catering, any process or industrial water use, and external irrigation systems where installed.',
   },
@@ -161,8 +181,13 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the typical payback period for rainwater harvesting systems in UK commercial buildings?',
-    options: ['1-2 years', '5-10 years', '15-20 years', 'Over 25 years'],
-    correctAnswer: 1,
+    options: [
+      '5-10 years',
+      '15-20 years',
+      '1-2 years',
+      'Over 25 years',
+    ],
+    correctAnswer: 0,
     explanation:
       'Rainwater harvesting systems in UK commercial buildings typically achieve payback periods of 5-10 years depending on building size, rainfall catchment area, water demand profile, and local water costs.',
   },
@@ -170,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'What evidence is required for Wat 01 compliance at design stage?',
     options: [
-      'Water bills from similar buildings',
+      'The percentage voltage drop at full load due to resistance and reactance',
       'Completed BREEAM water calculator with specified fittings',
-      'Manufacturer declarations only',
-      'Site water meter readings',
+      'To avoid confusion and track which areas have been tested',
+      'A circuit that produces a fraction of the input voltage',
     ],
     correctAnswer: 1,
     explanation:
@@ -185,26 +210,36 @@ const quizQuestions = [
     options: [
       'Rainwater from non-trafficked roofs',
       'Greywater from showers',
-      'Surface water from SUDS attenuation',
       'Blackwater from urinals',
+      'Surface water from SUDS attenuation',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Blackwater (from WCs and urinals) requires extensive treatment before reuse and is not suitable for simple recycling systems. Rainwater, greywater, and surface water can be used for WC flushing with appropriate filtration and treatment.',
   },
   {
     id: 11,
     question: 'What is the baseline shower flow rate in the BREEAM water calculator?',
-    options: ['6 litres/minute', '8 litres/minute', '10 litres/minute', '12 litres/minute'],
-    correctAnswer: 2,
+    options: [
+      '6 litres/minute',
+      '8 litres/minute',
+      '12 litres/minute',
+      '10 litres/minute',
+    ],
+    correctAnswer: 3,
     explanation:
       'The baseline shower flow rate is 10 litres/minute. Best practice showers achieve 6 litres/minute or less while maintaining adequate performance through optimised spray patterns and aeration.',
   },
   {
     id: 12,
     question: 'A leak detection system must be capable of detecting flow rates as low as:',
-    options: ['0.1 litres/second', '1 litre/minute', '10 litres/minute', 'No minimum specified'],
-    correctAnswer: 1,
+    options: [
+      '1 litre/minute',
+      'No minimum specified',
+      '0.1 litres/second',
+      '10 litres/minute',
+    ],
+    correctAnswer: 0,
     explanation:
       'BREEAM leak detection systems must be capable of detecting continuous flow rates as low as 1 litre/minute to identify small but persistent leaks that could result in significant water wastage over time.',
   },

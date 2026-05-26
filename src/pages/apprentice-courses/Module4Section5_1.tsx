@@ -43,7 +43,12 @@ const quizQuestions = [
     id: 1,
     question:
       'What is the standard mounting height for socket outlets in a new build under Part M?',
-    options: ['300 mm', '450 mm', '500 mm', '600 mm'],
+    options: [
+      '300 mm',
+      '450 mm',
+      '500 mm',
+      '600 mm',
+    ],
     correctAnswer: 1,
     explanation:
       'Building Regulations Part M requires socket outlets to be mounted at 450mm to the bottom edge from finished floor level in new builds for accessibility.',
@@ -51,8 +56,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which regulation sets out accessibility heights for sockets and switches?',
-    options: ['BS 7671', 'Building Regulations Part M', 'BS 5839', 'IET Code of Practice'],
-    correctAnswer: 1,
+    options: [
+      '0.027 × p^0.65 (L/s per m²)',
+      'Loose or intermittent connections',
+      'Building Regulations Part M',
+      'Uniformity ratio 40:1 maximum',
+    ],
+    correctAnswer: 2,
     explanation:
       'Building Regulations Part M sets out accessibility requirements including mounting heights for electrical accessories.',
   },
@@ -60,8 +70,13 @@ const quizQuestions = [
     id: 3,
     question:
       'True or False: Switches are generally mounted at 900mm above floor level in new builds.',
-    options: ['True', 'False', 'Only in bathrooms', 'Only for commercial buildings'],
-    correctAnswer: 1,
+    options: [
+      'Only in bathrooms',
+      'True',
+      'Only for commercial buildings',
+      'False',
+    ],
+    correctAnswer: 3,
     explanation:
       'False. Switches are generally mounted at 1200mm to the centre from finished floor level in new builds according to Part M.',
   },
@@ -70,9 +85,9 @@ const quizQuestions = [
     question: 'Name two types of back boxes.',
     options: [
       'Flush-mounted and surface-mounted',
-      'Round and square',
-      'Metal and plastic',
-      'Large and small',
+      'The metalwork becomes live and dangerous',
+      'Likelihood × Severity = Risk level',
+      'Asbestos-containing materials',
     ],
     correctAnswer: 0,
     explanation:
@@ -82,10 +97,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why are grommets used in back boxes?',
     options: [
-      'For decoration',
+      'MCBs always have a higher breaking capacity than HRC fuses',
       'To protect cables from sharp edges and prevent insulation damage',
-      'To improve electrical conductivity',
-      'To reduce installation time',
+      'Earthing connects to earth, bonding connects metalwork together',
+      'To prevent unauthorised access to the work area',
     ],
     correctAnswer: 1,
     explanation:
@@ -94,8 +109,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the correct wiring colour for a neutral conductor in modern UK wiring?',
-    options: ['Brown', 'Blue', 'Green/yellow', 'Black'],
-    correctAnswer: 1,
+    options: [
+      'Brown',
+      'Green/yellow',
+      'Blue',
+      'Black',
+    ],
+    correctAnswer: 2,
     explanation:
       'In modern UK wiring, the neutral conductor is blue in accordance with BS 7671 harmonised colours.',
   },
@@ -103,12 +123,12 @@ const quizQuestions = [
     id: 7,
     question: 'What should be done before energising a newly installed socket outlet?',
     options: [
-      'Check it looks neat',
+      '500W to 1kW per outlet for general assessment',
+      'If you miss a habit once, make sure you get back to it the next day',
+      'To provide evidence of compliance and ensure safety',
       'Carry out polarity, continuity, and insulation resistance tests',
-      'Install the faceplate',
-      'Clean the area',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Testing including polarity, continuity, and insulation resistance tests must be completed before energising any new installation.',
   },
@@ -116,12 +136,12 @@ const quizQuestions = [
     id: 8,
     question: 'Give one practical tip to ensure socket outlets are aligned in a row.',
     options: [
-      'Use a tape measure',
       'Use a laser level or temporarily fit all faceplates before final fixing',
-      'Measure from the ceiling',
-      'Estimate by eye',
+      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
+      'Dizziness and nausea from inhaling solvent vapours in a confined space',
+      'A dangerous occurrence that must be reported to the HSE',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Using a laser level or temporarily fitting all faceplates before final fixing ensures perfect alignment across multiple accessories.',
   },

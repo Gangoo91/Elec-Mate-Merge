@@ -1,5 +1,6 @@
 import React from 'react';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -73,6 +74,10 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
     toast({ title: 'Profile Applied', description: 'Your details have been filled.' });
   };
 
+  // If the key electrician fields are already populated (auto-loaded on mount or saved),
+  // soften the button text so it's clear it's a reload rather than the only way to fill.
+  const profilePopulated = !!(formData.electricianName && formData.position);
+
   return (
     <div className="space-y-6">
       {/* Load from Business Settings */}
@@ -80,9 +85,14 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
         type="button"
         onClick={handleUseMyProfile}
         disabled={smartFormLoading}
-        className="w-full h-10 rounded-lg font-semibold text-xs bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow touch-manipulation active:scale-[0.98]"
+        className={cn(
+          'w-full h-10 rounded-lg font-semibold text-xs touch-manipulation active:scale-[0.98]',
+          profilePopulated
+            ? 'bg-white/[0.05] border border-white/[0.08] text-white/70'
+            : 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+        )}
       >
-        Load from Business Settings
+        {profilePopulated ? 'Reload from Business Settings' : 'Load from Business Settings'}
       </button>
 
       {/* Electrician Details */}
@@ -117,7 +127,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
                 type="button"
                 onClick={() => { haptic.light(); onUpdate('position', pos); }}
                 className={cn(
-                  'h-8 rounded-md font-medium text-[9px] touch-manipulation transition-all active:scale-[0.98]',
+                  'h-10 rounded-lg font-medium text-xs touch-manipulation transition-all active:scale-[0.98] px-1',
                   formData.position === pos
                     ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
                     : 'bg-white/[0.05] border border-white/[0.08] text-white'
@@ -196,7 +206,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
         <p className="text-[10px] text-white leading-relaxed">
           I CERTIFY that the work covered by this certificate does not impair the safety of the existing
           installation and has been designed, constructed, inspected and tested in accordance with
-          BS 7671:2018+A3:2024.
+          BS 7671:2018+A4:2026.
         </p>
 
         <div className="grid grid-cols-3 gap-1">
@@ -223,11 +233,12 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
         </div>
 
         <FormField label="Additional Notes">
-          <Input
+          <Textarea
             value={formData.additionalNotes || ''}
             onChange={(e) => onUpdate('additionalNotes', e.target.value)}
             placeholder="Notes, comments or recommendations..."
-            className={inputClass}
+            className="text-base touch-manipulation bg-white/[0.06] border-white/[0.08] min-h-[80px] resize-none"
+            rows={3}
           />
         </FormField>
       </div>
@@ -241,8 +252,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
             type="date"
             value={formData.signatureDate || ''}
             onChange={(e) => onUpdate('signatureDate', e.target.value)}
-            className={cn(inputClass, 'text-xs')}
-            style={{ fontSize: '12px' }}
+            className={cn(inputClass, 'text-sm')}
           />
         </FormField>
 

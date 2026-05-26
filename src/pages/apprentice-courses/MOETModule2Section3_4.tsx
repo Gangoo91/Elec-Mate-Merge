@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'dc-series-motor',
     question: 'Why must a DC series motor NEVER be run without a mechanical load connected?',
     options: [
-      'The brushes will wear out quickly',
-      'The motor will overheat at low speed',
+      'Not exceeding around 40-45% of the conduit cross-sectional area for thermoplastic conduit (depending on conduit size, cable size, and number of bends) — to allow heat dissipation and cable installation/withdrawal.',
+      'The Network and Information Systems Regulations 2018 requiring operators of essential services to manage cybersecurity risks to their OT systems and report significant incidents',
       'Without load, the speed rises uncontrollably to a dangerous level (runaway) because the weak field at light load allows the speed to increase, which further weakens the field',
-      'The supply fuse will blow',
+      'The installation uses a TN-S earthing arrangement with a separate neutral and earth, requiring the neutral to be switched along with the three phases to prevent neutral current circulating between sources',
     ],
     correctIndex: 2,
     explanation:
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'What is the effect of reducing the armature voltage of a DC motor while keeping the field voltage constant?',
     options: [
-      'The speed increases',
       'The speed decreases — armature voltage control gives speeds below base speed',
-      'The speed stays the same but torque increases',
-      'The motor reverses direction',
+      'Power that oscillates between source and load without doing useful work',
+      'A graphical method for designing sequential control processes, standardised in IEC 60848',
+      'Test results, as-built drawings, labelling schedules, and material certificates',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Speed is approximately proportional to armature voltage divided by field flux: N is proportional to Va / phi. Reducing Va while keeping phi constant reduces the speed. This method gives a constant-torque speed range from zero to base speed, making it ideal for applications requiring good low-speed torque.',
   },
@@ -42,10 +42,10 @@ const quickCheckQuestions = [
     question:
       'When inspecting a DC motor commutator, what does a dark brown, polished appearance indicate?',
     options: [
-      'The commutator needs immediate repair',
-      'The motor is overloaded',
+      "Sensitive electronic equipment requiring low-noise earth reference",
+      "Person with sufficient training, experience and knowledge to prevent danger",
       "A healthy 'patina' — good commutation with correct brush grade and pressure",
-      'Excessive brush wear',
+      "A new installation OR an addition/alteration that introduces a new circuit",
     ],
     correctIndex: 2,
     explanation:
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     id: 'regenerative-braking',
     question: 'What is regenerative braking in a DC motor system?',
     options: [
-      'Using a mechanical brake to stop the motor',
-      'Reversing the supply to the motor',
+      'To verify battery capacity and ensure escape routes remain illuminated for the full evacuation period',
+      'Brief, regular meetings where each person reports on commitments made the previous week and makes new ones',
+      'Whether there are underlying causes such as personal problems, wrong career choice, bullying, financial stress, or health issues',
       'The motor acts as a generator, converting kinetic energy to electrical energy and feeding it back to the supply',
-      'Disconnecting the motor and letting it coast to a stop',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'During regenerative braking, the motor is driven by the mechanical load faster than its normal speed (or the armature voltage is reduced below the back-EMF). The motor becomes a generator, converting the kinetic energy of the rotating load into electrical energy, which is fed back to the supply through the drive. This provides controlled deceleration and recovers energy.',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'In a DC motor, the torque is produced by the interaction between:',
     options: [
-      'Two magnetic fields from the stator windings',
+      'Explaining repair made, any limitations, and operating instructions',
       'The field flux and the armature current-carrying conductors in the field',
-      'Electrostatic forces between plates',
-      'Eddy currents in the rotor',
+      'Providing professional counselling for mental health conditions',
+      'To verify quantities, quality and condition against the order',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: 'A DC shunt motor has its field winding connected:',
     options: [
-      'In series with the armature',
+      'By pressing the test button to see that it trips',
+      'Fire-rated collars or seals to maintain compartmentation',
       'In parallel with the armature, across the full supply voltage',
-      'To a separate AC supply',
-      'Through the commutator',
+      'Accumulated earth leakage from multiple appliances',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'In a shunt motor, the field winding is connected in parallel (shunt) with the armature, across the full supply voltage. This means the field current is independent of the armature current (load), providing approximately constant flux and therefore approximately constant speed across the load range — good speed regulation.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 3,
     question: "What is the 'back-EMF' in a DC motor?",
     options: [
-      'The voltage drop across the brushes',
+      'AC mains supply to controlled DC voltage for the motor armature',
+      'In parallel with the armature, across the full supply voltage',
+      'Armature voltage control (below base speed) and field weakening (above base speed)',
       'The voltage generated by the rotating armature, which opposes the supply voltage',
-      'The voltage across the field winding',
-      'The voltage drop in the supply cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'When the armature rotates in the magnetic field, it generates an EMF (just like a generator) that opposes the applied supply voltage — this is the back-EMF (Eb). The armature current is determined by: Ia = (V - Eb) / Ra. At running speed, the back-EMF is close to the supply voltage, so the armature current (and therefore copper losses) are relatively small.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'A DC compound motor combines:',
     options: [
-      'AC and DC windings',
       'Series and shunt field windings to provide characteristics between a pure series and pure shunt motor',
-      'Two armature windings',
-      'A permanent magnet field with an electromagnetic field',
+      'Hard searches appear on your credit file and can affect your score, soft searches do not',
+      'The method statement describes how to implement the controls identified in the risk assessment',
+      'Call 999 (put phone on speaker) → begin CPR → send someone for the AED when possible',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A compound motor has both a series field winding (carrying armature current) and a shunt field winding (across the supply voltage). The series winding adds flux under load, increasing torque, while the shunt winding provides base flux for good speed regulation. The result is moderate speed regulation with better starting torque than a pure shunt motor.',
   },
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'Field weakening in a DC shunt motor involves:',
     options: [
-      'Reducing the armature voltage',
+      'To limit the starting current — at standstill there is no back-EMF, so without a starter resistor the armature current would be V/Ra, which is extremely high',
       'Increasing the resistance in the field circuit to reduce field current and flux, causing the motor to speed up above base speed',
-      'Short-circuiting the field winding',
-      'Reversing the field connections',
+      'Cutting the mica insulation between commutator segments to below the copper surface to prevent the mica from protruding as the copper wears',
+      'Act as a mechanical rectifier, reversing the current direction in each armature coil as it passes the brush position, ensuring continuous unidirectional torque',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'The function of the commutator in a DC motor is to:',
     options: [
-      'Generate the magnetic field',
-      'Provide mechanical support for the armature',
+      'Increasing the resistance in the field circuit to reduce field current and flux, causing the motor to speed up above base speed',
+      'To limit the starting current — at standstill there is no back-EMF, so without a starter resistor the armature current would be V/Ra, which is extremely high',
       'Act as a mechanical rectifier, reversing the current direction in each armature coil as it passes the brush position, ensuring continuous unidirectional torque',
-      'Regulate the motor speed',
+      'Cutting the mica insulation between commutator segments to below the copper surface to prevent the mica from protruding as the copper wears',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,11 +151,11 @@ const quizQuestions = [
       'What are the two main methods of speed control for DC motors below and above base speed?',
     options: [
       'Changing the number of poles, and reversing the connections',
-      'Armature voltage control (below base speed) and field weakening (above base speed)',
-      'Changing the brush position and adding external resistance',
       'Varying the supply frequency and adjusting the commutator',
+      'Changing the brush position and adding external resistance',
+      'Armature voltage control (below base speed) and field weakening (above base speed)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Below base speed: armature voltage control varies Va from zero to rated voltage, giving constant-torque operation. Above base speed: field weakening reduces the field flux, giving constant-power operation at higher speeds but reduced torque. Together, these provide a wide speed range with excellent control characteristics.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: 'A thyristor DC drive converts:',
     options: [
-      'DC to AC for the motor',
       'AC mains supply to controlled DC voltage for the motor armature',
-      'Three-phase to single-phase',
-      'Low voltage DC to high voltage DC',
+      'All four outriggers must be fully extended and set on firm level ground',
+      'Calibrated within the previous 12 months with certificates available',
+      'Increases by the highest of earnings, inflation, or 2.5%',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A thyristor (SCR) DC drive uses phase-controlled thyristors to convert the AC mains supply to a variable DC voltage. By adjusting the thyristor firing angle, the mean DC output voltage is varied, controlling the motor speed. Four-quadrant drives can provide both motoring and regenerative braking in both directions of rotation.',
   },
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'What causes sparking at the brushes of a DC motor?',
     options: [
-      'Normal operation — all DC motors spark',
+      'Series and shunt field windings to provide characteristics between a pure series and pure shunt motor',
       'Poor commutation — causes include worn brushes, incorrect brush grade, commutator surface defects, overloading, or brush spring tension problems',
-      'The motor is operating at rated load',
-      'The field winding is energised',
+      'Increasing the resistance in the field circuit to reduce field current and flux, causing the motor to speed up above base speed',
+      'To limit the starting current — at standstill there is no back-EMF, so without a starter resistor the armature current would be V/Ra, which is extremely high',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,12 +189,12 @@ const quizQuestions = [
     id: 10,
     question: 'Why is an armature resistance starter used for starting large DC motors?',
     options: [
-      'To increase starting torque',
+      'Increasing the resistance in the field circuit to reduce field current and flux, causing the motor to speed up above base speed',
+      'Cutting the mica insulation between commutator segments to below the copper surface to prevent the mica from protruding as the copper wears',
       'To limit the starting current — at standstill there is no back-EMF, so without a starter resistor the armature current would be V/Ra, which is extremely high',
-      'To reverse the motor',
-      'To improve the power factor',
+      'Poor commutation — causes include worn brushes, incorrect brush grade, commutator surface defects, overloading, or brush spring tension problems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'At standstill, back-EMF = 0, so Ia = V / Ra. Since Ra is very small (often less than 1 ohm), the starting current without a resistor would be enormous — potentially 10-20 times rated current. The starter resistor limits this to a safe value (typically 1.5-2 times rated current). As the motor accelerates and back-EMF builds up, the resistance is progressively removed.',
   },
@@ -202,12 +202,12 @@ const quizQuestions = [
     id: 11,
     question: 'Dynamic braking of a DC motor involves:',
     options: [
-      'Reversing the supply voltage',
+      'Increasing the resistance in the field circuit to reduce field current and flux, causing the motor to speed up above base speed',
+      'Act as a mechanical rectifier, reversing the current direction in each armature coil as it passes the brush position, ensuring continuous unidirectional torque',
+      'Cutting the mica insulation between commutator segments to below the copper surface to prevent the mica from protruding as the copper wears',
       'Disconnecting the armature from the supply and connecting it across a braking resistor — the motor acts as a generator, dissipating kinetic energy as heat in the resistor',
-      'Applying a mechanical brake',
-      'Increasing the field current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In dynamic braking, the armature is disconnected from the supply and connected to a braking resistor. The motor, still spinning and with the field energised, acts as a generator, producing current through the resistor. The kinetic energy of the rotating load is converted to heat in the resistor, bringing the motor to a controlled stop. Unlike regenerative braking, the energy is wasted as heat.',
   },
@@ -215,12 +215,12 @@ const quizQuestions = [
     id: 12,
     question: 'When undercutting a commutator, you are:',
     options: [
-      'Removing material from the copper segments',
       'Cutting the mica insulation between commutator segments to below the copper surface to prevent the mica from protruding as the copper wears',
-      'Polishing the commutator surface',
-      'Replacing the commutator segments',
+      'Poor commutation — causes include worn brushes, incorrect brush grade, commutator surface defects, overloading, or brush spring tension problems',
+      'To limit the starting current — at standstill there is no back-EMF, so without a starter resistor the armature current would be V/Ra, which is extremely high',
+      'Series and shunt field windings to provide characteristics between a pure series and pure shunt motor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The mica insulation between commutator segments is harder than the copper. As the copper wears, the mica eventually protrudes above the copper surface, causing the brushes to bounce and spark. Undercutting removes the mica to a depth of about 1-1.5mm below the copper surface, ensuring smooth brush contact. This is a routine maintenance task for DC machines.',
   },

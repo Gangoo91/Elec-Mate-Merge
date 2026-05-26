@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'ups-online',
     question: 'What is the main advantage of an online (double-conversion) UPS?',
     options: [
-      'Lowest cost',
+      'Forming, establishing, developing, closing',
+      'Depends on system type and capacity',
+      'Correct connection of line, neutral, and earth conductors',
       'Zero transfer time - continuous power conditioning',
-      'Smallest physical size',
-      'Longest battery life',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Online UPS continuously converts AC to DC then back to AC, so there is no transfer time when mains fails. The load is always supplied from the inverter, providing constant power conditioning.',
   },
@@ -46,8 +46,13 @@ const quickCheckQuestions = [
     id: 'battery-ah',
     question:
       'A 10kVA UPS requires 15 minutes autonomy. Battery bank is 192V DC. What Ah capacity is needed (assume 80% efficiency)?',
-    options: ['52Ah', '65Ah', '81Ah', '98Ah'],
-    correctIndex: 2,
+    options: [
+      '81Ah',
+      '65Ah',
+      '52Ah',
+      '98Ah',
+    ],
+    correctIndex: 0,
     explanation:
       'Energy = 10000VA × 0.25h = 2500VAh. At 80% efficiency: 2500/0.8 = 3125VAh. Ah = 3125VAh/192V = 16.3Ah minimum. Allow 5× for discharge rate: ~81Ah typical.',
   },
@@ -55,10 +60,10 @@ const quickCheckQuestions = [
     id: 'ats',
     question: 'What does an Automatic Transfer Switch (ATS) do?',
     options: [
-      'Converts AC to DC',
+      'To continuously reassess risks as conditions change during the work',
       'Switches load between mains and generator automatically',
-      'Provides surge protection',
-      'Monitors power quality only',
+      'Installation method, ambient temperature, grouping, thermal insulation',
+      'A graph showing how electrical demand varies over time',
     ],
     correctIndex: 1,
     explanation:
@@ -67,8 +72,13 @@ const quickCheckQuestions = [
   {
     id: 'gen-start',
     question: 'What is the typical start-up time for a standby diesel generator?',
-    options: ['Instantaneous', '5-15 seconds', '1-2 minutes', '5-10 minutes'],
-    correctIndex: 1,
+    options: [
+      '5-15 seconds',
+      '5-10 minutes',
+      'Instantaneous',
+      '1-2 minutes',
+    ],
+    correctIndex: 0,
     explanation:
       'Modern standby generators with battery start typically achieve full rated power within 10-15 seconds. UPS provides backup during this start-up period.',
   },
@@ -79,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the purpose of a UPS system?',
     options: [
-      'To generate electrical power',
+      'Single fibre cable for one-way or BiDi links',
       'To provide uninterrupted power during mains failures',
-      'To reduce electricity consumption',
-      'To convert three-phase to single-phase',
+      'Record the exact measured value with appropriate units',
+      'Non-combustible enclosure (metal or fire-resistant)',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: 'How does an offline (standby) UPS differ from an online UPS?',
     options: [
-      'Offline UPS is always running from battery',
+      'Heat gains cannot escape, temperatures rise',
+      'In each individual DALI driver/ballast',
       'Offline UPS only switches to battery when mains fails',
-      'There is no difference',
-      'Offline UPS has no battery',
+      'Moves to lower flow, higher head (towards shutoff)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Offline UPS passes mains power directly to the load during normal operation, only switching to battery/inverter when mains fails. This causes a brief transfer time (typically 5-12ms).',
   },
@@ -105,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the function of the rectifier in an online UPS?',
     options: [
-      'To store energy in batteries',
+      'A self-propelled boom lift that can be driven with the platform raised',
+      'Overloading, loose connections, or high resistance contacts',
+      'Calmly repeating your position without getting drawn into arguments',
       'To convert AC mains to DC for charging batteries and supplying inverter',
-      'To increase voltage',
-      'To filter harmonics only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The rectifier converts incoming AC to DC, which charges the batteries and supplies the inverter. This decouples the load from mains disturbances.',
   },
@@ -118,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'What battery technology is most commonly used in modern UPS systems?',
     options: [
-      'Lead-acid only',
       'Lithium-ion or VRLA (Valve Regulated Lead Acid)',
-      'Nickel-cadmium only',
-      'Alkaline batteries',
+      'Enhanced fire stopping and emergency lighting requirements',
+      'Class EN 131 Professional — suitable for trade use',
+      'CO2 (carbon dioxide) or dry powder',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'VRLA batteries are most common due to low maintenance. Lithium-ion is increasingly used for longer life, lighter weight and faster charging, despite higher initial cost.',
   },
@@ -131,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why is generator synchronisation important before transferring load?',
     options: [
-      'It is not necessary',
+      'On-site in an accessible location near the fire panel or site office',
       'To ensure voltage, frequency and phase match before closing transfer switch',
-      'To reduce generator fuel consumption',
-      'For aesthetic reasons',
+      'Provide physical separation between workers and live parts, preventing accidental contact',
+      'That base plates are on sole boards, the ground is firm, and standards are plumb',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,20 +154,25 @@ const quizQuestions = [
     id: 6,
     question: "What is 'N+1' redundancy in UPS systems?",
     options: [
+      'To determine cable sizes and protective device ratings',
+      'Achieving net zero greenhouse gas emissions by 2050',
       'One extra UPS module beyond minimum needed for the load',
-      'Double the required capacity',
-      'One UPS per server',
-      'No redundancy',
+      'To prevent fire spread through cable penetrations',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'N+1 redundancy means having one extra UPS module beyond the N modules needed for the load. If N=2 modules carry the load, N+1 means 3 modules total - one can fail without affecting supply.',
   },
   {
     id: 7,
     question: 'What is the typical autonomy time for UPS in a data centre with generator backup?',
-    options: ['1-2 minutes', '5-15 minutes', '1-2 hours', '8 hours'],
-    correctAnswer: 1,
+    options: [
+      '1-2 minutes',
+      '8 hours',
+      '1-2 hours',
+      '5-15 minutes',
+    ],
+    correctAnswer: 3,
     explanation:
       'With generator backup, UPS typically provides 5-15 minutes autonomy - enough for generator start-up and stabilisation. Longer autonomy is costly and unnecessary.',
   },
@@ -165,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: "What causes 'battery float' operation?",
     options: [
-      'Battery is disconnected',
       'Continuous trickle charging to maintain full charge',
-      'Battery is being discharged',
-      'Battery failure',
+      'RF interference and spectrum management',
+      'AC residual currents (and some types handle DC components)',
+      'Work in special locations or involving new circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Float charging maintains batteries at full charge with a small continuous current to compensate for self-discharge. This keeps batteries ready for immediate use without overcharging.',
   },
@@ -178,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the function of a bypass in a UPS system?',
     options: [
-      'To increase efficiency',
+      'The period of employment plus a reasonable period after (typically 3-6 years)',
       'To allow maintenance and provide alternative power path if UPS fails',
-      'To charge batteries faster',
-      'To reduce noise',
+      'Any person who controls the work activity to any extent',
+      'Regularly reviewing progress towards your goal and adjusting your approach',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,12 +206,12 @@ const quizQuestions = [
     id: 10,
     question: "What is 'generator block loading' and why should it be avoided?",
     options: [
-      'Running generator at full load - recommended practice',
+      'Explain the underlying theory and regulation references before the practical task',
+      'Just fits — but with virtually no headroom for additional cables or future modification',
       'Connecting full load instantly causing frequency/voltage disturbance',
-      'Generator overload protection',
-      'Load shedding sequence',
+      'Critical path activities with lowest crash cost per day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Block loading is applying large loads instantly, causing voltage and frequency transients as the generator struggles to respond. Load should be applied in steps to allow recovery between each step.',
   },

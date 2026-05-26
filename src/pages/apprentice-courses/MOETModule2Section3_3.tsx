@@ -14,8 +14,13 @@ const quickCheckQuestions = [
     id: 'sync-speed-calc',
     question:
       'A synchronous motor has 6 poles and operates on a 50Hz supply. What is its running speed?',
-    options: ['750 rev/min', '1,000 rev/min', '1,500 rev/min', '3,000 rev/min'],
-    correctIndex: 1,
+    options: [
+      '750 rev/min',
+      '1,500 rev/min',
+      '1,000 rev/min',
+      '3,000 rev/min',
+    ],
+    correctIndex: 2,
     explanation:
       'Synchronous speed = (120 x f) / p = (120 x 50) / 6 = 1,000 rev/min. Unlike induction motors, a synchronous motor runs at exactly synchronous speed — there is no slip. The rotor locks into step with the rotating stator field.',
   },
@@ -24,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'How does adjusting the DC excitation current of a synchronous motor affect its power factor?',
     options: [
-      'It has no effect on power factor',
+      'Risks should be weighed against the cost, time, and effort of reducing them',
+      'To carry out a suitable and sufficient assessment of the risks to employees and others affected by the undertaking',
       'Increasing excitation beyond the normal value causes the motor to operate at a leading power factor',
-      'Increasing excitation always causes lagging power factor',
-      'Power factor is determined only by the mechanical load',
+      'Focuses on identifying and changing current thought patterns and behaviours, producing results in a structured timeframe',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "A synchronous motor's power factor is controlled by its DC field excitation. Under-excited: lagging power factor (absorbs reactive power like an inductor). Normal excitation: unity power factor. Over-excited: leading power factor (generates reactive power like a capacitor). This is why synchronous motors are sometimes used as synchronous condensers for power factor correction.",
   },
@@ -38,12 +43,12 @@ const quickCheckQuestions = [
     question:
       'Before connecting an alternator in parallel with the grid, which parameters must be matched?',
     options: [
-      'Voltage only',
-      'Frequency only',
       'Voltage magnitude, frequency, phase sequence, and phase angle',
-      'Power factor and efficiency',
+      'A temporary disturbance in brain function caused by a blow or jolt to the head',
+      'No - does not meet the 30 days with 20+ workers threshold',
+      'Noise, dust, vibration, weather conditions, contaminated ground',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'All four parameters must be matched: voltage magnitude (adjust field excitation), frequency (adjust prime mover speed), phase sequence (check once during commissioning), and phase angle (use a synchroscope or synchronising lamps to close the breaker at the exact moment of synchronism). Failure to synchronise correctly causes massive surge currents that can damage the generator and associated equipment.',
   },
@@ -55,10 +60,10 @@ const quizQuestions = [
     question:
       'What is the fundamental difference between a synchronous motor and an induction motor?',
     options: [
-      'A synchronous motor is always larger',
+      'Variation of system voltage and equipment impedance from nominal values',
       'A synchronous motor runs at exactly synchronous speed with no slip, using DC excitation on the rotor',
-      'A synchronous motor can only operate on DC supply',
-      'A synchronous motor has no stator windings',
+      'Have a current thorough examination report (within 6 months), be operated by a trained person, and the lift must be planned',
+      'Cool with water for 20+ minutes, cover with sterile dressing, seek medical help',
     ],
     correctAnswer: 1,
     explanation:
@@ -68,12 +73,12 @@ const quizQuestions = [
     id: 2,
     question: 'The frequency of the output voltage of an alternator is determined by:',
     options: [
-      'The load connected to it',
+      'Combined control achieving 30-50% energy savings',
+      'By preventing wasted effort on components that are not faulty',
       'The rotor speed and the number of poles: f = (p x N) / 120',
-      'The strength of the magnetic field only',
-      'The type of prime mover',
+      'Insulation monitoring, first fault indication, and maintenance procedures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The frequency is determined by the speed of rotation (N, in rev/min) and the number of poles (p): f = (p x N) / 120. For a 50Hz output: a 2-pole alternator must run at 3,000 rev/min, a 4-pole at 1,500 rev/min, etc. The prime mover speed must be precisely controlled to maintain correct frequency.',
   },
@@ -81,12 +86,12 @@ const quizQuestions = [
     id: 3,
     question: "What is a 'synchronous condenser'?",
     options: [
-      'A type of capacitor bank',
+      'Because it has no starting torque of its own — the rotor must be brought close to synchronous speed before it can lock into step with the rotating field',
+      'Oscillation of the rotor about its equilibrium position, caused by sudden load changes or supply disturbances',
+      'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
       'A synchronous motor running without mechanical load, used solely for power factor correction by varying its excitation',
-      'A device for cooling synchronous machines',
-      'A transformer used with synchronous motors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A synchronous condenser is a synchronous motor running at no load (or very light load) with its excitation adjusted to generate reactive power (leading power factor). Over-excited, it behaves like a large capacitor connected to the supply, providing power factor correction. They are used at large industrial sites and grid substations.',
   },
@@ -94,12 +99,12 @@ const quizQuestions = [
     id: 4,
     question: 'Why does a synchronous motor require special starting arrangements?',
     options: [
-      'Because it is too heavy to start directly',
       'Because it has no starting torque of its own — the rotor must be brought close to synchronous speed before it can lock into step with the rotating field',
-      'Because it runs on DC supply',
-      'Because the stator windings cannot handle starting current',
+      'A synchronous motor running without mechanical load, used solely for power factor correction by varying its excitation',
+      'The maximum torque the motor can develop while remaining in synchronism — exceeding this causes the motor to lose synchronism and stall',
+      'A synchroscope — it shows the frequency difference and phase angle between the incoming machine and the busbar',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A synchronous motor has no inherent starting torque because the DC-excited rotor cannot accelerate from standstill to synchronous speed before the rotating field moves past it. Starting methods include: amortisseur (damper) windings on the rotor (which provide induction motor starting torque), a small pony motor, or a variable frequency drive that ramps up the supply frequency.',
   },
@@ -109,8 +114,8 @@ const quizQuestions = [
     options: [
       '90 electrical degrees',
       '120 electrical degrees',
-      '180 electrical degrees',
       '60 electrical degrees',
+      '180 electrical degrees',
     ],
     correctAnswer: 1,
     explanation:
@@ -120,12 +125,12 @@ const quizQuestions = [
     id: 6,
     question: "What is the 'pull-out torque' of a synchronous motor?",
     options: [
-      'The starting torque',
+      'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
+      'A synchroscope — it shows the frequency difference and phase angle between the incoming machine and the busbar',
       'The maximum torque the motor can develop while remaining in synchronism — exceeding this causes the motor to lose synchronism and stall',
-      'The torque at no-load',
-      'The braking torque',
+      'A synchronous motor running without mechanical load, used solely for power factor correction by varying its excitation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Pull-out torque is the maximum torque a synchronous motor can produce while maintaining synchronous speed. If the mechanical load exceeds the pull-out torque, the rotor falls out of step with the stator field (loses synchronism), and the motor stalls. Pull-out torque is typically 1.5 to 2.5 times rated torque and depends on the excitation level.',
   },
@@ -133,8 +138,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A steam turbine generator has 2 poles and must produce 50Hz. What speed must the turbine operate at?',
-    options: ['1,500 rev/min', '1,000 rev/min', '3,000 rev/min', '750 rev/min'],
-    correctAnswer: 2,
+    options: [
+      '1,500 rev/min',
+      '1,000 rev/min',
+      '750 rev/min',
+      '3,000 rev/min',
+    ],
+    correctAnswer: 3,
     explanation:
       'N = (120 x f) / p = (120 x 50) / 2 = 3,000 rev/min. Steam turbines are high-speed machines, so they typically drive 2-pole generators at 3,000 rev/min for 50Hz output. By contrast, a hydroelectric generator with many poles (e.g., 40 poles) runs at only 150 rev/min.',
   },
@@ -143,12 +153,12 @@ const quizQuestions = [
     question:
       "What is the purpose of 'damper windings' (amortisseur windings) on a synchronous motor rotor?",
     options: [
-      'To provide the DC excitation',
       'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
-      'To generate the output voltage',
-      'To cool the rotor',
+      'Oscillation of the rotor about its equilibrium position, caused by sudden load changes or supply disturbances',
+      'A synchronous motor running without mechanical load, used solely for power factor correction by varying its excitation',
+      'A synchroscope — it shows the frequency difference and phase angle between the incoming machine and the busbar',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Damper windings are short-circuited copper or aluminium bars embedded in the rotor pole faces — similar to a squirrel cage. At starting, with the DC field de-energised, they provide induction motor starting torque. During running, they damp out hunting oscillations that occur when the load changes suddenly.',
   },
@@ -157,12 +167,12 @@ const quizQuestions = [
     question:
       'When an alternator is operating in parallel with the grid, increasing the prime mover fuel input causes:',
     options: [
-      'The frequency to increase',
-      'The output voltage to increase',
+      'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
       'The real power (kW) output to increase — the grid holds the frequency constant',
-      'The reactive power output to increase',
+      'The rotor speed and the number of poles: f = (p x N) / 120',
+      'A hydroelectric turbine at low speed (e.g., 150 rev/min)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'When paralleled with a large grid (effectively an infinite bus), the grid controls the frequency and voltage. Increasing the prime mover power input increases the rotor angle (load angle) relative to the grid, which increases the real power (kW) output. To change reactive power (kVAr), you adjust the field excitation instead.',
   },
@@ -171,10 +181,10 @@ const quizQuestions = [
     question:
       'What instrument is used to determine the exact moment for closing the paralleling breaker when synchronising an alternator?',
     options: [
-      'An ammeter',
-      'A power factor meter',
+      'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
+      'The maximum torque the motor can develop while remaining in synchronism — exceeding this causes the motor to lose synchronism and stall',
       'A synchroscope — it shows the frequency difference and phase angle between the incoming machine and the busbar',
-      'A wattmeter',
+      'The real power (kW) output to increase — the grid holds the frequency constant',
     ],
     correctAnswer: 2,
     explanation:
@@ -184,12 +194,12 @@ const quizQuestions = [
     id: 11,
     question: 'Hunting in a synchronous motor refers to:',
     options: [
-      'The motor searching for the correct phase sequence',
+      'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
+      'The maximum torque the motor can develop while remaining in synchronism — exceeding this causes the motor to lose synchronism and stall',
+      'A synchroscope — it shows the frequency difference and phase angle between the incoming machine and the busbar',
       'Oscillation of the rotor about its equilibrium position, caused by sudden load changes or supply disturbances',
-      'The motor reversing direction',
-      'Excessive speed above synchronous',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hunting is the oscillation of the rotor angle about its steady-state position following a sudden load change, supply disturbance, or cyclic torque variation. The rotor swings back and forth about synchronous speed, causing current and power pulsations. Damper windings help suppress hunting by generating opposing torques during oscillation.',
   },
@@ -198,12 +208,12 @@ const quizQuestions = [
     question:
       'What type of prime mover is typically used with a high-pole-number (e.g., 40-pole) synchronous generator?',
     options: [
-      'A gas turbine at 3,000 rev/min',
-      'A steam turbine at 3,000 rev/min',
       'A hydroelectric turbine at low speed (e.g., 150 rev/min)',
-      'A diesel engine at 1,500 rev/min',
+      'Increased resistance causes overheating, arcing, and eventual failure',
+      'To maintain circuit integrity during fire',
+      'In the room containing the room thermostat',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Hydroelectric generators typically use many poles because the water turbine operates at low speed. For 50Hz with 40 poles: N = (120 x 50) / 40 = 150 rev/min. The large-diameter, low-speed design suits the high torque, low speed characteristics of water turbines. By contrast, steam and gas turbines are high-speed, low-pole machines.',
   },

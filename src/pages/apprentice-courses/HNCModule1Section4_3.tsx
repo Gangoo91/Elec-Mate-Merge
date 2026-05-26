@@ -36,12 +36,12 @@ const quickCheckQuestions = [
     question:
       'Under the SRSC Regulations 1977, who appoints safety representatives in unionised workplaces?',
     options: [
-      'The employer',
       'The Health and Safety Executive',
       'A recognised trade union',
       'A vote by all employees',
+      'The employer',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Under the Safety Representatives and Safety Committees Regulations 1977, safety representatives must be appointed by a recognised trade union, not by the employer. The employer must then consult with these representatives on health and safety matters.',
   },
@@ -49,10 +49,10 @@ const quickCheckQuestions = [
     id: 'time-off-training',
     question: 'Are safety representatives entitled to paid time off for training?',
     options: [
-      'No, training must be done in their own time',
+      'Appoint a principal designer and principal contractor in writing as soon as practicable',
       'Yes, with pay for training approved by the union or agreed with the employer',
-      'Only if the employer volunteers to pay',
-      'Only for a maximum of one day per year',
+      'The effective surface temperature of an ideal cooling coil',
+      'The powder cloud severely reduces visibility, can cause breathing difficulties, and leaves residue',
     ],
     correctIndex: 1,
     explanation:
@@ -62,8 +62,13 @@ const quickCheckQuestions = [
     id: 'safety-committee-request',
     question:
       'If safety representatives request a safety committee, how long does the employer have to establish one?',
-    options: ['7 days', '14 days', '3 months', 'There is no time limit'],
-    correctIndex: 2,
+    options: [
+      '7 days',
+      '14 days',
+      'There is no time limit',
+      '3 months',
+    ],
+    correctIndex: 3,
     explanation:
       "If at least two safety representatives make a written request for a safety committee, the employer must establish one within 3 months of the request. The employer must consult with the representatives and recognised unions about the committee's composition.",
   },
@@ -72,12 +77,12 @@ const quickCheckQuestions = [
     question:
       'In workplaces without recognised trade unions, how must employers consult employees on health and safety?',
     options: [
-      'There is no requirement to consult in non-unionised workplaces',
       'Through the Health and Safety Consultation with Employees Regulations 1996',
-      'Only through written notices',
-      'By consulting with the HSE only',
+      'Rods, tapes, plates, foundation electrodes, and structural steel',
+      'A closed loop that contains no other closed loops within it',
+      'A shared digital space for project information management',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The Health and Safety (Consultation with Employees) Regulations 1996 require employers to consult employees directly or through elected representatives of employee safety (ROES) in workplaces without recognised trade unions.',
   },
@@ -89,10 +94,10 @@ const quizQuestions = [
     question:
       'What is the primary function of a safety representative under the SRSC Regulations 1977?',
     options: [
-      'To manage all health and safety on behalf of the employer',
+      'Stored carbon can be released back to atmosphere through fires, disease, or land-use change',
       'To represent employees on health and safety matters and consult with the employer',
-      'To enforce health and safety law',
-      "To replace the employer's health and safety duties",
+      'Investigation → meeting → decision → right to be accompanied → right of appeal',
+      'The design current of the cooker after applying diversity',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,10 +108,10 @@ const quizQuestions = [
     question:
       'Which of the following is NOT a function of safety representatives under the SRSC Regulations?',
     options: [
-      'Investigating potential hazards and dangerous occurrences',
-      'Examining causes of workplace accidents',
-      'Issuing improvement notices to the employer',
       'Making representations to the employer on health and safety matters',
+      'Investigating potential hazards and dangerous occurrences',
+      'Issuing improvement notices to the employer',
+      'Examining causes of workplace accidents',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,12 +121,12 @@ const quizQuestions = [
     id: 3,
     question: 'What information is an employer required to provide to safety representatives?',
     options: [
-      'All confidential business information',
+      'PCBs are persistent organic pollutants that are toxic and bioaccumulative',
+      'They prevent overcommitment and ensure each job receives proper attention',
+      'That all diagrams, charts and information notices comply with the applicable standards specified',
       'Information necessary for them to fulfil their functions, subject to certain restrictions',
-      'Only information about past accidents',
-      'No information is legally required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Employers must provide information necessary for safety representatives to fulfil their functions. However, there are restrictions - employers need not disclose information that would cause substantial injury to the business, personal health information, or information obtained for legal proceedings.',
   },
@@ -129,12 +134,12 @@ const quizQuestions = [
     id: 4,
     question: 'How often should a safety committee typically meet?',
     options: [
-      'Once per year',
-      'Only after accidents occur',
       'At least quarterly, though more frequently is often beneficial',
-      'Daily',
+      'To allow the reading to stabilise and detect leakage over time',
+      'To prevent defeat of the interlock using substitution',
+      'Subject line, greeting, body, closing, signature',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'While not specified in law, HSE guidance suggests safety committees should meet at least quarterly. More frequent meetings may be appropriate in higher-risk industries or during periods of significant change. Meetings should be regular and predictable.',
   },
@@ -142,10 +147,10 @@ const quizQuestions = [
     id: 5,
     question: 'What protection do safety representatives have against employer action?',
     options: [
-      'No special protection',
+      'The tongue withdraws from the switch head, breaking the safety circuit',
       'Protection from dismissal or detriment for performing their safety representative functions',
-      'Complete immunity from all employer decisions',
-      'Protection only if the union pays their salary',
+      'Research shows the adult brain continues forming new neural connections well into old age',
+      'Apply a tourniquet to each leg 5–7 cm above the highest wound on each limb',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,11 +161,11 @@ const quizQuestions = [
     question: 'Under the SRSC Regulations, safety representatives have the right to:',
     options: [
       'Stop production immediately if they believe there is danger',
-      'Inspect the workplace at reasonable intervals',
       'Hire and fire workers who breach safety rules',
+      'Inspect the workplace at reasonable intervals',
       "Access the employer's bank accounts",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Safety representatives have the right to inspect the workplace at least every three months (or more frequently with employer agreement). They cannot unilaterally stop production (though they can advise workers of dangers) and have no hiring/firing powers.',
   },
@@ -168,12 +173,12 @@ const quizQuestions = [
     id: 7,
     question: "What should be included in a safety committee's terms of reference?",
     options: [
-      'Only the names of committee members',
+      'The system achieved adequate lighting but documentation wasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t integrated with the fire safety strategy',
+      'An upstream device clears a fault if the closer device fails',
+      'To calculate whether the ground can support the weight and forces exerted by the MEWP',
       'Objectives, membership, meeting frequency, agenda setting, and reporting arrangements',
-      'Just the meeting location',
-      'Terms of reference are not necessary',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Clear terms of reference help committees function effectively. They should cover: the committee's objectives and scope, membership and quorum, meeting frequency, agenda setting process, decision-making process, and how findings/recommendations are reported and actioned.",
   },
@@ -182,12 +187,12 @@ const quizQuestions = [
     question:
       'A representative of employee safety (ROES) differs from a union safety representative in that:',
     options: [
-      'A ROES has more powers than a union safety representative',
       'A ROES is elected by employees in non-unionised workplaces',
-      'A ROES is appointed by the HSE',
-      'There is no difference',
+      'Regular check-in procedures and emergency contacts',
+      'To prevent fingers from slipping forward onto live conductors',
+      'Network security, encryption, and access controls',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ROES are elected by employees in workplaces without recognised trade unions, under the Health and Safety (Consultation with Employees) Regulations 1996. They have similar but not identical functions to union safety representatives and generally have fewer specific powers.',
   },
@@ -195,10 +200,10 @@ const quizQuestions = [
     id: 9,
     question: 'When must employers consult safety representatives?',
     options: [
-      'Only when an accident has occurred',
+      'Check the PLC diagnostic display for fault indicators and review the I/O status to identify unexpected states',
       'Before introducing measures affecting health and safety, when planning training, and on other specified matters',
-      'Only annually during formal reviews',
-      'Never - consultation is voluntary',
+      'To provide a formal documented system that authorises specific work at specific locations under defined safety conditions',
+      'A type of adjustable guardrail frame that provides collective fall protection during assembly',
     ],
     correctAnswer: 1,
     explanation:
@@ -209,12 +214,12 @@ const quizQuestions = [
     question:
       'What happens if an employer refuses to establish a safety committee after a valid request?',
     options: [
-      'Nothing - it is only a recommendation',
+      'The number of individual optical fibres in the cable',
+      'Because near misses indicate hazards that could lead to a serious incident if not addressed',
       'The employer is in breach of the SRSC Regulations and can be prosecuted',
-      'The union must pay for a private safety committee',
-      'The HSE automatically establishes one',
+      'Energy cable can withstand during fault without damage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Failure to establish a safety committee after a valid written request from at least two safety representatives is a breach of the SRSC Regulations 1977. The employer can be prosecuted and may face improvement notices requiring compliance.',
   },

@@ -32,12 +32,12 @@ const quickCheckQuestions = [
     id: 'ca-factor',
     question: 'What does the correction factor Ca account for?',
     options: [
-      'Cable age',
+      'Verified against designer\\\\\\\\\\\\\\\'s specification',
+      'Dust protected, splash proof',
+      'Site supervisor or project manager',
       'Ambient temperature different from 30°C',
-      'Cable armour',
-      'Current asymmetry',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Ca is the ambient temperature correction factor. When ambient temperature exceeds the reference 30°C, cable current capacity must be reduced (Ca < 1) because less heat can dissipate from the cable.',
   },
@@ -45,9 +45,9 @@ const quickCheckQuestions = [
     id: 'cg-factor',
     question: 'What does the correction factor Cg account for?',
     options: [
-      'Ground conditions',
-      'Grouping of cables together',
       'Generator loads',
+      'Grouping of cables together',
+      'Ground conditions',
       'Galvanic protection',
     ],
     correctIndex: 1,
@@ -58,20 +58,25 @@ const quickCheckQuestions = [
     id: 'ci-factor',
     question: 'When must the Ci (thermal insulation) factor be applied?',
     options: [
-      'When using insulated cables',
+      'Writing clearly with correct spelling, grammar, and punctuation',
+      'Emergency procedures, site rules, hazards and welfare facilities',
+      'LENI = (Installed power × Annual hours × Controls factor) / Floor area',
       'When cables pass through or are surrounded by thermal insulation',
-      'When insulation resistance is low',
-      'For all PVC cables',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Ci applies when cables are in contact with or surrounded by thermal insulation material (loft insulation, wall insulation). This severely restricts heat dissipation.',
   },
   {
     id: 'combined-factors',
     question: 'How are multiple correction factors combined?',
-    options: ['Added together', 'Multiplied together', 'The lowest is used', 'The highest is used'],
-    correctIndex: 1,
+    options: [
+      'Added together',
+      'The lowest is used',
+      'The highest is used',
+      'Multiplied together',
+    ],
+    correctIndex: 3,
     explanation:
       'Correction factors are multiplied together: Iz = It × Ca × Cg × Ci. Each factor further reduces the effective current-carrying capacity.',
   },
@@ -96,7 +101,12 @@ const quizQuestions = [
     id: 2,
     question:
       'Six circuits are grouped together in trunking. The grouping factor is 0.57. If each circuit needs 20A, what minimum It is required?',
-    options: ['11.4A', '20A', '35.1A', '120A'],
+    options: [
+      '120A',
+      '11.4A',
+      '35.1A',
+      '20A',
+    ],
     correctAnswer: 2,
     explanation:
       'Minimum It = In / Cg = 20 / 0.57 = 35.1A. The tabulated current must be higher to compensate for reduced heat dissipation when grouped.',
@@ -106,12 +116,12 @@ const quizQuestions = [
     question:
       'Why does the Ci factor for cables totally surrounded by thermal insulation equal 0.5?',
     options: [
-      'The insulation is 50% effective',
       'Only half the cable is covered',
-      'Heat dissipation is severely restricted',
+      'The insulation is 50% effective',
       "It's an arbitrary safety factor",
+      'Heat dissipation is severely restricted',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Thermal insulation prevents heat from escaping. When totally surrounded, the cable can only carry 50% of its normal current to prevent dangerous overheating.',
   },
@@ -120,12 +130,12 @@ const quizQuestions = [
     question:
       'A cable runs through 400mm of thermal insulation in a ceiling void. What Ci factor applies?',
     options: [
-      '0.5 (totally surrounded)',
-      '0.63 (100mm)',
-      '0.55 (200mm)',
       '0.5 (exceeds 400mm threshold)',
+      'Polarised Light Microscopy',
+      'RCD and overcurrent protection',
+      'Overcomes contact resistance',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'For cables passing through insulation exceeding 400mm, Ci = 0.5 applies (same as totally surrounded). The 400mm is the threshold for worst-case derating.',
   },
@@ -133,15 +143,25 @@ const quizQuestions = [
     id: 5,
     question:
       'In a plant room with 45°C ambient, what Ca factor applies to PVC cables (Table 4B1)?',
-    options: ['0.79', '0.87', '0.94', '1.0'],
-    correctAnswer: 0,
+    options: [
+      '0.87',
+      '0.79',
+      '1.0',
+      '0.94',
+    ],
+    correctAnswer: 1,
     explanation:
       'From Table 4B1, for PVC cables at 45°C ambient: Ca = 0.79. Higher temperatures require greater derating than moderate increases.',
   },
   {
     id: 6,
     question: 'What reference ambient temperature do BS 7671 tables assume?',
-    options: ['20°C', '25°C', '30°C', '35°C'],
+    options: [
+      '20°C',
+      '25°C',
+      '30°C',
+      '35°C',
+    ],
     correctAnswer: 2,
     explanation:
       'BS 7671 Appendix 4 tables assume a reference ambient temperature of 30°C for cables installed in air. Higher ambients require Ca derating.',
@@ -150,8 +170,13 @@ const quizQuestions = [
     id: 7,
     question:
       'Three single-phase circuits in a conduit are grouped with three three-phase circuits. How many circuits for the grouping factor?',
-    options: ['3 circuits', '6 circuits', '9 circuits (3 × 3-phase)', '12 circuits'],
-    correctAnswer: 1,
+    options: [
+      '3 circuits',
+      '12 circuits',
+      '9 circuits (3 × 3-phase)',
+      '6 circuits',
+    ],
+    correctAnswer: 3,
     explanation:
       'Count each multi-core cable or set of single-core cables forming one circuit as one circuit. Three single-phase + three three-phase = 6 circuits.',
   },
@@ -159,12 +184,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why do XLPE cables have different Ca factors than PVC cables?',
     options: [
-      'XLPE is more expensive',
       'XLPE has higher maximum operating temperature (90°C vs 70°C)',
-      'XLPE cables are always larger',
-      'PVC is fire resistant',
+      'Ensure they are the latest, stamped/dated copies',
+      'Fast response time and high power capability',
+      '3-5 years (standard) or 10-12 years (long-life)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'XLPE cables operate at 90°C compared to PVC at 70°C. The larger temperature margin means XLPE cables are less affected by elevated ambient temperatures.',
   },
@@ -172,8 +197,13 @@ const quizQuestions = [
     id: 9,
     question:
       'A cable has It = 40A. Ca = 0.87, Cg = 0.7, Ci = 1.0. What is the effective capacity Iz?',
-    options: ['24.4A', '40A', '65.7A', '27.8A'],
-    correctAnswer: 0,
+    options: [
+      '40A',
+      '24.4A',
+      '65.7A',
+      '27.8A',
+    ],
+    correctAnswer: 1,
     explanation:
       'Iz = It × Ca × Cg × Ci = 40 × 0.87 × 0.7 × 1.0 = 24.4A. Multiple factors compound to significantly reduce capacity.',
   },
@@ -182,11 +212,11 @@ const quizQuestions = [
     question: 'When cables are spaced by one cable diameter in a group, how does this affect Cg?',
     options: [
       'No improvement - same Cg applies',
+      'Only applicable to single-core cables',
       'Cg improves to a higher value',
       'Grouping factor no longer applies',
-      'Only applicable to single-core cables',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Table 4C1 Note 4: When cables are spaced by at least one cable diameter, improved grouping factors apply because air circulation improves heat dissipation.',
   },

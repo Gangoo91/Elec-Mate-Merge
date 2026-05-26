@@ -12,14 +12,24 @@ const DESCRIPTION =
 const quickCheckQuestions = [
   {
     question: 'What tool is inserted inside PVC conduit to prevent collapse during bending?',
-    options: ['Heat gun', 'Bending spring', 'Pipe vice', 'Hickey bender'],
-    correctIndex: 1,
+    options: [
+      'Heat gun',
+      'Hickey bender',
+      'Bending spring',
+      'Pipe vice',
+    ],
+    correctIndex: 2,
     explanation:
       'A bending spring (internal or external) is inserted into PVC conduit to maintain its shape and prevent collapse during the heating and bending process.',
   },
   {
     question: 'Which manual tool is best for small corrections in metal conduit?',
-    options: ['Hand bender', 'Hickey bender', 'Pipe vice', 'Bending spring'],
+    options: [
+      'Pipe vice',
+      'Hickey bender',
+      'Bending spring',
+      'Hand bender',
+    ],
     correctIndex: 1,
     explanation:
       'A hickey bender is specifically designed for small adjustments and kick bends in metal conduit without damaging the material.',
@@ -27,12 +37,12 @@ const quickCheckQuestions = [
   {
     question: 'Why should bends be made slowly rather than quickly?',
     options: [
-      'To save energy',
+      'To confirm each fault is resolved before moving on',
+      'Make the reading artificially lower',
       'To avoid kinks, flattening, or cracking',
-      'To reduce noise',
-      'To meet regulations',
+      'A north pole at the entry end (opposes the magnet)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Slow, controlled bending prevents damage such as kinks, flattening, or cracking that can occur when force is applied too quickly.',
   },

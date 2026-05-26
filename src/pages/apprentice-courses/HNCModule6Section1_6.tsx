@@ -33,8 +33,8 @@ const quickCheckQuestions = [
     options: [
       "The building's structural integrity",
       "The building's energy efficiency rating from A to G",
-      "The building's fire safety compliance",
       "The building's accessibility compliance",
+      "The building's fire safety compliance",
     ],
     correctIndex: 1,
     explanation:
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'building-log-book',
     question: 'What is the primary purpose of a building log book?',
     options: [
-      'To record visitor access to the building',
       "To document the building's energy systems and provide operational guidance",
-      'To list all contractors who worked on the building',
-      'To store warranty certificates only',
+      "Operators become overwhelmed and may miss critical safety issues",
+      "Dead testing is done with power off, live testing with power on",
+      "Essential requirements of relevant EU/UK product supply legislation (e.g., UKCA/CE marking)",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A building log book documents the energy-consuming systems, their design parameters, and operational guidance to enable efficient building operation. It is a requirement under Part L of the Building Regulations.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'as-built-documentation',
     question: 'As-built drawings differ from construction drawings because they:',
     options: [
-      'Use different paper sizes',
+      'They can fall and strike people below, causing injury or death',
+      'Lower than individual readings due to parallel paths',
+      'It represents the conductor material and insulation type constant',
       'Show the installation as actually constructed, including all variations',
-      'Are produced by the client rather than the contractor',
-      'Do not require approval',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'As-built drawings record the installation as actually constructed, incorporating all variations, changes, and RFIs that occurred during construction. They are essential for future maintenance and modifications.',
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'part-l-evidence',
     question: 'Part L evidence must demonstrate compliance with:',
     options: [
-      'Fire safety requirements',
-      'Accessibility standards',
+      'The rate of change of phase angle in radians per second',
       'Energy efficiency and carbon emission targets',
-      'Structural loading requirements',
+      'Prevent access to hazards while the machine is running',
+      'Your name, date, and reason for isolation',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Part L of the Building Regulations covers the conservation of fuel and power. Evidence must demonstrate that the building meets energy efficiency requirements and carbon emission targets through design calculations and as-built verification.',
   },
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'Who is legally responsible for commissioning a valid EPC for a new building?',
     options: [
-      'The building occupier',
+      'To convert AC mains to DC for charging batteries and supplying inverter',
       'The person carrying out the building work (typically the developer)',
-      'The local authority',
-      'The energy assessor',
+      'An appointed person and a suitably stocked first aid kit',
+      'Only when dead working is unreasonable and suitable precautions are taken',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'A commissioning certificate for an HVAC system should include:',
     options: [
-      'Design calculations only',
-      'Equipment warranties only',
+      'Operating procedures, maintenance schedules, and equipment data',
+      'There is no minimum; buildings must meet Part L requirements',
       'Test results demonstrating the system meets design intent',
-      'Marketing specifications',
+      'Total useful floor area greater than 500m²',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'The building log book requirement under Part L applies to buildings with:',
     options: [
-      'Any heating or cooling system',
+      'Building work complies with the Building Regulations',
+      'At practical completion, before final handover',
+      'Notice of commissioning (Regulation 44)',
       'Total useful floor area greater than 500m²',
-      'More than 10 occupants',
-      'Commercial use only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Part L requires a building log book for buildings with a total useful floor area greater than 500m². The log book provides information about the building's energy systems to enable efficient operation.",
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'Which document provides evidence that fixed building services have been commissioned in accordance with approved procedures?',
     options: [
-      'Design certificate',
-      'Commissioning Plan',
       'Notice of commissioning (Regulation 44)',
-      'Building log book',
+      'Total useful floor area greater than 500m²',
+      'At practical completion, before final handover',
+      'The BER does not exceed the TER',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Regulation 44 of the Building Regulations requires that a notice of commissioning be given to Building Control, confirming that fixed building services have been commissioned in accordance with an approved procedure.',
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'As-built documentation should be submitted:',
     options: [
-      'Before construction begins',
+      'Test results demonstrating the system meets design intent',
       'At practical completion, before final handover',
-      'Six months after occupation',
-      'Only when requested by the client',
+      'Building work complies with the Building Regulations',
+      'Notice of commissioning (Regulation 44)',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       'What is the minimum EPC rating required for new non-domestic buildings under current regulations?',
     options: [
-      'Rating E or above',
-      'Rating D or above',
-      'Rating B or above',
+      'Total useful floor area greater than 500m²',
+      'Building work complies with the Building Regulations',
       'There is no minimum; buildings must meet Part L requirements',
+      'Test results demonstrating the system meets design intent',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'New buildings must demonstrate compliance with Part L through the SBEM or DSM methodology, which determines the calculated emission rate. The EPC rating follows from this compliance rather than being a standalone minimum requirement.',
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'O&M manuals for building services should include:',
     options: [
-      'Design calculations and tender documents',
+      'Ensure smooth transition from construction to operation',
+      'At practical completion, before final handover',
+      'Test results demonstrating the system meets design intent',
       'Operating procedures, maintenance schedules, and equipment data',
-      'Staff training records',
-      'Construction programme and progress reports',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'O&M manuals provide essential information for operating and maintaining building services, including operating procedures, maintenance schedules, equipment specifications, spare parts lists, and manufacturer documentation.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'Part L evidence for a new building must demonstrate that:',
     options: [
-      'The building looks attractive',
       'The BER does not exceed the TER',
       'All materials are locally sourced',
+      'The building looks attractive',
       'The building can accommodate future expansion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Part L evidence must demonstrate that the Building Emission Rate (BER) does not exceed the Target Emission Rate (TER). This is calculated using approved software (SBEM for non-domestic buildings) and verified through as-built assessments.',
   },
@@ -193,11 +193,11 @@ const quizQuestions = [
     question: 'Which of these is NOT typically included in handover documentation?',
     options: [
       'Test certificates and commissioning data',
-      'As-built drawings',
       'Tender pricing breakdowns',
+      'As-built drawings',
       'Warranty information',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Tender pricing breakdowns are commercial documents that remain confidential and are not part of handover documentation. Handover focuses on technical information needed to operate and maintain the building.',
   },
@@ -206,11 +206,11 @@ const quizQuestions = [
     question: 'A Building Control completion certificate confirms:',
     options: [
       'The building meets all planning conditions',
+      'All contractor warranties are in place',
       'Building work complies with the Building Regulations',
       'The building is ready for occupation',
-      'All contractor warranties are in place',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A completion certificate from Building Control confirms that the building work, as inspected, complies with the applicable Building Regulations. It is a legal requirement before occupation of new buildings.',
   },
@@ -218,12 +218,12 @@ const quizQuestions = [
     id: 11,
     question: 'Soft landings procedures are designed to:',
     options: [
-      'Reduce construction costs',
-      'Accelerate the construction programme',
+      'Total useful floor area greater than 500m²',
+      'Test results demonstrating the system meets design intent',
+      'Notice of commissioning (Regulation 44)',
       'Ensure smooth transition from construction to operation',
-      'Eliminate the need for commissioning',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Soft landings is an approach that ensures smooth transition from construction to operation, with extended aftercare, user training, and post-occupancy evaluation to close the performance gap between design intent and actual operation.',
   },
@@ -231,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'The defects liability period typically begins:',
     options: [
-      'At contract award',
       'At practical completion',
-      'At final certificate',
       '12 months after occupation',
+      'At contract award',
+      'At final certificate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The defects liability period (typically 12 months) begins at practical completion. During this period, the contractor must return to rectify any defects that emerge, at no additional cost to the client.',
   },

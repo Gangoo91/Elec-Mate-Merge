@@ -24,19 +24,24 @@ const quickCheckQuestions = [
     question:
       'Why are flexible cords made with many fine strands rather than a single solid conductor?',
     options: [
-      'Cheaper to manufacture',
-      'Better electrical conductivity',
       'Greater flexibility without breakage',
-      'Easier to strip',
+      'To simulate mains failure for testing',
+      'In the reverse order to assembly (top down)',
+      'Skipping the re-prove step after isolation',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Multi-stranded conductors can bend repeatedly without breaking, making them ideal for movable applications.',
   },
   {
     id: 'flex-application',
     question: 'Name one application for heat-resistant flex.',
-    options: ['Table lamps', 'Cookers and ovens', 'Computer equipment', 'Garden tools'],
+    options: [
+      'Garden tools',
+      'Cookers and ovens',
+      'Table lamps',
+      'Computer equipment',
+    ],
     correctIndex: 1,
     explanation:
       'Heat-resistant flex is essential for high-temperature applications like cookers, ovens, and immersion heaters.',
@@ -45,12 +50,12 @@ const quickCheckQuestions = [
     id: 'flex-outlet',
     question: 'What is the purpose of a cord grip at a flex outlet?',
     options: [
-      'Improve appearance',
       'Prevent strain on conductor connections',
-      'Reduce electrical resistance',
-      'Allow easier disconnection',
+      'Loose or intermittent connections',
+      'Dividing L-L fault current by 0.87',
+      'Prospective Short-Circuit Current',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Cord grips provide strain relief, preventing pulling forces from damaging the conductor terminations.',
   },
@@ -61,10 +66,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main difference between flexible cords and fixed wiring cables?',
     options: [
-      'Colour of insulation',
+      'Deteriorating connections or added cable length',
       'Use of multi-stranded conductors for flexibility',
-      'Thickness of outer sheath',
-      'Voltage rating',
+      '18-22% for standard panels, up to 25%+ for premium',
+      'A transient current spike may occur during changeover',
     ],
     correctAnswer: 1,
     explanation:
@@ -73,7 +78,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which type of flex would you use for an outdoor tool exposed to mechanical wear?',
-    options: ['PVC flex', 'Heat-resistant flex', 'Rubber-sheathed HOFR flex', 'Artic flex'],
+    options: [
+      '6 times cable diameter',
+      'Heat and oil resistant',
+      'Rubber-sheathed HOFR flex',
+      'Cord grip or clamp',
+    ],
     correctAnswer: 2,
     explanation:
       'HOFR (Heavy Duty Oil and Flame Resistant) rubber-sheathed flex provides excellent protection against mechanical wear.',
@@ -90,51 +100,76 @@ const quizQuestions = [
     id: 4,
     question: 'Why is heat-resistant flex used for cookers and immersion heaters?',
     options: [
-      "It's cheaper than PVC flex",
       'It withstands high operating temperatures',
-      "It's more flexible",
-      "It's waterproof",
+      'Contactor + overload + supply rated for inrush',
+      'Name of person, nature of work, date and time',
+      'An ID card confirming qualifications and competence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Heat-resistant flex maintains its insulation properties and flexibility at high temperatures up to 90°C or more.',
   },
   {
     id: 5,
     question: 'Which colour is used for the earth conductor in flexible cords?',
-    options: ['Green', 'Yellow', 'Green/yellow', 'Bare copper'],
-    correctAnswer: 2,
+    options: [
+      'Yellow',
+      'Green/yellow',
+      'Bare copper',
+      'Green',
+    ],
+    correctAnswer: 1,
     explanation:
       'Green/yellow is the standard earth conductor colour in flexible cords, following BS 7671 colour coding.',
   },
   {
     id: 6,
     question: 'What component must be used at a flex outlet to prevent damage from pulling forces?',
-    options: ['Cable ties', 'Cord grip or clamp', 'Insulation tape', 'Terminal blocks'],
-    correctAnswer: 1,
+    options: [
+      'Cable ties',
+      'Insulation tape',
+      'Cord grip or clamp',
+      'Terminal blocks',
+    ],
+    correctAnswer: 2,
     explanation:
       'Cord grips or clamps provide essential strain relief to prevent conductor damage from pulling forces.',
   },
   {
     id: 7,
     question: 'Which type of flex remains flexible at low temperatures?',
-    options: ['PVC flex', 'Heat-resistant flex', 'Artic flex', 'Standard rubber flex'],
-    correctAnswer: 2,
+    options: [
+      'PVC flex',
+      'Heat-resistant flex',
+      'Standard rubber flex',
+      'Artic flex',
+    ],
+    correctAnswer: 3,
     explanation:
       'Artic flex is specially formulated to remain flexible in cold conditions where other types become stiff.',
   },
   {
     id: 8,
     question: 'What is the maximum continuous temperature rating for standard PVC flex?',
-    options: ['60°C', '70°C', '90°C', '105°C'],
-    correctAnswer: 1,
+    options: [
+      '70°C',
+      '90°C',
+      '60°C',
+      '105°C',
+    ],
+    correctAnswer: 0,
     explanation:
       'Standard PVC flexible cord is typically rated for continuous operation up to 70°C.',
   },
   {
     id: 9,
     question: 'Which British Standard covers flexible cords and cables?',
-    options: ['BS 6004', 'BS 6500', 'BS 7671', 'BS 5467'],
+    options: [
+      'BS 6004',
+      'BS 6500',
+      'BS 7671',
+      'BS 5467',
+    ],
     correctAnswer: 1,
     explanation:
       'BS 6500 covers flexible cords and cables, whilst BS 7671 provides installation requirements.',
@@ -143,20 +178,25 @@ const quizQuestions = [
     id: 10,
     question: 'What causes most flexible cord failures?',
     options: [
-      'Overloading',
+      'Heat and oil resistant',
+      '6 times cable diameter',
       'Repeated bending at connections',
-      'UV degradation',
-      'Manufacturing defects',
+      'Rubber-sheathed HOFR flex',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Most failures occur at connection points where repeated bending causes conductor fatigue without proper strain relief.',
   },
   {
     id: 11,
     question: 'Which flex type is suitable for food preparation areas?',
-    options: ['Standard PVC', 'Rubber HOFR', 'Heat and oil resistant', 'Artic flex'],
-    correctAnswer: 2,
+    options: [
+      'Standard PVC',
+      'Rubber HOFR',
+      'Artic flex',
+      'Heat and oil resistant',
+    ],
+    correctAnswer: 3,
     explanation:
       'Heat and oil resistant flex can withstand the temperatures and food-safe requirements of commercial kitchens.',
   },
@@ -164,12 +204,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the minimum bend radius for flexible cords during installation?',
     options: [
-      '2 times cable diameter',
-      '4 times cable diameter',
       '6 times cable diameter',
       '8 times cable diameter',
+      '2 times cable diameter',
+      '4 times cable diameter',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A minimum bend radius of 6 times the cable diameter prevents damage to conductors and insulation.',
   },

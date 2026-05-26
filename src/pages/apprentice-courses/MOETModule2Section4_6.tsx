@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'spd-purpose',
     question: 'What is the primary function of a surge protection device (SPD)?',
     options: [
-      'To protect against sustained overvoltage conditions',
+      '470mm above the platform (approximately halfway between platform and guardrail)',
       'To divert transient overvoltage energy safely to earth, limiting the voltage across connected equipment',
-      'To provide overcurrent protection for the installation',
-      'To improve the power factor of the electrical supply',
+      'Effective measures to prevent contact with dangerous parts or arrest movement before contact',
+      'Emotional exhaustion, cynicism (depersonalisation), and reduced personal efficacy',
     ],
     correctIndex: 1,
     explanation:
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'spd-type2',
     question: 'A Type 2 SPD is designed to protect against:',
     options: [
-      'Direct lightning strikes to the building',
+      'The PLC input must be configured for sinking (NPN-compatible) to work with a PNP sensor',
       'Indirect lightning effects and switching surges at the distribution board',
-      'Sustained undervoltage conditions',
-      'Harmonic distortion on the supply',
+      'Cease work, secure tools and materials, and descend the tower safely',
+      'Removing or disturbing AIB (asbestos insulating board), sprayed coatings, or pipe lagging',
     ],
     correctIndex: 1,
     explanation:
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'bs7671-spd-requirement',
     question: 'Under BS 7671:2018 Amendment 2, SPD protection is required unless:',
     options: [
-      'The installation is in an urban area',
+      'The supplier must provide them and the employer must make them accessible to employees',
       'A risk assessment determines that the consequences of overvoltage are not serious',
-      'The installation has RCD protection',
-      'The supply voltage is below 230 V',
+      'IET Code of Practice for EESS and manufacturer documentation',
+      'Improvement Notices, Prohibition Notices, and fines or prosecution',
     ],
     correctIndex: 1,
     explanation:
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     question:
       'Why must an SPD have a dedicated overcurrent protective device (backup fuse or MCB)?',
     options: [
-      'To protect the SPD from normal load current',
+      'Systematically verify that the correct signals are present at each stage of the circuit, identifying where the signal path is broken',
+      'A standardised document reporting verified environmental impacts of a product',
       'To disconnect the SPD if it fails short-circuit under sustained overvoltage or at end of life, preventing fire',
-      'To provide earth fault protection for the SPD',
-      'To improve the clamping voltage of the SPD',
+      'Oil must be stored in containers within impermeable bunds, with secure fittings, and away from drains and watercourses',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "SPDs contain metal oxide varistors (MOVs) or gas discharge tubes that can fail short-circuit if subjected to sustained overvoltage or at end of life due to degradation. The backup protective device (typically a fuse or MCB rated per the manufacturer's instructions) disconnects the SPD from the supply before it overheats and causes a fire. Some SPDs have integrated backup protection.",
   },
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'Transient overvoltages in a supply system are most commonly caused by:',
     options: [
-      'Excessive load current',
+      'LENI = (Installed power × Annual hours × Controls factor) / Floor area',
       'Lightning (direct and indirect) and switching operations on the power network',
-      'Incorrect cable sizing',
-      'Low power factor',
+      'Actively invite disagreement and alternative views to ensure your understanding is complete',
+      'A full inspection by a competent person before the tower is used again',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'The three SPD types (1, 2 and 3) correspond to different positions in the installation and different surge levels. Type 1 is installed:',
     options: [
-      'At individual socket outlets',
+      'The main earthing terminal of the installation (via the shortest practical route)',
+      'The maximum voltage the SPD allows to pass through to the protected equipment during a surge',
       'At the origin of the installation, between the supply and the main distribution board',
-      'Inside individual items of equipment',
-      'At the final circuit level only',
+      'The SPD has reached end of life and needs replacement — it is no longer providing protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Type 1 SPDs are installed at the origin of the installation (typically at or before the main switchboard) to handle the highest energy surges — including direct lightning current. They are required where the building has a lightning protection system (LPS). Type 2 SPDs are installed at the distribution board for general protection, and Type 3 SPDs are installed at the point of use for fine protection of sensitive equipment.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 3,
     question: 'The voltage protection level (Up) of an SPD indicates:',
     options: [
-      'The maximum supply voltage the SPD can handle',
+      'Line to neutral and neutral to earth (L-N + N-PE) — the \\\\\\\\\\\\\\\'3+1\\\\\\\\\\\\\\\' or \\\\\\\\\\\\\\\'CT2\\\\\\\\\\\\\\\' configuration',
+      'Long conductors add inductance which increases the effective voltage protection level during fast transients',
+      'The main earthing terminal of the installation (via the shortest practical route)',
       'The maximum voltage the SPD allows to pass through to the protected equipment during a surge',
-      "The voltage at which the SPD's backup fuse operates",
-      'The supply frequency the SPD is designed for',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The voltage protection level (Up) is the maximum voltage the SPD allows across its terminals during a surge event. It represents the 'clamping voltage' — the level to which the SPD limits the transient overvoltage. A lower Up provides better protection. For 230 V installations, a typical Up for Type 2 SPDs is 1.5 kV or less.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     question:
       'BS 7671 Regulation 534.2.1 requires that SPD conductors be kept as short as possible because:',
     options: [
-      'Long conductors cost more',
       'Long conductors add inductance which increases the effective voltage protection level during fast transients',
-      'Long conductors are more likely to be mechanically damaged',
-      'Short conductors look neater in the distribution board',
+      'The likelihood of transient overvoltages and the consequences of equipment damage (type of wiring, value of equipment, nature of occupancy)',
+      'Status indicator (healthy/fault), backup protection intact, connections tight, and SPD rating appropriate for the installation',
+      'The maximum voltage the SPD allows to pass through to the protected equipment during a surge',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "During a fast transient surge, the rate of current change (di/dt) through the SPD conductors can be very high. The voltage drop across the conductor inductance (V = L × di/dt) adds to the SPD's clamping voltage, effectively increasing the voltage seen by the protected equipment. Keeping connections as short as possible (ideally less than 500 mm total for both line and earth connections) minimises this effect.",
   },
@@ -125,10 +125,10 @@ const quizQuestions = [
     question:
       'A Type 2 SPD installed at a domestic consumer unit would typically be rated for a maximum discharge current (Imax) of:',
     options: [
-      '1 kA',
+      'STOP all work immediately',
       '10 to 40 kA (8/20 microsecond wave)',
-      '100 kA (10/350 microsecond wave)',
-      '500 kA',
+      'Equipment that could be damaged',
+      'To check for damage and cleanliness',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,12 +138,12 @@ const quizQuestions = [
     id: 6,
     question: "An SPD status indicator showing 'red' or 'fault' typically means:",
     options: [
-      'The SPD is operating normally',
+      'The maximum voltage the SPD allows to pass through to the protected equipment during a surge',
+      'Long conductors add inductance which increases the effective voltage protection level during fast transients',
       'The SPD has reached end of life and needs replacement — it is no longer providing protection',
-      'There is a surge occurring right now',
-      'The backup fuse needs testing',
+      'The main earthing terminal of the installation (via the shortest practical route)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Most SPDs include a status indicator (LED, mechanical flag, or window) that changes from green (healthy) to red (fault) when the internal protective elements have degraded or failed. This indicates the SPD is no longer providing protection and must be replaced. Degradation occurs naturally over time as the MOV absorbs successive surge events, and the device should be checked during periodic inspection.',
   },
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 7,
     question: 'When installing an SPD at a consumer unit, the earth connection should be made to:',
     options: [
-      'A separate earth electrode dedicated to the SPD',
+      'At the origin of the installation, between the supply and the main distribution board',
+      'Line to neutral and neutral to earth (L-N + N-PE) — the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'3+1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' or \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'CT2\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' configuration',
+      'The maximum voltage the SPD allows to pass through to the protected equipment during a surge',
       'The main earthing terminal of the installation (via the shortest practical route)',
-      'The neutral bar of the consumer unit',
-      'The metallic water pipe',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The SPD earth connection must be made to the main earthing terminal (MET) of the installation via the shortest possible route to minimise inductance. A separate earth electrode is not used because it could create a potential difference between the SPD earth and the installation earth during a surge event. All earths must be bonded together at a single reference point.',
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 8,
     question: 'In a TT earthing system, SPDs should be connected in which configuration?',
     options: [
-      'Line to earth only (L-PE)',
       "Line to neutral and neutral to earth (L-N + N-PE) — the '3+1' or 'CT2' configuration",
-      'Line to line only',
-      'No SPD is needed in TT systems',
+      "The SPD has reached end of life and needs replacement — it is no longer providing protection",
+      "Long conductors add inductance which increases the effective voltage protection level during fast transients",
+      "The maximum voltage the SPD allows to pass through to the protected equipment during a surge",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "In TT systems, surges can appear between line and neutral as well as between neutral and earth (because the neutral and earth are not closely coupled as in TN systems). The recommended configuration is L-N + N-PE (Type 2 CT2 or '3+1' for three-phase). This protects against both modes. The N-PE SPD must be a spark-gap type to avoid affecting RCD operation.",
   },
@@ -178,10 +178,10 @@ const quizQuestions = [
     question:
       'The risk assessment for SPD installation (per BS EN 62305 / BS 7671 Reg 443) considers:',
     options: [
-      'Only the cost of the SPD',
+      'Listing every KSB from the official ST1426 assessment plan so you have a complete framework to populate as you gather evidence throughout the apprenticeship',
       'The likelihood of transient overvoltages and the consequences of equipment damage (type of wiring, value of equipment, nature of occupancy)',
-      'The colour of the distribution board',
-      'The number of socket outlets in the installation',
+      'In a clearly identified, easily accessible location known to all workers — flagged at induction and on the site\\\\\\\\\\\\\\\'s emergency information',
+      'An external event triggers a thought or interpretation, which generates an emotion, which then drives a behaviour',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,12 +191,12 @@ const quizQuestions = [
     id: 10,
     question: 'SPDs must be inspected during periodic inspection. What should be checked?',
     options: [
-      'Only that the SPD is physically present',
+      'Long conductors add inductance which increases the effective voltage protection level during fast transients',
+      'The maximum voltage the SPD allows to pass through to the protected equipment during a surge',
       'Status indicator (healthy/fault), backup protection intact, connections tight, and SPD rating appropriate for the installation',
-      "Only the manufacturer's label",
-      'Only the colour of the indicator light',
+      'The SPD has reached end of life and needs replacement — it is no longer providing protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "During periodic inspection, SPDs should be checked for: status indicator condition (green = healthy, red = needs replacement), integrity of the backup protective device (fuse not blown, MCB not tripped), security of all connections, physical condition (no signs of burning or damage), and confirmation that the SPD type and rating are appropriate for the installation's earthing system and risk assessment.",
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     question:
       'Where a building has a lightning protection system (LPS), which type of SPD is required at the origin?',
     options: [
-      'Type 3 only',
+      'BS 8536 (now incorporated into BS EN ISO 19650)',
+      'Mandatory energy audit for large UK organisations every 4 years',
+      'Telecommunications Grounding Busbar',
       'Type 1 (to handle direct lightning current energy)',
-      'No SPD is needed if an LPS is installed',
-      'Type 2 is always sufficient',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Where a building has a lightning protection system, a direct lightning strike is conducted to earth via the LPS. However, a portion of the lightning energy can enter the electrical installation via the earthing system (conducted through bonding between the LPS earth and the installation MET). A Type 1 SPD is required to handle this high-energy current (10/350 microsecond impulse).',
   },

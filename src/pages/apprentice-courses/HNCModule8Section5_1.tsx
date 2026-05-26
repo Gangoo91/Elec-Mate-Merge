@@ -26,8 +26,13 @@ const quickCheckQuestions = [
   {
     id: 'bms-levels',
     question: 'Which level of a BMS architecture directly interfaces with sensors and actuators?',
-    options: ['Management level', 'Automation level', 'Field level', 'Enterprise level'],
-    correctIndex: 2,
+    options: [
+      'Management level',
+      'Automation level',
+      'Enterprise level',
+      'Field level',
+    ],
+    correctIndex: 3,
     explanation:
       'The field level is the lowest tier of the BMS hierarchy and directly interfaces with sensors, actuators, and other field devices. It collects data from the physical environment and executes control commands.',
   },
@@ -35,12 +40,12 @@ const quickCheckQuestions = [
     id: 'outstation-function',
     question: 'What is the primary function of a BMS outstation?',
     options: [
-      'Display graphical user interfaces',
       'Provide local control and data acquisition',
-      'Store historical trend data',
-      'Generate energy reports',
+      'At tender stage with confirmed lead times',
+      'Solar radiation tables based on clear sky models',
+      'Age, wear, and environmental factors',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Outstations (also called controllers or field controllers) provide local control and data acquisition. They can operate autonomously even if communication with the head-end is lost, ensuring continuous building control.',
   },
@@ -48,8 +53,13 @@ const quickCheckQuestions = [
     id: 'network-topology',
     question:
       'Which network topology provides the greatest resilience for critical BMS applications?',
-    options: ['Star topology', 'Bus topology', 'Ring topology', 'Daisy chain topology'],
-    correctIndex: 2,
+    options: [
+      'Daisy chain topology',
+      'Ring topology',
+      'Star topology',
+      'Bus topology',
+    ],
+    correctIndex: 1,
     explanation:
       'Ring topology provides redundant communication paths - if one segment fails, data can still reach its destination via the alternative path. This makes it ideal for critical applications where communication must be maintained.',
   },
@@ -86,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is NOT typically a function of a BMS?',
     options: [
-      'HVAC control',
-      'Lighting control',
+      'Full fall protection system',
+      'The reciprocal of resistance',
       'Structural load monitoring',
-      'Energy management',
+      '0.5-1% of initial cost per year',
     ],
     correctAnswer: 2,
     explanation:
@@ -98,8 +108,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'At which level of BMS architecture does the operator workstation reside?',
-    options: ['Field level', 'Automation level', 'Management level', 'Integration level'],
-    correctAnswer: 2,
+    options: [
+      'Automation level',
+      'Field level',
+      'Integration level',
+      'Management level',
+    ],
+    correctAnswer: 3,
     explanation:
       'Operator workstations with their graphical user interfaces, alarm displays, and reporting functions reside at the management level - the top tier of the BMS hierarchy.',
   },
@@ -107,20 +122,25 @@ const quizQuestions = [
     id: 4,
     question: 'What is a points schedule in BMS terminology?',
     options: [
-      'A maintenance timetable',
       'A list of all monitored and controlled points',
-      'A time-based control sequence',
-      'A sensor calibration record',
+      'Remote access and integration capabilities',
+      'To record historical data for analysis',
+      'The outstation continues operating using its local program',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A points schedule is a comprehensive list documenting all physical and virtual points in the BMS, including point names, descriptions, addresses, engineering units, and alarm parameters.',
   },
   {
     id: 5,
     question: 'Which communication medium typically connects field devices to outstations?',
-    options: ['Fibre optic cable', 'Wireless 4G/5G', 'Twisted pair cable', 'Coaxial cable'],
-    correctAnswer: 2,
+    options: [
+      'Wireless 4G/5G',
+      'Twisted pair cable',
+      'Coaxial cable',
+      'Fibre optic cable',
+    ],
+    correctAnswer: 1,
     explanation:
       'Twisted pair cable (often screened/shielded) is the most common medium for connecting field devices to outstations due to its cost-effectiveness, noise immunity, and ease of installation.',
   },
@@ -129,11 +149,11 @@ const quizQuestions = [
     question: 'What happens to a BMS outstation if communication with the head-end is lost?',
     options: [
       'All connected equipment shuts down immediately',
-      'The outstation continues operating using its local program',
       'Manual control is required at each device',
+      'The outstation continues operating using its local program',
       'Emergency alarms are triggered automatically',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Outstations are designed to operate autonomously. They contain their own programs and can maintain local control even when communication with the head-end is lost, ensuring building services continue to operate.',
   },
@@ -144,18 +164,23 @@ const quizQuestions = [
     options: [
       'Analogue input (AI)',
       'Analogue output (AO)',
-      'Analogue value (AV)',
       'Digital output (DO)',
+      'Analogue value (AV)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'An Analogue Value (AV) is a software point that stores adjustable values such as setpoints, timers, or calculated values. It can be modified by operators or the control program.',
   },
   {
     id: 8,
     question: 'Which topology uses a central switch or hub to connect all devices?',
-    options: ['Bus topology', 'Star topology', 'Ring topology', 'Mesh topology'],
-    correctAnswer: 1,
+    options: [
+      'Star topology',
+      'Ring topology',
+      'Bus topology',
+      'Mesh topology',
+    ],
+    correctAnswer: 0,
     explanation:
       'Star topology connects all devices to a central switch or hub. While easy to install and troubleshoot, it creates a single point of failure at the central device.',
   },
@@ -164,11 +189,11 @@ const quizQuestions = [
     question: 'Integration with fire alarm systems typically requires what type of interface?',
     options: [
       'Volt-free contacts only',
-      'Analogue 4-20mA signals',
       'Gateway or protocol converter',
+      'Analogue 4-20mA signals',
       'Direct sensor wiring',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Fire alarm systems are typically separate certified systems. Integration usually requires a gateway or protocol converter that can communicate with both the BMS and fire alarm panel protocols.',
   },
@@ -177,11 +202,11 @@ const quizQuestions = [
     question: 'What is the purpose of trending in a BMS?',
     options: [
       'To predict future equipment failures',
+      'To generate control commands',
       'To record historical data for analysis',
       'To display real-time graphics',
-      'To generate control commands',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Trending records historical data (temperatures, pressures, status changes) over time. This data is essential for performance analysis, fault diagnosis, energy management, and compliance verification.',
   },
@@ -190,11 +215,11 @@ const quizQuestions = [
     question: 'Which building system is commonly integrated with BMS for demand response?',
     options: [
       'Structural monitoring',
-      'Electrical metering and distribution',
-      'Wastewater treatment',
       'Window cleaning systems',
+      'Wastewater treatment',
+      'Electrical metering and distribution',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Electrical metering and distribution systems are commonly integrated to enable demand response - automatically reducing electrical load during peak periods or when grid stress is high.',
   },
@@ -202,12 +227,12 @@ const quizQuestions = [
     id: 12,
     question: 'What advantage does IP-based BMS communication offer over traditional protocols?',
     options: [
-      'Lower installation costs',
-      'Better noise immunity',
       'Remote access and integration capabilities',
-      'Faster response times',
+      'To record historical data for analysis',
+      'Electrical metering and distribution',
+      'A list of all monitored and controlled points',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'IP-based BMS communication enables remote access via standard networks and easier integration with IT systems, enterprise applications, and cloud services. This supports modern smart building requirements.',
   },

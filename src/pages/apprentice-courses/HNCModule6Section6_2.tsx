@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'fabric-first-definition',
     question: "What is the 'fabric first' approach to building design?",
     options: [
-      'Installing the cheapest insulation materials',
+      'Higher ambient temperature, grouping, and thermal insulation',
+      'No — the 7-day interval must not be exceeded regardless of use patterns',
+      'Stop work, make area safe with drying/rubber matting, then proceed',
       'Prioritising building envelope performance before considering active systems',
-      'Using only natural building materials',
-      'Focusing on renewable energy generation first',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The fabric first approach prioritises optimising the building envelope (walls, roof, floor, windows) to minimise heating and cooling demand before specifying active mechanical and electrical systems.',
   },
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'thermal-bridging',
     question: 'What is a thermal bridge in building construction?',
     options: [
-      'A connection between two heating systems',
+      'To monitor and manage energy consumption by end use',
       'An area where heat transfers more readily through the building envelope',
-      'A type of insulation material',
-      'A ventilation pathway through the building',
+      'Processing at the network edge/locally rather than in the cloud',
+      'The maximum operating temperature the winding insulation can withstand',
     ],
     correctIndex: 1,
     explanation:
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'airtightness-target',
     question: 'What is a typical enhanced airtightness target for a fabric first dwelling?',
     options: [
-      '10 m³/h/m² @ 50Pa',
-      '5 m³/h/m² @ 50Pa',
       '3 m³/h/m² @ 50Pa or less',
+      '5 m³/h/m² @ 50Pa',
+      '10 m³/h/m² @ 50Pa',
       '15 m³/h/m² @ 50Pa',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Enhanced airtightness targets for fabric first dwellings are typically 3 m³/h/m² @ 50Pa or less, compared to Building Regulations minimum of 10 m³/h/m² @ 50Pa. Passivhaus requires 0.6 ACH @ 50Pa.',
   },
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'system-sizing-impact',
     question: 'How does a fabric first approach affect HVAC system sizing?',
     options: [
-      'Systems must be larger to compensate',
-      'No impact on system sizing',
+      'Site-based project overheads and management costs',
+      'They have been advised of work completed and any recommendations',
       'Systems can be significantly smaller due to reduced loads',
-      'Only affects ventilation system sizing',
+      'Reverse polarity can cause permanent damage or safety hazards',
     ],
     correctIndex: 2,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which insulation strategy provides the most consistent thermal performance?',
     options: [
+      'Internal wall insulation (IWI)',
       'Cavity wall insulation only',
       'External wall insulation (EWI)',
-      'Internal wall insulation (IWI)',
       'Partial fill cavity batts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'External wall insulation (EWI) provides the most consistent thermal performance as it wraps the building in a continuous insulation layer, eliminating thermal bridges at floor/wall junctions and protecting the structure from thermal stress.',
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the psi value (ψ) used to measure in building design?',
     options: [
-      'Air permeability rate',
+      '1.0 W/m²K or better (triple glazing)',
+      '0.6 air changes per hour @ 50Pa',
+      'Window sill and jamb junctions',
       'Linear thermal transmittance at junctions',
-      'Overall building heat loss',
-      'Insulation thermal conductivity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Psi values (ψ) measure linear thermal transmittance at junctions and thermal bridges, expressed in W/mK. Lower psi values indicate better thermal bridge detailing. Accredited construction details (ACDs) provide standardised psi values.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'What air permeability does Passivhaus certification require?',
     options: [
-      '10 m³/h/m² @ 50Pa',
-      '5 m³/h/m² @ 50Pa',
-      '3 m³/h/m² @ 50Pa',
       '0.6 air changes per hour @ 50Pa',
+      '1.0 W/m²K or better (triple glazing)',
+      'External wall insulation (EWI)',
+      '15 kWh/m²/year or less',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Passivhaus requires airtightness of 0.6 air changes per hour (ACH) at 50Pa pressure, which is significantly more stringent than UK Building Regulations. This typically equates to around 0.3-0.5 m³/h/m² depending on building geometry.',
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     question:
       'Why is MVHR (Mechanical Ventilation with Heat Recovery) essential in airtight buildings?',
     options: [
-      'It is a legal requirement for all buildings',
+      'The difference between design predictions and actual measured performance',
       'Airtight buildings cannot rely on infiltration for ventilation',
-      'It increases the heating load',
-      'It is cheaper than extract fans',
+      'Internal thermal mass moderates temperature swings and reduces peak loads',
+      'To prevent uncontrolled air leakage through the building envelope',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'How does thermal mass interact with the fabric first approach?',
     options: [
-      'Thermal mass is irrelevant to fabric first design',
-      'Thermal mass should always be avoided',
+      'Airtight buildings cannot rely on infiltration for ventilation',
+      'The difference between design predictions and actual measured performance',
+      'To prevent uncontrolled air leakage through the building envelope',
       'Internal thermal mass moderates temperature swings and reduces peak loads',
-      'Thermal mass only affects cooling, not heating',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Internal thermal mass (concrete floors, masonry walls) moderates temperature fluctuations by absorbing and releasing heat slowly. This reduces peak heating and cooling loads and improves comfort, but must be inside the insulation layer to be effective.',
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: "What is the 'performance gap' in building energy use?",
     options: [
-      'The gap between insulation layers',
       'The difference between design predictions and actual measured performance',
-      'The gap in airtightness membrane installation',
-      'The thermal bridge at window reveals',
+      'To prevent uncontrolled air leakage through the building envelope',
+      'Internal thermal mass moderates temperature swings and reduces peak loads',
+      'Airtight buildings cannot rely on infiltration for ventilation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The performance gap refers to the often significant difference between predicted (designed) energy performance and actual measured consumption. Fabric first approaches with careful detailing and quality control help close this gap.',
   },
@@ -192,8 +192,13 @@ const quizQuestions = [
     id: 9,
     question:
       'What heating system capacity might be appropriate for a well-designed 100m² fabric first dwelling?',
-    options: ['15-20 kW (standard sizing)', '10-12 kW', '6-8 kW', '2-4 kW'],
-    correctAnswer: 3,
+    options: [
+      '15-20 kW (standard sizing)',
+      '2-4 kW',
+      '6-8 kW',
+      '10-12 kW',
+    ],
+    correctAnswer: 1,
     explanation:
       'A well-designed fabric first dwelling of 100m² might only require 2-4 kW of heating capacity, compared to 10-15 kW for a standard build. This enables use of smaller, more efficient heat pumps and lower distribution temperatures.',
   },
@@ -201,10 +206,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the primary purpose of a continuous air barrier in construction?',
     options: [
-      'To provide thermal insulation',
-      'To prevent moisture movement through the structure',
+      'Airtight buildings cannot rely on infiltration for ventilation',
+      'Internal thermal mass moderates temperature swings and reduces peak loads',
       'To prevent uncontrolled air leakage through the building envelope',
-      'To act as a vapour control layer',
+      'The difference between design predictions and actual measured performance',
     ],
     correctAnswer: 2,
     explanation:
@@ -215,19 +220,24 @@ const quizQuestions = [
     question: 'Which construction detail typically has the highest risk of thermal bridging?',
     options: [
       'Centre of external wall',
-      'Window sill and jamb junctions',
-      'Middle of roof insulation',
       'Centre of floor slab',
+      'Middle of roof insulation',
+      'Window sill and jamb junctions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Window sill and jamb junctions are high-risk thermal bridging areas due to the complexity of joining different materials and the need to support window frames. Careful detailing with insulated frames and thermal breaks is essential.',
   },
   {
     id: 12,
     question: 'What is the typical space heating demand target for a Passivhaus building?',
-    options: ['50 kWh/m²/year', '25 kWh/m²/year', '15 kWh/m²/year or less', '100 kWh/m²/year'],
-    correctAnswer: 2,
+    options: [
+      '15 kWh/m²/year or less',
+      '100 kWh/m²/year',
+      '50 kWh/m²/year',
+      '25 kWh/m²/year',
+    ],
+    correctAnswer: 0,
     explanation:
       'Passivhaus certification requires space heating demand of 15 kWh/m²/year or less. This is achieved through excellent fabric performance (low U-values, minimal thermal bridging, exceptional airtightness) combined with MVHR.',
   },

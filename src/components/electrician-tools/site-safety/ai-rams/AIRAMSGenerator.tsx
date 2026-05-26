@@ -361,8 +361,8 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
     setShowCelebration(false);
     setCelebrationShown(false);
 
-    const { data, error } = await supabase.functions.invoke('create-rams-job', {
-      body: { jobDescription, projectInfo, jobScale },
+    const { data, error } = await supabase.functions.invoke('rams-generator', {
+      body: { action: 'create', jobDescription, projectInfo, jobScale },
     });
 
     if (error || !data?.jobId) {
@@ -380,8 +380,8 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
     setIsCancelling(true);
 
     try {
-      const { data, error } = await supabase.functions.invoke('cancel-rams-job', {
-        body: { jobId: currentJobId },
+      const { data, error } = await supabase.functions.invoke('rams-generator', {
+        body: { action: 'cancel', jobId: currentJobId },
       });
 
       if (error || !data?.success) {
@@ -582,72 +582,120 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
   const generationTimeSeconds =
     generationEndTime && generationStartTime ? (generationEndTime - generationStartTime) / 1000 : 0;
 
+  // Editorial header state machine — the right-side action and status
+  // dot tone follow the orchestrator's current view state.
+  const headerStatus: 'input' | 'processing' | 'complete' | 'failed' = !showResults
+    ? 'input'
+    : status === 'complete'
+      ? 'complete'
+      : status === 'failed'
+        ? 'failed'
+        : 'processing';
+
+  const headerProjectName =
+    ramsData?.projectName || currentJobDescription
+      ? (ramsData?.projectName ||
+          currentJobDescription.slice(0, 60) +
+            (currentJobDescription.length > 60 ? '…' : ''))
+      : null;
+
   return (
-    <div className="min-h-screen bg-elec-dark">
-      {/* Header - Compact */}
-      <header className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-lg border-b border-white/[0.08]">
-        <div className="px-2 h-12 flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => (onBack ? onBack() : navigate('/electrician/site-safety'))}
-            className="h-9 w-9 rounded-lg hover:bg-white/10"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <div className="flex-1 min-w-0">
-            <h1 className="text-base font-bold text-white truncate">RAMS Generator</h1>
-            <p className="text-[10px] text-white">Risk Assessment & Method Statement</p>
+    <div className="min-h-screen bg-elec-dark -mx-3 sm:-mx-4 md:-mx-6 lg:-mx-8 -mt-1 sm:-mt-3 md:-mt-6">
+      {/* Sticky editorial header */}
+      <header className="sticky top-0 z-40 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
+        <div className="px-4 sm:px-6 md:px-10 lg:px-16">
+          <div className="flex items-center h-12 gap-3 sm:gap-4">
+            {!showResults && (
+              <button
+                type="button"
+                onClick={() => handleBack()}
+                className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                <span className="hidden sm:inline">Back</span>
+              </button>
+            )}
+            {showResults && (
+              <span className="inline-flex items-center gap-2 text-[12px] font-medium text-white">
+                <span
+                  className={`inline-block h-2 w-2 rounded-full ${
+                    headerStatus === 'complete'
+                      ? 'bg-emerald-400'
+                      : headerStatus === 'failed'
+                        ? 'bg-red-400'
+                        : 'bg-elec-yellow animate-pulse'
+                  }`}
+                />
+                {headerStatus === 'complete'
+                  ? 'Complete'
+                  : headerStatus === 'failed'
+                    ? 'Failed'
+                    : 'Generating'}
+              </span>
+            )}
+            <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/75 hidden sm:inline">
+                AI RAMS
+              </span>
+              <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
+              <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
+                {showResults && headerProjectName
+                  ? headerProjectName
+                  : 'RAMS Generator'}
+              </h1>
+            </div>
+            {showResults && status === 'complete' && (
+              <button
+                type="button"
+                onClick={handleStartOver}
+                className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation whitespace-nowrap"
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                <span>New</span>
+              </button>
+            )}
           </div>
-          {showResults && status === 'complete' && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleStartOver}
-              className="h-9 text-xs border-elec-yellow/30 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow touch-manipulation"
-            >
-              <Sparkles className="h-3 w-3 mr-1" />
-              New
-            </Button>
-          )}
         </div>
       </header>
 
       {/* Content */}
-      <main>
-        {/* Draft recovery banner */}
+      <main className="px-4 sm:px-6 md:px-10 lg:px-16 py-4 sm:py-6">
+        {/* Draft recovery banner — editorial */}
         {showDraftRecovery && recoveredDraft && !showResults && (
-          <div className="mx-4 mt-3 p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl">
-            <div className="flex items-start gap-3">
-              <RotateCcw className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
-              <div className="flex-1">
-                <p className="text-sm font-semibold text-white">Unsaved RAMS found</p>
-                <p className="text-xs text-white mt-1">
-                  "{recoveredDraft.projectName}" was saved locally{' '}
-                  {Math.floor((Date.now() - recoveredDraft.timestamp) / (1000 * 60))} minutes ago.
-                  Would you like to restore it?
+          <section className="mt-3 bg-[hsl(0_0%_10%)] border border-elec-yellow/30 rounded-2xl p-5">
+            <div className="flex items-baseline gap-3">
+              <span className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow shrink-0">
+                Draft
+              </span>
+              <div className="flex-1 min-w-0">
+                <div className="text-[14.5px] font-semibold text-white">
+                  Unsaved RAMS found
+                </div>
+                <p className="mt-1 text-[12.5px] leading-relaxed text-white/75">
+                  <span className="text-white">{recoveredDraft.projectName}</span> was saved
+                  locally {Math.floor((Date.now() - recoveredDraft.timestamp) / (1000 * 60))}{' '}
+                  minutes ago. Restore to pick up where you left off.
                 </p>
-                <div className="flex gap-2 mt-3">
-                  <Button
-                    size="sm"
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <button
+                    type="button"
                     onClick={handleRestoreDraft}
-                    className="h-9 bg-blue-500 hover:bg-blue-600 text-white touch-manipulation"
+                    className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation"
                   >
-                    <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
-                    Restore
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
+                    <RotateCcw className="h-3.5 w-3.5" />
+                    Restore draft
+                  </button>
+                  <button
+                    type="button"
                     onClick={handleDismissDraft}
-                    className="h-9 text-white hover:bg-white/10 touch-manipulation"
+                    className="inline-flex items-center gap-2 h-10 px-4 rounded-xl text-[13px] font-medium bg-white/[0.05] border border-white/[0.10] text-white/80 hover:border-white/20 hover:text-white transition-colors active:scale-[0.98] touch-manipulation"
                   >
                     Dismiss
-                  </Button>
+                  </button>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         )}
 
         {!showResults ? (
@@ -657,20 +705,27 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
           />
         ) : (
           <>
-            {/* Resuming banner */}
+            {/* Resuming banner — editorial */}
             {resumedJob && status !== 'complete' && (
-              <div className="p-3 sm:p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg flex items-center gap-3">
-                <Clock className="h-5 w-5 text-blue-400 shrink-0" />
-                <div>
-                  <p className="text-sm font-semibold text-blue-400">
-                    Resuming generation from earlier...
-                  </p>
-                  <p className="text-xs text-blue-400/70 mt-0.5">Current progress: {progress}%</p>
+              <section className="bg-[hsl(0_0%_10%)] border border-elec-yellow/30 rounded-2xl p-5 mb-7 sm:mb-10">
+                <div className="flex items-baseline gap-3">
+                  <span className="text-[10.5px] uppercase tracking-[0.18em] font-semibold text-elec-yellow shrink-0">
+                    Resuming
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[14.5px] font-semibold text-white">
+                      Picking up where you left off
+                    </div>
+                    <p className="mt-1 text-[12.5px] leading-relaxed text-white/75 tabular-nums">
+                      Current progress: {progress}%
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </section>
             )}
 
             <AgentProcessingView
+              jobId={currentJobId}
               overallProgress={progress}
               currentStep={currentStep}
               elapsedTime={

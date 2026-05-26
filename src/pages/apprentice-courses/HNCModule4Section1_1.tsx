@@ -34,10 +34,10 @@ const quickCheckQuestions = [
     id: 'max-demand-def',
     question: 'What is maximum demand in electrical installation design?',
     options: [
-      'The total connected load',
+      'The nameplate rating of all equipment',
       'The highest expected load at any time',
       'The average daily consumption',
-      'The nameplate rating of all equipment',
+      'The total connected load',
     ],
     correctIndex: 1,
     explanation:
@@ -47,12 +47,12 @@ const quickCheckQuestions = [
     id: 'esqcr-requirement',
     question: 'Under ESQCR, who must agree the maximum demand with the DNO?',
     options: [
+      'All of the above',
       'The building owner',
       'The installing contractor',
       'The designer/specifier',
-      'All of the above',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The designer or specifier is responsible for assessing maximum demand and agreeing the supply capacity with the Distribution Network Operator (DNO) under ESQCR.',
   },
@@ -60,20 +60,25 @@ const quickCheckQuestions = [
     id: 'coincident-demand',
     question: 'Coincident demand refers to:',
     options: [
-      'Loads that occur at the same time',
+      'Standby generator capacity',
       'Loads that never operate together',
       'Emergency backup loads',
-      'Standby generator capacity',
+      'Loads that occur at the same time',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Coincident demand is the portion of loads that operate simultaneously. Understanding coincidence is essential for accurate maximum demand assessment.',
   },
   {
     id: 'measurement-period',
     question: 'What integration period is typically used for maximum demand measurement?',
-    options: ['1 minute', '15 minutes', '30 minutes', '1 hour'],
-    correctIndex: 2,
+    options: [
+      '15 minutes',
+      '1 minute',
+      '1 hour',
+      '30 minutes',
+    ],
+    correctIndex: 3,
     explanation:
       'DNOs typically measure maximum demand over 30-minute integration periods. This smooths out short transient peaks while capturing sustained high loads.',
   },
@@ -85,11 +90,11 @@ const quizQuestions = [
     question: 'What is the relationship between total connected load and maximum demand?',
     options: [
       'They are always equal',
-      'Maximum demand is always higher due to safety factors',
       'Maximum demand is typically lower due to diversity',
+      'Maximum demand is always higher due to safety factors',
       'Maximum demand only includes lighting loads',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Maximum demand is typically 40-70% of total connected load because not all equipment operates simultaneously at full capacity. This is accounted for through diversity factors.',
   },
@@ -97,10 +102,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which method provides the most accurate maximum demand assessment?',
     options: [
-      'Nameplate summation',
-      'Calculated using diversity factors',
-      'Measured data from similar buildings',
       'Building regulations tables',
+      'Nameplate summation',
+      'Measured data from similar buildings',
+      'Calculated using diversity factors',
     ],
     correctAnswer: 2,
     explanation:
@@ -110,8 +115,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A building has 500kVA total connected load. If diversity is estimated at 0.65, what is the maximum demand?',
-    options: ['325kVA', '500kVA', '769kVA', '750kVA'],
-    correctAnswer: 0,
+    options: [
+      '769kVA',
+      '500kVA',
+      '750kVA',
+      '325kVA',
+    ],
+    correctAnswer: 3,
     explanation:
       'Maximum demand = Total connected load × Diversity factor = 500kVA × 0.65 = 325kVA',
   },
@@ -119,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: 'Under ESQCR Regulation 25, the maximum demand assessment must:',
     options: [
-      'Be completed after installation',
       'Be agreed with the DNO before connection',
-      'Only consider lighting loads',
-      'Ignore power factor',
+      'Confirming the design works as intended in practice',
+      'Discharge circuit and reconnect equipment',
+      '50% of rated residual current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ESQCR Regulation 25 requires that maximum demand be assessed and agreed with the DNO before connection to ensure adequate supply capacity.',
   },
@@ -132,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a load profile?',
     options: [
-      'A list of all connected equipment',
+      'Damper position/setting and measured air flow rate',
       'A graph showing demand variation over time',
-      'The cable size schedule',
-      'The circuit breaker ratings',
+      'Network security, encryption, and access controls',
+      'Before any person enters or works in a confined space',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: 'Peak demand for an office building typically occurs:',
     options: [
-      'At midnight',
-      'Early morning (6-8am)',
+      'Unsafe isolation procedure',
+      'The total path length (out and back)',
       'Mid-morning to early afternoon',
-      'Late evening',
+      'The perimeter-to-area ratio',
     ],
     correctAnswer: 2,
     explanation:
@@ -158,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why is the 30-minute integration period used for maximum demand?',
     options: [
-      "It's easier to calculate",
+      'Electricity at Work Regulations 1989, Reg 14',
+      'Identify hazards and implement control measures',
+      'Nonviolent Communication (NVC) in practice',
       'It filters short transients while capturing sustained loads',
-      "It's required by BS 7671",
-      'It matches electricity billing periods',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The 30-minute integration period smooths out short-duration peaks (motor starting, lift operation) while capturing genuinely sustained high demands that stress the supply infrastructure.',
   },
@@ -171,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'For a mixed-use development, how should maximum demand be assessed?',
     options: [
-      'Sum all individual building demands',
-      'Use the largest single building demand',
       'Apply inter-building diversity to summed demands',
       'Use a flat rate per square metre',
+      'Sum all individual building demands',
+      'Use the largest single building demand',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Mixed-use developments benefit from inter-building diversity - residential peaks occur at different times to commercial. Total demand is the sum with diversity factors applied.',
   },
@@ -184,12 +194,12 @@ const quizQuestions = [
     id: 9,
     question: 'What information must be provided to the DNO when requesting a supply?',
     options: [
+      'Ensure circuit is isolated and discharged',
       'Maximum demand (kVA), power factor, and connection point',
-      'Only the building floor area',
-      'Number of socket outlets',
-      'Cable manufacturer details',
+      'Promoting rapid clot formation through agents such as kaolin or chitosan',
+      'Connected to an isolated cable with other end disconnected',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'DNO supply applications require maximum demand in kVA, expected power factor, single/three-phase requirement, and proposed connection point location.',
   },
@@ -197,7 +207,12 @@ const quizQuestions = [
     id: 10,
     question:
       'A commercial building measured maximum demand is 180kW at 0.85 power factor. What is the kVA demand?',
-    options: ['153kVA', '180kVA', '212kVA', '270kVA'],
+    options: [
+      '153kVA',
+      '180kVA',
+      '212kVA',
+      '270kVA',
+    ],
     correctAnswer: 2,
     explanation:
       'kVA = kW ÷ power factor = 180 ÷ 0.85 = 211.8kVA ≈ 212kVA. DNOs supply capacity is in kVA, not kW.',

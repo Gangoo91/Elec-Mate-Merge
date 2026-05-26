@@ -31,20 +31,25 @@ const quickCheckQuestions = [
     id: 'practical-completion-def',
     question: 'What does practical completion mean in building contracts?',
     options: [
-      'All works 100% finished with no defects',
+      'Ballast bypass - direct mains connection to lamp holders',
+      'Showing electrical connections and circuit operation',
+      'Ensuring all team members lift and lower on a coordinated signal',
       'Works substantially complete and fit for occupation',
-      'Final account agreed and paid',
-      'All snagging completed',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Practical completion means works are substantially complete and the building is fit for occupation/use, even if minor defects remain. It triggers key contractual events including the start of the defects liability period.',
   },
   {
     id: 'defects-liability-typical',
     question: 'What is the typical defects liability period for building services installations?',
-    options: ['6 months', '12 months', '24 months', '36 months'],
-    correctIndex: 1,
+    options: [
+      '36 months',
+      '6 months',
+      '12 months',
+      '24 months',
+    ],
+    correctIndex: 2,
     explanation:
       'The defects liability period (also called rectification period) is typically 12 months for building services, allowing one full seasonal cycle to identify any operational defects.',
   },
@@ -52,12 +57,12 @@ const quickCheckQuestions = [
     id: 'sectional-completion',
     question: 'Sectional completion provisions allow:',
     options: [
-      'Work to be completed in random order',
+      'To provide legal proof of compliance and protect professional reputation',
+      'Using batteries to reduce maximum demand by discharging during peak consumption periods',
       'Client to take possession of defined sections before overall completion',
-      'Contractor to delay certain sections indefinitely',
-      'Omission of commissioning on early sections',
+      'Switching transients and earth leakage during starting',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Sectional completion allows the client to take possession of defined sections of the works before overall completion, each section having its own completion date and defects liability period.',
   },
@@ -81,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which document formally certifies that practical completion has been achieved?',
     options: [
-      'Completion notice from contractor',
+      'Rate of heat transfer through a building element (thermal transmittance)',
       'Practical completion certificate issued by contract administrator',
-      'Building control completion certificate',
-      'Client acceptance letter',
+      'To ensure all team members understand hazards and safety procedures',
+      'To normalise energy consumption for weather variations',
     ],
     correctAnswer: 1,
     explanation:
@@ -93,8 +98,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What percentage of retention is typically released at practical completion?',
-    options: ['25%', '50%', '75%', '100%'],
-    correctAnswer: 1,
+    options: [
+      '75%',
+      '25%',
+      '50%',
+      '100%',
+    ],
+    correctAnswer: 2,
     explanation:
       "Half (50%) of the retention is typically released at practical completion, with the remaining 50% held until the end of the defects liability period (often called 'making good defects' certificate).",
   },
@@ -103,12 +113,12 @@ const quizQuestions = [
     question:
       'Which of the following is NOT typically required for practical completion of building services?',
     options: [
-      'Commissioning completion certificates',
       'O&M manuals',
-      'Final account agreement',
+      'Commissioning completion certificates',
       'As-built drawings',
+      'Final account agreement',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Final account agreement is typically completed after practical completion. Commissioning certificates, O&M manuals, and as-built drawings are required before or at practical completion.',
   },
@@ -117,9 +127,9 @@ const quizQuestions = [
     question: 'Partial possession differs from sectional completion because:',
     options: [
       'Partial possession is not planned from contract start',
-      'Sectional completion requires client consent',
-      'Partial possession has no contractual effect',
-      'There is no difference',
+      'Investigate and rectify the cause before energising',
+      'Either the Project Manager or Contractor',
+      'Disconnected clamp or broken conductor',
     ],
     correctAnswer: 0,
     explanation:
@@ -129,12 +139,12 @@ const quizQuestions = [
     id: 5,
     question: 'During the defects liability period, the contractor must:',
     options: [
-      'Make good all defects free of charge',
       'Only repair defects if paid extra',
-      'Provide 24/7 maintenance cover',
+      'Make good all defects free of charge',
       'Replace any failed equipment with upgrades',
+      'Provide 24/7 maintenance cover',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'The contractor must make good any defects that appear during the defects liability period at their own cost, provided the defects arise from materials or workmanship not in accordance with the contract.',
   },
@@ -143,11 +153,11 @@ const quizQuestions = [
     question: "A 'snagging list' is prepared:",
     options: [
       'At contract commencement',
-      'Before practical completion inspection',
       'After practical completion is certified',
+      'Before practical completion inspection',
       'Only if the client requests it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The snagging list (schedule of defects) is prepared during the pre-completion inspection, listing minor defects that must be rectified but do not prevent practical completion being certified.',
   },
@@ -155,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which building services documentation forms part of the health and safety file?',
     options: [
-      'Original tender documents',
+      'Comfort from radiant heating/cooling surfaces',
+      'Insulation breakdown or poor earth connections',
+      'Distributed throughout the day between scheduled blocks',
       'As-built drawings and maintenance requirements',
-      'Contractor payment applications',
-      'Design team meeting minutes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Under CDM 2015, the health and safety file must contain as-built drawings, maintenance requirements, and information needed for future construction work - essential for building services.',
   },
@@ -168,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'If defects are discovered after the defects liability period ends:',
     options: [
-      'The contractor has no further liability',
       'Contractor may still be liable under the Limitation Act',
       'The client must claim on their insurance only',
+      'The contractor has no further liability',
       'Building control must be notified',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Contractors remain liable for latent defects under the Limitation Act (6 years for simple contracts, 12 years for deeds) even after the defects liability period ends.',
   },
@@ -181,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'For building services, seasonal commissioning may require:',
     options: [
-      'Completion in summer only',
+      'To confirm the supply has correct phase and neutral identification',
       'Return visits to commission heating in winter and cooling in summer',
-      'Delaying practical completion by 12 months',
-      'Third-party commissioning only',
+      'Both emotional consequences (how you feel) and behavioural consequences (what you do)',
+      'A competent person with appropriate knowledge and experience',
     ],
     correctAnswer: 1,
     explanation:
@@ -195,11 +205,11 @@ const quizQuestions = [
     question: 'The certificate of making good defects:',
     options: [
       'Is issued at practical completion',
+      'Is optional under JCT contracts',
       'Triggers release of remaining retention',
       'Can only be issued after 24 months',
-      'Is optional under JCT contracts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The certificate of making good defects is issued at the end of the defects liability period when all defects have been rectified, triggering release of the remaining retention money.',
   },

@@ -27,8 +27,8 @@ const quickCheckQuestions = [
     id: 'refrigerant-charging-method',
     question: 'What is the primary method for charging refrigerant into a VRF system?',
     options: [
-      'Liquid charging through the suction line',
       'Vapour charging through the discharge line',
+      'Liquid charging through the suction line',
       'Liquid charging through the liquid line service valve',
       'Vapour charging through the accumulator',
     ],
@@ -40,8 +40,13 @@ const quickCheckQuestions = [
     id: 'leak-test-pressure',
     question:
       'According to BS EN 378, what is the minimum leak test pressure for the high-pressure side of an R410A system?',
-    options: ['20 bar', '31 bar (1.1 x design pressure)', '40 bar (operating pressure)', '45 bar'],
-    correctIndex: 1,
+    options: [
+      'Tender pricing breakdowns',
+      'Finger guards and fused leads',
+      'Live-Neutral, Live-Earth, Neutral-Earth',
+      '31 bar (1.1 x design pressure)',
+    ],
+    correctIndex: 3,
     explanation:
       'BS EN 378 requires leak testing at 1.1 times the maximum allowable pressure. For R410A systems with a typical high-side design pressure of 28 bar, this equates to approximately 31 bar. The test must be conducted with oxygen-free nitrogen (OFN).',
   },
@@ -49,12 +54,12 @@ const quickCheckQuestions = [
     id: 'superheat-measurement',
     question: 'Where should temperature be measured to calculate superheat in a DX system?',
     options: [
-      'At the condenser outlet',
       'At the compressor discharge',
-      'At the evaporator outlet (suction line)',
       'At the expansion valve inlet',
+      'At the condenser outlet',
+      'At the evaporator outlet (suction line)',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Superheat is measured at the evaporator outlet (suction line) near the sensing bulb location. It is calculated as the difference between the actual suction temperature and the saturation temperature corresponding to suction pressure. Normal superheat is typically 5-8K.',
   },
@@ -63,12 +68,12 @@ const quickCheckQuestions = [
     question:
       'Under F-Gas Regulations, what certification is required to handle refrigerants with GWP &gt; 2500?',
     options: [
-      'No certification required',
-      'Category I certification only',
+      'A defined point when changes become significantly more costly',
       'Category I, II, III or IV depending on activity',
-      'Manufacturer training only',
+      'Cross-sectional area of conductor',
+      'Installation earth electrode separate from supply earth',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'F-Gas Regulations require personnel to hold appropriate Category certification (I-IV) based on the type of work undertaken. Category I covers all activities, Category II covers recovery, Category III covers systems &lt;3kg, and Category IV covers leak checking only.',
   },
@@ -92,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the purpose of the standing vacuum test?',
     options: [
-      'To check refrigerant purity',
+      'Insufficient refrigerant charge or restricted flow to evaporator',
+      'Sensible cooling capacity and temperature drop across the coil',
       'To verify the system holds vacuum without pressure rise, indicating no leaks or moisture',
-      'To measure compressor capacity',
-      'To test electrical insulation',
+      'The client or their representative observing key tests and signing off results',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A standing vacuum test verifies system integrity. After evacuation, the vacuum should be held for 30-60 minutes minimum. Pressure rise indicates either a leak or residual moisture evaporating. No rise confirms the system is leak-free and dry.',
   },
@@ -105,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'According to CIBSE Code M, commissioning records must include:',
     options: [
-      'Only the refrigerant type used',
+      'Insufficient refrigerant charge or restricted flow to evaporator',
+      'The client or their representative observing key tests and signing off results',
+      'System operation, maintenance requirements, emergency procedures, and documentation location',
       'Design parameters, measured values, and any deviations with explanations',
-      'Only the final temperature achieved',
-      "Just the commissioning engineer's signature",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'CIBSE Code M requires comprehensive commissioning records including design criteria, measured performance parameters, comparison with design, any deviations with explanations, instrument calibration details, and witness sign-off where required.',
   },
@@ -118,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'Subcooling in a refrigeration system is measured at:',
     options: [
-      'The evaporator inlet',
-      'The compressor suction',
       'The condenser outlet (liquid line)',
+      'The compressor suction',
+      'The evaporator inlet',
       'The expansion device outlet',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Subcooling is measured at the condenser outlet (liquid line) as the difference between the saturation temperature at condensing pressure and the actual liquid temperature. Normal subcooling is typically 5-10K and indicates adequate liquid refrigerant at the expansion device.',
   },
@@ -131,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does an abnormally high superheat reading indicate?',
     options: [
-      'System is overcharged with refrigerant',
+      'Design parameters, measured values, and any deviations with explanations',
       'Insufficient refrigerant charge or restricted flow to evaporator',
-      'Condenser is oversized',
-      'Compressor is too powerful',
+      'Flow rates, temperatures (entering/leaving), electrical input, and calculated COP',
+      'Calibrated within the previous 12 months with certificates available',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,12 +150,12 @@ const quizQuestions = [
     question:
       'During commissioning, the air-on and air-off temperatures across a cooling coil should be measured to verify:',
     options: [
-      'Refrigerant type',
+      'Insufficient refrigerant charge or restricted flow to evaporator',
+      'Design parameters, measured values, and any deviations with explanations',
       'Sensible cooling capacity and temperature drop across the coil',
-      'Compressor electrical consumption',
-      'Ductwork pressure drop',
+      'Calibrated within the previous 12 months with certificates available',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Air-on and air-off temperature measurements verify the sensible cooling capacity. The temperature drop multiplied by airflow rate and specific heat capacity gives the sensible cooling duty, which should match the design specification.',
   },
@@ -159,11 +164,11 @@ const quizQuestions = [
     question: 'F-Gas Regulations require leak checks on systems containing more than:',
     options: [
       'Any amount of F-gas',
-      '5 tonnes CO2 equivalent',
-      '3 kg of refrigerant',
       '10 tonnes CO2 equivalent',
+      '3 kg of refrigerant',
+      '5 tonnes CO2 equivalent',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'F-Gas Regulations (EU 517/2014 and UK amendments) require mandatory leak checks on systems containing 5 tonnes CO2 equivalent or more. Check frequency depends on charge size: 5-50 tCO2e annually, 50-500 tCO2e every 6 months, and above 500 tCO2e every 3 months.',
   },
@@ -171,12 +176,12 @@ const quizQuestions = [
     id: 8,
     question: 'What information must be included on a system data plate under F-Gas requirements?',
     options: [
-      'Manufacturer name only',
       'Refrigerant type, charge quantity, and GWP',
-      'Serial number only',
-      'Installation date only',
+      'DNO transformers and cables are rated in kVA, not kW',
+      '3% of nominal voltage for lighting, 5% for other uses',
+      'Seek clarification and approval for any deviations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'F-Gas Regulations require systems to display a label showing: refrigerant designation (e.g., R410A), charge quantity in kg, GWP value, and CO2 equivalent in tonnes. This enables proper leak check scheduling and end-of-life recovery planning.',
   },
@@ -184,10 +189,10 @@ const quizQuestions = [
     id: 9,
     question: 'The commissioning witness test typically involves:',
     options: [
-      'Only the installing contractor',
+      'Sensible cooling capacity and temperature drop across the coil',
       'The client or their representative observing key tests and signing off results',
-      'The equipment manufacturer only',
-      'The building control officer',
+      'Design parameters, measured values, and any deviations with explanations',
+      'Calibrated within the previous 12 months with certificates available',
     ],
     correctAnswer: 1,
     explanation:
@@ -197,12 +202,12 @@ const quizQuestions = [
     id: 10,
     question: 'O&M manuals for air conditioning systems should include:',
     options: [
-      'Only manufacturer literature',
+      'The client or their representative observing key tests and signing off results',
+      'Flow rates, temperatures (entering/leaving), electrical input, and calculated COP',
       'Operating procedures, maintenance schedules, as-built drawings, test certificates, and spare parts information',
-      'Only the installation certificate',
-      'Just the system schematic',
+      'To verify the system holds vacuum without pressure rise, indicating no leaks or moisture',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'O&M manuals must be comprehensive, including: system descriptions, operating procedures, maintenance schedules (PPM), manufacturer data sheets, as-built drawings, commissioning records, test certificates, spare parts lists, and emergency procedures.',
   },
@@ -210,8 +215,13 @@ const quizQuestions = [
     id: 11,
     question:
       'When using an electronic leak detector, the sensitivity should be set to detect leaks of:',
-    options: ['100 g/year', '5 g/year for F-gas systems', '50 g/year', '1 kg/year'],
-    correctAnswer: 1,
+    options: [
+      'Visual inspection and testing',
+      'Yes, with appropriate protection',
+      'Dressed neatly with no tangles',
+      '5 g/year for F-gas systems',
+    ],
+    correctAnswer: 3,
     explanation:
       'F-Gas Regulations require leak detectors capable of detecting leaks of 5 grams per year for stationary equipment. This high sensitivity is necessary to identify minor leaks before they become significant, minimising environmental impact and refrigerant loss.',
   },
@@ -219,12 +229,12 @@ const quizQuestions = [
     id: 12,
     question: 'Performance verification of a chiller should include measurement of:',
     options: [
-      'Only the leaving chilled water temperature',
       'Flow rates, temperatures (entering/leaving), electrical input, and calculated COP',
-      'Just the compressor current',
-      'Only the condensing temperature',
+      'The client or their representative observing key tests and signing off results',
+      'Sensible cooling capacity and temperature drop across the coil',
+      'Design parameters, measured values, and any deviations with explanations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Comprehensive chiller verification requires measuring: chilled water flow rate and temperatures (entering/leaving), condenser water or air temperatures, electrical power input, and calculating the coefficient of performance (COP) to compare against rated values.',
   },
@@ -232,10 +242,10 @@ const quizQuestions = [
     id: 13,
     question: 'BSRIA commissioning procedures specify that test instruments should be:',
     options: [
-      'New and unused',
+      'Insufficient refrigerant charge or restricted flow to evaporator',
       'Calibrated within the previous 12 months with certificates available',
-      'Manufacturer calibrated only',
-      'Self-calibrating digital instruments only',
+      'Sensible cooling capacity and temperature drop across the coil',
+      'The client or their representative observing key tests and signing off results',
     ],
     correctAnswer: 1,
     explanation:
@@ -245,12 +255,12 @@ const quizQuestions = [
     id: 14,
     question: 'The handover meeting for an air conditioning system should cover:',
     options: [
-      'Only the warranty period',
+      'Calibrated within the previous 12 months with certificates available',
+      'To verify the system holds vacuum without pressure rise, indicating no leaks or moisture',
       'System operation, maintenance requirements, emergency procedures, and documentation location',
-      'Just the energy consumption',
-      'Only the control system password',
+      'Operating procedures, maintenance schedules, as-built drawings, test certificates, and spare parts information',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Handover meetings should comprehensively cover: system operation demonstration, routine maintenance requirements, emergency shutdown procedures, location of isolation valves and controls, O&M documentation location, training records, and key contact details for support.',
   },

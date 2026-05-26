@@ -41,10 +41,10 @@ const checks = [
     id: 'ppe-purpose-check',
     question: 'What is PPE actually for?',
     options: [
-      'To replace safe systems of work',
-      'To stop the hazard happening in the first place',
+      'The scaffold is incomplete or unsafe and must NOT be used',
+      'HMRC bailiffs can force entry on a first visit',
       'To protect you when other controls can’t fully remove the risk',
-      'To make the job faster',
+      'Gather information, analyse, hypothesise, test, rectify',
     ],
     correctIndex: 2,
     explanation:
@@ -54,12 +54,12 @@ const checks = [
     id: 'ppe-hierarchy-check',
     question: 'Where does PPE sit in the hierarchy of control?',
     options: [
-      'First — always the easiest fix',
-      'Second — straight after elimination',
+      'Illuminance at specific grid points showing uniformity',
+      '7-22kW (typically 7kW for single-phase)',
+      'Happiness, sadness, anger, fear, surprise, and disgust',
       'Last — when nothing higher up can fully remove the risk',
-      'It’s separate from the hierarchy',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Eliminate → Substitute → Engineering controls → Administrative controls → PPE. Each step DOWN the list is less reliable. PPE is bottom because it relies on YOU wearing it, fitting it, looking after it. Anything above it is always preferable.',
   },
@@ -67,12 +67,12 @@ const checks = [
     id: 'ppe-employer-duty-check',
     question: 'Who pays for your PPE?',
     options: [
-      'You — it comes out of your wages',
       'Your employer — free of charge, by law',
-      "Half-and-half, that’s the industry standard",
       'Whoever supplies the site',
+      "Half-and-half, that’s the industry standard",
+      'You — it comes out of your wages',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'PPER 2022 Reg 4 + HASAWA s.9: the employer must provide suitable PPE FREE of charge when risk can’t be controlled by other means. Anyone deducting it from your wages is breaking the law. Apprentices, agency, sub-contractors — all covered.',
   },
@@ -85,12 +85,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does the acronym PPE stand for?',
     options: [
-      'Personal Protective Equipment',
       'Public Protection Essentials',
+      'Personal Protective Equipment',
       'Practical Performance Equipment',
       'Permanent Protective Eyewear',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Personal Protective Equipment — anything designed to be worn or held to protect you from a workplace risk. Defined under the Personal Protective Equipment at Work Regulations 1992 (as amended 2022).',
   },
@@ -98,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: 'In the hierarchy of control, what comes BEFORE PPE?',
     options: [
-      'Nothing — PPE is always first',
-      'Just risk assessment',
+      'Ingress Protection - protection against solid objects and liquids',
+      'To show the original approved programme for comparison',
       'Eliminate, substitute, engineering controls, administrative controls',
-      'Only training',
+      'A diamond with a black image of a hand and a surface being eaten away by liquid drops',
     ],
     correctAnswer: 2,
     explanation:
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: 'An electrician says "We don’t need to isolate, just stick the gloves on". What’s wrong with that?',
     options: [
-      'Nothing — gloves are fine',
-      'Insulated gloves are too hot to wear all day',
+      "It confirms understanding, engages workers and surfaces practical concerns",
+      "The total greenhouse gas emissions from extraction, manufacture, and transport of materials",
+      "Remove them from the scene, listen without judgement, and ensure they are referred for appropriate support",
       "PPE shouldn’t replace a higher control like isolation — gloves are the BACKSTOP, not the plan",
-      'You also need glasses',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Skipping isolation and relying on PPE inverts the hierarchy. Gloves are there for the moment something unexpected goes live — not as a substitute for proving dead. EAWR Reg 14 says working live needs justification AND suitable precautions. PPE alone isn’t suitable precaution.",
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     id: 4,
     question: "Under PPER 2022, who has to provide PPE to a first-year apprentice?",
     options: [
-      "The apprentice — out of their first wage",
-      "The college, only during training weeks",
       "The employer — free of charge",
+      "The college, only during training weeks",
+      "The apprentice — out of their first wage",
       "The main contractor on the job",
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Your employer. Free. The 2022 amendment closed a loophole — limb (b) workers (most agency/zero-hours) are now covered the same as direct employees. If they’re billing you for boots, that’s a PPER 2022 Reg 4 breach.",
   },
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: "Your supervisor hands you a 'one-size-fits-all' high-vis that drowns you and gloves two sizes too big. Is this OK?",
     options: [
-      "Yes — at least it’s PPE",
+      "72 hours of awareness, where the breach is likely to result in a risk to individuals",
       "No — PPE that doesn’t fit doesn’t protect; ask for the right size",
-      "Yes if you tape the gloves on",
-      "Only OK for a half-day",
+      "Zone classifications, IP ratings, equipotential bonding, and RCD protection",
+      "Do not energise until fault is found and rectified",
     ],
     correctAnswer: 1,
     explanation:
@@ -151,11 +151,11 @@ const quizQuestions = [
     question: "What does PPE NOT do?",
     options: [
       "Reduce the consequence of a hazard reaching you",
-      "Stop the hazard happening in the first place",
       "Provide a final layer of protection",
+      "Stop the hazard happening in the first place",
       "Need inspection before use",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "PPE doesn’t prevent the hazard — it just blunts the impact when one gets to you. The cable is still live, the dust is still in the air, the object can still fall. PPE only changes what happens to YOU when the higher controls fail or aren’t enough.",
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     id: 8,
     question: "You’re given PPE that has no CE or UKCA mark. What should you do?",
     options: [
-      "Use it anyway — it was free",
       "Refuse it and ask for properly marked kit",
       "Use it for short jobs only",
+      "Use it anyway — it was free",
       "Stick a label on it yourself",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "No CE/UKCA mark means it hasn’t been tested or certified to a recognised standard. For electrical PPE that’s a real safety issue — cheap unmarked ‘insulated’ gloves can fail at a fraction of their claimed rating. PPER 2022 Reg 4 requires PPE to comply with the relevant supply regulations. No mark, no go.",
   },

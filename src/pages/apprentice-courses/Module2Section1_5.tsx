@@ -14,7 +14,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which input jacks should you use to measure 150mA current?',
-    options: ['COM and VΩ jacks', 'COM and mA jacks', 'COM and A jacks', 'VΩ and A jacks'],
+    options: [
+      'COM and VΩ jacks',
+      'COM and mA jacks',
+      'COM and A jacks',
+      'VΩ and A jacks',
+    ],
     correctAnswer: 1,
     explanation:
       'For currents up to 200mA or 400mA (depending on meter), use the COM and mA jacks. The A jack is for higher currents and has different fuse protection.',
@@ -22,8 +27,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What does the symbol V~ on a multimeter represent?',
-    options: ['DC voltage', 'AC voltage', 'Variable voltage', 'High voltage'],
-    correctAnswer: 1,
+    options: [
+      'Variable voltage',
+      'DC voltage',
+      'AC voltage',
+      'High voltage',
+    ],
+    correctAnswer: 2,
     explanation:
       'V~ represents AC voltage measurement. The wavy line (~) is the universal symbol for alternating current, whilst V⎓ represents DC voltage.',
   },
@@ -31,12 +41,12 @@ const quizQuestions = [
     id: 3,
     question: 'Before measuring resistance, you must:',
     options: [
-      'Set the meter to the highest range',
-      'Isolate and de-energise the circuit',
       'Use the A jack instead of VΩ',
+      'Set the meter to the highest range',
       'Switch to AC mode',
+      'Isolate and de-energise the circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Always isolate and de-energise the circuit before resistance measurement. Live resistance testing can damage the meter and give false readings.',
   },
@@ -45,12 +55,12 @@ const quizQuestions = [
     question:
       "What will happen if you connect a multimeter set to 'A' (current) mode across a 230V supply?",
     options: [
-      "You'll get an accurate current reading",
-      "The display will show 'OL' (overload)",
       "The meter's fuse will blow instantly",
+      "The display will show 'OL' (overload)",
+      "You'll get an accurate current reading",
       'Nothing will happen',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Connecting in current mode across a voltage source creates a short circuit through the meter's low-resistance current shunt, blowing the internal fuse immediately.",
   },
@@ -58,12 +68,12 @@ const quizQuestions = [
     id: 5,
     question: 'When would you need a True RMS multimeter instead of an average-responding meter?',
     options: [
-      'Only for DC measurements',
-      'For all AC measurements',
+      'It establishes your current baseline so you can measure progress accurately',
       'When measuring non-sinusoidal waveforms (like from inverters)',
-      'When measuring very low voltages',
+      'To limit current and provide starting voltage',
+      'Provides evidence of due diligence and compliance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'True RMS meters are essential for accurate measurement of non-sinusoidal waveforms, common with electronic loads, LED drivers, and inverters.',
   },
@@ -71,7 +81,12 @@ const quizQuestions = [
     id: 6,
     question:
       'What CAT rating should your multimeter have for work on UK domestic distribution boards?',
-    options: ['CAT I', 'CAT II', 'CAT III', 'CAT IV'],
+    options: [
+      'CAT I',
+      'CAT II',
+      'CAT III',
+      'CAT IV',
+    ],
     correctAnswer: 2,
     explanation:
       'CAT III rating is required for fixed installation work including distribution boards. CAT III 600V or CAT III 1000V provides appropriate safety margins.',
@@ -80,12 +95,12 @@ const quizQuestions = [
     id: 7,
     question: "Your multimeter's continuity function beeps when the resistance is:",
     options: [
-      'Exactly zero ohms',
+      'The meter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s fuse will blow instantly',
+      'For high currents without breaking the circuit',
+      'Current readings are always zero or \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'OL\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
       'Below about 50Ω (depending on meter)',
-      'Above 1kΩ',
-      'In the megohm range',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Most multimeters beep for continuity when resistance is below 20-50Ω, indicating a good connection. The exact threshold varies by manufacturer.',
   },
@@ -93,12 +108,12 @@ const quizQuestions = [
     id: 8,
     question: "What symptom indicates your multimeter's current measurement fuse has blown?",
     options: [
-      "Display shows 'Err'",
       "Current readings are always zero or 'OL'",
-      "Voltage measurements don't work",
-      "The meter won't turn on",
+      "Isolate and de-energise the circuit",
+      "The meter's fuse will blow instantly",
+      "Because all current in a series circuit is the same",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A blown current fuse will cause current measurements to read zero or 'OL' (overload). Voltage and resistance functions will work normally.",
   },
@@ -106,10 +121,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why must current measurements be made in series with the circuit?',
     options: [
-      'To protect the multimeter',
+      'For high currents without breaking the circuit',
       'Because all current in a series circuit is the same',
-      'To avoid damaging the component being tested',
-      "It's just the convention",
+      'When measuring non-sinusoidal waveforms (like from inverters)',
+      'Current readings are always zero or \\\\\\\\\\\\\\\'OL\\\\\\\\\\\\\\\'',
     ],
     correctAnswer: 1,
     explanation:
@@ -119,12 +134,12 @@ const quizQuestions = [
     id: 10,
     question: 'When might you choose a clamp meter over a multimeter for current measurement?',
     options: [
-      'For very low currents (microamps)',
+      'Below about 50Ω (depending on meter)',
+      'The meter\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s fuse will blow instantly',
       'For high currents without breaking the circuit',
-      'For DC current only',
-      'When you need very precise readings',
+      'Because all current in a series circuit is the same',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Clamp meters measure current without breaking the circuit, making them ideal for high currents and live testing. However, they're less accurate for small currents.",
   },
@@ -134,16 +149,26 @@ const quickCheckQuestions = [
   {
     id: 'multimeter-jacks',
     question: 'Which jacks would you use to measure 230V AC across a socket outlet?',
-    options: ['COM and mA jacks', 'COM and VΩ jacks', 'COM and A jacks', 'VΩ and A jacks'],
-    correctIndex: 1,
+    options: [
+      'COM and mA jacks',
+      'COM and A jacks',
+      'COM and VΩ jacks',
+      'VΩ and A jacks',
+    ],
+    correctIndex: 2,
     explanation:
       'For voltage measurements, always use COM (common/negative) and VΩ (volts/ohms/positive) jacks. Current jacks are only for current measurement.',
   },
   {
     id: 'current-measurement',
     question: 'You need to measure 150mA load current. Which jack should the red lead connect to?',
-    options: ['VΩ jack', 'mA jack', 'A jack', 'COM jack'],
-    correctIndex: 1,
+    options: [
+      'COM jack',
+      'A jack',
+      'VΩ jack',
+      'mA jack',
+    ],
+    correctIndex: 3,
     explanation:
       'For 150mA (0.15A), use the mA jack which typically handles up to 200-400mA. The A jack is for higher currents above this range.',
   },

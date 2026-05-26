@@ -43,12 +43,12 @@ const checks = [
     question:
       "You take a photo of a particularly clean kitchen rewire because you want to use it as a portfolio entry for your AM2 prep and possibly post it to your trade Instagram in a year or two. Is this OK without saying anything to the customer?",
     options: [
-      "Yes — it's your work, you can show it.",
+      "BUS is the UK Government grant scheme paying homeowners up to £7,500 toward installing a heat pump (or biomass boiler in some cases). To claim BUS the heat pump must be installed by an MCS-registered installer using MCS-certified products, with the MCS certificate then submitted to Ofgem. BUS is the dominant route into the heat pump market for installers — without MCS registration you can't access BUS-funded work.",
+      "Hazardous Waste under EWC code 20 01 21* (the asterisk denotes hazardous). Fluorescent tubes contain mercury vapour — typically 3–5 mg in a 5-foot T8, less in modern T5 and CFL. Mercury is acutely toxic if inhaled and persistent in the environment. Producers of hazardous waste who generate over 500 kg / year must register with the Environment Agency; under that threshold the firm is exempt but still has the Duty of Care to use a licensed carrier and disposal route. Consignment Notes accompany the waste and are kept for three years.",
       "No. Photos of customer property are personal data under UK GDPR (they relate to an identifiable person — the property owner — through context). To use them for portfolio or marketing you need either explicit customer consent OR a legitimate-interest basis with a clear notice in the firm's privacy notice that covers portfolio use, plus you should crop out anything identifying. Best practice: ask the customer at the point of taking the photo and get a quick written agreement (text, signed slip).",
-      "Yes if you don't post for over a year.",
-      "Yes, but only on personal social media not work.",
+      "To discharge their CDM 2015 duty to ensure the workers on site are competent for the work. The ECS card is the industry-recognised proof of competence for electrical workers; main contractors use it to evidence that they checked competence before allowing entry. Failure to check competence (with no card or other evidence) leaves the main contractor exposed under CDM.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Photos of identifiable property (which usually means the kitchen, the room, the front of the house) are personal data because they relate to an identifiable person — the homeowner — through context (you know whose house it was). UK GDPR requires a lawful basis to process; for portfolio/marketing the most realistic options are consent (explicit, recorded) or legitimate interest with a clear privacy notice and the customer's right to object. The duty applies whether you post in a week or a year, on personal or work accounts. Asking at the time of taking the photo is the cleanest approach.",
   },
@@ -57,12 +57,12 @@ const checks = [
     question:
       "Mid-job you find a particularly bad existing installation. You WhatsApp a photo to your mate at another firm with caption 'look at this nightmare in this customer's house'. Have you done anything wrong?",
     options: [
-      "No — it's a private message, not a public post.",
+      "Multiple legitimate causes. (1) Instrument tolerance — both the Zs tester and the continuity tester have plus or minus 5-10 percent each, which can compound. (2) Slight temperature difference — the cables may be slightly warmer at live test time than at dead test time. (3) Supply voltage variation between the two tests can affect calculation. (4) The dead-test R1+R2 may include a parallel earth path (e.g. via metal back-boxes) that doesn\\\\\\\\\\\\\\\\\\\\\\\\'t carry full fault current under live conditions. Up to 20 percent discrepancy is generally within acceptable tolerance; investigate above 20 percent.",
+      "Wood-pellet or wood-chip boilers and stoves. Burns sustainably-sourced biomass to drive a wet heating system. Counts as 'low-carbon' because the CO₂ released is offset by what the trees absorbed during growth (debated within the carbon accounting community). Fuel storage, ash handling and air-quality regulation (Clean Air Act zones; the Ecodesign Directive for new appliances) make biomass operationally heavier than gas or heat pumps. Best fit: rural off-gas-grid properties with space for a fuel store. Worst fit: urban smoke-control areas with poor PM2.5 ratings.",
+      "A document prepared by the principal contractor before the construction phase starts, setting out the health and safety arrangements for the site (welfare, induction, site rules, hazard controls, emergency procedures, monitoring). Required for any project where there is more than one contractor; the depth of the plan scales with the project size and risk profile. Sub-contractors are entitled to relevant extracts on induction.",
       "Yes. You've shared a customer's personal data (a photo of their property identified by context) with someone outside your firm without a lawful basis. That's a UK GDPR breach. It's also almost certainly a breach of your firm's confidentiality and social-media policy. Private channel doesn't matter — the duty travels with the data. The fix: photos for your supervisor and the firm's internal systems only; if you want to discuss bad installs with mates at other firms, do it in general terms with no identifying info or photos.",
-      "Yes, but only if you said the address.",
-      "No — WhatsApp is end-to-end encrypted so it doesn't count.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "UK GDPR doesn't care about the channel — text, WhatsApp, email, in person, on TikTok. Sharing identifiable customer data with a third party (your mate at another firm) outside the original purpose (you were sent there to wire the kitchen, not to provide a horror tour) needs a lawful basis. There isn't one for 'showing your mates'. Private chat doesn't insulate you because the customer has the same right to complain to the ICO regardless of the channel, and the ICO has issued enforcement notices for exactly this kind of casual sharing.",
   },
@@ -71,10 +71,10 @@ const checks = [
     question:
       "How long should the firm retain electrical certificates (EICs, EICRs) for a typical domestic install, and why?",
     options: [
-      "12 months — long enough for the warranty.",
+      "Conduct a site survey to assess: existing installation condition; access difficulties; cable routes; floor types and finishes; client-specific requirements (working hours, decor protection); hidden risks (asbestos, services in walls, structural issues); customer expectations vs feasibility. The site survey is the difference between a quote that holds and a quote that haemorrhages on variations.",
       "At least 6 years. The Limitation Act 1980 sets the standard limitation period for civil claims (negligence, breach of contract) at 6 years from the date of the breach. Most contractor schemes (NICEIC, NAPIT, ELECSA) require 6 years minimum as a condition of registration. Many firms retain longer (e.g. lifetime of install) for evidence and re-issue purposes. Personal data within the cert is retained on the same basis under UK GDPR Article 5(1)(e) (storage limitation) — kept no longer than necessary for the purpose.",
-      "Forever — there's no upper limit.",
-      "30 days — that's the GDPR rule.",
+      "GS38 — 'Electrical test equipment for use by electricians'. It's HSE guidance, not statute, but the courts treat it as the reference for what 'safe' test probes, leads and instruments look like in practice. It specifies probe finger barriers, exposed metal length (no more than 4 mm), insulated leads, fused leads where appropriate, and the use of voltage indicators rather than meters where possible.",
+      "Part 2 — definitions. Every key term in BS 7671 has a verbatim definition in Part 2, and that definition is the legal vocabulary the inspector and the courts use. 'Extraneous-conductive-part' = 'a conductive part liable to introduce a potential, generally Earth potential, and not forming part of the electrical installation' — that exact wording is what decides whether the metal pipework needs main bonding.",
     ],
     correctIndex: 1,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       "What does UK GDPR mean by 'personal data'?",
     options: [
-      "Only names and addresses.",
+      "Stop immediately. The banksman is the trained signaller for that vehicle movement and they have the authority on site to stop pedestrian traffic during a reverse. Carrying on past them is a CDM 2015 Reg 15 breach (failure to co-operate with H&S arrangements) and a HASAWA s.7(b) breach. Wait until they wave you through.",
       "Any information relating to an identified or identifiable natural person — including names, addresses, phone numbers, email addresses, photos, video, location data, IP addresses, and information that, while not identifying on its own, becomes identifying when combined with other data the controller holds.",
-      "Only data the customer typed into a form.",
-      "Only health and financial data.",
+      "Metal CUs (as required by Amendment 3 onwards in domestic) are exposed-conductive-parts in their own right — but the regulation also drives consistent earthing practice across the property, and any metal back-box anywhere in the installation should already have been earthed regardless of CU material. The line item makes the existing requirement explicit in the quote.",
+      "Microgeneration Certification Scheme — a UK-government-backed certification scheme for installers and products of micro-generation. MCS is required to access most consumer financial schemes (including the Smart Export Guarantee) and is in practice mandatory for any commercial domestic install.",
     ],
     correctAnswer: 1,
     explanation:
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       "Under UK GDPR, what are the SIX lawful bases for processing personal data?",
     options: [
-      "There's only one — consent.",
+      "Realistic optimism acknowledges genuine difficulties and negative emotions while maintaining evidence-based belief in the possibility of positive outcomes. Toxic positivity dismisses or invalidates negative emotions (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Just think positive!\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"), which actually increases suffering by adding shame about feeling bad on top of the original difficulty.",
+      "Visually inspect for storage damage, check the coil resistance, verify the contacts are not corroded or contaminated, ensure the operating mechanism moves freely, and confirm the component is within its shelf-life (if applicable)",
       "Consent, contract, legal obligation, vital interests, public task, legitimate interests. For most trade work the relevant bases are: contract (we need this data to deliver the work) and legitimate interests (we hold the customer's details to honour warranty and respond to follow-up).",
-      "Consent and payment.",
-      "Whatever the customer agrees verbally.",
+      "The contractor (employer) for failing to provide adequate training under HSWA s.2 and WAH Regs; the supervisor for directing untrained persons; and potentially the principal contractor for failing to monitor under CDM 2015",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "UK GDPR Article 6 sets the six lawful bases. The firm has to identify which one applies BEFORE processing — and document that in its privacy notice. For electrical contracting, contract (Article 6(1)(b)) covers the work itself; legitimate interests (Article 6(1)(f)) covers things like warranty record-keeping and marketing follow-up. Consent (Article 6(1)(a)) is typically reserved for things the customer can genuinely opt out of — marketing emails, portfolio photo use.",
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     question:
       "Who in the data-protection chain is the firm, and who is the customer?",
     options: [
-      "The customer is the controller, the firm is the processor.",
+      "No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger, unless they possess such knowledge or experience or are under appropriate supervision having regard to the nature of the work. So either you're competent yourself OR you're being supervised by someone who is. Working outside your competence without supervision is a Reg 16 breach.",
+      "The Electrical Contractors' Association — the trade association for electrical contractors in England, Wales and Northern Ireland. Founded 1901. ECA membership is a quality mark for the contractor; ECA also lobbies on behalf of the industry, runs technical events, publishes guidance and runs the JIB jointly with the trade union (Unite).",
+      "Present both statistics in a lessons learnt briefing, analyse why entrapment is increasing despite overall fatality improvements, review all current entrapment prevention measures, implement additional controls such as secondary guarding and enhanced training, set measurable targets for entrapment reduction, and monitor progress quarterly using the PDCA cycle",
       "The firm (the contracting business) is the data CONTROLLER — it decides what data to collect, why, and how to process it. The customer is the DATA SUBJECT — the person to whom the data relates. The processor would be a third party processing data on the firm's behalf (e.g. the cloud-hosted CRM, the accounting software, an offshore admin team).",
-      "Both are processors.",
-      "Neither — only the ICO is involved.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "UK GDPR Article 4 defines the roles. Controller = decides the why and how; processor = acts on the controller's instructions; data subject = the individual. For an electrical firm, you're the controller of the customer's personal data. Most cloud CRMs (Joblogic, Commusoft, Service M8) are processors — and you should have a Data Processing Agreement (DPA) with them. Customers are data subjects and have rights — access, rectification, erasure, restriction, portability, objection.",
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     question:
       "What's the FIRST principle of UK GDPR Article 5 (the 'principles relating to processing')?",
     options: [
-      "Free at the point of use.",
       "Lawfulness, fairness and transparency — personal data must be processed lawfully (one of the six bases), fairly (in a way the data subject would reasonably expect), and transparently (the data subject knows what's happening with their data via a privacy notice).",
-      "Profitability for the controller.",
-      "Speed of processing.",
+      "The ratio between the thermal headroom available at the actual ambient temperature and the thermal headroom available at the 30 °C reference — a hotter ambient leaves less room for the cable to dissipate heat, so the cable can carry less current.",
+      "True adaptability requires actively regulating emotional resistance to change, maintaining effectiveness during ambiguity, proactively seeking new approaches, and flexing strategies without losing core values — it is an emotionally regulated, intentional process, not passive compliance",
+      "Provide EV charge points or cable routes in new residential buildings (one charge point per dwelling with associated parking) and new non-residential buildings (one charge point per five parking spaces plus cable routes to all remaining spaces) — ensuring the building is 'EV-ready' from construction",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "UK GDPR Article 5(1)(a) — lawfulness, fairness and transparency. The other principles in Article 5 are: purpose limitation (collected for specified purposes), data minimisation (only what's necessary), accuracy, storage limitation (kept no longer than needed), integrity and confidentiality (held securely), and accountability (the controller can demonstrate compliance). The principles are the high-level ground rules — every other GDPR requirement flows from them.",
   },
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       "If you take a photo of a customer's property and want to use it for the firm's marketing (website, social media), what's the cleanest lawful basis to rely on?",
     options: [
-      "Legal obligation.",
+      "CompEx (Competency in Explosive Atmospheres) is the standard UK competence scheme for electrical work in hazardous areas — petrochemical, offshore, fuel storage, paint shops, anywhere with explosive atmospheres. The CompEx Ex01-04 modules cover gas-protected installations; Ex05-06 cover dust-protected. Holding CompEx earns you the Hazardous Areas endorsement on your ECS card and unlocks high-day-rate work in oil and gas.",
       "Explicit consent, given freely, in writing, in advance — separate from the consent to do the work. The customer must be able to refuse without it affecting the work, and to withdraw consent later. Legitimate interest is sometimes used but is harder to defend for marketing because the customer's reasonable expectation is that you photograph for the job, not for advertising.",
-      "Vital interest.",
-      "Public task.",
+      "Plan, manage and monitor construction work carried out either by the contractor or by workers under their control, to ensure that, so far as reasonably practicable, it is carried out without risks to health or safety. Includes complying with any directions of the principal designer / principal contractor and applying the general principles of prevention.",
+      "An EIC (Electrical Installation Certificate) for the new circuit, the inverter manufacturer’s commissioning sheet, the DNO G98/G99 commissioning notice (filed with the DNO), the MCS certificate (issued by the MCS scheme), and the building regulations notification.",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       "How long should you keep an Electrical Installation Certificate, and why?",
     options: [
-      "30 days — that's the GDPR rule.",
+      "(1) Stop work; ensure no-one disturbs further. (2) Photograph and document. (3) Phone the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s contracts manager / H&S manager immediately. (4) Inform the dutyholder (building owner / managing agent). (5) Do NOT proceed without confirmation that the material is non-asbestos OR that licensed contractor has taken over disturbance work. Document everything in writing.",
+      "Heat-pump-ready electrical infrastructure (typically a 16-32 A radial spare way), EV charging provision (Approved Document S), PV and battery enabling (capped cables, suitably sized supply), and zero gas connections from 2025 in many new builds.",
       "At least 6 years — set by the Limitation Act 1980 for defending civil claims, and required by most contractor schemes (NICEIC, NAPIT, ELECSA) as a condition of registration. UK GDPR Article 5(1)(e) (storage limitation) is satisfied because there's a clear, justifiable reason for the retention period.",
-      "1 year — the warranty period.",
-      "Forever — no rule applies.",
+      "Confined Space Awareness (low-risk) up to specialist training (high-risk - typically City & Guilds 6160 or equivalent). Trained operatives + trained rescuers + trained issuing authority for permits. Refresher training periodic.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Retention isn't governed by GDPR alone — GDPR says 'no longer than necessary', and it's other laws and contractor scheme rules that set what 'necessary' means. The Limitation Act 1980 gives 6 years as the standard limitation for negligence and breach of contract. The contractor schemes mirror this. Many firms keep certs for the lifetime of the property as a service to the customer (and for re-issue revenue). The point is to have a written retention policy that explains the period and apply it consistently.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       "What's the ICO and what's the maximum fine it can impose for a serious GDPR breach?",
     options: [
-      "The Insurance Compliance Office; £500.",
+      "Three tests, ALL of which must be satisfied: (a) it is unreasonable in all the circumstances for the conductor to be dead, AND (b) it is reasonable in all the circumstances for the work to be carried out live, AND (c) suitable precautions are taken to prevent injury. All three — not any one. Most fault diagnosis live working passes test (a) (you need voltage to measure) but tests (b) and (c) are where most risk-assessment failures sit.",
+      "MCS certificate; Electrical Installation Certificate (BS 7671); G98 or G99 DNO notification copy; manufacturer commissioning record(s); MCS performance estimate (SCOP, kWh / kWp / yr, payback, etc.); warranty documentation for all major components; user instruction manuals; maintenance schedule and service intervals; F-Gas record (where refrigerant work was carried out); contact details for fault reporting; and the MCS Code complaints process. Pack is provided in physical or durable digital form on handover day.",
+      "Compressed into the EIC trio + customer handover pack: design notes (Zs calculations, RCBO selection, earthing review) typically held in the contractor file but not always issued separately to the customer; EIC + Schedules + manuals consolidated into the customer pack; verbal walk-through handles the operational handover.",
       "The Information Commissioner's Office — the UK's independent regulator for data protection. The maximum fine for the most serious breaches is the higher of £17.5 million OR 4% of the firm's global annual turnover. Lower-tier breaches max out at £8.7 million OR 2% of turnover. In practice most fines on small businesses are far lower, but reputational damage (named-and-shamed in ICO enforcement notices) is often more painful than the fine itself.",
-      "The Internal Compliance Officer; £100.",
-      "There is no regulator.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "ICO is the UK regulator. The two-tier fine structure mirrors EU GDPR — £8.7m / 2% for procedural breaches, £17.5m / 4% for breaches of the principles or data-subject rights. Small firms rarely see fines anywhere near these caps, but enforcement notices are public, are searchable on the ICO website, and routinely appear in trade press. Reputational damage to a small contractor can be more material than the fine itself.",
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       "A customer asks 'what data do you hold about me, and can I have a copy?' What right are they exercising and what's the timeframe to respond?",
     options: [
-      "No such right exists.",
       "The right of access under UK GDPR Article 15 (a 'subject access request' or SAR). The firm has one calendar month to respond, free of charge in most cases. The response must include the personal data being processed, the purposes, the categories, the recipients, the retention period, and the source of the data if not from the data subject.",
-      "Right to erasure; 7 days.",
-      "Right to rectification; 24 hours.",
+      "Reg 543.3.201 — protective conductors up to and including 6 mm² shall be protected throughout by a covering at least equivalent to a single-core non-sheathed cable of voltage rating 450/750 V. The same insulation requirement extends to bonding conductors. Bare strap is only allowed where it forms part of a metallic conduit/enclosure used as the protective conductor itself.",
+      "Completion of the relevant year's college units (typically C&G 2365-03 Year 2 / NVQ Level 3 progress), portfolio entries signed by the workplace mentor, and your employer's formal approval through the JIB grading update. Stage progression is evidence-based, not time-based — you can't just 'wait' for the next Stage; you have to demonstrate you've earned it.",
+      "The electrician should investigate, identify the water damage as the cause, explain that the fault was caused by an external factor (not workmanship), document the findings, and offer a paid repair while advising the client to address the plumbing issue first",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "UK GDPR Article 15 gives every data subject the right to access their personal data (commonly called a SAR). One month to respond, with a possible two-month extension for complex requests. Free of charge unless manifestly unfounded or excessive. For a small firm a SAR usually means: cert(s), job sheet(s), correspondence, contact details, marketing consent records. Most modern CRMs have an export-customer-data function that handles this. Failing to respond is a reportable breach.",
   },

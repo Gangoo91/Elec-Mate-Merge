@@ -43,12 +43,12 @@ const checks = [
     question:
       "An L2 mate is in contact with a live conductor. They've slumped and aren't moving. What's the L3-grade FIRST action?",
     options: [
-      "Grab them and pull them off.",
+      "Public-facing online register of all HSE prosecutions and notices issued. Searchable by company name and inspector area. Used by clients during procurement, by insurers when underwriting, by competitors, by potential employees and by news organisations. Reputational impact often outstrips the legal cost — major clients delist firms with prohibition notices.",
+      "The Health and Safety Executive (HSE). Construction sites are higher-risk premises under the Health and Safety (Enforcing Authority) Regulations 1998, so HSE inspectors take the lead. They enforce HASAWA, EAWR, CDM 2015, MHSWR, COSHH, RIDDOR and the rest of the workplace H&S regime on site.",
+      "Consent, contract, legal obligation, vital interests, public task, legitimate interests. For most trade work the relevant bases are: contract (we need this data to deliver the work) and legitimate interests (we hold the customer's details to honour warranty and respond to follow-up).",
       "ISOLATE the supply at the nearest accessible point — the local switch, the breaker, the supplier's main fuse if necessary. Do NOT touch the casualty until isolation is confirmed. If isolation isn't immediately achievable, use a non-conductive item (dry wood, plastic chair) to break the contact, but isolation is always the first preference. Once free of the source, casualty assessment (DR ABC) and 999.",
-      "Call 999 first.",
-      "Take a photo for the report.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Remember from L2 — isolation is always the first action. The L3 depth: knowing where the nearest isolation point is for every job is part of the dynamic risk assessment on arrival. If the isolation point is too far away, decide on the spot whether non-conductive separation (dry broom handle, plastic chair) is faster — but isolation remains the gold standard.",
   },
@@ -57,12 +57,12 @@ const checks = [
     question:
       "After an electrical incident the casualty is being treated and ambulance is on the way. What's the L3-grade scene management priority?",
     options: [
-      "Tidy up the work area.",
       "PRESERVE the scene. Don't move anything (tools, equipment, locks, voltage indicators), don't tidy, don't restore power. Photograph the scene and the work in progress. Identify witnesses and ask them to write down what they saw. Notify the firm's responsible person immediately. The HSE will likely attend (a specified injury triggers immediate notification under RIDDOR Reg 4); the scene as it was is the prosecution evidence in either direction.",
-      "Restart the work to keep schedule.",
-      "Throw away anything broken to make space.",
+      "C&I is a specialised electrical-technician discipline covering process control systems, instrumentation, PLCs, SCADA and DCS. Typical route: Approved Electrician + HNC/HND in Electrical/Electronic or Process Control + employer-specific training (Siemens, Rockwell, Schneider PLC training). Common employers: process industries (food, pharma, water utilities), petrochemical, large manufacturing.",
+      "Yes — HASAWA s.37 makes a director, manager, secretary or similar officer personally liable where a corporate offence is committed with their consent, connivance or attributable to their neglect. Knowing the ladder failed inspection and authorising its continued use is textbook s.37 territory. The Sentencing Council Definitive Guideline for Health and Safety Offences (2016) sets the personal sentence range; for high-culpability cases it includes custody.",
+      "Take ALL adequate precautions: secure isolation (lock-off + key in pocket, not left in lock); a warning notice at the point of isolation; in some installations a separate caution at the point of work; voltage proving on a known live source before AND after testing the isolation; all to prevent the equipment becoming live again whilst work is in progress. Talking to the customer about not touching it is part of the precaution chain.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "L2 framing was 'help the casualty'. L3 framing is 'help the casualty AND preserve what the regulator and the firm need to investigate'. Scene preservation is the single most-impactful supervisor act in the first 30 minutes after an incident. Tidying up before the inspector arrives is one of the worst things you can do.",
   },
@@ -71,12 +71,12 @@ const checks = [
     question:
       "A casualty has had a brief 230V shock through the hand to ground. They feel 'fine' and want to carry on working. What's the L3-grade response?",
     options: [
-      "Let them carry on if they say they're OK.",
+      "Near-misses are the leading indicator of serious incidents. The HSE's accident triangle (and similar industrial-safety models) consistently shows that for every serious incident there are dozens or hundreds of near-misses with similar root causes that didn't quite escalate. Investigating and acting on near-misses is the most effective way to prevent the serious incident. Failing to report a near-miss leaves the same defect in place for the next person — who may not be as lucky.",
+      "A dutyholder is a person on whom statute imposes a duty regardless of contract. Employer, self-employed person, employee, occupier, manufacturer, designer, importer — each has statute-imposed duties under HASAWA or its associated regulations. Contractual reallocation of the risk doesn't transfer the statutory duty. You can't 'contract out' of HASAWA.",
+      "TAQA is for assessing existing competence (signing off NVQ portfolio evidence, observing apprentices in workplace). Teaching qualifications (Award / Certificate / Diploma in Education and Training, formerly PTLLS / CTLLS / DTLLS) are for delivering classroom teaching. College lecturers typically need a teaching qualification (DET Level 5 minimum); college assessors need TAQA L3. Many lecturers hold both.",
       "Stop. Even a brief mains shock requires medical assessment because (a) cardiac arrhythmia can develop hours after the event; (b) deep burns can be present with little surface marking; (c) muscle damage may not be felt immediately; (d) psychological shock may impair judgement. Refuse the 'I'm fine' pressure, isolate them from work, get them to A&E for ECG and burn assessment. Document everything. The casualty's preference is not the operative decision-maker.",
-      "Give them tea and biscuits.",
-      "Send them home unsupervised.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Mains-voltage shock is a medical event regardless of how the casualty feels. Cardiac arrhythmia (particularly atrial fibrillation) can develop several hours after a shock and presents with no immediate warning. The 'I'm fine, let me crack on' is the most-prosecuted post-shock failure — supervisor lets them carry on, casualty collapses later, firm and supervisor both face HASAWA s.7 / s.2 charges.",
   },
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: "What's the immediate response to discovering someone in contact with live electricity?",
     options: [
-      "Grab and pull.",
+      "A practical observation where you demonstrate maintenance skills under assessor observation, and a professional discussion where you discuss your portfolio evidence and demonstrate knowledge and understanding in depth",
       "ISOLATE the supply first. If immediate isolation isn't possible, use a non-conductive item (dry wood, plastic) to break contact. Do NOT touch the casualty until they're separated from the source. Then DR ABC casualty assessment and 999.",
-      "Call the supervisor first.",
-      "Take a photo.",
+      "A licensed asbestos removal contractor must carry out the work, with full RPE, decontamination procedures, air monitoring, a specific asbestos plan of work and notification to the HSE where required",
+      "Smart functionality (default off-peak charging schedules), randomised delay function, demand-side response capability, security and data protection, and a privacy-respecting connection",
     ],
     correctAnswer: 1,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: "After an electric shock, what's the appropriate medical response even if the casualty feels OK?",
     options: [
-      "Give them a cup of tea.",
+      "Acknowledge that self-harm is currently helping them cope, validate their emotional pain, explore whether they would be open to learning alternative coping strategies over time, and gently encourage them to speak to a professional such as a counsellor when they feel ready",
+      "Cold (R1 + R2) = 50 × (12.10 + 18.10) / 1000 = 1.51 Ω. Hot at 70 degrees C: 1.51 × 1.20 = 1.812 Ω. Design Zs = 0.80 + 1.812 = 2.61 Ω. Table 41.3 max for B16 in A4:2026 = 2.73 Ω. Just passes (margin only 0.12 Ω) — design is borderline and any route-length error during install will push it over. Reconsider cable size or route.",
       "Mandatory medical assessment. ECG to check for cardiac arrhythmia (which can develop hours after the event). Examination for entry / exit burns (often deep with little surface marking). Assessment for muscle damage and rhabdomyolysis. Even a brief 230V shock warrants A&E.",
-      "Send them home alone.",
-      "Get them to drink water and continue work.",
+      "Prevailing \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"tough it out\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" and \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"leave feelings at the gate\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" cultures actively discourage emotional expression and reflection, creating an environment where acknowledging emotions is seen as weakness, which drives emotional suppression, reduces help-seeking, and increases the risk of unrecognised mental health deterioration",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "L2 baseline — every mains shock = medical assessment. L3 depth — refuse the casualty's 'I'm fine' if they push back. Their preference is not the operative decision-maker.",
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: "What's the difference between an electrical burn and a thermal burn for first aid purposes?",
     options: [
-      "There's no difference.",
+      "Currently £90,000 of VAT-taxable turnover in any rolling 12-month period (£85,000 was the long-standing figure, raised to £90,000 in April 2024). When you cross the threshold you must register for VAT within 30 days and start charging VAT (currently 20% standard rate) on your invoices. Quarterly VAT returns. You can reclaim VAT paid on business purchases. For a busy electrical firm crossing the threshold is a significant administrative event.",
+      "CDM 2015 Reg 13(1)(a) requires the principal contractor to plan, manage and monitor the construction phase. In practice this includes site sign-in / sign-out registers, attendance at toolbox talks, RAMS sign-on records, and any permit records. These records combine with the apprentice's own records to form a full picture of who was on site doing what when. The records are commonly required after any incident or in any later dispute.",
+      "Tariff arbitrage. The system controller can charge the battery from the grid during the cheap window and discharge during the expensive window, regardless of solar. On a tariff with a 25-30 p/kWh spread between cheap and expensive rates, the arbitrage saves a few hundred pounds a year on top of the solar self-consumption benefit. Over a 10-15 year battery life this can roughly double the system's lifetime value compared to solar self-consumption alone. The G98/G99 notification covers grid charging if the system can also export.",
       "Electrical burns are usually small at the surface but deep at the tissue level — current passing through tissue heats it from the inside out. Thermal burns are usually obvious at the surface. Electrical burns may have separate entry and exit wounds. Both need cooling (10-20 min cool running water for thermal; less aggressive for electrical because of underlying tissue damage), covering with a clean non-adherent dressing, and medical assessment.",
-      "Electrical burns are less serious.",
-      "Thermal burns are less serious.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Electrical burns are deceptive — small surface mark, large internal damage. Always assume worse than it looks. Casualties commonly underestimate their own burn because the surface mark is small.",
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: "Under RIDDOR, when must a specified injury (e.g. fracture from a fall) be reported?",
     options: [
-      "Within a year.",
       "Without delay — telephone notification expected before the F2508 follows. F2508 within 10 days. The 'specified injury' list (Schedule 1) includes fractures (excl fingers/thumbs/toes), amputations, sight loss, crush injuries, serious burns, scalpings, head-injury unconsciousness, enclosed-space injuries.",
-      "Within 30 days.",
-      "Only if the casualty wants to.",
+      "A near-miss is an unplanned event that did not result in injury, damage, or loss but had the potential to do so — near-miss reporting is vital because it identifies hazards before they cause harm, enabling proactive risk management",
+      "Step 1: end-to-end resistance of each conductor (r1, rn, r2). Step 2: cross-connect L outgoing to N return; measure L-N at each socket — should be ~constant. Step 3: cross-connect L outgoing to cpc return; measure L-cpc at each socket — gives R1+R2 for the ring",
+      "Don't move tools, equipment, locks, voltage indicators or anything else. Don't restore power. Don't continue work. Photograph the scene from multiple angles. Identify witnesses and ask them to record their observations. Notify the firm's responsible person. The scene as it was is the evidence.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Remember from L2 — RIDDOR is the reporting regulation. L3 depth: knowing the timescales by category and being able to escalate to the responsible person on the day of the incident.",
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: "What does 'preserve the scene' mean after a serious incident?",
     options: [
-      "Tidy up.",
+      "They are independent. ADS asks \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"does the device clear in time to limit shock voltage?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" The adiabatic asks \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"given the device’s actual clearing time at the actual fault current, will the CPC survive the energy let-through?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" Both must pass.",
       "Don't move tools, equipment, locks, voltage indicators or anything else. Don't restore power. Don't continue work. Photograph the scene from multiple angles. Identify witnesses and ask them to record their observations. Notify the firm's responsible person. The scene as it was is the evidence.",
-      "Restart work to keep schedule.",
-      "Throw away the broken kit.",
+      "Three prongs of director liability. Consent — director knew and agreed. Connivance — director knew and turned a blind eye. Neglect — director should have known but didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t take reasonable steps to find out / address. All three give personal liability for the corporate offence.",
+      "(1) PROVE the voltage indicator works on a known live source (proving unit OR a known live circuit). (2) TEST the conductors to be isolated — line-to-earth, line-to-neutral, line-to-line, neutral-to-earth. (3) PROVE the voltage indicator works AGAIN on the same known live source. Confirms the indicator wasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t faulty during the test.",
     ],
     correctAnswer: 1,
     explanation:
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: "What's DR ABC in casualty assessment?",
     options: [
-      "An alphabet drill.",
+      "The UK grid has decarbonised rapidly: from ~500 gCO₂/kWh in 2012 to under 200 gCO₂/kWh in recent years (varies by year and operating conditions). As the grid gets cleaner, electrified heat (heat pumps) and electrified transport (EVs) get cleaner too — even if the kit itself doesn't change. That's why government policy pushes electrification: every year of grid progress automatically improves the carbon footprint of every heat pump and EV already installed.",
+      "Mind is the UK's largest general mental health charity (not construction-specific). Provides information, advice, helpline (0300 123 3393), support groups and signposting for any UK adult experiencing mental health difficulty. Construction-specific charities (Lighthouse, EIC, Mates in Mind) complement Mind by providing sector-specific context and infrastructure. Both can help; pick whichever is most accessible.",
       "Danger (check the scene is safe to approach), Response (is the casualty conscious and responding?), Airway (open the airway with head-tilt-chin-lift), Breathing (look, listen, feel for normal breathing for up to 10 seconds), Circulation (look for signs of normal life — colour, movement, response). If breathing absent or abnormal: 999, CPR, defibrillator.",
-      "A type of cable code.",
-      "A wiring colour mnemonic.",
+      "Pass. The maximum trip time at 1 x I delta n for a general-purpose 30 mA RCD is 300 ms per the product standard, and the system disconnection time is 400 ms (TN) or 200 ms (TT) per Table 41.1. 35 ms is well under all limits. A trip time of 35 ms is typical for a healthy modern RCD; older RCDs may give 80-200 ms — also within limits. Trip times near or exceeding 300 ms suggest the RCD is approaching end of life and should be replaced.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "DR ABC is the standard first-aid casualty assessment. L3 expectation is fluency in the sequence and the ability to apply it without freezing.",
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: "Why is witness identification a supervisor-grade priority after an incident?",
     options: [
-      "It's not.",
+      "HASAWA s.2 requires every employer to ensure, so far as is reasonably practicable, the health, safety and welfare at work of all their employees. Section 2(2)(a) explicitly requires the provision of safe systems of work, and a clear management structure with defined supervisory responsibilities is part of that. An employer who can't say who supervises whom is in breach of s.2.",
+      "Load management is doing its job. The CT clamp on the main supply detects the rising property total when the heat pump enters defrost cycle or fast-heat mode (drawing 3-7 kW) and the charger throttles its own draw to keep the total below the configured limit (typically the main-fuse rating). This is the design intent — better to throttle the charger temporarily than to trip the cut-out. The customer should be briefed on this at handover so the slowdown is not interpreted as a fault.",
+      "A document accompanying the transfer of controlled waste from the producer to the next holder. Must contain a description of the waste, the European Waste Catalogue (EWC) code, the SIC (Standard Industrial Classification) code of the producer's activity, the quantity, the carrier's licence details, the destination, and signatures of both parties. Kept for 2 years (3 years for Hazardous Waste Consignment Notes).",
       "Witnesses fade fast — by the next day they've reconstructed events differently, by the next week they've forgotten details, by the next month their memory has merged with what they later read or heard. Asking each witness to write down what they saw, in their own words, on the day of the incident, captures evidence at its strongest. The HSE / insurer / firm's defence team will all want this evidence later.",
-      "Only the police can interview witnesses.",
-      "Witnesses don't matter.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Contemporaneous witness statements are gold. Three months later they're worth far less. The L3 supervisor's act of saying 'please write down what you saw, today, in your own words' is one of the highest-value 30-second tasks in incident response.",
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: "What's the relationship between the casualty's wishes and the supervisor's decisions after a shock?",
     options: [
-      "The casualty decides.",
       "The casualty has autonomy on their own treatment but the supervisor has duties to the firm, the regulator and the wider workplace. Refusing medical assessment is the casualty's right but doesn't discharge the supervisor's HASAWA s.2 / s.7 duty. Supervisor should: strongly recommend assessment, document the conversation, escalate to a more senior manager, decline to release the casualty back to safety-critical work without clearance.",
-      "The supervisor decides everything.",
-      "The customer decides.",
+      "No — the STR is the regulatory document. The instrument download is a useful audit trail and a way to capture test data at the point of testing, but the completed STR with all required fields and signatures is what satisfies Reg 642.4 and Section 644. Most professionals use the download to populate the STR rather than as a standalone replacement.",
+      "Around 1.2 Nm for the circuit terminals, around 3.5 Nm for the incomers (verify against the specific data sheet — values vary by product line and update cycle). Hager publishes the torques inside the CU lid, in the data sheet, and in the Hager Pro app. Wylex and Schneider have similar values for equivalent products.",
+      "The Environment Agency. The EA operates the consignment note tracking system, the waste carrier registration system, the environmental permit register and the public lookup tools. SEPA (Scotland), Natural Resources Wales (NRW) and the Northern Ireland Environment Agency (NIEA) cover the equivalent functions in their respective territories. Civil sanctions, variable monetary penalties and criminal prosecution are all available where breaches are detected, and the agencies publish enforcement bulletins regularly.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The L3 nuance: respect autonomy AND discharge the duty. A clear written record of the recommendation, the casualty's response and the escalation route is the defensible evidence trail.",
   },

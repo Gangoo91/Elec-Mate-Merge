@@ -33,7 +33,12 @@ const checks = [
   {
     id: 'work-formula-check',
     question: 'You push a 50 N load 4 m across a flat floor. How much work have you done?',
-    options: ['12.5 J', '54 J', '200 J', '200 N'],
+    options: [
+      '54 J',
+      '12.5 J',
+      '200 J',
+      '200 N',
+    ],
     correctIndex: 2,
     explanation:
       'Work = Force × distance = 50 × 4 = 200 J. Work is measured in joules (J), not in newtons. If your answer comes out in N, you’ve mixed units up.',
@@ -42,8 +47,13 @@ const checks = [
     id: 'pe-formula-check',
     question:
       'You lift a 20 kg consumer unit 2 m up onto a wall. How much PE has it gained (g = 9.81)?',
-    options: ['40 J', '196.2 J', '392.4 J', '981 J'],
-    correctIndex: 2,
+    options: [
+      '392.4 J',
+      '196.2 J',
+      '40 J',
+      '981 J',
+    ],
+    correctIndex: 0,
     explanation:
       'PE = m × g × h = 20 × 9.81 × 2 = 392.4 J. That’s also exactly the work you did against gravity to get it up there.',
   },
@@ -51,8 +61,13 @@ const checks = [
     id: 'ke-pe-conversion-check',
     question:
       'A 1 kg spanner sits on a 3 m scaffold. You drop it. How fast is it travelling when it hits the ground (ignoring air resistance, g = 9.81)?',
-    options: ['About 3 m/s', 'About 7.7 m/s', 'About 9.8 m/s', 'About 30 m/s'],
-    correctIndex: 1,
+    options: [
+      'About 9.8 m/s',
+      'About 30 m/s',
+      'About 3 m/s',
+      'About 7.7 m/s',
+    ],
+    correctIndex: 3,
     explanation:
       'PE → KE. mgh = ½mv². v = √(2gh) = √(2 × 9.81 × 3) = √58.86 ≈ 7.67 m/s. That’s why dropped tools at height are so dangerous — they hit hard.',
   },
@@ -65,10 +80,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is "work" in mechanics?',
     options: [
-      'Anything you do at your job',
+      'The horizontal distance between the load and the spine',
       'Force × distance moved in the direction of the force',
-      'How tired you feel after lifting',
-      'The mass of the object you’re lifting',
+      'When inductive reactance equals capacitive reactance',
+      'A persistent earth fault exists on the protected circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -77,7 +92,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the SI unit of energy?',
-    options: ['Newton (N)', 'Watt (W)', 'Joule (J)', 'Kilogram (kg)'],
+    options: [
+      'Kilogram (kg)',
+      'Newton (N)',
+      'Joule (J)',
+      'Watt (W)',
+    ],
     correctAnswer: 2,
     explanation:
       'Joule (J). Work and energy use the same unit because they’re really the same thing — energy is the capacity to do work.',
@@ -85,16 +105,26 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Which formula gives kinetic energy?',
-    options: ['KE = m × g × h', 'KE = ½ × m × v²', 'KE = F × d', 'KE = m × v'],
-    correctAnswer: 1,
+    options: [
+      'KE = F × d',
+      'KE = m × g × h',
+      'KE = m × v',
+      'KE = ½ × m × v²',
+    ],
+    correctAnswer: 3,
     explanation:
       'KE = ½ × m × v². Note the v is squared — double the speed and you quadruple the kinetic energy. That’s why a fast falling object hits SO much harder than a slow one.',
   },
   {
     id: 4,
     question: 'Which formula gives gravitational potential energy?',
-    options: ['PE = ½ × m × v²', 'PE = m × g × h', 'PE = F × d × t', 'PE = m × a'],
-    correctAnswer: 1,
+    options: [
+      'PE = m × g × h',
+      'PE = ½ × m × v²',
+      'PE = F × d × t',
+      'PE = m × a',
+    ],
+    correctAnswer: 0,
     explanation:
       'PE = m × g × h. Mass times gravity times height above your reference level. Lift something up and you’re storing energy in the gravitational field.',
   },
@@ -102,8 +132,13 @@ const quizQuestions = [
     id: 5,
     question:
       'You lift a 10 kg load 3 m. How much work have you done against gravity (g = 9.81)?',
-    options: ['30 J', '98.1 J', '147 J', '294.3 J'],
-    correctAnswer: 3,
+    options: [
+      '98.1 J',
+      '294.3 J',
+      '30 J',
+      '147 J',
+    ],
+    correctAnswer: 1,
     explanation:
       'Work = F × d = mg × h = 10 × 9.81 × 3 = 294.3 J. That’s also the gain in PE. Same number, two ways to think about it.',
   },
@@ -111,10 +146,10 @@ const quizQuestions = [
     id: 6,
     question: 'What does the "law of conservation of energy" say?',
     options: [
-      'Energy can be created if you have a big enough motor',
-      'Energy can be destroyed but not created',
+      'The force multiplied by the distance that tends to tip the tower about its base edge',
+      'Cease assembly work, secure the partially built tower if possible, and do not resume until conditions improve',
       'Energy cannot be created or destroyed — only transferred or converted from one form to another',
-      'Energy gets used up over time',
+      'Use the 10 minutes saved wisely — allocate it to complex Section B questions and final checking',
     ],
     correctAnswer: 2,
     explanation:
@@ -123,16 +158,26 @@ const quizQuestions = [
   {
     id: 7,
     question: 'A 2 kg object moves at 4 m/s. What is its kinetic energy?',
-    options: ['4 J', '8 J', '16 J', '32 J'],
-    correctAnswer: 2,
+    options: [
+      '4 J',
+      '8 J',
+      '32 J',
+      '16 J',
+    ],
+    correctAnswer: 3,
     explanation: 'KE = ½ × 2 × 4² = ½ × 2 × 16 = 16 J. Don’t forget to square the velocity FIRST.',
   },
   {
     id: 8,
     question:
       'A 0.5 kg drill is dropped from 4 m. Just before it hits the floor, what is its KE (ignoring air resistance, g = 9.81)?',
-    options: ['About 2 J', 'About 9.8 J', 'About 19.6 J', 'About 39.2 J'],
-    correctAnswer: 2,
+    options: [
+      'About 19.6 J',
+      'About 39.2 J',
+      'About 2 J',
+      'About 9.8 J',
+    ],
+    correctAnswer: 0,
     explanation:
       'PE at top = mgh = 0.5 × 9.81 × 4 = 19.62 J. All of it converts to KE at the bottom. KE just before impact ≈ 19.6 J.',
   },

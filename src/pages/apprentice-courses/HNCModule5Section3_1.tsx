@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'first-principles-def',
     question: 'What is first principles estimating?',
     options: [
-      'Using historical costs from previous projects',
+      'Two pages maximum, with the qualifications and key experience on page one.',
+      'Appropriate connection means and protective measures',
+      'Checking protocol specifications and certification compatibility',
       'Building up costs from individual resources (labour, materials, plant)',
-      'Applying a cost per square metre rate',
-      'Using contractor quotations only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'First principles estimating builds up costs from the fundamental resources required: labour hours, material quantities, and plant/equipment time. It provides the most detailed and accurate estimate when done correctly.',
   },
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'bcis-purpose',
     question: 'What is the primary purpose of BCIS data in estimating?',
     options: [
-      'To replace detailed estimates entirely',
+      'Multiple variables and diagnostics over two wires',
       'To provide benchmark costs for comparison and early-stage budgets',
-      'To calculate exact tender prices',
-      'To determine profit margins',
+      'Print outputs with input data visible, version noted, and include in calc package',
+      'All observations, defects, and compliance issues',
     ],
     correctIndex: 1,
     explanation:
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'parametric-method',
     question: 'Parametric estimating uses which approach?',
     options: [
-      'Detailed measurement of every item',
+      'Chromel and alumel (nickel-chromium / nickel-aluminium)',
+      'Isolate the circuit and implement temporary safety measures',
+      'The resistance of the earth electrode to general mass of earth',
       'Cost relationships based on key parameters (e.g., per m2, per kW)',
-      'Only labour rates without materials',
-      'Fixed price quotations from suppliers',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Parametric estimating uses cost relationships tied to measurable parameters such as cost per square metre, cost per kW of cooling, or cost per lighting point. It's faster than first principles but less detailed.",
   },
@@ -71,12 +71,12 @@ const quickCheckQuestions = [
     question:
       'Why do MEP systems typically have higher estimating uncertainty than structural works?',
     options: [
-      'Simpler installation methods',
-      'Fewer specialist trades involved',
       'Greater design development during construction and more complex coordination',
-      'Lower material costs',
+      'Determine the effective temperature driving force for heat transfer',
+      'A guaranteed income for life bought with your pension pot',
+      'Intrinsic motivation decreases because the need for autonomy is unmet',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'MEP (mechanical, electrical, plumbing) systems often undergo significant design development during construction, require complex coordination between trades, and have rapidly changing technology - all contributing to higher estimating uncertainty.',
   },
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: "In first principles estimating, what does 'all-in rate' for labour include?",
     options: [
-      'Basic wage only',
+      "To cover design development, coordination issues, and market volatility",
+      "Working around existing services, access restrictions, and unknown conditions",
       "Basic wage plus employer's NI, holiday pay, sick pay, pension, and overheads",
-      'Basic wage plus materials',
-      'Subcontractor quotations',
+      "Luminaire, containment allocation, wiring, labour, fixings, and testing allowance",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The all-in labour rate includes basic wage, employer's National Insurance, CITB levy, holiday pay, sick pay, pension contributions, travel, tool allowances, and company overheads attributed to labour.",
   },
@@ -113,8 +113,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A 5,000m2 office requires electrical installation. Using BCIS data showing median electrical costs of 120 per m2, what is the elemental estimate?',
-    options: ['500,000', '600,000', '720,000', '850,000'],
-    correctAnswer: 1,
+    options: [
+      '720,000',
+      '500,000',
+      '850,000',
+      '600,000',
+    ],
+    correctAnswer: 3,
     explanation:
       'Elemental estimate = Area x Cost per m2 = 5,000m2 x 120/m2 = 600,000. This provides a budget figure for early-stage cost planning.',
   },
@@ -123,12 +128,12 @@ const quizQuestions = [
     question:
       "What is the primary advantage of Spon's Mechanical and Electrical Services Price Book?",
     options: [
-      'Provides fixed contract prices',
       'Gives itemised rates for common MEP components with labour constants',
-      'Eliminates the need for quantity surveying',
-      'Guarantees accuracy within 5%',
+      'Basic wage plus employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s NI, holiday pay, sick pay, pension, and overheads',
+      'Working around existing services, access restrictions, and unknown conditions',
+      'Cost per m2 of treated floor area or per kW of installed cooling capacity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Spon's provides itemised rates including labour constants (hours per unit) for mechanical and electrical components. It serves as a checking tool and starting point for building up rates.",
   },
@@ -137,10 +142,10 @@ const quizQuestions = [
     question:
       'When building up a composite rate for installing a luminaire, which elements should be included?',
     options: [
-      'Only the luminaire purchase price',
+      'Basic wage plus employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s NI, holiday pay, sick pay, pension, and overheads',
       'Luminaire, containment allocation, wiring, labour, fixings, and testing allowance',
-      'Labour and luminaire only',
-      'Material cost plus 10% profit',
+      'Gives itemised rates for common MEP components with labour constants',
+      'Cost per m2 of treated floor area or per kW of installed cooling capacity',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +156,12 @@ const quizQuestions = [
     question:
       'What adjustment should be applied to BCIS data when using it for a project in Manchester if the base data is national average?',
     options: [
-      'No adjustment needed',
+      'Matched to motor full load current',
+      'HSG210 — Asbestos Essentials',
       'Apply regional location factor',
-      'Add 50% contingency',
-      'Reduce by inflation rate',
+      'Requires skilled installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BCIS provides location factors for different regions of the UK. These must be applied to convert national average costs to the specific project location, as labour and material costs vary regionally.',
   },
@@ -164,8 +169,13 @@ const quizQuestions = [
     id: 7,
     question:
       'For a complex hospital M&E installation, what percentage of construction cost might MEP services represent?',
-    options: ['15-20%', '25-35%', '40-60%', '70-80%'],
-    correctAnswer: 2,
+    options: [
+      '15-20%',
+      '25-35%',
+      '70-80%',
+      '40-60%',
+    ],
+    correctAnswer: 3,
     explanation:
       'Healthcare facilities have high M&E content due to medical gases, specialist ventilation, backup power, nurse call systems, and complex controls. M&E can represent 40-60% of construction cost compared to 25-35% for standard offices.',
   },
@@ -173,12 +183,12 @@ const quizQuestions = [
     id: 8,
     question: "What is 'prelims' in the context of building services estimating?",
     options: [
-      'Preliminary drawings',
       'Site-based project overheads and management costs',
-      'Design fees only',
-      'Material delivery charges',
+      'Divides proportionally to resistance',
+      'The person who signs the certificate',
+      'New circuits, consumer unit changes and bathroom/kitchen work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Preliminaries (prelims) are the contractor's site-based costs including site management, temporary facilities, plant and equipment, insurances, and project-specific overheads that cannot be allocated to measured work items.",
   },
@@ -187,12 +197,12 @@ const quizQuestions = [
     question:
       'When estimating for a refurbishment project, what additional factor significantly impacts MEP costs?',
     options: [
-      'Lower material requirements',
-      'Simpler coordination',
+      'Luminaire, containment allocation, wiring, labour, fixings, and testing allowance',
       'Working around existing services, access restrictions, and unknown conditions',
-      'Reduced testing requirements',
+      'Drawing cable from drum, pulling through containment, termination, labelling, and testing',
+      'Gives itemised rates for common MEP components with labour constants',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Refurbishment projects face challenges including working around existing services, restricted access, discovering unknown conditions, maintaining building operations, and coordinating with multiple existing systems.',
   },
@@ -201,12 +211,12 @@ const quizQuestions = [
     question:
       'A first principles estimate for cable installation should include which labour operations?',
     options: [
-      'Only the time to pull cable through containment',
+      'To cover design development, coordination issues, and market volatility',
+      'Basic wage plus employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s NI, holiday pay, sick pay, pension, and overheads',
       'Drawing cable from drum, pulling through containment, termination, labelling, and testing',
-      'Supervision costs only',
-      'Material delivery time',
+      'Working around existing services, access restrictions, and unknown conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Complete cable installation labour includes: drawing from drum, measuring and cutting, pulling through containment, forming and dressing, termination at both ends, labelling, initial testing, and an allowance for final testing.',
   },
@@ -214,12 +224,12 @@ const quizQuestions = [
     id: 11,
     question: "What is the purpose of applying a 'risk allowance' in MEP estimates?",
     options: [
-      'To guarantee profit',
+      'Drawing cable from drum, pulling through containment, termination, labelling, and testing',
+      'Basic wage plus employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s NI, holiday pay, sick pay, pension, and overheads',
+      'Luminaire, containment allocation, wiring, labour, fixings, and testing allowance',
       'To cover design development, coordination issues, and market volatility',
-      'To reduce the tender price',
-      'To comply with building regulations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Risk allowance covers uncertainties in MEP projects including ongoing design development, coordination clashes, material price volatility, productivity variations, and unforeseen site conditions. It's separate from contingency.",
   },
@@ -228,12 +238,12 @@ const quizQuestions = [
     question:
       'For benchmarking purposes, what unit is commonly used to express HVAC costs in offices?',
     options: [
-      'Cost per luminaire',
-      'Cost per socket outlet',
       'Cost per m2 of treated floor area or per kW of installed cooling capacity',
-      'Cost per linear metre of ductwork',
+      'Working around existing services, access restrictions, and unknown conditions',
+      'Drawing cable from drum, pulling through containment, termination, labelling, and testing',
+      'Basic wage plus employer\\\\\\\\\\\\\\\'s NI, holiday pay, sick pay, pension, and overheads',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'HVAC costs are commonly benchmarked as cost per m2 of treated floor area or cost per kW of cooling capacity. This allows comparison across projects regardless of specific system design.',
   },

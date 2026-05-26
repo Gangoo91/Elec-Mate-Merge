@@ -14,8 +14,13 @@ const quickCheckQuestions = [
     id: 'ir-test-voltage',
     question:
       'For a 400 V three-phase motor circuit, what DC test voltage should be applied during an insulation resistance test to BS 7671?',
-    options: ['250 V DC', '500 V DC', '1000 V DC', '5000 V DC'],
-    correctIndex: 1,
+    options: [
+      '5000 V DC',
+      '250 V DC',
+      '500 V DC',
+      '1000 V DC',
+    ],
+    correctIndex: 2,
     explanation:
       'BS 7671 Table 6.1 specifies a 500 V DC test voltage for circuits rated up to 500 V AC. A 400 V three-phase circuit falls within this range. Using too high a test voltage risks damaging insulation, while too low a voltage may not detect deterioration.',
   },
@@ -23,8 +28,13 @@ const quickCheckQuestions = [
     id: 'ir-minimum-value',
     question:
       'What is the minimum acceptable insulation resistance value for a 230 V circuit under BS 7671?',
-    options: ['0.5 megohms', '1.0 megohms', '2.0 megohms', '10 megohms'],
-    correctIndex: 1,
+    options: [
+      '0.5 megohms',
+      '10 megohms',
+      '2.0 megohms',
+      '1.0 megohms',
+    ],
+    correctIndex: 3,
     explanation:
       'BS 7671 Regulation 612.3 specifies a minimum insulation resistance of 1.0 megohm for circuits rated up to 500 V tested at 500 V DC. While 1.0 megohm is the absolute minimum for compliance, healthy insulation on new installations should read considerably higher — typically 100 megohms or more.',
   },
@@ -32,12 +42,12 @@ const quickCheckQuestions = [
     id: 'ir-temperature-effect',
     question: 'How does temperature affect insulation resistance readings?',
     options: [
-      'Higher temperature increases insulation resistance',
-      'Temperature has no effect on insulation resistance',
+      'Each dutyholder must cooperate with the others so far as is necessary to enable them to comply with their duties',
       'Higher temperature decreases insulation resistance — readings roughly halve for every 10 degrees C rise',
-      'Temperature only affects readings above 100 degrees C',
+      'Counts input pulses via dedicated hardware, independent of the PLC scan cycle',
+      'Unique Device ID, manufacturer & model, location, range & units, and accuracy class',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Insulation resistance is inversely proportional to temperature. As a general rule, the reading halves for approximately every 10 degrees C rise. This means a motor tested at 60 degrees C will show significantly lower readings than the same motor at 20 degrees C. When trending, always correct readings to a standard reference temperature (typically 40 degrees C).',
   },
@@ -63,12 +73,12 @@ const quizQuestions = [
     question:
       'Before performing an insulation resistance test, which safety precaution is essential?',
     options: [
-      'Ensure the circuit is energised at normal operating voltage',
+      'Applying progressively higher test voltages and comparing readings at each step',
+      'Safely discharge the stored capacitive charge before touching conductors',
       'Ensure the circuit is safely isolated, proved dead, and all sensitive equipment is disconnected',
-      'Ensure the ambient temperature is below 20 degrees C',
-      'Ensure all cable connections are loosened',
+      'Condition monitoring, electrical testing and diagnostic fault-finding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The circuit must be safely isolated, proved dead and locked off before testing. All connected equipment that could be damaged by the test voltage (electronic devices, surge protectors, capacitors, LEDs) must be disconnected.',
   },
@@ -76,12 +86,12 @@ const quizQuestions = [
     id: 3,
     question: 'The polarisation index (PI) is calculated by dividing:',
     options: [
-      'The 1-minute reading by the 30-second reading',
-      'The 10-minute reading by the 1-minute reading',
       'The test voltage by the leakage current',
+      'The 1-minute reading by the 30-second reading',
       'The cable length by the insulation resistance',
+      'The 10-minute reading by the 1-minute reading',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The polarisation index is the ratio of the 10-minute insulation resistance reading to the 1-minute reading. Good insulation shows a PI of 2.0 or higher. A PI close to 1.0 indicates contaminated or water-logged insulation.',
   },
@@ -90,12 +100,12 @@ const quizQuestions = [
     question:
       'When testing insulation resistance on a three-phase motor, which connections should be tested?',
     options: [
-      'Only L1 to earth',
       'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
-      'Only phase-to-phase',
-      'Only the supply cable, not the motor windings',
+      'Significant insulation deterioration requiring investigation',
+      'The 10-minute reading by the 1-minute reading',
+      'Condition monitoring, electrical testing and diagnostic fault-finding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A complete test requires testing each phase to earth (L1-E, L2-E, L3-E) and each phase to phase (L1-L2, L2-L3, L1-L3). This identifies insulation breakdown between windings and to the frame.',
   },
@@ -104,10 +114,10 @@ const quizQuestions = [
     question:
       'A motor insulation resistance drops from 50 megohms to 2 megohms over six months. This indicates:',
     options: [
-      'Normal operation — insulation resistance varies widely',
+      'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
       'Significant insulation deterioration requiring investigation',
-      'The tester is faulty',
-      'The motor needs rebalancing',
+      'Condition monitoring, electrical testing and diagnostic fault-finding',
+      'Misleadingly low insulation resistance readings',
     ],
     correctAnswer: 1,
     explanation:
@@ -118,12 +128,12 @@ const quizQuestions = [
     question:
       'After completing an insulation resistance test on a long cable run, what must be done?',
     options: [
-      'Wait 30 seconds for the reading to stabilise',
+      'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
+      'A standard reference temperature, typically 40 degrees C',
       'Safely discharge the stored capacitive charge before touching conductors',
-      'Apply a higher test voltage to verify',
-      'Record the ambient humidity',
+      'Significant insulation deterioration requiring investigation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Long cable runs store significant capacitive charge during testing. This charge must be safely discharged before touching any conductors or reconnecting equipment. Most modern testers have a built-in discharge function.',
   },
@@ -132,11 +142,11 @@ const quizQuestions = [
     question: 'The dielectric absorption ratio (DAR) compares readings taken at:',
     options: [
       'Two different test voltages',
-      '60 seconds and 30 seconds into the test',
-      'Two different temperatures',
       'Before and after the motor has run',
+      'Two different temperatures',
+      '60 seconds and 30 seconds into the test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The DAR is the 60-second reading divided by the 30-second reading. A DAR of 1.4 or higher indicates good insulation. Below 1.0 suggests contamination. DAR is a quicker alternative to the full polarisation index test.',
   },
@@ -144,12 +154,12 @@ const quizQuestions = [
     id: 8,
     question: 'Step voltage testing involves:',
     options: [
-      'Increasing the test duration at a fixed voltage',
       'Applying progressively higher test voltages and comparing readings at each step',
-      'Testing at different ambient temperatures',
-      'Applying the test voltage in pulses',
+      'Significant insulation deterioration requiring investigation',
+      'Ensure the circuit is safely isolated, proved dead, and all sensitive equipment is disconnected',
+      'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Step voltage testing applies increasing DC voltages in steps and compares the insulation resistance at each level. Good insulation shows similar resistance at each step. A significant drop at higher voltages indicates weakness that standard test voltages may not reveal.',
   },
@@ -157,10 +167,10 @@ const quizQuestions = [
     id: 9,
     question: 'High ambient temperature and surface moisture cause:',
     options: [
-      'Higher insulation resistance readings',
+      'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
       'Misleadingly low insulation resistance readings',
-      'No change in readings',
-      'The tester to malfunction',
+      '60 seconds and 30 seconds into the test',
+      'A standard reference temperature, typically 40 degrees C',
     ],
     correctAnswer: 1,
     explanation:
@@ -169,8 +179,13 @@ const quizQuestions = [
   {
     id: 10,
     question: 'Under BS 7671, the test voltage for SELV circuits (up to 50 V AC) is:',
-    options: ['250 V DC', '500 V DC', '1000 V DC', 'The same as the circuit voltage'],
-    correctAnswer: 0,
+    options: [
+      'The same as the circuit voltage',
+      '500 V DC',
+      '250 V DC',
+      '1000 V DC',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 7671 Table 6.1 specifies a 250 V DC test voltage for SELV and PELV circuits. The minimum acceptable insulation resistance for these circuits is 0.5 megohm.',
   },
@@ -178,12 +193,12 @@ const quizQuestions = [
     id: 11,
     question: 'For meaningful trending of motor insulation data, readings should be corrected to:',
     options: [
+      'Safely discharge the stored capacitive charge before touching conductors',
+      'The 10-minute reading by the 1-minute reading',
+      'Significant insulation deterioration requiring investigation',
       'A standard reference temperature, typically 40 degrees C',
-      'The highest recorded temperature',
-      '0 degrees C',
-      'Outdoor ambient temperature',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Readings should be corrected to a standard reference temperature — typically 40 degrees C for rotating machines (IEEE 43). Without temperature correction, readings taken at different temperatures cannot be meaningfully compared for trend analysis.',
   },
@@ -191,12 +206,12 @@ const quizQuestions = [
     id: 12,
     question: 'Under ST1426, insulation resistance testing relates to which competence area?',
     options: [
-      'Commercial awareness',
       'Condition monitoring, electrical testing and diagnostic fault-finding',
-      'Project planning',
-      'Quality management systems',
+      'Significant insulation deterioration requiring investigation',
+      'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
+      'A standard reference temperature, typically 40 degrees C',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 requires maintenance technicians to understand and apply electrical testing techniques including insulation resistance testing as part of condition monitoring and diagnostic fault-finding skills.',
   },

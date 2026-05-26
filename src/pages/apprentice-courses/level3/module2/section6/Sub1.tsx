@@ -41,10 +41,10 @@ const checks = [
     question:
       "An ASHP install runs over and the F-Gas engineer has gone home. The customer asks if you can just connect the refrigerant pipework that the engineer left dangling so the unit can be commissioned tomorrow. What is the correct answer?",
     options: [
-      "Yes — refrigerant pipework is just copper, you can braze it as part of the electrical install.",
+      "BPEC (British Plumbing Employers Council, now expanded to other trades) runs an MCS-recognised Solar PV installer course typically delivered as a 4-5 day classroom + practical course covering PV system design, installation, MCS standards and commissioning. AM2S is the JIB practical assessment route — assumes prior PV training and tests practical competence. Both routes earn the ECS PV endorsement; BPEC is more course-based, AM2S is more assessment-based.",
       "No. Any work that opens, closes or charges a sealed refrigerant circuit is restricted to F-Gas-certified persons under the F-Gas Regulations (EU 517/2014, retained UK law). Brazing into a refrigerant circuit, evacuating, charging or recovering refrigerant all sit outside the electrical scope. Your scope is the electrical supply, isolation, controls and bonding. Politely refuse, document the request, and let the customer know the F-Gas engineer must complete the refrigerant side before the unit can run.",
-      "Yes — provided you wear gloves and goggles.",
-      "Yes — as long as you record the refrigerant charge in the unit logbook.",
+      "Politely decline. Explain that the firm has a no-tips policy because it keeps the relationship clean — the firm has already been paid for the work via the invoice, and accepting an extra payment from a customer can look like an inducement to give favourable certificates or quotes in future. Offer instead that they could leave a Google review or recommend the firm.",
+      "Mode 1 is direct AC connection to a standard domestic socket with no in-cable protection (effectively banned for EVs in the UK and most of Europe). Mode 2 is AC with in-cable control protection (ICCB) — the 'granny cable' that ships with most EVs for emergency 13 A socket charging. Mode 3 is AC charging through a dedicated charge point with the control pilot signal and protection built into the fixed installation — this is the standard UK home and workplace install. Mode 4 is DC rapid charging where the rectifier is in the charger, not the car — used for motorway rapid charging at 50 kW upwards.",
     ],
     correctIndex: 1,
     explanation:
@@ -55,12 +55,12 @@ const checks = [
     question:
       "What does GWP mean in the context of F-Gas Regulations and why does it matter for refrigerant choice on modern heat pumps?",
     options: [
-      "Gas Working Pressure — sets the pipe wall thickness for refrigerant lines.",
+      "The Project Manager is client-facing and owns the programme, the budget and the contract. They sit in an office most of the week and visit site weekly. The Site Manager runs the site day to day — daily plan, trade co-ordination, welfare, safety walks, snag-list. The PM is who the client talks to about delays and money. The SM is who the trades talk to about the work itself.",
+      "Client: visionary (redirect focus to the project outcome and shared goals), Apprentice: coaching combined with affiliative (develop their coping strategies while showing genuine care for their wellbeing), Subcontractors: democratic for initial conflict resolution (hearing both perspectives) shifting to commanding only if safety is at risk — demonstrating style-flexing based on situational needs",
+      "Gas Safe engineers carry out work on gas appliances and pipework — disconnection, reconnection, commissioning. On a kitchen rewire involving a gas hob the Gas Safe engineer disconnects before the electrical work starts and reconnects after. They're a separate trade, with a separate competence scheme (Gas Safe Register, replacing the old CORGI), and only Gas Safe registered engineers can lawfully work on gas under the Gas Safety (Installation and Use) Regulations 1998.",
       "Global Warming Potential — a multiplier expressing how much heat a refrigerant traps in the atmosphere relative to carbon dioxide over 100 years. CO2 = 1; R-410A around 2,088; R-32 around 675; R-290 (propane) around 3. The F-Gas Regulation phases down high-GWP HFCs by quota and bans certain high-GWP refrigerants in new equipment. That is why new domestic heat pumps in the UK have moved from R-410A to R-32 and increasingly to R-290.",
-      "Generic Warranty Period — the manufacturer cover on a sealed refrigerant unit.",
-      "Group Working Permit — the F-Gas company certification number.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "GWP is the climate-impact multiplier that drives the F-Gas phase-down. The Regulation sets a tonnes-CO2-equivalent quota for HFC placing on the EU/UK market, shrinking each year. Manufacturers respond by switching to lower-GWP refrigerants. R-290 (propane) at GWP 3 is essentially climate-neutral on the F-Gas scale but introduces ATEX flammable-refrigerant handling rules. You will not choose the refrigerant — but you will see it on the data plate and you should know why a 2018 R-410A unit and a 2025 R-290 unit are not interchangeable.",
   },
@@ -69,12 +69,12 @@ const checks = [
     question:
       "On a typical 8 kW air-source heat pump install in a UK semi, which of these activities sit firmly inside the electrician scope of work?",
     options: [
-      "Brazing the liquid line, evacuating the system to vacuum, weighing in the refrigerant charge.",
       "Sizing and installing the dedicated supply (typically 32 A or 40 A radial on a Type C MCB), providing a means of isolation outside, bonding the outdoor unit chassis where it is an extraneous-conductive-part, wiring the controls and any smart-export integration, verifying continuity and Zs at handover. The refrigerant circuit, vacuum, charge and leak test all sit outside the electrical scope.",
-      "Pressure-testing the refrigerant lines with nitrogen.",
-      "Recovering refrigerant from the old AC unit being replaced.",
+      "Podium step or low tower scaffold. The work is two-handed (cutting trunking, fixing brackets, dropping cable in), of moderate duration (more than 30 minutes), and at a height where a fall would cause serious injury. A ladder fails the one-handed-work and short-duration tests. A tower fully boarded with guardrails is the prevent-a-fall control; a podium step gives the same protection over a smaller height range. PASMA training is required for tower assembly.",
+      "True adaptability requires actively regulating emotional resistance to change, maintaining effectiveness during ambiguity, proactively seeking new approaches, and flexing strategies without losing core values — it is an emotionally regulated, intentional process, not passive compliance",
+      "Visits apprentices in their workplace (typical 2-monthly visits), observes them carrying out real electrical work, signs off portfolio evidence against the apprenticeship standard, calibrates with the workplace mentor, attends three-way reviews, and contributes to the college's internal quality assurance. Typically employed by the college (or training provider) on a per-apprentice or sessional basis.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The electrical scope is supply, isolation, controls, bonding and verification. Everything refrigerant-side is F-Gas-certified work. Knowing the boundary protects your registration, the customer warranty and your employer F-Gas company certificate. On a mixed-trade site the install programme should sequence the F-Gas engineer in for the refrigerant work and you in for the electrical work, with neither stepping over the other.",
   },
@@ -86,10 +86,10 @@ const quizQuestions = [
     question:
       "Which piece of legislation forms the F-Gas regulatory framework in the UK after Brexit?",
     options: [
-      "EU Regulation 517/2014 ceased to apply in the UK on 1 January 2021.",
+      "You'll forget the detail. By Friday you can roughly remember Monday's hours but not which circuits you worked on, who you were with, what materials you used, or what variations came up. The diary is a contemporaneous record — its evidential value depends on it being written close to the event. Write daily; the five minutes at the end of each shift saves the Friday panic and produces a record that's actually useful in dispute.",
       "EU Regulation 517/2014 was retained as UK law under the European Union (Withdrawal) Act 2018 and continues to apply with minor UK-specific amendments. The UK F-Gas Regulation is enforced by the Environment Agency in England, SEPA in Scotland, NRW in Wales and the NIEA in Northern Ireland. It controls the placing on market, leak checking, recovery, certification of personnel and certification of companies handling fluorinated greenhouse gases.",
-      "It was replaced by a UK-specific GWP cap with no continuity from the EU regime.",
-      "The UK Climate Change Act 2008 covers refrigerants directly.",
+      "Yes. Section 722 applies to all EV charging installations regardless of earthing arrangement. The PEN-fault protection requirement specifically targets TN-C-S (PNB) supplies because that is where the broken-PEN risk exists; TT-earthed properties already have a separate earth electrode and do not have the PEN-fault risk. But all the other Section 722 requirements (RCD type, control pilot, isolation, labelling, cable rating) apply equally to TT-earthed installs. The MCS-certified designer specifies per the supply conditions; the apprentice executes per the design.",
+      "C&G qualifications themselves don't expire — once awarded, the certificate remains valid. But CPS schemes (NICEIC, NAPIT) typically require ongoing CPD for QS-named individuals to evidence current competence. The most important CPD is keeping up with BS 7671 amendments — currently A4:2026 introduces AFDD requirements, TN-C-S handling and revised schedule columns. Out-of-date QS competence risks scheme registration.",
     ],
     correctAnswer: 1,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     question:
       "An employer wants you to top up the refrigerant on a customer split AC unit because the F-Gas engineer is booked out for a fortnight. What is the correct response?",
     options: [
-      "Do it once, document it in the job sheet and move on.",
+      "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471). It places a statutory duty on the employer (and certain self-employed people) to report specified workplace injuries, occupational diseases, dangerous occurrences and fatalities to the HSE. Reportable items include fatalities, specified injuries (amputation, fracture other than fingers/toes/thumbs, loss of sight, scalping, etc.), over-7-day absences, and a defined list of dangerous occurrences. Reporting is via the F2508 form on hse.gov.uk.",
+      "Multiple legitimate causes. (1) Instrument tolerance — both the Zs tester and the continuity tester have plus or minus 5-10 percent each, which can compound. (2) Slight temperature difference — the cables may be slightly warmer at live test time than at dead test time. (3) Supply voltage variation between the two tests can affect calculation. (4) The dead-test R1+R2 may include a parallel earth path (e.g. via metal back-boxes) that doesn\\\\\\\\'t carry full fault current under live conditions. Up to 20 percent discrepancy is generally within acceptable tolerance; investigate above 20 percent.",
       "Refuse politely and escalate. Refrigerant top-up is a regulated F-Gas activity that requires individual F-Gas certification (Category I covers stationary refrigeration, AC and heat pumps) and is only legal when the company also holds an F-Gas company certificate. Doing the work uncertified exposes you, your employer and the customer to enforcement action and voids the manufacturer warranty. The correct answer is to document the request, decline, and rebook the F-Gas engineer.",
-      "Do it but only if the unit holds less than 3 kg of refrigerant.",
-      "Do it because you have done a refrigerant short course in the past.",
+      "Bond each extraneous service (gas, water) separately back to the MET per Reg 544.1.2 (within 600 mm of intake). Bond the structural steel frame at multiple accessible points back to the MET. Bond the LPS earth network to the MET via direct bond or spark gap per BS EN 62305. Each system has its own dedicated bonding cable to the MET — no daisy-chaining. The MET is the single common reference for the entire integrated earth and bonding network.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "An apprentice or qualified electrician without F-Gas Category I certification is not legally allowed to add refrigerant to a sealed circuit. The 3 kg charge threshold from the older F-Gas regime no longer applies in the same way under EU 517/2014 — the trigger is now tonnes CO2 equivalent and sealed hermetic units. Either way, top-up work is restricted regardless of charge size. The boundary protects you and the customer.",
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     question:
       "Why has the UK domestic heat pump market shifted from R-410A to R-32 and increasingly to R-290 (propane) refrigerants?",
     options: [
-      "R-32 and R-290 are cheaper to manufacture.",
+      "Reg 14(2) requires every employee to inform their employer (or any other employee with specific responsibility for safety) of any work situation which they reasonably consider represented a serious and immediate danger to health and safety, AND any matter which they reasonably consider represented a shortcoming in the employer's protection arrangements for health and safety. The duty extends to near-misses, defective safe systems of work, and any condition the employee believes presents danger.",
+      "The supervisor might notice: decreasing patience with apprentices' problems, emotional numbness when hearing about difficulties, cynicism about whether support makes a difference, withdrawal from mentoring conversations, and irritability — all signs that their empathic capacity is depleted and they need to restore their own emotional resources",
+      "Professional responsibility and PI insurance reasons. If a claim is made later (1 to 12 years post-handover under typical PI policy retroactive terms), the designer needs the as-installed pack to defend their work. Most designers retain master copies for the design life of the installation (typically 25 years for fixed wiring) plus 6 years for limitation period.",
       "The F-Gas Regulation imposes a phased reduction in the tonnes-CO2-equivalent of HFCs placed on the EU/UK market each year and bans certain high-GWP refrigerants in new equipment categories. R-410A has a GWP of around 2,088. R-32 sits around 675 and is a single-component refrigerant making service easier. R-290 (propane) has a GWP of around 3 and is essentially climate-neutral on the F-Gas scale, but is A3 flammable and brings ATEX and minimum-room-volume rules with it.",
-      "R-410A is now banned worldwide.",
-      "R-290 has higher operating pressure and so transfers more heat per cycle.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The phase-down quota is the regulatory engine driving refrigerant choice. Manufacturers will not place new high-GWP units on the market because the quota shrinks each year. R-290 monoblock heat pumps are now common in the UK because the entire refrigerant circuit is factory sealed inside the outdoor unit and only water pipes enter the building, neatly side-stepping the indoor minimum-room-volume rule. Knowing this lets you read a data plate and understand which install rules apply.",
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     question:
       "What is an F-Gas company certificate and why does the company you work for need one if it installs heat pumps?",
     options: [
-      "A voluntary trade association badge with no legal weight.",
       "A statutory certificate issued by an F-Gas certification body that authorises a company to carry out installation, maintenance, repair, decommissioning or leak checking on stationary refrigeration, AC and heat pump equipment containing fluorinated greenhouse gases. The company must also employ enough F-Gas Category I (or equivalent) certified individuals to cover the work. Without the company certificate, the firm cannot legally carry out refrigerant work even if individual engineers are certified.",
-      "A document required only if the company imports refrigerant cylinders directly.",
-      "A certificate that lapses automatically when the registered engineer leaves the company.",
+      "Safety Data Sheet — a 16-section document required for all hazardous substances by the CLP Regulation (EU 1272/2008, retained as UK law after Brexit). The SDS is the manufacturer's authoritative source of hazard, handling, exposure and first-aid information for the product. Required by COSHH 2002 Reg 12 to be available to anyone handling the substance.",
+      "ACAS promotes early, informal resolution through open conversation — addressing issues promptly, listening to all perspectives, seeking mutually acceptable solutions, and using formal processes only when informal approaches have been exhausted. This aligns with EI-based conflict resolution that prioritises empathic dialogue, assertive communication, and collaborative problem-solving",
+      "Phase 1: Temporary avoiding (separate the parties to prevent escalation while you prepare). Phase 2: Accommodating toward emotional needs (acknowledge both parties' feelings before addressing content). Phase 3: Collaborating on the technical issue (bring both parties together to find the best technical solution). Phase 4: If collaboration stalls on minor points, compromising to maintain progress. This multi-phase approach addresses both the emotional and technical dimensions",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Both certificates are required: individual (engineer) and company. The Environment Agency check both during enforcement visits. Many electrical contractors that sell heat pump installs subcontract the F-Gas work to a refrigerant company that holds the company cert, leaving the electrical contractor to handle the supply, isolation, controls and bonding within their own competence. The mixed-trade model is the norm in the UK domestic heat pump market.",
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       "Which UK regulator enforces the F-Gas Regulation in England and what do they typically take action on?",
     options: [
-      "The Health and Safety Executive only — and only on workplace exposure.",
+      "Requires the 'responsible person' (employer / building owner / occupier) to undertake a fire risk assessment, implement and maintain general fire precautions, provide adequate means of escape, fire detection and alarm, fire fighting equipment, and information / instruction / training to relevant persons. Enforced by the Fire and Rescue Service.",
       "The Environment Agency. Typical enforcement covers uncertified work on refrigerant circuits, missing or incomplete leak-check logbook entries, missing F-Gas company certification, failure to recover refrigerant during decommissioning, and placing prohibited high-GWP equipment on the market. Civil sanctions and criminal prosecution are both available. SEPA, NRW and NIEA enforce in the devolved nations.",
-      "Trading Standards under the Sale of Goods Act.",
-      "Ofgem under the energy supply licence regime.",
+      "Bonding required per Reg 411.3.1.2 — the metal oil supply pipe is an extraneous-conductive-part liable to introduce a potential. Bond per Reg 544.1.2 — consumer side, before any branch, within 600 mm of point of entry where practicable. Use a BS 951 clamp suitable for oil application (similar specification to gas — DSEAR considerations apply).",
+      "Increasingly critical. Google reviews are the first thing most prospective customers see when searching for an electrician. Trustpilot, Checkatrade, MyBuilder, Rated People all influence customer decisions. A consistent stream of positive reviews drives organic enquiries; a single uncontested negative review can deter customers. Actively request reviews from happy customers (post-job email with review link). Respond promptly and professionally to all reviews — positive and negative.",
     ],
     correctAnswer: 1,
     explanation:
@@ -156,12 +156,12 @@ const quizQuestions = [
     question:
       "A customer points at the outdoor heat pump unit and asks why the F-Gas label on the side of it matters. What is the right plain-English explanation?",
     options: [
-      "It is just a manufacturer marketing sticker.",
+      "Personally bound under s.110 (helping someone else commit an unlawful act, e.g. participating in harassment) and as a witness who is duty-bound to co-operate with internal investigations. The apprentice's reputational and legal exposure grows if they participate in or condone discriminatory or harassing behaviour. The apprentice also has a route to RAISE concerns — internal complaints procedure, ACAS conciliation, Employment Tribunal claim — and is protected against victimisation under s.27 for raising them in good faith.",
+      "Common triggers: profits exceed £40-50k/year (where Ltd's lower-cost dividend tax structure starts to outweigh the extra admin); contracts increasingly require Ltd-only counterparties (some commercial clients refuse to engage sole traders); risk profile grows (more employees, larger contracts, higher liability exposure); raising external investment (impossible as sole trader); planning succession or sale of the business (Ltd is sellable, sole trader isn't).",
       "The label records the refrigerant type, GWP value, charge weight in kilograms and the equivalent tonnes of CO2 the charge represents. The label is a statutory requirement under the F-Gas Regulation. It triggers leak-check frequency rules (typically once a year for charges over 5 tonnes CO2 equivalent without an automatic leak detection system, less often with one), drives the recovery requirements at end of life, and helps the F-Gas engineer choose the right recovery cylinder if the unit is decommissioned.",
-      "It is the WEEE collection label for end-of-life recycling.",
-      "It records the BS 7671 circuit reference for the supply.",
+      "Address the 3 Ps first (the failures are specific and temporary, not permanent or pervasive), then restore intrinsic motivation: give the team autonomy in developing their own quality-check process (Pink), provide clear goals and feedback loops for each installation (flow conditions), and ensure the purpose of quality work is connected to genuine values (safety, professionalism). This multi-framework approach addresses both the setback response and the ongoing motivation system",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The F-Gas equipment label is a small but legally significant artefact. It feeds straight into the leak-check regime and the end-of-life refrigerant recovery duty. As the electrician on site you do not maintain the F-Gas log, but you will see the label and you should be able to explain to a curious customer what it means without making things up.",
   },
@@ -170,12 +170,12 @@ const quizQuestions = [
     question:
       "Why does an R-290 (propane) monoblock heat pump avoid the indoor minimum-room-volume rule that an R-290 split system has to comply with?",
     options: [
-      "Monoblock units use less refrigerant overall.",
+      "Investigate the complaint fairly. Under CRA 2015 s.49 (reasonable care and skill), if the work is defective the consumer is entitled to remedies — re-performance, or price reduction / partial refund if re-performance isn't possible or proportionate. Address the issue promptly; don't make it adversarial unless the claim is obviously baseless.",
+      "Customer personal data (names, addresses, phone numbers, photos of their property), commercially sensitive information (the firm's pricing strategy, supplier discounts, employee salaries), and anything covered by a customer's NDA on commercial sites. The policy applies whether you're at work, in the pub, or on social media — the duty is on the data, not the location.",
+      "MCB / RCBO thermal element — overload (sustained excess current). MCB / RCBO magnetic element — short circuit and high-current fault. RCD / RCBO residual element — earth fault through CPC (residual current). AFDD — series and parallel arc faults (degraded contacts, arc tracking). SPD — transient over-voltage. Fuse (BS 88 HRC) — short circuit and overload (slower than MCB but higher breaking capacity, used at supply origins). Each device is designed for a specific fault type; using the wrong device leaves the corresponding fault uncovered.",
       "On a monoblock unit the entire refrigerant circuit is contained inside the outdoor unit and only water pipes enter the building. The flammable-refrigerant indoor minimum-room-volume rule (under BS EN 378 and the F-Gas / refrigerant safety standards) only applies where flammable refrigerant is present in occupied indoor space. Splits that route refrigerant pipes indoors do trigger the rule and require detailed room-volume calculations.",
-      "Monoblocks are exempt from EN 378 entirely.",
-      "Propane is non-flammable when used in monoblock units.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "This is why R-290 monoblocks have taken off in UK retrofit. The wet system carries energy into the house instead of refrigerant, so the safety case for indoor flammable charge does not arise. As an electrician you will see more monoblocks than splits in the heat pump market for this reason, and the supply / isolation / bonding scope is identical between them.",
   },
@@ -184,12 +184,12 @@ const quizQuestions = [
     question:
       "What is the apprentice safe response when a customer asks at handover whether they should ever top up the refrigerant themselves if the unit feels less effective?",
     options: [
-      "Tell them yes, refrigerant top-up is straightforward DIY.",
       "Explain clearly that refrigerant work is restricted by law to F-Gas-certified persons under the F-Gas Regulation. If the unit feels less effective they should call the original installer or an F-Gas certified service company who will leak-test and re-charge as needed. Topping up a refrigerant circuit DIY is illegal, dangerous (some refrigerants are A2L mildly flammable and R-290 is A3 flammable), and would void the warranty. The cost of professional service is small relative to the cost of an uncovered failure.",
-      "Tell them to refer to YouTube tutorials.",
-      "Tell them to swap the refrigerant for a different brand if performance drops.",
+      "AC, A, F or B — and a time-delayed device adds (S) suffix for devices to BS EN 61008, BS EN 61009 or BS EN 62423. So a time-delayed Type A device is recorded as \\\\\\\"A (S)\\\\\\\". The type code reflects the residual-current waveform sensitivity: AC = pure sinusoidal AC; A = AC + pulsating DC; F = A + composite (motor drives); B = A + F + smooth DC. Time-delayed (S) means selective tripping coordination — typically used as an upstream device with downstream non-delayed RCDs on individual circuits.",
+      "NAPIT is multi-trade — registers electricians, plumbers, gas engineers and other trades under a single scheme structure. For multi-discipline firms (e.g. a heating engineer doing gas plus electrical wiring) NAPIT offers single-scheme coverage rather than dual scheme membership. Cost is broadly comparable to NICEIC for electrical-only registration; the saving comes if you also need other trade registrations.",
+      "UK statute making it a criminal offence to offer, promise, give, request, accept or agree to receive a financial or other advantage as an inducement for improper performance. Applies to any UK person/business. For electricians: gifts to suppliers/main contractors over modest value (typically £100+) raise risk; cash 'thank-yous' to procurement people are clearly bribery; small thank-you gifts (bottle of wine, biscuit tin) are typically fine. Many large firms have anti-bribery policies that ban any gifts.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Customer-facing safety advice is part of the apprentice job. The honest answer protects the customer, the warranty and the regulatory framework all at once. As the electrician on the install you have credibility with the customer at handover — a clear short explanation of the F-Gas trade boundary keeps everyone safe.",
   },

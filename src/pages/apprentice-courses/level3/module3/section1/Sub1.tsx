@@ -39,16 +39,26 @@ const checks = [
   {
     id: 'l3-m3-1-1-indices',
     question: 'Convert 4.7 × 10⁻³ A to milliamps.',
-    options: ['0.47 mA', '4.7 mA', '47 mA', '470 mA'],
-    correctIndex: 1,
+    options: [
+      '0.47 mA',
+      '470 mA',
+      '47 mA',
+      '4.7 mA',
+    ],
+    correctIndex: 3,
     explanation:
       '10⁻³ is the milli prefix, so 4.7 × 10⁻³ A = 4.7 mA directly. The exponent is the prefix — milli means 10⁻³, so the number sits unchanged in the new unit.',
   },
   {
     id: 'l3-m3-1-1-transpose',
     question: 'V = IR. Transpose to make R the subject.',
-    options: ['R = V × I', 'R = V − I', 'R = V / I', 'R = I / V'],
-    correctIndex: 2,
+    options: [
+      'R = I / V',
+      'R = V / I',
+      'R = V × I',
+      'R = V − I',
+    ],
+    correctIndex: 1,
     explanation:
       'Divide both sides by I: V/I = IR/I = R. So R = V/I. Same operation on both sides — the equals sign stays balanced.',
   },
@@ -56,8 +66,13 @@ const checks = [
     id: 'l3-m3-1-1-trig',
     question:
       'A power triangle has true power P = 8 kW and apparent power S = 10 kVA. Power factor cos φ = ?',
-    options: ['0.6', '0.8', '1.25', '8'],
-    correctIndex: 1,
+    options: [
+      '0.8',
+      '0.6',
+      '1.25',
+      '8',
+    ],
+    correctIndex: 0,
     explanation:
       'cos φ = adjacent / hypotenuse = P / S = 8 / 10 = 0.8. The triangle is right-angled with P along the base and Q vertical; S is the hypotenuse.',
   },
@@ -67,7 +82,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Express 0.000045 in scientific notation.',
-    options: ['45 × 10⁻⁶', '4.5 × 10⁻⁵', '4.5 × 10⁻⁴', '0.45 × 10⁻⁴'],
+    options: [
+      '45 × 10⁻⁶',
+      '4.5 × 10⁻⁵',
+      '4.5 × 10⁻⁴',
+      '0.45 × 10⁻⁴',
+    ],
     correctAnswer: 1,
     explanation:
       'Scientific notation uses one non-zero digit before the decimal. 0.000045 = 4.5 × 10⁻⁵. Move the decimal point five places right and the exponent is −5.',
@@ -75,15 +95,25 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Simplify 10³ × 10⁴.',
-    options: ['10⁷', '10¹²', '10⁻¹', '20⁷'],
-    correctAnswer: 0,
+    options: [
+      '10⁻¹',
+      '20⁷',
+      '10⁷',
+      '10¹²',
+    ],
+    correctAnswer: 2,
     explanation:
       'Same base, indices add: 10³ × 10⁴ = 10³⁺⁴ = 10⁷. This is how kilo (10³) × kilo (10³) gives mega (10⁶) — kΩ × kΩ in parallel maths, for example.',
   },
   {
     id: 3,
     question: 'Convert 230 V to mV.',
-    options: ['0.23 mV', '23 mV', '23 000 mV', '230 000 mV'],
+    options: [
+      '23 000 mV',
+      '0.23 mV',
+      '23 mV',
+      '230 000 mV',
+    ],
     correctAnswer: 3,
     explanation:
       'milli is 10⁻³, so 1 V = 1000 mV. 230 V × 1000 = 230 000 mV (or 2.3 × 10⁵ mV).',
@@ -91,39 +121,64 @@ const quizQuestions = [
   {
     id: 4,
     question: 'In a right-angled triangle with adjacent = 3 and opposite = 4, the hypotenuse is:',
-    options: ['1', '5', '7', '12'],
-    correctAnswer: 1,
+    options: [
+      '5',
+      '1',
+      '7',
+      '12',
+    ],
+    correctAnswer: 0,
     explanation:
       'Pythagoras: h² = 3² + 4² = 9 + 16 = 25 → h = 5. This is the same maths as combining true power and reactive power into apparent power: S² = P² + Q².',
   },
   {
     id: 5,
     question: 'A circuit current rises from 8 A to 10 A. What is the percentage increase?',
-    options: ['2 %', '20 %', '25 %', '80 %'],
-    correctAnswer: 2,
+    options: [
+      '20 %',
+      '25 %',
+      '80 %',
+      '2 %',
+    ],
+    correctAnswer: 1,
     explanation:
       'Increase = (10 − 8) / 8 = 2 / 8 = 0.25 = 25 %. Always divide the change by the original value, not the new one.',
   },
   {
     id: 6,
     question: 'Transpose I = V / R to make V the subject.',
-    options: ['V = I − R', 'V = I + R', 'V = I × R', 'V = I / R'],
+    options: [
+      'V = I − R',
+      'V = I + R',
+      'V = I × R',
+      'V = I / R',
+    ],
     correctAnswer: 2,
     explanation: 'Multiply both sides by R: I × R = V. So V = IR.',
   },
   {
     id: 7,
     question: 'Which prefix represents 10⁶?',
-    options: ['kilo', 'mega', 'milli', 'micro'],
-    correctAnswer: 1,
+    options: [
+      'kilo',
+      'micro',
+      'milli',
+      'mega',
+    ],
+    correctAnswer: 3,
     explanation:
       'mega = 10⁶ (a million). kilo = 10³, milli = 10⁻³, micro = 10⁻⁶. You will see MΩ on insulation tests and MVA on transformer plates.',
   },
   {
     id: 8,
     question: 'On a calculator, sin 30° equals:',
-    options: ['0', '0.5', '0.707', '1'],
-    correctAnswer: 1,
+    options: [
+      '0.5',
+      '0.707',
+      '0',
+      '1',
+    ],
+    correctAnswer: 0,
     explanation:
       'sin 30° = 0.5 exactly. Make sure the calculator is in DEG mode, not RAD — getting that wrong is the most common L3 calculation error.',
   },

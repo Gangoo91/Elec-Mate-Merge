@@ -14,20 +14,25 @@ const quickCheckQuestions = [
     id: 'dc-characteristic',
     question: 'What is the defining characteristic of direct current (DC)?',
     options: [
-      'It alternates direction 50 times per second',
+      'Loss caused by a gap between fibre end-faces at a connection',
+      'Feelings and attitudes when the verbal and non-verbal messages are incongruent',
       'Current flows in one direction only with a constant or near-constant magnitude',
-      'It can only be produced by solar panels',
-      'It has a frequency of 50 Hz',
+      'To compensate for uneven ground and ensure the tower is level',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Direct current flows in one direction only. Unlike AC, the electrons move consistently from the negative terminal to the positive terminal of the source. The magnitude may be constant (as from a regulated supply) or may vary (as from an unsmoothed rectifier), but the direction remains the same.',
   },
   {
     id: 'battery-series',
     question: 'Three 12 V batteries are connected in series. What is the total EMF?',
-    options: ['4 V', '12 V', '36 V', '144 V'],
-    correctIndex: 2,
+    options: [
+      '36 V',
+      '12 V',
+      '4 V',
+      '144 V',
+    ],
+    correctIndex: 0,
     explanation:
       'In a series connection, individual battery EMFs are added together. Three 12 V batteries in series give 12 + 12 + 12 = 36 V. The total capacity (Ah) remains the same as a single battery. Series connection is used when a higher voltage is required.',
   },
@@ -36,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'Which type of rectifier uses four diodes to convert AC to DC using both half-cycles of the waveform?',
     options: [
-      'Half-wave rectifier',
-      'Full-wave centre-tap rectifier',
       'Full-wave bridge rectifier',
+      'Full-wave centre-tap rectifier',
+      'Half-wave rectifier',
       'Three-phase rectifier',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'A full-wave bridge rectifier uses four diodes arranged in a bridge configuration. During each half-cycle, two diodes conduct and two are reverse-biased, meaning both positive and negative half-cycles of the AC input are converted to a pulsating DC output. This is the most common rectifier configuration in industrial power supplies.',
   },
@@ -49,12 +54,12 @@ const quickCheckQuestions = [
     id: 'dc-polarity',
     question: 'Why is correct polarity essential when connecting DC equipment?',
     options: [
-      'Incorrect polarity has no effect on DC equipment',
-      'It only matters for batteries, not other DC equipment',
+      'The value of work actually completed expressed in terms of the budget',
+      'Stop work, inform a colleague, and descend to ground level carefully using the proper access route',
+      'A specific action that reduces energy consumption while maintaining service levels',
       'Reversed polarity can damage components, cause overheating, or create safety hazards',
-      'Polarity only affects the brightness of lamps',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Correct polarity is critical in DC circuits. Reversed polarity can destroy electrolytic capacitors (which may explode), damage semiconductor devices, reverse-bias protective diodes rendering them ineffective, cause incorrect motor rotation, and damage sensitive electronic control equipment. Always verify polarity before energising DC circuits.',
   },
@@ -65,12 +70,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which of the following is a primary source of direct current?',
     options: [
-      'A transformer',
-      'An alternator',
+      'A 22 mm copper incoming water service pipe',
       'A battery or electrochemical cell',
-      'A three-phase induction motor',
+      'Preventing falls in scaffolding operations',
+      'Transit time difference of sound waves',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Batteries and electrochemical cells are primary sources of DC — they convert chemical energy directly into electrical energy. Transformers and alternators produce AC. While rectifiers can convert AC to DC, the primary generating source of direct current is the electrochemical cell.',
   },
@@ -78,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'What happens to the total capacity (Ah) when batteries are connected in parallel?',
     options: [
-      'The capacity is halved',
-      'The capacity remains the same as one battery',
+      'To reduce ripple and produce a steadier DC output',
+      'Remove all metallic jewellery and use insulated tools to prevent short circuits',
       'The total capacity equals the sum of all individual capacities',
-      'The capacity is unpredictable',
+      'Fewer conversion stages reduce energy losses and improve efficiency',
     ],
     correctAnswer: 2,
     explanation:
@@ -90,8 +95,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'In a half-wave rectifier, what percentage of the AC input waveform is utilised?',
-    options: ['25%', '50%', '75%', '100%'],
-    correctAnswer: 1,
+    options: [
+      '75%',
+      '25%',
+      '100%',
+      '50%',
+    ],
+    correctAnswer: 3,
     explanation:
       'A half-wave rectifier uses only one half-cycle (positive or negative) of the AC waveform, blocking the other. This means only 50% of the input waveform is utilised, resulting in a lower average DC output and higher ripple. Full-wave rectification is preferred for most applications.',
   },
@@ -99,12 +109,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the primary function of a smoothing capacitor in a DC power supply?',
     options: [
-      'To increase the output voltage',
       'To reduce ripple and produce a steadier DC output',
-      'To convert AC to DC',
-      'To provide overcurrent protection',
+      'The total capacity equals the sum of all individual capacities',
+      'The battery is degrading and may need replacement',
+      'The supply polarity has been reversed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A smoothing (reservoir) capacitor is connected across the rectifier output. It charges during the peaks of the pulsating DC and discharges during the troughs, filling in the gaps and reducing the ripple voltage. This produces a much smoother DC output. Larger capacitance values and lower load currents give better smoothing.',
   },
@@ -115,8 +125,8 @@ const quizQuestions = [
     options: [
       'The motor has overheated',
       'The supply polarity has been reversed',
-      'The motor brushes are worn',
       'The supply frequency has changed',
+      'The motor brushes are worn',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,11 +150,11 @@ const quizQuestions = [
     question: 'What is the main advantage of DC distribution in data centres?',
     options: [
       'DC equipment is always cheaper than AC equipment',
-      'Fewer conversion stages reduce energy losses and improve efficiency',
-      'DC is safer than AC in all circumstances',
       'DC cables are always smaller than AC cables',
+      'DC is safer than AC in all circumstances',
+      'Fewer conversion stages reduce energy losses and improve efficiency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In a conventional data centre, power is converted multiple times: AC to DC (UPS rectifier), DC to AC (UPS inverter), AC to DC (server PSU). Each conversion introduces losses (typically 2-5% per stage). DC distribution eliminates intermediate conversion stages, reducing losses and improving overall efficiency by 5-15%.',
   },
@@ -153,12 +163,12 @@ const quizQuestions = [
     question:
       'When measuring the internal resistance of a battery, a significant increase from the baseline value indicates:',
     options: [
-      'The battery is fully charged',
-      'The battery is new and performing well',
       'The battery is degrading and may need replacement',
       'The measurement equipment is faulty',
+      'The battery is fully charged',
+      'The battery is new and performing well',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Internal resistance increases as a battery ages and degrades. Lead-acid batteries develop sulphation on the plates, lithium-ion batteries develop internal resistance from electrode degradation. A significant increase (typically >25% above baseline) indicates the battery's ability to deliver current under load is compromised and it may need replacement.",
   },
@@ -178,7 +188,12 @@ const quizQuestions = [
   {
     id: 10,
     question: 'Under BS 7671, what is the upper voltage limit for Band I DC circuits?',
-    options: ['50 V', '60 V', '120 V', '1500 V'],
+    options: [
+      '50 V',
+      '60 V',
+      '120 V',
+      '1500 V',
+    ],
     correctAnswer: 2,
     explanation:
       'Under BS 7671:2018+A3:2024, Band I for DC extends up to 120 V ripple-free DC (compared to 50 V for AC). This higher threshold reflects the fact that DC is less likely to cause ventricular fibrillation at equivalent voltages. Band II DC extends from 120 V to 1500 V.',
@@ -201,12 +216,12 @@ const quizQuestions = [
     id: 12,
     question: 'What safety precaution is essential before working on a DC battery bank?',
     options: [
-      'Wear rubber-soled shoes only',
-      'Remove insulated tools from the work area',
       'Remove all metallic jewellery and use insulated tools to prevent short circuits',
-      'Ensure the room temperature is below 20 °C',
+      'The total capacity equals the sum of all individual capacities',
+      'Fewer conversion stages reduce energy losses and improve efficiency',
+      'The ratio of AC ripple component to the DC component of the output',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Battery banks can deliver extremely high short-circuit currents (thousands of amps) because they have very low internal impedance. A metal ring, watch or tool placed across terminals can cause an immediate short circuit, resulting in explosive arcing, severe burns and molten metal. Always remove jewellery and use insulated tools rated for the voltage present.',
   },

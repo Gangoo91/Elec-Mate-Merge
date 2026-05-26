@@ -6,10 +6,10 @@ export const eventTriggersQuizData: QuizQuestion[] = [
     question:
       'What is the most important consideration when designing event trigger logic to prevent equipment cycling?',
     options: [
-      'Use the fastest possible response times',
-      'Implement appropriate time delays and hysteresis',
-      'Make triggers as sensitive as possible',
       'Avoid any delays in the system',
+      'Implement appropriate time delays and hysteresis',
+      'Use the fastest possible response times',
+      'Make triggers as sensitive as possible',
     ],
     correctAnswer: 1,
     explanation:
@@ -34,11 +34,11 @@ export const eventTriggersQuizData: QuizQuestion[] = [
     question: 'What is the recommended approach for complex automation scenarios?',
     options: [
       'Create one complex trigger with many conditions',
-      'Break into multiple simpler triggers',
-      'Avoid automation for complex scenarios',
       'Use manual control only',
+      'Avoid automation for complex scenarios',
+      'Break into multiple simpler triggers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Breaking complex scenarios into multiple simpler triggers makes the logic easier to understand, test, troubleshoot, and maintain while reducing the risk of unintended interactions.',
   },
@@ -47,12 +47,12 @@ export const eventTriggersQuizData: QuizQuestion[] = [
     question:
       'How should automated notification systems handle critical alarms if the primary notification method fails?',
     options: [
-      'Wait for the primary system to recover',
-      'Log the alarm for later review',
       'Use backup notification channels and escalation procedures',
-      'Disable the alarm to prevent false alerts',
+      'Design redundant automation paths for critical functions',
+      'Key performance indicators relevant to the audience',
+      'Daily summaries for facility managers, weekly for energy managers',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Backup notification channels (SMS, mobile app, alternate email) and escalation procedures ensure critical alarms reach responsible personnel even if primary systems fail.',
   },
@@ -61,10 +61,10 @@ export const eventTriggersQuizData: QuizQuestion[] = [
     question:
       'What is the optimal frequency for generating energy consumption reports in most commercial buildings?',
     options: [
-      'Hourly for all users',
+      'User authentication and encrypted communications',
       'Daily summaries for facility managers, weekly for energy managers',
-      'Monthly reports only',
-      'Real-time continuous reports',
+      'Key performance indicators relevant to the audience',
+      'Test during non-occupied hours with proper notifications',
     ],
     correctAnswer: 1,
     explanation:
@@ -74,10 +74,10 @@ export const eventTriggersQuizData: QuizQuestion[] = [
     id: 6,
     question: 'When testing event triggers in an occupied building, what is the best practice?',
     options: [
-      'Test during peak occupancy to see real conditions',
+      'Test only simulated triggers, never real equipment',
       'Never test in occupied buildings',
       'Test during non-occupied hours with proper notifications',
-      'Test only simulated triggers, never real equipment',
+      'Test during peak occupancy to see real conditions',
     ],
     correctAnswer: 2,
     explanation:
@@ -87,12 +87,12 @@ export const eventTriggersQuizData: QuizQuestion[] = [
     id: 7,
     question: 'What type of data should be prioritized in automated building performance reports?',
     options: [
-      'All available data points for completeness',
+      'Use backup notification channels and escalation procedures',
+      'Daily summaries for facility managers, weekly for energy managers',
+      'Calendar-based scheduling with smooth transitions',
       'Key performance indicators relevant to the audience',
-      'Only cost information',
-      'Only equipment status information',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Key performance indicators relevant to the specific audience provide actionable insights without overwhelming users with unnecessary data, enabling better decision-making.',
   },
@@ -100,12 +100,12 @@ export const eventTriggersQuizData: QuizQuestion[] = [
     id: 8,
     question: 'How should seasonal changes be handled in automated building control systems?',
     options: [
-      'Manual adjustment of all settings each season',
-      'Fixed settings year-round',
       'Calendar-based scheduling with smooth transitions',
+      'Fixed settings year-round',
+      'Manual adjustment of all settings each season',
       'Completely different systems for each season',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Calendar-based scheduling allows automatic seasonal adjustments while smooth transitions prevent abrupt changes that could affect occupant comfort or equipment operation.',
   },
@@ -114,10 +114,10 @@ export const eventTriggersQuizData: QuizQuestion[] = [
     question:
       'What is essential for maintaining automation system reliability during software updates?',
     options: [
-      'Disable all automation during updates',
+      'Use only manual control systems',
       'Design redundant automation paths for critical functions',
       'Perform updates only during emergencies',
-      'Use only manual control systems',
+      'Disable all automation during updates',
     ],
     correctAnswer: 1,
     explanation:
@@ -128,12 +128,12 @@ export const eventTriggersQuizData: QuizQuestion[] = [
     question:
       'What security measure is most important for protecting automated building control systems?',
     options: [
-      'Physical locks on all equipment',
+      'Calendar-based scheduling with smooth transitions',
+      'Break into multiple simpler triggers',
       'User authentication and encrypted communications',
-      'Hiding system locations',
-      'Using only wireless connections',
+      'Implement appropriate time delays and hysteresis',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'User authentication ensures only authorized personnel can modify automation, while encrypted communications protect against interception and tampering of control signals and data.',
   },

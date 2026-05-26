@@ -4,7 +4,12 @@ export const evModule1Section1Questions: QuizQuestion[] = [
   {
     id: 1,
     question: 'Which type of current is used in rapid charging?',
-    options: ['AC', 'DC', 'Mixed', 'Variable'],
+    options: [
+      'Variable',
+      'DC',
+      'AC',
+      'Mixed',
+    ],
     correctAnswer: 1,
     explanation:
       "Rapid charging (Level 3) uses DC (direct current) which bypasses the vehicle's onboard charger and delivers power directly to the battery for much faster charging speeds.",
@@ -20,8 +25,13 @@ export const evModule1Section1Questions: QuizQuestion[] = [
   {
     id: 3,
     question: 'What is the typical charging time for a Level 2 charger?',
-    options: ['1–2 hours', '3–6 hours', '8–12 hours', '15–20 minutes'],
-    correctAnswer: 1,
+    options: [
+      '1–2 hours',
+      '15–20 minutes',
+      '8–12 hours',
+      '3–6 hours',
+    ],
+    correctAnswer: 3,
     explanation:
       'Level 2 chargers typically provide 3–6 hours of charging time depending on battery size and charger capacity, making them ideal for home and workplace charging.',
   },
@@ -30,8 +40,8 @@ export const evModule1Section1Questions: QuizQuestion[] = [
     question: 'Which UK regulation covers EV charging installations?',
     options: [
       'BS 7671 Section 722',
-      'IET Code of Practice',
       'G98/G99',
+      'IET Code of Practice',
       'Building Regulations Part P',
     ],
     correctAnswer: 0,
@@ -42,19 +52,24 @@ export const evModule1Section1Questions: QuizQuestion[] = [
     id: 5,
     question: 'Give one reason why charging slows near full capacity.',
     options: [
+      'Monitoring, measuring, analysing, and evaluating energy performance',
       'Battery management prevents overcharging and overheating',
-      'Electrical supply becomes unstable',
-      'Connector efficiency decreases',
-      'Ambient temperature always increases',
+      'VSDs can generate harmonic distortion and electrical noise',
+      'Export limitation and grid protection settings verification',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Battery management systems slow charging near full capacity to prevent overcharging and overheating, which protects the battery and ensures safe operation.',
   },
   {
     id: 6,
     question: 'Which connector is standard for Japanese rapid charging?',
-    options: ['CCS', 'Type 2', 'CHAdeMO', 'Tesla'],
+    options: [
+      'Tesla',
+      'Type 2',
+      'CHAdeMO',
+      'CCS',
+    ],
     correctAnswer: 2,
     explanation:
       'CHAdeMO is the rapid DC charging standard commonly used in Japanese electric vehicles, though CCS is becoming more prevalent in European markets.',
@@ -65,10 +80,10 @@ export const evModule1Section1Questions: QuizQuestion[] = [
     options: [
       'Protected Multiple Earthing',
       'Primary Mains Earthing',
-      'Protective Multiple Earthing',
       'Primary Multiple Earthing',
+      'Protective Multiple Earthing',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'PME stands for Protective Multiple Earthing, a method of earthing the neutral conductor at multiple points throughout the distribution network.',
   },
@@ -77,9 +92,9 @@ export const evModule1Section1Questions: QuizQuestion[] = [
     question: 'Name one environmental factor that can slow charging.',
     options: [
       'Low or high ambient temperature',
-      'High humidity only',
-      'Atmospheric pressure',
-      'Wind speed',
+      'BS 7671 Wiring Regulations',
+      'HCFCs (hydrochlorofluorocarbons)',
+      'Two parallel lines with S2',
     ],
     correctAnswer: 0,
     explanation:

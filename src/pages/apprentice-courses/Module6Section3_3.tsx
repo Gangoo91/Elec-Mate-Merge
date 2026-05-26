@@ -16,10 +16,10 @@ const Module6Section3_3 = () => {
       id: 1,
       question: 'Why must instruments be zeroed before testing?',
       options: [
-        'To save time',
+        'Both temperature and humidity',
         'To correct for internal resistance',
-        'To extend battery life',
-        'To look professional',
+        'Weekly or more frequent readings',
+        'Written health and safety policy',
       ],
       correctAnswer: 1,
       explanation:
@@ -28,16 +28,26 @@ const Module6Section3_3 = () => {
     {
       id: 2,
       question: 'What should a continuity tester read when leads are shorted?',
-      options: ['5 Ω', '0 Ω', 'Infinity', '1 Ω'],
-      correctAnswer: 1,
+      options: [
+        'Infinity',
+        '5 Ω',
+        '0 Ω',
+        '1 Ω',
+      ],
+      correctAnswer: 2,
       explanation:
         'When test leads are shorted together, a properly zeroed continuity tester should read 0 Ω (zero ohms).',
     },
     {
       id: 3,
       question: 'What should an insulation resistance tester read with open leads?',
-      options: ['0 Ω', 'Infinity (∞)', '1 Ω', '100 MΩ'],
-      correctAnswer: 1,
+      options: [
+        '1 Ω',
+        '0 Ω',
+        '100 MΩ',
+        'Infinity (∞)',
+      ],
+      correctAnswer: 3,
       explanation:
         'With leads separated (open circuit), an insulation resistance tester should show infinity (∞) before applying test voltage.',
     },
@@ -65,8 +75,13 @@ const Module6Section3_3 = () => {
     {
       id: 6,
       question: "What problem might occur if a meter isn't zeroed?",
-      options: ['Inaccurate readings', 'Faster testing', 'Longer battery life', 'Better accuracy'],
-      correctAnswer: 0,
+      options: [
+        'Longer battery life',
+        'Faster testing',
+        'Inaccurate readings',
+        'Better accuracy',
+      ],
+      correctAnswer: 2,
       explanation:
         'Failure to zero instruments can lead to inaccurate readings, false fault diagnoses, and unsafe conditions.',
     },
@@ -74,12 +89,12 @@ const Module6Section3_3 = () => {
       id: 7,
       question: 'Why should instruments be recalibrated regularly?',
       options: [
-        'To comply with regulations',
+        'To update software',
         'To reset the clock',
         'To change fuses',
-        'To update software',
+        'To comply with regulations',
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation:
         'Regular calibration ensures continued accuracy and compliance with industry standards and regulations.',
     },
@@ -87,12 +102,12 @@ const Module6Section3_3 = () => {
       id: 8,
       question: 'What should you do if an instrument cannot be zeroed?',
       options: [
-        'Continue anyway',
         'Remove it from service',
         'Hit it gently',
+        'Continue anyway',
         'Use different leads',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'If an instrument cannot be zeroed properly, it must be removed from service and inspected or recalibrated.',
     },
@@ -100,10 +115,10 @@ const Module6Section3_3 = () => {
       id: 9,
       question: 'When should you re-check zeroing?',
       options: [
-        'After lunch',
+        'Ensure only the device nearest the fault operates',
         'After moving or dropping the instrument',
-        'After testing the first circuit only',
-        'Once per week',
+        'Narrow plan perpendicular to prevailing wind',
+        'Yes, with appropriate IP rating',
       ],
       correctAnswer: 1,
       explanation:
@@ -115,11 +130,11 @@ const Module6Section3_3 = () => {
         'What is the correct action if a continuity test shows resistance due to un-zeroed leads?',
       options: [
         'Assume a fault',
+        'Continue testing',
         'Re-zero the instrument',
         'Replace the circuit immediately',
-        'Continue testing',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'If unexpected resistance readings appear, first re-zero the instrument to eliminate lead resistance before diagnosing faults.',
     },

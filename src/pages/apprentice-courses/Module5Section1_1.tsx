@@ -16,10 +16,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is a specification in electrical work?',
     options: [
-      'A drawing showing cable routes',
+      'Total useful floor area greater than 500m²',
       'A formal document defining materials, methods and standards',
-      'A test certificate',
-      'A risk assessment',
+      'To ensure they are safe and provide accurate readings',
+      'First fix completion, pressure testing, and commissioning sign-off',
     ],
     correctIndex: 1,
     explanation:
@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Name one difference between performance and prescriptive specifications.',
     options: [
-      'Performance costs more',
+      'One controller output operating two final control elements sequentially',
+      'Personal factors, job factors, organisational factors, environmental factors',
       'Performance states the outcome required; prescriptive states the exact method/materials',
-      'There is no difference',
-      'Prescriptive is always better',
+      'Short-circuited via the test block when not connected to a relay/meter',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Performance specifications define the required outcome (e.g., lighting levels must achieve 500 lux), whilst prescriptive specifications define the exact method/materials (e.g., use PVC trunking 50mm x 50mm).',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why must specifications and drawings be used together?',
     options: [
-      "It's a legal requirement",
+      'In controlled document systems with version control and access records',
+      'Protective devices may not operate quickly enough',
+      'UV radiation from mercury discharge excites phosphor coating',
       'Drawings show where to install, specifications show how to install',
-      'To increase costs',
-      'Only for complex installations',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Drawings show where to install components and routing, whilst specifications explain how to install them - both are essential for accurate and compliant work.',
   },
@@ -62,10 +62,10 @@ const Module5Section1_1 = () => {
       id: 1,
       question: 'What is the main purpose of a specification?',
       options: [
-        'To show where cables should be routed',
+        'Through the design risk register and H&S file information',
         'To define materials, standards, and methods of installation',
-        'To replace BS 7671 requirements',
-        'To set project costs',
+        'Heating using organic materials like wood pellets, chips, or logs',
+        'Strong encryption, regular updates, and network segmentation',
       ],
       correctAnswer: 1,
       explanation:
@@ -75,12 +75,12 @@ const Module5Section1_1 = () => {
       id: 2,
       question: 'True or False: Specifications are optional guidelines.',
       options: [
+        'True - only for large projects',
         'True - they are just suggestions',
         'False - they are legally binding',
-        'True - only for large projects',
         'False - only BS 7671 matters',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Specifications form part of the contract and are legally binding - they must be followed for compliance and contractual obligations.',
     },
@@ -88,12 +88,12 @@ const Module5Section1_1 = () => {
       id: 3,
       question: 'Which type of specification tells you exactly what material to use?',
       options: [
-        'Performance specification',
-        'Prescriptive specification',
         'Hybrid specification',
+        'Performance specification',
         'General specification',
+        'Prescriptive specification',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "Prescriptive specifications define the exact method and materials to be used (e.g., 'use PVC trunking 50mm x 50mm with fire-resistant clips').",
     },
@@ -101,12 +101,12 @@ const Module5Section1_1 = () => {
       id: 4,
       question: 'Give one example of information typically included in a specification.',
       options: [
-        'Site address only',
         'Materials to be used (e.g., cable type)',
-        'Weather conditions',
-        "Client's personal preferences",
+        'Manufacturing and engineering time required',
+        'Bonding between exposed and extraneous parts',
+        'Removing asbestos insulation (lagging) from pipes',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Specifications typically include materials (cables, trunking, switches), standards (BS 7671), installation methods, testing requirements, and quality expectations.',
     },
@@ -114,10 +114,10 @@ const Module5Section1_1 = () => {
       id: 5,
       question: 'Why is it important to use specifications and drawings together?',
       options: [
-        'To make the work take longer',
+        'Investigate further — the minimum acceptable value for a 230 V circuit is 1.0 MΩ per BS 7671',
         'Because drawings show where to install and specifications show how to install',
-        'Only for electrical inspections',
-        'To increase material costs',
+        'Earthing connects to earth, bonding connects metalwork together',
+        'Preventing emergency response fatigue and maintaining system credibility',
       ],
       correctAnswer: 1,
       explanation:

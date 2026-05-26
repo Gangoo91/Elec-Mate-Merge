@@ -41,8 +41,13 @@ const checks = [
   {
     id: 'diode-direction',
     question: 'A standard silicon diode is forward-biased. Roughly what voltage drops across it?',
-    options: ['0 V', '0.3 V', '0.7 V', '1.5 V'],
-    correctIndex: 2,
+    options: [
+      '0.7 V',
+      '0 V',
+      '1.5 V',
+      '0.3 V',
+    ],
+    correctIndex: 0,
     explanation:
       'Silicon diodes drop about 0.7 V when conducting forward. Germanium drops about 0.3 V (rare on modern boards). LEDs drop more — typically 1.8–3.4 V depending on colour.',
   },
@@ -50,10 +55,10 @@ const checks = [
     id: 'rectifier-output',
     question: 'A bridge rectifier feeds a load from a 230 V AC supply. What does the load see (before smoothing)?',
     options: [
-      'Steady DC at 230 V.',
-      'AC at 230 V (unchanged).',
+      'Prefabricated conductor system in protective housing',
+      'Inventory tracking, usage monitoring, reorder points, and waste minimisation',
       'Pulsating DC — both halves of the AC sine wave folded above the zero line.',
-      'Zero — diodes block both directions.',
+      'To record the actual installation for future reference and maintenance',
     ],
     correctIndex: 2,
     explanation:
@@ -63,12 +68,12 @@ const checks = [
     id: 'led-protection',
     question: 'Why does an LED almost always need a series resistor (or a current-limited driver)?',
     options: [
-      'To make it brighter.',
+      'In steady flow, an increase in velocity occurs simultaneously with a decrease in pressure or potential energy',
+      'Intentionally delaying operation to allow downstream devices to clear first',
       'Because the LED itself doesn’t limit current — without something in series, it just self-destructs.',
-      'BS 7671 demands it.',
-      'To filter out radio interference.',
+      'Direct energy trading between producers and consumers without traditional utilities',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'An LED is essentially a low-resistance device once it conducts. Without a resistor or a constant-current driver to limit the current, it will pull as much as the supply gives — and burn out fast.',
   },
@@ -92,28 +97,38 @@ const quizQuestions = [
     id: 2,
     question: 'On a diode symbol, which way does the arrow point?',
     options: [
-      'From cathode to anode.',
+      'Prevent condensation forming on components during cold periods when the panel is not in use, avoiding moisture-related insulation failures',
+      'A sustainability assessment, rating, and awards scheme for civil engineering and infrastructure projects',
       'From anode (positive) to cathode (negative) — the direction conventional current flows when forward-biased.',
-      'It doesn’t matter.',
-      'Both ways at once.',
+      'Sharing passwords, using company systems for unlawful or commercial private purposes, downloading unauthorised software',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The triangle of the symbol points from anode to cathode. The bar at the cathode end is also marked on the physical component, usually as a coloured stripe. Get it the wrong way round and the diode either blocks or fails.',
   },
   {
     id: 3,
     question: 'A half-wave rectifier uses how many diodes?',
-    options: ['One', 'Two', 'Three', 'Four'],
-    correctAnswer: 0,
+    options: [
+      'Three',
+      'Two',
+      'Four',
+      'One',
+    ],
+    correctAnswer: 3,
     explanation:
       'One diode in series with the load gives half-wave rectification — only the positive half-cycle of the AC reaches the load. Cheap, simple, but inefficient and very “lumpy” DC.',
   },
   {
     id: 4,
     question: 'A full-wave (bridge) rectifier uses how many diodes?',
-    options: ['One', 'Two', 'Four', 'Six'],
-    correctAnswer: 2,
+    options: [
+      'Four',
+      'Two',
+      'One',
+      'Six',
+    ],
+    correctAnswer: 0,
     explanation:
       'Four diodes in a diamond arrangement. Both halves of the AC cycle drive current through the load in the same direction. Smoother DC, twice the average voltage of half-wave for the same input.',
   },
@@ -121,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is a Zener diode primarily used for?',
     options: [
-      'Switching at high speed.',
+      'Competing, collaborating, compromising, avoiding, accommodating',
       'Maintaining a fixed reverse voltage — used as a simple voltage reference.',
-      'Generating light.',
-      'Rectifying high-current AC.',
+      'Supply characteristics, impedance of supply path, and transformer ratings',
+      'Higher efficiency and better temperature coefficient',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'You see “1N4007” stamped on a diode. What does that tell you?',
     options: [
-      'It’s a 1 W resistor.',
+      'One or more related activities, as long as each is specifically described and the witness observed all of them',
+      'Generator → step-up transformer → transmission lines → grid supply point → primary substation → secondary (11 kV/400 V) substation → consumer',
       'It’s a general-purpose silicon rectifier diode rated 1000 V reverse, 1 A forward — common in mains-side circuits.',
-      'It’s a Zener with a 47 V breakdown.',
-      'It’s an LED with a code for the colour.',
+      'The client must pass the health and safety file to the new owner and ensure it remains available for future construction work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '1N400x series diodes are everywhere — chargers, transformers, doorbells, the rectifier section of basic AFDDs. The “4007” suffix is the highest reverse-voltage rating in the series. Recognise the part number and you know what you’re looking at.',
   },
@@ -147,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why is the output of a bridge rectifier usually fed into a capacitor next?',
     options: [
-      'To increase the voltage.',
+      'Correct connection of non-reversible plugs and socket-outlets',
+      'They automatically turn off when rooms are unoccupied to save energy',
+      'Presenting information in a way that emphasises different aspects to influence perception',
       'To smooth out the pulsating DC into a near-steady DC voltage for the load.',
-      'To convert it back to AC.',
-      'To rectify it again.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The bridge gives pulsating DC — a series of humps with gaps at zero. A smoothing capacitor fills in the gaps by holding charge between peaks. Bigger cap = smoother DC = less ripple voltage on the load.',
   },
@@ -160,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'A customer’s AFDD trips when they plug in their old upright vacuum. Likely cause?',
     options: [
-      'Faulty AFDD — replace immediately.',
       'A genuine series arc — worn motor brushes in the vacuum produce small arcs whose current signature is exactly what the AFDD’s electronics are looking for.',
-      'Loose neutral somewhere on the circuit.',
-      'Too many lights on the same circuit.',
+      'Employers have a reasonable responsibility to take steps to protect the physical and mental health of their employees',
+      'Energised continuously (or thermostatically controlled) to maintain the enclosure temperature above the dew point',
+      'The skill of being flexible with thoughts and feelings so that you can respond optimally to everyday situations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'AFDDs use a high-speed rectifier, sampling chip and signal-analysis software to detect arc signatures. Brush-type motors produce exactly that signature legitimately. The AFDD isn’t faulty — it’s doing its job. The vacuum needs servicing or replacing.',
   },

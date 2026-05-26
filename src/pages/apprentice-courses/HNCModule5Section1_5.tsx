@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'risk-register-def',
     question: 'What is the primary purpose of a risk register in project management?',
     options: [
-      'To record accidents that have occurred',
+      'Authorised staff can view and control BMS functions off-site',
+      'Balancing safety with production and never compromising on safety',
       'To document identified risks, their assessment, and planned responses',
-      'To list all project team members',
-      'To track daily progress on site',
+      'The site manager — single point of contact upward to the contracts manager',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A risk register is a living document that records all identified risks, their probability and impact assessment, assigned owners, and planned mitigation or response actions throughout the project lifecycle.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'qualitative-vs-quantitative',
     question: 'What distinguishes qualitative from quantitative risk analysis?',
     options: [
-      'Qualitative uses numbers, quantitative uses descriptions',
       'Qualitative uses subjective ratings, quantitative uses numerical data',
-      'They are the same thing',
-      'Qualitative is for large projects only',
+      'To provide visual benchmarks for acceptable installation quality',
+      'Power loss increases with the square of current, causing heating',
+      'Asbestos fibres from asbestos-containing tiles, adhesives, or backing materials',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Qualitative analysis uses subjective ratings (High/Medium/Low) to prioritise risks quickly, while quantitative analysis uses numerical data and statistical techniques to calculate precise probability and cost impact values.',
   },
@@ -57,20 +57,25 @@ const quickCheckQuestions = [
     id: 'mitigation-transfer',
     question: 'Risk transfer as a mitigation strategy typically involves:',
     options: [
-      'Ignoring the risk completely',
+      'A goal focused on the specific actions or behaviours you will carry out',
+      'Yes, either directly or through safety representatives',
       'Shifting risk to another party through insurance or contracts',
-      'Accepting the risk without action',
-      'Eliminating the source of the risk',
+      'Immediately resume CPR for 2 minutes, then allow the AED to re-analyse',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Risk transfer involves shifting the financial or operational impact of a risk to another party, commonly through insurance policies, performance bonds, or contractual clauses with subcontractors.',
   },
   {
     id: 'contingency-allowance',
     question: 'What is a typical contingency allowance for a complex MEP project?',
-    options: ['1-2%', '5-10%', '10-15%', '25-30%'],
-    correctIndex: 2,
+    options: [
+      '5-10%',
+      '1-2%',
+      '25-30%',
+      '10-15%',
+    ],
+    correctIndex: 3,
     explanation:
       'Complex MEP projects typically include 10-15% contingency allowance to cover unforeseen risks. Simpler projects may use 5-10%, while highly uncertain projects may require up to 20%.',
   },
@@ -96,10 +101,10 @@ const quizQuestions = [
     question:
       "In a probability/impact matrix, where would you place a risk with 'High' probability and 'High' impact?",
     options: [
-      'Green zone - accept',
-      'Amber zone - monitor',
+      'Hacksaw or metal cutting saw',
+      'Fire protection and equipment protection',
       'Red zone - requires immediate action',
-      'Outside the matrix',
+      'To prevent earthing through the body',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,8 +114,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the Expected Monetary Value (EMV) of a risk with 30% probability and £50,000 potential impact?',
-    options: ['£15,000', '£50,000', '£35,000', '£150,000'],
-    correctAnswer: 0,
+    options: [
+      '£35,000',
+      '£50,000',
+      '£150,000',
+      '£15,000',
+    ],
+    correctAnswer: 3,
     explanation:
       'EMV = Probability × Impact = 0.30 × £50,000 = £15,000. This value represents the weighted average cost of the risk and helps prioritise risk response investment.',
   },
@@ -118,7 +128,12 @@ const quizQuestions = [
     id: 4,
     question:
       'Which risk response strategy involves redesigning a system to eliminate the risk source entirely?',
-    options: ['Avoid', 'Transfer', 'Mitigate', 'Accept'],
+    options: [
+      'Avoid',
+      'Transfer',
+      'Mitigate',
+      'Accept',
+    ],
     correctAnswer: 0,
     explanation:
       'Risk avoidance involves changing the project plan to eliminate the risk or its impact entirely, such as redesigning a system to remove the hazardous element.',
@@ -126,8 +141,13 @@ const quizQuestions = [
   {
     id: 5,
     question: 'Late delivery of specialist MEP equipment is an example of which risk category?',
-    options: ['Technical risk', 'Commercial risk', 'Programme risk', 'Safety risk'],
-    correctAnswer: 2,
+    options: [
+      'Commercial risk',
+      'Programme risk',
+      'Safety risk',
+      'Technical risk',
+    ],
+    correctAnswer: 1,
     explanation:
       'Late delivery of equipment directly impacts the project schedule, making it a programme risk. It may also have commercial implications, but the primary effect is on timing.',
   },
@@ -135,8 +155,13 @@ const quizQuestions = [
     id: 6,
     question:
       'What percentage contingency is typically appropriate for a straightforward electrical installation with well-defined scope?',
-    options: ['1-2%', '5-8%', '10-15%', '20-25%'],
-    correctAnswer: 1,
+    options: [
+      '1-2%',
+      '10-15%',
+      '5-8%',
+      '20-25%',
+    ],
+    correctAnswer: 2,
     explanation:
       'For straightforward, well-defined installations, 5-8% contingency is typically adequate. Higher allowances are needed for complex, refurbishment, or unclear scope projects.',
   },
@@ -144,12 +169,12 @@ const quizQuestions = [
     id: 7,
     question: 'A SWOT analysis as part of risk management identifies:',
     options: [
-      'Only weaknesses and threats',
+      'Early warning signs that indicate a risk is materialising',
+      'The risk impact is low and probability is low',
+      'Coordination clashes between MEP services',
       'Strengths, weaknesses, opportunities, and threats',
-      'Safety, Welfare, Organisation, Training',
-      'Subcontractor performance metrics',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SWOT analysis identifies internal Strengths and Weaknesses alongside external Opportunities and Threats, providing a comprehensive view of factors affecting project success.',
   },
@@ -157,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'In risk management, "trigger conditions" refer to:',
     options: [
-      'Conditions that activate insurance claims',
       'Early warning signs that indicate a risk is materialising',
-      'Triggers on construction equipment',
-      'Contract termination clauses',
+      'Strengths, weaknesses, opportunities, and threats',
+      'Generate probability distributions for cost and schedule outcomes',
+      'Project execution plan, monthly reports, and project close-out report',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Trigger conditions are early warning signs or events that indicate a risk is becoming reality, allowing project managers to implement contingency plans proactively.',
   },
@@ -171,10 +196,10 @@ const quizQuestions = [
     question:
       'A Monte Carlo simulation in risk analysis is used to:',
     options: [
-      'Select random project team members',
+      'Early warning signs that indicate a risk is materialising',
       'Generate probability distributions for cost and schedule outcomes',
-      'Decide on contract type',
-      'Calculate VAT on materials',
+      'Strengths, weaknesses, opportunities, and threats',
+      'Project execution plan, monthly reports, and project close-out report',
     ],
     correctAnswer: 1,
     explanation:
@@ -184,12 +209,12 @@ const quizQuestions = [
     id: 10,
     question: 'Which type of risk is unique to building services compared to general construction?',
     options: [
-      'Weather delays',
+      'Strengths, weaknesses, opportunities, and threats',
+      'The risk impact is low and probability is low',
       'Coordination clashes between MEP services',
-      'Material price fluctuation',
-      'Health and safety incidents',
+      'Red zone - requires immediate action',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Coordination clashes between mechanical, electrical, and plumbing services in confined ceiling voids are particularly characteristic of building services projects, requiring specific mitigation through BIM coordination.',
   },
@@ -197,12 +222,12 @@ const quizQuestions = [
     id: 11,
     question: 'Risk acceptance as a strategy is most appropriate when:',
     options: [
-      'The risk is too expensive to mitigate',
+      'Coordination clashes between MEP services',
+      'Red zone - requires immediate action',
+      'Strengths, weaknesses, opportunities, and threats',
       'The risk impact is low and probability is low',
-      'There is no insurance available',
-      'The client demands it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Risk acceptance is appropriate for low-probability, low-impact risks where the cost of mitigation exceeds the potential impact. Active monitoring should still be maintained.',
   },
@@ -210,12 +235,12 @@ const quizQuestions = [
     id: 12,
     question: 'Which document should reference the risk register?',
     options: [
-      'Only the project execution plan',
-      'Only the contract documents',
       'Project execution plan, monthly reports, and project close-out report',
-      'Only insurance policies',
+      'Generate probability distributions for cost and schedule outcomes',
+      'Early warning signs that indicate a risk is materialising',
+      'Strengths, weaknesses, opportunities, and threats',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The risk register should be referenced in the project execution plan, regular progress reports, and project close-out documentation to ensure continuous visibility and learning.',
   },

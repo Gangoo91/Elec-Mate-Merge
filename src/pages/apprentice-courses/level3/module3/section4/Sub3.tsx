@@ -41,7 +41,12 @@ const checks = [
     id: 'l3-m3-4-3-3ph',
     question:
       'A Dyn11 transformer has primary 11 kV (line-line), secondary 400 V (line-line). What is the turns ratio per phase (delta primary winding to star secondary winding)?',
-    options: ['11000:400', '6350:230.9', '47.6:1', 'all of these (different reference points)'],
+    options: [
+      '6350:230.9',
+      '11000:400',
+      '47.6:1',
+      'all of these (different reference points)',
+    ],
     correctIndex: 2,
     explanation:
       'Delta primary winding sees 11 000 V line. Star secondary winding sees 400/√3 = 230.9 V phase. Ratio per winding = 11000 / 230.9 = 47.6:1. Note: the line-to-line voltage ratio is 11000/400 = 27.5:1 — different from the per-winding turns ratio.',
@@ -50,8 +55,13 @@ const checks = [
     id: 'l3-m3-4-3-ct',
     question:
       'A 1000 / 5 A current transformer has a primary current of 600 A. Secondary current is:',
-    options: ['1.2 A', '3 A', '5 A', '120 A'],
-    correctIndex: 1,
+    options: [
+      '1.2 A',
+      '5 A',
+      '3 A',
+      '120 A',
+    ],
+    correctIndex: 2,
     explanation:
       'CT ratio is 1000:5 = 200:1. Secondary = primary / 200 = 600 / 200 = 3 A.',
   },
@@ -59,8 +69,13 @@ const checks = [
     id: 'l3-m3-4-3-eff-current',
     question:
       'A 25 kVA, 230/400 V single-phase transformer (step-up). Rated primary current is:',
-    options: ['62.5 A', '108.7 A', '500 A', '5750 A'],
-    correctIndex: 1,
+    options: [
+      '108.7 A',
+      '500 A',
+      '62.5 A',
+      '5750 A',
+    ],
+    correctIndex: 0,
     explanation:
       "I_primary = S / V_primary = 25 000 / 230 = 108.7 A. Secondary current would be 25000/400 = 62.5 A.",
   },
@@ -70,14 +85,24 @@ const quizQuestions = [
   {
     id: 1,
     question: 'For an 11 kV / 230 V step-down distribution transformer, the turns ratio is approximately:',
-    options: ['1:48', '48:1', '11:230', '23:11'],
+    options: [
+      '1:48',
+      '48:1',
+      '11:230',
+      '23:11',
+    ],
     correctAnswer: 1,
     explanation: '11 000 / 230 = 47.83:1. Primary has many more turns than secondary.',
   },
   {
     id: 2,
     question: 'A 100 kVA, 400 V secondary transformer has rated secondary current:',
-    options: ['100 A', '144 A', '250 A', '400 A'],
+    options: [
+      '400 A',
+      '100 A',
+      '250 A',
+      '144 A',
+    ],
     correctAnswer: 2,
     explanation:
       'Single-phase: I = S / V = 100 000 / 400 = 250 A. (3-phase: divide by √3 → 144 A line, 250 A phase in delta.) Question implies single-phase context.',
@@ -86,15 +111,25 @@ const quizQuestions = [
     id: 3,
     question:
       "A 100 kVA 3-phase 400 V star secondary. Line current is:",
-    options: ['100 A', '144 A', '250 A', '433 A'],
-    correctAnswer: 1,
+    options: [
+      '250 A',
+      '100 A',
+      '433 A',
+      '144 A',
+    ],
+    correctAnswer: 3,
     explanation: 'I_line = S / (√3 × V_L) = 100 000 / (1.732 × 400) = 144.3 A.',
   },
   {
     id: 4,
     question:
       'Voltage transformer (VT) ratio 11 000 / 110 V. With primary 9 kV, secondary reads:',
-    options: ['90 V', '110 V', '900 V', '1000 V'],
+    options: [
+      '90 V',
+      '110 V',
+      '900 V',
+      '1000 V',
+    ],
     correctAnswer: 0,
     explanation: 'V2 = V1 × (N2/N1) = 9000 × (110/11000) = 9000 × 0.01 = 90 V.',
   },
@@ -103,10 +138,10 @@ const quizQuestions = [
     question:
       'Why are CT secondaries always rated 1 A or 5 A?',
     options: [
-      'Random standard',
+      'The overvoltage withstand capability appropriate to the measurement location in the installation',
       'Match standard switchboard ammeters and protective relays designed for 1 A or 5 A inputs',
-      'Higher would be unsafe',
-      'Match the primary',
+      'All electrical systems are constructed, maintained and worked on so as to prevent danger',
+      'Safety data sheets with hazard information and control measures',
     ],
     correctAnswer: 1,
     explanation:
@@ -117,12 +152,12 @@ const quizQuestions = [
     question:
       'NEVER open a CT secondary with primary energised because:',
     options: [
-      'Primary current overheats it',
+      'Test type, results, instruments used, environmental conditions, and acceptance criteria',
+      'The total required delay exceeds the maximum value of a single timer instruction',
       'Open secondary = no secondary current = uncontrolled flux → very high voltage induced (kV) → insulation failure',
-      'It blows the relay',
-      'Frequency changes',
+      'Ensure cables don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t compromise fire barriers and coordinate emergency supplies',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CTs operate in saturation with secondary loaded. Open the load and the magnetising current goes huge, induced voltage spikes to several kV — kills the CT, kills you. Always short the secondary terminals before disconnecting.',
   },
@@ -130,16 +165,26 @@ const quizQuestions = [
     id: 7,
     question:
       'A 200 kVA 3-phase transformer 11 kV / 400 V (Dyn11). Rated primary line current:',
-    options: ['10.5 A', '17.5 A', '60 A', '288.7 A'],
-    correctAnswer: 0,
+    options: [
+      '288.7 A',
+      '17.5 A',
+      '60 A',
+      '10.5 A',
+    ],
+    correctAnswer: 3,
     explanation: 'I_primary line = S / (√3 × V_L1) = 200 000 / (1.732 × 11 000) = 10.5 A.',
   },
   {
     id: 8,
     question:
       'Same 200 kVA transformer. Rated secondary line current:',
-    options: ['10.5 A', '288.7 A', '500 A', '866 A'],
-    correctAnswer: 1,
+    options: [
+      '288.7 A',
+      '500 A',
+      '10.5 A',
+      '866 A',
+    ],
+    correctAnswer: 0,
     explanation: 'I_secondary line = S / (√3 × V_L2) = 200 000 / (1.732 × 400) = 288.7 A.',
   },
 ];

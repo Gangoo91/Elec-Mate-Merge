@@ -16,10 +16,10 @@ const Module6Section2_2 = () => {
       id: 1,
       question: 'What does scorching on sockets usually indicate?',
       options: [
-        'Age-related wear',
+        'False - only safety-critical defects require action',
         'Overheating due to loose or faulty connections',
-        'Normal use patterns',
-        'Cosmetic damage only',
+        'Environmental effects reducing safety of connections',
+        'Causes overheating and difficulty in maintenance',
       ],
       correctAnswer: 1,
       explanation:
@@ -28,8 +28,13 @@ const Module6Section2_2 = () => {
     {
       id: 2,
       question: 'Name one example of deterioration caused by age.',
-      options: ['Scratched faceplates', 'Brittle insulation', 'Dust accumulation', 'Faded colours'],
-      correctAnswer: 1,
+      options: [
+        'Dust accumulation',
+        'Scratched faceplates',
+        'Brittle insulation',
+        'Faded colours',
+      ],
+      correctAnswer: 2,
       explanation:
         'Brittle insulation is a serious age-related deterioration that can expose live conductors and create safety hazards.',
     },
@@ -37,12 +42,12 @@ const Module6Section2_2 = () => {
       id: 3,
       question: 'True or False: Cosmetic scratches on accessories always need rectification.',
       options: [
-        'True - all damage must be fixed',
+        'Tighten or replace it to prevent arcing/overheating',
+        'Overheating due to loose or faulty connections',
+        'Environmental effects reducing safety of connections',
         'False - only safety-critical defects require action',
-        'True - for aesthetic reasons',
-        'False - scratches improve grip',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "Minor cosmetic damage that doesn't affect safety or function typically doesn't require immediate rectification, though it should still be noted.",
     },
@@ -50,12 +55,12 @@ const Module6Section2_2 = () => {
       id: 4,
       question: 'Which of the following is a critical fault?',
       options: [
-        'Slight discolouration of faceplate',
         'Exposed copper conductor',
+        'Slight discolouration of faceplate',
         'Minor scratches',
         'Dust on equipment',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Exposed copper conductors present an immediate shock and fire risk and must be addressed immediately.',
     },
@@ -63,10 +68,10 @@ const Module6Section2_2 = () => {
       id: 5,
       question: 'What does corrosion on terminals suggest?',
       options: [
-        'Normal aging process',
+        'False - only safety-critical defects require action',
         'Environmental effects reducing safety of connections',
-        'High-quality materials',
-        'Recent installation',
+        'Reversed polarity or missing grommets',
+        'Overheating due to loose or faulty connections',
       ],
       correctAnswer: 1,
       explanation:
@@ -76,12 +81,12 @@ const Module6Section2_2 = () => {
       id: 6,
       question: 'Give one example of incorrect installation practice.',
       options: [
-        'Proper cable sizing',
+        'Much higher speed (10–25 krpm vs 1500–3000)',
+        'A cloud-based specification writing platform',
         'Reversed polarity or missing grommets',
-        'Adequate ventilation',
-        'Correct labelling',
+        'Purchasing renewable energy certificates (RECs)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Reversed polarity and missing grommets are common installation errors that can create safety hazards and must be corrected.',
     },
@@ -89,12 +94,12 @@ const Module6Section2_2 = () => {
       id: 7,
       question: 'Why is overcrowding in consumer units dangerous?',
       options: [
-        'Makes the unit look untidy',
+        'Reversed polarity or missing grommets',
+        'Environmental effects reducing safety of connections',
+        'False - only safety-critical defects require action',
         'Causes overheating and difficulty in maintenance',
-        "Reduces the unit's value",
-        'Makes testing faster',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Overcrowding restricts airflow causing overheating and makes maintenance dangerous and difficult to perform safely.',
     },
@@ -102,19 +107,24 @@ const Module6Section2_2 = () => {
       id: 8,
       question: 'What should be done if a socket outlet is loose?',
       options: [
-        'Leave it as long as it works',
         'Tighten or replace it to prevent arcing/overheating',
-        'Paint over it',
-        'Use it more carefully',
+        'Overheating due to loose or faulty connections',
+        'Reversed polarity or missing grommets',
+        'False - only safety-critical defects require action',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Loose socket outlets can cause arcing and overheating, so they must be properly secured or replaced to maintain safety.',
     },
     {
       id: 9,
       question: 'Which regulation provides guidance on installation safety?',
-      options: ['BS 5839', 'BS 7671', 'Building Regulations Part M', 'BS 6004'],
+      options: [
+        'BS 5839',
+        'BS 7671',
+        'Building Regulations Part M',
+        'BS 6004',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 (The IET Wiring Regulations) is the primary standard for electrical installation safety in the UK.',
@@ -123,12 +133,12 @@ const Module6Section2_2 = () => {
       id: 10,
       question: 'Why must visual inspections precede testing?',
       options: [
-        'To save time',
+        'False - only safety-critical defects require action',
+        'Tighten or replace it to prevent arcing/overheating',
         'To identify unsafe conditions that could make testing hazardous',
-        "Because it's traditional",
-        'To comply with insurance',
+        'Overheating due to loose or faulty connections',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Visual inspection identifies obvious hazards and unsafe conditions that could make electrical testing dangerous or cause further damage.',
     },

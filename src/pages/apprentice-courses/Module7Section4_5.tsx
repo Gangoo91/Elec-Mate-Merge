@@ -14,7 +14,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'What does a resistance reading of >999 MΩ on insulation testing typically indicate?',
-    options: ['Poor insulation', 'Good insulation', 'Test fault', 'Earth fault'],
+    options: [
+      'Test fault',
+      'Good insulation',
+      'Earth fault',
+      'Poor insulation',
+    ],
     correctIndex: 1,
     explanation:
       '>999 MΩ indicates excellent insulation resistance, well above minimum requirements.',
@@ -23,19 +28,24 @@ const quickCheckQuestions = [
     id: 2,
     question: 'When should you investigate a continuity reading further?',
     options: [
-      "When it's exactly 0.05Ω",
+      'Disconnect the motor or test the circuit up to the motor terminals',
+      'The unexpected release of hazardous energy during maintenance or servicing',
       'When readings vary significantly between similar circuits',
-      "When it's below 2Ω",
-      'Always',
+      'Creating technical drawings and designs using computer software',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Significant variations between similar circuits may indicate loose connections or circuit faults.',
   },
   {
     id: 3,
     question: 'What Zs reading would require immediate investigation on a 32A Type B MCB?',
-    options: ['0.8Ω', '1.2Ω', '1.6Ω', '2.0Ω'],
+    options: [
+      '0.8Ω',
+      '1.6Ω',
+      '1.2Ω',
+      '2.0Ω',
+    ],
     correctIndex: 3,
     explanation:
       'Maximum Zs for 32A Type B MCB is 1.37Ω (BS 7671:2018+A4:2026 Table 41.3). A reading of 2.0Ω exceeds this limit and requires investigation.',
@@ -49,7 +59,12 @@ const Module7Section4_5 = () => {
     {
       id: 1,
       question: 'What is the minimum acceptable insulation resistance for most circuits?',
-      options: ['0.5MΩ', '1MΩ', '2MΩ', '10MΩ'],
+      options: [
+        '0.5MΩ',
+        '1MΩ',
+        '2MΩ',
+        '10MΩ',
+      ],
       correctAnswer: 1,
       explanation:
         'The minimum acceptable insulation resistance is 1MΩ for most circuits according to BS 7671.',
@@ -58,10 +73,10 @@ const Module7Section4_5 = () => {
       id: 2,
       question: 'A continuity test reading of 2Ω on a lighting circuit indicates:',
       options: [
-        'Excellent connection',
-        'Acceptable reading',
+        '1.25mm for LC, 2.5mm for SC/ST',
+        'Amtech ProDesign or Trimble ID',
         'High resistance - investigate',
-        'Open circuit',
+        'Future-ready architecture',
       ],
       correctAnswer: 2,
       explanation:
@@ -70,8 +85,13 @@ const Module7Section4_5 = () => {
     {
       id: 3,
       question: 'What should you do if a Zs reading is 95% of the maximum allowable value?',
-      options: ['Pass the test', 'Investigate further', 'Fail immediately', 'Ignore the reading'],
-      correctAnswer: 1,
+      options: [
+        'Fail immediately',
+        'Pass the test',
+        'Ignore the reading',
+        'Investigate further',
+      ],
+      correctAnswer: 3,
       explanation:
         'Readings close to maximum limits should be investigated as they indicate potential developing problems.',
     },
@@ -79,12 +99,12 @@ const Module7Section4_5 = () => {
       id: 4,
       question: 'Why might two identical circuits give different test readings?',
       options: [
-        "They can't - identical circuits always give same readings",
         'Due to cable length, connections, or temperature differences',
-        'Only if one is faulty',
-        'Test equipment error only',
+        'A device showing real-time energy usage and costs from the smart meter',
+        'As specified by the manufacturer, typically alternating on each bay level',
+        'Real power (kW), reactive power (kVAr) and apparent power (kVA)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Many factors including cable length, connection quality, and ambient temperature can affect readings.',
     },
@@ -100,8 +120,13 @@ const Module7Section4_5 = () => {
     {
       id: 6,
       question: 'What insulation resistance reading would require immediate investigation?',
-      options: ['50MΩ', '10MΩ', '2MΩ', '0.8MΩ'],
-      correctAnswer: 3,
+      options: [
+        '50MΩ',
+        '10MΩ',
+        '0.8MΩ',
+        '2MΩ',
+      ],
+      correctAnswer: 2,
       explanation:
         '0.8MΩ is below the minimum 1MΩ requirement and indicates insulation breakdown requiring investigation.',
     },
@@ -109,12 +134,12 @@ const Module7Section4_5 = () => {
       id: 7,
       question: 'When interpreting earth fault loop impedance readings, what should you consider?',
       options: [
-        'Only the exact value',
+        'Lock-off procedures and verification testing',
+        'All observations, defects, and compliance issues',
+        'Gradual retrofit with compatible devices and systems',
         'The value compared to BS 7671 maximum limits',
-        "Only whether it's zero",
-        'The test equipment used',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Zs readings must be compared to the maximum values specified in BS 7671 tables for the protection device.',
     },
@@ -122,12 +147,12 @@ const Module7Section4_5 = () => {
       id: 8,
       question: 'What action should you take for borderline test readings?',
       options: [
-        'Always pass them',
-        'Always fail them',
         'Investigate and document findings',
-        'Ignore them',
+        'Moisture ingress or cable damage',
+        'Branch resistance and applied voltage',
+        'Check markings and documentation',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Borderline readings should be investigated, documented, and appropriate action taken based on findings.',
     },
@@ -135,12 +160,12 @@ const Module7Section4_5 = () => {
       id: 9,
       question: 'Which test reading typically shows the greatest variation between circuits?',
       options: [
-        'Insulation resistance',
-        'Continuity',
+        '50% of the measured range',
         'Earth fault loop impedance',
-        'RCD trip times',
+        'HCFCs (hydrochlorofluorocarbons)',
+        '0.6 air changes per hour @ 50Pa',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Earth fault loop impedance varies most due to differences in cable lengths, connections, and earth paths.',
     },
@@ -148,12 +173,12 @@ const Module7Section4_5 = () => {
       id: 10,
       question: 'How should test readings be recorded?',
       options: [
-        'Approximately',
+        'Insulation degradation beginning',
+        'Only the person who applied it',
         'Exactly as displayed on the meter',
-        'Rounded to nearest whole number',
-        'Only if they fail',
+        'Current flowing through resistance',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Test readings should be recorded exactly as displayed on the test instrument for accuracy and compliance.',
     },

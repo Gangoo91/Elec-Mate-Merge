@@ -15,10 +15,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main purpose of fire stopping?',
     options: [
-      'Reduce noise transfer',
+      'Isolate SPDs during testing',
       'Prevent spread of fire and smoke',
-      'Hold cables in place',
-      'Reduce heat loss',
+      'Localised overheating and damage',
+      'VA/m² based on floor area',
     ],
     correctAnswer: 1,
     explanation:
@@ -27,8 +27,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which material expands when heated to seal gaps?',
-    options: ['Standard silicone', 'Intumescent sealant', 'Plastic conduit', 'Adhesive'],
-    correctAnswer: 1,
+    options: [
+      'Plastic conduit',
+      'Standard silicone',
+      'Intumescent sealant',
+      'Adhesive',
+    ],
+    correctAnswer: 2,
     explanation:
       'Intumescent materials expand when exposed to heat, creating a char that seals gaps and prevents fire spread through penetrations.',
   },
@@ -45,9 +50,9 @@ const quizQuestions = [
     question: 'Name one method for sealing large penetrations.',
     options: [
       'Fire-rated boards or intumescent wraps',
-      'Standard plasterboard',
-      'Plastic sheeting',
-      'Cable ties',
+      'The electromagnetic field around the conductor',
+      'Profit, costs, and financial health of their work',
+      'Incorrect rotation causes motors to run backwards',
     ],
     correctAnswer: 0,
     explanation:
@@ -56,7 +61,12 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What is the minimum fire rating typically required for escape route penetrations?',
-    options: ['10 minutes', '30 minutes', '60 minutes', '90 minutes'],
+    options: [
+      '10 minutes',
+      '30 minutes',
+      '90 minutes',
+      '60 minutes',
+    ],
     correctAnswer: 1,
     explanation:
       '30 minutes is typically the minimum fire rating for escape route penetrations, though higher ratings may be required in specific applications.',
@@ -65,12 +75,12 @@ const quizQuestions = [
     id: 6,
     question: 'What must be done before installing fire stopping?',
     options: [
-      'Paint the wall',
+      'Be agreed with the DNO before connection',
+      'Maintained mode for constant visibility',
       'Identify and fully seal all gaps',
-      'Disconnect all cables',
-      'Install extra sockets',
+      'Clearly and systematically',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'All gaps and penetrations must be identified and properly sealed to maintain the fire-resisting properties of the barrier structure.',
   },
@@ -78,12 +88,12 @@ const quizQuestions = [
     id: 7,
     question: 'Give one reason why fire stopping is inspected after work is done.',
     options: [
-      'To ensure aesthetic appearance',
+      'A coil of wire that produces a magnetic field when current flows',
+      'Voltage rise at the point of connection',
+      'Energy content of fuel before conversion losses',
       'To ensure integrity of fire barriers and compliance',
-      'To check cable colours',
-      'To verify socket positions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Inspection ensures fire barrier integrity is maintained and installation complies with Building Regulations and BS 7671 requirements.',
   },
@@ -91,12 +101,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which regulation in the UK covers fire stopping for service penetrations?',
     options: [
-      'BS 5839 only',
       'Building Regulations Part B and BS 7671',
-      'BS EN 60529 only',
-      'Planning regulations',
+      'Switching to low or zero-carbon energy sources',
+      'Thermocouples can measure much higher temperatures',
+      'Earthing and automatic disconnection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Building Regulations Part B covers fire safety requirements while BS 7671 specifies electrical installation requirements for fire stopping.',
   },
@@ -108,19 +118,24 @@ const quickCheckQuestions = [
     id: 'escape-routes',
     question: 'Why is fire stopping important in escape routes?',
     options: [
-      'It looks more professional',
+      'BS 5266-8 (EN 50172) (Emergency lighting testing and monitoring)',
+      'When the goal is still valid but the current approach is not working',
+      'Highest level of qualification and competence',
       'It prevents fire/smoke spread that could block evacuation',
-      'It reduces installation costs',
-      'It improves cable performance',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Fire stopping in escape routes prevents fire and smoke spread that could block evacuation paths, maintaining safe egress during emergencies.',
   },
   {
     id: 'materials',
     question: 'Give one example of a fire stopping material.',
-    options: ['Standard expanding foam', 'Intumescent sealant', 'Plastic tape', 'Cotton wadding'],
+    options: [
+      'Plastic tape',
+      'Intumescent sealant',
+      'Cotton wadding',
+      'Standard expanding foam',
+    ],
     correctIndex: 1,
     explanation:
       'Intumescent sealants expand when heated to seal gaps and are a primary fire stopping material for electrical penetrations.',
@@ -129,12 +144,12 @@ const quickCheckQuestions = [
     id: 'maintenance',
     question: 'What should be done if a fire seal is damaged during maintenance?',
     options: [
-      'Leave it until next inspection',
       'Replace immediately with approved materials',
-      'Cover with plastic tape',
-      'Report it next month',
+      'Balance loads across all three phases',
+      'Electrolytic capacitor (aluminium or tantalum)',
+      'Line to neutral fault (short circuit)',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Damaged fire seals must be replaced immediately using approved fire-rated materials to maintain fire compartment integrity.',
   },

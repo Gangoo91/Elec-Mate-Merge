@@ -49,12 +49,12 @@ const checks = [
     question:
       "You arrive at a commercial site to investigate a fault on a 400 V three-phase distribution board. The site manager hands you a generic 'electrical works' RAMS from six months ago. Is that adequate?",
     options: [
-      "Yes — RAMS is RAMS.",
+      "Ze is a LIVE test — it requires the supply to be energised and the measurement is taken at the MET with the installation isolated. It is part of the live test sequence after first energisation, but its value is needed for the dead-test sequence Zs calculations (Zs = Ze + R1+R2). On a new install, Ze is typically measured early in the live-test phase but estimated from DNO published values during dead-test design verification.",
+      "Yes — Reg 722.421.1.7.201 states that AFDDs are not required for circuits supplying EV charging equipment conforming to the BS EN 61851 series. The verifier should confirm by manufacturer declaration, marking, datasheet or test report that the equipment conforms to BS EN 61851 and that any socket-outlet or vehicle connector conforms to BS EN IEC 62196-2. Where evidence is present, the AFDD exemption applies legitimately.",
+      "The element has gone to earth — most likely a pinhole through the metal sheath into the water, OR moisture has tracked along the brass terminal head from a leaking cylinder. 0.12 MΩ at 500 V is well below the BS 7671 Table 64 minimum of 1 MΩ for a 230 V circuit, and the leakage current calculates to ≈ 1.9 mA — enough to trip a 30 mA RCD on switch-on transient. Replace the element (a brass-flanged Backer / Heatrae Sadia element on most UK cylinders), check the cylinder for leaks, re-test IR after replacement (should read &gt; 200 MΩ on a healthy element), recommission and confirm no trip.",
       "No. RAMS must be task-specific and current. A generic 'electrical works' document doesn't capture this fault, this DB, this circuit, this customer's environment, or the unknowns of an investigation. The L3 expectation is a fault-specific addendum to the RAMS that captures (a) the reported symptom, (b) the suspected cause and your diagnostic approach, (c) the live-vs-dead working decision under EAWR Reg 14, (d) the specific instruments you'll use and how they meet GS38, (e) emergency contacts. Without that, the firm's RAMS doesn't meet HSWA Section 2 / 3 duties for THIS task.",
-      "Only if it's signed.",
-      "Only if it's laminated.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Generic RAMS are a paperwork pretence. The Management of Health and Safety at Work Regulations 1999 (MHSWR) Reg 3 makes the risk assessment 'suitable and sufficient' for the work being done — and a fault you haven't yet seen can't be properly assessed by a document written for last year's job. The standard practice is a generic firm-wide RAMS plus a task addendum at the start of every diagnosis visit. Most CCS / SMAS / NICEIC audits will check for this.",
   },
@@ -63,10 +63,10 @@ const checks = [
     question:
       "What's the BARE MINIMUM PPE for a 230 V single-phase fault diagnosis at a domestic consumer unit, and what extras are added when the supply is 400 V three-phase commercial?",
     options: [
-      "Same kit for both.",
+      "Refuse politely and escalate. Refrigerant top-up is a regulated F-Gas activity that requires individual F-Gas certification (Category I covers stationary refrigeration, AC and heat pumps) and is only legal when the company also holds an F-Gas company certificate. Doing the work uncertified exposes you, your employer and the customer to enforcement action and voids the manufacturer warranty. The correct answer is to document the request, decline, and rebook the F-Gas engineer.",
       "Domestic 230 V 1-phase: safety glasses (Class 1, BS EN 166 1F), insulated gloves rated 1000 V AC (Class 0 to BS EN 60903), insulated tools (1000 V AC marked, IEC 60900), arc-rated long-sleeve top, sturdy work boots (no metal toecap exposure where metalwork is bonded). Add for 400 V 3-phase commercial: arc-flash rated face shield (Class 1 minimum, ATPV ≥ 8 cal/cm²), arc-flash rated outer layer, FR-treated trousers, voltage-rated overgloves with leather protectors. The arc energy on a 3-phase 400 V DB is an order of magnitude higher than a single-phase domestic CU.",
-      "Just gloves.",
-      "Just glasses.",
+      "The Work at Height Regulations 2005 (WAHR) — applies to any work where a person could fall a distance liable to cause personal injury. Reg 6 sets out the three-tier hierarchy (avoid > prevent > minimise). Reg 7 requires selection of the right equipment for the task. Reg 12 requires inspection of the equipment. PUWER 1998 sits underneath for the equipment itself, and LOLER 1998 covers MEWPs and other lifting kit.",
+      "Scope 1 (direct emissions from sources owned or controlled by the company): diesel combustion in the ten transit vans plus any natural gas burnt in the workshop heating boiler. Scope 2 (indirect emissions from purchased energy): grid electricity drawn for workshop lighting and small power. Scope 3 (other indirect emissions across the value chain): embodied carbon in the cable, accessories and tools purchased from the wholesaler, employee commuting, business travel by means other than company vehicles, waste disposal, and the use-phase emissions of the systems the contractor installs at customer sites.",
     ],
     correctIndex: 1,
     explanation:
@@ -77,12 +77,12 @@ const checks = [
     question:
       "You're sent solo to diagnose a fault on a remote unmanned site (water treatment kiosk, no signal, no other workers). What lone-working controls should be in place under HSE INDG73?",
     options: [
-      "Just go.",
+      "Address fabric first — insulation and glazing — then size any heat pump to the reduced load. A heat pump in a leaky house works at high flow temperatures, runs constantly, and posts a poor SCOP, blowing the customer's bills past where they were on gas. The MCS heat-loss calculation methodology assumes a reasonably insulated envelope. The honest answer is fabric upgrade first, then size the kit to the new load — which often ends up being smaller and cheaper.",
+      "Per BS 7671 Section 712 (PV) and Section 426 (electrical equipment for safety services) plus the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\'s installation instructions — typically the battery enclosure needs equipotential bonding back to the system earth, the DC busbars require fault-current path provisions, and the AC-coupled inverter must comply with the standard ADS framework. Battery installs add complexity over straight PV.",
       "Documented lone-working procedure with: (1) explicit risk assessment for lone working — including identifying tasks that should NEVER be done alone (anything live, anything in confined space, anything at height with no rescue); (2) check-in/check-out schedule with the office (typically every 30–60 minutes); (3) man-down alarm (a Reliance Protect, Skyguard or Solo Protect device with GPS + fall detection + amber alert); (4) defined escalation if a check-in is missed; (5) signal coverage check before starting and an alternative comms route if signal is poor.",
-      "Tell your mate.",
-      "Take a kettle.",
+      "A digital, accurate, accessible, secure information set covering the design, construction and ongoing management of an HRRB. Held by the Accountable Person during occupation. Includes design drawings, specifications, materials and product information, fire-safety strategy, evacuation arrangements, and changes through the building's life. Provides traceability of who designed/installed/changed what — including the electrical installation.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "HSE INDG73 'Working alone — health and safety guidance on the risks of lone working' sets the framework. Most fault diagnosis on commercial / industrial sites involves some degree of lone working and the firm has to have controls in place. The man-down alarm is increasingly the standard — Reliance Protect Mini, Skyguard Mysos, Solo Protect Identicom — typically £15–25 per month per device with monitored response. Cheap insurance against the apprentice who collapses in a kiosk and isn't found for hours.",
   },
@@ -94,10 +94,10 @@ const quizQuestions = [
     question:
       "What does RAMS stand for and what's the difference between the two documents in fault diagnosis context?",
     options: [
-      "Just paperwork.",
+      "Listen properly. Don't interrupt, don't try to fix it, don't minimise ('it'll pass'). Acknowledge what he's said and that it sounds hard. Don't diagnose or guess what's going on. Suggest some routes for support — Mates in Mind (free training and resources via matesinmind.org), the Lighthouse Construction Industry Charity 24/7 helpline (0345 605 1956), the Electrical Industries Charity (electricalcharity.org), Samaritans (116 123, 24/7), or his GP. Ask whether he'd like you to mention to your training-provider mentor, but don't break his confidence without asking. Follow up with him in a few days. Keep listening over time.",
       "Risk Assessment + Method Statement. Risk Assessment identifies the hazards (what could go wrong), assesses the likelihood and severity, and lists the controls that reduce risk to ALARP. Method Statement describes the sequence of work — how the job will actually be done step by step. For fault diagnosis, the RA covers the unknown-state hazards (parallel paths, induced voltage, supply-side faults) and the MS describes the test sequence (test, isolate, lock-off, prove dead, measure). Both are required by MHSWR 1999 Reg 3, both must be 'suitable and sufficient', and both should be reviewed at the start of every visit and updated as the diagnosis progresses.",
-      "Just for big jobs.",
-      "Just NICEIC paperwork.",
+      "Polarity test confirms that the line conductor is connected to the line terminal at every accessory and switching device, AND that switches break the line conductor (not the neutral). BS 7671 643.6 requires polarity verification at every accessory and at the origin. Failed polarity findings: switch breaks neutral instead of line (entire fitting remains live when off — common older-installation fault); reversed polarity at a socket (line and neutral swapped — appliances work but earth/neutral references are wrong); two-way switching wired wrong (intermittent operation). MFT has a polarity test mode; socket testers do polarity-only on 13A sockets.",
+      "Battery end-of-life in the residential storage context is usually defined as when usable capacity falls to around 70-80% of nameplate (varies by manufacturer warranty wording). A 10 kWh battery delivering 7 kWh of usable capacity is at roughly 70% — close to the typical 10-year warranty threshold. Whether the customer replaces depends on economics: the existing battery may still serve daily PV self-consumption usefully even at 70% capacity; the manufacturer warranty may trigger a free or subsidised replacement; second-life battery applications are emerging. Decommissioning is hazardous-waste handling, not skip handling.",
     ],
     correctAnswer: 1,
     explanation:
@@ -108,12 +108,12 @@ const quizQuestions = [
     question:
       "The JIB safe isolation procedure has six steps. What are they in order, and what instrument is used at each step?",
     options: [
-      "Just turn it off.",
+      "SECR is a statutory disclosure regime introduced in 2019 under the Companies (Directors Report) and Limited Liability Partnerships (Energy and Carbon Report) Regulations 2018. It requires large UK companies (typically meeting two of: turnover above 36 million pounds, balance sheet above 18 million pounds, or above 250 employees) to disclose their UK energy use and associated greenhouse gas emissions in their annual report. The disclosure covers scope 1, scope 2 and a defined subset of scope 3 (business travel in employee-owned vehicles), along with intensity metrics and a narrative on energy efficiency actions taken.",
+      "This is a strong micro-hydro site. With 30 m head and 100 l/s flow, theoretical hydraulic power is approximately ρ × g × h × Q = 1000 × 9.81 × 30 × 0.1 ≈ 29 kW. After turbine and generator efficiency (typically 70-85%) the realistic output is 20-25 kW continuous — significant baseload renewable energy. Practical issues: SEPA (Scottish equivalent of Environment Agency) abstraction licensing, fish-friendly intake design, civils for weir / intake / penstock / power-house, grid connection (G99 for an installation of this size), and the cost of a buried cable from the power-house to the property. The right site is rare; where it exists, micro-hydro outperforms PV and wind by a wide margin on capacity factor.",
       "(1) Identify circuit (label, drawings, customer info — hypothesis only). (2) Isolate (operate the breaker / switch — confirm it's the right one). (3) Lock-off (apply a personal padlock + tag with your name + date). (4) Prove the tester on a known live source (Martindale GVD2 proving unit OR a known live socket nearby) — voltage tester only. (5) Test the circuit at the work point (between L–N, L–E, N–E) — voltage tester only. (6) Re-prove the tester on the same known live source. Multimeters do NOT prove dead. Socket testers do NOT prove dead. Only a GS38 voltage tester does.",
-      "Three steps.",
-      "Four steps.",
+      "Lighting is part of the workplace under HASAWA s.2(2)(d) and the Workplace (Health, Safety and Welfare) Regulations 1992 Reg 8. Inadequate task lighting in a confined area is a hazard in itself — it hides other hazards (trip risks, services, structural defects) and increases the chance of an error. The fix: bring temporary task lighting, set it up before tools come out, and record the temporary supply on the dynamic assessment.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The six-step JIB procedure is the industry-standard sequence and it's tested on every L3 practical exam. The 'prove the tester before AND after' step is the one apprentices skip and the one that actually catches a faulty tester. If the tester reads zero on a circuit you've isolated, you don't know whether the circuit is dead OR the tester is broken — until you re-prove it on the known live source. That re-prove step is what makes the procedure robust.",
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       "When is a permit-to-work formally required for fault diagnosis, and what does the permit document?",
     options: [
-      "Never.",
+      "Mains-borne electromagnetic interference (EMI) from the induction hob's switching electronics coupling into the LED driver in the hood. Induction hobs run an inverter at 20–100 kHz that puts harmonic content on the supply; cheap LED drivers without proper EMC filtering pick this up and modulate their output, causing the flicker. The buzz is the magnetic coupling to the hood's transformer / driver chassis. The hob is compliant (BS EN IEC 61000-3 EMC standards) and the hood is compliant individually, but together they're a cumulative EMC failure. Fix options: (1) replace the hood's driver with a higher-spec unit with better EMC filtering, (2) fit a mains filter on the hood circuit, (3) escalate to the hood manufacturer as a product compatibility complaint. NOT a wiring fault.",
+      "The EIC carries the standard schedule of inspections and schedule of test results for the new circuit(s). For a PV install that includes the DC string circuits (with DC voltages and DC IR test results), the AC isolator and AC final connection back into the consumer unit, the labelling and signage at every isolation point, and the dual-supply warning at the consumer unit. Section 712 of BS 7671 (extensively revised in A4:2026) drives the inspection items. The 'designer' / 'constructor' / 'inspector and tester' boxes on the EIC may all be the MCS-certified installer's lead engineer; signatures still have to be physically present.",
+      "Professional ethics code binding on IET members and Engineering Council registrants. Covers integrity and honesty, public safety and interest, working within professional competence limits, maintaining and developing competence through CPD, treating colleagues, clients and the public with respect, reporting concerns about safety or unethical conduct. Failure to comply can lead to disciplinary action and ultimately removal from membership/register.",
       "Required for any high-risk task that needs documented authorisation — typically: live working above 50 V AC, work in hazardous areas (zoned ATEX environments), work on supply-side equipment, work that affects safety-critical systems (fire alarm, emergency lighting under test), work in confined spaces, hot work in close proximity to electrical equipment. The permit documents — task scope, authorised persons, date/time window, isolation steps already taken, residual hazards, PPE required, emergency response. Issued by an authorised manager, signed back at the end. Common on commercial / industrial sites; rare on domestic.",
-      "Only on building sites.",
-      "Only when the customer asks.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Permit-to-work systems are formal H&S controls that go beyond RAMS for higher-risk tasks. Most domestic fault diagnosis doesn't need a formal permit (the RAMS is enough), but commercial / industrial fault work usually does. Permits are typically site-specific (each premises has its own permit form) and the apprentice's role is to read it, follow it, and sign back at the end. Working outside the scope of the permit (e.g. extending the work beyond the listed isolation) breaches the permit and triggers the firm's incident reporting.",
   },
@@ -136,12 +136,12 @@ const quizQuestions = [
     question:
       "A fault investigation requires you to work on a live electronic control panel (a BMS controller — building management system). What ESD (electrostatic discharge) precautions apply?",
     options: [
-      "None — it's only static.",
       "Static discharge from the human body can reach 15 kV — well above the 5–100 V damage threshold of CMOS electronics. Standard ESD discipline: (1) wrist strap connected to the panel earth via a 1 MΩ resistor; (2) anti-static mat under the work area where possible; (3) handle PCBs by the edges, not by the components; (4) keep replacement boards in their anti-static bags until the moment of fitting; (5) avoid working in dry conditions where static builds up rapidly; (6) ground yourself on the chassis before touching any board. Failed boards from ESD damage often work intermittently — they fail months later — so ESD-induced faults are notoriously hard to trace to root cause.",
-      "Wear leather gloves.",
-      "Wear cotton.",
+      "Be honest: every environmental technology has a manufacturing carbon cost and an operating carbon benefit. The 'carbon payback time' is when the operating savings cover the manufacturing footprint. UK PV is roughly 1-3 years; heat pumps roughly 2-4 years on UK grid; MVHR varies hugely with airtightness. After payback, the system is in net-environmental-credit. As an apprentice, your job is the install — but the customer deserves an honest framing rather than greenwashed marketing.",
+      "Three steps: (1) Visual — case undamaged, leads not nicked or crushed, probes have intact finger barriers, no visible burn marks or melted plastic. (2) Calibration — calibration label in date (typically annual for MFT, two-yearly for two-pole testers, manufacturer's interval for multimeters); calibration certificate available if challenged. (3) Function — tester proves on a known live source AND on a known dead source; battery level indication healthy; selector switch operates cleanly. Any failure on any step — the instrument is not used until rectified. Most firms have a pre-use inspection log signed by the operative at the start of each shift.",
+      "Reg 4(2) puts the duty on every employer and on every employee — and Reg 16 on every person working with electrical systems. For the L3 apprentice doing fault diagnosis: (1) the system you're working on must be assessed for its 'as-found' safety BEFORE work starts (visual inspection of CU, supply, bonding, signs of damage); (2) any departures from safe construction must be recorded and not made worse by your work; (3) when you correct the fault, the corrected system must satisfy Reg 4 — i.e. you don't leave the installation in a worse state than you found it; (4) any defect that you can't fix safely is escalated for further work or for advisory documentation to the customer.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "ESD discipline is taught at L3 because that's where apprentices first encounter electronic control work — BMS, fire alarm panels, EV charger controllers, modern emergency lighting central battery systems, AFDDs with electronic detection. The £400 controller you've replaced 'might' work after you handled it without ESD precautions, but you've shortened its life and you've created a return-visit waiting to happen. The wrist strap costs £4 and lives in the toolbox; the failed board costs £400 and half a day's labour to replace.",
   },
@@ -150,10 +150,10 @@ const quizQuestions = [
     question:
       "On a fault investigation in an ATEX-zoned area (e.g. a paint spray booth, a fuel station forecourt, a petrochemical site), what additional electrical-safety precautions apply?",
     options: [
-      "Same as anywhere else.",
+      "The MFT (Megger MFT1741+, Kewtech KT64+) injects different test currents based on the RCD type. Type AC test: pure sinusoidal AC at I∆n. Type A test: pure sinusoidal AC AT I∆n PLUS pulsating DC at 1.4× I∆n (because Type A must detect both). Type F test: all of the above PLUS composite multi-frequency. Type B test: all of the above PLUS smooth DC at twice I∆n. Selecting the wrong type on the MFT may show 'pass' on a Type B device (because you're only testing the AC capability, not the DC) — false confidence. Modern MFTs auto-detect or have explicit type selection.",
       "ATEX zones (Zone 0 / 1 / 2 for gas, Zone 20 / 21 / 22 for dust) require all equipment in the zone — including test instruments — to be ATEX-rated for the zone. Standard kit: intrinsically-safe two-pole tester (Martindale VI-15800 or Megger DET14C with Ex marking), no mobile phones in zone, no battery tools without Ex rating, no smoking, no metal tools that could spark on contact with steel. The fault diagnosis approach is — bring everything to a non-zoned area where possible, isolate at the boundary, only work in-zone with intrinsically-safe instruments and a hot-work permit.",
-      "Just ventilate.",
-      "Just wait.",
+      "Resolve it informally first where possible. The ACAS Code recommends informal resolution as the starting point, then a written grievance under the employer's documented grievance procedure, then a meeting with management with the right to be accompanied by a colleague or trade-union representative, then a written outcome with a right of appeal. ACAS conciliation is available if the internal procedure fails. Employment tribunal is the last resort and tribunals will assess whether both parties followed the Code reasonably.",
+      "Gas Safe engineers carry out work on gas appliances and pipework — disconnection, reconnection, commissioning. On a kitchen rewire involving a gas hob the Gas Safe engineer disconnects before the electrical work starts and reconnects after. They're a separate trade, with a separate competence scheme (Gas Safe Register, replacing the old CORGI), and only Gas Safe registered engineers can lawfully work on gas under the Gas Safety (Installation and Use) Regulations 1998.",
     ],
     correctAnswer: 1,
     explanation:
@@ -164,12 +164,12 @@ const quizQuestions = [
     question:
       "You're investigating a fault that requires you to work in close proximity to a battery bank in a UPS room (typical 240 V DC, 100 Ah lead-acid stack). What precautions apply specifically to battery-related hazards?",
     options: [
-      "Same as anywhere.",
+      "REPAIRABLE: cable terminations, accessory faceplates, individual lampholders, switch modules, dimmer cores, individual MCBs / RCBOs (within a CU), circuit cables (mid-run patch with junction box). REPLACEMENT-ONLY (typically): consumer units (sealed enclosures, integrated busbar), transformers and ballasts (factory-sealed), most LED drivers (sealed pots), AFDDs (electronic devices), most modern accessories (one-piece moulded). The boundary is usually 'is the failed item a single field-replaceable unit?'. Sealed devices are replacement-only; assembled devices with field-accessible components are repairable.",
+      "Three layers. (1) Confirm the circuit is fully isolated AND proved dead with a separate two-pole tester — the MFT is a tester, not a prover. (2) Confirm there are no electronic loads on the circuit (LED drivers, presence sensors, dimmer modules) that 500 V will damage; if there are, disconnect them or test at 250 V on the MFT. (3) Confirm no parallel paths back to other circuits via shared neutrals; a 500 V test current finds those paths and can damage equipment on the OTHER circuit. The IR test is one of the highest-energy tests on the MFT and the rules around it are layered for a reason.",
       "Battery hazards are different from AC hazards: (1) DC shock — once your hand is on a DC busbar, your muscles can't release because there's no zero-crossing — DC at 60 V upward is treated as a let-go hazard; (2) hydrogen gas — lead-acid cells gas during charge, hydrogen accumulates in poorly-ventilated rooms, explosive at 4% LEL — battery rooms have forced ventilation for this reason; (3) electrolyte — sulphuric acid contact with skin / eyes — face shield, acid-resistant gloves, eye-wash station; (4) thermal runaway — a damaged or shorted cell can catch fire, with toxic fumes; (5) short-circuit current — a 100 Ah lead-acid string can deliver 5–10 kA short-circuit, enough to weld a spanner.",
-      "Wait for them to discharge.",
-      "Just wear gloves.",
+      "A published document that confirms the supplier commitment to achieving net-zero by 2050, sets out the current annual emissions broken down by scope (with scope 3 covering at least the categories identified in the PPN 06/21 guidance), describes the environmental management measures in place, and is signed off by a director of the supplier organisation. The CRP must be published on the supplier website, updated at least annually, and provided as part of any in-scope tender submission. The format follows a standard template provided in the PPN 06/21 guidance.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Battery rooms get their own H&S regime because the hazards are so different from AC fault work. EAWR still applies (a battery is a 'system' under Reg 4) but the practical precautions are unique. Most L3 apprentices won't work on a battery bank solo — it's improver / Approved Electrician territory — but the L3 syllabus includes battery-room awareness because emergency lighting central battery systems and UPS installations are increasingly common in commercial sites and the apprentice will find themselves working near them.",
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       "A senior electrician tells you 'don't bother with the gloves on a 230 V domestic fault — the risk is low'. Is that defensible under EAWR Reg 14?",
     options: [
-      "Yes — they're senior.",
+      "Annex A722 Item A722.3 gives guidance on determining the maximum resistance required for the earth electrode in route (b). The resistance must be low enough to ensure that, under a PEN open-circuit fault, the MET-to-earth voltage does not exceed 70 V RMS. That keeps the touch voltage between the car body and the surrounding ground within the safe envelope. Acceptance on site requires the calculated maximum resistance, the measured electrode resistance, and a record showing the measured value is at or below the calculated maximum.",
+      "Five categories. (1) THE DUTY HOLDER — the customer for domestic, the employer for commercial, the landlord for rented. They get the certificate and the verbal hand-back. (2) THE ORIGINAL DESIGNER if it's their installation and a design change has been made (informational courtesy). (3) BUILDING CONTROL via the competent-person scheme (NICEIC, NAPIT, ELECSA, STROMA) for notifiable work under Part P in England / Wales (slightly different in Scotland and Northern Ireland). (4) THE FIRM's INTERNAL JOB SYSTEM — job sheet update, photos, certificate copy filed. (5) THE NEXT PERIODIC INSPECTOR — implicit, served by leaving the certificate bundle (EICR + Schedule of Remedial Works + MWC) on file with the Duty Holder.",
+      "A boiler drives a wet heating system — pumps hot water around radiators / underfloor circuits and a hot-water cylinder. Typical output 10-50 kW, located in a utility room or outhouse, automatic fuel feed (auger from a hopper), automatic ignition, automatic ash handling. A stove is a room heater — radiates heat directly into the room it sits in, plus optional back-boiler for some hot water. Lower output (5-15 kW typical), manual loading (logs or pellets), no automatic ash removal. Different installation regulations, different MCS standards, different customer expectations.",
       "No. EAWR Reg 14(c) requires 'suitable precautions including where necessary the provision of suitable protective equipment'. The risk being 'low' doesn't dispense with the precaution — it informs which precaution. For 230 V live work, Class 0 insulated gloves (rated 1000 V AC) plus insulated tools are the standard precaution. The senior is exposing both themselves and the firm to liability under EAWR (failure to take suitable precautions) and HSWA Section 7 (employee duty to take reasonable care of own and others' safety). The apprentice's defence: 'I followed the firm's PPE matrix' — so make sure there IS one and it specifies gloves for live work.",
-      "Only on commercial.",
-      "Only above 1 kV.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Senior pressure to skip PPE is a classic apprentice trap. The right move is to wear the PPE you've been trained to wear and let your training, not the senior's pressure, drive your behaviour. If the senior is consistently bypassing PPE, that's a SAFETY-CONCERN report under the firm's H&S policy — usually reported to the H&S manager, not the line supervisor (who may be the same person bypassing PPE). The HSE has prosecuted firms where the supervisor's bad-example conduct was found to have contributed to an apprentice's injury.",
   },
@@ -192,12 +192,12 @@ const quizQuestions = [
     question:
       "When you arrive at a fault job, what are the first three documents you should look for / produce before any electrical work?",
     options: [
-      "None — just start.",
       "(1) The site / customer's existing risk-assessment and method statement — what the principal contractor has identified as on-site hazards. (2) Your firm's task RAMS — the document specific to fault diagnosis at this premises, which you may need to produce or update on arrival. (3) A permit-to-work or equivalent authorisation — for commercial / industrial sites only, signed by the authorised manager, defining what you're allowed to do. Without these three you don't have a defensible position if something goes wrong, and the customer's safety policy will record you as an unauthorised worker.",
-      "Just the invoice.",
-      "Just the part number.",
+      "The monthly review brings together the apprentice, the employer (or supervisor) and the training provider's tutor or assessor. The review discusses progress on the apprenticeship standards, on-the-job competence, off-the-job training hours, any concerns from any side, and actions for the next month. The form is a record of the review and is part of the audit trail for the apprenticeship's compliance with the standards.",
+      "REPAIRABLE: cable terminations, accessory faceplates, individual lampholders, switch modules, dimmer cores, individual MCBs / RCBOs (within a CU), circuit cables (mid-run patch with junction box). REPLACEMENT-ONLY (typically): consumer units (sealed enclosures, integrated busbar), transformers and ballasts (factory-sealed), most LED drivers (sealed pots), AFDDs (electronic devices), most modern accessories (one-piece moulded). The boundary is usually 'is the failed item a single field-replaceable unit?'. Sealed devices are replacement-only; assembled devices with field-accessible components are repairable.",
+      "SCOP 3.5 is solid for a UK domestic ASHP install — it means each kWh of electricity delivers 3.5 kWh of heat. On a UK grid carbon intensity of ~200 gCO₂/kWh, that's roughly 57 gCO₂ per kWh of heat — about 3.7× cleaner than burning gas (which emits ~210 gCO₂ per useful kWh). Top-end UK ASHP installs reach SCOP 3.8-4.2; GSHP can reach SCOP 4.5-5.0+. SCOP under 2.8 suggests something is wrong (oversized unit, undersized emitters, poorly insulated property, high flow temperature).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The 'first three' are the paperwork backbone of every fault visit. On a domestic call-out the customer doesn't have a formal RA or permit, so the firm's task RAMS is the only document — but it must exist. On a commercial site, the principal contractor / facilities manager will have a system you slot into. CDM 2015 Reg 13 puts the duty on the principal contractor to ensure subcontractors integrate with the site safety plan; CDM Reg 15 puts the duty on the contractor to do the planning. Both are explicit in HSE prosecutions where corner-cutting on paperwork led to harm.",
   },

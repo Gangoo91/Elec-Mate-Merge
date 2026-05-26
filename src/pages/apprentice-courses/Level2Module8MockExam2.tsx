@@ -26,6 +26,7 @@ import {
 } from '@/data/apprentice-courses/level2/module2/questionBank';
 import { ExamDesktopSidebar } from '@/components/apprentice-courses/ExamDesktopSidebar';
 import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayout';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 
 const Level2Module8MockExam2 = () => {
   useSEO(
@@ -45,11 +46,14 @@ const Level2Module8MockExam2 = () => {
 
   const startExam = () => {
     // Get 60 random questions from Module 2 question bank with balanced difficulty (C&G 2365-02 spec)
-    const selectedQuestions = getRandomQuestions(60, {
-      basic: 40,
-      intermediate: 45,
-      advanced: 15,
-    }).map((q, index) => ({
+    const selectedQuestions = shuffleAllQuestionOptions(
+      getRandomQuestions(60, {
+        basic: 40,
+        intermediate: 45,
+        advanced: 15,
+      }),
+      createShuffleSalt()
+    ).map((q, index) => ({
       id: index + 1,
       question: q.question,
       options: q.options,

@@ -22,10 +22,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the main reason for labelling electrical circuits?',
     options: [
-      'To make installations look tidy',
-      'To ensure safety and compliance',
       'To save money on materials',
+      'To ensure safety and compliance',
       'To meet client preferences',
+      'To make installations look tidy',
     ],
     correctIndex: 1,
     explanation:
@@ -34,8 +34,13 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'Which regulation requires correct labelling of circuits and cables?',
-    options: ['BS 5266', 'BS 7671', 'ISO 9001', 'BS 6004'],
-    correctIndex: 1,
+    options: [
+      'BS 6004',
+      'ISO 9001',
+      'BS 7671',
+      'BS 5266',
+    ],
+    correctIndex: 2,
     explanation:
       'BS 7671 (IET Wiring Regulations) requires proper identification and labelling of all electrical circuits and cables.',
   },
@@ -43,12 +48,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What must each distribution board contain?',
     options: [
+      'Test certificates',
+      'Colour code samples',
       'Spare labels',
       'A circuit schedule/chart',
-      'Colour code samples',
-      'Test certificates',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Each distribution board must contain a circuit schedule or chart that clearly identifies each circuit, its purpose, and its characteristics.',
   },
@@ -74,8 +79,13 @@ const Module5Section7_2 = () => {
     {
       id: 2,
       question: 'Which regulation requires correct labelling of circuits and cables?',
-      options: ['BS 5266', 'BS 7671', 'ISO 9001', 'BS 6004'],
-      correctAnswer: 1,
+      options: [
+        'ISO 9001',
+        'BS 5266',
+        'BS 7671',
+        'BS 6004',
+      ],
+      correctAnswer: 2,
       explanation:
         'BS 7671 (IET Wiring Regulations) requires proper identification and labelling of all electrical circuits and cables.',
     },
@@ -83,12 +93,12 @@ const Module5Section7_2 = () => {
       id: 3,
       question: 'What is used to identify conductors and cables?',
       options: [
-        'Cable ties',
+        'To prevent the spread of asbestos fibres to other areas',
+        'Motor power (W) ÷ airflow (l/s)',
+        'MRI machines, particle accelerators, power cables',
         'Heat-shrink, clip-on tags, or printed labels',
-        'Electrical tape only',
-        'Permanent markers',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Heat-shrink sleeves, clip-on tags, or printed labels are the proper methods for identifying conductors and cables in electrical installations.',
     },
@@ -96,12 +106,12 @@ const Module5Section7_2 = () => {
       id: 4,
       question: 'What must each distribution board contain?',
       options: [
-        'Spare labels',
         'A circuit schedule/chart',
+        'Spare labels',
         'Colour code samples',
         'Test certificates',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Each distribution board must contain a circuit schedule or chart that clearly identifies each circuit, its purpose, and its characteristics.',
     },
@@ -109,10 +119,10 @@ const Module5Section7_2 = () => {
       id: 5,
       question: 'Why should labels be durable and heat resistant?',
       options: [
-        'To meet client preference',
+        'Intrinsically safe (Ex-rated) lighting equipment',
         'To withstand environmental conditions and remain legible',
-        'To save on replacement costs',
-        'To look professional',
+        'To prevent misreading what\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s actually asked',
+        'A worldwide standard for home and building automation',
       ],
       correctAnswer: 1,
       explanation:
@@ -122,12 +132,12 @@ const Module5Section7_2 = () => {
       id: 6,
       question: 'What is a common risk of poor labelling?',
       options: [
-        'Lower energy efficiency',
+        'Circulating currents in conductors causing power loss',
+        'To avoid disputes and ensure compliance',
         'Isolating the wrong circuit, leading to safety hazards',
-        'Overloading cables',
-        'Increased installation costs',
+        'All cables radiate from a central point',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Poor labelling can lead to isolating the wrong circuit, creating serious safety hazards and potential accidents.',
     },
@@ -136,11 +146,11 @@ const Module5Section7_2 = () => {
       question: 'Which of the following should be updated when a circuit is altered?',
       options: [
         'Only the label on the cable',
-        'The circuit chart and the labels',
-        'Nothing if the change is minor',
         'Only the distribution board schedule',
+        'Nothing if the change is minor',
+        'The circuit chart and the labels',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Both the circuit chart and the labels must be updated when any circuit is altered to maintain accurate identification.',
     },
@@ -148,12 +158,12 @@ const Module5Section7_2 = () => {
       id: 8,
       question: 'What is a CPC in electrical installations?',
       options: [
-        'Circuit Protection Code',
         'Circuit Protective Conductor (earth)',
         'Cable Protection Cover',
+        'Circuit Protection Code',
         'Central Processing Controller',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'CPC stands for Circuit Protective Conductor, which is the earth conductor that provides protection against electric shock.',
     },
@@ -161,12 +171,12 @@ const Module5Section7_2 = () => {
       id: 9,
       question: 'In the real-world scenario, what problem occurred due to poor labelling?',
       options: [
+        '"The earth fault loop impedence was within acceptable limits."',
         'The wrong circuit was isolated, causing costly downtime',
-        'The cables overheated',
-        'The fire alarm system failed',
-        'The installation failed inspection',
+        'Check and follow coordinated site drawings',
+        'Have a private, non-judgemental conversation expressing genuine concern',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'Poor labelling led to the wrong circuit being isolated during testing, causing costly downtime across the entire site.',
     },
@@ -174,12 +184,12 @@ const Module5Section7_2 = () => {
       id: 10,
       question: 'Why should labels and charts always be cross-checked?',
       options: [
+        'Diagnostic capabilities and precise positioning',
+        'Directly above or below in vertical zones',
         'To ensure they match the correct circuit details',
-        'To make them look neat',
-        'To keep apprentices busy',
-        'To satisfy client requirements',
+        'To provide additional protection against electric shock',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'Labels and charts must be cross-checked to ensure they accurately match the correct circuit details and prevent dangerous mistakes.',
     },

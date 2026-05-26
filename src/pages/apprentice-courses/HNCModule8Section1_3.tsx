@@ -34,8 +34,13 @@ const quickCheckQuestions = [
   {
     id: 'pipe-spacing',
     question: 'What is the standard pipe spacing for UFH in a well-insulated living area?',
-    options: ['100mm', '150mm', '200mm', '300mm'],
-    correctIndex: 2,
+    options: [
+      '100mm',
+      '200mm',
+      '150mm',
+      '300mm',
+    ],
+    correctIndex: 1,
     explanation:
       '200mm pipe spacing is standard for well-insulated living areas. Higher heat loss areas like bathrooms may use 150mm spacing, whilst lower output areas might use 250-300mm.',
   },
@@ -43,10 +48,10 @@ const quickCheckQuestions = [
     id: 'manifold-purpose',
     question: 'What is the primary purpose of the UFH manifold?',
     options: [
-      'Heat generation',
-      'Water storage',
+      'Level 3 - System or end-use level',
+      'Certsure / NICEIC Certification Portal',
       'Flow distribution and zone control',
-      'Pressure boosting',
+      'Core losses (iron losses)',
     ],
     correctIndex: 2,
     explanation:
@@ -56,8 +61,13 @@ const quickCheckQuestions = [
     id: 'screed-depth',
     question:
       'What is the minimum screed depth over UFH pipes in a traditional sand/cement screed?',
-    options: ['25mm', '50mm', '65mm', '75mm'],
-    correctIndex: 2,
+    options: [
+      '75mm',
+      '25mm',
+      '50mm',
+      '65mm',
+    ],
+    correctIndex: 3,
     explanation:
       'A minimum of 65mm screed depth over UFH pipes is required for traditional sand/cement screeds to provide adequate thermal mass and structural integrity. The total screed depth is typically 65-75mm.',
   },
@@ -68,7 +78,12 @@ const quizQuestions = [
     id: 1,
     question:
       'What heat output (W/m²) can a wet UFH system typically achieve with 55°C flow temperature?',
-    options: ['50-70 W/m²', '80-100 W/m²', '120-150 W/m²', '180-200 W/m²'],
+    options: [
+      '50-70 W/m²',
+      '80-100 W/m²',
+      '120-150 W/m²',
+      '180-200 W/m²',
+    ],
     correctAnswer: 1,
     explanation:
       'Wet UFH systems with 55°C flow temperature can typically achieve 80-100 W/m². This is sufficient for most well-insulated buildings where heat loss is typically 40-60 W/m².',
@@ -76,7 +91,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the maximum recommended circuit length for 16mm PE-X pipe in UFH?',
-    options: ['60m', '80m', '100m', '120m'],
+    options: [
+      '120m',
+      '60m',
+      '100m',
+      '80m',
+    ],
     correctAnswer: 2,
     explanation:
       'Maximum circuit length for 16mm PE-X pipe is typically 100m to maintain adequate flow rates and minimise pressure drop. Longer circuits require larger diameter pipes or must be split into multiple circuits.',
@@ -85,20 +105,25 @@ const quizQuestions = [
     id: 3,
     question: 'Which pipe layout pattern provides the most uniform heat distribution?',
     options: [
-      'Serpentine (single)',
       'Bi-directional serpentine',
-      'Spiral (snail)',
+      'Serpentine (single)',
       'Random pattern',
+      'Spiral (snail)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The spiral (snail) pattern alternates flow and return pipes, providing the most uniform floor surface temperature. Serpentine patterns create temperature gradients across the floor.',
   },
   {
     id: 4,
     question: 'What is the tog value limit for floor coverings over UFH?',
-    options: ['0.5 tog', '1.0 tog', '1.5 tog', '2.5 tog'],
-    correctAnswer: 2,
+    options: [
+      '1.5 tog',
+      '1.0 tog',
+      '0.5 tog',
+      '2.5 tog',
+    ],
+    correctAnswer: 0,
     explanation:
       'Floor coverings should have a combined tog value of no more than 1.5 tog (thermal resistance of 0.15 m²K/W) to ensure adequate heat transfer. Higher tog values significantly reduce heat output.',
   },
@@ -108,8 +133,8 @@ const quizQuestions = [
     options: [
       'Pneumatic actuator',
       'Thermal wax actuator',
-      'Electric motor actuator',
       'Solenoid valve',
+      'Electric motor actuator',
     ],
     correctAnswer: 1,
     explanation:
@@ -119,12 +144,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of a mixing valve in a UFH system fed from a boiler?',
     options: [
-      'To increase water pressure',
+      'Calmly repeating your key message or boundary without being drawn into side arguments',
+      'They set standards for integration and safety requirements',
       'To reduce flow temperature from boiler temperature to UFH temperature',
-      'To filter the water',
-      'To measure flow rate',
+      'Removing asbestos insulation (lagging) from pipes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The mixing valve (thermostatic or 3-port) blends boiler return water with flow water to reduce the typical 70-80°C boiler temperature to the required 35-55°C for UFH.',
   },
@@ -132,12 +157,12 @@ const quizQuestions = [
     id: 7,
     question: 'How should UFH circuits be balanced during commissioning?',
     options: [
-      'By trial and error',
+      'Switch off, isolate, lock off, test, prove dead',
+      'Digital with appropriate safety rating',
+      'To ensure protective device breaking capacity is adequate',
       'Using flow meters to achieve design flow rates',
-      'By adjusting room thermostats',
-      'Balancing is not required for UFH',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'UFH circuits are balanced using the integral flow meters on the manifold to achieve design flow rates. Each circuit requires a specific flow rate based on heat output and temperature differential.',
   },
@@ -145,23 +170,38 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the minimum drying/commissioning period for a traditional sand/cement screed before full UFH operation?',
-    options: ['7 days', '14 days', '21 days', '28 days'],
-    correctAnswer: 2,
+    options: [
+      '21 days',
+      '28 days',
+      '7 days',
+      '14 days',
+    ],
+    correctAnswer: 0,
     explanation:
       'Traditional sand/cement screed requires a minimum 21-day curing period before commissioning. The initial heating cycle then takes 7-14 days, starting at 20°C and increasing by 5°C daily.',
   },
   {
     id: 9,
     question: 'What is the maximum floor surface temperature recommended for occupied spaces?',
-    options: ['24°C', '27°C', '29°C', '32°C'],
-    correctAnswer: 2,
+    options: [
+      '24°C',
+      '29°C',
+      '27°C',
+      '32°C',
+    ],
+    correctAnswer: 1,
     explanation:
       'Maximum floor surface temperature should not exceed 29°C in occupied spaces for comfort and safety. Peripheral zones (under windows) may operate at up to 35°C.',
   },
   {
     id: 10,
     question: 'What pipe material is most commonly used for wet UFH systems?',
-    options: ['Copper', 'PVC', 'PE-X (cross-linked polyethylene)', 'Stainless steel'],
+    options: [
+      'Using presence detection and scheduling',
+      'Correct mounting and secure connections',
+      'PE-X (cross-linked polyethylene)',
+      'Energy lost in charge/discharge cycle',
+    ],
     correctAnswer: 2,
     explanation:
       'PE-X (cross-linked polyethylene) is the most common UFH pipe material due to its flexibility, oxygen barrier properties, long service life, and resistance to scaling and corrosion.',
@@ -169,8 +209,13 @@ const quizQuestions = [
   {
     id: 11,
     question: 'What is the typical operating temperature differential (delta T) for UFH systems?',
-    options: ['5°C', '10°C', '15°C', '20°C'],
-    correctAnswer: 1,
+    options: [
+      '5°C',
+      '20°C',
+      '15°C',
+      '10°C',
+    ],
+    correctAnswer: 3,
     explanation:
       'UFH systems typically operate with a 10°C temperature differential (e.g., 45°C flow, 35°C return). This is lower than radiator systems and requires higher flow rates for the same heat output.',
   },
@@ -178,12 +223,12 @@ const quizQuestions = [
     id: 12,
     question: 'How should insulation be installed below UFH pipes?',
     options: [
-      'Insulation is optional',
-      '25mm minimum insulation with foil facing upward',
       '50mm minimum insulation with perimeter strip',
       '100mm minimum without edge insulation',
+      'Insulation is optional',
+      '25mm minimum insulation with foil facing upward',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A minimum of 50mm rigid insulation should be installed below UFH pipes with perimeter edge insulation strips. This minimises downward heat loss and ensures heat is directed upward into the room.',
   },

@@ -18,10 +18,10 @@ import {
 export default function DisconnectionTimeCalculatorPage() {
   return (
     <ToolTemplate
-      title="Disconnection Time Calculator UK | BS 7671 0.4s + 5s Rules"
-      description="Calculate disconnection times for TN + TT systems per BS 7671: verify 0.4s socket / 5s fixed-load rules, protective device coordination. Free UK tool."
+      title="Max Disconnection Time Calculator: BS 7671 0.4s/5s/0.2s"
+      description="Max disconnection time for BS 7671 final circuits not exceeding 32A: 0.4s for TN socket-outlets, 0.2s for TT, 5s for distribution + fixed loads. Free UK tool."
       datePublished="2026-01-20"
-      dateModified="2026-05-18"
+      dateModified="2026-05-24"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Disconnection Time Calculator', href: '/tools/disconnection-time-calculator' },

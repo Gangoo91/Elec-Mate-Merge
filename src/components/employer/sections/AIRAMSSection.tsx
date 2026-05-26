@@ -140,12 +140,13 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
     setResult(null);
 
     try {
-      const { data: job, error: createError } = await supabase
-        .from('rams_generation_jobs')
-        .insert({
-          job_description: jobDescription,
-          job_scale: 'Medium',
-          project_info: {
+      // Single call to rams-generator handles auth + insert + background
+      // worker via EdgeRuntime.waitUntil. Returns jobId immediately (202).
+      const { data, error: invokeError } = await supabase.functions.invoke('rams-generator', {
+        body: {
+          action: 'create',
+          jobDescription,
+          projectInfo: {
             projectName: selectedJobPack?.title || 'Untitled Project',
             location: selectedJobPack?.location || '',
             contractor: '',
@@ -159,25 +160,15 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
             safetyOfficerPhone: '',
             assemblyPoint: '',
           },
-          status: 'pending',
-          progress: 0,
-        })
-        .select()
-        .single();
-
-      if (createError || !job) {
-        throw new Error(createError?.message || 'Failed to create job');
-      }
-
-      setGenerationJobId(job.id);
-
-      const { error: invokeError } = await supabase.functions.invoke('generate-rams', {
-        body: { jobId: job.id },
+          jobScale: 'commercial',
+        },
       });
 
-      if (invokeError) {
-        throw invokeError;
+      if (invokeError || !data?.jobId) {
+        throw new Error(invokeError?.message || data?.error || 'Failed to start generation');
       }
+
+      setGenerationJobId(data.jobId);
     } catch (err: any) {
       setIsGenerating(false);
       setError(err.message);

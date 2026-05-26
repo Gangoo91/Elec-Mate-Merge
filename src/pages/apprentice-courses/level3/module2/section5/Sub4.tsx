@@ -46,12 +46,12 @@ const checks = [
     question:
       "A customer is having a 5 kWp single-phase PV array fitted with a 5 kW inverter. Which DNO notification framework applies and when does the paperwork need to be submitted?",
     options: [
-      "Neither — domestic PV is exempt from notification.",
+      "Three steps. (1) MINIMISE the damage during the work — score around the tile carefully; remove only the affected tile(s); save them for re-fit if intact. (2) MAKE SAFE the tile area — no exposed substrate, no sharp edges, no water-ingress path. (3) BRIEF THE CUSTOMER — explain what tiles were affected; recommend a tiler for re-fit (referrals are good business); document the damage on the job sheet. The electrician doesn't normally re-tile (specialist trade with tile-cutting tools, adhesives, grout) but is responsible for minimising damage AND informing the customer.",
+      "Yes. Section 722 applies to all EV charging installations regardless of earthing arrangement. The PEN-fault protection requirement specifically targets TN-C-S (PNB) supplies because that is where the broken-PEN risk exists; TT-earthed properties already have a separate earth electrode and do not have the PEN-fault risk. But all the other Section 722 requirements (RCD type, control pilot, isolation, labelling, cable rating) apply equally to TT-earthed installs. The MCS-certified designer specifies per the supply conditions; the apprentice executes per the design.",
+      "Anti-islanding requires a grid-connected generator (PV inverter, wind inverter, battery export inverter, micro-CHP, micro-hydro) to disconnect when the public distribution grid fails — even though it might still have local source energy and could in principle continue exporting. The safety reason: if the inverter continued exporting into a network the DNO had isolated for fault repair, line workers could be exposed to live conductors they thought were dead. ENA G98/G99 specifies the loss-of-mains detection settings (vector shift, ROCOF, voltage and frequency limits) and the maximum disconnection time.",
       "ENA Engineering Recommendation G98 applies — generation up to and including 16 A per phase per inverter is a fit-and-inform connection. The MCS-certified installer must notify the DNO within 28 days of energising the system, using the standard G98 notification form, including site details, inverter make / model / capacity, type-test reference and the installation date. The DNO does not need to consent before energisation under G98 (that's the difference vs G99). The MCS certificate, the EIC and the G98 notification together unlock the Smart Export Guarantee application with the customer's electricity supplier.",
-      "ENA G99 always applies regardless of size — the customer must wait for DNO approval for months before the inverter can be switched on.",
-      "Building Regs only — DNOs have no involvement.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "G98 is the fit-and-inform regime for inverters up to 16 A per phase per inverter (~3.68 kW per phase, so up to ~11 kW on three-phase). G99 is the apply-to-connect regime for larger systems — the DNO must accept the application before energisation. The 28-day post-energisation notification under G98 is non-negotiable; missing it is a breach of the Distribution Connection and Use of System Agreement (DCUSA) and can void the customer's export tariff. The MCS-certified installer carries the duty.",
   },
@@ -60,10 +60,10 @@ const checks = [
     question:
       "Why does the customer need an MCS certificate as well as an Electrical Installation Certificate?",
     options: [
-      "They don't — the EIC is enough on its own.",
+      "(1) Inform the customer in writing of the planned outage, expected duration, and any contingency they need (move stock, brief staff, sign at door). (2) Check whether the affected circuit has any safety-critical loads — fire alarm sounders, emergency lighting central battery, intruder alarm — and if so, brief the customer to put out a 'system off' note and inform their alarm-receiving centre. (3) Plan the isolation window to minimise impact (early morning, lunchtime closure). (4) Document the conversation on the job sheet — customer agreed to isolation, accepted impact, etc. (5) ONLY THEN isolate. The customer's commercial loss is real and your firm carries professional liability for unannounced outages.",
       "Different documents, different jobs. The Electrical Installation Certificate (BS 7671 model form) certifies the electrical installation as compliant with the wiring regulations. The MCS certificate (issued via the Microgeneration Certification Scheme) certifies that the renewable installation has been designed, installed and commissioned by an MCS-certified installer to the relevant MIS standard (MIS 3002 for PV, MIS 3005 for heat pumps, MIS 3007 for biomass etc.) and to the MCS Installation Standards. The MCS certificate is what unlocks the Smart Export Guarantee, the Boiler Upgrade Scheme grant, and the consumer-protection backing under the MCS Code 4.0. Without it the customer can't claim grants or export payments.",
-      "MCS only certifies the panels, not the install.",
-      "MCS is purely cosmetic and has no legal weight.",
+      "Treat as immediate hazard. Burning plastic smell from electrical sources almost always indicates an HRJ that's already heating to char-point on the surrounding insulation. Steps: (1) Ask customer to identify the location range — which floor, which area, when did it start. (2) Isolate at the main switch if the source is unlocated — removes the heat source while you investigate. (3) Open every consumer unit, junction box and accessory in the affected area for visual inspection. (4) Use a thermal camera (Sub 2.3) on accessible enclosures during normal operation if the smell isn't immediate (but only with the customer's informed consent — there's a fire risk in the meantime). (5) Customer brief: this is a Code 1 (Danger Present) issue — work doesn't pause for a coffee.",
+      "Required when (a) live working is planned at any voltage above 50 V AC where the operative can't safely self-rescue (e.g. confined space, working at height, working alone in a remote location), OR (b) the work is on a system where a single fault could cause death (HV, large industrial 3-phase), OR (c) the firm's internal H&S policy specifies it for the task. The accompanying person's job is to (1) observe and challenge unsafe acts, (2) raise the alarm if the operative is incapacitated, (3) assist with isolation / rescue if needed, (4) sign off the safe-system-of-work. The accompanying person must themselves be competent — typically an Approved Electrician or higher.",
     ],
     correctIndex: 1,
     explanation:
@@ -74,12 +74,12 @@ const checks = [
     question:
       "A customer phones six months after their heat pump install asking for the SCOP figure their installer quoted. The handover pack should already contain it — but where exactly?",
     options: [
-      "Nowhere — SCOP is internal to the installer.",
+      "A 1-page document in plain English: (1) WHAT YOU REPORTED — customer's symptom in their words. (2) WHAT WE FOUND — the fault, in plain English. (3) WHAT WE DID — the fix, in plain English. (4) WHAT WE TESTED — the verification, in plain English. (5) RECOMMENDATIONS — anything further the customer should consider. (6) WARRANTY — what's covered for what period. (7) NEXT STEPS — any follow-up work, retest schedule, contact info. Most modern firms have a customer summary template; the apprentice fills it in at the end of each job. Customer keeps the summary; firm keeps the technical job sheet.",
+      "Listen properly. Don't interrupt, don't try to fix it, don't minimise ('it'll pass'). Acknowledge what he's said and that it sounds hard. Don't diagnose or guess what's going on. Suggest some routes for support — Mates in Mind (free training and resources via matesinmind.org), the Lighthouse Construction Industry Charity 24/7 helpline (0345 605 1956), the Electrical Industries Charity (electricalcharity.org), Samaritans (116 123, 24/7), or his GP. Ask whether he'd like you to mention to your training-provider mentor, but don't break his confidence without asking. Follow up with him in a few days. Keep listening over time.",
       "Inside the MCS heat-loss calculation document and the MCS performance estimate that the MCS-certified installer is required to provide at handover under MIS 3005. The handover pack should also contain the manufacturer's commissioning record (with measured flow, return, ambient and instantaneous COP at commissioning conditions), the EIC, the G98 / G99 notification, the user instructions, the warranty paperwork, the F-Gas record (if applicable to the refrigerant fill), and the maintenance schedule. The MCS Code 4.0 makes the handover pack contents a customer-facing duty — the installer is contractually bound to hand over a complete, signed pack on the day, not weeks later.",
-      "Only on the inverter — the customer should climb into the loft to check.",
-      "On the box the heat pump arrived in.",
+      "Refrigerant evaporates at low temperature in the outdoor coil (or ground loop), absorbing heat from the source. The compressor squeezes the resulting low-pressure vapour, raising its pressure and temperature. The hot high-pressure vapour condenses in the indoor heat exchanger, releasing heat into the wet heating system. The liquid refrigerant expands back to low pressure through the expansion valve and the cycle repeats. Electrical work drives the compressor; the heat in the wet system comes from outside, not from the electricity. Energy is conserved.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The MCS Code 4.0 (effective 2023) reorganised the customer-facing handover obligations into a single defined pack. SCOP is one of the headline numbers customers ask about — and the MCS estimate document is where it lives. The handover pack also serves as the customer's evidence base if they ever need to invoke the MCS consumer-protection process, switch installers for service, or claim under warranty.",
   },
@@ -91,10 +91,10 @@ const quizQuestions = [
     question:
       "Which ENA Engineering Recommendation governs the connection of a small single-phase domestic PV inverter (≤16 A per phase) to the public distribution network?",
     options: [
-      "G83 — withdrawn and replaced.",
+      "Root cause analysis identifies and addresses the underlying reason for a problem, preventing recurrence, while symptom treatment only addresses the immediate effect without preventing it from happening again",
       "G98 — the fit-and-inform regime for generation up to and including 16 A per phase per inverter. The installer notifies the DNO within 28 days of energisation. The inverter must be type-tested to G98 / EREC G99 compliance and the model / type-test number recorded on the notification.",
-      "G88 — applies only to wind turbines.",
-      "G77 — applies only to commercial three-phase generation.",
+      "To gather the strands together so the screw clamps a single solid pin rather than 49 individual strands — improves contact pressure, prevents stray strands escaping the terminal and reduces the risk of damage to the strands when tightened.",
+      "Inversely proportional. Doubling the cable length doubles the surface area for leakage, halving the apparent IR. A 50 m run reading 200 MΩ would read approximately 100 MΩ at 100 m for the same insulation quality. On long runs (especially underground or in damp conditions), the absolute MΩ figure matters less than the consistency between runs of similar length.",
     ],
     correctAnswer: 1,
     explanation:
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       "What is the MCS Code 4.0?",
     options: [
-      "A wiring colour code for renewables.",
+      "Raise it with the supervisor and get the WEEE segregated and routed to an AATF promptly. Smoke alarms typically contain small primary batteries and circuit boards (and ionising-chamber units contain a tiny radioactive source — Americium-241 — which has its own disposal route). Old fuse boards contain wiring, plastics and sometimes mercury contactors in older kit. Both are classic WEEE. Letting the pile grow is a Duty of Care breach in the making and is also a fire risk because of the accumulated combustible plastic.",
+      "Reg 722.410.3.5 prohibits obstacles and placing out of reach (Section 417 measures). Reg 722.410.3.6 prohibits non-conducting location and earth-free local equipotential bonding. Designers must select alternative protective measures permitted within Chapter 72 and elsewhere in BS 7671 — typically ADS with appropriate RCDs, SELV / PELV where applicable, and double or reinforced insulation.",
       "The current Microgeneration Certification Scheme consumer code, in force from 2023, that sets out the contractual and consumer-protection duties of an MCS-certified installer toward the end customer. It covers pre-contract information, contract terms, deposit protection, performance estimates, the handover pack, complaints handling, and post-installation aftercare. It is backed by the MCS-approved alternative dispute resolution provider, currently RECC or HIES depending on installer membership.",
-      "A grid frequency standard.",
-      "An optional marketing badge with no contractual weight.",
+      "Dominated by Ra. The earth fault loop on TT is: line conductor + R1 + fault + R2 (CPC) + Ra (consumer\\\\\\\\'s electrode) + soil + Ra (transformer\\\\\\\\'s electrode) + transformer winding. The R1+R2 contribution is typically under 1 Omega; Ra dominates. Measured Zs will be approximately Ra + a small contribution from the cabling. With Ra = 150 Omega, Zs at any test point will be approximately 150-152 Omega. Overcurrent ADS is not feasible at that loop impedance — RCD ADS is mandatory on TT, verified by the Ra x I delta n less than or equal to 50 V calculation.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "MCS Code 4.0 replaced earlier versions in 2023 and tightened the customer-facing duties significantly. Every MCS-certified installer signs up to it as a condition of certification. As an apprentice on an MCS site you should recognise that the Code is a real contractual document driving how the install is documented and handed over — it is not a marketing label.",
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       "What are the headline contents of a complete renewables handover pack under MCS Code 4.0?",
     options: [
-      "Just the receipt.",
+      "Stop and verify before testing. Unusual supply arrangements suggest either (a) the property is genuinely TT (rural, older, or specifically designed) which may need different fault-diagnosis approach, OR (b) the customer's installation isn't what you expected from the booking (e.g. an older commercial site with three-phase supply you weren't briefed on). Either way, the test plan needs to match the actual supply. Escalate to supervisor if unsure; update the RAMS to reflect the actual installation; brief the customer if the work scope changes. Never just push ahead with the test plan you arrived with if it doesn't match what you find.",
+      "Protection against electric shock shall be provided by a device which electrically disconnects the vehicle from the live conductors of the supply and from protective earth in accordance with Regulation 543.3.3.101(b) within 5 s in the event of the utilisation voltage at the charging point, between the line and neutral conductors, being greater than 253 V RMS or less than 207 V RMS. The device shall provide isolation and be selected in accordance with Table 537.4.",
+      "TULRCA 1992 is the consolidating UK statute on trade union law and collective labour relations. It covers the right to join (and not join) a union, protection from anti-union discrimination, recognition for collective bargaining, industrial action ballot requirements, picketing rules, and union internal governance. It's the foundational statute that protects union members.",
       "MCS certificate; Electrical Installation Certificate (BS 7671); G98 or G99 DNO notification copy; manufacturer commissioning record(s); MCS performance estimate (SCOP, kWh / kWp / yr, payback, etc.); warranty documentation for all major components; user instruction manuals; maintenance schedule and service intervals; F-Gas record (where refrigerant work was carried out); contact details for fault reporting; and the MCS Code complaints process. Pack is provided in physical or durable digital form on handover day.",
-      "Only the wiring diagram.",
-      "Only a verbal briefing on the doorstep.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The MCS Code 4.0 makes the contents of the handover pack a defined, auditable list — not the installer's discretion. The pack also serves as the customer's evidence base if they need to invoke MCS consumer protection, switch installers for ongoing service, or claim under warranty. As the L3 electrician on the install team you may be asked to gather your slice of it (the EIC, your test records, signage notes) and feed it to the MCS lead for assembly.",
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       "Why is the manufacturer's commissioning record kept in the handover pack alongside the EIC?",
     options: [
-      "It isn't — the EIC replaces it.",
       "Because they certify different things. The EIC certifies the electrical installation against BS 7671. The manufacturer commissioning record certifies the equipment itself was started up and configured to the manufacturer's specified parameters — flow temperature, pump speed, weather compensation curve, refrigerant charge weight, inverter limits, network export-limitation settings, software firmware version. Manufacturer warranty cover usually requires evidence of correct commissioning and typically references this record. Without it the warranty defaults; without the EIC the BS 7671 compliance line is broken.",
-      "It is only kept by the manufacturer, never the customer.",
-      "It is purely decorative.",
+      "The UK grid has decarbonised rapidly: from ~500 gCO₂/kWh in 2012 to under 200 gCO₂/kWh in recent years (varies by year and operating conditions). As the grid gets cleaner, electrified heat (heat pumps) and electrified transport (EVs) get cleaner too — even if the kit itself doesn't change. That's why government policy pushes electrification: every year of grid progress automatically improves the carbon footprint of every heat pump and EV already installed.",
+      "WAHR 2005 Reg 12 requires a tower used for working at height to be inspected before use after assembly, after any event likely to have affected it (high winds, impact, alteration), and at intervals not exceeding 7 days. The pre-use check covers stability (level base, outriggers deployed, brakes on), structural integrity (no missing components, all connectors locked), platform fully boarded with guardrails and toeboards, and a current inspection record (Form 91 / scaff tag). The user does the daily check; a more thorough inspection is by a competent person.",
+      "Triggered when the property's existing supply capacity (typically 60 A or 80 A single-phase main fuse) is inadequate for the new combined load. Heat pump + EV charger + existing baseline can easily exceed this. DNO-managed process: customer / installer applies, DNO surveys, costs the work (cable upsize, possibly cut-out / meter replacement, possibly main-fuse upgrade), customer pays, work scheduled. Timeline 4-12 weeks for simple upgrades, longer for cable changes or three-phase conversions. Customer needs to factor this into the install date.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The two records cover complementary domains and the warranty position usually depends on both. Heat pump and inverter manufacturers in particular treat commissioning records as a precondition of warranty cover — skipped or undocumented commissioning is a common reason for warranty claims being rejected years later.",
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     question:
       "Which document unlocks the Smart Export Guarantee tariff for a domestic PV customer?",
     options: [
-      "The receipt only.",
+      "Ze (external earth fault loop impedance at the origin) — the impedance of the path from a fault at the consumer\\\\\\\\'s MET back to the supply transformer star point, via the supplier\\\\\\\\'s earth path. For TN-C-S typically 0.10-0.35 Ω; for TN-S typically 0.20-0.50 Ω; for TT essentially the consumer\\\\\\\\'s electrode resistance Ra (since the supplier\\\\\\\\'s metallic earth path is absent).",
       "The MCS certificate, accompanied by the G98 (or G99) DNO notification copy. The customer applies to a Smart Export Guarantee licensee (typically a major electricity supplier) and uploads both. Without the MCS certificate the supplier will not register the customer for export payments. The smart export meter (the customer's existing smart meter, usually) provides the half-hourly export data that the tariff is paid against.",
-      "A Building Regs certificate, on its own.",
-      "Nothing is needed beyond the install itself.",
+      "At all times the user must maintain three points of contact with the ladder — typically two feet and one hand, or two hands and one foot. The remaining hand is free to perform light work or for an extra grip while moving. The rule means: don't carry materials in both hands while climbing, don't lean far enough to break the contact, don't use a ladder for two-handed work like wall chasing.",
+      "The diary is your detailed contemporaneous record of what you did, who you worked with, what materials you used, what variations came up, what unusual events occurred. The time sheet records the hours; the diary records the substance. The diary is your evidence in any later dispute (pay, customer, NVQ portfolio, employer review) and is the source from which NVQ portfolio entries are written up.",
     ],
     correctAnswer: 1,
     explanation:
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       "What is recorded on the EIC for the renewable circuit specifically that wouldn't be on a normal final-circuit EIC?",
     options: [
-      "Nothing different.",
+      "Initiate a quiet check-in. Pick a private moment ('cup of tea after this job?'). Listen without trying to fix. Mention specific things you've noticed ('you've seemed a bit quieter this week'). Don't push — let them share if they want. Mention the helplines (Lighthouse 0345 605 1956, Samaritans 116 123) without making it a big thing. Check in again next week. Mental Health First Aider training (covered above) gives you structured tools for these conversations.",
+      "On TN-C-S, the neutral and protective earth share the PEN conductor between transformer and cut-out. If the PEN breaks anywhere upstream, the customer's neutral floats relative to the transformer star point. Customer's bonded metalwork (kitchen taps, sinks, radiators, EV charger chassis, all bonded to the customer earth terminal) rises toward phase voltage relative to true earth. RCD doesn't see it (no residual current — the lifted-neutral voltage flows through bonding network as L–E volt-drop, not as imbalance). First sign: tingle on metal taps or 30+ V N–E reading at cut-out. A4:2026 added explicit Open PEN protection requirements (Reg 411.3.3, especially for EV chargers).",
       "The EIC carries the standard schedule of inspections and schedule of test results for the new circuit(s). For a PV install that includes the DC string circuits (with DC voltages and DC IR test results), the AC isolator and AC final connection back into the consumer unit, the labelling and signage at every isolation point, and the dual-supply warning at the consumer unit. Section 712 of BS 7671 (extensively revised in A4:2026) drives the inspection items. The 'designer' / 'constructor' / 'inspector and tester' boxes on the EIC may all be the MCS-certified installer's lead engineer; signatures still have to be physically present.",
-      "Only the colour of the cable.",
-      "Only the customer's address.",
+      "A workmanship warranty is your written guarantee that the work you've done will be free from workmanship defects for a specified period — typically 1-2 years for standard electrical work, sometimes longer for renewables (RECC requires minimum 2-year workmanship warranty for MCS-registered work). Materials usually carry separate manufacturer warranties (passed through to customer). Clear warranty terms reduce disputes by setting expectations upfront.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "BS 7671 EIC and the schedules behind it are the universal electrical compliance document. For renewables the schedules pick up the special inspections mandated by Section 712 (PV) / Section 722 (EV) / Section 753 (heat pumps embedded in floors). The L3 electrician carrying out the inspection and test is the person whose signature carries the regulatory weight — even on an MCS-led install.",
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       "What does an F-Gas record look like and when is it issued?",
     options: [
-      "It isn't issued — refrigerants are unregulated.",
+      "That all systems shall, so far as is reasonably practicable, be of such construction as to prevent danger; that they be maintained so as to prevent (so far as is reasonably practicable) such danger; that work activities on or near systems be carried out so as not to give rise to danger; and that protective equipment be suitable for the use, properly maintained and properly used.",
+      "Continuity proving (sometimes 'continuity check') is a quick low-current test (typically 200 mA on the MFT or multimeter on continuity range) to confirm a connection exists — yes/no, not a precise measurement. R1+R2 is a precise measurement of the loop resistance of a complete circuit (line + protective conductor). For fault diagnosis: continuity proving is used to quickly verify that an isolation has fully disconnected a circuit (continuity from supply to load reads OPEN); R1+R2 is used to precisely characterise a circuit's loop resistance for comparison against expected design values. Both have their place; the L3 apprentice uses them at different stages.",
+      "Self-Awareness: recognise the emotional response (possibly frustration or anxiety about change). Self-Regulation: manage the resistance impulse and reappraise the change as professional development. Motivation: connect the update to professional purpose and mastery. Empathy: understand that colleagues may be at different stages of acceptance. Social Skills: communicate the change constructively, help the team adapt, and create a learning environment for the new requirements",
       "An F-Gas log entry recording the refrigerant type, the charge weight added or removed, the date, and the F-Gas-certified engineer's name and certificate number. The engineer logs the entry in their own F-Gas register and provides a copy or extract to the customer / installer for the handover pack. Required at every refrigerant transaction (initial commissioning charge, top-up, recovery at decommissioning). Required by the F-Gas Regulations and central to demonstrating compliance during any future enforcement check.",
-      "Only a sticker on the unit.",
-      "A verbal note only.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The F-Gas record chain is the legal audit trail for fluorinated refrigerants. The L3 electrician does not handle the refrigerant — that is the F-Gas-certified engineer's role — but the record produced does form part of the customer's handover pack and is referenced again at every annual service and at decommissioning. Missing records typically void the manufacturer warranty.",
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       "Who carries the legal duty to submit the G98 / G99 notification to the DNO?",
     options: [
-      "The customer.",
       "The MCS-certified installer (or, for non-MCS installs, the contractor energising the system). The duty is set out in the Distribution Connection and Use of System Agreement (DCUSA) and is enforced via the licensee framework Ofgem oversees. Failure to notify is a breach of the connection conditions and can result in disconnection and loss of any export tariff. As an apprentice you do not sign the notification — but you should recognise that on the install team the duty has a named owner and a 28-day clock from energisation.",
-      "The DNO itself.",
-      "Nobody — it is voluntary.",
+      "Apprenticeship standards (gov.uk) require evidence of at least 20% of the apprenticeship being off-the-job training. The log records day-release at college, online courses, structured study time, shadowing in unfamiliar areas, and any other learning activity outside normal productive work. Without it, the apprenticeship may not meet the standards required for the End-Point Assessment to be funded and certified.",
+      "The ECA is a trade body — voluntary membership organisation representing contractors' commercial interests, providing technical / commercial / legal support, lobbying, training and standard-form contracts. The JIB is the joint employer/union body that sets pay, conditions and grading on JIB-affiliated jobs. ECA members typically apply JIB rules but the bodies are separate. SELECT plays a similar (but distinct) role for the contracting industry in Scotland.",
+      "Significant. Many faults recur because the customer's behaviour caused or contributed to them — overloaded extensions, plug-in heaters on lighting circuits, kettle + microwave + toaster simultaneously. Educating the customer on the actual cause AND how to avoid recurrence is part of preventing the comeback. Format: brief verbal explanation during the work + written summary in the job sheet that the customer signs at completion. 'Your circuit is rated for X amps; running these appliances together exceeds that; consider running them sequentially OR add a dedicated circuit'. The customer's informed cooperation prevents 60–80% of behaviour-related comebacks.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "DCUSA is the contractual framework binding generators, suppliers and DNOs together. Notification under G98 (or pre-energisation acceptance under G99) is a DCUSA obligation on the installer / generator. The MCS-certified installer's procedures should make the 28-day deadline an automatic step on every PV / battery / wind install.",
   },

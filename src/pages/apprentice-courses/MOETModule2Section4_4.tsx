@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'earthing-purpose',
     question: 'What is the primary purpose of earthing in an electrical installation?',
     options: [
-      'To reduce the electricity bill by providing a return path',
+      'The panel\\\\\\\\\\\\\\\'s IP rating is maintained after the work — all covers, gaskets and cable entries are properly refitted and sealed',
+      'It allows problems to fester and grow, often resulting in larger conflicts later',
       'To provide a low-impedance path for fault current so that protective devices operate within the required time',
-      'To improve the power factor of the installation',
-      'To prevent static electricity build-up on equipment',
+      'Granular control, energy monitoring per fixture, and integration with building systems',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The primary purpose of earthing is to provide a low-impedance path for earth fault current to flow back to the source (transformer star point). This ensures that the fault current is large enough to operate the protective device (fuse, MCB or RCD) within the maximum disconnection time specified by BS 7671, thereby limiting the duration of any dangerous touch voltage.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'tn-c-s-pme',
     question: 'In a TN-C-S (PME) system, the neutral and earth functions are:',
     options: [
-      'Completely separate throughout the entire system',
       'Combined in the supply cable (PEN conductor) and separated at the origin of the installation',
-      'Combined throughout both supply and installation',
-      'Not connected — the installation relies on an earth electrode',
+      'To distribute incoming supply to outgoing circuit protective devices',
+      'Validation means acknowledging someone\\\\\\\\\\\\\\\'s feelings as understandable; agreement means you share their position',
+      'Larger cross-sectional area has lower resistance and better heat dissipation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "In a TN-C-S system (Protective Multiple Earthing), the supply uses a combined neutral and earth conductor called a PEN (Protective Earth and Neutral) conductor. At the origin of the consumer's installation, the PEN conductor is separated into distinct neutral (N) and protective earth (PE) conductors. This is the most common earthing arrangement for new UK domestic supplies.",
   },
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'tt-system-rcd',
     question: 'Why is RCD protection particularly important in a TT earthing system?',
     options: [
-      'Because TT systems have higher supply voltages',
+      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
       'Because the earth fault loop impedance is typically too high for overcurrent devices to achieve the required disconnection time',
-      'Because TT systems do not have a neutral conductor',
-      'Because the supply transformer is further away',
+      'To provide a low-impedance path for fault current, enabling protective devices to operate and disconnect the supply quickly',
+      'Open posture, eye contact, nodding to acknowledge, calm tone — encourages trust and openness',
     ],
     correctIndex: 1,
     explanation:
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'ze-measurement',
     question: 'External earth fault loop impedance (Ze) is measured:',
     options: [
+      'Temperature, humidity, and pressure affect both the reference standard and instrument under test, potentially introducing errors',
       'Between the main earthing terminal and the supply neutral with the installation earthing disconnected',
-      'Between any socket outlet and the consumer unit',
-      'Between the line conductor and a separate earth electrode',
-      'With all circuits loaded to their maximum capacity',
+      'Only if trained, it\\\\\\\'s safe to do so, you have the right extinguisher, and the fire is small',
+      'Zinc oxide fume from the galvanised coating, which can cause metal fume fever',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "Ze is measured at the origin of the installation between the means of earthing (main earthing terminal) and the supply neutral, with the installation's earthing conductor disconnected from the main earthing terminal. This isolates the measurement from the installation's own earth paths and measures only the impedance of the external supply earth loop — the supplier's responsibility.",
   },
@@ -70,10 +70,10 @@ const quizQuestions = [
     question:
       'The letter designations in earthing system classification (TN, TT, IT) are defined by:',
     options: [
-      "The cable manufacturer's product codes",
+      'The original F10 should be updated and the HSE notified of the changes as soon as practicable',
       'IEC 60364 and BS 7671 — the first letter relates to the source earthing, the second to the exposed-conductive-parts',
-      "The regional electricity company's naming convention",
-      'The physical layout of the installation',
+      'Sweep up the dust and bag it for disposal yourself — sweeping releases more fibres into the air, and a domestic vacuum disperses them further',
+      'Walk through the method statement step by step, explain the hazards and controls, answer questions, and confirm everyone understands before signing',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'In a TN-S system, the earth path from the installation back to the source is provided by:',
     options: [
-      'A local earth electrode driven into the ground',
+      'A registration that allows certain low-risk waste activities to be carried out without a full environmental permit',
+      'A written or electronic record covering all matters specified in Schedule 7 of the WAH Regulations',
       'A separate metallic conductor (the supply cable sheath or a dedicated earth conductor) from the supply',
-      'The general mass of earth',
-      'The water mains pipe',
+      'A simple file containing as-built drawings, details of hidden services, and any residual hazards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'TN-S (Separate) uses a dedicated earth conductor separate from the neutral throughout the supply cable. In older installations, this was typically the lead sheath of the supply cable. In modern installations, it may be a separate conductor within the supply cable or the steel wire armour. The key characteristic is that N and PE are separate throughout.',
   },
@@ -97,20 +97,25 @@ const quizQuestions = [
     id: 3,
     question: 'A PEN conductor in a TN-C-S system must have a minimum cross-sectional area of:',
     options: [
-      '1.5 mm² copper',
-      '6 mm² copper or 10 mm² aluminium',
+      'Architectural enhancement and identity',
+      'To check battery capacity and autonomy',
+      'Electromagnetic Compatibility',
       '10 mm² copper or 16 mm² aluminium',
-      '25 mm² copper',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'BS 7671 Regulation 543.4.1 requires that a PEN conductor must have a cross-sectional area of not less than 10 mm² copper or 16 mm² aluminium. This minimum size ensures the conductor has sufficient integrity to maintain the combined neutral and earth function reliably. Loss of the PEN conductor in a PME system can cause dangerous voltages on exposed metalwork.',
   },
   {
     id: 4,
     question: 'The typical range of Ze values for a TN-C-S (PME) supply in the UK is:',
-    options: ['0.01 to 0.05 ohms', '0.2 to 0.35 ohms', '2 to 5 ohms', '20 to 200 ohms'],
-    correctAnswer: 1,
+    options: [
+      '0.2 to 0.35 ohms',
+      '0.01 to 0.05 ohms',
+      '2 to 5 ohms',
+      '20 to 200 ohms',
+    ],
+    correctAnswer: 0,
     explanation:
       'For a TN-C-S (PME) supply, the DNO typically declares a maximum Ze of 0.35 ohms, with measured values commonly in the range 0.2 to 0.35 ohms. This low impedance ensures high earth fault currents, allowing overcurrent devices to operate within the required disconnection times. For TN-S supplies, the maximum declared Ze is typically 0.8 ohms.',
   },
@@ -118,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'In a TT system, the earth fault loop impedance (Zs) consists of:',
     options: [
-      'The supply transformer winding impedance and the supply cable impedance only',
+      'A systematic analysis of the environmental impacts of a product or service throughout its entire life, from raw material extraction to disposal',
       'The supply source impedance, the line conductor, the CPC, the installation earth electrode, and the general mass of earth back to the source earth',
-      'Only the resistance of the earth electrode',
-      'The line and neutral conductor impedances',
+      'A notice that must be issued by the payer within a prescribed period, specifying the sum they consider due and the basis on which it is calculated',
+      'Acknowledge they do not have the answer, commit to finding out, and follow up within an agreed timeframe',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'The main reason PME (TN-C-S) earthing is restricted for some applications is:',
     options: [
-      'PME supplies have insufficient current capacity',
+      'Because friction and the risk of cable jamming during pulling rise with length and bends, so a lower fill is needed to keep pulling tensions safe',
+      'An insurance policy that offers less coverage for mental health treatment compared to physical health treatment',
       'If the PEN conductor breaks, the installation earth rises to supply voltage, creating danger on exposed metalwork and extraneous-conductive-parts',
-      'PME supplies cannot be used with RCDs',
-      'PME is too expensive for domestic installations',
+      'A legally binding agreement between a landowner and a responsible body to manage land for conservation purposes for at least 30 years',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The critical risk with PME is that if the PEN conductor becomes open-circuit (broken, disconnected), the installation's earthing terminal is no longer connected to the supply earth. Load current flowing through the neutral will cause the earth terminal — and all earthed metalwork — to rise to a dangerous voltage. This is why PME earthing has restrictions for swimming pools, caravan parks, petrol stations and other special locations.",
   },
@@ -144,12 +149,12 @@ const quizQuestions = [
     id: 7,
     question: 'An IT earthing system is characterised by:',
     options: [
-      'The source being directly earthed and the installation using an earth electrode',
+      'To independently assess the apprentice against the standard, ensuring impartiality and consistency of assessment decisions',
+      'Any period of time during which design or preparatory work is carried out for a project and which may continue during the construction phase',
+      'Anyone who cannot evacuate without assistance — e.g. mobility-impaired visitors, people with conditions affecting evacuation',
       'The source being isolated from earth (or earthed through a high impedance) so that a single earth fault does not cause automatic disconnection',
-      'Using information technology to monitor earthing',
-      'The installation having no earthing at all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In an IT system, the supply source is either isolated from earth or connected through a high impedance. A first earth fault produces only a small fault current (through the distributed capacitance or the high impedance connection) that is insufficient to cause automatic disconnection. This allows continuity of supply — critical in hospitals, process plants and other locations where unexpected disconnection is dangerous.',
   },
@@ -158,12 +163,12 @@ const quizQuestions = [
     question:
       'In an IT system, what happens when a second earth fault occurs on a different phase?',
     options: [
-      'Nothing — the system continues to operate normally',
       'The two faults create a phase-to-phase fault through earth, requiring immediate disconnection',
-      'The insulation monitoring device resets',
-      'The supply voltage increases',
+      'The tower could roll unexpectedly, causing loss of balance or overturning',
+      'A material that absorbs/releases heat when changing state (solid/liquid), storing thermal energy',
+      'Regularly, after incidents, when changes occur to site or operations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A second earth fault on a different phase creates a fault loop through earth between the two faulted phases. This is effectively a phase-to-phase short-circuit through the earth path, producing a high fault current that must be cleared by overcurrent protection. This is why IT systems require insulation monitoring devices (IMDs) to detect the first fault and raise an alarm so it can be rectified before a second fault occurs.',
   },
@@ -171,16 +176,26 @@ const quizQuestions = [
     id: 9,
     question:
       'The maximum value of earth electrode resistance for a TT system protected by a 30 mA RCD is:',
-    options: ['20 ohms', '200 ohms', '1,667 ohms', 'There is no maximum'],
-    correctAnswer: 2,
+    options: [
+      '20 ohms',
+      '1,667 ohms',
+      '200 ohms',
+      'There is no maximum',
+    ],
+    correctAnswer: 1,
     explanation:
       'For a 30 mA RCD, the maximum Zs = 50 V / 0.03 A = 1,667 ohms. Since the earth electrode resistance (RA) dominates Zs in a TT system, RA must not exceed approximately 1,667 ohms. In practice, earth electrode resistances are typically kept well below 200 ohms to provide an adequate safety margin.',
   },
   {
     id: 10,
     question: 'When measuring Ze on a TN-C-S supply, a typical acceptable value would be:',
-    options: ['0.28 ohms', '2.8 ohms', '28 ohms', '280 ohms'],
-    correctAnswer: 0,
+    options: [
+      '280 ohms',
+      '2.8 ohms',
+      '0.28 ohms',
+      '28 ohms',
+    ],
+    correctAnswer: 2,
     explanation:
       "A typical Ze measurement on a TN-C-S (PME) supply would be around 0.2 to 0.35 ohms. A value of 0.28 ohms is entirely normal and within the DNO's declared maximum of 0.35 ohms. Values of 2.8 ohms or higher would indicate a problem with the earthing or suggest a TT rather than TN-C-S arrangement.",
   },
@@ -188,12 +203,12 @@ const quizQuestions = [
     id: 11,
     question: 'BS 7671 requires the main earthing terminal to be accessible for:',
     options: [
-      'Decorative purposes',
+      'Performance 20% worse than the TM46 benchmark',
+      'To ensure protective devices disconnect quickly enough under fault conditions',
+      'Building Research Establishment Environmental Assessment Method',
       'Testing, inspection and disconnection of the earthing conductor',
-      'Connection of surge protection devices only',
-      'Connection of telecommunications equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Regulation 542.4.1 requires that the main earthing terminal is accessible for inspection, testing and, where necessary, disconnection of the earthing conductor. This is essential for measuring Ze (which requires disconnecting the installation earth from the main earthing terminal to isolate the external loop impedance from the installation's own earth paths).",
   },
@@ -201,8 +216,13 @@ const quizQuestions = [
     id: 12,
     question:
       'Which earthing system type is most commonly used for new domestic supplies in the UK?',
-    options: ['TN-S', 'TN-C-S (PME)', 'TT', 'IT'],
-    correctAnswer: 1,
+    options: [
+      'TN-C-S (PME)',
+      'IT',
+      'TN-S',
+      'TT',
+    ],
+    correctAnswer: 0,
     explanation:
       'TN-C-S (PME — Protective Multiple Earthing) is the most common earthing arrangement for new domestic supplies in the UK. The DNO provides earth via the combined neutral/earth (PEN) conductor of the supply cable. PME provides a low-impedance earth, good for overcurrent protection disconnection times. TN-S is common in older urban areas, and TT is used in rural areas where the DNO does not provide an earth terminal.',
   },

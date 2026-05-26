@@ -27,8 +27,13 @@ const quickCheckQuestions = [
     id: 'cop-definition',
     question:
       'A heat pump has a COP of 4.0. If it consumes 3kW of electrical power, what is its heat output?',
-    options: ['3kW', '7kW', '12kW', '0.75kW'],
-    correctIndex: 2,
+    options: [
+      '3kW',
+      '12kW',
+      '7kW',
+      '0.75kW',
+    ],
+    correctIndex: 1,
     explanation:
       'COP = Heat Output / Electrical Input. Therefore Heat Output = COP x Electrical Input = 4.0 x 3kW = 12kW. This means the heat pump is moving 9kW of free heat from the environment while using 3kW of electricity.',
   },
@@ -36,8 +41,13 @@ const quickCheckQuestions = [
     id: 'flow-temp-radiators',
     question:
       'What is the recommended maximum flow temperature for heat pump systems with oversized radiators?',
-    options: ['75-80degC', '55-65degC', '35-45degC', '20-25degC'],
-    correctIndex: 2,
+    options: [
+      '35-45degC',
+      '75-80degC',
+      '20-25degC',
+      '55-65degC',
+    ],
+    correctIndex: 0,
     explanation:
       'Heat pumps operate most efficiently at low flow temperatures of 35-45degC. Radiators must be oversized (typically 2-2.5 times larger) to deliver adequate heat output at these lower temperatures compared to traditional boiler systems running at 70-80degC.',
   },
@@ -45,12 +55,12 @@ const quickCheckQuestions = [
     id: 'buffer-vessel-purpose',
     question: 'What is the primary purpose of a buffer vessel in a heat pump system?',
     options: [
-      'To store domestic hot water',
+      'Target Fabric Energy Efficiency (TFEE)',
+      'Highest level of qualification and competence',
+      'To confirm safety interlocks prevent dangerous situations',
       'To prevent short cycling and provide system stability',
-      'To increase the COP of the heat pump',
-      'To reduce electricity consumption',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Buffer vessels prevent short cycling by providing thermal mass, ensuring minimum run times are achieved. They also help balance variable heat demand from zone valves and thermostatic radiator valves (TRVs), protecting the compressor and improving system efficiency.',
   },
@@ -58,12 +68,12 @@ const quickCheckQuestions = [
     id: 'mcs-certification',
     question: 'Why is MCS certification important for heat pump installations in the UK?',
     options: [
-      'It is optional but reduces insurance costs',
       'It is required for Building Regulations approval only',
       'It is required for Boiler Upgrade Scheme grants and demonstrates quality',
       'It only applies to commercial installations',
+      'It is optional but reduces insurance costs',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'MCS (Microgeneration Certification Scheme) certification is mandatory for accessing the Boiler Upgrade Scheme (BUS) grants of up to 7,500 pounds. It ensures installations meet quality standards, proper design methodology is followed, and the system will perform as specified.',
   },
@@ -87,10 +97,10 @@ const quizQuestions = [
     id: 2,
     question: 'The COP of a heat pump typically decreases when:',
     options: [
-      'The outdoor temperature increases',
-      'The flow temperature decreases',
+      'Temporarily reverses to remove ice from the outdoor coil',
+      'Adjusts flow temperature based on outdoor conditions to optimise efficiency',
       'The temperature difference between source and sink increases',
-      'The system is correctly sized',
+      'Ground temperatures are more stable and higher in winter',
     ],
     correctAnswer: 2,
     explanation:
@@ -99,8 +109,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the typical SCOP for a well-designed air source heat pump system in the UK?',
-    options: ['1.5-2.0', '2.5-3.5', '5.0-6.0', '7.0-8.0'],
-    correctAnswer: 1,
+    options: [
+      '5.0-6.0',
+      '1.5-2.0',
+      '7.0-8.0',
+      '2.5-3.5',
+    ],
+    correctAnswer: 3,
     explanation:
       'SCOP (Seasonal Coefficient of Performance) accounts for performance variation throughout the heating season. A well-designed UK ASHP system typically achieves SCOP of 2.5-3.5, meaning for every 1kWh of electricity, 2.5-3.5kWh of heat is delivered over the year.',
   },
@@ -108,20 +123,25 @@ const quizQuestions = [
     id: 4,
     question: 'Ground source heat pumps (GSHPs) typically have higher COPs than ASHPs because:',
     options: [
-      'They use more electricity',
       'Ground temperatures are more stable and higher in winter',
-      'They are always larger systems',
-      'They do not require defrost cycles',
+      'The temperature difference between source and sink increases',
+      'Temporarily reverses to remove ice from the outdoor coil',
+      'Has lower GWP than R410A but is mildly flammable (A2L)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Ground temperatures at collector depth (typically 1-2m) remain relatively stable at 8-12degC year-round in the UK. This provides a more consistent and warmer heat source in winter compared to cold air, reducing temperature lift and improving COP.',
   },
   {
     id: 5,
     question: 'What is the minimum recommended buffer vessel size for a 12kW heat pump?',
-    options: ['10 litres', '20-30 litres', '50-100 litres', '200+ litres'],
-    correctAnswer: 2,
+    options: [
+      '20-30 litres',
+      '50-100 litres',
+      '200+ litres',
+      '10 litres',
+    ],
+    correctAnswer: 1,
     explanation:
       'The rule of thumb is 10-20 litres per kW of heat pump capacity. For a 12kW unit, this means 120-240 litres, but practical minimum is typically 50-100 litres. Actual sizing depends on the number of zones, TRV coverage, and heat pump modulation range.',
   },
@@ -129,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'During a defrost cycle, an ASHP:',
     options: [
-      'Continues heating normally',
+      'No F-gas qualified installer required for installation',
+      'Ground temperatures are more stable and higher in winter',
       'Temporarily reverses to remove ice from the outdoor coil',
-      'Switches to backup electric heating permanently',
-      'Reduces output by 50%',
+      'The temperature difference between source and sink increases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Defrost cycles temporarily reverse the refrigerant flow, using heat from the building to melt ice on the outdoor evaporator coil. This typically takes 2-10 minutes and occurs when outdoor temperatures are between -7degC and +7degC with high humidity.',
   },
@@ -142,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the typical electrical supply requirement for a domestic ASHP of 8-12kW?',
     options: [
-      'Single-phase 13A',
+      'The electrician assigned to install it',
+      'Provide detailed test data',
+      'Prospective short-circuit current (Ipsc)',
       'Single-phase 32A or three-phase',
-      'Three-phase 63A minimum',
-      'Single-phase 16A',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Domestic ASHPs of 8-12kW typically require single-phase 32A supplies or three-phase connections. The electrical demand is approximately 25-35% of heat output due to COP. Larger commercial units (&gt;15kW) usually require three-phase supplies.',
   },
@@ -155,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'In a hybrid heat pump system, the boiler typically operates when:',
     options: [
-      'The heat pump is switched off for maintenance',
       'Outdoor temperatures are very low or high-temperature DHW is needed',
-      'The system first starts up each day',
-      'Electricity prices are at their lowest',
+      'Has lower GWP than R410A but is mildly flammable (A2L)',
+      'Temporarily reverses to remove ice from the outdoor coil',
+      'Ground temperatures are more stable and higher in winter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Hybrid systems use the heat pump as primary when efficient (milder conditions), switching to the boiler when outdoor temperatures drop significantly (reducing heat pump COP) or when high-temperature domestic hot water is required quickly.',
   },
@@ -168,7 +188,12 @@ const quizQuestions = [
     id: 9,
     question:
       'What is the maximum flow temperature at which most heat pumps can operate efficiently?',
-    options: ['35degC', '45-55degC', '65-75degC', '80degC'],
+    options: [
+      '35degC',
+      '45-55degC',
+      '65-75degC',
+      '80degC',
+    ],
     correctAnswer: 1,
     explanation:
       'Most heat pumps operate efficiently up to 45-55degC flow temperature. Some high-temperature models can reach 65-70degC but with reduced efficiency. For optimal COP, systems should be designed for 35-45degC flow using UFH or oversized radiators.',
@@ -177,12 +202,12 @@ const quizQuestions = [
     id: 10,
     question: 'Part L of the Building Regulations requires heat pumps to achieve a minimum:',
     options: [
-      'COP of 2.0',
+      'Both BS EN 61921 and BS EN 60831',
+      'Adverse Childhood Experience',
       'SCOP of 2.5 (for wet heating systems)',
-      'Flow temperature of 55degC',
-      'Electrical efficiency of 90%',
+      'Total resistance increases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Part L 2021 requires heat pumps serving wet central heating systems to achieve minimum SCOP of 2.5. This ensures carbon savings compared to gas boilers and is verified through MCS design methodology during installation.',
   },
@@ -190,12 +215,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the primary advantage of a monobloc ASHP over a split system?',
     options: [
-      'Higher COP in all conditions',
+      'The temperature difference between source and sink increases',
+      'Ground temperatures are more stable and higher in winter',
+      'Outdoor temperatures are very low or high-temperature DHW is needed',
       'No F-gas qualified installer required for installation',
-      'Lower noise levels',
-      'Smaller outdoor unit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Monobloc units contain all refrigerant in the outdoor unit, with only water pipes running to the building. This means installation does not require F-gas certified technicians, simplifying installation and reducing costs compared to split systems.',
   },
@@ -203,12 +228,12 @@ const quizQuestions = [
     id: 12,
     question: 'Weather compensation in heat pump systems:',
     options: [
-      'Increases flow temperature when outdoor temperature rises',
       'Adjusts flow temperature based on outdoor conditions to optimise efficiency',
-      'Only operates during defrost cycles',
-      'Is optional and rarely used in modern systems',
+      'Temporarily reverses to remove ice from the outdoor coil',
+      'The temperature difference between source and sink increases',
+      'Ground temperatures are more stable and higher in winter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Weather compensation automatically adjusts the heating flow temperature based on outdoor temperature. As it gets colder outside, flow temperature increases; as it warms up, flow temperature decreases. This optimises efficiency by minimising temperature lift when possible.',
   },
@@ -216,10 +241,10 @@ const quizQuestions = [
     id: 13,
     question: 'The refrigerant R32 commonly used in modern ASHPs:',
     options: [
-      'Has zero global warming potential',
+      'No F-gas qualified installer required for installation',
       'Has lower GWP than R410A but is mildly flammable (A2L)',
-      'Requires no special handling or certification',
-      'Cannot operate below 0degC',
+      'Ground temperatures are more stable and higher in winter',
+      'Temporarily reverses to remove ice from the outdoor coil',
     ],
     correctAnswer: 1,
     explanation:
@@ -229,12 +254,12 @@ const quizQuestions = [
     id: 14,
     question: 'When sizing radiators for a heat pump system designed for 40degC flow temperature:',
     options: [
-      'Use standard radiator sizing from boiler calculations',
+      'Ground temperatures are more stable and higher in winter',
+      'Has lower GWP than R410A but is mildly flammable (A2L)',
       'Radiators should be approximately 2-2.5 times larger than for 75degC systems',
-      'Radiators should be 50% smaller to reduce costs',
-      'Only panel radiators can be used',
+      'The temperature difference between source and sink increases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'At 40degC flow (vs 75degC for boilers), radiator output is significantly reduced. Radiators must be 2-2.5 times larger (or use higher output types like double-panel plus convector) to achieve the same heat output at lower flow temperatures.',
   },

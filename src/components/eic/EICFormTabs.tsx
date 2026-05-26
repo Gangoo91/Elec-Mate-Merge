@@ -44,6 +44,7 @@ interface EICFormTabsProps {
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
   onSyncOnTabChange?: () => void;
+  onJumpToTab?: (tab: EICTabValue) => void;
 }
 
 const EICFormTabs: React.FC<EICFormTabsProps> = ({
@@ -59,6 +60,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
   onSaveDraft,
   canGenerateCertificate = true,
   onSyncOnTabChange,
+  onJumpToTab,
 }) => {
   const handleTabChange = (value: string) => {
     if (onSyncOnTabChange) {
@@ -75,6 +77,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
     onGenerateCertificate,
     onSaveDraft,
     canGenerateCertificate,
+    onJumpToTab,
   };
 
   const smartTabs: SmartTab[] = [

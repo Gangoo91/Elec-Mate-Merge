@@ -46,12 +46,12 @@ const checks = [
     question:
       "What's the difference between a 'pass' result and a 'healthy' result on an MFT test?",
     options: [
-      "Same thing.",
+      "Part P (Electrical Safety in Dwellings) requires certain types of electrical work in dwellings to be notified to Building Control — either via a registered competent-person scheme (NICEIC, NAPIT, etc.) or directly to the Local Authority. Notifiable work currently includes new circuits, consumer unit changes, and work in special locations (bathrooms / locations 700). Most environmental tech installs are notifiable — adding a PV inverter circuit, an EV charging circuit or a heat-pump dedicated radial all create new circuits and trigger Part P notification. Non-notifiable work (e.g. like-for-like socket replacement on an existing circuit) doesn't trigger Part P.",
+      "Five-step. (1) MAKE SAFE immediately — isolate the affected circuit / component if you can do so within your competence. (2) LABEL the fault prominently — 'OUT OF SERVICE — DO NOT RE-ENERGISE' — with date and your name. (3) INFORM CUSTOMER in writing — Dangerous Condition Notification (DCN) form describing the hazard, action taken, recommended remedial work, urgency. (4) ESCALATE to supervisor immediately — phone call, not email. (5) DOCUMENT on job sheet — what found, what done, customer brief delivered, supervisor informed. The make-safe action is non-negotiable; the customer's permission is not required for emergency safety action.",
       "PASS = within BS 7671 / Appendix 3 minimum acceptable limit. HEALTHY = significantly better than the limit; matches what a properly-installed system should produce. Example: BS 7671 643.3 IR limit is ≥ 1 MΩ; modern installations typically read 100+ MΩ on healthy circuits. A reading of 2 MΩ is technically PASS but not HEALTHY — it's an early indicator of insulation degradation that warrants investigation. The L3 step-up is recognising the difference: pass tells you it meets the regulation; healthy tells you the system is in good shape. Borderline pass readings are diagnostic indicators of developing faults.",
-      "Pass is enough.",
-      "Healthy is required.",
+      "Specified injuries (RIDDOR Reg 4) are the most serious named injuries — fatalities, fractures other than to fingers/toes/thumbs, amputations, loss of sight, scalpings, serious burns, crush injuries, unconsciousness from electric shock, and so on. They must be reported as soon as possible and within 10 days. Over-7-day incapacitation (Reg 6) is when a worker is off normal work for more than 7 consecutive days (excluding accident day, including weekends) — must be reported within 15 days. Different categories, different timeframes, both reportable.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Pass-vs-healthy thinking turns the MFT from a pass/fail tool into a trend-monitoring tool. A 2 MΩ IR reading on a domestic ring is technically pass but is a sign that something is degrading. The L3 expectation is to flag borderline readings as developing faults rather than dismiss as 'still pass'.",
   },
@@ -60,12 +60,12 @@ const checks = [
     question:
       "BS 7671 Table 41.3 sets maximum Zs values for protective devices. What's the practical use in fault diagnosis?",
     options: [
-      "Just for commissioning.",
       "Three uses. (1) PASS/FAIL — a measured Zs above the table value means the protective device cannot disconnect within the BS 7671 643 time limit; the circuit fails safety. (2) DIAGNOSTIC — an unexpected Zs value (much higher than calculated expected) indicates added impedance somewhere on the loop; HRJ or undersized cable likely. (3) DESIGN — for new install or alteration, the table tells you what protective device suits which cable / circuit. For fault diagnosis: measure Zs, compare to (a) Table 41.3 maximum, (b) calculated expected. If Zs > Table 41.3: real safety problem. If Zs > calculated expected but < Table 41.3: developing problem; investigate.",
-      "Random table.",
-      "Doesn't matter.",
+      "Face him directly so he can see your mouth and expression, speak at normal pace and volume (not exaggerated), use written notes for technical details, provide the permit-to-work document in advance for him to read, confirm understanding by asking specific questions ('what's the agreed comms signal if I see something wrong?'). Don't cover your mouth, don't turn away mid-sentence, don't have him facing into bright light behind you. If the work involves shared comms (radio), agree visual hand signals as the primary channel for him.",
+      "Workplace mentor is the unpaid (or informally paid) day-job mentor allocated to a specific apprentice within the employing firm. Different from college assessor (paid, formally qualified, employed by college). The mentor signs portfolio entries as evidence of on-site competence, attends three-way reviews, calibrates progress with the college tutor. Mentor competence is evidenced by JIB Approved Electrician grade plus experience — no specific qualification required.",
+      "Around 10% of the UK population is estimated to have dyslexia (British Dyslexia Association figure), with research suggesting prevalence may be materially higher in trade roles where visual-spatial reasoning is favoured. That means in a typical apprentice cohort of 20, two to four people are likely to be dyslexic. Plain English briefings, visual aids, audio material, extra time on written assessments and the option of practical demonstration are the standard reasonable adjustments — and they help non-dyslexic learners too.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Table 41.3 is the safety threshold; calculated expected is the design reference. The diagnostic value comes from comparing measured to both. The L3 apprentice learns to spot 'pass but worse than expected' as a developing fault.",
   },
@@ -74,12 +74,12 @@ const checks = [
     question:
       "What's the action chain when a test result falls outside acceptable limits?",
     options: [
-      "Just retest.",
+      "Fail the device. Issue a Code C2 (potentially dangerous) on the EICR if applicable, document on the Schedule of Test Results, replace the RCD or RCBO. A trip time exceeding the 300 ms manufacturer\\\\\\\\\\\\'s declared limit means the device cannot be relied upon to disconnect within the Table 41.1 system requirement. The RCD is approaching end of life and may fail to operate at all on the next fault. Replace, retest, document the remediation. Do not leave the installation in service relying on a failed RCD.",
+      "The standard initial verification: continuity of protective conductors (R1+R2 method or equivalent), continuity of ring circuits (N/A for a radial), insulation resistance (between live conductors and to earth), polarity, earth electrode resistance (where applicable), Zs at the most distant point of the circuit, RCD test (operating time, in some cases automatic disconnection time). Plus the visual inspection — labelling, accessibility of isolators, conductor identification, mechanical protection, terminal tightness. All recorded on the EIC. Mandatory before energising the circuit.",
       "Five-step. (1) VERIFY the reading — repeat the test; check leads / instrument condition; compare with second instrument if available. (2) IDENTIFY the failure mode — what does the unsatisfactory reading indicate (insulation breakdown, HRJ, polarity error, RCD slow trip)? (3) MAKE SAFE — isolate the affected circuit / component; label / signage if you'll be away from site. (4) DOCUMENT — record the failed reading, the verification, the action, on the job sheet AND inform customer in writing if Code 1 (Danger Present). (5) RECTIFY OR ESCALATE — fix if within competence; escalate to supervisor / specialist if not. Never leave a Code 1 fault unactioned even if outside the original call-out scope.",
-      "Walk away.",
-      "Just note.",
+      "ENA Engineering Recommendation G99 — the 7 kW inverter exceeds the 16 A per phase G98 fast-track limit (3.68 kW at 230 V single-phase). G99 is a pre-installation application to the DNO, who will confirm or reject the connection based on the local network capacity. The application is normally submitted by the MCS-certified installer using the standard G99 application form. Without the G99 approval the DNO can require disconnection. G98 (notification within 28 days of commissioning) only applies to inverters at or below 16 A per phase per inverter.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The action chain converts an unsatisfactory reading into a safe, documented, defensible outcome. The HSE / Building Regs / customer's contractual position all depend on the firm following this chain when faults are found — the alternative (note and walk away) is the path to prosecution.",
   },
@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 1,
     question: "Compare the BS 7671 minimum IR for LV circuits with the typical reading on a healthy modern installation. What's the practical difference?",
     options: [
-      "Same.",
+      "No — the plastic incomer means the copper pipework cannot introduce a dangerous potential from outside. The note to Reg 411.3.1.2 is explicit: where non-metallic pipes enter a building and are then connected to metallic pipes within the building, the metallic pipes within the building do not normally require protective bonding as they are unlikely to be extraneous-conductive-parts.",
       "BS 7671 643.3 minimum: ≥ 1 MΩ at 500 V DC test. Typical modern installation healthy reading: 100+ MΩ on the same test. A reading at 2–10 MΩ is PASS but indicates insulation degradation in progress — moisture, contamination, ageing. The L3 fault investigator records both the value and the assessment ('passes minimum but well below expected for modern installation; recommend investigation'). On an EICR this becomes a Code 3 (improvement recommended) finding rather than a pass dismissal.",
-      "Always 1 MΩ.",
-      "Always 100 MΩ.",
+      "A standard grid-tied inverter is required to shut down on loss of mains because of anti-islanding rules. Continuous operation through a power cut needs a hybrid inverter with explicit islanded-mode capability, paired with a battery and a changeover arrangement that first electrically isolates the property from the failed grid before re-energising selected circuits. The MCS designer specifies which loads stay alive, the battery sizing, and the transfer time.",
+      "Three-step matrix: (1) Culpability — Very High / High / Medium / Low; (2) Harm — Category 1 (death/permanent), 2 (serious), 3 (minor) with adjustments for risk of higher harm or multiple persons; (3) Turnover band — Large (£50m+), Medium (£10-£50m), Small (£2-£10m), Micro (under £2m). Cell in the matrix gives a starting point and a range. Adjusted up for aggravating factors, down for mitigating.",
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 2,
     question: "What's the maximum Zs for a 32 A B-curve RCBO protecting a domestic ring final on 230 V?",
     options: [
-      "5 Ω.",
+      "Because EFLI is a LIVE test — the MFT injects a small fault current through the loop and measures the impedance from the response. If the supply is off, no fault current flows; the meter shows OPEN or undefined reading. If the protective device is OFF, the loop is broken upstream of your test point; same result. Both conditions are pre-requisites for a meaningful EFLI test. The MFT (Megger MFT1741+) typically warns 'NO VOLTAGE' or 'CIRCUIT OPEN' if either condition isn't met — but the apprentice should know to check before the warning.",
+      "Mode 3 is AC charging through a dedicated charger that controls and protects the charging session — typical domestic 7 kW units (single-phase) or 22 kW units (three-phase). The vehicle's onboard charger converts AC to DC for the battery. Mode 4 is DC fast charging — the off-vehicle equipment (typically 50-350 kW public rapid chargers) outputs DC directly to the battery, bypassing the vehicle's onboard charger. Domestic installations are essentially always Mode 3. BS 7671 Section 722 (significantly amended in A4:2026) governs the electrical installation requirements.",
       "BS 7671:2018+A4:2026 Table 41.3 — for B-curve circuit breaker, fault disconnection in 0.4 s at U₀ = 230 V: 5×In magnetic threshold = 160 A; required Zs = (U₀ × Cmin) / Ia = (230 × 0.95) / 160 = 1.37 Ω. Actual A4:2026 table values: B16 = 2.73 Ω (0.4 s), B32 = 1.37 Ω (0.4 s). For RCD-protected circuits the RCD provides 30 mA earth-fault clearance independent of Zs (the RCD operates on residual current, not loop impedance), but the Zs value is still relevant for short-circuit clearance via the magnetic element of the RCBO.",
-      "10 Ω.",
-      "Doesn't matter.",
+      "F-Gas commissioning — refrigerant charge weight verified per manufacturer's instructions, leak test, pressure / temperature checks across the cycle. Wet system commissioning — pressure test, fill and bleed, flow rate verification per emitter, balancing. Heat pump system commissioning — flow temperature setpoint configured, defrost cycle verified, weather compensation curve set, smart controls integration tested, hot water cylinder priority confirmed, anti-legionella cycle verified. Performance check — measure flow temperature and ambient at first run; verify against design SCOP estimate. All recorded in the MCS commissioning records as part of the install pack.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Table 41.3 values are the disconnection-time pass/fail thresholds. For B-curve at 0.4 s disconnection: 1.37 Ω at 32 A. Modern RCD-protected installations don't rely on Zs alone for earth-fault clearance (the RCD does that), but Zs still matters for short-circuit clearance.",
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: "What does a continuity reading of 0.55 Ω on a 50 m run of 2.5 mm² ring final tell you?",
     options: [
-      "Nothing.",
+      "Apprenticeship standards (gov.uk) require evidence of at least 20% of the apprenticeship being off-the-job training. The log records day-release at college, online courses, structured study time, shadowing in unfamiliar areas, and any other learning activity outside normal productive work. Without it, the apprenticeship may not meet the standards required for the End-Point Assessment to be funded and certified.",
+      "Separating the person from their past behaviour and responding to their current human experience with genuine compassion. Advanced empathy recognises that difficult people are often struggling, that past conflict does not negate present humanity, and that showing empathy in this moment may transform the entire working relationship — whilst still maintaining appropriate professional boundaries",
+      "Yes — IET subscriptions are tax-deductible against income tax under HMRC's List 3 of approved professional bodies. Effectively reduces the cost by your marginal tax rate. For a higher-rate taxpayer (40%) the £200/year MIET subscription costs £120 net. List 3 covers most major UK professional bodies including IET, RICS, IMechE, IChemE etc.",
       "Calculated expected R1+R2 for 50 m of 2.5 mm² ring (cores + CPC): roughly 2 × 50 × 7.41 mΩ/m = 0.74 Ω end-to-end ÷ 2 (ring divides) = 0.37 Ω. Plus lead null. So 0.55 Ω is HIGHER than calculated expected — suggests added resistance somewhere on the ring (HRJ at a socket, partial connection at the CU). It's still well within Table 41.3 limits but the trend is worth investigating. The L3 apprentice records the value AND notes the deviation from expected.",
-      "Pass — done.",
-      "Fail — broken.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Reading interpretation requires knowing the expected value. A 'pass' reading 50% above expected is a developing fault. The expected value comes from cable length × resistance per metre × topology factor; the L3 apprentice does this calculation as part of fault investigation.",
   },
@@ -129,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: "An RCD trip-time test reads 28 ms at I∆n on a 30 mA general-type RCD. Pass or fail?",
     options: [
-      "Fail.",
       "PASS. BS 7671 643.7 maximum at I∆n for general-type RCD = 300 ms. A reading of 28 ms is well within limits and matches expected for a healthy modern RCD (typical 10–30 ms). The 1×IΔn test is also typically &lt;20 ms on a healthy device. If the trip-time was 250 ms (still passing) or 290 ms (still passing), it would be borderline and worth flagging. If 350 ms — fail.",
-      "Pass and reset.",
-      "Doesn't matter.",
+      "When teams avoid conflict, important issues go unaddressed, decisions are made without genuine input (leading to lack of commitment), underlying tensions fester and eventually explode destructively, and the quality of decisions suffers because ideas are not challenged and refined through debate. Healthy teams have MORE open conflict, not less — but it is constructive, issue-focused conflict",
+      "An employer's legal liability for wrongful acts committed by employees in the course of their employment. Distinct from personal liability of the employee. This is why Employers' Liability insurance is compulsory and why proper training, supervision and safe systems of work matter.",
+      "A BSI Publicly Available Specification — \\\"PAS 63100:2024 Electrical installations. Protection against fire of battery energy storage systems intended for use in dwellings\\\" — that sets out fire safety requirements for domestic battery storage, including location restrictions, separation distances from sleeping accommodation and escape routes, fire detection requirements and segregation from combustibles.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "RCD trip-times are usually well within BS 7671 limits when the device is healthy. The 300 ms limit at I∆n is generous — modern RCDs typically trip in 10–30 ms. A device approaching the limit (250+ ms) is approaching end of life.",
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: "What does a Zs reading of 7.5 Ω on a domestic ring final protected by 32 A B-curve RCBO indicate?",
     options: [
-      "Healthy.",
+      "MCS MIS 3005 is the Microgeneration Certification Scheme installer standard for heat pump systems — covering air-source, ground-source and water-source heat pumps. It sets competence requirements for the installing firm (design competence, installation competence, commissioning competence), defines the heat-loss calculation methodology, sets the SCOP estimation requirement, and defines the customer documentation pack. MCS MIS 3005 sits alongside BS 7671 (electrical install standard) and the F-Gas Regulations (refrigerant competence). The customer needs the MCS certificate to access the Boiler Upgrade Scheme grant and the heat pump SEG-equivalent payment routes.",
       "FAIL — well above the BS 7671 Table 41.3 maximum of 1.37 Ω for B32 at 0.4 s disconnection. The protective device cannot guarantee disconnection within the required time. Action: (1) Verify the reading. (2) Check supply Ze first — is the high Zs caused by high origin Ze (possible PEN issue) or by added impedance on the circuit (HRJ, undersized cable)? (3) Make safe — isolate the affected circuit. (4) Investigate and rectify. (5) Document as Code 1 if safety is at imminent risk; Code 2 if safety is compromised but not immediately dangerous.",
-      "Borderline.",
-      "Don't worry.",
+      "Three things. (1) The presence and purpose of the AFDD — fire protection by detecting arc-fault waveform signatures from damaged flexes and loose connections. (2) The quarterly test-button protocol — press T, device should trip, reset. Same as RCDs. (3) What to do if the device trips repeatedly — investigate plugged-in equipment first (a damaged flex is the most common cause), call an electrician if the cause isn\\\\\\\\'t obvious. The brief is short but important — without it the customer doesn\\\\\\\\'t know they have AFDD protection or how to maintain it.",
+      "Combination pliers — heavy-duty grip, twisting solid conductors, pulling cable through tight runs, light cutting of soft material. Side cutters (sometimes called diagonal cutters or 'snips') — flush cutting of insulated and bare conductor, trimming cable ends. Long-nose pliers — forming loops, reaching into recessed terminals, holding small components while you tighten. One job each, no overlap if you can help it.",
     ],
     correctAnswer: 1,
     explanation:
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: "What's the relationship between pass / fail thresholds in BS 7671 and EICR codes?",
     options: [
-      "Unrelated.",
+      "Fracture (other than to fingers, thumbs and toes); amputation; permanent loss of sight or reduction of sight; crush injuries leading to internal organ damage; serious burns covering more than 10% of the body or causing significant damage to eyes, respiratory system or other vital organs; scalpings requiring hospital treatment; loss of consciousness from head injury or asphyxia; any other injury arising from work in an enclosed space leading to hypothermia, heat-induced illness or requiring resuscitation or admittance to hospital for more than 24 hours.",
+      "BS 7671 Part 6 643 requires verification testing of any circuit that has been worked on, regardless of how minor the work. The MWC test panel records: continuity of CPC and protective conductors, insulation resistance, polarity, R1+R2, Zs, RCD trip-time at I&Delta;n where RCD-protected. The L3 apprentice carries out the tests with the Megger MFT1741 (or equivalent) and records the readings on the certificate. The point is — if the work has affected the circuit electrically (and replacing a protective device certainly has), verification is mandatory. 'It looks fine' is not a substitute for measured test results.",
       "Direct correlation but not identical. BS 7671 thresholds tell you whether something meets the standard. EICR codes (C1 / C2 / C3 / FI) tell you the safety implication: C1 (Danger Present — immediate action), C2 (Potentially Dangerous — urgent action), C3 (Improvement Recommended — further work advised), FI (Further Investigation needed). A FAIL on Zs gives a C1 or C2 depending on actual safety implication. A borderline pass gives a C3. The MFT measurement is the data; the EICR coding is the safety judgment based on the data + context.",
-      "Always C1.",
-      "Always C3.",
+      "The 'workmanship' standard and 'manufacturers' instructions' obligation. So a faulty cable joint that's electrically OK at the moment of test but executed with poor workmanship breaches 134.1.1, AND ignoring an SPD lead-length spec or a CU manufacturer's torque setting also breaches 134.1.1. This is the regulation a scheme inspector quotes when they're calling out poor workmanship without it being a specific technical-test failure.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "EICR coding is the experienced electrician's safety judgment overlaid on the test data. Two installations with the same Zs reading might get different codes depending on context (single domestic vs HMO bedroom; main earth bonded vs not). The L3 apprentice's role is producing the test data accurately; the EICR coding is improver / Approved Electrician territory.",
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: "When you find a Code 1 (Danger Present) fault, what's your immediate action sequence?",
     options: [
-      "Tell the customer.",
+      "Stop, raise the conflict politely, and ask for the change in writing. The method statement is the documented safe system of work. A verbal instruction to depart from it needs a documented reason, ideally a revised method statement signed off by whoever owns the original. If the supervisor refuses to put it in writing, that itself is a red flag — escalate via your employer's safety route. HASAWA s.7 makes you personally responsible for following the safe system; 'I was told to' is not a defence to a prosecution.",
+      "Raise the question constructively in writing through line management, citing the rising customer expectations (PPN 06/21 flow-down from prime contractors, BREEAM and net-zero specifications on commercial work, customer sustainability questionnaires) as the commercial driver. Suggest a starter step such as collecting fuel card data and electricity bills for a pilot scope 1 and scope 2 inventory, or enrolling staff in Carbon Literacy training. Frame the conversation as commercial competitiveness rather than personal advocacy. Document the suggestion. Many medium-sized electrical contractors have moved from no carbon reporting to a published CRP within twelve months when the commercial case was made clearly.",
+      "Carbon payback for typical UK PV is 1-3 years (the time taken for operating CO₂ savings to offset the manufacturing CO₂ cost). Financial payback depends on system cost, self-consumption, export tariff and electricity price — typically 6-12 years for a standalone PV install in 2026, often shorter if a battery is added (improves self-consumption from 25-40% to 70-90%). After payback the system continues for the rest of its 25-year warranted life essentially as free energy. The carbon case is much stronger than the financial case in isolation; together they make PV the dominant UK domestic environmental tech.",
       "Five-step. (1) MAKE SAFE immediately — isolate the affected circuit / component if you can do so within your competence. (2) LABEL the fault prominently — 'OUT OF SERVICE — DO NOT RE-ENERGISE' — with date and your name. (3) INFORM CUSTOMER in writing — Dangerous Condition Notification (DCN) form describing the hazard, action taken, recommended remedial work, urgency. (4) ESCALATE to supervisor immediately — phone call, not email. (5) DOCUMENT on job sheet — what found, what done, customer brief delivered, supervisor informed. The make-safe action is non-negotiable; the customer's permission is not required for emergency safety action.",
-      "Just leave.",
-      "Send email.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "C1 actions are time-critical because the fault could cause harm at any moment. The immediate isolation + labelling is to prevent re-energisation by the customer or another tradesperson. The DCN form gives the customer the formal record; the supervisor escalation gets management visibility. The five steps protect everyone.",
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: "A test reading is exactly on the limit — pass by 0.01 Ω. Is the circuit safe?",
     options: [
-      "Yes, just pass.",
       "Technically pass, practically marginal. The instrument has measurement uncertainty (typically ±5% or ±0.05 Ω on a Megger MFT1741+ EFLI test); a reading 'on the limit' is within the uncertainty band of failure. The L3 response: (1) Repeat the test — does the reading stabilise above the limit or drift below? (2) Verify with a second instrument if available. (3) Calculate the expected value; if measured >> expected, investigate the additional impedance. (4) Document the marginal pass on the job sheet; recommend follow-up investigation. (5) Discuss with supervisor whether to consider as fail (apply C2/C3 EICR coding) given the marginal nature. Marginal passes are diagnostic signals.",
-      "Doesn't matter.",
-      "Always fail.",
+      "The apprentice typically contributes the cable run from the consumer unit to the charge-point location (often a 6 mm or 10 mm meter-tails route through a wall), the supplementary bonding (where required), the supply-side termination at the consumer unit including any new RCBO or AFDD, the CT clamp installation around the supply tail, the labelling, and assists with first-fix mounting of the unit enclosure. The MCS-certified person handles the design, the OZEV-compliant unit selection, the commissioning and the regulatory paperwork (including the DNO notification under ENA G98 if export is enabled, and registration with OZEV for any grant claim).",
+      "Prefabrication off-site (e.g. pre-terminating SWA tails to length, pre-building consumer units, pre-assembling cable trays in a workshop) reduces on-site cuts and offcuts. Off-site cutting can be measured precisely; on-site cuts under time pressure tend to leave more wastage. Less waste = lower material cost = smaller skip = less environmental impact. Relevant to environmental tech because: (a) the customer is by definition committed to sustainability so resource-efficient installation matches their values; (b) the trade is increasingly held to evidence-based environmental claims; (c) it's a 2357 Unit 312 AC 2.1 explicit requirement. Plus prefabrication gives faster on-site install times.",
+      "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471). It places a statutory duty on the employer (and certain self-employed people) to report specified workplace injuries, occupational diseases, dangerous occurrences and fatalities to the HSE. Reportable items include fatalities, specified injuries (amputation, fracture other than fingers/toes/thumbs, loss of sight, scalping, etc.), over-7-day absences, and a defined list of dangerous occurrences. Reporting is via the F2508 form on hse.gov.uk.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Marginal readings are within the instrument's uncertainty band and should be treated as developing faults. The L3 apprentice records the value, notes the marginal status, and triggers further investigation rather than dismissing as 'just pass'.",
   },

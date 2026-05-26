@@ -90,35 +90,60 @@ const Module2Section6_2: React.FC = () => {
     {
       id: 1,
       question: 'A 1.5 kW heater runs for 3 hours. How much energy is used?',
-      options: ['0.5 kWh', '1.5 kWh', '3.0 kWh', '4.5 kWh'],
-      correctAnswer: 3,
+      options: [
+        '0.5 kWh',
+        '4.5 kWh',
+        '3.0 kWh',
+        '1.5 kWh',
+      ],
+      correctAnswer: 1,
       explanation: 'Energy = kW × h = 1.5 × 3 = 4.5 kWh.',
     },
     {
       id: 2,
       question: 'Your tariff is 28 p/kWh. 6 kWh costs approximately…',
-      options: ['£0.17', '£1.68', '£16.80', '£0.60'],
-      correctAnswer: 1,
+      options: [
+        '£16.80',
+        '£0.17',
+        '£1.68',
+        '£0.60',
+      ],
+      correctAnswer: 2,
       explanation: 'Cost ≈ kWh × tariff = 6 × £0.28 = £1.68.',
     },
     {
       id: 3,
       question: 'A fridge uses 120 W but runs 25% of the time over 24 h. Approx. energy?',
-      options: ['0.12 kWh', '0.72 kWh', '2.88 kWh', '12.0 kWh'],
-      correctAnswer: 1,
+      options: [
+        '2.88 kWh',
+        '0.12 kWh',
+        '12.0 kWh',
+        '0.72 kWh',
+      ],
+      correctAnswer: 3,
       explanation: 'Power = 0.12 kW, duty = 0.25 → 0.12 × 24 × 0.25 ≈ 0.72 kWh.',
     },
     {
       id: 4,
       question: 'Convert 900 W to kW.',
-      options: ['0.09 kW', '0.9 kW', '9 kW', '0.009 kW'],
-      correctAnswer: 1,
+      options: [
+        '0.9 kW',
+        '0.09 kW',
+        '9 kW',
+        '0.009 kW',
+      ],
+      correctAnswer: 0,
       explanation: 'kW = W ÷ 1000 → 900 ÷ 1000 = 0.9 kW.',
     },
     {
       id: 5,
       question: 'Two 8 W lamps run 5 h/day for 30 days at 30 p/kWh. Approx. monthly cost?',
-      options: ['£0.24', '£0.72', '£7.20', '£2.40'],
+      options: [
+        '£0.24',
+        '£0.72',
+        '£2.40',
+        '£7.20',
+      ],
       correctAnswer: 1,
       explanation:
         'Power = 16 W = 0.016 kW → daily 0.016×5=0.08 kWh → month 2.4 kWh → cost ≈ 2.4×£0.30=£0.72.',
@@ -127,23 +152,38 @@ const Module2Section6_2: React.FC = () => {
       id: 6,
       question:
         'A washing machine uses 0.8 kWh per cycle. At 32p/kWh, 5 cycles per week costs approximately:',
-      options: ['£0.64 per week', '£1.28 per week', '£6.40 per week', '£3.20 per week'],
-      correctAnswer: 1,
+      options: [
+        '£0.64 per week',
+        '£6.40 per week',
+        '£1.28 per week',
+        '£3.20 per week',
+      ],
+      correctAnswer: 2,
       explanation: 'Cost per cycle = 0.8 × £0.32 = £0.256. Weekly cost = £0.256 × 5 = £1.28.',
     },
     {
       id: 7,
       question:
         'An electric shower rated 8.5kW is used for 10 minutes daily. Daily energy consumption is:',
-      options: ['1.42 kWh', '8.5 kWh', '0.85 kWh', '85 kWh'],
-      correctAnswer: 0,
+      options: [
+        '85 kWh',
+        '8.5 kWh',
+        '0.85 kWh',
+        '1.42 kWh',
+      ],
+      correctAnswer: 3,
       explanation: 'Time = 10 min = 10/60 = 0.167 h. Energy = 8.5 × 0.167 = 1.42 kWh.',
     },
     {
       id: 8,
       question:
         'A business uses 150 kWh per month. If they switch from 30p/kWh to an Economy 7 tariff (18p night, 35p day) with 60% night usage, monthly saving is:',
-      options: ['£9.00', '£11.25', '£4.50', '£15.00'],
+      options: [
+        '£9.00',
+        '£4.50',
+        '£15.00',
+        '£11.25',
+      ],
       correctAnswer: 0,
       explanation:
         'Standard: 150 × £0.30 = £45. E7: (90×£0.18) + (60×£0.35) = £16.20 + £21 = £37.20. Saving = £45 - £37.20 = £7.80 ≈ £9.',
@@ -152,8 +192,13 @@ const Module2Section6_2: React.FC = () => {
       id: 9,
       question:
         'A 2kW tumble dryer runs at 60% power due to thermostat control, for 90 minutes. Energy used is:',
-      options: ['1.8 kWh', '2.7 kWh', '3.0 kWh', '1.2 kWh'],
-      correctAnswer: 0,
+      options: [
+        '2.7 kWh',
+        '1.8 kWh',
+        '3.0 kWh',
+        '1.2 kWh',
+      ],
+      correctAnswer: 1,
       explanation:
         'Effective power = 2 × 0.6 = 1.2 kW. Time = 90 min = 1.5 h. Energy = 1.2 × 1.5 = 1.8 kWh.',
     },
@@ -161,8 +206,13 @@ const Module2Section6_2: React.FC = () => {
       id: 10,
       question:
         'Converting from annual to daily energy: if a property uses 4,380 kWh per year, the average daily consumption is:',
-      options: ['12 kWh', '24 kWh', '6 kWh', '365 kWh'],
-      correctAnswer: 0,
+      options: [
+        '365 kWh',
+        '24 kWh',
+        '12 kWh',
+        '6 kWh',
+      ],
+      correctAnswer: 2,
       explanation: 'Daily average = 4,380 ÷ 365 = 12 kWh per day.',
     },
   ] as const;

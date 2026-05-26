@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'sbti-definition',
     question: 'What does the Science Based Targets initiative (SBTi) provide?',
     options: [
-      'Voluntary sustainability guidelines',
+      'A circuit containing both series and parallel combinations',
+      'Provides both line and phase voltages for different loads',
+      'They have a stated period (minimum 21 days) to put the breach right, with right of appeal',
       'A framework for setting emissions targets aligned with climate science',
-      'Renewable energy procurement standards',
-      'Building energy certification',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The SBTi provides a clearly defined pathway for companies to set greenhouse gas emissions reduction targets aligned with what climate science says is necessary to limit global warming to 1.5°C or well-below 2°C.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'pathway-difference',
     question: 'What is the key difference between 1.5°C and 2°C pathways?',
     options: [
-      'Only the target year differs',
+      'Total weight of cables and containment',
+      'Comply with the applicable standards specified for them.',
+      'Regulations 411.3.1.1 and 411.3.1.2',
       '1.5°C requires faster and deeper emissions cuts',
-      '2°C is no longer accepted by SBTi',
-      'There is no practical difference',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The 1.5°C pathway requires significantly faster and deeper emissions reductions - approximately 4.2% annual reduction compared to 2.5% for well-below 2°C - to maintain a 50% probability of limiting warming.',
   },
@@ -57,20 +57,25 @@ const quickCheckQuestions = [
     id: 'target-types',
     question: 'An intensity target measures emissions reduction relative to:',
     options: [
-      'Total company emissions',
       'A business metric such as revenue or floor area',
-      'Competitor performance',
-      'National averages',
+      'Compact size with good heat dissipation',
+      'Slight differences in fibre backscatter characteristics',
+      'To prevent electromagnetic interference and ensure safety',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Intensity targets express emissions relative to a business metric (e.g., kgCO2e per m² or per £million revenue), allowing companies to reduce emissions intensity while potentially growing their absolute operations.',
   },
   {
     id: 'near-term-timeframe',
     question: 'What is the typical timeframe for SBTi near-term targets?',
-    options: ['1-3 years', '5-10 years from submission', 'By 2050', '20+ years'],
-    correctIndex: 1,
+    options: [
+      'Running cables diagonally',
+      'Two parallel lines with S2',
+      'If they employ 5 or more people',
+      '5-10 years from submission',
+    ],
+    correctIndex: 3,
     explanation:
       'Near-term science-based targets cover a 5-10 year timeframe from the date of target submission, requiring concrete action plans and measurable progress within a business-relevant planning horizon.',
   },
@@ -81,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which organisation administers the Science Based Targets initiative?',
     options: [
-      'United Nations Environment Programme',
+      'One arm raised with an open palm facing the operator',
       'A partnership of CDP, UN Global Compact, WRI, and WWF',
-      'International Energy Agency',
-      'World Business Council for Sustainable Development',
+      'Continued operation during internet outages',
+      'Report it and do not use until repaired/replaced',
     ],
     correctAnswer: 1,
     explanation:
@@ -94,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is required for SBTi target validation?',
     options: [
-      'Self-certification by the company',
-      'Third-party verification of emissions data only',
+      'When Scope 3 emissions exceed 40% of total emissions',
+      'Public commitment to develop science-based targets within 24 months',
       'Submission to SBTi for technical assessment against criteria',
-      'Government approval',
+      'The reference year against which emission reductions are measured',
     ],
     correctAnswer: 2,
     explanation:
@@ -107,8 +112,13 @@ const quizQuestions = [
     id: 3,
     question:
       'For a 1.5°C-aligned target, what minimum annual linear reduction rate is typically required?',
-    options: ['1.5% per year', '2.5% per year', '4.2% per year', '7% per year'],
-    correctAnswer: 2,
+    options: [
+      '2.5% per year',
+      '1.5% per year',
+      '7% per year',
+      '4.2% per year',
+    ],
+    correctAnswer: 3,
     explanation:
       '1.5°C-aligned targets typically require a minimum 4.2% annual linear reduction in absolute emissions, calculated from a base year to achieve the necessary reductions by 2030 consistent with climate science.',
   },
@@ -116,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'What are Scope 1 emissions in the GHG Protocol framework?',
     options: [
-      'Emissions from purchased electricity',
       'Direct emissions from owned or controlled sources',
+      'Emissions from purchased electricity',
       'Emissions from the supply chain',
       'Emissions from employee commuting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Scope 1 covers direct GHG emissions from sources owned or controlled by the company, such as on-site fuel combustion, company vehicles, and refrigerant leaks from owned equipment.',
   },
@@ -129,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'When must companies include Scope 3 emissions in their science-based targets?',
     options: [
-      'Always, regardless of significance',
+      'Public commitment to develop science-based targets within 24 months',
       'When Scope 3 emissions exceed 40% of total emissions',
-      'Only for manufacturing companies',
-      'Scope 3 is always optional',
+      'The reference year against which emission reductions are measured',
+      'Direct emissions from owned or controlled sources',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the SBTi Net-Zero Standard requirement for residual emissions?',
     options: [
-      'All emissions must reach zero',
+      'Submission to SBTi for technical assessment against criteria',
+      'Absolute targets measure total emissions; intensity targets measure emissions per unit of activity',
       'Residual emissions (typically 5-10%) must be neutralised through carbon removal',
-      'Residual emissions can be offset with carbon credits',
-      'No specific requirement for residual emissions',
+      'Reputational impact and potential removal if consistently off-track without remediation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Net-Zero Standard requires companies to reduce emissions by at least 90% (typically 90-95%) and neutralise residual emissions through permanent carbon dioxide removal, not conventional offsetting.',
   },
@@ -155,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'What distinguishes absolute targets from intensity targets?',
     options: [
-      'Absolute targets are more ambitious',
+      'Decarbonisation trajectory for operational emissions from commercial and residential buildings',
+      'Residual emissions (typically 5-10%) must be neutralised through carbon removal',
+      'Reputational impact and potential removal if consistently off-track without remediation',
       'Absolute targets measure total emissions; intensity targets measure emissions per unit of activity',
-      'Intensity targets are not accepted by SBTi',
-      'There is no meaningful difference',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Absolute targets set a fixed reduction in total emissions (e.g., 50% reduction by 2030), while intensity targets set reduction relative to a business metric (e.g., 30% reduction in kgCO2e/m²).',
   },
@@ -168,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'For the buildings sector, what does the SBTi sector pathway address?',
     options: [
-      'Only new construction requirements',
       'Decarbonisation trajectory for operational emissions from commercial and residential buildings',
-      'Embodied carbon in building materials only',
-      'Tenant behaviour change programmes',
+      'Reputational impact and potential removal if consistently off-track without remediation',
+      'Residual emissions (typically 5-10%) must be neutralised through carbon removal',
+      'Public commitment to develop science-based targets within 24 months',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The SBTi buildings sector pathway provides specific guidance for decarbonising operational emissions (heating, cooling, lighting, equipment) from commercial and residential building portfolios.',
   },
@@ -181,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the commitment letter stage in the SBTi process?',
     options: [
-      'Final validation of targets',
+      'Direct emissions from owned or controlled sources',
       'Public commitment to develop science-based targets within 24 months',
-      'Annual progress reporting requirement',
-      'Certification of net-zero status',
+      'Submission to SBTi for technical assessment against criteria',
+      'The reference year against which emission reductions are measured',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,7 +203,12 @@ const quizQuestions = [
   {
     id: 10,
     question: 'How often must companies with validated SBTi targets report progress?',
-    options: ['Monthly', 'Quarterly', 'Annually', 'Every 5 years'],
+    options: [
+      'Monthly',
+      'Quarterly',
+      'Annually',
+      'Every 5 years',
+    ],
     correctAnswer: 2,
     explanation:
       'Companies with validated targets must report their emissions and progress towards targets annually, typically through CDP disclosure or equivalent public reporting mechanisms.',
@@ -202,12 +217,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the base year in SBTi target setting?',
     options: [
-      'Always 2015 (Paris Agreement year)',
+      'Residual emissions (typically 5-10%) must be neutralised through carbon removal',
+      'Public commitment to develop science-based targets within 24 months',
+      'Direct emissions from owned or controlled sources',
       'The reference year against which emission reductions are measured',
-      'The year targets are submitted',
-      'Always the most recent complete year',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The base year is the reference point against which emission reductions are measured. It must be representative, have verified data, and typically should not be more than two years prior to submission.',
   },
@@ -215,12 +230,12 @@ const quizQuestions = [
     id: 12,
     question: 'What happens if a company fails to meet its validated science-based target?',
     options: [
-      'Automatic removal from SBTi',
-      'Financial penalties apply',
       'Reputational impact and potential removal if consistently off-track without remediation',
-      'No consequences as targets are voluntary',
+      'Decarbonisation trajectory for operational emissions from commercial and residential buildings',
+      'Public commitment to develop science-based targets within 24 months',
+      'Absolute targets measure total emissions; intensity targets measure emissions per unit of activity',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'While SBTi does not impose financial penalties, companies face reputational consequences and potential removal from the initiative if they consistently fail to demonstrate progress and do not take corrective action.',
   },

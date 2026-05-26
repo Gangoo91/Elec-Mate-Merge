@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is a variation in electrical work?',
     options: [
-      'A mistake in installation',
+      'Permanent magnet synchronous motor (PMSM)',
       'A change to the agreed design, scope, or programme',
-      'A safety issue',
-      'A tool malfunction',
+      'Functional testing of detection and alarm systems',
+      'To reduce starting current and starting torque',
     ],
     correctIndex: 1,
     explanation:
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Give one example of an unforeseen issue.',
     options: [
-      'Client satisfaction',
+      'Suitable sleeve or grommet',
+      'Three-phase motor circuits',
       'Hidden beams blocking cable routes',
-      'Good weather',
-      'Early material delivery',
+      'Larger cable CSA or shorter route',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Unforeseen issues include hidden site conditions like structural beams blocking planned cable routes.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why must all changes be recorded formally?',
     options: [
-      'To create more work',
+      'The efficiency of cost utilisation on the project',
+      'Undersized - design current exceeds cable capacity',
+      'Close to the PV array and accessible',
       'To avoid disputes and ensure compliance',
-      'To slow down progress',
-      'To charge more money',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Formal recording prevents disputes, ensures regulatory compliance, and maintains clear project documentation.',
   },
@@ -60,10 +60,10 @@ const Module5Section3_5 = () => {
       id: 1,
       question: 'What is a variation in project work?',
       options: [
-        'A safety issue',
+        'Additional strain relief and environmental sealing',
         'A change to the agreed design, scope, or programme',
-        'A tool inspection',
-        'A material delivery',
+        'That there is no breakdown between conductors or to earth',
+        'In the reverse order to assembly (top down)',
       ],
       correctAnswer: 1,
       explanation:
@@ -72,16 +72,26 @@ const Module5Section3_5 = () => {
     {
       id: 2,
       question: 'Give one example of a variation.',
-      options: ['Weather delays', 'Adding sockets', 'Equipment failure', 'Staff training'],
-      correctAnswer: 1,
+      options: [
+        'Equipment failure',
+        'Weather delays',
+        'Adding sockets',
+        'Staff training',
+      ],
+      correctAnswer: 2,
       explanation:
         'Examples of variations include adding sockets, moving light fittings, or upgrading cable sizes.',
     },
     {
       id: 3,
       question: 'What is one example of an unforeseen issue?',
-      options: ['Planned maintenance', 'Hidden beams', 'Scheduled meetings', 'Regular inspections'],
-      correctAnswer: 1,
+      options: [
+        'Scheduled meetings',
+        'Planned maintenance',
+        'Regular inspections',
+        'Hidden beams',
+      ],
+      correctAnswer: 3,
       explanation:
         "Unforeseen issues include hidden beams, material shortages, weather delays, or other trades' delays.",
     },
@@ -97,10 +107,10 @@ const Module5Section3_5 = () => {
       id: 5,
       question: 'Why must all variations be recorded in writing?',
       options: [
-        'To slow down work',
+        'Eliminate the need for manual handling entirely',
         'To avoid disputes and ensure compliance',
-        'To create paperwork',
-        'To confuse workers',
+        'To verify operation under failure',
+        'Intelligent power management with sleep modes',
       ],
       correctAnswer: 1,
       explanation:
@@ -110,12 +120,12 @@ const Module5Section3_5 = () => {
       id: 6,
       question: 'Who should approve variations before work proceeds?',
       options: [
-        'Any electrician',
+        'The site manager or coordinator',
+        'Principal Accountable Person',
         'Supervisor or project manager',
-        'The client directly',
-        'Material suppliers',
+        'A missing guardrail or toeboard',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Variations must be approved by the supervisor or project manager before any work proceeds.',
     },
@@ -124,26 +134,36 @@ const Module5Section3_5 = () => {
       question: 'What is the safest response if an unforeseen issue creates a hazard?',
       options: [
         'Continue working carefully',
-        'Stop work and report immediately',
-        'Work around the problem',
         'Speed up to finish quickly',
+        'Work around the problem',
+        'Stop work and report immediately',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'If safety is affected, work must stop immediately and the issue reported to supervisors.',
     },
     {
       id: 8,
       question: 'Name one risk of poorly managing variations.',
-      options: ['Better quality work', 'Safety compromise', 'Lower costs', 'Faster completion'],
-      correctAnswer: 1,
+      options: [
+        'Safety compromise',
+        'Lower costs',
+        'Better quality work',
+        'Faster completion',
+      ],
+      correctAnswer: 0,
       explanation:
         'Poor variation management can lead to safety compromises, disputes, delays, and non-compliance.',
     },
     {
       id: 9,
       question: 'What document is used to formally record changes?',
-      options: ['Timesheet', 'Variation order or site instruction', 'Delivery note', 'Tool list'],
+      options: [
+        'Electricity at Work Regulations',
+        'Variation order or site instruction',
+        'Industry-wide retirement savings scheme',
+        'Condition assessment for continued safe use',
+      ],
       correctAnswer: 1,
       explanation:
         'Variation orders or site instructions formally document all approved changes to the project.',
@@ -152,12 +172,12 @@ const Module5Section3_5 = () => {
       id: 10,
       question: 'What is one way to reduce disruption while waiting for an issue to be resolved?',
       options: [
-        'Stop all work',
+        '350-400 kVA (20-30% spare)',
+        'Cognitive Behavioural Therapy (CBT)',
         'Switch to another planned task',
-        'Go home early',
-        'Change the design yourself',
+        'All brakes must be released',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Switching to alternative planned tasks maintains productivity while issues are being resolved.',
     },

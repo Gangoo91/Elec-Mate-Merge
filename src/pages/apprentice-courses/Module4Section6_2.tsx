@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What does "continuity" mean in electrical installation?',
     options: [
-      'High voltage capability',
-      'Unbroken electrical path',
       'Circuit switching ability',
+      'Unbroken electrical path',
       'Cable insulation strength',
+      'High voltage capability',
     ],
     correctIndex: 1,
     explanation:
@@ -28,20 +28,25 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why is polarity important for safety?',
     options: [
-      'For aesthetic reasons',
+      'To enable safe shutdown and evacuation',
+      'As part of routine maintenance records',
       'To prevent live parts on equipment casings',
-      'To reduce installation costs',
-      'For easier maintenance',
+      'Up to 70,000 Pa with forces exceeding 200 kg/m²',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Correct polarity ensures live and neutral conductors are connected to proper terminals, preventing dangerous situations like live metal parts on appliance casings.',
   },
   {
     id: 3,
     question: 'Name one tool used for checking continuity.',
-    options: ['Voltage indicator', 'Continuity tester', 'Current clamp', 'Power analyser'],
-    correctIndex: 1,
+    options: [
+      'Power analyser',
+      'Current clamp',
+      'Voltage indicator',
+      'Continuity tester',
+    ],
+    correctIndex: 3,
     explanation:
       'Continuity testers or low-resistance ohmmeters are used to verify unbroken electrical paths through conductors and protective circuits.',
   },
@@ -69,12 +74,12 @@ const Module4Section6_2 = () => {
       question:
         'True or False: Polarity checks confirm that conductors are connected to the correct terminals.',
       options: [
-        'True',
-        'False',
         'Only for domestic installations',
         'Only for industrial installations',
+        'True',
+        'False',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'True - Polarity checks verify that live, neutral, and earth conductors are connected to their designated terminals.',
     },
@@ -82,12 +87,12 @@ const Module4Section6_2 = () => {
       id: 3,
       question: 'Name one common fault discovered during a polarity check.',
       options: [
-        'Reversed line and neutral conductors',
-        'High insulation resistance',
         'Low current capacity',
+        'High insulation resistance',
         'Excessive voltage drop',
+        'Reversed line and neutral conductors',
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation:
         'Reversed or swapped line and neutral conductors are commonly discovered during polarity checks and create serious safety hazards.',
     },
@@ -95,19 +100,24 @@ const Module4Section6_2 = () => {
       id: 4,
       question: 'What reading would you expect on a continuity tester for a good connection?',
       options: [
-        'High resistance (mega-ohms)',
         'Close to zero ohms',
+        'High resistance (mega-ohms)',
         'Infinite resistance',
         'Variable resistance',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'A good continuous connection should show close to zero ohms resistance, indicating an unbroken electrical path.',
     },
     {
       id: 5,
       question: 'Which BS 7671 section covers inspection and testing?',
-      options: ['Part 4', 'Part 6', 'Part 7', 'Part 1'],
+      options: [
+        'Part 4',
+        'Part 6',
+        'Part 1',
+        'Part 7',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 Part 6 covers inspection and testing requirements for electrical installations.',
@@ -116,12 +126,12 @@ const Module4Section6_2 = () => {
       id: 6,
       question: 'Why is sleeving used on switched live conductors?',
       options: [
+        'To produce chilled water for cooling',
+        'A 22 mm copper incoming water service pipe',
         'To identify the conductor as live when switched on',
-        'To improve insulation properties',
-        'To reduce installation costs',
-        'For aesthetic purposes only',
+        'Adequate support to prevent mechanical damage from cable weight',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'Sleeving (typically brown) identifies switched live conductors, making it clear which conductor becomes live when the switch is operated.',
     },
@@ -129,20 +139,25 @@ const Module4Section6_2 = () => {
       id: 7,
       question: 'What should you do before carrying out a continuity test?',
       options: [
-        'Energise the circuit',
+        '45m (or 25m if only one exit available)',
+        'Significantly reduced energy consumption',
+        'Any voltage that could cause injury',
         'Isolate the circuit and verify isolation',
-        'Connect test equipment only',
-        'Check circuit ratings first',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Always isolate the circuit using appropriate switching and verify isolation with an approved voltage indicator before testing.',
     },
     {
       id: 8,
       question: 'True or False: Functional checks replace the need for full certification testing.',
-      options: ['True', 'False', 'Only for simple circuits', 'Only for experienced electricians'],
-      correctAnswer: 1,
+      options: [
+        'False',
+        'Only for simple circuits',
+        'True',
+        'Only for experienced electricians',
+      ],
+      correctAnswer: 0,
       explanation:
         'False - Functional checks are preliminary tests that supplement but do not replace formal certification testing required under BS 7671.',
     },

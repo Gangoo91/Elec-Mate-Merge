@@ -5,10 +5,10 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the main purpose of BS 5266-1?',
     options: [
-      'To define photometric performance only',
+      'Missing documentation and standards referencing despite adequate performance',
       'To provide a code of practice for emergency lighting design, installation, and maintenance',
-      'To specify exit sign requirements only',
-      'To replace building regulations',
+      'Design calculations, as-built drawings, certificates, and maintenance schedules',
+      'To avoid large variations between bright and dark areas that could impair visibility',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,44 +18,64 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 2,
     question: 'What does EN 1838 focus on?',
     options: [
-      'Installation methods only',
+      'Record non-attendance and proceed with the test as \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'deemed witnessed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'How one efficiency measure affects the savings of another',
       'Photometric performance criteria (light levels and duration)',
-      'Maintenance schedules only',
-      'Fire alarm integration',
+      'They have been advised of work completed and any recommendations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'EN 1838 specifically defines the photometric performance requirements including illuminance levels, uniformity, duration, and visibility.',
   },
   {
     id: 3,
     question: 'What is the minimum illuminance required for escape routes?',
-    options: ['0.5 lux', '1 lux', '5 lux', '15 lux'],
-    correctAnswer: 1,
+    options: [
+      '0.5 lux',
+      '15 lux',
+      '5 lux',
+      '1 lux',
+    ],
+    correctAnswer: 3,
     explanation:
       'EN 1838 requires a minimum of 1 lux along the centre line of escape routes to ensure safe evacuation.',
   },
   {
     id: 4,
     question: 'What is the minimum illuminance for open areas (anti-panic lighting)?',
-    options: ['0.1 lux', '0.5 lux', '1 lux', '2 lux'],
-    correctAnswer: 1,
+    options: [
+      '0.5 lux',
+      '1 lux',
+      '0.1 lux',
+      '2 lux',
+    ],
+    correctAnswer: 0,
     explanation:
       'Open areas require a minimum of 0.5 lux on the floor area to prevent panic and enable safe movement.',
   },
   {
     id: 5,
     question: 'What is the minimum required duration for emergency lighting in public buildings?',
-    options: ['30 minutes', '1 hour', '2 hours', '3 hours'],
-    correctAnswer: 3,
+    options: [
+      '30 minutes',
+      '3 hours',
+      '2 hours',
+      '1 hour',
+    ],
+    correctAnswer: 1,
     explanation:
       'Public and high-risk buildings typically require 3 hours duration, whilst 1 hour is the minimum for other premises.',
   },
   {
     id: 6,
     question: 'Which clause in BS 5266-1 deals with testing and inspection?',
-    options: ['Clause 4', 'Clause 6', 'Clause 8', 'Clause 10'],
-    correctAnswer: 3,
+    options: [
+      'Clause 4',
+      'Clause 6',
+      'Clause 10',
+      'Clause 8',
+    ],
+    correctAnswer: 2,
     explanation:
       'Clause 10 covers inspection, testing, and maintenance regime, with reference to BS 5266-8 (EN 50172).',
   },
@@ -63,12 +83,12 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Why is uniformity important in emergency lighting design?',
     options: [
-      'To save energy',
-      'To reduce costs',
+      'Because it lacks proper documentation and standards referencing',
+      'To provide a code of practice for emergency lighting design, installation, and maintenance',
+      'Design calculations, as-built drawings, certificates, and maintenance schedules',
       'To avoid large variations between bright and dark areas that could impair visibility',
-      'To comply with building aesthetics',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Uniformity (max/min ratio < 40:1) prevents dangerous dark spots that could hinder safe evacuation and cause disorientation.',
   },
@@ -76,12 +96,12 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 8,
     question: 'What type of documentation proves compliance with BS 5266-1?',
     options: [
-      'Invoice only',
-      'Photographs only',
       'Design calculations, as-built drawings, certificates, and maintenance schedules',
-      'Verbal confirmation',
+      'To provide a code of practice for emergency lighting design, installation, and maintenance',
+      'Missing documentation and standards referencing despite adequate performance',
+      'To avoid large variations between bright and dark areas that could impair visibility',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Comprehensive documentation including calculations, drawings, signed certificates, and maintenance schedules is essential to prove compliance.',
   },
@@ -89,10 +109,10 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 9,
     question: 'Why can a system that works still fail compliance?',
     options: [
-      "Because it's too expensive",
+      'To identify points requiring extra luminaires and potential obstructions',
       'Because it lacks proper documentation and standards referencing',
-      "Because it's too bright",
-      'Because it uses LED technology',
+      'Acute stress is short-term; chronic stress is long-lasting and ongoing',
+      'Gather information from the user about symptoms',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,10 +122,10 @@ export const emergencyLightingModule6Section1QuizData: QuizQuestion[] = [
     id: 10,
     question: 'What was the main issue found in the Manchester case study?',
     options: [
-      "The lights didn't work",
-      'Inadequate illumination levels',
+      'To provide a code of practice for emergency lighting design, installation, and maintenance',
+      'Photometric performance criteria (light levels and duration)',
       'Missing documentation and standards referencing despite adequate performance',
-      'Wrong colour temperature',
+      'To avoid large variations between bright and dark areas that could impair visibility',
     ],
     correctAnswer: 2,
     explanation:

@@ -43,8 +43,13 @@ const checks = [
     id: 'vd-basic',
     question:
       'A 30 m radial socket circuit at 32 A on 6 mm² T&E (mV/A/m ≈ 7.3) gives what voltage drop in volts?',
-    options: ['7.0 V', '≈7.01 V', '≈7.30 V', '≈70.1 V'],
-    correctIndex: 1,
+    options: [
+      '≈7.01 V',
+      '≈70.1 V',
+      '7.0 V',
+      '≈7.30 V',
+    ],
+    correctIndex: 0,
     explanation:
       "Vd = (mV/A/m × Ib × L) / 1000 = (7.3 × 32 × 30) / 1000 = 7008 / 1000 = 7.008 V ≈ 7.01 V. As a percentage of 230 V that is 7.01 / 230 = 3.05 percent — inside the 5 percent non-lighting limit but only just. A designer would seriously consider 10 mm² to leave headroom.",
   },
@@ -53,12 +58,12 @@ const checks = [
     question:
       "A lighting circuit Vd of 6.4 V on a 230 V single-phase supply equates to what percentage, and does it pass the lighting limit from BS 7671 Appendix 4 §6.4?",
     options: [
+      'Only HSE-licensed contractors holding a current asbestos licence',
       '2.78 percent — passes (below the 3 percent lighting limit).',
-      '6.4 percent — fails.',
-      '2.78 percent — fails the 3 percent lighting limit; you must size up.',
-      '4.6 percent — passes.',
+      'The frequency range between -3dB points (f2 - f1)',
+      'Multiple variables and diagnostics over two wires',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "Vd as a percentage = 6.4 / 230 = 0.0278 = 2.78 percent. The lighting limit is 3 percent. 2.78 is below 3 — the circuit passes. Just. Many designers would still size up to put headroom in, especially on a long run where future load changes (LED retrofits, dimmers, decorative additions) can push the load up.",
   },
@@ -84,10 +89,10 @@ const quizQuestions = [
     question:
       "What does the mV/A/m figure published in BS 7671 Appendix 4 actually represent for a single-phase two-core cable?",
     options: [
-      'The voltage drop per metre on the line conductor only.',
+      "Cutting containment (trunking, basket tray, conduit), making openings in plasterboard, cutting cable tray, and general cutting tasks where a hacksaw would be too slow",
       "The voltage drop in millivolts, per amp of load, per metre of route length, including both line and neutral conductors (the out-and-back loop).",
-      "The voltage drop per kilometre.",
-      "The maximum voltage the cable can handle.",
+      "To provide a path that will cause protective devices to operate immediately if the circuit is accidentally re-energised, protecting the worker",
+      "Removal / disturbance of sprayed coatings, lagging, large quantities of AIB, friable insulation, asbestos cement at significant scale. HSE-licensed contractor only - not optional.",
     ],
     correctAnswer: 1,
     explanation:
@@ -97,8 +102,13 @@ const quizQuestions = [
     id: 2,
     question:
       'What is the BS 7671 voltage drop limit for a lighting circuit, expressed as a percentage of nominal voltage?',
-    options: ['1 percent', '3 percent', '5 percent', '10 percent'],
-    correctAnswer: 1,
+    options: [
+      '5 percent',
+      '1 percent',
+      '3 percent',
+      '10 percent',
+    ],
+    correctAnswer: 2,
     explanation:
       "BS 7671 Appendix 4 §6.4 gives 3 percent for lighting circuits and 5 percent for all other circuits, both as percentages of the nominal supply voltage (230 V single-phase or 400 V three-phase line-to-line). The lighting limit is tighter because lamp dimming, flicker and life are sensitive to voltage; modern LED drivers tolerate the wider range better than legacy filament gear, but the regulation has not been relaxed.",
   },
@@ -107,12 +117,12 @@ const quizQuestions = [
     question:
       "The voltage drop formula Vd = (mV/A/m × Ib × L) / 1000 — why divide by 1000?",
     options: [
-      "To convert centimetres to metres.",
-      "To convert millivolts (mV) into volts (V).",
       "To halve the loop length.",
+      "To convert centimetres to metres.",
       "It is a safety margin built into the formula.",
+      "To convert millivolts (mV) into volts (V).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The mV/A/m table value is in millivolts. The formula multiplies it by amps and metres to get a millivolt total. Dividing by 1000 converts that millivolt total into volts so you can compare directly with the percentage limits expressed in volts. It is unit conversion, nothing more clever.",
   },
@@ -120,8 +130,13 @@ const quizQuestions = [
     id: 4,
     question:
       'A 25 m lighting radial at 6 A on 1.5 mm² T&E (mV/A/m ≈ 29) gives Vd of:',
-    options: ['1.5 V', '4.35 V', '7.2 V', '14.5 V'],
-    correctAnswer: 1,
+    options: [
+      '4.35 V',
+      '1.5 V',
+      '7.2 V',
+      '14.5 V',
+    ],
+    correctAnswer: 0,
     explanation:
       "Vd = (29 × 6 × 25) / 1000 = 4350 / 1000 = 4.35 V. As a percentage of 230 V: 4.35 / 230 = 1.89 percent. Comfortably under the 3 percent lighting limit. 1.5 mm² T&E is the right call for a typical domestic lighting circuit at this length.",
   },
@@ -130,10 +145,10 @@ const quizQuestions = [
     question:
       "Why is the lighting Vd limit (3 percent) tighter than the non-lighting limit (5 percent)?",
     options: [
-      "Lighting circuits draw more current.",
+      "The duration specified in the assessment plan — typically 45-60 minutes, during which the assessor will explore your portfolio evidence, probe your understanding, and assess your professional behaviours",
       "Lighting load is voltage-sensitive — lamp output, colour temperature, dimming smoothness and (for older filament gear) lamp life all degrade noticeably below ~220 V at the lampholder. The 3 percent limit keeps the lampholder above that threshold.",
-      "Cables for lighting are smaller.",
-      "There is no real reason.",
+      "Meets the minimum but warrants investigation per GN3 — sectional testing and visual inspection to determine if it represents normal length-related leakage or a developing fault",
+      "Use shorter conduit sections to reduce load length, knee pads for joint protection, frequent micro-breaks, and pre-position materials at the access point to minimise carrying distance in the restricted space",
     ],
     correctAnswer: 1,
     explanation:
@@ -143,8 +158,13 @@ const quizQuestions = [
     id: 6,
     question:
       "On a sub-main feeding a small commercial board, the cable run is 60 m, design current 80 A, supply is 400 V three-phase. Using a four-core thermosetting cable with mV/A/m = 1.5 (line-to-line), Vd is:",
-    options: ['7.2 V (1.8 percent) — passes 5 percent.', '12 V (3.0 percent) — passes.', '14.4 V (3.6 percent) — fails on a sub-main.', '8 V (2.0 percent) — passes.'],
-    correctAnswer: 0,
+    options: [
+      '14.4 V (3.6 percent) — fails on a sub-main.',
+      '12 V (3.0 percent) — passes.',
+      '7.2 V (1.8 percent) — passes 5 percent.',
+      '8 V (2.0 percent) — passes.',
+    ],
+    correctAnswer: 2,
     explanation:
       "Vd = (1.5 × 80 × 60) / 1000 = 7.2 V. As a percentage of 400 V (line-to-line nominal): 7.2 / 400 = 0.018 = 1.8 percent. Comfortably inside the 5 percent limit for non-lighting. On a sub-main feeding downstream final circuits, you typically aim for at most 3 percent drop to leave headroom for the final-circuit Vd downstream — the 1.8 percent figure leaves loads of margin.",
   },
@@ -152,8 +172,13 @@ const quizQuestions = [
     id: 7,
     question:
       "BS 7671 Appendix 4 §6.4 expresses the voltage drop limits in percentage form. What is the corresponding allowed Vd in volts on a 230 V single-phase supply for a lighting circuit?",
-    options: ['2.3 V', '6.9 V', '11.5 V', '23.0 V'],
-    correctAnswer: 1,
+    options: [
+      '2.3 V',
+      '23.0 V',
+      '11.5 V',
+      '6.9 V',
+    ],
+    correctAnswer: 3,
     explanation:
       "3 percent of 230 V = 0.03 × 230 = 6.9 V. That is the maximum allowed Vd from the origin of the installation to the lampholder for a lighting final circuit. For non-lighting it is 5 percent = 11.5 V.",
   },
@@ -162,12 +187,12 @@ const quizQuestions = [
     question:
       "A circuit just clears the Vd limit at 4.95 percent on a long radial. The customer adds a heat pump in three years that pushes the load up by 10 percent. What happens to the Vd, and is this a future compliance problem?",
     options: [
-      'Vd stays the same — it is a property of the cable.',
       "Vd scales with current, so a 10 percent load uplift gives a 10 percent Vd uplift, taking 4.95 percent to ~5.45 percent — the circuit is now non-compliant and the customer needs the cable upsized. This is exactly why designers leave headroom rather than scrape the limit.",
-      "Vd halves because the heat pump is more efficient.",
-      "It only matters for lighting circuits.",
+      "The JIB National Working Rules set out agreed terms covering wages, working hours, overtime, travel, and conditions, providing a contractual framework for resolving disputes about these matters in the electrical contracting industry",
+      "A small generator (often a Stirling engine or fuel cell) burns gas to make heat AND electricity at the same time, with the heat captured for hot water and the electricity used in the house or exported.",
+      "Disconnect at the EV charger\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own isolator / port connection. The charger control board has isolation monitoring electronics that will be triggered or damaged by the 500 V DC test signal. Per Reg 643.3.3, after reconnection apply the 250 V DC follow-up test (≥ 1 MΩ).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Vd is directly proportional to current, so any uplift in load gives a proportional uplift in Vd. A circuit that scrapes through at 4.95 percent now will fail at 5.45 percent after a modest load increase. Sizing up the cable to leave 1 percent of headroom (target around 4 percent on first install) bullet-proofs the install against typical future load growth.",
   },

@@ -45,12 +45,12 @@ const checks = [
     question:
       "On the JIB grading structure, what's the difference between an Improver and an Electrician?",
     options: [
-      "There is no difference — they're the same grade with two names.",
+      "Multiple parties: scaffolder personal s.7; scaffolder employer s.2/s.3; principal contractor (CDM Reg 13 coordination); site manager / responsible person (RRFSO if relevant); you (s.7 if you tacitly approve). HASAWA stacks.",
+      "Section 7(a) — to take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work. Section 7(b) — to co-operate with their employer (and any other person under a duty) so far as is necessary to enable that duty to be performed. These are personal statutory duties that apply to every operative on site, including apprentices.",
+      "Identifying potential problems or improvements proactively and taking appropriate action — such as reporting hazards, suggesting efficiency improvements, or addressing issues before they become critical — while working within your level of authority",
       "An Improver has completed the technical qualifications (often Level 3 NVQ or 2365-03) but has not yet passed AM2 — they work under the supervision of an Approved Electrician. An Electrician has passed AM2 and can work without direct supervision on routine work. Improver is therefore the post-college, pre-AM2 grade.",
-      "An Improver is more senior than an Electrician.",
-      "Improver is a college role; Electrician is a workplace role.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "JIB (Joint Industry Board) grades run Apprentice → Improver → Electrician → Approved Electrician → Technician. The AM2 (the End Point Assessment / industry test) is the line between Improver and Electrician. Once you've passed AM2 and your certification is updated you become an Electrician with full ECS card. Improvers carry an ECS card too but it specifies the Improver grade and the supervision requirement.",
   },
@@ -59,12 +59,12 @@ const checks = [
     question:
       "On a busy commercial site you're carrying tools across the loading bay when a tipper truck starts reversing. A banksman (in a high-vis vest, holding a stop sign) holds up their hand to you. What do you do?",
     options: [
-      "Carry on walking — the banksman has no authority over an electrician.",
+      "Auto-disconnection occurs in the same disconnection times as the equivalent TN system (Table 41.1) — once a second fault establishes a fault loop through the protective conductor, fault current flows like a TN line-to-earth fault and the protective device disconnects",
+      "No — a socket tester is a verification tool only and CAN show \\\\\\\\\\\\\\\"OK\\\\\\\\\\\\\\\" with reversed polarity if there is a fault that masks it (e.g. a borrowed neutral that completes the circuit through another path). Confirm with a continuity test from the consumer unit before signing off.",
       "Stop immediately. The banksman is the trained signaller for that vehicle movement and they have the authority on site to stop pedestrian traffic during a reverse. Carrying on past them is a CDM 2015 Reg 15 breach (failure to co-operate with H&S arrangements) and a HASAWA s.7(b) breach. Wait until they wave you through.",
-      "Walk faster to get past the truck.",
-      "Take a photo of the banksman to report them.",
+      "Three things — fit for the task (right type and size — long-nose for forming, side cutters for cutting, VDE driver for live-near-terminal work), in good condition (not damaged, blunt or modified), and used in the way the manufacturer intended (no tin snips as can openers, no screwdrivers as chisels). Tools used outside any one of those three legs breach Reg 4.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Banksmen (also called traffic marshals or signallers) are formally trained for vehicle movements on site under the Workplace Transport guidance (HSG136). They have site authority to stop pedestrians and traffic during a movement. Their signal is binding on you under CDM 2015 Reg 15 (workers must co-operate with the PC's arrangements) and under HASAWA s.7(b) (workers must co-operate with safety duties). Ignoring a banksman is a fast way off site.",
   },
@@ -73,10 +73,10 @@ const checks = [
     question:
       "Halfway through a first-fix you and the joiner are working in the same room. The joiner needs to fit a noggin in exactly the spot where you've just dressed a cable. What's the right move?",
     options: [
-      "Tell the joiner to find another spot — your work was there first.",
+      "Reject. Reg 722.410.3.6 prohibits the use of non-conducting location and earth-free local equipotential bonding within Chapter 72 (EV charging installations). The designer must select alternative protective measures permitted within Chapter 72 and elsewhere in BS 7671 — typically protective earthing with ADS, RCDs at the rated residual operating current required by Section 722, and where applicable SELV / PELV. Reg 722.410.3.5 separately prohibits obstacles and placing out of reach within Section 722 scope.",
       "Stop, talk it through with the joiner, and if you can't agree on the spot fetch your Foreman (or the joiner's Foreman, whichever is on site) to mediate. Trade clashes at first-fix are normal — the resolution is conversation first, then escalation to a Foreman who can re-sequence the work or adjust either trade's plan. The principle is co-operation under HASAWA s.7(b), not 'I was here first'.",
-      "Cut the cable to make room for the noggin without telling the joiner.",
-      "Walk off and complain to the main contractor's Site Manager.",
+      "Around 15-20 years for a well-maintained domestic ASHP, comparable to a high-quality gas boiler. The compressor is the wear part; secondary wear includes the fan motor, expansion valve, controls electronics. Annual servicing including refrigerant leak check, wet-system maintenance, electrical inspection and performance verification keeps the unit at design SCOP for as long as possible. Skipped service typically halves the working life and voids the warranty.",
+      "Standard route: existing Electrician JIB grade + AM2S (Solar PV variant of AM2) OR an MCS-recognised PV installer course (typically a 5-day course covering PV system design, installation, commissioning and the MCS install standard) + employer firm registers with MCS for PV. The individual electrician holds the PV competence; the firm holds the MCS registration. Some installers also pursue the BPEC Solar PV course.",
     ],
     correctIndex: 1,
     explanation:
@@ -92,10 +92,10 @@ const quizQuestions = [
     question:
       "What's the role of a labourer on a typical commercial fit-out?",
     options: [
-      "Labourers don't work on commercial sites.",
+      "Vd scales with current, so a 10 percent load uplift gives a 10 percent Vd uplift, taking 4.95 percent to ~5.45 percent — the circuit is now non-compliant and the customer needs the cable upsized. This is exactly why designers leave headroom rather than scrape the limit.",
       "Labourers handle site logistics — moving materials, sweeping out, clearing access routes, breaking out spoil, supporting trades with manual handling. They free up skilled trades to focus on their specialism and they keep the site safe by maintaining access routes. Labourers report up to their own contractor's Foreman, often via a working foreman within the labour gang.",
-      "Labourers replace skilled trades.",
-      "Labourers have no role under CDM 2015.",
+      "Yes — If = 230 × 0.95 / 200 = 1.09 A. S = √(1.09² × 0.04) / 115 = √(0.0475) / 115 = 0.218 / 115 = 0.0019 mm². The CPC needed is essentially zero; 1.5 mm² is hugely oversized for the adiabatic on a TT system. RCD operation, not CPC adiabatic, is the binding constraint on TT.",
+      "A fixed appliance is contributing leakage. Disconnect the dishwasher at its connection unit, retest. If IR rises above 1 MΩ the dishwasher was the cause. Disconnect the LED driver at the downlights, retest. The reading should now reflect the cable insulation alone — typically tens or hundreds of MΩ.",
     ],
     correctAnswer: 1,
     explanation:
@@ -106,12 +106,12 @@ const quizQuestions = [
     question:
       "Plant operators on construction sites typically need which two industry-recognised cards?",
     options: [
-      "Driving licence and bus pass.",
+      "Employers' Liability insurance — required by the Employers' Liability (Compulsory Insurance) Act 1969 for any employee (full-time, part-time, casual, apprentice). Minimum statutory cover is £5m; most policies provide £10m. Certificate must be displayed where employees can see it.",
+      "Advisory, Conciliation and Arbitration Service — a non-departmental public body that provides free, impartial advice on workplace rights and conflict resolution. ACAS publishes the Codes of Practice on Discipline and Grievance, runs early conciliation (mandatory before most employment tribunal claims), provides advice through a national helpline, and trains employers and unions on workplace dispute resolution.",
       "PASMA (for mobile aluminium tower scaffolds) and IPAF (for mobile elevating work platforms / MEWPs / cherry pickers and scissor lifts). PASMA covers tower assembly and use; IPAF covers powered access. Both are industry-recognised competence schemes accepted on most CDM sites. Many plant operators also hold CPCS (for construction plant — excavators, dumpers, telehandlers) or NPORS.",
-      "BS 7671 and Part P.",
-      "Driving licence only.",
+      "Most HASAWA offences are triable either way — the prosecution chooses Magistrates' (summary) or Crown (indictment). Magistrates' Court can impose unlimited fines on H&S offences (since 2015) and up to 6 months imprisonment. Crown Court can impose unlimited fines and up to 2 years imprisonment for individuals (longer for some related offences like Corporate Manslaughter — life). The Sentencing Council Definitive Guideline applies in both courts.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "PASMA (Prefabricated Access Suppliers' and Manufacturers' Association) and IPAF (International Powered Access Federation) are the two industry standards for tower scaffolds and powered access. CPCS (Construction Plant Competence Scheme) and NPORS cover heavy plant. Operating any of these without the relevant card is a HASAWA s.7 issue (failure to take care) and a PUWER 1998 Reg 9 issue (use of work equipment by competent persons only).",
   },
@@ -120,12 +120,12 @@ const quizQuestions = [
     question:
       "What is a slinger / signaller on site?",
     options: [
-      "A site nickname for a labourer.",
+      "Because electronics with capacitive or low-impedance protection paths (SPDs, LED driver capacitors, EMC filters in inverters) will either short the test signal (giving a false low reading) or be destroyed by the 500 V DC stress they were never designed to withstand.",
+      "(a) Don't carry out construction work unless you have the skills, knowledge, training and experience to do it safely (or are in the process of obtaining them); (b) report to the person in control anything you're aware of that's likely to endanger H&S; (c) co-operate with any other person working on or in connection with the project to enable that person to comply with their duties.",
+      "Roughly £15-20/month for full Unite membership for a working electrician, with reduced rates for apprentices, students and the unemployed. Cost is tax-deductible against income tax for trade union subscriptions. In return members get representation in disputes, legal advice, training discounts, member-only insurance products and the Unite member benefits programme.",
       "A trained operative who attaches loads to a crane (slinging) and signals the crane operator (signalling) during a lift. Both functions require formal CPCS or equivalent training. Lift operations are governed by LOLER 1998 (Lifting Operations and Lifting Equipment Regulations) which requires lifts to be planned by a competent person and supervised throughout.",
-      "A paid role for the apprentice on day one.",
-      "A type of access equipment.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Slingers and signallers are critical safety roles on any site with crane operations. LOLER 1998 Reg 8 requires lifts to be properly planned and appropriately supervised. The slinger/signaller is the supervisor at the work face. As an apprentice you should never attach a load or signal a crane without the relevant card — it's outside your competence and it puts everyone underneath the load at risk.",
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       "Who in the trade workforce do you, as an apprentice electrician, take direct work instructions from on the immediate task?",
     options: [
-      "The plumber on the floor below.",
       "The Approved Electrician you're paired with for that task. They direct the work at the immediate face, show you how to do it and check your work before sign-off. The Foreman or Charge-hand allocates the pairing; the Approved Electrician runs the pairing day to day.",
-      "The labourer working in the same room.",
-      "The HSE inspector.",
+      "F2508 — main RIDDOR form for accidents involving death, specified injuries, dangerous occurrences. 10-day deadline. F2508A — for over-7-day injuries and reportable diseases. 15-day deadline.",
+      "Series arc faults from damaged or aged flex, loose terminals, deteriorated terminations — typical of long-life installations with extensive socket-outlet use, in-wall cabling under furniture, and aged accessories.",
+      "HSE guidance \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Electricity at Work — Safe Working Practices\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\". Detailed practitioner guidance on EAWR compliance including isolation procedures, live working defences, competence and supervision. The non-statutory companion to EAWR.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Apprentice-pairing with an Approved Electrician is the standard model. The Approved Electrician holds the immediate competence and supervision for your work. The Foreman or Charge-hand sets the pairing each day or each task. Other trades (plumbers, joiners, labourers) co-operate with you under HASAWA s.7(b) but they don't direct your electrical work.",
   },
@@ -148,10 +148,10 @@ const quizQuestions = [
     question:
       "Under HASAWA s.7, what duties does every employee owe?",
     options: [
-      "None — HASAWA s.7 only applies to employers.",
+      "A Request For Information is a formal written query from a contractor to the design team (architect, engineer, principal designer) when the drawings or specifications are unclear, contradictory or missing detail. It's logged, numbered, dated and tracked through to a written response. It protects the contractor from being held responsible for a design ambiguity and creates a paper trail for any later dispute. Use one whenever you'd otherwise be guessing.",
       "Section 7(a) — to take reasonable care for the health and safety of themselves and of other persons who may be affected by their acts or omissions at work. Section 7(b) — to co-operate with their employer (and any other person under a duty) so far as is necessary to enable that duty to be performed. These are personal statutory duties that apply to every operative on site, including apprentices.",
-      "Only the duty to wear PPE.",
-      "Only the duty to attend toolbox talks.",
+      "Because the retail trading hours can't be disrupted. Floor lifts, ceiling tile removal, dust generation and circuit isolation all interfere with shoppers and staff. Out-of-hours work (typically 8pm to 6am for high-street retail) lets the work proceed without affecting trade. Prep includes agreed access times, security pass arrangements, fire-alarm coordination (if temporary detector covers are needed) and a formal hand-back at end of shift.",
+      "Public Liability (PL, typically £5-10m cover, £200-500/year), Employers' Liability (EL, statutory minimum £5m under the Employers' Liability (Compulsory Insurance) Act 1969 — required if you have any employees), Professional Indemnity (PI, £1-2m cover for design liability if you do any design work, £300-800/year), Tools-in-Transit insurance, Business Vehicle insurance for company vans. Plus director and officer cover for the directors personally.",
     ],
     correctAnswer: 1,
     explanation:
@@ -162,12 +162,12 @@ const quizQuestions = [
     question:
       "What's the role of a Gas Safe registered engineer on a refurbishment that involves a kitchen rewire?",
     options: [
-      "Gas Safe engineers don't work alongside electricians.",
+      "Five trades, five scopes. ELECTRICIAN — electrical work + make-good (filling, sealing, fire-stopping). PLASTERER — preparation, scrim, bond, skim of larger areas; finishing plaster surface. TILER — cutting, adhesive, fitting, grouting tiles; specialist tools. PAINTER / DECORATOR — preparation, primer, top-coat, decorative finishes. BUILDER — structural / load-bearing work; brick / block / concrete repair. Each trade has its competence boundary; the electrician's work is electrical + minimal building-fabric restoration. Specialist trades for finishing.",
+      "On a TN-C-S supply the PEN conductor combines neutral and protective earth between the substation and the cut-out. If the PEN breaks open between the substation and the property, the property's earthing rises toward line voltage depending on the load balance on neighbouring properties on the same PEN. For an EV on a driveway, the car body sits at the elevated PME potential while the surrounding ground (concrete, soil, gravel) stays at true earth potential — the touch-voltage between the car body and the ground can be lethal.",
       "Gas Safe engineers carry out work on gas appliances and pipework — disconnection, reconnection, commissioning. On a kitchen rewire involving a gas hob the Gas Safe engineer disconnects before the electrical work starts and reconnects after. They're a separate trade, with a separate competence scheme (Gas Safe Register, replacing the old CORGI), and only Gas Safe registered engineers can lawfully work on gas under the Gas Safety (Installation and Use) Regulations 1998.",
-      "Gas Safe engineers replace electricians on gas hob installations.",
-      "Gas Safe engineers only work on commercial buildings.",
+      "Functional literacy — able to navigate a coordinated model, read electrical objects with their attached information, raise and respond to clashes, contribute electrical content via either Revit (if competent) or by working with a BIM technician who imports the L3 designer's content into Revit, and understand the CDE and ISO 19650 roles. Full Revit authoring skill is a specialist add-on.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Gas Safe Register is the legal register for gas engineers in Great Britain (under the Gas Safety (Installation and Use) Regulations 1998). Touching gas pipework or appliances without Gas Safe registration is a criminal offence. Co-ordinating with the Gas Safe engineer at first-fix and at re-commissioning is part of the apprentice's awareness — you don't do their work, but you sequence around it.",
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     question:
       "Why does the workspace include 'other trades working above and below you' as a people hazard?",
     options: [
-      "It doesn't — only your own trade matters.",
+      "Individual grievance = one worker raises a workplace issue with the employer (typically follows the ACAS Code of Practice). Collective grievance = a group of workers (often via the union shop steward) raises an issue affecting multiple workers — pay rates, working conditions, restructuring proposals, health and safety concerns. Different procedures and different ACAS guidance apply to each.",
+      "An SDS-Max or larger SDS with a 100 mm core bit (sometimes called a diamond core drill) for the through-wall hole. Smaller SDS-Plus tools struggle with cores above 50 mm; SDS-Max is the bigger chuck system designed for it. Wet-coring (water flood) is preferred for diamond cores because it controls dust and stops the bit overheating, but dry-coring with intermittent withdrawal is acceptable for short single holes.",
+      "A standard grid-tied inverter is required to shut down on loss of mains because of anti-islanding rules. Continuous operation through a power cut needs a hybrid inverter with explicit islanded-mode capability, paired with a battery and a changeover arrangement that first electrically isolates the property from the failed grid before re-energising selected circuits. The MCS designer specifies which loads stay alive, the battery sizing, and the transfer time.",
       "Other trades create falling-object risk, slip risk, dust and noise risk for you, and your work creates electrical and tripping risk for them. The walk-round and the toolbox talks need to take account of who else is working in or above your area, not just your own activity. CDM 2015 Reg 13 puts a co-ordination duty on the Principal Contractor; HASAWA s.7(b) puts a co-operation duty on every operative.",
-      "Only the main contractor needs to think about this.",
-      "Apprentices are exempt from considering other trades.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Apprentices new to commercial work tend to think 'workspace' is the room they're in. On a live fit-out the workspace is three-dimensional. Plumbers cutting overhead, joiners with battery saws, decorators with wet paint and dust sheets, scaffolders moving boards — all of it affects you. The morning brief is when these clashes are flagged.",
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       "Who is the apprentice's specific peer group on a typical electrical sub-contract?",
     options: [
-      "There is no peer group for apprentices.",
       "Other apprentices on the same job, the Improver(s) (post-college, pre-AM2 colleagues), the Approved Electrician(s) you're paired with, and the formally-allocated Mentor. The peer group is who you spend most of your time with day to day and who you learn the trade from in real time.",
-      "Only the Site Manager.",
-      "Only the labourers.",
+      "Recognise HRRB sites; understand the gateway regime and PAP role; verify CPP integrates with golden thread; produce digital cert records (not paper-only); cooperate with PAP / AP requests for information.",
+      "Section 722 requirements: Type B (or Type A + DC monitor) RCD protection, BS 8519 / OPDP \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"open-PEN\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" protection on TN-C-S supplies, IP-rated outdoor enclosures, dedicated final circuit (not shared with general sockets).",
+      "(1) PROVE the voltage indicator works on a known live source (proving unit OR a known live circuit). (2) TEST the conductors to be isolated — line-to-earth, line-to-neutral, line-to-line, neutral-to-earth. (3) PROVE the voltage indicator works AGAIN on the same known live source. Confirms the indicator wasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t faulty during the test.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Apprentices learn most from the Approved Electrician they're paired with on the day, calibrate progress with their Mentor monthly and exchange tips with other apprentices and Improvers continuously. Building a relationship with this peer group is what makes the apprenticeship work. Isolating yourself ('I'll just work alone') is a common mistake.",
   },

@@ -17,10 +17,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What information is found in the title block?',
     options: [
-      'Only the drawing date',
+      'Providing accessible thermal mass',
       'Drawing type, project details, scale, and date',
-      'Just the project name',
-      'Only the scale information',
+      'Mark only what\\\\\\\'s complete - incomplete = lost marks',
+      'To anticipate future error based on rate of change',
     ],
     correctIndex: 1,
     explanation:
@@ -30,12 +30,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should all notes be read carefully?',
     options: [
-      'They are just suggestions',
+      'Fire panel relay outputs were wired to wrong BMS input terminals',
+      'Based on installation type, use, and condition found',
       'They often contain essential instructions like material requirements',
-      'They only show general information',
-      'They are optional to follow',
+      'To ensure exits are clearly visible and accessible during evacuation',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Notes often contain critical instructions such as material specifications (e.g., 'all cables to be LSF') that are essential for compliance.",
   },
@@ -43,12 +43,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why must specifications and drawings be used together?',
     options: [
-      "It's a legal requirement",
+      'To convert an oral instruction into a written record',
+      'Building Regulations requirements and future EV adoption',
+      'Extending the programme increases costs and may breach contract dates',
       'Drawings show where to install, specifications show how to install',
-      'To increase costs',
-      'Only for complex installations',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Drawings show where to install components and routing, whilst specifications explain how to install them - both are essential for accurate and compliant work.',
   },
@@ -63,10 +63,10 @@ const Module5Section1_5 = () => {
       id: 1,
       question: 'What key details are found in the title block of a drawing?',
       options: [
-        'Only the drawing number',
+        'Current lags voltage by 53° (inductive)',
         'Project details, drawing type, scale, and date',
-        'Just the project location',
-        "Only the designer's name",
+        'Isolate circuit and disconnect loads',
+        'Automatic capacitor switching based on load',
       ],
       correctAnswer: 1,
       explanation:
@@ -76,12 +76,12 @@ const Module5Section1_5 = () => {
       id: 2,
       question: 'True or False: Notes on drawings are optional to follow.',
       options: [
-        'True - they are just suggestions',
+        'Multiple variables and diagnostics over two wires',
+        'Preparation, calm discipline, and self-checking',
         'False - they are mandatory and often contain critical information',
-        'True - only for large projects',
-        'False - only symbols matter',
+        'To prevent loose strands causing faults and ensure secure terminations',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Notes on drawings are mandatory and often contain critical installation requirements that must be followed for safety and compliance.',
     },
@@ -89,12 +89,12 @@ const Module5Section1_5 = () => {
       id: 3,
       question: 'What do circuit codes such as L1/03 represent?',
       options: [
-        'Cable sizes',
+        'The Hazardous Waste (England and Wales) Regulations 2005',
+        'Marking a calendar with an X for each day you complete a habit',
+        'Requiring health and safety planning and coordination',
         'Specific circuit numbers linked to the distribution board',
-        'Material types',
-        'Installation methods',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Circuit codes like L1/03 represent specific circuit numbers that link to the distribution board and must be cross-referenced with schedules.',
     },
@@ -102,12 +102,12 @@ const Module5Section1_5 = () => {
       id: 4,
       question: 'Where should cable sizes be confirmed if not shown on the drawing?',
       options: [
-        'From previous projects',
         'In the specification',
+        'From previous projects',
         'By making an educated guess',
         "From the supplier's catalogue",
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Cable sizes should always be confirmed in the project specification when not clearly shown on drawings - never guess or assume.',
     },
@@ -117,8 +117,8 @@ const Module5Section1_5 = () => {
       options: [
         'Weather conditions for installation',
         'All cables to be LSF (low smoke and fume)',
-        'Project budget constraints',
         'Installation team member names',
+        'Project budget constraints',
       ],
       correctAnswer: 1,
       explanation:
@@ -128,12 +128,12 @@ const Module5Section1_5 = () => {
       id: 6,
       question: 'Why is cross-referencing drawings and specifications important?',
       options: [
-        "It's not really necessary for simple jobs",
+        'Encourages a fuller, more detailed response from the person',
+        'To ensure materials arrive when needed and in correct quantities',
         'Because drawings show where, specifications show how/what',
-        'Only required for large commercial projects',
-        'To justify higher project costs',
+        'To help them process the emotional impact and maintain their own wellbeing',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Drawings show positioning and layout whilst specifications provide the technical details of materials and methods - both are essential for complete information.',
     },
@@ -142,11 +142,11 @@ const Module5Section1_5 = () => {
       question: 'What is a common mistake when interpreting drawings?',
       options: [
         'Reading them too carefully and slowly',
-        'Ignoring notes or misreading symbols',
-        'Using the correct measurement scale',
         'Following all manufacturer guidelines',
+        'Using the correct measurement scale',
+        'Ignoring notes or misreading symbols',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Common mistakes include ignoring important notes or misinterpreting symbols, both of which can lead to incorrect installations and safety issues.',
     },
@@ -155,12 +155,12 @@ const Module5Section1_5 = () => {
       question:
         'True or False: You can assume all sockets shown on drawings are standard 13A types.',
       options: [
-        'True - this is standard practice',
         'False - always check specifications for socket types',
         'True - unless clearly marked otherwise',
+        'True - this is standard practice',
         'False - but only for industrial installations',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Never assume socket types - always check specifications as some may require RCD protection, different ratings, or special features.',
     },
@@ -168,10 +168,10 @@ const Module5Section1_5 = () => {
       id: 9,
       question: 'What do safe zones in drawings ensure?',
       options: [
-        'Faster installation times',
+        'Ensuring waste is transferred only to authorised persons with correct documentation',
         'That cables are run in positions where they are less likely to be damaged',
-        'Lower material costs',
-        'Easier access for maintenance',
+        'A motor circuit with significant inrush current on starting',
+        'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
       ],
       correctAnswer: 1,
       explanation:
@@ -182,11 +182,11 @@ const Module5Section1_5 = () => {
       question: 'If a drawing shows unclear requirements, what should you do?',
       options: [
         'Make your best professional judgement',
+        'Copy the approach from a similar project',
         'Confirm with the supervisor or project manager',
         'Skip that section and continue',
-        'Copy the approach from a similar project',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Always clarify unclear requirements with supervisors or project managers to ensure correct installation and avoid costly mistakes or safety issues.',
     },

@@ -37,10 +37,10 @@ const quickCheckQuestions = [
     question:
       "Under CDM 2015, when does a domestic client's duties transfer to another duty holder?",
     options: [
-      'Never - domestic clients always retain duties',
-      'When they appoint a Principal Contractor',
+      'Qualitative uses subjective ratings, quantitative uses numerical data',
+      'To prevent fire spreading through cable penetrations',
       'Automatically to the contractor in control of the construction phase',
-      'Only when notified to the HSE',
+      'To verify protective devices have adequate breaking capacity',
     ],
     correctIndex: 2,
     explanation:
@@ -50,12 +50,12 @@ const quickCheckQuestions = [
     id: 'cdm-f10-trigger',
     question: 'An F10 notification to HSE is required when a project exceeds which threshold?',
     options: [
-      'Any project with more than one contractor',
+      'Heat-shrink, clip-on tags, or printed labels',
+      'Mechanical fasteners and plug-in connections',
       '30 working days with more than 20 workers OR 500 person-days',
-      'Projects over £100,000 value',
-      'All commercial construction projects',
+      'Correct cut-in and cut-out pressure settings',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'F10 notification is required for projects lasting more than 30 working days with more than 20 workers at any one time, OR exceeding 500 person-days of construction work. This applies regardless of project value.',
   },
@@ -63,12 +63,12 @@ const quickCheckQuestions = [
     id: 'cdm-principal-designer',
     question: 'What is the PRIMARY duty of the Principal Designer under CDM 2015?',
     options: [
-      'Managing all site contractors',
       'Planning, managing and coordinating health and safety during the pre-construction phase',
-      'Writing the Construction Phase Plan',
-      'Conducting site safety inspections',
+      'To account for unexpected site conditions, part delays, and client changes',
+      'The longest sequence of dependent activities determining minimum duration',
+      'Current rating, voltage rating, type (HRC, rewireable, cartridge), breaking capacity, and category of duty',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The Principal Designer's primary duty is planning, managing and coordinating health and safety in the pre-construction phase. They ensure designers comply with their duties and that design risks are eliminated or reduced so far as reasonably practicable.",
   },
@@ -76,8 +76,13 @@ const quickCheckQuestions = [
     id: 'cdm-cpp-required',
     question:
       'Who is responsible for ensuring a Construction Phase Plan is in place before the construction phase begins?',
-    options: ['The Client', 'The Principal Designer', 'The Principal Contractor', 'The HSE'],
-    correctIndex: 2,
+    options: [
+      'The Client',
+      'The Principal Contractor',
+      'The Principal Designer',
+      'The HSE',
+    ],
+    correctIndex: 1,
     explanation:
       'The Principal Contractor must draw up a Construction Phase Plan before the construction phase begins. However, the Client must ensure this plan is in place before allowing construction to start - a joint responsibility.',
   },
@@ -88,8 +93,13 @@ const quizQuestions = [
     id: 1,
     question:
       'Under CDM 2015, which duty holder must make suitable arrangements for managing a project including allocating sufficient time and resources?',
-    options: ['Principal Designer', 'Principal Contractor', 'Client', 'Designer'],
-    correctAnswer: 2,
+    options: [
+      'Principal Designer',
+      'Client',
+      'Principal Contractor',
+      'Designer',
+    ],
+    correctAnswer: 1,
     explanation:
       'The Client has overarching duties under Regulation 4 to make suitable arrangements for managing the project, including allocating sufficient time and resources. This ensures projects are not rushed and properly resourced for health and safety.',
   },
@@ -98,10 +108,10 @@ const quizQuestions = [
     question:
       'A building services contractor is installing a new electrical distribution system in an occupied office building. The project will last 8 weeks with a maximum of 12 workers. Is an F10 notification required?',
     options: [
-      'Yes - any project over 4 weeks requires notification',
-      'Yes - commercial projects always require notification',
-      'No - does not meet the 30 days with 20+ workers threshold',
       'No - building services work is exempt from CDM',
+      'Yes - any project over 4 weeks requires notification',
+      'No - does not meet the 30 days with 20+ workers threshold',
+      'Yes - commercial projects always require notification',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,12 +122,12 @@ const quizQuestions = [
     question:
       'Which document must be prepared by the Principal Designer and passed to the Client at project completion?',
     options: [
-      'Construction Phase Plan',
       'F10 Notification',
-      'Health and Safety File',
+      'Construction Phase Plan',
       'Designer Risk Assessment',
+      'Health and Safety File',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The Health and Safety File must be prepared by the Principal Designer (or Principal Contractor if no PD) and handed to the Client at project completion. It contains information needed for future construction work on the building.',
   },
@@ -126,12 +136,12 @@ const quizQuestions = [
     question:
       'An M&E consultancy is designing HVAC systems for a new hospital. Under CDM 2015, what is their PRIMARY duty as a Designer?',
     options: [
-      'Prepare the Construction Phase Plan',
       'Eliminate foreseeable risks or reduce them so far as is reasonably practicable',
-      'Manage all contractors on site',
-      'Notify HSE of the project',
+      'As soon as practicable and before the construction phase begins',
+      'Regulation 14 - Principal Contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s duties to consult',
+      'No - does not meet the 30 days with 20+ workers threshold',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Designers must eliminate foreseeable health and safety risks or, where not possible, reduce them so far as is reasonably practicable. For HVAC, this includes considering safe access for maintenance, weight of equipment, and installation sequences.',
   },
@@ -140,12 +150,12 @@ const quizQuestions = [
     question:
       'The Principal Contractor must ensure which of the following regarding welfare facilities?',
     options: [
-      'Facilities are available from day one of construction',
       'Facilities meet minimum standards in Schedule 2',
       'Both A and B',
       "Facilities are the Client's responsibility",
+      'Facilities are available from day one of construction',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The Principal Contractor must ensure suitable welfare facilities (toilets, washing, rest areas, drinking water) are available from the start of construction and meet the minimum standards set out in Schedule 2 of CDM 2015.',
   },
@@ -155,11 +165,11 @@ const quizQuestions = [
       'A domestic client is having a house rewire. Under CDM 2015, who holds the client duties?',
     options: [
       'The homeowner retains all client duties',
-      'The electrical contractor controlling the work',
       'The local Building Control authority',
+      'The electrical contractor controlling the work',
       'No client duties apply to domestic work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'For domestic clients, client duties automatically transfer to the contractor in control of the construction phase (Regulation 7). The homeowner is not expected to have construction health and safety expertise.',
   },
@@ -181,12 +191,12 @@ const quizQuestions = [
     question:
       'Under CDM 2015, at what point must a Principal Designer be appointed on a notifiable project?',
     options: [
-      'Before the construction phase begins',
       'As soon as practicable and before the construction phase begins',
-      'Within 14 days of project commencement',
-      'When HSE requests it',
+      'No - does not meet the 30 days with 20+ workers threshold',
+      'Designer duty to eliminate or reduce foreseeable risks',
+      'The electrical contractor controlling the work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Client must appoint a Principal Designer 'as soon as is practicable, and in any event before the construction phase begins'. Early appointment allows proper influence over design decisions and health and safety planning.",
   },
@@ -209,10 +219,10 @@ const quizQuestions = [
     question:
       'Which regulation requires the Principal Contractor to consult and engage with workers on health and safety matters?',
     options: [
-      'Regulation 8 - General duties',
-      'Regulation 13 - Duties of Principal Contractors',
+      "The electrical contractor controlling the work",
+      "Designer duty to eliminate or reduce foreseeable risks",
       "Regulation 14 - Principal Contractor's duties to consult",
-      'Regulation 15 - Duties of contractors',
+      "No - does not meet the 30 days with 20+ workers threshold",
     ],
     correctAnswer: 2,
     explanation:
@@ -236,12 +246,12 @@ const quizQuestions = [
     question:
       'A contractor on a multi-contractor site must cooperate with the Principal Contractor by:',
     options: [
+      'All of the above',
+      'Complying with reasonable directions',
       'Following site rules',
       'Providing information for the Construction Phase Plan',
-      'Complying with reasonable directions',
-      'All of the above',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Contractors must cooperate with the Principal Contractor by following site rules, providing information for the CPP, reporting incidents, and complying with reasonable directions. This duty under Regulation 15 enables effective coordination.',
   },

@@ -15,7 +15,12 @@ const quizQuestions = [
   {
     id: 1,
     question: "What's the maximum horizontal support distance for standard PVC sheathed cable?",
-    options: ['250 mm', '300 mm', '400 mm', '450 mm'],
+    options: [
+      '250 mm',
+      '300 mm',
+      '400 mm',
+      '450 mm',
+    ],
     correctAnswer: 1,
     explanation:
       'Non-armoured PVC insulated and sheathed cables have a maximum horizontal support distance of 300mm to prevent excessive sagging.',
@@ -33,12 +38,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which type of cable support is required in escape routes?',
     options: [
-      'Plastic clips only',
+      'Construction (Design and Management)',
+      '60 seconds and 30 seconds into the test',
+      'Loss when joining fibres with different core sizes',
       'Metal fixings or non-combustible supports',
-      'Cable ties only',
-      'Adhesive mounts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 18th Edition Amendment 2 requires non-combustible supports in escape routes to prevent cable collapse during fire.',
   },
@@ -46,12 +51,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the main reason for closer support spacing on flexible cables?',
     options: [
-      'They are more expensive',
       'They sag more between fixings due to construction',
-      'They conduct more current',
-      'They are heavier than solid cables',
+      'No, because all three line currents must be equal',
+      'To reduce touch voltage between simultaneously accessible parts',
+      'Place it in a clearly labelled asbestos waste bag for disposal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Flexible cables have stranded conductors and softer sheathing that sags more readily, requiring support every 250mm horizontally.',
   },
@@ -61,8 +66,8 @@ const quizQuestions = [
     options: [
       'Indoor office environments',
       'Outdoor runs subject to wind/thermal expansion',
-      'Standard domestic installations',
       'Low-current lighting circuits',
+      'Standard domestic installations',
     ],
     correctAnswer: 1,
     explanation:
@@ -71,7 +76,12 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the maximum vertical support distance for SWA cable?',
-    options: ['400 mm', '500 mm', '600 mm', '700 mm'],
+    options: [
+      '400 mm',
+      '500 mm',
+      '600 mm',
+      '700 mm',
+    ],
     correctAnswer: 2,
     explanation:
       'SWA cables can be supported at 600mm intervals vertically, taking advantage of gravity to reduce sagging compared to horizontal runs.',
@@ -81,11 +91,11 @@ const quizQuestions = [
     question: 'Give one hazard caused by inadequate cable supports.',
     options: [
       'Improved cable flexibility',
-      'Sagging cables creating trip hazards',
-      'Reduced installation time',
       'Lower material costs',
+      'Reduced installation time',
+      'Sagging cables creating trip hazards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Inadequate supports cause cable sagging leading to trip hazards, mechanical strain on terminations, and potential fire route obstruction.',
   },
@@ -93,12 +103,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why is manufacturer guidance important for support spacing?',
     options: [
-      "It's legally required in all cases",
       'To ensure cable properties are properly accommodated',
       'To increase installation costs',
+      "It's legally required in all cases",
       'To make installation more complex',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Manufacturer specifications account for specific cable construction, weight, and mechanical properties that may require adjusted support spacing.',
   },
@@ -109,8 +119,13 @@ const quickCheckQuestions = [
   {
     id: 'support-distance',
     question: 'Which cable type typically requires the closest support spacing?',
-    options: ['SWA cable', 'Standard PVC T&E', 'Flexible cord', 'MICC cable'],
-    correctIndex: 2,
+    options: [
+      'Flexible cord',
+      'Standard PVC T&E',
+      'MICC cable',
+      'SWA cable',
+    ],
+    correctIndex: 0,
     explanation:
       'Flexible cords require the closest spacing (250mm horizontal) due to their stranded construction and tendency to sag.',
   },
@@ -120,10 +135,10 @@ const quickCheckQuestions = [
     options: [
       'They look more professional',
       "They're cheaper to install",
-      'They prevent cable collapse during fires',
       "They're easier to remove",
+      'They prevent cable collapse during fires',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Non-combustible supports prevent cables from falling and blocking escape routes during fires, as required by BS 7671 Amendment 2.',
   },
@@ -131,12 +146,12 @@ const quickCheckQuestions = [
     id: 'vertical-horizontal',
     question: 'Why can vertical cable runs typically have wider support spacing than horizontal?',
     options: [
-      'Gravity reduces sideways sagging',
       'Vertical cables carry less current',
-      "They're in protected locations",
       'Building codes are less strict',
+      'Gravity reduces sideways sagging',
+      "They're in protected locations",
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Gravity acts along the cable length in vertical runs, reducing lateral sagging that occurs in horizontal installations.',
   },

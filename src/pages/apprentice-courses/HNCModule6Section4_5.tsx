@@ -32,12 +32,12 @@ const quickCheckQuestions = [
     question:
       'What is the fundamental difference between carbon avoidance and carbon removal offsets?',
     options: [
-      'Avoidance is cheaper than removal',
+      'To prevent electromagnetic interference causing false safe signals',
+      'Excessive heat at connections, warm cable insulation, or hot components',
       'Avoidance prevents emissions; removal extracts CO2 already in the atmosphere',
-      'Removal is only for voluntary markets',
-      'Avoidance offsets expire after 10 years',
+      'When work methods change or new hazards are identified',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Carbon avoidance offsets prevent emissions that would otherwise occur (e.g., protecting forests, renewable energy projects), while removal offsets actively extract CO2 from the atmosphere (e.g., direct air capture, afforestation).',
   },
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     question:
       "Why is 'additionality' considered the most critical quality criterion for carbon offsets?",
     options: [
-      'It ensures offsets are permanent',
       'It guarantees the project would not have happened without offset funding',
-      'It means offsets can be counted multiple times',
-      'It relates to project location requirements',
+      'When additional insulation or identification is required',
+      '\\\\\\\\\\\\\\\'affected\\\\\\\\\\\\\\\' is correct — it is the verb meaning \\\\\\\\\\\\\\\'to have an impact on\\\\\\\\\\\\\\\'',
+      '2000 — chrysotile (white) asbestos was not fully banned in the UK until 1999',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Additionality ensures the emission reduction would not have occurred without the revenue from selling offsets. Without additionality, purchasing offsets does not create any real climate benefit - you are paying for something that would have happened anyway.',
   },
@@ -59,12 +59,12 @@ const quickCheckQuestions = [
     id: 'permanence',
     question: "What is the main risk associated with 'permanence' in nature-based carbon offsets?",
     options: [
-      'Projects may become too expensive',
+      'External hazards such as chemical spills or terrorist incidents make leaving the building more dangerous',
+      'Experiencing positive transformation that takes the person beyond their pre-trauma baseline',
+      'The cabling between separate items of equipment, with terminal references at each end',
       'Stored carbon can be released back to atmosphere through fires, disease, or land-use change',
-      'Verification standards may change',
-      'Market prices fluctuate over time',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Nature-based solutions like forests face reversal risks - fires, pests, disease, or future deforestation can release stored carbon back into the atmosphere, negating the offset benefit. This is why permanence monitoring and buffer pools are essential.',
   },
@@ -72,12 +72,12 @@ const quickCheckQuestions = [
     id: 'offset-hierarchy',
     question: 'According to best practice guidance, when should organisations use carbon offsets?',
     options: [
-      'As the primary strategy for achieving net-zero',
       'Only for residual emissions after maximising internal reductions',
-      'For all Scope 3 emissions',
-      'Whenever they are cheaper than internal reduction measures',
+      'To assess deterioration and continued safety of an existing installation',
+      'To establish the maximum allowable CO2 emissions for compliance',
+      'Input module, central processing unit (CPU), and output module',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The mitigation hierarchy requires organisations to first avoid emissions, then reduce what cannot be avoided, and only then offset residual emissions that cannot be eliminated through other means. Offsets should be a last resort, not a first choice.',
   },
@@ -88,12 +88,12 @@ const quizQuestions = [
     id: 1,
     question: 'Which type of carbon offset directly removes CO2 from the atmosphere?',
     options: [
-      'Renewable energy projects',
-      'Avoided deforestation (REDD+)',
+      'An operational energy performance rating for offices',
       'Direct air capture with carbon storage (DACCS)',
-      'Energy efficiency improvements',
+      'Determine the design current (Ib)',
+      'Through-bolts or heavy-duty anchors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Direct air capture with carbon storage (DACCS) physically removes CO2 from ambient air and stores it permanently. Renewable energy, REDD+, and efficiency projects are avoidance/reduction offsets that prevent emissions rather than removing existing atmospheric CO2.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: "What does the 'Gold Standard' certification indicate about a carbon offset project?",
     options: [
-      'It uses gold-plated equipment',
+      'Shift progressively from avoidance to removal offsets, and from short-lived to long-lived storage',
+      'When both the project developer and offset buyer claim the same emission reduction',
       'It meets rigorous criteria including additionality, verification, and sustainable development benefits',
-      'It is the cheapest available option',
-      'It is government-funded',
+      'Baseline setting is difficult, leading to credits for forests that were never at risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Gold Standard is a premium certification requiring projects to demonstrate additionality, undergo independent verification, and deliver measurable sustainable development benefits beyond carbon reduction, such as community health improvements or biodiversity protection.',
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: "What is 'double counting' in the context of carbon offsets?",
     options: [
-      "Counting the same offset twice in an organisation's inventory",
+      'Baseline setting is difficult, leading to credits for forests that were never at risk',
+      'Shift progressively from avoidance to removal offsets, and from short-lived to long-lived storage',
+      'It meets rigorous criteria including additionality, verification, and sustainable development benefits',
       'When both the project developer and offset buyer claim the same emission reduction',
-      'Using two different verification standards',
-      'Purchasing offsets from two different projects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Double counting occurs when the same emission reduction is claimed by multiple parties - for example, both the host country (for national targets) and the purchasing company. The Paris Agreement's Article 6 establishes 'corresponding adjustments' to prevent this.",
   },
@@ -127,8 +127,13 @@ const quizQuestions = [
     id: 4,
     question:
       'Which verification standard is most widely used for voluntary carbon market offsets?',
-    options: ['ISO 14001', 'Verified Carbon Standard (VCS/Verra)', 'BREEAM', 'PAS 2080'],
-    correctAnswer: 1,
+    options: [
+      'Verified Carbon Standard (VCS/Verra)',
+      'Artefacts, espoused values, basic assumptions',
+      'Capacitive humidity sensor',
+      'Line to neutral fault (short circuit)',
+    ],
+    correctAnswer: 0,
     explanation:
       'The Verified Carbon Standard (VCS), managed by Verra, is the most widely used standard in the voluntary carbon market, certifying over 1,800 projects and issuing more than 1 billion carbon credits. It provides methodology frameworks and registry infrastructure.',
   },
@@ -139,8 +144,8 @@ const quizQuestions = [
     options: [
       'Offsets can be used to meet 100% of targets',
       'Offsets should only be used for residual emissions after 90%+ reduction',
-      'Offsets are required for all target-setting',
       'Offsets are not permitted under any circumstances',
+      'Offsets are required for all target-setting',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: "What is 'leakage' in the context of carbon offset projects?",
     options: [
-      'Physical leakage of captured CO2',
+      'Purchasing renewable energy certificates (RECs)',
+      'Offsets should only be used for residual emissions after 90%+ reduction',
       'When emission reductions in one area cause increases elsewhere',
-      'Loss of offset credits due to market changes',
-      'Verification gaps in monitoring',
+      'A percentage of credits held back to cover potential reversal events',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Leakage occurs when protecting one forest from logging simply shifts deforestation to another unprotected area. Effective offset projects must account for leakage risk, either by expanding project boundaries or applying discount factors to credit calculations.',
   },
@@ -163,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the typical permanence requirement for high-quality carbon removal offsets?',
     options: [
-      '5-10 years',
-      '25-50 years',
+      'At the Best Efficiency Point (BEP)',
+      'Evaluate against expected service life',
+      'Issue corrected certificates',
       '100+ years (ideally 1,000+ years)',
-      'No specific requirement',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'High-quality carbon removal standards require storage for 100+ years minimum, with premium standards like the Oxford Principles recommending 1,000+ years. This reflects the long atmospheric lifetime of CO2 and the need for removals to genuinely counterbalance emissions.',
   },
@@ -176,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which of the following is NOT a recognised carbon offset project type?',
     options: [
+      'Purchasing renewable energy certificates (RECs)',
+      'Carbon capture during cement production',
       'Biochar production and soil application',
       'Enhanced weathering of minerals',
-      'Carbon capture during cement production',
-      'Purchasing renewable energy certificates (RECs)',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Renewable Energy Certificates (RECs) represent the environmental attributes of renewable electricity generation but do not themselves constitute carbon offsets. They cannot be used to claim emission reductions in carbon inventories - they relate to energy sourcing, not offsetting.',
   },
@@ -190,10 +195,10 @@ const quizQuestions = [
     question:
       "What is the 'Oxford Offsetting Principles' recommendation for offset portfolio composition over time?",
     options: [
-      'Use only the cheapest available offsets',
+      'A percentage of credits held back to cover potential reversal events',
       'Shift progressively from avoidance to removal offsets, and from short-lived to long-lived storage',
-      'Maintain a 50/50 split between project types',
-      'Focus exclusively on local projects',
+      'Baseline setting is difficult, leading to credits for forests that were never at risk',
+      'Offsets should only be used for residual emissions after 90%+ reduction',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,12 +208,12 @@ const quizQuestions = [
     id: 10,
     question: "What is a 'buffer pool' in the context of nature-based carbon offsets?",
     options: [
-      'A financial reserve for project costs',
+      'When both the project developer and offset buyer claim the same emission reduction',
+      'Offsets should only be used for residual emissions after 90%+ reduction',
       'A percentage of credits held back to cover potential reversal events',
-      'A geographic zone around the project boundary',
-      'A waiting period before credits can be traded',
+      'Corresponding adjustments to national inventories',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Buffer pools require a percentage of generated credits (typically 10-20%) to be held in reserve to compensate for potential reversals across the portfolio. If a project experiences fire or other loss, buffer credits can be cancelled to maintain overall integrity.',
   },
@@ -217,12 +222,12 @@ const quizQuestions = [
     question:
       'Under the Paris Agreement Article 6, what mechanism prevents double counting between countries?',
     options: [
-      'Carbon tariffs',
+      'Verified Carbon Standard (VCS/Verra)',
+      'When emission reductions in one area cause increases elsewhere',
+      'Purchasing renewable energy certificates (RECs)',
       'Corresponding adjustments to national inventories',
-      'Mandatory offset quotas',
-      'International offset taxes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Corresponding adjustments require the host country to add the transferred emission reductions back to its national inventory when credits are sold internationally, ensuring the reduction is only counted by the purchasing country. This maintains environmental integrity of national targets.',
   },
@@ -230,12 +235,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the primary criticism of using avoided deforestation (REDD+) offsets?',
     options: [
-      'They are too expensive',
       'Baseline setting is difficult, leading to credits for forests that were never at risk',
-      'They only work in tropical regions',
-      'They require too much land',
+      'When emission reductions in one area cause increases elsewhere',
+      'Shift progressively from avoidance to removal offsets, and from short-lived to long-lived storage',
+      'Offsets should only be used for residual emissions after 90%+ reduction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "REDD+ projects face significant baseline challenges - determining what would have happened without the project is inherently uncertain. Critics argue many projects generate credits for forests that faced little actual deforestation threat, undermining additionality and crediting 'phantom' reductions.",
   },

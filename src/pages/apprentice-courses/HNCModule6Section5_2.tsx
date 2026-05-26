@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'metering-hierarchy',
     question: 'What is a metering hierarchy in building services?',
     options: [
-      'A list of meter manufacturers ranked by quality',
       'A structured arrangement of meters from main intake to sub-circuits for energy apportionment',
-      'A maintenance schedule for meter calibration',
-      'A database of utility tariff structures',
+      'Letterforms are simpler with fewer decorative strokes, helping some readers (e.g. dyslexic) distinguish characters',
+      'To ensure exits are visible from a distance and confirm they lead outside',
+      'The maximum load the scaffold platform is designed to carry, classified by intended use',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A metering hierarchy is a structured arrangement of meters at different levels (main, sub-main, circuit) that enables energy consumption to be measured, apportioned, and analysed across a building or facility.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'sub-metering-purpose',
     question: 'What is the primary purpose of sub-metering in commercial buildings?',
     options: [
-      'To satisfy DNO requirements',
-      'To provide backup if the main meter fails',
       'To apportion energy costs and identify consumption patterns by area or tenant',
-      'To reduce the overall energy consumption automatically',
+      'Certificates, test results, maintenance records, and as-built drawings',
+      'Show the installation as actually constructed, including all variations',
+      'Visual inspection, earth continuity, insulation resistance and functional test',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Sub-metering enables energy costs to be apportioned fairly between tenants or departments, identifies areas of high consumption, and supports energy management initiatives by providing granular consumption data.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'amr-definition',
     question: 'What does AMR (Automatic Meter Reading) provide?',
     options: [
-      'Automatic energy bill payment',
+      'To reduce short-cycling and ensure minimum run times',
+      'You are significantly more likely to achieve them',
+      'Special procedures and equipment certification',
       'Remote collection of meter data without manual reading',
-      'Automatic adjustment of energy tariffs',
-      'Remote control of electrical loads',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'AMR systems automatically collect consumption data from meters and transfer it to a central database without the need for physical meter reading, enabling frequent data collection, billing accuracy, and energy analysis.',
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'ct-metering',
     question: 'When is CT (Current Transformer) metering typically required?',
     options: [
-      'For single-phase domestic supplies only',
+      'To assist with evacuation, check designated areas are clear, and report to the assembly point',
+      'The planned/unplanned ratio (or reactive/proactive split)',
       'When current exceeds direct-connect meter ratings (typically above 100A)',
-      'Only for emergency lighting circuits',
-      'When measuring voltage rather than current',
+      'Regulations setting minimum EPC ratings for rental properties',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'CT metering is used when circuit currents exceed the direct connection capability of meters (typically above 100A). CTs step down the current to a measurable level (usually 5A secondary) whilst maintaining proportionality.',
   },
@@ -86,8 +86,13 @@ const quizQuestions = [
     id: 1,
     question:
       'According to CIBSE TM39, what percentage of total building energy should typically be captured by sub-metering?',
-    options: ['At least 50%', 'At least 70%', 'At least 90%', '100% mandatory'],
-    correctAnswer: 2,
+    options: [
+      'At least 50%',
+      'At least 90%',
+      'At least 70%',
+      '100% mandatory',
+    ],
+    correctAnswer: 1,
     explanation:
       'CIBSE TM39 recommends that sub-metering should capture at least 90% of total building energy consumption to enable effective energy management and identification of consumption patterns.',
   },
@@ -95,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'In a typical metering hierarchy, Level 1 meters are:',
     options: [
-      'Circuit-level meters measuring individual loads',
-      'Sub-main meters at distribution board level',
-      'Fiscal/main meters at the building intake',
       'BMS monitoring points only',
+      'Circuit-level meters measuring individual loads',
+      'Fiscal/main meters at the building intake',
+      'Sub-main meters at distribution board level',
     ],
     correctAnswer: 2,
     explanation:
@@ -108,27 +113,37 @@ const quizQuestions = [
     id: 3,
     question: 'What is the typical pulse output from an energy meter?',
     options: [
-      '1 pulse per Wh',
       '1 pulse per 10 Wh',
-      '1 pulse per kWh',
+      '1 pulse per Wh',
       'Variable depending on load',
+      '1 pulse per kWh',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Standard energy meters typically output 1 pulse per kWh (or 1000 pulses per MWh). Some high-resolution meters may output 10 or 100 pulses per kWh for greater accuracy in monitoring applications.',
   },
   {
     id: 4,
     question: 'A Class 1 electricity meter has an accuracy of:',
-    options: ['±0.2%', '±0.5%', '±1.0%', '±2.0%'],
-    correctAnswer: 2,
+    options: [
+      '±1.0%',
+      '±0.5%',
+      '±0.2%',
+      '±2.0%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Class 1 meters have an accuracy of ±1.0% under reference conditions. Class 0.5 achieves ±0.5%, Class 0.2 achieves ±0.2%. Higher accuracy classes are used for fiscal metering and high-value monitoring.',
   },
   {
     id: 5,
     question: 'What is the standard secondary current for CT metering installations?',
-    options: ['1A', '5A', '10A', '100A'],
+    options: [
+      '1A',
+      '5A',
+      '100A',
+      '10A',
+    ],
     correctAnswer: 1,
     explanation:
       'The standard secondary current for CTs is 5A, although 1A secondary CTs are sometimes used for long cable runs to reduce voltage drop and power losses in the secondary circuit.',
@@ -137,8 +152,13 @@ const quizQuestions = [
     id: 6,
     question:
       'Which communication protocol is commonly used for AMR systems in commercial buildings?',
-    options: ['DALI', 'Modbus RTU/TCP', 'DMX512', '1-Wire'],
-    correctAnswer: 1,
+    options: [
+      'DALI',
+      'DMX512',
+      'Modbus RTU/TCP',
+      '1-Wire',
+    ],
+    correctAnswer: 2,
     explanation:
       'Modbus RTU (serial) and Modbus TCP (Ethernet) are widely used protocols for AMR systems, enabling meters to communicate consumption data to BMS or dedicated energy monitoring systems.',
   },
@@ -146,8 +166,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A data logger recording energy consumption every 15 minutes will generate how many readings per day?',
-    options: ['24 readings', '48 readings', '96 readings', '144 readings'],
-    correctAnswer: 2,
+    options: [
+      '24 readings',
+      '48 readings',
+      '144 readings',
+      '96 readings',
+    ],
+    correctAnswer: 3,
     explanation:
       '15-minute intervals result in 4 readings per hour × 24 hours = 96 readings per day. This is a common interval for half-hourly settlement metering and energy analysis.',
   },
@@ -155,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'For sub-metering tenant spaces, which meter configuration is most appropriate?',
     options: [
-      'Single-phase direct connect only',
       'Three-phase CT metering with MID approval',
       'Pulse counting from existing MCBs',
+      'Single-phase direct connect only',
       'Power factor meters only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'MID (Measuring Instruments Directive) approved three-phase CT meters are appropriate for tenant sub-metering as they provide the accuracy and legal traceability required for cost apportionment and potential recharging.',
   },
@@ -168,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'What information does a multi-function energy meter typically provide beyond kWh?',
     options: [
-      'Only voltage',
+      'Exposed parts may become live under fault conditions',
       'kWh, kVAh, kVArh, power factor, and demand',
-      'Temperature only',
-      'Only current measurements',
+      'Multiple trips to suppliers for forgotten materials',
+      'To ensure exact positioning as per drawings',
     ],
     correctAnswer: 1,
     explanation:
@@ -180,16 +205,26 @@ const quizQuestions = [
   {
     id: 10,
     question: 'The CT ratio for a 400A circuit using standard 5A secondary CTs would be:',
-    options: ['400/1', '400/5', '80/1', '2000/5'],
-    correctAnswer: 1,
+    options: [
+      '400/1',
+      '2000/5',
+      '400/5',
+      '80/1',
+    ],
+    correctAnswer: 2,
     explanation:
       'For a 400A circuit with 5A secondary CTs, the ratio is 400/5 (or 80:1). The meter must be programmed with this ratio to correctly calculate the primary current and energy consumption.',
   },
   {
     id: 11,
     question: 'Which CIBSE document provides detailed guidance on energy metering strategies?',
-    options: ['TM22', 'TM39', 'TM46', 'TM52'],
-    correctAnswer: 1,
+    options: [
+      'TM22',
+      'TM52',
+      'TM46',
+      'TM39',
+    ],
+    correctAnswer: 3,
     explanation:
       "CIBSE TM39 'Building Energy Metering' provides comprehensive guidance on metering strategies, hierarchy design, meter selection, and implementation for effective building energy management.",
   },
@@ -198,12 +233,12 @@ const quizQuestions = [
     question:
       'When integrating meters with a BMS, what is the primary advantage of using a dedicated energy monitoring system versus direct BMS connection?',
     options: [
-      'Lower installation cost',
       'Specialised analysis, reporting, and data storage capabilities',
-      'Faster response time for load control',
-      'Better compatibility with legacy equipment',
+      'Line-neutral faults where current is balanced',
+      'You may replace working components and miss the real fault',
+      'Overhead power lines, cables, beams and any other overhead obstructions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Dedicated energy monitoring systems provide specialised energy analysis, trend reporting, benchmarking, alarm management, and long-term data storage that general BMS systems may not offer to the same depth.',
   },

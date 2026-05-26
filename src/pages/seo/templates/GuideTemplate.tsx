@@ -3,7 +3,7 @@ import { SEOPageShell } from '@/components/seo/SEOPageShell';
 import { SEOReadingMeta } from '@/components/seo/SEOReadingMeta';
 import { SEOKeyTakeaways } from '@/components/seo/SEOKeyTakeaways';
 import { SEOFAQAccordion } from '@/components/seo/SEOFAQAccordion';
-import { SEORelatedPages, type RelatedPage } from '@/components/seo/SEORelatedPages';
+import { type RelatedPage } from '@/components/seo/SEORelatedPages';
 import { RecentReviews } from '@/components/seo/RecentReviews';
 import { SEOStickyMobileCTA } from '@/components/seo/SEOStickyMobileCTA';
 import { SEOInlineLeadMagnet } from '@/components/seo/SEOInlineLeadMagnet';
@@ -14,10 +14,12 @@ import { SEOHowToSteps } from '@/components/seo/SEOHowToSteps';
 import { SEOSocialProofBar } from '@/components/seo/SEOSocialProofBar';
 import { SEOTestimonialStrip } from '@/components/seo/SEOTestimonialStrip';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
-import { ArrowRight, FileCheck2, Zap } from 'lucide-react';
+import { ArrowRight, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import type { LucideIcon } from 'lucide-react';
 import type { TOCItem } from '@/components/seo/SEOTableOfContents';
 import type { BreadcrumbItem } from '@/components/seo/SEOBreadcrumbs';
+import { PageHero, Eyebrow, HubGrid, SectionHeader } from '@/components/college/primitives';
 
 interface ContentSection {
   id: string;
@@ -95,7 +97,6 @@ export default function GuideTemplate({
   breadcrumbs,
   tocItems,
   badge = 'Guide',
-  badgeIcon: BadgeIcon = FileCheck2,
   heroTitle,
   heroSubtitle,
   readingTime,
@@ -188,32 +189,29 @@ export default function GuideTemplate({
 
   return (
     <SEOPageShell breadcrumbs={breadcrumbs} tocItems={tocItems}>
-      {/* Hero */}
+      {/* Hero — editorial style */}
       <section className="pb-8">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-5">
-          <BadgeIcon className="w-4 h-4 text-yellow-400" />
-          <span className="text-sm font-medium text-yellow-400">{badge}</span>
-        </div>
-
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
-          {heroTitle}
-        </h1>
-
-        <p className="text-lg text-white leading-relaxed mb-6">{heroSubtitle}</p>
-
-        <div className="flex flex-wrap gap-3 mb-3">
-          <a
-            href="/auth/signup"
-            className="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-14 px-8 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold rounded-xl touch-manipulation transition-colors"
-          >
-            Start 7-Day Free Trial <ArrowRight className="w-4 h-4" />
-          </a>
-        </div>
-        <p className="text-xs text-white/60 mb-6">
+        <PageHero
+          eyebrow={badge.toUpperCase()}
+          title={heroTitle}
+          description={heroSubtitle}
+          tone="yellow"
+          actions={
+            <a
+              href="/auth/signup"
+              className="inline-flex items-center justify-center gap-2 h-11 px-5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-[13px] touch-manipulation transition-colors"
+            >
+              Start 7-day free trial <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          }
+        />
+        <p className="mt-3 text-[11.5px] text-white/60">
           No card required · Free for 7 days · Cancel anytime · Used by 1,000+ UK electricians
         </p>
 
-        <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />
+        <div className="mt-6">
+          <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />
+        </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-6">
           <SEOSocialShare url={breadcrumbs[breadcrumbs.length - 1]?.href || '/'} title={title} />
@@ -239,12 +237,15 @@ export default function GuideTemplate({
         </section>
       )}
 
-      {/* Content Sections — with auto mid-content CTAs every 2 sections */}
+      {/* Content Sections — editorial, numbered, with auto mid-content CTAs every 2 sections */}
       {sections.map((section, index) => (
         <div key={section.id}>
           <section id={section.id} className="pb-10 scroll-mt-24">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">{section.heading}</h2>
-            <div className="space-y-4 text-white leading-relaxed">{section.content}</div>
+            <SectionHeader
+              eyebrow={`${String(index + 1).padStart(2, '0')} · ${badge}`}
+              title={section.heading}
+            />
+            <div className="mt-6 space-y-4 text-white leading-relaxed">{section.content}</div>
           </section>
 
           {/* Lead magnet email capture — after the first section, only on
@@ -278,10 +279,38 @@ export default function GuideTemplate({
         </section>
       )}
 
-      {/* Related Pages */}
+      {/* Related Pages — editorial cards with real <a> tags for SEO link equity */}
       {relatedPages.length > 0 && (
         <section id="related" className="pb-10 scroll-mt-24">
-          <SEORelatedPages pages={relatedPages} />
+          <SectionHeader eyebrow="RELATED" title="Continue reading" />
+          <div className="mt-6">
+            <HubGrid columns={3}>
+              {relatedPages.map((page, i) => (
+                <Link
+                  key={page.href}
+                  to={page.href}
+                  className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 sm:p-7 lg:p-8 text-left min-h-[200px] sm:min-h-[240px] flex flex-col"
+                >
+                  <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-70 group-hover:opacity-100 transition-opacity" />
+                  <Eyebrow className="truncate">
+                    {String(i + 1).padStart(2, '0')} · {page.category}
+                  </Eyebrow>
+                  <h3 className="mt-4 text-xl sm:text-2xl lg:text-[26px] font-semibold text-white tracking-tight leading-[1.1]">
+                    {page.title}
+                  </h3>
+                  <p className="mt-2.5 text-[13px] leading-relaxed text-white max-w-[34ch] line-clamp-3">
+                    {page.description}
+                  </p>
+                  <div className="flex-grow" />
+                  <div className="mt-6 flex items-center justify-end pt-4 border-t border-white/[0.06]">
+                    <span className="text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
+                      Read →
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </HubGrid>
+          </div>
         </section>
       )}
 

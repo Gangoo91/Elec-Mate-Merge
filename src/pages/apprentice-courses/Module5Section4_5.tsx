@@ -22,10 +22,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why is coordinating equipment important on site?',
     options: [
-      'To increase project costs',
+      'Measure end-to-end resistance of each conductor (L, N, E)',
       'To ensure team members have what they need to work efficiently and safely',
-      'To create more paperwork',
-      'To slow down workflow',
+      'Immediately, where the inspector believes there is a risk of serious personal injury',
+      'Enabling components to be separated and reused at end of life',
     ],
     correctIndex: 1,
     explanation:
@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Name one common issue caused by poor coordination.',
     options: [
-      'Improved productivity',
-      'Better team relationships',
+      'At every change of direction to ensure visibility',
+      'At least three: emergency fund, tax provision, and general savings',
       'Multiple workers needing the same specialist tool at once',
-      'Reduced project costs',
+      'The cross-sectional area of the line conductor',
     ],
     correctIndex: 2,
     explanation:
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'How can equipment availability be tracked effectively?',
     options: [
-      'By memory only',
+      'Work requires load calculations and design assessment',
+      'Low sampling rate relative to signal frequency',
+      'Inhalation and skin absorption',
       'Using sign-in/out logs or booking systems',
-      'Leaving tools anywhere',
-      'No tracking needed',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Sign-in/out logs and booking systems provide clear tracking of who has which equipment and when it should be returned.',
   },
@@ -64,10 +64,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why is equipment coordination important?',
     options: [
-      'To create more work',
+      'Correct the wiring error and retest before energisation',
       'To ensure team members have what they need to work efficiently and safely',
-      'To increase project costs',
-      'To slow down progress',
+      'The time specified for the circuit type (0.4s for final, 5s for distribution)',
+      'Internal thermal mass moderates temperature swings and reduces peak loads',
     ],
     correctAnswer: 1,
     explanation:
@@ -88,12 +88,12 @@ const quizQuestions = [
     id: 3,
     question: 'Give one example of shared equipment that often requires scheduling.',
     options: [
-      'Personal hand tools',
-      'MEWPs or scaffold towers',
       'Individual PPE',
+      'Personal hand tools',
       'Personal notebooks',
+      'MEWPs or scaffold towers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'MEWPs (Mobile Elevating Work Platforms) and scaffold towers are expensive shared equipment that multiple teams need, requiring careful scheduling.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is a simple system for tracking who has equipment?',
     options: [
-      'Memory only',
       'A sign-in/out or booking log',
-      'No system needed',
-      'Verbal agreements',
+      'Kinking or creating uneven bends',
+      'Green rectangle or square',
+      'Protect people and property',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Sign-in/out logs provide clear documentation of who has equipment, when it was taken, and when it should be returned.',
   },
@@ -114,10 +114,10 @@ const quizQuestions = [
     id: 5,
     question: 'What should be done at daily team briefings?',
     options: [
-      'Discuss personal matters only',
+      'To enable safe jacket removal without cutting tools',
       'Plan equipment use and resolve potential conflicts',
-      'Ignore resource planning',
-      'Focus only on weather',
+      'Verify continuity and earth fault loop impedance',
+      'A bi-energy machine that can switch between electric and diesel',
     ],
     correctAnswer: 1,
     explanation:
@@ -126,8 +126,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is one risk of not coordinating equipment properly?',
-    options: ['Improved safety', 'Unsafe improvisation', 'Better productivity', 'Cost savings'],
-    correctAnswer: 1,
+    options: [
+      'Improved safety',
+      'Better productivity',
+      'Unsafe improvisation',
+      'Cost savings',
+    ],
+    correctAnswer: 2,
     explanation:
       "Poor coordination can lead to workers improvising with inappropriate or unsafe equipment when the correct tools aren't available.",
   },
@@ -135,12 +140,12 @@ const quizQuestions = [
     id: 7,
     question: 'How should equipment be returned after use?',
     options: [
-      'In any condition',
+      'Current at or above locked rotor current for extended period',
+      'Triple-N harmonics add in the neutral rather than cancelling',
+      'Degree or higher qualification in building services',
       'In good condition, stored, and ready for the next user',
-      'Damaged is acceptable',
-      'Left where last used',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Equipment must be returned in good condition and properly stored to maintain its usability for the next team member.',
   },
@@ -148,12 +153,12 @@ const quizQuestions = [
     id: 8,
     question: 'What type of tools should every worker provide themselves?',
     options: [
-      'All tools including specialist equipment',
       'Basic hand tools',
       'Only PPE',
+      'All tools including specialist equipment',
       'No tools at all',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Workers should provide their own basic hand tools, while larger or specialist equipment can be shared through coordination systems.',
   },
@@ -161,10 +166,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why is communication important in equipment coordination?',
     options: [
-      'It creates more meetings',
+      'When the MCB trips immediately — this indicates a dead short',
       'It prevents clashes and ensures fair use of shared resources',
-      'It slows down work',
-      "It's not important",
+      'Lower WIP limits generally reduce lead time for each job',
+      'Until the end of construction work at the site',
     ],
     correctAnswer: 1,
     explanation:
@@ -174,12 +179,12 @@ const quizQuestions = [
     id: 10,
     question: 'What was the problem in the warehouse lighting project example?',
     options: [
-      'Too much equipment available',
+      'Reduces energy costs and environmental impact',
+      'Protection against finger contact with live parts',
       'Two teams needed the same scissor lift at once, causing delays',
-      'Equipment was too expensive',
-      'No workers available',
+      'Emergency lighting is required regardless of ceiling height in occupied spaces',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The lack of a booking system meant two teams needed the same scissor lift simultaneously, causing unnecessary delays and lost productivity.',
   },

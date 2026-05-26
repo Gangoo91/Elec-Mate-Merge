@@ -41,12 +41,12 @@ const checks = [
     question:
       'Which organisation publishes a Code of Conduct that applies to electrical engineers and technicians?',
     options: [
-      'The Health and Safety Executive (HSE).',
       'The Institution of Engineering and Technology (IET) — Rules of Conduct setting standards for integrity, competence, public safety, professional judgement and supporting others. Members are expected to behave in line with the Rules and can be subject to disciplinary action for breach.',
-      'HMRC.',
-      'Local authority building control.',
+      'Below 200 Ω for general installations; below 100 Ω is preferred. Soil resistance varies significantly with moisture (worst case dry summer); designing for an electrode well below the absolute Reg 411.5.3 maximum gives compliance margin year-round and reliability when soil dries out.',
+      'The deliberate adjustment of electricity consumption by end users in response to price signals, grid conditions or direct requests from the system operator — shifting demand away from peak periods to reduce strain on the network and avoid the need for expensive peaking generation',
+      'Disposing of waste correctly (especially hazardous materials), minimising energy waste, recycling where possible, complying with environmental regulations, and considering the environmental impact of maintenance decisions',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The IET publishes Rules of Conduct that bind members. They cover the five headline duties: act with integrity; maintain competence; protect public safety; exercise sound professional judgement; support others' professional development. CPS schemes (NICEIC, NAPIT) align their own scheme rules with the same broad principles. Breach can lead to scheme suspension, loss of professional registration and reputational harm.",
   },
@@ -54,10 +54,10 @@ const checks = [
     id: 'mod7-s3-sub5-cash-vat',
     question: 'A client offers you cash to avoid VAT on a job. How should you respond?',
     options: [
-      'Accept if the amount is small.',
+      'A4:2026 made Cmin = 0.95 explicit in the calculation. Old: max Zs = U0 / Ia = 230 / 160 = 1.44 Ω (no Cmin). New: max Zs = U0 × Cmin / Ia = 230 × 0.95 / 160 = 1.37 Ω. The 5 percent reduction is the Cmin factor working through.',
       'Politely decline and explain you must work within the law. Tax evasion is a criminal offence under the Fraud Act 2006 and VAT legislation; accepting it puts your business, scheme registration and personal liability at serious risk. Decline firmly without lecturing the client.',
-      'Pretend to accept and report the client to HMRC behind their back.',
-      'Offer a discount but still pocket the VAT.',
+      'A licensed asbestos removal contractor must carry out the work, with full RPE, decontamination procedures, air monitoring, a specific asbestos plan of work and notification to the HSE where required',
+      'A first fault to earth has occurred. The system stays energised by design (continuity of supply matters in critical settings) but the fault must be located and rectified as soon as practical, before a second fault on a different conductor causes auto-disconnection at TN/TT-style fault current levels',
     ],
     correctIndex: 1,
     explanation:
@@ -67,12 +67,12 @@ const checks = [
     id: 'mod7-s3-sub5-confidentiality',
     question: 'What does professional confidentiality typically cover on a domestic job?',
     options: [
-      'Never speaking about any work to anyone.',
+      "Compliance with HASAWA s.2(2)(a) — 'safe systems of work' for an electrical installation. Because EAWR is a regulation made under HASAWA, demonstrating EAWR compliance through BS 7671 also demonstrates discharge of the underlying HASAWA s.2 / s.3 duties for the electrical-system part of the work.",
+      "To discharge their CDM 2015 duty to ensure the workers on site are competent for the work. The ECS card is the industry-recognised proof of competence for electrical workers; main contractors use it to evidence that they checked competence before allowing entry. Failure to check competence (with no card or other evidence) leaves the main contractor exposed under CDM.",
       "Protecting the client's personal information, security arrangements (alarm codes, key locations, access routines) and any commercially or personally sensitive matters you become aware of during the work. Casual chat about 'they've got a nice setup' can enable theft and breach the Data Protection Act 2018 if shared further.",
-      'Refusing to give the customer their EIC.',
-      'Refusing to speak to other trades on site.',
+      "Because the principal contractor (or main installer) carries practical and often legal responsibility for what happens on their site, including the conduct, safety and quality of sub-contractor work. CDM 2015 places duties on the PC for site coordination. The firm's policies typically require sub-contractors to be vetted, briefed, given clear scope, paid promptly and held to the same conduct standards as employees.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Confidentiality covers everything you see, hear or are told as a function of being on site. Personal data (names, addresses, contact details) is governed by UK GDPR and the Data Protection Act 2018. Security arrangements are common-sense confidential. Commercial information picked up on commercial sites is also protected — sharing or trading on it is misconduct and can be unlawful.",
   },
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       "You discover a colleague has been signing off work without completing proper tests. What's the professional response?",
     options: [
-      "Ignore it — it's not your problem.",
-      "Confront them publicly on site to embarrass them into changing.",
+      'PASS. BS 7671 643.7 maximum at I∆n for general-type RCD = 300 ms. A reading of 28 ms is well within limits and matches expected for a healthy modern RCD (typical 10–30 ms). The 1×IΔn test is also typically &lt;20 ms on a healthy device. If the trip-time was 250 ms (still passing) or 290 ms (still passing), it would be borderline and worth flagging. If 350 ms — fail.',
       'Raise it with your supervisor or QS in line with the firm whistleblowing process; document what you saw, when and where. Falsified certificates are dangerous to the public and a criminal matter under EWR 1989 and the Fraud Act 2006. You have a duty under EWR Reg 3 not to be complicit.',
-      'Sign off the next batch yourself so the rota looks balanced.',
+      'A formal recognition that you hold the specialist solar PV competence — typically gained by passing AM2S (the Solar PV variant of AM2) or by completing an MCS-approved PV installer course alongside time-served PV installation experience. The endorsement allows you to work on PV installations under MCS-registered firms.',
+      'Sealing arrangements that maintain the fire resistance rating of the element penetrated — using tested intumescent products (pillows, mortar, putty, sleeves) appropriate to the fire rating, cable type, and bundle size.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Reporting through the proper channel protects the public and you. Falsifying test results is a serious matter — it endangers occupants and breaches both EWR 1989 and CPS scheme rules. The Public Interest Disclosure Act 1998 protects workers from retaliation for raising genuine concerns. Don't tackle it on the shop floor; escalate calmly.",
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the primary purpose of professional codes of conduct in the electrical industry?',
     options: [
-      'To push prices up.',
+      "They may unintentionally alienate colleagues, miss important social cues, fail to adapt their communication style to different audiences, and receive repeated negative feedback they cannot understand or act upon",
+      "Allow the rotor to operate at varying speeds (matching wind conditions for maximum energy capture) while delivering power at fixed grid frequency — the variable-frequency AC from the generator is converted to DC then back to grid-frequency AC",
       "To protect the public, maintain industry standards and uphold the profession's reputation. The codes formalise the link between technical competence and ethical behaviour — both are needed to be a competent electrician within the meaning of EWR 1989.",
-      'To restrict competition.',
-      'To make paperwork harder.',
+      "Meets the minimum but warrants investigation per GN3 — sectional testing and visual inspection to determine if it represents normal length-related leakage or a developing fault",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Codes of conduct codify the behaviours that protect end-users from competent-but-corrupt or competent-but-careless practitioners. They sit alongside technical standards (BS 7671) and statutory duties (EWR 1989, HASAWA 1974) to define what 'competent' actually means in practice.",
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'How should you represent your employer when dealing with clients?',
     options: [
-      'Always criticise competitors to win work.',
+      "A loose termination at one end has oxidised over the three years — surface oxide film grows when contact pressure is insufficient, contact resistance climbs, the cable resistance hasn\\\\\\\\\\\\\\\\'t changed but the joint has degraded. Investigate, identify the bad terminal, re-make the joint, retest.",
+      "The generator output voltage and frequency (confirming the generator has started and reached stable output), then the ATS control circuit, transfer contactor coils, interlock mechanism and control wiring for faults",
+      "Complete and sign the documentation for their own scope of responsibility, clearly note the outstanding sign-off, and arrange for the responsible person to review and sign at the earliest opportunity",
       "Behave professionally, maintain confidentiality about internal matters, never criticise colleagues or competitors, only promise what the firm can deliver and refer complex issues to the right person rather than guess. You're the firm's public face on every call.",
-      'Share internal company information to look knowledgeable.',
-      'Promise whatever the client wants to lock the job in.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Every client interaction is reputation — yours and the firm's. Speak well of colleagues and competitors (or stay silent), maintain confidentiality, refer issues you can't handle to the QS or office, and never make commitments you can't honour. The Bribery Act 2010 also forbids 'commercial advantage' gifts and kickbacks in either direction.",
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'A homeowner asks you to install a socket outlet directly above their bathroom basin. What is the professional response?',
     options: [
-      'Install it because "the customer is always right".',
-      'Refuse without explanation and leave.',
       "Explain the BS 7671 special-location zones (Section 701) for rooms containing a bath or shower — socket outlets are prohibited within zones, with very limited exceptions (BS EN 61558-2-5 shaver sockets) — and offer the compliant alternatives. Customer education is part of the job.",
-      "Install it but don't list it on the certificate.",
+      "It means the local LV cable, transformer or upstream HV network can’t safely accept the additional export without reinforcement (typically a transformer upgrade or cable replacement). The customer either pays for the reinforcement (often £10,000+), accepts an export-limited install (the inverter is throttled to a lower export rating), or chooses not to proceed.",
+      "Management of Health and Safety at Work Regulations 1999 Reg 3 — every employer (and every self-employed person) must make a 'suitable and sufficient' assessment of risks to health and safety. Reg 3(6) requires firms with five or more employees to record the significant findings.",
+      "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I always mess things up (permanence), I am useless at everything (pervasiveness), and it is completely my fault because I am incompetent (personalisation)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" — treating the setback as permanent, pervasive, and entirely personal",
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Professional conduct requires plain-English explanation of why the regs exist and offering compliant alternatives (shaver socket, socket outside the room near the door). Walking away with no explanation is unhelpful; doing the non-compliant work is dishonest and unsafe. The right answer is education plus alternatives.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 5,
     question: 'What should you do if you make a mistake during an installation?',
     options: [
-      'Hide it and hope no one notices.',
-      'Blame the materials supplier.',
+      'Through the transfer of heat energy as electromagnetic waves (infrared radiation) that travel through air or vacuum',
       'Own up to it, put it right properly at your own expense, document the corrective action, and treat it as CPD — what went wrong and how to stop it recurring.',
-      'Leave the site before the QS arrives.',
+      'Longer cable = MORE insulation surface in parallel = LOWER measured IR. Test result expected to be inversely proportional to length',
+      'Confirm all personnel are clear, remove personal locks, remove danger notices, replace covers, then re-energise',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Owning mistakes is core professional integrity. Hiding a defect creates personal liability under EWR 1989 ('person who caused or permitted'), exposes the firm to contractual claims, and damages trust if discovered later. The right loop is: stop, declare, fix, document, learn. Most insurance and scheme policies expect that exact behaviour.",
   },
@@ -151,10 +151,10 @@ const quizQuestions = [
     question:
       "You overhear confidential information about a commercial client's business plans while on site. What's the right action?",
     options: [
-      'Share it with colleagues over a pint.',
-      "Approach the client's competitors with the information.",
+      'Walk them through the key symbols, highlight what they care about (sockets, switches, locations) and offer to print a simplified version',
+      'Report it, investigate the root cause, share the lesson with the team — the same gap kills the next person if it isn’t closed',
       'Treat it as confidential, do not disclose or use it, and do not record it. This is part of your professional duty even though the information was incidental to your work.',
-      'Post about it on social media for engagement.',
+      'Electrical equipment, hot surfaces, friction, static electricity, hot work (welding/cutting), radiant heat, and naked flames',
     ],
     correctAnswer: 2,
     explanation:
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'How should you handle disagreements with other trades on a construction site?',
     options: [
-      'Argue loudly to establish dominance.',
+      "Because verbal changes leave no audit trail. Reg 644.1.1 requires the EIC to be backed by documentation that matches the install; a phone call between site and office does not produce that documentation. Structured RFIs produce the trail.",
+      "Carrying out any building, civil engineering or engineering construction work; including alteration, renovation, demolition, conversion, repair, maintenance, decoration, removal of structures, installation, removal, maintenance of mechanical / electrical / similar services.",
+      "Contractor must satisfy themselves the client knows their CDM client duties before starting work — particularly relevant on commercial projects where domestic-style cascade doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t apply.",
       "Discuss professionally with the trade contact first, escalate to the site manager / principal contractor if it affects your work, document any decisions that change scope, and never let it impact the customer's view of the project.",
-      'Do whatever they say to avoid conflict.',
-      'Phone the client to complain.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'CDM 2015 names the principal contractor as the coordinator on construction sites. Most coordination disputes belong with them, not with the client. Document any changes in writing — verbal agreements between trades evaporate by the next site meeting. Stay polite even when the other party is not; the calm party wins the audit trail.',
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the appropriate action if you are asked to work beyond your competence?',
     options: [
-      'Try it anyway and hope for the best.',
       'Politely decline and explain your limitation, suggesting a colleague or specialist who is qualified. Working outside competence breaches EWR 1989 Reg 16 and is also a scheme rule for CPS-registered firms.',
-      'Accept and "learn as you go" on a live system.',
-      'Subcontract it secretly without telling the client.',
+      'A statutory cost recovery scheme charging a hourly fee for HSE inspector time spent identifying and helping to address material breaches of H&S law',
+      'The total greenhouse gas emissions associated with the manufacture, transport, installation, maintenance, and end-of-life disposal of building materials and components',
+      'Confirm L-PE = nominal voltage (~230V), N-PE = small voltage (typically <5V), and L-N = nominal — using approved voltage indicator at the cut-out or main switch',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "EWR 1989 Reg 16 is the statutory underpinning: no person shall be engaged in work activity where technical knowledge or experience is necessary to prevent danger unless they possess such knowledge or experience (or are supervised). 'Have a go' is not a professional response — refer to a specialist or to your QS.",
   },

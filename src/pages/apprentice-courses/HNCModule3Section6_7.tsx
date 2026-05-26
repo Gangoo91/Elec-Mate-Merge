@@ -33,7 +33,12 @@ const quickCheckQuestions = [
   {
     id: 'g99-threshold',
     question: 'What is the power threshold above which G99 application is required instead of G98?',
-    options: ['3.68kW', '11.04kW', '16kW', '50kW'],
+    options: [
+      '3.68kW',
+      '11.04kW',
+      '16kW',
+      '50kW',
+    ],
     correctIndex: 2,
     explanation:
       'G99 applies to generating equipment exceeding 16kW per phase (or 50kW three-phase total). Below this, the simpler G98 notification process applies for domestic and small commercial installations.',
@@ -41,7 +46,12 @@ const quickCheckQuestions = [
   {
     id: 'bess-chemistry',
     question: 'Which battery chemistry is most commonly used in commercial BESS installations?',
-    options: ['Lead-acid', 'Lithium iron phosphate (LFP)', 'Nickel-cadmium', 'Flow batteries'],
+    options: [
+      'The calculated design value',
+      'Lithium iron phosphate (LFP)',
+      'Mobile Elevated Work Platform',
+      'Yes, if properly insulated',
+    ],
     correctIndex: 1,
     explanation:
       'Lithium iron phosphate (LiFePO4/LFP) dominates commercial BESS due to superior safety (thermal stability), longer cycle life (6000+ cycles), and better round-trip efficiency (95%+) compared to other chemistries.',
@@ -50,8 +60,13 @@ const quickCheckQuestions = [
     id: 'ev-mode2',
     question:
       'What is the maximum current permitted for Mode 2 EV charging from a standard UK socket?',
-    options: ['8A', '10A', '13A', '16A'],
-    correctIndex: 1,
+    options: [
+      '10A',
+      '8A',
+      '13A',
+      '16A',
+    ],
+    correctIndex: 0,
     explanation:
       'Mode 2 charging uses an in-cable control box (ICCB) limiting current to 10A maximum from a standard 13A socket. This provides thermal protection for continuous charging loads over several hours.',
   },
@@ -59,12 +74,12 @@ const quickCheckQuestions = [
     id: 'islanding-detection',
     question: 'What is the primary safety concern that anti-islanding protection addresses?',
     options: [
-      'Overvoltage damage to equipment',
+      'Installation certificate and relevant schedules',
+      'Loose connections or corroded terminals',
       'Energising the grid during maintenance',
-      'Frequency instability',
-      'Power quality issues',
+      'Inform the supervisor immediately',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Anti-islanding prevents a generator from continuing to energise a section of grid that has been disconnected, protecting maintenance workers from unexpected live conductors. G98/G99 mandate Loss of Mains (LoM) protection.',
   },
@@ -87,7 +102,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A 10kWp PV system produces 9500kWh annually. What is the specific yield?',
-    options: ['850 kWh/kWp', '900 kWh/kWp', '950 kWh/kWp', '1000 kWh/kWp'],
+    options: [
+      '1000 kWh/kWp',
+      '850 kWh/kWp',
+      '950 kWh/kWp',
+      '900 kWh/kWp',
+    ],
     correctAnswer: 2,
     explanation:
       'Specific yield = Annual production / Installed capacity = 9500kWh / 10kWp = 950 kWh/kWp. UK systems typically achieve 850-1000 kWh/kWp depending on location, orientation and shading.',
@@ -95,8 +115,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What round-trip efficiency should be expected from a modern lithium BESS?',
-    options: ['70-75%', '80-85%', '90-95%', '98-99%'],
-    correctAnswer: 2,
+    options: [
+      '80-85%',
+      '70-75%',
+      '98-99%',
+      '90-95%',
+    ],
+    correctAnswer: 3,
     explanation:
       'Modern lithium batteries achieve 90-95% round-trip efficiency (energy out vs energy in). Losses occur in the battery cells, BMS, inverter conversion and parasitic loads (cooling, controls).',
   },
@@ -104,28 +129,38 @@ const quizQuestions = [
     id: 4,
     question: 'What is the purpose of export limitation in a grid-connected PV system?',
     options: [
-      'To maximise self-consumption',
+      'Both A and B',
       'To comply with DNO connection agreements',
       'To protect the inverter from damage',
-      'Both A and B',
+      'To maximise self-consumption',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Export limitation serves both purposes: it maximises self-consumption (improving financial returns) and complies with DNO requirements where network capacity is constrained. Many G98/G99 agreements include export limits.',
   },
   {
     id: 5,
     question: 'Which EV charging mode requires a dedicated circuit with EVSE (wallbox)?',
-    options: ['Mode 1', 'Mode 2', 'Mode 3', 'Mode 4'],
-    correctAnswer: 2,
+    options: [
+      'Mode 2',
+      'Mode 3',
+      'Mode 4',
+      'Mode 1',
+    ],
+    correctAnswer: 1,
     explanation:
       'Mode 3 uses a dedicated EVSE (Electric Vehicle Supply Equipment) permanently connected to the installation. It provides pilot signal communication for smart charging features and typically operates at 7kW (32A single-phase) or 22kW (32A three-phase).',
   },
   {
     id: 6,
     question: 'What is the minimum cable size required for a 7.4kW (32A) EV charger on a 20m run?',
-    options: ['4mm²', '6mm²', '10mm²', '16mm²'],
-    correctAnswer: 1,
+    options: [
+      '4mm²',
+      '10mm²',
+      '6mm²',
+      '16mm²',
+    ],
+    correctAnswer: 2,
     explanation:
       'A 32A load requires minimum 6mm² cable for current capacity. For a 20m run, voltage drop = 32A × 40m × 3.08mΩ/m = 3.94V (1.7%), within the 5% limit. 6mm² is suitable for this installation.',
   },
@@ -133,8 +168,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What frequency deviation triggers Loss of Mains protection disconnection under G98/G99?',
-    options: ['±0.2Hz', '±0.5Hz', '±1.5Hz', '±2.5Hz'],
-    correctAnswer: 2,
+    options: [
+      '±0.2Hz',
+      '±0.5Hz',
+      '±2.5Hz',
+      '±1.5Hz',
+    ],
+    correctAnswer: 3,
     explanation:
       'G98/G99 require disconnection when frequency deviates beyond 47.5Hz-52Hz (±1.5Hz from 50Hz nominal). Rate of Change of Frequency (RoCoF) protection must also disconnect at >1Hz/s to detect islanding conditions.',
   },
@@ -143,12 +183,12 @@ const quizQuestions = [
     question:
       'A building has 50kW PV, 100kWh BESS and 200kW peak demand. What BESS sizing ratio provides 30 minutes peak shaving?',
     options: [
-      '0.25C (100kW discharge)',
-      '0.5C (50kW discharge)',
       '1C (100kW discharge)',
       '2C (200kW discharge)',
+      '0.25C (100kW discharge)',
+      '0.5C (50kW discharge)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'To shave 100kW from 200kW peak for 30 minutes requires 50kWh (100kW × 0.5h). At 1C rate, the 100kWh BESS can deliver 100kW, providing 50kWh in 30 minutes while maintaining battery health.',
   },
@@ -156,12 +196,12 @@ const quizQuestions = [
     id: 9,
     question: 'What is the key advantage of AC-coupled over DC-coupled battery systems?',
     options: [
-      'Higher efficiency',
-      'Lower cost',
+      'Men who are feeling low or suicidal — 0800 58 58 58',
       'Flexibility - can retrofit to existing PV',
-      'Smaller cable sizes',
+      'Overheating components or insulation breakdown',
+      'Connecting multiple hubs to work together',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'AC-coupled systems connect the battery via its own inverter to the AC distribution. This allows retrofitting to any existing PV system and provides independence from the PV inverter. DC-coupled systems offer slightly higher efficiency but require compatible hybrid inverters.',
   },
@@ -170,12 +210,12 @@ const quizQuestions = [
     question:
       'Under the Electric Vehicles (Smart Charge Points) Regulations 2021, what feature is mandatory for domestic chargepoints?',
     options: [
-      'Solar integration capability',
+      'The ratio of collector current to base current',
+      'Summarising and checking understanding',
       'Off-peak default charging (smart functionality)',
-      'Vehicle-to-Grid (V2G) capability',
-      'Three-phase connection',
+      'It varies with the equation of time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The 2021 Regulations mandate that new domestic chargepoints must have smart functionality, defaulting to off-peak charging times to reduce grid strain. They must also be capable of responding to demand-side response signals.',
   },

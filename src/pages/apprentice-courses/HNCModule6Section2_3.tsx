@@ -31,8 +31,13 @@ const quickCheckQuestions = [
     id: 'biomass-fuel-types',
     question:
       'Which biomass fuel type typically offers the most consistent combustion characteristics?',
-    options: ['Logs', 'Wood chips', 'Wood pellets', 'Miscanthus bales'],
-    correctIndex: 2,
+    options: [
+      'Wood pellets',
+      'Logs',
+      'Miscanthus bales',
+      'Wood chips',
+    ],
+    correctIndex: 0,
     explanation:
       'Wood pellets offer the most consistent combustion due to standardised moisture content (typically <10%), uniform size, and consistent calorific value. This enables precise automated control and higher combustion efficiency.',
   },
@@ -40,10 +45,10 @@ const quickCheckQuestions = [
     id: 'fuel-storage',
     question: 'What is the primary reason biomass fuel stores must be kept dry?',
     options: [
-      'To prevent pest infestation',
+      'No - only employers with 5 or more employees',
       'Moisture reduces calorific value and combustion efficiency',
-      'To comply with fire regulations',
-      'To prevent odour issues',
+      'Gradual exposure through progressively challenging speeches',
+      'Installing fibre units into pre-installed tubes using air pressure',
     ],
     correctIndex: 1,
     explanation:
@@ -54,12 +59,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary method of particulate emissions control in modern biomass boilers?',
     options: [
-      'Wet scrubbers',
+      'To highlight changes and modifications',
+      'Green-sheathed twisted pair cable certified for KNX',
+      'Motors and variable speed drives (VSDs)',
       'Electrostatic precipitators or cyclonic separators',
-      'Catalytic converters',
-      'Carbon filters',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Modern biomass boilers typically use electrostatic precipitators (ESP) or cyclonic/multicyclonic separators to remove particulate matter from flue gases. ESPs are highly effective, achieving >99% particulate removal.',
   },
@@ -67,12 +72,12 @@ const quickCheckQuestions = [
     id: 'buffer-vessel',
     question: 'Why is a buffer vessel essential in most biomass heating systems?',
     options: [
-      'To store hot water for domestic use',
       'To prevent boiler short-cycling and thermal shock',
+      'To store hot water for domestic use',
       'To filter impurities from the system',
       'To increase system pressure',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Buffer vessels prevent short-cycling (frequent on/off operation) which reduces efficiency and increases emissions. They also protect against thermal shock during load changes and provide thermal mass for more stable operation.',
   },
@@ -83,7 +88,12 @@ const quizQuestions = [
     id: 1,
     question:
       'What moisture content is typically required for wood pellets to meet ENplus A1 quality standard?',
-    options: ['Less than 5%', 'Less than 10%', 'Less than 15%', 'Less than 20%'],
+    options: [
+      'Less than 5%',
+      'Less than 10%',
+      'Less than 15%',
+      'Less than 20%',
+    ],
     correctAnswer: 1,
     explanation:
       'ENplus A1 quality pellets must have moisture content below 10% (typically 8-10%). This ensures consistent combustion, high calorific value (minimum 4.6 kWh/kg), and reliable automatic feed system operation.',
@@ -93,12 +103,12 @@ const quizQuestions = [
     question:
       'Which type of biomass boiler is most suitable for small commercial applications requiring automated operation?',
     options: [
+      'Batch-fed chip boiler',
       'Log gasification boiler',
       'Pellet boiler with vacuum feed',
-      'Batch-fed chip boiler',
       'Straw bale boiler',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Pellet boilers with vacuum or auger feed systems offer fully automated operation ideal for small commercial applications. They provide precise modulation, automatic ignition, and minimal operator intervention.',
   },
@@ -106,8 +116,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the typical storage volume required for wood pellets to provide one heating season for a 50kW system?',
-    options: ['2-3 tonnes', '5-8 tonnes', '10-15 tonnes', '20-25 tonnes'],
-    correctAnswer: 1,
+    options: [
+      '10-15 tonnes',
+      '2-3 tonnes',
+      '20-25 tonnes',
+      '5-8 tonnes',
+    ],
+    correctAnswer: 3,
     explanation:
       "A 50kW pellet boiler operating at average load typically requires 5-8 tonnes of pellets annually. Storage should accommodate at least one delivery (typically 3-6 tonnes) or ideally a full season's supply.",
   },
@@ -116,12 +131,12 @@ const quizQuestions = [
     question:
       'What is the minimum recommended flue height above roof level for a biomass boiler installation?',
     options: [
-      '0.5 metres',
       '1 metre above highest point within 10m',
-      '2 metres above eaves',
-      '3 metres above boiler room',
+      'Pellet boiler with vacuum feed',
+      'Multi-zone stratified thermal store',
+      'Medium Combustion Plant Directive (MCPD)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Flue terminals should be at least 1 metre above the highest point of any structure within 10 metres to ensure adequate dispersion of combustion products and prevent downdraught issues.',
   },
@@ -131,8 +146,8 @@ const quizQuestions = [
     options: [
       'Auger feed system',
       'Pneumatic vacuum system',
-      'Gravity feed system',
       'Belt conveyor system',
+      'Gravity feed system',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,20 +157,25 @@ const quizQuestions = [
     id: 6,
     question: 'What is the primary purpose of a de-ashing system in a biomass boiler?',
     options: [
-      'To improve combustion efficiency',
+      'Physical positions of equipment and cable routes',
+      'The actual measured value of the controlled condition',
       'To automatically remove combustion residue from the grate',
-      'To reduce flue gas temperatures',
-      'To prevent fuel bridging',
+      'Someone with knowledge, training and experience',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Automatic de-ashing systems remove ash from the combustion grate and transfer it to external ash bins. This maintains airflow through the fuel bed, ensures consistent combustion, and reduces manual maintenance.',
   },
   {
     id: 7,
     question: 'What is the typical ash content of good quality wood pellets?',
-    options: ['Less than 0.7%', '2-3%', '5-7%', '10-12%'],
-    correctAnswer: 0,
+    options: [
+      '10-12%',
+      '2-3%',
+      '5-7%',
+      'Less than 0.7%',
+    ],
+    correctAnswer: 3,
     explanation:
       'High-quality wood pellets (ENplus A1) have ash content below 0.7%. Lower ash content reduces de-ashing frequency, minimises maintenance, and indicates cleaner fuel with fewer impurities.',
   },
@@ -164,19 +184,24 @@ const quizQuestions = [
     question:
       'Which regulation specifically governs emissions from medium combustion plants including biomass boilers?',
     options: [
-      'Building Regulations Part L',
       'Medium Combustion Plant Directive (MCPD)',
-      'Clean Air Act only',
-      'BREEAM standards',
+      '1 metre above highest point within 10m',
+      'Pellet boiler with vacuum feed',
+      'Multi-zone stratified thermal store',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Medium Combustion Plant Directive (MCPD), implemented in the UK as the Environmental Permitting Regulations, sets emission limits for plants 1-50MW thermal input, including NOx, SO2, and particulate matter.',
   },
   {
     id: 9,
     question: 'What is the recommended minimum buffer vessel size for a 100kW biomass boiler?',
-    options: ['500 litres', '1,000-1,500 litres', '3,000-5,000 litres', '10,000 litres'],
+    options: [
+      '500 litres',
+      '1,000-1,500 litres',
+      '3,000-5,000 litres',
+      '10,000 litres',
+    ],
     correctAnswer: 1,
     explanation:
       'Buffer vessel sizing typically follows 10-20 litres per kW of boiler output. For a 100kW boiler, 1,000-2,000 litres is recommended to prevent short-cycling and provide adequate thermal storage for load variations.',
@@ -185,20 +210,25 @@ const quizQuestions = [
     id: 10,
     question: 'What safety device prevents fire spreading from the boiler back to the fuel store?',
     options: [
-      'Pressure relief valve',
+      '1 metre above highest point within 10m',
+      'To automatically remove combustion residue from the grate',
       'Drop tube or rotary valve with fire protection',
-      'Expansion vessel',
-      'Flow switch',
+      'Multi-zone stratified thermal store',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Drop tubes (creating an air gap) or rotary valves with thermal fuses prevent burn-back from the combustion chamber to the fuel store. These are essential safety features required by insurance and regulations.',
   },
   {
     id: 11,
     question: 'What is the typical calorific value of dry wood chips at 25% moisture content?',
-    options: ['2.0 kWh/kg', '3.5 kWh/kg', '4.8 kWh/kg', '5.5 kWh/kg'],
-    correctAnswer: 1,
+    options: [
+      '2.0 kWh/kg',
+      '5.5 kWh/kg',
+      '4.8 kWh/kg',
+      '3.5 kWh/kg',
+    ],
+    correctAnswer: 3,
     explanation:
       'Wood chips at 25% moisture content have approximately 3.5 kWh/kg calorific value. This compares to 4.8 kWh/kg for pellets (<10% moisture) and reduces to about 2.5 kWh/kg at 40% moisture.',
   },
@@ -207,12 +237,12 @@ const quizQuestions = [
     question:
       'Which thermal store configuration is most suitable for integrating biomass with solar thermal?',
     options: [
-      'Single coil cylinder',
-      'Buffer vessel only',
       'Multi-zone stratified thermal store',
-      'Direct connection without storage',
+      'Pellet boiler with vacuum feed',
+      'Medium Combustion Plant Directive (MCPD)',
+      '1 metre above highest point within 10m',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Multi-zone stratified thermal stores allow different temperature zones for various heat sources and demands. Solar thermal feeds the lower zone, biomass the middle/upper zones, maximising efficiency of both systems.',
   },

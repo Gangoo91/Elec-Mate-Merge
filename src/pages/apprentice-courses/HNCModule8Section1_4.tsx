@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'A radiator is rated at 2000W at Delta T 50K. The system operates at flow 70 degrees C, return 50 degrees C with room temperature 20 degrees C. What correction factor applies?',
     options: [
-      '0.79 (reduced output)',
       '1.00 (no correction needed)',
       '1.26 (increased output)',
       '0.63 (significantly reduced)',
+      '0.79 (reduced output)',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Mean water temperature = (70+50)/2 = 60 degrees C. Delta T = 60 - 20 = 40K. Correction factor for Delta T 40K compared to rated Delta T 50K is approximately 0.79. The radiator will only deliver about 1580W.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary consideration when sizing pipework for a two-pipe heating system?',
     options: [
-      'Minimising material cost',
+      'To ensure only the device nearest the fault operates, minimising supply disruption',
+      'Cross-connection method for confirming ring continuity',
       'Keeping velocity below 1.5 m/s and pressure drop within pump capacity',
-      'Using the largest available pipe size',
-      'Matching existing pipework sizes',
+      'Contour lines connecting points of equal illuminance',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Pipe sizing must balance acceptable water velocity (typically &lt;1.5 m/s to avoid noise) with total system pressure drop that the pump can overcome. Too small causes noise and high pressure drop; too large wastes material and slows response.',
   },
@@ -56,11 +56,11 @@ const quickCheckQuestions = [
     question: 'What is the index circuit in a heating system?',
     options: [
       'The circuit with the smallest radiator',
-      'The circuit closest to the pump',
       'The circuit with the greatest resistance to flow',
+      'The circuit closest to the pump',
       'The circuit serving the living room',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The index circuit is the flow path with the highest total resistance (longest run or most restrictive). The pump must be sized to overcome this resistance whilst providing adequate flow to all radiators.',
   },
@@ -68,10 +68,10 @@ const quickCheckQuestions = [
     id: 'trv-function',
     question: 'How does a thermostatic radiator valve (TRV) regulate room temperature?',
     options: [
-      'By switching the boiler on and off',
-      'By sensing water temperature and adjusting flow',
+      'If no attendance after 48 hours, contractor may proceed',
+      'To maintain all conductive parts at the same potential',
       'By sensing air temperature and modulating flow through the radiator',
-      'By controlling the pump speed',
+      'A fracture of any bone other than a finger, thumb, or toe',
     ],
     correctIndex: 2,
     explanation:
@@ -86,18 +86,23 @@ const quizQuestions = [
       'A room has a calculated heat loss of 2.4kW. Selecting a radiator rated at Delta T 50K, what minimum output rating should you specify?',
     options: [
       '2.0kW - allow for system efficiency',
-      '2.4kW - match the heat loss exactly',
       '2.4kW plus 10-15% margin for design safety',
+      '2.4kW - match the heat loss exactly',
       '3.6kW - always oversize by 50%',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Best practice is to add a 10-15% margin to the calculated heat loss to account for exposed walls, intermittent heating, and thermal bridging. A 2.4kW room would typically specify 2.6-2.8kW radiator output.',
   },
   {
     id: 2,
     question: 'What is the standard test condition Delta T for radiator output ratings in the UK?',
-    options: ['Delta T 30K', 'Delta T 40K', 'Delta T 50K', 'Delta T 60K'],
+    options: [
+      'Delta T 60K',
+      'Delta T 30K',
+      'Delta T 50K',
+      'Delta T 40K',
+    ],
     correctAnswer: 2,
     explanation:
       'UK radiator outputs are rated at Delta T 50K (mean water temperature 75 degrees C minus room temperature 20 degrees C = 55K, but the industry standard uses 50K for calculations). Heat pump systems typically operate at Delta T 30-35K.',
@@ -106,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: 'In a two-pipe system, where should TRVs NOT be installed?',
     options: [
-      'In bedrooms',
+      'Output reduces by approximately 63%',
+      'All radiators should reach temperature simultaneously',
+      '15-20 kPa - include safety margin',
       'In the room containing the room thermostat',
-      'On towel radiators',
-      'In north-facing rooms',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The room containing the main room thermostat should not have a TRV on its radiator. The room stat controls the boiler; if a TRV closed that radiator, the room would cool and the boiler would run continuously trying to satisfy the thermostat.',
   },
@@ -133,8 +138,13 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the typical maximum recommended water velocity in copper pipework for domestic heating systems?',
-    options: ['0.5 m/s', '1.0 m/s', '1.5 m/s', '2.5 m/s'],
-    correctAnswer: 2,
+    options: [
+      '1.0 m/s',
+      '1.5 m/s',
+      '2.5 m/s',
+      '0.5 m/s',
+    ],
+    correctAnswer: 1,
     explanation:
       'Water velocity should be kept below 1.5 m/s to avoid noise from turbulence and erosion of fittings. Higher velocities also increase pressure drop significantly, requiring larger pumps.',
   },
@@ -143,11 +153,11 @@ const quizQuestions = [
     question: 'When balancing a two-pipe heating system, which valve is adjusted?',
     options: [
       'The TRV head',
-      'The lockshield valve',
       'The motorised zone valve',
+      'The lockshield valve',
       'The pump speed control',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Lockshield valves are adjusted during commissioning to balance flow rates between radiators. They are set once and locked. TRVs modulate automatically; lockshields provide the base restriction for balanced flow.',
   },
@@ -156,12 +166,12 @@ const quizQuestions = [
     question:
       'A heating system has an index circuit pressure drop of 15 kPa. What pump head is required?',
     options: [
-      '10 kPa - pumps are oversized',
-      '15 kPa minimum',
+      'In the room containing the room thermostat',
+      'Output reduces by approximately 63%',
+      'To maintain minimum flow when TRVs close',
       '15-20 kPa - include safety margin',
-      '30 kPa - double for safety',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Pump head should exceed the index circuit resistance by 15-25% to ensure adequate flow at design conditions and account for fouling over time. A 15 kPa index circuit needs approximately 17-19 kPa pump head.',
   },
@@ -169,19 +179,24 @@ const quizQuestions = [
     id: 8,
     question: 'Why are double panel radiators (Type 22) popular in modern installations?',
     options: [
-      'They are cheaper than single panels',
       'They provide high output from a compact size',
-      'They heat up faster',
-      'They work better with heat pumps',
+      'In the room containing the room thermostat',
+      'Output reduces by approximately 63%',
+      '15-20 kPa - include safety margin',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Type 22 (double panel, double convector) radiators have two water panels and two convector fins, providing up to 100% more output than a Type 11 of the same height and length, ideal where wall space is limited.',
   },
   {
     id: 9,
     question: 'What pressure drop per metre of pipe run is typically used for initial pipe sizing?',
-    options: ['50 Pa/m', '100-200 Pa/m', '300-400 Pa/m', '500 Pa/m'],
+    options: [
+      '50 Pa/m',
+      '100-200 Pa/m',
+      '300-400 Pa/m',
+      '500 Pa/m',
+    ],
     correctAnswer: 1,
     explanation:
       'Initial pipe sizing typically targets 100-200 Pa/m pressure loss. This provides a balance between pipe cost (smaller is cheaper) and pump energy (lower pressure drop is more efficient). Final sizing considers velocity limits.',
@@ -217,12 +232,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the purpose of a bypass valve in a heating system with TRVs?',
     options: [
-      'To increase system efficiency',
       'To maintain minimum flow when TRVs close',
-      'To reduce pump noise',
-      'To balance the system automatically',
+      'Output reduces by approximately 63%',
+      'They provide high output from a compact size',
+      'In the room containing the room thermostat',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When TRVs close on warm rooms, the pump still runs. Without a bypass, pressure builds up and flow reduces to near zero. A bypass valve allows minimum circulation to protect the pump and boiler heat exchanger.',
   },

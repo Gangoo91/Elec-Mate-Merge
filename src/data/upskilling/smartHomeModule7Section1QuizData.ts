@@ -4,10 +4,10 @@ export const smartHomeModule7Section1QuizData = {
       id: 1,
       question: 'What voltage do many smart home devices operate on?',
       options: [
-        '230V AC only',
+        'Reverse polarity can cause permanent damage or safety hazards',
         'Low voltage (e.g., 12V, 24V DC) or mains 230V AC',
-        '110V AC only',
-        '48V DC only',
+        'It protects cables from damage and prevents accidental contact',
+        'Device malfunction, overheating, or power supply failure',
       ],
       correctAnswer: 1,
       explanation:
@@ -17,10 +17,10 @@ export const smartHomeModule7Section1QuizData = {
       id: 2,
       question: 'Why is polarity important for DC devices?',
       options: [
-        'It only affects LED brightness',
-        'It determines the device colour',
+        'To avoid electromagnetic interference affecting data transmission',
+        'Smart relays installed without neutral conductors',
         'Reverse polarity can cause permanent damage or safety hazards',
-        "It's not important for modern devices",
+        'Device malfunction, overheating, or power supply failure',
       ],
       correctAnswer: 2,
       explanation:
@@ -31,11 +31,11 @@ export const smartHomeModule7Section1QuizData = {
       question: 'What type of connection do many smart relays require?',
       options: [
         'Only live and earth',
-        'A neutral connection',
-        'Only live connection',
         'DC supply only',
+        'Only live connection',
+        'A neutral connection',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Many smart switches and relays require a neutral connection for proper operation, though some can work without neutral but with reduced functionality.',
     },
@@ -43,12 +43,12 @@ export const smartHomeModule7Section1QuizData = {
       id: 4,
       question: 'What could happen if a power supply is undersized?',
       options: [
-        'The device will work more efficiently',
-        'Nothing - devices adapt automatically',
         'Device malfunction, overheating, or power supply failure',
-        'The device will last longer',
+        'Low voltage (e.g., 12V, 24V DC) or mains 230V AC',
+        'Smart devices draw power even when idle, affecting circuit loading',
+        'It protects cables from damage and prevents accidental contact',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'An undersized power supply cannot provide adequate power, leading to device malfunction, overheating, voltage drops, and potentially premature failure.',
     },
@@ -56,10 +56,10 @@ export const smartHomeModule7Section1QuizData = {
       id: 5,
       question: 'Why is standby consumption important to consider?',
       options: [
-        "It's not important for smart devices",
+        'It protects cables from damage and prevents accidental contact',
         'Smart devices draw power even when idle, affecting circuit loading',
-        'It only affects battery-powered devices',
-        'It reduces device lifespan',
+        'Low voltage (e.g., 12V, 24V DC) or mains 230V AC',
+        'Device malfunction, overheating, or power supply failure',
       ],
       correctAnswer: 1,
       explanation:
@@ -69,12 +69,12 @@ export const smartHomeModule7Section1QuizData = {
       id: 6,
       question: 'Give one method of cable containment.',
       options: [
+        'Hiding cables behind furniture',
         'Loose cables under floors',
         'Trunking, conduit, or cable tray',
         'Taping cables to walls',
-        'Hiding cables behind furniture',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Proper containment methods include trunking, conduit, cable tray, or other approved protective systems that meet BS 7671 requirements.',
     },
@@ -82,12 +82,12 @@ export const smartHomeModule7Section1QuizData = {
       id: 7,
       question: 'How does containment improve safety?',
       options: [
-        'It makes installation faster',
-        'It reduces cable costs',
+        'To avoid electromagnetic interference affecting data transmission',
+        'Smart devices draw power even when idle, affecting circuit loading',
+        'Device malfunction, overheating, or power supply failure',
         'It protects cables from damage and prevents accidental contact',
-        'It improves signal quality',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Containment protects cables from mechanical damage, prevents accidental contact with live parts, and supports fire resistance - all key safety benefits.',
     },
@@ -95,19 +95,24 @@ export const smartHomeModule7Section1QuizData = {
       id: 8,
       question: 'Why should power and data cables be separated?',
       options: [
-        'To make identification easier',
         'To avoid electromagnetic interference affecting data transmission',
-        'To reduce installation costs',
-        'To comply with colour coding',
+        'It protects cables from damage and prevents accidental contact',
+        'Smart relays installed without neutral conductors',
+        'Reverse polarity can cause permanent damage or safety hazards',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Power cables generate electromagnetic fields that can interfere with data signals, causing communication errors and reduced performance.',
     },
     {
       id: 9,
       question: 'Which regulation must UK electricians follow when wiring smart devices?',
-      options: ['BS 5266', 'BS 7671 Wiring Regulations', 'BS 6701', 'BS 8588'],
+      options: [
+        'No socket outlets permitted',
+        'BS 7671 Wiring Regulations',
+        'For representative assessment',
+        'Hole saw or knockout punch',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 (IET Wiring Regulations) is the UK standard that must be followed for all electrical installations, including smart home devices.',
@@ -116,10 +121,10 @@ export const smartHomeModule7Section1QuizData = {
       id: 10,
       question: 'In the real-world example, what wiring mistake caused flickering lights?',
       options: [
-        'Wrong cable size used',
-        'Incorrect polarity connections',
+        'Reverse polarity can cause permanent damage or safety hazards',
+        'It protects cables from damage and prevents accidental contact',
         'Smart relays installed without neutral conductors',
-        'Overloaded circuit',
+        'Device malfunction, overheating, or power supply failure',
       ],
       correctAnswer: 2,
       explanation:

@@ -14,8 +14,8 @@ const quickCheckQuestions = [
     id: 'hierarchy-ppe',
     question: 'Where does PPE sit in the hierarchy of controls?',
     options: [
-      'First — it should be the primary control measure',
       'Second — after elimination but before engineering controls',
+      'First — it should be the primary control measure',
       'Last — it is the final line of defence when other controls are insufficient',
       'It can be used at any level as a substitute for other controls',
     ],
@@ -27,15 +27,25 @@ const quickCheckQuestions = [
     id: 'glove-classes',
     question:
       'Which class of insulating glove is rated for use on low voltage systems up to 1000 V AC?',
-    options: ['Class 00', 'Class 0', 'Class 1', 'Class 2'],
-    correctIndex: 1,
+    options: [
+      'Class 2',
+      'Class 1',
+      'Class 00',
+      'Class 0',
+    ],
+    correctIndex: 3,
     explanation:
       'Class 0 insulating gloves are rated for a maximum use voltage of 1000 V AC (1500 V DC) and are the standard choice for low voltage electrical work. Class 00 is rated to 500 V AC, while Classes 1 through 4 are for progressively higher voltages up to 36,000 V AC (Class 4). Always check the voltage rating matches or exceeds the system voltage.',
   },
   {
     id: 'arc-flash-cat2',
     question: 'Category 2 arc flash PPE must have an arc rating of at least:',
-    options: ['4 cal/cm²', '8 cal/cm²', '25 cal/cm²', '40 cal/cm²'],
+    options: [
+      '4 cal/cm²',
+      '8 cal/cm²',
+      '25 cal/cm²',
+      '40 cal/cm²',
+    ],
     correctIndex: 1,
     explanation:
       'Category 2 arc flash PPE must have a minimum arc rating of 8 cal/cm². Category 1 requires 4 cal/cm², Category 3 requires 25 cal/cm² and Category 4 requires 40 cal/cm². The required category is determined by the incident energy calculation for the specific equipment and working distance.',
@@ -74,20 +84,25 @@ const quizQuestions = [
     id: 2,
     question: 'Insulating gloves for electrical work must comply with:',
     options: [
-      'BS EN 388 (mechanical hazards)',
+      'Power consumed by controls, sensors and standby',
+      'Accidental damage and safety hazards',
       'BS EN 60903 (live working — insulating gloves)',
-      'BS EN 374 (chemical hazards)',
-      'BS EN 511 (cold hazards)',
+      'To protect against overcurrent and short circuit faults',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Insulating gloves for electrical work must comply with BS EN 60903 (IEC 60903), which specifies requirements for insulating gloves and mitts for live working. The standard defines six classes (00 to 4) based on the maximum use voltage, and requires each glove to be individually tested. Additional standards may apply for mechanical protection (leather over-gloves are usually worn over insulating gloves).',
   },
   {
     id: 3,
     question: 'How often should Class 0 insulating gloves be electrically retested?',
-    options: ['Every month', 'Every 6 months', 'Every 12 months', 'Only when visually damaged'],
-    correctAnswer: 1,
+    options: [
+      'Every 12 months',
+      'Every month',
+      'Only when visually damaged',
+      'Every 6 months',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS EN 60903 and industry best practice recommend that insulating gloves are electrically retested at intervals not exceeding 6 months. Some organisations test more frequently (e.g., every 3 months for daily-use gloves). Between formal electrical tests, gloves should be visually inspected and air-tested (inflated to check for pinholes) before each use.',
   },
@@ -95,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'An arc flash face shield or hood visor must be rated to protect against:',
     options: [
-      'Impact from falling objects only',
       'Ultraviolet radiation, infrared radiation, molten metal splash and the thermal energy of the arc',
-      'Chemical splash only',
-      'Dust and airborne particles only',
+      'The product conforms to the essential health and safety requirements of the relevant regulations',
+      'Arc-rated clothing, face shield, insulating gloves (Class 0), safety boots and hard hat',
+      'An electrically insulated safety helmet tested to withstand electrical contact',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Arc flash face protection must guard against the full range of arc flash hazards: intense UV and IR radiation (which can cause flash burns and eye damage), molten metal droplets projected by the arc blast, and the thermal energy of the arc itself. The visor must have an arc rating (cal/cm²) that matches or exceeds the incident energy of the task.',
   },
@@ -108,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'Safety footwear for electrical work should be:',
     options: [
-      'Steel-capped boots with no specific electrical rating',
+      'Check for damage to leads, probes, body; ensure probes are insulated',
       'Electrically insulating (EH-rated) safety boots with composite toe caps',
-      'Wellington boots with no safety features',
-      'Any footwear with ankle support',
+      'Degree-level qualification plus professional development review',
+      'Employers, the self-employed AND employees — including you',
     ],
     correctAnswer: 1,
     explanation:
@@ -121,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'The ATPV rating of an arc flash garment indicates:',
     options: [
-      'The maximum temperature the garment can withstand',
+      'Inflate each glove by rolling from the cuff and check for air leaks (the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'air test\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
+      'The duty to provide PPE was extended to cover \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'limb (b) workers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' — those personally performing work under a contract',
       'The incident energy level at which there is a 50% probability of a second-degree burn through the fabric',
-      'The resistance of the fabric to tearing',
-      'The UV protection factor of the fabric',
+      'The product conforms to the essential health and safety requirements of the relevant regulations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "ATPV (Arc Thermal Performance Value) is the incident energy (in cal/cm²) at which there is a 50% probability that the wearer will sustain the onset of a second-degree burn through the fabric. It is the primary rating used to match garment protection to the calculated incident energy of the task. The garment's arc rating must exceed the calculated incident energy.",
   },
@@ -134,12 +149,12 @@ const quizQuestions = [
     id: 7,
     question: 'Under the PPE at Work Regulations 2022, a key change from the 1992 regulations was:',
     options: [
-      'PPE is no longer required for office workers',
+      "The product conforms to the essential health and safety requirements of the relevant regulations",
+      "Arc-rated clothing, face shield, insulating gloves (Class 0), safety boots and hard hat",
+      "Ultraviolet radiation, infrared radiation, molten metal splash and the thermal energy of the arc",
       "The duty to provide PPE was extended to cover 'limb (b) workers' — those personally performing work under a contract",
-      'Employers are no longer required to maintain PPE',
-      'Workers can opt out of wearing PPE',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The 2022 update extended the duty to provide PPE to 'limb (b) workers' — individuals who personally perform work under a contract but are not employees (e.g., some agency workers, casual workers). Previously, only employees were covered. This brought the UK in line with the broader intention of the original EU PPE Directive.",
   },
@@ -147,12 +162,12 @@ const quizQuestions = [
     id: 8,
     question: 'A hard hat (safety helmet) worn for electrical work should be:',
     options: [
-      'Any standard construction hard hat (BS EN 397)',
       'An electrically insulated safety helmet tested to withstand electrical contact',
-      'A bump cap (BS EN 812)',
-      'A standard cycling helmet',
+      'The product conforms to the essential health and safety requirements of the relevant regulations',
+      'Inflate each glove by rolling from the cuff and check for air leaks (the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'air test\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
+      'Arc-rated clothing, face shield, insulating gloves (Class 0), safety boots and hard hat',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Safety helmets for electrical work should be electrically insulated and tested for electrical resistance. BS EN 397 includes an optional requirement for electrical insulation (tested at 440 V AC). BS EN 50365 specifies helmets for use in low voltage installations (up to 1000 V AC). Metal components (such as ventilation systems) should be avoided as they can provide a conductive path.',
   },
@@ -160,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'Before using insulating gloves, a user should perform which daily check?',
     options: [
-      'Weigh the gloves to check for moisture absorption',
+      "An electrically insulated safety helmet tested to withstand electrical contact",
       "Inflate each glove by rolling from the cuff and check for air leaks (the 'air test')",
-      'Measure the resistance of the glove with a multimeter',
-      'Soak the gloves in water for 10 minutes',
+      "The product conforms to the essential health and safety requirements of the relevant regulations",
+      "Ultraviolet radiation, infrared radiation, molten metal splash and the thermal energy of the arc",
     ],
     correctAnswer: 1,
     explanation:
@@ -173,12 +188,12 @@ const quizQuestions = [
     id: 10,
     question: 'CE and UKCA markings on PPE indicate that:',
     options: [
-      'The product has been tested by the HSE and approved for use',
+      'Electrically insulating (EH-rated) safety boots with composite toe caps',
+      'Inflate each glove by rolling from the cuff and check for air leaks (the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'air test\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
       'The product conforms to the essential health and safety requirements of the relevant regulations',
-      'The product is the cheapest option available',
-      'The product is recommended by trade unions',
+      'Ultraviolet radiation, infrared radiation, molten metal splash and the thermal energy of the arc',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CE marking (for EU/Northern Ireland market) and UKCA marking (for Great Britain market) indicate that the PPE conforms to the essential health and safety requirements set out in the PPE Regulation (EU) 2016/425 or UK PPE Regulations. The manufacturer declares conformity based on testing by a Notified Body (for Category II and III PPE). These markings are a legal requirement for placing PPE on the market.',
   },
@@ -188,10 +203,10 @@ const quizQuestions = [
     options: [
       'The garment has been exposed to an arc flash event',
       'The fabric shows signs of wear, thinning or contamination',
-      'The garment has been washed more than 10 times',
       'The arc rating label is no longer legible',
+      'The garment has been washed more than 10 times',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Arc flash garments should be replaced after exposure to an arc event (even if no visible damage), when the fabric shows wear, thinning, holes or contamination with flammable substances, and when labelling is no longer legible (as the arc rating cannot be confirmed). The number of washes alone is not a replacement criterion — quality arc-rated garments are designed to withstand industrial laundering. However, follow the manufacturer's care instructions to maintain the arc rating.",
   },
@@ -200,12 +215,12 @@ const quizQuestions = [
     question:
       'When working on a 400 V three-phase distribution board, the MINIMUM PPE should include:',
     options: [
-      'Safety glasses only',
       'Arc-rated clothing, face shield, insulating gloves (Class 0), safety boots and hard hat',
-      'Leather work gloves and steel-capped boots',
-      'A high-visibility vest and ear defenders',
+      'Inflate each glove by rolling from the cuff and check for air leaks (the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'air test\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
+      'An electrically insulated safety helmet tested to withstand electrical contact',
+      'The incident energy level at which there is a 50% probability of a second-degree burn through the fabric',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Work on a 400 V three-phase distribution board presents both shock and arc flash hazards. Minimum PPE should include arc-rated clothing appropriate to the calculated incident energy, arc-rated face shield or hood, insulating gloves (Class 0 minimum for LV), safety boots with insulating soles, and a safety helmet where overhead hazards exist. The specific PPE level depends on the arc flash risk assessment for the equipment.',
   },

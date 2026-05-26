@@ -33,8 +33,13 @@ const quickCheckQuestions = [
     id: 'cibse-guide-a',
     question:
       'Which CIBSE guide provides the primary methodology for heating and cooling load calculations?',
-    options: ['CIBSE Guide B', 'CIBSE Guide A', 'CIBSE Guide F', 'CIBSE Guide M'],
-    correctIndex: 1,
+    options: [
+      'CIBSE Guide F',
+      'CIBSE Guide M',
+      'CIBSE Guide A',
+      'CIBSE Guide B',
+    ],
+    correctIndex: 2,
     explanation:
       'CIBSE Guide A (Environmental Design) provides the fundamental methodology for heating and cooling load calculations, including design temperatures, thermal properties, and calculation procedures.',
   },
@@ -42,12 +47,12 @@ const quickCheckQuestions = [
     id: 'diversity-factor',
     question: 'A diversity factor of 0.7 for small power in offices means:',
     options: [
-      '70% of equipment runs at 70% capacity',
       'Only 70% of connected load operates simultaneously at peak',
-      'Equipment is 70% efficient',
-      '30% of sockets are unused',
+      'To document final status, lessons learned, and formally close the project',
+      'Plate heat exchangers, control valves, and energy meters',
+      'Some faults only appear under load conditions',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Diversity factor accounts for the fact that not all installed equipment operates at the same time. A factor of 0.7 means only 70% of the connected load is expected to operate simultaneously at peak demand.',
   },
@@ -55,8 +60,13 @@ const quickCheckQuestions = [
     id: 'cooling-load-peak',
     question:
       'When calculating peak cooling loads for a west-facing office, which time typically produces the highest solar gain?',
-    options: ['9:00 AM', '12:00 noon', '3:00-5:00 PM', '7:00 PM'],
-    correctIndex: 2,
+    options: [
+      '7:00 PM',
+      '3:00-5:00 PM',
+      '9:00 AM',
+      '12:00 noon',
+    ],
+    correctIndex: 1,
     explanation:
       'West-facing facades receive maximum solar radiation in the late afternoon (3:00-5:00 PM), coinciding with high ambient temperatures. This timing is critical for sizing cooling systems.',
   },
@@ -64,8 +74,13 @@ const quickCheckQuestions = [
     id: 'heating-design-temp',
     question:
       'What is the typical CIBSE external design temperature for heating calculations in London?',
-    options: ['-5°C', '-2°C', '0°C', '+2°C'],
-    correctIndex: 1,
+    options: [
+      '-5°C',
+      '+2°C',
+      '0°C',
+      '-2°C',
+    ],
+    correctIndex: 3,
     explanation:
       'CIBSE Guide A specifies -2°C as the external heating design temperature for London (central). This represents conditions exceeded for only 1% of the heating season.',
   },
@@ -89,12 +104,12 @@ const quizQuestions = [
     id: 2,
     question: 'The sol-air temperature concept accounts for:',
     options: [
-      'Ground temperature variations',
+      'Fire alarm systems and emergency circuits requiring fire resistance',
+      'Redundancy — two independent channels monitor the E-stop, detecting single faults',
       'Combined effect of solar radiation and external air temperature on surfaces',
-      'Seasonal variations in solar intensity',
-      'Temperature difference between floors',
+      'Poor housekeeping, uneven surfaces, inadequate lighting, unsuitable footwear',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Sol-air temperature combines the effect of solar radiation absorbed by a surface with the external air temperature, providing an equivalent temperature for heat transfer calculations through the building fabric.',
   },
@@ -102,8 +117,13 @@ const quizQuestions = [
     id: 3,
     question:
       'For a typical open-plan office, what small power diversity factor does CIBSE recommend?',
-    options: ['0.4-0.5', '0.6-0.7', '0.8-0.9', '1.0'],
-    correctAnswer: 1,
+    options: [
+      '0.8-0.9',
+      '0.4-0.5',
+      '1.0',
+      '0.6-0.7',
+    ],
+    correctAnswer: 3,
     explanation:
       'CIBSE Guide A recommends diversity factors of 0.6-0.7 for small power in open-plan offices, recognising that not all equipment operates simultaneously at full load.',
   },
@@ -111,12 +131,12 @@ const quizQuestions = [
     id: 4,
     question: "What does 'thermal admittance' (Y-value) indicate about building elements?",
     options: [
-      'Steady-state heat transfer rate',
       'Ability to absorb and release heat over a 24-hour cycle',
-      'Resistance to moisture penetration',
-      'Sound insulation properties',
+      'Proper installation techniques and regular maintenance',
+      'Isolation procedures for electrical work',
+      'They display a fault via an LED indicator on the luminaire',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Thermal admittance (Y-value) indicates how quickly a surface can absorb and release heat in response to cyclic temperature variations. High admittance surfaces (exposed concrete) help moderate indoor temperatures.',
   },
@@ -124,12 +144,12 @@ const quizQuestions = [
     id: 5,
     question: 'When should peak heating load calculations exclude solar and internal gains?',
     options: [
-      'Never - always include all gains',
       'Only for residential buildings',
       'When sizing boiler plant capacity',
       'Only for naturally ventilated buildings',
+      'Never - always include all gains',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Peak heating load calculations for boiler sizing typically exclude solar and internal gains to ensure adequate capacity during worst-case conditions (early morning, cloudy winter days with minimal occupancy).',
   },
@@ -138,19 +158,24 @@ const quizQuestions = [
     question: 'CIBSE Guide A provides degree-day data for:',
     options: [
       'Calculating instantaneous heating loads only',
-      'Estimating annual energy consumption',
       'Determining equipment maintenance schedules',
+      'Estimating annual energy consumption',
       'Setting thermostat schedules',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Degree-day data allows estimation of annual heating energy consumption by correlating heating requirements with cumulative temperature differences below the base temperature throughout the heating season.',
   },
   {
     id: 7,
     question: 'What is the typical design margin applied to calculated cooling loads?',
-    options: ['0-5%', '5-10%', '10-15%', '20-25%'],
-    correctAnswer: 2,
+    options: [
+      '0-5%',
+      '5-10%',
+      '20-25%',
+      '10-15%',
+    ],
+    correctAnswer: 3,
     explanation:
       'A design margin of 10-15% is typically applied to calculated cooling loads to account for uncertainties in occupancy patterns, equipment loads, and future changes, without excessive oversizing.',
   },
@@ -158,12 +183,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which factor has the greatest impact on cooling load in a highly glazed building?',
     options: [
-      'Infiltration',
-      'Fabric heat gain through walls',
       'Solar gain through glazing',
       'Lighting heat gain',
+      'Infiltration',
+      'Fabric heat gain through walls',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'In highly glazed buildings, solar gain through windows typically dominates the cooling load, often accounting for 40-60% of the total. This is why glazing specification (g-value) is critical for cooling system sizing.',
   },
@@ -171,10 +196,10 @@ const quizQuestions = [
     id: 9,
     question: "The CIBSE 'admittance method' for cooling load calculations:",
     options: [
-      'Ignores thermal mass effects',
+      'Realistic operational energy prediction methodology',
       'Accounts for time lag and decrement factor of building elements',
-      'Only applies to lightweight buildings',
-      'Is identical to steady-state calculations',
+      'Ability to absorb and release heat over a 24-hour cycle',
+      'Combined effect of solar radiation and external air temperature on surfaces',
     ],
     correctAnswer: 1,
     explanation:
@@ -184,8 +209,13 @@ const quizQuestions = [
     id: 10,
     question:
       'For fresh air load calculations, what is the typical sensible heat ratio for UK summer conditions?',
-    options: ['0.5-0.6', '0.7-0.8', '0.9-1.0', 'It varies too much to generalise'],
-    correctAnswer: 1,
+    options: [
+      '0.5-0.6',
+      'It varies too much to generalise',
+      '0.7-0.8',
+      '0.9-1.0',
+    ],
+    correctAnswer: 2,
     explanation:
       'UK summer conditions typically have a sensible heat ratio of 0.7-0.8, meaning 70-80% of the cooling load from outdoor air is sensible (temperature) and 20-30% is latent (moisture).',
   },
@@ -194,11 +224,11 @@ const quizQuestions = [
     question: 'What information does CIBSE TM54 provide for load calculations?',
     options: [
       'Detailed U-value calculations',
-      'Realistic operational energy prediction methodology',
-      'Heating system sizing procedures',
       'Refrigerant charge calculations',
+      'Heating system sizing procedures',
+      'Realistic operational energy prediction methodology',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "CIBSE TM54 'Evaluating operational energy performance of buildings at the design stage' provides methodology for predicting realistic operational energy use, addressing the gap between design predictions and actual performance.",
   },
@@ -206,7 +236,12 @@ const quizQuestions = [
     id: 12,
     question:
       'When calculating heating loads, what infiltration rate is typically assumed for a modern sealed office building?',
-    options: ['0.1-0.25 ACH', '0.5-1.0 ACH', '1.5-2.0 ACH', '2.5-3.0 ACH'],
+    options: [
+      '0.1-0.25 ACH',
+      '2.5-3.0 ACH',
+      '1.5-2.0 ACH',
+      '0.5-1.0 ACH',
+    ],
     correctAnswer: 0,
     explanation:
       'Modern sealed office buildings with controlled ventilation typically achieve 0.1-0.25 ACH infiltration. Higher rates apply to naturally ventilated buildings or older construction with poor air tightness.',

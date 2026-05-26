@@ -16,10 +16,10 @@ const Module7Section5_4 = () => {
       id: 1,
       question: 'Why is PPE considered essential in electrical testing?',
       options: [
-        'It looks professional',
+        'Insulated gloves, safety glasses, protective footwear',
         'It provides protection against shock, burns, and flying debris',
-        "It's required by insurance",
-        "It's optional for experienced electricians",
+        'Take the drill out of service, label it, report it. Get a replacement',
+        'To determine the number of luminaires needed to achieve target illuminance',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,12 +29,12 @@ const Module7Section5_4 = () => {
       id: 2,
       question: 'Name three common items of PPE for fault investigation.',
       options: [
-        'Hard hat, boots, gloves',
+        'Comprehensive logging and diagnostic capabilities',
+        'Prevent access while equipment is energised',
         'Insulated gloves, safety glasses, protective footwear',
-        'Helmet, vest, knee pads',
-        'Overalls, belt, torch',
+        'It uses basic data registers and simple addressing',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Essential PPE for electrical fault investigation includes insulated gloves (shock protection), safety glasses (debris protection), and protective footwear (prevent earthing).',
     },
@@ -42,12 +42,12 @@ const Module7Section5_4 = () => {
       id: 3,
       question: 'What is the purpose of flame-retardant clothing?',
       options: [
-        'To look professional',
+        'Gradual change in instrument characteristics over time',
+        'Lines of constant pressure (isobars)',
+        'To prevent electric shock during maintenance work',
         'To limit burn injuries in case of arc fault',
-        'To stay warm',
-        'To be visible',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Flame-retardant clothing is designed to self-extinguish and limit burn injuries if an electrical arc fault occurs during testing.',
     },
@@ -55,12 +55,12 @@ const Module7Section5_4 = () => {
       id: 4,
       question: 'Why must footwear be protective and insulated?',
       options: [
-        'For comfort',
         'To prevent earthing through the body',
-        'For durability',
-        'To meet dress code',
+        'Residual Current Device (RCD)',
+        'To provide escape route lighting if occupied',
+        'For traceability and calibration verification',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Insulated footwear prevents the completion of an electrical circuit through the body to earth, reducing shock risk.',
     },
@@ -68,10 +68,10 @@ const Module7Section5_4 = () => {
       id: 5,
       question: 'What environmental risks must be checked before testing?',
       options: [
-        'Only lighting levels',
+        'Internal air movement is lower, reducing convective heat transfer',
         'Wet areas, poor lighting, trip hazards, confined spaces',
-        'Temperature only',
-        'Just the weather',
+        'Systematic evaluation of hazards and control measures',
+        'Without delay (immediately) by quickest practicable means',
       ],
       correctAnswer: 1,
       explanation:
@@ -81,12 +81,12 @@ const Module7Section5_4 = () => {
       id: 6,
       question: 'What should be done if water is present in the test area?',
       options: [
-        'Continue carefully',
+        'Corrosion-resistant materials and protective coatings',
+        'Latent organisational failures such as inadequate procedures or training gaps',
         'Stop work, make area safe with drying/rubber matting, then proceed',
-        'Work faster',
-        'Use different equipment',
+        'Non-combustible enclosure (metal or fire-resistant)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Water significantly increases shock risk. Work must stop, the area made safe through drying and/or rubber matting, before testing can continue.',
     },
@@ -102,12 +102,12 @@ const Module7Section5_4 = () => {
       id: 8,
       question: 'Why should barriers be used in industrial or public environments?',
       options: [
-        'To look professional',
         'To keep unauthorised people away from the work area',
-        'To store equipment',
-        'To mark territory',
+        'Power that oscillates between source and load without doing work',
+        'Raise their legs, ensure fresh air, and monitor them',
+        'The problem, circumstances, and actions taken',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Barriers prevent unauthorised personnel from entering the test area, protecting them from electrical hazards and preventing interference with testing.',
     },
@@ -115,10 +115,10 @@ const Module7Section5_4 = () => {
       id: 9,
       question: 'In the real-world example, what injury occurred due to lack of PPE?',
       options: [
-        'Electric shock',
+        'They consume the most energy in a building',
         'Face and eye burns from arc particles',
-        'Cut from tools',
-        'Trip and fall',
+        'The Distribution Network Operator (DNO)',
+        'Infinite resistance reading',
       ],
       correctAnswer: 1,
       explanation:
@@ -129,12 +129,12 @@ const Module7Section5_4 = () => {
       question:
         'How did the apprentice in the basement example ensure testing was carried out safely?',
       options: [
-        'Worked quickly',
+        'Condition monitoring, electrical testing and diagnostic fault-finding',
+        'Essential for coordination, safety information, emergency response',
         'Stopped, reported the risks, and waited for temporary lighting and rubber matting',
-        'Used different tools',
-        'Asked for help',
+        'Receptiveness and willingness to hear what they have to say without defensiveness',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The apprentice recognised the unsafe conditions (wet floor, poor lighting), stopped work, reported the risks, and waited for proper safety measures before continuing.',
     },

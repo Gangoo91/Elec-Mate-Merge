@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Name one common cause of material wastage.',
     options: [
-      'Accurate measuring',
-      'Poor storage conditions',
       'Proper planning',
+      'Poor storage conditions',
       'Correct handling',
+      'Accurate measuring',
     ],
     correctIndex: 1,
     explanation:
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What is one cause of material shortages?',
     options: [
-      'Over-ordering materials',
-      'Underestimating requirements',
-      'Proper stock control',
       'Accurate planning',
+      'Proper stock control',
+      'Underestimating requirements',
+      'Over-ordering materials',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Underestimating material requirements during the planning stage is a common cause of shortages.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What is one effect of material wastage and shortages?',
     options: [
+      'Better sustainability',
       'Improved efficiency',
       'Cost savings',
       'Increased project costs',
-      'Better sustainability',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Both wastage and shortages lead to increased project costs through waste or delays requiring emergency procurement.',
   },
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 4,
     question: 'Name one strategy to reduce material wastage.',
     options: [
+      'Measure and cut carefully',
       'Order extra materials',
       'Store materials outside',
-      'Measure and cut carefully',
       'Use damaged materials',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Measuring and cutting carefully prevents wastage from cutting errors and ensures materials are used efficiently.',
   },
@@ -79,10 +79,10 @@ const quickCheckQuestions = [
     id: 6,
     question: 'Give one example of sustainable practice.',
     options: [
-      'Throwing away offcuts',
+      'Using damaged materials',
       'Over-ordering materials',
       'Recycling cable offcuts',
-      'Using damaged materials',
+      'Throwing away offcuts',
     ],
     correctIndex: 2,
     explanation:
@@ -94,7 +94,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Give one example of a cause of wastage.',
-    options: ['Accurate planning', 'Incorrect cutting', 'Proper storage', 'Good coordination'],
+    options: [
+      'Accurate planning',
+      'Incorrect cutting',
+      'Proper storage',
+      'Good coordination',
+    ],
     correctAnswer: 1,
     explanation: 'Incorrect cutting due to measuring errors is a common cause of material wastage.',
   },
@@ -102,12 +107,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is one cause of shortages?',
     options: [
-      'Over-ordering',
+      'Uninterruptible supply (no-break)',
+      'Protect people and property',
       'Underestimating requirements',
-      'Proper planning',
-      'Accurate measuring',
+      'Manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s recommended method',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Underestimating material requirements during planning leads to shortages during installation.',
   },
@@ -122,8 +127,13 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Name one effect of material wastage.',
-    options: ['Cost savings', 'Increased costs', 'Improved efficiency', 'Better sustainability'],
-    correctAnswer: 1,
+    options: [
+      'Increased costs',
+      'Cost savings',
+      'Improved efficiency',
+      'Better sustainability',
+    ],
+    correctAnswer: 0,
     explanation:
       'Material wastage directly increases project costs through purchasing replacement materials.',
   },
@@ -133,8 +143,8 @@ const quizQuestions = [
     options: [
       'To save storage space',
       'To reduce waste and save costs',
-      'To impress clients',
       'To finish projects faster',
+      'To impress clients',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'What should a stock log be used for?',
     options: [
-      'Recording worker hours',
+      'Be tested by appropriate specialists',
+      'CDM 2007 replaced it with the CDM Co-ordinator',
       'Monitoring and updating material levels daily',
-      'Planning work schedules',
-      'Tracking tool usage',
+      'A current source in parallel with a resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A stock log tracks material levels daily to prevent shortages and manage inventory effectively.',
   },
@@ -157,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'What type of area should materials be stored in?',
     options: [
-      'Open outdoor areas',
+      'Equipment with variable frequency drives',
+      'Balance loads across all three phases',
+      'Motors and variable speed drives (VSDs)',
       'Dry, secure, ventilated storage',
-      'Damp basements',
-      'Temporary locations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Materials must be stored in dry, secure, ventilated areas to prevent damage and theft.',
   },
@@ -170,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is a benefit of holding buffer stock?',
     options: [
-      'Increases storage costs',
       'Prevents delays if deliveries are late',
-      'Creates more waste',
-      'Complicates inventory',
+      'Fire-resistant cable (e.g., MICC, FP cables)',
+      'Financial Conduct Authority (FCA)',
+      'Reduce, Reuse, Recycle, Recover, Dispose',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Buffer stock prevents work delays when deliveries are late or unexpected requirements arise.',
   },
@@ -196,12 +206,12 @@ const quizQuestions = [
     id: 10,
     question: 'Who should be informed immediately if shortages occur?',
     options: [
-      'The client',
+      'Detailed records with locations',
+      'AFDD presence/justification for each circuit',
       'The site supervisor or project manager',
-      'The suppliers',
-      'Other trades',
+      'Broken conductor, open circuit, or disconnection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The site supervisor or project manager must be informed immediately to coordinate solutions and minimize delays.',
   },

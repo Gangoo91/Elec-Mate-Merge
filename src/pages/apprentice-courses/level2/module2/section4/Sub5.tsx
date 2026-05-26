@@ -40,8 +40,13 @@ const checks = [
     id: 'power-formula-pick',
     question:
       'You know a kettle draws 8.7 A on a 230 V supply. Which formula gets you the power fastest?',
-    options: ['P = V × I', 'P = I² × R', 'P = V² ÷ R', 'P = R ÷ V'],
-    correctIndex: 0,
+    options: [
+      'P = I² × R',
+      'P = V × I',
+      'P = V² ÷ R',
+      'P = R ÷ V',
+    ],
+    correctIndex: 1,
     explanation:
       'You’ve got V and I directly, so P = V × I = 230 × 8.7 ≈ 2001 W ≈ 2 kW. Pick the formula that uses what you already have.',
   },
@@ -49,8 +54,13 @@ const checks = [
     id: 'cable-heating-doubling',
     question:
       'You double the current in a cable. How much does the I²R heating change?',
-    options: ['It doubles', 'It quadruples (×4)', 'It stays the same', 'It halves'],
-    correctIndex: 1,
+    options: [
+      'It halves',
+      'It doubles',
+      'It quadruples (×4)',
+      'It stays the same',
+    ],
+    correctIndex: 2,
     explanation:
       'Heat is proportional to I squared. Double the current = 2² = 4 times the heating. Triple it = 9× the heating. This is why grouped or undersized cables overheat fast under load.',
   },
@@ -59,12 +69,12 @@ const checks = [
     question:
       'Two identical 100 Ω resistors share a 12 V supply. Do they dissipate more total power in series, or in parallel?',
     options: [
-      'Series — more total resistance',
       'Parallel — less total resistance',
+      'Series — more total resistance',
       'Both the same',
       'Depends on the supply current',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'P = V² ÷ R. In series Rt = 200 Ω so P = 144 ÷ 200 = 0.72 W. In parallel Rt = 50 Ω so P = 144 ÷ 50 = 2.88 W. Lower resistance on the same voltage means more power.',
   },
@@ -76,7 +86,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'A 230 V heater draws 8 A. The power is roughly…',
-    options: ['184 W', '1.84 kW', '18.4 kW', '0.034 kW'],
+    options: [
+      '184 W',
+      '1.84 kW',
+      '18.4 kW',
+      '0.034 kW',
+    ],
     correctAnswer: 1,
     explanation:
       'P = V × I = 230 × 8 = 1840 W ≈ 1.84 kW. Around the size of a fan heater. Quick sanity check: 13 A plug fuse handles up to 3 kW, so 8 A on a 230 V circuit is well inside that — sounds right for a 2 kW heater on a domestic socket.',
@@ -85,27 +100,37 @@ const quizQuestions = [
     id: 2,
     question: 'Cable I²R heating mainly depends on…',
     options: [
-      'Voltage across the supply',
+      'No more than twice the mounting height',
+      'Automatic Disconnection of Supply',
       'Current and the cable’s resistance',
-      'Cable colour',
-      'Frequency only',
+      'Independent assessment of competence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Power lost as heat in the conductor is I² × R. Bigger current, more heat. Bigger cable resistance (long run, small CSA), more heat.',
   },
   {
     id: 3,
     question: 'At a fixed 230 V, which load dissipates more power?',
-    options: ['A 460 Ω load', 'A 920 Ω load', 'Both the same', 'Need current to decide'],
-    correctAnswer: 0,
+    options: [
+      'Both the same',
+      'A 920 Ω load',
+      'Need current to decide',
+      'A 460 Ω load',
+    ],
+    correctAnswer: 3,
     explanation: 'P = V² ÷ R. Lower R on the same V gives more power. 230² ÷ 460 ≈ 115 W; 230² ÷ 920 ≈ 57.5 W.',
   },
   {
     id: 4,
     question: 'You know I and R but not V. Which power formula fits?',
-    options: ['P = V × I', 'P = I² × R', 'P = V² ÷ R', 'P = V ÷ I'],
-    correctAnswer: 1,
+    options: [
+      'P = I² × R',
+      'P = V × I',
+      'P = V² ÷ R',
+      'P = V ÷ I',
+    ],
+    correctAnswer: 0,
     explanation:
       'Use P = I² × R when you have current and resistance. Common for cable losses and series components where I is shared.',
   },
@@ -113,27 +138,37 @@ const quizQuestions = [
     id: 5,
     question: 'Total power in a parallel circuit equals…',
     options: [
-      'The smallest branch power',
       'The largest branch power',
       'The sum of all branch powers',
       'V² ÷ smallest R only',
+      'The smallest branch power',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Each branch dissipates its own P = V × I, where V is the supply. Total = sum of branch powers (just like total current = sum of branch currents).',
   },
   {
     id: 6,
     question: 'A 17.6 Ω element on a 230 V supply draws approximately…',
-    options: ['13 A', '4 A', '40 A', '1.3 A'],
-    correctAnswer: 0,
+    options: [
+      '40 A',
+      '4 A',
+      '13 A',
+      '1.3 A',
+    ],
+    correctAnswer: 2,
     explanation: 'I = V ÷ R = 230 ÷ 17.6 ≈ 13 A. That’s a kettle-sized load.',
   },
   {
     id: 7,
     question: 'How much does it cost to run a 2 kW heater for 4 hours at 28p per kWh?',
-    options: ['£0.56', '£1.12', '£2.24', '£0.28'],
-    correctAnswer: 2,
+    options: [
+      '£0.56',
+      '£1.12',
+      '£0.28',
+      '£2.24',
+    ],
+    correctAnswer: 3,
     explanation:
       'Energy = 2 kW × 4 h = 8 kWh. Cost = 8 × £0.28 = £2.24. The kWh is the unit your bill is in.',
   },
@@ -142,12 +177,12 @@ const quizQuestions = [
     question:
       'Two identical 100 Ω resistors are connected first in series, then in parallel, across the same 12 V supply. Total power dissipated is…',
     options: [
-      'The same in both arrangements',
-      'Higher in series',
       'Higher in parallel',
       'Zero in series',
+      'The same in both arrangements',
+      'Higher in series',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Series Rt = 200 Ω → P = 144 ÷ 200 = 0.72 W. Parallel Rt = 50 Ω → P = 144 ÷ 50 = 2.88 W. Parallel = 4× the power for the same supply, because current is much higher.',
   },

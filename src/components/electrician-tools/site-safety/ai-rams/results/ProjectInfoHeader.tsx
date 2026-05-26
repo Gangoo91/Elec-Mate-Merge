@@ -1,5 +1,4 @@
 import React from 'react';
-import { MapPin, Users, User, Clock, Building2 } from 'lucide-react';
 import type { MethodStatementData } from '@/types/method-statement';
 
 interface ProjectInfoHeaderProps {
@@ -8,76 +7,57 @@ interface ProjectInfoHeaderProps {
   location?: string;
 }
 
-interface InfoItemProps {
-  icon: React.ReactNode;
+interface InfoRowProps {
   label: string;
   value: string;
 }
 
-const InfoItem: React.FC<InfoItemProps> = ({ icon, label, value }) => (
-  <div className="flex items-center gap-3 py-2">
-    <div className="w-9 h-9 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-      {icon}
-    </div>
-    <div className="flex-1 min-w-0">
-      <p className="text-[10px] uppercase tracking-wider text-white font-medium">{label}</p>
-      <p className="text-sm font-semibold text-white truncate">{value}</p>
-    </div>
+const InfoRow: React.FC<InfoRowProps> = ({ label, value }) => (
+  <div className="py-3 flex items-baseline gap-4">
+    <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 w-28 sm:w-32 shrink-0">
+      {label}
+    </span>
+    <span className="text-[14px] font-medium text-white flex-1 min-w-0">{value}</span>
   </div>
 );
 
+/**
+ * Project info header — editorial. No icons, no chip backgrounds.
+ * Hero title with sub-rows for location/contractor/supervisor/duration.
+ */
 export const ProjectInfoHeader: React.FC<ProjectInfoHeaderProps> = ({
   methodData,
   projectName,
   location,
 }) => {
-  const title = methodData.jobTitle || projectName || 'Untitled Project';
+  const title = methodData.jobTitle || projectName || 'Untitled project';
   const locationValue = methodData.location || location;
 
   return (
-    <div className="bg-white/[0.03] border border-white/[0.08] rounded-xl overflow-hidden">
-      {/* Header with title */}
-      <div className="px-4 py-3 border-b border-white/[0.08]">
-        <div className="flex items-center gap-3">
-          <div className="w-1 h-8 bg-elec-yellow rounded-full shrink-0" />
-          <h2 className="text-base font-bold text-white leading-tight">{title}</h2>
+    <section className="space-y-5">
+      {/* Hero title */}
+      <div className="space-y-2">
+        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+          Method statement
         </div>
+        <h2 className="text-[22px] sm:text-[28px] font-semibold tracking-tight leading-[1.15] text-white">
+          {title}
+        </h2>
       </div>
 
-      {/* Info Grid */}
-      <div className="px-4 py-2 divide-y divide-white/[0.05]">
-        {locationValue && (
-          <InfoItem
-            icon={<MapPin className="h-4 w-4 text-elec-yellow" />}
-            label="Location"
-            value={locationValue}
-          />
-        )}
-
-        {methodData.contractor && (
-          <InfoItem
-            icon={<Building2 className="h-4 w-4 text-elec-yellow" />}
-            label="Contractor"
-            value={methodData.contractor}
-          />
-        )}
-
-        {methodData.supervisor && (
-          <InfoItem
-            icon={<User className="h-4 w-4 text-elec-yellow" />}
-            label="Supervisor"
-            value={methodData.supervisor}
-          />
-        )}
-
+      {/* Info rows */}
+      <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
+        {locationValue && <InfoRow label="Location" value={locationValue} />}
+        {methodData.contractor && <InfoRow label="Contractor" value={methodData.contractor} />}
+        {methodData.supervisor && <InfoRow label="Supervisor" value={methodData.supervisor} />}
         {(methodData.duration || methodData.totalEstimatedTime) && (
-          <InfoItem
-            icon={<Clock className="h-4 w-4 text-elec-yellow" />}
+          <InfoRow
             label="Duration"
             value={methodData.totalEstimatedTime || methodData.duration || ''}
           />
         )}
+        {methodData.teamSize && <InfoRow label="Team" value={methodData.teamSize} />}
       </div>
-    </div>
+    </section>
   );
 };

@@ -30,15 +30,25 @@ const quickCheckQuestions = [
   {
     id: 'minimum-boiler-efficiency',
     question: 'What is the minimum ErP efficiency for a new gas boiler installed under Part L?',
-    options: ['86%', '89%', '92%', '95%'],
-    correctIndex: 2,
+    options: [
+      '86%',
+      '89%',
+      '95%',
+      '92%',
+    ],
+    correctIndex: 3,
     explanation:
       'Part L requires new gas boilers to achieve a minimum ErP (Energy-related Products) seasonal efficiency of 92%. This applies to both regular and combination boilers in new and existing buildings.',
   },
   {
     id: 'heat-pump-scop',
     question: 'What minimum SCOP must an air source heat pump achieve for Part L compliance?',
-    options: ['2.0', '2.5', '2.8', '3.0'],
+    options: [
+      '2.0',
+      '2.5',
+      '2.8',
+      '3.0',
+    ],
     correctIndex: 2,
     explanation:
       'Air source heat pumps must achieve a minimum Seasonal Coefficient of Performance (SCOP) of 2.8 under Part L. Ground source heat pumps require SCOP of 3.0 minimum.',
@@ -47,16 +57,26 @@ const quickCheckQuestions = [
     id: 'lighting-efficacy',
     question:
       'What is the minimum luminaire efficacy required for general lighting in new non-domestic buildings?',
-    options: ['60 lm/W', '80 lm/W', '95 lm/W', '100 lm/W'],
-    correctIndex: 1,
+    options: [
+      '60 lm/W',
+      '95 lm/W',
+      '80 lm/W',
+      '100 lm/W',
+    ],
+    correctIndex: 2,
     explanation:
       'Part L requires general lighting in new non-domestic buildings to achieve a minimum luminaire efficacy of 80 lumens per Watt (lm/W). Display lighting has a lower threshold of 60 lm/W.',
   },
   {
     id: 'metering-threshold',
     question: 'At what heating/cooling system output is sub-metering required under Part L?',
-    options: ['25 kW', '50 kW', '100 kW', '150 kW'],
-    correctIndex: 1,
+    options: [
+      '50 kW',
+      '150 kW',
+      '25 kW',
+      '100 kW',
+    ],
+    correctIndex: 0,
     explanation:
       'Part L requires sub-metering for heating and cooling systems with an output exceeding 50 kW. This enables energy consumption to be monitored and managed effectively.',
   },
@@ -67,15 +87,25 @@ const quizQuestions = [
     id: 1,
     question:
       'Under Part L 2021, what is the minimum seasonal efficiency for a new oil-fired boiler?',
-    options: ['88%', '90%', '92%', '93%'],
-    correctAnswer: 2,
+    options: [
+      '88%',
+      '92%',
+      '90%',
+      '93%',
+    ],
+    correctAnswer: 1,
     explanation:
       'Oil-fired boilers must achieve a minimum ErP seasonal efficiency of 92%, the same requirement as gas boilers. This ensures comparable performance standards across fuel types.',
   },
   {
     id: 2,
     question: 'What SCOP is required for a ground source heat pump to comply with Part L?',
-    options: ['2.5', '2.8', '3.0', '3.5'],
+    options: [
+      '3.5',
+      '2.5',
+      '3.0',
+      '2.8',
+    ],
     correctAnswer: 2,
     explanation:
       'Ground source heat pumps (GSHPs) must achieve a minimum SCOP of 3.0 under Part L. This is higher than air source heat pumps (2.8) due to the more stable ground temperatures enabling better performance.',
@@ -83,8 +113,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What minimum efficacy is required for display lighting in non-domestic buildings?',
-    options: ['50 lm/W', '60 lm/W', '80 lm/W', '95 lm/W'],
-    correctAnswer: 1,
+    options: [
+      '80 lm/W',
+      '50 lm/W',
+      '95 lm/W',
+      '60 lm/W',
+    ],
+    correctAnswer: 3,
     explanation:
       'Display lighting has a reduced minimum efficacy requirement of 60 lm/W compared to 80 lm/W for general lighting. This recognises the specific requirements of display applications.',
   },
@@ -92,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following is NOT a mandatory control for HVAC systems under Part L?',
     options: [
-      'Zone controls for areas over 150 m²',
+      'Automatic monitoring of energy consumption',
       'Weather compensation for wet heating systems',
       'Timed setback for heating systems',
-      'Automatic monitoring of energy consumption',
+      'Zone controls for areas over 150 m²',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Automatic monitoring is a requirement for larger systems (over 50 kW) but not a mandatory control for all HVAC systems. Zone controls, weather compensation, and timed setback are all required.',
   },
@@ -105,7 +140,12 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the maximum specific fan power (SFP) for a supply and extract ventilation system in a new non-domestic building?',
-    options: ['1.6 W/(l/s)', '1.8 W/(l/s)', '2.0 W/(l/s)', '2.2 W/(l/s)'],
+    options: [
+      '1.6 W/(l/s)',
+      '1.8 W/(l/s)',
+      '2.2 W/(l/s)',
+      '2.0 W/(l/s)',
+    ],
     correctAnswer: 1,
     explanation:
       'The maximum SFP for supply and extract mechanical ventilation systems is 1.8 W/(l/s). This limit ensures energy-efficient fan selection and ductwork design.',
@@ -115,11 +155,11 @@ const quizQuestions = [
     question: 'When must commissioning be completed and certified under Part L?',
     options: [
       'Within 30 days of practical completion',
-      'Before the building is occupied',
       'Within 6 months of handover',
+      'Before the building is occupied',
       'Before the EPC is issued',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Part L requires commissioning to be completed before the building is occupied or the fixed building services are used. A commissioning certificate must be provided to the building control body.',
   },
@@ -127,7 +167,12 @@ const quizQuestions = [
     id: 7,
     question:
       'What EER (Energy Efficiency Ratio) must a new comfort cooling system achieve under Part L?',
-    options: ['2.5 minimum', '2.8 minimum', '3.0 minimum', 'Depends on system type and capacity'],
+    options: [
+      'All lighting installations',
+      'Automatic monitoring of energy consumption',
+      'Before the building is occupied',
+      'Depends on system type and capacity',
+    ],
     correctAnswer: 3,
     explanation:
       'Part L specifies different minimum EER values depending on the cooling system type (split, multi-split, VRF) and capacity. Values range from 2.5 to 3.3 depending on classification.',
@@ -136,7 +181,12 @@ const quizQuestions = [
     id: 8,
     question:
       'What proportion of heated floor area must have individual room temperature controls?',
-    options: ['All heated spaces', 'At least 80%', 'At least 90%', 'Only spaces over 50 m²'],
+    options: [
+      'All heated spaces',
+      'At least 90%',
+      'Only spaces over 50 m²',
+      'At least 80%',
+    ],
     correctAnswer: 0,
     explanation:
       'Part L requires all heated spaces to have individual room temperature controls (typically TRVs or room thermostats). The only exception is spaces where control would be impractical.',
@@ -146,12 +196,12 @@ const quizQuestions = [
     question:
       'What documentation must be provided to demonstrate Part L building services compliance?',
     options: [
-      'Equipment specifications only',
-      'Commissioning certificate only',
+      'Disconnect the motor or test the circuit up to the motor terminals',
       'Building log book including commissioning records and operating instructions',
-      'EPC certificate only',
+      'The client (employer) — they are the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s eyes and ears for quality on site',
+      'They may retain dangerous voltage even after isolation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Part L requires a building log book containing commissioning records, as-built drawings, operating and maintenance instructions, and energy consumption monitoring guidance.',
   },
@@ -159,7 +209,12 @@ const quizQuestions = [
     id: 10,
     question:
       'What minimum heat recovery efficiency is required for mechanical ventilation systems with heat recovery?',
-    options: ['60%', '70%', '73%', '80%'],
+    options: [
+      '60%',
+      '70%',
+      '73%',
+      '80%',
+    ],
     correctAnswer: 2,
     explanation:
       'MVHR systems must achieve a minimum dry heat recovery efficiency of 73% under Part L. This ensures effective energy recovery from extract air to incoming supply air.',
@@ -169,20 +224,25 @@ const quizQuestions = [
     question:
       'At what lighting capacity must automatic controls be provided in non-domestic buildings?',
     options: [
-      'All lighting installations',
+      'Only in circulation spaces',
       'Over 100 W installed capacity per room',
       'Over 250 W installed capacity per room',
-      'Only in circulation spaces',
+      'All lighting installations',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Part L requires automatic controls (occupancy detection, daylight dimming, or time scheduling) for all general lighting in non-domestic buildings, regardless of capacity.',
   },
   {
     id: 12,
     question: 'What is the maximum chiller COP for water-cooled systems with capacity over 750 kW?',
-    options: ['4.5', '5.0', '5.5', '6.0'],
-    correctAnswer: 2,
+    options: [
+      '5.5',
+      '6.0',
+      '4.5',
+      '5.0',
+    ],
+    correctAnswer: 0,
     explanation:
       'Large water-cooled chillers (over 750 kW) must achieve a minimum full-load COP of 5.5. Smaller systems have proportionally lower requirements based on capacity.',
   },

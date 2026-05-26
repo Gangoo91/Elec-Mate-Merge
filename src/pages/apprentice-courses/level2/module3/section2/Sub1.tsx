@@ -45,12 +45,12 @@ const checks = [
     question:
       "You've got a brand-new RCBO sat in front of you and the test sequence on the OSG doesn't quite match what the device looks like. Where do you go FIRST to confirm how to test it?",
     options: [
-      "BS 7671 Part 6",
-      "GN3 (Inspection & Testing)",
       "The manufacturer's installation instructions for that specific RCBO",
-      "Ask the apprentice WhatsApp group",
+      "Provide small directional adjustment for final alignment",
+      "Electrical Installation Certificate and user documentation",
+      "A formal documented authorisation for work on or near isolated electrical equipment",
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Manufacturer's installation instructions (IIs) win for device-specific behaviour. BS 7671 and GN3 set the framework, but the device datasheet tells you the test buttons, terminal layout and any quirks. Reg 510.3 / 134.1.1 require you to follow manufacturer's instructions where they exist.",
   },
@@ -60,11 +60,11 @@ const checks = [
       "You need to know the maximum permitted Zs for a 32 A Type B MCB on a TN system. Which part of BS 7671 do you open?",
     options: [
       "Part 1 — Scope, object, fundamental principles",
-      "Part 4 — Protection for safety",
-      "Part 6 — Inspection and testing",
       "Appendix 3 — Time/current characteristics",
+      "Part 6 — Inspection and testing",
+      "Part 4 — Protection for safety",
     ],
-    correctIndex: 3,
+    correctIndex: 1,
     explanation:
       "Appendix 3 holds the time/current curves and the corresponding Zs tables for standard protective devices. Part 4 explains the principle of automatic disconnection; Appendix 3 gives you the actual numbers. Apprentices often head to Part 6 by reflex — Part 6 tells you HOW to test, not what the limit IS.",
   },
@@ -73,12 +73,12 @@ const checks = [
     question:
       "What's the difference between a RAMS and a method statement?",
     options: [
-      "Nothing — they mean the same thing",
-      "A RAMS is just the risk assessment, the method statement is separate",
       "RAMS = Risk Assessment AND Method Statement combined into one document",
       "A RAMS is for high-risk work, a method statement is for low-risk",
+      "A RAMS is just the risk assessment, the method statement is separate",
+      "Nothing — they mean the same thing",
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "RAMS is the umbrella term for the combined Risk Assessment + Method Statement document. The risk assessment identifies hazards and controls; the method statement is the step-by-step of how the work will actually be done. Most contractors issue them together as one PDF.",
   },
@@ -106,12 +106,12 @@ const quizQuestions = [
     question:
       "You're sizing a final circuit on a domestic dwelling and want quick lookup tables for cable size vs MCB rating, with diversity factors already applied. Which book gets you there fastest?",
     options: [
+      "IET Guidance Note 3 (GN3)",
       "BS 7671 itself",
       "IET On-Site Guide (OSG)",
-      "IET Guidance Note 3 (GN3)",
       "BS 7671 Appendix 12",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The On-Site Guide is the ready-reckoner for domestic and small commercial work — pre-calculated tables, diversity worked out, the lot. GN3 covers inspection and testing in depth, not design.",
   },
@@ -120,12 +120,12 @@ const quizQuestions = [
     question:
       "BS 7671:2018+A4:2026 introduced a new regulation, 514.9.2, about diagrams and charts. What does it actually require?",
     options: [
-      "That every installation must have a wiring diagram",
+      "Identify where work interfaces with others and specify coordination measures",
+      "A visitor sign-in system, escorted evacuation, and checking the visitor log at the assembly point",
+      "Zinc or copper fumes from welding, brazing, or galvanised steel cutting",
       "That all diagrams, charts and information notices comply with the applicable standards specified",
-      "That diagrams must be digital, not paper",
-      "That diagrams must be drawn to a scale of 1:50",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "514.9.2 (new in A4:2026) requires diagrams, charts and information/instruction notices to comply with the applicable standards — that means symbols per IEC 60617 (the modern replacement for BS EN 60617), notices per BS EN 60073 / 60446 etc. It's about consistency so anyone reading the drawing or label knows what they're looking at.",
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       "The manufacturer's installation instructions for an RCBO say 'torque each terminal to 1.2 Nm'. The OSG quotes 0.8-1.5 Nm as a typical range. What do you do?",
     options: [
-      "Use 0.8 Nm — it's at the low end, safer",
-      "Use 1.5 Nm — tighter is better",
       "Use 1.2 Nm — the manufacturer's specific figure overrides the generic guidance",
-      "Doesn't matter as long as it's in the range",
+      "How much a material resists or slows down the flow of current",
+      "Enhanced mechanical protection due to potential vandalism",
+      "Calculating optimal temperature and humidity for human comfort",
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Specific beats generic. Reg 526.1 requires connections to be made in accordance with manufacturer instructions — that's the legal hook. The OSG range is a safety net for when no specific figure is given.",
   },
@@ -149,8 +149,8 @@ const quizQuestions = [
     options: [
       "Required Amperage Method Standard",
       "Risk Assessment and Method Statement",
-      "Regulation Assessment for Mains Supply",
       "Rated Ampacity Multiplier System",
+      "Regulation Assessment for Mains Supply",
     ],
     correctAnswer: 1,
     explanation:
@@ -161,10 +161,10 @@ const quizQuestions = [
     question:
       "You've found a non-standard four-pole isolator on a refurb and need to know its short-circuit withstand rating. Where will the answer definitely be?",
     options: [
-      "BS 7671 Part 5",
-      "OSG Appendix A",
+      "Back-to-back thyristors (SCRs)",
+      "Depression severity over the past two weeks",
       "The manufacturer's product datasheet",
-      "GN3 Appendix B",
+      "Certificate of Making Good Defects",
     ],
     correctAnswer: 2,
     explanation:
@@ -177,10 +177,10 @@ const quizQuestions = [
     options: [
       "Definition of 'extraneous-conductive-part' (Part 2)",
       "Verbatim regulation wording on isolation (Section 537)",
-      "Worked example of a bathroom installation with the cable runs marked",
       "Time/current curves for standard protective devices (Appendix 3)",
+      "Worked example of a bathroom installation with the cable runs marked",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "BS 7671 sets requirements, not worked installation examples. Worked examples with cable runs marked sit in the OSG and the Guidance Notes — that's their job. BS 7671 stays prescriptive: definitions, regulations, appendix data.",
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       "On site, you spot the certification scheme (NICEIC / NAPIT / Stroma) has issued a technical bulletin about a specific manufacturer's consumer unit being recalled. What's the correct response?",
     options: [
-      "Ignore it — bulletins are advisory, not law",
       "Read it, log it, and apply it on relevant jobs — bulletins reflect current best practice and the scheme audits against them",
-      "Wait for it to be added to the next BS 7671 amendment",
-      "Only apply if a customer specifically asks",
+      "Allowing pauses gives the speaker time to think and often encourages them to share more detail",
+      "Risk assessment names the hazards and controls; method statement says how the work will be done in safe order",
+      "Referencing a specification rather than listing items creates ambiguity if the specification is later disputed or modified",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Scheme bulletins are how certification bodies communicate urgent technical changes between BS 7671 amendments. Audits expect to see you've taken account of them. Ignoring a bulletin about a recalled CU is exactly the kind of thing that fails an assessment visit.",
   },

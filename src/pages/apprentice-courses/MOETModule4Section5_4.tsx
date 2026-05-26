@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'func-purpose',
     question: 'What is the purpose of functional testing in electrical maintenance?',
     options: [
-      'To measure the resistance of circuit conductors',
       'To verify that all equipment, protective devices, and control systems operate correctly as intended under normal and fault conditions',
-      'To test the insulation between conductors',
-      'To calculate the prospective fault current',
+      'Calibration procedures, records, reference standard certificates, OOT investigations, interval reviews, training records, and equipment lists',
+      'Yes — Local Authority enforcement officers have similar powers of entry under HASAWA s.20 for premises they enforce',
+      'Send via secure means, only to the verified email address, retain the cert per your retention policy, and the privacy notice should cover this use',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Functional testing verifies that equipment and systems perform their intended function correctly. This goes beyond electrical parameter testing (resistance, impedance) to confirm that devices actually operate: RCDs trip at the correct current, interlocks prevent dangerous actions, emergency stops function, changeover switches operate, and control sequences execute properly.',
   },
@@ -27,8 +27,13 @@ const quickCheckQuestions = [
     id: 'func-rcd-test',
     question:
       'When conducting a functional test on a 30 mA Type AC RCD, the device must trip within which time at rated residual current (IΔn)?',
-    options: ['40 ms', '300 ms (0.3 seconds)', '1 second', '5 seconds'],
-    correctIndex: 1,
+    options: [
+      '40 ms',
+      '1 second',
+      '300 ms (0.3 seconds)',
+      '5 seconds',
+    ],
+    correctIndex: 2,
     explanation:
       'BS 7671 requires a Type AC general-purpose RCD to trip within 300 ms when tested at its rated residual operating current (IΔn). At 5 × IΔn (150 mA for a 30 mA device), it must trip within 40 ms. These test times verify that the device provides adequate protection against electric shock within the physiological time limits for ventricular fibrillation.',
   },
@@ -36,12 +41,12 @@ const quickCheckQuestions = [
     id: 'func-rcd-button',
     question: 'What is the purpose of the integral test button on an RCD?',
     options: [
-      'It performs the same test as a calibrated RCD test instrument',
+      'To review insurance cover, check progress towards goals, and adjust savings as income or circumstances change',
+      'A serious risk of injury arising from conditions in or associated with a confined space, such as flammable atmospheres, toxic gases, or engulfment',
       'It verifies the mechanical operation of the trip mechanism only — it does not verify the sensitivity of the device and cannot replace instrument testing',
-      'It tests the insulation resistance of the circuit',
-      'It permanently disables the RCD for maintenance',
+      'A detailed, step-by-step documented procedure specific to a particular instrument type and calibration task',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The integral test button creates an artificial imbalance within the device to verify that the trip mechanism operates mechanically. However, it does not test the actual sensitivity of the toroidal current transformer or the full tripping circuit at the rated residual current. Instrument testing with a calibrated RCD tester at the specific trip current and time is required for full verification. The test button is for periodic user checks between formal instrument tests.',
   },
@@ -50,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'Why is functional testing of electrical interlocks particularly important after maintenance work?',
     options: [
-      'Because interlocks are purely decorative features',
+      'An incorrect or incomplete crimp creates a high-resistance joint that may overheat, or a mechanically weak joint that may pull apart under load or vibration',
+      'Evacuate and seal the area, stop all work, notify the duty holder and HSE if appropriate, arrange licensed clean-up, retain workers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' clothing for assessment, log near miss and review',
+      'Inhalation (breathing in), absorption (through skin / eyes / mucous membranes), ingestion (swallowing), and injection (puncture / cut). Different substances exploit different routes; PPE selection follows the route.',
       'Because interlocks are safety devices that prevent dangerous operations (such as opening a panel while energised), and any maintenance work may have inadvertently defeated, bypassed, or misadjusted them',
-      'Because interlocks need lubricating after every maintenance visit',
-      'Because BS 7671 requires interlocks to be tested every week',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Electrical interlocks are safety-critical devices designed to prevent dangerous operations — for example, preventing a switchgear panel from being opened while the circuit is energised, or preventing a motor from starting while a guard is removed. During maintenance, interlocks may be temporarily bypassed, disturbed, or reassembled incorrectly. Functional testing after maintenance confirms that all interlocks have been correctly restored and operate as intended.',
   },
@@ -66,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'A 30 mA RCD tested at 50% of its rated residual current (15 mA) should:',
     options: [
-      'Trip within 300 ms',
+      'Check the toaster for a series arc fault (loose terminal, broken element strand) using IR test on the appliance lead and visual inspection',
       'Not trip — the device should not operate at 50% of IΔn, confirming it will not nuisance-trip under normal leakage conditions',
-      'Trip within 40 ms',
-      'Trip within 5 seconds',
+      'They reduce grip on loads and underfoot surfaces, increasing the risk of slips and dropped loads',
+      'Isolate the supply (if safe), call for help, assess the casualty, begin CPR if not breathing normally',
     ],
     correctAnswer: 1,
     explanation:
@@ -79,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: 'The full RCD test sequence specified by BS 7671 includes testing at:',
     options: [
-      'Only the rated residual current (IΔn)',
+      'Competent persons with appropriate knowledge, training and experience',
+      'Because they provide fall protection for the operative until the last possible moment',
       '50% IΔn (should not trip), 100% IΔn (must trip within 300 ms), and 5× IΔn (must trip within 40 ms)',
-      'Only at 5× IΔn',
-      'At 10 mA intervals from 0 to 100 mA',
+      'The employer must prove they did everything reasonably practicable to comply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The full RCD test sequence verifies the complete operating characteristic: at 50% IΔn the device should not trip (confirming it won't nuisance-trip), at 100% IΔn it must trip within 300 ms (confirming basic protection), and at 5× IΔn it must trip within 40 ms (confirming fast disconnection for higher fault currents). For Type S (time-delayed) RCDs, the time limits are different.",
   },
@@ -92,12 +97,12 @@ const quizQuestions = [
     id: 3,
     question: 'When functionally testing a circuit breaker, the technician should verify:',
     options: [
-      'Only that it can be switched off',
+      'An ELCB detects voltage on the earthing conductor rather than current imbalance, so the test method and acceptance criteria are different from those for current-operated RCDs',
+      'Verification of correct pick-up (energise) and drop-out (de-energise) operation, contact condition, coil operation, and correct response to control signals',
+      'Simulate the control conditions (setpoints, alarm triggers, timer events) and verify that the system responds with the correct output actions in the correct sequence and within the specified time parameters',
       'That it trips freely (opens under all conditions regardless of the handle position), that the operating mechanism is smooth without sticking or excessive force, and that the contacts make and break cleanly',
-      'Only that the rating label is still readable',
-      'That it has been painted recently',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Functional testing of circuit breakers verifies free tripping (the breaker must open even if the handle is held in the on position — this confirms the trip-free mechanism works), smooth mechanical operation (no sticking, excessive friction, or corroded mechanism), and clean contact operation (no arcing damage, welded contacts, or contact bounce). Any abnormality indicates the breaker requires maintenance or replacement.',
   },
@@ -105,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'Functional testing of an emergency lighting system should verify:',
     options: [
-      'Only that the lights are the correct colour',
       'That luminaires illuminate upon mains failure, achieve the required illumination level, and maintain illumination for the rated duration (typically 1 or 3 hours)',
-      'Only that the battery is fully charged',
-      'Only that the charging indicator is on',
+      'An ELCB detects voltage on the earthing conductor rather than current imbalance, so the test method and acceptance criteria are different from those for current-operated RCDs',
+      'Simulate the control conditions (setpoints, alarm triggers, timer events) and verify that the system responds with the correct output actions in the correct sequence and within the specified time parameters',
+      'Restore the system to its normal operational state, confirm all zones are active and monitoring, and notify the alarm receiving centre (ARC) that testing is complete',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Emergency lighting functional testing must verify that luminaires switch on when the mains supply is interrupted (automatic changeover), that they achieve the required illumination level on the escape routes, and that the battery-powered illumination is maintained for the full rated duration. BS 5266-1 specifies the testing requirements, including monthly brief functional tests and annual full-duration discharge tests.',
   },
@@ -118,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'After functional testing of a fire alarm system, the technician must:',
     options: [
-      'Leave the system in test mode overnight',
+      'Documented on the appropriate test schedule or commissioning record, including the test conditions, measured values, pass/fail assessment, and any observations or recommendations',
       'Restore the system to its normal operational state, confirm all zones are active and monitoring, and notify the alarm receiving centre (ARC) that testing is complete',
-      'Disconnect the system until the next scheduled test',
-      'Replace all detector heads',
+      'Provide discrimination with a downstream non-delayed RCD by incorporating an intentional time delay, allowing the downstream device to trip first for faults on its circuits',
+      'That it trips freely (opens under all conditions regardless of the handle position), that the operating mechanism is smooth without sticking or excessive force, and that the contacts make and break cleanly',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'A Type S (time-delayed) RCD is designed to:',
     options: [
-      'Trip faster than a standard RCD',
+      'That it trips freely (opens under all conditions regardless of the handle position), that the operating mechanism is smooth without sticking or excessive force, and that the contacts make and break cleanly',
+      'Documented on the appropriate test schedule or commissioning record, including the test conditions, measured values, pass/fail assessment, and any observations or recommendations',
       'Provide discrimination with a downstream non-delayed RCD by incorporating an intentional time delay, allowing the downstream device to trip first for faults on its circuits',
-      'Replace the need for MCBs in the circuit',
-      'Provide surge protection for electronic equipment',
+      'Restore the system to its normal operational state, confirm all zones are active and monitoring, and notify the alarm receiving centre (ARC) that testing is complete',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A Type S RCD has an intentional time delay (typically 130-500 ms at IΔn) that allows a downstream non-delayed RCD to trip first for faults on circuits protected by both devices. This provides discrimination — only the RCD closest to the fault operates, maintaining supply to unaffected circuits. The Type S RCD provides backup protection if the downstream device fails to operate.',
   },
@@ -144,12 +149,12 @@ const quizQuestions = [
     id: 7,
     question: 'Functional testing of a contactor or relay should include:',
     options: [
-      'Only visual inspection of the enclosure',
+      'An ELCB detects voltage on the earthing conductor rather than current imbalance, so the test method and acceptance criteria are different from those for current-operated RCDs',
+      'Restore the system to its normal operational state, confirm all zones are active and monitoring, and notify the alarm receiving centre (ARC) that testing is complete',
+      'That luminaires illuminate upon mains failure, achieve the required illumination level, and maintain illumination for the rated duration (typically 1 or 3 hours)',
       'Verification of correct pick-up (energise) and drop-out (de-energise) operation, contact condition, coil operation, and correct response to control signals',
-      'Only measuring the coil resistance',
-      'Only checking that the nameplate data is correct',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Functional testing of contactors and relays should verify: that the device picks up (energises) and drops out (de-energises) reliably in response to control signals, that the operating mechanism moves smoothly, that contacts are in acceptable condition (no excessive pitting, welding, or wear), and that the device performs its intended control function within the wider circuit.',
   },
@@ -158,12 +163,12 @@ const quizQuestions = [
     question:
       'When testing the emergency stop function of a machine, the technician should verify:',
     options: [
-      'That the emergency stop button is the correct colour only',
       'That pressing the emergency stop immediately de-energises all hazardous motion, that the stop is maintained (latched) until manually reset, and that the machine cannot restart until the stop is released and a deliberate start action is taken',
-      'That the emergency stop can be overridden by the operator',
-      'That the emergency stop disconnects only the control circuit',
+      'Simulate the control conditions (setpoints, alarm triggers, timer events) and verify that the system responds with the correct output actions in the correct sequence and within the specified time parameters',
+      'Provide discrimination with a downstream non-delayed RCD by incorporating an intentional time delay, allowing the downstream device to trip first for faults on its circuits',
+      'Documented on the appropriate test schedule or commissioning record, including the test conditions, measured values, pass/fail assessment, and any observations or recommendations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Emergency stop testing must verify: immediate de-energisation of all hazardous motion and energy sources when activated, maintained (latched) stop condition that requires manual reset, and prevention of automatic restart when the stop is released — a deliberate start action must be required. These requirements are specified in BS EN 60204-1 for machine safety and are critical for preventing injury.',
   },
@@ -172,10 +177,10 @@ const quizQuestions = [
     question:
       'A changeover switch (manual or automatic transfer switch) should be functionally tested to verify:',
     options: [
-      'Only that the handle moves freely',
+      'Verification of correct pick-up (energise) and drop-out (de-energise) operation, contact condition, coil operation, and correct response to control signals',
       'That it correctly transfers the load between sources, that the make-before-break or break-before-make sequence is correct for the application, and that mechanical and electrical interlocks prevent paralleling of sources',
-      'Only that it has the correct IP rating',
-      'Only that it is correctly labelled',
+      'Provide discrimination with a downstream non-delayed RCD by incorporating an intentional time delay, allowing the downstream device to trip first for faults on its circuits',
+      'Documented on the appropriate test schedule or commissioning record, including the test conditions, measured values, pass/fail assessment, and any observations or recommendations',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,12 +191,12 @@ const quizQuestions = [
     question:
       'The functional test of a voltage-operated ELCB (now largely obsolete) differs from an RCD test because:',
     options: [
-      'There is no difference',
+      'Verification of correct pick-up (energise) and drop-out (de-energise) operation, contact condition, coil operation, and correct response to control signals',
+      'That it correctly transfers the load between sources, that the make-before-break or break-before-make sequence is correct for the application, and that mechanical and electrical interlocks prevent paralleling of sources',
       'An ELCB detects voltage on the earthing conductor rather than current imbalance, so the test method and acceptance criteria are different from those for current-operated RCDs',
-      'ELCBs do not require testing',
-      'ELCBs are tested at higher currents than RCDs',
+      'Documented on the appropriate test schedule or commissioning record, including the test conditions, measured values, pass/fail assessment, and any observations or recommendations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Voltage-operated ELCBs (Earth Leakage Circuit Breakers) detect a voltage rise on the earthing conductor rather than current imbalance between line and neutral. They require a different test method — the test instrument applies a voltage between the ELCB earth terminal and a separate earth reference. While largely superseded by current-operated RCDs, ELCBs are still encountered in older installations during periodic inspection.',
   },
@@ -200,12 +205,12 @@ const quizQuestions = [
     question:
       'When functionally testing a building management system (BMS) control sequence, the technician should:',
     options: [
-      'Only check that the BMS screen displays correctly',
+      'Provide discrimination with a downstream non-delayed RCD by incorporating an intentional time delay, allowing the downstream device to trip first for faults on its circuits',
+      'That it trips freely (opens under all conditions regardless of the handle position), that the operating mechanism is smooth without sticking or excessive force, and that the contacts make and break cleanly',
+      'An ELCB detects voltage on the earthing conductor rather than current imbalance, so the test method and acceptance criteria are different from those for current-operated RCDs',
       'Simulate the control conditions (setpoints, alarm triggers, timer events) and verify that the system responds with the correct output actions in the correct sequence and within the specified time parameters',
-      'Only verify that the BMS is connected to the network',
-      'Only check that the power supply to the BMS is present',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Functional testing of BMS control sequences requires simulating the input conditions and verifying the outputs. This includes testing setpoint responses (does the system start and stop equipment at the correct thresholds?), alarm triggers (do alarms activate and notify correctly?), timer events (do scheduled operations occur at the correct times?), and fail-safe conditions (does the system respond safely to sensor failures or communication losses?).',
   },
@@ -213,12 +218,12 @@ const quizQuestions = [
     id: 12,
     question: 'After completing all functional tests, the results should be:',
     options: [
-      "Stored only in the technician's memory",
       'Documented on the appropriate test schedule or commissioning record, including the test conditions, measured values, pass/fail assessment, and any observations or recommendations',
-      'Reported verbally to the supervisor only',
-      'Recorded only if a fault was found',
+      'That it correctly transfers the load between sources, that the make-before-break or break-before-make sequence is correct for the application, and that mechanical and electrical interlocks prevent paralleling of sources',
+      'Verification of correct pick-up (energise) and drop-out (de-energise) operation, contact condition, coil operation, and correct response to control signals',
+      'Provide discrimination with a downstream non-delayed RCD by incorporating an intentional time delay, allowing the downstream device to trip first for faults on its circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'All functional test results must be formally documented on the appropriate schedule or commissioning record. The documentation should include the specific test performed, the conditions under which it was tested, the measured values or observed responses, a clear pass/fail assessment against the acceptance criteria, and any observations or recommendations for follow-up. This documentation forms part of the overall test and commissioning record.',
   },

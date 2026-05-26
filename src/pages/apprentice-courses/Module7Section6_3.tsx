@@ -14,10 +14,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the purpose of temporary isolation?',
     options: [
-      'To save time during repairs',
+      'False - apprentices must hand over responsibility to competent persons',
       'To prevent dangerous circuits from being energised until repairs are made',
-      'To reduce electricity bills',
-      'To test circuit performance',
+      'To ensure no one accidentally restores supply to a faulty circuit',
+      'Because faults can escalate into serious safety hazards, fires, or electrocution risks',
     ],
     correctAnswer: 1,
     explanation:
@@ -27,10 +27,10 @@ const quizQuestions = [
     id: 2,
     question: 'Why must faulty circuits never remain live?',
     options: [
-      'It wastes electricity',
-      "It's against company policy",
+      'To ensure no one accidentally restores supply to a faulty circuit',
+      'Circuit isolation, removing the faulty faceplate, and clear labelling',
       'Because faults can escalate into serious safety hazards, fires, or electrocution risks',
-      'It makes testing more difficult',
+      'To prevent dangerous circuits from being energised until repairs are made',
     ],
     correctAnswer: 2,
     explanation:
@@ -40,12 +40,12 @@ const quizQuestions = [
     id: 3,
     question: 'Give two methods of isolating a circuit.',
     options: [
-      'Switching off breakers and removing fuses',
-      'Turning off lights and unplugging equipment',
       'Covering sockets and switching off the main switch',
+      'Turning off lights and unplugging equipment',
       'Using different test equipment',
+      'Switching off breakers and removing fuses',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Circuit isolation is achieved through switching off protective devices (breakers), removing fuses, or using lockout kits.',
   },
@@ -53,12 +53,12 @@ const quizQuestions = [
     id: 4,
     question: 'What should be attached to a circuit breaker after isolation?',
     options: [
-      'A new fuse',
       "Clear warning notices such as 'Do Not Use – Faulty Circuit'",
-      'Test equipment',
-      'A replacement breaker',
+      "Physically removing or covering damaged accessories to prevent use",
+      "To prevent dangerous circuits from being energised until repairs are made",
+      "To ensure no one accidentally restores supply to a faulty circuit",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Clear warning labels must be attached to prevent accidental re-energisation and inform others of the fault status.',
   },
@@ -66,12 +66,12 @@ const quizQuestions = [
     id: 5,
     question: 'Why are warning labels important during fault management?',
     options: [
-      'They look professional',
-      "They're required by law",
+      'To prevent dangerous circuits from being energised until repairs are made',
       'To ensure no one accidentally restores supply to a faulty circuit',
-      'They help with record keeping',
+      'False - apprentices must hand over responsibility to competent persons',
+      'No isolation or warning was applied, leading to a fire from overheating',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Warning labels prevent accidental re-energisation of faulty circuits, which could create immediate danger to people and property.',
   },
@@ -79,12 +79,12 @@ const quizQuestions = [
     id: 6,
     question: 'Give one example of a temporary safety measure other than isolation.',
     options: [
-      'Replacing the entire circuit',
+      'To ensure no one accidentally restores supply to a faulty circuit',
+      'A competent person or supervisor with appropriate qualifications',
       'Physically removing or covering damaged accessories to prevent use',
-      'Installing new equipment',
-      'Increasing the fuse rating',
+      'No isolation or warning was applied, leading to a fire from overheating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Physical removal or covering of damaged accessories prevents anyone from attempting to use faulty equipment.',
   },
@@ -92,12 +92,12 @@ const quizQuestions = [
     id: 7,
     question: 'Who is responsible for permanent fault rectification?',
     options: [
-      'Any apprentice',
-      'The building owner',
+      'To prevent dangerous circuits from being energised until repairs are made',
+      'No isolation or warning was applied, leading to a fire from overheating',
+      'Physically removing or covering damaged accessories to prevent use',
       'A competent person or supervisor with appropriate qualifications',
-      'The person who found the fault',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Only competent persons with appropriate qualifications and authority can certify permanent fault rectification.',
   },
@@ -106,12 +106,12 @@ const quizQuestions = [
     question:
       'True or False: Apprentices can certify isolated circuits as safe for re-energisation.',
     options: [
-      'True - after proper training',
       'False - apprentices must hand over responsibility to competent persons',
-      'True - if supervised',
-      'True - for minor faults only',
+      'Circuit isolation, removing the faulty faceplate, and clear labelling',
+      'To prevent dangerous circuits from being energised until repairs are made',
+      'Because faults can escalate into serious safety hazards, fires, or electrocution risks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Apprentices cannot certify circuits as safe for re-energisation; this responsibility must be handed over to competent persons.',
   },
@@ -119,10 +119,10 @@ const quizQuestions = [
     id: 9,
     question: 'In the housing estate example, what measures made the socket safe until repair?',
     options: [
-      'Just switching off the circuit',
+      'Because faults can escalate into serious safety hazards, fires, or electrocution risks',
       'Circuit isolation, removing the faulty faceplate, and clear labelling',
-      'Only removing the socket',
-      'Covering the socket with tape',
+      'A competent person or supervisor with appropriate qualifications',
+      'False - apprentices must hand over responsibility to competent persons',
     ],
     correctAnswer: 1,
     explanation:
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       'What went wrong in the commercial building example when a lighting circuit was left energised?',
     options: [
-      "The lights didn't work properly",
+      'To prevent dangerous circuits from being energised until repairs are made',
+      'Physically removing or covering damaged accessories to prevent use',
       'No isolation or warning was applied, leading to a fire from overheating',
-      'The circuit tripped too often',
-      'The repair was too expensive',
+      'Because faults can escalate into serious safety hazards, fires, or electrocution risks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The faulty circuit was left energised without isolation or warnings, allowing continued overheating that eventually caused a fire.',
   },

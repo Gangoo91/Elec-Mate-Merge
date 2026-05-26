@@ -43,10 +43,10 @@ const checks = [
     question:
       "An apprentice gets a 230V shock from a back-box that wasn't isolated properly. They're unhurt — no burn, no medical attention sought, back to work the same morning. Is this RIDDOR reportable?",
     options: [
-      "Yes — every shock is RIDDOR reportable.",
+      "Five-step. (1) Power on — confirm self-test passes (Megger and Kewtech both run automatic self-tests on power-up). (2) Continuity — short the leads together; reading should be the lead resistance (typically 0.10–0.30 Ω) with audible buzzer; null the leads if the unit supports it. (3) Insulation resistance — connect leads together, press test at 250 V — should read &gt;999 MΩ (open circuit). (4) Loop / EFLI — connect to a known live socket; reading should match known reference for that location (or be plausible — typically 0.4–1.5 Ω at a domestic socket). (5) RCD — check on a known-good RCD outlet; trip-time should match the RCD's rating. Five minutes; catches drift, battery issues, lead damage.",
       "Yes, even though there's no injury. RIDDOR Reg 7 lists 'dangerous occurrences' separately from injuries. Schedule 2 includes 'any explosion or fire which results in stoppage of the affected equipment for more than 24 hours' but the more directly applicable list is the 'electrical short circuit or overload attended by fire or explosion which results in the stoppage of the plant involved for more than 24 hours...' — for a personal contact event without injury the actual report category is more nuanced. In practice the firm should treat any unintended live contact as a near-miss for internal logging; some categories also become formally reportable depending on the facts. The L3 instinct: log it, report it internally, then check the formal RIDDOR list before deciding to send the F2508.",
-      "No — RIDDOR only applies to fatalities.",
-      "No — only the customer can report.",
+      "Each product's commissioning depends on the others being in a known state. The battery commissioning needs the inverter live; the inverter needs the PV strings energised; the EV charger's load management needs the CT clamp reading correctly; the heat pump's smart controller needs network access to the HEMS; the HEMS needs all four products visible before it can configure dispatch logic. Doing them in the wrong order produces commissioning faults that are hard to diagnose because each individual product 'works' but the integrated behaviour fails. The MCS-certified designer should provide a commissioning sequence; the apprentice follows it.",
+      "A UK charity providing emotional, physical and financial wellbeing support specifically to the construction community and their families. Headline services include a 24/7 confidential helpline (0345 605 1956), a Helpline app, financial assistance grants for trade workers in difficulty, mental health and wellbeing training (Mental Health First Aid, Wellbeing Training), and signposting to appropriate professional services. The helpline is staffed by trained advisers and is free. Anyone in the construction industry — apprentices, qualified tradespeople, family members — can call.",
     ],
     correctIndex: 1,
     explanation:
@@ -57,12 +57,12 @@ const checks = [
     question:
       "Your firm hires in a battery-powered SDS drill from a hire shop. Under PUWER 1998, who's responsible for ensuring it's safe to use?",
     options: [
-      "Only the hire shop.",
+      "No — the plastic incomer means the copper pipework cannot introduce a dangerous potential from outside. The note to Reg 411.3.1.2 is explicit: where non-metallic pipes enter a building and are then connected to metallic pipes within the building, the metallic pipes within the building do not normally require protective bonding as they are unlikely to be extraneous-conductive-parts.",
+      "It continuously monitors the insulation resistance between the live DC conductors and earth, throughout the life of the array. A drop in insulation (a damaged cable, water in a connector) triggers an alarm or shuts down the inverter — catching insulation faults before they become DC arcing fires.",
+      "Test instruments (MFTs and voltage indicators), insulated tools, electrical PPE (gloves, mats, face shields where applicable), lock-off devices, warning labels — all of it. Reg 4(4) is why your MFT must be in calibration, why your voltage indicator must comply with HSE GS38, why your insulated tools must be in date and undamaged, and why your lock-off kit has to actually work. Use unsuitable equipment and you breach Reg 4(4) regardless of whether the install itself is sound.",
       "The hire shop has duties as a supplier and (if they manage maintenance) under PUWER itself; YOUR firm has duties as the user — Reg 4 (suitability), Reg 5 (maintenance), Reg 6 (inspection), Reg 8 (information and instructions), Reg 9 (training). PUWER duties don't transfer with hire — they sit with whoever uses the equipment in the course of work. The hire ticket and the user-firm's pre-use check both have to happen.",
-      "Only the operative who drills the hole.",
-      "Only the principal contractor.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Hired equipment is one of the most-prosecuted PUWER traps. Firms assume the hire shop owns the duty; the HSE prosecutes the user firm because they're the ones who operated it. The visual pre-use check, the test certificate review, the operator competence sign-off — all sit on the user firm under PUWER Reg 4–9.",
   },
@@ -71,12 +71,12 @@ const checks = [
     question:
       "You're cutting masonry chases in a 1980s commercial building. The dust contains respirable crystalline silica. Under COSHH 2002, what's the first thing the assessment should consider?",
     options: [
-      "Whether to use a more expensive drill.",
+      "That the installation has more than one source of supply (mains plus PV, battery, generator, etc.), that opening the main switch does NOT isolate the entire installation, what additional isolation is needed, and where each isolation point is located. Critical for anyone working on the system because back-feed from PV/battery can energise the install with the main switch open.",
+      "Risk Assessment + Method Statement. The risk assessment identifies hazards, evaluates the risk and lists the controls (required by Management of Health & Safety at Work Regs 1999 Reg 3). The method statement sets out HOW the work will be done safely, step by step. Together they're the working H&S document for a job — the inspector after an incident asks for both.",
+      "Public Liability (PL, typically £5-10m cover, £200-500/year), Employers' Liability (EL, statutory minimum £5m under the Employers' Liability (Compulsory Insurance) Act 1969 — required if you have any employees), Professional Indemnity (PI, £1-2m cover for design liability if you do any design work, £300-800/year), Tools-in-Transit insurance, Business Vehicle insurance for company vans. Plus director and officer cover for the directors personally.",
       "Whether the work activity can be eliminated, substituted or engineered to avoid producing the silica dust at source — the COSHH hierarchy of control. PPE (FFP3 mask) is the LAST resort, not the first. On-tool extraction connected to an M-class vacuum, water suppression and route-planning that minimises chasing are all higher in the hierarchy than mask-only working. The HSE workplace exposure limit (WEL) for respirable crystalline silica is currently 0.1 mg/m3 8-hour TWA and is under regulatory review.",
-      "Whether the customer wants the dust collected.",
-      "Whether the operative wants to wear a mask.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "COSHH Reg 7 is built around the hierarchy of control: eliminate, substitute, totally enclose, partial enclosure with extraction, system of work, and finally PPE. Respirable crystalline silica is a HSE priority — it's now the second-biggest cause of occupational lung disease after asbestos. The L3 step: assess the activity, not just the substance. 'Cut less, capture at source, mask as last resort.'",
   },
@@ -87,12 +87,12 @@ const quizQuestions = [
     id: 1,
     question: "What does RIDDOR 2013 stand for and what does it require?",
     options: [
+      "Plan, manage and monitor construction work carried out either by the contractor or by workers under their control, to ensure that, so far as reasonably practicable, it is carried out without risks to health or safety. Includes complying with any directions of the principal designer / principal contractor and applying the general principles of prevention.",
       "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 — requires the responsible person (employer / self-employed / person in control of premises) to report to the HSE certain work-related deaths, specified injuries, over-7-day injuries, occupational diseases and dangerous occurrences. Reports are made via the F2508 forms / online RIDDOR portal.",
-      "Regulations Involving Dangerous Drills On Roofs.",
-      "Real Issues Discovered During Operative Reviews.",
-      "Reporting Insurance Detail Daily Online Records.",
+      "The supervisor might notice: decreasing patience with apprentices' problems, emotional numbness when hearing about difficulties, cynicism about whether support makes a difference, withdrawal from mentoring conversations, and irritability — all signs that their empathic capacity is depleted and they need to restore their own emotional resources",
+      "A fixed appliance is contributing leakage. Disconnect the dishwasher at its connection unit, retest. If IR rises above 1 MΩ the dishwasher was the cause. Disconnect the LED driver at the downlights, retest. The reading should now reflect the cable insulation alone — typically tens or hundreds of MΩ.",
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       "Remember from L2 — RIDDOR is the reporting regulation. At L3 the depth: knowing which categories trigger which form, the timescales (immediate by phone for fatality / specified injury; F2508 within 10 days for the rest; F2508A within 15 days for over-7-day injury identified later), and the responsible-person identification.",
   },
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: "Which of these is a 'specified injury' under RIDDOR Schedule 1?",
     options: [
-      "A bruised shin.",
+      "(1) T+E shears or rotary cable stripper to crop the conductor square and to the right length. (2) Auto-stripper or preset 4 mm² stripper to remove insulation cleanly without nicking strands. (3) (Optional but preferred) — slip a grey 4 mm² bootlace ferrule on, ratchet-crimp it. (4) Insert into terminal. (5) Tighten with preset torque driver to manufacturer's value (typically 2–3 Nm for Schneider isolators).",
+      "No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger, unless they possess such knowledge or experience or are under appropriate supervision having regard to the nature of the work. So either you're competent yourself OR you're being supervised by someone who is. Working outside your competence without supervision is a Reg 16 breach.",
       "Fracture (other than to fingers, thumbs and toes); amputation; permanent loss of sight or reduction of sight; crush injuries leading to internal organ damage; serious burns covering more than 10% of the body or causing significant damage to eyes, respiratory system or other vital organs; scalpings requiring hospital treatment; loss of consciousness from head injury or asphyxia; any other injury arising from work in an enclosed space leading to hypothermia, heat-induced illness or requiring resuscitation or admittance to hospital for more than 24 hours.",
-      "A paper cut.",
-      "A headache.",
+      "Pregnancy and maternity (s.18). The Act prohibits unfavourable treatment of women because of pregnancy or maternity leave during the 'protected period' (broadly, from the start of pregnancy to the end of maternity leave). This is a separate category to sex discrimination — pregnancy / maternity claims don't need a male comparator. It's one of the most enforced parts of the Act and a leading source of Employment Tribunal awards.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Specified injuries are the serious-but-not-fatal category that requires immediate reporting. The 'crush', 'burn' and 'enclosed space' categories all routinely catch electrical incidents — arc-flash burns, falls from height, confined-space asphyxiation.",
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: "What's the timescale for reporting an over-7-day injury under RIDDOR?",
     options: [
-      "Within 1 day.",
+      "The consequence of overvoltage could result in serious injury or loss of life, interruption of public services, damage to cultural heritage, interruption of commercial or industrial activity, or affect a large number of co-located individuals — assessed by risk per Section 443.",
+      "A standard AC rotary switch has no DC breaking capacity. Opening it under load on a high-voltage DC string draws an arc that does not self-extinguish at zero crossing (DC has no zero crossing) and can sustain inside the switch — starting a fire. Reg 712.537 and the broader Section 462 require a switch suitable for DC isolation, normally a purpose-built PV DC isolator.",
+      "AutoCAD is primarily a 2D drafting tool with 3D extensions; it is the lingua franca for drawings and works well for SLDs, layouts and schedules. Revit is a 3D BIM authoring tool — every object carries metadata and is part of a coordinated model with structural, mechanical and architectural disciplines.",
       "Within 15 days of the incident — Reg 4(2). The over-7-day injury is one where the worker is incapacitated for more than 7 consecutive days (excluding the day of the accident) and unable to perform their normal duties. The day-of-incident counting trips firms up — the count starts the day AFTER.",
-      "Within 30 days.",
-      "Within 1 year.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Over-7-day = 8+ days off normal duties. Day of incident not counted. F2508A is the form. The timescale is 15 days from the incident (NOT from when the injury was reported).",
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: "What does PUWER 1998 cover?",
     options: [
-      "Only large machinery.",
       "All work equipment — anything used by an employee at work, including tools, machinery, vehicles, ladders, lifting equipment and apparatus. The duties cover suitability (Reg 4), maintenance (Reg 5), inspection (Reg 6), specific risks (Reg 7), information and instructions (Reg 8), training (Reg 9), conformity (Reg 10), dangerous parts protection (Reg 11), specified hazards (Reg 12), high/low temperature (Reg 13), controls (Reg 14–17), isolation (Reg 19) and stability (Reg 20).",
-      "Only equipment imported from outside the UK.",
-      "Only equipment over 5kg.",
+      "(1) Take the tool out of service immediately — don't try to use it 'gently'. (2) Apply the firm's quarantine tag ('do not use', signed and dated). (3) Move the tool to the firm's quarantine area (or, on site, to the supervisor's box). (4) Log the defect in the firm's tool register or defect log. (5) Tell the supervisor — verbally as well as written. (6) Get an alternative tool to continue the work. The fix happens later by a competent person; the apprentice's job ends at quarantine + report.",
+      "Address fabric first — insulation and glazing — then size any heat pump to the reduced load. A heat pump in a leaky house works at high flow temperatures, runs constantly, and posts a poor SCOP, blowing the customer's bills past where they were on gas. The MCS heat-loss calculation methodology assumes a reasonably insulated envelope. The honest answer is fabric upgrade first, then size the kit to the new load — which often ends up being smaller and cheaper.",
+      "Written grievance following the employer's documented grievance procedure (which the employer is required to provide under the ACAS Code of Practice on Discipline and Grievance). The written grievance triggers a structured response with timescales and right of appeal. Verbal complaints are easy to ignore; documented grievances are not. ACAS conciliation is available if the internal process fails.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "PUWER is the broadest equipment regulation in the UK. It covers everything from your screwdriver to a 32-tonne MEWP. The L3 depth: PUWER Reg 6 (inspection) drives the documented pre-use, periodic and after-event inspection regime that catches failing kit before it injures someone.",
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: "What does COSHH 2002 require?",
     options: [
-      "Only that hazardous substances are labelled.",
+      "IET Online = large technical document archive (standards, journals, conference papers) for searching and reference. IET Academy = structured online learning platform with bite-sized courses on technical topics (BS 7671, PV, EV, motor control, power quality, etc.). Both included with MIET membership. Online for reference; Academy for structured learning.",
       "Assessment of the risks from substances hazardous to health (Reg 6); prevention or control of exposure (Reg 7) using the hierarchy of control (eliminate, substitute, engineer, system of work, PPE); use and maintenance of control measures (Reg 8–9); monitoring of exposure (Reg 10); health surveillance where appropriate (Reg 11); information, instruction and training (Reg 12); arrangements for accidents, incidents and emergencies (Reg 13).",
-      "Only that the customer is informed.",
-      "Only that the substance has a Material Safety Data Sheet.",
+      "Carry out visual inspection (cable condition, connector pins, enclosure integrity, ventilation), electrical testing (earth continuity, insulation resistance, RCD operation, loop impedance), verify smart functionality (communication, scheduling, firmware version), and check the control pilot signal is within specification",
+      "A proving unit is a small portable source of low-voltage AC (typically 240 V or 110 V output) used to verify a voltage tester is functioning BEFORE and AFTER each safe-isolation test. The 'prove dead' routine: prove tester on the unit (should read live), test the circuit (should read dead), prove tester again on the unit (still reads live = tester is working = circuit really IS dead). Without proving the tester at both ends, a faulty tester reading 'dead' on a live circuit could kill you.",
     ],
     correctAnswer: 1,
     explanation:
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: "What does LOLER 1998 require for lifting equipment?",
     options: [
-      "Only that it has a CE mark.",
+      "The Climate Change Act 2008 (as amended) commits the UK to net-zero greenhouse gas emissions by 2050. Buildings are roughly 17% of UK emissions; the Future Homes Standard and successive Part L revisions are the regulatory mechanism for hitting that target. Each Part L revision tightens the SAP / SBEM target rate — meaning new builds have to demonstrate progressively lower regulated CO₂ emissions to gain Building Regs approval.",
+      "Where an offence under HASAWA is committed by a body corporate (a limited company) and is proved to have been committed with the consent or connivance of, or attributable to neglect on the part of, a director, manager, secretary or similar officer, that individual ALSO commits the offence and is liable to personal prosecution. Relevant once you become Approved Electrician, then a senior, then potentially a director — your personal liability scales with your role.",
       "That lifting equipment be of adequate strength and stability (Reg 4); positioned and installed to minimise risk (Reg 5); marked to indicate safe working loads (Reg 7); used in accordance with a written plan, supervised by a competent person, in a safe manner (Reg 8); thoroughly examined before first use, after assembly, periodically (every 6 months for lifting persons; every 12 months for other lifting equipment, or in accordance with an examination scheme) and after exceptional circumstances (Reg 9); examination reports kept (Reg 10).",
-      "Only that it can lift the load.",
-      "Only that it is painted yellow.",
+      "Yes, but only after preparing — switch off any sensitive loads on the same RCD, brief any occupants the supply may briefly trip, and be ready to reset the RCBO. Full trip-current mode is more accurate (typically plus or minus 5 percent vs plus or minus 10 percent for no-trip), and on a borderline result it can confirm whether the no-trip reading was accurate or whether you have a margin you can rely on. If the full mode confirms the reading you can document with higher confidence; if it differs significantly, investigate further.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "LOLER is the lifting-equipment subset of PUWER. The 6-month / 12-month periodic thorough examination intervals are the most-asked exam point — 6 months for anything lifting people (passenger hoists, MEWPs, accessibility lifts), 12 months for other lifting equipment (cranes, slings, hoists). The 'thorough examination' is performed by a competent person and recorded.",
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: "Under RIDDOR, what's the difference between a 'reportable disease' and a 'reportable dangerous occurrence'?",
     options: [
-      "There is no difference.",
+      "Re-make every disconnected termination, double-check via visual inspection that each conductor goes back to its correct terminal (brown to line, blue to neutral, green/yellow to CPC), refit all lamps and accessories, complete any remaining dead tests (e.g. earth electrode), then energise per the live test sequence in Section 4 — starting with Ze, PFC, then Zs and RCD/AFDD operation.",
+      "A workmanship warranty is your written guarantee that the work you've done will be free from workmanship defects for a specified period — typically 1-2 years for standard electrical work, sometimes longer for renewables (RECC requires minimum 2-year workmanship warranty for MCS-registered work). Materials usually carry separate manufacturer warranties (passed through to customer). Clear warranty terms reduce disputes by setting expectations upfront.",
+      "Apprentice is a formal JIB grade for someone in a registered apprenticeship — typically a learner working towards the C&G 2365 (or NVQ Level 3) and the AM2. 'Improver' is not a formal JIB grade — it's a colloquial industry term sometimes used for the post-college, pre-AM2 stage where the learner has completed the technical qualifications but not yet sat the AM2. Once AM2 is passed and JIB processes the upgrade, the worker becomes an Electrician on the JIB scale.",
       "Reportable diseases (Reg 8 + Schedule 3) are work-related ill-health diagnoses — carpal tunnel syndrome from repetitive work, occupational asthma, hand-arm vibration syndrome, certain cancers attributable to a known carcinogen at work. Reportable dangerous occurrences (Reg 7 + Schedule 2) are events that COULD have caused injury — collapse of lifting equipment, escape of dangerous substances, electrical short circuit causing 24+ hours plant stoppage, structural collapse, certain hazardous-area incidents.",
-      "Diseases are reportable but dangerous occurrences are not.",
-      "Both are the same form.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Diseases (F2508A) are diagnostic — a doctor confirms a specified work-related condition. Dangerous occurrences (F2508) are event-based — something happened that could have hurt someone. The L3 depth shift: knowing both lists exist means you don't miss a 'no-injury' event that's still RIDDOR reportable.",
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: "How does the COSHH hierarchy of control apply to silica dust from masonry chasing?",
     options: [
-      "Mask first, plan never.",
       "(1) Eliminate — can the chase be avoided entirely (surface mount, alternative route)? (2) Substitute — can a less dust-producing tool be used (resin-bonded chase saw with extraction vs hammer-and-bolster)? (3) Engineer — on-tool extraction connected to an M-class vacuum, water suppression. (4) Administrative — limit duration, rotate operatives, restrict access. (5) PPE — FFP3 mask as the LAST line, not the first. RPE alone is not COSHH-compliant for routine silica work.",
-      "Just wear gloves.",
-      "Just open a window.",
+      "A document setting out how building safety risks are being identified, mitigated and managed for the HRRB. Includes the fire and structural risks, the strategies for managing them, the residents' engagement strategy, and the golden thread links. Must be kept under review and updated. Submitted to the BSR with the building registration.",
+      "Bonding required per Reg 411.3.1.2 — the metal oil supply pipe is an extraneous-conductive-part liable to introduce a potential. Bond per Reg 544.1.2 — consumer side, before any branch, within 600 mm of point of entry where practicable. Use a BS 951 clamp suitable for oil application (similar specification to gas — DSEAR considerations apply).",
+      "One per RCBO. Each RCBO is an independent RCD device. Test each at 1 x I delta n, record trip time on the Schedule of Test Results against the circuit number. Standard MFT workflow: select RCD test mode, set I delta n to 30 mA (or other rating per device), AC test, plug into the circuit\\\\\\\\'s socket or test from the RCBO load terminals, press TEST, record trip time, move to next circuit. 12 RCBOs = 12 tests + 12 readings on the schedule. Modern MFTs auto-fill the schedule when they\\\\\\\\'re paired with certification software.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Silica is classed as a Group 1 carcinogen by IARC. The HSE WEL is 0.1 mg/m3 8-hour TWA and the limit is being kept under review (likely to fall). Mask-only working has been tested in court and routinely found inadequate where engineering controls were reasonably practicable. The L3 step: do the activity assessment, not just the substance assessment.",
   },

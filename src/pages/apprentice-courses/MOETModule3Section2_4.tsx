@@ -13,24 +13,39 @@ const quickCheckQuestions = [
   {
     id: 'dc-bus-voltage',
     question: 'What is the approximate DC bus voltage for a VSD connected to a 400 V AC supply?',
-    options: ['230 V DC', '400 V DC', '565 V DC', '690 V DC'],
-    correctIndex: 2,
+    options: [
+      '565 V DC',
+      '690 V DC',
+      '400 V DC',
+      '230 V DC',
+    ],
+    correctIndex: 0,
     explanation:
       'The DC bus voltage is approximately 400 V x 1.414 (the square root of 2) = 565 V DC. This is the peak of the AC supply waveform, rectified and smoothed by the DC bus capacitors. Monitoring the DC bus voltage is a key diagnostic parameter -- significantly lower values indicate rectifier or supply issues.',
   },
   {
     id: 'soft-starter-device',
     question: 'What semiconductor devices do soft starters use to control the motor voltage?',
-    options: ['IGBTs', 'Diodes', 'Back-to-back thyristors (SCRs)', 'MOSFETs'],
-    correctIndex: 2,
+    options: [
+      'Back-to-back thyristors (SCRs)',
+      'Test each line to neutral separately',
+      'Cross-connect termination',
+      'Steel tape measure or laser measure',
+    ],
+    correctIndex: 0,
     explanation:
       'Soft starters use back-to-back thyristors (SCRs) on each of the three phases. By controlling the firing angle of the thyristors, the effective voltage applied to the motor is gradually increased from a low initial level to full supply voltage over an adjustable ramp time. Once at full speed, the thyristors are typically bypassed by a contactor.',
   },
   {
     id: 'vsd-maintenance',
     question: 'What is the most common failure point in a VSD that requires regular maintenance?',
-    options: ['IGBT modules', 'Cooling fans and filters', 'The keypad display', 'Motor cables'],
-    correctIndex: 1,
+    options: [
+      'Cooling fans and filters',
+      'IGBT modules',
+      'The keypad display',
+      'Motor cables',
+    ],
+    correctIndex: 0,
     explanation:
       'Cooling fans and their air filters are the most common maintenance item on VSDs. Blocked or dirty filters restrict airflow, causing the drive to overheat and trip on overtemperature. Filters should be cleaned or replaced every 6-12 months depending on the environment. Fan failure is also common and many drives will alarm before the fan stops completely.',
   },
@@ -38,12 +53,12 @@ const quickCheckQuestions = [
     id: 'capacitor-safety',
     question: 'How long should you wait after isolating a VSD before opening the enclosure?',
     options: [
-      'No wait needed',
-      '30 seconds',
       "At least 5 minutes (check manufacturer's data)",
-      '24 hours',
+      "Potentially dangerous - urgent remedial action required",
+      "Eliminate wrong options and guess",
+      "The person who carried out inspection and testing",
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'DC bus capacitors retain a lethal charge after isolation. Wait at least 5 minutes (or as specified by the manufacturer -- some larger drives require longer) and verify the DC bus voltage has discharged below 50 V using a multimeter before touching any internal components. This is a critical safety requirement.',
   },
@@ -66,7 +81,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What switching devices are used in the VSD inverter stage?',
-    options: ['Thyristors', 'Diodes', 'IGBTs', 'Triacs'],
+    options: [
+      'Triacs',
+      'Thyristors',
+      'IGBTs',
+      'Diodes',
+    ],
     correctAnswer: 2,
     explanation:
       'IGBTs (Insulated Gate Bipolar Transistors) are used in the inverter stage, switching at high frequency (typically 2-16 kHz) to create the PWM output waveform.',
@@ -74,23 +94,38 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the approximate DC bus voltage for a 400 V VSD?',
-    options: ['400 V DC', '500 V DC', '565 V DC', '690 V DC'],
-    correctAnswer: 2,
+    options: [
+      '500 V DC',
+      '400 V DC',
+      '690 V DC',
+      '565 V DC',
+    ],
+    correctAnswer: 3,
     explanation:
       'The DC bus voltage is approximately 400 x 1.414 = 565 V DC (peak of the AC supply waveform, rectified and smoothed).',
   },
   {
     id: 4,
     question: 'What does V/f control maintain constant?',
-    options: ['Current', 'Power', 'Voltage-to-frequency ratio', 'Speed'],
-    correctAnswer: 2,
+    options: [
+      'Voltage-to-frequency ratio',
+      'Fan and filter maintenance',
+      'Back-to-back thyristors (SCRs)',
+      '5th, 7th, 11th and 13th',
+    ],
+    correctAnswer: 0,
     explanation:
       'V/f control maintains a constant voltage-to-frequency ratio (e.g., 8 V/Hz for 400 V/50 Hz) to keep the motor flux constant, providing approximately constant torque throughout the speed range up to base speed.',
   },
   {
     id: 5,
     question: 'What semiconductor devices do soft starters use?',
-    options: ['IGBTs', 'Back-to-back thyristors (SCRs)', 'MOSFETs', 'Diodes'],
+    options: [
+      '5th, 7th, 11th and 13th',
+      'Back-to-back thyristors (SCRs)',
+      'Engineering Recommendation G5/4-1',
+      'Torque reduces (field weakening)',
+    ],
     correctAnswer: 1,
     explanation:
       'Soft starters use back-to-back thyristors on each phase, controlling the firing angle to vary the effective voltage during starting and stopping.',
@@ -111,23 +146,38 @@ const quizQuestions = [
   {
     id: 7,
     question: 'How long must you wait before opening an isolated VSD?',
-    options: ['No wait needed', '1 minute', 'At least 5 minutes', '1 hour'],
-    correctAnswer: 2,
+    options: [
+      'No wait needed',
+      '1 minute',
+      '1 hour',
+      'At least 5 minutes',
+    ],
+    correctAnswer: 3,
     explanation:
       "DC bus capacitors retain a lethal charge. Wait at least 5 minutes (check manufacturer's data) and verify the DC bus has discharged below 50 V before any work.",
   },
   {
     id: 8,
     question: 'What harmonics are predominantly generated by a VSD rectifier?',
-    options: ['2nd and 4th', '3rd and 9th', '5th, 7th, 11th and 13th', 'None'],
-    correctAnswer: 2,
+    options: [
+      '5th, 7th, 11th and 13th',
+      'None',
+      '2nd and 4th',
+      '3rd and 9th',
+    ],
+    correctAnswer: 0,
     explanation:
       'The six-pulse diode rectifier produces predominantly 5th, 7th, 11th and 13th harmonics of the supply frequency.',
   },
   {
     id: 9,
     question: 'What UK standard sets harmonic emission limits for installations?',
-    options: ['BS 7671', 'Engineering Recommendation G5/4-1', 'BS EN 61439', 'GS38'],
+    options: [
+      'Back-to-back thyristors (SCRs)',
+      'Engineering Recommendation G5/4-1',
+      'Voltage-to-frequency ratio',
+      'Screened (shielded) cable',
+    ],
     correctAnswer: 1,
     explanation:
       'Engineering Recommendation G5/4-1 (issued by the Energy Networks Association) sets limits on harmonic emissions from installations connected to the public supply network.',
@@ -135,8 +185,13 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What is the typical lifespan of DC bus electrolytic capacitors?',
-    options: ['1-2 years', '5-10 years', '20-30 years', 'Indefinite'],
-    correctAnswer: 1,
+    options: [
+      '1-2 years',
+      'Indefinite',
+      '5-10 years',
+      '20-30 years',
+    ],
+    correctAnswer: 2,
     explanation:
       'Electrolytic capacitors have a finite life of typically 5-10 years, depending on temperature and usage. Capacitor degradation causes DC bus voltage ripple and eventual drive failure.',
   },
@@ -145,11 +200,11 @@ const quizQuestions = [
     question: 'What type of motor cable is required for EMC compliance with VSD installations?',
     options: [
       'Standard twin and earth',
-      'Screened (shielded) cable',
-      'Armoured cable only',
       'Any cable type',
+      'Armoured cable only',
+      'Screened (shielded) cable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Screened motor cables with 360-degree screen termination at both ends are required for EMC compliance, preventing radiated electromagnetic interference from the high-frequency PWM output.',
   },
@@ -157,12 +212,12 @@ const quizQuestions = [
     id: 12,
     question: 'What happens if you run a motor above base speed (above 50 Hz)?',
     options: [
-      'Torque increases',
       'Torque reduces (field weakening)',
-      'Nothing changes',
-      'Motor stops',
+      'Screened (shielded) cable',
+      'Voltage-to-frequency ratio',
+      'Engineering Recommendation G5/4-1',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Above base speed, the voltage cannot increase further (already at maximum), so the motor enters field weakening. The available torque reduces proportionally as frequency increases above the base value.',
   },

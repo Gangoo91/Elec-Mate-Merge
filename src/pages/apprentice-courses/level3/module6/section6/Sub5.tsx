@@ -45,12 +45,12 @@ const checks = [
     question:
       "At handover of a commercial fit-out the L3 designer's deliverable pack should include which of the following?",
     options: [
-      "Just the EIC.",
+      "Fluorinated greenhouse gases — refrigerants used in air conditioning, heat pumps and refrigeration equipment. Hydrofluorocarbons (HFCs) particularly. Phase-down quotas, mandatory leak-checking on equipment containing 5+ tonnes CO2e of F-Gas, certified personnel for installation/maintenance, and ban on certain F-Gases in new equipment from set dates.",
+      "Unauthorised access to grid control systems could enable: remote disconnection of millions of consumers; manipulation of demand-side response to cause grid instability; theft of consumer data; interference with energy billing; and potentially cascading failures across interconnected networks",
+      "Most career-focused electricians start the 2391-52 within 12-18 months of AM2 — long enough to consolidate site experience but soon enough to keep momentum on qualifications. Earlier than that is technically possible but the practical content is easier to absorb after some installation experience. Later than that risks losing study habit and falling behind peers in pay and progression.",
       "The full as-installed design pack (SLD, layouts, all schedules at as-installed revisions), the EIC and supporting schedules of inspection and test results, the operations and maintenance manual, the CDM Health and Safety File contributions, the RFI register and any change-order log, and (on HRRBs) the golden thread information.",
-      "The customer's signature on a satisfaction note.",
-      "Just the SLD and a verbal walkthrough.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Handover is the moment the design team transfers the project's whole knowledge package to the building owner. The pack must contain everything the next competent person needs to operate, maintain, alter or extend the install — that is the Reg 132.13 sufficiency floor. Skimping at handover loads cost on the building owner and leaves the designer exposed when a future contractor cannot find the information.",
   },
@@ -59,12 +59,12 @@ const checks = [
     question:
       "Why must the design pack be updated to as-installed values BEFORE the EIC issues?",
     options: [
-      "It is not needed; the EIC stands alone.",
+      "100 percent at full nameplate, because heat pumps run for many hours per day at high duty cycle, particularly during the heating season cold-snap morning and evening peaks. Manufacturer data may give a refined profile but defaulting to 100 percent is the safer design floor.",
+      "Change ONLY if you can articulate a specific reason (a clause you'd missed, a condition in the stem you'd misread, a calculation step you'd skipped). Otherwise keep your first answer — research shows trained first instinct beats second-guessing absent new information.",
       "Reg 644.1.1 requires defects and omissions revealed during inspection and testing to be corrected before the Certificate is issued. A design pack that disagrees with the install is a defect for the purposes of this regulation; the documentation must match reality before the EIC can issue.",
-      "Only Building Control require it.",
-      "Only on HRRBs.",
+      "Move the bond connection to a clean section of the same pipe (still consumer side, still before any branch, within 600 mm of point of entry where practicable per Reg 544.1.2). Clean to bare metal, apply paste, fit clamp.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Reg 644.1.1 makes the EIC conditional on the install matching the documentation. Routes change, lengths change, accessories get substituted, circuits get added — all normal. The as-installed update is what re-aligns the documentation with reality before the EIC signs off. Without it, the EIC certifies an install that the documentation does not describe, which fails Reg 644.1.1 and creates a future verification problem for every periodic inspection.",
   },
@@ -73,12 +73,12 @@ const checks = [
     question:
       "Under the Building Safety Act 2022, the golden thread of building information must be:",
     options: [
-      "Filed away and forgotten after handover.",
+      "Contact the distribution network operator to discuss options including isolation or diversion; install goal posts and physical barriers to define the safe zone; use a banks person; and restrict boom operation with a rated capacity limiter",
+      "Add a 'future load reservation' line for each foreseeable load with its expected MD after diversity, sum it into a 'design ultimate MD' that the supply, main switchgear and tails are sized for, with a note explaining what is committed today vs reserved.",
+      "ACAS promotes early, informal resolution through open conversation — addressing issues promptly, listening to all perspectives, seeking mutually acceptable solutions, and using formal processes only when informal approaches have been exhausted. This aligns with EI-based conflict resolution that prioritises empathic dialogue, assertive communication, and collaborative problem-solving",
       "Maintained as accurate, accessible and up-to-date throughout the building's life. It is digital information about the building, kept in a structured format, accessible to the dutyholders for the building (Accountable Person, Principal Accountable Person), and updated whenever the building changes.",
-      "Held only by the original architect.",
-      "Required only for new builds, not refurbishments.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The golden thread is a living information set, not an archive. BSA 2022 makes it a legal duty for higher-risk residential buildings (HRRBs — broadly residential buildings 18 m or seven storeys and above). The dutyholders must keep it accurate, accessible and current. The L3 designer's contribution is the as-installed electrical pack — the SLD, schedules, calc sheets, RFI register and any change orders, all in a format that survives the building's lifetime. The Building Safety Regulator can audit the golden thread at any point in the building's life.",
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: "What is included in a complete design pack handover at the end of a commercial fit-out?",
     options: [
-      "Just the EIC.",
+      "MHSWR Reg 5 — effective arrangements for planning, organising, controlling, monitoring, reviewing the preventive measures (POCMR). RA is one input; Reg 5 runs the system that operationalises it.",
       "As-installed SLD and layouts, all schedules at as-installed revisions, EIC plus inspection and test schedules, operations and maintenance manual, CDM Health and Safety File contributions, RFI register, change order log, and (on HRRBs) golden thread information.",
-      "Just the customer name and address.",
-      "A verbal walkthrough only.",
+      "Incorrect phase rotation will cause three-phase motors to run in the wrong direction, potentially damaging driven equipment, and may affect the operation of phase-sequence-sensitive protection relays",
+      "Competence is the combination of technical knowledge, practical skills, experience, and the ability to recognise and manage risk appropriate to the work being undertaken. The MOET apprenticeship develops all these elements through structured training, supervised workplace experience, and formal assessment",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: "What is the as-installed update process?",
     options: [
-      "An optional process for big jobs.",
+      "Substantially higher breaking capacity (typically 50-80 kA for BS 88-3 / BS 88-2 in commercial sizes), faster I²t let-through under heavy fault, and well-defined cascade behaviour. Plus zero risk of nuisance trip from in-rush — fuses do not 'see' microsecond peaks, only sustained current.",
+      "Written grievance following the employer's documented grievance procedure (which the employer is required to provide under the ACAS Code of Practice on Discipline and Grievance). The written grievance triggers a structured response with timescales and right of appeal. Verbal complaints are easy to ignore; documented grievances are not. ACAS conciliation is available if the internal process fails.",
       "The installer red-lines deviations on a working copy of the design pack at handover. The designer reviews each red-line, re-runs any affected calc, updates the affected schedules, the SLD and the layouts, marks the new revision, and re-issues. The re-issued pack is the as-installed pack — the master that the building owner inherits.",
-      "Just the EIC tester's job.",
-      "Always done by Building Control.",
+      "Because both have finite lives — panels are typically guaranteed for 25+ years (with declining output), inverters for 5–15 years (and need replacing within the system life), lithium-ion batteries for 10–15 years before significant capacity fade. The customer should understand the install isn’t fit-and-forget forever.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The as-installed update closes the loop between design and construction. It is the designer's responsibility because the design pack is the designer's product. The installer red-lines what changed; the designer reviews, re-calculates if needed, updates and re-issues. Without this step the design pack drifts from reality and every future inspection or modification starts from incorrect information.",
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: "Which BS 7671 regulation makes the EIC conditional on as-installed documentation matching the install?",
     options: [
-      "Reg 132.13.",
+      "Deliberate breach of, or flagrant disregard for, the law. Knew about hazard and ignored it; knowingly used unsafe procedures; deliberate cost-cutting that caused exposure.",
+      "Calculation from supply transformer impedance and cable parameters; OR use of DNO declared values (e.g. 16kA at typical urban supply origin)",
+      "Separation of busbars from functional units, and separation of functional units from each other, including separation of their terminals",
       "Reg 644.1.1 — for a new installation, any defect or omission revealed during inspection and testing shall be corrected before the Certificate is issued. A documentation mismatch is a defect.",
-      "Reg 411.4.",
-      "Reg 514.13.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Reg 644.1.1 is the regulatory hook for the as-installed update. The inspector finds disagreement between the design pack and the install; that is a defect or omission that must be corrected before the EIC issues. The fix is either to bring the install back to match the design or to update the documentation to as-installed and re-issue. The EIC cannot sign off until the documentation and the install are aligned.",
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: "Under the Building Safety Act 2022, what is the 'golden thread' of building information?",
     options: [
-      "A type of cable.",
       "A digital, structured, accessible and current set of information about a higher-risk residential building (HRRB), maintained throughout the building's life by the dutyholders (Accountable Person, Principal Accountable Person), used by the Building Safety Regulator and by anyone working on the building.",
-      "Just the architect's drawings.",
-      "Just the handover certificate.",
+      "That every employer appoint one or more competent persons to assist them in undertaking the measures needed to comply with the requirements and prohibitions imposed on them by the relevant statutory provisions. Often this is a designated H&S manager or external consultant.",
+      "People, environment, services, fabric. People — pedestrians, customers, children, other trades. Environment — weather, dust, asbestos suspicion in pre-2000 homes, confined spaces, working at height. Services — concealed live cables, gas pipes, water pipes, structural steel that needs bonding. Fabric — brittle masonry, joist orientation, plaster condition.",
+      "Auto-disconnection occurs in the same disconnection times as the equivalent TN system (Table 41.1) — once a second fault establishes a fault loop through the protective conductor, fault current flows like a TN line-to-earth fault and the protective device disconnects",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The golden thread is a living information set, not a static archive. BSA 2022 makes it a legal requirement for HRRBs — broadly residential buildings 18 m or seven storeys and above. It must be accurate, accessible, current and digital. The L3 designer's contribution is the as-installed electrical pack in a format that survives the building's lifetime; the dutyholders maintain it as the building changes.",
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: "What is the CDM 2015 Health and Safety File and how does the L3 designer contribute?",
     options: [
-      "A safety briefing document.",
+      "Lux level (typically 300 lux task), uniformity (greater than 0.6 across the desk area), glare control (UGR less than 19), colour temperature (3500-4000K typical), colour rendering (Ra greater than 80), AND accessibility — high contrast trim around switches, audible feedback on counter call-buttons, induction loop interface for hearing-aid users.",
       "A formal CDM 2015 deliverable, prepared by the Principal Designer and handed to the building owner at the end of construction, containing information needed to allow the building to be operated, maintained, cleaned, altered, demolished and used safely. The L3 designer contributes electrical content — SLD, schedules, residual risks, isolation arrangements, LOTO information, special hazards.",
-      "An optional document.",
-      "Only required for HRRBs.",
+      "Classification, Labelling and Packaging — the EU Regulation (1272/2008) that sets the format of the SDS, the GHS pictograms (skull, exclamation, flame, corrosion, etc.) and the H-statements (e.g. H314 'causes severe skin burns'). Retained as UK law after Brexit. It's the standard the SDS is written to.",
+      "A tethered charger has the charging cable permanently attached to the EVSE unit (convenient for home use — just plug into the vehicle), while a socketed charger has a Type 2 socket on the unit and the user provides their own cable (more flexible for workplace/public use where different cable lengths and vehicle connectors may be needed)",
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: "What format should the as-installed design pack be in for handover?",
     options: [
-      "Whatever the designer prefers.",
+      "Match symptoms to Schedule 1 categories: visible fracture (excl finger/thumb/toe), amputation, sight loss reported, crush with internal symptoms, burn &gt;10% / vital organ, scalping, LOC, enclosed-space asphyxia / heat. When in doubt, treat as specified and escalate.",
+      "Apply petroleum jelly or non-acidic grease to the prepared conductor and the terminal threads to inhibit corrosion. Heatshrink the joint if there is any risk of dripping water reaching it. Tighten to the manufacturer torque spec.",
       "Digital and durable — typically PDF for the drawings and schedules, native files (DWG, RVT, IFC) where the building owner has compatible software, and a structured index. Hard-copy printout if the building owner needs one. On HRRBs, format must support the BSA 2022 golden thread requirements (accessible, structured, digital).",
-      "Always hand-written.",
-      "Always native AutoCAD only.",
+      "Goleman's optimism involves realistic assessment of obstacles combined with genuine belief that effort and strategy can lead to success — it acknowledges difficulties but maintains persistent, evidence-based hope, unlike naive positivity which ignores or denies problems",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Format must serve the building owner's actual use case. PDF is the universal long-term format for drawings and schedules — it survives software changes. Native files (DWG, RVT, IFC) are useful where the owner can edit them. A structured index lets future readers navigate quickly. Hard copy is sometimes still required for the on-site DB chart and for some clients. BSA 2022 pushes HRRB packs toward fully digital, structured, accessible formats — the golden thread cannot be paper only.",
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: "Who is the Accountable Person under the Building Safety Act 2022?",
     options: [
-      "The L3 designer.",
+      "The more precisely you can identify your emotion (e.g., distinguishing \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"frustrated\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" from \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"disappointed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" from \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"overwhelmed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"), the more effectively you can select the appropriate regulation strategy — because different emotions require different responses",
+      "It is a systematic process of identifying hazards, evaluating the likelihood and severity of harm, and determining suitable control measures in accordance with the hierarchy of control under the Management of Health and Safety at Work Regulations 1999",
+      "A structured plan that includes: self-assessment (identifying current EI strengths and gaps), specific goals (which competencies to develop), practice opportunities (real situations to apply new skills), feedback mechanisms (trusted people who will give honest observations), reflection practices (regular review of progress), and accountability (commitments to specific actions with review dates)",
       "A dutyholder named under BSA 2022 for an occupied higher-risk residential building. The Accountable Person is responsible for the building's safety case, for managing building safety risks, and for maintaining the golden thread of information. The Principal Accountable Person is the lead AP where multiple APs exist.",
-      "The local authority.",
-      "The fire and rescue service.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "BSA 2022 introduces the Accountable Person and Principal Accountable Person as the named dutyholders for occupied HRRBs. Their duties include the safety case, the residents' engagement strategy, complaints handling, and the golden thread. They are not the designer or the contractor — they are the building's responsible owner during occupation. The L3 designer hands the as-installed information set to the AP / PAP at handover so they can take it forward through the building's life.",
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: "Why must the L3 designer keep a copy of the as-installed pack after handover?",
     options: [
-      "Personal preference.",
       "Professional responsibility and PI insurance reasons. If a claim is made later (1 to 12 years post-handover under typical PI policy retroactive terms), the designer needs the as-installed pack to defend their work. Most designers retain master copies for the design life of the installation (typically 25 years for fixed wiring) plus 6 years for limitation period.",
-      "Only required by Building Control.",
-      "Never — designers must hand everything over and keep nothing.",
+      "An event that could have caused injury but didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t — a slip without a fall, a near-contact, a tool drop without injury, a small fire that self-extinguished. Near-misses are the leading indicator of where the next incident will happen. Internal reporting and review of near-misses is one of the highest-impact preventive activities.",
+      "PASMA (Prefabricated Access Suppliers' and Manufacturers' Association) is the recognised training standard for assembling, dismantling and using mobile tower scaffolds. It's not a statutory licence in the way IPAF is for MEWPs, but PUWER 1998 Reg 9 requires anyone using or assembling work equipment to be adequately trained, and on construction sites the principal contractor's site rules typically require PASMA card-holders for tower assembly.",
+      "Manufacturer's website (always the latest version), the firm's COSHH register (in paper or app form — common apps include Sypol and Alcumus), and the product packaging at the point of purchase. Many manufacturers print QR codes on the can that link directly to the latest SDS.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Retention is part of the designer's professional discipline. PI claims can arise years after handover. Without the as-installed pack the designer cannot reconstruct what was designed and built. Most firms retain the full pack for 25 years plus the limitation period (typically 6 years for breach of contract, 12 years if the contract was by deed). Hand the pack to the building owner and keep your own copy — both are needed.",
   },

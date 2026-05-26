@@ -27,20 +27,25 @@ const quickCheckQuestions = [
     id: 'retrofit-assessment',
     question: 'What is the primary purpose of an energy audit in retrofit planning?',
     options: [
-      'To satisfy building regulations',
+      'With supervision, PPE, GS38 leads, and controlled area',
+      'To prevent accidents, legal non-compliance, and property damage',
+      'Licensed, notifiable non-licensed (NNLW), and non-licensed',
       'To identify energy saving opportunities and quantify potential savings',
-      'To calculate electricity tariffs',
-      'To design new electrical systems',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'An energy audit systematically identifies energy saving opportunities, quantifies current consumption, and estimates potential savings. This data forms the foundation for business case development and retrofit prioritisation.',
   },
   {
     id: 'business-case',
     question: 'Which financial metric is most commonly used to evaluate retrofit investments?',
-    options: ['Gross profit margin', 'Simple payback period', 'Operating margin', 'Current ratio'],
-    correctIndex: 1,
+    options: [
+      'Operating margin',
+      'Current ratio',
+      'Simple payback period',
+      'Gross profit margin',
+    ],
+    correctIndex: 2,
     explanation:
       'Simple payback period (investment cost divided by annual savings) is the most widely used metric for retrofit evaluation. Whilst NPV and IRR provide more sophisticated analysis, payback period is universally understood by stakeholders.',
   },
@@ -49,12 +54,12 @@ const quickCheckQuestions = [
     question:
       'When retrofitting fluorescent fittings with LED tubes, which safety consideration is paramount?',
     options: [
-      'Colour temperature matching',
+      'Review all explanations and identify knowledge gaps',
+      'An area of higher heat transfer through the building envelope',
       'Compatibility with existing ballasts or bypass requirements',
-      'Lumen output comparison',
-      'Dimming compatibility',
+      'It provides the framework under which more specific regulations can be made',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Ballast compatibility is the critical safety consideration. Type A LED tubes work with existing ballasts, Type B require ballast bypass, and Type C require new LED drivers. Incorrect selection can cause fire risks or equipment damage.',
   },
@@ -62,12 +67,12 @@ const quickCheckQuestions = [
     id: 'ipmvp-verification',
     question: 'What does IPMVP Option C require for measurement and verification?',
     options: [
-      'Individual load metering only',
-      'Engineering calculations without metering',
+      'It demonstrates competence, commitment to standards, and ethical conduct',
+      'Both operational and embodied carbon emissions',
+      'Due to cable length, connections, or temperature differences',
       'Whole facility utility metering with regression analysis',
-      'Spot measurements during commissioning',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'IPMVP Option C uses whole facility utility data with regression analysis to verify savings. It compares pre-retrofit and post-retrofit consumption, adjusted for variables like weather and occupancy, to quantify actual energy reductions.',
   },
@@ -80,11 +85,11 @@ const quizQuestions = [
       'Which level of energy audit provides the most detailed analysis for retrofit planning?',
     options: [
       'Walk-through audit (Level 1)',
-      'General audit (Level 2)',
       'Investment-grade audit (Level 3)',
+      'General audit (Level 2)',
       'Desktop audit (Level 0)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Investment-grade audit (Level 3) provides detailed engineering analysis, metering data, life-cycle cost analysis, and financial projections suitable for securing capital investment for major retrofit projects.',
   },
@@ -93,12 +98,12 @@ const quizQuestions = [
     question:
       'For a lighting retrofit business case, which costs should be included beyond equipment?',
     options: [
-      'Only the LED lamp costs',
+      'Ballast bypass - direct mains connection to lamp holders',
+      'Additional savings from occupancy sensors, daylight dimming, and scheduling',
       'Equipment, installation, disposal, and any control system upgrades',
-      'Equipment and installation only',
-      'Equipment and maintenance savings only',
+      'How one efficiency measure affects the savings of another',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A comprehensive business case includes capital costs (equipment, installation, controls), disposal costs for removed equipment, and considers all revenue implications (energy savings, maintenance savings, carbon reduction benefits).',
   },
@@ -106,8 +111,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the typical acceptable simple payback period for most commercial retrofit projects?',
-    options: ['Less than 1 year', '2-5 years', '7-10 years', 'Over 15 years'],
-    correctAnswer: 1,
+    options: [
+      '7-10 years',
+      'Less than 1 year',
+      'Over 15 years',
+      '2-5 years',
+    ],
+    correctAnswer: 3,
     explanation:
       'Most commercial organisations accept payback periods of 2-5 years for retrofit investments. Shorter paybacks are preferred but rare for comprehensive projects; longer paybacks typically require additional drivers like regulatory compliance or sustainability targets.',
   },
@@ -115,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'When conducting a pre-retrofit baseline, measurements should ideally cover:',
     options: [
-      'A single day of operation',
-      'At least one week',
       'A minimum of 12 months to capture seasonal variation',
-      'The period during peak demand only',
+      'Light levels, control functionality, and energy consumption',
+      'Changes in independent variables like weather and occupancy',
+      'Individual retrofit measures can be isolated and metered',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A 12-month baseline captures seasonal variations in consumption, occupancy patterns, and weather effects. This comprehensive baseline is essential for accurate post-retrofit savings verification using regression analysis.',
   },
@@ -128,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'Type B LED retrofit tubes require:',
     options: [
-      'No modifications to existing fittings',
+      'Light levels, control functionality, and energy consumption',
       'Ballast bypass - direct mains connection to lamp holders',
-      'Complete fitting replacement',
-      'Addition of an external LED driver',
+      'Both a 6 kW reduction and 50% improvement',
+      'Individual retrofit measures can be isolated and metered',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,11 +152,11 @@ const quizQuestions = [
     question: 'IPMVP Option A is most appropriate when:',
     options: [
       'Whole building savings must be verified',
-      'Individual retrofit measures can be isolated and metered',
       'No metering is available',
+      'Individual retrofit measures can be isolated and metered',
       'Multiple interactive measures are installed simultaneously',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Option A (Retrofit Isolation: Key Parameter Measurement) is suitable when specific retrofit measures can be isolated and key parameters metered. It uses spot or short-term measurements with engineering calculations for other variables.',
   },
@@ -154,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'Post-retrofit commissioning of lighting systems should verify:',
     options: [
-      'Only that lights switch on',
+      'Equipment, installation, disposal, and any control system upgrades',
+      'Cash flows over the project life discounted to present value',
+      'Individual retrofit measures can be isolated and metered',
       'Light levels, control functionality, and energy consumption',
-      'Only energy consumption',
-      'Colour temperature only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Comprehensive commissioning verifies illuminance levels meet design requirements, control systems function correctly (sensors, dimming, scheduling), and energy consumption aligns with predicted savings.',
   },
@@ -167,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'When calculating LED retrofit savings, the control factor accounts for:',
     options: [
-      'The quality of installation workmanship',
       'Additional savings from occupancy sensors, daylight dimming, and scheduling',
-      "The LED manufacturer's warranty period",
-      'The disposal costs of old equipment',
+      'Changes in independent variables like weather and occupancy',
+      'Ballast bypass - direct mains connection to lamp holders',
+      'Individual retrofit measures can be isolated and metered',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The control factor multiplies baseline savings by the additional reduction achieved through intelligent controls. Occupancy sensing typically adds 20-30% savings, daylight dimming 15-25%, and scheduling 5-15% beyond lamp efficiency gains.',
   },
@@ -180,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'Net Present Value (NPV) for retrofit projects considers:',
     options: [
-      'Only the initial investment cost',
+      'Light levels, control functionality, and energy consumption',
       'Cash flows over the project life discounted to present value',
-      'Only the annual energy savings',
-      'The payback period multiplied by annual savings',
+      'A minimum of 12 months to capture seasonal variation',
+      'Ballast bypass - direct mains connection to lamp holders',
     ],
     correctAnswer: 1,
     explanation:
@@ -194,11 +204,11 @@ const quizQuestions = [
     question: 'Interactive effects in retrofit projects refer to:',
     options: [
       'User interface design for control systems',
+      'Stakeholder engagement processes',
       'How one efficiency measure affects the savings of another',
       'Communication between building systems',
-      'Stakeholder engagement processes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Interactive effects describe how efficiency measures influence each other. For example, LED lighting generates less heat, reducing cooling loads but potentially increasing heating requirements - these interactions must be considered in savings calculations.',
   },
@@ -209,10 +219,10 @@ const quizQuestions = [
     options: [
       '6 kW of connected load reduction',
       '50% reduction in lighting energy consumption',
-      'Both a 6 kW reduction and 50% improvement',
       '12 kW of savings',
+      'Both a 6 kW reduction and 50% improvement',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The retrofit reduces connected load by 6 kW (12-6 W/m² × 1,000 m²) which is a 50% reduction. Annual energy savings depend on operating hours - at 2,500 hours/year, this equals 15,000 kWh annually.',
   },
@@ -220,12 +230,12 @@ const quizQuestions = [
     id: 12,
     question: 'The regression model baseline adjustment in IPMVP accounts for:',
     options: [
-      'Inflation in energy prices',
       'Changes in independent variables like weather and occupancy',
-      'Equipment degradation over time',
-      'Measurement uncertainty only',
+      'Light levels, control functionality, and energy consumption',
+      'Additional savings from occupancy sensors, daylight dimming, and scheduling',
+      'Cash flows over the project life discounted to present value',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Regression analysis adjusts the baseline for changes in independent variables (weather, occupancy, production) between pre and post-retrofit periods. This isolates the retrofit's impact from other factors affecting consumption.",
   },

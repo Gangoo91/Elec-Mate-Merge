@@ -36,11 +36,11 @@ const quickCheckQuestions = [
       'When applying the superposition theorem, what do you do with voltage sources not being considered?',
     options: [
       'Remove them completely',
-      'Replace with short circuits',
       'Replace with open circuits',
+      'Replace with short circuits',
       'Double their value',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Voltage sources not being considered are replaced with short circuits (zero resistance). This allows you to analyse the effect of each source independently before summing the results.',
   },
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     id: 'thevenin-components',
     question: 'A Thévenin equivalent circuit consists of which components?',
     options: [
-      'Current source in series with resistance',
       'Voltage source in parallel with resistance',
       'Voltage source in series with resistance',
+      'Current source in series with resistance',
       'Current source in series with capacitance',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Thévenin equivalent is a voltage source (VTh) in series with a resistance (RTh). This simplified model represents any linear network as seen from two terminals.',
   },
@@ -61,12 +61,12 @@ const quickCheckQuestions = [
     id: 'norton-components',
     question: 'A Norton equivalent circuit consists of which components?',
     options: [
-      'Voltage source in series with resistance',
       'Current source in parallel with resistance',
-      'Voltage source in parallel with capacitance',
+      'Voltage source in series with resistance',
       'Current source in series with inductance',
+      'Voltage source in parallel with capacitance',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Norton equivalent is a current source (IN) in parallel with a resistance (RN). Norton and Thévenin equivalents are interchangeable - they represent the same network behaviour.',
   },
@@ -74,7 +74,12 @@ const quickCheckQuestions = [
     id: 'thevenin-norton-conversion',
     question:
       'If a Thévenin equivalent has VTh = 48V and RTh = 12Ω, what is the Norton current IN?',
-    options: ['4A', '576A', '0.25A', '60A'],
+    options: [
+      '4A',
+      '0.25A',
+      '576A',
+      '60A',
+    ],
     correctIndex: 0,
     explanation:
       'IN = VTh / RTh = 48V / 12Ω = 4A. The Norton resistance equals the Thévenin resistance (RN = RTh = 12Ω).',
@@ -99,10 +104,10 @@ const quizQuestions = [
     id: 2,
     question: 'When finding Thévenin resistance, what must be done to all independent sources?',
     options: [
-      'They remain active',
-      'Voltage sources are open-circuited',
+      'Liquidated damages become payable by the contractor',
+      'Test results, circuit details, and any departures from standards',
       'All sources are deactivated (voltage→short, current→open)',
-      'Current sources are short-circuited',
+      'Circuits with moderate inrush currents like motors',
     ],
     correctAnswer: 2,
     explanation:
@@ -112,8 +117,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A network has Thévenin equivalent VTh = 230V, RTh = 4Ω. What current flows through a 42Ω load?',
-    options: ['5A', '5.5A', '50A', '54.8A'],
-    correctAnswer: 0,
+    options: [
+      '50A',
+      '5.5A',
+      '54.8A',
+      '5A',
+    ],
+    correctAnswer: 3,
     explanation: 'Using I = VTh / (RTh + RL) = 230V / (4Ω + 42Ω) = 230V / 46Ω = 5A',
   },
   {
@@ -121,12 +131,12 @@ const quizQuestions = [
     question:
       'Which theorem is most useful for analysing how a single load affects a complex network?',
     options: [
-      'Superposition theorem',
-      "Kirchhoff's voltage law",
       "Thévenin's theorem",
+      "Kirchhoff's voltage law",
+      'Superposition theorem',
       'Maximum power transfer',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Thévenin's theorem simplifies a complex network to a single voltage source and series resistance, making it easy to analyse how different loads affect the circuit.",
   },
@@ -134,16 +144,26 @@ const quizQuestions = [
     id: 5,
     question:
       'A UPS system has two sources: mains (230V) through 0.5Ω impedance and battery (24V DC-DC converted to 230V) through 2Ω. Using superposition, what is the contribution from mains alone to a 23Ω load when battery is disabled?',
-    options: ['9.79A through load', '10A through load', '230V across load', '219.1V across load'],
-    correctAnswer: 0,
+    options: [
+      '10A through load',
+      '9.79A through load',
+      '219.1V across load',
+      '230V across load',
+    ],
+    correctAnswer: 1,
     explanation:
       'With battery replaced by short: Total R = 0.5Ω + (2Ω || 23Ω) = 0.5Ω + 1.84Ω = 2.34Ω. Total I = 230/2.34 = 98.3A. Current through load branch: 98.3A × 2/(2+23) = 7.86A. Actually simpler: V at junction = 230 - (I × 0.5), solving gives load current ≈ 9.79A',
   },
   {
     id: 6,
     question: 'The relationship between Thévenin voltage and Norton current is:',
-    options: ['VTh = IN × RTh', 'VTh = IN / RTh', 'VTh = IN + RTh', 'VTh = IN - RTh'],
-    correctAnswer: 0,
+    options: [
+      'VTh = IN + RTh',
+      'VTh = IN / RTh',
+      'VTh = IN × RTh',
+      'VTh = IN - RTh',
+    ],
+    correctAnswer: 2,
     explanation:
       'VTh = IN × RTh (or IN = VTh / RTh). This allows easy conversion between equivalent circuits. The resistance values are identical: RTh = RN.',
   },
@@ -154,10 +174,10 @@ const quizQuestions = [
     options: [
       "Norton's theorem only",
       "Thévenin's theorem only",
-      'Superposition theorem',
       "Kirchhoff's current law only",
+      'Superposition theorem',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Superposition theorem is ideal for analysing circuits with multiple sources (solar + mains). It allows separate analysis of each source's contribution to load current/voltage.",
   },
@@ -165,8 +185,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A generator paralleling system has two 400V generators with internal resistances of 0.8Ω and 1.2Ω respectively. What is the Thévenin equivalent resistance?',
-    options: ['2.0Ω', '0.48Ω', '0.4Ω', '1.0Ω'],
-    correctAnswer: 1,
+    options: [
+      '0.48Ω',
+      '0.4Ω',
+      '2.0Ω',
+      '1.0Ω',
+    ],
+    correctAnswer: 0,
     explanation:
       'Parallel generators: RTh = (0.8 × 1.2) / (0.8 + 1.2) = 0.96 / 2.0 = 0.48Ω. When sources are equal voltage, they act in parallel for resistance calculation.',
   },

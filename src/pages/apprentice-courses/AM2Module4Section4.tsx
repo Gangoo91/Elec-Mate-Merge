@@ -53,10 +53,10 @@ const AM2Module4Section4 = () => {
       id: 'functional-vs-insulation',
       question: "What's the difference between insulation resistance and functional testing?",
       options: [
-        'They are the same test',
+        'Continuous data is recorded constantly, event-based only when something changes',
         'Insulation resistance checks safety of wiring; functional testing checks operation of equipment and circuits',
-        'Functional testing is optional',
-        'Insulation resistance is for motors only',
+        'Visual management — keeps the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s attention on today\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s priorities and tomorrow\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s readiness',
+        'Someone with sufficient training, knowledge, experience, and skills to carry out a manual handling risk assessment effectively',
       ],
       correctIndex: 1,
       explanation:
@@ -66,10 +66,10 @@ const AM2Module4Section4 = () => {
       id: 'rcd-failure',
       question: "What's the required action if an RCD fails to trip within the permitted time?",
       options: [
-        'Continue with other tests',
+        'Light switch disconnects neutral instead of line',
         'Record non-compliance and fail the RCD test',
-        'Try the test again',
-        'Adjust the settings',
+        'Tabular format with columns and rows',
+        'Effectively 100% (all energy → heat)',
       ],
       correctIndex: 1,
       explanation:
@@ -79,10 +79,10 @@ const AM2Module4Section4 = () => {
       id: 'testing-completeness',
       question: 'Why is it important to test every lighting switch combination?',
       options: [
-        'To save time',
-        "It's not necessary if some work",
+        'To confirm your voltage tester is working correctly',
+        'Correct line and neutral to isolating transformer',
         'To ensure all switching functions operate correctly as designed',
-        'Only for three-way switching',
+        'Lower, requiring recalculation of existing circuits',
       ],
       correctIndex: 2,
       explanation:
@@ -95,10 +95,10 @@ const AM2Module4Section4 = () => {
       id: 1,
       question: "What's the difference between insulation resistance and functional testing?",
       options: [
-        "No difference - they're the same",
+        'Mentally preparing your response while the speaker is still talking',
         'Insulation resistance checks safety of wiring; functional testing checks operation of equipment',
-        'Functional testing is electrical, insulation is mechanical',
-        'Only insulation resistance is required',
+        'A condition where a person feels they need a substance to function normally, with withdrawal symptoms if they stop',
+        'HSE Guidance Note GS38 — Electrical test equipment for use on low voltage electrical systems',
       ],
       correctAnswer: 1,
       explanation:
@@ -108,28 +108,38 @@ const AM2Module4Section4 = () => {
       id: 2,
       question: 'What must be tested on every lighting circuit?',
       options: [
-        'Only the main switch',
+        'Productivity, profitability, and customer satisfaction',
+        'Requiring health and safety planning and coordination',
         'Every switching combination and lamp operation',
-        'Just the circuit breaker',
-        'Only two-way switches',
+        'Duration test and battery condition',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'All switches (one-way, two-way, intermediate) and their combinations must be tested to confirm correct operation and lamp control.',
     },
     {
       id: 3,
       question: 'Which device is tested at 1×IΔn under A4:2026?',
-      options: ['MCB', 'RCD/RCBO', 'Isolator', 'Fuse'],
-      correctAnswer: 1,
+      options: [
+        'Isolator',
+        'MCB',
+        'Fuse',
+        'RCD/RCBO',
+      ],
+      correctAnswer: 3,
       explanation:
         'A4:2026 deleted the 5×IΔn test — RCDs and RCBOs are now verified by a single AC test at 1×IΔn.',
     },
     {
       id: 4,
       question: 'What unit are RCD trip times recorded in?',
-      options: ['Seconds (s)', 'Milliseconds (ms)', 'Minutes (min)', 'Microseconds (us)'],
-      correctAnswer: 1,
+      options: [
+        'Milliseconds (ms)',
+        'Seconds (s)',
+        'Minutes (min)',
+        'Microseconds (us)',
+      ],
+      correctAnswer: 0,
       explanation:
         'RCD trip times are measured and recorded in milliseconds (ms) as per BS 7671 requirements.',
     },
@@ -137,10 +147,10 @@ const AM2Module4Section4 = () => {
       id: 5,
       question: 'What happens if an RCD fails to trip within limits?',
       options: [
-        'Try again later',
+        'When there is more than one contractor on site',
         'Record non-compliance and fail the test',
-        'Adjust the test current',
-        'Skip the test',
+        'Reduced current spike during star-delta transition',
+        'Safety and functionality at reasonable cost',
       ],
       correctAnswer: 1,
       explanation:
@@ -158,12 +168,12 @@ const AM2Module4Section4 = () => {
       id: 7,
       question: 'Why must you test every lighting switch combination?',
       options: [
-        "It's not necessary",
+        'Misidentification of conductors and careless wiring',
+        'Walk them through it in person, explaining scope, timeline and price',
+        'Maximum power is transferred when load resistance equals source resistance',
         'To ensure all switching functions operate correctly as designed',
-        'Only for show',
-        'To waste time',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Testing every switch combination ensures correct wiring and operation of all lighting control functions as per the design.',
     },
@@ -171,12 +181,12 @@ const AM2Module4Section4 = () => {
       id: 8,
       question: 'What test tool can be used to check socket polarity?',
       options: [
-        'Multimeter only',
         'Polarity tester or plug-in socket tester',
-        'Insulation tester',
-        'Continuity tester',
+        'Investigate and possibly retest',
+        'Degraded performance or partial failure',
+        'Every switching combination and lamp operation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Polarity testers or plug-in socket testers can quickly verify correct polarity and supply presence at socket outlets.',
     },
@@ -184,10 +194,10 @@ const AM2Module4Section4 = () => {
       id: 9,
       question: 'What function must you confirm in motor circuits?',
       options: [
-        'Only the motor runs',
+        '£15,000 (6 months of essential outgoings)',
         'Start and stop controls, and overload reset operation',
-        'Just the electrical supply',
-        'Only the speed',
+        'Control, Resilience, Security, Freedom',
+        'A relevant event entitling extension of time',
       ],
       correctAnswer: 1,
       explanation:
@@ -197,12 +207,12 @@ const AM2Module4Section4 = () => {
       id: 10,
       question: "What's the final step after functional testing?",
       options: [
-        'Leave everything on',
+        'Door contact sensor showing open/closed',
+        'Seminars, demonstrations, and networking',
         'Leave installation in a safe state',
-        'Remove all fuses',
-        'Turn off main supply',
+        'Clear the route and plan the path',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'After functional testing, the installation must be left in a safe state with all systems operating normally and safely.',
     },

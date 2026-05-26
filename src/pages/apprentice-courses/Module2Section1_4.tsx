@@ -14,7 +14,12 @@ const quizQuestions = [
   {
     id: 1,
     question: "What does the prefix 'kilo' mean?",
-    options: ['× 100', '× 1,000', '× 10,000', '÷ 1,000'],
+    options: [
+      '× 100',
+      '× 1,000',
+      '× 10,000',
+      '÷ 1,000',
+    ],
     correctAnswer: 1,
     explanation:
       "The prefix 'kilo' means × 1,000 (multiply by one thousand). For example, 1 kV = 1,000 V.",
@@ -22,22 +27,37 @@ const quizQuestions = [
   {
     id: 2,
     question: 'How many milliamps equal 1 amp?',
-    options: ['10 mA', '100 mA', '1,000 mA', '10,000 mA'],
+    options: [
+      '10,000 mA',
+      '10 mA',
+      '1,000 mA',
+      '100 mA',
+    ],
     correctAnswer: 2,
     explanation: "1,000 mA = 1 A. The prefix 'milli' means ÷ 1,000, so 1 mA = 0.001 A.",
   },
   {
     id: 3,
     question: 'Convert 2.5 kW to watts:',
-    options: ['25 W', '250 W', '2,500 W', '25,000 W'],
-    correctAnswer: 2,
+    options: [
+      '250 W',
+      '25 W',
+      '25,000 W',
+      '2,500 W',
+    ],
+    correctAnswer: 3,
     explanation:
       '2.5 kW = 2.5 × 1,000 = 2,500 W. To convert from kilo to base units, multiply by 1,000.',
   },
   {
     id: 4,
     question: 'What is 500 µA in amperes?',
-    options: ['0.0005 A', '0.05 A', '5 A', '500,000 A'],
+    options: [
+      '0.0005 A',
+      '0.05 A',
+      '5 A',
+      '500,000 A',
+    ],
     correctAnswer: 0,
     explanation: "500 µA = 500 ÷ 1,000,000 = 0.0005 A. The prefix 'micro' means ÷ 1,000,000.",
   },
@@ -52,39 +72,64 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Convert 0.025 A to milliamps:',
-    options: ['2.5 mA', '25 mA', '250 mA', '0.25 mA'],
-    correctAnswer: 1,
+    options: [
+      '2.5 mA',
+      '250 mA',
+      '25 mA',
+      '0.25 mA',
+    ],
+    correctAnswer: 2,
     explanation:
       '0.025 A = 0.025 × 1,000 = 25 mA. To convert from base units to milli, multiply by 1,000.',
   },
   {
     id: 7,
     question: 'What is 3.3 kV in volts?',
-    options: ['33 V', '330 V', '3,300 V', '33,000 V'],
-    correctAnswer: 2,
+    options: [
+      '33 V',
+      '330 V',
+      '33,000 V',
+      '3,300 V',
+    ],
+    correctAnswer: 3,
     explanation: '3.3 kV = 3.3 × 1,000 = 3,300 V. Kilo means multiply by 1,000.',
   },
   {
     id: 8,
     question: 'An RCD has a 30mA rating. What is this in amperes?',
-    options: ['0.003 A', '0.03 A', '0.3 A', '3 A'],
-    correctAnswer: 1,
+    options: [
+      '0.03 A',
+      '0.3 A',
+      '0.003 A',
+      '3 A',
+    ],
+    correctAnswer: 0,
     explanation:
       '30 mA = 30 ÷ 1,000 = 0.03 A. This is a common RCD rating for domestic installations.',
   },
   {
     id: 9,
     question: 'Which is larger: 2,200 µF or 2.2 mF?',
-    options: ['2,200 µF', '2.2 mF', 'They are equal', 'Cannot determine'],
-    correctAnswer: 2,
+    options: [
+      '2,200 µF',
+      'They are equal',
+      '2.2 mF',
+      'Cannot determine',
+    ],
+    correctAnswer: 1,
     explanation:
       '2.2 mF = 2.2 × 1,000 µF = 2,200 µF, but mF means milli (÷1,000), so 2.2 mF = 0.0022 F, whilst 2,200 µF = 0.0022 F. They are equal!',
   },
   {
     id: 10,
     question: 'A cable has a resistance of 0.5 Ω per 100m. What is this in milliohms per metre?',
-    options: ['5 mΩ/m', '50 mΩ/m', '0.5 mΩ/m', '500 mΩ/m'],
-    correctAnswer: 0,
+    options: [
+      '500 mΩ/m',
+      '50 mΩ/m',
+      '5 mΩ/m',
+      '0.5 mΩ/m',
+    ],
+    correctAnswer: 2,
     explanation:
       '0.5 Ω per 100m = 0.5 ÷ 100 = 0.005 Ω/m. Converting to mΩ: 0.005 × 1,000 = 5 mΩ/m.',
   },
@@ -94,8 +139,13 @@ const quickCheckQuestions = [
   {
     id: 'prefix-conversion',
     question: 'How many milliamps equal 1 amp?',
-    options: ['10 mA', '100 mA', '1,000 mA', '10,000 mA'],
-    correctIndex: 2,
+    options: [
+      '1,000 mA',
+      '10 mA',
+      '10,000 mA',
+      '100 mA',
+    ],
+    correctIndex: 0,
     explanation: "1,000 mA = 1 A. The prefix 'milli' means ÷ 1,000, so 1 mA = 0.001 A.",
   },
 ];

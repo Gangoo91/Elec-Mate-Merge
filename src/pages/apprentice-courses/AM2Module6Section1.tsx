@@ -50,20 +50,25 @@ const AM2Module6Section1 = () => {
     {
       id: 'test-duration',
       question: 'How long is allocated for the AM2 knowledge test?',
-      options: ['45 minutes', '60 minutes', '90 minutes', '120 minutes'],
-      correctIndex: 1,
+      options: [
+        '60 minutes',
+        '90 minutes',
+        '120 minutes',
+        '45 minutes',
+      ],
+      correctIndex: 0,
       explanation: 'The AM2 online knowledge test has a duration of 60 minutes for 30 questions.',
     },
     {
       id: 'unsure-strategy',
       question: "What should you do if you're unsure of a question?",
       options: [
-        'Guess randomly and move on',
-        'Spend extra time working it out',
+        'Analyzing network topology and optimizing device placement',
+        'Only if directly supervised by a qualified person',
+        'Fire-resistant, LSZH, or MICC cable where required',
         'Flag it and move on - come back later if time allows',
-        'Leave it blank',
       ],
-      correctIndex: 2,
+      correctIndex: 3,
       explanation:
         'Flag uncertain questions and return to them later. This prevents getting stuck and running out of time.',
     },
@@ -71,12 +76,12 @@ const AM2Module6Section1 = () => {
       id: 'question-navigation',
       question: "True or false: You can't go back once you've answered a question.",
       options: [
-        'True - you must answer in order',
+        'High contact resistance, localised I²R heating and possible fire',
+        'Leveraging each protocol\\\\\\\\\\\\\\\'s strengths for specific applications',
         'False - you can move backwards and forwards through the paper',
-        'True - only forward navigation is allowed',
-        'False - but only within the same section',
+        'To ensure articles are safe, tested, and accompanied by adequate information',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'You can navigate forwards and backwards through the test and flag questions to return to them later.',
     },
@@ -86,7 +91,12 @@ const AM2Module6Section1 = () => {
     {
       id: 1,
       question: 'How long does the AM2 online knowledge test last?',
-      options: ['45 minutes', '60 minutes', '90 minutes', '120 minutes'],
+      options: [
+        '45 minutes',
+        '60 minutes',
+        '90 minutes',
+        '120 minutes',
+      ],
       correctAnswer: 1,
       explanation:
         'The AM2 online knowledge test has a duration of 60 minutes to complete 30 questions.',
@@ -94,28 +104,38 @@ const AM2Module6Section1 = () => {
     {
       id: 2,
       question: 'How many questions are typically in the test?',
-      options: ['20-25', '30-40', '45-50', '50-60'],
-      correctAnswer: 1,
+      options: [
+        '45-50',
+        '20-25',
+        '30-40',
+        '50-60',
+      ],
+      correctAnswer: 2,
       explanation:
         'The test contains 30 multiple-choice questions covering regulations, science, and safety.',
     },
     {
       id: 3,
       question: 'What is the approximate pass mark?',
-      options: ['50-55%', '60-65%', '70-75%', '80-85%'],
-      correctAnswer: 2,
+      options: [
+        '60-65%',
+        '50-55%',
+        '80-85%',
+        '70-75%',
+      ],
+      correctAnswer: 3,
       explanation: 'The pass mark is 70%, requiring 21 correct answers out of 30 questions.',
     },
     {
       id: 4,
       question: 'What types of questions are included?',
       options: [
-        'Only regulation references',
-        'Only science and calculations',
         'Regulations, science, safety, and scenario-based questions',
-        'Only health and safety',
+        'FTP cables include an overall foil shield around all pairs',
+        'False sensor readings and system malfunction',
+        'Testing notifications with trial alerts to all recipients',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'The test includes straight knowledge, applied scenarios, regulation references, science principles, and health & safety.',
     },
@@ -123,20 +143,25 @@ const AM2Module6Section1 = () => {
       id: 5,
       question: "What's the best strategy if you don't know an answer straight away?",
       options: [
-        'Guess randomly',
-        'Spend 10 minutes working it out',
+        'Overall assessment and recommendations',
         'Flag it and move on to return later',
-        'Leave it blank',
+        'Requirements for test probes and leads',
+        'Circuit Protective Conductor (earth)',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Flag uncertain questions and continue. Return to them if time allows. This prevents getting stuck and ensures you attempt all questions.',
     },
     {
       id: 6,
       question: 'How much time should you spend per question on average?',
-      options: ['30-60 seconds', '1-2 minutes', '3-4 minutes', '5-10 minutes'],
-      correctAnswer: 1,
+      options: [
+        '30-60 seconds',
+        '3-4 minutes',
+        '1-2 minutes',
+        '5-10 minutes',
+      ],
+      correctAnswer: 2,
       explanation:
         'With 60 minutes for 30 questions, 2 minutes per question allows time for review and flagged questions.',
     },
@@ -144,12 +169,12 @@ const AM2Module6Section1 = () => {
       id: 7,
       question: 'Why do many candidates fail this section even if they know the material?',
       options: [
-        'Questions are too difficult',
+        'When significant changes occur, after incidents, or periodically',
+        'Live parts are not accessible during normal use',
+        'Document conditions found and repairs made',
         'Time mismanagement and not attempting all questions',
-        'Equipment failure',
-        'Assessor bias',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Poor time management, getting stuck on difficult questions, and leaving questions blank are common reasons for failure despite good knowledge.',
     },
@@ -157,12 +182,12 @@ const AM2Module6Section1 = () => {
       id: 8,
       question: "What's the advantage of eliminating wrong options first?",
       options: [
-        'It saves time',
         'It narrows down choices and improves accuracy',
-        'It impresses the assessor',
-        "It's required by the system",
+        'Carry out a suitable and sufficient fire risk assessment',
+        'At the beginning and at intervals during work',
+        'The Regulatory Reform (Fire Safety) Order 2005 (RRFSO)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Eliminating obviously wrong answers narrows your choices and significantly improves your chances of selecting the correct answer.',
     },
@@ -171,11 +196,11 @@ const AM2Module6Section1 = () => {
       question: "What's the golden rule about leaving questions blank?",
       options: [
         'Leave difficult questions blank',
-        "Only answer questions you're 100% sure about",
         "Answer every question - there's no penalty for guessing",
+        "Only answer questions you're 100% sure about",
         'Leave 2-3 questions blank for time management',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         "Never leave questions blank. There's no penalty for incorrect answers, so always make an educated guess rather than leaving blanks.",
     },
@@ -184,11 +209,11 @@ const AM2Module6Section1 = () => {
       question: 'What format is the AM2 online knowledge test?',
       options: [
         'Written essay questions',
+        'Mixed format with essays and multiple choice',
         'Multiple-choice with one correct answer',
         'True/false questions only',
-        'Mixed format with essays and multiple choice',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "The test is entirely multiple-choice format, with one correct answer (or sometimes 'best' answer) for each question.",
     },

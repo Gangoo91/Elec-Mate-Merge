@@ -15,19 +15,24 @@ const quickCheckQuestions = [
     question:
       'A colleague has received an electric shock and is still in contact with the live conductor. What is the FIRST thing you should do?',
     options: [
+      'Throw water over the casualty to break the circuit',
+      'Begin CPR immediately',
       'Pull them away from the conductor by their clothing',
       'Switch off the electrical supply or isolate the circuit',
-      'Begin CPR immediately',
-      'Throw water over the casualty to break the circuit',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The first action is always to isolate the electrical supply — switch off at the nearest isolator, remove the plug, or trip the circuit breaker. Never touch the casualty while they are still in contact with a live conductor, as the current will pass through you as well. If you cannot isolate the supply, use a dry, non-conductive object (e.g., a wooden broom handle) to push the casualty clear.',
   },
   {
     id: 'dr-abc',
     question: "In the DR ABC primary survey, what does the 'D' stand for?",
-    options: ['Defibrillate', 'Diagnose', 'Danger', 'Disability'],
+    options: [
+      'Defibrillate',
+      'Diagnose',
+      'Danger',
+      'Disability',
+    ],
     correctIndex: 2,
     explanation:
       'D stands for Danger — the first step in any emergency response is to check for danger to yourself, bystanders and the casualty. In an electrical incident, this means ensuring the supply is isolated and there is no ongoing risk of electric shock before approaching the casualty.',
@@ -37,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'When using an AED on a casualty who has suffered cardiac arrest from electric shock, what should you ensure first?',
     options: [
-      'That the casualty is lying on a metal surface for grounding',
+      'Current-carrying conductor in a magnetic field experiences a force',
+      'Accuracy requirements, satellite availability, and local coordinate systems',
+      'A description of the fault, the investigation process, findings, and recommended actions',
       'That the casualty is not in contact with the electrical source and their chest is dry and bare',
-      'That you have completed 30 minutes of CPR before applying the AED',
-      'That only a qualified doctor operates the AED',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Before applying AED pads, ensure the casualty is no longer in contact with the electrical source, their chest is bare and dry (remove clothing, wipe sweat or water), and any medication patches or excessive chest hair are dealt with. AEDs are designed to be used by anyone — you do not need to be a doctor or paramedic.',
   },
@@ -50,12 +55,12 @@ const quickCheckQuestions = [
     id: 'electrical-burns',
     question: 'Why are electrical burns particularly dangerous compared to thermal burns?',
     options: [
-      'They are always visible on the skin surface',
-      'They only affect the outer layer of skin',
       'The current causes deep internal tissue damage that may not be visible externally',
-      'They heal much faster than thermal burns',
+      'Your most important priorities that must be scheduled first',
+      'A fire extinguisher, first aid kit, and the machine\\\\\\\\\\\\\\\'s operating manual with emergency procedures',
+      'Make proper use of control measures and PPE provided by the employer, and report defects',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Electrical burns are particularly dangerous because the current passes through the body, causing deep internal tissue damage (to muscles, nerves, blood vessels and organs) that may not be visible on the skin surface. Entry and exit wounds may appear small, but the internal damage can be severe. All electrical burns must be assessed at hospital, even if the external injury looks minor.',
   },
@@ -79,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: 'The letters DR ABC in the primary survey stand for:',
     options: [
+      'Diagnosis, Recovery, Assessment, Bandaging, Care',
       'Danger, Response, Airway, Breathing, CPR',
       'Danger, Response, Airway, Breathing, Circulation',
-      'Diagnosis, Recovery, Assessment, Bandaging, Care',
       'Danger, Rescue, Assess, Breathe, Compressions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'DR ABC stands for Danger, Response, Airway, Breathing and Circulation. This systematic approach ensures you check for hazards first, then assess whether the casualty is conscious, ensure their airway is open, check for breathing, and assess circulation (pulse/signs of life).',
   },
@@ -92,20 +97,25 @@ const quizQuestions = [
     id: 3,
     question: 'The correct ratio of chest compressions to rescue breaths in adult CPR is:',
     options: [
-      '15 compressions to 2 breaths',
-      '30 compressions to 2 breaths',
       '30 compressions to 1 breath',
+      '15 compressions to 2 breaths',
       '5 compressions to 1 breath',
+      '30 compressions to 2 breaths',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The current Resuscitation Council UK guidelines specify 30 chest compressions followed by 2 rescue breaths for adult CPR. Compressions should be at a rate of 100-120 per minute, pressing down 5-6 cm on the centre of the chest. If you are unwilling or unable to give rescue breaths, continuous compressions alone are better than no CPR.',
   },
   {
     id: 4,
     question: 'Chest compressions during CPR should be performed at a depth of:',
-    options: ['2-3 cm', '3-4 cm', '5-6 cm', '7-8 cm'],
-    correctAnswer: 2,
+    options: [
+      '5-6 cm',
+      '3-4 cm',
+      '2-3 cm',
+      '7-8 cm',
+    ],
+    correctAnswer: 0,
     explanation:
       'Effective chest compressions require a depth of 5-6 cm (approximately one-third of the depth of the chest). Compressions that are too shallow will not generate sufficient blood flow. Allow the chest to recoil fully between compressions to allow the heart to refill.',
   },
@@ -113,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'An AED (automated external defibrillator) is used to:',
     options: [
-      'Restart a heart that has stopped beating completely (asystole)',
+      'Causes more severe burns, deeper tissue damage and a higher likelihood of cardiac arrest',
       'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
-      'Monitor blood pressure during a medical emergency',
-      'Provide oxygen to a casualty who is not breathing',
+      'Is responsible for calling the emergency services and maintaining the first aid kit when a trained first aider is absent',
+      'Insist they attend hospital for assessment, as internal injuries may not be immediately apparent',
     ],
     correctAnswer: 1,
     explanation:
@@ -126,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'When treating electrical burns, you should:',
     options: [
-      'Apply butter or cream to the burn area',
+      'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
+      'Call 999, start CPR (30:2) immediately and send someone for the nearest AED',
       'Cool the burn with cold running water for at least 20 minutes and seek medical attention',
-      'Cover the burn tightly with a dry bandage and apply pressure',
-      'Break any blisters to release the fluid',
+      'Provide adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cool the burn with cold running water for at least 20 minutes (start as soon as possible, up to 3 hours after the injury). Do not use ice, butter, creams or adhesive dressings. Cover loosely with cling film or a clean, non-fluffy material. All electrical burns must be assessed at hospital due to the risk of internal damage.',
   },
@@ -140,12 +150,12 @@ const quizQuestions = [
     question:
       'The difference between a low voltage electric shock and a high voltage shock is that HV shock:',
     options: [
-      'Is always less dangerous because HV systems have better protection',
+      'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
+      'Severe thermal burns, blast injuries, eye damage from UV radiation and hearing damage',
+      'Insist they attend hospital for assessment, as internal injuries may not be immediately apparent',
       'Causes more severe burns, deeper tissue damage and a higher likelihood of cardiac arrest',
-      'Only affects the skin surface and does not penetrate the body',
-      'Can be safely treated on site without hospital attendance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'High voltage shocks are significantly more dangerous than low voltage. HV causes more severe burns (both entry and exit wounds), deeper tissue damage to muscles and organs, a higher likelihood of cardiac arrest, and potential for blast injuries from arc flash. All HV shock casualties must be taken to hospital immediately, even if they appear uninjured.',
   },
@@ -153,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: 'Arc flash injuries can include:',
     options: [
-      'Hearing loss only',
       'Severe thermal burns, blast injuries, eye damage from UV radiation and hearing damage',
-      'Minor skin irritation that heals within hours',
-      'Damage to clothing only, with no risk to the person',
+      'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
+      'Cool the burn with cold running water for at least 20 minutes and seek medical attention',
+      'Insist they attend hospital for assessment, as internal injuries may not be immediately apparent',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Arc flash produces temperatures up to 20,000°C, causing severe thermal burns to exposed skin. The pressure wave can cause blast injuries (broken bones, ruptured eardrums). Intense UV and visible light can cause arc eye (photokeratitis) and permanent retinal damage. Molten metal and debris can cause secondary injuries.',
   },
@@ -166,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: "An 'appointed person' for first aid is someone who:",
     options: [
-      'Holds a full first aid at work (FAW) certificate',
+      'Causes more severe burns, deeper tissue damage and a higher likelihood of cardiac arrest',
       'Is responsible for calling the emergency services and maintaining the first aid kit when a trained first aider is absent',
-      'Has completed a three-day first aid training course',
-      'Is a qualified paramedic employed on site',
+      'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
+      'Provide adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
     ],
     correctAnswer: 1,
     explanation:
@@ -180,12 +190,12 @@ const quizQuestions = [
     question:
       'After an electric shock incident on site, the casualty says they feel fine and wants to continue working. You should:',
     options: [
-      'Allow them to continue — they know best how they feel',
+      'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
+      'Provide adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
       'Insist they attend hospital for assessment, as internal injuries may not be immediately apparent',
-      'Offer them a cup of tea and ask them to sit down for 10 minutes',
-      'Call their next of kin to ask what they want to do',
+      'Severe thermal burns, blast injuries, eye damage from UV radiation and hearing damage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'All electric shock casualties must attend hospital for assessment, even if they appear well. Electric current passing through the body can cause delayed cardiac arrhythmias, internal tissue damage and kidney damage (from muscle breakdown) that may not be immediately apparent. The casualty should be monitored and transported to A&E.',
   },
@@ -195,11 +205,11 @@ const quizQuestions = [
       'When performing the primary survey on an electric shock casualty, if they are unresponsive and not breathing normally, you should:',
     options: [
       'Place them in the recovery position and wait for the ambulance',
-      'Call 999, start CPR (30:2) immediately and send someone for the nearest AED',
-      'Check their pulse for 5 minutes before deciding on treatment',
       'Give rescue breaths only — compressions are not needed for electric shock',
+      'Check their pulse for 5 minutes before deciding on treatment',
+      'Call 999, start CPR (30:2) immediately and send someone for the nearest AED',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'If the casualty is unresponsive and not breathing normally, they are in cardiac arrest. Call 999 immediately (or send someone to call), begin CPR with 30 compressions to 2 rescue breaths, and send someone to fetch the nearest AED. Early CPR and early defibrillation are the most important factors in survival from cardiac arrest.',
   },
@@ -207,12 +217,12 @@ const quizQuestions = [
     id: 12,
     question: 'Under the Health and Safety (First-Aid) Regulations 1981, employers must:',
     options: [
-      'Ensure every employee holds a first aid certificate',
       'Provide adequate and appropriate first aid equipment, facilities and personnel based on a needs assessment',
-      'Install a defibrillator in every room of the workplace',
-      'Employ a full-time paramedic on every site',
+      'Cool the burn with cold running water for at least 20 minutes and seek medical attention',
+      'Severe thermal burns, blast injuries, eye damage from UV radiation and hearing damage',
+      'Call 999, start CPR (30:2) immediately and send someone for the nearest AED',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Health and Safety (First-Aid) Regulations 1981 require employers to provide adequate and appropriate first aid equipment, facilities and personnel. The level of provision is determined by a first aid needs assessment, which considers the nature of the work, the workplace hazards, the number of employees, and the distance from emergency medical services.',
   },

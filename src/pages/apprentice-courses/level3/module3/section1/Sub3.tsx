@@ -41,8 +41,13 @@ const checks = [
   {
     id: 'l3-m3-1-3-mass',
     question: 'A 50 kg motor is mounted on a wall bracket. What weight (force) does the bracket support? (g ≈ 9.81 m/s²)',
-    options: ['5.1 N', '50 N', '490.5 N', '981 N'],
-    correctIndex: 2,
+    options: [
+      '490.5 N',
+      '50 N',
+      '5.1 N',
+      '981 N',
+    ],
+    correctIndex: 0,
     explanation:
       'Weight = mass × g = 50 × 9.81 = 490.5 N. The bracket has to take that downward force, plus any vibration. Mass (kg) is constant; weight (N) depends on gravity.',
   },
@@ -50,8 +55,13 @@ const checks = [
     id: 'l3-m3-1-3-work',
     question:
       'A motor lifts a 200 kg load 5 m vertically. How much work is done? (Take g = 10 m/s² for simplicity.)',
-    options: ['100 J', '1000 J', '10 000 J', '100 000 J'],
-    correctIndex: 2,
+    options: [
+      '100 J',
+      '10 000 J',
+      '1000 J',
+      '100 000 J',
+    ],
+    correctIndex: 1,
     explanation:
       'Work = force × distance = (mg) × h = (200 × 10) × 5 = 2000 × 5 = 10 000 J = 10 kJ. The energy gained is now stored as gravitational potential energy in the load.',
   },
@@ -59,7 +69,12 @@ const checks = [
     id: 'l3-m3-1-3-power',
     question:
       'The same lift takes 25 seconds. What average mechanical power output is needed?',
-    options: ['100 W', '400 W', '4 kW', '40 kW'],
+    options: [
+      '100 W',
+      '400 W',
+      '40 kW',
+      '4 kW',
+    ],
     correctIndex: 1,
     explanation:
       'Power = work / time = 10 000 J / 25 s = 400 W. That is the mechanical (output) power. The electrical input power will be higher because of motor inefficiency.',
@@ -70,7 +85,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'The SI unit of force is:',
-    options: ['kilogram', 'newton', 'joule', 'watt'],
+    options: [
+      'kilogram',
+      'newton',
+      'joule',
+      'watt',
+    ],
     correctAnswer: 1,
     explanation: 'Newton (N). 1 N = 1 kg accelerated at 1 m/s².',
   },
@@ -78,10 +98,10 @@ const quizQuestions = [
     id: 2,
     question: 'Mass and weight are:',
     options: [
-      'The same thing',
-      'Mass is in newtons, weight is in kilograms',
+      'Electronic switching via Hall sensors or sensorless control',
+      'To provide fault current path and stabilise phase voltages',
       'Mass is in kilograms (constant), weight is the force in newtons due to gravity',
-      'Both vary depending on altitude',
+      'Assessing operational performance of existing buildings',
     ],
     correctAnswer: 2,
     explanation:
@@ -90,23 +110,38 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Work done = ?',
-    options: ['Force × distance moved', 'Force × time', 'Mass × distance', 'Power × force'],
-    correctAnswer: 0,
+    options: [
+      'Mass × distance',
+      'Force × time',
+      'Power × force',
+      'Force × distance moved',
+    ],
+    correctAnswer: 3,
     explanation:
       'W = F × d, where the distance is in the direction of the force. If you push a load horizontally and it doesn\'t move, no work is done.',
   },
   {
     id: 4,
     question: 'Power = ?',
-    options: ['Force × distance', 'Energy × time', 'Energy ÷ time', 'Force × time'],
-    correctAnswer: 2,
+    options: [
+      'Energy ÷ time',
+      'Energy × time',
+      'Force × distance',
+      'Force × time',
+    ],
+    correctAnswer: 0,
     explanation:
       'Power = energy / time, in watts (J/s). A 1 kW heater dissipates 1000 joules every second.',
   },
   {
     id: 5,
     question: 'A motor draws 2 kW electrical and delivers 1.6 kW mechanical. Efficiency = ?',
-    options: ['60 %', '80 %', '125 %', '160 %'],
+    options: [
+      '60 %',
+      '80 %',
+      '160 %',
+      '125 %',
+    ],
     correctAnswer: 1,
     explanation:
       'η = output / input × 100 = 1600 / 2000 × 100 = 80 %. The other 20 % becomes heat in the windings, friction in the bearings, and noise.',
@@ -115,7 +150,12 @@ const quizQuestions = [
     id: 6,
     question:
       "A 5 kg block is lifted onto a shelf 2 m high. Gravitational potential energy gained (g ≈ 9.81)?",
-    options: ['10 J', '49 J', '98 J', '196 J'],
+    options: [
+      '10 J',
+      '49 J',
+      '98 J',
+      '196 J',
+    ],
     correctAnswer: 2,
     explanation: 'PE = mgh = 5 × 9.81 × 2 = 98.1 J ≈ 98 J.',
   },
@@ -123,20 +163,25 @@ const quizQuestions = [
     id: 7,
     question: 'A pulley with mechanical advantage 4 means:',
     options: [
-      'The load moves 4× faster than the effort',
+      'Inflammation of the skin caused or made worse by substances encountered at work',
+      'Reduced insulation test voltage and driver protection',
+      'The tower must not be used until the defect is rectified by a competent person',
       'The effort needs to be only ¼ of the load force, but moves 4× the distance',
-      'The pulley has 4 wheels',
-      'Friction is reduced by 75%',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'MA = load / effort. With MA = 4, you need ¼ of the load force, but you have to pull 4× as much rope to lift the load. Energy in = energy out (ignoring friction).',
   },
   {
     id: 8,
     question: 'Kinetic energy is the energy a body has because of:',
-    options: ['Its position', 'Its motion', 'Its temperature', 'Its mass alone'],
-    correctAnswer: 1,
+    options: [
+      'Its motion',
+      'Its temperature',
+      'Its position',
+      'Its mass alone',
+    ],
+    correctAnswer: 0,
     explanation: 'KE = ½mv². Energy due to motion. A flywheel stores kinetic energy.',
   },
 ];

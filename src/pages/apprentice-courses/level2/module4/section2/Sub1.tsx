@@ -42,12 +42,12 @@ const checks = [
     question:
       "You arrive at an occupied domestic rewire. The customer's RAMS was written three weeks ago when the surveyor visited. What's the FIRST thing you do before opening the toolbox?",
     options: [
-      'Set up the bench and start cutting cable lengths — the RAMS already covers everything.',
+      'Fire / explosion, asphyxiation (oxygen deficiency or harmful atmosphere), drowning (free-flowing solid / liquid), hyperthermia (high temperature). Plus serious injury from entrapment. The Regs apply when the space is substantially enclosed AND any specified risk is foreseeable.',
+      'Analyse the failure and condition monitoring history: if failures are occurring between PM intervals the frequency should be increased; if components are consistently in good condition at PM time the interval may be too short and can be extended',
+      'Thank the worker for reporting the concern, investigate the allegation confidentially, take appropriate action against the unsafe management practice, reinforce that safety procedures are non-negotiable, and protect the worker from retaliation',
       'A short dynamic walk-round of every room you will work in today, comparing what is in front of you against what the RAMS describes. Anything that has changed (new pet, kids home from school, decorating in progress, a damp patch that was not there at the survey) becomes a fresh hazard you record before you start.',
-      'Ask the customer to leave the property so you can work without distraction.',
-      'Phone the office and ask them to forward the most recent CDM phase plan.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "RAMS is the baseline plan — written before the work, in an office, sometimes weeks earlier. The dynamic risk assessment is the walk-round you do on the day, in the actual rooms, with the actual people present. Management of Health and Safety at Work Regulations 1999 Reg 3 requires the assessment to be 'suitable and sufficient' and that means up to date for the conditions you actually find. Five minutes of walking and looking before any tool comes out is what the regulation effectively demands.",
   },
@@ -56,12 +56,12 @@ const checks = [
     question:
       "You're chasing a vertical channel into a plastered wall in a 1960s end-terrace to drop a cable to a new socket. You've got a cable-and-pipe detector but it's flagging intermittently in the area. What's the safe next move?",
     options: [
-      "Push on with the chaser — the detector is probably just picking up the steel lintel.",
       "Stop. Treat the intermittent reading as a positive find until proven otherwise. Check the gas meter location and trace the rough route of the meter tail visually, look at the floor below for clues to pipe routes, lift a floorboard if you can to see the joist void, and consider re-routing the chase. Cutting into a live mains gas pipe is a fire-and-explosion risk well above the cost of a re-route.",
-      'Switch the detector off and rely on visual inspection only.',
-      'Drill a small pilot hole and see what comes out.',
+      "Loss-of-mains (LoM) protection, commonly called anti-islanding. The inverter monitors voltage, frequency, vector shift and rate of change of frequency on the AC side. When the grid reference is lost or moves outside the permitted window defined in ENA G98 / G99, the inverter ceases to export within the specified timing. The intent is to protect DNO engineers, prevent asynchronous reclosure damage and stop a small generator attempting to support a much larger network it cannot stabilise.",
+      "ACAS promotes early, informal resolution through open conversation — addressing issues promptly, listening to all perspectives, seeking mutually acceptable solutions, and using formal processes only when informal approaches have been exhausted. This aligns with EI-based conflict resolution that prioritises empathic dialogue, assertive communication, and collaborative problem-solving",
+      "Reg 514.16.1 — introduced by A4:2026, requiring a label to indicate the presence of SPDs (with an exception for domestic / household premises). Located in Part 5 (selection and erection), Chapter 51 (common rules), Section 514 (identification and notices). Knowing the labelling regs live in Section 514 is faster than searching by reg number.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Concealed services are the headline 'services' hazard. Gas, water, structural steel and other live cables can all sit in a wall or under a floor with no surface clue. The detector is a tool, not a verdict — intermittent or flickering readings are treated as positive until you've proven they aren't. Cutting into a live gas pipe is the textbook avoidable fatality and the HSE has prosecuted electricians under HASAWA s.3 (risk to non-employees) when a botched chase has led to a gas leak in a customer's home.",
   },
@@ -70,12 +70,12 @@ const checks = [
     question:
       "Halfway through a kitchen first-fix, the customer's two young children come home from school and start running through the work area where you've got an open consumer unit and tools on the floor. Your work is partially complete and the area is not isolatable from the rest of the house. What do you do?",
     options: [
-      'Carry on — the kids will stay out the way once they see you.',
+      "Creating a wellbeing programme that includes: team-building activities (Connect), active travel schemes and lunchtime walks (Be Active), mindfulness sessions and reflective practice groups (Take Notice), CPD opportunities and skills-sharing workshops (Keep Learning), and volunteering days and peer support schemes (Give)",
+      "(1) Strict liability — pollution incidents are offences regardless of intent; (2) duty of care under EPA 1990 s.34 + the Polluter Pays principle; (3) MHSWR Reg 14 (employee duty to report shortcomings); (4) operator's environmental permit conditions; (5) reputational and commercial consequences of an undetected pollution event downstream; (6) personal liability under HASAWA s.7 if the environmental hazard also creates a worker safety hazard.",
+      "GN3 allows omission of origin PFC measurement for this combination — BS EN 61439-3 CU rated 16 kA, TN-C-S supply with distributor-declared PFC at 16 kA maximum. Take the distributor\\\\\\\\\\\\'s declared 16 kA as the design value, document on the EIC. For non-conforming installations or commercial / industrial work, direct measurement is required.",
       "Stop work, secure the open consumer unit (close the door and lock-off where you can), gather the floor-level tools, and have a quick conversation with the parent about keeping the children out of the work area for the rest of the visit. If that can't be arranged, pack down and reschedule. HASAWA s.3 puts the duty on you to protect non-employees affected by your work — children in your work zone is a textbook s.3 issue.",
-      'Carry on but tell the parent you are not responsible if the kids touch anything.',
-      'Continue working but move the consumer unit cover so the kids can see you working.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "People hazards include the customers, their family and visitors. HASAWA s.3 makes you responsible for them. A consumer unit with the cover off in a household with running children isn't a tolerable risk — you secure the area or you stop work. 'I told them to stay away' has never won an SFAIRP defence after an incident. The walk-round is repeated whenever the people in the property change, not just at the start of the day.",
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       "When you arrive at a domestic property to start work, what's the difference between the RAMS and a dynamic risk assessment?",
     options: [
-      'There is no difference — they are the same document.',
+      "When the DNO does not provide an earth terminal at the supply (rural overhead supplies, some old undersea cables, certain industrial or specialist supply arrangements). The earthing arrangement is determined by the supply, not by choice.",
       "RAMS (risk assessment + method statement) is the written plan prepared in advance, usually after a survey. A dynamic risk assessment is the walk-round you do on the day, in real time, with real conditions and real people present. RAMS sets the baseline; the dynamic assessment catches what has changed since the paperwork was written.",
-      'RAMS is a verbal briefing only — dynamic risk assessment is the written one.',
-      'RAMS is for construction sites; dynamic risk assessment is for domestic only.',
+      "Heat-pump-ready electrical infrastructure (typically a 16-32 A radial spare way), EV charging provision (Approved Document S), PV and battery enabling (capped cables, suitably sized supply), and zero gas connections from 2025 in many new builds.",
+      "Apply the 0.8 rule for measured-vs-table comparison: Zs(measured) ≤ 0.8 × Zs(table) = 0.8 × 1.37 = 1.10 Ω. 1.05 ≤ 1.10 → pass with small margin (5 %). Worth noting on the schedule that compliance is borderline; investigate any reasons the cable might be hot in service (long run, bundled cables, high ambient temperature).",
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     question:
       "Which four broad families of hazard does the workspace walk-round in this Sub use as a structure?",
     options: [
-      'Tools, materials, weather, time.',
+      "Photos of the scene as it was when evacuated; identity and contact of witnesses; written first-hand account from yourself and any colleagues; equipment positions; any recordings (CCTV near you); customer / building-manager contact information; any fault you noted that may have caused or contributed; tool and instrument condition before and after.",
+      "HRC fuses can interrupt very high prospective fault currents safely (1500 A or higher breaking capacity). Glass cartridges have ~35 A breaking capacity; on a high-PSCC circuit (UK domestic 6 kA, commercial 16 kA+) a glass fuse can rupture violently when fault current exceeds its breaking capacity — glass shards, hot metal, no current interruption. Fluke and Martindale lead sets use sand-filled HRC elements.",
       "People, environment, services, fabric. People — pedestrians, customers, children, other trades. Environment — weather, dust, asbestos suspicion in pre-2000 homes, confined spaces, working at height. Services — concealed live cables, gas pipes, water pipes, structural steel that needs bonding. Fabric — brittle masonry, joist orientation, plaster condition.",
-      'Electrical, mechanical, chemical, biological.',
-      'Sparks, fire, water, height.',
+      "On the client side — typically held by the building facilities manager (printed and digital), with a copy held by the building owner and a soft copy retained by the contractor for warranty and PI purposes. It is the reference for all future maintenance, fault diagnosis, periodic inspection (EICR) and any alteration project.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The four families are a memory aid — they cover the realistic threat surface for an electrician on a typical install. Working through them in the same order each time stops you missing one. The HSE INDG163 leaflet on risk assessment uses a similar structure — slips/trips, electricity, manual handling, dust, working at height — but the four-family version maps better onto a domestic-or-commercial walk-round.",
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       "You're working in a property built in 1972. Before you drill into a ceiling, what assumption should you start from?",
     options: [
-      'No problem — buildings of that age are too modern to contain asbestos.',
+      "Following BS 7671 raises a presumption that the underlying statutory duty (EAWR Reg 4) has been met. The legal logic: HSR25 (HSE's guidance to EAWR) cites BS 7671 as a means of demonstrating EAWR compliance. So evidence of BS 7671 compliance = evidence of EAWR compliance, by reference. Departing from BS 7671 is allowed but flips the burden — you have to prove your alternative method was at least as safe.",
+      "Advanced cultural empathy: understanding that safety communication styles must be adapted to cultural context. In high power-distance cultures, a peer raising concerns directly may be uncomfortable. In indirect communication cultures, blunt safety warnings may cause face-loss. The electrician must find a culturally appropriate way to communicate urgency without causing shame, possibly involving the site supervisor or using visual demonstration rather than direct verbal confrontation",
+      "Wide statutory powers under s.20 — enter premises at any reasonable time, take photographs / measurements, take samples, require any person to answer questions, require production of documents, take possession of articles. Plus the power under s.21/s.22 to issue improvement and prohibition notices on the spot. Refusing or obstructing an inspector is itself a criminal offence under s.33.",
       "Treat it as 'asbestos suspect until proven otherwise'. Buildings constructed before 2000 (and refurbished before 2000) can contain asbestos in textured ceilings, insulation board, cement products, floor tiles and pipe lagging. Stop and check the asbestos register if the building has one (commercial buildings are required to have one under the Control of Asbestos Regulations 2012). For a domestic property without a register, assume suspect material is present and avoid disturbance until you can verify or arrange a survey.",
-      'Drill quickly so any dust does not have time to build up.',
-      'Wear a normal dust mask and crack on.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Control of Asbestos Regulations 2012 Reg 4 requires duty-holders of non-domestic buildings to maintain an asbestos register and provide it to anyone working on the fabric. For domestic work the duty falls on the homeowner but the practical risk is the same. Disturbing an asbestos textured ceiling without a survey is one of the most common ways an apprentice gets exposed. The default assumption for any pre-2000 build is 'suspect' and the safe move is to stop and check.",
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       "On a busy commercial fit-out, what 'people hazard' is most often missed by an apprentice on day one?",
     options: [
-      'The principal contractor — they do not count as a hazard.',
       "Other trades working above, beside or below you. Plumbers cutting overhead, joiners with battery saws, decorators with wet paint and dust sheets, scaffolders moving boards. Their work creates falling-object risk, slip risk and noise risk for you, and your work creates electrical and tripping risk for them. The walk-round needs to take account of who else is on site, not just your own activity.",
-      'The site office staff — they never come on site.',
-      'The architect — they are usually off-site.',
+      "Part 6 has been completely restructured and renumbered to align with the CENELEC standard for inspection and testing. The old chapter and regulation numbers do not map directly to the new 64x.x numbering. Inspectors must use the new numbers on certificates and EICRs from A4:2026 onward.",
+      "Bonding required per Reg 411.3.1.2 — the metal oil supply pipe is an extraneous-conductive-part liable to introduce a potential. Bond per Reg 544.1.2 — consumer side, before any branch, within 600 mm of point of entry where practicable. Use a BS 951 clamp suitable for oil application (similar specification to gas — DSEAR considerations apply).",
+      "Set the switches to a known closed position, then continuity-test from line at the CU through to the switched-line terminal of the lamp. Toggle each switch in turn and verify the meter responds correctly at every step. The intermediate switch should swap the strap connections when toggled — the meter should show this in the continuity readings.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Apprentices new to commercial work tend to think 'workspace' is the room they are in. On a live fit-out the workspace is three-dimensional — what is happening above your head and below your feet matters as much as what is in front of you. CDM 2015 Reg 13 puts a duty on the principal contractor to coordinate, but the individual operative still owes a duty under HASAWA s.7 to take reasonable care for themselves and others, and that includes scanning for what other trades are doing.",
   },
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       "What's the purpose of identifying the gas isolation valve location during the walk-round of a domestic kitchen install?",
     options: [
-      'It is not the electrician\'s problem.',
+      "Model the behaviour - report own near-misses openly; encourage colleagues to report theirs without blame; analyse with the team; feed lessons forward; celebrate the report (not the near-miss). Cumulative cultural change over months / years.",
       "Knowing where the emergency gas isolation valve sits before work starts means you (or any trade in the property) can shut the gas down quickly if there is a leak — including a leak you might cause by chasing into a concealed pipe. It is part of the 'services' family of hazards and forms part of a defensible safe-system-of-work record.",
-      'You isolate the gas at the valve before any electrical work.',
-      'You move the valve to a more convenient location.',
+      "The Construction Phase Plan is the Principal Contractor's plan for managing H&S throughout the construction phase (CDM 2015 Reg 12). It documents the controls, the welfare arrangements, the emergency procedures, the trade-clash management, the high-risk activities and the supervision arrangements. The PC writes it and updates it as the project evolves.",
+      "Allows EVs to discharge stored battery energy back to the grid or building during peak demand periods — effectively using the EV battery as a distributed energy storage resource, providing grid services and reducing electricity costs for the vehicle owner",
     ],
     correctAnswer: 1,
     explanation:
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       "Which set of regulations explicitly requires the employer to assess workplace risks and record the significant findings?",
     options: [
-      'Building Regulations Part P.',
+      "The Apprentice, the College Tutor and the Workplace Mentor (with the Employer's training lead or HR sometimes attending as a fourth voice). The three-way review is the formal sit-down where progress is calibrated, gaps identified, and the next month's targets agreed. It's the structural mechanism that stops academic and practical sides drifting apart.",
+      "Because the EIC and any future EICR have to be able to trace the calculation back to a defensible source — DNO Form 1 or BS 7671 assumed maximum for Ze; OSG Table I1 / IET GN1 cable resistance tables for (R1 + R2) — and confirm the temperature correction was applied. Without the trace the design Zs is unverifiable.",
       "Management of Health and Safety at Work Regulations 1999, Reg 3 — every employer (and every self-employed person) must make a 'suitable and sufficient' assessment of the risks to the health and safety of employees and of anyone else affected by their undertaking. Where there are five or more employees the significant findings must be recorded.",
-      'BS 7671 Section 132.',
-      'PUWER 1998.',
+      "Accountability structures are important because EI development involves changing habitual patterns, which is difficult without external support. An effective structure might include: a development partner (colleague or mentor who checks in regularly), a reflective journal (tracking specific incidents and responses), regular self-assessments, and scheduled review points to evaluate progress against goals",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "MHSWR 1999 Reg 3 is the statutory hook for the risk-assessment regime. It is made under HASAWA's enabling powers, so a breach of Reg 3 also feeds back into a HASAWA s.2 / s.3 breach. The 'five or more employees' threshold for recording is a low bar — most electrical contracting firms cross it — and HSE inspectors will ask to see the risk assessments during any post-incident visit.",
   },
@@ -173,12 +173,12 @@ const quizQuestions = [
     question:
       "You're working alone in a customer's cellar. The lighting is one bare bulb on a pull-cord. What does the walk-round flag and what do you do about it?",
     options: [
-      'Nothing — you have a head torch, that is enough.',
+      "The certificate references the edition in force on the date of installation (e.g. BS 7671:2018+A4:2026). Subsequent amendments don't make the install non-compliant retrospectively, but they DO change what's required for any future addition / alteration / EICR you do on the same installation. Periodic inspection (EICR) is carried out to the standard in force at the time of the inspection — so a 2026 install will be EICR'd against whatever amendment is current in 2031.",
+      "IET Academy is the IET's online learning platform — bite-sized technical courses, BS 7671 update training, design and engineering CPD content. Member access typically included with MIET subscription; some content open to non-members. Strong CPD resource alongside scheme-specific (NICEIC, NAPIT) and provider-specific (Elec-Mate) CPD platforms.",
+      "Gather and preserve facts at the scene; provide a contemporaneous written account; notify the responsible person immediately; assist with form completion if asked; provide witness information; preserve evidence; cooperate with any HSE follow-up. The operative isn\\\\\\\\'t normally the report-maker but is the source of the facts.",
       "Lighting is part of the workplace under HASAWA s.2(2)(d) and the Workplace (Health, Safety and Welfare) Regulations 1992 Reg 8. Inadequate task lighting in a confined area is a hazard in itself — it hides other hazards (trip risks, services, structural defects) and increases the chance of an error. The fix: bring temporary task lighting, set it up before tools come out, and record the temporary supply on the dynamic assessment.",
-      'Wait until daylight.',
-      'Ask the customer to fit a brighter bulb on the existing fitting.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Lighting is one of the easiest hazards to fix and one of the most often ignored. The walk-round should explicitly flag 'is the lighting adequate for the task I'm about to do?' and the answer in cellars, lofts, plant rooms and unfinished new-builds is almost always 'no, bring temporary'. Working in poor light leads to slips, missed identification of services and bad terminations.",
   },
@@ -187,12 +187,12 @@ const quizQuestions = [
     question:
       "Under CDM 2015 Reg 13, what must the principal contractor provide to anyone coming on to a notifiable construction site to work?",
     options: [
-      'Nothing — workers find out for themselves.',
       "Site induction covering the relevant parts of the construction phase plan, the site rules, the welfare arrangements, the emergency procedures, and the specific hazards on that site. Plus access to relevant information from the pre-construction phase. CDM 2015 Reg 13 makes this a duty on the principal contractor and Reg 15 makes it a duty on the worker to co-operate with it.",
-      'A high-vis vest and a copy of BS 7671.',
-      'Lunch on the first day.',
+      "The Electrical Contractors' Association — the largest trade association for electrical contractors in England, Wales and Northern Ireland. Membership signals quality, access to ECA technical guidance, ECA insurance products, ECA Apprentice scheme (for member firms taking on apprentices), and joint co-running of the JIB. ECA is not a CPS — you still need separate CPS membership for Part P self-certification.",
+      "Engineering Council registration typically correlates with meaningful salary uplift. EngTech-registered roles often pay £35-45k; IEng roles £45-65k; CEng roles £65k+. Registration alone doesn't generate the salary — the underlying competence and the roles you take on do — but the registration is widely used as a salary-band anchor in engineering job markets. For senior technical and design roles registration is often a job pre-requisite.",
+      "Conditionally yes — but only after the installer verifies and documents that the heating unit complies with Regulation 412.2.1.1 (Class II equipment type-tested and marked). Only when compliance with 412.2.1.1 is demonstrated may the mesh specified in Reg 753.411.3.2 be omitted. Verbal assurance is not acceptance — the documentary evidence of 412.2.1.1 conformity must be in the install file.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "CDM 2015 Reg 13 site induction is the formal mechanism for transferring the principal contractor's hazard knowledge to every operative arriving on site. Skipping the induction or signing in without listening is an apprentice-day-one mistake. The induction is also the moment to ask about specific hazards in your work area — the principal contractor's site team will know about live services, asbestos surveys and trade clashes that the design drawings won't show.",
   },

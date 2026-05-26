@@ -25,35 +25,90 @@ const checks = [
   {
     id: 'l3-m3-4-4-cu',
     question: 'A 100 kVA transformer has copper loss 1.5 kW at full load. At 50 % load, copper loss is:',
-    options: ['0.375 kW', '0.75 kW', '1.5 kW', '3.0 kW'],
-    correctIndex: 0,
+    options: [
+      '1.5 kW',
+      '0.75 kW',
+      '0.375 kW',
+      '3.0 kW',
+    ],
+    correctIndex: 2,
     explanation: 'P_cu ∝ I². Half the current → quarter the loss. 1.5 × 0.25 = 0.375 kW.',
   },
   {
     id: 'l3-m3-4-4-fe',
     question: 'A transformer has iron loss 800 W at no load. At 50 % load, iron loss is:',
-    options: ['200 W', '400 W', '800 W', '1600 W'],
-    correctIndex: 2,
+    options: [
+      '400 W',
+      '1600 W',
+      '200 W',
+      '800 W',
+    ],
+    correctIndex: 3,
     explanation: 'Iron loss is essentially constant — depends on flux density (set by V), not load current. Still 800 W at any load level.',
   },
   {
     id: 'l3-m3-4-4-eta',
     question: 'A 50 kVA transformer at 75 % load with pf 0.9: P_out = 33.75 kW. Iron loss 0.4 kW; copper loss at full load 0.8 kW. Efficiency at 75 % load:',
-    options: ['85 %', '92 %', '97 %', '99 %'],
+    options: [
+      '85 %',
+      '99 %',
+      '97 %',
+      '92 %',
+    ],
     correctIndex: 2,
     explanation: 'Cu loss at 75 % = 0.8 × 0.75² = 0.45 kW. Total loss = 0.4 + 0.45 = 0.85 kW. P_in = 33.75 + 0.85 = 34.6 kW. η = 33.75 / 34.6 × 100 = 97.5 %.',
   },
 ];
 
 const quizQuestions = [
-  { id: 1, question: 'Iron (core) losses include:', options: ['I²R only', 'Hysteresis + eddy currents', 'Skin effect', 'Friction'], correctAnswer: 1, explanation: 'Iron losses = hysteresis (re-orienting domains) + eddy currents (induced circulating in laminations). Both depend on flux density and frequency, not on load.' },
-  { id: 2, question: 'Copper losses depend on:', options: ['Flux density', 'I² × R of windings', 'Voltage', 'Frequency'], correctAnswer: 1, explanation: 'P_cu = I² × R for each winding. Quadratic with current — half load = quarter loss.' },
-  { id: 3, question: 'Maximum efficiency occurs when:', options: ['Iron loss = 2 × copper loss', 'Iron loss = copper loss', 'Iron loss = ½ copper loss', 'Always at full load'], correctAnswer: 1, explanation: 'Maximum efficiency when variable loss (Cu) equals constant loss (Fe). Often around 60-80 % load for distribution transformers.' },
-  { id: 4, question: 'A 50 kVA transformer with iron loss 500 W and full-load copper loss 800 W reaches max efficiency at approximately what fraction of full load?', options: ['√(500/800) = 0.79', '500/800 = 0.625', '0.5', '1.0'], correctAnswer: 0, explanation: 'Set P_cu(x) = P_fe: 800 × x² = 500 → x = √(500/800) = 0.79. Max efficiency at 79 % of full load.' },
-  { id: 5, question: 'Efficiency formula:', options: ['η = P_in / P_out', 'η = P_out / P_in × 100 %', 'η = P_loss / P_in', 'η = P_out / P_loss'], correctAnswer: 1, explanation: 'η = useful output / total input × 100. P_in = P_out + P_loss.' },
-  { id: 6, question: 'A no-load test on a transformer measures primarily:', options: ['Copper loss', 'Iron loss + magnetising VA', 'Insulation resistance', 'Turns ratio'], correctAnswer: 1, explanation: 'No load = no current in secondary = no copper loss. The wattmeter reads iron losses.' },
-  { id: 7, question: 'Stray losses in a transformer are caused by:', options: ['Loose windings', 'Magnetic flux leakage and eddy currents in tank/core clamps', 'Damaged insulation', 'Excess voltage'], correctAnswer: 1, explanation: 'Leakage flux induces eddies in steel tanks, end-windings and clamping plates. Small but counted in load loss measurements.' },
-  { id: 8, question: 'Which loss is dominant at no-load?', options: ['Copper', 'Iron', 'Both equal', 'Stray'], correctAnswer: 1, explanation: 'No load = no significant current = negligible copper loss. Iron loss dominates.' },
+  { id: 1, question: 'Iron (core) losses include:', options: [
+    '500 V DC, minimum 1.0 MΩ.',
+    'Hysteresis + eddy currents',
+    'Non-verbal / visual communication',
+    'Welded brackets or beam clamps',
+  ], correctAnswer: 1, explanation: 'Iron losses = hysteresis (re-orienting domains) + eddy currents (induced circulating in laminations). Both depend on flux density and frequency, not on load.' },
+  { id: 2, question: 'Copper losses depend on:', options: [
+    'Voltage',
+    'Flux density',
+    'I² × R of windings',
+    'Frequency',
+  ], correctAnswer: 2, explanation: 'P_cu = I² × R for each winding. Quadratic with current — half load = quarter loss.' },
+  { id: 3, question: 'Maximum efficiency occurs when:', options: [
+    'Iron loss = ½ copper loss',
+    'Iron loss = 2 × copper loss',
+    'Always at full load',
+    'Iron loss = copper loss',
+  ], correctAnswer: 3, explanation: 'Maximum efficiency when variable loss (Cu) equals constant loss (Fe). Often around 60-80 % load for distribution transformers.' },
+  { id: 4, question: 'A 50 kVA transformer with iron loss 500 W and full-load copper loss 800 W reaches max efficiency at approximately what fraction of full load?', options: [
+    '√(500/800) = 0.79',
+    '500/800 = 0.625',
+    '0.5',
+    '1.0',
+  ], correctAnswer: 0, explanation: 'Set P_cu(x) = P_fe: 800 × x² = 500 → x = √(500/800) = 0.79. Max efficiency at 79 % of full load.' },
+  { id: 5, question: 'Efficiency formula:', options: [
+    'η = P_in / P_out',
+    'η = P_out / P_in × 100 %',
+    'η = P_out / P_loss',
+    'η = P_loss / P_in',
+  ], correctAnswer: 1, explanation: 'η = useful output / total input × 100. P_in = P_out + P_loss.' },
+  { id: 6, question: 'A no-load test on a transformer measures primarily:', options: [
+    'Rotary motion (typically 90°)',
+    'Triple-N harmonics add in neutral',
+    'Iron loss + magnetising VA',
+    'Annually to traceable standards',
+  ], correctAnswer: 2, explanation: 'No load = no current in secondary = no copper loss. The wattmeter reads iron losses.' },
+  { id: 7, question: 'Stray losses in a transformer are caused by:', options: [
+    'A ROES is elected by employees in non-unionised workplaces',
+    'Maintaining eye contact while giving instructions',
+    'Date, time, and name of the person writing it',
+    'Magnetic flux leakage and eddy currents in tank/core clamps',
+  ], correctAnswer: 3, explanation: 'Leakage flux induces eddies in steel tanks, end-windings and clamping plates. Small but counted in load loss measurements.' },
+  { id: 8, question: 'Which loss is dominant at no-load?', options: [
+    'Iron',
+    'Both equal',
+    'Copper',
+    'Stray',
+  ], correctAnswer: 0, explanation: 'No load = no significant current = negligible copper loss. Iron loss dominates.' },
 ];
 
 const faqs = [

@@ -27,8 +27,13 @@ const quickCheckQuestions = [
     id: 'condensing-efficiency',
     question:
       'What is the minimum seasonal efficiency required for a condensing boiler under ErP regulations?',
-    options: ['86%', '90%', '92%', '94%'],
-    correctIndex: 2,
+    options: [
+      '94%',
+      '92%',
+      '90%',
+      '86%',
+    ],
+    correctIndex: 1,
     explanation:
       'Under ErP (Energy-related Products) regulations, condensing boilers must achieve a minimum seasonal efficiency of 92% to qualify for the highest efficiency class. This is measured under the Seasonal Space Heating Energy Efficiency (SEDBUK 2009) methodology.',
   },
@@ -36,8 +41,13 @@ const quickCheckQuestions = [
     id: 'flue-terminal-position',
     question:
       'According to Building Regulations Part J, what is the minimum distance from a flue terminal to an opening window?',
-    options: ['150mm', '300mm', '450mm', '600mm'],
-    correctIndex: 1,
+    options: [
+      '300mm',
+      '600mm',
+      '150mm',
+      '450mm',
+    ],
+    correctIndex: 0,
     explanation:
       'Building Regulations Approved Document J specifies that flue terminals must be at least 300mm from any opening into the building, including openable windows, doors, and air vents. This prevents flue gases from re-entering the building.',
   },
@@ -46,10 +56,10 @@ const quickCheckQuestions = [
     question:
       'In a cascade boiler system, how are the boilers typically controlled to optimise efficiency?',
     options: [
-      'All boilers fire simultaneously',
+      'To confirm the defect has been properly corrected and safety restored',
       'Lead boiler fires first with lag boilers sequenced as demand increases',
-      'Random boiler selection',
-      'Largest boiler always fires first',
+      'To identify obvious faults safely before applying power',
+      'By ensuring materials are delivered as close as possible to their point of use',
     ],
     correctIndex: 1,
     explanation:
@@ -60,12 +70,12 @@ const quickCheckQuestions = [
     question:
       'Which safety device must be wired into the boiler control circuit to meet Gas Safe requirements?',
     options: [
-      'Time clock only',
-      'Room thermostat only',
+      'To prevent materials and tools from falling off the edge',
+      'To meet maximum demand safely and effectively',
+      'Equipment not to cause or be susceptible to interference',
       'Overheat thermostat and gas solenoid valve interlock',
-      'Frost thermostat only',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Gas Safe regulations require that an overheat (high limit) thermostat is wired to shut off the gas supply via a solenoid valve interlock. This provides positive shut-off in the event of overheating, preventing dangerous conditions from developing.',
   },
@@ -77,10 +87,10 @@ const quizQuestions = [
     question:
       'What is the primary characteristic that distinguishes a condensing boiler from a conventional boiler?',
     options: [
-      'Higher operating pressure',
+      'Identification of different circuits and functions',
       'Recovery of latent heat from flue gases by condensing water vapour',
-      'Larger combustion chamber',
-      'Higher gas input rate',
+      'It represents the conductor material and insulation type constant',
+      'Two-way communication and individual addressing',
     ],
     correctAnswer: 1,
     explanation:
@@ -90,8 +100,13 @@ const quizQuestions = [
     id: 2,
     question:
       'Under the Energy-related Products (ErP) directive, what efficiency class represents the highest performance for space heating?',
-    options: ['Class B', 'Class A', 'Class A+', 'Class A+++'],
-    correctAnswer: 3,
+    options: [
+      'Class A+',
+      'Class B',
+      'Class A+++',
+      'Class A',
+    ],
+    correctAnswer: 2,
     explanation:
       'The ErP directive uses an energy labelling system from G (lowest) to A+++ (highest) for space heating. Modern condensing boilers typically achieve A or A+ ratings, with heat pumps capable of A++ and A+++ ratings.',
   },
@@ -99,8 +114,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the typical return water temperature required for a condensing boiler to operate in condensing mode?',
-    options: ['Below 35°C', 'Below 45°C', 'Below 55°C', 'Below 65°C'],
-    correctAnswer: 2,
+    options: [
+      'Below 45°C',
+      'Below 35°C',
+      'Below 65°C',
+      'Below 55°C',
+    ],
+    correctAnswer: 3,
     explanation:
       'For a condensing boiler to operate in condensing mode, the return water temperature must be below the dew point of the flue gases, approximately 55°C. Lower return temperatures result in greater condensation and higher efficiency gains.',
   },
@@ -109,12 +129,12 @@ const quizQuestions = [
     question:
       'What type of boiler is most suitable for a property with no hot water cylinder and limited space?',
     options: [
-      'System boiler',
-      'Regular (heat-only) boiler',
       'Combination (combi) boiler',
+      'Regular (heat-only) boiler',
+      'System boiler',
       'Condensing floor-standing boiler',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A combination (combi) boiler provides both space heating and instantaneous domestic hot water without the need for a separate hot water storage cylinder. This makes it ideal for smaller properties with limited space.',
   },
@@ -122,8 +142,13 @@ const quizQuestions = [
     id: 5,
     question:
       'According to Building Regulations Part L, what is the minimum boiler efficiency requirement for new installations?',
-    options: ['86% SEDBUK', '88% SEDBUK', '90% SEDBUK', '92% SEDBUK'],
-    correctAnswer: 2,
+    options: [
+      '88% SEDBUK',
+      '90% SEDBUK',
+      '92% SEDBUK',
+      '86% SEDBUK',
+    ],
+    correctAnswer: 1,
     explanation:
       'Building Regulations Approved Document L requires that new boiler installations achieve a minimum seasonal efficiency of 90% SEDBUK (2009). In practice, this means condensing boilers are required for virtually all new installations.',
   },
@@ -131,10 +156,10 @@ const quizQuestions = [
     id: 6,
     question: 'In a cascade boiler system, what is the purpose of lead-lag rotation?',
     options: [
-      'To increase total system output',
-      'To reduce installation costs',
+      'As specified by the manufacturer, typically 4-8 metres equivalent',
+      'Benchmark commissioning checklist and Building Regulations notification',
       'To ensure even wear and extend service life across all boilers',
-      'To improve combustion efficiency',
+      'Fused connection unit on a dedicated radial circuit',
     ],
     correctAnswer: 2,
     explanation:
@@ -144,8 +169,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What material is typically used for condensate drainage pipework from condensing boilers?',
-    options: ['Copper', 'Mild steel', 'PVC or ABS plastic', 'Cast iron'],
-    correctAnswer: 2,
+    options: [
+      'Copper',
+      'Mild steel',
+      'Cast iron',
+      'PVC or ABS plastic',
+    ],
+    correctAnswer: 3,
     explanation:
       'Condensate from condensing boilers is acidic (pH 3-5) and would corrode metal pipework. PVC or ABS plastic pipework is used as it is resistant to the acidic condensate and provides a long service life.',
   },
@@ -153,8 +183,13 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the minimum internal diameter for a condensate drainage pipe from a domestic condensing boiler?',
-    options: ['15mm', '22mm', '28mm', '32mm'],
-    correctAnswer: 1,
+    options: [
+      '22mm',
+      '28mm',
+      '15mm',
+      '32mm',
+    ],
+    correctAnswer: 0,
     explanation:
       'The minimum internal diameter for condensate pipework is 22mm to prevent blockages and ensure adequate flow. External condensate pipes may need to be larger (32mm) and must be insulated or traced to prevent freezing.',
   },
@@ -163,10 +198,10 @@ const quizQuestions = [
     question:
       'According to BS 7671, what type of electrical supply is typically required for a domestic boiler?',
     options: [
-      'Three-phase supply',
+      'Vertical balanced flue through the roof',
       'Fused connection unit on a dedicated radial circuit',
-      '13A socket outlet',
-      'Direct connection to the consumer unit',
+      'As specified by the manufacturer, typically 4-8 metres equivalent',
+      'To ensure even wear and extend service life across all boilers',
     ],
     correctAnswer: 1,
     explanation:
@@ -176,12 +211,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of the condensate trap on a condensing boiler?',
     options: [
-      'To increase boiler pressure',
+      'Benchmark commissioning checklist and Building Regulations notification',
+      'Vertical balanced flue through the roof',
       'To prevent flue gases escaping via the condensate drain',
-      'To filter the condensate',
-      'To heat the condensate before discharge',
+      'To ensure even wear and extend service life across all boilers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The condensate trap maintains a water seal that prevents combustion gases from escaping through the condensate drain. The trap must be properly filled with water and checked during commissioning and servicing.',
   },
@@ -192,10 +227,10 @@ const quizQuestions = [
     options: [
       'Natural draught flue',
       'Open flue with draught diverter',
-      'Vertical balanced flue through the roof',
       'Room-sealed with no flue required',
+      'Vertical balanced flue through the roof',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'When a condensing boiler cannot be located on an external wall, a vertical balanced flue system through the roof is required. This maintains the room-sealed principle while providing combustion air supply and flue gas discharge.',
   },
@@ -204,12 +239,12 @@ const quizQuestions = [
     question:
       'Under Gas Safe requirements, what documentation must be provided to the customer after boiler installation?',
     options: [
-      "Manufacturer's brochure only",
       'Benchmark commissioning checklist and Building Regulations notification',
-      'Invoice only',
-      'Verbal confirmation of satisfactory installation',
+      'To ensure even wear and extend service life across all boilers',
+      'As specified by the manufacturer, typically 4-8 metres equivalent',
+      'To prevent flue gases escaping via the condensate drain',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Gas Safe registered engineers must complete the Benchmark commissioning checklist (or equivalent manufacturer documentation) and notify Building Control of the installation. A copy must be provided to the customer for their records.',
   },
@@ -218,12 +253,12 @@ const quizQuestions = [
     question:
       'What is the maximum horizontal length for a room-sealed balanced flue on a typical domestic boiler?',
     options: [
-      '500mm',
-      '1000mm equivalent',
+      'Fused connection unit on a dedicated radial circuit',
       'As specified by the manufacturer, typically 4-8 metres equivalent',
-      'Unlimited length',
+      'To ensure even wear and extend service life across all boilers',
+      'Benchmark commissioning checklist and Building Regulations notification',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Maximum flue lengths are specified by the boiler manufacturer and vary depending on the model. Typically, room-sealed balanced flues can extend 4-8 metres equivalent, with deductions for bends. Always refer to manufacturer instructions.',
   },
@@ -232,12 +267,12 @@ const quizQuestions = [
     question:
       'In a cascade boiler installation, what is the typical method of hydraulic separation between boilers and the heating system?',
     options: [
-      'Direct connection',
+      'Specific locations of air leakage paths',
+      'New installations and major alterations',
       'Low-loss header or hydraulic separator',
-      'Check valves only',
-      'Thermostatic mixing valve',
+      'Boiler plant startup and staging sequence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A low-loss header or hydraulic separator provides hydraulic separation between the boiler primary circuit and the secondary heating system. This allows independent flow rates, prevents boiler short-cycling, and ensures proper return temperatures.',
   },

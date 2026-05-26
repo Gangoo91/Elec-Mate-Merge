@@ -32,8 +32,13 @@ const quickCheckQuestions = [
   {
     id: 'water-density',
     question: 'What is the approximate density of water at 20°C?',
-    options: ['100 kg/m³', '500 kg/m³', '1000 kg/m³', '1500 kg/m³'],
-    correctIndex: 2,
+    options: [
+      '1500 kg/m³',
+      '1000 kg/m³',
+      '100 kg/m³',
+      '500 kg/m³',
+    ],
+    correctIndex: 1,
     explanation:
       'Water has a density of approximately 1000 kg/m³ (or 1 kg/litre) at 20°C. This value is fundamental to all hydraulic calculations in building services.',
   },
@@ -41,8 +46,13 @@ const quickCheckQuestions = [
     id: 'pressure-types',
     question:
       'If atmospheric pressure is 101.3 kPa and gauge pressure reads 150 kPa, what is the absolute pressure?',
-    options: ['48.7 kPa', '150 kPa', '201.3 kPa', '251.3 kPa'],
-    correctIndex: 3,
+    options: [
+      '201.3 kPa',
+      '48.7 kPa',
+      '251.3 kPa',
+      '150 kPa',
+    ],
+    correctIndex: 2,
     explanation:
       'Absolute pressure = Gauge pressure + Atmospheric pressure. So 150 kPa + 101.3 kPa = 251.3 kPa. Most pressure gauges read gauge pressure (zero at atmospheric).',
   },
@@ -50,12 +60,12 @@ const quickCheckQuestions = [
     id: 'pascal-law',
     question: "According to Pascal's law, pressure applied to a confined fluid:",
     options: [
-      'Decreases with depth',
       'Is transmitted equally in all directions',
-      'Only acts downward',
-      'Creates turbulent flow',
+      'Ensure metalwork is at earth potential',
+      'Clearly and legibly in permanent ink or digitally',
+      'They improve appearance and make maintenance easier',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Pascal's law states that pressure applied to a confined fluid is transmitted undiminished and equally in all directions. This principle enables hydraulic systems to multiply force.",
   },
@@ -63,8 +73,13 @@ const quickCheckQuestions = [
     id: 'hydrostatic-pressure',
     question:
       'A water tank is 8m high. What is the hydrostatic pressure at the bottom? (g = 9.81 m/s²)',
-    options: ['7.85 kPa', '39.24 kPa', '78.48 kPa', '98.1 kPa'],
-    correctIndex: 2,
+    options: [
+      '98.1 kPa',
+      '78.48 kPa',
+      '7.85 kPa',
+      '39.24 kPa',
+    ],
+    correctIndex: 1,
     explanation:
       'P = ρgh = 1000 × 9.81 × 8 = 78,480 Pa = 78.48 kPa. This is approximately 0.78 bar or 7.85 metres head of water.',
   },
@@ -87,7 +102,12 @@ const quizQuestions = [
   {
     id: 2,
     question: "Which property describes a fluid's resistance to flow?",
-    options: ['Density', 'Pressure', 'Viscosity', 'Compressibility'],
+    options: [
+      'Compressibility',
+      'Density',
+      'Viscosity',
+      'Pressure',
+    ],
     correctAnswer: 2,
     explanation:
       "Viscosity (μ) describes a fluid's internal resistance to flow - essentially its 'thickness'. Higher viscosity fluids like oil flow more slowly than lower viscosity fluids like water.",
@@ -95,32 +115,52 @@ const quizQuestions = [
   {
     id: 3,
     question: 'The SI unit of dynamic viscosity is:',
-    options: ['kg/m³', 'Pa·s (Pascal-seconds)', 'm²/s', 'N/m²'],
-    correctAnswer: 1,
+    options: [
+      'm²/s',
+      'kg/m³',
+      'N/m²',
+      'Pa·s (Pascal-seconds)',
+    ],
+    correctAnswer: 3,
     explanation:
       'Dynamic viscosity (μ) is measured in Pascal-seconds (Pa·s) or equivalently kg/(m·s). Water at 20°C has a viscosity of approximately 0.001 Pa·s (1 mPa·s).',
   },
   {
     id: 4,
     question: 'What is the relationship between kinematic viscosity (ν) and dynamic viscosity (μ)?',
-    options: ['ν = μ × ρ', 'ν = μ / ρ', 'ν = ρ / μ', 'ν = μ + ρ'],
-    correctAnswer: 1,
+    options: [
+      'ν = μ / ρ',
+      'ν = μ × ρ',
+      'ν = ρ / μ',
+      'ν = μ + ρ',
+    ],
+    correctAnswer: 0,
     explanation:
       'Kinematic viscosity (ν) = Dynamic viscosity (μ) / Density (ρ). Units are m²/s. This relationship is important when using the Reynolds number formula.',
   },
   {
     id: 5,
     question: 'Standard atmospheric pressure at sea level is approximately:',
-    options: ['10.13 kPa', '50 kPa', '101.3 kPa', '1013 kPa'],
-    correctAnswer: 2,
+    options: [
+      '50 kPa',
+      '101.3 kPa',
+      '1013 kPa',
+      '10.13 kPa',
+    ],
+    correctAnswer: 1,
     explanation:
       'Standard atmospheric pressure is 101.325 kPa (often rounded to 101.3 kPa), equivalent to 1.013 bar or 10.33 metres head of water.',
   },
   {
     id: 6,
     question: 'A pressure gauge reading of zero indicates:',
-    options: ['Absolute vacuum', 'Atmospheric pressure', 'Maximum system pressure', 'Pump failure'],
-    correctAnswer: 1,
+    options: [
+      'Absolute vacuum',
+      'Maximum system pressure',
+      'Atmospheric pressure',
+      'Pump failure',
+    ],
+    correctAnswer: 2,
     explanation:
       'Gauge pressure uses atmospheric pressure as the reference point (zero). A gauge reading of zero means the actual (absolute) pressure equals atmospheric pressure.',
   },
@@ -128,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: "In a building's LPHW system, why does pressure increase at lower floor levels?",
     options: [
-      'Due to pump operation',
+      'Pre-agreed terms, pricing and streamlined ordering',
+      'Ensure circuit is isolated and discharged',
+      'Moisture, heat, mechanical damage, or aging',
       'Due to hydrostatic pressure from the water column above',
-      'Due to pipe friction',
-      'Due to temperature changes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hydrostatic pressure (P = ρgh) increases with depth. Each metre of water column adds approximately 9.81 kPa (0.1 bar) to the static pressure.',
   },
@@ -141,8 +181,13 @@ const quizQuestions = [
     id: 8,
     question:
       "What pressure is exerted at the base of a 25m tall building's heating system header tank? (Use ρ = 1000 kg/m³, g = 10 m/s²)",
-    options: ['25 kPa', '100 kPa', '250 kPa', '2500 kPa'],
-    correctAnswer: 2,
+    options: [
+      '250 kPa',
+      '2500 kPa',
+      '25 kPa',
+      '100 kPa',
+    ],
+    correctAnswer: 0,
     explanation:
       'P = ρgh = 1000 × 10 × 25 = 250,000 Pa = 250 kPa = 2.5 bar. This static head must be considered when sizing components at lower levels.',
   },
@@ -150,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: "Pascal's law is the fundamental principle behind:",
     options: [
-      'Centrifugal pumps',
+      'Pa·s (Pascal-seconds)',
       'Hydraulic lifts and presses',
-      'Heat exchangers',
-      'Cooling towers',
+      'Atmospheric pressure',
+      'Density and viscosity',
     ],
     correctAnswer: 1,
     explanation:
@@ -164,27 +209,37 @@ const quizQuestions = [
     question: 'How does water viscosity change as temperature increases?',
     options: [
       'Viscosity increases significantly',
+      'Viscosity first increases then decreases',
       'Viscosity decreases significantly',
       'Viscosity remains constant',
-      'Viscosity first increases then decreases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Water viscosity decreases as temperature rises. At 20°C it's about 1.0 mPa·s, at 60°C it's about 0.47 mPa·s. This affects flow characteristics in heating systems.",
   },
   {
     id: 11,
     question: 'What is the specific gravity of a fluid with density 1200 kg/m³?',
-    options: ['0.83', '1.0', '1.2', '1200'],
-    correctAnswer: 2,
+    options: [
+      '0.83',
+      '1.0',
+      '1200',
+      '1.2',
+    ],
+    correctAnswer: 3,
     explanation:
       "Specific gravity (SG) is the ratio of a fluid's density to water's density. SG = 1200/1000 = 1.2. This dimensionless number indicates the fluid is 20% denser than water.",
   },
   {
     id: 12,
     question: 'In HVAC applications, which fluid property most affects pump power requirements?',
-    options: ['Colour', 'Density and viscosity', 'Thermal conductivity', 'Surface tension'],
-    correctAnswer: 1,
+    options: [
+      'Density and viscosity',
+      'Surface tension',
+      'Colour',
+      'Thermal conductivity',
+    ],
+    correctAnswer: 0,
     explanation:
       'Density affects the mass flow rate and static head, while viscosity affects friction losses. Both directly impact the power required to pump fluids through building systems.',
   },

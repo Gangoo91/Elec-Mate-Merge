@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'passive-design-definition',
     question: 'What is the primary objective of passive design in buildings?',
     options: [
+      'To increase renewable energy generation',
+      'To eliminate all electrical systems',
       'To maximise mechanical system efficiency',
       'To reduce energy demand through building form and fabric',
-      'To eliminate all electrical systems',
-      'To increase renewable energy generation',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Passive design aims to reduce energy demand by utilising building form, orientation, fabric, and natural forces (sun, wind, thermal mass) to provide heating, cooling, and lighting with minimal mechanical intervention.',
   },
@@ -44,7 +44,12 @@ const quickCheckQuestions = [
     id: 'solar-orientation',
     question:
       'For a building in the UK, which facade orientation receives the most consistent solar gain throughout the year?',
-    options: ['North-facing', 'South-facing', 'East-facing', 'West-facing'],
+    options: [
+      'North-facing',
+      'South-facing',
+      'West-facing',
+      'East-facing',
+    ],
     correctIndex: 1,
     explanation:
       "South-facing facades in the UK (and Northern Hemisphere) receive the most consistent solar gain. The sun's path is lower in winter, allowing deeper penetration, while summer sun angles are higher and easier to shade.",
@@ -53,12 +58,12 @@ const quickCheckQuestions = [
     id: 'stack-ventilation',
     question: 'Stack effect ventilation relies primarily on:',
     options: [
-      'Wind pressure differences',
-      'Mechanical fans at low speed',
+      'Because I²R losses cause heat that cannot dissipate',
       'Temperature differences creating buoyancy',
-      'Humidity gradients',
+      'Check members maintain their development commitments',
+      'A device that converts DC to AC',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Stack effect (or buoyancy-driven ventilation) relies on warm air being less dense than cool air. Warm air rises and exits at high level, drawing in cooler replacement air at low level - creating natural air movement without mechanical assistance.',
   },
@@ -66,12 +71,12 @@ const quickCheckQuestions = [
     id: 'thermal-mass',
     question: 'High thermal mass materials in buildings help to:',
     options: [
-      'Increase instantaneous heating response',
+      'It provides quick wins by clearing small debts first',
+      'Form a neat hook and ensure full contact with terminal',
+      'To maintain all conductive parts at the same potential',
       'Moderate temperature swings by absorbing and releasing heat',
-      'Reduce the need for insulation',
-      'Increase air infiltration rates',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Thermal mass (concrete, masonry, water) absorbs heat when surroundings are warm and releases it when cooler. This moderates temperature swings, reducing peak heating and cooling loads and improving thermal comfort.',
   },
@@ -95,7 +100,12 @@ const quizQuestions = [
     id: 2,
     question:
       'In the UK, what solar altitude angle should be used when designing summer shading for south-facing windows?',
-    options: ['23.5°', '45°', '60-65°', '90°'],
+    options: [
+      '90°',
+      '23.5°',
+      '60-65°',
+      '45°',
+    ],
     correctAnswer: 2,
     explanation:
       'At UK latitudes (51-56°N), the summer sun altitude reaches approximately 60-65° at solar noon in June. Horizontal overhangs should be designed to shade windows at these angles while allowing lower winter sun to penetrate.',
@@ -104,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'Cross ventilation in buildings is most effective when:',
     options: [
-      'Openings are on the same wall',
+      'Cools the building structure overnight using cool night air',
+      'Ultra-low energy demand through exceptional fabric and airtightness',
+      'Low afternoon sun angles make horizontal shading ineffective',
       'Openings are on opposite or adjacent walls with clear internal paths',
-      'The building has no internal partitions',
-      'Windows are kept closed during the day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Cross ventilation requires inlet and outlet openings on opposite or adjacent walls, with clear internal air paths. Wind pressure differences drive airflow through the space, providing effective natural cooling and fresh air.',
   },
@@ -117,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'A daylight factor of 5% in an office space indicates:',
     options: [
-      'Poor daylight provision requiring artificial lighting',
       'Adequate daylight for most office tasks',
+      'Poor daylight provision requiring artificial lighting',
       'Excessive daylight likely to cause glare',
       'Daylight only sufficient for circulation areas',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Daylight factor is the ratio of internal to external illuminance. 5% is generally adequate for office work (2% minimum for circulation, 5% for working areas). Higher values may require glare control measures.',
   },
@@ -130,20 +140,25 @@ const quizQuestions = [
     id: 5,
     question: 'Night purge ventilation is a passive cooling strategy that:',
     options: [
-      'Cools the building structure overnight using cool night air',
       'Operates mechanical cooling only at night',
-      'Removes pollutants accumulated during the day',
+      'Cools the building structure overnight using cool night air',
       'Increases thermal mass effectiveness',
+      'Removes pollutants accumulated during the day',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       "Night purge ventilation uses cooler night-time air to remove heat stored in the building's thermal mass during the day. The cooled mass then absorbs heat gains the following day, reducing peak temperatures.",
   },
   {
     id: 6,
     question: 'Which glazing property is most important for controlling solar heat gain?',
-    options: ['U-value', 'g-value (solar factor)', 'Visible light transmittance', 'Frame material'],
-    correctAnswer: 1,
+    options: [
+      'U-value',
+      'Visible light transmittance',
+      'g-value (solar factor)',
+      'Frame material',
+    ],
+    correctAnswer: 2,
     explanation:
       'The g-value (solar factor or SHGC) indicates the proportion of solar radiation transmitted through glazing. Lower g-values reduce solar heat gain - critical for preventing overheating in highly glazed buildings.',
   },
@@ -152,11 +167,11 @@ const quizQuestions = [
     question: 'Exposed concrete soffits in offices contribute to passive design by:',
     options: [
       'Reducing acoustic reverberation',
-      'Providing accessible thermal mass',
-      'Improving fire resistance',
       'Reducing floor-to-floor heights',
+      'Improving fire resistance',
+      'Providing accessible thermal mass',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Exposed concrete soffits provide accessible thermal mass that can absorb heat during the day and release it at night. Suspended ceilings isolate the thermal mass, reducing its effectiveness in moderating temperatures.',
   },
@@ -164,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'The optimum depth for daylit spaces in side-lit buildings is typically:',
     options: [
-      'Equal to window head height',
       '1.5 to 2.5 times the window head height',
       '3 to 4 times the window head height',
+      'Equal to window head height',
       'Unlimited with adequate glazing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Useful daylight penetration is typically limited to 1.5-2.5 times the window head height from the facade. Deeper spaces require toplighting (rooflights) or light shelves to achieve adequate daylight levels.',
   },
@@ -177,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'A building designed with a narrow floor plate (12-15m) primarily enables:',
     options: [
-      'Maximum lettable floor area',
+      'Openings are on opposite or adjacent walls with clear internal paths',
       'Cross ventilation and daylight penetration from both sides',
-      'Reduced structural costs',
-      'Higher occupant densities',
+      'Ultra-low energy demand through exceptional fabric and airtightness',
+      'Storing latent heat during phase transitions',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,11 +206,11 @@ const quizQuestions = [
     question: 'Solar shading on west-facing facades is particularly challenging because:',
     options: [
       'West facades receive no direct sunlight',
+      'Rain penetration is most common on west facades',
       'Low afternoon sun angles make horizontal shading ineffective',
       'Wind loads are highest on west facades',
-      'Rain penetration is most common on west facades',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "West-facing facades receive intense, low-angle afternoon sun when buildings are already warm from the day's heat gains. Horizontal overhangs are ineffective; vertical fins or internal blinds are typically required.",
   },
@@ -204,11 +219,11 @@ const quizQuestions = [
     question: 'Phase Change Materials (PCMs) enhance passive design by:',
     options: [
       'Generating electricity from temperature differences',
-      'Storing latent heat during phase transitions',
-      'Improving window insulation',
       'Increasing ventilation rates',
+      'Improving window insulation',
+      'Storing latent heat during phase transitions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PCMs absorb significant heat energy during melting (latent heat) without temperature rise. This increases effective thermal mass in lightweight construction, helping to moderate temperature swings and reduce cooling loads.',
   },
@@ -216,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'The Passivhaus standard primarily focuses on:',
     options: [
-      'Renewable energy generation',
       'Ultra-low energy demand through exceptional fabric and airtightness',
-      'Natural ventilation only',
-      'Thermal mass construction',
+      'Cross ventilation and daylight penetration from both sides',
+      'Cools the building structure overnight using cool night air',
+      'Openings are on opposite or adjacent walls with clear internal paths',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Passivhaus achieves ultra-low energy demand (≤15 kWh/m²/yr heating) through exceptional insulation (U-values ~0.1 W/m²K), airtightness (≤0.6 ACH@50Pa), thermal bridge-free design, and mechanical ventilation with heat recovery.',
   },

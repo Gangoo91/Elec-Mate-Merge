@@ -1,94 +1,70 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { GraduationCap, Award, UserCheck, FileCheck } from 'lucide-react';
 import { MethodStatementData } from '@/types/method-statement';
 
 interface CompetencyMatrixCardProps {
   methodData: MethodStatementData;
 }
 
+interface CompetencyRowProps {
+  label: string;
+  value?: string;
+  tone?: 'default' | 'warning';
+}
+
+const CompetencyRow: React.FC<CompetencyRowProps> = ({ label, value, tone = 'default' }) => {
+  if (!value) return null;
+  return (
+    <div className="py-4 flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
+      <span
+        className={`text-[10.5px] font-semibold uppercase tracking-[0.18em] sm:w-44 shrink-0 ${
+          tone === 'warning' ? 'text-amber-400' : 'text-white/55'
+        }`}
+      >
+        {label}
+      </span>
+      <span className="text-[13.5px] text-white/85 leading-relaxed flex-1 min-w-0">{value}</span>
+    </div>
+  );
+};
+
+/**
+ * Competency & training requirements — editorial.
+ */
 export function CompetencyMatrixCard({ methodData }: CompetencyMatrixCardProps) {
   const competency = methodData.competencyMatrix;
+  if (!competency) return null;
 
-  if (!competency) {
-    return null;
-  }
-
-  const hasAnyCompetency =
+  const hasAny =
     competency.competencyRequirements ||
     competency.trainingRequired ||
     competency.supervisionLevel ||
     competency.additionalCertifications;
-
-  if (!hasAnyCompetency) {
-    return null;
-  }
+  if (!hasAny) return null;
 
   return (
-    <Card className="bg-purple-500/5 border-purple-500/20 mb-4">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-base flex items-center gap-2">
-          <GraduationCap className="h-5 w-5 text-purple-400" />
-          Competency & Training Requirements
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-3">
-        {/* Competency Requirements */}
-        {competency.competencyRequirements && (
-          <div className="bg-elec-gray/30 border border-purple-500/10 rounded-lg p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <UserCheck className="h-4 w-4 text-purple-400" />
-              <span className="text-sm font-semibold text-elec-light">Competency Requirements</span>
-            </div>
-            <p className="text-sm text-white">{competency.competencyRequirements}</p>
-          </div>
-        )}
-
-        {/* Training Required */}
-        {competency.trainingRequired && (
-          <div className="bg-elec-gray/30 border border-purple-500/10 rounded-lg p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <GraduationCap className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-semibold text-elec-light">Training Required</span>
-            </div>
-            <p className="text-sm text-white">{competency.trainingRequired}</p>
-          </div>
-        )}
-
-        {/* Supervision Level */}
-        {competency.supervisionLevel && (
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <UserCheck className="h-4 w-4 text-amber-400" />
-              <span className="text-sm font-semibold text-amber-400">Supervision Level</span>
-            </div>
-            <p className="text-sm text-white">{competency.supervisionLevel}</p>
-          </div>
-        )}
-
-        {/* Additional Certifications */}
-        {competency.additionalCertifications && (
-          <div className="bg-elec-gray/30 border border-purple-500/10 rounded-lg p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <Award className="h-4 w-4 text-green-400" />
-              <span className="text-sm font-semibold text-elec-light">
-                Additional Certifications
-              </span>
-            </div>
-            <p className="text-sm text-white">{competency.additionalCertifications}</p>
-          </div>
-        )}
-
-        {/* Footer Note */}
-        <div className="pt-2 border-t border-border/40">
-          <p className="text-xs text-white flex items-start gap-2">
-            <FileCheck className="h-3 w-3 mt-0.5 flex-shrink-0" />
-            <span>
-              All personnel must have appropriate qualifications verified before commencing work
-            </span>
-          </p>
+    <section className="space-y-5">
+      <div className="space-y-1">
+        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+          Competency &amp; training
         </div>
-      </CardContent>
-    </Card>
+        <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
+          Who is qualified to work.
+        </h3>
+      </div>
+
+      <div className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
+        <CompetencyRow label="Competency required" value={competency.competencyRequirements} />
+        <CompetencyRow label="Training required" value={competency.trainingRequired} />
+        <CompetencyRow label="Supervision" value={competency.supervisionLevel} tone="warning" />
+        <CompetencyRow
+          label="Additional certs"
+          value={competency.additionalCertifications}
+        />
+      </div>
+
+      <p className="text-[12px] text-white/55 leading-relaxed">
+        All personnel must have appropriate qualifications verified before commencing work.
+      </p>
+    </section>
   );
 }

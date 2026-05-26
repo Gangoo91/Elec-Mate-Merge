@@ -27,8 +27,13 @@ const quickCheckQuestions = [
     id: 'pid-components',
     question:
       'In a PID controller, which term responds to the current error value and provides immediate corrective action?',
-    options: ['Proportional (P)', 'Integral (I)', 'Derivative (D)', 'All three equally'],
-    correctIndex: 0,
+    options: [
+      'Derivative (D)',
+      'Proportional (P)',
+      'All three equally',
+      'Integral (I)',
+    ],
+    correctIndex: 1,
     explanation:
       'The Proportional term provides output directly proportional to the current error. It gives immediate response but cannot eliminate steady-state error on its own.',
   },
@@ -36,12 +41,12 @@ const quickCheckQuestions = [
     id: 'cascade-benefit',
     question: 'What is the primary benefit of cascade control over single-loop control?',
     options: [
-      'Lower installation cost',
+      'Ratio of 10-minute to 1-minute resistance readings',
+      'Electrical isolation and safe working practices',
+      'Converting sound energy to heat in porous material',
       'Faster response to secondary disturbances',
-      'Simpler programming',
-      'Reduced sensor requirements',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Cascade control places a secondary (inner) loop around disturbances, correcting them before they affect the primary (outer) loop. This significantly improves response time.',
   },
@@ -49,12 +54,12 @@ const quickCheckQuestions = [
     id: 'optimum-start',
     question: 'What data does an optimum start algorithm typically use to calculate pre-heat time?',
     options: [
-      'Only outside air temperature',
+      'Short circuit causing flashover and burns',
+      'Apply the hierarchy of control when assessing risks',
+      'Voltage equals current multiplied by resistance',
       'Building thermal mass and outside temperature',
-      'Occupancy schedule only',
-      'Equipment age and condition',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Optimum start algorithms use outside air temperature, building thermal characteristics (thermal mass, insulation), and sometimes historical data to calculate the minimum pre-conditioning time required.',
   },
@@ -62,8 +67,13 @@ const quickCheckQuestions = [
     id: 'dcv-sensor',
     question:
       'In demand-controlled ventilation (DCV), what is the most common parameter used to indicate occupancy levels?',
-    options: ['Temperature', 'Humidity', 'CO2 concentration', 'Light levels'],
-    correctIndex: 2,
+    options: [
+      'Temperature',
+      'Humidity',
+      'Light levels',
+      'CO2 concentration',
+    ],
+    correctIndex: 3,
     explanation:
       'CO2 concentration is the most common indicator for DCV as it directly correlates with human occupancy and metabolic activity, allowing ventilation to match actual demand.',
   },
@@ -73,7 +83,12 @@ const quizQuestions = [
   {
     id: 1,
     question: "What does the 'I' in PID control stand for?",
-    options: ['Immediate', 'Integral', 'Inverse', 'Incremental'],
+    options: [
+      'Immediate',
+      'Integral',
+      'Inverse',
+      'Incremental',
+    ],
     correctAnswer: 1,
     explanation:
       "The 'I' stands for Integral. The integral term sums the error over time and eliminates steady-state offset that proportional control alone cannot remove.",
@@ -82,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: 'In PID tuning, what symptom indicates excessive integral action?',
     options: [
+      'Steady-state error',
       'Slow response',
       'Oscillation and overshoot',
-      'Steady-state error',
       'No response to setpoint changes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Excessive integral action causes overshoot, oscillation, and slow settling as the accumulated error continues to drive the output even after the setpoint is reached.',
   },
@@ -95,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of derivative action in a PID controller?',
     options: [
-      'To eliminate steady-state error',
       'To provide proportional response',
-      'To anticipate future error based on rate of change',
+      'To eliminate steady-state error',
       'To reduce energy consumption',
+      'To anticipate future error based on rate of change',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Derivative action responds to the rate of change of error, effectively 'anticipating' where the process is heading. This reduces overshoot and improves stability.",
   },
@@ -109,12 +124,12 @@ const quizQuestions = [
     question:
       'In a cascade control system for AHU heating, what would typically be the inner loop?',
     options: [
-      'Room temperature control',
-      'Heating coil valve position',
       'Supply air temperature control',
+      'Heating coil valve position',
+      'Room temperature control',
       'Outside air temperature measurement',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The inner (secondary) loop controls supply air temperature, responding quickly to coil disturbances. The outer (primary) loop controls room temperature by adjusting the supply air setpoint.',
   },
@@ -124,8 +139,8 @@ const quizQuestions = [
     options: [
       'Energy tariff rates',
       'Building thermal decay rate',
-      'Equipment maintenance schedule',
       'Staff overtime costs',
+      'Equipment maintenance schedule',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,7 +150,12 @@ const quizQuestions = [
     id: 6,
     question:
       'What is the typical CO2 setpoint for demand-controlled ventilation in occupied spaces?',
-    options: ['400 ppm', '600 ppm', '800-1000 ppm', '1500 ppm'],
+    options: [
+      '400 ppm',
+      '600 ppm',
+      '800-1000 ppm',
+      '1500 ppm',
+    ],
     correctAnswer: 2,
     explanation:
       'DCV typically maintains CO2 between 800-1000 ppm above outdoor levels. This indicates acceptable air quality whilst avoiding over-ventilation and wasted energy.',
@@ -145,11 +165,11 @@ const quizQuestions = [
     question: 'Chilled water supply temperature reset typically increases the setpoint when:',
     options: [
       'Cooling load increases',
-      'Cooling load decreases',
-      'Humidity rises',
       'Occupancy increases',
+      'Humidity rises',
+      'Cooling load decreases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'When cooling load decreases, the chilled water setpoint can be raised (reset upwards), reducing chiller energy consumption whilst still meeting the reduced demand.',
   },
@@ -157,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the primary energy-saving mechanism of supply air temperature reset?',
     options: [
-      'Reducing fan speed',
       'Reducing reheat energy and improving chiller efficiency',
-      'Reducing lighting loads',
-      'Reducing pump speed',
+      'To anticipate future error based on rate of change',
+      'Widens the temperature deadband to reduce plant operation',
+      'Limiting integral accumulation when output is saturated',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Raising supply air temperature in cooling mode reduces simultaneous cooling and reheating, and allows chillers to operate at higher efficiency with elevated chilled water temperatures.',
   },
@@ -170,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'Night setback control typically:',
     options: [
-      'Maintains daytime setpoints',
+      'Limiting integral accumulation when output is saturated',
       'Widens the temperature deadband to reduce plant operation',
-      'Increases ventilation rates',
-      'Activates all cooling systems',
+      'Reducing reheat energy and improving chiller efficiency',
+      'To anticipate future error based on rate of change',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,12 +203,12 @@ const quizQuestions = [
     id: 10,
     question: 'Which tuning method involves deliberately inducing oscillations in a control loop?',
     options: [
-      'Trial and error',
+      'Use appropriate PPE and procedures',
+      'Connect shield at both ends',
       'Ziegler-Nichols ultimate gain method',
-      'Lambda tuning',
-      'Cohen-Coon method',
+      'Pressing the test button (if fitted)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Ziegler-Nichols ultimate gain method increases proportional gain until sustained oscillation occurs, then calculates PID parameters from the critical gain and oscillation period.',
   },
@@ -197,12 +217,12 @@ const quizQuestions = [
     question:
       'In a variable air volume (VAV) system, what parameter is typically reset based on zone demand?',
     options: [
-      'Room temperature setpoint',
+      'Oscillation and overshoot',
+      'Building thermal decay rate',
+      'Ziegler-Nichols ultimate gain method',
       'Supply air static pressure setpoint',
-      'Outside air quantity',
-      'Exhaust fan speed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Static pressure reset reduces the duct pressure setpoint when VAV boxes are not fully open, reducing fan energy whilst maintaining airflow to zones that need it.',
   },
@@ -210,12 +230,12 @@ const quizQuestions = [
     id: 12,
     question: "What is 'anti-windup' in PID control?",
     options: [
-      'Protection against high wind speeds',
       'Limiting integral accumulation when output is saturated',
-      'Preventing motor overheating',
-      'Reducing derivative noise sensitivity',
+      'Widens the temperature deadband to reduce plant operation',
+      'Reducing reheat energy and improving chiller efficiency',
+      'To anticipate future error based on rate of change',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Anti-windup prevents the integral term from accumulating excessively when the controller output is at its limit (saturated), avoiding large overshoot when the constraint is removed.',
   },

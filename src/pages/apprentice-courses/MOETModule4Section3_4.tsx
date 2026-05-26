@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'single-phasing',
     question: 'What happens to a three-phase motor when one phase is lost (single-phasing)?',
     options: [
-      'The motor stops instantly with no damage',
       'The motor continues running but draws increased current on the remaining phases, causing overheating and potential winding damage',
-      'The motor reverses direction',
-      'The motor speeds up to compensate',
+      'Offensive, intimidating, malicious, or insulting behaviour, or an abuse of power, that undermines, humiliates, or causes physical or emotional harm to someone',
+      'Long-range, low-power wide-area networking for monitoring applications covering large areas such as remote sites, pipelines, and utilities',
+      'Sight, hearing (e.g. arcing/buzzing), smell (e.g. burning insulation), touch (carefully — for excessive temperature) — never taste',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A running three-phase motor that loses one phase will attempt to continue running as a single-phase motor, but it draws significantly increased current (up to 2-3 times normal) on the remaining two phases. This rapidly overheats the windings and will cause insulation failure if the overload protection does not disconnect the motor quickly enough.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'A motor is producing a grinding or rumbling noise that increases with speed. The most likely cause is:',
     options: [
-      'An electrical fault in the stator windings',
-      'Worn or damaged bearings',
-      'Incorrect supply voltage',
       'A broken rotor bar',
+      'Incorrect supply voltage',
+      'Worn or damaged bearings',
+      'An electrical fault in the stator windings',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Grinding, rumbling or growling noises that are speed-dependent are characteristic of bearing faults. As bearings wear, the rolling elements or races develop surface damage (pitting, spalling) that produces vibration and noise. Bearing noise increases with speed because the rolling elements are rotating faster over the damaged surfaces.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       "A variable speed drive (VSD) trips on 'overcurrent' during motor acceleration. The FIRST diagnostic step should be:",
     options: [
-      'Replace the drive with a larger rated unit',
       'Check the motor for mechanical binding, verify the acceleration ramp time is adequate, and check for cable or motor insulation faults',
-      'Increase the overcurrent trip setting',
-      'Bypass the drive and connect the motor direct-on-line',
+      'To provide protection against contact with live parts of adjacent functional units and to minimise the effects of arcing faults',
+      'Suitable and sufficient information, instruction, and training about the hazardous substances they work with',
+      'Rusting of steel surfaces, biological decomposition, displacement by other gases, combustion processes, and chemical reactions that consume oxygen',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'An overcurrent trip during acceleration has several possible causes: the motor is mechanically bound or overloaded (requiring high torque), the acceleration ramp time is too short (causing excessive current), or there is a cable or motor winding fault (earth fault or short circuit). Diagnose the cause before taking action — increasing the trip setting or using a larger drive may mask a serious underlying fault.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     id: 'insulation-class',
     question: "A motor's insulation class determines:",
     options: [
-      'The colour of the motor housing',
+      'The email server was offline and no backup alerts existed',
+      'That batteries can sustain illumination for the full 3-hour rated period',
       'The maximum operating temperature the winding insulation can withstand',
-      "The motor's starting torque",
-      'The minimum supply voltage',
+      'Make a clear, dated correction preserving the original entry and audit trail',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The insulation class (B, F, or H being the most common) defines the maximum temperature the winding insulation can tolerate continuously. Class B allows 130 degrees C, Class F allows 155 degrees C, and Class H allows 180 degrees C. Exceeding the insulation class temperature accelerates insulation degradation — for every 10 degrees C above the rated temperature, insulation life is approximately halved.',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The most common cause of electric motor failure is:',
     options: [
-      'Manufacturing defects',
+      '"The circuits were tested and found to be satisfactory."',
       'Bearing failure (mechanical) or insulation breakdown (electrical)',
-      'Incorrect motor selection',
-      'Power supply transients',
+      'Extraneous-conductive-parts to main earthing terminal',
+      'Recognising, understanding, and managing your own emotions and those of others',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,12 +85,12 @@ const quizQuestions = [
     question:
       'An insulation resistance test on a motor winding reads 0.3 MΩ at 500 V DC. This indicates:',
     options: [
-      'The motor is in excellent condition',
+      'Misalignment between the motor shaft and the driven equipment during reassembly',
+      'High-frequency voltage pulses from a VSD inducing current through the motor bearings',
       'The winding insulation has degraded below the minimum acceptable level and the motor should not be energised',
-      'The reading is normal for a motor of this age',
-      'The test was performed incorrectly',
+      'Insulation resistance decreases as temperature increases — the hot motor has lower insulation resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The minimum acceptable insulation resistance for a motor winding tested at 500 V DC is 1 MΩ (as per BS 7671 and IEEE 43 guidance). A reading of 0.3 MΩ indicates significantly degraded insulation that could lead to earth faults, short circuits or complete winding failure if energised. The motor requires investigation — possible causes include moisture ingress, contamination or thermal degradation.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 3,
     question: 'Phase current imbalance of more than 10% on a three-phase motor can indicate:',
     options: [
-      'Normal operating variation',
+      'The drive has detected current flowing to earth through the motor cable or motor windings',
+      'Motor current signature analysis (MCSA) or a growler test on the removed rotor',
+      'High-frequency voltage pulses from a VSD inducing current through the motor bearings',
       'A developing winding fault such as shorted turns, or a supply voltage imbalance',
-      'The motor is running at full load',
-      'The motor bearings need lubrication',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A phase current imbalance exceeding 10% is abnormal and suggests either a supply voltage imbalance (each 1% voltage imbalance causes approximately 6-10% current imbalance) or a developing winding fault such as shorted turns in one phase. Measuring both the supply voltages and motor currents on all three phases helps differentiate between supply and motor faults.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 4,
     question: "A VSD displays fault code 'earth fault' (EF). This means:",
     options: [
-      'The earth connection to the drive enclosure is loose',
       'The drive has detected current flowing to earth through the motor cable or motor windings',
-      'The supply earth is missing',
-      'The drive firmware needs updating',
+      'The winding insulation has degraded below the minimum acceptable level and the motor should not be energised',
+      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
+      'The motor acting as a generator during deceleration, pumping energy back into the drive DC bus',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "An earth fault code on a VSD means the drive's internal current sensors have detected an imbalance indicating current is flowing to earth. This is typically caused by insulation failure in the motor cable or motor windings, or moisture ingress into the motor terminal box. The cable and motor insulation resistance should be tested before re-energising.",
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Shaft current damage (fluting) in motor bearings is commonly caused by:',
     options: [
-      'Excessive mechanical load',
+      'Misalignment between the motor shaft and the driven equipment during reassembly',
       'High-frequency voltage pulses from a VSD inducing current through the motor bearings',
-      'Lack of lubrication',
-      'Misalignment of the motor shaft',
+      'The drive has detected current flowing to earth through the motor cable or motor windings',
+      'Normal behaviour — the high starting current (locked rotor current) is needed to develop starting torque',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,8 +137,13 @@ const quizQuestions = [
     id: 6,
     question:
       'A motor overload relay is set to 1.05 times the motor full load current (FLC). If the motor FLC is 20 A, the overload should trip if current exceeds:',
-    options: ['20 A', "21 A sustained over the relay's thermal time curve", '25 A', '30 A'],
-    correctAnswer: 1,
+    options: [
+      "Standard first fix electrical installation",
+      "Temporarily reducing non-essential loads during peak demand",
+      "21 A sustained over the relay's thermal time curve",
+      "Exactly where continuity is lost, indicating fault location",
+    ],
+    correctAnswer: 2,
     explanation:
       'The overload setting of 1.05 times 20 A = 21 A. The relay will trip when the current exceeds this value for a duration determined by its time-current characteristic curve. A momentary current spike (such as starting current) will not trip the relay because the thermal element takes time to heat up. The overload protects against sustained overcurrent that would overheat the motor windings.',
   },
@@ -147,12 +152,12 @@ const quizQuestions = [
     question:
       'A direct-on-line (DOL) started motor draws approximately 6-8 times its full load current during starting. This is:',
     options: [
-      'A fault condition requiring investigation',
+      'The drive has detected current flowing to earth through the motor cable or motor windings',
+      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
+      'Failure of one or more output transistors (IGBTs) within the drive, or a very low impedance fault on the output',
       'Normal behaviour — the high starting current (locked rotor current) is needed to develop starting torque',
-      'Caused by a winding fault',
-      'Due to low supply voltage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A three-phase induction motor typically draws 6-8 times its rated full load current during DOL starting. This locked rotor current (LRC) is a normal characteristic caused by the high slip at standstill — the rotor is stationary relative to the rotating magnetic field, inducing maximum current. The current drops to normal as the motor accelerates. This is why star-delta or soft starters are used for larger motors.',
   },
@@ -160,12 +165,12 @@ const quizQuestions = [
     id: 8,
     question: "A VSD 'overvoltage' fault during motor deceleration is typically caused by:",
     options: [
-      'The supply voltage being too high',
       'The motor acting as a generator during deceleration, pumping energy back into the drive DC bus',
-      'A short circuit in the motor cable',
-      'The drive being oversized for the motor',
+      'The winding insulation has degraded below the minimum acceptable level and the motor should not be energised',
+      'Insulation resistance decreases as temperature increases — the hot motor has lower insulation resistance',
+      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "During deceleration, the motor's inertia drives it faster than the rotating field, causing it to act as a generator. This regenerated energy flows back into the drive's DC bus, raising the voltage. If the deceleration is too rapid or the DC bus capacitors cannot absorb the energy, the bus voltage exceeds the overvoltage threshold and the drive trips. Solutions include longer deceleration ramps, braking resistors or regenerative drives.",
   },
@@ -174,10 +179,10 @@ const quizQuestions = [
     question:
       'Megger testing a motor winding immediately after shutdown shows 50 MΩ. The same motor tested cold shows 200 MΩ. This difference is because:',
     options: [
-      'The tester is faulty',
+      'Normal behaviour — the high starting current (locked rotor current) is needed to develop starting torque',
       'Insulation resistance decreases as temperature increases — the hot motor has lower insulation resistance',
-      'The motor has developed a fault between the two tests',
-      'The test leads were reversed',
+      'The winding insulation has degraded below the minimum acceptable level and the motor should not be energised',
+      'The drive has detected current flowing to earth through the motor cable or motor windings',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,12 +192,12 @@ const quizQuestions = [
     id: 10,
     question: 'A motor vibrates excessively after a bearing replacement. The most likely cause is:',
     options: [
-      'The new bearings are faulty',
+      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
+      'High-frequency voltage pulses from a VSD inducing current through the motor bearings',
       'Misalignment between the motor shaft and the driven equipment during reassembly',
-      'The motor needs to be rewound',
-      'The supply frequency has changed',
+      'The drive has detected current flowing to earth through the motor cable or motor windings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Misalignment is the most common cause of vibration after maintenance work. When bearings are replaced, the motor is disconnected from the driven load. If the motor and load are not correctly realigned during reassembly, angular or parallel misalignment causes vibration, premature bearing wear and coupling damage. Laser alignment tools provide the most accurate alignment.',
   },
@@ -200,12 +205,12 @@ const quizQuestions = [
     id: 11,
     question: "A VSD 'short circuit' or 'IGBT fault' typically indicates:",
     options: [
-      'The motor cable is too long',
+      'The winding insulation has degraded below the minimum acceptable level and the motor should not be energised',
+      'Motor current signature analysis (MCSA) or a growler test on the removed rotor',
+      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
       'Failure of one or more output transistors (IGBTs) within the drive, or a very low impedance fault on the output',
-      'The motor is too small for the application',
-      'The input supply fuses need replacing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An IGBT fault code indicates that the drive has detected a shoot-through or desaturation condition in its output power stage, suggesting an IGBT has failed short-circuit, or there is a very low impedance fault (short circuit) on the drive output. This requires investigation of both the drive output stage and the motor/cable insulation before re-energising.',
   },
@@ -213,12 +218,12 @@ const quizQuestions = [
     id: 12,
     question: 'To check for broken rotor bars in a squirrel-cage motor, you would use:',
     options: [
-      'An insulation resistance test',
       'Motor current signature analysis (MCSA) or a growler test on the removed rotor',
-      'A continuity test on the stator windings',
-      'A phase rotation meter',
+      'High-frequency voltage pulses from a VSD inducing current through the motor bearings',
+      'The drive has detected current flowing to earth through the motor cable or motor windings',
+      'A developing winding fault such as shorted turns, or a supply voltage imbalance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Broken rotor bars cannot be detected by standard stator winding tests. Motor current signature analysis (MCSA) measures the stator current spectrum while the motor is running — broken rotor bars produce characteristic sideband frequencies around the supply frequency. Alternatively, a growler or rotor bar test can be performed on a removed rotor. Symptoms include reduced torque, increased slip, vibration and elevated current.',
   },

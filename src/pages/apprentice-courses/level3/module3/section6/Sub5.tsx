@@ -15,20 +15,75 @@ const TITLE = 'Electric heating principles and applications | Level 3 Module 3.6
 const DESCRIPTION = 'Resistive (I²R), induction, dielectric and infra-red heating. Sizing immersion, panel, underfloor, storage heaters. The maths behind every electric heating job.';
 
 const checks = [
-  { id: 'l3-m3-6-5-immersion', question: 'A 3 kW immersion heater on 230 V draws what current?', options: ['7 A', '13 A', '23 A', '30 A'], correctIndex: 1, explanation: 'I = P/V = 3000/230 = 13.04 A. Standard immersion circuit, 16 A MCB, 2.5 mm² T&E.' },
-  { id: 'l3-m3-6-5-shower', question: 'A 9 kW shower on 230 V single-phase draws:', options: ['9 A', '20 A', '32 A', '39 A'], correctIndex: 3, explanation: 'I = 9000/230 = 39.1 A. Hence dedicated 6 mm² or 10 mm² circuit with 40 A MCB.' },
-  { id: 'l3-m3-6-5-time', question: 'How long to heat 100 L of water from 15 °C to 60 °C with a 3 kW immersion (assume 100% efficiency)?', options: ['10 min', '32 min', '105 min', '210 min'], correctIndex: 2, explanation: 'Energy = m × c × ΔT = 100 × 4186 × 45 = 18 837 000 J = 18.84 MJ = 5.23 kWh. Time = E/P = 5.23 / 3 = 1.74 h ≈ 105 min.' },
+  { id: 'l3-m3-6-5-immersion', question: 'A 3 kW immersion heater on 230 V draws what current?', options: [
+    '13 A',
+    '30 A',
+    '7 A',
+    '23 A',
+  ], correctIndex: 0, explanation: 'I = P/V = 3000/230 = 13.04 A. Standard immersion circuit, 16 A MCB, 2.5 mm² T&E.' },
+  { id: 'l3-m3-6-5-shower', question: 'A 9 kW shower on 230 V single-phase draws:', options: [
+    '20 A',
+    '9 A',
+    '32 A',
+    '39 A',
+  ], correctIndex: 3, explanation: 'I = 9000/230 = 39.1 A. Hence dedicated 6 mm² or 10 mm² circuit with 40 A MCB.' },
+  { id: 'l3-m3-6-5-time', question: 'How long to heat 100 L of water from 15 °C to 60 °C with a 3 kW immersion (assume 100% efficiency)?', options: [
+    '105 min',
+    '32 min',
+    '10 min',
+    '210 min',
+  ], correctIndex: 0, explanation: 'Energy = m × c × ΔT = 100 × 4186 × 45 = 18 837 000 J = 18.84 MJ = 5.23 kWh. Time = E/P = 5.23 / 3 = 1.74 h ≈ 105 min.' },
 ];
 
 const quizQuestions = [
-  { id: 1, question: 'Resistive heating efficiency:', options: ['~30%', '~70%', 'Effectively 100% (all energy → heat)', '~50%'], correctAnswer: 2, explanation: 'A heating element converts ALL the electrical energy into heat — that\'s the whole point. From a "useful output" point of view, efficiency is 100%.' },
-  { id: 2, question: 'Specific heat capacity of water (used to calculate water heating energy):', options: ['1000 J/kg·K', '2200 J/kg·K', '4186 J/kg·K', '10000 J/kg·K'], correctAnswer: 2, explanation: 'c_water = 4186 J/(kg·K). Used in E = m × c × ΔT for water heating calculations.' },
-  { id: 3, question: 'A storage heater stores energy as:', options: ['Battery charge', 'Heat in a high-density ceramic core overnight on Economy 7 tariff', 'Hot water', 'Compressed air'], correctAnswer: 1, explanation: 'Storage heater = bricks heated overnight on cheap Economy 7 electricity, releasing heat through the day. Output controlled by damper or fan.' },
-  { id: 4, question: 'Underfloor electric heating cable typical power density:', options: ['10-50 W/m²', '100-200 W/m²', '500 W/m²', '1000 W/m²'], correctAnswer: 1, explanation: '100-200 W/m² typical for residential UFH. Higher (200-300) for "boost" or bathrooms; lower (80-150) for primary heating.' },
-  { id: 5, question: 'A heat pump COP (Coefficient of Performance) of 3.5 means:', options: ['Wastes 3.5× the electricity', 'Outputs 3.5× more heat than the electrical input — net efficiency 350%', 'Costs 3.5× more', 'Has 3.5 components'], correctAnswer: 1, explanation: 'COP = heat output / electrical input. 3.5 means 1 kW electric → 3.5 kW heat, the extra coming from the air or ground source. Air-source typical 3.0-4.5 COP; ground-source higher.' },
-  { id: 6, question: 'Induction hob heating works by:', options: ['Direct contact with element', 'Electromagnetic induction creating eddy currents in ferromagnetic cookware', 'Infra-red radiation', 'Convection'], correctAnswer: 1, explanation: 'Induction hob: AC coil under glass creates alternating field; ferromagnetic pan develops eddy currents and resistive heating in itself. Pan IS the element. Glass stays cool. Highly efficient.' },
-  { id: 7, question: 'Building Regs Part L 2026: new homes can NOT be fitted with:', options: ['Solar PV', 'Direct-acting electric resistive heating as primary heat source (with limited exceptions)', 'Heat pumps', 'Storage heaters'], correctAnswer: 1, explanation: 'Future Homes Standard (2025+ Part L L1A): no fossil-fuel heating in new builds. Direct-acting electric resistive is generally not permitted as primary heat for energy reasons; heat pumps (or hybrid) required for primary heat.' },
-  { id: 8, question: 'Dielectric heating (microwave) works by:', options: ['Contact heating', 'High-frequency E-field rotating water dipoles in food, generating heat by molecular friction', 'Infra-red', 'Convection'], correctAnswer: 1, explanation: 'Microwave (2.45 GHz typically) excites water molecules in food — they rotate to follow the field, friction creates heat throughout the food, not just at the surface.' },
+  { id: 1, question: 'Resistive heating efficiency:', options: [
+    'Stop immediately and investigate the cause',
+    'Effectively 100% (all energy → heat)',
+    'Regulations, science, safety',
+    'Compensate for lead wire resistance',
+  ], correctAnswer: 1, explanation: 'A heating element converts ALL the electrical energy into heat — that\'s the whole point. From a "useful output" point of view, efficiency is 100%.' },
+  { id: 2, question: 'Specific heat capacity of water (used to calculate water heating energy):', options: [
+    '10000 J/kg·K',
+    '1000 J/kg·K',
+    '4186 J/kg·K',
+    '2200 J/kg·K',
+  ], correctAnswer: 2, explanation: 'c_water = 4186 J/(kg·K). Used in E = m × c × ΔT for water heating calculations.' },
+  { id: 3, question: 'A storage heater stores energy as:', options: [
+    'NICEIC, NAPIT, or equivalent electrical scheme',
+    'Fresh air from grilles can cause false low CO₂ readings',
+    'By providing rapid response to balance supply and demand',
+    'Heat in a high-density ceramic core overnight on Economy 7 tariff',
+  ], correctAnswer: 3, explanation: 'Storage heater = bricks heated overnight on cheap Economy 7 electricity, releasing heat through the day. Output controlled by damper or fan.' },
+  { id: 4, question: 'Underfloor electric heating cable typical power density:', options: [
+    '100-200 W/m²',
+    '10-50 W/m²',
+    '500 W/m²',
+    '1000 W/m²',
+  ], correctAnswer: 0, explanation: '100-200 W/m² typical for residential UFH. Higher (200-300) for "boost" or bathrooms; lower (80-150) for primary heating.' },
+  { id: 5, question: 'A heat pump COP (Coefficient of Performance) of 3.5 means:', options: [
+    'High electric field strength around conductors causing air ionization',
+    'Outputs 3.5× more heat than the electrical input — net efficiency 350%',
+    'To protect the motor from excessive current that could cause overheating',
+    'A single pulse of fixed duration regardless of how long the input is held',
+  ], correctAnswer: 1, explanation: 'COP = heat output / electrical input. 3.5 means 1 kW electric → 3.5 kW heat, the extra coming from the air or ground source. Air-source typical 3.0-4.5 COP; ground-source higher.' },
+  { id: 6, question: 'Induction hob heating works by:', options: [
+    'Areas with specific equipment and protection requirements',
+    'A Pilz PNOZmulti or Sick Flexi Classic programmed with graphical safety logic',
+    'Electromagnetic induction creating eddy currents in ferromagnetic cookware',
+    'Verifying correct phase sequence in three-phase supplies',
+  ], correctAnswer: 2, explanation: 'Induction hob: AC coil under glass creates alternating field; ferromagnetic pan develops eddy currents and resistive heating in itself. Pan IS the element. Glass stays cool. Highly efficient.' },
+  { id: 7, question: 'Building Regs Part L 2026: new homes can NOT be fitted with:', options: [
+    'A luminaire containing its own battery, lamp, control gear, and test facility',
+    'Creating technical drawings and designs using computer software',
+    'To protect against earth leakage current by monitoring imbalances between live and neutral',
+    'Direct-acting electric resistive heating as primary heat source (with limited exceptions)',
+  ], correctAnswer: 3, explanation: 'Future Homes Standard (2025+ Part L L1A): no fossil-fuel heating in new builds. Direct-acting electric resistive is generally not permitted as primary heat for energy reasons; heat pumps (or hybrid) required for primary heat.' },
+  { id: 8, question: 'Dielectric heating (microwave) works by:', options: [
+    'High-frequency E-field rotating water dipoles in food, generating heat by molecular friction',
+    'Report it immediately, stop work in that area, and ensure the guardrails are reinstated before work continues',
+    'Using the hierarchy of control: eliminate, substitute, engineer, administrate, PPE',
+    'Awareness of emergency lighting purpose, exit routes, and assembly points',
+  ], correctAnswer: 0, explanation: 'Microwave (2.45 GHz typically) excites water molecules in food — they rotate to follow the field, friction creates heat throughout the food, not just at the surface.' },
 ];
 
 const faqs = [

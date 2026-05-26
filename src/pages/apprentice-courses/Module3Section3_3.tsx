@@ -73,7 +73,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which instrument is used to measure voltage, current, and resistance?',
-    options: ['Continuity tester', 'Multimeter', 'RCD tester', 'Insulation resistance tester'],
+    options: [
+      'Continuity tester',
+      'Multimeter',
+      'RCD tester',
+      'Insulation resistance tester',
+    ],
     correctAnswer: 1,
     explanation:
       'Multimeters are versatile instruments capable of measuring voltage, current, and resistance, making them essential for general electrical testing.',
@@ -81,7 +86,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What voltage does an insulation resistance tester typically apply for testing?',
-    options: ['50 V DC', '230 V AC', '500 V DC', '12 V DC'],
+    options: [
+      '12 V DC',
+      '50 V DC',
+      '500 V DC',
+      '230 V AC',
+    ],
     correctAnswer: 2,
     explanation:
       'Insulation resistance testers typically apply 500V DC to test insulation quality, providing sufficient voltage to detect potential breakdown.',
@@ -98,20 +108,25 @@ const quizQuestions = [
     id: 4,
     question: 'Name one test you can perform with a continuity tester.',
     options: [
-      'Voltage measurement',
       'Earth continuity check',
+      'Voltage measurement',
       'RCD trip time',
       'Insulation resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Continuity testers are used for earth continuity checks, ring final circuit testing, and verifying bonding conductor integrity.',
   },
   {
     id: 5,
     question: 'Which tester should always be proved before and after use?',
-    options: ['Voltage indicator', 'Multimeter', 'RCD tester', 'Clamp meter'],
-    correctAnswer: 0,
+    options: [
+      'Multimeter',
+      'Voltage indicator',
+      'Clamp meter',
+      'RCD tester',
+    ],
+    correctAnswer: 1,
     explanation:
       'Voltage indicators must be proved on a known live source before and after testing to ensure they are working correctly.',
   },
@@ -119,12 +134,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the main purpose of an RCD tester?',
     options: [
-      'Measure resistance of conductors',
+      'Visual inspection and insulation resistance',
+      'Protocol choice and network capacity',
       'Measure trip time and trip current',
-      'Check cable length',
-      'Identify polarity',
+      'Temperature correction factor (Cmin 0.95)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'RCD testers measure both trip time and trip current to verify that RCDs operate within BS 7671 requirements for protection.',
   },
@@ -132,20 +147,25 @@ const quizQuestions = [
     id: 7,
     question: 'Why is regular calibration important for test equipment?',
     options: [
-      'To maintain warranty coverage',
+      'No, it only proves the mechanical trip mechanism',
+      'Multiples of fundamental frequency causing distortion',
+      'P = sqrt(3) x V_L x I_L x cos(phi)',
       'To ensure accuracy and compliance with standards',
-      'To increase resale value',
-      'To reduce testing time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regular calibration ensures test equipment provides accurate readings, maintaining compliance with testing standards and ensuring reliable results.',
   },
   {
     id: 8,
     question: 'Name one PPE item recommended when testing live circuits.',
-    options: ['Hard hat', 'Insulated gloves', 'High-vis vest', 'Steel toe boots'],
-    correctAnswer: 1,
+    options: [
+      'Insulated gloves',
+      'High-vis vest',
+      'Hard hat',
+      'Steel toe boots',
+    ],
+    correctAnswer: 0,
     explanation:
       'Insulated gloves provide essential protection against electric shock when testing live circuits, along with safety glasses and other appropriate PPE.',
   },

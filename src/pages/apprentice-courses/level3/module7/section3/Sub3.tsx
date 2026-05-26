@@ -39,10 +39,10 @@ const checks = [
     id: 'mod7-s3-sub3-day-rate',
     question: "What's a typical day rate for a self-employed UK electrician?",
     options: [
-      "£10/day.",
+      "Ask what they're comparing against — often cheap quotes exclude things your quote includes (testing, certification, branded materials, insured workmanship, scheme guarantee). Walk through your quotation explaining each element. If the gap remains large, the cheap quote is probably non-compliant — wish them well and let them go. Never undercut your true cost to win work.",
       "Varies hugely by region and work type. Domestic London / South East: £250-400/day. Domestic North/Midlands: £200-300/day. Commercial sub-contracted: £180-280/day. Specialist (CompEx, BAFE, rail PTS): £350-700+/day. Self-employed day rates need to cover all overheads — insurance, scheme membership, vehicle, holidays, sick pay, pension. Effective hourly equivalent typically 50-70% of headline day rate after overheads.",
-      "£10,000/day.",
-      "Always £100/day.",
+      "GN3 allows omission of origin PFC measurement for this combination — BS EN 61439-3 CU rated 16 kA, TN-C-S supply with distributor-declared PFC at 16 kA maximum. Take the distributor\\\\\\\\\\\\'s declared 16 kA as the design value, document on the EIC. For non-conforming installations or commercial / industrial work, direct measurement is required.",
+      "Misuse depletes the kit (so it\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s unavailable when needed); risks contamination (single-use items used multiple times); breaches infection control; may cause harm if used inappropriately (e.g. burn gel applied incorrectly). Restocking and proper use are both required by the 1981 Regs duty to provide ADEQUATE first aid.",
     ],
     correctIndex: 1,
     explanation:
@@ -53,10 +53,10 @@ const checks = [
     question:
       "What's the Late Payment of Commercial Debts (Interest) Act 1998 and how does it help?",
     options: [
-      "Doesn't exist.",
+      "Electricity at Work Regulations 1989 (EAWR), Statutory Instrument 1989/635. EAWR applies to ALL work activities involving electricity, in nearly all workplaces. It covers design, construction, operation and maintenance of electrical systems, and the competence of those carrying out the work. Reg 14 (live working) and Reg 16 (competence) are the two an apprentice meets first.",
       "UK statute giving businesses the right to charge statutory interest plus debt recovery costs on overdue commercial debts. Statutory interest rate: Bank of England base rate + 8% (so currently around 13-14%). Plus a flat fee per invoice (£40 for invoices under £1,000, £70 for £1,000-9,999, £100 for £10,000+). The right is automatic — you don't have to specify it in your contract — and applies to all UK commercial transactions.",
-      "Only for foreign trade.",
-      "Just a guideline.",
+      "Report internally; if the defect appears systemic (e.g. a brand of MCB failing prematurely across multiple installs), escalate to the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s technical lead who can report to the manufacturer / RAPEX (Rapid Alert System for Non-Food Products) / Office for Product Safety and Standards. Product withdrawals and safety alerts come out of these channels.",
+      "Combi drill with a 25 mm flat bit (or auger) — the joist is timber, not masonry. The combi spins fast and cuts cleanly through wood. SDS is rotary-hammer action designed for masonry; using it on timber wastes the tool's capability and the chuck doesn't take standard wood bits anyway. Right tool for the substrate.",
     ],
     correctIndex: 1,
     explanation:
@@ -67,12 +67,12 @@ const checks = [
     question:
       "What's 'retention money' on commercial work?",
     options: [
-      "A bonus.",
       "Retention is the percentage of contract value (typically 3-5%) that the main contractor (or client) holds back from payments until the end of the contract — released in two halves: 50% at practical completion, 50% after the defects liability period (typically 12 months). It's an industry-standard mechanism for the customer's protection against post-completion defects but it ties up significant cash for the sub-contractor.",
-      "Doesn't exist.",
-      "Only for retainer fees.",
+      "Continuity reads OPEN (∞ Ω) on the affected conductor; IR reads infinity (no leakage path); EFLI reads OPEN (the loop is broken). The load doesn't operate (no current path). Customer symptom: 'the socket / light / appliance has stopped working'. Causes: broken conductor (cut, snapped at termination), failed terminal screw (loosened to no contact), failed component (broken switch, blown fuse, failed contactor). The classic L1 / L2 'why isn't this working?' fault — straightforward to diagnose, usually a localised termination or component issue.",
+      "Part 4, Chapter 41, Section 411, sub-section 3, regulation 4. So it lives in Part 4 (protection for safety), Chapter 41 (protection against electric shock), Section 411 (protective measure: automatic disconnection of supply), sub-section 411.3 (additional protection), regulation 411.3.4 (RCD on luminaires in domestic premises). The numbering encodes the location.",
+      "Yes — HASAWA s.37 makes a director, manager, secretary or similar officer personally liable where a corporate offence is committed with their consent, connivance or attributable to their neglect. Knowing the ladder failed inspection and authorising its continued use is textbook s.37 territory. The Sentencing Council Definitive Guideline for Health and Safety Offences (2016) sets the personal sentence range; for high-culpability cases it includes custody.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Retention is a real cash flow issue for sub-contractors on commercial work. On a £100k contract with 5% retention, the sub-contractor sees £5k held back — £2,500 released at practical completion, £2,500 released 12 months later. Many sub-contractors lose retention money entirely if the main contractor goes insolvent before release. Some use retention bonds (insurance-backed) to release retention at completion; check the contract terms.",
   },
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: "What's a typical materials markup for an electrical firm?",
     options: [
-      "0%.",
+      "Header (your business name, address, VAT number if registered, contact details), customer details (name, address), invoice number (sequential), invoice date and payment due date, work description (line items: labour days/hours, materials line items, any extras), subtotal, VAT (if applicable, 20%), total, payment terms (e.g. 'Net 30'), payment methods (BACS details, cheque). Invoices over £250 must include a statement of how to complain (Consumer Rights Act 2015 for domestic).",
       "Most electrical firms apply 15-30% markup on materials — covers handling, ordering admin, storage, working capital tied up in stock, and the value-added service of selecting the right materials. Some firms quote materials at trade price + markup; others at retail price (which already builds in markup vs trade price). Always be transparent with customers about which model you're using; they understand markup as the standard model.",
-      "1000%.",
-      "Always exactly 50%.",
+      "Reg 14 prohibits live work UNLESS three conditions are all met: (a) it's unreasonable to do the work dead, (b) it's reasonable to do it live, AND (c) suitable precautions are in place. The standard mechanism for proving all three is a permit-to-work — a formal document that authorises the specific live activity, identifies the operatives, lists the precautions, and is signed by the issuing authority before work starts and again at completion.",
+      "An Approved Electrician has additional time-served experience (typically 2+ years post-AM2) plus an Inspection and Testing qualification (2391-52 or equivalent), and is recognised by JIB as competent to supervise others, sign off completed work, and lead a gang. The Approved grade carries a higher hourly rate (around £21-22/hr in 2024) and is the JIB grade typically required for site Foreman, Qualified Supervisor and Senior Electrician roles.",
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: "What's the difference between day-rate and fixed-price pricing?",
     options: [
-      "Same thing.",
+      "The diary is your detailed contemporaneous record of what you did, who you worked with, what materials you used, what variations came up, what unusual events occurred. The time sheet records the hours; the diary records the substance. The diary is your evidence in any later dispute (pay, customer, NVQ portfolio, employer review) and is the source from which NVQ portfolio entries are written up.",
+      "A JIB-graded employer is a firm that has signed up to the JIB Working Rule Agreement and undertakes to pay at least JIB minimum rates and follow JIB conditions (holiday, sick pay, pension, apprentice training rules). For an apprentice this matters because JIB-graded firms are bound to follow the JIB Apprentice Code of Practice — named mentor, structured training, Stage progression on evidence, paid college time.",
       "Day-rate: customer pays an agreed daily (or hourly) rate for time spent plus materials at agreed markup. Risk on time-overrun sits with the customer. Fixed-price: you quote a single all-in price for the defined scope. Risk on time-overrun sits with you. Customers typically prefer fixed-price (predictable budget); contractors typically prefer day-rate (no overrun risk). Practical compromise: fixed-price for well-defined scopes, day-rate for variable or fault-finding work.",
-      "Day-rate is illegal.",
-      "Fixed-price is illegal.",
+      "Phase 1 (Days 1-30): Foundation — self-assessment, identify target competency, establish baseline, begin daily reflection practice, and find an accountability partner. Phase 2 (Days 31-60): Practice — apply new skills in specific situations, gather feedback, adjust approach based on results. Phase 3 (Days 61-90): Integration — embed new behaviours into routine, measure progress against baseline, plan for ongoing development",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The pricing model decision shapes who carries the risk. Day-rate suits unpredictable work (fault-finding, EICR remedials, complex retrofit) where time can't be estimated accurately. Fixed-price suits well-defined scopes (consumer unit replacement, kitchen circuits, full rewire) where time is predictable. Many electricians use both — fixed for new install, day-rate for remedial / fault.",
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: "What payment terms should a small electrical firm use for commercial work?",
     options: [
-      "60 days.",
+      "Stop. Either fetch the hi-vis from the van, borrow a spare from the site office (most large sites keep loaners), or step off site until properly equipped. Working without required PPE is a breach of HASAWA s.7 (failure to co-operate with the employer's safety arrangements) AND a breach of CDM 2015 Reg 15 (worker's duties). It's also a fast way to get sent home by the principal contractor and recorded against the firm's safety performance.",
+      "A durable label complying with BS 951 stating \\\\\\\"Safety Electrical Connection — Do Not Remove\\\\\\\" shall be permanently fixed in a visible position at or near the point of connection of every earthing conductor to an earth electrode, every bonding conductor to extraneous-conductive-parts, and at the main earthing terminal where separated from the main switchgear.",
+      "The firm probably won't recover the cost of the additional work in dispute. Verbal variations are binding in principle but hard to prove in practice. Courts and ombudsmen weight written contractual evidence above verbal recollection. The labour, materials and time spent on the undocumented variation sit on the firm's profit margin. Multiplied across many small variations on many jobs it's a material drag on profitability and a leading cause of bad debt.",
       "Net 30 (payment within 30 days of invoice) is the standard UK commercial default — backed by the Late Payment of Commercial Debts Act. For domestic work, 7-14 days or 'on completion' is more common. Some sub-contracts on commercial work specify Net 60 or Net 90, which strains cash flow — push back on long terms during contract negotiation. Always state payment terms clearly on the invoice.",
-      "1 day.",
-      "10 years.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Net 30 is the default but sub-contractors often face longer terms imposed by main contractors. Negotiate at contract stage — once the contract is signed, the terms are fixed. For domestic customers, payment on completion (or part-payment progress) is standard and easier on cash flow than Net 30. Always send the invoice promptly after work completion; delays in invoicing cause delays in payment.",
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     id: 4,
     question: "What's a 'pay when paid' clause and is it enforceable?",
     options: [
-      "Always enforceable.",
       "A 'pay when paid' clause says the main contractor only pays the sub-contractor when the main contractor has been paid by the client. These clauses are largely UNENFORCEABLE in UK construction contracts under the Housing Grants, Construction and Regeneration Act 1996 ('the Construction Act'), except in cases of upstream insolvency. So most 'pay when paid' clauses you see in sub-contracts can be challenged.",
-      "Never enforceable.",
-      "Only Scottish.",
+      "The single shared online platform where all project information is stored, controlled and exchanged — drawings, models, schedules, RFIs, change orders, all under structured access control and revision management. Examples include Autodesk Construction Cloud, Procore, Asite, Aconex, Viewpoint For Projects.",
+      "Three things — battery life vs run time (a hard day on an SDS will drain a 5 Ah pack faster than you can charge spares), tool weight (cordless SDS with a 9 Ah pack on the back is noticeably heavier than a corded equivalent), and what supply is actually on site (no 110 V on site = corded 230 V is awkward, cordless wins). Most apprentices end up with a mixed loadout — cordless drill/driver + cordless impact for general work, corded SDS / grinder / recip on site supply for the heavy-duty jobs.",
+      "The customer makes the COMMERCIAL decision (cost / convenience trade-off). The firm makes the SAFETY / COMPLIANCE decision (which options satisfy BS 7671 + current standards). Apprentice presents options with trade-offs in plain English; customer chooses; firm executes the chosen option within the safety constraint. Customer cannot choose 'below BS 7671' — that's the firm's professional duty floor. The boundary: customer chooses between compliant options; firm refuses non-compliant requests.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Construction Act 1996 (and the Local Democracy Economic Development and Construction Act 2009 amendment) was specifically passed to outlaw 'pay when paid' arrangements that left sub-contractors unpaid when main contractors had cash flow problems. The Act covers most UK construction contracts. If your sub-contract has a 'pay when paid' clause, get legal advice before accepting the term — it may not be enforceable.",
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: "What's the typical structure of a self-employed electrician's invoice?",
     options: [
-      "Just a number.",
+      "To identify hazards, set out the controls, allocate responsibility, and provide a defensible record of the safe system of work. RAMS and risk assessments are statutory under MHSWR 1999 Reg 3. COSHH data sheets are statutory under COSHH 2002. Permits-to-work cover higher-risk activities. The fire muster and welfare info satisfy the Workplace (Health, Safety and Welfare) Regulations 1992. Together they convert legal duty into specific instructions.",
       "Header (your business name, address, VAT number if registered, contact details), customer details (name, address), invoice number (sequential), invoice date and payment due date, work description (line items: labour days/hours, materials line items, any extras), subtotal, VAT (if applicable, 20%), total, payment terms (e.g. 'Net 30'), payment methods (BACS details, cheque). Invoices over £250 must include a statement of how to complain (Consumer Rights Act 2015 for domestic).",
-      "Just a price.",
-      "Just an email.",
+      "Around year 10 or a defined number of full-equivalent cycles (often 6,000-10,000 cycles), whichever comes first. The threshold is usually 70-80% of nameplate usable capacity. A 10 kWh battery delivering around 7 kWh after a decade is at typical end-of-warranty capacity; whether the customer replaces depends on the economics of remaining capacity vs replacement cost.",
+      "Typically £1,200-1,800 for the course, exam fees and practical assessment combined. Premium providers (SECTT in Scotland, JIB-approved providers, NICEIC training arm) sometimes charge £2,000+. Lower-cost providers around £900-1,200 with smaller class sizes or basic practical facilities. Always check exam and assessment fees are included in the headline price.",
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     id: 6,
     question: "What's a 'pro forma' invoice?",
     options: [
-      "Same as a normal invoice.",
+      "That the service is performed with 'reasonable care and skill'. This is a statutory implied term that can't be excluded by your terms and conditions. If the work falls below the standard a competent electrician would deliver, the customer has a right to repeat performance or a price reduction under s.55 and s.56.",
+      "Comparison sites are useful for pricing benchmarks but specialist trade brokers (NICEIC Insurance, NAPIT Insurance, ECA Insure, Hiscox, Tradesman Saver) typically offer better-fitting policies because they understand electrical-trade risks. Comparison sites can miss nuances (property-in-care exclusion, defective workmanship, scheme requirements). Use comparison sites to set a benchmark; talk to a trade-specialist broker for the actual purchase.",
       "A pro forma is a quote-style document that looks like an invoice but doesn't trigger a tax point — typically used for upfront payment requests before work begins (e.g. materials deposit). Once the customer pays the pro forma, you issue the actual VAT invoice. Useful for cash-flow management on jobs where you need materials money upfront. Doesn't count toward turnover until converted to a real invoice.",
-      "Just for foreign trade.",
-      "Only for materials.",
+      "Consent, contract, legal obligation, vital interests, public task, legitimate interests. For most trade work the relevant bases are: contract (we need this data to deliver the work) and legitimate interests (we hold the customer's details to honour warranty and respond to follow-up).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Pro forma is the standard mechanism for requesting upfront payment without triggering VAT and accounting treatment too early. Common on jobs with significant materials cost — you ask for 50% upfront via pro forma, customer pays, you order materials, then issue real VAT invoice on completion. Manages cash flow on materials-heavy jobs.",
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     id: 7,
     question: "How long must you keep invoices and receipts for HMRC?",
     options: [
-      "1 year.",
+      "PASMA (Prefabricated Access Suppliers' and Manufacturers' Association) is the recognised training standard for assembling, dismantling and using mobile tower scaffolds. It's not a statutory licence in the way IPAF is for MEWPs, but PUWER 1998 Reg 9 requires anyone using or assembling work equipment to be adequately trained, and on construction sites the principal contractor's site rules typically require PASMA card-holders for tower assembly.",
+      "Operation of mechanical interlocks (e.g. door interlock prevents opening while energised, key interlock prevents racking out a circuit-breaker without permit), confirmation that emergency-off devices break the supply, manual operation of the main switch under load (where safe), and that any control circuit logic (contactors, relays, time delays) operates as designed.",
+      "Management of Health and Safety at Work Regulations 1999, Reg 3 — every employer (and every self-employed person) must make a 'suitable and sufficient' assessment of the risks to the health and safety of employees and of anyone else affected by their undertaking. Where there are five or more employees the significant findings must be recorded.",
       "Sole trader: 5 years from the 31 January Self Assessment deadline for that tax year — so effectively 5 years and 10 months from the end of the tax year. Ltd company: 6 years from the end of the company's accounting period. VAT registered: 6 years for VAT records. Practical advice: keep all records 7+ years. Cloud accounting (Xero, QuickBooks, FreeAgent) makes this easier — records stored indefinitely.",
-      "Forever.",
-      "1 month.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Record retention is a legal requirement, not optional. HMRC can investigate up to 6 years back as standard, longer in cases of suspected fraud. Cloud accounting platforms make record-keeping easier — every invoice, receipt and bank transaction stored automatically with audit trail. Plan systems for retention from day one; trying to reconstruct records during an HMRC enquiry is hugely painful.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     id: 8,
     question: "What's the benefit of using cloud accounting software (Xero, QuickBooks, FreeAgent)?",
     options: [
-      "Just marketing.",
       "Automated bank feed (transactions imported from your bank), invoice generation and tracking (sent invoices visible, paid status tracked), VAT return preparation (Making Tax Digital compliant), expense tracking with photo receipts, integration with payroll for staff/apprentices, real-time profit and loss view. Cost £15-30/month for sole trader; saves hours of manual bookkeeping each month.",
-      "Cheaper than paper.",
-      "Only for big firms.",
+      "Completion of the relevant year's college units (typically C&G 2365-03 Year 2 / NVQ Level 3 progress), portfolio entries signed by the workplace mentor, and your employer's formal approval through the JIB grading update. Stage progression is evidence-based, not time-based — you can't just 'wait' for the next Stage; you have to demonstrate you've earned it.",
+      "Electricity at Work Regulations 1989 (EAWR), Statutory Instrument 1989/635. EAWR applies to ALL work activities involving electricity, in nearly all workplaces. It covers design, construction, operation and maintenance of electrical systems, and the competence of those carrying out the work. Reg 14 (live working) and Reg 16 (competence) are the two an apprentice meets first.",
+      "All Waste Electrical and Electronic Equipment — distribution boards, consumer units, switchgear, control panels, lighting equipment (luminaires, drivers, lamps), small power equipment, cables containing electronic components. Producer take-back obligations on manufacturers/importers; user obligations on segregation, transfer to authorised treatment facilities (AATF) and consignment.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Cloud accounting is now the standard for any business above hobby scale — Making Tax Digital (MTD) requires digital VAT records and quarterly VAT returns done through MTD-compatible software. Xero and QuickBooks dominate the UK small-business market; FreeAgent is bundled free with NatWest, RBS and Mettle business banking. The £15-30/month cost is trivial compared to the time saved.",
   },

@@ -32,12 +32,12 @@ const quickCheckQuestions = [
     question:
       'What is the main advantage of a horizontal axis wind turbine (HAWT) over a vertical axis wind turbine (VAWT)?',
     options: [
-      'Lower installation costs',
       'Higher energy capture efficiency',
-      'No yaw mechanism required',
       'Better performance in turbulent wind',
+      'Lower installation costs',
+      'No yaw mechanism required',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'HAWTs typically achieve higher energy capture efficiency (Cp values of 0.35-0.45) compared to VAWTs (0.25-0.35) because they can better optimise blade angle relative to wind direction and operate at higher tip-speed ratios.',
   },
@@ -45,12 +45,12 @@ const quickCheckQuestions = [
     id: 'wind-assessment',
     question: 'Why is the Weibull distribution used in wind resource assessment?',
     options: [
-      'It calculates turbine efficiency',
-      'It predicts maintenance intervals',
       'It accurately models the statistical distribution of wind speeds',
-      'It determines planning permission requirements',
+      'Evacuation time allowance for larger buildings',
+      'A transient current spike may occur during changeover',
+      'Have technical knowledge and experience to prevent danger and recognise risk',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The Weibull distribution accurately models the probability distribution of wind speeds at a site, using shape (k) and scale (c) parameters. This enables calculation of annual energy yield by combining the wind speed distribution with the turbine power curve.',
   },
@@ -59,12 +59,12 @@ const quickCheckQuestions = [
     question:
       'Why are building-mounted wind turbines generally less effective than freestanding installations?',
     options: [
-      'They are more expensive to install',
       'Building interference creates turbulent, low-velocity airflow',
-      'Planning permission is harder to obtain',
-      'Grid connection is more complex',
+      'They must be CAT III or CAT IV rated with finger guards',
+      'Circuit protective conductor (CPC) resistance',
+      'By wearing high-visibility vests or armbands, often in a distinct colour',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Buildings create significant turbulence and reduce wind speed in their vicinity. The building effect zone extends to approximately 2-3 times building height. Turbulent flow reduces energy capture and increases mechanical stress on the turbine.',
   },
@@ -72,8 +72,13 @@ const quickCheckQuestions = [
     id: 'grid-connection',
     question:
       'For a small wind turbine connecting to the UK grid, what is the maximum single-phase inverter capacity typically permitted without DNO application?',
-    options: ['1.6 kW', '3.68 kW', '6 kW', '10 kW'],
-    correctIndex: 1,
+    options: [
+      '3.68 kW',
+      '1.6 kW',
+      '6 kW',
+      '10 kW',
+    ],
+    correctIndex: 0,
     explanation:
       'Under G98 (formerly G83), single-phase inverters up to 3.68 kW can be connected using the notification process without requiring a formal DNO application. Above this threshold, or for three-phase systems above 11.04 kW, G99 application is required.',
   },
@@ -85,11 +90,11 @@ const quizQuestions = [
     question: 'The power available in wind is proportional to:',
     options: [
       'Wind speed',
-      'Wind speed squared',
       'Wind speed cubed',
+      'Wind speed squared',
       'Wind speed to the fourth power',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Wind power is proportional to the cube of wind speed (P = ½ρAV³). This means doubling wind speed increases available power by a factor of eight, making site selection critical.',
   },
@@ -97,7 +102,12 @@ const quizQuestions = [
     id: 2,
     question:
       'The Betz limit states that the maximum theoretical efficiency of a wind turbine is approximately:',
-    options: ['42%', '50%', '59%', '75%'],
+    options: [
+      '75%',
+      '42%',
+      '59%',
+      '50%',
+    ],
     correctAnswer: 2,
     explanation:
       'The Betz limit (59.3% or 16/27) is the theoretical maximum proportion of wind energy that can be extracted by a turbine. Practical turbines achieve 35-45% due to aerodynamic losses, generator efficiency, and tip losses.',
@@ -106,8 +116,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A site has an average wind speed of 5 m/s. If an alternative site has 6 m/s average, approximately how much more energy would the same turbine produce?',
-    options: ['20% more', '44% more', '73% more', '100% more'],
-    correctAnswer: 2,
+    options: [
+      '44% more',
+      '20% more',
+      '100% more',
+      '73% more',
+    ],
+    correctAnswer: 3,
     explanation:
       'Energy is proportional to velocity cubed: (6/5)³ = 1.728, representing 72.8% more energy. This demonstrates why even small increases in average wind speed significantly impact annual yield.',
   },
@@ -115,19 +130,24 @@ const quizQuestions = [
     id: 4,
     question: 'In a Weibull distribution with shape parameter k = 2, the distribution is known as:',
     options: [
-      'Normal distribution',
       'Rayleigh distribution',
+      'Normal distribution',
       'Exponential distribution',
       'Uniform distribution',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When k = 2, the Weibull distribution becomes the Rayleigh distribution, which is commonly used for wind speed analysis. Most UK sites have k values between 1.8 and 2.5.',
   },
   {
     id: 5,
     question: 'The capacity factor of a small wind turbine is typically:',
-    options: ['5-15%', '15-30%', '35-45%', '50-60%'],
+    options: [
+      '5-15%',
+      '15-30%',
+      '50-60%',
+      '35-45%',
+    ],
     correctAnswer: 1,
     explanation:
       'Small wind turbines typically achieve capacity factors of 15-30% in the UK, compared to 25-45% for large utility-scale turbines. This reflects lower hub heights, more turbulent wind regimes, and less optimal siting.',
@@ -136,8 +156,13 @@ const quizQuestions = [
     id: 6,
     question:
       'What minimum hub height above nearby obstructions is generally recommended for small wind turbines?',
-    options: ['5 metres', '10 metres', '15 metres', '20 metres'],
-    correctAnswer: 1,
+    options: [
+      '5 metres',
+      '15 metres',
+      '10 metres',
+      '20 metres',
+    ],
+    correctAnswer: 2,
     explanation:
       'A minimum of 10 metres clearance above obstructions within a 150m radius is recommended to avoid turbulent wake effects. Higher installations capture stronger, more consistent wind.',
   },
@@ -145,8 +170,13 @@ const quizQuestions = [
     id: 7,
     question:
       'Under UK permitted development rights, a standalone domestic wind turbine must not exceed what hub height?',
-    options: ['9 metres', '11.1 metres', '15 metres', '20 metres'],
-    correctAnswer: 1,
+    options: [
+      '9 metres',
+      '20 metres',
+      '15 metres',
+      '11.1 metres',
+    ],
+    correctAnswer: 3,
     explanation:
       'Permitted development rights in England allow standalone turbines with hub height not exceeding 11.1 metres and overall height not exceeding 11.1 metres plus half the rotor diameter, subject to other conditions.',
   },
@@ -154,12 +184,12 @@ const quizQuestions = [
     id: 8,
     question: 'Wind shear describes:',
     options: [
-      'The force exerted on turbine blades',
       'The increase in wind speed with height above ground',
       'The effect of buildings on wind direction',
+      'The force exerted on turbine blades',
       'The variation in wind speed throughout the day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Wind shear is the increase in wind speed with height, typically modelled using the power law: V₂/V₁ = (h₂/h₁)^α where α is the shear exponent (typically 0.14-0.25 depending on terrain roughness).',
   },
@@ -167,8 +197,13 @@ const quizQuestions = [
     id: 9,
     question:
       'A 5 kW turbine at a site with capacity factor 0.22 would generate approximately how much energy annually?',
-    options: ['4,380 kWh', '8,760 kWh', '9,636 kWh', '43,800 kWh'],
-    correctAnswer: 2,
+    options: [
+      '4,380 kWh',
+      '9,636 kWh',
+      '8,760 kWh',
+      '43,800 kWh',
+    ],
+    correctAnswer: 1,
     explanation:
       'Annual energy = Rated power × Hours in year × Capacity factor = 5 kW × 8,760 hours × 0.22 = 9,636 kWh. This represents the actual expected output compared to theoretical maximum.',
   },
@@ -176,7 +211,12 @@ const quizQuestions = [
     id: 10,
     question:
       'Which noise level at the nearest dwelling typically triggers a planning concern for small wind turbines?',
-    options: ['25 dB(A)', '35 dB(A)', '45 dB(A)', '55 dB(A)'],
+    options: [
+      '25 dB(A)',
+      '35 dB(A)',
+      '45 dB(A)',
+      '55 dB(A)',
+    ],
     correctAnswer: 2,
     explanation:
       'ETSU-R-97 guidelines typically limit turbine noise to 35-40 dB(A) at dwellings during daytime or 5 dB above background, whichever is greater. Night-time limits are often 43 dB(A) or background + 5 dB.',
@@ -185,8 +225,13 @@ const quizQuestions = [
     id: 11,
     question:
       'For grid-connected small wind systems, the inverter must comply with which current UK standard?',
-    options: ['BS 7671', 'G98/G99 (Engineering Recommendations)', 'MCS 006', 'IEC 61400'],
-    correctAnswer: 1,
+    options: [
+      'Sharp bends and potential damage points',
+      'Polarity test at outlets/switches',
+      'Decreases UGR (better glare control)',
+      'G98/G99 (Engineering Recommendations)',
+    ],
+    correctAnswer: 3,
     explanation:
       'G98 (for systems ≤16A per phase) and G99 (larger systems) are the Engineering Recommendations governing connection of generation equipment to UK distribution networks, specifying protection, power quality, and disconnection requirements.',
   },
@@ -194,12 +239,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the primary structural concern for building-mounted wind turbines?',
     options: [
-      'Roof waterproofing',
       'Dynamic loading and resonance with building structure',
-      'Aesthetic impact',
-      'Electrical cable routing',
+      'At regular intervals as specified in regulations',
+      'HMRC refunds the £5,000 overpayment after filing the tax return',
+      'Cracked insulation, damaged probes, or intermittent readings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Dynamic loads from turbine operation (vibration, cyclic loading) can cause resonance with building structures, potentially causing structural damage. Structural engineering assessment is essential for building-mounted installations.',
   },

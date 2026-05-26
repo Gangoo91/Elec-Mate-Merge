@@ -39,23 +39,38 @@ const quickCheckQuestions = [
   {
     id: 'dali-addresses',
     question: 'How many individual addresses can be assigned on a single DALI bus?',
-    options: ['32 addresses', '48 addresses', '64 addresses', '128 addresses'],
-    correctIndex: 2,
+    options: [
+      '64 addresses',
+      '32 addresses',
+      '48 addresses',
+      '128 addresses',
+    ],
+    correctIndex: 0,
     explanation:
       'A single DALI bus supports up to 64 individually addressable devices (addresses 0-63). This allows independent control of up to 64 luminaires or control gear units on one bus segment.',
   },
   {
     id: 'dali-groups',
     question: 'How many groups can luminaires be assigned to on a DALI system?',
-    options: ['8 groups', '16 groups', '32 groups', '64 groups'],
-    correctIndex: 1,
+    options: [
+      '16 groups',
+      '64 groups',
+      '8 groups',
+      '32 groups',
+    ],
+    correctIndex: 0,
     explanation:
       'DALI supports 16 groups (numbered 0-15). Each luminaire can belong to multiple groups simultaneously, allowing flexible control scenarios such as zone control, task lighting, and daylight-linked groups.',
   },
   {
     id: 'dali-voltage',
     question: 'What is the nominal voltage level on a DALI bus?',
-    options: ['5V DC', '12V DC', '16V DC (9.5V-22.5V range)', '24V DC'],
+    options: [
+      'Overheating and fire risk',
+      '1.35 metres (approximately)',
+      '16V DC (9.5V-22.5V range)',
+      'Local exhaust ventilation',
+    ],
     correctIndex: 2,
     explanation:
       'The DALI bus operates at a nominal 16V DC with an acceptable range of 9.5V to 22.5V. This voltage is supplied by the DALI power supply unit (PSU) which also provides the bus communication power.',
@@ -66,7 +81,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which international standard defines the DALI protocol?',
-    options: ['IEC 61000', 'IEC 62386', 'IEC 60364', 'IEC 61439'],
+    options: [
+      'IEC 61000',
+      'IEC 62386',
+      'IEC 60364',
+      'IEC 61439',
+    ],
     correctAnswer: 1,
     explanation:
       'IEC 62386 is the international standard that defines the DALI protocol. It covers control gear, control devices, and application controllers, ensuring interoperability between manufacturers.',
@@ -74,7 +94,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the maximum cable length for a DALI bus?',
-    options: ['100 metres', '200 metres', '300 metres', '500 metres'],
+    options: [
+      '500 metres',
+      '100 metres',
+      '300 metres',
+      '200 metres',
+    ],
     correctAnswer: 2,
     explanation:
       'The maximum DALI bus length is 300 metres. This limit ensures reliable communication and accounts for voltage drop. For longer distances, DALI bridges or routers must be used.',
@@ -82,16 +107,26 @@ const quizQuestions = [
   {
     id: 3,
     question: 'How many scenes can be stored in each DALI control gear device?',
-    options: ['4 scenes', '8 scenes', '16 scenes', '32 scenes'],
-    correctAnswer: 2,
+    options: [
+      '8 scenes',
+      '4 scenes',
+      '32 scenes',
+      '16 scenes',
+    ],
+    correctAnswer: 3,
     explanation:
       'Each DALI control gear can store 16 scenes (numbered 0-15). Scenes store predefined lighting levels that can be recalled instantly, enabling rapid switching between lighting configurations.',
   },
   {
     id: 4,
     question: 'What is the maximum current allowed on a DALI bus?',
-    options: ['100mA', '250mA', '500mA', '1A'],
-    correctAnswer: 1,
+    options: [
+      '250mA',
+      '100mA',
+      '500mA',
+      '1A',
+    ],
+    correctAnswer: 0,
     explanation:
       'The maximum current on a DALI bus is 250mA. This current is shared between all devices on the bus. Typical DALI drivers draw 2mA standby current, allowing approximately 64 devices per bus.',
   },
@@ -99,10 +134,10 @@ const quizQuestions = [
     id: 5,
     question: 'In DALI-2, what is the purpose of device type 8 (DT8)?',
     options: [
-      'Emergency lighting control',
+      'Store in dry, secure conditions',
       'Colour temperature and RGB control',
-      'Motion sensor integration',
-      'Energy metering',
+      'Building Management System',
+      'Gather information and symptoms',
     ],
     correctAnswer: 1,
     explanation:
@@ -112,12 +147,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the function of a DALI gateway?',
     options: [
-      'To power the DALI bus only',
+      'To set the time for luminaires to transition between light levels',
+      'Sending commands to all devices on the bus simultaneously',
       'To interface DALI with other protocols like BACnet, KNX, or Modbus',
-      'To increase the number of addresses beyond 64',
-      'To provide emergency lighting backup',
+      'Standard 1.5mm² mains cable or dedicated 5-core DALI cable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A DALI gateway provides protocol translation between DALI and building management systems using protocols such as BACnet, KNX, Modbus, or Ethernet. This enables integration with wider building automation.',
   },
@@ -125,20 +160,25 @@ const quizQuestions = [
     id: 7,
     question: 'What cable type is typically used for DALI wiring?',
     options: [
-      'Cat 6 data cable only',
-      'Screened twisted pair only',
+      'Sending commands to all devices on the bus simultaneously',
+      'Standardised control devices (sensors, switches) and push button input',
+      'To interface DALI with other protocols like BACnet, KNX, or Modbus',
       'Standard 1.5mm² mains cable or dedicated 5-core DALI cable',
-      'Fibre optic cable',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'DALI can use standard mains-rated cable (1.5mm²) as it operates at SELV voltages. Dedicated 5-core cable provides L, N, E plus two DALI control cores. Polarity of DALI cores is not critical.',
   },
   {
     id: 8,
     question: 'What is the data transmission rate of DALI?',
-    options: ['100 bits/second', '1,200 bits/second', '9,600 bits/second', '115,200 bits/second'],
-    correctAnswer: 1,
+    options: [
+      '1,200 bits/second',
+      '9,600 bits/second',
+      '100 bits/second',
+      '115,200 bits/second',
+    ],
+    correctAnswer: 0,
     explanation:
       'DALI operates at 1,200 bits/second. While this is slow compared to other protocols, it is sufficient for lighting control and provides excellent noise immunity and reliability.',
   },
@@ -146,12 +186,12 @@ const quizQuestions = [
     id: 9,
     question: 'What advantage does DALI-2 offer over DALI-1?',
     options: [
-      'Higher data transmission speed',
-      'More addresses per bus',
+      'Sending commands to all devices on the bus simultaneously',
       'Standardised control devices (sensors, switches) and push button input',
-      'Longer maximum cable length',
+      'To interface DALI with other protocols like BACnet, KNX, or Modbus',
+      'To assign unique short addresses (0-63) to each control gear',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'DALI-2 standardises control devices (input devices) such as sensors and switches, plus introduces push button input device types. DALI-1 only standardised control gear (drivers/ballasts).',
   },
@@ -160,11 +200,11 @@ const quizQuestions = [
     question: 'During commissioning, what is the purpose of DALI addressing?',
     options: [
       'To set the physical location of luminaires',
+      'To set emergency lighting duration',
       'To assign unique short addresses (0-63) to each control gear',
       'To configure the mains supply connection',
-      'To set emergency lighting duration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'DALI addressing assigns unique short addresses (0-63) to each control gear device on the bus. This enables individual control and monitoring of each luminaire in the system.',
   },
@@ -173,11 +213,11 @@ const quizQuestions = [
     question: 'What is broadcast mode in DALI?',
     options: [
       'A fault condition where all lights turn on',
-      'Sending commands to all devices on the bus simultaneously',
-      'A wireless extension of the DALI protocol',
       'A method of addressing more than 64 devices',
+      'A wireless extension of the DALI protocol',
+      'Sending commands to all devices on the bus simultaneously',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Broadcast mode sends commands to all devices on the DALI bus simultaneously without addressing individual units. It is useful for all-on, all-off, or system-wide dimming commands.',
   },
@@ -185,12 +225,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the purpose of fade time in DALI?',
     options: [
-      'To delay command transmission',
       'To set the time for luminaires to transition between light levels',
-      'To allow emergency battery charging',
-      'To synchronise multiple DALI buses',
+      'To interface DALI with other protocols like BACnet, KNX, or Modbus',
+      'Sending commands to all devices on the bus simultaneously',
+      'To assign unique short addresses (0-63) to each control gear',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fade time sets the duration for luminaires to smoothly transition between light levels. DALI supports fade times from 0 (instant) to 90.5 seconds, enabling smooth dimming effects and comfortable visual transitions.',
   },

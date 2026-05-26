@@ -33,8 +33,13 @@ const quickCheckQuestions = [
     id: 'balanced-neutral',
     question:
       'In a perfectly balanced star-connected three-phase system, what is the neutral current?',
-    options: ['Equal to line current', '√3 times line current', 'Zero', 'Half the line current'],
-    correctIndex: 2,
+    options: [
+      'Half the line current',
+      'Equal to line current',
+      '√3 times line current',
+      'Zero',
+    ],
+    correctIndex: 3,
     explanation:
       'In a balanced star system, the three phase currents are equal in magnitude but displaced by 120°. They sum vectorially to zero, meaning no current flows in the neutral conductor.',
   },
@@ -42,8 +47,13 @@ const quickCheckQuestions = [
     id: 'phase-angle',
     question:
       'What is the phase angle separation between currents in a balanced three-phase system?',
-    options: ['90°', '120°', '180°', '60°'],
-    correctIndex: 1,
+    options: [
+      '90°',
+      '180°',
+      '120°',
+      '60°',
+    ],
+    correctIndex: 2,
     explanation:
       'In a balanced three-phase system, each phase is separated by 120° (360° ÷ 3 phases = 120°). This equal angular displacement is what causes the currents to cancel in the neutral.',
   },
@@ -51,12 +61,12 @@ const quickCheckQuestions = [
     id: 'unbalance-effect',
     question: 'What is the primary effect of significant load unbalance on a three-phase system?',
     options: [
-      'Reduced power factor',
-      'Increased line voltage',
       'Neutral current flow and voltage asymmetry',
-      'Lower frequency',
+      'Corrosion, loose connections, damage',
+      '0.68Ω (Zs = 0.95 × 230 / 320 = 0.683Ω)',
+      'Ignoring, pretending, selective, attentive, empathic',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Load unbalance causes the phase currents to no longer cancel in the neutral, resulting in neutral current flow. This also creates voltage asymmetry between phases.',
   },
@@ -65,12 +75,12 @@ const quickCheckQuestions = [
     question:
       'In commercial buildings with predominantly single-phase non-linear loads, how should the neutral be sized?',
     options: [
-      'Half the phase conductor size',
-      'Equal to phase conductor size',
+      'Accurate measurement of low resistances',
       'Up to double the phase conductor size',
-      'Neutral not required',
+      'Guaranteed available power',
+      'Protected Extra Low Voltage',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Non-linear loads (computers, LED drivers) generate triplen harmonics (3rd, 9th, 15th) that add in the neutral rather than cancel. The neutral may need to be oversized, potentially up to 200% of phase size.',
   },
@@ -94,8 +104,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A star-connected load has phase currents of IR = 20A, IY = 20A, and IB = 20A, each at their respective phase angles. What is the neutral current?',
-    options: ['60A', '34.6A', '20A', '0A'],
-    correctAnswer: 3,
+    options: [
+      '20A',
+      '60A',
+      '0A',
+      '34.6A',
+    ],
+    correctAnswer: 2,
     explanation:
       'With equal currents at 120° phase separation, the phasor sum is zero. IR + IY + IB = 0 when balanced. This is the fundamental principle of balanced three-phase systems.',
   },
@@ -103,7 +118,12 @@ const quizQuestions = [
     id: 3,
     question:
       'In a star-connected system, if only the red phase carries 30A while yellow and blue carry 0A, what is the neutral current?',
-    options: ['0A', '10A', '17.3A', '30A'],
+    options: [
+      '17.3A',
+      '0A',
+      '10A',
+      '30A',
+    ],
     correctAnswer: 3,
     explanation:
       'With only one phase loaded, the neutral must carry the full return current. IN = IR = 30A. This is the worst-case unbalance scenario.',
@@ -112,19 +132,24 @@ const quizQuestions = [
     id: 4,
     question: 'What is voltage unbalance typically expressed as?',
     options: [
-      'The difference between highest and lowest phase voltages',
       'The ratio of negative sequence to positive sequence voltage, as a percentage',
-      'The sum of all three phase voltages',
-      'The neutral-to-earth voltage',
+      'Changes to layout, occupancy, or use may affect emergency lighting requirements',
+      'Approximately 0.3 decades (30% of a decade) of horizontal separation',
+      'Minimum separation to detect two adjacent reflective events',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Voltage Unbalance Factor (VUF) = (V- / V+) × 100%, where V- is negative sequence and V+ is positive sequence voltage. This is the IEC standard definition.',
   },
   {
     id: 5,
     question: 'What is the maximum recommended voltage unbalance for most equipment?',
-    options: ['1%', '2%', '5%', '10%'],
+    options: [
+      '1%',
+      '2%',
+      '10%',
+      '5%',
+    ],
     correctAnswer: 1,
     explanation:
       'IEC and BS EN standards recommend keeping voltage unbalance below 2%. Above this, motors experience increased heating, vibration, and reduced efficiency.',
@@ -134,12 +159,12 @@ const quizQuestions = [
     question:
       'A distribution board has: Red = 8kW, Yellow = 6kW, Blue = 10kW single-phase loads at unity power factor. What is the current unbalance?',
     options: [
+      'Commissioning certificate or witness record',
+      'Continuity test along the conductor length',
       'Red: 34.8A, Yellow: 26.1A, Blue: 43.5A',
-      'All phases: 34.8A',
-      'Red: 8A, Yellow: 6A, Blue: 10A',
-      'Total: 104.4A across all phases',
+      'Risk Assessment for Pushing and Pulling',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'At 230V: IR = 8000/230 = 34.8A, IY = 6000/230 = 26.1A, IB = 10000/230 = 43.5A. The unbalance is 17.4A between highest and lowest loaded phases.',
   },
@@ -147,12 +172,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why do triplen harmonics (3rd, 9th, 15th...) add in the neutral rather than cancel?',
     options: [
-      'They have higher frequency',
+      'Implement responsive design with prioritised information',
+      'Underground installations and areas requiring mechanical protection',
+      'Signs of damage, deterioration, overheating, or unsafe conditions',
       'They are all in phase with each other across the three phases',
-      'They travel faster through copper',
-      'They only exist in delta systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Triplen harmonics (multiples of 3) are zero-sequence harmonics. They are in phase across all three phases, so instead of cancelling (like fundamental currents), they add arithmetically in the neutral.',
   },
@@ -161,12 +186,12 @@ const quizQuestions = [
     question:
       'What is the recommended practice for balancing single-phase loads across a three-phase distribution board?',
     options: [
-      'Connect all lighting to one phase',
       'Distribute loads so each phase carries approximately equal current',
-      'Always use delta connection',
-      'Install a larger main breaker',
+      'Safety glasses or goggles rated for impact and potentially arc flash',
+      'Leads to confusion, duplication of work, or project delays',
+      'The basic unit of matter consisting of protons, neutrons, and electrons',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Single-phase loads should be distributed across all three phases to achieve approximately equal loading. This minimises neutral current and voltage unbalance.',
   },
@@ -174,7 +199,12 @@ const quizQuestions = [
     id: 9,
     question:
       'A three-phase induction motor is supplied with 3% voltage unbalance. What is the approximate increase in winding temperature rise?',
-    options: ['9%', '18%', '27%', '3%'],
+    options: [
+      '9%',
+      '18%',
+      '27%',
+      '3%',
+    ],
     correctAnswer: 1,
     explanation:
       'Motor heating due to voltage unbalance increases approximately as the square of the unbalance percentage × 2. For 3% unbalance: increase ≈ 2 × 3² = 18%. This is why voltage unbalance must be minimised.',
@@ -184,10 +214,10 @@ const quizQuestions = [
     question:
       'In a 100A three-phase distribution board for an office building, what neutral size would be appropriate if heavy non-linear loads are expected?',
     options: [
-      '50A rated (50% of phase)',
-      '100A rated (100% of phase)',
+      'Moisture, dust, heat, or UV light',
+      'Damage, kinks, and repairs',
       '150-200A rated (150-200% of phase)',
-      'No neutral required',
+      'Separated Extra-Low Voltage',
     ],
     correctAnswer: 2,
     explanation:

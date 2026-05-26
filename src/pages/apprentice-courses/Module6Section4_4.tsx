@@ -19,10 +19,10 @@ const Module6Section4_4 = () => {
       id: 1,
       question: 'What is an open circuit?',
       options: [
-        'A circuit with too many connections',
+        'Loose terminations or damaged cable',
         'A break in continuity of the conductor',
-        'A short circuit',
-        'A perfectly working circuit',
+        'Overheating and possible fire risk',
+        'To prevent equipment being live when \\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\'',
       ],
       correctAnswer: 1,
       explanation:
@@ -32,12 +32,12 @@ const Module6Section4_4 = () => {
       id: 2,
       question: 'What does a high resistance joint cause?',
       options: [
+        'Faster current flow',
         'Cooling of the conductor',
         'Overheating and possible fire risk',
-        'Faster current flow',
         'Better circuit performance',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'High resistance joints cause overheating due to increased I²R losses, creating a significant fire risk.',
     },
@@ -45,12 +45,12 @@ const Module6Section4_4 = () => {
       id: 3,
       question: 'What is the risk of a disconnected CPC?',
       options: [
-        'Equipment may not function',
+        'Appliances work but safety is compromised',
+        'Can cause reversed polarity or missing CPC connections',
+        'A break in continuity of the conductor',
         'Exposed parts may become live under fault conditions',
-        'Nothing, as neutral protects the system',
-        'Improved energy efficiency',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'A disconnected CPC means exposed parts may become live under fault conditions, creating a serious shock hazard.',
     },
@@ -58,12 +58,12 @@ const Module6Section4_4 = () => {
       id: 4,
       question: 'What happens if line and neutral are reversed at a socket?',
       options: [
-        "Circuit won't energise",
         'Appliances work but safety is compromised',
-        'Protective devices trip instantly',
-        'Power consumption increases',
+        'Overheating and possible fire risk',
+        'Exposed parts may become live under fault conditions',
+        'To prevent equipment being live when \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         "Appliances may work normally but safety is compromised as protective devices won't disconnect correctly during faults.",
     },
@@ -73,8 +73,8 @@ const Module6Section4_4 = () => {
       options: [
         'Clamp meter',
         'Low resistance ohmmeter',
-        'Socket tester',
         'Multimeter on voltage setting',
+        'Socket tester',
       ],
       correctAnswer: 1,
       explanation:
@@ -84,12 +84,12 @@ const Module6Section4_4 = () => {
       id: 6,
       question: 'Why must a switch always interrupt the line conductor?',
       options: [
-        'To reduce energy bills',
+        "Overheating and possible fire risk",
+        "Appliances work but safety is compromised",
         "To prevent equipment being live when 'off'",
-        'To make neutral visible',
-        'To improve circuit efficiency',
+        "Loose terminations or damaged cable",
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Switches must interrupt the line conductor to ensure equipment is truly dead when switched off, preventing shock hazards.',
     },
@@ -97,12 +97,12 @@ const Module6Section4_4 = () => {
       id: 7,
       question: 'Which of the following is a common cause of open circuits?',
       options: [
-        'Over-tightened CPC',
+        'A break in continuity of the conductor',
+        'Appliances work but safety is compromised',
+        'To prevent equipment being live when \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
         'Loose terminations or damaged cable',
-        'Correct polarity at sockets',
-        'Proper cable routing',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Loose terminations or damaged cables are the most common causes of open circuits in electrical installations.',
     },
@@ -110,12 +110,12 @@ const Module6Section4_4 = () => {
       id: 8,
       question: 'What effect can poor workmanship have on polarity?',
       options: [
-        'No effect at all',
         'Can cause reversed polarity or missing CPC connections',
-        'Can only cause high insulation readings',
-        'Only affects aesthetics',
+        'Exposed parts may become live under fault conditions',
+        'To prevent equipment being live when \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+        'Appliances work but safety is compromised',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Poor workmanship commonly results in reversed polarity or missing CPC connections, compromising installation safety.',
     },
@@ -123,10 +123,10 @@ const Module6Section4_4 = () => {
       id: 9,
       question: 'How should faults be recorded during testing?',
       options: [
-        'Ignored if the circuit works',
+        'Can cause reversed polarity or missing CPC connections',
         'Clearly on the test sheet and rectified before energising',
-        'Noted verbally only',
-        'Recorded after energising',
+        'Appliances work but safety is compromised',
+        'To prevent equipment being live when \\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\'',
       ],
       correctAnswer: 1,
       explanation:
@@ -137,11 +137,11 @@ const Module6Section4_4 = () => {
       question: 'What should never be done if a CPC fault is found?',
       options: [
         'Continue testing other circuits',
+        'Report to supervisor',
         'Energise the circuit',
         'Record the fault',
-        'Report to supervisor',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Never energise a circuit with a known CPC fault as this creates serious shock hazards to users.',
     },

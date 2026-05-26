@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'battery-dod',
     question: 'What does Depth of Discharge (DoD) indicate for a battery system?',
     options: [
-      'The charging speed of the battery',
       'The percentage of battery capacity that has been discharged',
+      'The charging speed of the battery',
       'The maximum voltage the battery can reach',
       'The number of cells in the battery pack',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Depth of Discharge (DoD) indicates the percentage of battery capacity that has been discharged relative to the total capacity. A higher DoD means more energy has been extracted, which affects battery lifespan.',
   },
@@ -45,12 +45,12 @@ const quickCheckQuestions = [
     question:
       'What is a key advantage of lithium-ion batteries over lead-acid for domestic storage?',
     options: [
-      'Lower initial cost',
+      'To give practical guidance on complying with legal duties',
+      'Lead and rosin (colophony) fumes from solder and flux',
+      'Standard inputs and methods for Part L calculations',
       'Higher cycle life and deeper discharge capability',
-      'No battery management system required',
-      'Simpler installation requirements',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Lithium-ion batteries offer significantly higher cycle life (4,000-10,000 cycles vs 500-1,500) and can be discharged to 80-90% DoD compared to 50% for lead-acid, making them more suitable for daily cycling applications.',
   },
@@ -58,12 +58,12 @@ const quickCheckQuestions = [
     id: 'bms-function',
     question: 'What is the primary function of a Battery Management System (BMS)?',
     options: [
-      'To increase battery capacity',
       'To monitor and protect battery cells from damage',
-      'To convert DC to AC power',
-      'To connect the battery to the grid',
+      'Process material adhering to sensor surfaces',
+      'To predict and plan for income and expense patterns',
+      'Digital communication with diagnostics and precise positioning',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The BMS monitors individual cell voltages, temperatures, and state of charge, and protects the battery by preventing overcharging, over-discharging, and thermal runaway.',
   },
@@ -71,12 +71,12 @@ const quickCheckQuestions = [
     id: 'grid-services',
     question: 'Which grid service involves batteries absorbing excess renewable generation?',
     options: [
-      'Frequency response',
-      'Peak shaving',
       'Grid balancing and absorption',
-      'Voltage regulation',
+      'Gantt charts or daily task sheets',
+      'Avoid work at height where possible',
+      'Environmental Protection Act 1990',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Grid balancing involves batteries absorbing excess generation (often from solar or wind) when supply exceeds demand, and releasing it later when demand increases or generation drops.',
   },
@@ -87,7 +87,12 @@ const quizQuestions = [
     id: 1,
     question:
       'A lithium iron phosphate (LiFePO4) battery has a nominal voltage of 3.2V per cell. How many cells are needed for a 48V nominal system?',
-    options: ['12 cells', '15 cells', '16 cells', '20 cells'],
+    options: [
+      '12 cells',
+      '15 cells',
+      '16 cells',
+      '20 cells',
+    ],
     correctAnswer: 1,
     explanation:
       '48V ÷ 3.2V = 15 cells. LiFePO4 batteries use 3.2V nominal per cell, so 15 cells in series provide 48V nominal (range approximately 40V-54.6V depending on state of charge).',
@@ -95,7 +100,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the typical round-trip efficiency of a modern lithium-ion battery system?',
-    options: ['70-75%', '80-85%', '90-95%', '98-99%'],
+    options: [
+      '98-99%',
+      '70-75%',
+      '90-95%',
+      '80-85%',
+    ],
     correctAnswer: 2,
     explanation:
       'Modern lithium-ion battery systems achieve 90-95% round-trip efficiency, meaning 90-95% of energy stored can be retrieved. Lead-acid systems typically achieve 80-85%.',
@@ -104,15 +114,25 @@ const quizQuestions = [
     id: 3,
     question:
       'For a domestic property with 10kWh daily consumption and 80% self-consumption target, what minimum usable battery capacity is appropriate?',
-    options: ['4kWh', '6kWh', '8kWh', '10kWh'],
-    correctAnswer: 2,
+    options: [
+      '6kWh',
+      '4kWh',
+      '10kWh',
+      '8kWh',
+    ],
+    correctAnswer: 3,
     explanation:
       'With 10kWh daily consumption and 80% self-consumption target, approximately 8kWh usable capacity is needed. This accounts for the portion of consumption occurring during non-generation hours.',
   },
   {
     id: 4,
     question: 'What is the C-rate of a 10kWh battery discharging at 5kW?',
-    options: ['C/2 (0.5C)', '1C', '2C', '5C'],
+    options: [
+      'C/2 (0.5C)',
+      '1C',
+      '2C',
+      '5C',
+    ],
     correctAnswer: 0,
     explanation:
       'C-rate = Power ÷ Capacity = 5kW ÷ 10kWh = 0.5C or C/2. This means the battery would fully discharge in 2 hours. Higher C-rates reduce battery lifespan.',
@@ -122,12 +142,12 @@ const quizQuestions = [
     question:
       'Which battery technology is most suitable for applications requiring very high cycle counts with minimal degradation?',
     options: [
-      'Lead-acid AGM',
-      'Lithium-ion NMC',
+      'IP44 or higher depending on zone',
       'Lithium iron phosphate (LiFePO4)',
-      'Nickel-cadmium',
+      'Check integrity and compliance',
+      'Measuring from different reference points',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'LiFePO4 offers the highest cycle life (6,000-10,000 cycles at 80% DoD) with minimal degradation, excellent thermal stability, and is considered the safest lithium chemistry for stationary storage.',
   },
@@ -136,12 +156,12 @@ const quizQuestions = [
     question:
       'According to BS EN 62619, what is required for lithium battery installations in domestic premises?',
     options: [
-      'Installation in any convenient location',
+      'Fuse or circuit breaker suitable for DC fault current',
+      'Optimal power point tracking to maximise PV harvest',
       'Fire-rated enclosure or separation from occupied spaces',
-      'Outdoor installation only',
-      'Installation in the loft space',
+      'Degradation that occurs over time regardless of use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS EN 62619 requires lithium batteries in domestic premises to have appropriate fire protection, typically a fire-rated enclosure or 30-minute fire separation from occupied spaces, with adequate ventilation.',
   },
@@ -149,12 +169,12 @@ const quizQuestions = [
     id: 7,
     question: 'What function does an MPPT charge controller provide that a PWM controller cannot?',
     options: [
-      'Battery protection from overcharge',
+      'Fast response time and high power capability',
+      'Degradation that occurs over time regardless of use',
+      'Fuse or circuit breaker suitable for DC fault current',
       'Optimal power point tracking to maximise PV harvest',
-      'Load disconnection at low voltage',
-      'Temperature compensation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'MPPT (Maximum Power Point Tracking) controllers actively find and maintain the optimal operating point of the PV array, harvesting 15-30% more energy than PWM controllers, especially in cold conditions or when PV voltage differs significantly from battery voltage.',
   },
@@ -162,7 +182,12 @@ const quizQuestions = [
     id: 8,
     question:
       'A battery system is rated at 10kWh with 80% depth of discharge and 90% inverter efficiency. What usable AC energy is available?',
-    options: ['7.2kWh', '8.0kWh', '8.1kWh', '9.0kWh'],
+    options: [
+      '7.2kWh',
+      '8.1kWh',
+      '9.0kWh',
+      '8.0kWh',
+    ],
     correctAnswer: 0,
     explanation:
       'Usable AC energy = Capacity × DoD × Inverter efficiency = 10kWh × 0.80 × 0.90 = 7.2kWh. Both DoD limit and conversion losses must be considered for actual available energy.',
@@ -185,12 +210,12 @@ const quizQuestions = [
     question:
       'For frequency response grid services, what characteristic is most important in a battery system?',
     options: [
-      'Maximum energy capacity',
+      'Lithium iron phosphate (LiFePO4)',
+      'Fuse or circuit breaker suitable for DC fault current',
       'Fast response time and high power capability',
-      'Lowest cost per kWh',
-      'Longest calendar life',
+      'Fire-rated enclosure or separation from occupied spaces',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Frequency response requires fast reaction times (typically under 1 second) and sufficient power capability to rapidly inject or absorb energy. Energy capacity is secondary to power and response speed.',
   },
@@ -199,12 +224,12 @@ const quizQuestions = [
     question:
       'What safety device is required between a battery bank and the inverter according to BS 7671?',
     options: [
-      'SPD only',
+      'Fire-rated enclosure or separation from occupied spaces',
+      'Fast response time and high power capability',
+      'Degradation that occurs over time regardless of use',
       'Fuse or circuit breaker suitable for DC fault current',
-      'Residual current device',
-      'Earth leakage relay',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A suitable DC-rated fuse or circuit breaker must be installed between the battery and inverter, capable of safely interrupting the high fault currents batteries can deliver. AC-rated devices are not suitable for DC circuits.',
   },
@@ -213,12 +238,12 @@ const quizQuestions = [
     question:
       'What is the primary advantage of flow batteries over lithium-ion for grid-scale storage?',
     options: [
-      'Higher energy density',
-      'Lower initial cost',
       'Decoupled power and energy scaling with very long duration',
-      'Faster response time',
+      'Fast response time and high power capability',
+      'Optimal power point tracking to maximise PV harvest',
+      'Fuse or circuit breaker suitable for DC fault current',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Flow batteries allow independent scaling of power (stack size) and energy (tank size), making them ideal for long-duration storage (4-12+ hours). Energy capacity can be increased simply by adding more electrolyte.',
   },

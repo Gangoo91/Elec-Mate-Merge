@@ -16,10 +16,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the most serious direct safety risk from electrical faults?',
     options: [
-      'Equipment damage',
+      'Red to line conductor, black to earth/CPC',
       'Electric shock and electrocution',
-      'Higher electricity bills',
-      'Noisy equipment',
+      'Self-certify notifiable electrical work',
+      'They must unlock to allow free evacuation',
     ],
     correctIndex: 1,
     explanation:
@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What legal framework governs electrical safety in UK workplaces?',
     options: [
-      'Building Regulations',
+      'Gather information about the fault symptoms',
+      'Electric vehicle charging and smart appliances',
       'Electricity at Work Regulations 1989',
-      'Health and Safety Act',
-      'Fire Safety Order',
+      'No discrimination possible',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The Electricity at Work Regulations 1989 specifically govern electrical safety in UK workplaces and place legal duties on employers and employees.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'How can electrical faults impact business operations?',
     options: [
-      'No impact on business',
-      'Only affect electrical bills',
+      'A framework for gradual handover and extended aftercare',
+      'To identify conflicts between services before installation',
+      'Line to neutral fault (short circuit)',
       'Cause production downtime and reputation damage',
-      'Make equipment work better',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Electrical faults can cause significant production downtime, data loss, and damage to business reputation if not properly managed.',
   },
@@ -61,10 +61,10 @@ const Module7Section1_3 = () => {
       id: 1,
       question: 'What is the most serious direct safety risk from electrical faults?',
       options: [
-        'Equipment damage',
+        'It has four terminals instead of three',
         'Electric shock and electrocution',
-        'Higher electricity bills',
-        'Noisy equipment',
+        'Percentage of reading plus/minus digits',
+        'Red to line conductor, black to earth/CPC',
       ],
       correctAnswer: 1,
       explanation:
@@ -74,8 +74,13 @@ const Module7Section1_3 = () => {
       id: 2,
       question:
         'What percentage of UK workplace accidents involve electrical hazards according to HSE data?',
-      options: ['Less than 1%', 'Around 3%', 'Over 10%', 'Around 25%'],
-      correctAnswer: 1,
+      options: [
+        'Over 10%',
+        'Less than 1%',
+        'Around 3%',
+        'Around 25%',
+      ],
+      correctAnswer: 2,
       explanation:
         'HSE statistics show that electrical hazards are involved in approximately 3% of workplace accidents, representing over 1,000 incidents annually.',
     },
@@ -83,28 +88,38 @@ const Module7Section1_3 = () => {
       id: 3,
       question: 'What legal framework governs electrical safety in UK workplaces?',
       options: [
-        'Building Regulations',
+        'Installation type, environment, and usage',
+        'Before each testing session',
+        'Repair or replace promptly',
         'Electricity at Work Regulations 1989',
-        'Health and Safety Act',
-        'Fire Safety Order',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'The Electricity at Work Regulations 1989 specifically govern electrical safety in UK workplaces and place legal duties on employers and employees.',
     },
     {
       id: 4,
       question: 'What is the maximum fine for serious breaches of electrical safety regulations?',
-      options: ['£1,000', '£10,000', '£50,000', 'Unlimited'],
-      correctAnswer: 3,
+      options: [
+        'Unlimited',
+        '£10,000',
+        '£50,000',
+        '£1,000',
+      ],
+      correctAnswer: 0,
       explanation:
         'Serious breaches of electrical safety regulations can result in unlimited fines in Crown Court, plus potential imprisonment.',
     },
     {
       id: 5,
       question: 'What percentage of UK fires are caused by electrical faults?',
-      options: ['Around 10%', 'Around 20%', 'Around 30%', 'Around 50%'],
-      correctAnswer: 2,
+      options: [
+        'Around 20%',
+        'Around 30%',
+        'Around 50%',
+        'Around 10%',
+      ],
+      correctAnswer: 1,
       explanation:
         'Approximately 30% of UK fires are caused by electrical faults, making it one of the leading causes of structural fires.',
     },
@@ -112,10 +127,10 @@ const Module7Section1_3 = () => {
       id: 6,
       question: 'How can electrical faults impact business operations?',
       options: [
-        'No impact on business',
-        'Only affect electrical bills',
+        'To prevent disorientation and ensure safe evacuation',
+        'Leave installation in a safe state',
         'Cause production downtime and reputation damage',
-        'Make equipment work better',
+        'Ratio of 10-minute to 1-minute resistance readings',
       ],
       correctAnswer: 2,
       explanation:
@@ -125,12 +140,12 @@ const Module7Section1_3 = () => {
       id: 7,
       question: 'What is arc flash and why is it dangerous?',
       options: [
-        'A type of light bulb',
+        'You lose marks even if fault diagnosis was correct',
+        'Electromagnetic interference from nearby mains cables',
+        'Self-clearing after a short time',
         'An explosive release of electrical energy',
-        'Normal electrical operation',
-        'A safety feature',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Arc flash is an explosive release of electrical energy that can reach temperatures of 19,000°C and cause severe burns or death.',
     },
@@ -138,12 +153,12 @@ const Module7Section1_3 = () => {
       id: 8,
       question: 'Who can be held personally liable for electrical safety breaches?',
       options: [
-        'Only company directors',
-        'Only electricians',
         'Any employee with electrical responsibilities',
-        'No one personally',
+        'That there is no breakdown between conductors or to earth',
+        'Temperature sensors were miswired',
+        'Higher efficiency and temperature coefficient',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Under EAWR 1989, any employee with electrical responsibilities can be held personally liable for safety breaches, facing fines and imprisonment.',
     },
@@ -151,10 +166,10 @@ const Module7Section1_3 = () => {
       id: 9,
       question: 'What should be the immediate response to discovering a serious electrical fault?',
       options: [
-        'Continue working carefully',
+        'Lunch service, dinner service, cleaning, and closed',
         'Isolate the circuit and report immediately',
-        'Fix it quickly',
-        'Ignore if equipment still works',
+        'A pre-programmed combination of lighting settings',
+        'Regulation 8 — Use of control measures',
       ],
       correctAnswer: 1,
       explanation:
@@ -164,12 +179,12 @@ const Module7Section1_3 = () => {
       id: 10,
       question: 'How do insurance companies typically respond to electrical fault-related claims?',
       options: [
-        'Always pay full claims',
+        "Isolate the circuit and implement temporary safety measures",
+        "The overhead of tracking a quick task exceeds the time to just complete it",
         "May reduce or refuse claims if proper maintenance wasn't carried out",
-        "Insurance doesn't cover electrical faults",
-        'Double the payout',
+        "In controlled document systems with version control and access records",
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "Insurance companies may reduce or refuse claims if they find that proper electrical maintenance and testing wasn't carried out as required.",
     },

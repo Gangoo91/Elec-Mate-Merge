@@ -31,24 +31,39 @@ const quickCheckQuestions = [
   {
     id: 'power-factor-definition',
     question: 'What is the formula for power factor?',
-    options: ['pf = S/P', 'pf = Q/P', 'pf = P/S', 'pf = P/Q'],
-    correctIndex: 2,
+    options: [
+      'pf = P/S',
+      'pf = P/Q',
+      'pf = Q/P',
+      'pf = S/P',
+    ],
+    correctIndex: 0,
     explanation:
       'Power factor is the ratio of true power (P) to apparent power (S): pf = P/S = cos φ. It indicates how effectively current is being converted into useful work.',
   },
   {
     id: 'lagging-power-factor',
     question: 'Which type of load causes a lagging power factor?',
-    options: ['Resistive heaters', 'Capacitor banks', 'Induction motors', 'LED drivers'],
-    correctIndex: 2,
+    options: [
+      'Induction motors',
+      'LED drivers',
+      'Resistive heaters',
+      'Capacitor banks',
+    ],
+    correctIndex: 0,
     explanation:
       'Induction motors cause a lagging power factor because current lags behind voltage due to their inductive nature. This is the most common cause of poor power factor in buildings.',
   },
   {
     id: 'power-triangle',
     question: 'In the power triangle, what does the vertical side represent?',
-    options: ['True power (P)', 'Apparent power (S)', 'Reactive power (Q)', 'Power factor'],
-    correctIndex: 2,
+    options: [
+      'Power factor',
+      'Reactive power (Q)',
+      'True power (P)',
+      'Apparent power (S)',
+    ],
+    correctIndex: 1,
     explanation:
       'The power triangle shows P (true power) on the horizontal axis, Q (reactive power) on the vertical axis, and S (apparent power) as the hypotenuse. Q represents the power that oscillates between source and load.',
   },
@@ -56,12 +71,12 @@ const quickCheckQuestions = [
     id: 'poor-pf-effect',
     question: 'What is a direct consequence of operating with a 0.7 power factor instead of unity?',
     options: [
-      'Reduced cable heating',
-      'Lower energy bills',
       '43% higher current for same power',
-      'Faster motor operation',
+      'Silicosis and lung cancer',
+      'Lagging, typically 0.8-0.9 at full load',
+      'Circuit completely dead, no power at all',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'At 0.7 pf, current is 1/0.7 = 1.43 times higher than at unity pf for the same real power. This 43% increase causes greater I²R losses, voltage drop, and requires larger cables.',
   },
@@ -73,18 +88,23 @@ const quizQuestions = [
     question: 'What is true power (P) measured in?',
     options: [
       'Volt-amperes (VA)',
-      'Volt-amperes reactive (VAr)',
       'Watts (W)',
+      'Volt-amperes reactive (VAr)',
       'Power factor units',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'True power (P) is measured in Watts (W) or kilowatts (kW). It represents the actual power doing useful work in the circuit.',
   },
   {
     id: 2,
     question: 'A motor draws 50kVA at 0.8 power factor. What is the true power?',
-    options: ['62.5kW', '50kW', '40kW', '30kW'],
+    options: [
+      '30kW',
+      '62.5kW',
+      '40kW',
+      '50kW',
+    ],
     correctAnswer: 2,
     explanation:
       'True power P = S × pf = 50kVA × 0.8 = 40kW. The remaining 30kVAr is reactive power.',
@@ -93,34 +113,49 @@ const quizQuestions = [
     id: 3,
     question: 'What causes leading power factor?',
     options: [
-      'Induction motors',
-      'Transformers at low load',
+      'Danger, so far as is reasonably practicable',
+      'The electrical contractor controlling the work',
+      'Emergency Lighting Completion Certificate',
       'Capacitor banks or synchronous motors',
-      'Incandescent lighting',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Capacitor banks and over-excited synchronous motors cause leading power factor, where current leads voltage. This is used for power factor correction.',
   },
   {
     id: 4,
     question: 'Using S² = P² + Q², calculate Q when S = 100kVA and P = 80kW.',
-    options: ['20kVAr', '40kVAr', '60kVAr', '80kVAr'],
-    correctAnswer: 2,
+    options: [
+      '60kVAr',
+      '40kVAr',
+      '20kVAr',
+      '80kVAr',
+    ],
+    correctAnswer: 0,
     explanation: 'Q = √(S² - P²) = √(100² - 80²) = √(10000 - 6400) = √3600 = 60kVAr',
   },
   {
     id: 5,
     question: 'What is the typical power factor of an unloaded induction motor?',
-    options: ['0.95 lagging', '0.85 lagging', '0.3 to 0.4 lagging', 'Unity'],
-    correctAnswer: 2,
+    options: [
+      '0.85 lagging',
+      '0.3 to 0.4 lagging',
+      'Unity',
+      '0.95 lagging',
+    ],
+    correctAnswer: 1,
     explanation:
       'Unloaded induction motors have very poor power factor (0.3-0.4) because magnetising current is a large proportion of total current. This improves significantly when loaded.',
   },
   {
     id: 6,
     question: 'At what power factor do UK DNOs typically start charging reactive power penalties?',
-    options: ['Below unity', 'Below 0.95', 'Below 0.90', 'Below 0.85'],
+    options: [
+      'Below unity',
+      'Below 0.95',
+      'Below 0.90',
+      'Below 0.85',
+    ],
     correctAnswer: 2,
     explanation:
       'Most UK DNOs charge reactive power penalties when power factor falls below 0.90. The charge is typically based on kVArh consumption above this threshold.',
@@ -130,11 +165,11 @@ const quizQuestions = [
     question: 'How does poor power factor affect cable sizing?',
     options: [
       'No effect - cables are sized on true power only',
-      'Larger cables needed due to higher current',
-      'Smaller cables can be used',
       'Only affects three-phase cables',
+      'Smaller cables can be used',
+      'Larger cables needed due to higher current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Poor power factor means higher current for the same real power, requiring larger cables to carry the additional current without overheating or excessive voltage drop.',
   },
@@ -142,8 +177,13 @@ const quizQuestions = [
     id: 8,
     question:
       'What power factor do fluorescent luminaires with electronic control gear typically achieve?',
-    options: ['0.5 lagging', '0.7 lagging', '0.85 lagging', '0.95 or better'],
-    correctAnswer: 3,
+    options: [
+      '0.95 or better',
+      '0.85 lagging',
+      '0.5 lagging',
+      '0.7 lagging',
+    ],
+    correctAnswer: 0,
     explanation:
       'Modern electronic control gear includes power factor correction, achieving 0.95 or better. Older magnetic ballasts typically operated at 0.5-0.6 power factor.',
   },
@@ -151,8 +191,13 @@ const quizQuestions = [
     id: 9,
     question:
       'If cable I²R losses are 2kW at unity power factor, what are they at 0.8 pf (same real power)?',
-    options: ['1.6kW', '2.0kW', '2.5kW', '3.125kW'],
-    correctAnswer: 3,
+    options: [
+      '1.6kW',
+      '3.125kW',
+      '2.5kW',
+      '2.0kW',
+    ],
+    correctAnswer: 1,
     explanation:
       'At 0.8 pf, current is 1.25× higher (1/0.8). Losses = I²R, so with 1.25× current: (1.25)² × 2kW = 1.5625 × 2 = 3.125kW - a 56% increase in losses.',
   },
@@ -160,7 +205,12 @@ const quizQuestions = [
     id: 10,
     question:
       'A building has 200kW load at 0.75 pf. What apparent power must the transformer supply?',
-    options: ['150kVA', '200kVA', '267kVA', '300kVA'],
+    options: [
+      '150kVA',
+      '200kVA',
+      '267kVA',
+      '300kVA',
+    ],
     correctAnswer: 2,
     explanation:
       'S = P / pf = 200kW / 0.75 = 267kVA. The transformer must be rated for apparent power, not just true power, hence poor pf requires larger transformers.',
@@ -168,8 +218,13 @@ const quizQuestions = [
   {
     id: 11,
     question: 'What is the phase angle φ when power factor is 0.866?',
-    options: ['15°', '30°', '45°', '60°'],
-    correctAnswer: 1,
+    options: [
+      '15°',
+      '60°',
+      '45°',
+      '30°',
+    ],
+    correctAnswer: 3,
     explanation:
       'pf = cos φ, so φ = cos⁻¹(0.866) = 30°. This represents the phase difference between voltage and current waveforms.',
   },
@@ -177,12 +232,12 @@ const quizQuestions = [
     id: 12,
     question: 'Which building services equipment typically has the worst power factor?',
     options: [
-      'Electric resistance heaters',
-      'LED lighting with drivers',
       'Lightly loaded induction motors',
       'Computer power supplies',
+      'Electric resistance heaters',
+      'LED lighting with drivers',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Lightly loaded induction motors can have power factors as low as 0.3, much worse than motors at full load (0.85). Variable speed drives can help by unloading motors efficiently.',
   },

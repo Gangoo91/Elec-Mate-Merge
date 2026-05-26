@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'earthing-purpose',
     question: 'What is the PRIMARY purpose of earthing in an electrical installation?',
     options: [
-      'To reduce electricity bills by improving power factor',
+      'A simple tick (or P/F) confirming polarity has been verified per Reg 643.6 — i.e. all the dead polarity test items pass.',
+      'Taking reasonable care for their own health and safety and that of others affected by their acts or omissions',
       'To provide a low-impedance fault current path so protective devices operate quickly to disconnect the supply',
-      'To prevent static electricity building up on equipment casings',
-      'To improve the quality of the electrical supply',
+      'The stressor is largely outside your control and managing your emotional response is the priority',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The primary purpose of earthing is to provide a low-impedance path for fault current to flow back to the source, enabling protective devices (fuses, MCBs, RCDs) to detect the fault and disconnect the supply within the required time specified in BS 7671. Without an effective earth path, a fault to an exposed-conductive-part could leave it at a dangerous potential indefinitely.',
   },
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'tncs-system',
     question: 'In a TN-C-S (PME) system, the neutral and earth functions are:',
     options: [
-      'Completely separate throughout the system',
+      'Incompatible chemicals can react and generate heat, toxic fumes, or flammable gases, and flammable liquids can release ignitable vapours',
       'Combined in a single PEN conductor in the supply network, then separated at the origin of the installation',
-      'Combined throughout the entire installation including final circuits',
-      'Never connected to each other',
+      'Selected the correct answer but your reasoning was flawed or based on a guess',
+      'The ground may collapse under the weight of the MEWP, causing it to overturn',
     ],
     correctIndex: 1,
     explanation:
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'bonding-purpose',
     question: 'The purpose of main protective bonding is to:',
     options: [
-      'Improve the earth fault loop impedance for faster disconnection',
+      'A new regulatory regime for higher-risk buildings including a Building Safety Regulator, mandatory safety case reports, and a residents\\\\\\\\\\\\\\\' engagement strategy',
+      'Upstream RCD has higher IΔn AND time-delayed (Type S) characteristic, so downstream 30mA RCD trips first for downstream faults — preventing total supply loss',
+      'Sensors need time to reach equilibrium; rushing readings before stabilisation introduces errors that appear as linearity problems',
       'Ensure all extraneous-conductive-parts are at the same potential as the main earthing terminal, preventing dangerous potential differences during a fault',
-      'Provide a return path for normal load current',
-      'Connect the gas and water pipes to the electricity supply',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Main protective bonding connects extraneous-conductive-parts (such as metallic water, gas and oil pipes, structural steelwork and lightning protection systems) to the main earthing terminal. This creates an equipotential zone — ensuring that during a fault, all metallic parts that a person could simultaneously touch are at substantially the same potential, preventing a dangerous voltage across the body.',
   },
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'loop-impedance',
     question: 'Earth fault loop impedance (Zs) must be low enough to ensure that:',
     options: [
-      'The voltage drop on the circuit is within limits',
+      'Investigate further — the minimum acceptable value for a 230 V circuit is 1.0 MΩ per BS 7671',
+      'Learning and productivity are not mutually exclusive \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 well-planned learning during normal work benefits both',
       'Sufficient fault current flows to operate the protective device within the disconnection time required by BS 7671',
-      'The neutral current does not exceed the cable rating',
-      'The earth electrode resistance is below 1 ohm',
+      'Because a single satisfied client can generate years of repeat business, referrals, and recommendations worth far more than any individual job',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The earth fault loop impedance (Zs) determines the fault current that will flow during an earth fault: If = Uo/Zs. If Zs is too high, the fault current will be too low to operate the protective device (fuse or MCB) within the disconnection time specified in BS 7671 (0.4 s for socket outlets and portable equipment, 5 s for fixed equipment in TN systems). This would leave the exposed-conductive-part energised at a dangerous potential.',
   },
@@ -69,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'In a TN-S earthing system, the means of earthing is:',
     options: [
-      'The supply neutral conductor',
+      'Enables identification of energy waste and targeting of improvements',
       'A separate earth conductor provided by the DNO, typically the cable sheath',
-      'An earth electrode at the installation',
-      'A combined PEN conductor',
+      'Nature of danger, who isolated it, and contact details',
+      'A temporary disturbance in brain function caused by a blow or jolt to the head',
     ],
     correctAnswer: 1,
     explanation:
@@ -82,10 +82,10 @@ const quizQuestions = [
     id: 2,
     question: 'A TT earthing system requires:',
     options: [
-      'A PEN conductor from the supply',
-      'A separate metallic return path to the substation earth',
+      'The source impedance (Ze), the line conductor impedance (R1) and the circuit protective conductor impedance (R2)',
+      'Discharge stored energy, protect against inadvertent re-energisation, and ensure the work area remains at earth potential',
       'The installation to provide its own earth electrode, with the earth return path through the general mass of earth',
-      'No earth connection at all',
+      'The conditions for automatic disconnection of supply cannot be met, or in specific special locations such as bathrooms',
     ],
     correctAnswer: 2,
     explanation:
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 3,
     question: 'The main earthing terminal is the point where:',
     options: [
-      'The electricity meter is connected',
+      "The conditions for automatic disconnection of supply cannot be met, or in specific special locations such as bathrooms",
+      "The installation to provide its own earth electrode, with the earth return path through the general mass of earth",
+      "The prospective fault current, the disconnection time and the material properties of the conductor (k factor)",
       "The earthing conductor, main protective bonding conductors and circuit protective conductors all connect to form the installation's earth reference",
-      'The consumer unit is mounted on the wall',
-      'Lightning protection is connected to the building',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The main earthing terminal (MET) is the central connection point for the installation's earthing system. It connects: the earthing conductor (from the means of earthing), the main protective bonding conductors (from extraneous-conductive-parts), and the circuit protective conductors (via the distribution board). It is the star point of the installation's earth network.",
   },
@@ -108,8 +108,13 @@ const quizQuestions = [
     id: 4,
     question:
       'Under BS 7671:2018+A3:2024, the minimum cross-sectional area of a main protective bonding conductor in a PME installation with 25 mm² supply tails is:',
-    options: ['4 mm²', '6 mm²', '10 mm²', '16 mm²'],
-    correctAnswer: 2,
+    options: [
+      '10 mm²',
+      '6 mm²',
+      '4 mm²',
+      '16 mm²',
+    ],
+    correctAnswer: 0,
     explanation:
       'For TN-C-S (PME) installations, BS 7671 Table 54.8 specifies minimum bonding conductor sizes. Where the supply neutral is 25 mm² copper, the minimum main protective bonding conductor is 10 mm² copper. For 35 mm² supply tails (common in modern domestic installations), the minimum is 10 mm² copper. These sizes ensure the bonding conductor can carry the prospective fault current without damage.',
   },
@@ -117,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'Supplementary bonding is required when:',
     options: [
-      'It is always required in every installation',
+      'The installation to provide its own earth electrode, with the earth return path through the general mass of earth',
       'The conditions for automatic disconnection of supply cannot be met, or in specific special locations such as bathrooms',
-      'The installation has an RCD fitted',
-      'The building has a lightning protection system',
+      'Discharge stored energy, protect against inadvertent re-energisation, and ensure the work area remains at earth potential',
+      'The earthing conductor, main protective bonding conductors and circuit protective conductors all connect to form the installation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earth reference',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,12 +135,12 @@ const quizQuestions = [
     id: 6,
     question: 'An earth electrode for a TT system is typically:',
     options: [
-      'A copper water pipe connected to the mains water supply',
+      'The source impedance (Ze), the line conductor impedance (R1) and the circuit protective conductor impedance (R2)',
+      'The conditions for automatic disconnection of supply cannot be met, or in specific special locations such as bathrooms',
       'A driven copper-clad steel rod, copper plate, or foundation earth electrode in direct contact with the general mass of earth',
-      'An aluminium rod hammered into the ground',
-      'A connection to the gas pipe',
+      '0.4 seconds for socket outlet circuits (or portable equipment), 5 seconds for fixed equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Earth electrodes for TT systems are typically driven copper-clad steel rods (usually 1.2 m lengths coupled together to achieve the required depth), copper plates, or foundation earth electrodes (copper conductors embedded in the concrete foundations). The electrode must be in direct contact with the general mass of earth. Water and gas pipes must NOT be used as the sole means of earthing — they are extraneous-conductive-parts that require bonding TO the earthing system.',
   },
@@ -143,12 +148,12 @@ const quizQuestions = [
     id: 7,
     question: 'The earth fault loop impedance (Zs) for a circuit is the sum of:',
     options: [
-      'The resistance of the line conductor and the neutral conductor only',
+      '0.4 seconds for socket outlet circuits (or portable equipment), 5 seconds for fixed equipment',
+      'The conditions for automatic disconnection of supply cannot be met, or in specific special locations such as bathrooms',
+      'The installation to provide its own earth electrode, with the earth return path through the general mass of earth',
       'The source impedance (Ze), the line conductor impedance (R1) and the circuit protective conductor impedance (R2)',
-      'The resistance of the earth electrode only',
-      'The impedance of the supply transformer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The total earth fault loop impedance is: Zs = Ze + (R1 + R2), where Ze is the external earth fault loop impedance (from the supply), R1 is the resistance of the line conductor from the distribution board to the point of utilisation, and R2 is the resistance of the circuit protective conductor over the same length. All three elements contribute to determining the fault current that will flow.',
   },
@@ -157,12 +162,12 @@ const quizQuestions = [
     question:
       'For a 230 V circuit protected by a 32 A Type B MCB in a TN system, BS 7671 requires disconnection within:',
     options: [
-      '0.1 seconds',
       '0.4 seconds for socket outlet circuits (or portable equipment), 5 seconds for fixed equipment',
-      '10 seconds',
-      'No specific time is required',
+      'The source impedance (Ze), the line conductor impedance (R1) and the circuit protective conductor impedance (R2)',
+      'The prospective fault current, the disconnection time and the material properties of the conductor (k factor)',
+      'Corroded, loose or disconnected main protective bonding conductors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 Table 41.1 specifies maximum disconnection times for TN systems: 0.4 seconds for circuits supplying socket outlets and portable equipment (where a person could be in direct contact), and 5 seconds for circuits supplying fixed equipment. These times ensure that the touch voltage on exposed-conductive-parts does not persist long enough to cause ventricular fibrillation.',
   },
@@ -171,10 +176,10 @@ const quizQuestions = [
     question:
       'The protective conductor (CPC) in a ring final circuit can be sized using the adiabatic equation. This equation relates the minimum conductor size to:',
     options: [
-      'The length of the circuit and the voltage drop',
+      'The installation to provide its own earth electrode, with the earth return path through the general mass of earth',
       'The prospective fault current, the disconnection time and the material properties of the conductor (k factor)',
-      'The load current and the ambient temperature',
-      'The number of socket outlets on the ring',
+      'Discharge stored energy, protect against inadvertent re-energisation, and ensure the work area remains at earth potential',
+      'The source impedance (Ze), the line conductor impedance (R1) and the circuit protective conductor impedance (R2)',
     ],
     correctAnswer: 1,
     explanation:
@@ -198,12 +203,12 @@ const quizQuestions = [
     id: 11,
     question: 'Temporary earthing for HV maintenance is applied to:',
     options: [
-      'Improve the quality of test readings',
+      'The conditions for automatic disconnection of supply cannot be met, or in specific special locations such as bathrooms',
+      '0.4 seconds for socket outlet circuits (or portable equipment), 5 seconds for fixed equipment',
+      'The earthing conductor, main protective bonding conductors and circuit protective conductors all connect to form the installation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s earth reference',
       'Discharge stored energy, protect against inadvertent re-energisation, and ensure the work area remains at earth potential',
-      'Provide a better connection for portable tools',
-      'Meet insurance requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Temporary earths (portable earthing equipment) are applied to HV systems during maintenance to: discharge any stored energy (capacitive charge on cables, residual magnetism in transformers), protect workers against inadvertent re-energisation (if someone switches on the supply, the earths create a dead short circuit that will trip the protective device), and ensure the work area conductors remain at earth potential.',
   },
@@ -211,12 +216,12 @@ const quizQuestions = [
     id: 12,
     question: 'A common earthing defect found during periodic inspection is:',
     options: [
-      'Too many earth connections at the main earthing terminal',
       'Corroded, loose or disconnected main protective bonding conductors',
-      'Earth conductors that are too large',
-      'Too many supplementary bonds in the bathroom',
+      'Installing a new electrical distribution board in an existing factory',
+      'Electronic equipment and surge protective devices',
+      'To convert messages from one protocol to another',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Corroded, loose or disconnected bonding conductors are among the most commonly found defects during periodic inspection. Over time, connections can corrode (particularly at dissimilar metal joints), vibration can loosen clamps, and plumbing or gas work can result in bonding being disconnected and not reconnected. These defects can leave metallic parts unbonded, creating a serious risk of dangerous potential differences during a fault.',
   },

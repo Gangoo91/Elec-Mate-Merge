@@ -14,7 +14,12 @@ const quickCheckQuestions = [
     id: 'symbol-standard',
     question:
       'Which international standard defines the graphical symbols used in electrical circuit diagrams?',
-    options: ['BS 7671:2018', 'BS EN 60617', 'BS EN 61439', 'BS EN 61008'],
+    options: [
+      'BS EN 61439',
+      'BS EN 60617',
+      'BS 7671:2018',
+      'BS EN 61008',
+    ],
     correctIndex: 1,
     explanation:
       'BS EN 60617 (identical to IEC 60617) is the international standard for graphical symbols used in electrotechnical documentation. It defines symbols for components, connections, and devices used in circuit diagrams, schematic diagrams, and wiring diagrams. BS 7671 references these symbols but does not define them.',
@@ -36,10 +41,10 @@ const quickCheckQuestions = [
     id: 'single-line',
     question: 'In a single-line (one-line) diagram, what does a single line typically represent?',
     options: [
-      'Only the live conductor',
-      'Only the neutral conductor',
+      'Daily or weekly log of completed work not yet invoiced',
+      'Adequate temporary lighting for safe working',
       'All conductors of a circuit (live, neutral, and earth)',
-      'The protective conductor only',
+      'Even profitable businesses can fail without cash',
     ],
     correctIndex: 2,
     explanation:
@@ -49,8 +54,13 @@ const quickCheckQuestions = [
     id: 'terminal-id',
     question:
       'According to IEC 60445, which letter identifies the protective earth terminal on electrical equipment?',
-    options: ['N', 'L', 'PE', 'E'],
-    correctIndex: 2,
+    options: [
+      'N',
+      'PE',
+      'L',
+      'E',
+    ],
+    correctIndex: 1,
     explanation:
       "IEC 60445 designates the protective earth terminal as PE (Protective Earth). The neutral terminal is designated N, and line (live) terminals are designated L1, L2, L3 (or L for single-phase). While the letter 'E' is commonly used colloquially and on older equipment, PE is the correct current designation per IEC standards.",
   },
@@ -61,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The BS EN 60617 symbol for a normally open (NO) contact is:',
     options: [
-      'Two parallel lines with a diagonal line connecting them',
+      'The reference year against which emission reductions are measured',
       'Two parallel lines with a gap (the moving contact shown open)',
-      'A circle with a cross inside',
-      "A rectangle with the letter 'K' inside",
+      'To prevent electric shock during maintenance work',
+      'Non-linear effects (Brillouin/Raman scattering)',
     ],
     correctAnswer: 1,
     explanation:
@@ -74,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: 'On a circuit diagram, the symbol for a fuse is:',
     options: [
-      'A circle with a sine wave inside',
+      'Productivity, profitability, and customer satisfaction',
+      '2-4 weeks before anticipated practical completion',
       'A rectangle with a line through the centre',
-      'A zigzag line',
-      'Two semicircles back to back',
+      'Report the discrepancy and obtain correct materials',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The BS EN 60617 symbol for a fuse is a rectangle (representing the fuse body) with a straight line through the centre (representing the fuse element). Some older drawings may use an 'S' shape inside the rectangle. The zigzag line represents a resistor, the circle with a sine wave represents an AC source, and two semicircles represent a thermal overload.",
   },
@@ -88,12 +98,12 @@ const quizQuestions = [
     question:
       'An MCB (miniature circuit breaker) symbol differs from a simple switch symbol by the addition of:',
     options: [
-      'A circle around the switch symbol',
+      'A mechanical connection, future work, or a component boundary',
+      'A switch symbol with a test button and current-sensing element (toroid)',
+      'Normally Closed (contact is closed when the relay is de-energised)',
       'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
-      "The letters 'MCB' next to the symbol",
-      'A dashed line from the switch to earth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The MCB symbol is based on the basic switch symbol but with additional elements showing the tripping mechanisms: a small rectangle for the thermal (overload) trip element and/or a small arc or semicircle for the magnetic (short-circuit) trip element. This distinguishes it from a simple isolator or switch which has no automatic tripping capability.',
   },
@@ -102,9 +112,9 @@ const quizQuestions = [
     question: 'On a single-line diagram, a transformer is typically represented by:',
     options: [
       'Two coils side by side (or two circles with parallel lines between them)',
-      "A rectangle with 'TX' inside",
-      'A triangle with a circle inside',
-      'Two parallel wavy lines',
+      'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
+      'A switch symbol with a test button and current-sensing element (toroid)',
+      'A mechanical connection, future work, or a component boundary',
     ],
     correctAnswer: 0,
     explanation:
@@ -114,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'The IEC symbol for an RCD (residual current device) includes:',
     options: [
-      'A simple switch symbol with no additions',
+      'Two coils side by side (or two circles with parallel lines between them)',
       'A switch symbol with a test button and current-sensing element (toroid)',
-      "A fuse symbol with the letters 'RCD'",
-      'A circle with a lightning bolt inside',
+      'A mechanical connection, future work, or a component boundary',
+      'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,10 +137,10 @@ const quizQuestions = [
     id: 6,
     question: 'In electrical drawings, a dashed line typically represents:',
     options: [
-      'A live conductor',
-      'A neutral conductor',
+      'Normally Closed (contact is closed when the relay is de-energised)',
+      'Terminals U1, V1, W1 (start of windings) and U2, V2, W2 (end of windings)',
       'A mechanical connection, future work, or a component boundary',
-      'An earth conductor',
+      'A switch symbol with a test button and current-sensing element (toroid)',
     ],
     correctAnswer: 2,
     explanation:
@@ -141,11 +151,11 @@ const quizQuestions = [
     question: 'Terminal marking L1, L2, L3 on a three-phase motor indicates:',
     options: [
       'Three different lamp connections',
-      'Three line (phase) supply connections',
-      'Three neutral connections',
       'Three earth connections',
+      'Three neutral connections',
+      'Three line (phase) supply connections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'L1, L2, L3 designate the three line (phase) supply connections per IEC 60445. On a motor, these are the terminals where the three-phase supply is connected. The old UK convention used R (red), Y (yellow), B (blue), which is now replaced by L1 (brown), L2 (black), L3 (grey) for conductor colours per BS 7671 Amendment 2.',
   },
@@ -153,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: 'A motor symbol on a circuit diagram is typically shown as:',
     options: [
-      "A rectangle with 'M' inside",
       "A circle with 'M' inside",
       "A triangle with 'M' inside",
+      "A rectangle with 'M' inside",
       'A square with a lightning bolt inside',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The standard IEC symbol for a motor is a circle with the letter 'M' inside. Additional notation may indicate the motor type: 3~ for three-phase, 1~ for single-phase, or specific letters for DC motors. A generator uses the same circle symbol but with the letter 'G' inside.",
   },
@@ -166,12 +176,12 @@ const quizQuestions = [
     id: 9,
     question: 'On a control circuit diagram, a relay coil is shown as:',
     options: [
-      "A circle with 'K' inside",
-      'A rectangle (or circle) with a diagonal line',
+      'A switch symbol with a test button and current-sensing element (toroid)',
       'A rectangle representing the coil, labelled with the relay designation',
-      'Two parallel lines',
+      'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
+      'Terminals U1, V1, W1 (start of windings) and U2, V2, W2 (end of windings)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A relay coil is shown as a rectangle (or sometimes a circle) representing the electromagnetic coil, labelled with the relay designation (e.g., K1, KA1, KM1). The contacts of the same relay are drawn separately in the circuit where they are used, with the same designation label to show the relationship. KM typically denotes a contactor (motor), KA an auxiliary relay, and KT a timer relay.',
   },
@@ -179,12 +189,12 @@ const quizQuestions = [
     id: 10,
     question: "What does the abbreviation 'NC' mean when applied to a relay contact?",
     options: [
-      'Not Connected',
+      'Two coils side by side (or two circles with parallel lines between them)',
+      'A mechanical connection, future work, or a component boundary',
       'Normally Closed (contact is closed when the relay is de-energised)',
-      'New Circuit',
-      'Neutral Connection',
+      'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "NC stands for Normally Closed — the contact is in the closed (conducting) position when the relay coil is de-energised. When the relay energises, the NC contact opens. The complementary term is NO (Normally Open) — the contact is open when de-energised and closes when the relay energises. The 'normal' state refers to the de-energised condition of the operating mechanism.",
   },
@@ -192,12 +202,12 @@ const quizQuestions = [
     id: 11,
     question: 'IEC terminal designation for a motor star-delta starter typically includes:',
     options: [
-      'Terminals marked 1-6 only',
+      'A switch symbol with a test button and current-sensing element (toroid)',
+      'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
+      'A rectangle representing the coil, labelled with the relay designation',
       'Terminals U1, V1, W1 (start of windings) and U2, V2, W2 (end of windings)',
-      'Terminals marked A, B, C and X, Y, Z',
-      'Terminals marked R, S, T and U, V, W',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'IEC 60034-8 designates motor winding terminals as U1, V1, W1 for the start of each phase winding and U2, V2, W2 for the end of each winding. This notation replaced the older system (U, V, W and X, Y, Z). For star connection, U2, V2, W2 are linked together. For delta connection, U1-W2, V1-U2, W1-V2 are linked. Understanding this is essential for reconnecting motors during maintenance.',
   },
@@ -205,12 +215,12 @@ const quizQuestions = [
     id: 12,
     question: "When reading a manufacturer's control panel drawing, 'cross-referencing' means:",
     options: [
-      'Checking the drawing against the parts list',
       'Tracing a relay coil to its associated contacts by matching designation numbers shown on the drawing',
-      "Comparing the drawing with a different manufacturer's diagram",
-      'Verifying the drawing date against the installation date',
+      'Terminals U1, V1, W1 (start of windings) and U2, V2, W2 (end of windings)',
+      'A switch symbol with a test button and current-sensing element (toroid)',
+      'A small rectangle (thermal element) and/or arc (magnetic element) at the contact',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cross-referencing on control panel drawings allows you to trace the relationship between a relay coil and all its associated contacts, which may appear on different pages or sections of the drawing. The relay designation (e.g., K1) appears at both the coil and its contacts. Many drawings include a contact cross-reference table showing the page/line number where each contact is used. This is essential for fault-finding in complex control circuits.',
   },

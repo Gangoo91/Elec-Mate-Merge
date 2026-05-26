@@ -33,20 +33,25 @@ const quickCheckQuestions = [
     id: 'rh-definition',
     question: 'What does 50% relative humidity mean?',
     options: [
-      'Air contains 50% water by mass',
+      'Smart building systems including BMS and integrated controls',
+      'Work completed, problems encountered, materials used, and time spent',
+      'Sakichi Toyoda as part of the Toyota Production System',
       'Air holds half the moisture it could at that temperature',
-      'The dew point is at 50% of the dry bulb temperature',
-      'Wet bulb is 50% lower than dry bulb',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Relative humidity is the ratio of actual water vapour pressure to the saturation vapour pressure at that temperature. 50% RH means the air holds half the maximum possible moisture at that dry bulb temperature.',
   },
   {
     id: 'moisture-content',
     question: 'What are typical units for moisture content (specific humidity) in HVAC?',
-    options: ['% RH', 'g/kg (grams per kg dry air)', '°C', 'kPa'],
-    correctIndex: 1,
+    options: [
+      'The contractor\\\\\\\\\\\\\\\'s own poor planning',
+      'The branch with lower resistance',
+      'Less than 1° (ideally <0.5°)',
+      'g/kg (grams per kg dry air)',
+    ],
+    correctIndex: 3,
     explanation:
       'Moisture content (specific humidity) is expressed as g/kg - grams of water vapour per kilogram of dry air. This absolute measure remains constant during sensible heating/cooling processes.',
   },
@@ -54,12 +59,12 @@ const quickCheckQuestions = [
     id: 'dew-point',
     question: 'What happens when air is cooled to its dew point temperature?',
     options: [
-      'The air expands',
       'Condensation begins to form',
+      'The air expands',
       'Relative humidity drops to 0%',
       'Pressure increases',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'At dew point temperature, the air becomes saturated (100% RH). Any further cooling causes water vapour to condense out as liquid water (dew, mist, or condensation on surfaces).',
   },
@@ -67,10 +72,10 @@ const quickCheckQuestions = [
     id: 'wet-bulb',
     question: 'Why is wet bulb temperature always lower than or equal to dry bulb temperature?',
     options: [
-      'The thermometer is less accurate',
+      'The sensor measures radiation',
       'Evaporation from the wet wick causes cooling',
       'Water has a higher specific heat',
-      'The sensor measures radiation',
+      'The thermometer is less accurate',
     ],
     correctIndex: 1,
     explanation:
@@ -96,8 +101,13 @@ const quizQuestions = [
     id: 2,
     question:
       'If air at 25°C has a moisture content of 10 g/kg and can hold a maximum of 20 g/kg at saturation, what is the relative humidity?',
-    options: ['25%', '50%', '75%', '100%'],
-    correctAnswer: 1,
+    options: [
+      '75%',
+      '25%',
+      '50%',
+      '100%',
+    ],
+    correctAnswer: 2,
     explanation:
       'RH ≈ (actual moisture / saturation moisture) × 100% = (10/20) × 100% = 50%. Note: This is an approximation; precise calculation uses vapour pressures.',
   },
@@ -105,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the dew point temperature?',
     options: [
-      'The temperature at which air reaches 50% RH',
-      'The temperature at which condensation begins',
       'The average of wet and dry bulb temperatures',
+      'The temperature at which air reaches 50% RH',
       'The temperature of the evaporator coil',
+      'The temperature at which condensation begins',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Dew point is the temperature to which air must be cooled (at constant pressure and moisture content) to reach 100% saturation and begin condensation.',
   },
@@ -119,12 +129,12 @@ const quizQuestions = [
     question:
       'Air at 22°C and 60% RH is heated to 30°C. What happens to the moisture content and RH?',
     options: [
-      'Moisture content increases, RH increases',
       'Moisture content stays same, RH decreases',
+      'Moisture content increases, RH increases',
       'Moisture content decreases, RH increases',
       'Both stay the same',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Sensible heating adds no moisture, so moisture content (g/kg) stays constant. However, warmer air can hold more moisture, so RH decreases when temperature rises.',
   },
@@ -132,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: 'The wet bulb temperature is measured using:',
     options: [
-      'A thermometer in a water bath',
+      'Air is unsaturated with moderate humidity',
       'A thermometer with a wet wick in moving air',
-      'An electronic humidity sensor',
-      'A pressure gauge',
+      'The temperature at which condensation begins',
+      'It remains constant during sensible heating/cooling',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,20 +155,25 @@ const quizQuestions = [
     id: 6,
     question: 'What is the wet bulb depression?',
     options: [
-      'The wet bulb temperature itself',
+      'The partial pressure of water vapour when air is saturated',
+      'The temperature at which condensation begins',
       'The difference between dry bulb and wet bulb temperatures',
-      'The dew point temperature',
-      'The saturation temperature',
+      'It remains constant during sensible heating/cooling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Wet bulb depression = Dry bulb - Wet bulb temperature. A larger depression indicates lower relative humidity; zero depression means 100% RH (saturated air).',
   },
   {
     id: 7,
     question: 'Comfort conditions for offices typically require RH in the range of:',
-    options: ['20-30%', '40-60%', '70-80%', '80-90%'],
-    correctAnswer: 1,
+    options: [
+      '20-30%',
+      '80-90%',
+      '70-80%',
+      '40-60%',
+    ],
+    correctAnswer: 3,
     explanation:
       'CIBSE Guide A recommends 40-60% RH for comfort. Below 40% can cause dry skin and static; above 60% can feel stuffy and encourage mould growth.',
   },
@@ -166,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is saturation vapour pressure?',
     options: [
-      'The maximum pressure air can exert',
       'The partial pressure of water vapour when air is saturated',
       'The atmospheric pressure at sea level',
+      'The maximum pressure air can exert',
       'The pressure in a sealed container',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Saturation vapour pressure (ps) is the maximum partial pressure water vapour can exert at a given temperature. It increases exponentially with temperature.',
   },
@@ -179,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why is moisture content (g/kg) preferred over RH for HVAC calculations?',
     options: [
-      'It is easier to measure',
+      'A thermometer with a wet wick in moving air',
       'It remains constant during sensible heating/cooling',
-      'It has simpler units',
-      'It is required by regulations',
+      'The partial pressure of water vapour when air is saturated',
+      'Air is unsaturated with moderate humidity',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,7 +207,12 @@ const quizQuestions = [
     id: 10,
     question:
       'The latent heat of vaporisation of water at atmospheric conditions is approximately:',
-    options: ['1000 kJ/kg', '2260 kJ/kg', '2501 kJ/kg', '4186 kJ/kg'],
+    options: [
+      '1000 kJ/kg',
+      '2260 kJ/kg',
+      '2501 kJ/kg',
+      '4186 kJ/kg',
+    ],
     correctAnswer: 2,
     explanation:
       'The latent heat of vaporisation at 0°C is approximately 2501 kJ/kg (hfg). This energy is absorbed when water evaporates and released when vapour condenses.',
@@ -201,20 +221,25 @@ const quizQuestions = [
     id: 11,
     question: 'If dry bulb = 24°C, wet bulb = 17°C, and dew point = 12°C, what can be concluded?',
     options: [
-      'Air is saturated',
+      'A thermometer with a wet wick in moving air',
+      'The temperature at which condensation begins',
+      'Moisture content stays same, RH decreases',
       'Air is unsaturated with moderate humidity',
-      'Air is completely dry',
-      'Measurements are incorrect',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The wet bulb (17°C) is between dry bulb (24°C) and dew point (12°C), indicating unsaturated air. The 7°C wet bulb depression suggests moderate humidity (around 50% RH).',
   },
   {
     id: 12,
     question: 'What is the approximate saturation moisture content of air at 20°C?',
-    options: ['7.4 g/kg', '14.7 g/kg', '29.4 g/kg', '58.8 g/kg'],
-    correctAnswer: 1,
+    options: [
+      '14.7 g/kg',
+      '58.8 g/kg',
+      '7.4 g/kg',
+      '29.4 g/kg',
+    ],
+    correctAnswer: 0,
     explanation:
       'At 20°C and 101.325 kPa, the saturation moisture content is approximately 14.7 g/kg. This value roughly doubles for every 10°C temperature rise.',
   },

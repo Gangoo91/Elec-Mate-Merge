@@ -41,12 +41,12 @@ const checks = [
     question:
       'A T&E cable runs 2 m through 100 mm of loft insulation, then is clipped direct to the joists for the remaining 23 m. Which Reference Method drives the sizing calculation?',
     options: [
-      'Method C (clipped direct) — the longest section wins.',
+      'The depth of the excavation multiplied by 1.5, or as determined by a competent person',
+      'They reduce the amount of work at height and on-site hazardous activities by moving work to a controlled factory environment',
       'Method 100 / 103 (in thermal insulation) — the worst section governs because the cable will overheat there first.',
-      'Average the two methods.',
-      'Pick whichever gives the larger CSA after Vd check.',
+      'Records of who was trained, what training was given, when it was delivered, and when refresher training is due',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BS 7671 Appendix 4 makes you size for the worst portion of the run. Two metres in thermal insulation will reach the limiting temperature long before the clipped-direct section does, so Method 100 / 103 (Ci ≈ 0.5 for total enclosure) sets the floor. You can never size a cable on its easiest stretch.',
   },
@@ -57,8 +57,8 @@ const checks = [
     options: [
       'It ≥ 32 A — derates only matter for the load, not the cable.',
       'It ≥ 32 / (0.94 × 0.70 × 0.5) = 32 / 0.329 ≈ 97.3 A.',
-      'It ≥ 32 × (0.94 + 0.70 + 0.5) = 67.6 A.',
       'It ≥ 32 / 0.5 = 64 A — only the worst factor counts.',
+      'It ≥ 32 × (0.94 + 0.70 + 0.5) = 67.6 A.',
     ],
     correctIndex: 1,
     explanation:
@@ -69,12 +69,12 @@ const checks = [
     question:
       'A 25 m radial socket circuit at full design current of 32 A on 6 mm² T&E (mV/A/m = 7.3) gives what voltage drop, and is it inside the 5 % limit?',
     options: [
+      'Hearing only the parts of a message that interest you or confirm your existing views',
+      'That it is firm, level and capable of supporting the tower and its load',
+      'The measured variable and the instrument function (e.g., FT = flow transmitter, PI = pressure indicator)',
       'Vd = 7.3 × 32 × 25 / 1000 = 5.84 V — that is 2.54 % of 230 V — comfortably under 5 %.',
-      'Vd = 7.3 × 32 × 25 = 5840 V — fails.',
-      'Vd = 5.84 V — that is 12.7 % of 230 V — fails.',
-      'Vd = 7.3 V — pass.',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'The mV/A/m figure already includes the out-and-back loop. Vd in volts = (mV/A/m × Ib × L) / 1000 = (7.3 × 32 × 25) / 1000 = 5.84 V. As a percentage of 230 V, that is 5.84 / 230 = 2.54 %. The non-lighting BS 7671 limit is 5 %, so the circuit clears Vd with margin.',
   },
@@ -86,12 +86,12 @@ const quizQuestions = [
     question:
       'You are sizing a 25 m radial that runs through three derate environments. Which length and which derate factors set the required tabulated CCC?',
     options: [
-      'Average the conditions over the whole 25 m.',
-      'Use the easiest section — that is what the cable will mostly be doing.',
+      'Identify previously coded defects, recommended improvements, and any limitations — to inform scope and expected condition',
       'Use the worst section — the cable can only be as good as its hottest point — and apply the dominant Ca, Cg and Ci together.',
-      'Ignore derates if the route is mostly clipped direct.',
+      'A statutory fallback scheme that implies payment and adjudication terms into construction contracts that do not already comply with the Construction Act',
+      'A two-pole GS38-compliant voltage indicator (e.g. Martindale VI-13800, Kewtech KEWPROVE) — purpose-designed for safe isolation.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Cables fail at the hottest point first. BS 7671 Appendix 4 makes you derate for the worst conditions on the route. If 2 m of the run is in thermal insulation and the rest is clipped direct, you must size on the in-insulation portion. That is non-negotiable.',
   },
@@ -99,8 +99,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A circuit has Ib = 25 A, Ca = 0.91, Cg = 0.80, Ci = 1.0 (no insulation). Required tabulated It is:',
-    options: ['25 A', '~34.3 A', '~58 A', '~22 A'],
-    correctAnswer: 1,
+    options: [
+      '~58 A',
+      '25 A',
+      '~34.3 A',
+      '~22 A',
+    ],
+    correctAnswer: 2,
     explanation:
       'It ≥ Ib / (Ca × Cg × Ci) = 25 / (0.91 × 0.80 × 1.0) = 25 / 0.728 = 34.3 A. You then look up Table 4D5 (or relevant Reference Method table) and pick the smallest CSA whose tabulated CCC is at least 34.3 A.',
   },
@@ -109,12 +114,12 @@ const quizQuestions = [
     question:
       'Why is the BS 7671 inequality Ib ≤ In ≤ Iz, and not Ib ≤ Iz ≤ In?',
     options: [
-      'Iz is always larger than In on any installation.',
+      'The principal contractor must establish and maintain appropriate emergency procedures, including arrangements for first aid, fire, and evacuation, and ensure they are tested and understood by all site workers',
+      'Consider replacing the oversized motors with correctly sized alternatives, or fitting VSDs to match motor speed to the actual load requirement, reducing energy consumption and improving the power factor',
+      'In a clearly identified, easily accessible location known to all workers — flagged at induction and on the site\\\\\\\\\\\\\\\'s emergency information',
       'In must be at or above Ib so it does not nuisance-trip; Iz must be at or above In so the cable can carry the trip current long enough for the device to operate without cooking the cable.',
-      'It does not matter which way round.',
-      'Because BS 7671 says so — no underlying reason.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The protective device must let the design load through (In ≥ Ib). The cable must be able to carry whatever current the device lets through, including overload, until the device operates (Iz ≥ In). The order is structural: load, then device, then cable.',
   },
@@ -122,8 +127,13 @@ const quizQuestions = [
     id: 4,
     question:
       'A 4 mm² T&E circuit (mV/A/m ≈ 11) carries a 32 A oven over a 30 m route. Vd in volts is:',
-    options: ['1.05 V', '~10.56 V', '~33 V', '~3.5 V'],
-    correctAnswer: 1,
+    options: [
+      '~10.56 V',
+      '1.05 V',
+      '~33 V',
+      '~3.5 V',
+    ],
+    correctAnswer: 0,
     explanation:
       'Vd = (mV/A/m × Ib × L) / 1000 = (11 × 32 × 30) / 1000 = 10.56 V. As a percentage of 230 V that is 4.59 % — under the 5 % non-lighting limit, but only just. A site supervisor would size up to 6 mm² to leave headroom for diversity changes.',
   },
@@ -132,10 +142,10 @@ const quizQuestions = [
     question:
       'You have sized a 6 mm² T&E to satisfy CCC and Vd, but on site the conduit drop is already full and the cable will not pull. The correct response is:',
     options: [
-      'Lubricate the cable and force it.',
+      'Any addition or alteration to an existing circuit that does not extend it to a new circuit — covers most non-notifiable work in dwellings AND the equivalent in commercial.',
       'Change the conduit size or add a draw box, then re-check the spacing factor (Sub 3.6) — sizing is not just electrical, it is mechanical too.',
-      'Drop to 4 mm² to make it fit.',
-      'Run the new cable surface.',
+      'Deliver a controlled electric shock to restore a normal heart rhythm during ventricular fibrillation',
+      'The emergency services have clear access to the site, gates are unlocked and someone meets the ambulance',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,8 +155,13 @@ const quizQuestions = [
     id: 6,
     question:
       'For a 32 A Type B MCB on a TN-C-S system, BS 7671 Table 41.3 gives Zs ≤ ~1.37 Ω. With Ze = 0.35 Ω, the maximum permitted (R1 + R2) for the circuit is approximately:',
-    options: ['0.35 Ω', '~1.02 Ω', '1.72 Ω', '1.37 Ω'],
-    correctAnswer: 1,
+    options: [
+      '0.35 Ω',
+      '1.72 Ω',
+      '~1.02 Ω',
+      '1.37 Ω',
+    ],
+    correctAnswer: 2,
     explanation:
       'Zs = Ze + (R1 + R2). Maximum (R1 + R2) = 1.37 − 0.35 = 1.02 Ω. If your chosen cable on the 25 m route gives a measured (R1 + R2) above that, the disconnection time is not met and you must either size up the CPC or add 30 mA RCD additional protection.',
   },
@@ -154,8 +169,13 @@ const quizQuestions = [
     id: 7,
     question:
       'I²R thermal sanity check — a 6 mm² T&E carries 32 A over 25 m. Loop resistance ≈ 2 × 25 × 0.00308 ≈ 0.154 Ω. Power dissipated as heat in the cable run is about:',
-    options: ['~5 W', '~50 W', '~158 W', '~500 W'],
-    correctAnswer: 2,
+    options: [
+      '~5 W',
+      '~50 W',
+      '~500 W',
+      '~158 W',
+    ],
+    correctAnswer: 3,
     explanation:
       'P = I²R = 32² × 0.154 = 1024 × 0.154 ≈ 158 W. That is 158 W of low-grade heat shedding into whatever surrounds the cable. In free air on cleats it is fine. In thermal insulation, with no air movement, it cooks. That is why Ci is so brutal.',
   },
@@ -164,12 +184,12 @@ const quizQuestions = [
     question:
       'You design a circuit and every gate passes — CCC, Vd, thermal, Zs, mechanical. The final inequality you write on the design sheet is:',
     options: [
-      'Ib ≤ Iz only.',
       'Ib ≤ In ≤ Iz, with Vd, I²R and Zs all separately verified within their respective limits.',
-      'In = Ib exactly.',
-      'Iz ≥ Ib only.',
+      'The process of cleaning concrete from tools and equipment — the alkaline wash water can pollute watercourses',
+      'Joints and connections must be properly made to be mechanically and electrically sound',
+      'Temptation bundling pairs the habit with a simultaneous pleasure, not a delayed reward',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The final design line is Reg 433.1.1 — Ib ≤ In ≤ Iz — and you record alongside it: Vd at full load (V and %), I²R thermal (W), and Zs at the furthest point against the Table 41.3 limit. That is what an inspector reads and what your future self will thank you for.',
   },

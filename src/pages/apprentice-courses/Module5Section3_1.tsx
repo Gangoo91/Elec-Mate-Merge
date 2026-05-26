@@ -16,10 +16,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is job breakdown?',
     options: [
-      'Making jobs harder',
+      'False - always use correct reference point',
       'Splitting large jobs into smaller, manageable tasks',
-      'Working alone',
-      'Avoiding responsibility',
+      'Electrical supplies energised and tested',
+      'The minimum angle for total internal reflection to occur',
     ],
     correctIndex: 1,
     explanation:
@@ -29,20 +29,25 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should work be sequenced logically?',
     options: [
-      'To look professional',
+      'Death benefits, injury cover, and welfare support',
+      'Durable and legible marking identifying each circuit',
       'To prevent rework and avoid clashes with other trades',
-      'To work faster',
-      'To use fewer materials',
+      'Only the last rung scanned determines the final output state',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Logical sequencing prevents rework, avoids clashes with other trades, and ensures safe, efficient installations.',
   },
   {
     id: 3,
     question: 'Give one risk of poor sequencing.',
-    options: ['Better teamwork', 'Wasted time and materials', 'Faster completion', 'Lower costs'],
-    correctIndex: 1,
+    options: [
+      'Assessment of Repetitive Tasks',
+      '100-150% of full-load current',
+      'Temperature and humidity sensors',
+      'Wasted time and materials',
+    ],
+    correctIndex: 3,
     explanation:
       'Poor sequencing leads to wasted time and materials, increased accidents, delays from rework, and non-compliance with schedules.',
   },
@@ -57,10 +62,10 @@ const Module5Section3_1 = () => {
       id: 1,
       question: 'What is the purpose of job breakdown?',
       options: [
-        'To make work harder',
+        'Never miss a habit 2 days in a row to prevent breaking the pattern',
         'To divide large jobs into smaller, manageable tasks',
-        'To work alone',
-        'To avoid planning',
+        'Protecting sensitive electronic equipment from voltage surges',
+        'When base voltage rises above ~0.7 V (so base current flows).',
       ],
       correctAnswer: 1,
       explanation:
@@ -70,28 +75,38 @@ const Module5Section3_1 = () => {
       id: 2,
       question: 'What is meant by sequencing in electrical installation?',
       options: [
-        'Working randomly',
+        'Over-tightening terminals damaging insulation',
+        'Check for proper sealing and protection',
         'Arranging tasks in the correct, logical order',
-        'Working quickly',
-        'Using expensive tools',
+        'Gather information about the fault symptoms',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Sequencing means arranging tasks in the correct, logical order to avoid rework and safety issues.',
     },
     {
       id: 3,
       question: 'Which comes first: installing accessories or containment?',
-      options: ['Accessories', 'Containment', 'Both at the same time', "It doesn't matter"],
-      correctAnswer: 1,
+      options: [
+        'Both at the same time',
+        'Accessories',
+        "It doesn't matter",
+        'Containment',
+      ],
+      correctAnswer: 3,
       explanation:
         'Containment must be installed first, then cables, then accessories. This logical sequence prevents rework and damage.',
     },
     {
       id: 4,
       question: 'Name one tool that can be used for sequencing tasks.',
-      options: ['Screwdriver', 'Gantt chart', 'Cable stripper', 'Voltmeter'],
-      correctAnswer: 1,
+      options: [
+        'Gantt chart',
+        'Screwdriver',
+        'Cable stripper',
+        'Voltmeter',
+      ],
+      correctAnswer: 0,
       explanation:
         'Gantt charts and task lists are useful tools for tracking work stages and sequencing tasks.',
     },
@@ -106,8 +121,13 @@ const Module5Section3_1 = () => {
     {
       id: 6,
       question: 'Who usually sets the task sequence on site?',
-      options: ['Apprentice', 'Site supervisor or project manager', 'Customer', 'Delivery driver'],
-      correctAnswer: 1,
+      options: [
+        'The person who signs the certificate',
+        'Portable Appliance Testing',
+        'Site supervisor or project manager',
+        'Short circuit (L-N or L-E)',
+      ],
+      correctAnswer: 2,
       explanation:
         'The site supervisor or project manager usually decides the sequence, but electricians must understand and follow it.',
     },
@@ -115,12 +135,12 @@ const Module5Section3_1 = () => {
       id: 7,
       question: 'Give one example of poor sequencing.',
       options: [
-        'Installing containment first',
+        'About 3.5 hours for testing and documentation combined',
+        'Total number of bends and cumulative angle changes',
+        'Starting current and protection coordination',
         'Installing sockets before plastering is complete',
-        'Testing after terminations',
-        'Planning the work',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Installing sockets before plastering is complete is poor sequencing that can lead to damage and rework.',
     },
@@ -128,12 +148,12 @@ const Module5Section3_1 = () => {
       id: 8,
       question: 'Why is coordination with other trades important in sequencing?',
       options: [
-        'To make friends',
         'To avoid clashes and rework',
-        'To work slower',
-        'To use more materials',
+        'Upward Light Output Ratio',
+        'Precise speed control of AC motors',
+        'Easily scalable without rewiring',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Coordination with other trades prevents clashes, reduces rework, and ensures smooth project progression.',
     },
@@ -141,10 +161,10 @@ const Module5Section3_1 = () => {
       id: 9,
       question: 'What should you do if unforeseen issues affect the sequence?',
       options: [
-        'Continue as planned',
+        "The test current passes through earth causing imbalance",
         "Adjust with supervisor's approval and communicate changes",
-        'Stop work',
-        'Work around the problem alone',
+        "Increased resistance causes overheating, arcing, and eventual failure",
+        "A position is what someone says they want; an interest is why they want it",
       ],
       correctAnswer: 1,
       explanation:
@@ -153,7 +173,12 @@ const Module5Section3_1 = () => {
     {
       id: 10,
       question: 'Which stage usually comes just before testing?',
-      options: ['Containment', 'Cabling', 'Terminations', 'Planning'],
+      options: [
+        'Containment',
+        'Cabling',
+        'Terminations',
+        'Planning',
+      ],
       correctAnswer: 2,
       explanation:
         'Terminations come just before testing in the typical sequence: containment → cabling → terminations → testing.',

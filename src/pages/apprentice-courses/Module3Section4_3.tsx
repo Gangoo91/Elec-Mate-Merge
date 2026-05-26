@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 'ferrule-purpose',
     question: 'What is the main purpose of using ferrules on flexible conductors?',
     options: [
-      'To change the cable colour',
+      'Registration, insurance, accounts, marketing, and legal requirements',
+      'BMS provides centralised control vs manual individual controls',
+      'Circuit identification, voltage levels, and emergency contact information',
       'To prevent conductor strand splay and ensure reliable connection',
-      'To increase conductor size',
-      'To reduce cable cost',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Ferrules prevent strand splay in multi-stranded conductors, ensuring all strands make contact and providing a reliable connection in screw or clamp terminals.',
   },
@@ -41,28 +41,38 @@ const quickCheckQuestions = [
     id: 'sleeving-fit',
     question: 'Why must sleeving fit snugly over a conductor?',
     options: [
-      'To look professional',
       'To prevent slipping and ensure full protection',
-      'To reduce material cost',
-      'To make installation faster',
+      'VFDs, fluorescent lighting, or high-frequency switching',
+      'A conductor in the lighting circuit is broken',
+      'Rain, ice, lightning, fog, and extreme temperatures',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Snug-fitting sleeving prevents it from slipping off the conductor and ensures complete coverage and protection of exposed copper.',
   },
   {
     id: 'crimp-types',
     question: 'Name one type of crimp terminal.',
-    options: ['Ring terminal', 'Cable gland', 'Junction box', 'Circuit breaker'],
-    correctIndex: 0,
+    options: [
+      'Junction box',
+      'Cable gland',
+      'Ring terminal',
+      'Circuit breaker',
+    ],
+    correctIndex: 2,
     explanation:
       'Ring terminals are a common type of crimp terminal used for bolted connections, providing a secure mechanical and electrical connection.',
   },
   {
     id: 'earth-sleeving',
     question: 'What colour is sleeving for an earth conductor in the UK?',
-    options: ['Blue', 'Brown', 'Green/Yellow', 'Red'],
-    correctIndex: 2,
+    options: [
+      'Brown',
+      'Green/Yellow',
+      'Red',
+      'Blue',
+    ],
+    correctIndex: 1,
     explanation:
       'In the UK, earth conductor sleeving must be green/yellow as per BS 7671, providing clear identification for safety.',
   },
@@ -72,7 +82,12 @@ const mainQuizQuestions = [
   {
     id: 1,
     question: 'Which termination method prevents strand splay in flexible conductors?',
-    options: ['Sleeving', 'Ferrules', 'Crimps', 'Tape'],
+    options: [
+      'Sleeving',
+      'Ferrules',
+      'Crimps',
+      'Tape',
+    ],
     correctAnswer: 1,
     explanation:
       'Ferrules are specifically designed to prevent strand splay in flexible conductors, ensuring all strands are contained and make proper contact.',
@@ -80,7 +95,12 @@ const mainQuizQuestions = [
   {
     id: 2,
     question: 'What colour is sleeving for an earth conductor in the UK?',
-    options: ['Blue', 'Brown', 'Green/Yellow', 'Red'],
+    options: [
+      'Red',
+      'Blue',
+      'Green/Yellow',
+      'Brown',
+    ],
     correctAnswer: 2,
     explanation:
       'Earth conductor sleeving must be green/yellow in the UK as specified in BS 7671 for clear identification and safety.',
@@ -96,15 +116,25 @@ const mainQuizQuestions = [
   {
     id: 4,
     question: 'Name one tool used for installing ferrules.',
-    options: ['Screwdriver', 'Ferrule crimping tool', 'Wire strippers', 'Multimeter'],
-    correctAnswer: 1,
+    options: [
+      'Ferrule crimping tool',
+      'Screwdriver',
+      'Wire strippers',
+      'Multimeter',
+    ],
+    correctAnswer: 0,
     explanation:
       'A ferrule crimping tool is specifically designed to properly compress ferrules onto conductors for secure connections.',
   },
   {
     id: 5,
     question: 'Which crimp type is best for bolted connections?',
-    options: ['Butt connector', 'Ring terminal', 'Spade terminal', 'Blade connector'],
+    options: [
+      'Butt connector',
+      'Ring terminal',
+      'Blade connector',
+      'Spade terminal',
+    ],
     correctAnswer: 1,
     explanation:
       'Ring terminals provide the most secure connection for bolted applications as they completely encircle the bolt.',
@@ -113,12 +143,12 @@ const mainQuizQuestions = [
     id: 6,
     question: 'Why should you perform a tug-test on a crimp?',
     options: [
-      'To check insulation colour',
+      'Lithium Iron Phosphate (LiFePO4)',
+      'To maintain minimum flow when TRVs close',
       'To ensure the conductor is secure',
-      'To stretch the wire',
-      'To mark the cable',
+      'Pre-Construction Information',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A tug-test verifies that the crimp has properly gripped the conductor and won't come loose under normal operating conditions.",
   },
@@ -126,12 +156,12 @@ const mainQuizQuestions = [
     id: 7,
     question: 'Give one risk of loose cable terminations.',
     options: [
-      'Reduced cable flexibility',
+      '2 times the mounting height',
+      'Can give false high readings',
+      'Starting current and running current',
       'Overheating and potential fire risk',
-      'Increased cable cost',
-      'Slower installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Loose terminations create high resistance joints that generate heat, potentially leading to overheating, arcing, and fire risk.',
   },
@@ -139,12 +169,12 @@ const mainQuizQuestions = [
     id: 8,
     question: 'What must be done before sliding sleeving onto a conductor?',
     options: [
-      'Test the circuit',
       'Strip the insulation and prepare the conductor end',
-      'Mark the cable',
-      'Connect to earth',
+      'A circuit containing both series and parallel combinations',
+      'Higher efficiency, especially at peak ambient temperatures',
+      'Limit fault current in case of errors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The conductor must be properly stripped and prepared before sleeving can be fitted to ensure proper fit and coverage.',
   },

@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'In the half-split diagnostic technique, where do you make your first test measurement?',
     options: [
-      'At the power supply input',
-      'At the final load',
       'At the approximate midpoint of the circuit or system',
-      'At the earth connection',
+      'Disconnect at mid-point and test each half separately',
+      'Significantly increases temperature requiring derating',
+      'Earth for correct equipment operation, not primarily for safety',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'The half-split technique works by testing at the midpoint of the circuit. The result tells you which half contains the fault. You then test at the midpoint of the faulty half, and so on, rapidly narrowing down the fault location. Each test eliminates approximately half of the remaining possibilities.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 'input-output-method',
     question: 'The input-to-output (signal tracing) method is most appropriate when:',
     options: [
-      'You have no test equipment available',
-      'The circuit has a clear signal flow path from input to output',
       'The fault is known to be in the power supply',
+      'You have no test equipment available',
       'Multiple faults exist simultaneously',
+      'The circuit has a clear signal flow path from input to output',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The input-to-output method follows the signal or power flow through the circuit from source to load. It is most effective when there is a clear, sequential flow path — such as a control circuit where the signal passes through a series of devices. You test at each stage until you find where the expected signal is lost.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'six-point-technique',
     question: 'The six-point fault-finding technique involves which sequence of steps?',
     options: [
-      'Measure, record, replace, test, document, close',
+      '470mm above the platform (approximately halfway between platform and guardrail)',
+      'To allow maintenance and provide alternative power path if UPS fails',
+      'After I complete the final test on an installation, I will take three photographs',
       'Collect evidence, analyse evidence, locate fault, determine cause, rectify fault, check system',
-      'Isolate, lock off, prove dead, repair, test, energise',
-      'Plan, prepare, execute, verify, commission, handover',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The six-point technique provides a structured framework: (1) collect evidence — gather symptoms and information, (2) analyse evidence — interpret the data logically, (3) locate the fault — identify exactly where the problem is, (4) determine the cause — understand why it happened, (5) rectify the fault — carry out the repair, (6) check the system — verify the repair has resolved the issue and no secondary faults exist.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'In a systematic diagnostic approach, what should you do if your initial hypothesis is proved wrong by testing?',
     options: [
-      'Replace the component anyway, as it may fail soon',
+      'When the matter is urgent, complex, sensitive, or requires back-and-forth discussion',
+      'Vibration from the compressor causing a marginal connection or component to make intermittent contact',
       'Return to the evidence, review your analysis, and form a new hypothesis based on the test results',
-      'Ask another technician to take over the job',
-      'Reset the equipment and hope the fault does not recur',
+      'Lower power consumption, longer life, better reliability, and reduced maintenance',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A disproved hypothesis is not a failure — it is valuable information. The test result has eliminated one possible cause and may point towards the actual fault. Return to your evidence, incorporate the new data, and form a revised hypothesis. This iterative process is at the heart of systematic fault finding.',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The primary advantage of a systematic diagnostic approach over trial-and-error is:',
     options: [
-      'It requires less technical knowledge',
+      'It ensures you fully understand the message and can confirm it back',
       'It minimises diagnostic time by eliminating possible causes logically rather than randomly',
-      'It does not require any test equipment',
-      'It only works on simple circuits',
+      'Barriers, warning signs, and exclusion zones should be established to keep the public away from the work area',
+      'Insulation resistance checks safety of wiring; functional testing checks operation of equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,7 +84,12 @@ const quizQuestions = [
     id: 2,
     question:
       'In a series control circuit with 8 devices, using the half-split technique, the maximum number of tests needed to locate a single open-circuit fault is:',
-    options: ['8 tests', '4 tests', '3 tests', '2 tests'],
+    options: [
+      '2 tests',
+      '8 tests',
+      '3 tests',
+      '4 tests',
+    ],
     correctAnswer: 2,
     explanation:
       'Using half-split on 8 devices: test 1 (midpoint) narrows to 4 devices, test 2 narrows to 2 devices, test 3 identifies the faulty device. In general, the maximum number of tests is log2(n), rounded up. For 8 devices: log2(8) = 3 tests. Compare this to up to 8 tests with a sequential approach.',
@@ -94,12 +99,12 @@ const quizQuestions = [
     question:
       'When using the input-to-output method on a motor starter circuit, you find 230 V at the contactor coil terminal A1 but 0 V at terminal A2. This indicates:',
     options: [
-      'The contactor coil is healthy',
-      'The supply to the circuit is faulty',
+      'It identifies the root cause so that the same fault does not recur after repair',
+      'Approximately midway — at the auxiliary contact or overload relay contact',
+      'Verify the repair has resolved the original fault AND check for any secondary faults or collateral damage',
       'The contactor coil has an open circuit (or the neutral connection to A2 is broken)',
-      'The motor winding has failed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'If you measure 230 V at A1 (line side) but 0 V at A2 (neutral side), there are two possibilities: the coil is open-circuit (no current can flow to develop a voltage at A2), or the neutral connection from A2 back to the supply neutral is broken. Either way, the fault is localised to the coil circuit — not the supply or motor.',
   },
@@ -107,12 +112,12 @@ const quizQuestions = [
     id: 4,
     question: 'The function testing method of fault finding involves:',
     options: [
-      'Testing each component individually after removal from the circuit',
       'Operating the system step by step through its normal sequence and observing where it fails',
+      'Testing each component individually after removal from the circuit',
       'Measuring the resistance of every wire in the circuit',
       'Replacing components one at a time until the fault clears',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Function testing operates the system through its normal operational sequence while observing each stage. When the sequence stops or behaves abnormally, you have identified the stage where the fault lies. This is particularly effective for sequential control circuits and automated systems.',
   },
@@ -121,10 +126,10 @@ const quizQuestions = [
     question:
       'A motor starter circuit has the following: supply present at the isolator output, supply present at the fuse output, no voltage at the contactor coil A1 terminal. The fault is most likely in:',
     options: [
-      'The motor windings',
+      'Each test performed, its result, the reasoning behind the test, and the conclusions drawn',
       'The control circuit between the fuses and the contactor coil — typically a control switch, interlock or overload contact',
-      'The main power supply',
-      'The cable between the starter and the motor',
+      'Using the PLC diagnostic display to identify which input or output has an unexpected state, then investigating that specific point',
+      'Operating the system step by step through its normal sequence and observing where it fails',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,10 +140,10 @@ const quizQuestions = [
     question:
       'Which diagnostic approach would be MOST efficient for a fault in a PLC-controlled conveyor system with 40 inputs and outputs?',
     options: [
-      'Testing every input and output sequentially from the first',
-      'Replacing the PLC and hoping the fault clears',
+      'The switch-disconnector on the supply side of THIS board (or, if it has none, on the upstream board)',
+      'A material whose conductivity sits between a conductor and an insulator and can be controlled',
       'Using the PLC diagnostic display to identify which input or output has an unexpected state, then investigating that specific point',
-      'Disconnecting all field wiring and testing each wire individually',
+      'Calmly restate the concern using another I-message, such as "I understand it might seem that way, but this is about safety and I need us to follow the procedure"',
     ],
     correctAnswer: 2,
     explanation:
@@ -149,12 +154,12 @@ const quizQuestions = [
     question:
       "After repairing a fault, the 'check system' step of the six-point technique requires you to:",
     options: [
-      'Simply switch on and walk away',
+      'The contactor coil has an open circuit (or the neutral connection to A2 is broken)',
+      'Form a hypothesis based on evidence, test the hypothesis, and revise if necessary',
+      'Operating the system step by step through its normal sequence and observing where it fails',
       'Verify the repair has resolved the original fault AND check for any secondary faults or collateral damage',
-      'Only check the repaired component',
-      'Write a report and close the job',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The final check must confirm that the original fault is resolved and that the repair has not introduced any new problems. Secondary faults may exist — for example, a short circuit that damaged a contactor may also have weakened the cable insulation. A thorough functional test of the complete system is essential before returning it to service.',
   },
@@ -163,12 +168,12 @@ const quizQuestions = [
     question:
       'When fault finding a three-phase motor that runs but in the wrong direction, the systematic approach would identify the cause as:',
     options: [
-      'A failed motor winding',
       'Two of the three phase connections being transposed (swapped)',
-      'The motor overload setting being too high',
-      'A faulty earth connection',
+      'To induce voltage and current in the rotor conductors',
+      'Exactly what could not be inspected and the reasons why',
+      'Systematically dividing the circuit to isolate the fault location',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A three-phase motor's direction of rotation is determined by the phase sequence at its terminals. If two phases are transposed (e.g., L1 and L2 swapped), the motor will run in the opposite direction. This is a common occurrence after maintenance work where connections have been disturbed. Phase rotation can be verified using a phase rotation meter.",
   },
@@ -176,10 +181,10 @@ const quizQuestions = [
     id: 9,
     question: "The 'determine cause' step in the six-point technique is important because:",
     options: [
-      'It satisfies the paperwork requirements',
+      'The contactor coil has an open circuit (or the neutral connection to A2 is broken)',
       'It identifies the root cause so that the same fault does not recur after repair',
-      'It determines who is to blame for the fault',
-      'It is only required for warranty claims',
+      'Operating the system step by step through its normal sequence and observing where it fails',
+      'Form a hypothesis based on evidence, test the hypothesis, and revise if necessary',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,12 +194,12 @@ const quizQuestions = [
     id: 10,
     question: 'A systematic diagnostic approach requires you to:',
     options: [
-      'Always start by replacing the cheapest component first',
+      'Each test performed, its result, the reasoning behind the test, and the conclusions drawn',
+      'Operating the system step by step through its normal sequence and observing where it fails',
       'Form a hypothesis based on evidence, test the hypothesis, and revise if necessary',
-      'Follow the same testing sequence regardless of the fault symptoms',
-      'Only use the oscilloscope for all fault finding',
+      'The contactor coil has an open circuit (or the neutral connection to A2 is broken)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The systematic approach is evidence-based and hypothesis-driven. You gather evidence, form a hypothesis about the most likely cause, test that hypothesis, and revise your diagnosis based on the results. This scientific method ensures efficient use of time and resources.',
   },
@@ -203,12 +208,12 @@ const quizQuestions = [
     question:
       'In a control circuit with a start button, stop button, contactor with auxiliary contact, overload relay and emergency stop, the half-split first test point would be:',
     options: [
-      'The start button',
-      'The contactor coil',
+      'The contactor coil has an open circuit (or the neutral connection to A2 is broken)',
+      'Two of the three phase connections being transposed (swapped)',
+      'Operating the system step by step through its normal sequence and observing where it fails',
       'Approximately midway — at the auxiliary contact or overload relay contact',
-      'The emergency stop',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'With five series devices in the control circuit, the midpoint falls at approximately the third device — the auxiliary contact or overload relay contact. Testing here first tells you whether the fault is in the first half (start/stop buttons) or the second half (overload, emergency stop, contactor coil).',
   },
@@ -216,12 +221,12 @@ const quizQuestions = [
     id: 12,
     question: 'Documentation during the diagnostic process should include:',
     options: [
-      'Only the final repair carried out',
       'Each test performed, its result, the reasoning behind the test, and the conclusions drawn',
-      'Just the time spent on the job',
-      'Only information requested by the supervisor',
+      'Operating the system step by step through its normal sequence and observing where it fails',
+      'Approximately midway — at the auxiliary contact or overload relay contact',
+      'Verify the repair has resolved the original fault AND check for any secondary faults or collateral damage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Comprehensive diagnostic documentation records the entire thought process: what was tested, what the results were, what conclusions were drawn, and what actions were taken. This creates a knowledge base for future fault finding, supports quality assurance, and provides evidence of a systematic approach as required by ST1426.',
   },

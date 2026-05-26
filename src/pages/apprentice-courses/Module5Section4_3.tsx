@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why is it unsafe to use the wrong tool for a task?',
     options: [
-      'It might damage the tool',
+      'The metalwork becomes live and dangerous',
       'It increases risk of injury and poor workmanship',
-      'It takes longer to complete',
-      'It costs more money',
+      'Pilot wire integrity and in-cable control box function',
+      'No, they only work with changing (AC) currents',
     ],
     correctIndex: 1,
     explanation:
@@ -26,7 +26,12 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'Name one specialist tool required in electrical installation.',
-    options: ['Standard screwdriver', 'Hammer', 'Torque screwdriver', 'Measuring tape'],
+    options: [
+      'Measuring tape',
+      'Hammer',
+      'Torque screwdriver',
+      'Standard screwdriver',
+    ],
     correctIndex: 2,
     explanation:
       'Specialist tools like torque screwdrivers are essential for meeting BS 7671 compliance requirements.',
@@ -35,12 +40,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What system helps manage shared tools on site?',
     options: [
+      'Random allocation',
+      'Personal ownership only',
       'First come, first served',
       'Tool sign-in/out system',
-      'Personal ownership only',
-      'Random allocation',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A sign-in/out system ensures accountability and prevents loss of shared tools on construction sites.',
   },
@@ -51,10 +56,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why is it important to use the correct tool for each task?',
     options: [
-      'To impress clients',
+      'Potentially dangerous - urgent remedial action required',
       'To ensure safety, accuracy, and prevent damage',
-      'To work faster',
-      'To save money',
+      'Maintain adequate clearance or use heat-resistant cables',
+      'A diode (must be forward biased to turn the transistor on)',
     ],
     correctAnswer: 1,
     explanation:
@@ -63,16 +68,26 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Give one example of a specialist electrical tool.',
-    options: ['Standard hammer', 'Torque screwdriver', 'Regular pliers', 'Basic screwdriver'],
-    correctAnswer: 1,
+    options: [
+      'Regular pliers',
+      'Standard hammer',
+      'Torque screwdriver',
+      'Basic screwdriver',
+    ],
+    correctAnswer: 2,
     explanation:
       'Torque screwdrivers are specialist tools that ensure precise tightening to manufacturer specifications.',
   },
   {
     id: 3,
     question: 'What type of tool is a multimeter?',
-    options: ['Hand tool', 'Power tool', 'Measuring and testing tool', 'Cutting tool'],
-    correctAnswer: 2,
+    options: [
+      '50% of rated residual current',
+      'Voltage and current are in phase',
+      'Prevents obstruction and rework',
+      'Measuring and testing tool',
+    ],
+    correctAnswer: 3,
     explanation:
       'A multimeter is a measuring and testing tool used to verify electrical values and circuit integrity.',
   },
@@ -91,8 +106,8 @@ const quizQuestions = [
     options: [
       'Honour system',
       'Tool sign-in/out system',
-      'Random distribution',
       'First come, first served',
+      'Random distribution',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +117,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why should torque screwdrivers be calibrated?',
     options: [
-      'To make them look professional',
+      'Work from supply to load, isolating sections systematically',
+      'They increase the chance of accidental drilling',
       'To ensure accurate tightening to required specifications',
-      'To increase their lifespan',
-      'To comply with insurance requirements',
+      'Amtech, Trimble, DIALux, spreadsheet templates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Calibration ensures torque settings meet manufacturer specifications and BS 7671 requirements.',
   },
@@ -115,12 +130,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is a risk of not having spare essential tools?',
     options: [
-      'Higher insurance costs',
+      'Specific gas constant for the gas',
+      'Triple-N harmonics add in neutral',
+      'Dust tight and water jet protected',
       'Work delays if tools break or are lost',
-      'Client complaints',
-      'Reduced profit margins',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Tool failure without spares can halt work completely, causing costly project delays.',
   },
@@ -128,12 +143,12 @@ const quizQuestions = [
     id: 8,
     question: 'Name one storage method that helps protect tools.',
     options: [
-      'Leaving them on benches',
       'Tool cases, racks, or lockable boxes',
       'Storing in damp areas',
+      'Leaving them on benches',
       'Keeping them in vehicles',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Proper storage in cases, racks, or lockable boxes protects tools from damage, theft, and environmental factors.',
   },
@@ -141,10 +156,10 @@ const quizQuestions = [
     id: 9,
     question: "What's a consequence of poor tool planning?",
     options: [
-      'Better team relationships',
+      'Either end of previous day or first thing in morning',
       'Delays, poor workmanship, or failed inspections',
-      'Increased client satisfaction',
-      'Lower material costs',
+      'Near exits and at changes of direction',
+      'Delta primary, star secondary with 11 o\\\\\\\\\\\\\\\'clock phase shift',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,10 +169,10 @@ const quizQuestions = [
     id: 10,
     question: 'Who is responsible for checking tool condition before use?',
     options: [
-      'The site supervisor only',
-      'The client',
+      'Three phases with no neutral',
+      'Ratio of average load to peak load',
       'The individual using the tool',
-      'The tool manufacturer',
+      'The rate of flow of electric charge',
     ],
     correctAnswer: 2,
     explanation:

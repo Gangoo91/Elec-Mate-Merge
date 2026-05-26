@@ -16,10 +16,10 @@ const Module6Section3_4 = () => {
       id: 1,
       question: 'What regulation requires proving dead before work?',
       options: [
-        'Gas Safety Act',
+        'At the origin (closest to supply)',
         'Electricity at Work Regulations',
-        'Building Regulations',
-        'Health & Safety Act',
+        'Voltage drop calculations',
+        '0.5 lux on the floor area',
       ],
       correctAnswer: 1,
       explanation:
@@ -29,27 +29,37 @@ const Module6Section3_4 = () => {
       id: 2,
       question: 'What is the first step in safe isolation?',
       options: [
-        'Apply lock-off',
+        '6 months of practical completion',
+        'Both certificate and manual',
         'Identify the correct circuit',
-        'Prove dead immediately',
-        'Test the tester',
+        'Record all test points and results',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Circuit identification is crucial first step - working on the wrong circuit is a common cause of electrical accidents.',
     },
     {
       id: 3,
       question: 'Which device is used to check a tester works correctly?',
-      options: ['Multimeter', 'Proving unit', 'Neon screwdriver', 'Voltage pen'],
-      correctAnswer: 1,
+      options: [
+        'Neon screwdriver',
+        'Multimeter',
+        'Voltage pen',
+        'Proving unit',
+      ],
+      correctAnswer: 3,
       explanation:
         'A proving unit provides a known voltage source to verify that your voltage tester is working correctly before and after use.',
     },
     {
       id: 4,
       question: 'What is the correct tool to prove dead?',
-      options: ['Two-pole voltage indicator', 'Neon screwdriver', 'Voltage pen', 'Multimeter'],
+      options: [
+        'Two-pole voltage indicator',
+        'Need additional security measures',
+        'Any safety-critical fault',
+        'LED ≈ 100 lm/W, GLS ≈ 12 lm/W',
+      ],
       correctAnswer: 0,
       explanation:
         'Only GS38-compliant two-pole voltage indicators should be used for proving dead - neon screwdrivers and voltage pens are unreliable.',
@@ -67,11 +77,11 @@ const Module6Section3_4 = () => {
       question: 'Why must you test L–N, L–E, and N–E?',
       options: [
         'To confirm correct polarity',
-        'To ensure all conductors are dead',
         'To check insulation resistance',
+        'To ensure all conductors are dead',
         'To measure voltage drop',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Testing all combinations ensures no conductor is live - circuits can be backfed or have switching arrangements that leave some conductors live.',
     },
@@ -80,11 +90,11 @@ const Module6Section3_4 = () => {
       question: 'Why do you re-prove your tester after use?',
       options: [
         'To check calibration',
-        "To ensure it hasn't failed",
-        'To extend battery life',
         'To reset the display',
+        'To extend battery life',
+        "To ensure it hasn't failed",
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "Re-proving after use confirms the tester hasn't failed during the proving dead procedure - a failed tester could give false readings.",
     },
@@ -92,12 +102,12 @@ const Module6Section3_4 = () => {
       id: 8,
       question: 'What should you do with the isolator key?',
       options: [
-        'Leave it in the switch',
         'Keep it with you',
         'Hand it to another worker',
+        'Leave it in the switch',
         'Put it in the office',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         "Keep the isolation key with you to prevent accidental re-energisation by others while you're working on the circuit.",
     },
@@ -119,11 +129,11 @@ const Module6Section3_4 = () => {
       question: 'What is the main risk of skipping the proving dead procedure?',
       options: [
         'Extra paperwork',
+        'Equipment damage',
         'Serious injury or death',
         'Slightly slower work',
-        'Equipment damage',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The main risk is serious injury or death from electric shock, burns, or arc flash incidents when working on live circuits.',
     },

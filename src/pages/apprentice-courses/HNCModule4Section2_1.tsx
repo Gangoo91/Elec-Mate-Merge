@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     question:
       'Which installation reference method applies to cables clipped directly to a wall surface?',
     options: [
-      'Reference Method A',
-      'Reference Method B',
       'Reference Method C',
+      'Reference Method B',
       'Reference Method D',
+      'Reference Method A',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Reference Method C applies to cables clipped directly to a non-metallic surface such as a wall or ceiling. This is one of the most common installation methods in building services.',
   },
@@ -47,12 +47,12 @@ const quickCheckQuestions = [
     id: 'appendix-4-purpose',
     question: 'What is the primary purpose of BS 7671 Appendix 4 tables?',
     options: [
-      'To specify cable colours',
+      'An unlimited fine and/or up to two years\\\\\\\\\\\\\\\' imprisonment',
+      'Taking insulation resistance readings at 1 minute and 10 minutes and calculating the ratio',
       'To provide current-carrying capacities for different installation conditions',
-      'To list cable manufacturers',
-      'To specify conduit sizes',
+      'Ask the listener to summarise back the key message in their own words to confirm understanding',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BS 7671 Appendix 4 provides tabulated current-carrying capacities (It) for different cable types, sizes and installation methods, which are fundamental to cable selection.',
   },
@@ -60,12 +60,12 @@ const quickCheckQuestions = [
     id: 'it-meaning',
     question: "What does 'It' represent in cable sizing calculations?",
     options: [
-      'Installation temperature',
+      'To subtract lead resistance from readings',
+      'Loose or poorly tightened connections',
       'Tabulated current-carrying capacity',
-      'Total current',
-      'Test current',
+      'Power increases (more total current drawn)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'It is the tabulated current-carrying capacity from BS 7671 Appendix 4. This value must be adjusted using correction factors to determine the actual current the cable can safely carry.',
   },
@@ -74,11 +74,11 @@ const quickCheckQuestions = [
     question: 'What is the first step in the cable selection process?',
     options: [
       'Select the protective device',
-      'Determine the design current (Ib)',
       'Calculate voltage drop',
+      'Determine the design current (Ib)',
       'Choose the installation method',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The first step is always to determine the design current (Ib) - the current the circuit will actually carry in normal operation. All subsequent sizing decisions depend on this value.',
   },
@@ -88,15 +88,25 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which BS 7671 Appendix 4 table would you use for single-core PVC cables in conduit?',
-    options: ['Table 4D1A', 'Table 4D2A', 'Table 4D5', 'Table 4E1A'],
-    correctAnswer: 0,
+    options: [
+      'Table 4D2A',
+      'Table 4D1A',
+      'Table 4D5',
+      'Table 4E1A',
+    ],
+    correctAnswer: 1,
     explanation:
       'Table 4D1A covers single-core PVC cables installed in conduit in an insulated wall (Reference Method A) or enclosed in trunking (Reference Method B).',
   },
   {
     id: 2,
     question: 'A 10kW single-phase load at 230V has what design current (Ib)?',
-    options: ['10A', '23A', '43.5A', '100A'],
+    options: [
+      '100A',
+      '10A',
+      '43.5A',
+      '23A',
+    ],
     correctAnswer: 2,
     explanation:
       'Ib = P/V = 10,000W / 230V = 43.5A. This is the starting point for cable selection.',
@@ -105,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is Reference Method E in BS 7671?',
     options: [
-      'Cables in conduit in an insulated wall',
       'Cables clipped directly to a surface',
-      'Cables on perforated cable tray',
+      'Cables in conduit in an insulated wall',
       'Cables buried in the ground',
+      'Cables on perforated cable tray',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Reference Method E applies to multicore cables on perforated cable tray, which allows air circulation and provides good cooling.',
   },
@@ -118,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'Why do cables in thermal insulation have reduced current-carrying capacity?',
     options: [
-      'The insulation is conductive',
       'Heat cannot dissipate effectively',
+      'The insulation is conductive',
       'The cable becomes shorter',
       'Voltage drop increases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Thermal insulation prevents heat from dissipating from the cable. Since the cable cannot cool effectively, its current-carrying capacity must be reduced to prevent overheating.',
   },
@@ -131,12 +141,12 @@ const quizQuestions = [
     id: 5,
     question: 'For a circuit with Ib = 25A, the protective device In must be:',
     options: [
-      'Exactly 25A',
-      'Less than 25A',
+      'Maximum Power Point Tracking',
       'Greater than or equal to 25A',
-      'Twice the design current',
+      'Overfilling and creating sharp bends',
+      '60 seconds to discharge to <50V',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The fundamental relationship is Ib ≤ In ≤ Iz. The protective device rating (In) must be at least equal to the design current (Ib) to avoid nuisance tripping.',
   },
@@ -146,10 +156,10 @@ const quizQuestions = [
     options: [
       'Reference Method A - enclosed in insulated wall',
       'Reference Method B - enclosed in trunking',
-      'Reference Method C - clipped direct',
       'Reference Method E - on perforated cable tray',
+      'Reference Method C - clipped direct',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Reference Method E (perforated cable tray) provides the best cooling due to free air circulation around the cable, giving the highest current-carrying capacity.',
   },
@@ -158,12 +168,12 @@ const quizQuestions = [
     question:
       'A 6mm² twin and earth cable clipped direct (Method C) has It = 47A. What does this mean?',
     options: [
-      'The cable will melt at 47A',
+      'Building services engineer or ventilation specialist',
+      'To reduce the drive current to dim the LED output',
+      'Two of the three phase connections being transposed (swapped)',
       'The cable can continuously carry 47A under standard conditions',
-      'The protective device must be 47A',
-      '47A is the maximum fault current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'It = 47A means the cable can continuously carry 47A under the standard reference conditions specified in BS 7671 (30°C ambient, no grouping, not in thermal insulation).',
   },
@@ -171,20 +181,25 @@ const quizQuestions = [
     id: 8,
     question: 'What is the relationship between Iz and It when correction factors are applied?',
     options: [
-      'Iz = It × correction factors',
       'Iz = It / correction factors',
       'Iz = It + correction factors',
+      'Iz = It × correction factors',
       'Iz = It - correction factors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Iz = It / (Ca × Cg × Ci × Cc). Because correction factors account for adverse conditions, they reduce the effective current-carrying capacity, hence division.',
   },
   {
     id: 9,
     question: 'For three-phase balanced loads, what formula calculates design current?',
-    options: ['Ib = P / V', 'Ib = P / (√3 × VL)', 'Ib = P / (√3 × VL × pf)', 'Ib = 3 × P / V'],
-    correctAnswer: 2,
+    options: [
+      'Ib = P / V',
+      'Ib = P / (√3 × VL × pf)',
+      'Ib = P / (√3 × VL)',
+      'Ib = 3 × P / V',
+    ],
+    correctAnswer: 1,
     explanation:
       'For three-phase: Ib = P / (√3 × VL × pf), where VL is the line voltage (400V) and pf is the power factor. This accounts for the three-phase power relationship.',
   },
@@ -193,12 +208,12 @@ const quizQuestions = [
     question:
       'Why is it important to select the correct reference method before consulting Appendix 4?',
     options: [
-      'It determines the cable colour',
+      'Installing sensors, relays, and control circuits for system integration',
+      'The value should be consistent with cable length and cross-sectional area',
       'It determines which table to use and the tabulated capacity',
-      'It affects the cable length calculation',
-      'It specifies the conduit size required',
+      'Network security and data privacy protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The installation reference method determines which table in Appendix 4 applies and significantly affects the tabulated current values. The same cable has different capacities depending on installation method.',
   },

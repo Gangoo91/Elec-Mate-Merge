@@ -43,12 +43,12 @@ const checks = [
     question:
       "A customer rings at 4pm and asks if you can add a second outdoor socket while you're on site tomorrow. They sound friendly and casual. What do you do?",
     options: [
-      "Say yes on the phone, do the work tomorrow, and add it to the invoice afterwards.",
+      "Both check Building Regulations compliance, but LABC inspectors work for the Local Authority and follow the public-sector route; Approved Inspectors are private-sector firms registered with CICAIR (Construction Industry Council Approved Inspectors Register) who can be appointed in place of LABC. The choice is the client's. Both have the same statutory authority and the same Building Regulations to enforce.",
+      "Report internally; if the defect appears systemic (e.g. a brand of MCB failing prematurely across multiple installs), escalate to the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s technical lead who can report to the manufacturer / RAPEX (Rapid Alert System for Non-Food Products) / Office for Product Safety and Standards. Product withdrawals and safety alerts come out of these channels.",
+      "No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger, unless they possess such knowledge or experience or are under appropriate supervision having regard to the nature of the work. So either you're competent yourself OR you're being supervised by someone who is. Working outside your competence without supervision is a Reg 16 breach.",
       "Acknowledge the request verbally, then send a short written variation by email or in your job-management app before the end of the day. Quote the additional cost, get the customer's written confirmation back before you arrive on site, and only then carry out the extra work. The verbal yes is fine for tone; the written variation is what protects payment, scope and warranty.",
-      "Tell them no, you can only do work that was on the original quote.",
-      "Add it to your diary as a verbal agreement and rely on your memory at invoice time.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Consumer Rights Act 2015 treats verbal agreements as binding, but proving what was agreed is another matter. Courts and ombudsmen consistently weight written contractual evidence above verbal recollection. The rule of thumb on a contract change: acknowledge verbally for the relationship, confirm in writing for the file. Variation orders, scope changes and price increases are written, every time, before the work happens — not after.",
   },
@@ -57,12 +57,12 @@ const checks = [
     question:
       "You're on a fit-out site with a labourer at the lift core feeding cable up to you on the third floor. The hand signal range is broken by a wall, your phones are in the welfare cabin, and the radios are charged on the desk. What's the right communication method to set up before you start the pull?",
     options: [
-      "Shout — voices carry on a quiet site.",
+      "Teams with high collective EI can better understand client concerns, communicate their approach empathetically, build trust during interviews, handle challenging questions with composure, and demonstrate collaborative working relationships — all of which influence bid evaluations",
+      "EI enables informal leadership through: influence without authority (social skills), building trust through consistent, regulated behaviour (self-regulation), motivating others through enthusiasm and competence (motivation), understanding and responding to team needs (empathy), and modelling emotionally intelligent behaviour that others naturally follow (self-awareness)",
+      "Raise it with your supervisor or QS in line with the firm whistleblowing process; document what you saw, when and where. Falsified certificates are dangerous to the public and a criminal matter under EWR 1989 and the Fraud Act 2006. You have a duty under EWR Reg 3 not to be complicit.",
       "Two-way radios on a pre-agreed channel, tested before the pull starts. Brief both ends on the agreed call-words ('pull', 'stop', 'slack', 'snag'), confirm channel volume so both parties hear over background noise, and agree a default action if comms drop ('stop' is always the default). Phones are a backup, not the primary — they can ring while you're holding cable.",
-      "WhatsApp voice notes between the two of you.",
-      "Hand signals only — they always work.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Two-way radio is the right tool for short-range, hands-busy, two-way coordination. The structured pre-brief (call-words, default action on comms loss) is what stops the pull becoming an incident if a battery dies mid-job. The HSE has investigated cable-pull incidents where the operative below couldn't hear 'stop' over plant noise — the safe-system-of-work needs the comms channel built into it from the start.",
   },
@@ -71,12 +71,12 @@ const checks = [
     question:
       "You finish a first-fix at 5pm. The plasterer is coming in at 7am to board over the chases. What's the most useful communication artefact to leave for the second-fix electrician (which might be you, in a fortnight)?",
     options: [
-      "Nothing — they'll find it when they take the boards back off.",
       "A short series of photos of every chase, every cable drop and every back-box position before the plasterer arrives, geotagged or labelled by room, saved to the job folder. A redline on the layout drawing showing actual routes vs designed routes. Five minutes with a phone camera saves an hour of detective work in two weeks' time and stops the second-fix electrician drilling into a cable they didn't know was there.",
-      "A long voice note describing where everything is.",
-      "A quick chalk mark on each wall — it'll still be visible after plastering.",
+      "All of them — the old fuse board, the under-cabinet LED strips, the extractor fan motor, the integrated oven, the lighting transformers, the ceiling pendants. WEEE covers any equipment dependent on electric currents or electromagnetic fields to work properly. Cable offcuts and fixings are not WEEE but are still controlled waste under the Environmental Protection Act 1990 Duty of Care.",
+      "Tape measure (5 m or 8 m, lockable), spirit level (a torpedo level for short runs, a 600 mm level for socket lines), pencil OR a chinagraph pencil for darker surfaces, and a marker square (or just the level on edge) to keep the back box parallel to the line of the wall. Centre-mark with a small cross so the chaser knows where the centre is, not just the outline.",
+      "Both can be held liable. The individual harasser is personally liable under s.110 (helping a discriminatory act). The employer is vicariously liable under s.109 for acts done by the employee 'in the course of employment'. The employer's defence is to show they took 'all reasonable steps' to prevent the conduct — i.e. proper policies, training, monitoring and enforcement. A claimant can name both the individual and the employer in the same claim.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Photographs are the most under-used communication artefact on a fit-out. They're free, they're fast, they're geotaggable, and they're contemporaneous evidence. Modern job-management apps timestamp them automatically. The redline on the layout drawing converts the photos into something the second-fix electrician (or the inspector) can navigate — photo plus drawing markup is the gold standard for as-built communication.",
   },
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       "What's the core principle for picking a communication method on site?",
     options: [
-      "Always use the most formal method available.",
+      "CAR 2012 Reg 10 — anyone who is or may be exposed to asbestos must receive adequate training. UKATA / IATP-certified asbestos awareness (1-day) is the typical baseline for trades. Higher levels (non-licensed work, licensed work) require more advanced training.",
       "Match the medium to the message. Quick coordination = verbal or radio. Contractual change = written. Geometry or position = visual (photo, sketch, redline). Permanent record = formal (RAMS, certificate, variation order). The wrong medium for the message either burns time (formal letter for a quick query) or burns money (WhatsApp message for a contract change).",
-      "Always use WhatsApp — it's fastest.",
-      "Always use email — it leaves a record.",
+      "Provided to the customer (full pack — EIC + Schedule of Inspections + STR), retained by the contractor (typically minimum six years), and uploaded to any applicable Competent Person Scheme (NICEIC, NAPIT, Stroma, ECA etc.) within the scheme\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s required notification window — typically 30 days for Part P-notifiable work.",
+      "Periodic visual inspection, checking for physical damage, verifying ventilation and cooling, reviewing BMS logs for cell imbalance or temperature anomalies, testing isolation and protection devices, confirming firmware is current, and checking earthing and bonding",
     ],
     correctAnswer: 1,
     explanation:
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       "Which Act places a statutory duty on the employer to provide employees with information they need for their health and safety at work?",
     options: [
-      "Equality Act 2010.",
+      "Reg 722.411.4 applies to TN systems and addresses requirements where a PME earthing facility would otherwise be used as the means of earthing for the protective conductor contact(s) of a charging point located outdoors or that might reasonably be expected to be used to charge a vehicle outdoors. It sets alternative methods (b) to (e) that shall be used instead of using the PME facility directly as the charging-point protective-earth connection.",
+      "Risk assessment identifies the hazards; hierarchy of control reduces them; PPE addresses residual risk. Match the standard to the specific hazard (electrical, mechanical, thermal, chemical, biological, ionising). Consider compatibility (multiple PPE items must work together — e.g. helmet + hearing defenders + safety glasses).",
       "Management of Health and Safety at Work Regulations 1999, Reg 10 — every employer must provide employees with comprehensible and relevant information on the risks to their health and safety identified by the assessment, and on the preventive and protective measures. Regulation 11 covers co-operation and co-ordination on shared workplaces. The duty to communicate safety information is statutory, not optional.",
-      "Building Regulations Part P.",
-      "Consumer Rights Act 2015.",
+      "Record: measured Ze (= electrode resistance for TT) = 180 Ω; RCD test results — IΔn trip at 30 mA / 27 ms (passes the 300 ms requirement for general use, 40 ms for additional protection); RA × IΔn = 180 × 0.03 = 5.4 V (passes Reg 411.5); and the test instrument used and its calibration date.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "MHSWR 1999 Reg 10 is the statutory hook for safety communication. The word 'comprehensible' is doing a lot of work — a briefing in dense legal English to a labourer with English-as-a-second-language doesn't satisfy the duty. 'Comprehensible' is what drives plain English, visual aids and translated material on real sites. Sub 5.2 picks this up in detail.",
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     question:
       "When is WhatsApp an appropriate communication method on a site?",
     options: [
-      "For everything — it's quick and everyone uses it.",
+      "PASMA (for mobile aluminium tower scaffolds) and IPAF (for mobile elevating work platforms / MEWPs / cherry pickers and scissor lifts). PASMA covers tower assembly and use; IPAF covers powered access. Both are industry-recognised competence schemes accepted on most CDM sites. Many plant operators also hold CPCS (for construction plant — excavators, dumpers, telehandlers) or NPORS.",
+      "Optimistic individuals persist longer after setbacks, approach challenges with greater creativity, and maintain motivation through difficult periods — leading to measurably better performance outcomes. The MetLife study demonstrated that optimism (measured by Seligman's ASQ) was a better predictor of success than traditional hiring criteria",
+      "To co-operate with the client, principal designer, principal contractor, contractor and any other person performing a duty under CDM, AND to report to the principal contractor (or contractor where there is no principal contractor) anything that they consider is likely to endanger their own or another person's health or safety, AND to comply with the requirements of CDM.",
       "Informal coordination — 'I'm five minutes away', 'meet me at the welfare unit', 'have you got a 16mm fly lead in the van'. NOT for contractual changes, scope variations, formal warnings, grievances, safety briefings of record, or anything you might need to defend in a dispute. WhatsApp messages have been admitted as evidence in court, but they carry less evidential weight than a signed variation order and they sit on a personal device the employer doesn't control.",
-      "Only for personal messages, never work.",
-      "Only for emergencies.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "WhatsApp is excellent for fast informal coordination and dreadful for contractual record. The line between the two gets crossed when an apprentice agrees to extra work on WhatsApp because the customer asked them to. Two months later, when the invoice is disputed, the evidence is a thread of casual messages with no clear scope agreement. The discipline is to switch to a formal medium the moment the conversation stops being coordination and starts being contract.",
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     question:
       "Under CDM 2015, what's the duty around providing pre-construction information to workers?",
     options: [
-      "There's no duty — workers find out as they go.",
       "Reg 13 places a duty on the principal contractor to plan, manage, monitor and co-ordinate the construction phase, and to ensure suitable site induction. Reg 4(2) puts a duty on the client and Reg 9 puts a duty on the principal designer to provide pre-construction information. The information must be in a form that can be understood by those who need to use it — that's a written, structured, accessible duty, not a verbal handover at the gate.",
-      "Only the client communicates with workers.",
-      "Workers receive a verbal-only briefing on day one.",
+      "Lifting equipment used to lift persons (MEWPs, lift platforms, scaffolding hoists carrying personnel) requires thorough examination at 6-monthly intervals. Other lifting equipment (chain blocks, manual hoists, anchor points used for material lifting only) requires 12-monthly thorough examination, OR in accordance with an examination scheme drawn up by a competent person. Per LOLER 1998 Reg 9(3). The examination is by a competent person (typically an independent examiner) and a written report is provided. The current report must be available with the machine.",
+      "Circuit reference, conductor sizes (line, neutral, CPC), protective device type and rating, RCD operating current and operating time (where applicable), R1+R2 or R2 (depending on test method), insulation resistance values (line-line, line-earth, neutral-earth), polarity confirmation, Zs value, RCD operating time, and any test instrument identification needed for traceability.",
+      "Consistently demonstrating: (1) framing work as a learning problem (\\\"what can we learn from this?\\\"), (2) acknowledging your own fallibility (\\\"I may have missed something — what do you see?\\\"), (3) modelling curiosity by asking genuine questions, (4) responding to mistakes with inquiry rather than blame, (5) following through on commitments made when people do speak up, and (6) explicitly thanking people for raising concerns even when the news is unwelcome",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "CDM 2015 makes communication a structured, multi-party duty. Pre-construction information flows from client and principal designer to principal contractor, who turns it into a construction phase plan and a site induction for everyone arriving on site. The form of communication is regulated — it must be in a form the recipients can understand. Verbal-only doesn't satisfy the duty for a notifiable project.",
   },
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       "You receive a verbal instruction from your supervisor that contradicts the written method statement for the job. What do you do?",
     options: [
-      "Follow the verbal instruction — supervisors always know best.",
+      "Near-misses are the leading indicator of serious incidents. The HSE's accident triangle (and similar industrial-safety models) consistently shows that for every serious incident there are dozens or hundreds of near-misses with similar root causes that didn't quite escalate. Investigating and acting on near-misses is the most effective way to prevent the serious incident. Failing to report a near-miss leaves the same defect in place for the next person — who may not be as lucky.",
       "Stop, raise the conflict politely, and ask for the change in writing. The method statement is the documented safe system of work. A verbal instruction to depart from it needs a documented reason, ideally a revised method statement signed off by whoever owns the original. If the supervisor refuses to put it in writing, that itself is a red flag — escalate via your employer's safety route. HASAWA s.7 makes you personally responsible for following the safe system; 'I was told to' is not a defence to a prosecution.",
-      "Follow the written method statement and ignore the supervisor.",
-      "Pick whichever is easier.",
+      "To enable the customer to operate the install correctly, recognise fault conditions, perform any user-level routine checks (e.g. weekly fire-alarm test) and know when to call you back. Without them the customer can't discharge their own legal duties (e.g. fire-alarm log under the Regulatory Reform (Fire Safety) Order 2005) and is more likely to mis-use or under-maintain the kit.",
+      "Five-yearly EICR (Electrical Installation Condition Report) covering the entire fixed electrical installation, including any PV, EV chargers, heat pump supplies, battery storage circuits and MVHR supplies that have been added. Landlord must provide the EICR to tenants and to the local authority on request. Any C1 (immediate danger) or C2 (potentially dangerous) findings must be remediated within 28 days. Environmental tech additions trigger an updated EICR; they don't escape the regime. The Regulations apply to private rented properties in England; equivalents in the devolved nations.",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       "What's the appropriate communication method for raising a formal grievance about working conditions?",
     options: [
-      "WhatsApp message to the supervisor.",
+      "The employer is potentially failing in their legal duty under the Health & Safety at Work Act 1974 to protect employee welfare, and a systematic assessment using the HSE Management Standards could help identify and address the organisational factors contributing to poor mental health, potentially reducing both turnover and absence",
+      "5-day course at an accredited training centre. Covers ATEX/UKEX directives, hazardous-area zone classification (zones 0/1/2 for gas, 20/21/22 for dust), Ex equipment marking and selection, installation methods (cable glanding, conduit, sealing), inspection regimes (visual / close / detailed). Mix of classroom and practical lab. Assessment includes written exam and practical inspection task. Cost typically £1,000-1,500 plus any travel/accommodation.",
       "Written grievance following the employer's documented grievance procedure (which the employer is required to provide under the ACAS Code of Practice on Discipline and Grievance). The written grievance triggers a structured response with timescales and right of appeal. Verbal complaints are easy to ignore; documented grievances are not. ACAS conciliation is available if the internal process fails.",
-      "Tell a co-worker and hope it gets back to management.",
-      "Quit and find a new employer.",
+      "Control of Substances Hazardous to Health Regulations 2002 (COSHH), SI 2002/2677. COSHH places a statutory duty on the employer to assess and control exposure to hazardous substances — solvents, paints, cleaning products, dust, fumes — and on workers to use the controls provided and report defects. A leaking chemical drum is a COSHH issue: stop work, evacuate the immediate area, report to the supervisor and the site responsible person, and don't try to clean it up yourself unless trained.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The ACAS Code of Practice on Discipline and Grievance is the framework. Employers without a written grievance procedure are in breach of good practice and the Code's recommendations are taken into account by employment tribunals when assessing the reasonableness of conduct on both sides. Putting a grievance in writing — calmly, factually, with dates — is the apprentice's best protection in the early years.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       "On a fit-out, the principal contractor calls a toolbox talk for everyone arriving on site that morning. What's the purpose of that communication method?",
     options: [
-      "Box-ticking — nobody really listens.",
+      "0.4 seconds (400 ms) for TN, 0.2 seconds (200 ms) for TT — these are the maximum disconnection times specified in Table 41.1 for the supply system and final-circuit type. For a 30 mA general-purpose RCD operated by a 30 mA residual current (1 x I delta n), the manufacturer\\\\\\\\'s declared maximum trip time is 300 ms (per BS EN 61008 / BS EN 61009 product standards) — well within the Table 41.1 system requirement. The verification is the Table 41.1 limit; the 300 ms is the product spec.",
+      "Tariff arbitrage. The system controller can charge the battery from the grid during the cheap window and discharge during the expensive window, regardless of solar. On a tariff with a 25-30 p/kWh spread between cheap and expensive rates, the arbitrage saves a few hundred pounds a year on top of the solar self-consumption benefit. Over a 10-15 year battery life this can roughly double the system's lifetime value compared to solar self-consumption alone. The G98/G99 notification covers grid charging if the system can also export.",
+      "Annual service is the standard, with weekly to monthly customer-side tasks. Annual: full strip-down clean, ash compartment service, auger inspection, igniter check, fan check, flue inspection, controls firmware update, performance check. Monthly customer task: empty ash pan. Weekly customer task: top up pellet hopper, check fuel feed, visual check for blockages. Pellet quality matters — high-ash or wet pellets shorten component life. Some boilers need flue cleaning more frequently than annual; chimney sweep is a specialist trade.",
       "Toolbox talks are short, focused, structured verbal briefings to workers on a specific safety topic — typically a hazard relevant to that day or that week. They're documented (sign-on sheet) so the employer can demonstrate they've discharged the MHSWR Reg 10 duty to provide comprehensible information. The format works because it's short, in person, with the chance to ask questions — the opposite of a long written document nobody reads.",
-      "A rest break.",
-      "A union meeting.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Toolbox talks are HSE-recommended, statutorily-aligned communication. The combination of short length (5-15 minutes), specific topic, in-person delivery and signed attendance record makes them effective both as actual communication and as evidence the duty has been discharged. The apprentice's job is to actually listen, ask if anything is unclear, and sign in honestly.",
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       "What's an RFI (Request For Information) and when do you use one?",
     options: [
-      "An informal text to the office.",
       "A Request For Information is a formal written query from a contractor to the design team (architect, engineer, principal designer) when the drawings or specifications are unclear, contradictory or missing detail. It's logged, numbered, dated and tracked through to a written response. It protects the contractor from being held responsible for a design ambiguity and creates a paper trail for any later dispute. Use one whenever you'd otherwise be guessing.",
-      "A verbal question at the morning huddle.",
-      "A complaint about working conditions.",
+      "Because EAWR is the trade-specific instrument made under HASAWA's enabling powers (s.15) — but HASAWA's general duties (s.2, s.3, s.7) sit underneath the EAWR breach as the broader safe-system / personal-duty obligations. Charging both gives the prosecution two routes to conviction and lets the court assess culpability across both the specific technical reg AND the broader systems-of-work failure.",
+      "Roughly £15-20/month for full Unite membership for a working electrician, with reduced rates for apprentices, students and the unemployed. Cost is tax-deductible against income tax for trade union subscriptions. In return members get representation in disputes, legal advice, training discounts, member-only insurance products and the Unite member benefits programme.",
+      "Investigate. Expected R2 for 20 m of 1.5 mm² Cu is approximately 0.24 Ω. 0.85 Ω is roughly 3.5 × the expected value — strongly suggests a poor termination (loose terminal at an accessory, oxidised connection in a junction box) or a partly broken CPC. Trace through the circuit, retighten or replace the suspect connection, retest.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "RFIs are the formal communication mechanism for design queries on construction projects. Structured RFI logs are standard practice on any project of meaningful scale. As an apprentice you may not raise the RFI yourself — your supervisor or project engineer will — but you should be the source of the question when something on the drawing isn't right. 'I assumed' is the phrase that's never in the file when an RFI would have been the safer move.",
   },

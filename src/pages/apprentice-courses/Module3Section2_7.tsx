@@ -71,7 +71,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the recommended spare capacity to allow for future cables?',
-    options: ['5-10%', '15-20%', '25-30%', '50%'],
+    options: [
+      '50%',
+      '5-10%',
+      '25-30%',
+      '15-20%',
+    ],
     correctAnswer: 2,
     explanation:
       'Industry best practice and BS 7671 guidance recommend allowing 25-30% spare capacity for future cable installations and system expansion.',
@@ -88,19 +93,24 @@ const quizQuestions = [
     id: 4,
     question: 'Name one way to separate power and data cables within the same trunking.',
     options: [
-      'Use cable ties',
       'Use barriers or separate compartments',
-      'Paint cables different colours',
-      'Use longer cables',
+      'Spark-proof tools and clothing',
+      'To prevent recurrence of the same fault',
+      'Person with knowledge and experience',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Physical barriers or separate compartments provide the electromagnetic separation required between power and data cables.',
   },
   {
     id: 5,
     question: 'What should be fitted at containment entry points to protect cable insulation?',
-    options: ['Insulation tape', 'Grommets or bushes', 'Paint', 'Adhesive pads'],
+    options: [
+      'Insulation tape',
+      'Grommets or bushes',
+      'Adhesive pads',
+      'Paint',
+    ],
     correctAnswer: 1,
     explanation:
       'Grommets or bushes prevent sharp metal edges from cutting or abrading cable insulation during installation and service.',
@@ -109,12 +119,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why should installers avoid overfilling containment?',
     options: [
-      'It increases voltage drop',
+      'Bypass mode with monitoring for improved efficiency',
+      'Fire and Rescue Authorities (local Fire and Rescue Services)',
       'It causes overheating and makes cable pulling difficult',
-      'It makes the installation heavier',
-      'It affects cable colour coding',
+      'Predictive maintenance alerts based on system performance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Overfilled containment restricts heat dissipation leading to overheating, and makes future cable installation very difficult or impossible.',
   },
@@ -122,20 +132,25 @@ const quizQuestions = [
     id: 7,
     question: 'Give one reason why straight, level runs are preferred.',
     options: [
-      'They use less material',
+      'Isolate with plastic/nylon washers and appropriate sealants',
+      'Practical installation, inspection, and testing scenarios',
+      'Both strengths and areas for development',
       'They improve appearance and make maintenance easier',
-      'They are faster to install',
-      'They require fewer fixings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Straight, level runs provide a professional appearance and make future maintenance, inspection, and cable pulling much easier.',
   },
   {
     id: 8,
     question: 'Which regulation governs best practice for containment in the UK?',
-    options: ['BS 5839', 'BS 7671 (IET Wiring Regulations)', 'BS 6701', 'BS EN 50085'],
-    correctAnswer: 1,
+    options: [
+      'BS 7671 (IET Wiring Regulations)',
+      'Total weight of cables and containment',
+      'For representative assessment',
+      'Current flowing through the conductor',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 7671 (IET Wiring Regulations) provides the regulatory framework for electrical installation practices including containment systems.',
   },

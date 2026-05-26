@@ -47,7 +47,7 @@ const tabConfigs: TabConfig[] = [
     id: 'certificate',
     label: 'Certificate',
     shortLabel: 'Certificate',
-    requiredFields: ['inspectedByName', 'reportAuthorisedByName'],
+    requiredFields: ['reportAuthorisedByName'],
   },
 ];
 
@@ -96,7 +96,7 @@ export const useEICTabs = (formData: any) => {
       case 'certificate':
         return (
           completedSections[tabId] ||
-          (formData.inspectedByName && formData.reportAuthorisedByName && formData.bs7671Compliance)
+          (formData.reportAuthorisedByName && formData.bs7671Compliance)
         );
       default:
         return completedSections[tabId] === true;

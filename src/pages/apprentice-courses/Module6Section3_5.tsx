@@ -28,23 +28,38 @@ const Module6Section3_5 = () => {
     {
       id: 2,
       question: 'Which device is safest for proving dead?',
-      options: ['Neon screwdriver', 'Two-pole voltage tester', 'Voltage pen', 'Multimeter'],
-      correctAnswer: 1,
+      options: [
+        'Voltage pen',
+        'Neon screwdriver',
+        'Two-pole voltage tester',
+        'Multimeter',
+      ],
+      correctAnswer: 2,
       explanation:
         'Two-pole voltage testers are GS38-compliant and provide the safest, most reliable method for proving circuits are dead.',
     },
     {
       id: 3,
       question: 'What sequence is followed when proving dead?',
-      options: ['Dead-live-dead', 'Live-dead-live', 'Lock-off only', 'Test then isolate'],
-      correctAnswer: 1,
+      options: [
+        'Lock-off only',
+        'Dead-live-dead',
+        'Test then isolate',
+        'Live-dead-live',
+      ],
+      correctAnswer: 3,
       explanation:
         'The live-dead-live sequence ensures your tester works before testing, confirms the circuit is dead, then verifies the tester still works.',
     },
     {
       id: 4,
       question: 'What must you test between during proving?',
-      options: ['L–N, L–E, N–E', 'N–N only', 'Earth only', 'Live only'],
+      options: [
+        'L–N, L–E, N–E',
+        'N–N only',
+        'Earth only',
+        'Live only',
+      ],
       correctAnswer: 0,
       explanation:
         'You must test between all combinations: L–N, L–E, and N–E to ensure all conductors are dead.',
@@ -61,27 +76,37 @@ const Module6Section3_5 = () => {
       id: 6,
       question: 'What could happen if you skip the re-prove step?',
       options: [
-        'Nothing significant',
+        'They must be competent or supervised',
+        'Resistance values add together',
         'You may trust a faulty tester',
-        'Faster isolation',
-        'Better accuracy',
+        'Fused Connection Unit, 13 amp',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'If you skip re-proving, you might trust a tester that has failed during testing, leading to dangerous assumptions.',
     },
     {
       id: 7,
       question: 'What safety standard applies to testers and leads?',
-      options: ['GS38', 'BS 7671', 'ISO 9001', 'IEC 60364'],
-      correctAnswer: 0,
+      options: [
+        'IEC 60364',
+        'BS 7671',
+        'ISO 9001',
+        'GS38',
+      ],
+      correctAnswer: 3,
       explanation:
         'GS38 is the safety standard that applies to electrical test equipment and leads.',
     },
     {
       id: 8,
       question: 'Which unsafe tool relies on your body for operation?',
-      options: ['Neon screwdriver', 'Proving unit', 'Two-pole tester', 'Digital meter'],
+      options: [
+        'Neon screwdriver',
+        'Two-pole tester',
+        'Digital meter',
+        'Proving unit',
+      ],
       correctAnswer: 0,
       explanation:
         'Neon screwdrivers rely on your body to complete the circuit, making them unsafe and non-compliant.',
@@ -90,10 +115,10 @@ const Module6Section3_5 = () => {
       id: 9,
       question: 'Why are voltage pens not acceptable for proving dead?',
       options: [
-        'They drain batteries too quickly',
+        'Both are measured in watts; 1 W = 1 J/s in both cases',
         'They only detect potential presence, not confirm dead',
-        'They are too heavy',
-        'They are too expensive',
+        'Cable resistance increases with temperature',
+        'Regularly based on competency assessment',
       ],
       correctAnswer: 1,
       explanation:
@@ -104,11 +129,11 @@ const Module6Section3_5 = () => {
       question: 'When should you re-prove your tester?',
       options: [
         'Only at the end of the day',
+        'Once per week',
         'Immediately after testing',
         'Only if the circuit seems faulty',
-        'Once per week',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "You must re-prove your tester immediately after testing to confirm it hasn't failed during the testing process.",
     },

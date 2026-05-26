@@ -14,8 +14,13 @@ const quickCheckQuestions = [
     id: 'three-phase-voltage',
     question:
       'In a UK three-phase supply, the voltage between any two line conductors is 400 V. What is the voltage between any line and neutral?',
-    options: ['200 V', '230 V', '325 V', '400 V'],
-    correctIndex: 1,
+    options: [
+      '400 V',
+      '200 V',
+      '230 V',
+      '325 V',
+    ],
+    correctIndex: 2,
     explanation:
       'In a star-connected three-phase system, the line-to-neutral voltage (phase voltage) equals the line voltage divided by √3: VL-N = VL-L / √3 = 400 / 1.732 = 230 V. This is the standard UK single-phase supply voltage and is derived directly from the three-phase system.',
   },
@@ -23,12 +28,12 @@ const quickCheckQuestions = [
     id: 'star-delta',
     question: 'In a star (Y) connection, the neutral point is formed by connecting together:',
     options: [
-      'The start terminals of all three windings',
+      'Current capacity vs. rated capacity',
+      'To calculate Zs when added to Ze',
       'One end of each of the three phase windings',
-      'The line conductors',
-      'Two adjacent phase windings',
+      'The first 1-2 weeks after discharge',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'In a star connection, one end of each of the three phase windings is connected to a common point called the star point (or neutral point). The other ends of the windings connect to the three line conductors (L1, L2, L3). The neutral conductor is connected to the star point, providing the reference for the 230 V line-to-neutral voltage.',
   },
@@ -36,20 +41,25 @@ const quickCheckQuestions = [
     id: 'balanced-load',
     question: 'In a perfectly balanced three-phase four-wire system, the neutral current is:',
     options: [
+      'Zero',
       'Equal to one line current',
       'Three times the line current',
-      'Zero',
       'Equal to the sum of all three line currents',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'In a perfectly balanced three-phase system, the three line currents are equal in magnitude and displaced by 120 degrees. When added vectorially, they cancel out completely, resulting in zero neutral current. This is one of the key advantages of three-phase systems — the neutral conductor carries no current under balanced conditions.',
   },
   {
     id: 'three-phase-power',
     question: 'The total power in a balanced three-phase load is calculated as:',
-    options: ['P = VL x IL', 'P = 3 x VL x IL', 'P = √3 x VL x IL x cos φ', 'P = VL² / R'],
-    correctIndex: 2,
+    options: [
+      'P = VL x IL',
+      'P = √3 x VL x IL x cos φ',
+      'P = 3 x VL x IL',
+      'P = VL² / R',
+    ],
+    correctIndex: 1,
     explanation:
       'The total three-phase power is: P = √3 x VL x IL x cos φ. The √3 factor accounts for the 120-degree phase displacement between the three phases. For a 400 V supply with 100 A line current at unity power factor: P = 1.732 x 400 x 100 x 1 = 69.28 kW.',
   },
@@ -60,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A UK domestic property is typically supplied with:',
     options: [
-      'Single-phase 400 V',
+      'Total energy let through by a protective device during fault clearance',
       'Single-phase 230 V (one phase and neutral from the three-phase network)',
-      'Three-phase 230 V',
-      'DC 240 V',
+      'A motor circuit with significant inrush current on starting',
+      'To prevent the cable from overheating due to reduced heat dissipation',
     ],
     correctAnswer: 1,
     explanation:
@@ -72,8 +82,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'The phase displacement between L1, L2 and L3 in a three-phase supply is:',
-    options: ['90 degrees', '120 degrees', '180 degrees', '360 degrees'],
-    correctAnswer: 1,
+    options: [
+      '180 degrees',
+      '90 degrees',
+      '120 degrees',
+      '360 degrees',
+    ],
+    correctAnswer: 2,
     explanation:
       'In a three-phase supply, the three phases are displaced by 120 degrees (one-third of a complete cycle). This means L2 lags L1 by 120 degrees, and L3 lags L1 by 240 degrees (or leads by 120 degrees). This uniform displacement is what produces the constant instantaneous power and rotating magnetic field that make three-phase systems so efficient.',
   },
@@ -81,8 +96,13 @@ const quizQuestions = [
     id: 3,
     question:
       'In a delta (Δ) connection, the relationship between line current and phase current is:',
-    options: ['IL = IP (they are equal)', 'IL = √3 x IP', 'IL = IP / √3', 'IL = 3 x IP'],
-    correctAnswer: 1,
+    options: [
+      'IL = IP / √3',
+      'IL = IP (they are equal)',
+      'IL = 3 x IP',
+      'IL = √3 x IP',
+    ],
+    correctAnswer: 3,
     explanation:
       'In a delta connection, each line conductor is connected to the junction of two phase windings. The line current is the vector sum of the two phase currents meeting at each junction, giving: IL = √3 x IP. Conversely, in a delta connection the line voltage equals the phase voltage: VL = VP.',
   },
@@ -90,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which connection type provides both 230 V and 400 V from the same system?',
     options: [
-      'Delta connection',
       'Star connection with neutral',
+      'Delta connection',
       'Series connection',
       'Parallel connection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A star connection with a neutral conductor provides two voltage levels: 400 V between any two lines (line voltage) and 230 V between any line and neutral (phase voltage). This is the standard distribution arrangement in the UK, allowing single-phase 230 V loads and three-phase 400 V loads to be supplied from the same system.',
   },
@@ -103,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: "A three-phase motor has a nameplate rating of 'Δ 400 V'. This means:",
     options: [
-      'The motor requires a 400 V star connection',
+      'Three-phase supplies provide constant instantaneous power and a rotating magnetic field for motors',
       'Each motor winding is rated for 400 V, connected in delta across the 400 V supply',
-      'The motor can only run on single-phase',
-      'The motor windings are connected in series',
+      'Current flowing in the neutral conductor, voltage imbalance between phases, increased losses',
+      'A large number of single-phase computer loads unevenly distributed across phases',
     ],
     correctAnswer: 1,
     explanation:
@@ -116,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'An unbalanced three-phase load causes which of the following problems?',
     options: [
-      'No problems — unbalance is normal and expected',
+      'Three-phase supplies provide constant instantaneous power and a rotating magnetic field for motors',
+      'Incorrect phase rotation causes three-phase motors to rotate in the wrong direction',
       'Current flowing in the neutral conductor, voltage imbalance between phases, increased losses',
-      'The supply frequency changes',
-      'All circuit breakers trip simultaneously',
+      'Each motor winding is rated for 400 V, connected in delta across the 400 V supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Unbalanced loads cause neutral current to flow (which would be zero in a balanced system), create voltage imbalance between phases (the most heavily loaded phase has the lowest voltage), increase system losses (I²R losses increase with imbalance), and can cause overheating of the neutral conductor. Severe unbalance can also cause three-phase motors to overheat and fail.',
   },
@@ -131,11 +151,11 @@ const quizQuestions = [
       'Star-delta starting of a three-phase motor reduces the starting current to approximately:',
     options: [
       'Half of the direct-on-line starting current',
-      'One-third of the direct-on-line starting current',
-      'One-quarter of the direct-on-line starting current',
       'One-tenth of the direct-on-line starting current',
+      'One-quarter of the direct-on-line starting current',
+      'One-third of the direct-on-line starting current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Star-delta starting connects the motor in star during start-up, reducing the voltage across each winding to 230 V (instead of 400 V in delta). Since power is proportional to V², the starting current is reduced to approximately one-third (1/√3² = 1/3) of the direct-on-line delta current. The motor is then switched to delta for full-speed running.',
   },
@@ -144,12 +164,12 @@ const quizQuestions = [
     question:
       'The main advantage of three-phase power over single-phase for industrial applications is:',
     options: [
-      'Three-phase equipment is always smaller and cheaper',
       'Three-phase supplies provide constant instantaneous power and a rotating magnetic field for motors',
-      'Three-phase is safer than single-phase',
-      'Three-phase uses less copper for the neutral conductor',
+      'Current flowing in the neutral conductor, voltage imbalance between phases, increased losses',
+      'A large number of single-phase computer loads unevenly distributed across phases',
+      'Each motor winding is rated for 400 V, connected in delta across the 400 V supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Three-phase power delivers constant instantaneous power (unlike single-phase, which pulsates at 100 Hz). This means three-phase motors produce smooth, constant torque with no vibration. Three-phase also provides a naturally rotating magnetic field, allowing simple and robust induction motors with no starting mechanisms. Additionally, three-phase transmits 73% more power than single-phase using only 50% more conductors.',
   },
@@ -157,7 +177,12 @@ const quizQuestions = [
     id: 9,
     question:
       'A three-phase 400 V supply feeds a balanced load drawing 50 A per line at a power factor of 0.85. The total power consumed is:',
-    options: ['17 kW', '29.4 kW', '34 kW', '58.8 kW'],
+    options: [
+      '17 kW',
+      '29.4 kW',
+      '34 kW',
+      '58.8 kW',
+    ],
     correctAnswer: 1,
     explanation:
       'Total three-phase power P = √3 x VL x IL x cos φ = 1.732 x 400 x 50 x 0.85 = 29,444 W ≈ 29.4 kW. This formula applies to both star and delta balanced loads when using line values. Always remember to include the power factor — without it, you would calculate the apparent power (kVA), not the real power (kW).',
@@ -166,10 +191,10 @@ const quizQuestions = [
     id: 10,
     question: 'Phase rotation (phase sequence) is important because:',
     options: [
-      'Incorrect phase rotation has no practical effect',
-      'It only matters for lighting circuits',
+      'A large number of single-phase computer loads unevenly distributed across phases',
+      'Current flowing in the neutral conductor, voltage imbalance between phases, increased losses',
       'Incorrect phase rotation causes three-phase motors to rotate in the wrong direction',
-      'It determines the supply frequency',
+      'Three-phase supplies provide constant instantaneous power and a rotating magnetic field for motors',
     ],
     correctAnswer: 2,
     explanation:
@@ -179,8 +204,13 @@ const quizQuestions = [
     id: 11,
     question:
       'In a star-connected system, the relationship between line voltage and phase voltage is:',
-    options: ['VL = VP', 'VL = √3 x VP', 'VL = VP / √3', 'VL = 3 x VP'],
-    correctAnswer: 1,
+    options: [
+      'VL = VP',
+      'VL = 3 x VP',
+      'VL = VP / √3',
+      'VL = √3 x VP',
+    ],
+    correctAnswer: 3,
     explanation:
       'In a star connection, the line voltage is √3 times the phase voltage: VL = √3 x VP. This is because the line voltage is the vector difference between two phase voltages 120 degrees apart. For the UK: VP = 230 V, so VL = 1.732 x 230 = 400 V (approximately). The line current equals the phase current in a star connection: IL = IP.',
   },
@@ -189,12 +219,12 @@ const quizQuestions = [
     question:
       'Which of the following loads is most likely to cause a significant neutral current in a three-phase four-wire system?',
     options: [
-      'A three-phase induction motor (balanced three-wire load)',
-      'Three identical heaters, one on each phase',
       'A large number of single-phase computer loads unevenly distributed across phases',
-      'A three-phase transformer with no load connected',
+      'Each motor winding is rated for 400 V, connected in delta across the 400 V supply',
+      'Three-phase supplies provide constant instantaneous power and a rotating magnetic field for motors',
+      'Incorrect phase rotation causes three-phase motors to rotate in the wrong direction',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Single-phase loads (computers, lighting, socket outlets) connected unevenly across the three phases create an unbalanced system with neutral current. Additionally, computer power supplies draw current rich in third harmonics, which add arithmetically in the neutral (they are in phase on all three lines). In modern office buildings, the neutral current can actually exceed the line current due to triplen harmonics — a significant fire risk if the neutral is undersized.',
   },

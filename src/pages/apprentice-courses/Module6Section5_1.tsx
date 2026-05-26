@@ -22,10 +22,10 @@ const Module6Section5_1 = () => {
       id: 1,
       question: 'What is the main purpose of insulation resistance testing?',
       options: [
-        'To measure voltage',
+        'Electricity at Work Regulations 1989',
         'To ensure insulation prevents leakage currents',
-        'To test circuit breakers',
-        'To check cable capacity',
+        'Moisture caused nuisance tripping and fire',
+        'Insulation is good and preventing current leakage',
       ],
       correctAnswer: 1,
       explanation:
@@ -35,12 +35,12 @@ const Module6Section5_1 = () => {
       id: 2,
       question: 'What does a high insulation resistance reading mean?',
       options: [
-        'Insulation is damaged',
+        'Electricity at Work Regulations 1989',
+        'Electrical Installation Certificate (EIC)',
         'Insulation is good and preventing current leakage',
-        'Circuit is overloaded',
-        'Test equipment is faulty',
+        'Do not energise until fault is rectified',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'A high insulation resistance reading indicates that the insulation is in good condition and effectively preventing current leakage.',
     },
@@ -48,12 +48,12 @@ const Module6Section5_1 = () => {
       id: 3,
       question: 'What does a low reading indicate?',
       options: [
-        'Good insulation',
+        'To avoid damage from high test voltages',
+        'Electricity at Work Regulations 1989',
+        'Do not energise until fault is rectified',
         'Insulation has been damaged or is contaminated',
-        'Normal operation',
-        'High voltage',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'A low insulation resistance reading suggests that the insulation has been damaged, contaminated, or is beginning to fail.',
     },
@@ -61,12 +61,12 @@ const Module6Section5_1 = () => {
       id: 4,
       question: 'Which regulation requires electrical systems to be kept safe at all times?',
       options: [
-        'BS 7671',
         'Electricity at Work Regulations 1989',
-        'Health and Safety at Work Act',
-        'Building Regulations',
+        'Moisture caused nuisance tripping and fire',
+        'To ensure insulation prevents leakage currents',
+        'Insulation has been damaged or is contaminated',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'The Electricity at Work Regulations 1989 make it a legal duty to ensure electrical systems are maintained in a safe condition.',
     },
@@ -75,10 +75,10 @@ const Module6Section5_1 = () => {
       question:
         'Which certificate records insulation resistance test results for new installations?',
       options: [
-        'Minor Works Certificate',
+        'Moisture caused nuisance tripping and fire',
         'Electrical Installation Certificate (EIC)',
-        'EICR',
-        'PAT Certificate',
+        'To ensure insulation prevents leakage currents',
+        'Insulation is good and preventing current leakage',
       ],
       correctAnswer: 1,
       explanation:
@@ -87,8 +87,13 @@ const Module6Section5_1 = () => {
     {
       id: 6,
       question: 'True or False: Insulation resistance testing is optional on minor works.',
-      options: ['True', 'False', 'Only sometimes', 'Depends on the client'],
-      correctAnswer: 1,
+      options: [
+        'True',
+        'Only sometimes',
+        'False',
+        'Depends on the client',
+      ],
+      correctAnswer: 2,
       explanation:
         'False. Even minor works must undergo insulation resistance testing to prove the system is safe and compliant.',
     },
@@ -96,12 +101,12 @@ const Module6Section5_1 = () => {
       id: 7,
       question: 'What instrument is typically used to carry out the test?',
       options: [
-        'Multimeter',
+        'To ensure insulation prevents leakage currents',
+        'Do not energise until fault is rectified',
+        'Electricity at Work Regulations 1989',
         'Insulation resistance tester (megger)',
-        'Oscilloscope',
-        'Clamp meter',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "An insulation resistance tester, commonly called a 'megger', is used to apply high DC voltage and measure resistance.",
     },
@@ -109,12 +114,12 @@ const Module6Section5_1 = () => {
       id: 8,
       question: 'Why must sensitive equipment be disconnected before testing?',
       options: [
-        'To save time',
         'To avoid damage from high test voltages',
-        "It's not necessary",
-        'To get accurate readings',
+        'Electrical Installation Certificate (EIC)',
+        'Insulation resistance tester (megger)',
+        'Moisture caused nuisance tripping and fire',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Sensitive electronic equipment must be disconnected because the high test voltages used could damage delicate components.',
     },
@@ -122,12 +127,12 @@ const Module6Section5_1 = () => {
       id: 9,
       question: 'What must an electrician do if a test result is unsatisfactory?',
       options: [
-        'Continue with energising',
-        'Record and ignore',
+        'To ensure insulation prevents leakage currents',
         'Do not energise until fault is rectified',
-        'Test again later',
+        'Electricity at Work Regulations 1989',
+        'To avoid damage from high test voltages',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'If test results are unsatisfactory, the circuit must not be energised until the fault has been identified and rectified.',
     },
@@ -136,12 +141,12 @@ const Module6Section5_1 = () => {
       question:
         'In the real-world example, what was the consequence of skipping insulation resistance testing?',
       options: [
-        'Nothing happened',
+        'Electrical Installation Certificate (EIC)',
+        'Insulation is good and preventing current leakage',
         'Moisture caused nuisance tripping and fire',
-        'Client was happy',
-        'Work was completed faster',
+        'To ensure insulation prevents leakage currents',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Skipping testing led to moisture ingress causing RCD tripping and eventual fire, plus reputational and financial damage.',
     },

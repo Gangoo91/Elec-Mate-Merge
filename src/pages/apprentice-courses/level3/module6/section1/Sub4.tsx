@@ -39,12 +39,12 @@ const checks = [
     question:
       'In a new dwelling under Approved Document M (Category 1 visitable dwelling), at what height range above floor finish should switches and socket-outlets generally be installed?',
     options: [
-      '300 mm to 1300 mm.',
+      'Approximately 23 mph (Beaufort scale force 5) as a general guide, subject to risk assessment',
+      'In a dry, secure area, on level ground or racking, protected from weather and impact damage',
+      'Risk assessments, permits to work, gas test records, training records, and any incident reports should be retained',
       '450 mm to 1200 mm — the accessible reach range that suits seated wheelchair users and standing users with limited reach.',
-      '150 mm to 1500 mm.',
-      'Whatever the customer wants.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Approved Document M Volume 1 (Dwellings) Category 1 (visitable) specifies switches, sockets, controls and similar accessories should be 450-1200 mm above finished floor level. This is the seated-wheelchair-and-limited-reach band that the Equality Act considers reasonable adjustment for visitors. Category 2 (accessible and adaptable) and Category 3 (wheelchair user) impose tighter bands and additional rules — for example, controls must be at least 350 mm from internal corners. For commercial premises read Approved Document M Volume 2 — slightly different ranges (typically 400-1000 mm for primary controls).",
   },
@@ -53,12 +53,12 @@ const checks = [
     question:
       'A small business client asks you to install a wall switch for the main lighting at 1700 mm because their tallest staff member prefers it there. The client has no disabled staff currently. The right design action is:',
     options: [
-      'Install at 1700 mm — the customer is paying.',
+      'Voltage, current, power factor, harmonics, voltage dips and swells, frequency variations and transient events — providing a comprehensive picture of the supply quality',
+      'Basic periodic inspection as part of the fixed installation inspection programme (BS 7671), with repair or replacement when a fault is reported — a run-to-failure approach is acceptable because the consequences of failure are low',
+      'Yes — design Zs ≤ Table 41.3 max, ADS will clear in time. The design should still target lower Zs (under 0.8 × 2.73 = 2.18 Ω) to leave headroom for measurement uncertainty and operating-temperature confidence at handover.',
       'Install within the M Volume 2 range (typically 750-1200 mm), explain that the Equality Act 2010 requires reasonable provision for disabled users and visitors regardless of current staff, and document the decision in writing.',
-      'Refuse the job.',
-      'Install at 1700 mm and add a stool.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The Equality Act 2010 imposes an anticipatory duty — design must be inclusive even where there is no current disabled user, because the workplace and customer-facing premises are anticipated to admit disabled persons over time. Installing controls outside the accessibility range creates a service-provision discrimination risk for the client and a design-liability risk for you. Document the decision and the regulatory basis in writing; if the client overrides you, decline to certify.",
   },
@@ -67,12 +67,12 @@ const checks = [
     question:
       'A common escape route in a small office building requires emergency lighting. What is the typical horizontal lux floor on the centre-line of the route?',
     options: [
-      '0.2 lux.',
+      'The outgoing worker removes their lock and the incoming worker immediately applies theirs, maintaining continuous lockout',
+      'A poor termination somewhere along the circuit — a loose neutral block, a poorly tightened CPC, or a corroded joint adding extra resistance to the fault loop. Check every termination, retest after re-making.',
       '1 lux on the centre-line of the escape route, with a uniformity ratio not exceeding 40:1, sustained for the duration of the escape (3 hours typical) — per BS 5266-1.',
-      '50 lux.',
-      'No floor — emergency lighting is optional.',
+      'Create a phase displacement between the start and run windings, simulating a two-phase supply to produce starting torque',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "BS 5266-1 (Emergency lighting code of practice) sets 1 lux minimum on the centre-line of an escape route, sustained for 3 hours after mains failure (or 1 hour with controlled re-entry). Uniformity ratio of max-to-min should not exceed 40:1 across the route. Anti-panic lighting in open spaces above 60 m² is 0.5 lux. High-risk task areas (machinery shutdown, plant rooms) need 15 lux or 10 percent of normal task lighting. The accessibility lens then asks: do colours, contrast and the position of luminaires support partially-sighted evacuees?",
   },
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'The Equality Act 2010 imposes which kind of design duty on the L3 electrical designer?',
     options: [
-      'A reactive duty — adjust only when a disabled user requests it.',
+      'For legitimate complaints, all five steps apply fully; for unreasonable complaints, you Hear and Empathise but the Apologise, Resolve, and Do follow up steps are adapted to maintain boundaries while remaining professional',
       'An anticipatory duty — design inclusively for the foreseeable range of disabled users, including those not currently present, in any premises that will be used by the public or by employees.',
-      'No duty — the Act covers employment only.',
-      'A duty only on hospitals.',
+      'The fire evacuation procedure, assembly point location, fire warden names, emergency contact numbers, and the location of firefighting equipment',
+      'Design out or reduce the need for work at height where reasonably practicable, and where it cannot be eliminated, provide information about remaining risks in the health and safety file for future duty holders',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'Approved Document M Volume 1 (Dwellings) is split into how many categories?',
     options: [
-      'Two.',
+      'Combine an IET mentor (expert guidance), a 4DX accountability partner (weekly commitments and scoreboard reviews), and a mastermind group (peer support) into a layered support structure with different review cadences',
+      'Are treated as any other electrical system — the duty holder must ensure they are properly installed, maintained, and that persons working on them are competent and use safe systems of work appropriate to the specific hazards of each technology',
       'Three: Category 1 (visitable dwellings — accessible to visitors), Category 2 (accessible and adaptable dwellings), Category 3 (wheelchair user dwellings, with sub-categories 3a and 3b for adaptable and accessible respectively).',
-      'Four.',
-      'One.',
+      'Loss of fire alarm interfaces, loss of automatic doors, loss of emergency lighting (if isolated), interruption of process equipment, loss of computer-room cooling, loss of safety-critical controls in industrial environments. Plan and brief accordingly.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Approved Document M Volume 1: Cat 1 visitable (the floor for all new dwellings), Cat 2 accessible and adaptable (planning condition), Cat 3 wheelchair user (3a wheelchair adaptable, 3b wheelchair accessible). The category is set by the local authority planning condition. The L3 electrical designer must know which category applies before sizing switch heights, fitting positions and accessibility aids.",
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'For Category 3 wheelchair user dwellings, switches and sockets should be installed:',
     options: [
-      '450-1200 mm above FFL with no other rules.',
+      'Revised to apply to socket-outlets with a rated current not exceeding 32 A. There is an exception to omit RCD protection where, other than for a dwelling, a documented risk assessment determines that RCD protection is not necessary.',
+      'Apply the HEARD framework: listen fully, empathise genuinely, apologise for the inconvenience, resolve the defect promptly and thoroughly, and follow up to ensure satisfaction',
+      'Unplanned breakdowns incur additional costs: emergency call-out charges, expedited parts delivery, overtime, lost production, secondary damage to adjacent components, safety risks, and the disruption of other planned work',
       '450-1200 mm above FFL, AND positioned at least 350 mm from internal corners to allow wheelchair access, AND with at least one switch operable from the bed position in each bedroom for two-way control.',
-      '300-1500 mm.',
-      'Above 1500 mm.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Cat 3 imposes additional rules: 350 mm corner setback for wheelchair clearance, two-way switching from bed positions for primary lighting, controls operable with one hand and minimal force, audible and visible doorbell, and provision for assistive technology integration (smart home interfaces). The electrical design pack documents each.",
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     id: 4,
     question: 'A commercial reception desk lighting design must consider:',
     options: [
-      'Lux level only.',
       'Lux level (typically 300 lux task), uniformity (greater than 0.6 across the desk area), glare control (UGR less than 19), colour temperature (3500-4000K typical), colour rendering (Ra greater than 80), AND accessibility — high contrast trim around switches, audible feedback on counter call-buttons, induction loop interface for hearing-aid users.',
-      'Just colour temperature.',
-      'Whether it looks good.',
+      'Culpability (very high / high / medium / low) × harm category (level A — life-threatening / fatal, level B — serious, level C — minor) — then mapped against the company\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s turnover band (large / medium / small / micro). The starting point and range are then adjusted for aggravating and mitigating factors.',
+      'A RAMS that uses the same generic wording for every job (\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'standard electrical install — usual precautions\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\') without reflecting the specific hazards and conditions of THIS site. The inspector spots it instantly because the wording doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t match what\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s actually present on the job. It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s evidence that the assessment wasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'suitable and sufficient\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' under MHSWR 1999 Reg 3 even though the document exists.',
+      'No — Reg 701.415.2 allows supplementary bonding to be omitted when all three conditions are met (ADS compliance, all final circuits in the location have 30 mA RCD additional protection, main bonding on extraneous-conductive-parts is in place per Reg 411.3.1.2). Modern fully-RCD-protected new-builds typically meet all three.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Reception lighting is one of the most accessibility-sensitive zones in any commercial building. The lux and uniformity targets come from CIBSE LG07 / SLL Code for Lighting. Glare control and colour rendering matter for visually impaired users. High-contrast trim around switches helps partially-sighted users. Induction loops at counters are an Equality Act expectation for any service-providing public counter.",
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'BS 5266-1 sets emergency lighting floors. The minimum horizontal illuminance on the centre-line of an escape route is:',
     options: [
-      '0.5 lux.',
+      'Setting aside your own opinions and values to provide a safe space where the person feels accepted and heard',
       '1 lux for at least 3 hours after supply failure, with uniformity max-to-min not exceeding 40:1.',
-      '15 lux.',
-      '50 lux.',
+      'Promoting rapid clot formation through agents such as kaolin or chitosan',
+      'To ensure it is working correctly and give confidence the circuit is dead',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     id: 6,
     question: 'A doorbell in a Cat 3 dwelling must be:',
     options: [
-      'Just audible.',
+      'A connector that combines the Type 2 AC connector with two additional DC pins below it, enabling both AC charging (via the Type 2 portion) and DC rapid charging (via the DC pins) through a single vehicle inlet — supporting DC charging up to 350 kW',
+      'Removal from your electrical scheme membership (NICEIC / NAPIT / ELECSA / SELECT), potential criminal prosecution if abstraction is alleged, and personal civil liability for any damage. Career-altering.',
       'Audible AND visible — typically a beacon strobe in addition to the chime, positioned where it can be seen from the main living area and bedrooms. Provision for vibrating-pad accessory should be included for profoundly deaf users.',
-      'Just visible.',
-      'Optional.',
+      'The load should be carefully reviewed: while 225 kg is technically within the 230 kg SWL, the margin of only 5 kg leaves no allowance for additional items such as PPE, drinks, or unforeseen materials, and the task should be reassessed to determine if the load can be reduced',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Cat 3 doorbells require dual-mode (audible and visible) signalling. Beacon strobes in the main living area and bedrooms cover most cases; vibrating-pad accessories under pillows cover profoundly deaf users at night. The same dual-mode principle extends to fire alarms in dwellings adapted for deaf or hard-of-hearing residents (BS 5839-6 categories LD1 and LD2 with additional sounder/strobe combinations).",
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     id: 7,
     question: 'In a public WC for an office building, accessibility provisions include:',
     options: [
-      'Just an accessible cubicle.',
+      'Creates a corporate offence where an organisation\\\\\\\'s activities cause a person\\\\\\\'s death and amount to a gross breach of a relevant duty of care, where the breach is the result of the way in which senior management organised or managed activities. Triable on indictment only; unlimited fines. Allows publicity orders and remedial orders. Sits alongside HASAWA prosecutions, not as a replacement.',
+      'BS EN 61009-1 RCBO 32 A Type B 6 kA Icn 30 mA Type B (or Type A plus charger internal RDC-DD per IEC 62752 to comply with Reg 722.531.3.101); plus Reg 722.411.4.1 O-PEN protection (charger with built-in O-PEN protection or earth-electrode arrangement); plus Reg 421.1.7 AFDD discussion with customer (typically declined on dedicated EV with fixed flex).',
+      'Roughly £15-20/month for full Unite membership for a working electrician, with reduced rates for apprentices, students and the unemployed. Cost is tax-deductible against income tax for trade union subscriptions. In return members get representation in disputes, legal advice, training discounts, member-only insurance products and the Unite member benefits programme.',
       'Accessible WC cubicle with: door switch reachable from wheelchair, light switch within reach, mirror at appropriate height, occupancy indicator, emergency pull-cord (red, reaching the floor, with a visible-from-corridor strobe and audible alarm at reception), and slow-acting timer on lights to avoid trapping users in darkness.',
-      'A bigger cubicle only.',
-      'No special provisions needed.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Accessible WC electrical design covers occupancy sensing with reasonable timeout (avoid dark surprise on long use), the emergency pull-cord system (red, reaching the floor, alarms outside the cubicle and at reception), reachable controls, and provision for wheelchair turning circles around any wall accessory. The pull-cord alarm is one of the most-missed accessibility items on small commercial fit-outs.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     id: 8,
     question: 'The L3 designer’s pack should evidence accessibility decisions through:',
     options: [
-      'Verbal explanation to the customer.',
       'Documented Approved Document M (or BS 8300 for non-residential) compliance per zone, lux calculations against CIBSE / SLL targets, accessibility-aid schedule (induction loops, pull-cords, visible alarm beacons, doorbell modes), and an Equality Act anticipatory-duty statement on the design cover sheet.',
-      'A photo of the finished install.',
-      'No documentation needed.',
+      'A material breach is one which an inspector reasonably opines is sufficiently serious that it warrants written notification — letter, notice or report. The HSE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s Enforcement Management Model is the published decision tool. Once a material breach is identified, FFI invoicing starts from the inspector\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s first time spent on the matter.',
+      'The Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020 — requiring an EICR at intervals not exceeding five years (or sooner if the report states), a copy to the tenant within 28 days, a copy to a new tenant before occupation, and a copy to the local housing authority on request within 7 days.',
+      'Yes — if new information comes to light (e.g. injury upgraded from over-3-day to over-7-day, fatality follows initial specified-injury report) the report can be updated through the portal. Honest amendment is much better than leaving an inaccurate report on file.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Accessibility evidence is a discrete part of the design pack. The cover sheet declares the Equality Act anticipatory duty has been considered. The accessibility-aid schedule lists every assistive provision (where, what, why). The lighting calc shows lux and uniformity against CIBSE / SLL targets per zone. Approved Document M or BS 8300 compliance is recorded per zone on the layout drawings. This is what an inspector or claims investigator looks for years after handover if accessibility becomes contested.",
   },

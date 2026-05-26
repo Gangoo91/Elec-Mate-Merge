@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { CheckCircle, XCircle, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 
 interface QuizQuestion {
   id?: number;
@@ -15,11 +16,18 @@ interface QuizProps {
   title?: string;
 }
 
-export const Quiz: React.FC<QuizProps> = ({ questions, title = 'Quick Quiz' }) => {
+export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Quick Quiz' }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [showResult, setShowResult] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  // Per-attempt salt — kept in state so option order is stable through the
+  // attempt and only changes when the user retakes the quiz.
+  const [shuffleSalt, setShuffleSalt] = useState(() => createShuffleSalt());
+  const questions = useMemo(
+    () => shuffleAllQuestionOptions(rawQuestions, shuffleSalt),
+    [rawQuestions, shuffleSalt]
+  );
 
   // Helper to get correct answer index (handles both number and string formats)
   const getCorrectAnswerIndex = (question: QuizQuestion): number => {
@@ -62,6 +70,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = 'Quick Quiz' }) =
     setSelectedAnswers([]);
     setShowResult(false);
     setQuizCompleted(false);
+    setShuffleSalt(createShuffleSalt());
   };
 
   const getScore = () => {

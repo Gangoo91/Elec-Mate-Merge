@@ -40,16 +40,26 @@ const checks = [
     id: 'l3-m3-4-2-ratio',
     question:
       'A transformer has 800 primary turns and 100 secondary turns. With 230 V primary, secondary voltage is:',
-    options: ['28.75 V', '230 V', '460 V', '1840 V'],
-    correctIndex: 0,
+    options: [
+      '230 V',
+      '460 V',
+      '1840 V',
+      '28.75 V',
+    ],
+    correctIndex: 3,
     explanation: 'V2 = V1 × (N2/N1) = 230 × (100/800) = 230 × 0.125 = 28.75 V. Step-down.',
   },
   {
     id: 'l3-m3-4-2-current',
     question:
       'Same transformer, secondary load of 10 A. Primary current (ideal):',
-    options: ['1.25 A', '8 A', '80 A', '1.0 A'],
-    correctIndex: 0,
+    options: [
+      '8 A',
+      '1.25 A',
+      '80 A',
+      '1.0 A',
+    ],
+    correctIndex: 1,
     explanation:
       'I1/I2 = N2/N1 (inverse ratio). I1 = 10 × (100/800) = 1.25 A. Power = V × I is conserved: 230 × 1.25 = 287 VA = 28.75 × 10. Tick.',
   },
@@ -57,8 +67,13 @@ const checks = [
     id: 'l3-m3-4-2-step',
     question:
       'A 11 000 V / 433 V distribution transformer is:',
-    options: ['Step-up', 'Step-down', 'Isolation', 'Auto-transformer'],
-    correctIndex: 1,
+    options: [
+      'Step-up',
+      'Isolation',
+      'Step-down',
+      'Auto-transformer',
+    ],
+    correctIndex: 2,
     explanation:
       'Primary higher than secondary = step-down. Common UK pole-mounted distribution transformer feeding a 400 V LV network.',
   },
@@ -68,7 +83,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'A transformer works by:',
-    options: ['Direct conduction', 'Mutual induction between two coils on a magnetic core', 'Electrostatic charging', 'Mechanical motion'],
+    options: [
+      'They must be removed before the tower is moved',
+      'Mutual induction between two coils on a magnetic core',
+      'Different power factors affecting total current',
+      'Breaking capacity ≥ Ipf at installation point',
+    ],
     correctAnswer: 1,
     explanation:
       'Primary coil creates an alternating flux in the core; secondary coil sits in that flux and an EMF is induced. No physical connection between primary and secondary — pure magnetic coupling.',
@@ -76,28 +96,48 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Voltage ratio for an ideal transformer:',
-    options: ['V1/V2 = N1/N2', 'V1/V2 = I1/I2', 'V1 + V2 = N1 + N2', 'V1 × V2 = constant'],
-    correctAnswer: 0,
+    options: [
+      'V1 + V2 = N1 + N2',
+      'V1 × V2 = constant',
+      'V1/V2 = N1/N2',
+      'V1/V2 = I1/I2',
+    ],
+    correctAnswer: 2,
     explanation: 'V1/V2 = N1/N2. Higher turns ratio = bigger voltage transformation.',
   },
   {
     id: 3,
     question: 'Current ratio for an ideal transformer:',
-    options: ['I1/I2 = N1/N2', 'I1/I2 = N2/N1', 'I1 = I2', 'I1 + I2 = constant'],
-    correctAnswer: 1,
+    options: [
+      'I1 = I2',
+      'I1/I2 = N1/N2',
+      'I1 + I2 = constant',
+      'I1/I2 = N2/N1',
+    ],
+    correctAnswer: 3,
     explanation: 'I1/I2 = N2/N1 — inverse of the voltage ratio. Step-down voltage = step-up current.',
   },
   {
     id: 4,
     question: 'In an ideal transformer, input apparent power equals:',
-    options: ['Half output', 'Output (V1 × I1 = V2 × I2)', 'Twice output', 'Zero'],
-    correctAnswer: 1,
+    options: [
+      'Output (V1 × I1 = V2 × I2)',
+      'Manual Handling Assessment Charts',
+      'Water, foam, or dry powder',
+      'All electronic components',
+    ],
+    correctAnswer: 0,
     explanation: 'Power conservation. V1 × I1 = V2 × I2. Real transformers have small losses.',
   },
   {
     id: 5,
     question: 'A step-up transformer has more turns on the:',
-    options: ['Primary', 'Secondary', 'Core', 'Both equally'],
+    options: [
+      'Primary',
+      'Secondary',
+      'Both equally',
+      'Core',
+    ],
     correctAnswer: 1,
     explanation: 'Step-up means higher secondary voltage → more secondary turns. Used at generators (11 kV → 132 kV) and at substations onto the grid.',
   },
@@ -105,28 +145,38 @@ const quizQuestions = [
     id: 6,
     question: 'An isolation transformer has:',
     options: [
+      'For the life of the installation (indefinitely for client), minimum six years for contractor',
+      'A hydraulic crimping tool with the manufacturer-specified die set matched to the lug barrel size',
       'Primary and secondary at the same voltage, no electrical connection between them',
-      'A 10:1 ratio',
-      'Three phases',
-      'No core',
+      'A protective conductor connecting exposed-conductive-parts to the main earthing terminal',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Isolation = same voltage in and out (typically 1:1), with full electrical separation. Used in medical equipment, hi-fi, sensitive instruments to break ground loops.',
   },
   {
     id: 7,
     question: 'No-load test on a transformer measures:',
-    options: ['Winding resistance', 'Iron (core) losses', 'Copper losses', 'Insulation resistance'],
-    correctAnswer: 1,
+    options: [
+      'Winding resistance',
+      'Insulation resistance',
+      'Copper losses',
+      'Iron (core) losses',
+    ],
+    correctAnswer: 3,
     explanation:
       'No-load test: rated voltage on primary, secondary open. Tiny magnetising current; power drawn = iron losses (hysteresis + eddy).',
   },
   {
     id: 8,
     question: 'Short-circuit test on a transformer measures:',
-    options: ['No-load loss', 'Iron losses only', 'Copper losses (winding I²R)', 'Magnetising current'],
-    correctAnswer: 2,
+    options: [
+      'Copper losses (winding I²R)',
+      'Q_C = P × (tan φ₁ − tan φ₂)',
+      'Output (V1 × I1 = V2 × I2)',
+      'To evaluate adequacy and compliance',
+    ],
+    correctAnswer: 0,
     explanation:
       'Short-circuit test: secondary shorted, primary at reduced voltage to get rated current. Power drawn = copper losses (I²R) plus stray losses. Used to find equivalent series impedance.',
   },

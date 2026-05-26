@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'interlock-purpose',
     question: 'What is the primary purpose of an interlocking guard?',
     options: [
-      'Improve machine speed',
+      'Gap between design predictions and actual operational energy use',
       'Prevent access to hazards while the machine is running',
-      'Reduce energy consumption',
-      'Enable remote operation',
+      'Building interference creates turbulent, low-velocity airflow',
+      'Cable is totally surrounded by thermal insulation over 0.5m',
     ],
     correctIndex: 1,
     explanation:
@@ -26,8 +26,13 @@ const quickCheckQuestions = [
   {
     id: 'iso14119',
     question: 'Which standard covers interlocking devices associated with guards?',
-    options: ['BS EN 60204-1', 'BS EN ISO 14119', 'BS 7671', 'IEC 61131-3'],
-    correctIndex: 1,
+    options: [
+      'BS EN ISO 14119',
+      'BS EN 60204-1',
+      'BS 7671',
+      'IEC 61131-3',
+    ],
+    correctIndex: 0,
     explanation:
       'BS EN ISO 14119 specifies principles for the design and selection of interlocking devices associated with guards. It covers device types, coding levels, fault resistance and defeat prevention.',
   },
@@ -35,12 +40,12 @@ const quickCheckQuestions = [
     id: 'trapped-key',
     question: 'What does a trapped-key interlock system ensure?',
     options: [
-      'The key cannot be removed until the machine is safe',
       'The operator has the correct training certificate',
+      'The key cannot be removed until the machine is safe',
       'The machine runs at reduced speed',
       'Power is supplied from two independent sources',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'Trapped-key systems physically prevent key removal until the machine has reached a safe state (e.g., isolated and stopped). This enforces a strict sequence of operations that cannot be bypassed without breaking the lock.',
   },
@@ -48,12 +53,12 @@ const quickCheckQuestions = [
     id: 'guard-locking',
     question: 'What is guard locking used for?',
     options: [
-      'Locking the factory at night',
+      'Regular assessment of work completed for interim payment certification',
+      'Understanding environmental context and user habits for relevant responses',
       'Preventing the guard from being opened until hazardous conditions have ceased',
-      'Securing tools inside the machine enclosure',
-      'Maintaining guard alignment during transport',
+      'It can melt and adhere to skin in an arc flash, worsening burns',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Guard locking keeps the guard closed and locked until run-down hazards (e.g., rotating parts slowing to a stop, hot surfaces cooling) have ceased. It prevents premature access to residual hazards.',
   },
@@ -64,10 +69,10 @@ const quizQuestions = [
     id: 1,
     question: 'According to the hierarchy of safeguarding measures, what is the first priority?',
     options: [
-      'Interlocking guards',
+      'The householder who commissioned the work',
       'Elimination of the hazard by design',
-      'Warning signs',
-      'Personal protective equipment',
+      'Depends on condition code',
+      'To ensure the conductor is secure',
     ],
     correctAnswer: 1,
     explanation:
@@ -76,8 +81,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which type of guard physically prevents access to the danger zone at all times?',
-    options: ['Interlocking guard', 'Fixed guard', 'Adjustable guard', 'Self-adjusting guard'],
-    correctAnswer: 1,
+    options: [
+      'Adjustable guard',
+      'Interlocking guard',
+      'Fixed guard',
+      'Self-adjusting guard',
+    ],
+    correctAnswer: 2,
     explanation:
       'A fixed guard is permanently attached and requires tools for removal, providing a continuous barrier. It cannot be opened for normal operation and is the simplest and most reliable guard type.',
   },
@@ -86,12 +96,12 @@ const quizQuestions = [
     question:
       'What additional feature does a guard with guard locking provide beyond a standard interlocking guard?',
     options: [
-      'Higher IP rating',
+      'The tongue withdraws from the switch head, breaking the safety circuit',
+      'To prevent defeat of the interlock using substitution',
+      'Hand/body approach speed per BS EN ISO 13855',
       'Keeps the guard locked closed until the hazard has ceased',
-      'Wireless monitoring capability',
-      'Automatic lubrication of the hinge',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Guard locking physically prevents the guard from being opened until hazardous conditions such as rotating parts have stopped. A standard interlock only stops the machine when opened — it does not prevent opening.',
   },
@@ -99,12 +109,12 @@ const quizQuestions = [
     id: 4,
     question: 'In a tongue-operated interlock, what happens when the guard is opened?',
     options: [
-      'An alarm sounds but the machine continues',
       'The tongue withdraws from the switch head, breaking the safety circuit',
-      'The motor reverses direction',
-      'Nothing until the operator presses stop',
+      'Keeps the guard locked closed until the hazard has ceased',
+      'To prevent defeat of the interlock using substitution',
+      'General requirements for the design and construction of guards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When the guard opens, the coded tongue withdraws from the switch head, causing the safety contacts to open. This break in the safety circuit signals the control system to stop the machine.',
   },
@@ -112,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the purpose of using coded actuators in safety interlock switches?',
     options: [
-      'To increase switching speed',
+      'The physical key transfer sequence between locks',
       'To prevent defeat of the interlock using substitution',
-      'To enable wireless communication',
-      'To reduce wiring costs',
+      'Keeps the guard locked closed until the hazard has ceased',
+      'Hand/body approach speed per BS EN ISO 13855',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,12 +148,12 @@ const quizQuestions = [
     id: 7,
     question: 'What does BS EN ISO 14120 cover?',
     options: [
-      'Emergency stop devices',
+      'The tongue withdraws from the switch head, breaking the safety circuit',
+      'To prevent electromagnetic interference causing false safe states',
+      'The physical key transfer sequence between locks',
       'General requirements for the design and construction of guards',
-      'Safety relay wiring',
-      'PLC programming languages',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN ISO 14120 specifies general requirements for the design, construction, and selection of guards — covering material selection, fixing methods, reach distances and gap dimensions.',
   },
@@ -152,12 +162,12 @@ const quizQuestions = [
     question:
       'In a trapped-key interlock system with multiple locks, what determines the sequence of operations?',
     options: [
-      'The PLC programme',
       'The physical key transfer sequence between locks',
-      "The operator's choice",
-      'The machine speed setting',
+      'Hand/body approach speed per BS EN ISO 13855',
+      'Keeps the guard locked closed until the hazard has ceased',
+      'The employer who provides the work equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The physical arrangement of keys and locks enforces a strict mechanical sequence that cannot be bypassed. Each key released from one lock is required to open the next lock in the sequence.',
   },
@@ -166,12 +176,12 @@ const quizQuestions = [
     question:
       'What must be considered when selecting the approach speed for calculating safety distance?',
     options: [
-      'Machine production rate',
-      'Guard material thickness',
+      'The employer who provides the work equipment',
       'Hand/body approach speed per BS EN ISO 13855',
-      'Ambient temperature',
+      'To prevent defeat of the interlock using substitution',
+      'Keeps the guard locked closed until the hazard has ceased',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'BS EN ISO 13855 defines standard approach speeds (2000 mm/s for hand approach, 1600 mm/s for body approach) used to calculate minimum safety distances between the guard and the hazard.',
   },
@@ -179,12 +189,12 @@ const quizQuestions = [
     id: 10,
     question: 'Why should safety interlock wiring be run separately from power wiring?',
     options: [
-      'To save cable costs',
+      'The physical key transfer sequence between locks',
+      'Keeps the guard locked closed until the hazard has ceased',
       'To prevent electromagnetic interference causing false safe states',
-      'To simplify cable tray design',
-      'It is not required to be separate',
+      'General requirements for the design and construction of guards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Separating safety wiring from power circuits prevents electromagnetic interference from causing undetected faults in the safety system that could mask a dangerous condition.',
   },
@@ -192,12 +202,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is a muting function in a safety guarding system?',
     options: [
-      'Silencing the machine alarm',
+      'Single-core PVC-insulated cables (non-armoured) in specific installation methods',
+      'When there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s risk from dust, fumes, gases, vapours, or oxygen deficiency',
+      'Plant rooms, laboratories, industrial processes, operating theatres',
       'Temporarily suspending the safety function under specific conditions to allow material passage',
-      'Reducing machine speed during guard opening',
-      'Disabling the E-stop circuit for maintenance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Muting temporarily suspends the safety function (e.g., a light curtain) to allow workpieces to pass through while maintaining personnel protection. Muting requires specific conditions to be met and is automatically reversed.',
   },
@@ -206,12 +216,12 @@ const quizQuestions = [
     question:
       'Under PUWER 1998, who is responsible for ensuring that guards and interlocks are maintained in an efficient state?',
     options: [
-      'Only the machine manufacturer',
       'The employer who provides the work equipment',
-      'The HSE inspector',
-      'The operator only',
+      'To prevent defeat of the interlock using substitution',
+      'Hand/body approach speed per BS EN ISO 13855',
+      'The physical key transfer sequence between locks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PUWER 1998 Regulation 5 places the duty on the employer to ensure that work equipment is maintained in an efficient state, in efficient working order and in good repair. This includes guards and safety interlocks.',
   },

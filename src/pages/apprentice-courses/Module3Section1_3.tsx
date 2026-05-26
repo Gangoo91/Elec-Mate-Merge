@@ -23,7 +23,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'Which type of conduit can act as an earth path?',
-    options: ['PVC conduit', 'Steel conduit', 'Flexible conduit', 'Plastic trunking'],
+    options: [
+      'PVC conduit',
+      'Steel conduit',
+      'Flexible conduit',
+      'Plastic trunking',
+    ],
     correctAnswer: 1,
     explanation:
       'Steel conduit can act as an earth path when properly installed with continuous bonding and appropriate couplings.',
@@ -31,8 +36,13 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'Name one advantage of using singles in trunking over surface-clipped cable.',
-    options: ['Lower cost', 'Easier cable changes', 'Faster installation', 'Less planning needed'],
-    correctAnswer: 1,
+    options: [
+      'Faster installation',
+      'Lower cost',
+      'Easier cable changes',
+      'Less planning needed',
+    ],
+    correctAnswer: 2,
     explanation:
       'Trunking allows easy addition, removal, or replacement of cables without disturbing walls or ceilings.',
   },
@@ -40,12 +50,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why must cable fill capacity be considered in trunking systems?',
     options: [
-      'For cost reasons',
-      'To prevent overheating',
       'For aesthetic appearance',
+      'For cost reasons',
       'To reduce voltage drop',
+      'To prevent overheating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Overfilling causes excessive heating due to poor heat dissipation and makes cable pulling difficult.',
   },
@@ -56,10 +66,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main purpose of conduit or trunking in a singles installation?',
     options: [
-      'Reduce voltage drop',
+      'Three-phase mV/A/m values from tables',
       'Provide mechanical protection and routing',
-      'Improve current capacity',
-      'Reduce material cost',
+      'Mechanical stress and vibration',
+      '+/-5mm tolerance for exact positioning',
     ],
     correctAnswer: 1,
     explanation:
@@ -68,8 +78,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which containment type can be used as an earth conductor?',
-    options: ['PVC conduit', 'Steel conduit', 'PVC trunking', 'Flexible conduit'],
-    correctAnswer: 1,
+    options: [
+      'PVC trunking',
+      'PVC conduit',
+      'Steel conduit',
+      'Flexible conduit',
+    ],
+    correctAnswer: 2,
     explanation:
       'Steel conduit can serve as an earth conductor when properly bonded with continuous electrical continuity.',
   },
@@ -86,12 +101,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following is a limitation of steel conduit systems?',
     options: [
-      'Poor mechanical strength',
       'Requires skilled installation',
-      'Low cost',
-      'Limited service life',
+      'Gateway or protocol converter',
+      'Any voltage that could cause injury',
+      'Investigate and rectify fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Steel conduit requires skilled installation for threading, bending, and ensuring proper earthing continuity.',
   },
@@ -99,8 +114,13 @@ const quizQuestions = [
     id: 5,
     question:
       'What device should be used to protect cable insulation at entry points into steel conduit?',
-    options: ['Grommets or bushes', 'Cable ties', 'Insulation tape', 'Wooden blocks'],
-    correctAnswer: 0,
+    options: [
+      'Cable ties',
+      'Grommets or bushes',
+      'Wooden blocks',
+      'Insulation tape',
+    ],
+    correctAnswer: 1,
     explanation:
       'Grommets or bushes prevent sharp edges from damaging cable insulation at conduit entry points.',
   },
@@ -108,35 +128,50 @@ const quizQuestions = [
     id: 6,
     question: 'Why must you avoid overfilling trunking with cables?',
     options: [
-      'Increases voltage drop',
+      'The sum of voltages around any closed loop equals zero',
+      'Sustained overcurrent or poor terminations',
       'Causes excessive heating and difficulty pulling cables',
-      'Reduces cable flexibility',
-      'Damages outer sheath',
+      'Dampen pressure pulsations and protect gauge',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Overfilling causes poor heat dissipation leading to overheating and makes future cable pulling extremely difficult.',
   },
   {
     id: 7,
     question: 'What is the typical maximum fill capacity for cables in trunking?',
-    options: ['25%', '35%', '45%', '55%'],
-    correctAnswer: 2,
+    options: [
+      '25%',
+      '35%',
+      '55%',
+      '45%',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS 7671 generally limits cable fill to around 45% of trunking cross-sectional area to allow heat dissipation.',
   },
   {
     id: 8,
     question: 'Which installation method provides better cable access for future modifications?',
-    options: ['Buried T&E', 'Surface clipped singles', 'Singles in trunking', 'SWA cable'],
-    correctAnswer: 2,
+    options: [
+      'Singles in trunking',
+      'SWA cable',
+      'Buried T&E',
+      'Surface clipped singles',
+    ],
+    correctAnswer: 0,
     explanation:
       'Singles in trunking provide excellent access for adding, removing, or modifying cables without major disruption.',
   },
   {
     id: 9,
     question: 'When using steel conduit, what must be tested to ensure safety?',
-    options: ['Cable colour coding', 'Earth continuity', 'Cable flexibility', 'Installation speed'],
+    options: [
+      'Cable colour coding',
+      'Earth continuity',
+      'Cable flexibility',
+      'Installation speed',
+    ],
     correctAnswer: 1,
     explanation:
       'Earth continuity through the steel conduit system must be tested to ensure it can serve as a protective conductor.',
@@ -144,8 +179,13 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What is the recommended support spacing for 20mm PVC conduit?',
-    options: ['500mm', '750mm', '1000mm', '1250mm'],
-    correctAnswer: 1,
+    options: [
+      '500mm',
+      '1250mm',
+      '750mm',
+      '1000mm',
+    ],
+    correctAnswer: 2,
     explanation:
       '20mm PVC conduit should be supported at maximum 750mm intervals to prevent sagging.',
   },
@@ -154,19 +194,24 @@ const quizQuestions = [
     question: 'Which pulling technique is recommended for long conduit runs?',
     options: [
       'Pull all cables at once',
-      'Use pulling compound',
-      'Push from both ends',
       'Install without pulling',
+      'Push from both ends',
+      'Use pulling compound',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Pulling compound reduces friction and cable damage during installation in long conduit runs.',
   },
   {
     id: 12,
     question: 'In which environment would steel conduit be preferred over PVC?',
-    options: ['Domestic bathroom', 'Office building', 'Industrial workshop', 'Residential loft'],
-    correctAnswer: 2,
+    options: [
+      'Industrial workshop',
+      'Residential loft',
+      'Domestic bathroom',
+      'Office building',
+    ],
+    correctAnswer: 0,
     explanation:
       'Industrial workshops require the superior mechanical protection that steel conduit provides against impact damage.',
   },

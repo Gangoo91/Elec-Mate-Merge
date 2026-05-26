@@ -39,12 +39,12 @@ const checks = [
     id: 'mod7-s4-sub5-am2',
     question: 'What is the AM2 / AM2S assessment?',
     options: [
-      'A written multiple-choice exam covering BS 7671.',
+      'Employer to provide PPE where risks cannot be adequately controlled by other means; PPE must be suitable, properly maintained, properly used, with information / instruction / training. 2022 amendment extended duties to cover limb (b) workers (workers under arrangements that aren\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t employment contracts).',
+      'Non-statutory guidance giving practical detail on how to comply with the Building Regulations 2010. Compliance with Approved Documents = strong evidence of compliance with Building Regs (safe-harbour relationship).',
+      'Display the certificate where employees can readily see it, or make an electronic copy accessible to employees. The Employers\\\\\\\\\\\\\\\' Liability (Compulsory Insurance) Regulations 1998 require display and reasonable access. Records of all certificates from the previous 40 years must be retained.',
       'The end-point practical assessment of installation, inspection-testing and fault-finding competence in the C&G 2365-03 / Level 3 apprenticeship. AM2S is the current variant (incorporates safe-isolation and updated assessment criteria). Pass is required for Gold ECS card and qualified-status JIB grading.',
-      'An online portfolio submission.',
-      'A first-aid certificate.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The AM2 / AM2S is the practical end-point assessment — a multi-day practical including installation, inspection and testing, fault-finding and safe-isolation. It's run by NET (National Electrotechnical Training). Passing is the gate to Gold ECS card status and to JIB qualified-Electrician grading. Most apprentices sit AM2S at the end of the apprenticeship after completing the Level 3 Diploma and required portfolio.",
   },
@@ -52,10 +52,10 @@ const checks = [
     id: 'mod7-s4-sub5-part-p',
     question: "What is the main purpose of Part P of the Building Regulations?",
     options: [
-      'To set rates of pay for electricians.',
+      'Immediately prohibit use of the scaffold, tag it as unsafe, investigate who made the modifications and why, have the scaffold redesigned or returned to its approved configuration by a competent scaffolder, and re-inspect before permitting reuse',
       'To ensure that fixed electrical work in dwellings is designed, installed, inspected and tested so that it is reasonably safe — and to require notification of certain work via building control or a registered competent person.',
-      'To regulate commercial installations only.',
-      'To provide insurance for domestic electrical work.',
+      'The continuity and resistance of protective conductors (R1+R2), bonding conductors, and ring final circuit conductors — confirming that the earth fault path is complete and has acceptably low resistance',
+      'The principal designer must plan, manage, and monitor the pre-construction phase and coordinate matters relating to health and safety to ensure designers comply with their duties',
     ],
     correctIndex: 1,
     explanation:
@@ -65,12 +65,12 @@ const checks = [
     id: 'mod7-s4-sub5-cps-schemes',
     question: 'What is a competent person scheme?',
     options: [
-      'A government grant scheme for training.',
+      "A combination of user checks (before each use), formal visual inspection (weekly/monthly), and combined inspection and testing (3-monthly for construction site tools) including earth continuity, insulation resistance and functional tests",
+      "An estimate is an approximate cost that may change as the scope clarifies; a quotation is a fixed price for clearly-defined work. A quotation, once accepted, forms the contractual price unless the scope changes (variations). Make sure clients understand which they're receiving — confusion here is a leading cause of payment disputes.",
       "A government-authorised scheme (NICEIC, NAPIT, ELECSA, STROMA, NICEIC Domestic Installer, Certsure) whose registered firms can self-certify their Part P notifiable work in dwellings without involving building control for each job. Registration requires qualifications, equipment, insurance and ongoing assessment.",
-      'A union membership requirement.',
-      "A homeowner's insurance scheme.",
+      "Sign in, get a brief visitor induction, wear correct PPE, and be escorted by the Site Manager or a senior member of the contractor's team. For a client representative the escort is usually the Project Manager or Site Manager because they'll want to talk through progress, snags and any commercial issues.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "CPS schemes are designated under Part P. The big four are NICEIC, NAPIT, ELECSA and STROMA. Registration typically requires: appropriate electrical qualifications for the QS-named individual, calibrated test equipment, public liability insurance, an initial competence assessment by the scheme assessor, ongoing annual assessment, and evidence of CPD. The benefit: the firm can certify its own notifiable domestic work; the customer gets the certificate and the scheme's six-year workmanship guarantee.",
   },
@@ -81,10 +81,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does ECS stand for and who administers it?',
     options: [
-      'Electrical Compliance Scheme — administered by the HSE.',
+      "Workers with alexithymic traits may struggle to recognise their own stress, fatigue, or frustration until these states become severe, potentially leading to safety risks, interpersonal conflicts, and burnout without early warning signs",
       "Electrotechnical Certification Scheme — administered by the JIB (Joint Industry Board). The card evidences qualifications, competence grade, health-and-safety currency and CPD; required for access to most construction sites.",
-      'Engineering Competence Standard — administered by the IET.',
-      'Electrical Contractor Services — administered by ECA.',
+      "Apply pressing force to the ring being fitted — inner ring when pressing onto the shaft, outer ring when pressing into the housing — never through the rolling elements",
+      "Approaching challenges constructively, supporting colleagues, sharing knowledge willingly, and contributing to a culture where safety concerns can be raised without fear",
     ],
     correctAnswer: 1,
     explanation:
@@ -93,7 +93,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which of the following is NOT a competent person scheme for Part P notifiable electrical work?',
-    options: ['NICEIC.', 'NAPIT.', 'HSE.', 'ELECSA.'],
+    options: [
+      'ELECSA.',
+      'NICEIC.',
+      'HSE.',
+      'NAPIT.',
+    ],
     correctAnswer: 2,
     explanation:
       "The HSE (Health and Safety Executive) is the statutory regulator under HASAWA / EWR — not a competent person scheme. NICEIC, NAPIT, ELECSA, STROMA and similar designated bodies are the actual Part P schemes. Don't confuse the regulator with the certification schemes; they're different roles in the system.",
@@ -102,12 +107,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the C&G 2382 qualification?',
     options: [
-      'A practical installation qualification.',
+      'It is unreasonable in all the circumstances to make the conductor dead AND it is reasonable to work live AND suitable precautions are taken — all three tests must be met',
+      'Treat it as confidential, do not disclose or use it, and do not record it. This is part of your professional duty even though the information was incidental to your work.',
+      'Vapours heavier than air (vapour density greater than 1) sink and accumulate at low levels such as basements, pits, and drains, where they may find ignition sources',
       'The City & Guilds BS 7671 Requirements for Electrical Installations qualification — open-book exam testing knowledge of the current edition / amendment. 2382-22 covers the 18th Edition with A2:2022; 2382-26 will cover A4:2026.',
-      'A first-aid certificate.',
-      'A management qualification.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "C&G 2382 is the regs knowledge qualification — the standard CPD evidence for currency with BS 7671. Each major amendment triggers a new 2382 variant (2382-15 for 17th, 2382-18 for 17th+A3, 2382-22 for 18th, 2382-26 will be 18th+A4). It's open-book, 60 multiple-choice, typically £150-250 to sit. CPS schemes generally expect QS-named individuals to hold the current 2382.",
   },
@@ -115,12 +120,12 @@ const quizQuestions = [
     id: 4,
     question: 'What work is notifiable under Part P in dwellings (England)?',
     options: [
-      'All electrical work without exception.',
-      'Only work in commercial premises.',
       'New circuits, consumer unit replacement, and work in special locations (bathrooms, kitchens with a new circuit, outdoor installations and swimming pool zones).',
-      'Only work done by unqualified persons.',
+      'No - against public policy to insure the cost of breaking the law. PI / EL covers legal defence costs and civil claims but NOT criminal fines.',
+      'Listen non-judgementally, offer reassurance, and gently encourage them to seek professional help while respecting their confidentiality',
+      'The control circuit between the fuses and the contactor coil — typically a control switch, interlock or overload contact',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Part P notifiable work (England, since 2013 simplification) covers: new circuits; replacement of a consumer unit; and work in special locations (room containing a bath or shower, sauna, swimming pool, hot air sauna, outdoors). Minor work — adding a socket to an existing ring, replacing a light switch, like-for-like — is non-notifiable but must still meet BS 7671. Always check the current Part P guidance as scope of notifiable work has changed over time.",
   },
@@ -128,10 +133,10 @@ const quizQuestions = [
     id: 5,
     question: 'What qualification is the C&G 2919 (or current equivalent EV qualification)?',
     options: [
-      'Solar PV installation.',
+      'The insulation chemistry differs — standard thermoplastic (PVC) softens above ~70 °C, modern thermosetting (LSF, XLPE) cross-links and tolerates 90 °C continuously. The cable\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s tabulated CCC depends on which insulation it has.',
       'Electric Vehicle (EV) charging equipment installation — covers the BS 7671 Section 722 requirements, OZEV grant scheme eligibility, manufacturer-specific training pathways and Open-PEN protection considerations for TN-C-S supplies.',
-      'Fire alarm systems.',
-      'Emergency lighting.',
+      'A mask that doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t seal properly to the face provides much less protection than its rated assigned protection factor. Face-fit testing (qualitative or quantitative) confirms the fit. HSE INDG479 is the guide. Fit-test required at first issue and on changes (weight, dental work, beard growth).',
+      'Heat (lofts, plant rooms, summer outdoor — heat stress, dehydration, equipment overheat); cold (numb fingers, brittle PVC sheathing, slip risk on ice); rain (water tracking on first-fix, shock risk, slip); wind (working at height risk, dropped tools); lightning (outdoor work risk).',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,8 +145,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Which card colour indicates an Installation Electrician on the ECS scheme?',
-    options: ['Blue.', 'Gold.', 'Red.', 'Green.'],
-    correctAnswer: 1,
+    options: [
+      'Blue.',
+      'Red.',
+      'Gold.',
+      'Green.',
+    ],
+    correctAnswer: 2,
     explanation:
       "Gold ECS card = fully-qualified Installation Electrician (passed Level 3 Diploma + AM2 / AM2S). The Gold band also covers Approved Electrician (Installation Electrician + 2391 inspection-testing) and higher technician grades. Blue = apprentice; White = provisional / trainee; Green = labourer. The card is the day-one ID for site access — keep it current and visible.",
   },
@@ -149,12 +159,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is required to keep an ECS card valid?',
     options: [
-      'Nothing once issued.',
+      'Reinstated to at least the original condition using suitable mortar/plaster, with cable in safe zones or in earthed metal containment, and any made-good areas redecorated as agreed',
+      'Connect one MFT lead to the MET clamp and the other to the bonding clamp at the gas service — read directly. The reading proves end-to-end resistance of the conductor including both clamps. Acceptance: < 0.05 Ω as a practical rule of thumb.',
+      'Notify the occupant in advance, agree timings, identify life-safety equipment dependent on supply, plan temporary arrangements where required, document agreement',
       'Renewal every 3-5 years (varies by card band) with evidence of CPD and a current health-and-safety qualification (typically the ECS Health, Safety and Environmental Assessment or CSCS-equivalent).',
-      'Annual exams.',
-      'Monthly fee payments only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "ECS cards renew on a 3-5 year cycle depending on band. Renewal requires: evidence of CPD (typically 30+ hours per year for QS-named individuals; less for Installation Electricians); a current health-and-safety qualification (the ECS HSEA test, valid 3 years); and the JIB renewal fee. CSCS-equivalent health-and-safety tests are sometimes accepted as an alternative.",
   },
@@ -162,12 +172,12 @@ const quizQuestions = [
     id: 8,
     question: 'What does MCS certification relate to?',
     options: [
-      'Motor control systems.',
       'Microgeneration Certification Scheme — the consumer-protection scheme covering low-carbon installations (solar PV, heat pumps, battery storage, biomass) that customers can use to access government feed-in tariffs, the Smart Export Guarantee or Boiler Upgrade Scheme grants.',
-      'Mechanical control services.',
-      'Master craftsman status.',
+      'Investigate. Expected R2 for 20 m of 1.5 mm² Cu is approximately 0.24 Ω. 0.85 Ω is roughly 3.5 × the expected value — strongly suggests a poor termination (loose terminal at an accessory, oxidised connection in a junction box) or a partly broken CPC. Trace through the circuit, retighten or replace the suspect connection, retest.',
+      '30 mA RCD at the pitch — TT installations require RCD protection because Ra x I-delta-n must satisfy the 50 V touch-voltage limit, and the high electrode resistance means an overcurrent device alone cannot achieve disconnection in the required time',
+      'Saying privately: "When you take my tools without asking, I feel frustrated because I cannot find them when I need them. I would like you to ask first so I can plan around it" — clearly stating the behaviour, its impact, and the desired change without aggression',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "MCS is the consumer-facing certification scheme for low-carbon installations. To access government incentives (SEG, Boiler Upgrade Scheme, etc.) the install must be MCS-certified. To MCS-certify a job the firm must be MCS-registered (which requires the relevant install qualifications — e.g. C&G 2399 for PV — plus an initial assessment). MCS is separate from Part P; an installer may be Part P registered without being MCS, and vice versa.",
   },

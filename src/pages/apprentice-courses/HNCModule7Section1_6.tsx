@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'max-demand-definition',
     question: 'What is maximum demand in an electrical installation?',
     options: [
-      'The total connected load in kW',
+      'Discharge circuit and reconnect equipment',
+      'Ensures emergency systems work to required standards',
+      'Square root of 2 times magnitude at 45 degrees',
       'The highest current expected to flow at any time',
-      'The cable rating required',
-      'The DNO supply limit',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Maximum demand is the highest electrical current or power expected to flow at any time in an installation. It is always less than total connected load due to diversity - not all loads operate simultaneously at full capacity.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'diversity-purpose',
     question: 'Why are diversity factors applied in load assessment?',
     options: [
-      'To increase cable sizes for safety',
+      'Higher grade exhaust heat (typically 450-550°C)',
+      'Continuous trickle charging to maintain full charge',
+      'A system that automatically tests and records emergency luminaire function',
       'To account for the fact that not all loads operate simultaneously',
-      'To comply with DNO requirements',
-      'To reduce installation costs',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Diversity factors account for the reality that connected loads do not all operate at the same time at full capacity. This allows more realistic sizing of supply equipment without over-engineering the installation.',
   },
@@ -53,10 +53,10 @@ const quickCheckQuestions = [
     id: 'supply-capacity',
     question: 'What determines the available supply capacity from a DNO?',
     options: [
-      "The customer's requested load only",
+      'DC provides stable readings without capacitive effects',
       'The existing network infrastructure and transformer capacity',
-      'BS 7671 regulations',
-      'The size of the service cable',
+      'Within 15 days of the accident, using the appropriate online form',
+      'Pale, cold clammy skin, rapid weak pulse, nausea, confusion, and anxiety',
     ],
     correctIndex: 1,
     explanation:
@@ -67,11 +67,11 @@ const quickCheckQuestions = [
     question: 'What is a typical allowance for future load growth in commercial installations?',
     options: [
       '5% of current demand',
-      '10-25% of current demand',
-      '50% of current demand',
       'No allowance is required',
+      '50% of current demand',
+      '10-25% of current demand',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Commercial installations typically allow 10-25% spare capacity for future load growth. This prevents costly upgrades when additional equipment is installed and is considered good design practice per BS 7671 guidance.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'When assessing maximum demand for socket outlets in a commercial office, which approach is recommended?',
     options: [
+      '100% of all connected loads',
       '1 kVA per socket outlet',
       'VA/m² based on floor area',
-      '100% of all connected loads',
       'Number of workstations × 2 kW',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'For commercial offices, assessing socket outlet demand using VA per square metre of floor area (typically 25-35 VA/m²) is more accurate than per-socket calculations, accounting for typical office equipment density.',
   },
@@ -110,8 +110,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the typical diversity factor for lighting circuits in a commercial building?',
-    options: ['50%', '66%', '90%', '100%'],
-    correctAnswer: 2,
+    options: [
+      '66%',
+      '50%',
+      '100%',
+      '90%',
+    ],
+    correctAnswer: 3,
     explanation:
       'Commercial lighting typically attracts a diversity factor of 90% (0.9), as most lighting is likely to be on during occupied hours. Some allowance is made for areas not continuously lit or daylight-controlled zones.',
   },
@@ -119,8 +124,13 @@ const quizQuestions = [
     id: 4,
     question:
       'A DNO quotes an available supply capacity of 150 kVA. What is the maximum demand (kW) assuming a power factor of 0.95?',
-    options: ['150 kW', '142.5 kW', '157.9 kW', '158 kW'],
-    correctAnswer: 1,
+    options: [
+      '142.5 kW',
+      '150 kW',
+      '157.9 kW',
+      '158 kW',
+    ],
+    correctAnswer: 0,
     explanation:
       'kW = kVA × power factor = 150 × 0.95 = 142.5 kW. The available active power (kW) depends on the power factor of the installation. A typical commercial power factor of 0.95 is often assumed.',
   },
@@ -129,12 +139,12 @@ const quizQuestions = [
     question:
       'When calculating maximum demand for motor loads, what factor accounts for starting current?',
     options: [
-      'No additional factor required',
-      'Largest motor at full load, others at 50%',
+      'Maximum demand, load type, power factor, and growth expectations',
       'Largest motor at 125% or higher, others at full load',
-      'All motors at 50%',
+      'To determine overall supply requirements for a building or site',
+      'Building use, technology trends, and client expansion plans',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'For motor installations, the largest motor is typically assessed at 125% (or higher for DOL starting) to account for starting current, with other motors at full load current. This reflects the diversity of motor operation and starting sequences.',
   },
@@ -142,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'What information must be provided to the DNO when applying for a new supply?',
     options: [
-      'Only the cable size required',
+      'Largest motor at 125% or higher, others at full load',
+      'It reduces kVA demand for the same kW load, potentially avoiding supply upgrades',
       'Maximum demand, load type, power factor, and growth expectations',
-      'The number of circuits',
-      "The contractor's name",
+      'Apply for supply upgrade, consider on-site generation, or implement load management',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'DNO applications require maximum demand (kVA), load type/characteristics, expected power factor, phasing requirements, and anticipated load growth. This enables the DNO to assess network capacity and design the appropriate supply.',
   },
@@ -156,12 +166,12 @@ const quizQuestions = [
     question:
       'In a residential development with 20 dwellings, each with a 100A supply, what diversity factor would typically apply?',
     options: [
-      '100% (2000A total)',
-      'Approximately 50% (1000A equivalent)',
+      'Lithium iron phosphate (LiFePO4)',
+      'Switchgear, controls, and interlocks',
+      'Visual inspection of leads and probes',
       'Approximately 30-40% (600-800A equivalent)',
-      '25% (500A equivalent)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Multiple dwelling developments attract significant diversity (typically 0.3-0.4 for 20+ units) because households have different usage patterns. BS 7671 Appendix 1 and ESQCR guidance provide specific factors based on dwelling count.',
   },
@@ -169,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the purpose of a block load assessment?',
     options: [
-      'To size individual circuit cables',
       'To determine overall supply requirements for a building or site',
-      'To calculate voltage drop',
-      'To select protective devices',
+      'Largest motor at 125% or higher, others at full load',
+      'Building use, technology trends, and client expansion plans',
+      'Essential/critical loads that must always be available at full capacity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A block load assessment determines the overall supply requirements for a building or site, aggregating all load types with appropriate diversity factors to establish maximum demand for DNO supply sizing and main switchgear selection.',
   },
@@ -182,10 +192,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which factor most significantly affects future load growth allowance?',
     options: [
-      'Current cable sizes',
+      'Largest motor at 125% or higher, others at full load',
       'Building use, technology trends, and client expansion plans',
-      'DNO preferences',
-      'Existing lighting levels',
+      'Maximum demand, load type, power factor, and growth expectations',
+      'Approximately 30-40% (600-800A equivalent)',
     ],
     correctAnswer: 1,
     explanation:
@@ -196,12 +206,12 @@ const quizQuestions = [
     question:
       'What is the recommended approach when calculated maximum demand exceeds available DNO supply?',
     options: [
-      'Reduce cable sizes to fit',
+      'To determine overall supply requirements for a building or site',
+      'Maximum demand, load type, power factor, and growth expectations',
       'Apply for supply upgrade, consider on-site generation, or implement load management',
-      'Ignore the shortfall',
-      'Use smaller protective devices',
+      'It reduces kVA demand for the same kW load, potentially avoiding supply upgrades',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Options include applying for a DNO supply upgrade (may involve infrastructure costs), installing on-site generation or energy storage, implementing intelligent load management/demand response, or reviewing design to reduce demand.',
   },
@@ -209,12 +219,12 @@ const quizQuestions = [
     id: 11,
     question: 'How does power factor correction affect maximum demand assessment?',
     options: [
-      'It has no effect on demand',
+      'Maximum demand, load type, power factor, and growth expectations',
+      'Building use, technology trends, and client expansion plans',
+      'Apply for supply upgrade, consider on-site generation, or implement load management',
       'It reduces kVA demand for the same kW load, potentially avoiding supply upgrades',
-      'It increases the maximum demand',
-      'It only affects voltage drop',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Power factor correction reduces the kVA demand for a given kW load (kVA = kW ÷ pf). Improving power factor from 0.8 to 0.95 reduces kVA by approximately 16%, potentially avoiding expensive supply upgrades.',
   },
@@ -222,12 +232,12 @@ const quizQuestions = [
     id: 12,
     question: 'When would you NOT apply diversity to a load in maximum demand calculations?',
     options: [
-      'Domestic cooking appliances',
       'Essential/critical loads that must always be available at full capacity',
-      'Office small power',
-      'Residential heating',
+      'Apply for supply upgrade, consider on-site generation, or implement load management',
+      'Largest motor at 125% or higher, others at full load',
+      'Maximum demand, load type, power factor, and growth expectations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Critical loads such as hospital life-safety equipment, data centre UPS systems, or essential industrial processes should be assessed at 100% as they must be available at full capacity whenever required, regardless of other loads.',
   },

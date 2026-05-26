@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'kcl-definition',
     question: "What does Kirchhoff's Current Law state about currents at a node?",
     options: [
-      'Currents in parallel circuits are equal',
-      'The sum of currents entering a node equals the sum leaving',
       'Current is the same at all points in a circuit',
+      'The sum of currents entering a node equals the sum leaving',
       'Current divides equally between branches',
+      'Currents in parallel circuits are equal',
     ],
     correctIndex: 1,
     explanation:
@@ -47,12 +47,12 @@ const quickCheckQuestions = [
     question:
       "According to Kirchhoff's Voltage Law, what is the sum of voltages around any closed loop?",
     options: [
-      'Equal to the supply voltage',
-      'Zero',
       'Depends on the resistance',
       'Equal to the current multiplied by total resistance',
+      'Zero',
+      'Equal to the supply voltage',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'KVL states that the algebraic sum of all voltages around any closed loop equals zero. Voltage rises (sources) equal voltage drops (across components). This is based on conservation of energy.',
   },
@@ -60,8 +60,13 @@ const quickCheckQuestions = [
     id: 'node-current',
     question:
       'At a distribution board busbar, three circuits draw 15A, 20A, and 10A. What is the current in the main supply cable?',
-    options: ['15A', '20A', '45A', '10A'],
-    correctIndex: 2,
+    options: [
+      '15A',
+      '45A',
+      '20A',
+      '10A',
+    ],
+    correctIndex: 1,
     explanation:
       'By KCL, the current entering the node (busbar) equals the sum of currents leaving. 15A + 20A + 10A = 45A must flow in the main supply cable.',
   },
@@ -69,8 +74,13 @@ const quickCheckQuestions = [
     id: 'voltage-loop',
     question:
       'A 230V supply feeds a series circuit. If two resistors drop 95V and 85V, what voltage appears across the third resistor?',
-    options: ['50V', '180V', '230V', '0V'],
-    correctIndex: 0,
+    options: [
+      '180V',
+      '230V',
+      '50V',
+      '0V',
+    ],
+    correctIndex: 2,
     explanation:
       'By KVL, the sum of voltage drops must equal the supply: V3 = 230 - 95 - 85 = 50V. The drops around the loop total 230V.',
   },
@@ -94,8 +104,13 @@ const quizQuestions = [
     id: 2,
     question:
       'At a junction in a circuit, currents of 5A, 8A, and 3A flow in. If one current flows out at 10A, what is the other outgoing current?',
-    options: ['4A', '6A', '8A', '16A'],
-    correctAnswer: 1,
+    options: [
+      '8A',
+      '4A',
+      '6A',
+      '16A',
+    ],
+    correctAnswer: 2,
     explanation:
       'By KCL: Currents in = Currents out. So 5 + 8 + 3 = 10 + x. Therefore x = 16 - 10 = 6A.',
   },
@@ -103,12 +118,12 @@ const quizQuestions = [
     id: 3,
     question: "Kirchhoff's Voltage Law is based on which conservation principle?",
     options: [
-      'Conservation of charge',
-      'Conservation of energy',
       'Conservation of mass',
+      'Conservation of charge',
       'Conservation of current',
+      'Conservation of energy',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'KVL is based on conservation of energy. As you travel around any closed loop, the energy gained (from sources) must equal the energy lost (in components).',
   },
@@ -116,18 +131,23 @@ const quizQuestions = [
     id: 4,
     question:
       'In a series circuit with a 24V supply and three resistors, the voltage drops are 8V and 10V across the first two. What is the drop across the third?',
-    options: ['4V', '6V', '8V', '18V'],
-    correctAnswer: 1,
+    options: [
+      '6V',
+      '4V',
+      '8V',
+      '18V',
+    ],
+    correctAnswer: 0,
     explanation: 'By KVL: 24V = 8V + 10V + V3. Therefore V3 = 24 - 8 - 10 = 6V.',
   },
   {
     id: 5,
     question: 'Why is node analysis particularly useful for distribution board calculations?',
     options: [
-      'It simplifies voltage calculations',
+      'Excessive heat at connections, warm cable insulation, or hot components',
       'It allows tracking of current flow through multiple outgoing circuits',
-      "It eliminates the need for Ohm's Law",
-      'It only works with single-phase supplies',
+      'To communicate safety information, work updates, and coordinate activities',
+      'Multiple discipline models combined for coordination',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,7 +157,12 @@ const quizQuestions = [
     id: 6,
     question:
       'A fault current of 800A flows to earth. By KCL, what current flows back through the supply?',
-    options: ['0A', '400A', '800A', '1600A'],
+    options: [
+      '0A',
+      '400A',
+      '800A',
+      '1600A',
+    ],
     correctAnswer: 2,
     explanation:
       'By KCL, 800A must flow back through the supply (via the earth fault loop) to complete the circuit. Current in = current out at every node.',
@@ -146,12 +171,12 @@ const quizQuestions = [
     id: 7,
     question: 'When applying KVL to an earth fault loop, which voltages must be considered?',
     options: [
-      'Only the supply voltage',
-      'Only the voltage drops in the fault path',
+      'To improve commutation and reduce brush sparking',
+      'To operate systems under load to identify early failures',
+      'Every switching combination and lamp operation',
       'Supply voltage and all voltage drops in the complete loop',
-      'Only the protective device voltage',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'KVL requires accounting for ALL voltages around the complete loop: the supply EMF and voltage drops in cables, connections, and the fault itself.',
   },
@@ -159,12 +184,12 @@ const quizQuestions = [
     id: 8,
     question: 'In a parallel circuit, why is the voltage the same across each branch?',
     options: [
-      'Because of KCL',
       'Because each branch forms a loop with the source, and KVL applies',
-      'Because the resistance is the same',
-      'Because the current divides equally',
+      'Provides an asbestos register and a refurbishment/demolition survey identifying ACMs',
+      'Report it and do not use until repaired/replaced',
+      'Check internal diameter and remove any restrictions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Each parallel branch and the source form a closed loop. By KVL, the source voltage minus the branch voltage drop = 0, so all branches have the same voltage.',
   },
@@ -172,16 +197,26 @@ const quizQuestions = [
     id: 9,
     question:
       'A three-phase DB has balanced loads drawing 30A per phase. What neutral current flows?',
-    options: ['0A', '30A', '90A', '52A'],
-    correctAnswer: 0,
+    options: [
+      '30A',
+      '0A',
+      '90A',
+      '52A',
+    ],
+    correctAnswer: 1,
     explanation:
       'In a balanced three-phase system, the three phase currents are equal in magnitude but 120 degrees apart. At the star point (neutral node), KCL shows these currents sum to zero.',
   },
   {
     id: 10,
     question: 'When using mesh analysis based on KVL, what do you solve for?',
-    options: ['Node voltages', 'Loop currents', 'Power in each component', 'Total resistance'],
-    correctAnswer: 1,
+    options: [
+      'Node voltages',
+      'Total resistance',
+      'Loop currents',
+      'Power in each component',
+    ],
+    correctAnswer: 2,
     explanation:
       'Mesh analysis applies KVL around each independent loop to create equations in terms of loop (mesh) currents. Solving these gives the current in each branch.',
   },

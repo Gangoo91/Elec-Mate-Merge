@@ -37,11 +37,11 @@ const quickCheckQuestions = [
     question: 'What must a written health and safety policy include as its first element?',
     options: [
       'Risk assessments',
-      'General statement of intent',
-      'Emergency procedures',
       'Training records',
+      'Emergency procedures',
+      'General statement of intent',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The general statement of intent is the first and most important element - it sets out the organisation's commitment to health and safety, signed by the most senior person.",
   },
@@ -49,7 +49,12 @@ const quickCheckQuestions = [
     id: 'policy-threshold',
     question:
       'At what employee threshold must an organisation have a written health and safety policy?',
-    options: ['1 employee', '5 or more employees', '10 or more employees', '50 or more employees'],
+    options: [
+      '1 employee',
+      '5 or more employees',
+      '50 or more employees',
+      '10 or more employees',
+    ],
     correctIndex: 1,
     explanation:
       'Under the Health and Safety at Work etc. Act 1974, employers with 5 or more employees must have a written health and safety policy.',
@@ -57,7 +62,12 @@ const quickCheckQuestions = [
   {
     id: 'policy-review',
     question: 'How often should a health and safety policy be reviewed as a minimum?',
-    options: ['Monthly', 'Quarterly', 'Annually', 'Every 5 years'],
+    options: [
+      'Quarterly',
+      'Every 5 years',
+      'Annually',
+      'Monthly',
+    ],
     correctIndex: 2,
     explanation:
       'Safety policies should be reviewed at least annually, or sooner if there are significant changes to the organisation, legislation, or after incidents.',
@@ -67,12 +77,12 @@ const quickCheckQuestions = [
     question:
       'Which is the most effective method for communicating safety information to site workers?',
     options: [
-      'Email only',
-      'Notice boards only',
+      'Its excellent thermal resistance',
+      'According to BS7671 tables',
+      'Below minimum requirements',
       'Toolbox talks and briefings',
-      'Annual training only',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Toolbox talks and regular briefings are most effective as they allow two-way communication, immediate feedback, and can address current site-specific hazards.',
   },
@@ -83,10 +93,10 @@ const quizQuestions = [
     id: 1,
     question: 'What are the three main parts of a health and safety policy?',
     options: [
-      'Introduction, body, conclusion',
+      'To establish true vertical reference lines',
       'Statement of intent, organisation, arrangements',
-      'Policy, procedures, practices',
-      'Aims, objectives, methods',
+      'Its maximum continuous apparent power output',
+      'MTBF divided by (MTBF + MTTR), expressed as a percentage',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,10 +106,10 @@ const quizQuestions = [
     id: 2,
     question: 'Who has ultimate responsibility for health and safety in an organisation?',
     options: [
-      'The Health and Safety Manager',
-      'The Site Supervisor',
+      'Optimise accuracy and safety',
+      'The scaffold may collapse due to instability',
       'The most senior person (MD/CEO/Owner)',
-      'The HSE Inspector',
+      'Equal load on each phase with equal phase angles',
     ],
     correctAnswer: 2,
     explanation:
@@ -110,12 +120,12 @@ const quizQuestions = [
     question:
       "What is the role of a 'competent person' under the Management of Health and Safety at Work Regulations?",
     options: [
-      'To carry out all risk assessments personally',
-      'To advise the employer on health and safety matters',
       'To enforce safety rules and issue fines',
+      'To carry out all risk assessments personally',
       'To represent employees in safety disputes',
+      'To advise the employer on health and safety matters',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A competent person is appointed to assist the employer with health and safety. They must have sufficient training, experience, and knowledge to advise on compliance with health and safety law.',
   },
@@ -123,12 +133,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which document demonstrates management commitment to health and safety?',
     options: [
-      'Risk assessment forms',
       'Signed statement of intent in the safety policy',
-      'Accident book entries',
-      'Training certificates',
+      'Being regularly reviewed, communicated, and implemented',
+      'Changes in legislation, organisation, or after incidents',
+      'To cooperate with the employer and follow safety arrangements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The signed statement of intent demonstrates visible commitment from top management. It should be signed by the MD/CEO and clearly state the organisation's commitment to health and safety.",
   },
@@ -138,8 +148,8 @@ const quizQuestions = [
     options: [
       'To list all company products and services',
       'To detail who is responsible for what aspects of health and safety',
-      "To describe the company's financial position",
       "To outline the company's marketing strategy",
+      "To describe the company's financial position",
     ],
     correctAnswer: 1,
     explanation:
@@ -149,12 +159,12 @@ const quizQuestions = [
     id: 6,
     question: 'How should safety responsibilities be communicated to employees?',
     options: [
-      'Verbal instructions only',
+      'Signed statement of intent in the safety policy',
+      'Cascade from management through supervisors to operatives',
       'Through job descriptions, induction, and ongoing communication',
-      'Posted on the company website only',
-      'Only during annual appraisals',
+      'To cooperate with the employer and follow safety arrangements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Safety responsibilities should be clearly documented in job descriptions, explained during induction, reinforced through training, and communicated through regular briefings and meetings.',
   },
@@ -162,12 +172,12 @@ const quizQuestions = [
     id: 7,
     question: 'What triggers the need for a safety policy review?',
     options: [
-      'Only when requested by the HSE',
+      'To cooperate with the employer and follow safety arrangements',
+      'Cascade from management through supervisors to operatives',
+      'To advise the employer on health and safety matters',
       'Changes in legislation, organisation, or after incidents',
-      'Only when an accident occurs',
-      'Never - once written it remains valid',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Policy reviews should occur annually as minimum, plus after any significant changes: new legislation, organisational restructure, new work activities, incidents/accidents, or audit findings.',
   },
@@ -175,12 +185,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the role of safety representatives appointed by trade unions?',
     options: [
-      'To manage all health and safety activities',
       'To represent employees and consult on safety matters',
-      'To carry out all risk assessments',
-      'To issue improvement notices',
+      'To advise the employer on health and safety matters',
+      'Signed statement of intent in the safety policy',
+      'Changes in legislation, organisation, or after incidents',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Safety representatives represent employees in consultations with the employer, investigate hazards and complaints, inspect the workplace, and attend safety committee meetings.',
   },
@@ -189,10 +199,10 @@ const quizQuestions = [
     question:
       'Which building services scenario requires specific mention in the arrangements section?',
     options: [
-      'Office stationery ordering',
+      'To advise the employer on health and safety matters',
       'Isolation procedures for electrical work',
-      'Staff holiday booking',
-      'Vehicle parking arrangements',
+      'The most senior person (MD/CEO/Owner)',
+      'Signed statement of intent in the safety policy',
     ],
     correctAnswer: 1,
     explanation:
@@ -202,12 +212,12 @@ const quizQuestions = [
     id: 10,
     question: "What makes a safety policy 'live' and effective?",
     options: [
-      'Being kept in a locked cabinet',
+      'To represent employees and consult on safety matters',
+      'Through job descriptions, induction, and ongoing communication',
       'Being regularly reviewed, communicated, and implemented',
-      'Being written by external consultants',
-      'Being over 100 pages long',
+      'To detail who is responsible for what aspects of health and safety',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An effective policy is regularly reviewed, actively communicated to all employees, implemented through practical arrangements, monitored for compliance, and updated based on feedback and incidents.',
   },
@@ -215,12 +225,12 @@ const quizQuestions = [
     id: 11,
     question: 'Under HASAWA 1974, what duty do employees have regarding safety policies?',
     options: [
-      'No duties - only employers have responsibilities',
+      'Cascade from management through supervisors to operatives',
+      'Through job descriptions, induction, and ongoing communication',
+      'Signed statement of intent in the safety policy',
       'To cooperate with the employer and follow safety arrangements',
-      'To write their own safety policies',
-      "To inspect other workers' activities",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Employees must cooperate with their employer on health and safety matters, follow safety rules and procedures, use equipment as trained, and not interfere with safety provisions.',
   },
@@ -229,12 +239,12 @@ const quizQuestions = [
     question:
       'What is the recommended structure for communicating safety information on a construction site?',
     options: [
-      'One annual meeting',
       'Cascade from management through supervisors to operatives',
-      'Email distribution only',
-      'Notice on head office notice board',
+      'Being regularly reviewed, communicated, and implemented',
+      'To cooperate with the employer and follow safety arrangements',
+      'To advise the employer on health and safety matters',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Effective communication cascades down through the organisation: management decisions communicated through supervisors to operatives via toolbox talks, briefings, and site inductions, with feedback flowing upward.',
   },

@@ -42,12 +42,12 @@ const checks = [
     question:
       'On a commercial new-build commissioning, the documentation chain runs in what order?',
     options: [
-      'Customer → designer → installer → tester → certifier.',
       'Designer (Reg 132.13 design pack) → installer (as-built records, mark-ups, materials register) → tester (Schedule of Test Results, RCD/Zs witness sheets) → certifier (EIC top-level signed declarations) → customer (full O&M pack including all of the above).',
-      'Tester → installer → designer → certifier → customer.',
-      'Designer → certifier → customer; installer and tester do not generate paperwork.',
+      'The main contractor need only pay £4,000 as stated in the pay-less notice for now; the electrician can refer the dispute to adjudication to challenge the pay-less notice and recover the difference if the adjudicator finds in their favour',
+      'Power rating, voltage, speed, mounting type, IP rating, duty cycle, and operating environment from the original motor nameplate, equipment data sheet in the O&M manual, asset register in the CMMS, and the original design specification',
+      'Coded as FI with a recommended investigation route, recorded under Limitations on the EICR, and brought to the duty holder\\\\\\\'s attention in the handover so they can commission the investigation as a separate work item. The EICR cannot certify what cannot be inspected.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Each role generates documentation that the next role uses. Designer produces the design pack (single-line diagrams, panel schedules, calculations, specs) under Reg 132.13. Installer marks up the design with as-built changes and records the materials actually fitted. Tester records every reading on the Schedule of Test Results plus separate RCD/Zs witness sheets where the spec calls for them. Certifier (typically the senior electrician or commissioning engineer) signs the EIC top-level declarations and assembles the pack. Customer receives the consolidated O&M manual with everything in it.",
   },
@@ -56,12 +56,12 @@ const checks = [
     question:
       'The design pack handed from designer to installer at the start of the project should include:',
     options: [
-      'A verbal brief.',
       'Single-line diagrams, panel schedules, circuit calculations (cable sizing, voltage drop, Zs calculations), specification of OCPDs (type, rating, IΔn for RCBOs, AFDD where required), specification of the earthing arrangement, list of departures from BS 7671 (with reasoning), interface details with adjacent disciplines (HVAC, fire alarm, BMS).',
-      'Just the wiring diagrams.',
-      'A purchase order only.',
+      'Investigate the complaint fairly. Under CRA 2015 s.49 (reasonable care and skill), if the work is defective the consumer is entitled to remedies — re-performance, or price reduction / partial refund if re-performance isn\\\\\\\\\\\\\\\'t possible or proportionate. Address the issue promptly; don\\\\\\\\\\\\\\\'t make it adversarial unless the claim is obviously baseless.',
+      'Danger (check the scene is safe to approach), Response (is the casualty conscious and responding?), Airway (open the airway with head-tilt-chin-lift), Breathing (look, listen, feel for normal breathing for up to 10 seconds), Circulation (look for signs of normal life — colour, movement, response). If breathing absent or abnormal: 999, CPR, defibrillator.',
+      'Report internally; if the defect appears systemic (e.g. a brand of MCB failing prematurely across multiple installs), escalate to the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s technical lead who can report to the manufacturer / RAPEX (Rapid Alert System for Non-Food Products) / Office for Product Safety and Standards. Product withdrawals and safety alerts come out of these channels.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The design pack is the installer's reference for what was specified. Without it, the installer is reverse-engineering the design from a verbal brief — a sign-off risk and a fault-tracing nightmare years later. Standard design pack contents: single-line diagrams, panel schedules with circuit-by-circuit OCPD selections, calculations supporting cable sizes and disconnection times, earthing arrangement spec, fault-clearance Zs targets, departure log, interface drawings with adjacent disciplines.",
   },
@@ -70,12 +70,12 @@ const checks = [
     question:
       'On a larger commercial commissioning, separate witness sheets for RCD trip times and Zs are typically used because:',
     options: [
-      'BS 7671 mandates separate witness sheets.',
+      'An \\\\\\\\\\\\\\\'electrical system\\\\\\\\\\\\\\\' is defined in Reg 2 as \\\\\\\\\\\\\\\'a system in which all the electrical equipment is, or may be, electrically connected to a common source of electrical energy\\\\\\\\\\\\\\\'. So everything from the cut-out to the final accessory is one system. Reg 4(1) applies to the whole of it, not just the bit you happened to touch.',
+      'Main earthing terminal notice (514.13.1), bonding-clamp notices on gas and water bonds (514.13.1), RCD test notice (in the 514 series), single-line diagram or circuit list inside the CU door (514.9.1), individual circuit identification on each MCB/RCBO, isolator labelling, and a warning notice for any additional or alternative supply (PV, battery, generator) where applicable.',
       'The standard Schedule of Test Results captures the readings, but the spec or the contract often requires a separate countersigned witness sheet for safety-critical items (RCD trip, Zs, IR) — counter-signed by the commissioning engineer or a third-party inspector. Provides an additional audit trail and supports any subsequent dispute.',
-      'The Schedule of Test Results is not sufficient alone for any installation.',
-      'Witness sheets replace the Schedule of Test Results entirely.',
+      'An EICR carried out and signed by a competent person (usually a CPS-registered contractor) in accordance with BS 7671 Part 6 / IET GN3, at the recommended frequency for the premises type, with a satisfactory or remediated outcome. Without that, the insurer\\\\\\\\\\\\\\\'s claim that the installation wasn\\\\\\\\\\\\\\\'t maintained to current standards is hard to refute.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Separate witness sheets are a contract or specification overlay on top of the BS 7671 minimum. They are not a regulatory requirement — the Schedule of Test Results captures the same data — but they provide an additional countersigned record on safety-critical items. Common on commercial fit-outs, public buildings, healthcare estates and hazardous locations where the project specification calls for redundant audit. The witness sheet typically captures the meter serial, the test value, the date, and signatures from both the testing electrician and the witnessing engineer.',
   },
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'On a small domestic CU swap by a single self-employed electrician, the commissioning paperwork chain:',
     options: [
-      'Does not apply.',
+      'Habitual suppressors showed worse social outcomes (fewer close relationships, less social support, lower life satisfaction) and paradoxically experienced MORE negative emotion over time — while habitual reappraisers showed better outcomes on all these measures',
       'Collapses to a single role with three signed declarations on the EIC — designer, constructor and inspector all signed by the same person — but the documentation links remain (design notes / Zs calculations, as-built schedule on the CU door, Schedule of Test Results, signed EIC, customer pack). The chain is shorter but every link is still present.',
-      'Is replaced by a verbal handover.',
-      'Only requires the EIC.',
+      'A standard AC rotary switch has no DC breaking capacity. Opening it under load on a high-voltage DC string draws an arc that does not self-extinguish at zero crossing (DC has no zero crossing) and can sustain inside the switch — starting a fire. Reg 712.537 and the broader Section 462 require a switch suitable for DC isolation, normally a purpose-built PV DC isolator.',
+      'The policy covers claims notified during the policy period, regardless of when the underlying work was done. Distinct from \\\\\\\'occurrence\\\\\\\' basis (covers events during policy period regardless of when claim made). Claims-made is standard for PI; means you need continuous cover (or run-off cover after ceasing) to protect against late-emerging claims.',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: 'Reg 132.13 sits where in the commissioning chain?',
     options: [
-      'At the customer end only.',
+      "Risk Assessment = identifies hazards, evaluates risks, specifies controls. Method Statement = sets out the safe sequence of work, the people, the equipment, the controls in operation. RAMS is the combined document. RA tells you WHAT the risks are; MS tells you HOW to do the work safely.",
+      "Because at the moment the fault occurs the cable is already at its operating temperature (typically 70 degrees C for 70-deg thermoplastic insulation), and the resistance of copper rises with temperature — using the cold value would understate Zs and make the disconnection time look better than it actually is at full load.",
       "At the start — Reg 132.13 is the design-side documentation requirement that establishes what must be provided for every installation. The design pack flowing from designer to installer is the implementation of Reg 132.13 at the project's start. The same documentation flows through to the customer's O&M pack at handover.",
-      'At the certifier end only.',
-      'It does not apply to commissioning.',
+      "Competence = having the technical knowledge / skill / experience to do the work safely. Authority = being permitted by the firm or a regulator to do it. Both are required. An L3 may be competent on a task but not authorised (e.g. EIC sign-off requires Qualified Supervisor authority); or authorised by job title but not yet competent on a specific item (e.g. CompEx work).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 132.13 sets the documentation requirement at the design phase — diagrams, schedules, circuit charts, protective-device location information for every installation. The design pack handed from designer to installer is the project-start delivery of Reg 132.13. The certifier folds the same documentation (with as-built mark-ups) into the customer pack. So Reg 132.13 spans the entire chain — start (designer), middle (installer mark-ups), end (customer pack).',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'The installer hands to the tester:',
     options: [
-      'Only verbal instructions.',
+      'All new private charge points (domestic and workplace) to have smart functionality by default — including ability to respond to price signals, shift charging times, randomised delay at installation to prevent synchronised charging, and remote firmware update capability',
+      'A detector that uses a light source and photosensor to detect smoke particles by light scattering; most effective at detecting slow-smouldering fires that produce large visible smoke particles',
+      'A device that transfers heat from a low-temperature source (air, ground, or water) to a higher-temperature output for space heating and hot water, achieving efficiencies of 250-400%',
       'Marked-up as-built drawings, materials register (what was actually fitted), test record sheet with the dead-test results recorded as installation progressed (continuity, IR), confirmation of safe-isolation status for live testing.',
-      'A purchase order.',
-      'Nothing — the tester starts from scratch.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The installer's deliverables to the tester are: as-built mark-ups (any deviations from the design), materials register (what brand of RCBO, what cable batch — useful for warranty and traceability), dead-test record sheet (continuity and IR readings recorded as installation progressed — saves the tester repeating work), and the safe-isolation status (which circuits can now be live-tested and which still need work). The tester then completes the live-test sequence and the Schedule of Test Results.",
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'The certifier (commissioning engineer or senior electrician) hands to the customer:',
     options: [
-      'A handshake.',
       'The Operations and Maintenance (O&M) pack — typically a bound document or PDF with: signed EIC (top-level), Schedule of Inspections, Schedule of Test Results, design pack (single-line, panel schedules, calculations), as-built drawings, Building Control Compliance Certificate (or notification reference), commissioning test results, departures log, manufacturer manuals for installed equipment, recommended maintenance schedule.',
-      'Only the EIC.',
-      'A verbal walk-through alone.',
+      'Inversely proportional. Doubling the cable length doubles the surface area for leakage, halving the apparent IR. A 50 m run reading 200 MΩ would read approximately 100 MΩ at 100 m for the same insulation quality. On long runs (especially underground or in damp conditions), the absolute MΩ figure matters less than the consistency between runs of similar length.',
+      'It\\\'s a positive declaration that you have read the RAMS, understood it, and will work to it. Once your signature is on the sheet you\\\'ve personally adopted the document — including the working method, the controls and the residual risks. It\\\'s the contractor\\\'s evidence to the HSE that the operatives were properly briefed, and it\\\'s the reason your supervisor will push back if you sign without reading.',
+      'Cutting (T+E shears, side cutters, hacksaw for trunking and conduit), stripping (auto-strippers and a sharp Stanley for outer sheath) and terminating (Pozidriv VDE drivers for accessory terminations, ratchet crimper for ferrules where used). Layered on top of that — measuring (tape, level), marking (pencil or chinagraph), and fixing (claw hammer for joist clips, club hammer for chasing). Six categories in two months.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The O&M pack is the customer's evidence base for the lifetime of the installation. On commercial work it can run to hundreds of pages. On domestic it may be a 30-page folder or a bookmarked PDF. The pack contains everything from each role in the chain — design pack from designer, as-built mark-ups from installer, test results from tester, signed certification from certifier, and equipment manuals. Any future facility manager, EICR inspector or fault-finder picks up the O&M and has the full picture.",
   },
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'Pre-commissioning checks (before any energisation) include:',
     options: [
-      'Just turning on the supply.',
+      'Functional literacy — able to navigate a coordinated model, read electrical objects with their attached information, raise and respond to clashes, contribute electrical content via either Revit (if competent) or by working with a BIM technician who imports the L3 designer\\\\\\\'s content into Revit, and understand the CDE and ISO 19650 roles. Full Revit authoring skill is a specialist add-on.',
       'Visual inspection per Reg 642.3, dead-test sequence (continuity of CPCs and ring final ring conductors, IR per Reg 643.3), confirmation that all circuits are correctly identified at the CU, isolation lock-off in place, design dead-test results compared to expected values from the design pack — only after all of these complete and pass, energisation proceeds.',
-      'Only insulation resistance.',
-      'A telephone call to the customer.',
+      'Conditionally yes — but only after the installer verifies and documents that the heating unit complies with Regulation 412.2.1.1 (Class II equipment type-tested and marked). Only when compliance with 412.2.1.1 is demonstrated may the mesh specified in Reg 753.411.3.2 be omitted. Verbal assurance is not acceptance — the documentary evidence of 412.2.1.1 conformity must be in the install file.',
+      'Risk-weighted — circuits in special locations (bathrooms, kitchens, outdoors), socket circuits used by ordinary persons, circuits supplying high-risk equipment (showers, EV chargers, electric heating), circuits showing visible signs of damage or modification, and the dedicated samples needed to characterise common features of the installation. Document the sampling logic.',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: "The Operations and Maintenance manual on a commercial fit-out typically lives where after handover?",
     options: [
-      "In the contractor's office only.",
+      'When the worker may be exposed to a risk to their health or safety while at work, EXCEPT where and to the extent that the risk has been or will be adequately controlled by other means which are equally or more effective. The 2022 amendment also extended the duty to cover limb (b) workers (some categories of casual / gig workers) as well as employees.',
+      'Regular inspection and testing to BS 7671 (every 5 years for commercial premises), avoiding overloaded circuits, maintaining PAT regimes, using correct fuse/MCB ratings, considering AFDDs in high-risk locations, and ensuring cable installation complies with current standards',
       'On the client side — typically held by the building facilities manager (printed and digital), with a copy held by the building owner and a soft copy retained by the contractor for warranty and PI purposes. It is the reference for all future maintenance, fault diagnosis, periodic inspection (EICR) and any alteration project.',
-      'Posted on a public website.',
-      'Discarded after one year.',
+      'The grievance and disciplinary policies, normally aligned to the ACAS Code of Practice on Discipline and Grievance. Grievance covers complaints raised BY the employee against the firm or another employee. Disciplinary covers action taken BY the firm against the employee for misconduct, capability or other concerns.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The O&M is the building's electrical history. Facilities manager uses it daily — fault diagnosis, planned maintenance, supplier contacts. Building owner retains a copy for compliance and asset evidence. Contractor retains a soft copy for warranty (typically 12 months on installation work, longer on equipment) and PI (6+ years per Limitation Act). On a property sale, the O&M transfers with the property — the next owner inherits the same reference base.",
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'On a domestic CU swap, the simplified commissioning chain typically is:',
     options: [
-      'Same as commercial — full O&M manual required.',
+      'MCS handles the technical certification. HIES (Home Insulation and Energy Systems Contractors Scheme) and RECC (Renewable Energy Consumer Code) handle the consumer-protection side — installer-customer contracts, deposit protection, dispute resolution, complaints handling. MCS-registered installers must also be members of one of these consumer codes. They\\\\\\\'re complementary regulatory layers.',
+      'Safely isolate the installation from the supply. The earthing conductor is the protective earth path — while the supply is live, removing it could leave exposed-conductive-parts undefined relative to earth, and any earth-fault current would have nowhere to go. GN3 explicit: \\\\\\\'For safety reasons, the installation shall be isolated from the supply before disconnecting the earthing conductor.\\\\\\\'',
+      'At L2 you sat firmly inside Reg 15 (worker). At L3 you start carrying weight inside Reg 9 (contractor) — you may run a small job alone, you may be the senior trade on site, your firm may be \\\\\\\'the Contractor\\\\\\\' for a domestic job where the homeowner is the client. Recognising that the contractor duties apply to your firm (and to your conduct as the firm\\\\\\\'s representative) is the planning-duty step.',
       'Compressed into the EIC trio + customer handover pack: design notes (Zs calculations, RCBO selection, earthing review) typically held in the contractor file but not always issued separately to the customer; EIC + Schedules + manuals consolidated into the customer pack; verbal walk-through handles the operational handover.',
-      'No paperwork at all.',
-      'Only a one-page summary.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Domestic commissioning compresses the chain. The single competent person fulfils designer, installer, tester and certifier roles. The design notes (Zs calculations, RCBO selection, earthing review) typically live in the contractor file rather than being separately bound and handed to the customer. The customer pack is the EIC trio + manuals + as-built schedule + operational instructions. The verbal walk-through covers the parts a commercial O&M would document at length. Lighter chain, same logical content.',
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'Documentation chain integrity matters most when:',
     options: [
-      'Never — it is just paperwork.',
       "Years later — when a fault occurs, a sale happens, an EICR runs, an insurance claim is investigated, or an alteration project starts. Every later interaction depends on the documentation chain being complete and traceable. A weak link (missing as-builts, lost design pack, no signed declarations) can compromise the whole installation's defendability.",
-      'Only on the day of handover.',
-      'Only for the contractor.',
+      "Ask what they're comparing against — often cheap quotes exclude things your quote includes (testing, certification, branded materials, insured workmanship, scheme guarantee). Walk through your quotation explaining each element. If the gap remains large, the cheap quote is probably non-compliant — wish them well and let them go. Never undercut your true cost to win work.",
+      "An ASHP extracts heat from the ambient air using an external evaporator coil, while a GSHP extracts heat from the ground via buried pipe loops (horizontal trenches or vertical boreholes) — ASHPs are cheaper to install but have lower COP in cold weather",
+      "Like parallel resistors. Two equal-IR cables in parallel halve the apparent IR. Three reduce it to one-third. To localise a low-IR fault on parallel cables, isolate one cable at a time and retest — the cable whose disconnection raises the reading is the lower-IR run.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The documentation chain is invisible while everything works. It becomes critical when something happens — a fault months later, a sale years later, an EICR a decade later, an insurance claim after an incident, an alteration project that has to start from "what was actually installed". A complete, traceable chain answers every question. A weak chain leaves the customer (and the contractor) defending a position with incomplete evidence.',
   },

@@ -33,8 +33,13 @@ const quickCheckQuestions = [
     id: 'dol-starting',
     question:
       'What is the typical starting current for a DOL (direct-on-line) starter compared to full load current?',
-    options: ['2-3 times FLC', '4-8 times FLC', '10-12 times FLC', 'Equal to FLC'],
-    correctIndex: 1,
+    options: [
+      '2-3 times FLC',
+      'Equal to FLC',
+      '10-12 times FLC',
+      '4-8 times FLC',
+    ],
+    correctIndex: 3,
     explanation:
       'DOL starting draws 4-8 times full load current (typically 6-7 times). This high inrush can cause voltage dips affecting other equipment, which is why DOL is limited to smaller motors (typically under 7.5kW in commercial buildings).',
   },
@@ -42,7 +47,12 @@ const quickCheckQuestions = [
     id: 'star-delta',
     question:
       'By what factor does star-delta starting reduce the starting current compared to DOL?',
-    options: ['1/2 (50%)', '1/√3 (58%)', '1/3 (33%)', '1/4 (25%)'],
+    options: [
+      '1/√3 (58%)',
+      '1/4 (25%)',
+      '1/3 (33%)',
+      '1/2 (50%)',
+    ],
     correctIndex: 2,
     explanation:
       'Star-delta starting reduces both starting current AND starting torque to 1/3 (33%) of DOL values. In star, line voltage is applied across two windings in series (V/√3 per winding), reducing current to 1/3.',
@@ -51,7 +61,12 @@ const quickCheckQuestions = [
     id: 'vfd-frequency',
     question:
       'A 4-pole motor connected to a 50Hz VSD is operated at 25Hz. What is the synchronous speed?',
-    options: ['750 rpm', '1500 rpm', '3000 rpm', '375 rpm'],
+    options: [
+      '750 rpm',
+      '1500 rpm',
+      '375 rpm',
+      '3000 rpm',
+    ],
     correctIndex: 0,
     explanation:
       'Synchronous speed Ns = (120 × f) / p = (120 × 25) / 4 = 750 rpm. Halving the frequency halves the speed. The actual rotor speed will be slightly less due to slip.',
@@ -60,7 +75,12 @@ const quickCheckQuestions = [
     id: 'pump-affinity',
     question:
       'According to the pump affinity laws, if pump speed is halved, power consumption becomes:',
-    options: ['Half (50%)', 'Quarter (25%)', 'One-eighth (12.5%)', 'One-sixteenth (6.25%)'],
+    options: [
+      'Half (50%)',
+      'Quarter (25%)',
+      'One-eighth (12.5%)',
+      'One-sixteenth (6.25%)',
+    ],
     correctIndex: 2,
     explanation:
       'Power is proportional to speed cubed: P2/P1 = (N2/N1)³. Halving speed: P2 = P1 × (0.5)³ = 0.125 × P1 = 12.5%. This is why VSDs offer massive energy savings on pumps and fans.',
@@ -73,12 +93,12 @@ const quizQuestions = [
     question:
       'Which starting method provides reduced starting current but maintains full starting torque?',
     options: [
-      'Star-delta starting',
-      'Auto-transformer starting',
-      'Soft starter',
+      'CAT III or higher depending on application',
       'None - reduced current always means reduced torque',
+      'They are more reliable and don\\\\\\\\\\\\\\\'t depend on human behaviour',
+      'When hazardous manual handling cannot be avoided',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'For standard induction motors, torque is proportional to voltage squared. Any method that reduces voltage (and hence current) will also reduce starting torque. Star-delta reduces both to 1/3, soft starters reduce both proportionally.',
   },
@@ -86,12 +106,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the main advantage of a soft starter over star-delta starting?',
     options: [
-      'Higher starting torque',
+      'Plasterboard fixings or back boxes with adjustable lugs',
+      'The proportion of glazed area to total window area',
       'Smooth, adjustable acceleration without current transients',
-      'Lower cost',
-      'No heat generation',
+      'Incompatible dimmer switch or loose connection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Soft starters use thyristors to gradually increase voltage, providing smooth acceleration without the current spike that occurs at star-delta changeover. Starting current and time are adjustable, and there's no mechanical switching.",
   },
@@ -100,12 +120,12 @@ const quizQuestions = [
     question:
       'A VFD operating in V/f control maintains a constant ratio of voltage to frequency. Why is this necessary?',
     options: [
-      'To maintain constant motor current',
-      'To maintain constant magnetic flux in the motor',
       'To reduce harmonic distortion',
+      'To maintain constant motor current',
       'To comply with BS 7671 requirements',
+      'To maintain constant magnetic flux in the motor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Motor flux is proportional to V/f. Maintaining constant V/f ratio keeps flux constant, ensuring full torque capability across the speed range. Reducing frequency without reducing voltage would cause magnetic saturation and excessive current.',
   },
@@ -113,8 +133,13 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the typical energy saving when a fan running at 80% speed compared to throttling at full speed?',
-    options: ['20%', '36%', '49%', '80%'],
-    correctAnswer: 2,
+    options: [
+      '49%',
+      '36%',
+      '20%',
+      '80%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Using the fan affinity law: Power = Speed³. At 80% speed, power = (0.8)³ = 0.512 = 51.2% of full speed power. Savings = 100% - 51.2% = 48.8% ≈ 49%. Throttling wastes energy as heat in the damper/valve.',
   },
@@ -123,12 +148,12 @@ const quizQuestions = [
     question:
       'Which motor starting method is most suitable for a large chiller compressor requiring full load starting?',
     options: [
-      'DOL (if supply can handle inrush)',
       'Star-delta (low starting torque acceptable)',
-      'Soft starter (smooth start preferred)',
       'VFD (variable speed operation beneficial)',
+      'DOL (if supply can handle inrush)',
+      'Soft starter (smooth start preferred)',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'Large chiller compressors benefit most from VFDs: soft starting prevents mechanical shock, variable speed matches capacity to load, and energy savings are substantial. Modern chillers often have integral VFDs.',
   },
@@ -136,12 +161,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the main disadvantage of star-delta starting?',
     options: [
-      'High starting current',
+      'They provide free, independent dispute resolution with financial firms',
+      'Put your fingers or an object into their mouth',
       'Current spike at changeover and reduced starting torque',
-      'High cost',
-      'Cannot be used with three-phase motors',
+      'Predictive analytics and AI capabilities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Star-delta has two issues: (1) starting torque is only 33% of DOL - may not start high-inertia loads, and (2) a current transient occurs at changeover from star to delta, potentially causing mechanical stress.',
   },
@@ -149,16 +174,26 @@ const quizQuestions = [
     id: 7,
     question:
       'A building BMS requests a pump to run at 40% flow. Using a VSD, what percentage of full speed power is consumed?',
-    options: ['40%', '16%', '6.4%', '2.6%'],
-    correctAnswer: 2,
+    options: [
+      '40%',
+      '16%',
+      '2.6%',
+      '6.4%',
+    ],
+    correctAnswer: 3,
     explanation:
       'Flow is proportional to speed, so 40% flow = 40% speed. Power = (0.4)³ = 0.064 = 6.4% of full speed power. This demonstrates the massive energy savings VSDs provide for variable flow applications.',
   },
   {
     id: 8,
     question: 'What type of control does a VFD use for precise torque control at low speeds?',
-    options: ['V/f control', 'Scalar control', 'Vector control (FOC)', 'PWM control'],
-    correctAnswer: 2,
+    options: [
+      'Vector control (FOC)',
+      'PWM control',
+      'V/f control',
+      'Scalar control',
+    ],
+    correctAnswer: 0,
     explanation:
       'Vector control (Field Oriented Control) independently controls flux and torque-producing currents, enabling precise torque control even at standstill. V/f (scalar) control is simpler but has poor low-speed torque performance.',
   },
@@ -182,10 +217,10 @@ const quizQuestions = [
     options: [
       'DOL - simple and reliable for constant speed',
       'Star-delta - reduced starting current',
-      'Soft starter - smooth passenger experience',
       'VFD - energy saving in standby mode',
+      'Soft starter - smooth passenger experience',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Modern escalators use VFDs to enable standby mode (slow speed when unoccupied), regenerative braking on descent, and smooth starting/stopping. Energy savings of 30-50% are typical compared to fixed-speed operation.',
   },

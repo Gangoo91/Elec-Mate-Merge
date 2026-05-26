@@ -236,6 +236,48 @@ export const reportCloud = {
   },
 
   /**
+   * Find the user's most recent completed cert at a given installation address.
+   * Powers the "Use details from last cert at this address?" prompt — keeps
+   * supply / earthing / BS amendment data flowing forward without re-typing.
+   * Returns null if nothing matches or address is empty.
+   */
+  getLastCertificateAtAddress: async (
+    userId: string,
+    address: string,
+    certType: ReportType,
+    excludeReportId?: string
+  ): Promise<CloudReport | null> => {
+    const trimmed = (address || '').trim();
+    if (!trimmed) return null;
+
+    try {
+      let query = supabase
+        .from('reports')
+        .select(
+          'id, report_id, report_type, certificate_number, client_name, installation_address, inspector_name, inspection_date, status, updated_at, data, customer_id, edit_version'
+        )
+        .eq('user_id', userId)
+        .eq('report_type', certType)
+        .is('deleted_at', null)
+        .neq('status', 'auto-draft')
+        .ilike('installation_address', `%${trimmed}%`)
+        .order('updated_at', { ascending: false })
+        .limit(1);
+
+      if (excludeReportId) {
+        query = query.neq('report_id', excludeReportId);
+      }
+
+      const { data, error } = await query.maybeSingle();
+      if (error) throw error;
+      return (data as CloudReport) || null;
+    } catch (error) {
+      console.warn('[reportCloud] getLastCertificateAtAddress failed:', error);
+      return null;
+    }
+  },
+
+  /**
    * Create a new report
    * @param isAutoSync - If true, creates with 'auto-draft' status (won't show in Recent Certs until manually saved)
    */

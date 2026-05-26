@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'ach-definition',
     question: 'What does an air change rate of 1.5 ach mean?',
     options: [
-      '1.5m³ of air enters per hour',
+      'Final settlement of all financial matters',
+      'Water-based or gel polymer compounds safe for cables',
+      'Grommets or bushes to protect against sharp edges',
       'The room volume is replaced 1.5 times per hour',
-      'Air moves at 1.5 m/s',
-      'Air pressure changes 1.5 times per hour',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Air changes per hour (ach) means the entire room volume is theoretically replaced that many times each hour. 1.5 ach means the volume equivalent enters/leaves 1.5 times per hour.',
   },
@@ -47,11 +47,11 @@ const quickCheckQuestions = [
     question: 'What is the maximum air permeability permitted for new dwellings under Part L 2021?',
     options: [
       '3 m³/(h.m²) @ 50Pa',
-      '5 m³/(h.m²) @ 50Pa',
       '8 m³/(h.m²) @ 50Pa',
       '10 m³/(h.m²) @ 50Pa',
+      '5 m³/(h.m²) @ 50Pa',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Part L 2021 requires maximum 8 m³/(h.m²) at 50Pa for new dwellings. Better than 5 is needed for good energy performance, and Passivhaus requires less than 0.6 ach at 50Pa.',
   },
@@ -59,12 +59,12 @@ const quickCheckQuestions = [
     id: 'stack-effect',
     question: 'When does stack effect ventilation work most effectively?',
     options: [
-      'When internal and external temperatures are equal',
+      'To provide visual representation of electrical systems and component locations',
+      'Continuously monitor insulation resistance of IT systems',
+      'Because it provides legal compliance, protects users, and demonstrates professional integrity',
       'When there is a significant temperature difference between inside and outside',
-      'Only during windy conditions',
-      'Only in single-storey buildings',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Stack effect relies on buoyancy from temperature difference. Warm air inside rises and exits at high level, drawing in cooler air below. Greater temperature difference = stronger stack effect.',
   },
@@ -72,9 +72,9 @@ const quickCheckQuestions = [
     id: 'wind-pressure',
     question: 'On which face of a building is wind pressure typically positive (pushing air in)?',
     options: [
-      'Leeward (downwind) face',
-      'Windward (upwind) face',
       'Roof only',
+      'Windward (upwind) face',
+      'Leeward (downwind) face',
       'All faces equally',
     ],
     correctIndex: 1,
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the difference between infiltration and ventilation?',
     options: [
-      'Infiltration is intentional, ventilation is unintentional',
+      'Linking present effort to future outcomes \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 helping the learner see the bigger picture',
       'Infiltration is unintentional air leakage, ventilation is controlled air supply',
-      'They are the same thing',
-      'Infiltration only occurs in winter',
+      'To reduce confusion and allow safe movement towards escape routes when mains lighting fails',
+      'To ensure even wear and extend service life across all boilers',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,8 +100,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'How do you convert air permeability (m³/h/m²@50Pa) to typical infiltration rate?',
-    options: ['Divide by 10', 'Divide by 20', 'Multiply by 2', 'No conversion needed'],
-    correctAnswer: 1,
+    options: [
+      'Multiply by 2',
+      'Divide by 10',
+      'Divide by 20',
+      'No conversion needed',
+    ],
+    correctAnswer: 2,
     explanation:
       'As a rule of thumb, divide q50 by 20 to estimate typical infiltration rate (ach). A building with 5 m³/h/m²@50Pa would have approximately 0.25 ach infiltration under normal conditions.',
   },
@@ -109,8 +114,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What ventilation rate does Building Regulations Approved Document F require for an office?',
-    options: ['5 l/s per person', '8 l/s per person', '10 l/s per person', '15 l/s per person'],
-    correctAnswer: 2,
+    options: [
+      '8 l/s per person',
+      '5 l/s per person',
+      '15 l/s per person',
+      '10 l/s per person',
+    ],
+    correctAnswer: 3,
     explanation:
       'ADF requires minimum 10 l/s per person for offices and similar workplaces. This provides adequate fresh air for CO2 dilution and general air quality.',
   },
@@ -118,26 +128,36 @@ const quizQuestions = [
     id: 4,
     question: 'What is the primary driving force for stack effect ventilation?',
     options: [
-      'Wind speed',
       'Density difference between warm and cool air',
-      'Mechanical fans',
-      'Solar radiation',
+      'Approximately mid-height of the ventilated space',
+      'Continuous background fresh air when windows are closed',
+      'Narrow plan perpendicular to prevailing wind',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Stack effect is driven by buoyancy - warm air is less dense than cool air. The density difference creates pressure difference, causing warm air to rise and exit at height while cool air enters at low level.',
   },
   {
     id: 5,
     question: 'A room is 4m × 5m × 3m high with 2 ach. What is the volumetric flow rate?',
-    options: ['30 m³/h', '60 m³/h', '120 m³/h', '240 m³/h'],
-    correctAnswer: 2,
+    options: [
+      '60 m³/h',
+      '120 m³/h',
+      '240 m³/h',
+      '30 m³/h',
+    ],
+    correctAnswer: 1,
     explanation: 'Volume = 4 × 5 × 3 = 60 m³. Flow rate = Volume × ach = 60 × 2 = 120 m³/h.',
   },
   {
     id: 6,
     question: 'What wind pressure coefficient (Cp) would you expect on a windward face?',
-    options: ['-0.5 to -0.8', '0', '+0.5 to +0.8', '+2.0'],
+    options: [
+      '-0.5 to -0.8',
+      '0',
+      '+0.5 to +0.8',
+      '+2.0',
+    ],
     correctAnswer: 2,
     explanation:
       'Windward faces typically have Cp values of +0.5 to +0.8, indicating positive pressure. Leeward faces have negative values (-0.3 to -0.5). Cp depends on building shape and wind angle.',
@@ -146,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'For natural ventilation design, what is the approximate neutral pressure level?',
     options: [
-      'Ground floor',
+      'Density difference between warm and cool air',
+      'Narrow plan perpendicular to prevailing wind',
+      'Continuous background fresh air when windows are closed',
       'Approximately mid-height of the ventilated space',
-      'Top floor',
-      'Roof level',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The neutral pressure level (NPL) is where internal and external pressures are equal, typically at mid-height of a naturally ventilated space. Air enters below NPL and exits above.',
   },
@@ -159,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the purpose of a background ventilator (trickle vent)?',
     options: [
-      'Emergency smoke ventilation',
-      'Rapid purge ventilation',
       'Continuous background fresh air when windows are closed',
-      'Mechanical ventilation backup',
+      'Density difference between warm and cool air',
+      'Narrow plan perpendicular to prevailing wind',
+      'Approximately mid-height of the ventilated space',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Background ventilators (trickle vents) provide continuous low-level fresh air ventilation when windows are closed, preventing build-up of moisture and pollutants. Part F requires minimum equivalent areas.',
   },
@@ -172,12 +192,12 @@ const quizQuestions = [
     id: 9,
     question: 'Which building orientation maximises cross-ventilation potential?',
     options: [
-      'Narrow plan perpendicular to prevailing wind',
       'Deep plan parallel to prevailing wind',
+      'Narrow plan perpendicular to prevailing wind',
       'Square plan with single aspect',
       "Orientation doesn't affect cross-ventilation",
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Narrow plan buildings perpendicular to prevailing wind enable effective cross-ventilation. Wind enters windward openings and exits leeward. Maximum depth for effective cross-ventilation is typically 12-15m.',
   },
@@ -185,8 +205,13 @@ const quizQuestions = [
     id: 10,
     question:
       'What is the heat loss due to ventilation for a room with 100 l/s fresh air and 20K temperature difference?',
-    options: ['1.2 kW', '2.4 kW', '4.8 kW', '12 kW'],
-    correctAnswer: 1,
+    options: [
+      '1.2 kW',
+      '12 kW',
+      '2.4 kW',
+      '4.8 kW',
+    ],
+    correctAnswer: 2,
     explanation:
       'Q = ρ × cp × V × ΔT = 1.2 × 1.0 × 0.1 × 20 = 2.4 kW. Or use Q = 1.2 × V(l/s) × ΔT(K) = 1.2 × 100 × 20 / 1000 = 2.4 kW.',
   },
@@ -194,12 +219,12 @@ const quizQuestions = [
     id: 11,
     question: "What is meant by 'equivalent area' of a ventilation opening?",
     options: [
-      'The actual measured area of the opening',
+      'Applications sensitive to back-reflections (CATV, PON, analogue)',
+      'Circumferential wrapping can act as a tourniquet if the burn swells',
+      'Battery backup with monitoring and low-battery alerts',
       'The theoretical area that would pass the same airflow with no resistance',
-      'Half the opening area',
-      'The frame area plus glass area',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Equivalent area is the theoretical sharp-edged orifice area that would pass the same flow. Real openings have discharge coefficients (typically 0.6-0.7) reducing effective area below geometric area.',
   },
@@ -207,8 +232,13 @@ const quizQuestions = [
     id: 12,
     question:
       'For a naturally ventilated building, what minimum floor-to-ceiling height helps stack effect?',
-    options: ['2.4m', '2.7m', '3.0m or greater', "Height doesn't affect stack effect"],
-    correctAnswer: 2,
+    options: [
+      '3.0m or greater',
+      "Height doesn't affect stack effect",
+      '2.4m',
+      '2.7m',
+    ],
+    correctAnswer: 0,
     explanation:
       'Greater floor-to-ceiling height increases stack effect pressure (ΔP ∝ height). Minimum 3.0m is often recommended for naturally ventilated offices. Atria and voids further enhance stack height.',
   },

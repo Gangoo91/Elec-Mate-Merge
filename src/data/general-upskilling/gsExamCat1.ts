@@ -16,12 +16,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'According to Carol Dweck&rsquo;s research at Stanford, what is a &ldquo;growth mindset&rdquo;?',
     options: [
+      'The idea that only naturally talented people succeed',
       'The belief that abilities can be developed through dedication and hard work',
       'The belief that intelligence is fixed at birth and cannot change',
       'A positive attitude that ignores weaknesses',
-      'The idea that only naturally talented people succeed',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Carol Dweck&rsquo;s landmark research at Stanford University defined a growth mindset as the belief that basic qualities like intelligence and talent can be developed through effort, strategies, and help from others. This contrasts with a fixed mindset, where people believe their qualities are carved in stone.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -33,12 +33,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     id: 2,
     question: 'What is a &ldquo;fixed mindset&rdquo; as defined by Carol Dweck?',
     options: [
-      'The belief that your qualities are carved in stone and cannot be changed',
-      'A mindset focused on fixing problems quickly',
       'The ability to stay focused on a single task',
+      'A mindset focused on fixing problems quickly',
+      'The belief that your qualities are carved in stone and cannot be changed',
       'A preference for routine and predictable work',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Dweck describes a fixed mindset as the belief that your intelligence, talent, and personality are static traits that cannot be meaningfully developed. People with a fixed mindset tend to avoid challenges and feel threatened by the success of others.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -51,12 +51,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'What does the concept of &ldquo;the power of yet&rdquo; mean in growth mindset theory?',
     options: [
+      'The zone where you set new goals, find purpose, and achieve things you previously thought impossible',
+      'The belief that your qualities are carved in stone and cannot be changed',
+      'Mastery experiences &mdash; successfully completing a task yourself',
       'Adding &ldquo;yet&rdquo; to statements of inability reframes them as learning opportunities',
-      'You should always say yes to every opportunity',
-      'Success is guaranteed if you wait long enough',
-      'Failures should be ignored until they resolve themselves',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Dweck popularised the idea that saying &ldquo;I can&rsquo;t do this yet&rdquo; instead of &ldquo;I can&rsquo;t do this&rdquo; transforms a statement of defeat into a statement of potential. This small linguistic shift reinforces the belief that skills develop over time with effort and practice.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -69,8 +69,8 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question: 'Neural plasticity refers to the brain&rsquo;s ability to do which of the following?',
     options: [
       'Form new neural connections and reorganise itself throughout life',
-      'Store unlimited amounts of information without decay',
       'Function without sleep for extended periods',
+      'Store unlimited amounts of information without decay',
       'Operate at the same capacity regardless of age',
     ],
     correctAnswer: 0,
@@ -85,8 +85,13 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     id: 5,
     question:
       'Which psychologist is most closely associated with the concept of &ldquo;self-efficacy&rdquo;?',
-    options: ['Albert Bandura', 'Carol Dweck', 'Angela Duckworth', 'Abraham Maslow'],
-    correctAnswer: 0,
+    options: [
+      'Carol Dweck',
+      'Albert Bandura',
+      'Angela Duckworth',
+      'Abraham Maslow',
+    ],
+    correctAnswer: 1,
     explanation:
       'Albert Bandura, a psychologist at Stanford University, introduced the concept of self-efficacy in 1977. Self-efficacy is a person&rsquo;s belief in their ability to succeed in specific situations or accomplish a task, and it is one of the most powerful predictors of performance and motivation.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -99,12 +104,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Angela Duckworth defines &ldquo;grit&rdquo; as a combination of which two qualities?',
     options: [
-      'Passion and perseverance',
-      'Intelligence and talent',
-      'Confidence and charisma',
       'Speed and accuracy',
+      'Intelligence and talent',
+      'Passion and perseverance',
+      'Confidence and charisma',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'In her research at the University of Pennsylvania, Angela Duckworth defined grit as the combination of passion (a deep, enduring interest) and perseverance (sustained effort over time). Her studies found that grit predicted success more reliably than IQ or talent alone.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -115,8 +120,13 @@ export const gsCat1Questions: StandardMockQuestion[] = [
   {
     id: 7,
     question: 'In the comfort zone model, which zone comes immediately after the comfort zone?',
-    options: ['The fear zone', 'The learning zone', 'The growth zone', 'The danger zone'],
-    correctAnswer: 0,
+    options: [
+      'The growth zone',
+      'The learning zone',
+      'The danger zone',
+      'The fear zone',
+    ],
+    correctAnswer: 3,
     explanation:
       'The comfort zone model describes four concentric zones: comfort, fear, learning, and growth. When you first step outside your comfort zone, you enter the fear zone, where self-doubt and anxiety are common. Pushing through the fear zone leads to the learning zone, where new skills are acquired.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -146,12 +156,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     id: 9,
     question: 'Why is self-assessment important when setting personal development goals?',
     options: [
-      'It establishes your current baseline so you can measure progress accurately',
       'It proves to others that you are already skilled',
+      'It establishes your current baseline so you can measure progress accurately',
       'It eliminates the need for external feedback',
       'It guarantees you will pass any future assessment',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Self-assessment helps you understand your starting point &mdash; your existing strengths and areas for development. Research by Boud and Falchikov (1989) demonstrated that the ability to accurately self-assess is a critical skill for lifelong learners and is essential for setting realistic, measurable goals.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -163,12 +173,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     id: 10,
     question: 'Which of the following is an example of a fixed mindset statement?',
     options: [
-      '&ldquo;I&rsquo;m just not a maths person&rdquo;',
-      '&ldquo;This is challenging but I&rsquo;ll keep trying&rdquo;',
       '&ldquo;I need to find a different strategy&rdquo;',
+      '&ldquo;This is challenging but I&rsquo;ll keep trying&rdquo;',
+      '&ldquo;I&rsquo;m just not a maths person&rdquo;',
       '&ldquo;Mistakes help me learn&rdquo;',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Saying &ldquo;I&rsquo;m just not a maths person&rdquo; treats mathematical ability as a fixed trait rather than a skill that can be developed. Dweck&rsquo;s research shows that such labelling creates a self-fulfilling prophecy where people avoid the very practice that would help them improve.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -180,12 +190,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     id: 11,
     question: 'What does Bandura identify as the strongest source of self-efficacy?',
     options: [
-      'Mastery experiences &mdash; successfully completing a task yourself',
-      'Watching someone else complete the task',
       'Being told you are capable by a manager',
       'Reading about the theory behind the task',
+      'Watching someone else complete the task',
+      'Mastery experiences &mdash; successfully completing a task yourself',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Bandura identified four sources of self-efficacy: mastery experiences, vicarious experiences, verbal persuasion, and physiological states. Of these, mastery experiences &mdash; your own direct successes &mdash; are the most powerful because they provide authentic evidence of your capability.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -214,12 +224,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     id: 13,
     question: 'What is a &ldquo;belief system&rdquo; in the context of personal performance?',
     options: [
+      'It establishes your current baseline so you can measure progress accurately',
       'A set of deeply held assumptions about yourself and the world that shape your behaviour',
-      'A religious framework that determines career choices',
-      'A formal document outlining company values',
-      'A scientifically proven method for predicting success',
+      'Claiming to have a growth mindset without genuinely embracing effort, struggle, and feedback',
+      'Making excuses and finding reasons not to attempt the new task',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'A belief system comprises the assumptions, attitudes, and expectations you hold about yourself and the world. Research in cognitive behavioural psychology shows that these beliefs directly influence behaviour, effort, and ultimately performance &mdash; making them a crucial factor in personal development.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -232,12 +242,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'According to research on neural plasticity, what happens in the brain when you practise a new skill repeatedly?',
     options: [
+      'Brain activity decreases because the task becomes automatic immediately',
+      'Existing neural connections are permanently deleted and replaced',
       'Neural pathways are strengthened through a process called myelination',
       'The brain creates entirely new lobes dedicated to that skill',
-      'Existing neural connections are permanently deleted and replaced',
-      'Brain activity decreases because the task becomes automatic immediately',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'When you repeatedly practise a skill, the neural pathways involved become coated in myelin, a fatty substance that speeds up signal transmission. This process, supported by research from neuroscientists like Daniel Coyle, explains why deliberate practice leads to measurable improvements in performance.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -250,12 +260,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Which of the following best describes the &ldquo;growth zone&rdquo; in the comfort zone model?',
     options: [
+      'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
+      'Adding &ldquo;yet&rdquo; to statements of inability reframes them as learning opportunities',
+      'The belief that your qualities are carved in stone and cannot be changed',
       'The zone where you set new goals, find purpose, and achieve things you previously thought impossible',
-      'The zone where you feel completely comfortable and unchallenged',
-      'The zone where anxiety prevents you from taking action',
-      'The zone where you first begin to acquire new knowledge',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'The growth zone is the outermost ring of the comfort zone model. It is where real transformation happens: you set ambitious goals, live with purpose, and accomplish things that once seemed beyond your reach. Reaching this zone requires pushing through both the fear zone and the learning zone.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -268,9 +278,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question: 'What is the key difference between a performance goal and a learning goal?',
     options: [
       'A performance goal focuses on proving ability; a learning goal focuses on developing ability',
-      'A performance goal is set by managers; a learning goal is set by the individual',
-      'A performance goal is short-term; a learning goal is always long-term',
-      'There is no meaningful difference between them',
+      'The belief that abilities can be developed through dedication and hard work',
+      'People can have a growth mindset in some areas of life and a fixed mindset in others',
+      'It establishes your current baseline so you can measure progress accurately',
     ],
     correctAnswer: 0,
     explanation:
@@ -288,12 +298,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Carol Dweck warns about &ldquo;false growth mindset.&rdquo; What does this term describe?',
     options: [
+      'Praising effort even when strategies are clearly ineffective',
       'Claiming to have a growth mindset without genuinely embracing effort, struggle, and feedback',
       'A growth mindset that develops too quickly to be sustainable',
       'The belief that growth mindset theory has been scientifically disproved',
-      'Praising effort even when strategies are clearly ineffective',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Dweck coined the term &ldquo;false growth mindset&rdquo; to describe people and organisations who claim to value growth but do not actually embrace the difficult parts &mdash; struggle, mistakes, and critical feedback. She warned that simply saying &ldquo;I have a growth mindset&rdquo; without backing it up with behaviour is counterproductive.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -306,12 +316,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'According to Bandura, which of the following is an example of a &ldquo;vicarious experience&rdquo; building self-efficacy?',
     options: [
+      'Anxiety, stress, and fatigue can be misinterpreted as signs of inability, lowering self-efficacy',
+      'Adding &ldquo;yet&rdquo; to statements of inability reframes them as learning opportunities',
       'Watching a colleague who is similar to you successfully complete a complex wiring task',
-      'Receiving a pay rise for good performance',
-      'Reading the BS 7671 regulations cover to cover',
-      'Feeling calm before a practical assessment',
+      'An apprentice who asks for feedback after failing a practical assessment and practises the weak areas',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Bandura described vicarious experiences as observing someone similar to yourself succeed at a task. The key factor is perceived similarity &mdash; if you see someone &ldquo;like you&rdquo; accomplish something, your belief in your own capability increases. This is why mentoring and peer demonstration are so powerful in trade apprenticeships.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -324,12 +334,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'A qualified electrician refuses to learn about EV charger installation, saying &ldquo;That&rsquo;s not real electrical work.&rdquo; Which fixed mindset trigger is this most likely driven by?',
     options: [
-      'Identity protection &mdash; new technologies threaten their established sense of competence',
+      'Logical reasoning &mdash; EV chargers genuinely are not electrical work',
       'Laziness &mdash; they simply cannot be bothered to learn',
       'Financial concerns &mdash; EV charger courses are too expensive',
-      'Logical reasoning &mdash; EV chargers genuinely are not electrical work',
+      'Identity protection &mdash; new technologies threaten their established sense of competence',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Dweck identifies that fixed mindset triggers often occur when something threatens a person&rsquo;s established identity as competent. A qualified electrician who dismisses new technology may be protecting their self-image rather than making a rational assessment. Recognising these triggers is the first step to overcoming them.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -343,9 +353,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
       'In Duckworth&rsquo;s grit research, what did she find about the relationship between grit and talent?',
     options: [
       'Grit and talent are often inversely related &mdash; high talent can reduce perseverance',
-      'Grit and talent are always perfectly correlated',
-      'Talent is always more important than grit for predicting success',
-      'Grit only matters for people who lack talent entirely',
+      'Adding &ldquo;yet&rdquo; to statements of inability reframes them as learning opportunities',
+      'The belief that your qualities are carved in stone and cannot be changed',
+      'People can have a growth mindset in some areas of life and a fixed mindset in others',
     ],
     correctAnswer: 0,
     explanation:
@@ -360,12 +370,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'How does the concept of neural plasticity challenge the idea that &ldquo;you can&rsquo;t teach an old dog new tricks&rdquo;?',
     options: [
-      'Research shows the adult brain continues forming new neural connections well into old age',
       'Neural plasticity only applies to children under the age of 12',
+      'Research shows the adult brain continues forming new neural connections well into old age',
       'The brain stops developing at age 25 and cannot change after that',
       'Neural plasticity means the brain physically grows larger with age',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Studies by researchers including Eleanor Maguire at University College London showed that London taxi drivers developed larger hippocampi through years of navigation practice, demonstrating that the adult brain remains plastic. This evidence directly contradicts the myth that adults cannot learn new skills.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -378,12 +388,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Dweck&rsquo;s research found that praising children for intelligence (&ldquo;You&rsquo;re so smart&rdquo;) had what effect when they later faced a difficult task?',
     options: [
+      '&ldquo;I don&rsquo;t understand fire alarm circuits yet, but I&rsquo;m going to study the wiring diagrams this week&rdquo;',
+      'The belief that your qualities are carved in stone and cannot be changed',
       'They were more likely to give up and chose easier tasks to protect their &ldquo;smart&rdquo; label',
-      'They performed significantly better because the praise boosted their confidence',
-      'It had no measurable effect on their behaviour',
-      'They became more motivated to tackle increasingly difficult challenges',
+      'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'In Dweck&rsquo;s well-known studies with primary school children, those praised for intelligence became risk-averse, choosing easier tasks and giving up more quickly on hard problems. They wanted to maintain their &ldquo;smart&rdquo; label rather than risk failure. Children praised for effort, by contrast, embraced harder challenges.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -396,12 +406,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'In the comfort zone model, what is a characteristic behaviour when someone is in the &ldquo;fear zone&rdquo;?',
     options: [
+      'Neural pathways are strengthened through a process called myelination',
+      'Form new neural connections and reorganise itself throughout life',
+      '&ldquo;I&rsquo;m just not a maths person&rdquo;',
       'Making excuses and finding reasons not to attempt the new task',
-      'Setting ambitious long-term goals',
-      'Teaching the skill to others with confidence',
-      'Feeling bored and unchallenged by the work',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'The fear zone is characterised by self-doubt, excuse-making, and a lack of confidence. People in this zone are affected by the opinions of others and tend to rationalise why they should not attempt the challenge. Recognising that this is a normal and temporary stage helps individuals push through to the learning zone.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -415,9 +425,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
       'Which of the following statements about self-assessment is supported by educational research?',
     options: [
       'Accurate self-assessment improves when combined with external feedback and clear criteria',
-      'Self-assessment is always more accurate than peer assessment',
-      'Beginners are typically the most accurate self-assessors',
       'Self-assessment should replace all forms of external assessment',
+      'Beginners are typically the most accurate self-assessors',
+      'Self-assessment is always more accurate than peer assessment',
     ],
     correctAnswer: 0,
     explanation:
@@ -432,12 +442,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'A first-year apprentice believes they will never understand three-phase systems because they struggled with basic circuit theory. According to Dweck, what type of belief is this?',
     options: [
-      'A fixed mindset belief that treats current difficulty as evidence of permanent limitation',
       'A realistic assessment based on objective evidence',
+      'A fixed mindset belief that treats current difficulty as evidence of permanent limitation',
       'A growth mindset belief because they are aware of their weakness',
       'A healthy level of caution that prevents overconfidence',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Dweck would identify this as a fixed mindset belief because the apprentice is interpreting a current struggle as proof of an unchangeable limitation. A growth mindset response would be: &ldquo;I&rsquo;m finding three-phase challenging right now, but with practice and the right support I can improve.&rdquo;',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -450,12 +460,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Bandura identified four sources of self-efficacy. Which of the following is NOT one of them?',
     options: [
-      'Financial incentives',
-      'Mastery experiences',
       'Vicarious experiences',
+      'Mastery experiences',
+      'Financial incentives',
       'Verbal persuasion',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Bandura&rsquo;s four sources of self-efficacy are: mastery experiences, vicarious experiences, verbal persuasion, and physiological/emotional states. Financial incentives, while they may motivate behaviour, are not one of the sources Bandura identified as building genuine belief in one&rsquo;s capabilities.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -468,12 +478,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Duckworth&rsquo;s &ldquo;Hard Thing Rule&rdquo; requires family members to do which of the following?',
     options: [
+      'Grit and talent are often inversely related &mdash; high talent can reduce perseverance',
+      'A performance goal focuses on proving ability; a learning goal focuses on developing ability',
+      'A fixed mindset belief that treats current difficulty as evidence of permanent limitation',
       'Each person must commit to one hard thing and cannot quit until a natural stopping point is reached',
-      'Everyone must do the same difficult activity together',
-      'Children must choose the hardest activity available regardless of interest',
-      'The family must change their hard thing every week to avoid boredom',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Duckworth&rsquo;s Hard Thing Rule has three parts: everyone (including parents) must do a hard thing; you can quit, but not on a bad day or before a natural stopping point; and each person gets to choose their own hard thing. This develops grit by combining personal choice with sustained commitment.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -487,9 +497,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
       'How do negative belief systems typically affect an electrician&rsquo;s career progression?',
     options: [
       'They create self-limiting behaviour that causes the person to avoid opportunities and underperform',
-      'They have no measurable impact on career progression',
-      'They motivate the person to prove doubters wrong and achieve more',
-      'They only affect mental health, not actual work performance',
+      'It establishes your current baseline so you can measure progress accurately',
+      'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
+      'Research shows the adult brain continues forming new neural connections well into old age',
     ],
     correctAnswer: 0,
     explanation:
@@ -503,12 +513,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     id: 29,
     question: 'What does Dweck mean when she says everyone has a &ldquo;mixed mindset&rdquo;?',
     options: [
+      'Adding &ldquo;yet&rdquo; to statements of inability reframes them as learning opportunities',
       'People can have a growth mindset in some areas of life and a fixed mindset in others',
-      'Nobody truly has either a growth or fixed mindset',
-      'Mindsets change randomly throughout each day',
-      'You must choose between a growth and fixed mindset &mdash; mixing them is harmful',
+      'It establishes your current baseline so you can measure progress accurately',
+      'The zone where you set new goals, find purpose, and achieve things you previously thought impossible',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Dweck clarified in later work that mindset is not a binary trait. A person might have a growth mindset about their technical skills but a fixed mindset about their leadership ability. Recognising where your fixed mindset triggers lie is the first step toward developing a more consistently growth-oriented approach.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -521,12 +531,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Which of the following is the best example of reframing a limitation using growth mindset language?',
     options: [
-      '&ldquo;I don&rsquo;t understand fire alarm circuits yet, but I&rsquo;m going to study the wiring diagrams this week&rdquo;',
-      '&ldquo;Fire alarm circuits are easy &mdash; I just need to believe in myself&rdquo;',
       '&ldquo;I don&rsquo;t need to understand fire alarm circuits because I specialise in domestic work&rdquo;',
+      '&ldquo;Fire alarm circuits are easy &mdash; I just need to believe in myself&rdquo;',
+      '&ldquo;I don&rsquo;t understand fire alarm circuits yet, but I&rsquo;m going to study the wiring diagrams this week&rdquo;',
       '&ldquo;Some people are just naturally better at understanding complex circuits&rdquo;',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Effective growth mindset reframing includes three elements: acknowledging the current gap (&ldquo;I don&rsquo;t understand&rdquo;), adding &ldquo;yet&rdquo; to signal potential, and identifying a specific action plan. Dweck emphasises that genuine growth mindset is not empty positivity &mdash; it requires concrete strategies paired with effort.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -539,12 +549,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'In Bandura&rsquo;s theory, how do &ldquo;physiological and emotional states&rdquo; influence self-efficacy?',
     options: [
+      'A performance goal focuses on proving ability; a learning goal focuses on developing ability',
+      'Claiming to have a growth mindset without genuinely embracing effort, struggle, and feedback',
+      'The belief that abilities can be developed through dedication and hard work',
       'Anxiety, stress, and fatigue can be misinterpreted as signs of inability, lowering self-efficacy',
-      'Physical fitness automatically increases self-efficacy in all domains',
-      'Emotional states have no impact on self-efficacy once a skill has been learned',
-      'Only positive emotions contribute to self-efficacy',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Bandura found that people often read their physiological responses &mdash; such as sweating, a racing heart, or fatigue &mdash; as signals about their capability. An apprentice who feels nervous before an AM2 assessment might interpret those nerves as evidence they are not ready, when in fact some anxiety is a normal response to high-stakes situations.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -558,9 +568,9 @@ export const gsCat1Questions: StandardMockQuestion[] = [
       'Which of the following is a common characteristic of the &ldquo;learning zone&rdquo; in the comfort zone model?',
     options: [
       'Acquiring new skills, dealing with challenges, and extending your comfort zone',
-      'Feeling completely relaxed and unstressed',
-      'Being paralysed by self-doubt and making excuses',
-      'Having already mastered the skill and teaching it to others',
+      'A set of deeply held assumptions about yourself and the world that shape your behaviour',
+      'The belief that your qualities are carved in stone and cannot be changed',
+      'People can have a growth mindset in some areas of life and a fixed mindset in others',
     ],
     correctAnswer: 0,
     explanation:
@@ -578,12 +588,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Dweck&rsquo;s research on &ldquo;false growth mindset&rdquo; identified a particular danger in organisations. What was it?',
     options: [
-      'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
       'Organisations that invest too heavily in staff training programmes',
+      'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
       'Leaders who set excessively high standards for their teams',
       'Companies that hire based on qualifications rather than attitude',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Dweck warned that a false growth mindset in organisations manifests as rewarding effort regardless of results. She clarified that growth mindset is not about praising effort for its own sake &mdash; it is about praising productive effort that leads to learning. If a strategy is not working, the growth mindset response is to try a different approach, not simply try harder with the same failing method.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -596,12 +606,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'How does Bandura&rsquo;s concept of &ldquo;reciprocal determinism&rdquo; relate to self-efficacy and growth mindset?',
     options: [
-      'It shows that behaviour, personal beliefs, and environment continuously influence each other in a dynamic cycle',
-      'It proves that genetics determine mindset and cannot be changed',
       'It demonstrates that environment is the only factor that determines success',
+      'It proves that genetics determine mindset and cannot be changed',
+      'It shows that behaviour, personal beliefs, and environment continuously influence each other in a dynamic cycle',
       'It suggests that personal beliefs have no influence on behaviour',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Bandura&rsquo;s reciprocal determinism model shows that personal factors (beliefs, self-efficacy), behaviour (actions, effort), and environment (feedback, support) all interact bidirectionally. This means that changing one element &mdash; such as developing a growth mindset belief &mdash; can create a positive cascade that alters behaviour and even the environments a person seeks out.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -614,12 +624,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'Duckworth distinguishes between &ldquo;harmonious passion&rdquo; and &ldquo;obsessive passion.&rdquo; Why is this distinction important for sustained grit?',
     options: [
+      'Each person must commit to one hard thing and cannot quit until a natural stopping point is reached',
+      'An apprentice who asks for feedback after failing a practical assessment and practises the weak areas',
+      'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
       'Harmonious passion integrates with your identity and promotes wellbeing, while obsessive passion leads to burnout and rigid persistence',
-      'Obsessive passion is always more productive than harmonious passion',
-      'Harmonious passion means you never feel stressed about your work',
-      'The distinction is purely theoretical and has no practical application',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Drawing on Vallerand&rsquo;s Dualistic Model of Passion, Duckworth emphasises that sustainable grit requires harmonious passion &mdash; where the activity is freely chosen and integrates well with other aspects of life. Obsessive passion, by contrast, creates internal compulsion and conflict, leading to burnout. For tradespeople, this means loving the craft without letting it consume every aspect of life.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -650,12 +660,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'How does Dweck&rsquo;s growth mindset theory intersect with Vygotsky&rsquo;s &ldquo;Zone of Proximal Development&rdquo; (ZPD)?',
     options: [
+      'They create self-limiting behaviour that causes the person to avoid opportunities and underperform',
       'Both frameworks suggest that optimal learning occurs when challenges are just beyond current ability but achievable with appropriate support',
-      'They are contradictory theories that cannot be reconciled',
-      'Vygotsky&rsquo;s ZPD only applies to children, while growth mindset only applies to adults',
-      'The ZPD replaces the need for growth mindset in educational settings',
+      'The zone where you set new goals, find purpose, and achieve things you previously thought impossible',
+      'An apprentice who asks for feedback after failing a practical assessment and practises the weak areas',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Vygotsky&rsquo;s ZPD describes the gap between what a learner can do independently and what they can achieve with guidance. This aligns with Dweck&rsquo;s growth mindset because both emphasise that ability is not fixed &mdash; the right challenge combined with appropriate scaffolding (mentoring, instruction, feedback) enables learners to develop beyond their current level.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -668,12 +678,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'A contracting firm wants to build a growth mindset culture. According to Dweck&rsquo;s organisational research, which approach is most effective?',
     options: [
+      'Harmonious passion integrates with your identity and promotes wellbeing, while obsessive passion leads to burnout and rigid persistence',
+      'A set of deeply held assumptions about yourself and the world that shape your behaviour',
       'Creating systems where learning from failure is valued, feedback is normalised, and development pathways are transparent',
-      'Sending all staff on a one-day growth mindset workshop',
-      'Hiring only candidates who already demonstrate a growth mindset and excluding fixed mindset individuals',
-      'Posting motivational quotes about effort and persistence around the workplace',
+      'Both frameworks suggest that optimal learning occurs when challenges are just beyond current ability but achievable with appropriate support',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Dweck&rsquo;s organisational research found that growth mindset cultures require systemic change, not just individual beliefs. This means creating psychologically safe environments where mistakes are treated as learning opportunities, feedback flows in all directions, and transparent development pathways show people how to progress. One-off workshops or motivational posters do not create lasting cultural change.',
     section: 'Understanding Goals &amp; Growth Mindset',
@@ -686,12 +696,12 @@ export const gsCat1Questions: StandardMockQuestion[] = [
     question:
       'What criticism has been levelled at growth mindset research by scholars such as Broer, Bai, and Fonseca (2019)?',
     options: [
+      'It shows that behaviour, personal beliefs, and environment continuously influence each other in a dynamic cycle',
+      'Organisations rewarding effort alone without addressing ineffective strategies or poor outcomes',
+      'The zone where you set new goals, find purpose, and achieve things you previously thought impossible',
       'Large-scale replication studies found that mindset interventions had very small effect sizes, particularly for disadvantaged students',
-      'Growth mindset theory has been completely disproved by neuroscience',
-      'The original research was fabricated and later retracted',
-      'Growth mindset only applies to academic settings and has no relevance to vocational training',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'A meta-analysis by Sisk et al. (2018) and studies by researchers such as Broer, Bai, and Fonseca (2019) found that while mindset interventions can have positive effects, the effect sizes are often small and inconsistent, particularly for the most disadvantaged students. This does not invalidate the theory but suggests it works best as part of a wider approach that addresses structural barriers alongside individual beliefs.',
     section: 'Understanding Goals &amp; Growth Mindset',

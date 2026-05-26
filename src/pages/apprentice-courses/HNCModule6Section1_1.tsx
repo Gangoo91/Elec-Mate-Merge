@@ -32,11 +32,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of Part L of the Building Regulations?',
     options: [
       'Fire safety in buildings',
-      'Conservation of fuel and power',
       'Structural stability',
+      'Conservation of fuel and power',
       'Ventilation requirements',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Part L of the Building Regulations specifically addresses the conservation of fuel and power, setting requirements to limit heat gains and losses through building fabric and services to reduce carbon emissions.',
   },
@@ -44,8 +44,13 @@ const quickCheckQuestions = [
     id: 'part-l-2021-uplift',
     question:
       'By approximately how much did the 2021 Part L amendments reduce CO₂ targets for new dwellings compared to Part L 2013?',
-    options: ['15%', '31%', '50%', '75%'],
-    correctIndex: 1,
+    options: [
+      '75%',
+      '15%',
+      '31%',
+      '50%',
+    ],
+    correctIndex: 2,
     explanation:
       'The Part L 2021 amendments introduced a 31% reduction in CO₂ emissions for new dwellings compared to Part L 2013, representing a significant step towards the Future Homes Standard.',
   },
@@ -53,8 +58,13 @@ const quickCheckQuestions = [
     id: 'compliance-method',
     question:
       'Which compliance calculation method is used for new domestic buildings under Part L?',
-    options: ['SBEM', 'SAP', 'CIBSE TM54', 'BREEAM'],
-    correctIndex: 1,
+    options: [
+      'SAP',
+      'SBEM',
+      'CIBSE TM54',
+      'BREEAM',
+    ],
+    correctIndex: 0,
     explanation:
       "SAP (Standard Assessment Procedure) is the government's methodology for assessing the energy performance of dwellings. SBEM is used for non-domestic buildings.",
   },
@@ -63,11 +73,11 @@ const quickCheckQuestions = [
     question: 'Part L is divided into different volumes. Part L1 applies to:',
     options: [
       'Non-domestic buildings only',
-      'Extensions only',
       'Dwellings',
+      'Extensions only',
       'Historic buildings only',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Part L is split into Part L1 (dwellings) and Part L2 (buildings other than dwellings). Each has separate compliance requirements and calculation methodologies.',
   },
@@ -78,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the notional building approach in Part L compliance?',
     options: [
-      'A building designed without any insulation',
+      'Measure end-to-end resistance of each conductor (L, N, E)',
       'A reference building with the same geometry but compliant specifications',
-      'A building that exceeds minimum standards',
-      'A pre-fabricated modular building',
+      'Dust masks or respirators appropriate to the dust type',
+      'Where cables pass through fire-rated walls, floors and partitions',
     ],
     correctAnswer: 1,
     explanation:
@@ -91,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: "What does the term 'primary energy' mean in Part L context?",
     options: [
+      'Energy from renewable sources only',
       'Energy used only for heating',
       'Energy content of fuel before conversion losses',
-      'Energy from renewable sources only',
       'Energy measured at the meter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Primary energy accounts for the full energy cost of fuel, including extraction, processing, and distribution losses. It gives a more complete picture of environmental impact than delivered energy alone.',
   },
@@ -104,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is a key metric introduced in Part L 2021?',
     options: [
-      'Energy Use Intensity (EUI)',
-      'Primary Energy Rate',
       'Building Performance Index',
+      'Energy Use Intensity (EUI)',
       'Thermal Efficiency Rating',
+      'Primary Energy Rate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Part L 2021 introduced the Primary Energy Rate alongside CO₂ emission rate (TER/DER or BER) as key compliance metrics, providing a more comprehensive view of building energy performance.',
   },
@@ -117,19 +127,24 @@ const quizQuestions = [
     id: 4,
     question: 'For existing buildings, Part L applies when:',
     options: [
-      'Any maintenance work is carried out',
-      'The building is sold',
       'Controlled fittings or services are replaced or work exceeds defined thresholds',
-      'An EPC is required',
+      'An area of higher heat transfer through the building envelope',
+      'It sets targets for 2025 requiring homes to be zero-carbon ready',
+      'Prioritising building envelope performance before adding complex systems',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Part L applies to existing buildings when controlled fittings (windows, boilers) are replaced, when extensions are built, or when renovation work affects more than 25% of the thermal envelope.',
   },
   {
     id: 5,
     question: 'What is the maximum U-value for walls in new dwellings under Part L 2021?',
-    options: ['0.18 W/m²K', '0.26 W/m²K', '0.35 W/m²K', '0.45 W/m²K'],
+    options: [
+      '0.18 W/m²K',
+      '0.26 W/m²K',
+      '0.45 W/m²K',
+      '0.35 W/m²K',
+    ],
     correctAnswer: 1,
     explanation:
       'Part L 2021 sets a limiting U-value of 0.26 W/m²K for external walls in new dwellings. The notional dwelling uses 0.18 W/m²K, but the actual design can trade off between elements.',
@@ -139,11 +154,11 @@ const quizQuestions = [
     question: 'SBEM stands for:',
     options: [
       'Standard Building Energy Model',
-      'Simplified Building Energy Model',
       'Sustainable Building Efficiency Measure',
+      'Simplified Building Energy Model',
       'System-Based Energy Methodology',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "SBEM (Simplified Building Energy Model) is the government's tool for demonstrating Part L compliance in non-domestic buildings. It calculates energy use and CO₂ emissions.",
   },
@@ -154,10 +169,10 @@ const quizQuestions = [
     options: [
       '10 m³/(h·m²) at 50 Pa',
       '8 m³/(h·m²) at 50 Pa',
-      '5 m³/(h·m²) at 50 Pa',
       '3 m³/(h·m²) at 50 Pa',
+      '5 m³/(h·m²) at 50 Pa',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The Part L 2021 notional dwelling assumes an air permeability of 5 m³/(h·m²) at 50 Pa. Lower air permeability improves energy performance but requires adequate ventilation provision.',
   },
@@ -165,8 +180,13 @@ const quizQuestions = [
     id: 8,
     question:
       'Which Part of the Building Regulations works closely with Part L to address ventilation?',
-    options: ['Part A', 'Part B', 'Part F', 'Part M'],
-    correctAnswer: 2,
+    options: [
+      'Part F',
+      'Part M',
+      'Part A',
+      'Part B',
+    ],
+    correctAnswer: 0,
     explanation:
       'Part F (Ventilation) works in conjunction with Part L. As buildings become more airtight for energy efficiency, adequate ventilation becomes critical for indoor air quality and moisture control.',
   },
@@ -174,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: "The 'fabric first' approach in Part L means:",
     options: [
-      'Using only natural materials',
+      'It sets targets for 2025 requiring homes to be zero-carbon ready',
       'Prioritising building envelope performance before adding complex systems',
-      'Installing fabric-based heating systems',
-      'Meeting only the minimum fabric standards',
+      'An area of higher heat transfer through the building envelope',
+      'Controlled fittings or services are replaced or work exceeds defined thresholds',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,11 +208,11 @@ const quizQuestions = [
     question: 'What is a thermal bridge in building construction?',
     options: [
       'A connection between heating systems',
+      'A gap in insulation that allows ventilation',
       'An area of higher heat transfer through the building envelope',
       'A method of transferring heat to adjacent buildings',
-      'A gap in insulation that allows ventilation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A thermal bridge (or cold bridge) is a localised area of the building envelope with higher heat flow, typically at junctions, around openings, or where insulation is penetrated. Part L requires thermal bridging to be minimised.',
   },
@@ -201,12 +221,12 @@ const quizQuestions = [
     question:
       'For a non-domestic building extension over 50m², Part L compliance is demonstrated by:',
     options: [
-      'Only meeting U-value limits',
-      'Using SAP calculations',
+      'It sets targets for 2025 requiring homes to be zero-carbon ready',
+      'An area of higher heat transfer through the building envelope',
+      'Prioritising building envelope performance before adding complex systems',
       'Following the guidance for new buildings or consequential improvements',
-      'No Part L requirements apply',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Extensions over 50m² to non-domestic buildings must follow Part L2 guidance. Larger extensions may trigger consequential improvements to the existing building's energy systems.",
   },
@@ -214,12 +234,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the significance of the Future Homes Standard in relation to Part L?',
     options: [
-      'It replaces Part L entirely',
       'It sets targets for 2025 requiring homes to be zero-carbon ready',
-      'It only applies to social housing',
-      'It reduces energy efficiency requirements',
+      'An area of higher heat transfer through the building envelope',
+      'Energy content of fuel before conversion losses',
+      'Controlled fittings or services are replaced or work exceeds defined thresholds',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Future Homes Standard (planned for 2025) will require new homes to produce 75-80% less CO₂ than Part L 2013 standards. Part L 2021 is an interim step towards this, often called the 'Future Homes uplift'.",
   },

@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'jct-sbc-purpose',
     question: 'What is the primary purpose of the JCT Standard Building Contract (SBC)?',
     options: [
-      'For small domestic works',
+      'Leakage currents from damp conditions or equipment filters',
+      'Resident on-site support and fine-tuning of building systems',
       'For traditionally procured projects with full design by the employer',
-      'For design and build projects',
-      'For management contracting',
+      'True — CDM 2015 applies to every construction project',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The JCT SBC is used for traditionally procured projects where the employer provides full design information through an architect or contract administrator. The contractor builds to the design provided.',
   },
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'eot-requirement',
     question: 'What must a contractor do to claim an extension of time under JCT contracts?',
     options: [
-      'Simply inform the client verbally',
+      'Compliance with design, construction, inspection, and testing standards',
       'Give written notice to the contract administrator as soon as delay becomes apparent',
-      'Wait until the project is complete',
-      'Only claim if the delay exceeds one month',
+      'At least three: emergency fund, tax provision, and general savings',
+      'Yes — agonal gasps are not effective breathing and CPR must continue',
     ],
     correctIndex: 1,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'practical-completion',
     question: 'What does practical completion mean under JCT contracts?',
     options: [
-      '100% of all work finished with no defects',
+      'Investigate the connection and clean/retighten as necessary',
       'Work substantially complete and fit for occupation',
-      'Final certificate issued',
-      'All snagging items resolved',
+      'Because they happen far more frequently and complacency is common',
+      'Isolated system with no intentional connection to earth',
     ],
     correctIndex: 1,
     explanation:
@@ -69,8 +69,13 @@ const quickCheckQuestions = [
   {
     id: 'defects-period',
     question: 'What is the typical defects liability period under JCT contracts?',
-    options: ['3 months', '6 months', '12 months', '24 months'],
-    correctIndex: 2,
+    options: [
+      '3 months',
+      '12 months',
+      '6 months',
+      '24 months',
+    ],
+    correctIndex: 1,
     explanation:
       'The standard defects liability period (now called rectification period) under JCT contracts is 12 months from practical completion, during which the contractor must rectify defects at their own cost.',
   },
@@ -95,10 +100,10 @@ const quizQuestions = [
     id: 2,
     question: 'Under JCT contracts, who is responsible for issuing the extension of time decision?',
     options: [
-      'The employer directly',
-      "The contractor's project manager",
+      'A relevant event entitling extension of time',
+      'Direct loss and expense caused by relevant matters',
       'The contract administrator or architect',
-      'The quantity surveyor',
+      'The contractor\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own poor planning',
     ],
     correctAnswer: 2,
     explanation:
@@ -108,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'A relevant event under JCT contracts does NOT include:',
     options: [
-      'Exceptionally adverse weather conditions',
       'Late design information from the employer',
-      "The contractor's own poor planning",
+      'Exceptionally adverse weather conditions',
       'Changes instructed by the contract administrator',
+      "The contractor's own poor planning",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The contractor's own failures, delays, or poor planning are not relevant events. Only events beyond the contractor's control listed in the contract qualify for extension of time.",
   },
@@ -121,8 +126,13 @@ const quizQuestions = [
     id: 4,
     question:
       'What percentage of retention is typically released at practical completion under JCT contracts?',
-    options: ['25%', '50%', '75%', '100%'],
-    correctAnswer: 1,
+    options: [
+      '50%',
+      '25%',
+      '75%',
+      '100%',
+    ],
+    correctAnswer: 0,
     explanation:
       'At practical completion, 50% of the retention fund is released to the contractor. The remaining 50% is held until the end of the defects liability period and issue of the final certificate.',
   },
@@ -130,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'Loss and expense claims under JCT contracts are intended to compensate for:',
     options: [
-      'Any contractor losses on the project',
+      'The contract administrator or architect',
       'Direct loss and expense caused by relevant matters',
-      'Profit loss due to market changes',
-      'Inflation on material costs',
+      'A relevant event entitling extension of time',
+      'Medium complexity projects with nominated subcontractors',
     ],
     correctAnswer: 1,
     explanation:
@@ -156,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'Under JCT subcontracts, when must a domestic subcontractor be paid?',
     options: [
-      'Within 30 days of their invoice',
+      "To allow current flow in the rotor by relative motion between field and rotor",
+      "Referencing a specification rather than listing items creates ambiguity if the specification is later disputed or modified",
+      "Use collective protection measures (e.g., guard rails) before personal protection (e.g., harnesses)",
       "Within the period stated in the subcontract following the main contractor's receipt of payment",
-      'Only when the project reaches practical completion',
-      'Within 7 days of any application',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Payment timing follows the subcontract terms, typically within a specified period after the main contractor receives payment from the employer (pay-when-paid clauses are generally prohibited under the Construction Act).',
   },
@@ -169,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the effect of issuing a non-completion certificate under JCT contracts?',
     options: [
-      'The contract is terminated immediately',
       'Liquidated damages become payable by the contractor',
       'The employer must pay additional fees',
+      'The contract is terminated immediately',
       'The defects period is extended',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A non-completion certificate confirms the contractor has failed to complete by the completion date. This enables the employer to deduct liquidated damages at the agreed rate until completion.',
   },
@@ -196,12 +206,12 @@ const quizQuestions = [
     id: 10,
     question: 'The final certificate under JCT contracts is issued:',
     options: [
-      'At practical completion',
+      'Liquidated damages become payable by the contractor',
+      'The contract administrator or architect',
       'When all defects are remedied and final account agreed',
-      'Six months after practical completion',
-      'When the employer takes occupation',
+      'Direct loss and expense caused by relevant matters',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The final certificate is issued after the defects liability period ends, all defects have been remedied, and the final account has been agreed. It releases remaining retention and concludes the contract.',
   },
@@ -210,11 +220,11 @@ const quizQuestions = [
     question: 'Under JCT contracts, variations must be instructed by:',
     options: [
       'The employer directly to the contractor',
-      'The contract administrator in writing',
-      'The quantity surveyor',
       'Any professional team member',
+      'The quantity surveyor',
+      'The contract administrator in writing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Variations must be instructed by the contract administrator (or architect) in writing. Verbal instructions should be confirmed in writing to be valid and to ensure proper valuation.',
   },
@@ -222,12 +232,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the purpose of liquidated damages in JCT contracts?',
     options: [
-      'To punish the contractor for delays',
       "To provide a pre-agreed genuine estimate of the employer's loss from late completion",
-      'To cover all employer costs regardless of actual loss',
-      'To fund project acceleration',
+      "Rate of heat transfer through a building element (thermal transmittance)",
+      "The sensor is faulty, misadjusted, or detecting a metallic object that should not be in range",
+      "High currents require more effective heat dissipation and connections",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Liquidated damages are a pre-agreed genuine estimate of the employer's likely loss from late completion. They provide certainty and avoid the need to prove actual loss, but must be a reasonable estimate, not a penalty.",
   },

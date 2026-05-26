@@ -32,15 +32,25 @@ const quickCheckQuestions = [
   {
     id: 'mcb-type-b',
     question: 'What is the magnetic trip range for a Type B MCB?',
-    options: ['2-3 × In', '3-5 × In', '5-10 × In', '10-20 × In'],
-    correctIndex: 1,
+    options: [
+      '2-3 × In',
+      '10-20 × In',
+      '5-10 × In',
+      '3-5 × In',
+    ],
+    correctIndex: 3,
     explanation:
       'Type B MCBs trip magnetically (instantaneously) between 3-5 times their rated current (In). This makes them suitable for resistive loads and domestic circuits where inrush currents are low.',
   },
   {
     id: 'type-c-application',
     question: 'Which application is most suitable for a Type C MCB?',
-    options: ['Domestic lighting', 'Socket outlets', 'Motor circuits', 'IT equipment'],
+    options: [
+      'Socket outlets',
+      'Domestic lighting',
+      'Motor circuits',
+      'IT equipment',
+    ],
     correctIndex: 2,
     explanation:
       'Type C MCBs (5-10 × In magnetic trip) are suitable for motor circuits, fluorescent lighting with inductive ballasts, and other loads with moderate inrush currents.',
@@ -49,10 +59,10 @@ const quickCheckQuestions = [
     id: 'hrc-fuse-advantage',
     question: 'What is the main advantage of HRC fuses over MCBs for high fault levels?',
     options: [
-      'Lower cost',
-      'Easier replacement',
+      'Gateway or protocol converter',
+      'Double-shielded or armoured cables',
       'Current-limiting capability',
-      'Adjustable settings',
+      'Asbestos Mines of South Africa',
     ],
     correctIndex: 2,
     explanation:
@@ -62,12 +72,12 @@ const quickCheckQuestions = [
     id: 'mccb-feature',
     question: 'What feature distinguishes MCCBs from MCBs?',
     options: [
-      'Thermal operation only',
-      'Adjustable trip settings',
       'Plug-in design',
+      'Thermal operation only',
       'Single-pole only',
+      'Adjustable trip settings',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'MCCBs (Moulded Case Circuit Breakers) typically have adjustable thermal (overload) and magnetic (short-circuit) trip settings, allowing configuration for specific applications.',
   },
@@ -77,16 +87,26 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the magnetic trip range for a Type D MCB?',
-    options: ['3-5 × In', '5-10 × In', '10-20 × In', '20-50 × In'],
-    correctAnswer: 2,
+    options: [
+      '3-5 × In',
+      '10-20 × In',
+      '5-10 × In',
+      '20-50 × In',
+    ],
+    correctAnswer: 1,
     explanation:
       "Type D MCBs have the highest magnetic trip range of 10-20 × In. They're designed for loads with very high inrush currents such as welding equipment, transformers, and X-ray machines.",
   },
   {
     id: 2,
     question: 'Which BS standard covers industrial MCBs with higher breaking capacities?',
-    options: ['BS EN 60898', 'BS EN 60947-2', 'BS 88', 'BS 3036'],
-    correctAnswer: 1,
+    options: [
+      'BS 88',
+      'BS EN 60898',
+      'BS EN 60947-2',
+      'BS 3036',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS EN 60947-2 covers industrial circuit-breakers with breaking capacities typically 10-25kA, compared to BS EN 60898 domestic MCBs at 6-10kA.',
   },
@@ -94,35 +114,50 @@ const quizQuestions = [
     id: 3,
     question: "What does the 'gG' classification mean for HRC fuses?",
     options: [
-      'Generator protection',
+      'Complexity and achievement levels of qualifications',
+      'Protective device operates (MCB trips)',
+      'Viewing waveforms to diagnose complex signal problems',
       'General purpose, full-range breaking capacity',
-      'Ground fault protection',
-      'Gradual thermal operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "gG (general purpose, full-range) fuses provide overload and short-circuit protection across their entire operating range. They're the most common type for general circuit protection.",
   },
   {
     id: 4,
     question: 'A Type B MCB rated 20A will trip magnetically at currents above:',
-    options: ['40A (2 × In)', '60A (3 × In)', '100A (5 × In)', '200A (10 × In)'],
-    correctAnswer: 2,
+    options: [
+      '100A (5 × In)',
+      '60A (3 × In)',
+      '40A (2 × In)',
+      '200A (10 × In)',
+    ],
+    correctAnswer: 0,
     explanation:
       'Type B MCBs trip magnetically between 3-5 × In. The upper threshold of 5 × 20A = 100A guarantees instantaneous magnetic tripping for fault currents above this value.',
   },
   {
     id: 5,
     question: 'What is the typical fusing factor for BS EN 60898 MCBs?',
-    options: ['1.13', '1.25', '1.45', '1.60'],
-    correctAnswer: 2,
+    options: [
+      '1.25',
+      '1.45',
+      '1.60',
+      '1.13',
+    ],
+    correctAnswer: 1,
     explanation:
       'MCBs to BS EN 60898 have a conventional tripping current of 1.45 × In (fusing factor 1.45). This means they will definitely trip at 1.45 times their rated current within the conventional time.',
   },
   {
     id: 6,
     question: 'Which fuse type is specifically designed for motor protection?',
-    options: ['gG fuse', 'gM fuse', 'aM fuse', 'BS 3036 fuse'],
+    options: [
+      'gG fuse',
+      'gM fuse',
+      'aM fuse',
+      'BS 3036 fuse',
+    ],
     correctAnswer: 2,
     explanation:
       'aM (motor, partial-range) fuses are designed specifically for motor circuits. They provide short-circuit protection whilst allowing motor starting currents to pass without operation.',
@@ -131,20 +166,25 @@ const quizQuestions = [
     id: 7,
     question: "What characteristic makes BS 88 HRC fuses 'current-limiting'?",
     options: [
-      'They reduce the supply voltage during faults',
+      'L1-E, L2-E, L3-E and phase-to-phase (L1-L2, L2-L3, L1-L3)',
+      'Energy efficiency and carbon emissions targets',
+      'A condition involving persistent, excessive worry about many different things',
       'They clear faults before the current reaches its prospective peak',
-      'They limit the number of operations',
-      'They restrict current flow during normal operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Current-limiting fuses operate so quickly that they clear the fault in the first half-cycle, before the prospective fault current reaches its peak. This significantly reduces equipment stress and I²t let-through.',
   },
   {
     id: 8,
     question: 'For discrimination between two MCBs, what is the general current ratio requirement?',
-    options: ['1.5:1', '2:1', '3:1', 'They cannot discriminate reliably'],
-    correctAnswer: 1,
+    options: [
+      '2:1',
+      '3:1',
+      '1.5:1',
+      'They cannot discriminate reliably',
+    ],
+    correctAnswer: 0,
     explanation:
       'MCBs require approximately 2:1 current ratio for reliable discrimination at overload currents. However, for fault currents in the magnetic region, discrimination is often not achievable.',
   },
@@ -153,12 +193,12 @@ const quizQuestions = [
     question:
       'What is the primary selection criterion when choosing between Type B and Type C MCBs?',
     options: [
-      'Cable size',
-      'Breaking capacity required',
+      'Voice alarm and public address systems',
       'Expected inrush current of load',
-      'Ambient temperature',
+      'Traditional with specialist subcontracts',
+      'Architectural enhancement and identity',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "The key selection criterion is the load's inrush current. Type B (3-5 × In) suits resistive loads; Type C (5-10 × In) suits loads with higher inrush like motors and fluorescent lighting.",
   },
@@ -166,7 +206,12 @@ const quizQuestions = [
     id: 10,
     question:
       'An MCCB is set with Ir = 0.8 and Im = 10. If In = 100A, at what current will magnetic tripping occur?',
-    options: ['80A', '100A', '800A', '1000A'],
+    options: [
+      '80A',
+      '100A',
+      '800A',
+      '1000A',
+    ],
     correctAnswer: 2,
     explanation:
       'Ir (thermal setting) = 0.8 × 100A = 80A continuous rating. Im (magnetic setting) = 10 × Ir = 10 × 80A = 800A magnetic trip threshold.',

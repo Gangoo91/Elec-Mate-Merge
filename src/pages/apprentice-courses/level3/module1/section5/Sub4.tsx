@@ -15,20 +15,75 @@ const TITLE = 'RIDDOR specified injuries depth | Level 3 Module 1.5.4 | Elec-Mat
 const DESCRIPTION = 'L3 deep-dive on RIDDOR Schedule 1 specified injuries — fractures, amputations, sight loss, crush, burns, scalping, unconsciousness, enclosed-space.';
 
 const checks = [
-  { id: 'l3-m1-s5-sub4-fingers', question: 'Are finger fractures RIDDOR specified injuries?', options: ['Yes always.', 'NO — Schedule 1 explicitly excludes "fingers, thumbs and toes" from the fracture category. So a finger fracture from a tool drop is NOT a specified injury (though may be over-7-day if 8+ days off normal duties = F2508A).', 'Maybe.', 'Random.'], correctIndex: 1, explanation: 'Important exclusion. Finger / thumb / toe fractures aren\'t Schedule 1; they may still be over-7-day reportable separately.' },
-  { id: 'l3-m1-s5-sub4-burn', question: 'When is a burn a Schedule 1 specified injury?', options: ['Always.', 'When (a) covers more than 10% of the body, OR (b) causes significant damage to eyes, respiratory system or other vital organs. Smaller burns may be over-7-day if incapacitating.', 'Never.', 'Only on Mondays.'], correctIndex: 1, explanation: 'Two triggers: 10% body coverage OR vital organ damage. Many electrical burns hit one or the other.' },
-  { id: 'l3-m1-s5-sub4-asphyx', question: 'What\'s an "enclosed-space injury" under Schedule 1?', options: ['Random.', 'Any injury arising from work in an enclosed space leading to (i) hypothermia or heat-induced illness, OR (ii) requiring resuscitation, OR (iii) requiring admittance to hospital for more than 24 hours.', 'Just being in a small room.', 'Allergy.'], correctIndex: 1, explanation: 'Enclosed-space category. Confined Spaces Regs 1997 hazards trigger this RIDDOR category.' },
+  { id: 'l3-m1-s5-sub4-fingers', question: 'Are finger fractures RIDDOR specified injuries?', options: [
+    'Three: Category 1 (visitable dwellings — accessible to visitors), Category 2 (accessible and adaptable dwellings), Category 3 (wheelchair user dwellings, with sub-categories 3a and 3b for adaptable and accessible respectively).',
+    'Respect their autonomy as an adult while expressing concern, exploring their reasons for not wanting others to know, strongly encouraging professional help, and documenting the conversation for your own safeguarding records',
+    'NO — Schedule 1 explicitly excludes "fingers, thumbs and toes" from the fracture category. So a finger fracture from a tool drop is NOT a specified injury (though may be over-7-day if 8+ days off normal duties = F2508A).',
+    'A meeting between you, your employer and your training provider to review your progress, confirm readiness for EPA, agree any final actions, and formally authorise progression to the gateway',
+  ], correctIndex: 2, explanation: 'Important exclusion. Finger / thumb / toe fractures aren\'t Schedule 1; they may still be over-7-day reportable separately.' },
+  { id: 'l3-m1-s5-sub4-burn', question: 'When is a burn a Schedule 1 specified injury?', options: [
+    'Continuity of protective conductors -> continuity of ring final conductors -> insulation resistance -> polarity (dead) -> earth electrode resistance (TT)',
+    'When (a) covers more than 10% of the body, OR (b) causes significant damage to eyes, respiratory system or other vital organs. Smaller burns may be over-7-day if incapacitating.',
+    'A systematic analysis of the environmental impacts of a product or service throughout its entire life, from raw material extraction to disposal',
+    'XLPE has a higher continuous operating temperature (90°C vs 70°C), allowing higher current ratings for the same conductor size',
+  ], correctIndex: 1, explanation: 'Two triggers: 10% body coverage OR vital organ damage. Many electrical burns hit one or the other.' },
+  { id: 'l3-m1-s5-sub4-asphyx', question: 'What\'s an "enclosed-space injury" under Schedule 1?', options: [
+    'Non-conformance — Reg 526.1 requires connections to provide durable electrical continuity AND adequate mechanical strength AND protection. Exposed copper past the terminal fails the protection element.',
+    'Any injury arising from work in an enclosed space leading to (i) hypothermia or heat-induced illness, OR (ii) requiring resuscitation, OR (iii) requiring admittance to hospital for more than 24 hours.',
+    'PPM is scheduled maintenance carried out at predetermined intervals to prevent failures, while reactive maintenance responds to breakdowns after they occur',
+    'Investigate the task, review the risk assessment, consider the symptoms as a potential early sign of a WRULD, and refer the worker for occupational health assessment',
+  ], correctIndex: 1, explanation: 'Enclosed-space category. Confined Spaces Regs 1997 hazards trigger this RIDDOR category.' },
 ];
 
 const quizQuestions = [
-  { id: 1, question: 'Where is the specified-injuries list?', options: ['HSG85.', 'RIDDOR 2013 Schedule 1.', 'BS 7671.', 'GS38.'], correctAnswer: 1, explanation: 'Schedule 1 RIDDOR. The full list is short; worth memorising.' },
-  { id: 2, question: 'What\'s the timescale for reporting a specified injury?', options: ['One year.', 'Without delay (telephone notification expected for fatalities and specified injuries) + F2508 within 10 days.', 'Within an hour.', 'Within 30 days.'], correctAnswer: 1, explanation: 'Phone immediately, F2508 within 10 days. Same as fatality timescale.' },
-  { id: 3, question: 'Are amputations always specified injuries?', options: ['Only major.', 'Yes — Schedule 1 includes "amputation" with no minimum size threshold. A finger-tip amputation is a specified injury.', 'Only legs.', 'Only on weekends.'], correctAnswer: 1, explanation: 'Amputations all in. Even partial finger-tip amputation triggers immediate phone notification + F2508.' },
-  { id: 4, question: 'What\'s a "scalping requiring hospital treatment"?', options: ['Just hair loss.', 'Detachment of skin / soft tissue from the head / scalp area requiring surgical / hospital treatment. Often from machinery contact (rotating shafts catching hair). Specified injury.', 'Haircut.', 'Dandruff.'], correctAnswer: 1, explanation: 'Scalping = traumatic skin detachment. Rare in electrical work but possible (rotating tools).' },
-  { id: 5, question: 'What\'s "loss of consciousness from head injury or asphyxia"?', options: ['Just a faint.', 'Specified injury — unconsciousness arising from head impact OR from asphyxiation (including from electrical events causing respiratory failure). Even brief loss requires immediate notification.', 'Tiredness.', 'Sleep.'], correctAnswer: 1, explanation: 'Schedule 1 covers head-injury LOC and asphyxia LOC. Electrical shocks causing brief LOC are specified injuries.' },
-  { id: 6, question: 'What\'s the difference between Schedule 1 and over-7-day?', options: ['Same thing.', 'Schedule 1 = list of severe injuries triggering immediate phone + F2508 within 10 days. Over-7-day = injury causing 8+ days off normal duties triggering F2508A within 15 days. Different categories, different timescales, different forms.', 'Cost.', 'Distance.'], correctAnswer: 1, explanation: 'Two distinct categories. An injury can be both (specified injury that also causes 8+ days off — but reported as specified, not as over-7-day).' },
-  { id: 7, question: 'What\'s "crush injury leading to internal organ damage"?', options: ['Just a bruise.', 'Specified injury — crushing trauma resulting in internal organ damage (liver, kidney, lung, abdominal organs). Commonly from falling objects, vehicle impacts, structural collapse. Significant force required.', 'Headache.', 'Cold.'], correctAnswer: 1, explanation: 'Crush + internal damage = Schedule 1. The internal-organ aspect is the trigger.' },
-  { id: 8, question: 'How does the L3 supervisor identify a specified injury at the scene?', options: ['Guess.', 'Match symptoms to Schedule 1 categories: visible fracture (excl finger/thumb/toe), amputation, sight loss reported, crush with internal symptoms, burn &gt;10% / vital organ, scalping, LOC, enclosed-space asphyxia / heat. When in doubt, treat as specified and escalate.', 'Random.', 'Customer\'s opinion.'], correctAnswer: 1, explanation: 'Symptom match to Schedule 1. When in doubt = treat as specified; better to over-escalate than miss.' },
+  { id: 1, question: 'Where is the specified-injuries list?', options: [
+    'HSG85.',
+    'RIDDOR 2013 Schedule 1.',
+    'BS 7671.',
+    'GS38.',
+  ], correctAnswer: 1, explanation: 'Schedule 1 RIDDOR. The full list is short; worth memorising.' },
+  { id: 2, question: 'What\'s the timescale for reporting a specified injury?', options: [
+    'Confirm all personnel are clear, remove personal locks, remove danger notices, replace covers, then re-energise',
+    'SAP/SBEM calculations, EPC, commissioning certificates, and operating instructions',
+    'Without delay (telephone notification expected for fatalities and specified injuries) + F2508 within 10 days.',
+    'By pre-heating classrooms before lessons then reducing output during empty periods',
+  ], correctAnswer: 2, explanation: 'Phone immediately, F2508 within 10 days. Same as fatality timescale.' },
+  { id: 3, question: 'Are amputations always specified injuries?', options: [
+    'A deliberate routine that helps you mentally shift from work mode to personal mode at the end of the day',
+    '"All circuits were tested in accordance with BS 7671 and the results are recorded in the attached schedule"',
+    'Be consistently fair, follow through on commitments, and admit when you do not know something',
+    'Yes — Schedule 1 includes "amputation" with no minimum size threshold. A finger-tip amputation is a specified injury.',
+  ], correctAnswer: 3, explanation: 'Amputations all in. Even partial finger-tip amputation triggers immediate phone notification + F2508.' },
+  { id: 4, question: 'What\'s a "scalping requiring hospital treatment"?', options: [
+    'Detachment of skin / soft tissue from the head / scalp area requiring surgical / hospital treatment. Often from machinery contact (rotating shafts catching hair). Specified injury.',
+    'Contract — processing necessary for the performance of the contract (or to take pre-contract steps at the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s request)',
+    'Arc-rated clothing matched to the prospective incident energy, insulated gloves rated to the working voltage, eye/face protection, and insulated footwear',
+    '"During yesterday\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s socket installation (S), I noticed three terminals were not tightened to the correct torque (B), which could cause overheating and a fire risk (I)"',
+  ], correctAnswer: 0, explanation: 'Scalping = traumatic skin detachment. Rare in electrical work but possible (rotating tools).' },
+  { id: 5, question: 'What\'s "loss of consciousness from head injury or asphyxia"?', options: [
+    'Because friction and the risk of cable jamming during pulling rise with length and bends, so a lower fill is needed to keep pulling tensions safe',
+    'Specified injury — unconsciousness arising from head impact OR from asphyxiation (including from electrical events causing respiratory failure). Even brief loss requires immediate notification.',
+    'A licensed asbestos removal contractor must carry out the work, with full RPE, decontamination procedures, air monitoring, a specific asbestos plan of work and notification to the HSE where required',
+    'Withdraw, tell your site manager and the school\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s Designated Safeguarding Lead — they decide next steps including any police involvement',
+  ], correctAnswer: 1, explanation: 'Schedule 1 covers head-injury LOC and asphyxia LOC. Electrical shocks causing brief LOC are specified injuries.' },
+  { id: 6, question: 'What\'s the difference between Schedule 1 and over-7-day?', options: [
+    '5 years per ESF/GN3 frequency guidance — adjusted shorter where condition or risk warrants. The 5-year interval is a recommended starting point; commercial environments with higher risk (workshops, kitchens, public-facing spaces) typically warrant shorter intervals.',
+    'Document the analysis, identify corrective and preventive actions, assign responsibilities and timescales, and verify that the actions address the root cause effectively',
+    'Schedule 1 = list of severe injuries triggering immediate phone + F2508 within 10 days. Over-7-day = injury causing 8+ days off normal duties triggering F2508A within 15 days. Different categories, different timescales, different forms.',
+    'All work equipment (including power tools) is suitable for its intended use, maintained in a safe condition, inspected at suitable intervals, and used only by trained and competent persons',
+  ], correctAnswer: 2, explanation: 'Two distinct categories. An injury can be both (specified injury that also causes 8+ days off — but reported as specified, not as over-7-day).' },
+  { id: 7, question: 'What\'s "crush injury leading to internal organ damage"?', options: [
+    'Explain the importance of the statement for your EPA, offer to provide a template, and suggest discussing the specific activity to help them recall details',
+    'Line to neutral, line to earth, and neutral to earth (for single phase); between all phases, and each phase to neutral and earth (for three phase)',
+    'BS 7671 defines the technical standards against which electrical systems are designed, installed, tested and maintained — a maintenance technician must understand these standards to maintain systems safely',
+    'Specified injury — crushing trauma resulting in internal organ damage (liver, kidney, lung, abdominal organs). Commonly from falling objects, vehicle impacts, structural collapse. Significant force required.',
+  ], correctAnswer: 3, explanation: 'Crush + internal damage = Schedule 1. The internal-organ aspect is the trigger.' },
+  { id: 8, question: 'How does the L3 supervisor identify a specified injury at the scene?', options: [
+    'Match symptoms to Schedule 1 categories: visible fracture (excl finger/thumb/toe), amputation, sight loss reported, crush with internal symptoms, burn &gt;10% / vital organ, scalping, LOC, enclosed-space asphyxia / heat. When in doubt, treat as specified and escalate.',
+    'The principles of prevention in Schedule 1: avoid risks, evaluate unavoidable risks, combat risks at source, adapt work to the individual, adapt to technical progress, replace dangerous with non/less dangerous, develop a coherent prevention policy, give collective measures priority, and give appropriate instructions',
+    'Covering at least equivalent to the insulation of a single-core non-sheathed cable, voltage rating at least 450/750 V — except where it forms part of a multicore cable or is run inside a metal enclosure used as the protective conductor.',
+    'Theory on legislation and anatomy, practical demonstration of techniques, supervised practice with actual workplace loads, assessment of competence, and task-specific elements for the worker\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s actual role',
+  ], correctAnswer: 0, explanation: 'Symptom match to Schedule 1. When in doubt = treat as specified; better to over-escalate than miss.' },
 ];
 
 const faqs = [

@@ -175,7 +175,9 @@ export function Arrow({ className }: { className?: string }) {
 
 interface PageHeroProps {
   eyebrow?: string;
-  title: string;
+  /** Title may be a string OR JSX so callers can highlight a phrase
+      (e.g. <>Ze Values: <span className="text-yellow-400">...</span></>). */
+  title: ReactNode;
   description?: string;
   actions?: ReactNode;
   tone?: Tone;

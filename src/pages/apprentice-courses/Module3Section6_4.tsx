@@ -16,10 +16,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does a grommet prevent?',
     options: [
-      'Electrical arcing',
+      'Elimination of the electrical hazard',
       'Insulation damage from sharp edges',
-      'Overheating',
-      'Water ingress only',
+      '0.5-1% of initial cost per year',
+      'Final connection to vibrating equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -28,8 +28,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which type of gland is suitable for marine environments?',
-    options: ['PVC gland', 'Brass IP68 gland', 'Plastic bush', 'Rubber grommet'],
-    correctAnswer: 1,
+    options: [
+      'Plastic bush',
+      'PVC gland',
+      'Brass IP68 gland',
+      'Rubber grommet',
+    ],
+    correctAnswer: 2,
     explanation:
       'IP68-rated brass or stainless glands provide the sealing and corrosion resistance required in marine environments.',
   },
@@ -44,7 +49,12 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Name one standard that requires preventing cable damage at entry points.',
-    options: ['BS 7671', 'BS 5839', 'BS 5266', 'BS 1363'],
+    options: [
+      'BS 7671',
+      'BS 5839',
+      'BS 5266',
+      'BS 1363',
+    ],
     correctAnswer: 0,
     explanation:
       'BS 7671 requires that cables are installed to prevent damage during installation, use and maintenance (e.g., via grommets, bushes, glands).',
@@ -52,8 +62,13 @@ const quizQuestions = [
   {
     id: 5,
     question: 'Which IP rating is typically required for an enclosure exposed to heavy rain?',
-    options: ['IP44', 'IP54', 'IP65', 'IP20'],
-    correctAnswer: 2,
+    options: [
+      'IP54',
+      'IP65',
+      'IP20',
+      'IP44',
+    ],
+    correctAnswer: 1,
     explanation:
       'Outdoor enclosures commonly require at least IP65; harsher conditions may require IP66/67/68.',
   },
@@ -63,11 +78,11 @@ const quizQuestions = [
       'Give one example of an application where an explosion-proof gland would be required.',
     options: [
       'Domestic bathroom',
-      'Petrol forecourt/ATEX zone',
       'Office ceiling void',
+      'Petrol forecourt/ATEX zone',
       'Under-stairs cupboard',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Hazardous areas (ATEX zones) such as petrochemical sites require certified explosion-proof glands.',
   },
@@ -75,12 +90,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why should unused cable entries be sealed?',
     options: [
-      'To reduce noise',
+      'The manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions and suitability for the job',
+      'Systematically dividing the circuit to isolate the fault location',
+      'When unable to fully investigate a potential issue during inspection',
       'To maintain IP rating and prevent ingress of dust/water/pests',
-      'To improve cable colour coding',
-      'To make labels stick better',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Open entries compromise IP rating and can allow moisture, dust, or pests to enter, risking failures.',
   },
@@ -88,12 +103,12 @@ const quizQuestions = [
     id: 8,
     question: "What's one risk of over-tightening a cable gland?",
     options: [
-      'Improved sealing',
       'Damaging the cable sheath, leading to premature failure',
-      'Better strain relief with no downsides',
-      'Reduced enclosure rating',
+      'Modern systems are fully integrated and IoT-connected',
+      'The manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instruction manual for the specific tower model',
+      'Difference between ascending and descending measurement paths',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Over-tightening can cut into or deform the sheath, stressing conductors and shortening cable life.',
   },
@@ -118,10 +133,10 @@ const quickCheckQuestions = [
     id: 'outdoor-gland',
     question: 'Which entry method is most suitable for IP65 outdoor use?',
     options: [
-      'Standard rubber grommet',
-      'Plastic bush only',
+      'Similar tasks requiring the same mental mode or tools',
+      'Magnetic domain resistance to realignment',
       'IP-rated cable gland sized to the cable OD',
-      'Open entry with silicone',
+      'Ill-fitting PPE may not provide adequate protection',
     ],
     correctIndex: 2,
     explanation:
@@ -131,12 +146,12 @@ const quickCheckQuestions = [
     id: 'sizing-gland',
     question: 'Why is correct sizing important when fitting a gland?',
     options: [
-      'It makes labels fit better',
+      'Discrimination is achieved up to a specific fault level only',
+      'Using standard PVC cable too close to a heat source',
       'To ensure compression seal works without damaging the sheath',
-      'To reduce cable capacitance',
-      "It's only cosmetic",
+      'Extended operating hours and out-of-hours consumption',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Correct sizing ensures the compression seal grips properly for IP performance without crushing or cutting the sheath.',
   },

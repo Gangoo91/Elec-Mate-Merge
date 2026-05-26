@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'io-digital-vs-analogue',
     question: 'What is the key difference between a digital input and an analogue input on a PLC?',
     options: [
-      'Digital inputs are faster than analogue inputs',
+      'A chronic state of feeling emotionally drained, overwhelmed, and unable to face the emotional demands of work or life',
       'A digital input reads only ON or OFF states; an analogue input reads a continuously variable signal',
-      'Analogue inputs can only be used with temperature sensors',
-      'Digital inputs require shielded cable; analogue inputs do not',
+      'It should be clearly marked as defective, removed from service and reported',
+      'Starting by chairing a small, low-stakes team meeting to gain a mastery experience',
     ],
     correctIndex: 1,
     explanation:
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'Why is the 4-20 mA current loop preferred over 0-10 V for industrial analogue signals?',
     options: [
-      'It is cheaper to implement',
+      'Electrolytic capacitors dry out over time, leading to increased ripple and potential failure',
+      'Name/address of installer, installation date, type of earthing system',
+      'When the specified work is completed, or at the end of the shift, or when conditions change significantly',
       'Current signals are less affected by cable resistance and electrical noise over long distances',
-      'Voltage signals cannot be used with PLCs',
-      '4-20 mA signals do not need any wiring',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A current loop signal (4-20 mA) is preferred in industrial environments because the current remains constant regardless of cable length and resistance (within limits). Additionally, the live zero at 4 mA allows the system to distinguish between a genuine 0% signal and a broken wire (which would read 0 mA), providing built-in fault detection.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'io-sink-source',
     question: "In a PLC digital input circuit, what does 'sourcing' mean?",
     options: [
-      'The input module provides (sources) current to the field device',
+      'The input module requires an external relay',
       'The input module receives (sinks) current from the field device',
       'The input module generates its own signal',
-      'The input module requires an external relay',
+      'The input module provides (sources) current to the field device',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'In a sourcing configuration, the PLC I/O module provides current to the field device. In a sinking configuration, the PLC receives current from the field device. The choice between sink and source depends on the sensor type and the regional wiring convention. European practice often uses sourcing inputs (PNP sensors), while some legacy systems use sinking inputs (NPN sensors).',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'io-isolation',
     question: 'What is the purpose of optical isolation (opto-coupling) in PLC I/O modules?',
     options: [
-      'To increase the switching speed of the outputs',
       'To electrically separate the field wiring from the PLC internal circuitry, protecting against voltage spikes',
-      'To convert digital signals to analogue',
-      'To reduce the cost of the I/O module',
+      'Oxygen, flammable gases, and toxic gases must all be tested using a calibrated multi-gas detector',
+      'Apply the correct, manufacturer-specified tightening force to terminal connections',
+      'Varying both the supply frequency and the voltage proportionally (V/f control)',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Optical isolation uses an LED and phototransistor to transfer the signal across an air gap, providing complete electrical separation between the field wiring and the PLC backplane. This protects the CPU and other modules from voltage transients, ground loops and electrical noise that are common in industrial environments.',
   },
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A digital input module on a PLC typically operates at which voltage level?',
     options: [
-      '240 V AC only',
+      'They are visible even when mains lighting is working',
       '24 V DC or 110/240 V AC depending on the module type',
-      '5 V DC only',
-      '48 V DC only',
+      'Materials compatibility and fire safety',
+      'Disconnect, Isolate, Secure, Prove Dead, Earth',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 2,
     question: 'What does a 4 mA reading on a 4-20 mA analogue input represent?',
     options: [
-      'A fault condition',
-      'The maximum measured value (100%)',
-      'The minimum measured value (0%)',
       'The sensor is disconnected',
+      'A fault condition',
+      'The minimum measured value (0%)',
+      'The maximum measured value (100%)',
     ],
     correctAnswer: 2,
     explanation:
@@ -97,20 +97,25 @@ const quizQuestions = [
     question:
       'Which type of output module would be most suitable for controlling a 3-phase motor contactor?',
     options: [
-      'Analogue output module (4-20 mA)',
-      'Digital relay output module',
       'High-speed counter module',
+      'Analogue output module (4-20 mA)',
       'Thermocouple input module',
+      'Digital relay output module',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A motor contactor coil is a simple ON/OFF device, requiring a digital output. A relay output module is ideal because it provides electrical isolation and can switch the AC voltage required by the contactor coil. Relay outputs are also suitable for higher-current loads compared to transistor outputs.',
   },
   {
     id: 4,
     question: 'What is the resolution of a 12-bit analogue input module?',
-    options: ['256 steps', '1024 steps', '4096 steps', '65536 steps'],
-    correctAnswer: 2,
+    options: [
+      '4096 steps',
+      '1024 steps',
+      '256 steps',
+      '65536 steps',
+    ],
+    correctAnswer: 0,
     explanation:
       'A 12-bit analogue-to-digital converter provides 2^12 = 4096 discrete steps across the input range. For a 0-10 V input, this gives a resolution of approximately 2.4 mV per step. Higher resolution (16-bit = 65536 steps) is available for applications requiring greater precision.',
   },
@@ -119,10 +124,10 @@ const quizQuestions = [
     question:
       'When wiring a PNP (sourcing) proximity sensor to a PLC digital input, the sensor output connects to:',
     options: [
-      'The PLC input terminal and common (0 V) rail',
+      'Switches faster, has no mechanical wear, but can only switch DC loads (for NPN/PNP types)',
       'The PLC input terminal, with the sensor sourcing current into the input',
-      'The PLC analogue input channel',
-      'The PLC output module',
+      'Identify, test and replace faulty I/O modules and verify correct operation',
+      'To suppress the voltage spike (back-EMF) generated when the inductive load is de-energised',
     ],
     correctAnswer: 1,
     explanation:
@@ -132,12 +137,12 @@ const quizQuestions = [
     id: 6,
     question: "What causes 'signal aliasing' on a PLC analogue input?",
     options: [
-      'Using too long a cable run',
+      'Switches faster, has no mechanical wear, but can only switch DC loads (for NPN/PNP types)',
+      'The PLC input terminal, with the sensor sourcing current into the input',
       'Sampling the analogue signal at a rate lower than twice the signal frequency',
-      'Using a 4-20 mA signal instead of 0-10 V',
-      'Having too many I/O modules on the rack',
+      'Identify, test and replace faulty I/O modules and verify correct operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Aliasing occurs when the sampling rate of the analogue-to-digital converter is less than twice the frequency of the input signal (Nyquist theorem). This produces false readings. In practice, input filters and adequate scan rates prevent aliasing in most industrial applications.',
   },
@@ -146,12 +151,12 @@ const quizQuestions = [
     question:
       'A transistor (solid-state) output module differs from a relay output module in that it:',
     options: [
-      'Can switch both AC and DC loads',
+      'Sampling the analogue signal at a rate lower than twice the signal frequency',
+      'The unique software address assigned to each input and output point for use in the program',
+      'To suppress the voltage spike (back-EMF) generated when the inductive load is de-energised',
       'Switches faster, has no mechanical wear, but can only switch DC loads (for NPN/PNP types)',
-      'Is cheaper but less reliable',
-      'Does not require a power supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Transistor outputs (NPN or PNP) switch much faster than relays (microseconds vs milliseconds) and have no moving parts, so there is no mechanical wear. However, standard transistor outputs can only switch DC loads. For AC loads, triac outputs or relay outputs are required.',
   },
@@ -160,12 +165,12 @@ const quizQuestions = [
     question:
       "What is the purpose of a 'surge suppressor' across a PLC relay output controlling an inductive load?",
     options: [
-      'To increase the switching speed',
       'To suppress the voltage spike (back-EMF) generated when the inductive load is de-energised',
-      'To reduce the current consumption of the load',
-      'To improve the accuracy of the output signal',
+      'Verifying the correct module type is installed and the input range matches the field transmitter output',
+      'The PLC input terminal, with the sensor sourcing current into the input',
+      'Switches faster, has no mechanical wear, but can only switch DC loads (for NPN/PNP types)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Inductive loads (contactors, solenoid valves, relay coils) generate a high-voltage back-EMF spike when de-energised. Without suppression, this spike can damage the relay contacts and cause electrical noise. A suitable suppressor (RC snubber for AC, flyback diode for DC) clamps the spike to a safe level.',
   },
@@ -173,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: "In a PLC system, the term 'I/O addressing' refers to:",
     options: [
-      'The physical location of the PLC in the plant',
+      'Sampling the analogue signal at a rate lower than twice the signal frequency',
       'The unique software address assigned to each input and output point for use in the program',
-      'The IP address of the PLC communication port',
-      'The postal address of the PLC manufacturer',
+      'The PLC input terminal, with the sensor sourcing current into the input',
+      'Verifying the correct module type is installed and the input range matches the field transmitter output',
     ],
     correctAnswer: 1,
     explanation:
@@ -185,7 +190,12 @@ const quizQuestions = [
   {
     id: 10,
     question: 'What is the typical current rating per point of a PLC digital output relay module?',
-    options: ['10 mA', '100 mA', '2 A', '30 A'],
+    options: [
+      '10 mA',
+      '100 mA',
+      '2 A',
+      '30 A',
+    ],
     correctAnswer: 2,
     explanation:
       'Most PLC relay output modules are rated at approximately 2 A per point for resistive loads. For inductive loads the rating is typically lower (0.5-1 A). Loads requiring higher currents must be switched via an interposing relay or contactor controlled by the PLC output.',
@@ -194,12 +204,12 @@ const quizQuestions = [
     id: 11,
     question: 'When commissioning a new PLC analogue input, the first check should be:',
     options: [
-      'Writing the program first',
+      'Sampling the analogue signal at a rate lower than twice the signal frequency',
+      'To suppress the voltage spike (back-EMF) generated when the inductive load is de-energised',
+      'Switches faster, has no mechanical wear, but can only switch DC loads (for NPN/PNP types)',
       'Verifying the correct module type is installed and the input range matches the field transmitter output',
-      'Connecting all field wiring before checking the module',
-      'Setting the output to maximum',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Before any wiring, confirm the analogue input module matches the transmitter signal type (4-20 mA, 0-10 V, thermocouple type, RTD type). A mismatch will produce incorrect readings or could damage the module or transmitter. Check the module configuration in the PLC hardware setup software.',
   },
@@ -208,12 +218,12 @@ const quizQuestions = [
     question:
       'Under ST1426, a maintenance technician working with PLC I/O devices must be able to:',
     options: [
-      'Design new PLC programs from scratch',
       'Identify, test and replace faulty I/O modules and verify correct operation',
-      'Manufacture replacement I/O modules',
-      'Write the PLC hardware specification',
+      'To suppress the voltage spike (back-EMF) generated when the inductive load is de-energised',
+      'The PLC input terminal, with the sensor sourcing current into the input',
+      'Switches faster, has no mechanical wear, but can only switch DC loads (for NPN/PNP types)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The ST1426 standard requires maintenance technicians to identify faults, carry out replacements and verify correct operation of control system components including PLC I/O modules. While programming knowledge is beneficial, the primary maintenance role focuses on hardware diagnosis, replacement and functional verification.',
   },

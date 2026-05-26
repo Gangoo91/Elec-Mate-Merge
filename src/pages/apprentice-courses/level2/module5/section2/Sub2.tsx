@@ -44,10 +44,10 @@ const checks = [
     question:
       "Which of the following is the closest correct statement of an apprentice's personal duty under HASAWA s.7?",
     options: [
-      "An apprentice has no personal duty — H&S is the employer's job.",
+      "Address fabric first — insulation and glazing — then size any heat pump to the reduced load. A heat pump in a leaky house works at high flow temperatures, runs constantly, and posts a poor SCOP, blowing the customer's bills past where they were on gas. The MCS heat-loss calculation methodology assumes a reasonably insulated envelope. The honest answer is fabric upgrade first, then size the kit to the new load — which often ends up being smaller and cheaper.",
       "Every employee, including an apprentice, has two personal duties under HASAWA s.7. (a) take reasonable care for their own H&S and that of anyone affected by their acts or omissions, AND (b) co-operate with the employer's arrangements (RAMS, toolbox talks, permits, PPE rules). Breach is a criminal offence personally — the apprentice can be prosecuted, not just the firm.",
-      "An apprentice's only duty is to follow instructions from the supervisor.",
-      "An apprentice can never be prosecuted personally — only the company is liable.",
+      "Heat pumps (ASHP / GSHP), solar PV, EV charging, battery storage and MVHR — these five make up the bulk of MCS-regulated and Part L-relevant kit on UK domestic sites today. Solar thermal, micro-CHP, biomass, wind and micro-hydro all exist but are far less common. The five common families share regulatory homes (BS 7671 Section 712 / 722 / 753, MCS MIS 3002 / 3005 / 3007 / 3012, Building Regs Part L) and the electrician's interface logic is broadly similar across them.",
+      "IR35 (the 'off-payroll working rules') is HMRC anti-avoidance legislation that targets disguised employment — situations where a worker uses a Ltd company structure to provide services that would otherwise be employment. If HMRC determines the engagement is 'inside IR35', the income is taxed broadly as employment income (loss of dividend tax efficiency). For an electrician contracting through a personal services company on a long-term single-client engagement IR35 risk is real.",
     ],
     correctIndex: 1,
     explanation:
@@ -58,12 +58,12 @@ const checks = [
     question:
       "Under EAWR Reg 14, what three conditions must ALL be met before any live electrical work can lawfully be carried out?",
     options: [
-      "The customer agrees, the work is paid for, and you are wearing gloves.",
+      "Analyse the failure and condition monitoring history: if failures are occurring between PM intervals the frequency should be increased; if components are consistently in good condition at PM time the interval may be too short and can be extended",
+      "Meet each person individually to understand their perspective using the SBI model, then mediate a joint conversation to identify the underlying issues, agree behavioural expectations, and follow up regularly to ensure improvement",
       "(a) it's unreasonable in all the circumstances to make it dead, AND (b) it's reasonable in all the circumstances to do the work live, AND (c) suitable precautions (including PPE and equipment) are taken to prevent injury. All three. Failing any one of them = unlawful live work, criminal offence under EAWR.",
-      "The work is for a domestic customer only.",
-      "Live work is freely allowed as long as you have a wireman's permit.",
+      "A notice served by the fire authority prohibiting or restricting the use of all or part of the premises because the use involves a risk of death or serious injury to relevant persons that is so serious that the use should be prohibited or restricted",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "EAWR Reg 14 is one of the most-tested regulations in apprenticeship assessments and one of the most-prosecuted in real life. The three conditions are conjunctive — all three required. The 'reasonably practicable to make dead' test is the killer: in the vast majority of installation work it IS reasonably practicable to isolate, so the live-work justification fails at step one. As an apprentice you would not normally be authorised to do live work alone — you'd be working under a permit issued to a senior, who carries the legal responsibility for the Reg 14 justification.",
   },
@@ -72,12 +72,12 @@ const checks = [
     question:
       "If an apprentice's unsafe work causes an injury, what's the realistic prosecution route under HASAWA?",
     options: [
-      "There is no prosecution route — only the company can be prosecuted.",
+      "Provide site induction (covering the construction phase plan, site rules, welfare, emergency procedures and specific hazards), provide access to relevant pre-construction information, and ensure each worker has the information they need to do their work safely. Reg 14 makes it a duty on the principal contractor to ensure workers receive any relevant H&S training. Reg 15 puts a corresponding duty on the worker to co-operate.",
+      "C&G 2391-52 is the combined Initial Verification and Periodic Inspection qualification — covers the full inspection and testing curriculum for new installations (initial verification, EICs) and existing installations (periodic inspection, EICRs). It's the most common single I&T qualification in the UK trade. Holding 2391-52 is the typical entry condition for Approved Electrician JIB grade, for QS roles in CPS-registered firms, and for taking on testing-led contract work.",
+      "Schedule 1 Part P of the Building Regulations 2010 sets the legal requirement that 'reasonable provision shall be made in the design and installation of electrical installations in order to protect persons operating, maintaining or altering the installations from fire or injury'. The Approved Document P guidance then names BS 7671 as the recognised way to meet that requirement. So in a dwelling in England, BS 7671 compliance is the practical route to legal compliance.",
       "HSE investigates. Charges can be laid against the firm (HASAWA s.2 / s.3, EAWR Reg 4 / 14), against directors personally if they consented or connived (HASAWA s.37), AND against the individual operative personally (HASAWA s.7, EAWR Reg 3). Magistrates' Court — up to £20,000 fine and / or 6 months prison per offence. Crown Court — unlimited fine and / or 2 years prison. The company and the apprentice can both be prosecuted in the same case.",
-      "Only the customer can sue — there's no criminal route.",
-      "The apprentice is automatically immune until they're 21.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The HSE prosecution toolkit is wide. The firm faces s.2 / s.3 / EAWR charges. The directors face s.37 if they consented or were complicit. The individual operative — whatever their grade — faces s.7 and (for electrical work) EAWR Reg 3 charges. In a serious case all three layers can be prosecuted in the same proceedings. The Sentencing Council Definitive Guideline for H&S Offences sets the tariff: offences are categorised by culpability and harm, and even mid-range categories carry six-figure fines for medium-sized firms and prison terms for individuals.",
   },
@@ -91,10 +91,10 @@ const quizQuestions = [
     question:
       "What does HASAWA s.7 require of every employee personally?",
     options: [
-      "Just to wear a hi-vis.",
+      "Reg 526.1 — 'Every connection between conductors or between a conductor and other equipment shall provide durable electrical continuity and adequate mechanical strength and protection.' This is the formal hook for torque values, ferrule requirements, conductor preparation and termination sequence.",
       "Two limbs. Limb (a) — take reasonable care for the H&S of yourself and of anyone affected by your acts or omissions at work. Limb (b) — co-operate with the employer (and any other person on whom a duty falls) so far as is necessary to enable that duty to be performed. Both are personal criminal duties. Breach can lead to a personal prosecution, fine and / or prison.",
-      "To pass an exam.",
-      "To be polite to the supervisor.",
+      "Part 2 — definitions. Every key term in BS 7671 has a verbatim definition in Part 2, and that definition is the legal vocabulary the inspector and the courts use. 'Extraneous-conductive-part' = 'a conductive part liable to introduce a potential, generally Earth potential, and not forming part of the electrical installation' — that exact wording is what decides whether the metal pipework needs main bonding.",
+      "Sample sufficiently to give a representative picture of the installation condition; expand the sample if defects are found at higher than expected rates; record the sampling rate and any expansion on the report; agree the sampling approach with the customer in writing in advance.",
     ],
     correctAnswer: 1,
     explanation:
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       "What does HASAWA s.8 prohibit?",
     options: [
-      "Working overtime.",
+      "Although the PD's primary duty is during the pre-construction phase (gathering and providing pre-construction information), they often make periodic visits during construction to verify that the design assumptions held up and that the pre-construction H&S information is being used. This is especially common on complex projects where design changes during construction.",
+      "Other trades working above, beside or below you. Plumbers cutting overhead, joiners with battery saws, decorators with wet paint and dust sheets, scaffolders moving boards. Their work creates falling-object risk, slip risk and noise risk for you, and your work creates electrical and tripping risk for them. The walk-round needs to take account of who else is on site, not just your own activity.",
       "No person shall intentionally or recklessly interfere with or misuse anything provided in the interests of H&S. Examples — removing a machine guard, defeating an interlock, taking down a barrier, reaching round a lock-off, stuffing the door of an interlocked enclosure, switching off a smoke detector you find inconvenient. s.8 is a personal criminal offence and applies to everyone on site, employee or not.",
-      "Smoking on site.",
-      "Using a mobile phone.",
+      "Wide range: textured ceilings (artex), insulation board (AIB), cement products (roofing, soffits, downpipes), pipe and boiler lagging, sprayed coatings, floor tiles and adhesive, gaskets and seals, electrical components (rare in UK but some old fuse boards), bath panels, window putty, wall claddings.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "s.8 is the 'don't tamper with the controls' Section. It catches the most common form of avoidable accident — someone defeating a safety control because the control was inconvenient. Removing a guard, defeating a permit, breaking a lock-off, blocking a fire exit — all s.8 offences. For an apprentice the message is simple: if a control is in your way, you don't remove it; you escalate to the supervisor and have it formally addressed.",
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       "Under EAWR Reg 3, who exactly owes the duty to comply with the Regulations?",
     options: [
-      "Only the company director.",
+      "Establish a full exclusion zone with barriers minimum 6 metres from the base, deploy adequate task and area lighting, station banksmen at all access points, display warning signs, ensure all personnel wear enhanced high-visibility clothing, have a traffic management plan approved by the local authority, and confirm the rescue plan accounts for reduced visibility",
+      "EI creates the psychological infrastructure for safety culture: self-awareness enables recognition of when fatigue or distraction creates risk, self-regulation prevents shortcuts under pressure, motivation sustains safety commitment even without supervision, empathy enables understanding of why others take risks (rather than just punishing them), and social skills create the communication culture where anyone can stop unsafe work without fear. Safety culture IS emotional culture",
+      "In writing, contemporaneously. Text or email to the supervisor; CC to a senior manager or H&S manager; copy retained. State what was asked, what you said, and the reason (regulation cited or risk identified). Time-stamped. The contemporaneous written record is the strongest evidence in any subsequent ERA s.44 claim or HSE prosecution.",
       "Reg 3 puts the duty on EVERY employer, every self-employed person, and every employee — including apprentices — engaged in any work activity covered by the Regulations. The employee duty is to co-operate with the employer in complying with EAWR, AND to comply themselves with EAWR insofar as the matters relate to things within the employee's control. So an apprentice has a personal EAWR duty, not just an employer-mediated one.",
-      "Only the customer.",
-      "Only the apprenticeship provider.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "EAWR Reg 3 is the equivalent of HASAWA s.7 for electrical work — it explicitly places the duty on the employee. So an apprentice doing electrical work owes their own EAWR Reg 14 duty (don't work live without justification), Reg 16 duty (work within their competence) and Reg 4 duty (don't construct or maintain in a way that creates danger). The HSE has prosecuted operatives personally under EAWR Reg 3 + Reg 14 for unauthorised live work.",
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       "An apprentice is told by a senior operative to do something they think is unsafe. What does the law require them to do?",
     options: [
-      "Just do it — 'following orders' is a defence.",
       "Refuse the unsafe instruction and raise the concern with the supervisor or higher. HASAWA s.7 puts the personal duty on the apprentice — a direct order from a senior is not a defence to a s.7 prosecution. The Employment Rights Act 1996 s.44 also gives the apprentice statutory protection from victimisation for raising H&S concerns. Document the refusal and the reason in writing (text, email, app note) at the time.",
-      "Wait until the next H&S audit and mention it then.",
-      "Resign immediately.",
+      "EI enhances teamwork by: enabling trust (through self-regulation and reliability), improving communication (through empathy and active listening), facilitating constructive conflict (through assertiveness and perspective-taking), and creating psychological safety (through social awareness) — transforming a group of individuals into a genuinely high-performing team",
+      "Bond each extraneous service (gas, water) separately back to the MET per Reg 544.1.2 (within 600 mm of intake). Bond the structural steel frame at multiple accessible points back to the MET. Bond the LPS earth network to the MET via direct bond or spark gap per BS EN 62305. Each system has its own dedicated bonding cable to the MET — no daisy-chaining. The MET is the single common reference for the entire integrated earth and bonding network.",
+      "'So far as is reasonably practicable' (SFAIRP) — the duty-holder weighs the risk against the cost, time and effort of further precautions. The bar is set by what a competent person would have done. Established in Edwards v National Coal Board (1949). Trivially expensive controls against serious risk = required. Disproportionately expensive controls against trivial residual risk = not required.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The 'I was just following orders' defence does not exist in UK H&S law. Every individual is responsible for their own acts and omissions under HASAWA s.7. The Employment Rights Act 1996 s.44 (right not to suffer detriment for raising H&S concerns) and s.100 (automatic unfair dismissal for the same reason) backstop the apprentice's right to refuse unsafe work. A contemporaneous written note of the refusal is the best evidence of having discharged the personal duty.",
   },
@@ -147,10 +147,10 @@ const quizQuestions = [
     question:
       "What's the penalty range for a serious EAWR breach prosecuted in the Crown Court?",
     options: [
-      "A small fixed penalty notice.",
+      "Domestic Installer firms are scheme-registered to self-certify Building Regulations Part P notifiable work in dwellings only (single-family homes, flats). Approved Contractor firms are assessed to a higher standard covering commercial, industrial and dwellings — they can self-certify Part P plus issue compliance certificates against BS 7671 across the full scope. The Approved Contractor assessment is more rigorous and carries higher annual fees.",
       "Unlimited fine, and / or up to 2 years' imprisonment. The Sentencing Council Definitive Guideline for Health and Safety Offences sets the tariff using a culpability-and-harm matrix — even medium-culpability mid-harm cases against an individual can attract a custodial sentence, particularly where someone has been seriously injured or killed. Companies face fines that scale with turnover; individuals face fines + prison.",
-      "A verbal warning.",
-      "A £100 fine and nothing else.",
+      "An F-Gas log entry recording the refrigerant type, the charge weight added or removed, the date, and the F-Gas-certified engineer's name and certificate number. The engineer logs the entry in their own F-Gas register and provides a copy or extract to the customer / installer for the handover pack. Required at every refrigerant transaction (initial commissioning charge, top-up, recovery at decommissioning). Required by the F-Gas Regulations and central to demonstrating compliance during any future enforcement check.",
+      "Roughly 60-100 GBP per AFDD-RCBO device times 10 circuits = 600-1000 GBP additional cost over standard RCBO-only protection. Labour is similar (each AFDD-RCBO replaces an RCBO, same install effort). Total upgrade premium for AFDD-protected CU vs RCBO-only typically 600-1200 GBP. Worth quoting on every domestic CU change as a \\\\\\\"premium fire-protection option\\\\\\\" — many customers will pay the premium when the value is explained.",
     ],
     correctAnswer: 1,
     explanation:
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       "EAWR Reg 16 covers competence. What does it actually require?",
     options: [
-      "Everyone on site must hold a degree.",
+      "Apprentice (graded by year of apprenticeship) → on completion of Level 3 + AM2/E + 18th Ed → Electrician → with additional experience and competence demonstration → Approved Electrician → with further design / fault-finding competence → Technician. Each grade unlocks higher pay (set by the JIB National Working Rules) and a wider scope of work the operative can carry out unsupervised on JIB-affiliated sites.",
+      "That the installation incorporates an RCD, that the user should test it quarterly (or six-monthly per the older guidance) by pressing the test button, that the RCD should trip when tested, and that if it doesn't trip the user should call a competent electrician immediately. Maintains the protection by catching RCD failure before it matters.",
       "No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger, unless they possess such knowledge or experience or are under appropriate supervision having regard to the nature of the work. So either you're competent yourself OR you're being supervised by someone who is. Working outside your competence without supervision is a Reg 16 breach.",
-      "Only fully qualified electricians can touch any tool.",
-      "Apprentices can only watch, never work.",
+      "It means the local LV cable, transformer or upstream HV network can’t safely accept the additional export without reinforcement (typically a transformer upgrade or cable replacement). The customer either pays for the reinforcement (often £10,000+), accepts an export-limited install (the inverter is throttled to a lower export rating), or chooses not to proceed.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "EAWR Reg 16 is the legal hook for the apprenticeship model. An apprentice doesn't yet have full competence — they're acquiring it — so they work under appropriate supervision until they do. The supervisor is competent and is taking responsibility. A senior who lets an apprentice loose on work the apprentice isn't ready for is breaching Reg 16. An apprentice who takes on work outside their competence without supervision is also breaching Reg 16. Both can be prosecuted.",
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       "What's HASAWA s.37 and when does it become relevant to an electrician's career?",
     options: [
-      "It applies only to MPs.",
+      "Digital and durable — typically PDF for the drawings and schedules, native files (DWG, RVT, IFC) where the building owner has compatible software, and a structured index. Hard-copy printout if the building owner needs one. On HRRBs, format must support the BSA 2022 golden thread requirements (accessible, structured, digital).",
+      "Report internally; if the defect appears systemic (e.g. a brand of MCB failing prematurely across multiple installs), escalate to the firm\\\\\\\\'s technical lead who can report to the manufacturer / RAPEX (Rapid Alert System for Non-Food Products) / Office for Product Safety and Standards. Product withdrawals and safety alerts come out of these channels.",
+      "A standard grid-tied inverter is required to shut down on loss of mains because of anti-islanding rules. Continuous operation through a power cut needs a hybrid inverter with explicit islanded-mode capability, paired with a battery and a changeover arrangement that first electrically isolates the property from the failed grid before re-energising selected circuits. The MCS designer specifies which loads stay alive, the battery sizing, and the transfer time.",
       "Where an offence under HASAWA is committed by a body corporate (a limited company) and is proved to have been committed with the consent or connivance of, or attributable to neglect on the part of, a director, manager, secretary or similar officer, that individual ALSO commits the offence and is liable to personal prosecution. Relevant once you become Approved Electrician, then a senior, then potentially a director — your personal liability scales with your role.",
-      "It only applies to the HSE itself.",
-      "It only applies to clients.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "s.37 is the 'directors can be personally prosecuted' Section. As you progress from apprentice to Approved Electrician to supervisor to senior to director, your personal exposure under s.37 grows. The most serious electrical-trade prosecutions in the last decade have used s.37 to name the company director alongside the company itself — and where the director was found to have consented to, connived in, or neglected the underlying breach, they've faced personal fines and (in the worst cases) custodial sentences. Knowing s.37 exists is what makes a director sign off the H&S system seriously rather than rubber-stamp it.",
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       "An apprentice has been told to work on a live distribution board because 'we can't take the building off and the customer is impatient'. What does the law actually require?",
     options: [
-      "Crack on.",
       "Stop. EAWR Reg 14 makes live work the exception, requiring three conditions to be met simultaneously — unreasonable to make dead, reasonable to do live, suitable precautions in place. Customer impatience is not a Reg 14 condition. The supervisor needs to (a) re-examine whether isolation is truly impossible, (b) if it genuinely is, document a Reg 14 justification with permit-to-work, and (c) ensure the work is done by a competent person, not an apprentice working alone. The apprentice should refuse the instruction in writing and escalate. HASAWA s.7 + ERA 1996 s.44 protect the refusal.",
-      "Do it but wear extra-thick gloves.",
-      "Do it but only on Tuesdays.",
+      "Battery hazards are different from AC hazards: (1) DC shock — once your hand is on a DC busbar, your muscles can't release because there's no zero-crossing — DC at 60 V upward is treated as a let-go hazard; (2) hydrogen gas — lead-acid cells gas during charge, hydrogen accumulates in poorly-ventilated rooms, explosive at 4% LEL — battery rooms have forced ventilation for this reason; (3) electrolyte — sulphuric acid contact with skin / eyes — face shield, acid-resistant gloves, eye-wash station; (4) thermal runaway — a damaged or shorted cell can catch fire, with toxic fumes; (5) short-circuit current — a 100 Ah lead-acid string can deliver 5–10 kA short-circuit, enough to weld a spanner.",
+      "Hypothesis-driven order. Example for 'lights flicker' hypothesis: (1) Visual + customer interview (cost: free). (2) Clamp meter on lighting circuit during normal load (live, low risk). (3) Voltage measurement at lampholder during high-load event (live, low risk). (4) If above inconclusive — isolate, IR test on lighting circuit, R1+R2, EFLI Zs (dead and live tests in BS 7671 643 order). (5) If still inconclusive — install PQ analyser for 24–72 hours. The sequence escalates from quick / cheap / safe to slow / expensive / higher-risk only as needed. Many faults solve at step 1–3 without ever needing the full BS 7671 643 sequence.",
+      "PEOPLE: earth fault that's NOT cleared by a protective device — the operator touches metalwork that has risen to phase voltage, current flows through them to earth. Direct cause of most electrical shock fatalities. PROPERTY: high-resistance joint (HRJ) — generates I²R heat under load, ignites surrounding combustibles. Direct cause of most electrical fires. The two top fault categories on the HSE / Fire & Rescue statistics. RCD protects against the people-harm fault; AFDD + thermal monitoring protect against the property-harm fault. Both are required for full protection.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Customer pressure is the most common driver for unjustified live work. The EAWR Reg 14 test is objective — does it pass all three conditions? — and customer impatience does not factor in. The fact the apprentice is being told to do it personally is also a Reg 16 problem (competence + supervision). The apprentice's correct response is refuse + escalate + document. After an incident the documented refusal is the apprentice's evidence of having discharged HASAWA s.7. The supervisor and the firm carry the prosecution exposure for issuing the instruction.",
   },

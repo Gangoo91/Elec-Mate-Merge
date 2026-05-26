@@ -16,7 +16,12 @@ const quizQuestions = [
     id: 1,
     question:
       'Which stainless steel grade is generally preferred for coastal/marine installations?',
-    options: ['304', '316', '430', '201'],
+    options: [
+      '304',
+      '316',
+      '430',
+      '201',
+    ],
     correctAnswer: 1,
     explanation:
       'AISI 316 contains molybdenum for superior pitting resistance in chloride-rich (salt) environments compared with 304.',
@@ -24,16 +29,26 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is a suitable minimum enclosure rating for high‑pressure washdown areas?',
-    options: ['IP44', 'IP54', 'IP65', 'IP66'],
-    correctAnswer: 3,
+    options: [
+      'IP65',
+      'IP44',
+      'IP66',
+      'IP54',
+    ],
+    correctAnswer: 2,
     explanation:
       'IP66 provides protection against powerful water jets. Some sites may require IP67/68; always check the specification.',
   },
   {
     id: 3,
     question: 'Which cable sheath type is typically preferred where chemical vapours are present?',
-    options: ['Standard PVC', 'LSZH', 'Basic PE', 'Rubber only'],
-    correctAnswer: 1,
+    options: [
+      'Basic PE',
+      'Standard PVC',
+      'Rubber only',
+      'LSZH',
+    ],
+    correctAnswer: 3,
     explanation:
       'LSZH compounds can offer improved resistance and reduced toxic emissions in fire. Always verify the specific chemical compatibility.',
   },
@@ -41,12 +56,12 @@ const quizQuestions = [
     id: 4,
     question: "Why fit a 'drip loop' before cable entry into an outdoor enclosure?",
     options: [
-      'To reduce voltage drop',
-      'To manage spare length',
       'To prevent water tracking along the cable into the enclosure',
-      'To improve EMC',
+      'Two teams needed the same scissor lift at once, causing delays',
+      'A tester designed to test without tripping RCDs',
+      'Loss caused by a gap between fibre end-faces at a connection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A drip loop diverts water away from the gland/entry so it cannot track into the enclosure.',
   },
@@ -55,12 +70,12 @@ const quizQuestions = [
     question:
       'What installation detail helps prevent galvanic corrosion between dissimilar metals?',
     options: [
-      'Use larger fixings',
-      'Paint only the bolts',
+      'Key design calculations, assumptions, and any as-built revisions',
       'Isolate with plastic/nylon washers and appropriate sealants',
-      'Tighten fixings harder',
+      '"The installation includes lighting, power, and heating circuits."',
+      'AC sinusoidal and pulsating DC residual currents',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Electrical isolation between dissimilar metals breaks the corrosion cell; also consider compatible fasteners/coatings.',
   },
@@ -68,12 +83,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which is the best first step when selecting materials for a damp plant room?',
     options: [
-      'Choose the cheapest enclosure',
+      'To provide an unbroken documented record of who handled the sample from collection to analysis',
+      'Reducing access to the means by which people could take their own life',
       'Assess the environmental influences and duty (BS 7671 external influences)',
-      'Install everything in stainless steel regardless',
-      'Use domestic-grade accessories',
+      'A receiver\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s preconceived negative opinion about the sender',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 requires assessment of external influences (water, corrosives, mechanical, temperature) during design and selection.',
   },
@@ -81,20 +96,25 @@ const quizQuestions = [
     id: 7,
     question: 'What maintenance action is most critical for gasketed enclosures in damp areas?',
     options: [
-      'Annual repainting',
+      'Installing and commissioning solar photovoltaic systems',
+      'Multiple sensors with overlapping detection zones',
+      'At least 12 months to capture seasonal variations',
       'Monthly check and replacement of perished seals',
-      'Weekly torque check of all fixings',
-      'Fit larger cable glands',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regular inspection and timely replacement of seals/gaskets prevents moisture ingress and premature failure.',
   },
   {
     id: 8,
     question: 'For chemically aggressive zones, which non-metallic enclosure is commonly selected?',
-    options: ['ABS', 'Polycarbonate', 'GRP', 'PVC'],
-    correctAnswer: 2,
+    options: [
+      'GRP',
+      'PVC',
+      'ABS',
+      'Polycarbonate',
+    ],
+    correctAnswer: 0,
     explanation:
       'GRP (Glass Reinforced Plastic) offers strong chemical resistance and good strength; check manufacturer data for compatibility.',
   },
@@ -105,7 +125,12 @@ const quickCheckQuestions = [
   {
     id: 'materials-chem',
     question: 'Which plastic enclosure is often preferred in chemical washdown areas?',
-    options: ['ABS', 'GRP', 'Polystyrene', 'MDF'],
+    options: [
+      'MDF',
+      'GRP',
+      'ABS',
+      'Polystyrene',
+    ],
     correctIndex: 1,
     explanation:
       'GRP typically provides excellent chemical resistance and structural integrity in harsh environments.',
@@ -113,8 +138,13 @@ const quickCheckQuestions = [
   {
     id: 'ip-washdown',
     question: 'Minimum practical IP rating usually specified for regular high‑pressure washdown?',
-    options: ['IP54', 'IP55', 'IP65', 'IP66'],
-    correctIndex: 3,
+    options: [
+      'IP66',
+      'IP54',
+      'IP55',
+      'IP65',
+    ],
+    correctIndex: 0,
     explanation:
       'IP66 resists powerful water jets. Some food plants require higher—always confirm the client specification.',
   },
@@ -122,12 +152,12 @@ const quickCheckQuestions = [
     id: 'galvanic',
     question: 'How do you minimise galvanic corrosion at fixings?',
     options: [
-      'Use any metals available',
-      'Mix stainless and carbon steel for strength',
       'Isolate dissimilar metals and use compatible fasteners',
-      'Rely on paint only',
+      'MA of about 1 — it just changes the direction of the force',
+      'Raise the alarm and ensure all persons in the area are alerted',
+      'May require modified procedures and criteria',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Isolating dissimilar metals and selecting compatible fasteners/coatings prevents galvanic corrosion cells forming.',
   },

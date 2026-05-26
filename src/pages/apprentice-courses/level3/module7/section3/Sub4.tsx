@@ -41,12 +41,12 @@ const checks = [
     question:
       "What does the Consumer Rights Act 2015 require for services contracts (like electrical work for a homeowner)?",
     options: [
-      "Nothing.",
+      "COP = useful heat output (kW) / electrical input (kW). It tells you how much heat each kWh of electricity moves. A COP of 3 means 1 kWh in produces 3 kWh of heat out. COP varies with outdoor temperature, flow temperature and load — manufacturers also quote SCOP (seasonal COP) which averages performance across the heating season. The MCS standard for heat pump installation requires SCOP to be calculated and disclosed to the customer.",
+      "Electrical burns are usually small at the surface but deep at the tissue level — current passing through tissue heats it from the inside out. Thermal burns are usually obvious at the surface. Electrical burns may have separate entry and exit wounds. Both need cooling (10-20 min cool running water for thermal; less aggressive for electrical because of underlying tissue damage), covering with a clean non-adherent dressing, and medical assessment.",
+      "AC, A, F or B — and a time-delayed device adds (S) suffix for devices to BS EN 61008, BS EN 61009 or BS EN 62423. So a time-delayed Type A device is recorded as \\\\\\\"A (S)\\\\\\\". The type code reflects the residual-current waveform sensitivity: AC = pure sinusoidal AC; A = AC + pulsating DC; F = A + composite (motor drives); B = A + F + smooth DC. Time-delayed (S) means selective tripping coordination — typically used as an upstream device with downstream non-delayed RCDs on individual circuits.",
       "The Act requires services to be performed with reasonable care and skill, within a reasonable time if no time is agreed, and at a reasonable price if no price is agreed. If the service falls below standard the consumer can require repeat performance, or get a price reduction or refund. Applies to all consumer (domestic) work; doesn't apply to commercial/business-to-business contracts.",
-      "Only material standards.",
-      "Only Scottish customers.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "CRA 2015 is the statutory floor for consumer protection. For domestic electrical work it means: do the job competently, do it in a reasonable timeframe, charge a reasonable price. If you don't, the customer has clear statutory rights to put it right. Fair dealing isn't optional — it's the law. Keep your work to BS 7671, document it properly, communicate clearly, and you'll be on the right side of the Act.",
   },
@@ -55,12 +55,12 @@ const checks = [
     question:
       "What's ADR and when does it apply to consumer disputes?",
     options: [
-      "Only for divorce.",
+      "Safely isolate the installation from the supply. The earthing conductor is the protective earth path — while the supply is live, removing it could leave exposed-conductive-parts undefined relative to earth, and any earth-fault current would have nowhere to go. GN3 explicit: 'For safety reasons, the installation shall be isolated from the supply before disconnecting the earthing conductor.'",
+      "Report to the JIB ECS team immediately and request a replacement (small admin fee, typically £15-20). Get a temporary letter of confirmation from JIB or your employer to maintain site access while the new card is in production (typically 5-10 working days). Most sites will accept an ECS register printout temporarily; some won't, in which case you can't work until the new card arrives.",
       "Alternative Dispute Resolution — out-of-court mechanisms for resolving consumer disputes (mediation, conciliation, arbitration). Under the Alternative Dispute Resolution for Consumer Disputes Regulations 2015 you must signpost customers to a certified ADR provider when an internal complaint is unresolved (you're not always required to USE ADR but you must offer it). MCS-registered installers must be members of an approved ADR scheme via RECC or HIES.",
-      "Only commercial.",
-      "Government only.",
+      "A departure is a deliberate, design-stage deviation from BS 7671 (e.g. designer specified non-standard impedances) recorded by the inspector if discovered. An observation is a finding during the inspection — a defect, deterioration or condition. Observations get C1/C2/C3/FI codes; departures are recorded separately with the rationale and the responsible designer.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "ADR is the standard mechanism for resolving consumer disputes without going to court. RECC, HIES, NICEIC, NAPIT all have approved ADR routes — when a complaint can't be resolved internally you signpost the customer to the relevant ADR provider. Costs are typically borne by the trader (you), but ADR is significantly cheaper and faster than court. Cooperate with the ADR process; it usually leads to a faster resolution than going to court would.",
   },
@@ -69,12 +69,12 @@ const checks = [
     question:
       "What's the right way to handle a negative online review?",
     options: [
-      "Reply with rude comments.",
+      "Set the switches to a known closed position, then continuity-test from line at the CU through to the switched-line terminal of the lamp. Toggle each switch in turn and verify the meter responds correctly at every step. The intermediate switch should swap the strap connections when toggled — the meter should show this in the continuity readings.",
+      "Hot work (gas torch, grinding sparks, welding) on commercial premises, confined-space entry (ducts, voids, lift shafts), live electrical work under EAWR Reg 14, and high-energy switching on industrial / healthcare sites. The permit is a formal document authorising the specific activity within a specific time window, listing the precautions, and signed by the issuing authority and the operative.",
       "Respond promptly, professionally and publicly. Acknowledge the customer's experience without admitting liability. Offer to discuss offline ('please call us on X to discuss in detail'). Keep tone calm and factual. Never argue publicly. Take resolution to private channels. A good response to a bad review is often better marketing than the review itself was bad — it shows future customers how you handle problems.",
-      "Demand the review be removed.",
-      "Sue the customer.",
+      "The Information Commissioner's Office — the UK's independent regulator for data protection. The maximum fine for the most serious breaches is the higher of £17.5 million OR 4% of the firm's global annual turnover. Lower-tier breaches max out at £8.7 million OR 2% of turnover. In practice most fines on small businesses are far lower, but reputational damage (named-and-shamed in ICO enforcement notices) is often more painful than the fine itself.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Online reputation matters increasingly. Google reviews, Trustpilot, Checkatrade, Rated People all influence prospective customer decisions. The right response to a negative review is calm, professional, public acknowledgement plus offer to take resolution offline. Many customers update or remove negative reviews after a constructive resolution. Bad responses (defensive, rude, denial) cause more damage than the original review.",
   },
@@ -86,10 +86,10 @@ const quizQuestions = [
     question:
       "What's the cooling-off period for distance / off-premises consumer contracts?",
     options: [
-      "1 day.",
+      "Both theories share autonomy as a core element. SDT\\\\\\\\\\\\'s \\\"competence\\\" maps closely to Pink\\\\\\\\\\\\'s \\\"mastery\\\" (both involve developing skills and feeling effective). The integration comes through recognising that Pink\\\\\\\\\\\\'s \\\"purpose\\\" and SDT\\\\\\\\\\\\'s \\\"relatedness\\\" both address connection to something beyond the self — purpose through meaning, relatedness through people. Together they form a five-factor model: autonomy, mastery/competence, purpose, relatedness, and intrinsic engagement",
       "14 days under the Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013. Applies when you contract with a consumer at a distance (online, phone) or off-premises (at the customer's home). The customer can cancel for any reason within 14 days. To start work within the 14-day period you need the customer's express consent (waiving the cooling-off right for the work done).",
-      "1 hour.",
-      "1 year.",
+      "Optimistic individuals persist longer after setbacks, approach challenges with greater creativity, and maintain motivation through difficult periods — leading to measurably better performance outcomes. The MetLife study demonstrated that optimism (measured by Seligman's ASQ) was a better predictor of success than traditional hiring criteria",
+      "In dwellings or similar premises where a consumer unit to BS EN 61439-3 is used AND the maximum prospective fault current declared by the distributor is 16 kA. The combination of a CU rated for 16 kA fault current AND the distributor\\\\'s declared 16 kA cap means the PFC at the origin will not exceed the CU\\\\'s breaking capacity by design — no measurement needed. Outside dwellings, or with a non-BS EN 61439-3 distribution board, or where the distributor declares above 16 kA, measurement / calculation IS required.",
     ],
     correctAnswer: 1,
     explanation:
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: "What's the typical structure of a good complaints procedure?",
     options: [
-      "Don't have one.",
+      "To enable the customer to operate the install correctly, recognise fault conditions, perform any user-level routine checks (e.g. weekly fire-alarm test) and know when to call you back. Without them the customer can't discharge their own legal duties (e.g. fire-alarm log under the Regulatory Reform (Fire Safety) Order 2005) and is more likely to mis-use or under-maintain the kit.",
+      "Meet each person individually using the SBI model to understand their perspective, then facilitate a joint discussion where both parties share their concerns, identify underlying interests (skills development, recognition, fairness), and collaboratively agree a fair rotation or allocation that addresses both people's needs",
       "Stage 1: customer raises concern with the firm (often verbally). Stage 2: written complaint logged, investigated, response within agreed timeframe (typically 14-28 days). Stage 3: if unresolved, escalate to senior person (or independent reviewer in larger firms). Stage 4: if still unresolved, signpost to ADR / scheme complaint procedure / Trading Standards. Document each stage in writing.",
-      "Just hang up.",
-      "One stage only.",
+      "Realistic optimism acknowledges genuine difficulties and negative emotions while maintaining evidence-based belief in the possibility of positive outcomes. Toxic positivity dismisses or invalidates negative emotions (\\\\\\\"Just think positive!\\\\\\\"), which actually increases suffering by adding shame about feeling bad on top of the original difficulty.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A documented complaints procedure protects both customer and firm. Most CPS schemes (NICEIC, NAPIT) require members to have a complaints procedure as part of scheme rules. Even one-person sole traders should have a basic written procedure. Customers complaining is a normal part of business — the question is whether you handle them well or badly. Well-handled complaints often result in customer loyalty; badly-handled escalate to scheme/ADR/court.",
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: "What's the Bribery Act 2010 and when might it apply to an electrician?",
     options: [
-      "Doesn't apply to trades.",
+      "Assessment of the risks from substances hazardous to health (Reg 6); prevention or control of exposure (Reg 7) using the hierarchy of control (eliminate, substitute, engineer, system of work, PPE); use and maintenance of control measures (Reg 8–9); monitoring of exposure (Reg 10); health surveillance where appropriate (Reg 11); information, instruction and training (Reg 12); arrangements for accidents, incidents and emergencies (Reg 13).",
+      "A hole saw of the correct diameter on a cordless combi drill — cuts a clean circular hole sized exactly to the downlight aperture (typically 65 mm or 75 mm). For the rough access cut where you need a square hole or are running cable through, a multi-tool (oscillating multi-cutter, Bosch GOP / Fein MultiMaster) gives a controlled plunge cut without dust kicking up half the room.",
+      "Hold the line on the coding — explain the BPG4 logic for C2 (single foreseeable fault scenario), reference the specific risk in plain terms, document the conversation. The absence of harm to date does not change the risk; it means the foreseeable fault has not yet occurred. The professional duty under EAWR Reg 16 (competence) and the inspector's continuing Reg 4 duty both require honest coding, not customer-pleasing coding.",
       "UK statute making it a criminal offence to offer, promise, give, request, accept or agree to receive a financial or other advantage as an inducement for improper performance. Applies to any UK person/business. For electricians: gifts to suppliers/main contractors over modest value (typically £100+) raise risk; cash 'thank-yous' to procurement people are clearly bribery; small thank-you gifts (bottle of wine, biscuit tin) are typically fine. Many large firms have anti-bribery policies that ban any gifts.",
-      "Only for politicians.",
-      "Only for foreign trade.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The Bribery Act has surprised many small-business owners. It applies broadly to all UK trade. The line between a courtesy gift and a bribe is judgment-based but broadly: token gifts (under ~£50, no expectation of reciprocity) are typically fine; substantial gifts or cash with implicit expectation of preferential treatment are not. When in doubt, don't. Most large firms (main contractors, public-sector clients) have policies banning gifts entirely.",
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: "Should a small electrical firm have written terms and conditions?",
     options: [
-      "No need.",
       "Yes — written T&Cs protect both you and the customer. Cover: scope of work, payment terms, materials warranty, workmanship warranty, complaints procedure, cooling-off period (consumer), variations and extras, cancellation, retention of title (you own materials until paid for), data protection (GDPR). T&C templates available from CPS schemes (NICEIC, NAPIT), trade associations (ECA), or solicitors specialising in trade.",
-      "Only for big firms.",
-      "Only verbal.",
+      "CAT IV 600 V two-pole testers — Martindale VI-13800 (~£60), Fluke T130 (~£100), Kewtech KT1780 (~£70). CAT III 1000 V / CAT IV 600 V multimeters — Fluke 87V (~£400), Megger AVO830 (~£200). CAT IV-rated MFTs — Megger MFT1721+ (~£900), Kewtech KT200 (~£500). Personal apprentice purchases typically: Martindale VI-13800 + Fluke 117 (CAT III 600 V — adequate for DB work but not cut-out). Firm-issued: Megger MFT1741+ and Fluke 87V for senior staff.",
+      "Compressed into the EIC trio + customer handover pack: design notes (Zs calculations, RCBO selection, earthing review) typically held in the contractor file but not always issued separately to the customer; EIC + Schedules + manuals consolidated into the customer pack; verbal walk-through handles the operational handover.",
+      "Ensure the earthing conductor is RECONNECTED BEFORE the supply is re-energised. The temporary disconnection during the test must be undone or the installation will operate without its protective earth path on first energisation — exposed-conductive-parts would have no defined potential relative to earth and a downstream fault could not disconnect.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Written T&Cs are the legal foundation of every job. Without them, default rules apply (Consumer Rights Act for domestic, Sale of Goods Act for materials, Late Payment Act for invoicing, etc.) — workable but you have no firm-specific protections. Standard T&Cs from CPS scheme (NICEIC, NAPIT publish member templates) are a good starting point; a solicitor can tailor them. Reference T&Cs in your quotes; have customers sign acceptance.",
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     question:
       "What happens if a customer refuses to pay because they're unhappy with the work?",
     options: [
-      "Just give up.",
+      "The location, the specific activity (gas torch, grinding, welding), the operative names, the permit validity window (start time, end time), the precautions in place (combustibles cleared, fire blanket / extinguisher to hand, fire watch arranged for after work), the cool-down / fire-watch requirement (typically 30-60 minutes after work ceases), and signatures from issuer, operative and (on completion) the fire-watch confirming no smouldering.",
       "Stage 1: try to discuss and resolve — most disputes resolve through conversation. Stage 2: if unresolved, follow your written complaints procedure. Stage 3: if still unresolved, signpost ADR (RECC for MCS work, NICEIC/NAPIT for scheme work, generic ADR providers like Centre for Effective Dispute Resolution). Stage 4: as last resort, small claims court (under £10k, online process). Document everything in writing throughout.",
-      "Sue immediately.",
-      "Threaten the customer.",
+      "A toolbox talk is short (5-10 min), focused on a single topic, delivered on site by a supervisor or senior operative, often at the start of a shift. It's a refresh / awareness tool, not initial training. Formal training (e.g. PASMA, IPAF, asbestos awareness) is longer, structured, certificated and provides the underlying competence. Toolbox talks reinforce that competence in the day-to-day work.",
+      "That all systems shall, so far as is reasonably practicable, be of such construction as to prevent danger; that they be maintained so as to prevent (so far as is reasonably practicable) such danger; that work activities on or near systems be carried out so as not to give rise to danger; and that protective equipment be suitable for the use, properly maintained and properly used.",
     ],
     correctAnswer: 1,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     question:
       "What's GDPR and how does it affect a small electrical firm?",
     options: [
-      "Nothing.",
+      "EAWR 'electrical systems' includes portable equipment supplied from those systems. A faulty 110 V SDS on a 110 V site supply is part of the electrical system in EAWR terms. The maintenance duty under Reg 4(2) covers the supply (transformer, leads, sockets) AND the equipment plugged into it. Visual checks, PAT, and competent-person inspection all sit under this duty — EAWR is the second statutory hook alongside PUWER.",
+      "The charge point installation typically includes a notice label identifying the supply origin, the protective device that isolates it, the type of earthing arrangement (TN-C-S with PEN-fault protection or TT with a local electrode) and any special instructions for emergency isolation. Section 722 and the IET Code of Practice both specify the labelling. The customer should be able to point to the means of isolation and the maintenance log; the next electrician arriving on site (perhaps years later) should be able to identify the install configuration without disassembling anything. The label is not decorative — it is a maintenance and safety document.",
       "UK GDPR (the UK's adoption of the EU GDPR after Brexit) governs how organisations handle personal data. For an electrical firm: customer names, addresses, phone numbers, email addresses, payment details, photos of work in customer property all count as personal data. Headline obligations: lawful basis for processing, data minimisation, security, customer's right to access their data, breach notification within 72 hours. Most small firms register with ICO (Information Commissioner's Office) for £40-60/year.",
-      "Only EU.",
-      "Only big firms.",
+      "Category II — intermediate risk, covers most cut/abrasion-resistant work gloves used for cable pulling, cable cutting, masonry handling. The key is matching the cut resistance level (EN 388 marking — A to F for cut, plus puncture, abrasion and tear ratings) to the actual task. A glove rated for general handling is not the right glove for cutting steel cable tray, and a heavily armoured glove makes fine termination work impossible.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "GDPR applies to every UK organisation processing personal data, including sole-trader electricians keeping customer contact lists. Most small firms register with the ICO (cost £40-60/year) and have a basic privacy policy explaining how they handle customer data. Cloud accounting (Xero, QuickBooks) helps — major SaaS providers handle most of the data security on your behalf. Don't ignore GDPR; ICO can fine for serious breaches.",
   },
@@ -166,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: "How important are online reviews for a domestic electrical firm?",
     options: [
-      "Not important.",
+      "Toolbox talks are short, focused, structured verbal briefings to workers on a specific safety topic — typically a hazard relevant to that day or that week. They're documented (sign-on sheet) so the employer can demonstrate they've discharged the MHSWR Reg 10 duty to provide comprehensible information. The format works because it's short, in person, with the chance to ask questions — the opposite of a long written document nobody reads.",
+      "Shorter cycles than the standard for the parent property type because the elevated risk in special locations justifies more frequent inspection. EV charge points are commonly inspected annually by the EV-charging-equipment manufacturer's recommendation; swimming pools annually for plant room; agricultural premises every 3 years given the harsh environment; caravans and marinas have their own GN3 Chapter 66 frequencies.",
+      "Parallel paths — every circuit\\\\\\\\'s insulation appears in parallel between the same L+N+E conductors at the CU. Twelve circuits each at 100 MΩ in parallel give 100/12 ≈ 8.3 MΩ. The reading is low because of summed leakage paths, not because of an insulation fault. Per-circuit testing is more diagnostically useful and is the recommended method.",
       "Increasingly critical. Google reviews are the first thing most prospective customers see when searching for an electrician. Trustpilot, Checkatrade, MyBuilder, Rated People all influence customer decisions. A consistent stream of positive reviews drives organic enquiries; a single uncontested negative review can deter customers. Actively request reviews from happy customers (post-job email with review link). Respond promptly and professionally to all reviews — positive and negative.",
-      "Only commercial.",
-      "Only for plumbers.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Online reputation is the modern equivalent of word-of-mouth, scaled by Google. Most domestic customers search 'electrician near me' before contacting anyone. Firms with strong review profiles dominate the local pack and get the first call. Building review momentum requires deliberate effort — ask every happy customer for a review, make it easy with a direct link, respond to every review (positive and negative). Long game pays off.",
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: "What's a 'workmanship warranty' and how long should it run?",
     options: [
-      "1 day.",
       "A workmanship warranty is your written guarantee that the work you've done will be free from workmanship defects for a specified period — typically 1-2 years for standard electrical work, sometimes longer for renewables (RECC requires minimum 2-year workmanship warranty for MCS-registered work). Materials usually carry separate manufacturer warranties (passed through to customer). Clear warranty terms reduce disputes by setting expectations upfront.",
-      "Forever.",
-      "1 hour.",
+      "Be honest: every environmental technology has a manufacturing carbon cost and an operating carbon benefit. The 'carbon payback time' is when the operating savings cover the manufacturing footprint. UK PV is roughly 1-3 years; heat pumps roughly 2-4 years on UK grid; MVHR varies hugely with airtightness. After payback, the system is in net-environmental-credit. As an apprentice, your job is the install — but the customer deserves an honest framing rather than greenwashed marketing.",
+      "Very high, high, medium, low — with starting-point fines that scale with both the culpability finding AND the harm category (1–4) AND the organisation's annual turnover band (micro / small / medium / large). A 'very high culpability + Category 1 harm + large organisation' combination has produced fines well into seven figures.",
+      "Yes — UK FE colleges and training providers consistently report difficulty recruiting industry-experienced electrical lecturers and assessors. The pay is below skilled-trade rates but the lifestyle (term-time hours, holidays, pension) appeals to mid-career and later-career electricians. Apprenticeship Standards expansion has increased demand for assessors. Many regions have unfilled posts at any given time.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Warranty terms shape customer expectations and your post-completion obligations. 1-2 years is the standard UK trade norm for workmanship; some firms offer longer (3-5 years) as a competitive differentiator. MCS / RECC require minimum 2-year warranty for renewables work. State warranty terms clearly in your T&Cs and on your invoice. Honour them when called upon — reputation damage from refused warranty claims is severe.",
   },

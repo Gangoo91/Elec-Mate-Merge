@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary purpose of discrimination (selectivity) between protective devices?',
     options: [
-      'To reduce installation costs',
+      'Ratio of 10-minute to 1-minute resistance readings',
+      'Safety and functionality at reasonable cost',
+      'Yes, but they are difficult to prove if a dispute arises',
       'To ensure only the device nearest the fault operates',
-      'To increase fault current levels',
-      'To allow higher cable ratings',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Discrimination ensures only the protective device immediately upstream of a fault operates, leaving the rest of the installation energised. This minimises disruption and aids fault location.',
   },
@@ -48,9 +48,9 @@ const quickCheckQuestions = [
     question: 'For time discrimination to work, the upstream device must have:',
     options: [
       'Lower current rating',
-      'Shorter operating time',
-      'Longer operating time',
       'Same characteristics',
+      'Longer operating time',
+      'Shorter operating time',
     ],
     correctIndex: 2,
     explanation:
@@ -60,12 +60,12 @@ const quickCheckQuestions = [
     id: 'current-discrimination',
     question: 'Current discrimination relies on the fact that:',
     options: [
-      'All devices have the same rating',
       'Fault current is higher at the origin than downstream',
-      'Cables limit current equally throughout',
-      'RCDs provide current limiting',
+      'To avoid confusion and keep communication clear',
+      'Loss when joining fibres with different light-gathering capabilities',
+      'Maintain standards and act professionally',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Current discrimination uses the natural reduction in fault current along cable runs. The upstream device sees lower fault current and doesn't reach its instantaneous trip threshold.",
   },
@@ -73,12 +73,12 @@ const quickCheckQuestions = [
     id: 'cascade-backup',
     question: 'What is cascade (back-up) protection?',
     options: [
-      'Devices operate in sequence',
+      'Equipment with rated current up to 16 A per phase (Class A, B, C, D equipment)',
+      'Varying the supply frequency (and voltage proportionally to keep V/f constant)',
       'Upstream device assists downstream device in fault clearance',
-      'Multiple RCDs in series',
-      'Time-delayed tripping',
+      'A processing unit that executes control strategies for a group of I/O points',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Cascade protection allows an upstream device with higher breaking capacity to assist a downstream device in clearing faults that exceed the downstream device's breaking capacity.",
   },
@@ -88,8 +88,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the typical time discrimination ratio required between MCBs in series?',
-    options: ['No discrimination possible', '1.5:1', '2:1', '3:1'],
-    correctAnswer: 0,
+    options: [
+      'Clearly identified and accessible',
+      'No discrimination possible',
+      'Cable and terminal identification',
+      'Retest to verify the correction',
+    ],
+    correctAnswer: 1,
     explanation:
       'Standard MCBs typically cannot achieve reliable discrimination in the magnetic (instantaneous) region due to similar operating times. This is why fuse-MCB or MCCB-MCB combinations are preferred.',
   },
@@ -97,7 +102,12 @@ const quizQuestions = [
     id: 2,
     question:
       'When using BS 88 fuses for discrimination, what current ratio is typically required?',
-    options: ['1.2:1', '1.6:1', '2:1', '3:1'],
+    options: [
+      '3:1',
+      '1.2:1',
+      '2:1',
+      '1.6:1',
+    ],
     correctAnswer: 2,
     explanation:
       'BS 88 fuses typically achieve discrimination at a 2:1 current ratio across most of their operating range. This makes them excellent for distribution system discrimination.',
@@ -106,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: 'What does I²t represent in protective device coordination?',
     options: [
-      'Device rating squared',
+      'Section 8 — Exposure controls/personal protection',
+      'Delta-T greater than 40°C above ambient',
+      'The number of individual optical fibres in the cable',
       'Energy let-through during fault clearance',
-      'Installation test current',
-      'Inrush current multiplier',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "I²t (I-squared-t) represents the energy let-through during fault clearance. For discrimination, the downstream device must clear the fault with lower I²t than the upstream device's withstand capability.",
   },
@@ -119,20 +129,25 @@ const quizQuestions = [
     id: 4,
     question: 'Partial discrimination means:',
     options: [
-      'Discrimination only works at low currents',
-      'Only some devices discriminate',
       'Discrimination is achieved up to a specific fault level only',
-      'Half the devices trip on any fault',
+      'All radiators should reach temperature simultaneously',
+      'False - only current versions should be used',
+      'Embodied carbon coefficients for construction materials',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Partial discrimination occurs when devices discriminate up to a specific current level. Above this limit, both devices may operate. Full discrimination means discrimination at all fault levels.',
   },
   {
     id: 5,
     question: 'Which device combination typically provides the best discrimination?',
-    options: ['MCB - MCB', 'MCCB - MCCB', 'HRC fuse - MCB', 'RCD - RCD'],
-    correctAnswer: 2,
+    options: [
+      'MCCB - MCCB',
+      'HRC fuse - MCB',
+      'RCD - RCD',
+      'MCB - MCB',
+    ],
+    correctAnswer: 1,
     explanation:
       "HRC fuse upstream with MCB downstream provides excellent discrimination. The fuse's different time-current characteristic and current-limiting ability allows reliable selectivity.",
   },
@@ -140,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'In a distribution system, where is discrimination most critical?',
     options: [
-      'At final circuits only',
+      'Additional strain relief and environmental sealing',
+      'Stop testing and rectify the fault before proceeding',
       'Between the incomer and first distribution tier',
-      'At socket outlets',
-      'At lighting circuits',
+      'Line charts with historical comparison',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Discrimination is most critical at the main incomer level, where a fault causing the main device to trip would affect the entire installation. Loss of discrimination here has maximum impact.',
   },
@@ -153,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: "What information do manufacturers' selectivity tables provide?",
     options: [
-      'Cable sizing data',
+      'The standard does not set a single limit; it depends on the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instruction manual',
+      'A missing or broken neutral conductor before the load (broken or floating neutral)',
+      'The equipment operates correctly under normal conditions',
       'Combinations of devices that achieve discrimination and to what fault level',
-      'RCD test intervals',
-      'Voltage drop calculations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Selectivity (coordination) tables show which device combinations achieve discrimination and specify the maximum fault current for which discrimination is guaranteed.',
   },
@@ -166,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'An MCCB with short-time delay (STD) setting achieves discrimination by:',
     options: [
-      'Reducing its breaking capacity',
-      'Increasing its current rating',
       'Intentionally delaying operation to allow downstream devices to clear first',
-      'Operating faster than downstream devices',
+      'To allow fire investigators to determine the origin, cause, and circumstances of the fire',
+      'Require contraventions to be remedied within a specified time',
+      'A substance that can cause or contribute to the development of cancer',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Short-time delay deliberately delays the MCCB's operation (typically 100-500ms) allowing downstream devices time to clear faults within their zones before the MCCB operates.",
   },
@@ -179,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'Zone selective interlocking (ZSI) improves discrimination by:',
     options: [
-      'Reducing fault current',
+      'An international treaty on climate change limiting global warming to 1.5-2°C',
       'Using communication between devices to identify fault location',
-      'Increasing cable sizes',
-      'Adding more protective devices',
+      'Eliminate foreseeable risks or reduce them so far as is reasonably practicable',
+      'An RCBO combines RCD protection with overcurrent protection',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,10 +207,10 @@ const quizQuestions = [
     id: 10,
     question: 'For cascade protection to be valid, what must be verified?',
     options: [
-      'Cable lengths are equal',
-      'Both devices have same manufacturer',
+      "Analyzing network topology and optimizing device placement",
+      "Earth the screen at both ends with 360-degree termination",
       "Combined let-through energy doesn't exceed downstream cable withstand",
-      'Devices have matching current ratings',
+      "To convert the sender's message into a transmittable signal",
     ],
     correctAnswer: 2,
     explanation:

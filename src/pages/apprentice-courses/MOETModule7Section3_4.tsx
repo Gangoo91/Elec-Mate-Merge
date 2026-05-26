@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'mapping-purpose',
     question: 'What is the primary purpose of a KSB mapping matrix?',
     options: [
-      'To make the portfolio look more organised',
+      'Ensure all extraneous-conductive-parts are at the same potential as the main earthing terminal, preventing dangerous potential differences during a fault',
+      'The initial neurochemical response of an emotion surges and then dissipates within approximately 90 seconds — any emotional experience lasting longer is being sustained by our own thoughts and self-talk',
       'To systematically cross-reference your evidence to the specific knowledge, skills and behaviours required by the ST1426 standard, ensuring complete coverage',
-      'To list all the tasks you have completed',
-      'It is only needed for distinction-grade candidates',
+      'Recognise that this is a situation where confidentiality must be broken and seek appropriate help, explaining to the colleague why you need to involve others',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The KSB mapping matrix is your evidence management tool. It links each piece of portfolio evidence to the specific requirements of the standard, makes it easy to identify gaps, and helps the assessor verify that all areas are covered. Without it, evidence is just a collection of documents — with it, the evidence tells a coherent story of competence.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'Why is it beneficial to cross-reference a single piece of evidence to multiple KSBs?',
     options: [
-      'It reduces the amount of evidence you need to collect',
       'One activity can genuinely demonstrate multiple competences simultaneously — for example, a fault diagnosis task may demonstrate technical knowledge, practical skills, safety awareness and professional communication',
-      'It is a shortcut to fill the matrix quickly',
-      'It is not acceptable — each evidence should link to only one KSB',
+      'Confirming using approved voltage indicator that the LINE terminal carries supply voltage to earth/neutral, and the neutral does not — with installation isolated downstream',
+      'Maintenance activities triggered by the actual measured condition of the equipment, using monitoring techniques to determine when maintenance is needed',
+      'In PNB the PEN conductor is earthed at a single point close to the consumer’s installation (between transformer and supply terminals), not at multiple points along the network as in PME.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Real-world activities naturally involve multiple competences. A single maintenance task might demonstrate fault diagnosis knowledge (K), practical testing skills (S), safe working behaviours (B), and professional communication (B). Cross-referencing captures this reality and reduces the total volume of evidence needed while ensuring comprehensive coverage.',
   },
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'mapping-gaps',
     question: 'What should you do when your mapping matrix reveals a gap in evidence coverage?',
     options: [
-      'Ignore it — the assessor may not notice',
+      'Because the build-up of flammable vapours or toxic fumes in a substantially enclosed space creates a foreseeable risk of serious injury',
       'Plan with your employer and training provider to access activities that will generate evidence for the missing KSBs, allowing sufficient time before the EPA',
-      'Write a reflective account about the topic even if you have no real experience',
-      'Ask another apprentice for their evidence',
+      '"There could be several causes, such as a loose connection or a faulty switch. I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ll carry out some tests to identify the exact issue and let you know what I find."',
+      'Both sets of duties apply simultaneously — the person must comply with designer duties when carrying out design work and contractor duties when carrying out construction work',
     ],
     correctIndex: 1,
     explanation:
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'mapping-review',
     question: 'How often should you review and update your KSB mapping matrix?',
     options: [
-      'Only once, when you first create it',
       'At every progress review with your training provider, and whenever new evidence is added to the portfolio, with a thorough review at least three months before the EPA',
-      'Only in the final week before the EPA',
-      'Your training provider handles all updates',
+      'The characteristics of the devices shall be coordinated and the combination verified as suitable for the maximum prospective fault current',
+      'Training appropriate to the level of risk, covering hazard awareness, use of equipment, safe working procedures, and emergency actions',
+      'Consumer Contracts (Information, Cancellation and Additional Charges) Regulations 2013 — 14-day cancellation right for off-premises contracts',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The mapping matrix is a living document that should be updated continuously. Reviewing it at every progress meeting ensures gaps are identified early. Adding new evidence references as you collect them keeps the matrix current. A thorough review three months before the EPA gives enough time to address any remaining gaps.',
   },
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A KSB mapping matrix for the MOET EPA should list:',
     options: [
-      'Only the skills from the standard',
+      'CAT III (distribution level) at the appropriate voltage rating — e.g., CAT III 600 V for a standard UK distribution board',
       'All knowledge, skills and behaviour requirements from the ST1426 standard, with cross-references to the evidence that demonstrates each one',
-      'Only the KSBs you feel confident about',
-      'The modules from your college course',
+      'Create a historical record that aids future fault diagnosis, identifies recurring problems, demonstrates compliance and supports continuous improvement',
+      '0.35 Ω — the recognised maximum for PME systems used in design where no DNO declared figure is available.',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: 'The most effective way to organise a KSB mapping matrix is:',
     options: [
-      'Alphabetically by evidence title',
+      'Enabling quick location of specific evidence within the portfolio — each piece of evidence has a unique code that the matrix references, making it easy to find the actual document',
+      'Identify areas to probe with questions — particularly KSBs where evidence appears weaker — to verify your understanding and competence through discussion',
       'With KSBs listed in rows and evidence items in columns (or vice versa), with clear markings showing which evidence demonstrates which KSBs',
-      'In order of when the evidence was collected',
-      'As a simple list with no cross-references',
+      'All the KSBs that the evidence genuinely demonstrates, including knowledge applied, skills used, and behaviours exhibited during the activity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A grid or matrix format (KSBs on one axis, evidence on the other) provides the clearest visual representation of coverage. Use tick marks, colours or reference codes to show links. This makes gaps immediately visible and helps the assessor navigate your portfolio efficiently.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 3,
     question: 'When mapping evidence to KSBs, you should consider:',
     options: [
-      'Only the most obvious link',
+      'Listing every KSB from the official ST1426 assessment plan so you have a complete framework to populate as you gather evidence throughout the apprenticeship',
+      'Regularly throughout the apprenticeship — typically at each progress review with your training provider — and updated as new evidence is added',
+      'Providing a quick visual indication of evidence strength — for example, green for well-evidenced KSBs, amber for adequate but could be stronger, and red for gaps that need addressing',
       'All the KSBs that the evidence genuinely demonstrates, including knowledge applied, skills used, and behaviours exhibited during the activity',
-      'Only knowledge requirements',
-      'Only practical skills',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A maintenance activity typically involves knowledge (understanding the system), skills (practical techniques) and behaviours (safety, communication, professionalism) simultaneously. Mapping all genuine links maximises the evidence value and demonstrates integrated competence — you apply knowledge, skills and behaviours together in practice.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'If your mapping matrix shows that one KSB has only a single weak piece of evidence, you should:',
     options: [
-      'It is fine — one piece is enough',
       'Seek to strengthen that area by gathering additional or better-quality evidence, such as a more detailed activity log entry, a reflective account, or a witness statement covering that KSB',
-      'Remove the KSB from the matrix',
-      'Copy evidence from another KSB section',
+      'Specific examples of professional behaviours demonstrated during real workplace activities — described in activity logs, witnessed by others, or reflected upon in written accounts',
+      'Regularly throughout the apprenticeship — typically at each progress review with your training provider — and updated as new evidence is added',
+      'With KSBs listed in rows and evidence items in columns (or vice versa), with clear markings showing which evidence demonstrates which KSBs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A single weak piece of evidence for a KSB is a risk. The assessor may probe this area in the professional discussion, and if you cannot demonstrate competence, it could affect your grade. Strengthening evidence through additional activity logs, reflective accounts or witness statements provides a more robust evidence base.',
   },
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'The mapping matrix should be reviewed:',
     options: [
-      'Only once, when first created',
+      'All the KSBs that the evidence genuinely demonstrates, including knowledge applied, skills used, and behaviours exhibited during the activity',
       'Regularly throughout the apprenticeship — typically at each progress review with your training provider — and updated as new evidence is added',
-      'Only in the final month before the EPA',
-      'It does not need reviewing once completed',
+      'Identify areas to probe with questions — particularly KSBs where evidence appears weaker — to verify your understanding and competence through discussion',
+      'With KSBs listed in rows and evidence items in columns (or vice versa), with clear markings showing which evidence demonstrates which KSBs',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'Colour coding in a mapping matrix is useful for:',
     options: [
-      'Making it look attractive',
+      'Enabling quick location of specific evidence within the portfolio — each piece of evidence has a unique code that the matrix references, making it easy to find the actual document',
+      'With KSBs listed in rows and evidence items in columns (or vice versa), with clear markings showing which evidence demonstrates which KSBs',
       'Providing a quick visual indication of evidence strength — for example, green for well-evidenced KSBs, amber for adequate but could be stronger, and red for gaps that need addressing',
-      'It is not necessary',
-      'Showing which evidence was most recent',
+      'Specific examples of professional behaviours demonstrated during real workplace activities — described in activity logs, witnessed by others, or reflected upon in written accounts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A traffic-light colour system (green/amber/red) makes the matrix a powerful planning tool. At a glance, you and your training provider can see overall readiness and focus attention on areas that need work. It also demonstrates a professional, organised approach to your apprenticeship.',
   },
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 7,
     question: "Behaviours in the ST1426 standard (the 'B' in KSBs) are best evidenced through:",
     options: [
-      'Statements saying you have good behaviour',
+      'Identify areas to probe with questions — particularly KSBs where evidence appears weaker — to verify your understanding and competence through discussion',
+      'Show complete coverage of all KSBs with at least one strong piece of evidence for each, use consistent reference codes, and be presented in a clear format that the assessor can navigate easily',
+      'Consider whether your log entry or reflective account explains the underpinning knowledge — if it does, map it to both; if not, add an explanation of the knowledge applied to strengthen the evidence',
       'Specific examples of professional behaviours demonstrated during real workplace activities — described in activity logs, witnessed by others, or reflected upon in written accounts',
-      'Attendance records',
-      'Employer references',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Behaviours must be demonstrated through actions, not just claimed. Evidence of teamwork, communication, safety awareness, initiative and professionalism comes from describing specific instances where you exhibited these behaviours. Witness statements from supervisors confirming observed behaviours are particularly effective.',
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 8,
     question: 'An evidence reference code system in the matrix helps by:',
     options: [
-      'Making it look more complicated',
       'Enabling quick location of specific evidence within the portfolio — each piece of evidence has a unique code that the matrix references, making it easy to find the actual document',
-      'It is unnecessary',
-      'Replacing the need for a contents page',
+      'All the KSBs that the evidence genuinely demonstrates, including knowledge applied, skills used, and behaviours exhibited during the activity',
+      'Seek to strengthen that area by gathering additional or better-quality evidence, such as a more detailed activity log entry, a reflective account, or a witness statement covering that KSB',
+      'Regularly throughout the apprenticeship — typically at each progress review with your training provider — and updated as new evidence is added',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A simple reference system (e.g., WL-01 for Work Log 1, RA-03 for Reflective Account 3, WS-02 for Witness Statement 2) enables both you and the assessor to quickly locate the actual evidence from the matrix. It demonstrates organisation and professionalism.',
   },
@@ -176,10 +176,10 @@ const quizQuestions = [
     question:
       'If an activity demonstrates a skill (S) but you are unsure whether it also demonstrates the related knowledge (K), you should:',
     options: [
-      'Only map it to the skill',
+      'Providing a quick visual indication of evidence strength — for example, green for well-evidenced KSBs, amber for adequate but could be stronger, and red for gaps that need addressing',
       'Consider whether your log entry or reflective account explains the underpinning knowledge — if it does, map it to both; if not, add an explanation of the knowledge applied to strengthen the evidence',
-      'Map it to both anyway',
-      'Ask your assessor',
+      'All the KSBs that the evidence genuinely demonstrates, including knowledge applied, skills used, and behaviours exhibited during the activity',
+      'Specific examples of professional behaviours demonstrated during real workplace activities — described in activity logs, witnessed by others, or reflected upon in written accounts',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,12 +189,12 @@ const quizQuestions = [
     id: 10,
     question: 'The final version of your mapping matrix before the EPA should:',
     options: [
-      'Be a rough draft',
+      'Regularly throughout the apprenticeship — typically at each progress review with your training provider — and updated as new evidence is added',
+      'Providing a quick visual indication of evidence strength — for example, green for well-evidenced KSBs, amber for adequate but could be stronger, and red for gaps that need addressing',
       'Show complete coverage of all KSBs with at least one strong piece of evidence for each, use consistent reference codes, and be presented in a clear format that the assessor can navigate easily',
-      'Only cover the KSBs you expect to be asked about',
-      'Be completed by your training provider',
+      'Seek to strengthen that area by gathering additional or better-quality evidence, such as a more detailed activity log entry, a reflective account, or a witness statement covering that KSB',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The final matrix should be complete, accurate and well-presented. Every KSB should have at least one strong piece of evidence (ideally multiple). Reference codes should be consistent, and the format should allow the assessor to quickly verify coverage and locate specific evidence.',
   },
@@ -202,12 +202,12 @@ const quizQuestions = [
     id: 11,
     question: 'During the professional discussion, the assessor may use your mapping matrix to:',
     options: [
-      'Check your handwriting',
+      'Show complete coverage of all KSBs with at least one strong piece of evidence for each, use consistent reference codes, and be presented in a clear format that the assessor can navigate easily',
+      'With KSBs listed in rows and evidence items in columns (or vice versa), with clear markings showing which evidence demonstrates which KSBs',
+      'Consider whether your log entry or reflective account explains the underpinning knowledge — if it does, map it to both; if not, add an explanation of the knowledge applied to strengthen the evidence',
       'Identify areas to probe with questions — particularly KSBs where evidence appears weaker — to verify your understanding and competence through discussion',
-      'Grade your organisational skills only',
-      'Compare your matrix with other candidates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The assessor uses the matrix as a discussion planning tool. They may focus questions on areas where evidence is thinner, or ask you to expand on evidence that appears particularly interesting. Being prepared to discuss every mapped evidence item confidently is essential.',
   },
@@ -216,12 +216,12 @@ const quizQuestions = [
     question:
       'When starting your mapping matrix at the beginning of the apprenticeship, the most important first step is:',
     options: [
-      'Waiting until you have some evidence to map',
       'Listing every KSB from the official ST1426 assessment plan so you have a complete framework to populate as you gather evidence throughout the apprenticeship',
-      "Copying another apprentice's completed matrix",
-      'Asking your training provider to create it for you',
+      'Identify areas to probe with questions — particularly KSBs where evidence appears weaker — to verify your understanding and competence through discussion',
+      'All the KSBs that the evidence genuinely demonstrates, including knowledge applied, skills used, and behaviours exhibited during the activity',
+      'Seek to strengthen that area by gathering additional or better-quality evidence, such as a more detailed activity log entry, a reflective account, or a witness statement covering that KSB',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Starting with the complete list of KSBs from the official ST1426 assessment plan creates your framework from day one. As you complete activities and gather evidence, you populate the matrix progressively. This approach means you always have a clear picture of which areas are covered and which still need attention, enabling strategic planning throughout the apprenticeship.',
   },

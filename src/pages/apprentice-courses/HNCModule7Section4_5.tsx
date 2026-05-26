@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'What distinguishes IoT-enabled lighting from traditional networked lighting control?',
     options: [
-      'Higher wattage luminaires',
       'Bidirectional communication with cloud connectivity and data analytics',
-      'Use of LED technology only',
-      'Proprietary wiring systems',
+      'It guarantees the project would not have happened without offset funding',
+      'Higher resistance than copper and thermal expansion issues',
+      'Reduced operational energy with residual emissions offset',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'IoT-enabled lighting features bidirectional communication capabilities, cloud connectivity for remote management, and the ability to collect and analyse operational data - going beyond simple on/off control to enable intelligent building management.',
   },
@@ -41,20 +41,25 @@ const quickCheckQuestions = [
     id: 'mesh-network-advantage',
     question: 'What is the primary advantage of mesh networking in smart lighting?',
     options: [
-      'Lower luminaire costs',
+      'Light output reduction over time due to dirt, lamp ageing, room dirt',
+      'Conduct a detailed baseline carbon assessment',
+      'To receive and distribute the incoming electrical supply',
       'Self-healing networks with no single point of failure',
-      'Faster dimming response',
-      'Reduced cable requirements',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Mesh networks create self-healing topologies where each node can route messages through multiple paths. If one luminaire fails or is removed, the network automatically reconfigures, maintaining system reliability.',
   },
   {
     id: 'zigbee-frequency',
     question: 'Which frequency band does Zigbee primarily operate in for lighting applications?',
-    options: ['433 MHz', '868 MHz', '2.4 GHz', '5 GHz'],
-    correctIndex: 2,
+    options: [
+      '2.4 GHz',
+      '433 MHz',
+      '5 GHz',
+      '868 MHz',
+    ],
+    correctIndex: 0,
     explanation:
       'Zigbee operates primarily in the 2.4 GHz ISM band globally, providing a good balance of range, data rate, and worldwide regulatory compatibility for smart lighting applications.',
   },
@@ -62,12 +67,12 @@ const quickCheckQuestions = [
     id: 'predictive-maintenance-data',
     question: 'What operational data is most valuable for predictive maintenance in LED lighting?',
     options: [
-      'Colour temperature settings',
-      'User preferences',
+      'Single-point grounding, typically at the patch panel end',
       'Operating hours, temperature, and current draw trends',
-      'Room occupancy schedules',
+      'Building Regulations Approved Document P',
+      'Interoperability issues between different manufacturer systems',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Predictive maintenance algorithms analyse operating hours, junction temperatures, driver current draw, and lumen depreciation trends to forecast LED or driver failures before they occur, enabling proactive replacement.',
   },
@@ -78,8 +83,13 @@ const quizQuestions = [
     id: 1,
     question:
       'Which wireless protocol was specifically designed for IP-based smart home and building automation?',
-    options: ['Zigbee', 'Bluetooth Mesh', 'Thread', 'Z-Wave'],
-    correctAnswer: 2,
+    options: [
+      'Zigbee',
+      'Thread',
+      'Bluetooth Mesh',
+      'Z-Wave',
+    ],
+    correctAnswer: 1,
     explanation:
       'Thread was designed from the ground up as an IPv6-based mesh protocol, enabling direct IP addressing of devices. This simplifies integration with IT infrastructure and cloud services compared to protocols requiring translation gateways.',
   },
@@ -87,19 +97,24 @@ const quizQuestions = [
     id: 2,
     question: "In Bluetooth Mesh lighting, what is the role of a 'Friend' node?",
     options: [
+      'Manages user authentication',
       'Controls colour temperature',
       'Stores messages for low-power nodes',
-      'Manages user authentication',
       'Provides internet connectivity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Friend nodes in Bluetooth Mesh store messages for associated Low Power Nodes (LPNs) that sleep most of the time. When the LPN wakes periodically, it retrieves any stored messages from its Friend, enabling battery-powered sensors to participate in the mesh.',
   },
   {
     id: 3,
     question: 'What is the maximum theoretical number of nodes in a Zigbee network?',
-    options: ['256', '1,024', '32,767', '65,535'],
+    options: [
+      '32,767',
+      '256',
+      '1,024',
+      '65,535',
+    ],
     correctAnswer: 3,
     explanation:
       'Zigbee uses 16-bit addressing, supporting up to 65,535 (2^16 - 1) nodes per network. This makes it highly scalable for large commercial and industrial lighting installations.',
@@ -108,8 +123,13 @@ const quizQuestions = [
     id: 4,
     question:
       'Which cloud architecture model processes smart lighting data locally before sending summaries to the cloud?',
-    options: ['Centralised cloud', 'Edge computing', 'Fog computing', 'Distributed ledger'],
-    correctAnswer: 1,
+    options: [
+      'Edge computing',
+      'Centralised cloud',
+      'Fog computing',
+      'Distributed ledger',
+    ],
+    correctAnswer: 0,
     explanation:
       'Edge computing processes data locally at or near the source (e.g., in a local gateway or luminaire), reducing latency, bandwidth requirements, and cloud dependency while maintaining cloud connectivity for analytics and remote management.',
   },
@@ -118,12 +138,12 @@ const quizQuestions = [
     question:
       'For occupancy analytics in smart lighting, what sensor fusion approach provides the most accurate people counting?',
     options: [
-      'Single PIR sensor',
-      'Ultrasonic sensors only',
+      'kWh consumption correlated with occupancy patterns',
       'Combination of PIR, thermal imaging, and AI analysis',
-      'Light level sensors alone',
+      'Smartphone-based mass provisioning with automatic addressing',
+      'Gradual reduction in light output over LED lifetime',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Combining multiple sensor technologies (PIR for motion, thermal for heat signatures, and AI-based image processing) provides more accurate occupancy detection and people counting than any single technology, accounting for stationary occupants and distinguishing individuals.',
   },
@@ -131,8 +151,13 @@ const quizQuestions = [
     id: 6,
     question:
       'What authentication standard is commonly used for secure smart lighting app control?',
-    options: ['WEP', 'OAuth 2.0 with TLS', 'Basic HTTP authentication', 'Telnet access'],
-    correctAnswer: 1,
+    options: [
+      'WEP',
+      'Basic HTTP authentication',
+      'OAuth 2.0 with TLS',
+      'Telnet access',
+    ],
+    correctAnswer: 2,
     explanation:
       'OAuth 2.0 with TLS encryption is the industry standard for secure app-based control, providing token-based authentication, granular permissions, and encrypted communication without exposing user credentials to third-party applications.',
   },
@@ -141,12 +166,12 @@ const quizQuestions = [
     question:
       'Which data metric is essential for calculating energy savings in smart lighting systems?',
     options: [
-      'Luminaire serial numbers',
+      'Smartphone-based mass provisioning with automatic addressing',
+      'Stores messages for low-power nodes',
+      'Combination of PIR, thermal imaging, and AI analysis',
       'kWh consumption correlated with occupancy patterns',
-      'Installation date only',
-      'Manufacturer warranty periods',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Correlating actual kWh consumption with occupancy patterns and daylight levels enables accurate calculation of energy savings from smart controls, demonstrating the value of occupancy-based dimming and daylight harvesting strategies.',
   },
@@ -154,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: "What is 'lumen depreciation' in the context of predictive maintenance?",
     options: [
-      'Dimmer malfunction',
       'Gradual reduction in light output over LED lifetime',
-      'Sensor calibration drift',
-      'Network latency increase',
+      'Cryptographic code signing and secure boot',
+      'Direct internet connectivity without translation gateways',
+      'Smartphone-based mass provisioning with automatic addressing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Lumen depreciation (L70, L80 ratings) describes the gradual reduction in LED light output over time. Smart systems can monitor this decline through photosensors and predict when replacement is needed to maintain specified illumination levels.',
   },
@@ -181,12 +206,12 @@ const quizQuestions = [
     id: 10,
     question: "What is the primary benefit of Thread's use of IPv6 addressing for smart lighting?",
     options: [
-      'Faster dimming response',
+      'kWh consumption correlated with occupancy patterns',
+      'Gradual reduction in light output over LED lifetime',
       'Direct internet connectivity without translation gateways',
-      'Lower power consumption',
-      'Longer radio range',
+      'Combination of PIR, thermal imaging, and AI analysis',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Thread's native IPv6 addressing allows each device to have a routable IP address, enabling direct communication with cloud services and IT systems without requiring protocol translation gateways, simplifying system architecture.",
   },
@@ -195,12 +220,12 @@ const quizQuestions = [
     question:
       'For GDPR compliance in occupancy analytics, what anonymisation technique is commonly applied?',
     options: [
-      'Storing full video recordings',
+      'Smartphone-based mass provisioning with automatic addressing',
+      'Gradual reduction in light output over LED lifetime',
+      'Direct internet connectivity without translation gateways',
       'Heat mapping and aggregated counting without personal identification',
-      'Facial recognition databases',
-      'Individual tracking logs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'GDPR-compliant occupancy analytics typically use heat mapping and aggregated counting that detect presence without identifying individuals. Thermal sensors and processed edge analytics avoid capturing personally identifiable information.',
   },
@@ -209,12 +234,12 @@ const quizQuestions = [
     question:
       'Which commissioning approach is most efficient for large-scale Bluetooth Mesh lighting deployments?',
     options: [
-      'Individual luminaire configuration via ladder access',
       'Smartphone-based mass provisioning with automatic addressing',
-      'Manual DIP switch configuration',
-      'Wired programming during manufacture only',
+      'Cryptographic code signing and secure boot',
+      'Combination of PIR, thermal imaging, and AI analysis',
+      'kWh consumption correlated with occupancy patterns',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Modern Bluetooth Mesh systems support smartphone-based mass provisioning where luminaires are automatically discovered, assigned addresses, and grouped. This dramatically reduces commissioning time compared to individual configuration.',
   },

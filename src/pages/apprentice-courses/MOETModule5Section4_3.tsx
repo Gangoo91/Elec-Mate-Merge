@@ -14,8 +14,13 @@ const quickCheckQuestions = [
     id: 'pneumatic-signal',
     question:
       'What is the standard pneumatic signal range used in process control instrumentation?',
-    options: ['0-10 psi', '3-15 psi', '0-100 psi', '15-30 psi'],
-    correctIndex: 1,
+    options: [
+      '3-15 psi',
+      '0-100 psi',
+      '0-10 psi',
+      '15-30 psi',
+    ],
+    correctIndex: 0,
     explanation:
       "The standard pneumatic instrument signal range is 3-15 psi (approximately 0.2-1.0 bar). Like the 4-20 mA electrical standard, it uses a 'live zero' — 3 psi represents 0% of the process variable range, and 15 psi represents 100%. A signal of 0 psi indicates a fault (supply failure or disconnection) rather than a zero reading.",
   },
@@ -23,12 +28,12 @@ const quickCheckQuestions = [
     id: 'hydraulic-advantage',
     question: 'What is the main advantage of hydraulic systems over pneumatic systems?',
     options: [
-      'Hydraulic systems are cheaper to install',
+      'Experience as a resource (acknowledge their skills) and self-direction (involve them in planning their learning)',
+      'Omitting safety-critical steps such as safe isolation, failing to prove dead, or not wearing appropriate PPE',
       'Hydraulic systems can generate much higher forces in a compact space because liquids are virtually incompressible',
-      'Hydraulic systems do not require any maintenance',
-      'Hydraulic systems are lighter than pneumatic systems',
+      'Understanding others — sensing others\\\\\\\\\\\\\\\' feelings and perspectives, and taking an active interest in their concerns',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The key advantage of hydraulic systems is their ability to generate very high forces in compact actuators. Because hydraulic fluid (oil) is virtually incompressible, force is transmitted directly and efficiently. Pneumatic systems use compressible air, which limits force output and can cause spongy, imprecise positioning under heavy loads.',
   },
@@ -36,10 +41,10 @@ const quickCheckQuestions = [
     id: 'ip-converter',
     question: 'What does an I/P converter do in a control system?',
     options: [
-      'Converts internet protocol signals to pneumatic signals',
+      'Converts imperial measurements to metric',
       'Converts a 4-20 mA electrical signal to a 3-15 psi pneumatic signal',
       'Converts pneumatic energy into electrical power',
-      'Converts imperial measurements to metric',
+      'Converts internet protocol signals to pneumatic signals',
     ],
     correctIndex: 1,
     explanation:
@@ -49,12 +54,12 @@ const quickCheckQuestions = [
     id: 'pneumatic-safety',
     question: 'Why is compressed air considered a hazard in industrial environments?',
     options: [
-      'It can only cause minor injuries',
+      'Additional loads and forces not accounted for in the tower\\\\\\\\\\\\\\\'s design can cause structural failure or overturning',
+      'A virtual model of a physical asset continuously updated with real-time sensor data, enabling simulation and optimisation',
       'Compressed air stores significant energy; sudden release can cause impact injuries, hearing damage from noise, and eye injuries from debris',
-      'Compressed air is flammable',
-      'Compressed air is toxic',
+      'An economic model that aims to keep resources in use for as long as possible, extracting maximum value, then recovering and regenerating products and materials at end of life',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Compressed air stores significant energy and must be treated with respect. Hazards include: high-velocity air jets that can penetrate skin or inject air into the bloodstream; hearing damage from noise; eye injuries from blown debris; whiplash injuries from unsecured hoses; and burst injuries from over-pressurised components. Always depressurise systems before maintenance and never use compressed air to clean clothing or skin.',
   },
@@ -65,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'In a pneumatic control system, instrument air supply is typically provided at:',
     options: [
-      '1-2 bar (15-30 psi)',
+      'Daily or weekly for key metrics',
       '1.4 bar (20 psi) regulated supply',
-      '7-10 bar (100-150 psi)',
-      '20 bar (300 psi)',
+      'For representative assessment',
+      '"EICR_2024_Thompson_42-High-Street.pdf"',
     ],
     correctAnswer: 1,
     explanation:
@@ -78,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: "Pascal's law, which underpins hydraulic systems, states that:",
     options: [
-      'Pressure in a fluid increases with depth',
+      'It must be clean, dry and oil-free to prevent instrument damage and blockages',
+      'Isolate the power, relieve all stored pressure and ensure accumulators are fully discharged',
       'Pressure applied to a confined fluid is transmitted equally in all directions',
-      'Fluids always flow from high to low pressure',
-      'The force of a fluid depends on its temperature',
+      'To differentiate between a genuine zero reading and a system fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Pascal's law states that pressure applied to a confined, incompressible fluid is transmitted equally and undiminished in all directions throughout the fluid. This principle allows hydraulic systems to multiply force: a small force applied to a small piston creates pressure that acts on a larger piston, producing a proportionally larger force.",
   },
@@ -91,12 +96,12 @@ const quizQuestions = [
     id: 3,
     question: "A pneumatic control valve with 'fail-close' action will:",
     options: [
-      'Close slowly when the power supply fails',
+      'It must be clean, dry and oil-free to prevent instrument damage and blockages',
+      'Pressure applied to a confined fluid is transmitted equally in all directions',
+      'Convert an electrical on/off signal into pneumatic switching, directing air to actuators',
       'Close fully when the air supply is lost, driven by the spring return',
-      'Remain in its last position when air is lost',
-      'Open fully when the air supply fails',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A fail-close (air-to-open) valve uses a spring to hold the valve closed. Pneumatic pressure must be applied against the spring to open the valve. If the air supply is lost for any reason, the spring forces the valve to its fully closed position. This is a critical safety feature — the failure mode is chosen to put the process in a safe state.',
   },
@@ -104,12 +109,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following is a critical quality requirement for instrument air?',
     options: [
-      'It must contain a minimum level of moisture for lubrication',
       'It must be clean, dry and oil-free to prevent instrument damage and blockages',
-      'It must be heated to above 40 degrees C',
-      'It must contain lubricating oil for valve stems',
+      'To differentiate between a genuine zero reading and a system fault',
+      'Convert an electrical on/off signal into pneumatic switching, directing air to actuators',
+      'Close fully when the air supply is lost, driven by the spring return',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Instrument air must be clean (filtered to remove particles), dry (dew point well below ambient to prevent condensation) and oil-free (to prevent contamination of instrument internals). Moisture causes corrosion, freezing in cold weather, and blockage of small orifices. Oil contaminates diaphragms and nozzles. ISA-7.0.01 specifies instrument air quality requirements.',
   },
@@ -117,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'In a hydraulic system, what is the function of the relief valve?',
     options: [
-      'To relieve the operator of maintenance duties',
+      'The operating principles, safety hazards, maintenance requirements and how these systems integrate with electrical control systems',
       'To limit the maximum system pressure by diverting excess flow back to the reservoir, preventing damage from over-pressurisation',
-      'To control the speed of the hydraulic cylinder',
-      'To filter the hydraulic fluid',
+      'A system that uses compressed air to pressurize hydraulic oil, combining pneumatic simplicity with hydraulic force and precision',
+      'Isolate the power, relieve all stored pressure and ensure accumulators are fully discharged',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,12 +135,12 @@ const quizQuestions = [
     id: 6,
     question: 'A positioner on a pneumatic control valve is used to:',
     options: [
-      'Position the valve in the pipeline',
+      'Isolate the power, relieve all stored pressure and ensure accumulators are fully discharged',
+      'Convert an electrical on/off signal into pneumatic switching, directing air to actuators',
       'Ensure the valve reaches the exact position demanded by the controller signal, compensating for friction and pressure effects',
-      'Record the valve position for maintenance logs',
-      'Lock the valve in a fixed position during maintenance',
+      'A system that uses compressed air to pressurize hydraulic oil, combining pneumatic simplicity with hydraulic force and precision',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A valve positioner is a feedback device that ensures the valve stem position accurately matches the control signal. It uses a local feedback mechanism (position sensor on the valve stem) and a pneumatic amplifier to overcome friction, stem packing resistance, and process pressure forces. Without a positioner, the actual valve position may differ significantly from the demanded position, especially on larger valves.',
   },
@@ -144,12 +149,12 @@ const quizQuestions = [
     question:
       'Hydraulic fluid contamination is a major cause of system failure. The most common contaminant is:',
     options: [
-      'Water',
+      'To ensure all items are systematically checked',
+      'Issuing improvement notices to the employer',
+      'A delivery note listing contents',
       'Metallic particles from component wear',
-      'Sand from the environment',
-      'Paint flakes from the reservoir',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Metallic particles generated by internal wear of pumps, valves and cylinders are the most common contaminant in hydraulic systems. These particles cause further abrasive wear, creating a self-accelerating cycle of contamination. Filtration is essential — most hydraulic systems use pressure-line and return-line filters rated to specific micron levels. Regular fluid analysis and filter changes are critical maintenance tasks.',
   },
@@ -157,12 +162,12 @@ const quizQuestions = [
     id: 8,
     question: 'In electro-pneumatic systems, a solenoid valve is used to:',
     options: [
-      'Generate compressed air from electrical energy',
       'Convert an electrical on/off signal into pneumatic switching, directing air to actuators',
-      'Measure the pressure in the pneumatic supply',
-      'Filter the air supply',
+      'Close fully when the air supply is lost, driven by the spring return',
+      'Pressure applied to a confined fluid is transmitted equally in all directions',
+      'To differentiate between a genuine zero reading and a system fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Solenoid valves are the interface between electrical control signals and pneumatic actuators. When the solenoid coil is energised by a PLC or controller output, it moves a spool or poppet that directs compressed air to the actuator. Solenoid valves come in various configurations (2-way, 3-way, 5-way) to control single-acting and double-acting cylinders.',
   },
@@ -170,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: "What does the term 'air-over-oil' describe in a pneumatic-hydraulic system?",
     options: [
-      'A lubrication method for air compressors',
+      'Ensure the valve reaches the exact position demanded by the controller signal, compensating for friction and pressure effects',
       'A system that uses compressed air to pressurize hydraulic oil, combining pneumatic simplicity with hydraulic force and precision',
-      'A method of cooling hydraulic fluid',
-      'An air filtration technique',
+      'To limit the maximum system pressure by diverting excess flow back to the reservoir, preventing damage from over-pressurisation',
+      'Isolate the power, relieve all stored pressure and ensure accumulators are fully discharged',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,12 +188,12 @@ const quizQuestions = [
     id: 10,
     question: 'Before carrying out maintenance on a hydraulic system, the first safety step is to:',
     options: [
-      'Start the hydraulic pump to check for leaks',
+      'Close fully when the air supply is lost, driven by the spring return',
+      'It must be clean, dry and oil-free to prevent instrument damage and blockages',
       'Isolate the power, relieve all stored pressure and ensure accumulators are fully discharged',
-      'Remove the hydraulic reservoir cap',
-      'Check the fluid colour',
+      'Pressure applied to a confined fluid is transmitted equally in all directions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Hydraulic systems store dangerous amounts of energy in pressurised fluid and accumulators. Before any maintenance: isolate the electrical supply to the pump motor; operate valves to relieve line pressure; ensure any hydraulic accumulators are fully discharged (these can store pressure even after the pump is off); lock out/tag out; and verify zero pressure with a gauge. Failure to discharge accumulators has caused fatal injuries.',
   },
@@ -197,12 +202,12 @@ const quizQuestions = [
     question:
       "The 3-15 psi pneumatic signal standard uses a 'live zero' at 3 psi for the same reason as the 4-20 mA standard uses 4 mA, which is:",
     options: [
-      'To save energy',
+      'Pressure applied to a confined fluid is transmitted equally in all directions',
+      'It must be clean, dry and oil-free to prevent instrument damage and blockages',
+      'Close fully when the air supply is lost, driven by the spring return',
       'To differentiate between a genuine zero reading and a system fault',
-      'To reduce noise in the signal',
-      'To make calibration easier',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Both the 3-15 psi and 4-20 mA standards use a live zero so that a complete loss of signal (0 psi or 0 mA) always indicates a fault condition — a broken tube, disconnected fitting, or failed supply — rather than a genuine zero process reading. This allows immediate detection of instrumentation failures, which is critical for safe plant operation.',
   },
@@ -211,12 +216,12 @@ const quizQuestions = [
     question:
       'Under ST1426, maintenance technicians working with pneumatic and hydraulic systems should understand:',
     options: [
-      'Only the electrical aspects; fluid power is not their concern',
       'The operating principles, safety hazards, maintenance requirements and how these systems integrate with electrical control systems',
-      'Only how to replace hoses and fittings',
-      'Fluid power theory at degree level',
+      'Isolate the power, relieve all stored pressure and ensure accumulators are fully discharged',
+      'To limit the maximum system pressure by diverting excess flow back to the reservoir, preventing damage from over-pressurisation',
+      'Ensure the valve reaches the exact position demanded by the controller signal, compensating for friction and pressure effects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 requires maintenance technicians to have a working knowledge of pneumatic and hydraulic systems as part of their overall capability in maintaining automated plant. This includes understanding operating principles, recognising safety hazards, carrying out routine maintenance (filter changes, fluid checks, leak detection) and understanding how these systems interface with electrical controls.',
   },

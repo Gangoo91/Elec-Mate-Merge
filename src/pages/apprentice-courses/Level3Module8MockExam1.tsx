@@ -19,6 +19,7 @@ import {
 import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import { MockExamQuestionPanel } from '@/components/apprentice-courses/MockExamQuestionPanel';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 import {
   getRandomQuestions,
   type QuestionBank,
@@ -42,7 +43,10 @@ const Level3Module8MockExam1 = () => {
 
   const startExam = () => {
     // Get 60 random questions from Level 3 Module 1 question bank (C&G 2365-03 spec)
-    const selectedQuestions = getRandomQuestions(60);
+    const selectedQuestions = shuffleAllQuestionOptions(
+      getRandomQuestions(60),
+      createShuffleSalt()
+    );
 
     setExamQuestions(selectedQuestions);
     setSelectedAnswers({});

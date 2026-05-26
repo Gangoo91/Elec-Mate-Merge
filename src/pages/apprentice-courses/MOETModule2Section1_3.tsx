@@ -14,8 +14,13 @@ const quickCheckQuestions = [
     id: 'kwh-calc',
     question:
       'A 7.5 kW motor runs for 8 hours per day, 5 days per week. What is the weekly energy consumption in kWh?',
-    options: ['37.5 kWh', '60 kWh', '300 kWh', '1500 kWh'],
-    correctIndex: 2,
+    options: [
+      '37.5 kWh',
+      '300 kWh',
+      '60 kWh',
+      '1500 kWh',
+    ],
+    correctIndex: 1,
     explanation:
       'Energy = Power x Time = 7.5 kW x 8 hours x 5 days = 300 kWh per week. At a typical industrial tariff of 20p per kWh, this would cost 300 x 0.20 = 60 GBP per week, or approximately 3120 GBP per year. This demonstrates why motor efficiency is so important in maintenance — even a small improvement can yield significant savings.',
   },
@@ -23,7 +28,12 @@ const quickCheckQuestions = [
     id: 'efficiency-calc',
     question:
       'A motor has an electrical input of 5 kW and a mechanical output of 4.25 kW. What is its efficiency?',
-    options: ['75%', '82.5%', '85%', '117.6%'],
+    options: [
+      '82.5%',
+      '75%',
+      '85%',
+      '117.6%',
+    ],
     correctIndex: 2,
     explanation:
       'Efficiency = (Output / Input) x 100% = (4.25 / 5) x 100% = 85%. The remaining 15% (0.75 kW or 750 W) is lost as heat in the motor windings (copper losses), core (iron losses), friction, and windage. This lost energy must be dissipated — which is why adequate ventilation is essential for motor longevity.',
@@ -32,8 +42,13 @@ const quickCheckQuestions = [
     id: 'copper-loss',
     question:
       'A cable carries 25 A and has a resistance of 0.3 ohms. What is the power wasted as heat in the cable?',
-    options: ['7.5 W', '75 W', '187.5 W', '750 W'],
-    correctIndex: 2,
+    options: [
+      '187.5 W',
+      '7.5 W',
+      '750 W',
+      '75 W',
+    ],
+    correctIndex: 0,
     explanation:
       'Copper loss = I² x R = 25² x 0.3 = 625 x 0.3 = 187.5 W. This is pure waste heat generated in the cable. If the cable is enclosed in insulation or grouped with other cables, this heat cannot escape easily, raising the cable temperature. This is why BS 7671 applies derating factors for grouping, ambient temperature, and thermal insulation.',
   },
@@ -42,12 +57,12 @@ const quickCheckQuestions = [
     question:
       'Under the EU Ecodesign Regulation, what is the minimum efficiency class required for new general-purpose three-phase motors from 0.75 kW to 1000 kW?',
     options: [
-      'IE1 (Standard Efficiency)',
-      'IE2 (High Efficiency)',
-      'IE3 (Premium Efficiency)',
       'IE4 (Super Premium Efficiency)',
+      'IE2 (High Efficiency)',
+      'IE1 (Standard Efficiency)',
+      'IE3 (Premium Efficiency)',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Since July 2021, the EU Ecodesign Regulation (EU 2019/1781) requires all new three-phase motors from 0.75 kW to 1000 kW to meet a minimum of IE3 (Premium Efficiency). From July 2023, motors from 75 kW to 200 kW must meet IE4 if operated with a variable speed drive. As a maintenance technician, you should specify IE3 or IE4 motors as replacements to comply with current regulations and reduce energy costs.',
   },
@@ -57,8 +72,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'One kilowatt-hour (kWh) is equivalent to:',
-    options: ['1000 joules', '3,600 joules', '3,600,000 joules', '1,000,000 joules'],
-    correctAnswer: 2,
+    options: [
+      '1000 joules',
+      '3,600,000 joules',
+      '3,600 joules',
+      '1,000,000 joules',
+    ],
+    correctAnswer: 1,
     explanation:
       '1 kWh = 1000 W x 3600 s = 3,600,000 J = 3.6 MJ. The kilowatt-hour is a practical unit of energy used for electricity billing. One kWh is the energy consumed by a 1 kW load running for one hour, or equivalently a 100 W lamp running for 10 hours.',
   },
@@ -66,12 +86,12 @@ const quizQuestions = [
     id: 2,
     question: 'The efficiency of an electrical device is defined as:',
     options: [
+      'Power loss divided by input power, multiplied by 100%',
       'Input power divided by output power, multiplied by 100%',
       'Output power divided by input power, multiplied by 100%',
-      'Power loss divided by input power, multiplied by 100%',
       'Output power minus input power, multiplied by 100%',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Efficiency (eta) = (Output power / Input power) x 100%. Efficiency is always less than 100% because some energy is inevitably lost as heat due to resistance in windings (copper losses), magnetic losses in cores (iron losses), friction, and windage.',
   },
@@ -79,8 +99,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A transformer has a primary input of 2400 VA and a secondary output of 2280 VA. What are the losses?',
-    options: ['5 W', '12 W', '120 W', '120 VA'],
-    correctAnswer: 2,
+    options: [
+      '12 W',
+      '5 W',
+      '120 VA',
+      '120 W',
+    ],
+    correctAnswer: 3,
     explanation:
       'Losses = Input - Output = 2400 - 2280 = 120 W (expressed in watts as losses are real power dissipated as heat). The efficiency would be (2280/2400) x 100% = 95%. For a distribution transformer, this is typical. These losses generate heat that must be dissipated, which is why transformer cooling is important in maintenance.',
   },
@@ -88,12 +113,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which type of power loss in a motor is proportional to the square of the current?',
     options: [
-      'Iron losses (core losses)',
-      'Friction and windage losses',
       'Copper losses (I²R losses)',
+      'Friction and windage losses',
+      'Iron losses (core losses)',
       'Stray losses',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Copper losses (also called I²R losses or resistive losses) are proportional to the square of the current flowing through the windings. If the current doubles, the copper losses quadruple. This is why motor overloading is so damaging — the excess current rapidly increases winding temperature, degrading insulation and shortening motor life.',
   },
@@ -101,8 +126,13 @@ const quizQuestions = [
     id: 5,
     question:
       'A 15 kW motor with 90% efficiency runs at full load for 2000 hours per year. What is the annual energy cost at 20p/kWh?',
-    options: ['2,700 GBP', '3,000 GBP', '3,333 GBP', '6,000 GBP'],
-    correctAnswer: 2,
+    options: [
+      '3,000 GBP',
+      '3,333 GBP',
+      '6,000 GBP',
+      '2,700 GBP',
+    ],
+    correctAnswer: 1,
     explanation:
       'Input power = Output / Efficiency = 15 / 0.90 = 16.67 kW. Annual energy = 16.67 x 2000 = 33,333 kWh. Annual cost = 33,333 x 0.20 = 6,667 GBP. Wait — let us recalculate: 16.67 kW x 2000 h = 33,340 kWh x 0.20 GBP = 6,668 GBP. Actually the correct answer is 3,333 GBP which would be at 10p/kWh. At 20p: the input is 16.67 kW for 2000 hours = 33,333 kWh at 0.20 = 6,667 GBP. The answer 3,333 GBP uses the output power directly: 15 x 2000 x 0.20/1.8. The point is: always use input power (output/efficiency) for energy cost calculations.',
   },
@@ -111,11 +141,11 @@ const quizQuestions = [
     question: 'Iron losses in a transformer consist of:',
     options: [
       'I²R losses in the copper windings',
-      'Hysteresis losses and eddy current losses in the core',
       'Losses due to poor power factor',
+      'Hysteresis losses and eddy current losses in the core',
       'Losses caused by harmonics in the supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Iron losses (also called core losses) comprise hysteresis losses (energy needed to repeatedly magnetise and demagnetise the core material) and eddy current losses (circulating currents induced in the core by the changing magnetic field). Iron losses are approximately constant regardless of load and depend on the supply voltage and frequency. They are minimised by using laminated silicon steel cores.',
   },
@@ -124,11 +154,11 @@ const quizQuestions = [
     question: 'An IE4 motor compared to an IE1 motor of the same rating typically:',
     options: [
       'Has lower efficiency and higher losses',
-      'Has approximately 5-15% lower energy losses',
-      'Has the same efficiency but is more compact',
       'Is only suitable for variable speed drive operation',
+      'Has the same efficiency but is more compact',
+      'Has approximately 5-15% lower energy losses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An IE4 (Super Premium Efficiency) motor has significantly lower losses than an IE1 (Standard Efficiency) motor — typically 5-15% lower losses depending on the motor size. While the purchase price is higher, the lifetime energy savings far outweigh the additional cost, especially for motors that run continuously. The payback period for upgrading from IE1 to IE4 is often less than 2 years for continuously running motors.',
   },
@@ -137,12 +167,12 @@ const quizQuestions = [
     question:
       'During an energy audit, a maintenance technician identifies a motor running at 50% load for most of its operating time. What action should be recommended?',
     options: [
-      'Replace with a larger motor for headroom',
       'Consider replacing with a correctly sized motor or fitting a variable speed drive',
-      'No action — motors are most efficient at 50% load',
-      'Increase the supply voltage to improve efficiency',
+      'Essential requirements of relevant EU/UK product supply legislation (e.g., UKCA/CE marking)',
+      'Typically degree-level qualification plus relevant experience',
+      'Can sustain at low currents below protective device thresholds',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Motors are most efficient between 75-100% of rated load. At 50% load, efficiency drops significantly, and the power factor deteriorates. The recommended actions are: (a) replace with a correctly sized motor that will operate closer to full load, or (b) fit a variable speed drive (VSD) that adjusts motor speed to match the actual load requirement, saving energy. VSDs are particularly effective on fan and pump applications where power consumption follows the cube law.',
   },
@@ -151,10 +181,10 @@ const quizQuestions = [
     question:
       'What is the relationship between heat dissipation and cable current-carrying capacity?',
     options: [
-      'Heat dissipation has no effect on current capacity',
+      'Corrective addresses existing problems; preventive stops potential problems',
       'Better heat dissipation allows higher current capacity because I²R losses can be removed more effectively',
-      'Higher heat dissipation reduces current capacity',
-      'Heat dissipation only affects cables in outdoor installations',
+      'Turn off the heat source, hold the blanket as a shield, and gently place it over the pan from front to back',
+      'Each dutyholder must cooperate with the others so far as is necessary to enable them to comply with their duties',
     ],
     correctAnswer: 1,
     explanation:
@@ -164,7 +194,12 @@ const quizQuestions = [
     id: 10,
     question:
       'A factory replaces ten 5.5 kW IE1 motors (88% efficient) with IE3 motors (92.6% efficient). The motors run 4000 hours per year at full load. What is the approximate annual energy saving?',
-    options: ['1,380 kWh', '6,900 kWh', '13,800 kWh', '27,500 kWh'],
+    options: [
+      '1,380 kWh',
+      '6,900 kWh',
+      '13,800 kWh',
+      '27,500 kWh',
+    ],
     correctAnswer: 2,
     explanation:
       'IE1 input per motor: 5.5/0.88 = 6.25 kW. IE3 input per motor: 5.5/0.926 = 5.94 kW. Saving per motor: 6.25 - 5.94 = 0.31 kW. For 10 motors over 4000 hours: 0.31 x 10 x 4000 = 12,400 kWh. Closest answer is 13,800 kWh (the difference is due to rounding in the options). At 20p/kWh, this saves approximately 2,760 GBP per year.',
@@ -173,12 +208,12 @@ const quizQuestions = [
     id: 11,
     question: 'No-load losses in a transformer are also known as:',
     options: [
-      'Copper losses',
+      'BS 5266-1 and BS EN 50172',
+      'Track progress across all visits',
+      'Follow manufacturer instructions',
       'Iron losses (core losses)',
-      'Eddy current losses only',
-      'Winding losses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'No-load losses are the losses present whenever a transformer is energised, regardless of whether it is supplying a load. These are the iron losses — hysteresis and eddy current losses in the core. They remain approximately constant from no-load to full-load. Copper losses (I²R in windings) are the load-dependent losses that increase with the square of the load current.',
   },
@@ -187,12 +222,12 @@ const quizQuestions = [
     question:
       'Which instrument is most commonly used for energy monitoring on existing installations without disconnection?',
     options: [
-      'Megger insulation tester',
       'Clamp-on power analyser with CTs and voltage leads',
-      'Digital multimeter on the AC volts range',
-      'Earth loop impedance tester',
+      'Output power divided by input power, multiplied by 100%',
+      'Hysteresis losses and eddy current losses in the core',
+      'Has approximately 5-15% lower energy losses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A clamp-on power analyser with current transformers (CTs) and voltage leads can measure voltage, current, power, power factor, energy consumption, and harmonics on live circuits without disconnection. This makes it ideal for energy audits and monitoring. The CTs clamp around the conductors (no need to break the circuit), and voltage leads are connected at accessible terminals. Modern analysers can log data over days or weeks to build a complete energy profile.',
   },

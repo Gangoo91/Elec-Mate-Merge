@@ -29,10 +29,13 @@ import { getZsLimitFromDeviceString } from '@/data/zsLimits';
 // New tab-based components
 import MWFormHeader from '@/components/minor-works/MWFormHeader';
 import DuplicatedFromBanner from '@/components/certificates/DuplicatedFromBanner';
+import LastCertSuggestionCard from '@/components/certificates/LastCertSuggestionCard';
+import { useCertPrefill } from '@/hooks/useCertPrefill';
 import MWDetailsTab from '@/components/minor-works/MWDetailsTab';
 import MWCircuitTab from '@/components/minor-works/MWCircuitTab';
 import MWTestingTab from '@/components/minor-works/MWTestingTab';
 import MWDeclarationTab from '@/components/minor-works/MWDeclarationTab';
+import MinorWorksValidationPanel from '@/components/minor-works/MinorWorksValidationPanel';
 import EICRTabNavigation from '@/components/EICRTabNavigation';
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
@@ -305,17 +308,30 @@ const MinorWorksForm = ({
     enabled: true,
   });
 
-  // Pre-fill customer details if navigating from customer page
+  // Pre-fill customer details if navigating from customer page — parity with EICR + EIC.
   useEffect(() => {
     if (customerDataFromNav && !initialReportId) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setFormData((prev: any) => ({
         ...prev,
         clientName: customerDataFromNav.name || '',
+        clientPhone: customerDataFromNav.phone || '',
+        clientEmail: customerDataFromNav.email || '',
         propertyAddress: customerDataFromNav.address || '',
       }));
     }
   }, [customerDataFromNav, initialReportId]);
+
+  // Default workDate to today on a brand-new MW. Guarded so editing an existing
+  // cert never has its saved workDate overwritten.
+  useEffect(() => {
+    if (initialReportId) return;
+    if (formData.workDate) return;
+    const today = new Date().toISOString().split('T')[0];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setFormData((prev: any) => ({ ...prev, workDate: today }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialReportId]);
 
   // Auto-fill from Business Settings for new certificates
   useEffect(() => {
@@ -1060,7 +1076,11 @@ const MinorWorksForm = ({
       shortLabel: 'Declare',
       content: (
         <>
-          <MWDeclarationTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />
+          <MWDeclarationTab
+            formData={formData}
+            onUpdate={handleUpdate}
+            isMobile={isMobile}
+          />
 
           {/* Certificate Actions — matches EIC pattern */}
           <div className="mt-6">
@@ -1087,6 +1107,22 @@ const MinorWorksForm = ({
     circuit: isTabComplete('circuit'),
     testing: isTabComplete('testing'),
     declaration: isTabComplete('declaration'),
+  };
+
+  // Last-cert prompt — soft suggestion to copy supply / earthing / BS amendment
+  // from the user's most recent Minor Works at the same address.
+  const prefillAddress =
+    (formData.propertyAddress as string) ||
+    (formData.installationAddress as string) ||
+    (formData.clientAddress as string) ||
+    '';
+  const { suggestion: lastCertSuggestion, dismiss: dismissLastCert, buildPatch } =
+    useCertPrefill(prefillAddress, 'minor-works', { excludeReportId: currentReportId || undefined });
+
+  const handleApplyLastCert = () => {
+    const patch = buildPatch();
+    Object.entries(patch).forEach(([key, value]) => handleUpdate(key, value));
+    dismissLastCert();
   };
 
   return (
@@ -1121,8 +1157,27 @@ const MinorWorksForm = ({
           />
         )}
 
+        {/* Last cert at this address — soft suggestion to copy supply/earthing data forward */}
+        {lastCertSuggestion && (
+          <div className="px-4 pt-3">
+            <LastCertSuggestionCard
+              suggestion={lastCertSuggestion}
+              onApply={handleApplyLastCert}
+              onDismiss={dismissLastCert}
+            />
+          </div>
+        )}
+
         {/* Main Content — full-width mobile */}
         <div className="py-4 pb-48 sm:px-4 sm:pb-8">
+          {/* Validation panel — always visible, tap a row to jump to that tab */}
+          <div className="px-4 mb-3 sm:px-0">
+            <MinorWorksValidationPanel
+              formData={formData}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              onJumpToTab={(tab) => setTab(tab as any)}
+            />
+          </div>
           <SmartTabs
             tabs={smartTabs}
             value={currentTab}

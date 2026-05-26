@@ -43,12 +43,12 @@ const checks = [
     question:
       "Why does Section 712 of BS 7671 require a DC isolator on the array side of every PV install?",
     options: [
-      "Because the DNO requires it for grid-connection notification.",
+      "Consistently demonstrating: (1) framing work as a learning problem (\\\"what can we learn from this?\\\"), (2) acknowledging your own fallibility (\\\"I may have missed something — what do you see?\\\"), (3) modelling curiosity by asking genuine questions, (4) responding to mistakes with inquiry rather than blame, (5) following through on commitments made when people do speak up, and (6) explicitly thanking people for raising concerns even when the news is unwelcome",
+      "Some MFTs have multiple Zs measurement ranges (e.g. low range 0-2 Omega, high range 0-200 Omega). If you\\\\\\\\\\\\'re testing a TT installation with expected Zs of 80-200 Omega and the meter is set to the low range, the reading will saturate or read inaccurately. GN3 wants you to consciously check the range matches the expected reading before pressing TEST — a failed test or wildly wrong reading wastes time and may damage the instrument if test current exceeds the range capacity.",
+      "No. Part P (Building Regulations Approved Document P) makes NEW circuits in dwellings notifiable to Building Control. Replacement of an existing protective device is NOT a new circuit — it's maintenance. Notifiable work is: new circuits in dwellings; consumer unit replacements; any work in special locations (bathroom Zone 0/1/2 work, swimming pools, saunas). For non-notifiable work, the Minor Works Certificate is the documentary record but no Building Control submission is required. For notifiable work, the contractor must be a registered competent person (NICEIC, NAPIT, ELECSA, STROMA) and the Building Control notification goes via the scheme's online portal.",
       "Because PV arrays are unique — you cannot switch them off. As long as light hits the panels, the array generates DC voltage at the inverter terminals. The DC isolator gives the installer (and emergency responders) a means of breaking that DC circuit before working on the inverter or the strings. AC isolators downstream of the inverter only break the inverter-to-grid path; they do not de-energise the DC side. A4:2026 has refined the DC isolation requirements alongside the broader Section 712 update — typically the isolator is sited adjacent to the inverter on the DC entry side, accessible without disturbing the panel array.",
-      "It is a brand-name-only requirement and not actually mandatory.",
-      "It is required only on systems above 10 kWp.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "DC isolation is the headline difference between PV and any other domestic install. You cannot pull a fuse and de-energise a PV array — sunlight keeps generating. Section 712 requires a means of disconnection on the DC side, accessible for safe work and emergency response. Typically the isolator is fitted at the inverter; some installs add a roof-side isolator for additional safety on rescue access.",
   },
@@ -57,12 +57,12 @@ const checks = [
     question:
       "What does fire-fighter safety mean in the context of a PV installation and how does Section 712 / IET CoP address it?",
     options: [
-      "PV is fireproof so fire safety does not apply.",
       "PV systems remain energised during a fire — water from a hose hitting an energised DC string can produce a shock hazard for the fire-fighter. The IET Code of Practice for Grid-Connected Solar Photovoltaic Systems (currently 4th edition with 2026 update) addresses this through (1) clear external labelling identifying the property as having PV, (2) DC isolation accessible from outside the building where practicable, (3) emergency switching that de-energises the strings as far as is practical, and (4) optional rapid-shutdown technology that drops module-level voltage to safe levels on a signal. Section 712 references the IET CoP as the practical implementation guide. Some manufacturers now bake rapid-shutdown into the panel optimisers as standard.",
-      "It only applies to commercial PV systems.",
-      "Fire-fighters are trained to ignore PV systems.",
+      "AFDDs, RCBOs, RCCBs and SPDs all have internal electronic components that can present low resistance during a 500 V IR test, potentially skewing results or causing unacceptable current flow during testing. GN3 explicitly identifies these device categories. The standard practice is to either disconnect the device for the IR test (re-test after re-fitting), use 250 V if the device can\\\\\\\\\\\\\\\\\\\\\\\\'t tolerate 500 V (check manufacturer manual), or apply IR test only to the wiring (not through the device) by isolating at the load terminals.",
+      "Recognise that the diversity calculation is more complex than a simple sum and flag the constraint to the MCS-certified designer. The headline maximum could be heat pump (7 kW) plus EV (7.4 kW) plus shower (9.5 kW) plus oven (4 kW) = around 28 kW = around 122 A on single-phase 230 V — well above any typical UK domestic main fuse. The diversity calculation accounts for: (1) which loads can run concurrently in practice; (2) the heat pump's actual draw being typically below nameplate (compressor modulates); (3) the dynamic load management on the EV charger; (4) the battery's ability to time-shift loads away from peak; (5) the PV's contribution to net property draw during the day. The MCS-certified designer runs the calculation per the IET On-Site Guide. The apprentice's job is to flag the constraint and not just bolt the loads on without checking.",
+      "The full life cycle is broken into modules: A1-A3 product stage (raw material supply, transport to factory, manufacturing); A4-A5 construction stage (transport to site, installation); B1-B7 use stage (use, maintenance, repair, replacement, refurbishment, operational energy and water use); C1-C4 end-of-life stage (deconstruction, transport, waste processing, disposal); and D benefits and loads beyond the system boundary (recycling and recovery beyond end of life). Different EPDs cover different module sets — A1-A3 cradle-to-gate is the most common minimum; A1-C4 plus D is the most complete cradle-to-grave with recycling credits.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "PV fire safety is genuinely complex because of the inability to de-energise the modules themselves with conventional isolation. The IET Code of Practice is the practical reference; A4:2026 has refined the BS 7671 cross-references. As an apprentice you should recognise the labelling and the rapid-shutdown features when you see them, and not assume a PV system is dead just because the AC isolator is open.",
   },
@@ -71,12 +71,12 @@ const checks = [
     question:
       "Why is MCS MIS 3002 separate from BS 7671 Section 712, and what does each cover?",
     options: [
-      "MIS 3002 is a competing standard to BS 7671.",
       "BS 7671 Section 712 covers the electrical safety of the PV installation — the wiring, isolation, protective measures, cable ratings and earthing. MCS MIS 3002 is the installer competence and product certification standard required for the customer to claim Smart Export Guarantee payments and to demonstrate quality assurance on the install. The two work alongside each other — every MCS-certified PV install must also comply with BS 7671 Section 712 (which is the legal underpinning); not every BS 7671-compliant PV install needs MCS (e.g. an off-grid install with no SEG claim does not require MCS, though most reputable installers still hold it).",
-      "MIS 3002 is for inverters only and BS 7671 is for cabling only.",
-      "Only one applies at a time depending on the customer.",
+      "Research suggests neurodivergence — dyslexia, ADHD, and autism — may be more common in trade roles than the general population. Some studies suggest dyslexia at materially higher rates in trade and creative industries (the visual-spatial reasoning associated with dyslexia is often a strength in hands-on work). ADHD and autism prevalence in the trade is also frequently reported as elevated. The Equality Act 2010 reasonable-adjustments duty (s.20) applies where the condition has a substantial and long-term effect, and Sub 5.2 covers the practical adjustments in detail.",
+      "EI creates the psychological infrastructure for safety culture: self-awareness enables recognition of when fatigue or distraction creates risk, self-regulation prevents shortcuts under pressure, motivation sustains safety commitment even without supervision, empathy enables understanding of why others take risks (rather than just punishing them), and social skills create the communication culture where anyone can stop unsafe work without fear. Safety culture IS emotional culture",
+      "It binds whoever is the duty-holder for the system at the time — most often the duty-holder under HASAWA who controls the premises (employer, dutyholder, landlord). The duty-holder discharges the maintenance obligation by arranging periodic inspection (an EICR) to a recommended frequency, acting on the resulting condition codes (C1 / C2 / FI), and keeping records. The electrician carrying out the EICR is the technical evidence the duty-holder is meeting Reg 4(2).",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "BS 7671 is the safety standard (legal underpinning); MCS is the quality / market-access scheme (commercial pathway to grants and tariffs). They cover different aspects and both apply to most UK domestic PV installs. As an apprentice you contribute to both — the wiring satisfies BS 7671, the install paperwork satisfies MCS.",
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       "What is the scope statement of BS 7671 Section 712 in plain English?",
     options: [
-      "Only off-grid PV installations.",
+      "Nameplate kWh is the total energy the cells could theoretically deliver. Usable kWh is what the BMS will actually let you cycle between the manufacturer's safe state-of-charge limits. Manufacturers commonly cap usable capacity at 80-95 percent of nameplate to extend cycle life; a 13.5 kWh nameplate Powerwall, for example, ships with 13.5 kWh usable but many other systems are quoted differently. Read the spec sheet — usable kWh is the number that determines how long the battery actually keeps the lights on, not the headline capacity.",
       "All PV installations — installations not connected to a system for distribution of electricity to the public, installations in parallel with such a system, and installations as an alternative to such a system. Section 712 has been substantially revised in A4:2026 to reflect modern PV practice including hybrid PV-battery systems, microinverters and module-level power electronics. Every PV configuration the L3 apprentice will see in the UK is within the Section 712 scope.",
-      "Only systems above 16 A per phase.",
-      "Only systems on commercial buildings.",
+      "Three reasons. (1) Verify the fix actually worked — a repair you think is good can fail under live conditions; the retest catches the failure before the customer's reset goes wrong. (2) Verify the fix didn't introduce a new fault — terminal screw over-tightened can crack; cable repositioned can chafe; new component can be DOA. (3) Generate the documented evidence of compliance — the post-fix retest readings on the job sheet are the proof that BS 7671 643 requirements are met. Skipping the retest = no evidence of correct repair = comeback risk + regulatory exposure.",
+      "Treating someone less favourably because they have done a 'protected act' — typically making a discrimination complaint, supporting someone else's complaint, or giving evidence in a discrimination case. Victimisation is unlawful even if the original complaint was unsuccessful, provided it was made in good faith. The protection extends to apprentices, ex-employees and anyone else covered by the Act.",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       "What is the typical DC voltage on a domestic PV string and why does it matter for the install architecture?",
     options: [
-      "Always 12 V DC like a car battery.",
+      "Type AC — detects AC residual currents only; obsolete for most new installations under BS 7671 A2:2022. Type A — detects AC and pulsating DC residual currents; current default for general use. Type F — detects AC + pulsating DC + composite multi-frequency residuals; required for circuits with VFDs, Class 1 PCs / servers. Type B — detects all of the above PLUS smooth DC residual currents; required for EV chargers (BS 7671 722.531), some PV inverters, three-phase rectifier loads. The choice depends on the load. Wrong type = won't detect the actual residual current = false sense of protection.",
+      "Just culture — the firm separates HONEST MISTAKE (well-trained competent person made a reasonable error under the circumstances; the response is learning, training, procedure improvement) from AT-RISK BEHAVIOUR (person knew the safer option but chose the riskier; the response is coaching) from RECKLESS BEHAVIOUR (person knowingly took unjustifiable risk; the response is disciplinary). The framework prevents the unfair pattern where well-meaning people get punished for honest mistakes (which kills the reporting culture) AND the equally unfair pattern where reckless behaviour gets dismissed as 'just a mistake'. For L3 apprentice fault diagnosis, the framework supports the learning environment — you can report a genuine mistake without fearing your career; you can't get away with deliberately skipping isolation.",
       "Modern crystalline silicon modules typically have a Voc (open-circuit voltage) of 40-50 V per module. A residential string of 8-12 modules in series produces a string Voc of 350-600 V DC under standard conditions, with voltages running higher in cold conditions (Voc rises as temperature falls — the temperature-corrected maximum is what determines the inverter input rating). String inverters operate at these voltages; microinverters convert DC to AC at module level so the cable run between modules and the rest of the system is at AC; module-level DC optimisers raise or lower module voltage to keep the string at MPPT regardless of shading on individual modules. The architecture choice affects the cable type, the protective measures and the rapid-shutdown options.",
-      "Always 24 V DC for safety reasons.",
-      "Always above 1500 V DC.",
+      "L–L (phase-to-phase) fault is a direct connection between two phases of a three-phase supply (e.g. L1 and L2). Continuity between the phases reads near zero. Fault current is high (limited only by supply + cable impedance) — typically 5–10 kA on a typical commercial supply. Operates the magnetic element of the protective device on at least one of the affected phases. The unaffected phase remains live; loads connected line-to-neutral on the unaffected phase continue working. Common cause: insulation breakdown in three-phase cable or motor windings, accidental contact between phases at a terminal block.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "DC voltage architecture is the headline electrical difference between PV systems. String inverter (most common UK domestic) — high DC voltage to the inverter, single-point MPPT, simplest install. Microinverter (Enphase) — module-level conversion, AC-only system cable from the roof, more components but immune to single-module shading. DC optimisers (SolarEdge) — module-level DC-DC, single string inverter, panel-level monitoring and rapid shutdown.",
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     question:
       "What does the term anti-islanding mean for a grid-connected PV inverter?",
     options: [
-      "Stopping the panels from being installed on islands like the Isle of Wight.",
+      "They apply together. Section 712 covers the PV-side electrical requirements (DC isolation, string protection, inverter compliance, AC connection). Section 826 covers the EESS aspects (battery isolation, BMS, fire safety, signage). The hybrid inverter is a single piece of equipment that has to comply with both — the manufacturer's certification typically demonstrates compliance with both sections. The IET Codes of Practice for Grid-Connected PV and for EESS both reference each other. A4:2026 has clarified the interaction in places where ambiguity existed in the 18th Edition.",
+      "Apprentice (graded by year of apprenticeship) → on completion of Level 3 + AM2/E + 18th Ed → Electrician → with additional experience and competence demonstration → Approved Electrician → with further design / fault-finding competence → Technician. Each grade unlocks higher pay (set by the JIB National Working Rules) and a wider scope of work the operative can carry out unsupervised on JIB-affiliated sites.",
+      "Phase 1 (Days 1-30): Foundation — self-assessment, identify target competency, establish baseline, begin daily reflection practice, and find an accountability partner. Phase 2 (Days 31-60): Practice — apply new skills in specific situations, gather feedback, adjust approach based on results. Phase 3 (Days 61-90): Integration — embed new behaviours into routine, measure progress against baseline, plan for ongoing development",
       "Anti-islanding is the inverter's ability to detect when the grid has gone down and to disconnect itself within milliseconds — preventing the inverter from continuing to feed a portion of the local network ('islanding') with the DNO's workers expecting that section to be dead. ENA G98 (and G99 for larger systems) defines the protection settings the inverter must implement (typically G99/1-7 or earlier G83/G59 protection settings depending on inverter age). Modern inverters self-test the anti-islanding regularly. A4:2026 has refined the BS 7671 cross-references to G98/G99.",
-      "It is a setting that prevents PV panels from charging the battery.",
-      "It is a feature exclusive to off-grid systems.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Anti-islanding is the safety-critical reason a PV inverter must be type-tested to G98 or G99. Without anti-islanding, an unintentional islanded section of the local network with the inverter still feeding it could shock a DNO worker thinking the section is dead. Every grid-connected inverter sold in Great Britain must hold a G98 or G99 type-test certificate.",
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       "On a hybrid PV-battery system, how do BS 7671 Sections 712 and 826 interact?",
     options: [
-      "They contradict each other — only one applies.",
       "They apply together. Section 712 covers the PV-side electrical requirements (DC isolation, string protection, inverter compliance, AC connection). Section 826 covers the EESS aspects (battery isolation, BMS, fire safety, signage). The hybrid inverter is a single piece of equipment that has to comply with both — the manufacturer's certification typically demonstrates compliance with both sections. The IET Codes of Practice for Grid-Connected PV and for EESS both reference each other. A4:2026 has clarified the interaction in places where ambiguity existed in the 18th Edition.",
-      "Section 826 replaces Section 712 once a battery is added.",
-      "Only Section 712 applies on hybrid systems.",
+      "Whenever the chosen EV charger doesn't include integrated open-PEN protection. Section 722 of BS 7671 (significantly amended in A4:2026) requires that the PEN-fault risk on PME supplies is managed — either by the charger's built-in open-PEN protection function, or by providing a TT earth electrode for the EV chassis at the charge point. Most modern chargers from major manufacturers include the open-PEN protection function, simplifying the install. Where they don't, the local TT electrode is the fallback. The certified installer reads the charger spec and chooses the architecture.",
+      "LLP = Limited Liability Partnership, a hybrid form created by the Limited Liability Partnerships Act 2000. Partners have limited liability (like Ltd directors) but the partnership is taxed as a partnership (members file Self Assessment on share of profits, no Corporation Tax). Common in professional services (law, accountancy) but rare in trades. For an electrical firm with multiple working partners LLP is sometimes considered as an alternative to Ltd.",
+      "Phase 1: Temporary avoiding (separate the parties to prevent escalation while you prepare). Phase 2: Accommodating toward emotional needs (acknowledge both parties' feelings before addressing content). Phase 3: Collaborating on the technical issue (bring both parties together to find the best technical solution). Phase 4: If collaboration stalls on minor points, compromising to maintain progress. This multi-phase approach addresses both the emotional and technical dimensions",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Hybrid PV-battery systems sit at the intersection of Sections 712 and 826. Both apply. The MCS-certified designer (often holding both MIS 3002 PV and MIS 3012 storage certifications) handles the design; the apprentice's wiring needs to satisfy both regulation strands. Documentation should reference both sections.",
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       "What is the role of overcurrent protection on the DC side of a PV string and when is it required?",
     options: [
-      "Always required regardless of string configuration.",
+      "MCS-certified installers belong to an MCS umbrella scheme (NICEIC, NAPIT, ELECSA, Stroma, BBA HAPAS, etc.) — the umbrella scheme audits the installer, validates competence, processes commissioning certificates, and runs the customer-facing complaints framework. The umbrella scheme issues the MCS Commissioning Certificate based on the install pack the installer submits. MCS sits over the umbrella schemes — it is the standards body, not the certifying body. Without an active MCS umbrella scheme membership, the installer cannot issue MCS Commissioning Certificates, and the customer cannot claim Smart Export Guarantee tariff or Boiler Upgrade Scheme grant. The L3 apprentice will work under an MCS-certified installer's competence; you do not yet hold MCS certification yourself.",
       "Overcurrent protection on the DC side is required when the maximum reverse current that could flow into a string under fault conditions exceeds the string cable's or module's reverse-current rating. This depends on the array configuration — single-string systems often do not require DC fuses (no reverse current possible), multi-string systems in parallel may require string fuses to protect each string from reverse current driven by the other strings under fault. Section 712 sets the framework; the MCS-certified designer calculates whether fuses are needed for the specific array configuration. A4:2026 has refined the DC overcurrent requirements alongside the broader update.",
-      "Only required on systems above 10 kWp.",
-      "Never required because PV is current-limited.",
+      "The type-test certificate is the manufacturer's evidence — issued by an accredited test lab — that the inverter model has been tested to the EREC G98 / G99 / EN 50549 protection requirements. It records the LoM detection method (ROCOF, vector shift, hybrid), the trip thresholds for over-voltage / under-voltage / over-frequency / under-frequency, the disconnection time, and the recovery delay. The DNO accepts the type-test certificate at face value — they do not retest each inverter on each install. Without a current type-test certificate, the DNO will refuse to accept G98 / G99 notification and the install cannot legally export.",
+      "Equality Act 2010 s.6 defines disability as a physical or mental impairment that has a substantial and long-term adverse effect on the person's ability to carry out normal day-to-day activities. 'Long-term' means it has lasted, or is likely to last, 12 months or more. This explicitly includes mental health conditions — depression, anxiety disorders, PTSD, bipolar disorder, schizophrenia and others — where they meet the substantial and long-term thresholds. Where a worker's mental health condition is a disability under the Act, the s.20 reasonable-adjustments duty applies in the same way as for physical disability.",
     ],
     correctAnswer: 1,
     explanation:
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       "What does the labelling on a domestic PV install need to include per Section 712 and the IET Code of Practice?",
     options: [
-      "Just the manufacturer's logo.",
+      "Domestic ASHP installs usually include an unvented hot water cylinder (typically 200 to 300 L for a family home) with two heat sources — the heat pump heating coil (primary, low-temperature) and an electric immersion heater (secondary, higher-temperature). The heat pump heats the cylinder to 45 to 50 °C for normal hot water demand. The immersion heater is run periodically (typically weekly) to lift the cylinder temperature to 60 °C for at least 60 minutes for legionella pasteurisation per the WHS guidance under HSWA 1974 / L8 ACoP. Some heat pumps can do the legionella cycle themselves at high flow temperature without the immersion. The programmable thermostat on the immersion is the L3 electrician's wiring scope. Hot water at 60 °C is hot enough to scald — anti-scald TMVs are required at outlets per Building Regs Part G.",
+      "Buildings of 18 m or more in height (typically 7 storeys or more) containing two or more residential units. The HRRB regime came in after the Grenfell Tower fire and brings additional fire-safety requirements including (depending on the specific building regulations) recommended AFDDs (Reg 421.1.7) on socket circuits, mandatory linked smoke detection, and enhanced fire compartmentation. The regime is administered by the Health and Safety Executive (Building Safety Regulator) for the highest-risk buildings.",
       "External label identifying the property as having a PV system (typically near the meter and at the main isolator); internal labels at the AC isolator (identifying it as the PV AC isolator, not a generic isolator), at the DC isolator (warning that the array remains energised in light), at the inverter (warning of dual supply), and on the consumer unit (identifying the PV final circuit). The labelling is for the customer (so they know what their isolators do), the next electrician (so they understand the install years later), and the fire-fighter (so they know the building has PV before forcing entry). Section 514 of BS 7671 covers identification; Section 712 and the IET CoP add PV-specific requirements.",
-      "Only an external sticker.",
-      "Labelling is optional under Section 712.",
+      "A boiler drives a wet heating system — pumps hot water around radiators / underfloor circuits and a hot-water cylinder. Typical output 10-50 kW, located in a utility room or outhouse, automatic fuel feed (auger from a hopper), automatic ignition, automatic ash handling. A stove is a room heater — radiates heat directly into the room it sits in, plus optional back-boiler for some hot water. Lower output (5-15 kW typical), manual loading (logs or pellets), no automatic ash removal. Different installation regulations, different MCS standards, different customer expectations.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Labelling is non-glamorous but legally and operationally important. Multiple labels in multiple locations is the norm on a PV install. The IET Code of Practice for Grid-Connected Solar Photovoltaic Systems gives the practical wording recommendations. Skipping labelling under time pressure on the day of install creates a long-term cost for everyone who comes later.",
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       "What is the difference between MCS MIS 3002 and the IET Code of Practice for Grid-Connected Solar Photovoltaic Systems?",
     options: [
-      "They are the same document with different names.",
+      "On a monoblock unit the entire refrigerant circuit is contained inside the outdoor unit and only water pipes enter the building. The flammable-refrigerant indoor minimum-room-volume rule (under BS EN 378 and the F-Gas / refrigerant safety standards) only applies where flammable refrigerant is present in occupied indoor space. Splits that route refrigerant pipes indoors do trigger the rule and require detailed room-volume calculations.",
+      "Consistently demonstrating: (1) framing work as a learning problem (\\\\\\\"what can we learn from this?\\\\\\\"), (2) acknowledging your own fallibility (\\\\\\\"I may have missed something — what do you see?\\\\\\\"), (3) modelling curiosity by asking genuine questions, (4) responding to mistakes with inquiry rather than blame, (5) following through on commitments made when people do speak up, and (6) explicitly thanking people for raising concerns even when the news is unwelcome",
+      "Lifting equipment used to lift persons (MEWPs, lift platforms, scaffolding hoists carrying personnel) requires thorough examination at 6-monthly intervals. Other lifting equipment (chain blocks, manual hoists, anchor points used for material lifting only) requires 12-monthly thorough examination, OR in accordance with an examination scheme drawn up by a competent person. Per LOLER 1998 Reg 9(3). The examination is by a competent person (typically an independent examiner) and a written report is provided. The current report must be available with the machine.",
       "MIS 3002 is the MCS installer-competence and product-certification standard required for the customer to claim Smart Export Guarantee payments and demonstrate quality assurance. The IET Code of Practice is the practical implementation guide that walks through how to apply BS 7671 Section 712 on a real install — system architecture, cable selection, protective devices, labelling, commissioning. Both reference each other; both should be on the bench when the MCS designer is producing the install drawings. Neither replaces BS 7671 — Section 712 is the legal floor; MIS 3002 and the IET CoP build on top.",
-      "MIS 3002 only applies to inverters.",
-      "The IET CoP only applies to off-grid systems.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "MCS and IET serve different purposes. MCS is a market-access scheme (the customer needs MCS for grants and SEG); IET CoPs are practical guidance documents (helping installers apply the wiring regs in real-world scenarios). Both reference BS 7671 Section 712 as the legal underpinning. As an apprentice you should recognise the names and what they do.",
   },
@@ -186,12 +186,12 @@ const quizQuestions = [
     question:
       "Why is a PV cable run typically through a steel conduit on a roof void or external installation?",
     options: [
-      "Steel conduit looks more professional.",
       "PV cables on a roof void or external run are exposed to UV, mechanical damage from foot traffic and rodents, and elevated temperatures (loft voids hit 50+ degC in summer). Steel conduit provides physical protection, UV shielding, and a fault-current path. The cable inside is typically a UV-stable single-core PV cable (often dual-insulated H1Z2Z2-K type) rated for the elevated temperatures. The conduit is bonded to the main earthing terminal. Section 712 references the general BS 7671 requirements for cable installation methods and the elevated-temperature derating; the IET CoP gives the practical guidance on conduit selection and routing.",
-      "Steel conduit is cheaper than the alternatives.",
-      "PV cable installation does not need any protection.",
+      "Two-way wiring uses two STRAPPER cables between the switches plus a COMMON to the lamp. If one strapper is broken or wrongly terminated, one switch becomes inoperative. Diagnostic: isolate, prove dead, remove both switch fronts. Use the MFT continuity tester on the strapper conductors between the two boxes — both should read low resistance (near zero ohms for a typical 1.0 mm&sup2; lighting cable run); if one is open, that's the fault. Inspect the terminations at both ends — most common cause is a loose terminal at one of the switches. CORRECTION: re-terminate; verify both switches now operate the light from any combination of positions. Re-energise; functional test (switch on at top, off at bottom; switch off at top, on at bottom).",
+      "Live working is permitted under EAWR Reg 14 only when (a) it's unreasonable for the conductor to be dead, (b) it's reasonable for work to be carried out live, and (c) suitable precautions are taken — ALL three. Choosing live work to avoid customer inconvenience does NOT pass test (a) — convenience isn't 'unreasonable for the conductor to be dead'. The L3 apprentice doesn't get to make that trade-off; the firm's risk assessment makes it, with documented justification, and the supervisor authorises it. The 'I'll just do it live, the customer doesn't want the power off' is the exact failure mode the HSE prosecutes after the inevitable shock.",
+      "Research suggests neurodivergence — dyslexia, ADHD, and autism — may be more common in trade roles than the general population. Some studies suggest dyslexia at materially higher rates in trade and creative industries (the visual-spatial reasoning associated with dyslexia is often a strength in hands-on work). ADHD and autism prevalence in the trade is also frequently reported as elevated. The Equality Act 2010 reasonable-adjustments duty (s.20) applies where the condition has a substantial and long-term effect, and Sub 5.2 covers the practical adjustments in detail.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "PV cable installation is a real specialism — UV, heat, mechanical exposure all factor in. The MCS-certified PV installer specifies the cable and the installation method; the apprentice typically assists with the run and termination. Steel conduit, fire-rated cable trays, dedicated PV cable in protected routes — all part of the standard PV installation toolkit.",
   },

@@ -1,55 +1,45 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertTriangle } from 'lucide-react';
 
 interface EmergencyProceduresCardsProps {
   procedures?: string[];
 }
 
+/**
+ * Emergency procedures — editorial list. No icon, no red-bubble numbers,
+ * no card chrome. Numbered editorial rows with monospace ordinal.
+ */
 export const EmergencyProceduresCards: React.FC<EmergencyProceduresCardsProps> = ({
   procedures,
 }) => {
-  if (!procedures || procedures.length === 0) {
-    return (
-      <Card className="bg-card border-elec-yellow/20">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base font-semibold text-elec-light flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5 text-red-400" />
-            Emergency Procedures
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-white">No emergency procedures specified</p>
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
-    <Card className="bg-card border-elec-yellow/20">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-base font-semibold text-elec-light flex items-center gap-2">
-          <AlertTriangle className="h-5 w-5 text-red-400" />
-          Emergency Procedures
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {procedures.map((procedure, idx) => (
-            <div
-              key={idx}
-              className="flex items-start gap-3 p-4 bg-red-500/5 border-l-4 border-red-500 rounded-lg hover:bg-red-500/10 transition-colors"
-            >
-              <div className="flex-shrink-0 w-8 h-8 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center font-bold text-sm border border-red-500/40">
-                {idx + 1}
-              </div>
-              <div className="flex-1">
-                <p className="text-sm text-elec-light leading-relaxed">{procedure}</p>
-              </div>
-            </div>
-          ))}
+    <section className="space-y-5">
+      <div className="space-y-1">
+        <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-red-400">
+          Emergency procedures
         </div>
-      </CardContent>
-    </Card>
+        <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
+          If something goes wrong.
+        </h3>
+      </div>
+
+      {!procedures || procedures.length === 0 ? (
+        <p className="text-[13px] text-white/55 leading-relaxed">
+          No emergency procedures specified.
+        </p>
+      ) : (
+        <ol className="divide-y divide-white/[0.06] border-y border-white/[0.06]">
+          {procedures.map((procedure, idx) => (
+            <li key={idx} className="py-3 flex items-baseline gap-3">
+              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums text-red-400 w-8 shrink-0">
+                {String(idx + 1).padStart(2, '0')}
+              </span>
+              <span className="text-[13.5px] text-white/85 leading-relaxed flex-1">
+                {procedure}
+              </span>
+            </li>
+          ))}
+        </ol>
+      )}
+    </section>
   );
 };

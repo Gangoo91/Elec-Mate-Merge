@@ -77,7 +77,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which installation method is generally faster to install?',
-    options: ['Concealed wiring', 'Surface wiring', 'Both take the same time', 'Neither'],
+    options: [
+      'Concealed wiring',
+      'Surface wiring',
+      'Both take the same time',
+      'Neither',
+    ],
     correctAnswer: 1,
     explanation:
       'Surface wiring is faster to install as it avoids the time-consuming processes of chasing walls and making good finishes.',
@@ -86,12 +91,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is one major advantage of concealed wiring?',
     options: [
+      'Easier to modify after installation',
       'Cheaper labour cost',
       'Reduced risk of accidental damage',
-      'Easier to modify after installation',
       'No finishing work needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Concealed wiring is protected within the building structure, significantly reducing the risk of accidental damage from impact or interference.',
   },
@@ -108,20 +113,25 @@ const quizQuestions = [
     id: 4,
     question: 'Name one disadvantage of surface wiring.',
     options: [
-      'Higher electrical resistance',
       'Less visually appealing in finished spaces',
-      'Requires more voltage',
-      'Cannot be earthed properly',
+      'Growing opportunities in building automation',
+      'All cables to be LSF (low smoke and fume)',
+      'RTD (Resistance Temperature Detector)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Surface wiring is less visually appealing in finished spaces and has a higher risk of accidental damage unless properly protected.',
   },
   {
     id: 5,
     question: 'Which type of installation is preferred for plant rooms and workshops?',
-    options: ['Surface wiring', 'Concealed wiring', 'Neither', 'Both'],
-    correctAnswer: 0,
+    options: [
+      'Concealed wiring',
+      'Surface wiring',
+      'Both',
+      'Neither',
+    ],
+    correctAnswer: 1,
     explanation:
       'Surface wiring is preferred in industrial environments for easier access, maintenance, and future modifications without aesthetic concerns.',
   },
@@ -129,12 +139,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why can concealed wiring be more expensive?',
     options: [
-      'Requires more copper',
+      'I-messages versus You-messages',
+      'Increased risk of legal and safety issues',
       'Requires chasing and making good finishes',
-      'Needs longer cables',
-      'Requires extra testing',
+      'To maintain required illumination levels',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Concealed wiring requires additional labour for chasing channels, installing conduit, and making good wall finishes, increasing overall costs.',
   },
@@ -142,12 +152,12 @@ const quizQuestions = [
     id: 7,
     question: 'What must be provided for concealed wiring to allow inspection?',
     options: [
-      'Windows in walls',
+      'Lower initial cost and simpler installation',
+      'The heart twitching chaotically instead of pumping properly',
+      'Starting current which can be 6-8 times full load',
       'Access points for junction boxes or pull points',
-      'Surface indicators',
-      'Special tools only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Access points must be provided for junction boxes, connection points, or cable pulling locations to enable future inspection and maintenance.',
   },
@@ -155,12 +165,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which UK regulation covers requirements for safe zones in wiring?',
     options: [
-      'Building Regulations',
       'BS 7671 (IET Wiring Regulations)',
-      'Health and Safety at Work Act',
-      'Fire Safety Order',
+      'Unlimited fine and/or imprisonment',
+      'Type 5 disposable coveralls',
+      'Digital contact signal (dry contact)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 (IET Wiring Regulations) specifies the requirements for safe zones and installation methods for concealed wiring systems.',
   },

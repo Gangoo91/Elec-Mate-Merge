@@ -51,12 +51,12 @@ const checks = [
     question:
       'Which device is suitable for proving a circuit is dead before working on it?',
     options: [
-      "A multimeter set to AC volts",
-      'A non-contact voltage stick',
+      'A bi-energy machine that can switch between electric and diesel',
+      'All extraneous and exposed-conductive-parts within zones',
+      'An agreement to buy electricity from a third-party owned system',
       'A two-pole voltage indicator (e.g. CAT III/IV) compliant with GS38',
-      "Any of the above is fine",
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'GS38 requires a two-pole detector with the right CAT rating, proven on a known live source before AND after use. Non-contact "stick" testers can identify live cables but should NOT be used for proving dead — they can miss certain conditions. Multimeters are not the recommended tool for proving dead.',
   },
@@ -80,8 +80,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'A multimeter switched to AC volts (V~) and connected across L and N at a UK socket should read approximately:',
-    options: ['12 V', '110 V', '230 V', '400 V'],
-    correctAnswer: 2,
+    options: [
+      '12 V',
+      '230 V',
+      '110 V',
+      '400 V',
+    ],
+    correctAnswer: 1,
     explanation:
       "230 V single-phase is the UK nominal. Real readings sit between ~216 V and ~253 V (ESQCR ±10%). Anything outside that is a supply problem.",
   },
@@ -90,12 +95,12 @@ const quizQuestions = [
     question:
       "What does 'CAT III' on a multimeter mean?",
     options: [
-      'It can measure 3 phases at once',
+      'Locations with specific risks requiring additional protection measures',
+      'To ensure emergency shutdowns and safety systems work correctly',
       'It is rated for measurements on fixed installations including distribution boards',
-      'It has 3 input jacks',
-      'It is a category 3 fire-resistant device',
+      'A written document describing how work will be carried out safely, step by step',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CAT III rating covers measurements on fixed installations like distribution boards. CAT IV is for the supply origin/incomer, CAT II for plug-in appliances. Use the wrong CAT rating and an internal arc-flash event becomes a real risk.',
   },
@@ -103,12 +108,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which instrument is used to measure earth fault loop impedance (Zs)?',
     options: [
-      'A clamp meter',
+      'Represent workers on safety matters and investigate concerns',
+      'Power and data cables in office environments',
+      'Details of activities, dates, and learning outcomes',
       'A multifunction tester (MFT) on the loop impedance setting',
-      'An insulation tester only',
-      'A non-contact voltage indicator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A multifunction tester (MFT) has a dedicated loop impedance test that injects a small current and measures the resulting voltage drop to calculate Zs. Standard multimeters cannot do this.',
   },
@@ -117,12 +122,12 @@ const quizQuestions = [
     question:
       'You set a multimeter to current (A) mode and connect the leads across a 230 V socket. What happens?',
     options: [
-      'You get a current reading in amps',
-      'The display shows 0.00',
       "The meter's internal fuse blows almost instantly because you've created a near-short across the supply",
-      'Nothing — multimeters are protected',
+      "Immobilise the leg in the position found using padding and bandages, support the joints above and below the fracture, and call 999",
+      "Both the timer/delta circuit fault and welded star contacts are possible causes",
+      "By maintaining optimal temperature, lighting, and air quality conditions",
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Current mode has very low internal resistance. Putting low resistance across 230 V creates a huge fault current, which the HBC fuse inside is designed to interrupt. With no fuse / wrong CAT rating, the meter explodes.",
   },
@@ -130,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'Per HSE GS38, before using a voltage indicator to prove dead you must:',
     options: [
-      'Wipe the leads with cleaner',
+      'When the coil sides cut the field lines at right angles (perpendicular to the field)',
       'Prove it on a known live source (or proving unit) BEFORE and AFTER the dead test',
-      'Test the battery only',
-      'Wear safety glasses (no other check needed)',
+      'Incorrect phase rotation causes three-phase motors to rotate in the wrong direction',
+      'Technology delivering electrical power along with data on Ethernet cables',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: "What's a clamp meter best at, that a normal multimeter can't easily do?",
     options: [
-      'Measuring DC voltage',
-      'Measuring resistance',
+      'Whether mass is on warm (internal) or cold (external) side',
+      'To ensure they can support the load safely',
       'Measuring current without breaking the circuit',
-      'Measuring frequency',
+      'Completely disconnect supply for maintenance',
     ],
     correctAnswer: 2,
     explanation:
@@ -157,12 +162,12 @@ const quizQuestions = [
     question:
       'Insulation resistance must NOT be measured on a live circuit because:',
     options: [
+      "Hands-free device control for mobility-limited users",
+      "Reputational impact and potential removal if consistently off-track without remediation",
+      "To enable safe and effective identification of escape routes leading to final exits",
       "It will give an inaccurate reading and may damage the meter or the circuit",
-      'It would make the lights flicker',
-      'It is illegal',
-      "There's no reason — you can do it live",
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Insulation testers apply 250/500/1000 V DC and assume there is nothing else live in the circuit. Running an IR test on a live AC circuit damages the instrument, gives a meaningless reading, and can damage connected equipment.',
   },
@@ -171,12 +176,12 @@ const quizQuestions = [
     question:
       'A two-pole voltage indicator (Martindale, Drummond, Megger MTL etc.) is preferred over a multimeter for proving dead because:',
     options: [
-      'It looks more professional',
       'It cannot be set to the wrong function — it only does voltage detection, with built-in current limiting per GS38',
-      'It is cheaper',
-      'It has more features',
+      'Zs = 0.75 Ω. Pass — 0.75 Ω is below the corrected limit of 1.37 × 0.8 = 1.10 Ω.',
+      'It may be assessed as insufficient because CPD should demonstrate breadth across multiple competence areas, not just volume of hours',
+      'Hazardous to the aquatic environment — the substance is toxic to aquatic life with long-lasting effects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Two-pole indicators are single-purpose: they detect voltage between two points with built-in current limiting and the correct CAT rating. Multimeters can be set to the wrong function (current, ohms) which is a common cause of test-equipment incidents.',
   },

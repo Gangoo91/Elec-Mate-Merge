@@ -35,12 +35,12 @@ const AM2Module2Section5 = () => {
       id: 'critical-safety-error',
       question: 'Which of these is a critical safety error?',
       options: [
+        'Writing down wrong units on a test sheet',
         'Forgetting to label a circuit',
         'Re-energising a faulted circuit',
-        'Writing down wrong units on a test sheet',
         'Using the wrong cable size',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'Re-energising a faulted circuit is a critical safety error that results in instant failure as it could cause injury or death.',
     },
@@ -49,12 +49,12 @@ const AM2Module2Section5 = () => {
       question:
         "What's wrong with testing a circuit immediately after switching off, without proving your tester?",
       options: [
-        'It takes too long',
-        "It's not professional",
+        "It breaks down polymer chains causing brittleness",
         "You don't know if your tester works - unsafe isolation",
-        'It uses too much battery',
+        "Weather exposure, IP rating, and mechanical protection",
+        "True power divided by apparent power (cos φ)",
       ],
-      correctIndex: 2,
+      correctIndex: 1,
       explanation:
         "Without proving your tester works, you can't be sure if the circuit is actually dead - this is unsafe isolation.",
     },
@@ -62,12 +62,12 @@ const AM2Module2Section5 = () => {
       id: 'isolation-golden-rule',
       question: "What's the golden rule for AM2 safety errors?",
       options: [
-        'Always work fast to save time',
         "If it's unsafe in the real world, it's an instant fail in AM2",
-        "Paperwork mistakes don't matter",
-        'You can fix mistakes as you go',
+        "5 years (or 40 years for personal exposure records of identifiable employees)",
+        "Flexible connections and vibration-resistant supports",
+        "Batching similar tasks reduces attention residue by minimising context switches",
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         "The golden rule: if it's unsafe in the real world, it's an instant fail in AM2. NET assesses real-world competency.",
     },
@@ -75,12 +75,12 @@ const AM2Module2Section5 = () => {
       id: 'lock-off-device',
       question: 'True or false: Using tape instead of a lock-off device is acceptable in AM2?',
       options: [
-        'True - tape is quicker',
+        'They automatically turn off when rooms are unoccupied to save energy',
+        'Corresponding adjustments to national inventories',
+        'Difference between synchronous and rotor speed',
         'False - lock-off devices are mandatory for safe isolation',
-        "True - as long as it's clearly marked",
-        'False - but only loses minor marks',
       ],
-      correctIndex: 1,
+      correctIndex: 3,
       explanation:
         'False - using tape instead of a proper lock-off device is a critical safety error resulting in instant failure.',
     },
@@ -88,10 +88,10 @@ const AM2Module2Section5 = () => {
       id: 'second-chances',
       question: 'Do assessors give a second chance if you miss a step in safe isolation?',
       options: [
-        'Yes - everyone makes mistakes',
-        'No - safety is non-negotiable',
         'Only for minor steps',
+        'No - safety is non-negotiable',
         'Yes - but with mark deduction',
+        'Yes - everyone makes mistakes',
       ],
       correctIndex: 1,
       explanation:
@@ -104,10 +104,10 @@ const AM2Module2Section5 = () => {
       id: 1,
       question: 'What is a critical safety error in AM2?',
       options: [
-        'A mistake that loses marks but allows continuation',
+        'Typically 5 years depending on type and use',
         'An unsafe practice that causes instant section failure',
-        'A paperwork error that needs correction',
-        'A minor procedural mistake',
+        'To establish true vertical reference lines',
+        'Null the leads using the tester\\\\\\\'s calibration function',
       ],
       correctAnswer: 1,
       explanation:
@@ -117,10 +117,10 @@ const AM2Module2Section5 = () => {
       id: 2,
       question: 'Give one example of a safe isolation mistake that causes instant fail:',
       options: [
-        'Taking too long to isolate',
-        'Not labelling the isolation point',
-        'Skipping the re-prove step after isolation',
         'Using a different isolation method',
+        'Taking too long to isolate',
+        'Skipping the re-prove step after isolation',
+        'Not labelling the isolation point',
       ],
       correctAnswer: 2,
       explanation:
@@ -130,12 +130,12 @@ const AM2Module2Section5 = () => {
       id: 3,
       question: 'Why does NET treat energising a faulted circuit as a critical fail?',
       options: [
-        'It wastes time in the assessment',
-        'It could cause fire, injury or death in real work',
         'It shows poor planning skills',
+        'It wastes time in the assessment',
         'It damages the test equipment',
+        'It could cause fire, injury or death in real work',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Energising a faulted circuit could cause fire, electric shock, or death - exactly the risks NET assessments are designed to prevent.',
     },
@@ -143,12 +143,12 @@ const AM2Module2Section5 = () => {
       id: 4,
       question: 'True or false: Using tape instead of a lock-off device is acceptable:',
       options: [
-        'True - if clearly marked',
         'False - lock-off devices are mandatory for safe isolation',
-        'True - tape is industry standard',
-        'False - but only loses minor marks',
+        'Industry developments and new technology requirements',
+        'Isolating the wrong circuit, leading to safety hazards',
+        'To filter out higher-order modes for consistent launch conditions',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'False - proper lock-off devices are mandatory. Using tape is a critical safety error resulting in instant failure.',
     },
@@ -158,8 +158,8 @@ const AM2Module2Section5 = () => {
       options: [
         'To double-check the circuit is isolated',
         'To confirm your voltage tester is working correctly',
-        'To document the isolation procedure',
         'To test the circuit resistance',
+        'To document the isolation procedure',
       ],
       correctAnswer: 1,
       explanation:
@@ -169,10 +169,10 @@ const AM2Module2Section5 = () => {
       id: 6,
       question: 'Can incorrect paperwork alone cause a critical fail?',
       options: [
-        'Yes - all paperwork errors are critical',
-        'No - paperwork errors only lose marks',
+        'Clear, purposeful, respectful of working hours, and separate from social chat',
+        'The tilt of Earth\\\\\\\\\\\\\\\'s axis at 23.5° to the orbital plane',
         'Not usually - unless it hides or misrepresents a dangerous condition',
-        "Yes - if it's illegible",
+        'The total flux through a coil multiplied by number of turns',
       ],
       correctAnswer: 2,
       explanation:
@@ -182,12 +182,12 @@ const AM2Module2Section5 = () => {
       id: 7,
       question: 'Name one PPE-related mistake that could count as a safety fail:',
       options: [
-        'Using wrong color hard hat',
+        'Loose terminal, damaged cable, or incorrect routing',
+        'To establish true vertical reference lines',
+        'To identify and control hazards before accidents occur',
         'Not wearing safety glasses while cutting or drilling',
-        'Having dirty high-vis clothing',
-        'Using worn but functional gloves',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Not wearing appropriate PPE like safety glasses during cutting/drilling operations is a serious health & safety breach.',
     },
@@ -195,12 +195,12 @@ const AM2Module2Section5 = () => {
       id: 8,
       question: 'What should you always check before energising a circuit?',
       options: [
-        'That paperwork is complete',
         'That all testing is complete and results are satisfactory',
-        'That tools are put away',
-        'That time allocation allows it',
+        'High-risk task area lighting providing minimum 10% of normal illuminance',
+        'Verify continuity and earth fault loop impedance',
+        'A saddle within ~150-200 mm of every box, fitting and change of direction.',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Never energise a circuit until all testing is complete and results confirm the installation is safe and compliant.',
     },
@@ -222,11 +222,11 @@ const AM2Module2Section5 = () => {
       question: 'If you make a critical error, can you continue the assessment?',
       options: [
         'Yes - but with heavy mark deduction',
+        'No - the entire AM2 is terminated',
         'No - the section is immediately failed',
         'Yes - after explaining your mistake',
-        'No - the entire AM2 is terminated',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Critical safety errors result in immediate section failure. The assessor will stop that section of the assessment immediately.',
     },

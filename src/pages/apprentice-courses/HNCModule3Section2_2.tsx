@@ -32,7 +32,12 @@ const quickCheckQuestions = [
   {
     id: 'inductive-reactance',
     question: 'What is the inductive reactance of a 50mH inductor at 50Hz?',
-    options: ['7.85Ω', '15.7Ω', '31.4Ω', '157Ω'],
+    options: [
+      '7.85Ω',
+      '15.7Ω',
+      '31.4Ω',
+      '157Ω',
+    ],
     correctIndex: 1,
     explanation:
       'Xₗ = 2πfL = 2π × 50 × 0.050 = 15.7Ω. Remember to convert mH to H (50mH = 0.050H) before calculating.',
@@ -40,7 +45,12 @@ const quickCheckQuestions = [
   {
     id: 'capacitive-reactance',
     question: 'A 100µF capacitor has what reactance at 50Hz?',
-    options: ['15.9Ω', '31.8Ω', '63.7Ω', '318Ω'],
+    options: [
+      '15.9Ω',
+      '31.8Ω',
+      '63.7Ω',
+      '318Ω',
+    ],
     correctIndex: 1,
     explanation:
       'Xᴄ = 1/(2πfC) = 1/(2π × 50 × 0.0001) = 31.8Ω. Note Xᴄ decreases as capacitance increases.',
@@ -48,16 +58,26 @@ const quickCheckQuestions = [
   {
     id: 'impedance-magnitude',
     question: 'A circuit has R = 30Ω and Xₗ = 40Ω. What is the impedance magnitude?',
-    options: ['10Ω', '35Ω', '50Ω', '70Ω'],
-    correctIndex: 2,
+    options: [
+      '50Ω',
+      '70Ω',
+      '35Ω',
+      '10Ω',
+    ],
+    correctIndex: 0,
     explanation:
       '|Z| = √(R² + X²) = √(30² + 40²) = √(900 + 1600) = √2500 = 50Ω. This is a classic 3-4-5 Pythagorean triangle.',
   },
   {
     id: 'phase-angle',
     question: 'For R = 100Ω and Xₗ = 100Ω, what is the phase angle?',
-    options: ['30°', '45°', '60°', '90°'],
-    correctIndex: 1,
+    options: [
+      '30°',
+      '60°',
+      '45°',
+      '90°',
+    ],
+    correctIndex: 2,
     explanation:
       'θ = arctan(X/R) = arctan(100/100) = arctan(1) = 45°. When X = R, the phase angle is always 45°.',
   },
@@ -68,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is reactance?',
     options: [
-      'The resistance of a DC circuit',
+      'Working on live low voltage equipment with high fault current',
       'Opposition to AC current due to energy storage in electric or magnetic fields',
-      'The total opposition to current in any circuit',
-      'The power dissipated in a resistor',
+      'Explaining repair made, any limitations, and operating instructions',
+      'Drawings show where to install, specifications show how to install',
     ],
     correctAnswer: 1,
     explanation:
@@ -81,40 +101,50 @@ const quizQuestions = [
     id: 2,
     question: 'How does inductive reactance change with frequency?',
     options: [
+      'Remains constant regardless of frequency',
       'Decreases as frequency increases',
       'Increases proportionally with frequency',
-      'Remains constant regardless of frequency',
       'Increases with the square of frequency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Xₗ = 2πfL shows that inductive reactance is directly proportional to frequency. Doubling the frequency doubles the reactance. This is why inductors block high frequencies.',
   },
   {
     id: 3,
     question: 'A motor winding has L = 0.1H. What is its reactance at 50Hz?',
-    options: ['15.7Ω', '31.4Ω', '50Ω', '314Ω'],
-    correctAnswer: 1,
+    options: [
+      '50Ω',
+      '15.7Ω',
+      '314Ω',
+      '31.4Ω',
+    ],
+    correctAnswer: 3,
     explanation: 'Xₗ = 2πfL = 2π × 50 × 0.1 = 31.4Ω',
   },
   {
     id: 4,
     question: 'How does capacitive reactance change with frequency?',
     options: [
-      'Increases proportionally with frequency',
       'Decreases as frequency increases',
+      'Increases proportionally with frequency',
       'Remains constant regardless of frequency',
       'Increases with the square of frequency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Xᴄ = 1/(2πfC) shows that capacitive reactance is inversely proportional to frequency. Higher frequencies encounter less opposition, which is why capacitors pass high frequencies.',
   },
   {
     id: 5,
     question: 'What is the unit of impedance?',
-    options: ['Henrys', 'Farads', 'Ohms', 'Siemens'],
-    correctAnswer: 2,
+    options: [
+      'Farads',
+      'Ohms',
+      'Siemens',
+      'Henrys',
+    ],
+    correctAnswer: 1,
     explanation:
       'Impedance, like resistance and reactance, is measured in Ohms (Ω). It represents the total opposition to AC current flow.',
   },
@@ -122,20 +152,25 @@ const quizQuestions = [
     id: 6,
     question: "In the complex impedance Z = R + jX, what does 'j' represent?",
     options: [
-      'Current density',
+      'To amplify signals or act as a switch',
+      'Rapid temperature changes causing material stress',
       'The imaginary unit (√-1), indicating 90° phase shift',
-      'Joule heating factor',
-      'Junction temperature',
+      'To verify protective device operation under fault conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'In electrical engineering, j represents √-1 (called i in pure mathematics). It indicates that the reactive component is 90° out of phase with the resistive component.',
   },
   {
     id: 7,
     question: 'A circuit has Z = 40 + j30 Ω. What is the impedance magnitude?',
-    options: ['10Ω', '35Ω', '50Ω', '70Ω'],
-    correctAnswer: 2,
+    options: [
+      '10Ω',
+      '35Ω',
+      '70Ω',
+      '50Ω',
+    ],
+    correctAnswer: 3,
     explanation:
       '|Z| = √(R² + X²) = √(40² + 30²) = √(1600 + 900) = √2500 = 50Ω',
   },
@@ -143,35 +178,50 @@ const quizQuestions = [
     id: 8,
     question:
       'Two impedances of 10Ω each are connected in series. What is the total impedance?',
-    options: ['5Ω', '10Ω', '20Ω', '100Ω'],
-    correctAnswer: 2,
+    options: [
+      '20Ω',
+      '100Ω',
+      '5Ω',
+      '10Ω',
+    ],
+    correctAnswer: 0,
     explanation:
       'In series, impedances add directly: Zₜ = Z₁ + Z₂ = 10 + 10 = 20Ω. This is the same rule as for resistances in series.',
   },
   {
     id: 9,
     question: 'What is the phase angle of an impedance Z = 50 + j50√3 Ω?',
-    options: ['30°', '45°', '60°', '90°'],
-    correctAnswer: 2,
+    options: [
+      '30°',
+      '60°',
+      '45°',
+      '90°',
+    ],
+    correctAnswer: 1,
     explanation: 'θ = arctan(X/R) = arctan(50√3/50) = arctan(√3) = 60°',
   },
   {
     id: 10,
     question: 'A power factor correction capacitor reduces motor circuit impedance magnitude. Why?',
     options: [
-      'It increases the resistance',
+      'Scope of work, exclusions, price, validity period and payment terms',
+      'To understand how the space is used and identify potential interference sources',
       'The capacitive reactance partially cancels the inductive reactance',
-      'It reduces the supply voltage',
-      'It increases the motor speed',
+      'PV generates electricity; thermal heats water or air',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Motors have inductive reactance (+jXₗ). Adding capacitance (-jXᴄ) reduces the net reactance. Since |Z| = √(R² + Xₙₑₜ²), reducing Xₙₑₜ reduces impedance magnitude.',
   },
   {
     id: 11,
     question: 'At what frequency does a 10mH inductor have Xₗ = 100Ω?',
-    options: ['159Hz', '318Hz', '500Hz', '1.59kHz'],
+    options: [
+      '159Hz',
+      '318Hz',
+      '500Hz',
+      '1.59kHz',
+    ],
     correctAnswer: 3,
     explanation:
       'Rearranging Xₗ = 2πfL: f = Xₗ/(2πL) = 100/(2π × 0.01) = 100/0.0628 = 1592Hz ≈ 1.59kHz',
@@ -179,7 +229,12 @@ const quizQuestions = [
   {
     id: 12,
     question: 'Two 20Ω impedances in parallel give what total impedance?',
-    options: ['10Ω', '20Ω', '40Ω', '400Ω'],
+    options: [
+      '10Ω',
+      '400Ω',
+      '40Ω',
+      '20Ω',
+    ],
     correctAnswer: 0,
     explanation:
       'For equal impedances in parallel: Zₜ = Z/n = 20/2 = 10Ω. Alternatively: 1/Zₜ = 1/20 + 1/20 = 2/20, so Zₜ = 10Ω',

@@ -22,7 +22,6 @@ const REQUIRED_FIELDS: string[] = [
 const INFINITE_READING_FIELDS = [
   'insulationLiveNeutral',
   'insulationLiveEarth',
-  'insulationNeutralEarth',
 ];
 
 const isInfiniteReading = (value: string): boolean =>
@@ -41,7 +40,6 @@ const NUMERIC_FIELDS = [
   'continuityR1R2',
   'insulationLiveNeutral',
   'insulationLiveEarth',
-  'insulationNeutralEarth',
   'earthFaultLoopImpedance',
   'maxPermittedZs',
   'prospectiveFaultCurrent',
@@ -328,11 +326,10 @@ export function validateMinorWorksFormData(formData: any): ValidationResult {
     });
   }
 
-  // Insulation resistance validation (Reg 643.3)
+  // Insulation resistance validation (Reg 643.3) — A4:2026 model form has L-N + L-E columns.
   const insulationFields = [
     'insulationLiveNeutral',
     'insulationLiveEarth',
-    'insulationNeutralEarth',
   ];
   insulationFields.forEach((field) => {
     if (formData[field]) {

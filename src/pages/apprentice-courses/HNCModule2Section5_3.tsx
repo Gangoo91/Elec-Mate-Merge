@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'admittance-def',
     question: 'What does the admittance (Y-value) of a building element describe?',
     options: [
-      'Its steady-state heat loss',
+      'Temperature and pressure effects on gas density',
+      'Metalwork each side may need individual bonding',
+      'Learning — identifying root cause and preventing recurrence',
       'Its ability to store and release heat cyclically',
-      'Its resistance to moisture penetration',
-      'Its acoustic performance',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Admittance (Y-value, W/m²K) describes how a surface absorbs and releases heat in response to cyclic temperature variations. Higher admittance means greater thermal storage capacity.',
   },
@@ -47,11 +47,11 @@ const quickCheckQuestions = [
     question: 'A wall has a decrement factor of 0.3. What does this mean?',
     options: [
       '30% of steady-state heat passes through',
-      'The temperature swing inside is 30% of that outside',
       '70% of the heat is stored in the wall',
+      'The temperature swing inside is 30% of that outside',
       'The wall has 30% thermal bridging',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Decrement factor (f) is the ratio of internal to external temperature swing. f = 0.3 means if external temperature swings 20K, internal swing is only 6K (20 × 0.3) - the wall dampens fluctuations.',
   },
@@ -59,8 +59,13 @@ const quickCheckQuestions = [
     id: 'time-lag',
     question:
       'A heavyweight external wall has an 8-hour time lag. If peak external temperature is at 14:00, when does peak heat reach inside?',
-    options: ['06:00', '14:00', '18:00', '22:00'],
-    correctIndex: 3,
+    options: [
+      '06:00',
+      '22:00',
+      '18:00',
+      '14:00',
+    ],
+    correctIndex: 1,
     explanation:
       'Time lag is the delay between external peak and internal peak. With 8-hour lag, external peak at 14:00 produces internal peak at 22:00 (14:00 + 8h), after occupants have left.',
   },
@@ -69,10 +74,10 @@ const quickCheckQuestions = [
     question:
       'Why do lightweight buildings typically have higher peak cooling loads than heavyweight buildings?',
     options: [
-      'They have worse insulation',
+      'Red to line conductor, black to earth/CPC',
       'They cannot store heat to spread gains over time',
-      'They have more glazing',
-      'They always have more internal gains',
+      'Significant findings, people at risk, control measures',
+      'Device ID (and possibly IP addresses or node IDs)',
     ],
     correctIndex: 1,
     explanation:
@@ -84,7 +89,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What are the units of thermal admittance (Y-value)?',
-    options: ['m²K/W', 'W/m²K', 'W/mK', 'J/kgK'],
+    options: [
+      'm²K/W',
+      'W/m²K',
+      'W/mK',
+      'J/kgK',
+    ],
     correctAnswer: 1,
     explanation:
       'Admittance has the same units as U-value: W/m²K. However, they measure different properties - U-value is steady-state conductance, Y-value is cyclic response capability.',
@@ -93,10 +103,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which building element typically has the highest admittance?',
     options: [
-      'Plasterboard on studs',
-      'Insulated lightweight steel panel',
-      'Dense concrete (150mm exposed)',
       'Double glazing',
+      'Plasterboard on studs',
+      'Dense concrete (150mm exposed)',
+      'Insulated lightweight steel panel',
     ],
     correctAnswer: 2,
     explanation:
@@ -105,8 +115,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the approximate time lag for a 215mm solid brick wall?',
-    options: ['2-3 hours', '6-8 hours', '10-12 hours', '24 hours'],
-    correctAnswer: 1,
+    options: [
+      '10-12 hours',
+      '2-3 hours',
+      '24 hours',
+      '6-8 hours',
+    ],
+    correctAnswer: 3,
     explanation:
       'A 215mm solid brick wall has a time lag of approximately 6-8 hours. This shifts afternoon heat gains to evening, potentially reducing cooling demand during occupied hours.',
   },
@@ -115,12 +130,12 @@ const quizQuestions = [
     question:
       'How does internal thermal mass (exposed concrete soffit) benefit an office building?',
     options: [
-      'Reduces heating energy only',
-      'Improves acoustic performance only',
       'Absorbs daytime gains, reducing cooling load and enabling night purge',
-      'Increases natural daylight levels',
+      'Helps in heavyweight construction by reducing peak temperatures',
+      'Using cool night air to remove heat stored in thermal mass',
+      'Whether mass is on warm (internal) or cold (external) side',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Exposed thermal mass absorbs heat during the day (reducing peak temperature) and releases it at night (when it can be purged with cool night air), reducing mechanical cooling requirements.',
   },
@@ -130,8 +145,8 @@ const quizQuestions = [
     options: [
       'Running the air conditioning at night',
       'Using cool night air to remove heat stored in thermal mass',
-      'Closing all ventilation at night',
       'Cooling the external fabric at night',
+      'Closing all ventilation at night',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,7 +155,12 @@ const quizQuestions = [
   {
     id: 6,
     question: 'For the admittance method, what 24-hour temperature cycle is typically assumed?',
-    options: ['Square wave', 'Linear rise and fall', 'Sinusoidal', 'Exponential decay'],
+    options: [
+      'Square wave',
+      'Linear rise and fall',
+      'Sinusoidal',
+      'Exponential decay',
+    ],
     correctAnswer: 2,
     explanation:
       'The CIBSE admittance method assumes a sinusoidal 24-hour temperature cycle. This mathematical simplification enables manual calculation of thermal storage effects.',
@@ -150,12 +170,12 @@ const quizQuestions = [
     question:
       'A building has high admittance sum (ΣAY). What does this indicate about its cooling load profile?',
     options: [
-      'Higher peak cooling load',
+      'Earthing, bonding, main switch, and consumer unit',
+      'Phase conductor cross-sectional area',
+      'To avoid electromagnetic interference',
       'Lower peak but longer duration cooling',
-      'No effect on cooling load',
-      'Higher ventilation rate required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'High ΣAY (admittance × area sum) means high thermal storage, reducing peak cooling load but spreading the load over more hours. This can enable smaller plant or shift load to cheaper off-peak periods.',
   },
@@ -164,20 +184,25 @@ const quizQuestions = [
     question:
       'Which factor determines the position of insulation for best thermal mass performance?',
     options: [
-      'Moisture resistance',
       'Whether mass is on warm (internal) or cold (external) side',
-      'Fire rating requirements',
-      'Acoustic requirements',
+      'Absorbs daytime gains, reducing cooling load and enabling night purge',
+      'Using cool night air to remove heat stored in thermal mass',
+      'Helps in heavyweight construction by reducing peak temperatures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'For thermal mass to be effective, it must be on the warm (internal) side of insulation. External insulation allows internal mass to interact with room temperature. Internal insulation isolates mass from the room.',
   },
   {
     id: 9,
     question: 'What is the typical admittance of a suspended ceiling with tiles?',
-    options: ['0.5-1.0 W/m²K', '1.0-2.0 W/m²K', '4.0-5.0 W/m²K', '6.0-8.0 W/m²K'],
-    correctAnswer: 0,
+    options: [
+      '1.0-2.0 W/m²K',
+      '0.5-1.0 W/m²K',
+      '4.0-5.0 W/m²K',
+      '6.0-8.0 W/m²K',
+    ],
+    correctAnswer: 1,
     explanation:
       'Suspended ceiling tiles have very low admittance (0.5-1.0 W/m²K) due to their lightweight construction. They effectively isolate the room from any concrete soffit thermal mass above.',
   },
@@ -185,12 +210,12 @@ const quizQuestions = [
     id: 10,
     question: 'In CIBSE Guide A, what is the response factor (fr) used for?',
     options: [
-      'Fire spread calculations',
+      'Helps in heavyweight construction by reducing peak temperatures',
+      'Lower peak but longer duration cooling',
       'Classifying buildings as fast, medium or slow response',
-      'Calculating ventilation rates',
-      'Determining insulation thickness',
+      'Whether mass is on warm (internal) or cold (external) side',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Response factor (fr) classifies building thermal response: fr < 4 = fast (lightweight), 4 < fr < 6 = medium, fr > 6 = slow (heavyweight). This affects both heating and cooling system selection.',
   },
@@ -198,12 +223,12 @@ const quizQuestions = [
     id: 11,
     question: 'Why is thermal mass less effective in buildings with high ventilation rates?',
     options: [
-      'Air removes heat faster than mass can store it',
+      'Thermal mass increases pressure drop',
       'Ventilation air has lower specific heat',
       'Fresh air is always at external temperature',
-      'Thermal mass increases pressure drop',
+      'Air removes heat faster than mass can store it',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'High ventilation rates quickly remove heat from the space, reducing the benefit of thermal storage. The air change rate competes with thermal mass absorption - very high rates can make mass ineffective.',
   },
@@ -211,12 +236,12 @@ const quizQuestions = [
     id: 12,
     question: 'For Part O overheating assessment, how does thermal mass affect compliance?',
     options: [
-      'No effect - only glazing matters',
       'Helps in heavyweight construction by reducing peak temperatures',
-      'Makes compliance harder due to heat storage',
-      'Only relevant if mechanical cooling is installed',
+      'Absorbs daytime gains, reducing cooling load and enabling night purge',
+      'Classifying buildings as fast, medium or slow response',
+      'Air removes heat faster than mass can store it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TM59 overheating assessment benefits from thermal mass in heavyweight buildings. Peak temperatures are reduced through absorption, and night ventilation can discharge stored heat, aiding compliance.',
   },

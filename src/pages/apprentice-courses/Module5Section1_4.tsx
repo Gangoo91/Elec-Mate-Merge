@@ -17,10 +17,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What do floorplans show in electrical drawings?',
     options: [
-      'Only the building structure',
+      'Achieving net zero greenhouse gas emissions by 2050',
       'Building layout with positions of electrical equipment',
-      'Just the electrical circuits',
-      'Cable sizes and ratings',
+      'Adding small amounts of impurities to control conductivity',
+      'Installing and commissioning solar photovoltaic systems',
     ],
     correctIndex: 1,
     explanation:
@@ -30,12 +30,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should electrical layouts be cross-checked on-site?',
     options: [
-      "It's not necessary",
+      'Flow-down clauses in the subcontract',
+      'Orders placed but not yet invoiced',
       'Buildings may differ from drawings',
-      'To waste time',
-      'Because drawings are always wrong',
+      'Achieve minimum energy efficiency standards',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Buildings may differ slightly from drawings due to construction variations, making on-site verification essential for accurate installation.',
   },
@@ -43,12 +43,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'What is the risk of ignoring safe cable zones?',
     options: [
-      'No risk at all',
+      'To allow maintenance without total shutdown',
+      'Distortion of the main field flux',
+      'Authorised supervisors/managers only',
       'Accidental damage and safety hazards',
-      'Better cable runs',
-      'Easier installation',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Ignoring safe cable zones increases the risk of accidental damage from drilling or fixing, creating safety hazards and potential failures.',
   },
@@ -63,10 +63,10 @@ const Module5Section1_4 = () => {
       id: 1,
       question: 'What do floorplans show in electrical drawings?',
       options: [
-        'Only the building structure',
+        'Because RCD sensitivity varies with AC waveform phase',
         'Building layout with positions of electrical equipment',
-        'Just the electrical circuits',
-        'Cable sizes and ratings',
+        'Boiler plant startup and staging sequence',
+        'Inductive loads (motors, transformers, solenoids)',
       ],
       correctAnswer: 1,
       explanation:
@@ -76,20 +76,25 @@ const Module5Section1_4 = () => {
       id: 2,
       question: 'What do circuit layouts show?',
       options: [
-        'Building structure only',
+        'Reactive effects may need to be considered',
+        'Maximum demand during Triad periods',
         'How accessories connect to distribution boards',
-        'Cable colours',
-        'Installation costs',
+        'Accuracy and compliance with regulations',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Circuit layouts show how electrical accessories and equipment connect back to distribution boards and how circuits are organised.',
     },
     {
       id: 3,
       question: 'What is often used to identify circuits?',
-      options: ['Colours only', 'Circuit numbers or codes', 'Arrow directions', 'Line thickness'],
-      correctAnswer: 1,
+      options: [
+        'Arrow directions',
+        'Colours only',
+        'Line thickness',
+        'Circuit numbers or codes',
+      ],
+      correctAnswer: 3,
       explanation:
         'Circuit numbers or codes (like L1/01) are used to identify and track individual circuits throughout the installation.',
     },
@@ -105,10 +110,10 @@ const Module5Section1_4 = () => {
       id: 5,
       question: 'Why should electrical layouts be cross-checked on-site?',
       options: [
-        "It's not necessary",
+        'In series, broken into the chain',
         'Buildings may differ from drawings',
-        'To waste time',
-        'Because drawings are always wrong',
+        'To account for supply voltage tolerance',
+        'Individual device identification and status',
       ],
       correctAnswer: 1,
       explanation:
@@ -117,8 +122,13 @@ const Module5Section1_4 = () => {
     {
       id: 6,
       question: 'What do arrows on cable route drawings usually represent?',
-      options: ['Wind direction', 'Direction of cable runs', 'North direction', 'Traffic flow'],
-      correctAnswer: 1,
+      options: [
+        'Wind direction',
+        'North direction',
+        'Direction of cable runs',
+        'Traffic flow',
+      ],
+      correctAnswer: 2,
       explanation:
         'Arrows indicate the direction of cable runs and the routing path that cables should follow through the building.',
     },
@@ -128,10 +138,10 @@ const Module5Section1_4 = () => {
       options: [
         'Another apprentice',
         'The client directly',
-        'The site supervisor',
         'Nobody, just improvise',
+        'The site supervisor',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Always consult the site supervisor when there are discrepancies between drawings and actual site conditions.',
     },
@@ -139,12 +149,12 @@ const Module5Section1_4 = () => {
       id: 8,
       question: 'What is the risk of ignoring safe cable zones?',
       options: [
-        'No risk at all',
         'Accidental damage and safety hazards',
-        'Better cable runs',
-        'Easier installation',
+        'Conduct site survey and risk assessment',
+        'To avoid damaging the insulation',
+        '½ × IΔn (15mA for 30mA RCD)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Ignoring safe cable zones increases the risk of accidental damage from drilling or fixing, creating safety hazards and potential failures.',
     },
@@ -152,10 +162,10 @@ const Module5Section1_4 = () => {
       id: 9,
       question: 'What must electricians do before transferring positions to site?',
       options: [
-        'Start installing immediately',
+        'Starting torque is reduced to one-third',
         'Measure and check against the drawing',
-        'Guess the positions',
-        'Ask the client',
+        'When copper losses equal iron losses',
+        'Adequate temporary lighting for safe working',
       ],
       correctAnswer: 1,
       explanation:
@@ -166,11 +176,11 @@ const Module5Section1_4 = () => {
       question: 'Which document might include cable sizes if not shown on the layout?',
       options: [
         'The building permit',
+        'The health and safety file',
         'The specification',
         'The invoice',
-        'The health and safety file',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The specification document typically contains detailed technical information like cable sizes, ratings, and installation methods when not shown on layout drawings.',
     },

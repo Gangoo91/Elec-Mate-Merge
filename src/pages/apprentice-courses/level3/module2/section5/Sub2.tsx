@@ -44,12 +44,12 @@ const checks = [
     question:
       'After completing the electrical work on a heat-pump install, you complete the BS 7671 Electrical Installation Certificate. Does that finish your involvement with the install pack?',
     options: [
-      'Yes — the EIC is the only document that matters.',
       "No — the EIC covers the BS 7671 inspection and test of your electrical work, but the heat-pump install pack is broader. The MCS-certified installer compiles the full pack: EIC (your contribution), F-Gas commissioning records, wet-system pressure-test, refrigerant charge log, SCOP estimate, MCS install certificate, BUS grant claim, EPC update arrangement, customer operating instructions. The EIC is one document in the pack — essential, but not sufficient. Your contribution to the broader handover is the verified electrical install.",
-      'No — you also need to update the EPC.',
-      'Only on Sundays.',
+      "Under TN-C-S the neutral and the protective earth share a combined PEN conductor between the transformer and the cut-out. A break in the PEN somewhere upstream (the DNO side, not the consumer side) lifts the neutral — and therefore the customer's bonded metalwork — to a fraction of phase voltage relative to true earth. While you're investigating an unrelated fault, the system can be carrying a hidden TT-equivalent hazard if the PEN is compromised. Always read the voltage L–N AND L–E AND N–E at the cut-out before you start; if N–E is more than a few volts, stop and call the DNO.",
+      "Each brand has known failure modes that point you to likely fault locations. Hager 6 kA RCBOs (popular UK domestic) — known for thermal element drift after 15+ years, busbar terminations need annual re-torque. Wylex NHX — known for plastic enclosure stress fractures around the busbar after thermal cycling. Schneider Acti9 — generally robust, known for incoming terminal block failures on the larger 100 A units. MK Sentry — known for poor manufacturer warranty support but generally reliable hardware. Crabtree Starbreaker — older series, RCBO trip-time slows significantly past 12 years. The brand tells you where to look first.",
+      "Whenever the chosen EV charger doesn't include integrated open-PEN protection. Section 722 of BS 7671 (significantly amended in A4:2026) requires that the PEN-fault risk on PME supplies is managed — either by the charger's built-in open-PEN protection function, or by providing a TT earth electrode for the EV chassis at the charge point. Most modern chargers from major manufacturers include the open-PEN protection function, simplifying the install. Where they don't, the local TT electrode is the fallback. The certified installer reads the charger spec and chooses the architecture.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The EIC is the BS 7671 documentation for the electrical install — your professional certification. The MCS install pack wraps the EIC into a broader customer handover document. As the L3 electrician your responsibility is the EIC; you contribute the EIC into the certified installer's wider pack. Knowing where your responsibility ends and the certified installer's begins is part of the trade-boundary discipline.",
   },
@@ -58,12 +58,12 @@ const checks = [
     question:
       'After heat-pump commissioning the customer asks "so do I just leave the thermostat at 21°C and forget about it?". What\'s the right answer?',
     options: [
-      'Yes — exactly that.',
+      "The control pilot is a low-voltage PWM signal between the charge point and the vehicle that negotiates charging current, communicates protection status, signals connection / disconnection events and triggers safe shutdown on fault. The signal is part of the IEC 61851 Mode 3 protocol. The car uses the duty cycle of the PWM signal to determine the maximum current the charge point can supply; the charge point uses the signal level to know whether the cable is connected, whether the car is ready to charge, and whether a fault has occurred. The signalling is built into the unit and the cable; the apprentice does not configure it but should recognise its role.",
+      "Durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit, at the main isolation, at the inverter and at any DC isolators. The Distribution Network Operator's emergency contacts. The PV system identification (kWp rating, inverter manufacturer/model). The signage requirements come from BS 7671 Section 712 plus MCS MIS 3002 plus the DNO's G98/G99 connection conditions. A future maintainer who turns up to a 'normal' fault call must know there's a generator on the property before they start touching things.",
       "Heat pumps work best with steady operation rather than aggressive setback / boost cycles. The right answer is closer to 'leave the system to run continuously at low flow temperature, with modest setbacks if any (e.g. 1-2°C overnight). Avoid 5°C overnight setbacks — that's a gas-boiler control strategy and costs you SCOP'. The MCS install pack should include customer operating instructions covering this. Walk the customer through it at handover; otherwise they fall back on gas-boiler habits and don't get the SCOP they're paying for.",
-      'Tell them to set it to 30°C.',
-      'Disable the controls.',
+      "Institution of Engineering and Technology — UK-based professional body for engineering and technology, with around 156,000 members worldwide. For electrical practitioners IET offers: technical resources (BS 7671 publication, Wiring Matters magazine, IET Standards), professional registration via Engineering Council (EngTech, IEng, CEng), member events and CPD via IET Academy, and the credibility signal of MIET / FIET membership.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Heat-pump operation is genuinely different from gas-boiler operation. Customers who try to run a heat pump like a gas boiler (aggressive setbacks, on-off scheduling) post poor SCOP and disappointing comfort. The five-minute customer-training conversation at handover is one of the highest-leverage interactions in the entire install. It costs nothing and prevents months of customer dissatisfaction.",
   },
@@ -72,12 +72,12 @@ const checks = [
     question:
       'A customer phones six months after their PV install asking what they need for a house sale. What documents do they need from the original handover pack?',
     options: [
-      'Just the receipt.',
       "EIC for the new electrical circuit, MCS install certificate, Building Regs Part P compliance certificate (from the firm's competent-person scheme), updated EPC reflecting the PV, smart meter / SEG enrolment confirmation, manufacturer warranties, ENA G98 (or G99) DNO connection confirmation, system operating manual. Plus a copy of the install drawings if available. The buyer's solicitor will ask for all of this. Without it the buyer's solicitor flags the install as 'unverified' and the sale can stall. Customers should keep the handover pack as carefully as they keep their EPC and gas safety certificate.",
-      'A photograph of the panels.',
-      'A handwritten note.',
+      "FAIL — well above the BS 7671 Table 41.3 maximum of 1.37 Ω for B32 at 0.4 s disconnection. The protective device cannot guarantee disconnection within the required time. Action: (1) Verify the reading. (2) Check supply Ze first — is the high Zs caused by high origin Ze (possible PEN issue) or by added impedance on the circuit (HRJ, undersized cable)? (3) Make safe — isolate the affected circuit. (4) Investigate and rectify. (5) Document as Code 1 if safety is at imminent risk; Code 2 if safety is compromised but not immediately dangerous.",
+      "Engineering compromise = solution that's less than ideal but acceptable given constraints (cost, time, building fabric, customer budget). Examples: (1) Add a dedicated circuit for high-load appliance instead of full kitchen rewire. (2) Replace one tripping RCBO instead of upgrading to all-RCBO CU. (3) Patch a damaged cable section instead of replacing the full run. Each compromise is acceptable IF: (a) it brings the installation to BS 7671 compliance, (b) the limitations are documented and communicated to the customer, (c) the customer has accepted the compromise in writing, (d) the firm's professional indemnity covers the chosen approach. Compromise is engineering, not corner-cutting.",
+      "A4:2026 introduced AFDD (Arc Fault Detection Device) acknowledgement on the model forms — where AFDD is fitted, the form records the type, location and test result; where AFDD is not fitted (most existing installations), the form records an explicit 'AFDD not present' note rather than a blank field. A4 also tightened the supply earthing arrangement field (TN-S, TN-C-S / PNB, TT) and added explicit Protective Equipotential Bonding (PEB) verification fields. The MWC field for 'departures from BS 7671' is unchanged but now references A4:2026 by edition. Always check the latest model form from the IET — the field set has moved.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The handover pack is the long-term proof of the install. Conveyancing solicitors ask for it; mortgage lenders ask for it; insurers ask for it. A complete pack at handover is what makes the customer feel confident and what protects the trade from disputes years later. The pack should be physical (folder) and digital (PDF) — the digital version is what survives a house move.",
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       'What\'s the BS 7671 inspection and test sequence for a new dedicated radial circuit (e.g. heat pump or EV charger)?',
     options: [
-      'Just look at it.',
+      "Confirm: (1) clamp is on consumer side of the meter and on hard metal pipework before any branch; (2) within 600 mm of the meter outlet union where practicable; (3) pipe cleaned to bare metal under the clamp jaw; (4) jointing paste applied; (5) clamp screw torqued to manufacturer spec; (6) \\\"Safety Electrical Connection — Do Not Remove\\\" warning label fitted on the clamp body or conductor; (7) bonding conductor secure and labelled at the MET end.",
       "The standard initial verification: continuity of protective conductors (R1+R2 method or equivalent), continuity of ring circuits (N/A for a radial), insulation resistance (between live conductors and to earth), polarity, earth electrode resistance (where applicable), Zs at the most distant point of the circuit, RCD test (operating time, in some cases automatic disconnection time). Plus the visual inspection — labelling, accessibility of isolators, conductor identification, mechanical protection, terminal tightness. All recorded on the EIC. Mandatory before energising the circuit.",
-      'Test the cooker.',
-      'Phone a friend.',
+      "Three layers operating together: (1) operative pre-use visual inspection every shift — cable, plug, casing, guard, switch, anti-restart; (2) periodic in-service inspection by a competent person at a documented interval (monthly for harsh site use is typical); (3) formal Portable Appliance Test (PAT) on the documented cycle — every 3 months for 110 V site tools is HSE-recommended typical. Missing any one layer weakens the Reg 5 defence at any post-incident investigation.",
+      "The supervision is appropriate when the supervisor is themselves competent for the task, has direct visibility of the work AND the trainee, can intervene before a danger materialises, and the degree of supervision is matched to BOTH the task danger AND the trainee's experience level. A second-year on socket extensions is light supervision; a first-year on a CU change is direct, hands-on supervision throughout. Token oversight from elsewhere on site doesn't meet the regulation.",
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     question:
       'What does heat-pump functional commissioning involve beyond the BS 7671 electrical test?',
     options: [
-      'Just turn it on and see if it works.',
+      "BS 7671 (A4:2026 Reg 421.1.7) recommends AFDDs in specified locations including dwellings — but the wording is \\\\\\\"recommending\\\\\\\", not mandating. They are not strictly required by BS 7671 for a typical owner-occupied house. They ARE mandatory in Higher Risk Residential Buildings (HRRBs — typically blocks of flats over 18 m or 7 storeys) under the Building Safety Act 2022. For your house, they are a strongly recommended best-practice fire protection. Cost is roughly 60-100 GBP per AFDD-RCBO; protecting all socket and lighting circuits typically adds 600-1200 GBP to a CU change. Many domestic specifiers now include AFDDs as standard.",
+      "Type A RCDs detect AC residual currents and pulsating DC residual currents. They cannot detect smooth (continuous) DC residual currents — these can blind the device. Type B RCDs detect AC, pulsating DC and smooth DC residual currents. EV charge points produce smooth DC fault currents that a Type A alone cannot reliably trip. Two acceptable solutions per Section 722: (1) the unit includes its own RDC-DD (6 mA DC detection per IEC 62752 / 61851-1) and the upstream RCD can be Type A; (2) the unit does not include an RDC-DD and the upstream device must be Type B. Modern UK domestic units almost universally include the RDC-DD, so Type A upstream is the dominant choice. Always confirm against the unit's data sheet.",
       "F-Gas commissioning — refrigerant charge weight verified per manufacturer's instructions, leak test, pressure / temperature checks across the cycle. Wet system commissioning — pressure test, fill and bleed, flow rate verification per emitter, balancing. Heat pump system commissioning — flow temperature setpoint configured, defrost cycle verified, weather compensation curve set, smart controls integration tested, hot water cylinder priority confirmed, anti-legionella cycle verified. Performance check — measure flow temperature and ambient at first run; verify against design SCOP estimate. All recorded in the MCS commissioning records as part of the install pack.",
-      'A song and dance.',
-      'A coat of paint.',
+      "The DNO (Distribution Network Operator) is the company that owns and maintains the local low-voltage and medium-voltage distribution network — the poles, cables and substations between the National Grid and the customer meter. There are six DNO regions in Great Britain (UK Power Networks, Northern Powergrid, SP Energy Networks, Electricity North West, National Grid Electricity Distribution, SSEN). The DNO is NOT the supplier — the supplier sends the customer bill but does not own wires. You find the DNO from the postcode (the ENA Distribution map) or from the MPAN supply number at the customer meter (digit 1 of the bottom-line MPAN identifies the supply area). G98 / G99 notifications go to the relevant DNO, not to OFGEM, not to the supplier.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Heat-pump commissioning is a multi-trade activity. Each trade commissions their own scope — F-Gas for refrigerant, plumber for wet system, electrician for electrical, certified installer for the integrated system performance. The commissioning records combine into the customer handover pack. Skipping commissioning checks is the headline cause of post-install issues.",
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       'What does PV commissioning involve beyond the BS 7671 electrical test?',
     options: [
-      'Just connect it and forget.',
+      "Multiple bodies. (1) Emergency services — ambulance / fire / police as appropriate at the time. (2) Police — investigate scene, especially in fatalities (corporate manslaughter / individual gross-negligence manslaughter potential). (3) HSE — H&S investigation (HASAWA, EAWR, CDM, MHSWR, RIDDOR). (4) Building Control — where there's a building-regs / structural angle. (5) DNO — if mains supply was involved (ESQCR). (6) Insurers — both the firm's and the client's. The HSE and police typically work in parallel, especially after fatal incidents.",
+      "(1) Lifts — passengers can be trapped between floors when a lift loses supply mid-travel; modern lifts have an auto-rescue battery that returns to the nearest floor before opening, but you cannot assume; the lift contractor is informed and the lift is taken out of service before isolation. (2) Automatic doors and disabled-access — wheelchair users cannot exit a building whose powered doors fail; the building manager needs to staff the doors during the isolation. (3) Fire escape lighting + fire alarm + sprinkler pumps — public escape routes lose their indicated path and any fire detection during the isolation; this is a Fire Safety Order issue and the responsible person plans the cover. Other categories: ATMs, CCTV (insurance / security), public Wi-Fi (less critical), traffic signals on adjacent works (rare but possible).",
+      "BUS provides £7,500 for ASHP / GSHP and £5,000 for biomass — but the biomass strand is restricted to properties that are not connected to the gas grid AND in defined rural categories AND meet Ecodesign emission limits. The intent: heat pumps are the policy default, biomass is a fallback for properties where heat pumps are not viable (very high heat load, no electrical capacity for the heat pump, off-gas-grid rural) and where the air-quality impact is minimal (rural distance from neighbours, Defra-approved Ecodesign appliance). For a typical suburban property the BUS biomass strand is closed. For a rural off-gas-grid farmhouse with a 30 kW heat load, BUS biomass is sometimes the only viable grant route. The L3 electrician sees biomass overwhelmingly in rural settings.",
       "DC-side checks — string voltage at open circuit (matched against design Voc), string short-circuit current (matched against design Isc), polarity at the inverter input. AC-side checks — inverter switch-on, anti-islanding test (simulated grid disconnect), generation meter accuracy, export verification with smart meter. System functional check — inverter MPPT operation under load, error log review. Performance check — irradiance at commissioning, instantaneous output compared against expected output for current irradiance. All recorded in the MCS commissioning records and the inverter datalog. Plus the safety signage at all isolation points and the meter position.",
-      'Pour water on it.',
-      'Hide the meter.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "PV commissioning is the test that the design has converted to a working system. The DC-side checks verify the strings as installed match the design intent; the AC-side checks verify the grid interface; the performance check verifies the system delivers what was estimated. The MCS-certified installer signs off the commissioning records.",
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       'What\'s the customer-training conversation that needs to happen at heat-pump handover?',
     options: [
-      'No conversation needed.',
       "Run the customer through: how the system operates (continuous low-temperature heating, not on-off cycles like a gas boiler); how to set the room thermostat (set and forget at desired temperature, modest setbacks only); how to use the hot water schedule (typically once or twice a day); when to expect higher running costs (cold spells push up consumption); what the smart controls do; what the warning lights / app notifications mean; who to call for support (warranty contact, manufacturer support, installer aftercare); annual service requirement. Five-to-ten minutes that prevents months of customer confusion.",
-      'Argue with them.',
-      'Hide the manual.',
+      "Part P (Electrical Safety in Dwellings) requires certain types of electrical work in dwellings to be notified to Building Control — either via a registered competent-person scheme (NICEIC, NAPIT, etc.) or directly to the Local Authority. Notifiable work currently includes new circuits, consumer unit changes, and work in special locations (bathrooms / locations 700). Most environmental tech installs are notifiable — adding a PV inverter circuit, an EV charging circuit or a heat-pump dedicated radial all create new circuits and trigger Part P notification. Non-notifiable work (e.g. like-for-like socket replacement on an existing circuit) doesn't trigger Part P.",
+      "PQ analyser (Fluke 1748, Megger PQM, Dranetz HDPQ) is a long-term monitoring instrument — connect it at the supply or DB for a few days / weeks, it logs voltage, current, harmonic spectrum, transient events, sags / swells / interruptions, frequency, power factor, flicker. The multimeter shows you NOW; the PQ analyser shows you the past 7 days. Essential for diagnosing intermittent faults on commercial installations where the symptom only appears occasionally — the PQ log captures the moment of the fault and the conditions around it.",
+      "Carbon payback for typical UK PV is 1-3 years (the time taken for operating CO₂ savings to offset the manufacturing CO₂ cost). Financial payback depends on system cost, self-consumption, export tariff and electricity price — typically 6-12 years for a standalone PV install in 2026, often shorter if a battery is added (improves self-consumption from 25-40% to 70-90%). After payback the system continues for the rest of its 25-year warranted life essentially as free energy. The carbon case is much stronger than the financial case in isolation; together they make PV the dominant UK domestic environmental tech.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Customer training is the highest-leverage interaction in the entire install. Done well, the customer becomes a happy long-term advocate. Skipped, the customer reverts to gas-boiler habits, posts poor SCOP, and complains. The MCS install pack should include written customer operating instructions; the spoken handover walks the customer through them.",
   },
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       'What signage is required at the consumer unit / meter position after a PV install?',
     options: [
-      'No signage required.',
+      "All construction work in Great Britain, with proportionate duties based on project type and size. Notifiable projects (more than 30 working days with 20+ workers simultaneously, or exceeding 500 person-days) trigger additional duties including HSE notification (F10) and the appointment of Principal Designer and Principal Contractor for multi-contractor projects.",
       "Durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit, at the main isolation, at the inverter and at any DC isolators. The DNO emergency contacts. The PV system identification (kWp rating, inverter manufacturer/model). Required by BS 7671 Section 712, MCS MIS 3002 and the DNO's G98/G99 connection conditions. The signage protects future maintainers who may not realise there's a generator on the property.",
-      'A balloon.',
-      'A flashing light.',
+      "(1) T+E shears or rotary cable stripper to crop the conductor square and to the right length. (2) Auto-stripper or preset 4 mm² stripper to remove insulation cleanly without nicking strands. (3) (Optional but preferred) — slip a grey 4 mm² bootlace ferrule on, ratchet-crimp it. (4) Insert into terminal. (5) Tighten with preset torque driver to manufacturer's value (typically 2–3 Nm for Schneider isolators).",
+      "Bond each extraneous service (gas, water) separately back to the MET per Reg 544.1.2 (within 600 mm of intake). Bond the structural steel frame at multiple accessible points back to the MET. Bond the LPS earth network to the MET via direct bond or spark gap per BS EN 62305. Each system has its own dedicated bonding cable to the MET — no daisy-chaining. The MET is the single common reference for the entire integrated earth and bonding network.",
     ],
     correctAnswer: 1,
     explanation:
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       'What\'s the role of the electrical generation meter in a PV install\'s commissioning?',
     options: [
-      'It\'s just decoration.',
+      "Because EFLI is a LIVE test — the MFT injects a small fault current through the loop and measures the impedance from the response. If the supply is off, no fault current flows; the meter shows OPEN or undefined reading. If the protective device is OFF, the loop is broken upstream of your test point; same result. Both conditions are pre-requisites for a meaningful EFLI test. The MFT (Megger MFT1741+) typically warns 'NO VOLTAGE' or 'CIRCUIT OPEN' if either condition isn't met — but the apprentice should know to check before the warning.",
+      "Fracture (other than to fingers, thumbs and toes); amputation; permanent loss of sight or reduction of sight; crush injuries leading to internal organ damage; serious burns covering more than 10% of the body or causing significant damage to eyes, respiratory system or other vital organs; scalpings requiring hospital treatment; loss of consciousness from head injury or asphyxia; any other injury arising from work in an enclosed space leading to hypothermia, heat-induced illness or requiring resuscitation or admittance to hospital for more than 24 hours.",
       "An MID-compliant generation meter measures the total electrical output of the PV array. Required by Smart Export Guarantee (the supplier needs accurate metering to pay the export tariff) and increasingly by BUS / SEG-equivalent schemes for performance monitoring. At commissioning the meter is verified to read correctly (display zero before energising, increment as the inverter delivers, accumulate accurately over the first day's run). The customer can read the meter themselves to verify ongoing performance. The smart meter at the property handles the import / export reading for the supplier.",
-      'It\'s where the customer plugs in.',
-      'It\'s an inverter cooling fan.',
+      "Older fixed-speed heat pumps run the compressor at full output or off — short-cycling repeatedly to match a partial load. Each start consumes electricity and stresses the compressor. Modern inverter-driven units vary the compressor speed continuously to match the actual heat demand — running at 30 to 100 percent capacity smoothly. The result is better SCOP (less wasted starting energy), longer compressor life, quieter operation and more comfortable indoor temperatures. Almost every new domestic ASHP sold in the UK is inverter-driven. The L3 electrician sizes the supply to the rated nameplate current (the compressor at full speed); the variable-speed control is internal to the unit.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The generation meter is the system's accountability instrument. Customers (and SEG suppliers) need to trust the reading. Commissioning verifies it. MCS sign-off requires the meter to be present and verified. Older installs without a separate generation meter may struggle with SEG enrolment.",
   },
@@ -173,12 +173,12 @@ const quizQuestions = [
     question:
       'What\'s the typical content of the MCS install certificate that the customer receives at handover?',
     options: [
-      'Just the customer\'s name.',
+      "Three. (1) Test readings — pre-rectification (the failed reading) and post-rectification (the corrected reading), with timestamps and instrument IDs. (2) Functional test outcomes — what was tested, what worked, any anomalies. (3) Customer hand-back record — what was demonstrated, what documentation provided, customer's signed acceptance. The records become the diagnostic narrative on the job sheet — defensible audit trail of what was found, what was done, what was verified.",
+      "Apprentice is a formal JIB grade for someone in a registered apprenticeship — typically a learner working towards the C&G 2365 (or NVQ Level 3) and the AM2. 'Improver' is not a formal JIB grade — it's a colloquial industry term sometimes used for the post-college, pre-AM2 stage where the learner has completed the technical qualifications but not yet sat the AM2. Once AM2 is passed and JIB processes the upgrade, the worker becomes an Electrician on the JIB scale.",
+      "Stage 1: try to discuss and resolve — most disputes resolve through conversation. Stage 2: if unresolved, follow your written complaints procedure. Stage 3: if still unresolved, signpost ADR (RECC for MCS work, NICEIC/NAPIT for scheme work, generic ADR providers like Centre for Effective Dispute Resolution). Stage 4: as last resort, small claims court (under £10k, online process). Document everything in writing throughout.",
       "Customer name and address; installer name and MCS certification number; install date; technology and rating (e.g. 5 kWp PV with 10 kWh battery); manufacturer and model details for the major components; performance estimate (annual generation kWh, SCOP, etc.); MCS Installation Standard reference (e.g. MIS 3002 v6.0); Workmanship Warranty period and what it covers; aftercare contact details. The certificate is the customer's proof of MCS-certified installation, used for BUS grant, SEG enrolment, manufacturer warranty registration and future house sale.",
-      'A bus timetable.',
-      'A weather forecast.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The MCS certificate is the headline document the customer keeps. It's the gateway to incentives, warranties and future house sale credibility. The MCS-certified installer issues it; the customer should keep it permanently with the rest of the install pack.",
   },
@@ -187,12 +187,12 @@ const quizQuestions = [
     question:
       'What happens to the customer\'s EPC after an environmental tech install, and why does it matter?',
     options: [
-      'EPCs aren\'t affected by environmental tech.',
       "The EPC should be re-issued to reflect the new performance — heat pump, PV, MVHR, insulation upgrades all change the SAP rating. The MCS-certified installer normally arranges the EPC update. An updated EPC matters for: (a) future house sale (the buyer's solicitor sees current performance); (b) mortgage applications (lenders increasingly weight EPC ratings); (c) insurance (some insurers now adjust premium for low-EPC properties); (d) BUS grant requires a valid EPC at the time of install. EPCs are valid for 10 years from issue.",
-      'EPCs are issued by the milkman.',
-      'EPCs only apply to commercial.',
+      "Because the standard's enforcement and interpretation hinges on the precise definitions. 'Exposed-conductive-part' (a conductive part of equipment that can be touched and which is liable to become live in fault conditions) and 'extraneous-conductive-part' (a conductive part liable to introduce a potential, generally Earth, not forming part of the electrical installation) are different categories with different bonding rules. Mis-classify one as the other and you mis-bond, you fail the EICR, you potentially leave the customer unprotected. Definitions ARE the technical content.",
+      "To co-operate with the client, principal designer, principal contractor, contractor and any other person performing a duty under CDM, AND to report to the principal contractor (or contractor where there is no principal contractor) anything that they consider is likely to endanger their own or another person's health or safety, AND to comply with the requirements of CDM.",
+      "The CO2-equivalent refrigerant charge — kg of refrigerant multiplied by the refrigerant's global warming potential, divided by 1000. Mandatory intervals: 5+ tonnes CO2e annual; 50+ tonnes CO2e six-monthly; 500+ tonnes CO2e three-monthly. Most domestic ASHPs sit below 5 tonnes CO2e and are not subject to the mandatory regulatory intervals — but manufacturer warranty terms typically require annual servicing anyway.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "EPC update is part of the broader install handover, not just the technical commissioning. Customers often forget about it; the certified installer should arrange or remind. An out-of-date EPC understates the property's actual performance and costs the customer money on sale / mortgage / insurance.",
   },

@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'pre-commissioning',
     question: 'What is the primary purpose of pre-commissioning checks?',
     options: [
-      'To energise the installation quickly',
       'To verify installation completeness and identify defects before energisation',
-      'To complete handover documentation',
-      'To test RCD operation',
+      'Testing systems under both heating and cooling conditions',
+      'Gravity causes the load to shift downwards, so the lower person naturally takes more weight',
+      'Plan key points, practise what you will say, choose the right time and place, execute with empathy',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Pre-commissioning checks verify that the installation is complete, correctly installed, and free from obvious defects before any electrical testing or energisation takes place.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'dead-testing',
     question: 'Which tests must be completed before the installation is energised?',
     options: [
-      'RCD testing and earth fault loop impedance',
+      'Missing grommets and exposed copper conductors',
+      'Adjusting activity timing to avoid resource overallocation',
       'Continuity, insulation resistance, and polarity verification',
-      'Functional testing and load measurements',
-      'Prospective fault current only',
+      'Building services engineer or ventilation specialist',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Continuity of protective conductors, insulation resistance testing, and polarity verification are dead tests that must be completed before energisation to ensure safety.',
   },
@@ -53,8 +53,13 @@ const quickCheckQuestions = [
     id: 'insulation-resistance',
     question:
       'What is the minimum acceptable insulation resistance value for a 230V circuit per BS 7671?',
-    options: ['0.5 MΩ', '1.0 MΩ', '2.0 MΩ', '10 MΩ'],
-    correctIndex: 1,
+    options: [
+      '0.5 MΩ',
+      '10 MΩ',
+      '2.0 MΩ',
+      '1.0 MΩ',
+    ],
+    correctIndex: 3,
     explanation:
       'For circuits operating at nominal voltages up to and including 500V AC, the minimum insulation resistance value is 1.0 MΩ per Regulation 643.3.2 of BS 7671.',
   },
@@ -62,10 +67,10 @@ const quickCheckQuestions = [
     id: 'eicr-purpose',
     question: 'What is the purpose of the Electrical Installation Certificate (EIC)?',
     options: [
-      'To list all materials used',
+      'Accessible trunking and containment systems with mechanical fixings',
       'To certify that the installation complies with BS 7671 and is safe for use',
-      'To record energy consumption',
-      'To detail the project costs',
+      'The ratio of real power to apparent power at the fundamental frequency',
+      'Infrared radiation emitted by objects, which correlates to their surface temperature',
     ],
     correctIndex: 1,
     explanation:
@@ -79,10 +84,10 @@ const quizQuestions = [
     question:
       'What document should be completed first during visual inspection before any testing?',
     options: [
-      'Schedule of Test Results',
+      'To translate between different protocols and connect to the internet',
       'Pre-commissioning checklist verifying installation completeness',
-      'Electrical Installation Certificate',
-      'Minor Works Certificate',
+      'Imposter syndrome as described by Clance and Imes (1978)',
+      'Building user surveys, energy analysis, and environmental monitoring',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,8 +97,13 @@ const quizQuestions = [
     id: 2,
     question:
       'According to BS 7671, at what test voltage should insulation resistance testing be performed on a 230V circuit?',
-    options: ['250V DC', '500V DC', '1000V DC', '230V AC'],
-    correctAnswer: 1,
+    options: [
+      '1000V DC',
+      '250V DC',
+      '500V DC',
+      '230V AC',
+    ],
+    correctAnswer: 2,
     explanation:
       'For circuits with nominal voltage up to and including 500V AC (which includes 230V circuits), insulation resistance testing must be performed at 500V DC per Table 64.3 of BS 7671.',
   },
@@ -102,12 +112,12 @@ const quizQuestions = [
     question:
       'When testing continuity of protective conductors, what is the purpose of comparing R1+R2 values?',
     options: [
-      'To calculate power consumption',
+      'After all safety tests are complete and the installation is energised',
+      'All dead tests are satisfactory and the supply characteristics are known',
+      'Schedule of Inspections and Schedule of Test Results',
       'To verify earth fault loop impedance will be within limits',
-      'To determine cable size',
-      'To test RCD operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The measured R1+R2 value, when added to the external earth fault loop impedance (Ze), gives the total earth fault loop impedance (Zs), which must be within the limits stated in BS 7671 to ensure protective devices operate within the required disconnection time.',
   },
@@ -115,8 +125,13 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the maximum disconnection time for a 32A final circuit in a TN system per BS 7671?',
-    options: ['0.1 seconds', '0.2 seconds', '0.4 seconds', '5 seconds'],
-    correctAnswer: 2,
+    options: [
+      '0.4 seconds',
+      '0.2 seconds',
+      '0.1 seconds',
+      '5 seconds',
+    ],
+    correctAnswer: 0,
     explanation:
       'For final circuits not exceeding 63A in TN systems, the maximum disconnection time is 0.4 seconds per Regulation 411.3.2.2. This ensures rapid disconnection under earth fault conditions.',
   },
@@ -124,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'During polarity testing, which connections must be verified as correct?',
     options: [
-      'Only the live conductor connection',
+      'Assertive communication respects both your own rights and the rights of others; aggressive communication disregards others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' rights',
       'Single-pole switches in line conductor, centre contact of ES lampholders to line, and correct phase rotation',
-      'Only three-phase connections',
-      'Neutral conductor connections only',
+      'Pulseless electrical activity (PEA) — treated with high-quality CPR and addressing reversible causes',
+      'It ensures consistent, accurate data that can be used in calculations and comparisons',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,8 +151,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the maximum trip time for a 30mA RCD at 150mA test current?',
-    options: ['40ms', '200ms', '300ms', '1 second'],
-    correctAnswer: 0,
+    options: [
+      '300ms',
+      '200ms',
+      '40ms',
+      '1 second',
+    ],
+    correctAnswer: 2,
     explanation:
       'When tested at 5 times rated residual current (5 x 30mA = 150mA), the RCD must trip within 40ms per BS EN 61008/61009. This verifies the RCD will provide fast disconnection under high fault currents.',
   },
@@ -145,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'What test equipment is used to measure prospective fault current (PFC)?',
     options: [
-      'Insulation resistance tester',
+      'The rate of flow of charge past a point',
+      'Store safely for future reference',
+      'Isolate the affected circuit and clearly inform the client',
       'Earth loop impedance tester with PFC function',
-      'Continuity tester',
-      'RCD tester',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Earth loop impedance testers typically include a PFC measurement function. PFC must be measured at the origin and at various points to verify protective devices have adequate breaking capacity.',
   },
@@ -158,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'When should functional testing of emergency lighting be performed?',
     options: [
-      'Before any other testing',
       'After all safety tests are complete and the installation is energised',
-      'Only during the EICR periodic inspection',
-      'Functional testing is not required',
+      'To verify earth fault loop impedance will be within limits',
+      'To report on the condition of an existing installation and identify defects',
+      'All dead tests are satisfactory and the supply characteristics are known',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Functional testing of emergency lighting and other systems must be performed after the installation is safely energised and all safety verification tests have confirmed compliance.',
   },
@@ -171,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'What document must accompany the EIC to record all test results?',
     options: [
-      'Building Regulations compliance certificate',
+      'Only if the terminal is designed to accommodate them safely',
       'Schedule of Inspections and Schedule of Test Results',
-      'Risk assessment',
-      'Method statement',
+      'Match the phasing of building occupation',
+      'Lower magnitude 5th and 7th harmonics',
     ],
     correctAnswer: 1,
     explanation:
@@ -184,12 +204,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of an EICR (Electrical Installation Condition Report)?',
     options: [
-      'To certify new installations',
+      'To verify earth fault loop impedance will be within limits',
+      'All dead tests are satisfactory and the supply characteristics are known',
       'To report on the condition of an existing installation and identify defects',
-      'To record energy consumption',
-      'To approve design drawings',
+      'After all safety tests are complete and the installation is energised',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An EICR reports on the condition of an existing installation, identifying any damage, deterioration, defects, dangerous conditions, or non-compliance with current standards.',
   },
@@ -197,12 +217,12 @@ const quizQuestions = [
     id: 11,
     question: 'Before energising an installation, which of the following must be confirmed?',
     options: [
-      'All circuits have been loaded',
-      'The client has paid the invoice',
+      'To verify earth fault loop impedance will be within limits',
+      'Schedule of Inspections and Schedule of Test Results',
+      'After all safety tests are complete and the installation is energised',
       'All dead tests are satisfactory and the supply characteristics are known',
-      'All labels have been fitted',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Before energisation, all dead tests (continuity, insulation resistance, polarity) must return satisfactory results, and the supply characteristics (voltage, frequency, PFC, Ze) must be known and recorded.',
   },
@@ -210,8 +230,13 @@ const quizQuestions = [
     id: 12,
     question:
       'What classification code indicates a dangerous condition requiring immediate action on an EICR?',
-    options: ['C3', 'C2', 'C1', 'FI'],
-    correctAnswer: 2,
+    options: [
+      'C1',
+      'FI',
+      'C3',
+      'C2',
+    ],
+    correctAnswer: 0,
     explanation:
       "C1 indicates 'Danger present - risk of injury. Immediate remedial action required.' This classification requires the danger to be addressed before the installation continues in use.",
   },

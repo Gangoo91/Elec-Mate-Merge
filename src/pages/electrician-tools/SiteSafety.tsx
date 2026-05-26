@@ -22,6 +22,8 @@ import { Eyebrow, containerVariants, itemVariants } from '@/components/college/p
 import { RAMSProvider } from '@/components/electrician-tools/site-safety/rams/RAMSContext';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import { useSafetyDashboardStats, useRecentDocuments } from '@/hooks/useSafetyDashboardStats';
+import { useAllSafetyDocuments } from '@/hooks/useAllSafetyDocuments';
+import { SafetyScoreSheet } from '@/components/electrician-tools/site-safety/SafetyScoreSheet';
 import { useSafetyEquipment } from '@/hooks/useSafetyEquipment';
 import { useCOSHHOverdueReviews } from '@/hooks/useCOSHH';
 import { useWeeklySafetySummary } from '@/hooks/useWeeklySafetySummary';
@@ -504,9 +506,14 @@ const SiteSafety = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [activeView, setActiveView] = useState<string | null>(null);
+  const [scoreSheetOpen, setScoreSheetOpen] = useState(false);
 
   const { stats: dashboardStats } = useSafetyDashboardStats();
   const { data: recentDocuments } = useRecentDocuments();
+  // Real document count across all modules — same source the Documents
+  // page reads from, so the hub stat agrees with what the user sees inside.
+  const { data: allDocuments = [] } = useAllSafetyDocuments();
+  const totalDocuments = allDocuments?.length ?? 0;
   const { overdueItems: equipmentOverdue, dueSoonItems: equipmentDueSoon } = useSafetyEquipment();
   const { data: coshhOverdue = [] } = useCOSHHOverdueReviews();
   const { data: weeklySummary } = useWeeklySafetySummary();
@@ -542,10 +549,10 @@ const SiteSafety = () => {
         cta: { label: 'View permits', onClick: () => setActiveView('permit-to-work') },
       };
     }
-    if (dashboardStats.totalDocuments > 0) {
+    if (totalDocuments > 0) {
       return {
         headline: pickHeadline(HEADLINES_CLEAR),
-        verdict: `${dashboardStats.totalDocuments} safety ${dashboardStats.totalDocuments === 1 ? 'document' : 'documents'} on file. Pull a RAMS together for tomorrow's job in under a minute.`,
+        verdict: `${totalDocuments} safety ${totalDocuments === 1 ? 'document' : 'documents'} on file. Pull a RAMS together for tomorrow's job in under a minute.`,
         cta: { label: 'New RAMS', onClick: () => setActiveView('ai-rams') },
       };
     }
@@ -554,7 +561,7 @@ const SiteSafety = () => {
       verdict: 'No safety docs yet. Generate your first RAMS in under a minute — AI handles the boilerplate.',
       cta: { label: 'New RAMS', onClick: () => setActiveView('ai-rams') },
     };
-  }, [coshhOverdue.length, equipmentOverdue.length, dashboardStats.activePermits, dashboardStats.totalDocuments]);
+  }, [coshhOverdue.length, equipmentOverdue.length, dashboardStats.activePermits, totalDocuments]);
 
   const safetyScore = weeklySummary?.safetyScore ?? null;
   const stats: SafetyStat[] = [
@@ -570,11 +577,11 @@ const SiteSafety = () => {
               ? 'Steady'
               : 'Needs attention',
       accent: true,
-      onClick: () => setActiveView('documents'),
+      onClick: () => setScoreSheetOpen(true),
     },
     {
       label: 'Documents',
-      value: dashboardStats.totalDocuments,
+      value: totalDocuments,
       sub: 'On file',
       onClick: () => setActiveView('documents'),
     },
@@ -636,8 +643,8 @@ const SiteSafety = () => {
       description: 'Every saved RAMS, permit and assessment in one place.',
       onClick: () => setActiveView('documents'),
       meta:
-        dashboardStats.totalDocuments > 0
-          ? `${dashboardStats.totalDocuments} saved`
+        totalDocuments > 0
+          ? `${totalDocuments} saved`
           : 'Empty',
     },
     {
@@ -958,6 +965,12 @@ const SiteSafety = () => {
           />
         </div>
       </div>
+
+      <SafetyScoreSheet
+        open={scoreSheetOpen}
+        onOpenChange={setScoreSheetOpen}
+        summary={weeklySummary}
+      />
     </RAMSProvider>
   );
 };

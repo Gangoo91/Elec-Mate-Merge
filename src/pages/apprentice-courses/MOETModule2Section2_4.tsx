@@ -13,8 +13,13 @@ const quickCheckQuestions = [
   {
     id: 'harmonic-order',
     question: 'The third harmonic of the 50 Hz UK supply has a frequency of:',
-    options: ['100 Hz', '150 Hz', '200 Hz', '250 Hz'],
-    correctIndex: 1,
+    options: [
+      '200 Hz',
+      '100 Hz',
+      '250 Hz',
+      '150 Hz',
+    ],
+    correctIndex: 3,
     explanation:
       'The nth harmonic is n times the fundamental frequency. The third harmonic of 50 Hz is 3 x 50 = 150 Hz. Similarly, the 5th harmonic is 250 Hz, the 7th is 350 Hz, and so on. Odd harmonics are the most significant in power systems because most non-linear loads produce symmetrical waveform distortion.',
   },
@@ -22,12 +27,12 @@ const quickCheckQuestions = [
     id: 'thd-meaning',
     question: 'Total Harmonic Distortion (THD) is a measure of:',
     options: [
-      'The frequency stability of the supply',
-      'The voltage drop in a cable',
+      'To provide additional connection points for sensors and actuators',
       'How much the waveform deviates from a pure sine wave due to harmonic content',
-      'The power factor of a circuit',
+      'Ensuring metallic parts are at same potential to prevent dangerous voltages',
+      'Commissioning certificate, cause and effect matrix, zone plans and detector schedule',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'THD expresses the ratio of the RMS value of all harmonic components to the RMS value of the fundamental component, usually as a percentage. A THD of 0% means a perfect sine wave. A THD of 5% is typical for a lightly loaded modern installation. A THD above 8% generally requires investigation and possible remediation.',
   },
@@ -36,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'Triplen harmonics (3rd, 9th, 15th, etc.) are particularly problematic in three-phase systems because:',
     options: [
-      'They cause the supply frequency to change',
       'They add arithmetically in the neutral conductor, potentially overloading it',
-      'They reduce the supply voltage to zero',
-      'They only affect single-phase circuits',
+      'Suitable means for cutting off electrical energy supply',
+      'Introducing clean fluid to protect instruments from process contamination',
+      'Elimination → substitution → engineering controls → administrative controls → PPE',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Triplen harmonics (multiples of 3) are zero-sequence harmonics. Unlike the fundamental 50 Hz currents (which cancel in a balanced neutral), triplen harmonics from all three phases are in phase with each other and add arithmetically in the neutral conductor. This can cause the neutral current to exceed the line current — a serious overloading risk, particularly in older installations with reduced neutral conductors.',
   },
@@ -50,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'When using an oscilloscope to measure a 50 Hz waveform, what timebase setting would show approximately two complete cycles on the screen?',
     options: [
-      '1 ms/div with 10 divisions = 10 ms total',
-      '5 ms/div with 10 divisions = 50 ms total',
       '10 ms/div with 10 divisions = 100 ms total',
       '50 ms/div with 10 divisions = 500 ms total',
+      '5 ms/div with 10 divisions = 50 ms total',
+      '1 ms/div with 10 divisions = 10 ms total',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'One complete cycle at 50 Hz takes 20 ms (T = 1/f = 1/50 = 0.02 s). To display two complete cycles requires 40 ms of time on screen. With 10 horizontal divisions, a timebase of 5 ms/div gives 50 ms total — enough to display 2.5 cycles, clearly showing approximately two complete cycles.',
   },
@@ -65,8 +70,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'The angular frequency of the UK 50 Hz supply is approximately:',
-    options: ['50 rad/s', '157 rad/s', '314 rad/s', '628 rad/s'],
-    correctAnswer: 2,
+    options: [
+      '50 rad/s',
+      '314 rad/s',
+      '157 rad/s',
+      '628 rad/s',
+    ],
+    correctAnswer: 1,
     explanation:
       'Angular frequency ω = 2πf = 2 x π x 50 = 100π ≈ 314 rad/s. Angular frequency is used in calculations of inductive reactance (XL = ωL) and capacitive reactance (XC = 1/ωC). It represents the rate of rotation of the phasor in radians per second.',
   },
@@ -75,10 +85,10 @@ const quizQuestions = [
     question:
       'Which of the following loads is most likely to produce significant harmonic distortion?',
     options: [
-      'A resistive heater element',
-      'An incandescent lamp',
+      'Increased eddy current and hysteresis losses, causing additional heating',
+      'Voltage distortion from harmonic-producing loads (flat-topping)',
       'A variable speed drive (VSD) with a six-pulse rectifier input',
-      'A purely inductive coil',
+      'Injecting equal and opposite harmonic currents to cancel the harmonics',
     ],
     correctAnswer: 2,
     explanation:
@@ -89,12 +99,12 @@ const quizQuestions = [
     question:
       'A six-pulse rectifier (as found in many VSDs) produces characteristic harmonics of order:',
     options: [
-      '2nd, 4th, 6th, 8th (even harmonics)',
       '3rd, 9th, 15th (triplen harmonics)',
-      '5th, 7th, 11th, 13th (h = 6n ± 1)',
+      '2nd, 4th, 6th, 8th (even harmonics)',
       'All harmonics equally',
+      '5th, 7th, 11th, 13th (h = 6n ± 1)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A six-pulse rectifier produces harmonics of order h = 6n ± 1, where n = 1, 2, 3... This gives 5th, 7th, 11th, 13th, 17th, 19th, etc. The magnitude decreases with harmonic order (approximately 1/h). A twelve-pulse rectifier eliminates the 5th and 7th, producing mainly 11th and 13th — this is one method of harmonic reduction.',
   },
@@ -102,12 +112,12 @@ const quizQuestions = [
     id: 4,
     question: 'What effect do harmonics have on transformers?',
     options: [
-      'No effect — transformers are immune to harmonics',
       'Increased eddy current and hysteresis losses, causing additional heating',
-      'Reduced output voltage only',
-      'Increased efficiency due to higher frequency components',
+      'Use an appropriately rated high-voltage differential probe or voltage attenuator',
+      'Equipment with rated current up to 16 A per phase (Class A, B, C, D equipment)',
+      'Injecting equal and opposite harmonic currents to cancel the harmonics',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Harmonics cause additional heating in transformers through two mechanisms: eddy current losses increase as the square of the frequency (a 250 Hz 5th harmonic produces 25 times the eddy current losses of the 50 Hz fundamental), and hysteresis losses increase approximately linearly with frequency. This is why transformers supplying harmonic-rich loads must be derated or specified as 'K-rated' transformers designed for harmonic duty.",
   },
@@ -115,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: 'The BS EN 61000-3-2 standard limits harmonic currents for:',
     options: [
-      'All industrial installations regardless of size',
+      'Voltage distortion from harmonic-producing loads (flat-topping)',
       'Equipment with rated current up to 16 A per phase (Class A, B, C, D equipment)',
-      'Only motors above 100 kW',
-      'Only lighting circuits',
+      'Increased eddy current and hysteresis losses, causing additional heating',
+      'A variable speed drive (VSD) with a six-pulse rectifier input',
     ],
     correctAnswer: 1,
     explanation:
@@ -129,10 +139,10 @@ const quizQuestions = [
     question:
       'An oscilloscope displays a waveform with a flattened top. This is most likely caused by:',
     options: [
-      'A pure sine wave',
-      'Excessive fundamental frequency current',
+      'Increased eddy current and hysteresis losses, causing additional heating',
+      'Injecting equal and opposite harmonic currents to cancel the harmonics',
       'Voltage distortion from harmonic-producing loads (flat-topping)',
-      'A low supply frequency',
+      'A variable speed drive (VSD) with a six-pulse rectifier input',
     ],
     correctAnswer: 2,
     explanation:
@@ -145,10 +155,10 @@ const quizQuestions = [
     options: [
       'Passive harmonic filter',
       'Active harmonic filter',
-      'Twelve-pulse rectification',
       'K-rated transformer',
+      'Twelve-pulse rectification',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Twelve-pulse rectification uses two six-pulse rectifiers fed from transformer secondaries with a 30-degree phase shift (typically one star and one delta secondary). The 5th and 7th harmonics from the two rectifiers are 180 degrees out of phase and cancel each other, leaving mainly 11th and 13th harmonics. This can reduce total current THD from approximately 30% to approximately 10%.',
   },
@@ -156,12 +166,12 @@ const quizQuestions = [
     id: 8,
     question: "The 'skin effect' at harmonic frequencies causes:",
     options: [
-      'Reduced conductor temperature',
       'Increased effective AC resistance of conductors',
-      'Improved power factor',
-      'Reduced cable insulation requirements',
+      'Electronically via the HSE website or by post',
+      'The person responsible for the design of the installation',
+      'Only the person who applied them or authorised transfer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The skin effect causes AC current to flow preferentially on the surface of a conductor. The depth of penetration decreases with increasing frequency. At harmonic frequencies (250 Hz, 350 Hz, etc.), the skin effect is more pronounced than at 50 Hz, reducing the effective cross-sectional area and increasing the AC resistance. This causes additional heating in conductors carrying harmonic currents and may require conductor derating.',
   },
@@ -169,10 +179,10 @@ const quizQuestions = [
     id: 9,
     question: 'An active harmonic filter works by:',
     options: [
-      'Blocking harmonic frequencies with a series inductor',
+      'Use an appropriately rated high-voltage differential probe or voltage attenuator',
       'Injecting equal and opposite harmonic currents to cancel the harmonics',
-      'Increasing the supply impedance',
-      'Converting AC to DC and back again',
+      'Increased eddy current and hysteresis losses, causing additional heating',
+      'Equipment with rated current up to 16 A per phase (Class A, B, C, D equipment)',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,7 +192,12 @@ const quizQuestions = [
     id: 10,
     question:
       'A power quality analyser shows voltage THD of 12% on a distribution board. According to BS EN 50160, the recommended limit for voltage THD on LV systems is:',
-    options: ['1%', '5%', '8%', '15%'],
+    options: [
+      '1%',
+      '5%',
+      '8%',
+      '15%',
+    ],
     correctAnswer: 2,
     explanation:
       'BS EN 50160 (voltage characteristics of electricity supplied by public distribution systems) states that voltage THD should not exceed 8% under normal operating conditions, measured over 10-minute intervals. Individual harmonic voltages also have specific limits. A THD of 12% exceeds this limit and investigation is warranted — the source of harmonics should be identified and mitigation measures considered.',
@@ -192,12 +207,12 @@ const quizQuestions = [
     question:
       'When connecting an oscilloscope probe to measure a 400 V three-phase supply, you should:',
     options: [
-      'Connect directly with a standard 1:1 probe',
+      'Increased eddy current and hysteresis losses, causing additional heating',
+      'Voltage distortion from harmonic-producing loads (flat-topping)',
+      'Injecting equal and opposite harmonic currents to cancel the harmonics',
       'Use an appropriately rated high-voltage differential probe or voltage attenuator',
-      'Connect to the earth terminal only',
-      'Use a current probe on the neutral conductor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Standard oscilloscope probes are typically rated for a maximum of 300-600 V (CAT II). For 400 V three-phase measurements, a high-voltage differential probe (with appropriate CAT III or CAT IV rating) must be used. A differential probe measures the voltage between two points without connecting either to the oscilloscope's ground — this is essential because the oscilloscope ground is typically connected to mains earth, and connecting it to a live conductor would create a dangerous short circuit.",
   },
@@ -206,12 +221,12 @@ const quizQuestions = [
     question:
       'In a building with many VSD-controlled motors, which of the following is NOT a typical symptom of harmonic distortion?',
     options: [
+      'Increased supply frequency above 50 Hz',
+      'Incorrect readings on average-responding meters',
       'Unexplained overheating of neutral conductors',
       'Premature failure of power factor correction capacitors',
-      'Incorrect readings on average-responding meters',
-      'Increased supply frequency above 50 Hz',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Harmonics do not change the supply frequency — the fundamental remains at 50 Hz. Harmonics are additional frequency components superimposed on the fundamental. The other three options are all genuine symptoms of harmonic distortion: neutral overloading from triplen harmonics, PFC capacitor failure from harmonic resonance and overcurrent, and incorrect meter readings because average-responding meters assume a pure sine wave.',
   },

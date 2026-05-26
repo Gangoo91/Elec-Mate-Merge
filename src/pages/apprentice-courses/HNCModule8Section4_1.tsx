@@ -27,16 +27,26 @@ const quickCheckQuestions = [
     id: 'synchronous-speed',
     question:
       'A 4-pole three-phase motor is connected to a 50Hz supply. What is the synchronous speed?',
-    options: ['3000 rpm', '1500 rpm', '1000 rpm', '750 rpm'],
-    correctIndex: 1,
+    options: [
+      '1500 rpm',
+      '3000 rpm',
+      '1000 rpm',
+      '750 rpm',
+    ],
+    correctIndex: 0,
     explanation:
       'Synchronous speed Ns = (120 x f) / p = (120 x 50) / 4 = 1500 rpm. A 4-pole motor has two pairs of poles, giving 1500 rpm at 50Hz. This is the speed of the rotating magnetic field.',
   },
   {
     id: 'slip-calculation',
     question: 'A 4-pole motor runs at 1440 rpm on a 50Hz supply. What is the slip?',
-    options: ['2%', '4%', '6%', '8%'],
-    correctIndex: 1,
+    options: [
+      '2%',
+      '8%',
+      '6%',
+      '4%',
+    ],
+    correctIndex: 3,
     explanation:
       'Slip s = (Ns - Nr) / Ns x 100% = (1500 - 1440) / 1500 x 100% = 4%. Typical full-load slip for induction motors is 2-6%. The rotor must slip behind the rotating field to induce current.',
   },
@@ -44,8 +54,13 @@ const quickCheckQuestions = [
     id: 'ie-efficiency',
     question:
       'Which IE efficiency class is now the minimum legal requirement for new motors in the EU/UK?',
-    options: ['IE1 Standard', 'IE2 High', 'IE3 Premium', 'IE4 Super Premium'],
-    correctIndex: 2,
+    options: [
+      'IE1 Standard',
+      'IE2 High',
+      'IE4 Super Premium',
+      'IE3 Premium',
+    ],
+    correctIndex: 3,
     explanation:
       'Since July 2021, IE3 (Premium Efficiency) is the minimum requirement for most three-phase motors 0.75-1000kW. IE4 is required for some applications. This regulation drives significant energy savings across industry.',
   },
@@ -54,12 +69,12 @@ const quickCheckQuestions = [
     question:
       'An AHU fan motor runs continuously at constant load. Which duty cycle designation applies?',
     options: [
-      'S1 - Continuous duty',
-      'S2 - Short-time duty',
-      'S3 - Intermittent periodic duty',
       'S6 - Continuous operation periodic duty',
+      'S2 - Short-time duty',
+      'S1 - Continuous duty',
+      'S3 - Intermittent periodic duty',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'S1 (continuous duty) applies when the motor runs at constant load for sufficient time to reach thermal equilibrium. This is typical for HVAC fans, pumps and other continuously operating equipment.',
   },
@@ -70,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: 'What produces the rotating magnetic field in a three-phase induction motor?',
     options: [
-      'The rotor windings energised by slip rings',
+      'The planned/unplanned ratio (or reactive/proactive split)',
       'Three-phase currents displaced by 120 degrees in the stator windings',
-      'Permanent magnets in the rotor',
-      'A commutator and brushes',
+      'To prevent damage to final fittings and finishes',
+      'When working near watercourses or installing certain equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,12 +98,12 @@ const quizQuestions = [
     id: 2,
     question: 'Why must there be slip in an induction motor for it to produce torque?',
     options: [
-      'To prevent overheating of the stator',
+      'To compensate for reduced cooling at low speeds',
+      'Maximum winding temperature of 155 degrees C',
       'To induce voltage and current in the rotor conductors',
-      'To reduce starting current',
-      'To improve power factor',
+      'S4 - Intermittent periodic duty with starting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'If the rotor turned at synchronous speed, there would be no relative motion between rotor and stator field, so no EMF would be induced in the rotor. Slip causes relative motion, inducing rotor current which interacts with the stator field to produce torque.',
   },
@@ -96,16 +111,26 @@ const quizQuestions = [
     id: 3,
     question:
       'A motor nameplate shows 400V, 11kW, 21.5A, cos phi 0.85, 1460 rpm. What is the number of poles?',
-    options: ['2 poles', '4 poles', '6 poles', '8 poles'],
-    correctAnswer: 1,
+    options: [
+      '6 poles',
+      '2 poles',
+      '8 poles',
+      '4 poles',
+    ],
+    correctAnswer: 3,
     explanation:
       'At 1460 rpm with ~3% slip, synchronous speed is approximately 1500 rpm. Using Ns = 120f/p, we get p = 120 x 50/1500 = 4 poles. The actual speed is slightly below synchronous due to slip.',
   },
   {
     id: 4,
     question: 'What is the typical full-load efficiency of an IE3 motor rated at 7.5kW?',
-    options: ['75-80%', '80-85%', '89-91%', '95-97%'],
-    correctAnswer: 2,
+    options: [
+      '89-91%',
+      '80-85%',
+      '75-80%',
+      '95-97%',
+    ],
+    correctAnswer: 0,
     explanation:
       "IE3 (Premium Efficiency) motors typically achieve 89-91% efficiency at 7.5kW. This represents significant improvement over older IE1 motors (84-86%) and reduces running costs substantially over the motor's lifetime.",
   },
@@ -113,12 +138,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which factor has the greatest impact on motor efficiency losses?',
     options: [
-      'Bearing friction',
-      'Windage losses',
+      'Power is proportional to speed cubed',
       'Copper losses (I squared R) in windings',
-      'Stray losses',
+      'S4 - Intermittent periodic duty with starting',
+      'Maximum winding temperature of 155 degrees C',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Copper losses (I squared R losses) in the stator and rotor windings are typically the largest component, accounting for 30-50% of total losses. This is why high-efficiency motors use more copper and better quality materials.',
   },
@@ -127,11 +152,11 @@ const quizQuestions = [
     question: "A motor has frame size 132M. What does the '132' indicate?",
     options: [
       'Motor power in watts',
-      'Shaft height in millimetres',
       'Overall length in millimetres',
+      'Shaft height in millimetres',
       'Mounting bolt spacing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The frame size number (132) indicates the shaft centre height above the mounting surface in millimetres. This standardisation (IEC 60072) ensures interchangeability between manufacturers. 'M' indicates medium length for that frame.",
   },
@@ -142,10 +167,10 @@ const quizQuestions = [
     options: [
       'Power is proportional to speed',
       'Power is proportional to speed squared',
-      'Power is proportional to speed cubed',
       'Power is inversely proportional to speed',
+      'Power is proportional to speed cubed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The affinity laws state that power varies with the cube of speed (P proportional to N cubed). Reducing fan speed by 20% reduces power consumption by approximately 50%. This makes variable speed drives highly effective for HVAC energy savings.',
   },
@@ -153,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: "What does the motor insulation class 'F' indicate?",
     options: [
-      'Maximum winding temperature of 105 degrees C',
-      'Maximum winding temperature of 130 degrees C',
       'Maximum winding temperature of 155 degrees C',
       'Maximum winding temperature of 180 degrees C',
+      'Maximum winding temperature of 105 degrees C',
+      'Maximum winding temperature of 130 degrees C',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Class F insulation permits a maximum winding temperature of 155 degrees C. Most modern motors use Class F insulation but are designed for Class B temperature rise (80K), giving a 25K safety margin and extended insulation life.',
   },
@@ -167,12 +192,12 @@ const quizQuestions = [
     question:
       'Which duty cycle applies to a motor used for crane hoisting with defined on/off periods?',
     options: [
-      'S1 - Continuous duty',
-      'S2 - Short-time duty',
-      'S3 - Intermittent periodic duty',
+      'Copper losses (I squared R) in windings',
       'S4 - Intermittent periodic duty with starting',
+      'Maximum winding temperature of 155 degrees C',
+      'To induce voltage and current in the rotor conductors',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'S4 applies when the starting process contributes significantly to thermal loading. Crane motors experience frequent starts under load, so starting losses must be considered alongside running periods.',
   },
@@ -195,12 +220,12 @@ const quizQuestions = [
     question:
       'When selecting a motor for a variable speed application, why might you choose a motor with higher power rating?',
     options: [
-      'To achieve higher maximum speed',
+      'Maximum winding temperature of 155 degrees C',
+      'Power is proportional to speed cubed',
+      'Copper losses (I squared R) in windings',
       'To compensate for reduced cooling at low speeds',
-      'To improve power factor',
-      'To reduce cable size requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Standard motors have shaft-mounted cooling fans that provide less airflow at reduced speeds. For continuous operation at low speeds, either an oversized motor or a force-ventilated motor should be selected to prevent overheating.',
   },
@@ -208,8 +233,13 @@ const quizQuestions = [
     id: 12,
     question:
       'A 15kW IE3 motor costs 800 pounds more than an equivalent IE2 motor. If electricity costs 15p/kWh and the motor runs 4000 hours/year, what is the approximate payback period?',
-    options: ['Less than 1 year', '1-2 years', '3-4 years', 'More than 5 years'],
-    correctAnswer: 1,
+    options: [
+      '1-2 years',
+      'More than 5 years',
+      'Less than 1 year',
+      '3-4 years',
+    ],
+    correctAnswer: 0,
     explanation:
       'IE3 is typically 2% more efficient than IE2 at this rating. Annual savings = 15kW x 0.02 x 4000h x 0.15 pounds = 180 pounds/year. Payback = 800/180 = 4.4 years. However, larger motors and higher running hours give faster payback, often under 2 years.',
   },

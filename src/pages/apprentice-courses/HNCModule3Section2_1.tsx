@@ -34,18 +34,23 @@ const quickCheckQuestions = [
     question: "According to Faraday's law, what induces an EMF in a coil?",
     options: [
       'Constant magnetic flux',
-      'Changing magnetic flux',
       'Electric current alone',
+      'Changing magnetic flux',
       'Static magnetic field',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Faraday's law states that an EMF is induced when the magnetic flux linking a coil changes. The rate of change of flux determines the magnitude of the induced EMF: e = -N(dPhi/dt).",
   },
   {
     id: 'inductance-formula',
     question: 'What is the unit of inductance?',
-    options: ['Farad', 'Ohm', 'Henry', 'Weber'],
+    options: [
+      'Weber',
+      'Ohm',
+      'Henry',
+      'Farad',
+    ],
     correctIndex: 2,
     explanation:
       'Inductance is measured in Henrys (H), named after Joseph Henry. 1 Henry means that a current change of 1 A/s induces an EMF of 1 Volt in the coil.',
@@ -54,19 +59,24 @@ const quickCheckQuestions = [
     id: 'capacitance-increase',
     question: 'How can the capacitance of a parallel plate capacitor be increased?',
     options: [
-      'Increase plate separation',
-      'Decrease plate area',
       'Use a higher permittivity dielectric',
-      'Reduce the dielectric constant',
+      'Daily task allocation and quality checks',
+      'Responsible, Accountable, Consulted, Informed',
+      'A sprained ankle requiring 5 days off work',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Capacitance C = epsilon A/d. Increasing the dielectric permittivity (epsilon), increasing plate area (A), or decreasing separation (d) all increase capacitance.',
   },
   {
     id: 'energy-inductor',
     question: 'An inductor of 0.5H carries 4A. What energy is stored?',
-    options: ['1J', '2J', '4J', '8J'],
+    options: [
+      '2J',
+      '1J',
+      '4J',
+      '8J',
+    ],
     correctIndex: 2,
     explanation:
       'Energy stored in an inductor E = 1/2 LI squared = 1/2 x 0.5 x 4 squared = 1/2 x 0.5 x 16 = 4J. The energy increases with the square of current.',
@@ -91,10 +101,10 @@ const quizQuestions = [
     id: 2,
     question: "Lenz's law states that the direction of induced EMF always:",
     options: [
-      'Assists the change producing it',
-      'Is perpendicular to the magnetic field',
-      'Opposes the change producing it',
       'Is parallel to the current flow',
+      'Assists the change producing it',
+      'Opposes the change producing it',
+      'Is perpendicular to the magnetic field',
     ],
     correctAnswer: 2,
     explanation:
@@ -104,8 +114,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A coil with 500 turns has a flux of 20mWb passing through it. What is the flux linkage?',
-    options: ['0.01 Wb-turns', '0.1 Wb-turns', '10 Wb-turns', '25 Wb-turns'],
-    correctAnswer: 2,
+    options: [
+      '0.1 Wb-turns',
+      '0.01 Wb-turns',
+      '25 Wb-turns',
+      '10 Wb-turns',
+    ],
+    correctAnswer: 3,
     explanation:
       'Flux linkage (lambda) = N x Phi = 500 x 0.020Wb = 10 Wb-turns. Flux linkage represents the total flux linking all turns of the coil.',
   },
@@ -113,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'If L = NPhi/I, what happens to inductance when the number of turns doubles?',
     options: [
-      'Inductance halves',
-      'Inductance doubles',
       'Inductance quadruples',
+      'Inductance doubles',
+      'Inductance halves',
       'Inductance remains unchanged',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Inductance is proportional to N squared. If N doubles, the flux Phi also roughly doubles (for the same current), so L = NPhi/I quadruples. This is why motor windings have many turns.',
   },
@@ -128,8 +143,8 @@ const quizQuestions = [
     options: [
       'The inductance of a single coil',
       'The coupling between two magnetically linked coils',
-      'The resistance of an inductor',
       'The capacitance between coil windings',
+      'The resistance of an inductor',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,8 +153,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'A 100 microfarad capacitor is charged to 230V. What energy does it store?',
-    options: ['1.15J', '2.65J', '11.5J', '26.5J'],
-    correctAnswer: 1,
+    options: [
+      '1.15J',
+      '11.5J',
+      '2.65J',
+      '26.5J',
+    ],
+    correctAnswer: 2,
     explanation:
       'E = 1/2 CV squared = 1/2 x 100x10 to the minus 6 x 230 squared = 1/2 x 100x10 to the minus 6 x 52900 = 2.645J, approximately 2.65J',
   },
@@ -147,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the function of a capacitor in power factor correction?',
     options: [
-      'To increase the real power',
-      'To store energy for backup',
+      'By visually checking core colours at terminations',
+      'Hear, Empathise, Apologise, Resolve, Do follow up',
+      'Preventive maintenance based on usage patterns and manufacturer recommendations',
       'To supply leading reactive current to offset lagging motor current',
-      'To reduce the supply voltage',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Power factor correction capacitors supply leading reactive current (kVAr) that cancels the lagging reactive current drawn by inductive loads like motors. This reduces the total current drawn from the supply.',
   },
@@ -161,12 +181,12 @@ const quizQuestions = [
     question:
       'The capacitance of a parallel plate capacitor is given by C = epsilon A/d. If the plate separation is halved:',
     options: [
-      'Capacitance halves',
       'Capacitance doubles',
       'Capacitance quadruples',
+      'Capacitance halves',
       'Capacitance remains the same',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Since C is inversely proportional to d (C = epsilon A/d), halving the separation doubles the capacitance. This is why high-value capacitors use very thin dielectric films.',
   },
@@ -174,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'In a fluorescent lighting ballast, the inductor serves to:',
     options: [
-      'Store energy for lamp starting only',
+      'Type D MCB (trips at 10-20 times rated current)',
       'Limit current and provide starting voltage',
-      'Convert DC to AC',
-      'Improve power factor to unity',
+      'Back, neck, shoulders, arms, and legs',
+      '.pdf (Portable Document Format)',
     ],
     correctAnswer: 1,
     explanation:
@@ -187,7 +207,12 @@ const quizQuestions = [
     id: 10,
     question:
       'An HVAC motor draws 50A at 0.7 power factor lagging. What capacitor kVAr is needed to improve to 0.95?',
-    options: ['8.2 kVAr', '12.4 kVAr', '15.8 kVAr', '20.1 kVAr'],
+    options: [
+      '8.2 kVAr',
+      '12.4 kVAr',
+      '15.8 kVAr',
+      '20.1 kVAr',
+    ],
     correctAnswer: 2,
     explanation:
       'At 400V 3-phase: kVA = root 3 x 400 x 50 / 1000 = 34.6 kVA. kW = 34.6 x 0.7 = 24.2 kW. At pf 0.7: kVAr1 = 24.7 kVAr. At pf 0.95: kVAr2 = 8.0 kVAr. Required = 24.7 - 8.0 = approximately 16.7 kVAr (closest answer 15.8 kVAr accounting for rounding).',
@@ -195,8 +220,13 @@ const quizQuestions = [
   {
     id: 11,
     question: 'What determines the energy stored in an inductor?',
-    options: ['E = 1/2 LV squared', 'E = 1/2 LI squared', 'E = LI', 'E = L/I squared'],
-    correctAnswer: 1,
+    options: [
+      'E = 1/2 LV squared',
+      'E = L/I squared',
+      'E = LI',
+      'E = 1/2 LI squared',
+    ],
+    correctAnswer: 3,
     explanation:
       'Energy stored in an inductor is E = 1/2 LI squared, where L is inductance in Henrys and I is current in Amperes. The energy is stored in the magnetic field around the inductor.',
   },
@@ -204,12 +234,12 @@ const quizQuestions = [
     id: 12,
     question: 'Why do motors cause a lagging power factor?',
     options: [
-      'They generate harmonics',
-      'They have high resistance',
       'Their windings are inductive, causing current to lag voltage',
-      'They operate at high frequency',
+      'Limit current and provide starting voltage',
+      'The coupling between two magnetically linked coils',
+      'To supply leading reactive current to offset lagging motor current',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Motor windings are primarily inductive. In an inductor, current lags voltage by up to 90 degrees. This lagging current creates reactive power (kVAr) that must be supplied but does no useful work, reducing the power factor.',
   },

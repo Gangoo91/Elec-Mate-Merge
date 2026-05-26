@@ -32,11 +32,11 @@ const quickCheckQuestions = [
     question: 'What is the primary objective of value engineering?',
     options: [
       'To reduce initial capital cost only',
-      'To maximise function whilst minimising whole life cost',
       'To specify the cheapest equipment available',
+      'To maximise function whilst minimising whole life cost',
       'To eliminate design consultants',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Value engineering seeks to maximise function (what the system does) whilst minimising whole life cost. It considers capital, operating, maintenance, and disposal costs over the asset's lifespan.",
   },
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'life-cycle-cost',
     question: 'Which costs are included in life cycle costing for MEP systems?',
     options: [
-      'Capital costs only',
-      'Capital and energy costs only',
+      'The design meets BS 7671 requirements',
+      '28 days, extendable to 42 days with the referring party\\\\\\\'s consent',
       'Capital, operating, maintenance, and disposal costs',
-      'Only costs within the defects liability period',
+      'The total power (combination of real and reactive power)',
     ],
     correctIndex: 2,
     explanation:
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'npv-purpose',
     question: 'Net Present Value (NPV) is used to:',
     options: [
-      'Calculate VAT on equipment',
       'Compare costs occurring at different times',
+      'Calculate VAT on equipment',
       'Determine electrical load requirements',
       'Assess contractor competence',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'NPV adjusts future costs to present-day values using a discount rate, allowing fair comparison of options with different cost profiles over time.',
   },
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 've-workshop',
     question: 'When should a value engineering workshop ideally take place?',
     options: [
-      'After construction is complete',
-      'During snagging',
+      'The resistance of the earth electrode to general mass of earth',
+      'Mental health problems are a sign of personal weakness',
       'At RIBA Stage 2-3 (Concept/Spatial Coordination)',
-      'Only if the project is over budget',
+      'Monthly function test, annual full duration test',
     ],
     correctIndex: 2,
     explanation:
@@ -99,7 +99,12 @@ const quizQuestions = [
     id: 2,
     question:
       'A chiller costs £80,000 with annual running costs of £12,000 over 15 years. Using simple payback, what is the total life cycle cost?',
-    options: ['£80,000', '£180,000', '£260,000', '£92,000'],
+    options: [
+      '£92,000',
+      '£80,000',
+      '£260,000',
+      '£180,000',
+    ],
     correctAnswer: 2,
     explanation:
       'Simple LCC = Capital + (Annual cost × Years) = £80,000 + (£12,000 × 15) = £80,000 + £180,000 = £260,000',
@@ -108,8 +113,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Option A costs £50,000 initially with £8,000/year running costs. Option B costs £70,000 initially with £5,000/year running costs. Over 10 years (simple method), which has lower life cycle cost?',
-    options: ['Option A: £130,000', 'Option B: £120,000', 'Both are equal', 'Cannot be determined'],
-    correctAnswer: 1,
+    options: [
+      'Both are equal',
+      'Option A: £130,000',
+      'Cannot be determined',
+      'Option B: £120,000',
+    ],
+    correctAnswer: 3,
     explanation:
       'Option A: £50,000 + (£8,000 × 10) = £130,000. Option B: £70,000 + (£5,000 × 10) = £120,000. Option B has lower LCC despite higher capital cost.',
   },
@@ -117,8 +127,13 @@ const quizQuestions = [
     id: 4,
     question:
       'What discount rate is typically used for public sector building services projects in the UK?',
-    options: ['2.5%', '3.5%', '5.0%', '10.0%'],
-    correctAnswer: 1,
+    options: [
+      '3.5%',
+      '2.5%',
+      '5.0%',
+      '10.0%',
+    ],
+    correctAnswer: 0,
     explanation:
       'The HM Treasury Green Book specifies 3.5% discount rate for public sector projects. Private sector often uses higher rates (8-12%) reflecting cost of capital.',
   },
@@ -128,8 +143,8 @@ const quizQuestions = [
     options: [
       'Annual savings × Investment cost',
       'Investment cost ÷ Annual savings',
-      'Annual savings ÷ Investment cost',
       'Investment cost × Discount rate',
+      'Annual savings ÷ Investment cost',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,8 +154,13 @@ const quizQuestions = [
     id: 6,
     question:
       'Which function analysis technique identifies the primary and secondary functions of a component?',
-    options: ['SWOT analysis', 'FAST diagram', 'Gantt chart', 'Critical path method'],
-    correctAnswer: 1,
+    options: [
+      'SWOT analysis',
+      'Gantt chart',
+      'FAST diagram',
+      'Critical path method',
+    ],
+    correctAnswer: 2,
     explanation:
       'Function Analysis System Technique (FAST) diagrams show how functions relate hierarchically, helping identify which functions are essential and which are secondary.',
   },
@@ -149,12 +169,12 @@ const quizQuestions = [
     question:
       'When comparing LED lighting against fluorescent, which factors should be included in the life cycle cost analysis?',
     options: [
-      'Lamp purchase price only',
-      'Purchase price and energy costs only',
+      'It establishes when the inspection was carried out and when the next inspection is due',
+      'Optimised for 1550nm with larger effective area for submarine/long-haul',
+      'Clear walkways, proper storage, regular cleaning, waste removal',
       'Purchase, energy, maintenance, lamp replacement, and disposal costs',
-      'Whatever costs are easiest to calculate',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A comprehensive LCC includes capital (luminaires, installation), energy consumption, maintenance labour, lamp/driver replacement frequency, and disposal/recycling costs.',
   },
@@ -162,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'The maintenance cost projection for a building services system should consider:',
     options: [
-      'Only planned preventive maintenance',
-      'Only reactive breakdown repairs',
       'PPM, reactive repairs, component replacement cycles, and eventual major refurbishment',
-      'Whatever the manufacturer states',
+      'Coordinating between employer, college, and apprentice to ensure learning progresses',
+      'Nothing — variation within ±1% of 50 Hz is normal under ESQCR 2002',
+      'Restricted space limits posture options, guardrails restrict movement, and platform bounce affects stability',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Maintenance projections must include planned preventive maintenance (PPM), reactive repairs (statistically estimated), component lifecycle replacements, and eventual system refurbishment or replacement.',
   },
@@ -175,7 +195,12 @@ const quizQuestions = [
     id: 9,
     question:
       'A VRF system costs £120,000 more than a split system but saves £15,000/year in energy. What is the simple payback?',
-    options: ['6 years', '8 years', '10 years', '12 years'],
+    options: [
+      '6 years',
+      '8 years',
+      '10 years',
+      '12 years',
+    ],
     correctAnswer: 1,
     explanation: 'Simple payback = Additional cost ÷ Annual saving = £120,000 ÷ £15,000 = 8 years',
   },
@@ -184,11 +209,11 @@ const quizQuestions = [
     question: 'Which statement about whole life value assessment is correct?',
     options: [
       'It only considers tangible financial costs',
+      'It is only relevant for projects over £10 million',
       'It includes sustainability, resilience, and non-financial benefits',
       'It always favours the cheapest capital option',
-      'It is only relevant for projects over £10 million',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Whole life value assessment extends beyond financial LCC to include sustainability impacts, operational flexibility, resilience, user satisfaction, and other non-financial value factors.',
   },

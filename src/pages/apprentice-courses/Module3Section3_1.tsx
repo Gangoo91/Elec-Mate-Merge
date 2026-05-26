@@ -68,10 +68,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why should screwdrivers used in electrical work be VDE-rated?',
     options: [
-      'To improve grip',
+      'In protective conduit or trunking',
       'To ensure insulation against electric shock',
-      'To make them lighter',
-      'To meet aesthetic standards',
+      'Oval conduit or suitable protection against nails',
+      'Ten (line-line, line-N, line-E for each line, plus N-E)',
     ],
     correctAnswer: 1,
     explanation:
@@ -80,7 +80,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which tool is used for stripping insulation from conductors without damaging them?',
-    options: ['Pliers', 'Screwdriver', 'Cable strippers', 'Hacksaw'],
+    options: [
+      'Hacksaw',
+      'Pliers',
+      'Cable strippers',
+      'Screwdriver',
+    ],
     correctAnswer: 2,
     explanation:
       'Cable strippers are specifically designed to remove insulation cleanly without cutting into or damaging the copper conductors underneath.',
@@ -96,15 +101,25 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Name one type of screwdriver head commonly used in electrical work.',
-    options: ['Robertson', 'Slotted', 'Hex', 'Star'],
-    correctAnswer: 1,
+    options: [
+      'Slotted',
+      'Robertson',
+      'Hex',
+      'Star',
+    ],
+    correctAnswer: 0,
     explanation:
       'Slotted screwdrivers are one of the most common types used in electrical work, along with Phillips, Pozidriv, and Torx for various screw heads.',
   },
   {
     id: 5,
     question: 'Which pliers are best for reaching into confined spaces?',
-    options: ['Combination pliers', 'Long-nose pliers', 'Water pump pliers', 'Ratchet pliers'],
+    options: [
+      'Combination pliers',
+      'Long-nose pliers',
+      'Ratchet pliers',
+      'Water pump pliers',
+    ],
     correctAnswer: 1,
     explanation:
       'Long-nose pliers have a narrow, elongated design that makes them ideal for precision work in tight spaces and gripping small components.',
@@ -113,28 +128,38 @@ const quizQuestions = [
     id: 6,
     question: 'Give one reason for keeping plier jaws clean.',
     options: [
+      'Preventing falls in scaffolding operations',
+      'Carry out the work alone to keep numbers down',
       'To maintain a strong grip and prevent slipping',
-      'To improve appearance',
-      'To reduce weight',
-      'To prevent rust',
+      'Parallel earth paths through bonding or water pipes',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Clean plier jaws provide better grip on components, preventing slipping that could cause damage to work or injury to the user.',
   },
   {
     id: 7,
     question: 'What should be used to cut larger power cables cleanly?',
-    options: ['Ratchet cable cutters', 'Long-nose pliers', 'Adjustable spanner', 'Knife'],
-    correctAnswer: 0,
+    options: [
+      'Knife',
+      'Long-nose pliers',
+      'Adjustable spanner',
+      'Ratchet cable cutters',
+    ],
+    correctAnswer: 3,
     explanation:
       'Ratchet cable cutters provide the leverage needed to cut through larger power cables cleanly without crushing or distorting the conductors.',
   },
   {
     id: 8,
     question: 'Name one measuring tool commonly used in electrical installations.',
-    options: ['Compass', 'Tape measure', 'Protractor', 'Caliper'],
-    correctAnswer: 1,
+    options: [
+      'Tape measure',
+      'Protractor',
+      'Compass',
+      'Caliper',
+    ],
+    correctAnswer: 0,
     explanation:
       'Tape measures are essential for accurate layout work, measuring cable runs, and ensuring proper spacing in electrical installations.',
   },

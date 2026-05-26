@@ -33,8 +33,13 @@ const checks = [
   {
     id: 'mass-weight-units-check',
     question: 'A consumer unit has a mass of 8 kg. What is its weight on Earth (g = 9.81 m/s²)?',
-    options: ['8 N', '8 kg', '78.5 N', '0.82 N'],
-    correctIndex: 2,
+    options: [
+      '8 kg',
+      '8 N',
+      '0.82 N',
+      '78.5 N',
+    ],
+    correctIndex: 3,
     explanation:
       'Weight = mass × g = 8 × 9.81 ≈ 78.5 N. Mass stays in kilograms; weight is always in newtons. Don’t mix the two — that’s the mistake the examiner is looking for.',
   },
@@ -42,12 +47,12 @@ const checks = [
     id: 'moon-vs-earth-check',
     question: 'You take a 5 kg drill to the Moon, where g ≈ 1.6 m/s². What changes?',
     options: [
-      'Mass drops to 0.5 kg, weight stays the same',
       'Mass stays 5 kg, weight drops from ≈49 N to ≈8 N',
+      'Mass drops to 0.5 kg, weight stays the same',
       'Both mass and weight drop to about a sixth',
       'Nothing changes — kilograms are kilograms',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Mass is fixed — it’s how much stuff is in the drill. Weight depends on local gravity, so it drops on the Moon. Same drill, lighter to lift, but just as hard to start swinging because that depends on mass, not weight.',
   },
@@ -56,12 +61,12 @@ const checks = [
     question:
       'HSE guidance suggests roughly 25 kg as a sensible single-person lifting cap at waist height for a fit adult male. Why is that figure given as a mass, not a weight in newtons?',
     options: [
-      'Because newtons are too hard for site use',
+      'A horizontal tube fixed to the standards running parallel to the building face',
+      'It is unreasonable to work dead, reasonable to work live, and suitable precautions are taken',
+      'The wearer must pass a qualitative or quantitative face-fit test for that specific make and model of RPE',
       'Because mass is what you can read off a label or a set of scales — weight depends on where you are',
-      'Because gravity changes too much across the UK to use newtons',
-      'Because newtons only apply to dropped objects',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Bags of cement, drums of cable, consumer units — they’re all labelled in kilograms because that’s the property you can measure anywhere. Convert to weight (×9.81) when you need a force for a calculation.',
   },
@@ -87,28 +92,38 @@ const quizQuestions = [
     id: 2,
     question: 'What is weight?',
     options: [
-      'Another word for mass',
+      'Test voltage, temperature, humidity, and surface contamination',
+      'Washing out concrete chutes or cement mixers into a surface water drain',
       'The force gravity puts on an object — measured in newtons',
-      'The volume of an object in cubic metres',
-      'The density of an object',
+      'Use revision clouds, updated revision table, and maintain drawing history',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Weight is a force, not an amount of stuff. It’s what gravity pulls on the mass. SI unit: newton (N). On Earth, W = m × g, with g ≈ 9.81 m/s².',
   },
   {
     id: 3,
     question: 'Which formula links mass and weight?',
-    options: ['W = m ÷ g', 'm = W × g', 'W = m × g', 'g = m × W'],
-    correctAnswer: 2,
+    options: [
+      'm = W × g',
+      'W = m ÷ g',
+      'g = m × W',
+      'W = m × g',
+    ],
+    correctAnswer: 3,
     explanation:
       'Weight = mass × gravity. On Earth use g = 9.81 m/s² for proper answers, or 10 m/s² for quick mental sums (call out which one you used).',
   },
   {
     id: 4,
     question: 'A 20 kg consumer unit needs lifting onto a wall. What is its weight on Earth?',
-    options: ['20 N', '2 N', '196.2 N', '981 N'],
-    correctAnswer: 2,
+    options: [
+      '196.2 N',
+      '2 N',
+      '20 N',
+      '981 N',
+    ],
+    correctAnswer: 0,
     explanation:
       'W = 20 × 9.81 = 196.2 N. That’s the force the bracket and your arms have to hold up against gravity. Mass = 20 kg either way.',
   },
@@ -118,8 +133,8 @@ const quizQuestions = [
     options: [
       'Yes — they’ve lost mass',
       'No — only their weight has changed',
-      'Yes — both mass and weight drop to zero',
       'It depends on what they ate that morning',
+      'Yes — both mass and weight drop to zero',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,12 +145,12 @@ const quizQuestions = [
     question:
       'Why is the SI unit of force (and therefore weight) the newton, not the kilogram?',
     options: [
-      'It just is — no real reason',
+      'Questions shift the other person from defensive mode to thinking mode, re-engaging their rational brain',
+      'Whether the learners enjoyed the training and found it relevant',
       'Because the kilogram is the unit of mass; weight is a force, and force has its own unit',
-      'Because newtons are smaller and easier to write',
-      'Because kilograms only exist on Earth',
+      'Stop work in the affected area immediately and seek advice from a qualified ecologist',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '1 N is the force needed to accelerate 1 kg at 1 m/s². Mass and force are different physical quantities, so they get different units. Mixing them up is the classic Level 2 exam trap.',
   },
@@ -144,12 +159,12 @@ const quizQuestions = [
     question:
       'A site supervisor labels a heavy isolator switch "Weight: 12 kg" on the lift plan. What should you say?',
     options: [
-      'Nothing — kilograms is a unit of weight',
+      'Open secondary = no secondary current = uncontrolled flux → very high voltage induced (kV) → insulation failure',
+      'To monitor and control building services for comfort and efficiency',
+      'Filtering facepieces, half/full face masks, powered respirators, breathing apparatus',
       'Strictly that’s mass (12 kg). The weight is about 118 N. Either way, plan the lift safely',
-      'It should be in pounds, not kilograms',
-      'Mass and weight are the same thing on Earth, so it doesn’t matter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Day-to-day, people say "weight" when they mean mass — and you won’t correct your supervisor on a Friday afternoon. But for an exam, a calc, or a lift plan involving force loads on brackets, get the language right.',
   },
@@ -158,12 +173,12 @@ const quizQuestions = [
     question:
       'You’re estimating the weight of a 25 kg cable drum to size a hoist. Quick mental check?',
     options: [
-      '25 N',
       'About 250 N (using g ≈ 10 for a quick estimate)',
-      '25 kg, no need to convert',
-      'About 2,500 N',
+      'Chilled water for cooling systems',
+      'It provides structured data for facilities management systems',
+      'It reduces energy waste through automated control',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Site shortcut: g ≈ 10 m/s² for quick estimates → mass × 10. So 25 kg ≈ 250 N. The proper figure with g = 9.81 is 245 N. Close enough to size kit; not close enough for a final calculation in your portfolio.',
   },

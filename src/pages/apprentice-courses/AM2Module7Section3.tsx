@@ -41,12 +41,12 @@ const AM2Module7Section3 = () => {
       id: 'unsafe-practice',
       question: 'What does unsafe practice in AM2 usually result in?',
       options: [
-        'Minor mark deduction',
-        'Warning from assessor',
+        'Special test procedures required due to earthing arrangement',
+        'An inverted-U curve — performance peaks at moderate arousal then declines',
+        'Cling film applied lengthways over the burn',
         'Automatic failure, regardless of performance in other areas',
-        'Extra time to correct mistakes',
       ],
-      correctIndex: 2,
+      correctIndex: 3,
       explanation:
         'Unsafe practice in AM2 results in automatic failure, regardless of how well you complete the rest of the exam.',
     },
@@ -54,10 +54,10 @@ const AM2Module7Section3 = () => {
       id: 'cpc-fail',
       question: 'If you attempt to energise a circuit without CPC connected, what happens?',
       options: [
-        'Minor mark deduction',
-        'Warning to reconnect it',
+        'To secure and align electrical accessories',
+        'It operates at the correct temperature setting',
         'Automatic fail - dangerous and non-compliant',
-        'No consequence if caught quickly',
+        'Occupational asthma (respiratory sensitiser)',
       ],
       correctIndex: 2,
       explanation:
@@ -67,12 +67,12 @@ const AM2Module7Section3 = () => {
       id: 'isolation-steps',
       question: 'What happens if you skip any step in safe isolation?',
       options: [
-        'Minor mark deduction',
         'You can continue if you remember later',
         'Instant fail - critical safety error',
         'Warning from assessor',
+        'Minor mark deduction',
       ],
-      correctIndex: 2,
+      correctIndex: 1,
       explanation:
         'Skipping any step in safe isolation is a critical safety error that results in instant failure.',
     },
@@ -83,10 +83,10 @@ const AM2Module7Section3 = () => {
       id: 1,
       question: 'Why is safety the top priority in AM2?',
       options: [
-        "It's part of the syllabus",
+        "GSHPs typically have higher COP (3.5-5.0 vs 2.5-4.0)",
         "NET's primary objective is to prove you are safe to work unsupervised",
-        "It's required by regulations",
-        'Assessors like safe workers',
+        "A fault specific to that individual device or its circuit",
+        "Annually or as per manufacturer's recommendations",
       ],
       correctAnswer: 1,
       explanation:
@@ -96,12 +96,12 @@ const AM2Module7Section3 = () => {
       id: 2,
       question: 'Name three safety behaviours assessors look for:',
       options: [
+        'Confidence, knowledge, experience',
         'Speed, accuracy, neatness',
         'Safe isolation, correct PPE, tool use',
-        'Confidence, knowledge, experience',
         'Planning, organisation, efficiency',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Key safety behaviours include safe isolation following the 10-step process, correct PPE usage, and proper tool use.',
     },
@@ -109,12 +109,12 @@ const AM2Module7Section3 = () => {
       id: 3,
       question: 'What happens if you skip a safe isolation step?',
       options: [
-        'Minor mark deduction',
         'Warning from assessor',
-        'Instant failure',
+        'Minor mark deduction',
         'Extra time given',
+        'Instant failure',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         "Skipping any step in safe isolation results in instant failure as it's a critical safety error.",
     },
@@ -122,12 +122,12 @@ const AM2Module7Section3 = () => {
       id: 4,
       question: 'What regulation requires safe working practices?',
       options: [
-        'BS 7671 (current edition)',
-        'GS38',
         'Both BS 7671 and GS38',
+        'GS38',
+        'BS 7671 (current edition)',
         'HSE guidelines only',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Both BS 7671 (current edition — BS 7671:2018+A4:2026) and HSE GS38 require safe working practices and proper test equipment use.',
     },
@@ -135,10 +135,10 @@ const AM2Module7Section3 = () => {
       id: 5,
       question: 'Why should CPCs always be sleeved and connected immediately?',
       options: [
-        'It looks professional',
+        "To ensure safety and compliance",
         "It's required by BS 7671 for safety",
-        'Assessors prefer it',
-        'It saves time later',
+        "As Low As Reasonably Practicable",
+        "Yes, if suitable IP rating",
       ],
       correctAnswer: 1,
       explanation:
@@ -156,12 +156,12 @@ const AM2Module7Section3 = () => {
       id: 7,
       question: 'What is GS38 and why is it important?',
       options: [
-        'A wiring regulation for installations',
+        'False triggering from heat sources or incorrect positioning',
+        'To ensure earth fault protection is working correctly',
+        'To give practical guidance on complying with legal duties',
         'Safety standard for electrical test equipment and probes',
-        'PPE requirement standard',
-        'Tool maintenance guideline',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'GS38 is the safety standard for electrical test equipment, requiring proper probe guards and safe test leads.',
     },
@@ -169,12 +169,12 @@ const AM2Module7Section3 = () => {
       id: 8,
       question: "Give an example of an 'instant fail' safety error:",
       options: [
-        'Forgetting to label a circuit',
         'Using non-GS38 test probes',
         'Working too slowly',
+        'Forgetting to label a circuit',
         'Making a termination mistake',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Using non-GS38 compliant test probes is an instant fail safety error as it creates serious safety risks.',
     },
@@ -182,10 +182,10 @@ const AM2Module7Section3 = () => {
       id: 9,
       question: 'How can you show the assessor you are working safely?',
       options: [
-        'Work quickly and efficiently',
+        'When waste is transferred from one party to another',
         'Talk through safety steps and make actions visible',
-        'Ask lots of questions',
-        'Copy other candidates',
+        'The maximum number of concurrent jobs you take on',
+        'Unforeseen site conditions and construction uncertainties',
       ],
       correctAnswer: 1,
       explanation:
@@ -196,11 +196,11 @@ const AM2Module7Section3 = () => {
       question: "What's the golden rule about safety in AM2?",
       options: [
         'Safety first, speed second',
+        'Never take shortcuts',
         'Unsafe = fail. Safe = pass.',
         'Follow all regulations exactly',
-        'Never take shortcuts',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "The golden rule is 'Unsafe = fail. Safe = pass.' Safety is the foundation of everything in AM2.",
     },

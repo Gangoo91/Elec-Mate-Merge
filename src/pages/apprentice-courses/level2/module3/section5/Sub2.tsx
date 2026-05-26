@@ -42,10 +42,10 @@ const checks = [
     question:
       'Why does the UK National Grid transmit power at 400 kV rather than at 11 kV?',
     options: [
-      'Because the transformers only work at 400 kV',
+      'It automatically records calibration data, calculates errors, and generates calibration certificates electronically',
       'Because power loss in the line is I²R — and at higher voltage you can transfer the same power at lower current, slashing the I² loss',
-      'Because higher voltage is safer for engineers',
-      'Because the wires are too thin to carry low-voltage current',
+      'Use the back of your hand (to detect temperature) at a safe distance first, then use a vibration pen or stethoscope for detailed assessment',
+      'Between the main earthing terminal and the supply neutral with the installation earthing disconnected',
     ],
     correctIndex: 1,
     explanation:
@@ -55,7 +55,12 @@ const checks = [
     id: 'm3s5s2-grid-tiers',
     question:
       'Which of the following is NOT one of the three principal UK transmission voltages?',
-    options: ['400 kV', '275 kV', '132 kV', '66 kV'],
+    options: [
+      '400 kV',
+      '132 kV',
+      '275 kV',
+      '66 kV',
+    ],
     correctIndex: 3,
     explanation:
       'GB transmission is 400 kV (super-grid), 275 kV (grid), and 132 kV (the lower transmission tier — owned by transmission operators in Scotland and by DNOs in England and Wales). 66 kV exists as a sub-transmission voltage in some London areas but is not part of the national transmission tier.',
@@ -65,12 +70,12 @@ const checks = [
     question:
       'UK transmission is three-phase end-to-end. Compared with single-phase, three-phase transmission:',
     options: [
-      'Is cheaper to install but less efficient',
+      'A site supervisor noticing an apprentice is unusually quiet, checking in privately, and adjusting the day\\\\\\\\\\\\\\\'s tasks to support them',
+      'A temporary depression of the central nervous system causing drowsiness, dizziness, confusion, and potentially unconsciousness',
+      'Arrange exposure to three-phase work on site and liaise with the college to coordinate practical and theoretical learning',
       'Delivers smoother power (no zero crossings on the combined waveform), uses less conductor for the same power, and runs large rotating loads without flicker',
-      'Is required only for industrial loads',
-      'Can carry DC as well as AC',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Three balanced phases give continuous power delivery (the sum of three sinusoids 120° apart never falls to zero), need only three live conductors instead of six for the same power, and start/run large motors smoothly. That is why every transmission and primary distribution voltage in the UK is three-phase.',
   },
@@ -81,15 +86,25 @@ const quizQuestions = [
     id: 1,
     question:
       'Which of the following is the highest voltage on the UK National Grid transmission network?',
-    options: ['132 kV', '275 kV', '400 kV', '500 kV'],
-    correctAnswer: 2,
+    options: [
+      '132 kV',
+      '400 kV',
+      '275 kV',
+      '500 kV',
+    ],
+    correctAnswer: 1,
     explanation:
       '400 kV is the GB super-grid voltage, used for the longest cross-country and inter-regional transfers. 500 kV is not used on the GB network (though it exists elsewhere — Eastern Europe, Russia).',
   },
   {
     id: 2,
     question: 'A power line carrying 1000 MW at 400 kV three-phase. Approximately what line current?',
-    options: ['250 A', '1.4 kA', '3.6 kA (≈1443 A)', '14 kA'],
+    options: [
+      '14 kA',
+      '250 A',
+      '3.6 kA (≈1443 A)',
+      '1.4 kA',
+    ],
     correctAnswer: 2,
     explanation:
       'I = P / (√3 × V × cos φ). Assume unity power factor: I = 1,000,000,000 / (1.732 × 400,000) ≈ 1443 A. That is the line current per phase. If the same 1000 MW were sent at 11 kV the current would be 36× higher (~52 kA) — physically impossible at scale and electrically ruinous in I²R loss.',
@@ -98,8 +113,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A 500 km transmission line has a resistance of 5 Ω. It carries 1000 A. Approximate I²R loss?',
-    options: ['500 W', '5 kW', '5 MW', '50 MW'],
-    correctAnswer: 2,
+    options: [
+      '5 kW',
+      '500 W',
+      '50 MW',
+      '5 MW',
+    ],
+    correctAnswer: 3,
     explanation:
       'P_loss = I² × R = 1000² × 5 = 5,000,000 W = 5 MW. (Single-phase equivalent — Q2 showed the real three-phase line current at 400 kV / 1 GW is ~1443 A; this question uses round 1000 A purely to keep the I²R arithmetic clean.) At 400 kV that 5 MW loss represents a tiny fraction (~0.5%) of the 1 GW being transferred. At 11 kV with 36× the current, the loss would be 36² × 5 MW = 6480 MW — far more than the power being transferred. Physics rules out low-voltage long-distance transmission.',
   },
@@ -108,12 +128,12 @@ const quizQuestions = [
     question:
       'Who OWNS and OPERATES the 400 kV and 275 kV transmission network in England and Wales?',
     options: [
-      'The local DNO (e.g. UK Power Networks)',
       'National Grid Electricity Transmission (NGET)',
+      'The local DNO (e.g. UK Power Networks)',
       'NESO (National Energy System Operator)',
       'Each individual generator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'NGET (National Grid Electricity Transmission) owns the wires and substations in England and Wales. SP Transmission owns Southern Scotland, SHE Transmission owns Northern Scotland. NESO (the system operator, separated from National Grid in 2024) runs the system in real time but does not own the assets.',
   },
@@ -122,10 +142,10 @@ const quizQuestions = [
     question:
       'A typical pylon-mounted 400 kV three-phase line will carry how many conductors per circuit?',
     options: [
-      'One conductor per phase = 3 total',
+      'Turn off the heat source, hold the blanket as a shield, and gently place it over the pan from front to back',
       'Two or four bundled conductors per phase, plus an earth wire on top = 6–12 power conductors plus 1–2 earth',
-      'Seven conductors of mixed voltage',
-      'Just a single conductor',
+      'To draw a measured volume of air through a filter or sorbent tube in the wearer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s breathing zone to measure exposure',
+      '6 boxes + 4 socket plates + 2 FCU plates + ~42 m of 2.5 mm² T&E (35 m × 1.20 routing) + grommets, fixings, sleeving.',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,12 +156,12 @@ const quizQuestions = [
     question:
       'A grid supply point (GSP) is the substation where:',
     options: [
-      'Electricity is generated',
+      'Temporarily activate an output to verify the output module and field wiring are functioning, bypassing the program logic',
+      'The two faults create a phase-to-phase fault through earth, requiring immediate disconnection',
       'The transmission network meets the distribution network — typically stepping down from 400 kV or 275 kV to 132 kV or 33 kV',
-      'Customers pay their bills',
-      'The DNO terminates the consumer service cable',
+      'Deliberately limiting screen time and digital device use to reduce stimulation and allow genuine mental recovery',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GSP = the boundary between the transmission system (owned by NGET / SPT / SHET) and the distribution system (owned by the DNO). Power crosses the GSP transformer from 400/275 kV down to typically 132 kV, 66 kV or 33 kV, depending on the region. From there the DNO takes over.',
   },
@@ -150,12 +170,12 @@ const quizQuestions = [
     question:
       'Why does GB transmission use AC and not DC for cross-country transfers?',
     options: [
-      'DC is illegal in the UK',
+      'Circuit 2 (ring final) — socket in living room shows signs of overheating at the neutral terminal. Circuit isolated and labelled. Requires further investigation before energising',
+      'Separate the people from the problem — acknowledge that both parties have legitimate perspectives and focus on the issue rather than personal attacks or character judgements',
+      'A pilot drill bit guides the hole saw, cutting fluid/lubricant should be used, speed should be moderate (high speed generates excessive heat), and the workpiece should be clamped or supported',
       'AC voltage can be stepped up and down by transformers — DC cannot — so AC is much cheaper to use across multiple voltage tiers. (HVDC is used selectively for very long subsea or interconnector links where AC line losses dominate.)',
-      'DC requires too much copper',
-      'AC is faster than DC',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Transformers only work on AC. That alone is why the AC grid won the 1880s ‘war of the currents’ and remains the universal grid technology. HVDC has come back into the picture for very long subsea cables (Dogger Bank, the BritNed and IFA interconnectors) and for asynchronous interconnections between grids — but only because the cost of the AC/DC converter stations at each end is now affordable for those niche applications.',
   },
@@ -164,12 +184,12 @@ const quizQuestions = [
     question:
       'An electrician working on a domestic install is unlikely to ever touch a 400 kV conductor. Why does it matter that they understand transmission voltages?',
     options: [
-      'It does not — transmission is purely an industry topic',
       'Because the voltage at the cut-out is one end of an unbroken chain that starts at 400 kV — understanding the chain explains why supply is stable, where it can fail, and why ESQCR statutory limits exist on the 230 V you actually work with',
-      'Because exam papers always ask about pylon design',
-      'Because transmission engineers and DNO engineers do the same job',
+      'Death that occurs after rescue from suspension, caused by the sudden redistribution of pooled blood overwhelming the heart — prevented by adopting a semi-seated recovery position rather than laying the casualty flat',
+      'EN 149 — FFP1 (assigned protection factor 4), FFP2 (APF 10), FFP3 (APF 20). FFP3 is the standard for respirable crystalline silica, asbestos-disturbance work (where licensed), wood dust. Face-fit test required.',
+      'Permits are required for installations carrying out specified activities like waste treatment or large combustion plant; most electrical contractors don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need one but must comply with permit conditions when working at a permitted site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The 230 V at the socket sits at the bottom of a regulated chain. Knowing the chain explains why supply quality is what it is, why DNOs can refuse a connection that would push the local network out of spec, and where the responsibilities lie when something goes wrong. It is also fair game in C&G theory exams.',
   },

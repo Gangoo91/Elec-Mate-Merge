@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'criticality-purpose',
     question: 'The primary purpose of criticality analysis in maintenance management is to:',
     options: [
-      'Determine which equipment should be scrapped',
+      'Plan, manage and monitor construction work under their control so it is carried out without risks to health and safety, and provide site-specific induction',
+      'The existing fluorescent ballast must be bypassed or removed, and the circuit verified for compatibility with the LED driver',
+      'It is generally prohibited under the Housing Grants, Construction and Regeneration Act 1996 (as amended), except in cases of upstream insolvency',
       'Rank equipment based on the consequences of its failure so that maintenance resources can be focused on the most important assets first',
-      'Calculate the purchase price of all equipment',
-      'Determine the number of spare parts to hold for every item',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Criticality analysis ranks equipment based on the impact that its failure would have on safety, the environment, production, quality and cost. This ranking enables the maintenance organisation to allocate its limited resources (technician time, condition monitoring, spare parts investment) to the assets where failure would have the greatest consequences. Critical assets receive the most comprehensive maintenance strategy, while non-critical assets may be maintained with simpler or less frequent tasks, or deliberately run to failure.',
   },
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     question:
       'When assessing the criticality of a piece of electrical equipment, the key factors to consider include:',
     options: [
-      'Only the physical size of the equipment',
+      'Challenge the beliefs (B): \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I\'ll call ahead, being late once is not a disaster, and \'always\' is an exaggeration\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"',
       'The consequences of failure across multiple dimensions: safety impact, environmental impact, production impact, repair cost and time, and the availability of redundancy or backup',
-      'Only the age of the equipment',
-      'Only the original purchase price',
+      'Following them is not compulsory, but failing to follow them may be used in court as evidence of non-compliance unless equivalent or better measures can be shown',
+      'A client having work done in their own home not connected to a business — most CDM duties pass automatically to the contractor (or principal contractor where there are several)',
     ],
     correctIndex: 1,
     explanation:
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'criticality-categories',
     question: 'A typical criticality classification system categorises equipment as:',
     options: [
-      "Only 'important' or 'not important'",
+      'Verification of correct pick-up (energise) and drop-out (de-energise) operation, contact condition, coil operation, and correct response to control signals',
+      'A growth mindset person would view the amendment as an opportunity to learn, regulate any frustration about having to update their knowledge, and approach the new material with curiosity rather than resistance',
+      'It may contain substances that can cause skin irritation, eye irritation or respiratory sensitisation on prolonged or repeated exposure',
       'Critical (A) — essential, no redundancy, high failure consequence; Important (B) — significant impact but some mitigation available; General (C) — low consequence, run-to-failure acceptable',
-      'Only by manufacturer name',
-      'Only by installation date',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Most criticality systems use three or four categories. Critical (A) assets are those where failure would have serious safety, environmental or production consequences and where no backup or redundancy exists — these receive the most comprehensive maintenance. Important (B) assets have moderate consequences or have partial redundancy — they receive targeted preventive maintenance. General (C) assets have low failure consequences and are typically managed with basic inspection or run-to-failure. This ABC classification directly drives the maintenance strategy for each asset.',
   },
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'criticality-maintenance-link',
     question: 'The relationship between criticality and maintenance strategy is:',
     options: [
-      'There is no relationship — all equipment receives the same maintenance',
+      'Dedicated circuit(s) for each charging point with appropriate cable sizing; 30 mA Type A RCD as a minimum (or Type B where the EVSE does not contain integral DC fault protection); PME earthing considerations; labelling; and sizing for continuous load at the maximum rated output of the charger',
       'Higher-criticality equipment receives more comprehensive, proactive maintenance strategies (condition monitoring, predictive techniques, comprehensive PM), while lower-criticality equipment receives simpler or reactive strategies',
-      'Only critical equipment receives any maintenance at all',
-      'Lower-criticality equipment always receives more maintenance than higher-criticality equipment',
+      'Noticing that a normally confident apprentice is standing with hunched shoulders, avoiding eye contact, and speaking quietly — and recognising these non-verbal cues may indicate they are struggling or anxious, then gently checking in with them',
+      'Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'Criticality analysis should be performed:',
     options: [
-      'Only when a new piece of equipment is installed',
+      'Collecting and treating wastewater from baths, showers, washbasins, and washing machines for reuse in non-potable applications such as toilet flushing and garden irrigation',
       'As a systematic exercise covering all assets, and reviewed periodically or when operating conditions change, new equipment is added, or following significant failures that reveal previously underestimated consequences',
-      'Only after a major breakdown',
-      'Only by the equipment manufacturer',
+      'Assessing criticality based on the cost or size of the equipment rather than the consequences of its failure in its operating context — a cheap relay protecting a safety function may be more critical than an expensive motor with a backup',
+      'An alternative fieldbus using the same physical layer as Profibus PA (31.25 kbit/s MBP) but with a different application layer supporting control in the field',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: 'A criticality matrix typically scores each asset against factors including:',
     options: [
-      'Only the weight of the equipment',
+      'High criticality (A) because its failure during a mains outage could have life-safety consequences — the low running hours do not reduce its criticality because the consequence of failure when needed is extreme',
+      'Multiplying Severity (S) x Occurrence (O) x Detection (D) to produce a number that ranks the overall risk of each failure mode',
       'Safety impact (severity of potential harm), environmental impact, production impact (downtime cost), frequency of failure, detection difficulty, and repair time/cost',
-      'Only the distance from the maintenance workshop',
-      'Only the noise level during operation',
+      'Always be ranked higher in criticality because safety consequences take priority over all other factors in the criticality assessment — safety is non-negotiable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A criticality matrix scores each asset against multiple consequence dimensions. Common factors include: safety impact (from no impact to potential fatality), environmental impact (from none to reportable incident), production impact (from none to complete plant shutdown), failure frequency (how often the failure mode is expected to occur), detectability (how easily a developing fault can be detected), and repair time/cost (from quick replacement to extended rebuild). Each factor is scored on a numerical scale, and the scores are combined to produce an overall criticality rating.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'In a criticality matrix, a motor on a critical production line with no standby backup would typically be rated:',
     options: [
-      'Low criticality because motors are common items',
+      'Safety impact (severity of potential harm), environmental impact, production impact (downtime cost), frequency of failure, detection difficulty, and repair time/cost',
+      'Asset identification, function, criticality rating (A/B/C), the basis for the rating (what consequences were considered), the assigned maintenance strategy, and review date',
+      'Multiplying Severity (S) x Occurrence (O) x Detection (D) to produce a number that ranks the overall risk of each failure mode',
       'High criticality (A) because its failure would stop production, there is no redundancy, and the consequences include significant lost production and potential supply chain impacts',
-      'Medium criticality because it can be repaired eventually',
-      'Not rated because motors do not need criticality analysis',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The criticality of the motor is determined by the consequences of its failure in context, not by its inherent characteristics. A motor on a critical production line with no backup scores highly on production impact (line stops), repair time (may need specialist parts or winding), and lack of redundancy (no alternative path). This makes it a high-criticality (A) asset, warranting comprehensive maintenance: vibration monitoring, thermographic survey, insulation resistance testing, detailed PM schedule, and priority spare parts. The same model of motor in a non-critical application might be rated C.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'A standby generator used for emergency power in a hospital would be classified as:',
     options: [
-      'Low criticality because it only runs occasionally',
       'High criticality (A) because its failure during a mains outage could have life-safety consequences — the low running hours do not reduce its criticality because the consequence of failure when needed is extreme',
-      'Medium criticality because it has a long service life',
-      'Not applicable because generators are not electrical equipment',
+      'Safety impact (severity of potential harm), environmental impact, production impact (downtime cost), frequency of failure, detection difficulty, and repair time/cost',
+      'Assessing criticality based on the cost or size of the equipment rather than the consequences of its failure in its operating context — a cheap relay protecting a safety function may be more critical than an expensive motor with a backup',
+      'Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Criticality is based on the consequences of failure, not on how often the equipment runs. A standby generator in a hospital has extreme consequences if it fails when demanded — loss of power to operating theatres, life support equipment, and essential services. Despite running for only a few hours per year, it must be classified as critical (A) with a comprehensive maintenance and testing regime including regular load testing, fuel system maintenance, battery and starter checks, automatic transfer switch testing, and periodic full-load runs. This is an example of RCM's failure-finding task applied to equipment with hidden failure potential.",
   },
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: "The concept of 'redundancy' affects criticality because:",
     options: [
-      'Redundant equipment does not need any maintenance',
+      'Basic periodic inspection as part of the fixed installation inspection programme (BS 7671), with repair or replacement when a fault is reported — a run-to-failure approach is acceptable because the consequences of failure are low',
       'If a standby or backup system exists and can maintain the required function when the primary system fails, the overall consequence of a single failure is reduced — but the backup system itself becomes critical and must be maintained to ensure it works when needed',
-      'Redundancy makes all equipment non-critical',
-      'Redundancy only applies to IT systems',
+      'Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown',
+      'Understand why different assets have different maintenance strategies, contribute to criticality assessments using their operational knowledge, prioritise their own work based on asset criticality, and explain to colleagues why maintenance effort varies between assets',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'A Risk Priority Number (RPN) is calculated by:',
     options: [
-      'Adding the criticality score to the asset number',
+      'Earthing of exposed-conductive-parts, protective equipotential bonding, and a protective device that disconnects in the required time',
+      'The transmission network meets the distribution network — typically stepping down from 400 kV or 275 kV to 132 kV or 33 kV',
       'Multiplying Severity (S) x Occurrence (O) x Detection (D) to produce a number that ranks the overall risk of each failure mode',
-      'Dividing the purchase price by the expected life',
-      'Counting the number of maintenance tasks assigned',
+      'The outgoing worker removes their lock and the incoming worker immediately applies theirs, maintaining continuous lockout',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Risk Priority Number (RPN) is a tool from FMEA that combines three factors: Severity (how serious are the consequences of this failure mode — scored 1-10), Occurrence (how likely is this failure mode to occur — scored 1-10), and Detection (how likely is it that the failure will be detected before it causes the consequence — scored 1-10, where 10 means very hard to detect). RPN = S x O x D, giving a range from 1 to 1,000. Higher RPN values indicate failure modes that need priority attention. The RPN drives both criticality ranking and maintenance task selection.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       'When two assets have the same production impact but one has a safety consequence and the other does not, the asset with the safety consequence should:',
     options: [
-      'Be treated identically to the other asset',
+      'Multiplying Severity (S) x Occurrence (O) x Detection (D) to produce a number that ranks the overall risk of each failure mode',
+      'High criticality (A) because its failure would stop production, there is no redundancy, and the consequences include significant lost production and potential supply chain impacts',
+      'Safety impact (severity of potential harm), environmental impact, production impact (downtime cost), frequency of failure, detection difficulty, and repair time/cost',
       'Always be ranked higher in criticality because safety consequences take priority over all other factors in the criticality assessment — safety is non-negotiable',
-      'Be given a lower criticality rating to save money',
-      'Only be assessed after all other assets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Safety always takes priority in criticality assessment. An asset whose failure could cause injury or death must be ranked as critical regardless of its production impact. This reflects the legal duty of care under the Health and Safety at Work etc. Act 1974 and the Electricity at Work Regulations 1989 — the employer must ensure that electrical systems are maintained so as to prevent danger. No economic argument can justify accepting a safety risk. The criticality assessment must reflect this hierarchy: safety first, then environmental, then operational, then economic.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: 'A criticality register should contain, as a minimum:',
     options: [
-      'Only the equipment name and location',
       'Asset identification, function, criticality rating (A/B/C), the basis for the rating (what consequences were considered), the assigned maintenance strategy, and review date',
-      "Only the manufacturer's serial number",
-      'Only the date of last maintenance',
+      'Multiplying Severity (S) x Occurrence (O) x Detection (D) to produce a number that ranks the overall risk of each failure mode',
+      'High criticality (A) because its failure would stop production, there is no redundancy, and the consequences include significant lost production and potential supply chain impacts',
+      'Safety impact (severity of potential harm), environmental impact, production impact (downtime cost), frequency of failure, detection difficulty, and repair time/cost',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A useful criticality register documents: asset identification (tag number, description, location), the asset's function in the system, the criticality rating (A, B or C), the justification for the rating (what failure consequences were considered and scored), the maintenance strategy assigned based on the criticality (condition monitoring, PPM, run-to-failure), spare parts holding decision, and the date of last review. This documentation ensures that criticality decisions are traceable, reviewable and auditable — not based on individual opinion or tradition.",
   },
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'A common mistake in criticality analysis is:',
     options: [
-      'Including too many assets in the analysis',
+      'Understand why different assets have different maintenance strategies, contribute to criticality assessments using their operational knowledge, prioritise their own work based on asset criticality, and explain to colleagues why maintenance effort varies between assets',
       'Assessing criticality based on the cost or size of the equipment rather than the consequences of its failure in its operating context — a cheap relay protecting a safety function may be more critical than an expensive motor with a backup',
-      'Involving operators in the assessment',
-      'Using a numerical scoring system',
+      'High criticality (A) because its failure during a mains outage could have life-safety consequences — the low running hours do not reduce its criticality because the consequence of failure when needed is extreme',
+      'Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'The maintenance strategy for a Critical (A) rated electrical panel would typically include:',
     options: [
-      'No maintenance — just replace it when it fails',
+      'Basic periodic inspection as part of the fixed installation inspection programme (BS 7671), with repair or replacement when a fault is reported — a run-to-failure approach is acceptable because the consequences of failure are low',
+      'If a standby or backup system exists and can maintain the required function when the primary system fails, the overall consequence of a single failure is reduced — but the backup system itself becomes critical and must be maintained to ensure it works when needed',
       'Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown',
-      'Only a visual check every 5 years',
-      'Only cleaning the panel exterior',
+      'Understand why different assets have different maintenance strategies, contribute to criticality assessments using their operational knowledge, prioritise their own work based on asset criticality, and explain to colleagues why maintenance effort varies between assets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Critical (A) assets warrant the most comprehensive maintenance approach: condition monitoring (thermographic surveys to detect hot joints, insulation resistance testing for busbar degradation, partial discharge monitoring for HV panels), comprehensive PPM (scheduled inspections with torque checks, cleaning, functional testing of protection devices), priority spare parts (key components held in stock or on guaranteed delivery), emergency response plan (documented procedure for rapid repair), and detailed investigation and root cause analysis following any failure.',
   },
@@ -204,12 +204,12 @@ const quizQuestions = [
     question:
       'For a General (C) rated asset such as a convenience socket outlet in a storage area, the appropriate maintenance strategy is typically:',
     options: [
-      'The same comprehensive strategy as a Critical (A) asset',
+      'If a standby or backup system exists and can maintain the required function when the primary system fails, the overall consequence of a single failure is reduced — but the backup system itself becomes critical and must be maintained to ensure it works when needed',
+      'Understand why different assets have different maintenance strategies, contribute to criticality assessments using their operational knowledge, prioritise their own work based on asset criticality, and explain to colleagues why maintenance effort varies between assets',
+      'Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown',
       'Basic periodic inspection as part of the fixed installation inspection programme (BS 7671), with repair or replacement when a fault is reported — a run-to-failure approach is acceptable because the consequences of failure are low',
-      'No inspection or maintenance of any kind',
-      'Daily condition monitoring with specialist equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'General (C) assets have low consequences of failure and do not justify comprehensive proactive maintenance. A convenience socket outlet in a storage area would be inspected as part of the periodic inspection and testing programme required by BS 7671 (typically every 5 years for a commercial premises), and repaired or replaced when a fault is reported by the user. This is a run-to-failure strategy with basic statutory inspection — it is appropriate because the consequence of the socket failing is minimal (no safety, environmental or production impact beyond minor inconvenience).',
   },
@@ -218,12 +218,12 @@ const quizQuestions = [
     question:
       'In the context of ST1426, understanding criticality analysis enables the maintenance technician to:',
     options: [
-      'Only maintain the most expensive equipment',
       'Understand why different assets have different maintenance strategies, contribute to criticality assessments using their operational knowledge, prioritise their own work based on asset criticality, and explain to colleagues why maintenance effort varies between assets',
-      'Avoid maintaining any non-critical equipment',
-      'Only work on equipment that has already failed',
+      'Assessing criticality based on the cost or size of the equipment rather than the consequences of its failure in its operating context — a cheap relay protecting a safety function may be more critical than an expensive motor with a backup',
+      'Basic periodic inspection as part of the fixed installation inspection programme (BS 7671), with repair or replacement when a fault is reported — a run-to-failure approach is acceptable because the consequences of failure are low',
+      'If a standby or backup system exists and can maintain the required function when the primary system fails, the overall consequence of a single failure is reduced — but the backup system itself becomes critical and must be maintained to ensure it works when needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST1426 expects maintenance technicians to understand the rationale behind maintenance planning and contribute to continuous improvement. Understanding criticality enables the technician to: prioritise their own work (critical equipment first when multiple tasks compete for time), contribute practical knowledge to criticality assessments (they know which equipment causes the most problems), understand why some equipment gets more attention than others, and explain the maintenance strategy to operators and colleagues. This understanding is valued in the End Point Assessment professional discussion.',
   },

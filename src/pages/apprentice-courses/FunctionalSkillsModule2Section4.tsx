@@ -27,8 +27,13 @@ const FunctionalSkillsModule2Section4 = () => {
     {
       id: 1,
       question: 'Which is the correct spelling of the electrical term?',
-      options: ['Florescent', 'Flourescent', 'Fluorescent', 'Fluoresent'],
-      correctAnswer: 2,
+      options: [
+        'Florescent',
+        'Fluorescent',
+        'Flourescent',
+        'Fluoresent',
+      ],
+      correctAnswer: 1,
       explanation:
         "'Fluorescent' is the correct spelling. This is one of the most commonly misspelt words in the electrical trade. The word comes from 'fluorescence' — remember the 'uo' in the middle and the 'sc' before the ending.",
     },
@@ -37,12 +42,12 @@ const FunctionalSkillsModule2Section4 = () => {
       question:
         "In the sentence 'The fault has affected the entire circuit', which word is correct?",
       options: [
+        "Safety advisor, CDM coordinator, or compliance roles",
+        "Check for hidden services and structural elements",
         "'affected' is correct — it is the verb meaning 'to have an impact on'",
-        "'effected' should be used instead",
-        'Either word can be used interchangeably',
-        'Neither word is appropriate in this context',
+        "It operates continuously and remains lit during an emergency",
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         "'Affected' is the correct choice. 'Affect' is usually a verb meaning 'to have an impact on', while 'effect' is usually a noun meaning 'the result'. In this sentence, we need the verb — the fault has had an impact on the circuit.",
     },
@@ -50,12 +55,12 @@ const FunctionalSkillsModule2Section4 = () => {
       id: 3,
       question: 'Which EICR observation is written with correct spelling, grammar and punctuation?',
       options: [
-        "accessorie's missing from socket in kitchen, needs sorting",
+        'It may not be present when the technician arrives, making diagnosis difficult',
+        'Increased attenuation from radiation or hydrogen exposure over time',
+        'Because it lacks proper documentation and standards referencing',
         'Missing accessory faceplate on socket outlet in kitchen — replacement required (C3)',
-        "there are some issue's with the sockets need looking at",
-        'Socket in kitchen not right, its cover is of',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "The second option is correctly written: 'accessory' is spelt correctly, the sentence is complete and clear, the location is specified, the action required is stated, and the observation code is included. Professional observations must be clear, specific and grammatically correct.",
     },
@@ -63,12 +68,12 @@ const FunctionalSkillsModule2Section4 = () => {
       id: 4,
       question: "Which sentence uses the correct form of 'their/there/they're'?",
       options: [
-        'Their going to replace the consumer unit tomorrow',
-        "The cables are over they're by the distribution board",
         "They're installing the new lighting circuit on Tuesday",
+        "The cables are over they're by the distribution board",
+        'Their going to replace the consumer unit tomorrow',
         'There inspection is booked for next week',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         "'They're' is the contraction of 'they are' — 'They are installing the new lighting circuit on Tuesday.' The other options should be: 'They're going to replace...' (not 'Their'), 'The cables are over there...' (not 'they're'), and 'Their inspection is booked...' (not 'There').",
     },
@@ -78,8 +83,8 @@ const FunctionalSkillsModule2Section4 = () => {
       options: [
         'The circuit was tested and the results were satisfactory.',
         'Each of the RCDs were tested individually.',
-        'All cables have been installed in accordance with the specification.',
         'The consumer unit has been replaced with a metal-clad unit.',
+        'All cables have been installed in accordance with the specification.',
       ],
       correctAnswer: 1,
       explanation:
@@ -103,11 +108,11 @@ const FunctionalSkillsModule2Section4 = () => {
       question: 'Which of these is the correct use of an apostrophe?',
       options: [
         "The RCD's in the board were all tested",
-        "The client's property was re-energised safely",
-        "Three MCB's need replacing",
         "All the circuit's are labelled correctly",
+        "Three MCB's need replacing",
+        "The client's property was re-energised safely",
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "'The client's property' is correct because the apostrophe shows possession — the property belonging to the client. The other options incorrectly use apostrophes to form plurals. 'RCDs', 'MCBs', and 'circuits' are simple plurals and do not need apostrophes.",
     },
@@ -115,12 +120,12 @@ const FunctionalSkillsModule2Section4 = () => {
       id: 8,
       question: 'What is the most effective proofreading technique for catching wrong homophones?',
       options: [
-        'Using spell check software only',
-        'Reading the document backwards word by word',
         'Reading the document aloud slowly',
         'Asking someone else to reformat it',
+        'Using spell check software only',
+        'Reading the document backwards word by word',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Reading aloud is the most effective technique for catching wrong homophones because your ear will detect when a word sounds wrong in context, even though the spelling is correct. Spell checkers cannot catch homophones because both words are validly spelt — just used in the wrong place.',
     },

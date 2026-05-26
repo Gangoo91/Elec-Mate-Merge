@@ -32,24 +32,39 @@ const quickCheckQuestions = [
   {
     id: 'fabric-formula',
     question: 'What is the correct formula for fabric heat loss?',
-    options: ['Q = U × A × ΔT', 'Q = 0.33 × n × V × ΔT', 'Q = m × c × ΔT', 'Q = U / A × ΔT'],
-    correctIndex: 0,
+    options: [
+      'Q = U / A × ΔT',
+      'Q = 0.33 × n × V × ΔT',
+      'Q = m × c × ΔT',
+      'Q = U × A × ΔT',
+    ],
+    correctIndex: 3,
     explanation:
       'Fabric heat loss Q = U × A × ΔT where U is the U-value (W/m²K), A is the area (m²), and ΔT is the temperature difference (K or °C).',
   },
   {
     id: 'ventilation-formula',
     question: 'Which formula calculates ventilation heat loss?',
-    options: ['Q = U × A × ΔT', 'Q = 0.33 × n × V × ΔT', 'Q = P × t', 'Q = V × I'],
-    correctIndex: 1,
+    options: [
+      'Q = V × I',
+      'Q = U × A × ΔT',
+      'Q = P × t',
+      'Q = 0.33 × n × V × ΔT',
+    ],
+    correctIndex: 3,
     explanation:
       'Ventilation heat loss Q = 0.33 × n × V × ΔT where 0.33 is the volumetric specific heat of air (Wh/m³K), n is air changes per hour, V is room volume (m³), and ΔT is temperature difference.',
   },
   {
     id: 'design-temp-external',
     question: 'What is the typical CIBSE external design temperature for the UK?',
-    options: ['+5°C', '0°C', '-1°C to -4°C', '-10°C'],
-    correctIndex: 2,
+    options: [
+      '-1°C to -4°C',
+      '0°C',
+      '+5°C',
+      '-10°C',
+    ],
+    correctIndex: 0,
     explanation:
       'CIBSE Guide A recommends external design temperatures between -1°C and -4°C for most UK locations, with colder temperatures for northern regions and exposed sites.',
   },
@@ -57,9 +72,9 @@ const quickCheckQuestions = [
     id: 'total-heat-load',
     question: 'Total building heat load is calculated as:',
     options: [
-      'Fabric loss × Ventilation loss',
-      'Fabric loss + Ventilation loss',
       'Fabric loss - Ventilation loss',
+      'Fabric loss + Ventilation loss',
+      'Fabric loss × Ventilation loss',
       'Fabric loss ÷ Ventilation loss',
     ],
     correctIndex: 1,
@@ -73,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does the U-value represent in heat loss calculations?',
     options: [
-      'The area of a building element',
+      'Hearing only parts of the conversation that interest you or confirm your existing views',
       'The rate of heat transfer through a material per unit area per degree temperature difference',
-      'The total heat loss from a building',
-      'The air change rate',
+      'Material prices and labour rates change; an open-ended quote can leave the contractor on the hook for old prices',
+      'The tower must not be used — it has failed inspection or is incomplete/unsafe',
     ],
     correctAnswer: 1,
     explanation:
@@ -86,16 +101,26 @@ const quizQuestions = [
     id: 2,
     question:
       'A wall has U-value 0.3 W/m²K, area 45m², with 21°C inside and -3°C outside. What is the fabric heat loss?',
-    options: ['324W', '405W', '486W', '540W'],
-    correctAnswer: 0,
+    options: [
+      '486W',
+      '540W',
+      '324W',
+      '405W',
+    ],
+    correctAnswer: 2,
     explanation: 'Q = U × A × ΔT = 0.3 × 45 × (21 - (-3)) = 0.3 × 45 × 24 = 324W',
   },
   {
     id: 3,
     question:
       'What is the volumetric specific heat capacity of air used in ventilation calculations?',
-    options: ['0.25 Wh/m³K', '0.33 Wh/m³K', '0.50 Wh/m³K', '1.00 Wh/m³K'],
-    correctAnswer: 1,
+    options: [
+      '0.50 Wh/m³K',
+      '0.25 Wh/m³K',
+      '1.00 Wh/m³K',
+      '0.33 Wh/m³K',
+    ],
+    correctAnswer: 3,
     explanation:
       'The volumetric specific heat capacity of air is approximately 0.33 Wh/m³K (or 1200 J/m³K). This value accounts for both the density and specific heat capacity of air at standard conditions.',
   },
@@ -103,8 +128,13 @@ const quizQuestions = [
     id: 4,
     question:
       'A room is 5m × 4m × 2.8m with 1.5 air changes per hour. ΔT is 24K. What is the ventilation heat loss?',
-    options: ['332W', '443W', '554W', '665W'],
-    correctAnswer: 3,
+    options: [
+      '665W',
+      '443W',
+      '554W',
+      '332W',
+    ],
+    correctAnswer: 0,
     explanation:
       'Volume = 5 × 4 × 2.8 = 56m³. Q = 0.33 × n × V × ΔT = 0.33 × 1.5 × 56 × 24 = 665.3W ≈ 665W',
   },
@@ -112,8 +142,13 @@ const quizQuestions = [
     id: 5,
     question:
       'According to CIBSE Guide A, what is the recommended internal design temperature for a general office?',
-    options: ['18°C', '20°C', '22°C', '24°C'],
-    correctAnswer: 2,
+    options: [
+      '20°C',
+      '22°C',
+      '24°C',
+      '18°C',
+    ],
+    correctAnswer: 1,
     explanation:
       'CIBSE Guide A recommends 22°C for general offices (sedentary work). Living rooms are 21°C, bedrooms 18°C, and bathrooms 22°C.',
   },
@@ -121,12 +156,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why is a margin typically added to calculated heat loads?',
     options: [
-      'To reduce the boiler size',
+      'Large, complex, or high-occupancy sites like hospitals and airports',
+      'Noise radiating through duct walls into surrounding spaces',
       'To account for pre-heat requirements and system losses',
-      'Because CIBSE requires it by law',
-      'To reduce energy consumption',
+      'Test each conductor individually then cross-connect and test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A margin (typically 10-20%) is added to account for pre-heat/boost requirements, distribution losses, and to ensure the system can maintain comfort during extreme weather events.',
   },
@@ -134,8 +169,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A building has 5kW fabric loss and 2kW ventilation loss. With a 15% margin, what boiler output is needed?',
-    options: ['7.0kW', '7.5kW', '8.05kW', '9.2kW'],
-    correctAnswer: 2,
+    options: [
+      '7.0kW',
+      '7.5kW',
+      '9.2kW',
+      '8.05kW',
+    ],
+    correctAnswer: 3,
     explanation:
       'Total heat load = 5 + 2 = 7kW. With 15% margin: 7 × 1.15 = 8.05kW. The boiler would typically be sized at 9kW or 10kW to match available equipment.',
   },
@@ -143,23 +183,38 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the typical air change rate for a living room used in heat loss calculations?',
-    options: ['0.5 ACH', '1.0 ACH', '1.5 ACH', '2.0 ACH'],
-    correctAnswer: 1,
+    options: [
+      '1.0 ACH',
+      '1.5 ACH',
+      '0.5 ACH',
+      '2.0 ACH',
+    ],
+    correctAnswer: 0,
     explanation:
       'CIBSE recommends 1.0 air change per hour for living rooms. Kitchens and bathrooms require higher rates (2-3 ACH) due to moisture and odour removal needs.',
   },
   {
     id: 9,
     question: 'Which building element typically has the highest U-value?',
-    options: ['External wall', 'Roof', 'Floor', 'Windows'],
-    correctAnswer: 3,
+    options: [
+      'External wall',
+      'Windows',
+      'Floor',
+      'Roof',
+    ],
+    correctAnswer: 1,
     explanation:
       'Windows typically have the highest U-values (1.2-2.8 W/m²K for double glazing), making them the weakest thermal element. Modern walls achieve 0.18-0.3 W/m²K.',
   },
   {
     id: 10,
     question: 'When calculating heat loss, temperature difference (ΔT) is measured in:',
-    options: ['Kelvin only', 'Celsius only', 'Either Kelvin or Celsius', 'Fahrenheit'],
+    options: [
+      'Kelvin only',
+      'Celsius only',
+      'Either Kelvin or Celsius',
+      'Fahrenheit',
+    ],
     correctAnswer: 2,
     explanation:
       'A temperature difference of 1K equals a difference of 1°C. While absolute temperatures differ (0°C = 273K), temperature differences are numerically identical, so either unit can be used.',
@@ -168,8 +223,13 @@ const quizQuestions = [
     id: 11,
     question:
       'Building Regulations Part L sets maximum U-values. What is the current limit for new-build external walls?',
-    options: ['0.35 W/m²K', '0.26 W/m²K', '0.18 W/m²K', '0.15 W/m²K'],
-    correctAnswer: 2,
+    options: [
+      '0.35 W/m²K',
+      '0.26 W/m²K',
+      '0.15 W/m²K',
+      '0.18 W/m²K',
+    ],
+    correctAnswer: 3,
     explanation:
       'Building Regulations Part L (2021) sets a maximum U-value of 0.18 W/m²K for new-build external walls. This represents a significant improvement from previous standards.',
   },
@@ -177,8 +237,13 @@ const quizQuestions = [
     id: 12,
     question:
       'A heating system has a boiler efficiency of 89%. If the building heat load is 15kW, what boiler input is required?',
-    options: ['13.4kW', '15.0kW', '16.9kW', '17.8kW'],
-    correctAnswer: 2,
+    options: [
+      '16.9kW',
+      '17.8kW',
+      '13.4kW',
+      '15.0kW',
+    ],
+    correctAnswer: 0,
     explanation:
       'Boiler input = Heat load ÷ Efficiency = 15 ÷ 0.89 = 16.85kW ≈ 16.9kW. The boiler must provide more input energy than the useful heat output.',
   },

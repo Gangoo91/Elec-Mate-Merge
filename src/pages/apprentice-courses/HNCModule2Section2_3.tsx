@@ -34,10 +34,10 @@ const quickCheckQuestions = [
     question:
       "Bernoulli's equation states that the sum of which three energy terms remains constant along a streamline?",
     options: [
-      'Kinetic, potential, thermal',
+      'Avoid manual handling altogether wherever possible',
       'Pressure, velocity (kinetic), elevation (potential)',
-      'Mass, volume, density',
-      'Force, work, power',
+      'Loose connections or magnetostriction',
+      'The 6-year limitation period restarts from that date',
     ],
     correctIndex: 1,
     explanation:
@@ -48,20 +48,25 @@ const quickCheckQuestions = [
     question:
       "According to Bernoulli's principle, when fluid velocity increases through a constriction, what happens to static pressure?",
     options: [
+      'Pressure becomes zero',
       'Pressure increases',
       'Pressure decreases',
       'Pressure stays the same',
-      'Pressure becomes zero',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'As velocity increases, kinetic energy increases. Since total energy is constant, static pressure must decrease. This principle explains how venturi meters and aircraft wings work.',
   },
   {
     id: 'venturi-application',
     question: "A venturi meter uses Bernoulli's principle to measure:",
-    options: ['Temperature', 'Pressure only', 'Flow rate', 'Pipe diameter'],
-    correctIndex: 2,
+    options: [
+      'Pressure only',
+      'Pipe diameter',
+      'Temperature',
+      'Flow rate',
+    ],
+    correctIndex: 3,
     explanation:
       "A venturi meter measures flow rate by creating a constriction. The pressure difference between the wide and narrow sections can be related to velocity, and hence flow rate, using Bernoulli's equation.",
   },
@@ -69,10 +74,10 @@ const quickCheckQuestions = [
     id: 'pitot-tube',
     question: 'A pitot tube measures:',
     options: [
-      'Static pressure only',
       'Dynamic (velocity) pressure only',
-      'Stagnation (total) pressure',
       'Atmospheric pressure',
+      'Stagnation (total) pressure',
+      'Static pressure only',
     ],
     correctIndex: 2,
     explanation:
@@ -86,11 +91,11 @@ const quizQuestions = [
     question: "What assumption is NOT required for the ideal form of Bernoulli's equation?",
     options: [
       'Steady flow conditions',
-      'Incompressible fluid',
       'Turbulent flow',
+      'Incompressible fluid',
       'No friction losses',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "The ideal Bernoulli equation requires steady, incompressible flow with no friction (inviscid). It doesn't require laminar flow - it applies along a streamline regardless of whether overall flow is laminar or turbulent.",
   },
@@ -98,8 +103,13 @@ const quizQuestions = [
     id: 2,
     question:
       "In Bernoulli's equation P + ½ρv² + ρgh = constant, what does the term ½ρv² represent?",
-    options: ['Static pressure', 'Dynamic (velocity) pressure', 'Elevation head', 'Total pressure'],
-    correctAnswer: 1,
+    options: [
+      '1 lux along the centre line',
+      'Reason for incomplete testing',
+      'Dynamic (velocity) pressure',
+      'The method of loci (memory palace)',
+    ],
+    correctAnswer: 2,
     explanation:
       '½ρv² is the dynamic or velocity pressure - the kinetic energy per unit volume of the moving fluid. It represents the pressure increase that would occur if the fluid were brought to rest.',
   },
@@ -107,8 +117,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Water flows through a horizontal pipe that narrows from 100mm to 50mm diameter. If the velocity in the larger section is 1 m/s, what is the velocity in the smaller section?',
-    options: ['2 m/s', '4 m/s', '8 m/s', '16 m/s'],
-    correctAnswer: 1,
+    options: [
+      '8 m/s',
+      '2 m/s',
+      '16 m/s',
+      '4 m/s',
+    ],
+    correctAnswer: 3,
     explanation:
       'Using continuity: A₁v₁ = A₂v₂. Since A ∝ D², and diameter halves (ratio 2:1), area reduces by factor 4. Therefore v₂ = v₁ × (A₁/A₂) = 1 × 4 = 4 m/s.',
   },
@@ -116,15 +131,25 @@ const quizQuestions = [
     id: 4,
     question:
       'The pressure difference measured across a venturi meter throat is 20 kPa. If the approach velocity is negligible, what is the throat velocity? (ρ = 1000 kg/m³)',
-    options: ['4.5 m/s', '6.3 m/s', '10 m/s', '20 m/s'],
-    correctAnswer: 1,
+    options: [
+      '6.3 m/s',
+      '4.5 m/s',
+      '10 m/s',
+      '20 m/s',
+    ],
+    correctAnswer: 0,
     explanation:
       'Using Bernoulli: ΔP = ½ρv². Rearranging: v = √(2ΔP/ρ) = √(2 × 20000/1000) = √40 = 6.32 m/s',
   },
   {
     id: 5,
     question: "Which device uses Bernoulli's principle to measure air velocity in ductwork?",
-    options: ['Thermometer', 'Pitot-static tube', 'Pressure gauge', 'Flow switch'],
+    options: [
+      'Thermometer',
+      'Pitot-static tube',
+      'Flow switch',
+      'Pressure gauge',
+    ],
     correctAnswer: 1,
     explanation:
       'A pitot-static tube measures both total (stagnation) pressure and static pressure. The difference gives dynamic pressure, from which velocity can be calculated: v = √(2×ΔP/ρ).',
@@ -133,7 +158,12 @@ const quizQuestions = [
     id: 6,
     question:
       'In a horizontal pipe, if flow velocity doubles, by what factor does the dynamic pressure change?',
-    options: ['Doubles (×2)', 'Triples (×3)', 'Quadruples (×4)', 'Halves (÷2)'],
+    options: [
+      'Doubles (×2)',
+      'Triples (×3)',
+      'Quadruples (×4)',
+      'Halves (÷2)',
+    ],
     correctAnswer: 2,
     explanation:
       'Dynamic pressure = ½ρv². Since it depends on v², doubling velocity quadruples dynamic pressure. This is why high velocities create significant pressure drops.',
@@ -142,8 +172,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A water jet rises 5m vertically from a nozzle. Ignoring air resistance, what was the jet velocity at the nozzle exit? (g = 10 m/s²)',
-    options: ['5 m/s', '10 m/s', '25 m/s', '50 m/s'],
-    correctAnswer: 1,
+    options: [
+      '5 m/s',
+      '50 m/s',
+      '25 m/s',
+      '10 m/s',
+    ],
+    correctAnswer: 3,
     explanation:
       'Using energy conservation (Bernoulli): ½v² = gh. Therefore v = √(2gh) = √(2 × 10 × 5) = √100 = 10 m/s.',
   },
@@ -151,8 +186,13 @@ const quizQuestions = [
     id: 8,
     question:
       "The Bernoulli equation can be expressed in terms of 'head'. What are the units of head?",
-    options: ['Pascals', 'Metres', 'kg/m³', 'Watts'],
-    correctAnswer: 1,
+    options: [
+      'Metres',
+      'kg/m³',
+      'Pascals',
+      'Watts',
+    ],
+    correctAnswer: 0,
     explanation:
       "When Bernoulli's equation is divided by ρg, all terms have units of metres (length). Pressure head = P/ρg, velocity head = v²/2g, elevation head = h. This 'head' form is common in pump specifications.",
   },
@@ -173,12 +213,12 @@ const quizQuestions = [
     id: 10,
     question: 'In building services, the Bernoulli principle explains why:',
     options: [
-      'Pumps need electricity',
+      'They can give misleading results if incorrectly set',
+      'At least 15 minutes of continuous flow',
       'Partially closed valves cause large pressure drops',
-      'Pipes expand when heated',
-      'Water boils at 100°C',
+      'Battery voltage must not fall below 50% at end of rated duration',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Partially closed valves create constrictions that accelerate flow. By Bernoulli's principle, this converts pressure energy to kinetic energy, causing pressure drop. The energy is then dissipated as turbulence and heat.",
   },
@@ -187,12 +227,12 @@ const quizQuestions = [
     question:
       'A pump adds energy to a fluid system. In the extended Bernoulli equation, this appears as:',
     options: [
-      'Increased friction loss',
-      'Reduced velocity',
+      'L-L and N-N similar, CPC may be higher',
+      'Load requirements and current demand',
+      'The DB\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s outgoing line terminal',
       'Added head (positive pump term)',
-      'Decreased elevation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The extended Bernoulli equation includes pump head: P₁/ρg + v₁²/2g + z₁ + H_pump = P₂/ρg + v₂²/2g + z₂ + h_loss. Pump head H_pump is positive, representing energy added to the system.',
   },
@@ -201,12 +241,12 @@ const quizQuestions = [
     question:
       'At a stagnation point in fluid flow, the velocity is zero. What happens to the pressure?',
     options: [
-      'Pressure is zero',
-      'Pressure is at its minimum',
       'Pressure reaches its maximum (stagnation pressure)',
-      'Pressure equals atmospheric',
+      'Operating below maximum ratings to ensure reliability',
+      'Fail for non-compliance with specification',
+      'Because Ze is typically too high for overcurrent devices alone',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'At a stagnation point, all kinetic energy converts to pressure energy. The stagnation pressure is the maximum pressure in the flow: P_stag = P_static + ½ρv². This is measured by a pitot tube.',
   },

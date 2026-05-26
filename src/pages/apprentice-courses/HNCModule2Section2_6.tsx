@@ -32,8 +32,13 @@ const quickCheckQuestions = [
   {
     id: 'system-curve-shape',
     question: 'What is the general shape of a system resistance curve?',
-    options: ['Straight line', 'Parabolic (H ∝ Q²)', 'Exponential', 'Inverse'],
-    correctIndex: 1,
+    options: [
+      'Straight line',
+      'Exponential',
+      'Parabolic (H ∝ Q²)',
+      'Inverse',
+    ],
+    correctIndex: 2,
     explanation:
       'System resistance curves are parabolic because friction head loss is proportional to velocity squared (and therefore flow squared). The equation is H = H_static + KQ², creating a characteristic parabolic shape.',
   },
@@ -41,12 +46,12 @@ const quickCheckQuestions = [
     id: 'operating-point',
     question: 'Where is the operating point on a pump-system diagram?',
     options: [
-      'At maximum pump head',
+      'Temperature, humidity, and other relevant factors',
+      'Clear responsibility boundaries between disciplines',
+      'They move from negative to positive terminal',
       'Where pump curve intersects system curve',
-      'At maximum pump flow',
-      'At the pump BEP',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The operating point is where the pump curve intersects the system curve. At this point, the pump delivers exactly the head required by the system at that flow rate - the system is in equilibrium.',
   },
@@ -54,12 +59,12 @@ const quickCheckQuestions = [
     id: 'pumps-parallel',
     question: 'What is the effect of running two identical pumps in parallel?',
     options: [
-      'Head doubles, flow unchanged',
-      'Flow doubles at any head',
       'Flow increases but less than doubles at the operating point',
-      'No change in performance',
+      'Hazardous waste requiring special disposal',
+      'By using the CSCS Smart Check app to scan the card\\\\\\\\\\\\\\\'s QR code',
+      'Unexpected twisting forces on the handler\\\\\\\\\\\\\\\'s spine as the load tilts',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'In parallel, flows add at the same head. However, because the system curve is parabolic, the actual flow increase at the operating point is less than double - typically 40-60% more flow, not 100%.',
   },
@@ -69,8 +74,8 @@ const quickCheckQuestions = [
     options: [
       'They increase pump efficiency',
       'Power reduces with cube of speed (P ∝ N³)',
-      'They eliminate friction losses',
       'They increase system head',
+      'They eliminate friction losses',
     ],
     correctIndex: 1,
     explanation:
@@ -83,8 +88,13 @@ const quizQuestions = [
     id: 1,
     question:
       'A system has 5m static head and requires 15m total head at 10 l/s design flow. What is the system constant K?',
-    options: ['0.1', '1.0', '1.5', '10'],
-    correctAnswer: 0,
+    options: [
+      '1.0',
+      '0.1',
+      '1.5',
+      '10',
+    ],
+    correctAnswer: 1,
     explanation:
       'Using H = H_static + KQ²: 15 = 5 + K(10)². Therefore K = (15-5)/100 = 0.1. The friction component is 10m at 10 l/s.',
   },
@@ -92,8 +102,13 @@ const quizQuestions = [
     id: 2,
     question:
       'If flow through a system doubles, by what factor does the friction head loss increase?',
-    options: ['2 times', '4 times', '8 times', 'Stays the same'],
-    correctAnswer: 1,
+    options: [
+      '8 times',
+      '2 times',
+      '4 times',
+      'Stays the same',
+    ],
+    correctAnswer: 2,
     explanation:
       'Friction head is proportional to Q². If Q doubles, friction head increases by 2² = 4 times. This is why system curves are parabolic - doubling flow quadruples the friction loss.',
   },
@@ -102,9 +117,9 @@ const quizQuestions = [
     question:
       'Two identical pumps are connected in series. What happens to the combined performance?',
     options: [
+      'Both flow and head double',
       'Flow doubles, head unchanged',
       'Head doubles, flow unchanged',
-      'Both flow and head double',
       'Head approximately doubles at any given flow',
     ],
     correctAnswer: 3,
@@ -129,10 +144,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the main advantage of differential pressure control on a VSD pump?',
     options: [
-      'Maintains constant flow rate',
+      '30-40% - to ensure adequate motor cooling and prevent recirculation',
       'Maintains constant head across the system, matching pump speed to demand',
-      'Maximises pump efficiency',
-      'Prevents cavitation',
+      'The system has no static head - friction losses only',
+      'Motor overheating due to reduced cooling flow through pump',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,8 +157,13 @@ const quizQuestions = [
     id: 6,
     question:
       'A pump operates at duty point 15 l/s, 20m head. Using a VSD, speed is reduced until the pump delivers 12 l/s. What is the approximate new head?',
-    options: ['12.8m', '16m', '20m', '25m'],
-    correctAnswer: 0,
+    options: [
+      '20m',
+      '16m',
+      '12.8m',
+      '25m',
+    ],
+    correctAnswer: 2,
     explanation:
       'Using affinity laws: speed ratio = 12/15 = 0.8, H₂ = H₁ × (N₂/N₁)² = 20 × 0.64 = 12.8m. The pump moves along an affinity law line, not the system curve.',
   },
@@ -151,12 +171,12 @@ const quizQuestions = [
     id: 7,
     question: 'What problem can occur if a pump operates at very low flow (far left of its curve)?',
     options: [
-      'Cavitation only',
+      'To hydraulically decouple primary and secondary circuits',
+      'Maintains constant head across the system, matching pump speed to demand',
+      'The system has no static head - friction losses only',
       'Motor overheating due to reduced cooling flow through pump',
-      'Excessive flow noise',
-      'Low discharge pressure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'At low flows, less water passes through the pump to cool the motor (especially for wet-rotor designs). Additionally, recirculation within the pump generates heat. Minimum flow valves or VSDs with minimum speed settings prevent this.',
   },
@@ -165,12 +185,12 @@ const quizQuestions = [
     question:
       'In a primary-secondary pumping system, what is the purpose of the bypass (common) pipe?',
     options: [
-      'To increase total system flow',
       'To hydraulically decouple primary and secondary circuits',
-      'To reduce pump head requirement',
-      'To eliminate the need for control valves',
+      'Head approximately doubles at any given flow',
+      'Motor overheating due to reduced cooling flow through pump',
+      'Moves to lower flow, higher head (towards shutoff)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The bypass pipe hydraulically decouples the circuits. Primary pumps maintain constant boiler/chiller flow regardless of secondary demand. Secondary pumps independently control building distribution, enabling variable flow without affecting plant equipment.',
   },
@@ -178,10 +198,10 @@ const quizQuestions = [
     id: 9,
     question: 'When should you consider parallel pumps rather than a single larger pump?',
     options: [
-      'When space is limited',
+      'Maintains constant head across the system, matching pump speed to demand',
       'For variable demand systems, redundancy, and better part-load efficiency',
-      'When NPSH is critical',
-      'For constant flow systems only',
+      'To hydraulically decouple primary and secondary circuits',
+      'The system has no static head - friction losses only',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,11 +212,11 @@ const quizQuestions = [
     question: 'A system curve passes through the origin. What does this indicate?',
     options: [
       'The system has no friction losses',
+      'The system has maximum efficiency',
       'The system has no static head - friction losses only',
       'The pump cannot operate in this system',
-      'The system has maximum efficiency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A system curve through the origin (H = KQ²) indicates zero static head - only friction losses. This is typical of closed-loop heating/cooling systems where supply and return are at the same level (pressurised circuits).',
   },
@@ -205,12 +225,12 @@ const quizQuestions = [
     question:
       'What happens to the pump operating point if the system develops an air lock or blockage?',
     options: [
-      'Moves to higher flow, lower head',
+      'Motor overheating due to reduced cooling flow through pump',
+      'Head approximately doubles at any given flow',
+      'To hydraulically decouple primary and secondary circuits',
       'Moves to lower flow, higher head (towards shutoff)',
-      'Stays at the same point',
-      'Moves along the system curve',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A blockage or air lock increases system resistance dramatically. The system curve shifts left, causing the operating point to move up the pump curve towards shutoff - low flow, high head, potential pump damage.',
   },
@@ -218,12 +238,12 @@ const quizQuestions = [
     id: 12,
     question: 'In a VSD-controlled pump system, what is the typical minimum speed limit and why?',
     options: [
-      '10% - to save maximum energy',
       '30-40% - to ensure adequate motor cooling and prevent recirculation',
-      '50% - for constant pressure',
-      '80% - to maintain efficiency',
+      'Maintains constant head across the system, matching pump speed to demand',
+      'Motor overheating due to reduced cooling flow through pump',
+      'For variable demand systems, redundancy, and better part-load efficiency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Minimum speed is typically 30-40% of full speed. Below this: motor cooling may be inadequate, pump efficiency drops significantly, recirculation causes heating, and bearings may not be properly lubricated. Some systems use minimum flow valves.',
   },

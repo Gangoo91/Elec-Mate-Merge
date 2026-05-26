@@ -43,10 +43,10 @@ const checks = [
     question:
       'You need to verify isolation at the point of work on a single-phase final circuit. The right test instrument is:',
     options: [
-      'A socket tester — the cheap one that plugs in.',
-      'A multimeter set to AC Volts.',
+      'Because it increases wind loading and can make the scaffold unstable if the ties are not designed for the additional load',
+      'Report the matter to the site supervisor, safety representative, or principal contractor as required by Regulation 8(4)',
       'A two-pole GS38-compliant voltage indicator (e.g. Martindale VI-13800, Kewtech KEWPROVE) — purpose-designed for safe isolation.',
-      'Your finger — if it tingles, it is live.',
+      'FAIL — exceeds max. Investigation: increase cpc csa, reduce length, fit RCD additional protection, or replace with Type B at higher rating that accepts Zs',
     ],
     correctIndex: 2,
     explanation:
@@ -57,10 +57,10 @@ const checks = [
     question:
       'Step 7 of the published JIB 9-step safe isolation procedure (re-prove the voltage indicator on a known supply, AFTER the test for dead) exists because:',
     options: [
-      'It is administrative.',
+      'The battery and the PV strings both connect to the DC side of one inverter. PV power can charge the battery without first being inverted to AC and back, giving roughly 3–5 % higher round-trip efficiency than AC-coupling. Best for new PV plus battery installs that go in together.',
       'It catches a voltage indicator that failed silently between step 3 (prove before) and step 6 (test for dead). If the indicator broke after step 3, the "dead" reading at step 6 was unreliable; the step 7 re-prove confirms the indicator was still working when step 6 happened.',
-      'It is only for three-phase.',
-      'It replaces step 3.',
+      'Notifiable work under Approved Doc P must be done by a Competent Person Scheme registered installer OR notified to local authority building control (with associated fees and inspection). CPS registration is the normal industry route - NICEIC, NAPIT, ELECSA, Stroma etc.',
+      'An Electrical Installation Certificate (EIC) signed by the responsible competent persons for design, construction and inspection/testing, accompanied by a Schedule of Inspections and a Schedule of Test Results, plus the documentation required by Regulation 132.13',
     ],
     correctIndex: 1,
     explanation:
@@ -71,12 +71,12 @@ const checks = [
     question:
       'Step 5 of the published JIB procedure (lock and label) requires you to:',
     options: [
-      'Trust the customer not to switch it on.',
       'Apply a physical lockout device (padlock + clip + warning notice) so the device cannot be re-energised, OR remove the fuse and retain it in your possession.',
-      'Tell the householder verbally.',
-      'Mark the breaker with a Sharpie.',
+      'Stop your work in the affected area, report to your supervisor and to the Principal Contractor — HASAWA s.3 covers risk to non-employees',
+      'The highest average power demand recorded over any half-hour period since the MDI was last reset, which is used by the DNO for billing and supply capacity planning',
+      'Typically 0.6-0.8 for traditional dwellings (categories rarely peak at the same instant); pushing toward 0.8-0.95 for heat-pump and EV-rich dwellings (cold-morning categories align more).',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Step 5 (lock and label) is a distinct step in the published 9-step JIB sequence — it follows the physical isolation in step 4 (turn off / open / remove fuse) and PRECEDES the test for dead in step 6. Lockout = padlock + lockout clip on an MCB, OR removal of a fuse and retention in your pocket / toolbox. Verbal instructions to the householder are not sufficient (they can forget, change shift, lose attention). A Sharpie mark is not a physical barrier. The lockout has to be physical, the warning notice has to be in place, and the key (or the fuse) has to be in YOUR possession. EAWR Reg 13 requires "adequate precautions to prevent equipment becoming electrically charged" — the lockout is the practical mechanism.',
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       'EAWR Reg 14 (1989) places restrictions on:',
     options: [
-      'All work on electrical equipment.',
+      'To provide a means of frequently switching the motor on and off under control of external signals (start/stop, PLC output)',
       'Working on or near LIVE conductors — prohibited unless impractical to make dead AND it is reasonable to work live AND suitable precautions are taken.',
-      'Working on dead conductors.',
-      'Voltage testing only.',
+      'For a new installation, any defect or omission revealed during inspection and testing shall be corrected before the Certificate is issued — fix first, retest, then certify.',
+      'Looking for the underlying interests of both parties and finding a solution that meets both — a more durable outcome than either side "winning"',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       'The first step of the JIB 9-step safe isolation procedure is:',
     options: [
-      'Switch the breaker off.',
+      'Because the refrigeration system may leak gases that displace oxygen, the insulated room is substantially enclosed, and there may be risk of entrapment if the door locks',
+      'To lift materials vertically through the riser shaft, avoiding the need to carry heavy items up ladders or stairs',
       'Identify the circuit / installation to be isolated — using the circuit chart, the schematic and confirmation with the customer / occupier.',
-      'Test the voltage indicator.',
-      'Apply lockout.',
+      'A person with sufficient training, experience or knowledge to identify defects and assess the tower\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s fitness for continued use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Step 1 is identification. Before any switching, confirm exactly which circuit (or installation) you are isolating. Cross-check the circuit chart against the actual layout, talk to the customer about which devices the circuit feeds, trace it visually if possible. Get this wrong and you isolate the wrong circuit — meaning you work on something still live.',
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     question:
       'Step 6 of the JIB procedure (test for dead at the point of work) requires you to test:',
     options: [
-      'L-N only.',
+      'The total vertical distance required below the worker to ensure they do not hit a lower level during a fall arrest',
+      'Type A is evaluated by statistical analysis of repeated measurements; Type B is evaluated by other means such as specifications or prior knowledge',
+      'Wrong circuit isolated by future maintainers — leading to live work where the worker thought they had isolated; potentially fatal',
       'L-N, L-E and N-E for single-phase; L1-L2 / L1-L3 / L2-L3 / L-N each phase / L-E each phase / N-E for three-phase, all at the POINT OF WORK.',
-      'L-E only.',
-      'At the consumer unit only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Test for dead by checking every possible voltage combination AT THE POINT OF WORK. Single-phase: L-N, L-E, N-E (three tests). Three-phase: L1-L2, L1-L3, L2-L3, L1-N, L2-N, L3-N, L1-E, L2-E, L3-E, N-E (ten tests). Testing at the point of work, not at the upstream device, catches situations where the wrong circuit was isolated or where there is back-feed from another source.',
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'A "proving unit" (e.g. Martindale GVD2, Kewtech KEWPROVE) is used to:',
     options: [
-      'Replace the voltage indicator.',
       'Generate a known reference voltage so you can verify the voltage indicator is working — when no known live supply is conveniently available.',
-      'Test the load.',
-      'Calibrate the multimeter.',
+      'To verify that the earth fault loop impedance is low enough to ensure the protective device will operate within the required disconnection time specified in BS 7671',
+      'The goal lacks genuine commitment &mdash; the electrician may not truly value the 2396 or believe they can achieve it, undermining persistence as described by Locke &amp; Latham',
+      'An injury that results in the worker being incapacitated for more than 7 consecutive days, not counting the day of the injury',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A proving unit generates a known voltage (typically 230 V or 690 V dummy) so you can prove the voltage indicator is working without needing access to a live supply. It is the safer alternative to "prove the indicator on the upstream supply terminal" — particularly important when the install you are isolating is the only nearby supply. Step 3 (prove before isolation) and step 6 (prove after isolation) both use the proving unit.',
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       'A socket tester (Martindale ST120 / Kewtech) is acceptable for safe isolation verification:',
     options: [
-      'Yes — it tests for voltage and shows wiring fault status.',
+      'No — a prohibition notice remains in force during an appeal unless the tribunal specifically directs otherwise; this is different from an improvement notice which is suspended during an appeal',
       'No — socket testers are a wiring verification tool only. They do not provide the GS38-required indicator features (shrouded probes, current limiting, prove function) and cannot be considered a safe-isolation tool.',
-      'Yes if backed up by a multimeter.',
-      'Yes for domestic only.',
+      '+/- 30% of measured value (allowing for instrument and test method uncertainty) — accounted for in BS 7671 Table 41.3 by use of Cmin = 0.95 and 80% rule',
+      'A loose connection or arcing fault at a socket outlet, junction box or accessory creating high-frequency arcing signatures the AFDD is designed to detect',
     ],
     correctAnswer: 1,
     explanation:
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'After completing the test for dead and the re-prove of the indicator, you also need to:',
     options: [
-      'Nothing — work can begin.',
+      'Prolonged crawling, lying, and dragging loads in extremely restricted space, with no ability to use normal lifting techniques',
+      'Areas where heat transfers more easily through the building envelope due to breaks in insulation',
       'Test polarity at the point of work (step 8) and record the isolation in your work log / permit (step 9).',
-      'Switch the breaker back on briefly to test.',
-      'Just write a note.',
+      'MHSWR 1999 Reg 19 — additional risk assessment for young persons, considering their inexperience and immaturity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Step 8 — test polarity at the point of work (confirm L is on the L terminal, N is on the N, E is on the E). Step 9 — record the isolation in your permit, work log or test record. Polarity verification catches reverse-polarity wiring that would be live during work even after correct isolation of the upstream device. Recording the isolation creates an audit trail for safety and for any future incident investigation.',
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       'A "permit to work" interacts with the JIB procedure how?',
     options: [
-      'It replaces it.',
+      'Underfloor voids (some); plant rooms with limited ventilation; lift shafts; ductwork; basement / cellar in some cases; switchroom in industrial settings; tank work for instrumentation; manholes for cable jointing.',
+      'The electrician (shock, burn, arc flash), other personnel on site, customers/clients, the public if the work affects public-accessible parts, and building systems (consequential damage from arc faults, fire spread).',
+      'Regulation 132.13 — the explicit requirement for design documentation. Plus Reg 514.9.1 which addresses the on-site distribution board diagram requirement (with the A4:2026 domestic exception). Plus Reg 644.1.1 which makes the EIC and supporting documentation conditional on defect rectification. Plus Section 514 series on identification and notices.',
       'On commercial sites, the permit names the circuit / equipment to be worked on, the precautions required (which include safe isolation per the JIB procedure), the time window, the worker and the responsible person — the JIB procedure is the practical execution of the permit&rsquo;s isolation requirement.',
-      'It is for hot works only.',
-      'It is informal.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'On commercial / industrial sites, the permit to work is the formal authorisation to do the task — it names the work, the worker, the time window, the precautions. The JIB safe isolation procedure is the practical method by which the "isolation" precaution gets achieved on the ground. Permit and JIB procedure work together: the permit authorises, the JIB sequence executes. On a domestic install, no permit is required but the JIB sequence is still mandatory.',
   },
@@ -186,12 +186,12 @@ const quizQuestions = [
     question:
       'You complete the JIB procedure and start work. Twenty minutes in, the lockout padlock falls off the MCB clip. The right action is:',
     options: [
-      'Carry on — you are nearly finished.',
       'Stop work IMMEDIATELY. Treat the circuit as potentially live until you re-prove it dead with the voltage indicator (and verify the indicator is working). Re-secure the lockout properly before continuing.',
-      'Tape the padlock back on.',
-      'Hold the padlock in place with one hand while working with the other.',
+      'Multiple hazards interact and compound each other — the combined effect can exceed the tower\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safety margin even when each individual hazard alone would not',
+      'Reflect on the interaction in supervision, recognise the dependency dynamic, gently but firmly re-establish boundaries, reiterate the role limits of an MHFA, and collaboratively create a plan to transition the colleague to appropriate professional support',
+      'Hand the schedule to the supervisor for sign-off, then lift it into the formal design pack (cable schedule, single-line, EIC issue draft) before procurement starts.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Any breach of the isolation security means stopping work and re-verifying the dead state. The MCB might have been switched on briefly while the lockout was off; the circuit may now be live. The correct response is: stop, re-test isolation at the point of work, re-prove the voltage indicator after the test, re-secure the lockout properly, then resume work. Continuing on the assumption "it&rsquo;s still off because nobody touched it" is the kind of assumption that leads to fatalities.',
   },

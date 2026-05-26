@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'pfc-definition',
     question: 'What is prospective fault current (Ipf)?',
     options: [
-      'The normal operating current of the circuit',
-      'The maximum current that could flow at a given point under fault conditions',
       'The current drawn by the largest single load on the circuit',
       'The current that flows when the RCD test button is pressed',
+      'The maximum current that could flow at a given point under fault conditions',
+      'The normal operating current of the circuit',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Prospective fault current (Ipf) is the maximum current that would flow at a given point in the installation if a fault of negligible impedance occurred at that point. It is determined by the supply voltage and the total impedance of the fault loop. BS 7671 Regulation 434.5.1 requires that the breaking capacity of every protective device must not be less than the Ipf at its point of installation.',
   },
@@ -28,11 +28,11 @@ const quickCheckQuestions = [
     question: 'The adiabatic equation t = k²S²/I² is used to verify that:',
     options: [
       'The cable voltage drop does not exceed the permitted limit',
+      'The earth fault loop impedance is low enough for disconnection',
       'The cable can withstand the thermal energy released during a fault without damage',
       'The circuit design current does not exceed the MCB rating',
-      'The earth fault loop impedance is low enough for disconnection',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The adiabatic equation relates the maximum fault clearance time (t) to the cable cross-sectional area (S), a factor representing the cable conductor and insulation material (k), and the fault current (I). It ensures that the energy let-through (I²t) of the protective device does not exceed the thermal withstand capability (k²S²) of the cable during a short-circuit or earth fault.',
   },
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'overload-vs-shortcircuit',
     question: 'What is the key difference between an overload current and a short-circuit current?',
     options: [
-      'There is no difference — they are the same thing',
+      'Prevent condensation forming on components during cold periods when the panel is not in use, avoiding moisture-related insulation failures',
       'An overload occurs in a sound circuit due to excess demand; a short-circuit results from a fault of negligible impedance',
-      'An overload is always greater than a short-circuit current',
-      'Short-circuit currents only occur on three-phase circuits',
+      'A fixed mindset belief that treats current difficulty as evidence of permanent limitation',
+      'Contract — processing necessary for the performance of the contract (or to take pre-contract steps at the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s request)',
     ],
     correctIndex: 1,
     explanation:
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     question:
       "In protection coordination, what does 'total discrimination' between two devices in series mean?",
     options: [
-      'Both devices trip simultaneously',
-      'The upstream device always trips first',
       'The downstream device always trips before the upstream device, for all fault currents up to its breaking capacity',
-      'Neither device trips on fault',
+      'Analysis of what happened, what worked well, what failed, and recommendations for preventing recurrence',
+      'Information about the project, including known hazards, that the client must provide to designers and contractors as soon as practicable',
+      'Contribute to the preparation of method statements for their work, follow them on site, and identify when they need updating',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Total discrimination means that for every fault current up to the breaking capacity of the downstream device, the downstream device will always operate before the upstream device. Partial discrimination exists when the downstream device operates first only up to a certain fault level, beyond which both may operate. Manufacturers publish discrimination tables showing the maximum fault current for which discrimination is achieved between specific device pairs.',
   },
@@ -70,7 +70,12 @@ const quizQuestions = [
     id: 1,
     question:
       'The prospective fault current at the origin of a typical UK domestic installation is usually in the range of:',
-    options: ['100 A to 500 A', '1 kA to 16 kA', '20 kA to 50 kA', '50 kA to 100 kA'],
+    options: [
+      '100 A to 500 A',
+      '1 kA to 16 kA',
+      '20 kA to 50 kA',
+      '50 kA to 100 kA',
+    ],
     correctAnswer: 1,
     explanation:
       'The prospective fault current at the origin of a typical UK domestic installation supplied from the public network is usually between 1 kA and 16 kA. The DNO (Distribution Network Operator) maximum declared value is typically 16 kA for single-phase supplies. BS 7671 Regulation 434.5.1 requires that all protective devices have a breaking capacity not less than this value.',
@@ -79,8 +84,13 @@ const quizQuestions = [
     id: 2,
     question:
       'BS 7671 Regulation 434.5.2 requires that the energy let-through of a protective device satisfies:',
-    options: ['I²t ≤ k²S²', 'I²t ≥ k²S²', 'Ib ≤ In ≤ Iz', 'Zs × Ia ≤ Uo'],
-    correctAnswer: 0,
+    options: [
+      'Ib ≤ In ≤ Iz',
+      'Zs × Ia ≤ Uo',
+      'I²t ≤ k²S²',
+      'I²t ≥ k²S²',
+    ],
+    correctAnswer: 2,
     explanation:
       'Regulation 434.5.2 requires that the let-through energy (I²t) of the protective device during a short-circuit does not exceed the withstand energy (k²S²) of the cable. This ensures the cable insulation is not damaged by the thermal effects of the fault current during the time taken for the protective device to operate. The value of k depends on the conductor and insulation materials.',
   },
@@ -88,12 +98,12 @@ const quizQuestions = [
     id: 3,
     question: "In the adiabatic equation, the factor 'k' depends on:",
     options: [
-      'The circuit voltage and frequency',
-      'The conductor material and insulation type',
       'The ambient temperature only',
+      'The circuit voltage and frequency',
       'The length of the cable run',
+      'The conductor material and insulation type',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The k factor is a constant that accounts for the thermal properties of the conductor material (copper or aluminium) and the insulation material (PVC, XLPE, etc.), along with the initial and final temperatures of the conductor. Values of k are tabulated in BS 7671 Table 43.1. For example, copper conductors with thermoplastic (PVC) insulation have k = 115.',
   },
@@ -102,19 +112,24 @@ const quizQuestions = [
     question:
       'When the prospective fault current exceeds the breaking capacity of a downstream MCB, the installation can be made compliant by:',
     options: [
-      'Accepting the risk and proceeding anyway',
       'Using back-up protection from an upstream HRC fuse with a verified coordination combination',
-      'Adding a surge protection device',
-      'Increasing the cable size',
+      'Their electrons are tightly bound and the band gap to conduction is large',
+      '32A or greater — the cable rating (Iz) must be at least equal to the protective device rating (In)',
+      'Segregate at source — copper to a metals merchant, PVC to a plastic recycling stream, general waste to skip',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "BS 7671 Regulation 434.5.1 permits the use of back-up protection where the downstream device's breaking capacity is exceeded. An upstream device (typically an HRC fuse) limits the prospective fault current to a level the downstream MCB can handle. The combination must be verified by the manufacturer — the devices must be tested together and the results published in coordination tables.",
   },
   {
     id: 5,
     question: 'The maximum disconnection time for a 32 A final circuit in a TN system at 230 V is:',
-    options: ['0.1 seconds', '0.4 seconds', '1 second', '5 seconds'],
+    options: [
+      '0.1 seconds',
+      '0.4 seconds',
+      '5 seconds',
+      '1 second',
+    ],
     correctAnswer: 1,
     explanation:
       'BS 7671 Table 41.1 specifies a maximum disconnection time of 0.4 seconds for TN systems on final circuits not exceeding 32 A at 230 V nominal (120-230 V Uo). For distribution circuits, the maximum disconnection time is 5 seconds. These times ensure that in the event of an earth fault, the supply is disconnected before the touch voltage duration becomes dangerous.',
@@ -123,12 +138,12 @@ const quizQuestions = [
     id: 6,
     question: 'Earth fault loop impedance (Zs) is important for overcurrent protection because:',
     options: [
-      "It determines the circuit's power factor",
+      'That breaking capacity ≥ Ipf, Zs values meet tables, and discrimination is adequate for the installation',
+      'A downstream device to have a lower breaking capacity than the prospective fault current, backed up by an upstream current-limiting device',
       'It determines the magnitude of the earth fault current and therefore whether the protective device will operate within the required time',
-      'It affects the voltage drop along the cable',
-      "It determines the cable's current-carrying capacity",
+      'The I²t value — the total thermal energy the device allows to pass through to the circuit during fault clearance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The earth fault loop impedance (Zs) determines the magnitude of the earth fault current: If = Uo / Zs. The protective device must be able to carry this fault current and disconnect within the maximum permitted time specified by BS 7671. If Zs is too high, the fault current will be too low to trip the device quickly enough, and the disconnection time requirement will not be met.',
   },
@@ -136,8 +151,13 @@ const quizQuestions = [
     id: 7,
     question:
       'For a circuit protected by a 32 A Type B MCB in a TN system, the maximum earth fault loop impedance (Zs) is approximately:',
-    options: ['0.27 ohms', '1.09 ohms', '1.37 ohms', '7.19 ohms'],
-    correctAnswer: 2,
+    options: [
+      '0.27 ohms',
+      '1.09 ohms',
+      '7.19 ohms',
+      '1.37 ohms',
+    ],
+    correctAnswer: 3,
     explanation:
       'For a Type B MCB, instantaneous magnetic tripping occurs between 3 and 5 times In. Using the worst case (5 × In): the minimum fault current needed = 5 × 32 = 160 A. BS 7671:2018+A4:2026 applies Cmin = 0.95 to U0 in the Zs calculation: Maximum Zs = (U0 × Cmin) / Ia = (230 × 0.95) / 160 = 218.5 / 160 = 1.366 ohms ≈ 1.37 ohms (Table 41.3). The pre-A4 figure of 1.44 ohms (without Cmin) is now obsolete.',
   },
@@ -146,12 +166,12 @@ const quizQuestions = [
     question:
       'Cascading (also called series connection or let-through energy coordination) allows:',
     options: [
-      'Two protective devices to share the fault current equally',
       'A downstream device to have a lower breaking capacity than the prospective fault current, backed up by an upstream current-limiting device',
-      'Two devices to operate simultaneously for faster disconnection',
-      'A single device to protect multiple parallel circuits',
+      'The I²t value — the total thermal energy the device allows to pass through to the circuit during fault clearance',
+      'That breaking capacity ≥ Ipf, Zs values meet tables, and discrimination is adequate for the installation',
+      'It determines the magnitude of the earth fault current and therefore whether the protective device will operate within the required time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Cascading (or back-up protection) allows a downstream device (e.g., MCB) to have a breaking capacity lower than the prospective fault current at its location, provided an upstream current-limiting device (e.g., HRC fuse or MCCB) limits the energy let-through to within the downstream device's capability. The combination must be tested and certified by the manufacturer.",
   },
@@ -159,7 +179,12 @@ const quizQuestions = [
     id: 9,
     question:
       'If a cable has a cross-sectional area (S) of 2.5 mm² and k = 115, the maximum fault energy the cable can withstand (k²S²) is:',
-    options: ['287.5 A²s', '82,656 A²s', '115,000 A²s', '828 A²s'],
+    options: [
+      '287.5 A²s',
+      '82,656 A²s',
+      '115,000 A²s',
+      '828 A²s',
+    ],
     correctAnswer: 1,
     explanation:
       "k²S² = 115² × 2.5² = 13,225 × 6.25 = 82,656.25 A²s. This is the maximum energy (I²t) that the cable can absorb during a short-circuit without the insulation temperature exceeding its damage threshold. The protective device's I²t let-through must not exceed this value. This calculation is fundamental to verifying short-circuit protection per BS 7671 Regulation 434.5.2.",
@@ -169,12 +194,12 @@ const quizQuestions = [
     question:
       'When checking protection coordination during periodic inspection, a maintenance technician should verify:',
     options: [
-      'Only that the devices are from the same manufacturer',
+      'A specific risk assessment must be carried out for young persons before they start work',
+      'Whether flow is laminar or turbulent (the ratio of inertial to viscous forces)',
       'That breaking capacity ≥ Ipf, Zs values meet tables, and discrimination is adequate for the installation',
-      'Only that the cable size matches the MCB rating',
-      'Only that the RCD test button works',
+      'A risk that a reasonable, competent person could anticipate might occur given the nature of the space and the work to be done',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'During periodic inspection, protection coordination should be verified by confirming: the prospective fault current has not increased beyond device breaking capacities, Zs values are within the maximum tabulated values for the devices installed, devices are correctly rated for the circuits they protect, and discrimination between devices in series is adequate to minimise disruption during fault conditions.',
   },
@@ -182,12 +207,12 @@ const quizQuestions = [
     id: 11,
     question: "The term 'let-through energy' of a protective device refers to:",
     options: [
-      'The electrical energy consumed by the device during normal operation',
+      'A downstream device to have a lower breaking capacity than the prospective fault current, backed up by an upstream current-limiting device',
+      'Using back-up protection from an upstream HRC fuse with a verified coordination combination',
+      'It determines the magnitude of the earth fault current and therefore whether the protective device will operate within the required time',
       'The I²t value — the total thermal energy the device allows to pass through to the circuit during fault clearance',
-      'The power dissipated in the device contacts',
-      'The energy required to reset the device after tripping',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Let-through energy (I²t) is the integral of the square of the fault current over the time taken for the device to clear the fault. It represents the total thermal energy that passes through the device and into the downstream circuit during fault clearance. Current-limiting devices (HRC fuses, current-limiting MCBs) are specifically designed to minimise I²t, reducing stress on cables and equipment.',
   },

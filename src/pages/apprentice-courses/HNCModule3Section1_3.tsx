@@ -34,12 +34,12 @@ const quickCheckQuestions = [
     question:
       'In a series circuit with three resistors, the current through R2 is 2A. What is the current through R1 and R3?',
     options: [
-      '1A through each',
       '2A through each',
       'Depends on resistance values',
+      '1A through each',
       '6A total split between them',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'In a series circuit, current is the SAME through all components. If 2A flows through R2, then 2A also flows through R1 and R3 - this is the defining characteristic of series circuits.',
   },
@@ -47,8 +47,13 @@ const quickCheckQuestions = [
     id: 'voltage-divider',
     question:
       'A 24V supply feeds two resistors in series: 100Ω and 200Ω. What voltage appears across the 200Ω resistor?',
-    options: ['8V', '12V', '16V', '24V'],
-    correctIndex: 2,
+    options: [
+      '8V',
+      '16V',
+      '12V',
+      '24V',
+    ],
+    correctIndex: 1,
     explanation:
       'Using the voltage divider rule: V2 = VT × (R2/RT) = 24V × (200/300) = 24V × 0.667 = 16V. The larger resistor drops the larger voltage.',
   },
@@ -56,8 +61,13 @@ const quickCheckQuestions = [
     id: 'total-resistance',
     question:
       'Three resistors of 10Ω, 22Ω, and 47Ω are connected in series. What is the total resistance?',
-    options: ['26.3Ω', '47Ω', '79Ω', '6.1Ω'],
-    correctIndex: 2,
+    options: [
+      '47Ω',
+      '79Ω',
+      '6.1Ω',
+      '26.3Ω',
+    ],
+    correctIndex: 1,
     explanation:
       'In series circuits, total resistance is simply the sum: RT = R1 + R2 + R3 = 10 + 22 + 47 = 79Ω. Series resistance always increases total resistance.',
   },
@@ -65,8 +75,13 @@ const quickCheckQuestions = [
     id: 'emergency-lighting',
     question:
       'An emergency lighting battery pack has 10 cells in series, each 1.2V. What is the total battery voltage?',
-    options: ['1.2V', '6V', '12V', '120V'],
-    correctIndex: 2,
+    options: [
+      '120V',
+      '12V',
+      '1.2V',
+      '6V',
+    ],
+    correctIndex: 1,
     explanation:
       'Voltage sources in series add together: VT = 10 × 1.2V = 12V. This is why NiCd/NiMH emergency lighting packs use multiple cells in series to achieve the required voltage.',
   },
@@ -90,8 +105,13 @@ const quizQuestions = [
     id: 2,
     question:
       'Three resistors of 15Ω, 27Ω, and 33Ω are connected in series to a 230V supply. What current flows?',
-    options: ['1.53A', '3.07A', '6.13A', '17.25A'],
-    correctAnswer: 1,
+    options: [
+      '6.13A',
+      '1.53A',
+      '3.07A',
+      '17.25A',
+    ],
+    correctAnswer: 2,
     explanation:
       "RT = 15 + 27 + 33 = 75Ω. Using Ohm's Law: I = V/R = 230/75 = 3.07A. This current flows through all three resistors.",
   },
@@ -99,12 +119,12 @@ const quizQuestions = [
     id: 3,
     question: 'In a series circuit, how does voltage distribute across components?',
     options: [
-      'Equally across all components',
       'Inversely proportional to resistance',
-      'Proportional to resistance',
+      'Equally across all components',
       'Randomly distributed',
+      'Proportional to resistance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Voltage divides proportionally to resistance. Larger resistors drop more voltage (V = IR, and since I is constant, V is proportional to R).',
   },
@@ -112,8 +132,13 @@ const quizQuestions = [
     id: 4,
     question:
       'A PIR sensor circuit has three series resistors: 4.7kΩ, 10kΩ, and 2.2kΩ from a 12V supply. What voltage appears across the 10kΩ resistor?',
-    options: ['3.33V', '5.92V', '7.10V', '10V'],
-    correctAnswer: 2,
+    options: [
+      '7.10V',
+      '5.92V',
+      '3.33V',
+      '10V',
+    ],
+    correctAnswer: 0,
     explanation: 'RT = 4.7 + 10 + 2.2 = 16.9kΩ. V10k = 12V × (10/16.9) = 12V × 0.592 = 7.10V',
   },
   {
@@ -122,8 +147,8 @@ const quizQuestions = [
     options: [
       'Total resistance decreases',
       'Total resistance increases',
-      'Total resistance stays the same',
       'Depends on the voltage',
+      'Total resistance stays the same',
     ],
     correctAnswer: 1,
     explanation:
@@ -133,8 +158,13 @@ const quizQuestions = [
     id: 6,
     question:
       'An emergency lighting unit contains 8 NiCd cells (1.2V each) in series. During discharge, each cell drops to 1.0V. What is the pack voltage?',
-    options: ['1.0V', '8.0V', '9.6V', '12.8V'],
-    correctAnswer: 1,
+    options: [
+      '1.0V',
+      '9.6V',
+      '8.0V',
+      '12.8V',
+    ],
+    correctAnswer: 2,
     explanation:
       'With 8 cells at 1.0V each in series: VT = 8 × 1.0V = 8.0V. This voltage drop indicates the battery needs recharging.',
   },
@@ -142,8 +172,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A voltage divider uses R1 = 1kΩ and R2 = 2kΩ from a 9V supply. What voltage is available at the junction (across R2)?',
-    options: ['3V', '4.5V', '6V', '9V'],
-    correctAnswer: 2,
+    options: [
+      '3V',
+      '4.5V',
+      '9V',
+      '6V',
+    ],
+    correctAnswer: 3,
     explanation:
       'V2 = VT × (R2/RT) = 9V × (2kΩ/3kΩ) = 9V × 0.667 = 6V. The output is taken across R2.',
   },
@@ -151,8 +186,13 @@ const quizQuestions = [
     id: 8,
     question:
       'In a series circuit with a 12V supply, if one component drops 5V and another drops 3V, what must the third component drop?',
-    options: ['2V', '4V', '8V', '12V'],
-    correctAnswer: 1,
+    options: [
+      '4V',
+      '8V',
+      '2V',
+      '12V',
+    ],
+    correctAnswer: 0,
     explanation:
       "Kirchhoff's Voltage Law states that the sum of voltage drops equals the supply voltage. 5V + 3V + V3 = 12V, therefore V3 = 4V.",
   },
@@ -160,10 +200,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why are fuses connected in series with the load they protect?',
     options: [
-      'So voltage is the same through both',
+      'Reducing reheat energy and improving chiller efficiency',
       'So current flows through both - if fuse blows, circuit opens',
-      'To reduce power consumption',
-      'To increase the voltage available',
+      'Responsible, Accountable, Consulted, Informed',
+      'Adequate support to prevent mechanical damage from cable weight',
     ],
     correctAnswer: 1,
     explanation:
@@ -173,8 +213,13 @@ const quizQuestions = [
     id: 10,
     question:
       'A cable has resistance of 0.1Ω per metre. For a 50m single-phase run, what is the total cable resistance?',
-    options: ['5Ω', '10Ω', '50Ω', '100Ω'],
-    correctAnswer: 1,
+    options: [
+      '5Ω',
+      '100Ω',
+      '10Ω',
+      '50Ω',
+    ],
+    correctAnswer: 2,
     explanation:
       'Cable resistance is in series: line conductor (50m × 0.1Ω = 5Ω) + neutral conductor (50m × 0.1Ω = 5Ω) = 10Ω total. Always remember both conductors in single-phase circuits.',
   },

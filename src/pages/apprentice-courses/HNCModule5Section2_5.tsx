@@ -32,11 +32,11 @@ const quickCheckQuestions = [
     question: 'What is the primary purpose of an Invitation to Tender (ITT)?',
     options: [
       'To negotiate prices with a single contractor',
-      'To invite contractors to submit competitive bids for defined work',
-      'To award contracts without competition',
       'To finalise contract terms after selection',
+      'To award contracts without competition',
+      'To invite contractors to submit competitive bids for defined work',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'An ITT formally invites contractors to submit competitive bids for a clearly defined scope of work, enabling the client to compare offerings and select the most suitable contractor.',
   },
@@ -45,9 +45,9 @@ const quickCheckQuestions = [
     question:
       'What happens if a tender submission fails to meet a mandatory compliance requirement?',
     options: [
-      'It receives a lower score',
-      'It may be rejected without further evaluation',
       'It automatically wins if cheapest',
+      'It may be rejected without further evaluation',
+      'It receives a lower score',
       'The client must request clarification',
     ],
     correctIndex: 1,
@@ -58,12 +58,12 @@ const quickCheckQuestions = [
     id: 'letter-of-intent',
     question: 'A Letter of Intent (LOI) in tendering:',
     options: [
+      'Requires full project completion',
       'Is the same as a signed contract',
       'Indicates intention to award but is not a binding contract',
-      'Requires full project completion',
       'Cannot be issued before contract award',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "A Letter of Intent indicates the client's intention to award a contract and may authorise limited preliminary works, but it is not a fully binding contract until formal execution.",
   },
@@ -71,12 +71,12 @@ const quickCheckQuestions = [
     id: 'evaluation-criteria',
     question: 'In public sector procurement, tender evaluation criteria must be:',
     options: [
-      'Kept confidential until after award',
-      'Published in advance with weightings',
       'Changed during evaluation if needed',
       'Based solely on lowest price',
+      'Kept confidential until after award',
+      'Published in advance with weightings',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Public sector procurement requires transparency. Evaluation criteria and weightings must be published in advance in the ITT documents, and evaluators must assess bids consistently against these stated criteria.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: "What is 'front-loading' in tender pricing?",
     options: [
+      'Submitting the tender before the deadline',
       'Including all costs at the start of the schedule',
       'Pricing early activities higher to improve cash flow',
-      'Submitting the tender before the deadline',
       'Adding contingencies to the first section',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Front-loading involves pricing early project activities higher than their true cost to improve cash flow through early valuations. This practice is often scrutinised during tender evaluation.',
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'During a tender interview, the evaluation panel typically assesses:',
     options: [
-      'Only the written submission',
+      'The contractor withdrawing their bid after submission',
+      'Screen contractors before ITT stage to create a shortlist',
+      'To seek clarity on ITT requirements without gaining unfair advantage',
       'Key personnel, methodology, and understanding of the project',
-      'Previous client relationships exclusively',
-      'Financial accounts only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Tender interviews allow the evaluation panel to assess the proposed key personnel, technical approach, project understanding, and the contractor's ability to deliver beyond what's written in the submission.",
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'A two-envelope tender system separates:',
     options: [
-      'Original and copy submissions',
       'Technical/quality submission from commercial/price submission',
-      'Health and safety from environmental documents',
-      'References from CVs',
+      'To seek clarity on ITT requirements without gaining unfair advantage',
+      'Screen contractors before ITT stage to create a shortlist',
+      'Key personnel, methodology, and understanding of the project',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The two-envelope system separates technical/quality submissions from commercial submissions. Technical envelopes are evaluated first without knowledge of price, ensuring quality assessment is not influenced by cost.',
   },
@@ -143,8 +143,8 @@ const quizQuestions = [
     options: [
       '5 calendar days',
       '10 calendar days minimum',
-      '30 calendar days',
       'No standstill is required',
+      '30 calendar days',
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of tender clarification questions during the bidding period?',
     options: [
-      'To negotiate prices before submission',
+      'Logical sequencing, resource allocation, and key milestones',
+      'Technical/quality submission from commercial/price submission',
       'To seek clarity on ITT requirements without gaining unfair advantage',
-      'To change the scope of work',
-      'To extend the submission deadline',
+      'Key personnel, methodology, and understanding of the project',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Clarification questions allow bidders to seek clarity on ITT requirements. Responses to questions of general relevance are typically circulated to all bidders to maintain fairness.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: "A contractor's tender programme should demonstrate:",
     options: [
-      'Only the contract duration',
+      'To seek clarity on ITT requirements without gaining unfair advantage',
+      'Screen contractors before ITT stage to create a shortlist',
+      'The best combination of price and quality per stated criteria',
       'Logical sequencing, resource allocation, and key milestones',
-      'Previous project timescales',
-      'Generic construction phases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A tender programme should demonstrate logical sequencing of activities, realistic resource allocation, critical path analysis, key milestones, and how the contractor will achieve practical completion.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'In Most Economically Advantageous Tender (MEAT) evaluation, the winning bid is:',
     options: [
-      'Always the lowest price',
-      'The highest quality regardless of price',
       'The best combination of price and quality per stated criteria',
-      'Selected randomly from compliant bids',
+      'Logical sequencing, resource allocation, and key milestones',
+      'Key personnel, methodology, and understanding of the project',
+      'To seek clarity on ITT requirements without gaining unfair advantage',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'MEAT evaluation considers both price and quality factors according to published weightings (e.g., 60% quality, 40% price). The winning bid offers the best overall value, not necessarily the lowest price.',
   },
@@ -194,10 +194,10 @@ const quizQuestions = [
     question:
       'What is typically included in a tender method statement for electrical installation?',
     options: [
-      'Only the equipment specifications',
+      'The best combination of price and quality per stated criteria',
       'Installation sequence, testing procedures, coordination, and quality assurance',
-      'Previous project photographs',
-      'Standard manufacturer instructions',
+      'Technical/quality submission from commercial/price submission',
+      'Clarify scope, refine details, and agree final terms without fundamentally changing the tender',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,12 +207,12 @@ const quizQuestions = [
     id: 10,
     question: 'Post-tender negotiation is typically permitted to:',
     options: [
-      'Reduce the price below other bidders',
+      'Imbalance between phases indicating shorted turns, poor connections or winding damage',
+      'Mark it, move on to complete easier questions first, then return to it with remaining time',
       'Clarify scope, refine details, and agree final terms without fundamentally changing the tender',
-      'Change all specifications after evaluation',
-      'Allow non-compliant bidders to resubmit',
+      'Regular assessment of work completed for interim payment certification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Post-tender negotiation allows clarification of scope details, refinement of programme, and agreement of final contract terms. However, fundamental changes to scope or price that would disadvantage other bidders are not permitted.',
   },
@@ -220,12 +220,12 @@ const quizQuestions = [
     id: 11,
     question: 'A tender bond or bid bond protects the client against:',
     options: [
-      'Price increases during construction',
+      'Key personnel, methodology, and understanding of the project',
+      'The best combination of price and quality per stated criteria',
+      'Pricing early activities higher to improve cash flow',
       'The contractor withdrawing their bid after submission',
-      'Poor workmanship',
-      'Late project completion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A tender bond is a financial guarantee that the contractor will not withdraw their bid during the tender validity period. If they withdraw, the bond may be forfeit to compensate the client for re-tendering costs.',
   },
@@ -233,12 +233,12 @@ const quizQuestions = [
     id: 12,
     question: 'Pre-qualification questionnaires (PQQs) are used to:',
     options: [
-      'Select the winning contractor',
       'Screen contractors before ITT stage to create a shortlist',
-      'Negotiate contract terms',
-      'Finalise the scope of work',
+      'Pricing early activities higher to improve cash flow',
+      'The contractor withdrawing their bid after submission',
+      'Key personnel, methodology, and understanding of the project',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PQQs assess contractor capability, experience, financial standing, and compliance before issuing the ITT. This creates a shortlist of qualified contractors capable of delivering the project.',
   },

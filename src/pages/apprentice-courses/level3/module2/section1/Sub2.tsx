@@ -43,12 +43,12 @@ const checks = [
     question:
       'A customer has a south-facing roof and wants "solar". They\'re asking the difference between PV and solar thermal — what\'s the honest distinction?',
     options: [
-      'They are the same — solar thermal is the modern name for PV.',
+      "Same framework as PV and battery. Any generator connected in parallel with the public distribution network falls under ENA G98 (up to 16 A per phase per inverter / generator) or G99 (above 16 A or where the DNO requires pre-application). Micro-wind turbines, micro-hydro turbines and micro-CHP units output AC and connect via an inverter (or a synchronous generator with grid-tie protection). Biomass boilers without electrical generation (just heat) are not generators — no G98 / G99. ENA G83 was the older fast-track standard for micro-generators; superseded by G98 from 2019. The L3 apprentice should recognise that the document chain (G98 / G99, type-test certificate, MCS commissioning, BS 7671 EIC, install pack) is the same regardless of the generation technology.",
+      "The element has gone to earth — most likely a pinhole through the metal sheath into the water, OR moisture has tracked along the brass terminal head from a leaking cylinder. 0.12 MΩ at 500 V is well below the BS 7671 Table 64 minimum of 1 MΩ for a 230 V circuit, and the leakage current calculates to ≈ 1.9 mA — enough to trip a 30 mA RCD on switch-on transient. Replace the element (a brass-flanged Backer / Heatrae Sadia element on most UK cylinders), check the cylinder for leaks, re-test IR after replacement (should read &gt; 200 MΩ on a healthy element), recommission and confirm no trip.",
+      "Stop. MEWP operation requires an IPAF licence (or equivalent recognised training). The Provision and Use of Work Equipment Regulations 1998 Reg 9 requires the operator to be adequately trained, and LOLER 1998 Reg 9 requires the MEWP itself to be subject to thorough examination. Plus you need a harness for boom-type MEWPs (cherry pickers) clipped to the basket anchor, and a familiarisation on the specific machine. Until the training is in place, the work goes to a competent operator.",
       "They look similar on the roof but do completely different jobs. PV converts sunlight into DC electricity that an inverter turns into AC for the property and the grid. Solar thermal absorbs sunlight as heat and uses it to preheat domestic hot water (DHW) via a heat exchanger in a twin-coil cylinder. PV is electricity-out, governed by BS 7671 Section 712 + MCS MIS 3002. Solar thermal is heat-out, governed by Building Regs Part L + MCS MIS 3001. PV has overtaken solar thermal in the UK because PV electricity now runs the immersion or heat pump that heats the water — one collector, two jobs.",
-      'PV is for winter use; solar thermal is for summer use.',
-      'PV is illegal in the UK; only solar thermal is allowed.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Solar thermal had its day in the early 2000s when PV was expensive. PV prices have collapsed and PV's flexibility — drives the heat pump, charges the EV, exports to grid, runs the lights — has made it the default. Solar thermal still exists but is increasingly rare on new installs. The MCS sign-off and regulatory home are different for each technology. Recognising which kind of 'solar' the customer is asking about is the first move.",
   },
@@ -57,12 +57,12 @@ const checks = [
     question:
       'When would a ground-source heat pump be the right choice over an air-source heat pump?',
     options: [
-      'Always — ground-source is just better.',
       "When the site has space for the ground loop (a bored borehole or a horizontal slinky array in a large garden), and the customer wants the highest possible SCOP and the longest equipment life, and the up-front cost is acceptable. Ground temperature stays close to 8-12°C year-round, so GSHP doesn't suffer the cold-day SCOP penalty that ASHP does. ASHP is right for most retrofits — cheaper, faster to install, no garden disruption — and modern ASHP units are now respectable performers. GSHP wins on performance and lifetime; ASHP wins on cost and constructability.",
-      'When the customer hates fans.',
-      'Whenever the customer asks for the cheapest option.',
+      "Advanced cultural empathy: understanding that safety communication styles must be adapted to cultural context. In high power-distance cultures, a peer raising concerns directly may be uncomfortable. In indirect communication cultures, blunt safety warnings may cause face-loss. The electrician must find a culturally appropriate way to communicate urgency without causing shame, possibly involving the site supervisor or using visual demonstration rather than direct verbal confrontation",
+      "It will almost certainly disappoint. Domestic-scale wind turbines need clean laminar wind, which only happens at hub heights well clear of surrounding obstacles — typically 30+ m up in open rural settings. A suburban back garden sits in turbulent air shed by surrounding houses; the turbine spends most of its time below cut-in wind speed or cycling wildly. Real-world yield from sub-10 kW turbines in suburban settings has historically been a fraction of the manufacturer's wind-tunnel claim. Plus planning permission, noise / vibration objections from neighbours, and ongoing maintenance. The honest answer is that wind only works where the wind is — and a suburban back garden almost certainly isn't where the wind is.",
+      "The control pilot is a low-voltage PWM signal between the charge point and the vehicle that negotiates charging current, communicates protection status, signals connection / disconnection events and triggers safe shutdown on fault. The signal is part of the IEC 61851 Mode 3 protocol. The car uses the duty cycle of the PWM signal to determine the maximum current the charge point can supply; the charge point uses the signal level to know whether the cable is connected, whether the car is ready to charge, and whether a fault has occurred. The signalling is built into the unit and the cable; the apprentice does not configure it but should recognise its role.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "GSHP installations require either a horizontal slinky (large garden, shallow trench, ~50-150 m of pipe per kW heating output) or a vertical borehole (drilled to 50-150 m depth). Both are expensive and disruptive. The pay-off is a stable 8-12°C ground source temperature regardless of weather, so SCOP typically clears 4.0-5.0. ASHP SCOP is more variable — typically 2.8-3.8 across a UK heating season. For new-build with land available the calculation often favours GSHP; for a retrofit on a postage-stamp garden, ASHP wins on practicality.",
   },
@@ -71,10 +71,10 @@ const checks = [
     question:
       'What does a domestic battery storage unit actually do for a customer with PV?',
     options: [
-      'It generates additional electricity overnight.',
+      "ISOLATE the supply at the nearest accessible point — the local switch, the breaker, the supplier's main fuse if necessary. Do NOT touch the casualty until isolation is confirmed. If isolation isn't immediately achievable, use a non-conductive item (dry wood, plastic chair) to break the contact, but isolation is always the first preference. Once free of the source, casualty assessment (DR ABC) and 999.",
       "It time-shifts PV-generated energy. PV typically over-generates at midday when nobody is in (export to grid at the SEG rate, often 5-15p/kWh) and under-generates at evening peak when the family is in (import from grid at 25-35p/kWh). The battery captures the midday surplus and discharges it across the evening load. Net effect: much higher self-consumption of the PV (typically 70-90% with battery vs 25-40% without), much lower grid import, much shorter PV payback. The battery doesn't generate anything — it shifts when the customer uses what the PV makes.",
-      'It powers the property when the grid fails — that\'s its only purpose.',
-      'It exports surplus electricity faster.',
+      "Your employment contract and the JIB Working Rules. The JIB Handbook sets the industry-standard overtime, travel-time, lodging and grading rules for electricians in England and Wales. Your contract should reference it (most reputable firms apply the JIB rates as a baseline). The HR docs — contract, JIB rules, holiday and grievance procedures — are how you get paid correctly and how you keep your rights if a dispute arises.",
+      "CALIBRATION — measurement of the instrument's response against reference standards, with results documented in a certificate. The instrument is unchanged; you get a certificate that says 'at the time of test, this instrument read X when measuring Y'. ADJUSTMENT — physical or software adjustment of the instrument to bring it into specification. Some calibration labs do both (calibrate, then adjust if out of spec, then re-calibrate); some do calibration-only (and you make the decision whether to adjust based on the report). The calibration certificate normally states whether adjustment was performed and the as-found vs as-left readings.",
     ],
     correctIndex: 1,
     explanation:
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       'Which family of environmental technology systems does an electrician most commonly meet on UK domestic installs?',
     options: [
-      'Tidal, geothermal, hydrogen.',
+      "No. UK trade union density across the workforce is around 22% (ONS). In the electrical contracting trade union density is higher than the national average on traditional JIB-graded contractors, particularly large M&E firms working on infrastructure and big commercial. It's lower on smaller domestic-focused firms and on self-employed electricians. Union membership is a personal choice — many electricians never join, others see it as essential.",
       "Heat pumps (ASHP / GSHP), solar PV, EV charging, battery storage and MVHR — these five make up the bulk of MCS-regulated and Part L-relevant kit on UK domestic sites today. Solar thermal, micro-CHP, biomass, wind and micro-hydro all exist but are far less common. The five common families share regulatory homes (BS 7671 Section 712 / 722 / 753, MCS MIS 3002 / 3005 / 3007 / 3012, Building Regs Part L) and the electrician's interface logic is broadly similar across them.",
-      'Tidal, wave, biomass.',
-      'Hydrogen boilers — they\'re everywhere now.',
+      "To enable the customer to operate the install correctly, recognise fault conditions, perform any user-level routine checks (e.g. weekly fire-alarm test) and know when to call you back. Without them the customer can't discharge their own legal duties (e.g. fire-alarm log under the Regulatory Reform (Fire Safety) Order 2005) and is more likely to mis-use or under-maintain the kit.",
+      "Initially, work quality may be high, but over time: team members feel overwhelmed and inadequate, initiative decreases (people fear not meeting the standard), morale drops, burnout increases, and the leader becomes a bottleneck because they end up doing everything themselves rather than trusting others — ultimately reducing both performance and wellbeing",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       'What\'s the typical electrical interface for a domestic ASHP install?',
     options: [
-      'A 13 A plug socket.',
+      "Very low global warming potential — around 3, compared with R-32 at 675 and R-410A at 2088. Means less environmental impact per kg released, lower CO2-equivalent charge, less stringent F-Gas leak-check regime. Excellent thermodynamic properties — high efficiency, supports flow temperatures up to around 75°C suitable for retrofit on existing radiator systems. Trade-off: highly flammable (A3 safety classification), requires careful installation per ATEX and manufacturer rules around ventilation, charge limits and electrical zoning around the unit.",
+      "Section 722 of BS 7671 (Electric vehicle charging installations) is the regulation anchor. It applies in addition to the rest of BS 7671 and covers the supply, the charging point, the protective measures (especially the PEN-fault and additional protection requirements), the cable rating and the means of isolation. A4:2026 has refined Section 722 alongside the broader updates around TN-C-S systems (now PNB) and AFDD requirements.",
       "A dedicated radial circuit, typically 32 A or 40 A (Type C MCB to handle the inrush from the compressor and fan), in 6 mm² or 10 mm² T&E or SWA depending on length and method. RCD protection per BS 7671 Section 411.3.3 / 415.1. A local rotary or DP isolator outdoors at the unit. Smart controls integration via dedicated low-voltage cable. Cyclic-rated cable selection — heat pumps run for hours, not minutes. Bonding to the unit chassis if it forms an extraneous-conductive part.",
-      'A 30 A blue Commando socket on a domestic ring final.',
-      '110 V CTE supply via a transformer.',
+      "Reg 514.16.1 — introduced by A4:2026, requiring a label to indicate the presence of SPDs (with an exception for domestic / household premises). Located in Part 5 (selection and erection), Chapter 51 (common rules), Section 514 (identification and notices). Knowing the labelling regs live in Section 514 is faster than searching by reg number.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The supply must be sized for the heat pump's nameplate maximum load, not its average. Manufacturer schedules typically specify the MCB type and cable size. The local outdoor isolator is a maintenance-and-emergency interface — the F-Gas-certified engineer will use it. Heat pumps draw their full load for sustained periods (hours) so cable thermal rating is the design constraint, not voltage drop.",
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     question:
       'What does kWp mean on a PV system spec, and how does it relate to the actual annual yield in the UK?',
     options: [
-      'kWp is the actual continuous output in kW.',
+      "Every 3 months — formal PAT (combined visual + electrical test) for harsh-environment use. HSE HSG107 'Maintaining portable electrical equipment' and the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th ed.) publish typical intervals; construction-site Class I portable tools are at the short end at 3 months. Office Class I equipment is 12 months (the low-risk regime in HSE INDG236). Class II (double-insulated) and battery chargers are typically longer.",
+      "The IET CoP is the practical implementation guide that walks through how to apply Section 722 on a real install — supply assessment, earthing arrangement choice, protective device selection, cable sizing, isolation, labelling, commissioning. Currently in its 5th edition with regular updates to track BS 7671 amendments and OZEV regulation changes. Not legally mandatory in itself but referenced by reasonable-installer expectations and by MCS / OZEV scheme requirements. The apprentice should recognise it as a practical companion to Section 722 — Section 722 is the legal floor; the IET CoP is the practical playbook.",
+      "Motor circuit analyser (PdMA MCEMAX, AEMC 6505, AVO Megger MIT400 series with motor-test modes) measures the motor's electrical characteristics OFF-LINE — winding resistance balance between phases, IR to ground, polarisation index, surge comparison. Identifies inter-turn shorts, ground faults, contamination, rotor cage damage. ON-LINE analysers (Baker Static Motor Analyser, SKF) measure during operation — current signature analysis, harmonic content. L3 apprentices rarely operate these but the broader principle — a motor has electrical AND mechanical fault modes, and dedicated instruments characterise them — is L3 syllabus knowledge.",
       "kWp (kilowatt-peak) is the array's nameplate output under Standard Test Conditions (1000 W/m² irradiance, 25°C cell temperature, AM 1.5 spectrum). It's a laboratory rating, not a real-world output. Annual yield in the UK is normally quoted as kWh per kWp per year — typically 800-1100 depending on roof orientation, pitch and shading. So a 4 kWp array on a south-facing roof in southern England might deliver 4 × 1000 = 4000 kWh per year; the same array on a north-facing roof might deliver 4 × 600 = 2400 kWh. The kWp tells you the size; the kWh per kWp tells you the real-world.",
-      'kWp is the maximum surge power the array can deliver in a thunderstorm.',
-      'kWp is the inverter\'s frequency.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Customers often confuse kWp (peak rating) with kWh (energy delivered). The MCS yield calculator and SAP both use long-run irradiance data plus the array's orientation and shading to produce the kWh-per-kWp number. Always quote both — the customer needs the kWh number to estimate financial savings.",
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       'What\'s the practical difference between an MCS Mode 3 and a Mode 4 EV charger?',
     options: [
-      'Mode 3 is petrol; Mode 4 is diesel.',
       "Mode 3 is AC charging through a dedicated charger that controls and protects the charging session — typical domestic 7 kW units (single-phase) or 22 kW units (three-phase). The vehicle's onboard charger converts AC to DC for the battery. Mode 4 is DC fast charging — the off-vehicle equipment (typically 50-350 kW public rapid chargers) outputs DC directly to the battery, bypassing the vehicle's onboard charger. Domestic installations are essentially always Mode 3. BS 7671 Section 722 (significantly amended in A4:2026) governs the electrical installation requirements.",
-      'Mode 3 is for cars; Mode 4 is for vans.',
-      'They are the same.',
+      "(1) T+E shears or rotary cable stripper to crop the conductor square and to the right length. (2) Auto-stripper or preset 4 mm² stripper to remove insulation cleanly without nicking strands. (3) (Optional but preferred) — slip a grey 4 mm² bootlace ferrule on, ratchet-crimp it. (4) Insert into terminal. (5) Tighten with preset torque driver to manufacturer's value (typically 2–3 Nm for Schneider isolators).",
+      "The EIC carries the standard schedule of inspections and schedule of test results for the new circuit(s). For a PV install that includes the DC string circuits (with DC voltages and DC IR test results), the AC isolator and AC final connection back into the consumer unit, the labelling and signage at every isolation point, and the dual-supply warning at the consumer unit. Section 712 of BS 7671 (extensively revised in A4:2026) drives the inspection items. The 'designer' / 'constructor' / 'inspector and tester' boxes on the EIC may all be the MCS-certified installer's lead engineer; signatures still have to be physically present.",
+      "Because Future Homes Standard requires very low fabric U-values, very low air permeability, and Part F controlled ventilation. At those airtightness levels the building cannot rely on infiltration for air change — it needs deliberate mechanical ventilation. MVHR provides that mechanical ventilation while recovering 80-90% of the heat. SAP credits MVHR with significant carbon savings in airtight new-build, contributing materially to the Part L target rate. Fitting MEV (mechanical extract ventilation only, no recovery) instead loses the recovery benefit and harms the SAP score.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The IEC 61851 / BS EN 61851 'Mode' terminology defines the control and protection arrangement for EV charging. Mode 1 (no protection — banned in the UK) and Mode 2 (in-cable protection — the granny lead) are not used for permanent installs. Mode 3 is the standard domestic / workplace AC interface. The Smart Charging Regulations 2021 add demand-side response requirements on top of the BS 7671 electrical safety requirements.",
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       'When would micro-CHP (combined heat and power) make sense over a heat pump?',
     options: [
-      'Always — micro-CHP is more efficient.',
+      "Around eight hours of accredited training (typically delivered as a one-day workshop or split over two half-days) covering climate science, the carbon impact of the trainee role and sector, individual and workplace action, and the social and economic context of the climate transition. To become Certified Carbon Literate the trainee must demonstrate understanding through assessment and commit in writing to one personal action and one workplace action. The Carbon Literacy Project (a Manchester-based registered charity) accredits training providers and issues the certifications. Major UK construction and engineering firms run rolling Carbon Literacy programmes for their workforces.",
       "Rarely, in the modern UK context. Micro-CHP burns gas to generate electricity locally and uses the waste heat to drive the wet system. It made sense when grid electricity was carbon-intensive (~500 gCO₂/kWh) and gas was cheap. As the grid decarbonises (~200 gCO₂/kWh now), the relative carbon advantage shrinks. Heat pumps deliver lower running carbon per kWh of heat. Micro-CHP is now mostly seen in larger commercial / institutional applications where heat demand is constant and high. For domestic UK new-build, the Future Homes Standard effectively rules it out.",
-      'Whenever the customer has a chimney.',
-      'On every new-build by default.',
+      "Three-phase induction motors with no inherent restart protection will RESTART AUTOMATICALLY when supply is restored. If anyone is near the motor, the impeller, the belt drive or the driven plant, they're in immediate danger. The standard precaution: (1) Verify the local motor isolator is OFF before restoring the upstream supply. (2) Restore upstream supply, retest. (3) Walk to the motor location, brief anyone nearby that you're about to restart, visually check the area is clear. (4) Operate the local isolator. (5) Confirm correct operation and rotation. BS 7671 463.1 / 463.2 (mechanical maintenance switching) and PUWER 1998 Reg 19 (isolation from sources of energy) both apply.",
+      "Five questions. (1) IS PARTS AVAILABLE? Older MCBs may be obsolete; replacement requires new model. (2) IS REPAIR EVEN POSSIBLE? Most MCBs are sealed units; 'repair' usually means swap. (3) IS THE EXISTING DESIGN STILL APPROPRIATE? Modern installations may need RCBO (RCD + MCB combined) instead of MCB-only. (4) WILL THE NEW COMPONENT FIT THE BUSBAR? Some old CUs need full CU replacement to fit modern devices. (5) WHAT'S THE OVERALL CU AGE / CONDITION? If the CU itself is approaching end of life (typical 25–30 years), full CU replacement may be the right call. Engineering decision is rarely just 'repair vs replace one device'.",
     ],
     correctAnswer: 1,
     explanation:
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       'What characterises biomass heating for the domestic UK customer?',
     options: [
-      'It\'s the cheapest heating option in every case.',
+      "A dedicated radial circuit, typically 32 A or 40 A (Type C MCB to handle the inrush from the compressor and fan), in 6 mm² or 10 mm² T&E or SWA depending on length and method. RCD protection per BS 7671 Section 411.3.3 / 415.1. A local rotary or DP isolator outdoors at the unit. Smart controls integration via dedicated low-voltage cable. Cyclic-rated cable selection — heat pumps run for hours, not minutes. Bonding to the unit chassis if it forms an extraneous-conductive part.",
+      "Written communication carries emotional tone even without non-verbal cues. EI in writing means: considering how the reader will feel when they read it, choosing words that are clear and respectful, avoiding language that could be interpreted as blame or aggression, and re-reading messages before sending to check for unintended emotional impact — especially important when conveying criticism or bad news",
       "Wood-pellet or wood-chip boilers and stoves. Burns sustainably-sourced biomass to drive a wet heating system. Counts as 'low-carbon' because the CO₂ released is offset by what the trees absorbed during growth (debated within the carbon accounting community). Fuel storage, ash handling and air-quality regulation (Clean Air Act zones; the Ecodesign Directive for new appliances) make biomass operationally heavier than gas or heat pumps. Best fit: rural off-gas-grid properties with space for a fuel store. Worst fit: urban smoke-control areas with poor PM2.5 ratings.",
-      'It\'s a refrigerant cycle like a heat pump.',
-      'It only burns coal.',
+      "Annual calibration to a UKAS-traceable standard, with a calibration certificate kept in the firm's instrument register. Test instruments drift over time — a multimeter that reads 235 V on a 230 V supply, or an insulation tester that reads 200 MΩ on a 100 MΩ test, will produce wrong test results that fail BS 7671 612.x. Most certification schemes (NICEIC, NAPIT) require evidence of in-date calibration as part of audit. Sub 1.5 covers test instruments in detail.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Biomass had a boost from the Renewable Heat Incentive (RHI) which closed in 2022. New domestic biomass installs are now relatively rare — heat pumps have taken over the off-gas-grid retrofit market. Air quality concerns in urban areas have further squeezed it. As an electrician you may still meet existing biomass installs (boilers need 13 A or 16 A supply for the auger, igniter and pump; controls integrate with the wet system).",
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       'What\'s the practical limitation that rules out wind for most UK suburban gardens?',
     options: [
-      'Planning permission only — physics is fine.',
+      "Because the terminal is engineered to clamp at a specific force range — too little, the conductor isn't held firmly and the joint runs hot; too much, the parts deform and crack. The published value is the engineering specification. BS 7671 134.1.1 says installations must comply with manufacturers' instructions; ignoring the published torque value breaches 134.1.1 directly. NICEIC / NAPIT scheme assessments check this at audit.",
+      "SCOP 3.5 is solid for a UK domestic ASHP install — it means each kWh of electricity delivers 3.5 kWh of heat. On a UK grid carbon intensity of ~200 gCO₂/kWh, that's roughly 57 gCO₂ per kWh of heat — about 3.7× cleaner than burning gas (which emits ~210 gCO₂ per useful kWh). Top-end UK ASHP installs reach SCOP 3.8-4.2; GSHP can reach SCOP 4.5-5.0+. SCOP under 2.8 suggests something is wrong (oversized unit, undersized emitters, poorly insulated property, high flow temperature).",
+      "A boiler drives a wet heating system — pumps hot water around radiators / underfloor circuits and a hot-water cylinder. Typical output 10-50 kW, located in a utility room or outhouse, automatic fuel feed (auger from a hopper), automatic ignition, automatic ash handling. A stove is a room heater — radiates heat directly into the room it sits in, plus optional back-boiler for some hot water. Lower output (5-15 kW typical), manual loading (logs or pellets), no automatic ash removal. Different installation regulations, different MCS standards, different customer expectations.",
       "Wind shear from neighbouring buildings. Domestic-scale turbines need clean laminar wind, which only happens at hub heights well clear of surrounding obstacles. In a typical suburban garden the turbine sits in turbulent air, the yield is well below the manufacturer's wind-tunnel claims, and the noise / vibration interface is poor. Even where the planning application succeeds, the energy yield often disappoints. Wind makes sense in open rural settings with tall masts; it does not make sense in suburban back gardens.",
-      'They\'re illegal.',
-      'They damage the National Grid.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Manufacturer yield figures are quoted at clean reference wind speeds. In real suburban sites the actual wind regime delivers a fraction of that. Several high-profile small-wind installations from the 2008-2012 era posted yields well below promise and the market for sub-10 kW turbines has since contracted. As an electrician you may meet existing units but new domestic installs are uncommon.",
   },
@@ -186,12 +186,12 @@ const quizQuestions = [
     question:
       'A customer in a rural Welsh valley with a fast-flowing year-round stream asks about micro-hydro. What\'s the honest framing?',
     options: [
-      'It will never work in the UK.',
       "Micro-hydro can deliver excellent baseload renewable electricity if the site has the head (vertical drop) and flow rate to support it. Unlike wind and PV, hydro runs 24/7 and tracks demand reasonably well. Practical issues: Environment Agency / Natural Resources Wales abstraction licensing, fish protection requirements, weir and intake construction cost, and connection to the property (often hundreds of metres of buried cable). The right site is rare; where it exists, micro-hydro is one of the best-performing renewables per pound spent.",
-      'It only works in Scotland.',
-      'It\'s a heat pump variant.',
+      "Very low global warming potential — around 3, compared with R-32 at 675 and R-410A at 2088. Means less environmental impact per kg released, lower CO2-equivalent charge, less stringent F-Gas leak-check regime. Excellent thermodynamic properties — high efficiency, supports flow temperatures up to around 75°C suitable for retrofit on existing radiator systems. Trade-off: highly flammable (A3 safety classification), requires careful installation per ATEX and manufacturer rules around ventilation, charge limits and electrical zoning around the unit.",
+      "Stop and verify before testing. Unusual supply arrangements suggest either (a) the property is genuinely TT (rural, older, or specifically designed) which may need different fault-diagnosis approach, OR (b) the customer's installation isn't what you expected from the booking (e.g. an older commercial site with three-phase supply you weren't briefed on). Either way, the test plan needs to match the actual supply. Escalate to supervisor if unsure; update the RAMS to reflect the actual installation; brief the customer if the work scope changes. Never just push ahead with the test plan you arrived with if it doesn't match what you find.",
+      "Fail the device. Issue a Code C2 (potentially dangerous) on the EICR if applicable, document on the Schedule of Test Results, replace the RCD or RCBO. A trip time exceeding the 300 ms manufacturer\\\\\\\\'s declared limit means the device cannot be relied upon to disconnect within the Table 41.1 system requirement. The RCD is approaching end of life and may fail to operate at all on the next fault. Replace, retest, document the remediation. Do not leave the installation in service relying on a failed RCD.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Micro-hydro is genuinely site-specific. Where head and flow are adequate it produces consistent output with low intermittency. The capital cost (turbine, intake, power-house, civils, grid connection) is the headline barrier; the operational cost is low. As an electrician you'd encounter it as a G99 connection installer or as the cable-and-controls specialist on the property side. MCS MIS 3008 covers small-hydro installation standards.",
   },

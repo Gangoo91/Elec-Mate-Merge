@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'cpm-definition',
     question: 'What does the critical path represent in project scheduling?',
     options: [
-      'The shortest route through the network',
+      'Activities that can be delayed',
       'The longest sequence of dependent activities',
       'The most expensive activities',
-      'Activities that can be delayed',
+      'The shortest route through the network',
     ],
     correctIndex: 1,
     explanation:
@@ -45,11 +45,11 @@ const quickCheckQuestions = [
     question: 'Total float is calculated as:',
     options: [
       'Early Start minus Early Finish',
+      'Early Finish minus Late Start',
       'Late Finish minus Early Finish',
       'Duration minus Early Start',
-      'Early Finish minus Late Start',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Total float = Late Finish - Early Finish (or Late Start - Early Start). It represents the maximum time an activity can be delayed without affecting the project completion date.',
   },
@@ -57,19 +57,24 @@ const quickCheckQuestions = [
     id: 'forward-pass',
     question: 'During the forward pass calculation, what are we determining?',
     options: [
-      'Late Start and Late Finish times',
       'Early Start and Early Finish times',
+      'Late Start and Late Finish times',
       'Total and free float values',
       'Activity dependencies',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The forward pass works from project start to finish, calculating the earliest possible start (ES) and finish (EF) times for each activity. EF = ES + Duration.',
   },
   {
     id: 'critical-activity',
     question: 'An activity on the critical path will have:',
-    options: ['Maximum float', 'Free float only', 'Zero total float', 'Negative duration'],
+    options: [
+      'Negative duration',
+      'Free float only',
+      'Zero total float',
+      'Maximum float',
+    ],
     correctIndex: 2,
     explanation:
       'Critical activities have zero total float - there is no spare time available. Any delay to these activities will delay the entire project completion by the same amount.',
@@ -81,20 +86,25 @@ const quizQuestions = [
     id: 1,
     question: 'In an activity-on-node (AON) diagram, what do the boxes represent?',
     options: [
-      'Milestones only',
-      'Dependencies between tasks',
+      'Transmitter powered by the current loop itself',
       'Individual activities with their attributes',
-      'Resource allocations',
+      'Risk of shock is increased, such as bathrooms',
+      'A break in continuity of the conductor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'In AON diagrams, boxes (nodes) represent activities and contain information such as activity name, duration, early/late start and finish times, and float. Arrows show dependencies.',
   },
   {
     id: 2,
     question: 'Activity A has ES=5, Duration=3, LF=12. What is the total float?',
-    options: ['3 days', '4 days', '5 days', '7 days'],
-    correctAnswer: 1,
+    options: [
+      '5 days',
+      '3 days',
+      '4 days',
+      '7 days',
+    ],
+    correctAnswer: 2,
     explanation:
       'EF = ES + Duration = 5 + 3 = 8. Total Float = LF - EF = 12 - 8 = 4 days. This activity can slip 4 days without affecting the project end date.',
   },
@@ -102,20 +112,25 @@ const quizQuestions = [
     id: 3,
     question: 'What is the relationship between free float and total float?',
     options: [
-      'Free float is always greater than total float',
-      'They are always equal',
+      'To focus coordination efforts and resources on schedule-critical work',
+      'Critical path activities with lowest crash cost per day',
+      'Overlapping activities that would normally be sequential',
       'Free float is always less than or equal to total float',
-      'They are unrelated measures',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Free float is always less than or equal to total float. Free float only considers impact on the next activity, while total float considers impact on project completion.',
   },
   {
     id: 4,
     question: 'When performing the backward pass, which value is calculated first?',
-    options: ['Early Start', 'Late Finish', 'Early Finish', 'Duration'],
-    correctAnswer: 1,
+    options: [
+      'Late Finish',
+      'Early Start',
+      'Early Finish',
+      'Duration',
+    ],
+    correctAnswer: 0,
     explanation:
       'The backward pass starts from the project end, setting the Late Finish of the final activity equal to the project completion date, then works backwards. LS = LF - Duration.',
   },
@@ -123,12 +138,12 @@ const quizQuestions = [
     id: 5,
     question: "A chiller installation has predecessor 'pipework complete'. This is an example of:",
     options: [
-      'Start-to-Start dependency',
       'Finish-to-Finish dependency',
       'Finish-to-Start dependency',
       'Start-to-Finish dependency',
+      'Start-to-Start dependency',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Finish-to-Start (FS) is the most common dependency type - the predecessor must finish before the successor can start. The pipework must be complete before the chiller can be installed.',
   },
@@ -136,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'Programme compression (crashing) should prioritise:',
     options: [
-      'Activities with the longest duration',
-      'Activities with the most float',
+      'Free float is always less than or equal to total float',
+      'It becomes critical - there are now two critical paths',
       'Critical path activities with lowest crash cost per day',
-      'All activities equally',
+      'Cannot be determined without more information',
     ],
     correctAnswer: 2,
     explanation:
@@ -151,11 +166,11 @@ const quizQuestions = [
       'On a hospital MEP project, which trade typically drives the critical path for plant room completion?',
     options: [
       'Electrical containment',
-      'Mechanical pipework',
-      'Fire alarm installation',
       'BMS controls',
+      'Fire alarm installation',
+      'Mechanical pipework',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mechanical pipework (especially large bore heating/chilled water) typically has the longest duration and drives the critical path. Electrical and controls work often has more float.',
   },
@@ -163,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'What happens if an activity on a parallel path gains zero float?',
     options: [
-      'It becomes non-critical',
       'It becomes critical - there are now two critical paths',
-      'The project duration increases',
-      'Free float increases',
+      'The successor can start before the predecessor finishes',
+      'Free float is always less than or equal to total float',
+      'Overlapping activities that would normally be sequential',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "When a parallel path's float reduces to zero, that path also becomes critical. Projects can have multiple critical paths, making schedule management more complex.",
   },
@@ -177,11 +192,11 @@ const quizQuestions = [
     question: 'Lead time (negative lag) between activities means:',
     options: [
       'A delay must occur between activities',
-      'Activities must start simultaneously',
       'The successor can start before the predecessor finishes',
+      'Activities must start simultaneously',
       'The predecessor duration increases',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Lead time allows overlap - the successor activity can start a specified time before the predecessor finishes. Example: cable pulling can start before all containment is complete.',
   },
@@ -189,10 +204,10 @@ const quizQuestions = [
     id: 10,
     question: 'Fast-tracking a project involves:',
     options: [
-      'Adding more resources to critical activities',
-      'Reducing activity scope',
+      'Critical path activities with lowest crash cost per day',
+      'To focus coordination efforts and resources on schedule-critical work',
       'Overlapping activities that would normally be sequential',
-      'Removing non-critical activities',
+      'It becomes critical - there are now two critical paths',
     ],
     correctAnswer: 2,
     explanation:
@@ -202,12 +217,12 @@ const quizQuestions = [
     id: 11,
     question: 'In MEP coordination, why is early identification of the critical path essential?',
     options: [
-      'To determine which trade gets paid first',
+      'It becomes critical - there are now two critical paths',
+      'Critical path activities with lowest crash cost per day',
+      'Overlapping activities that would normally be sequential',
       'To focus coordination efforts and resources on schedule-critical work',
-      'To reduce the number of activities',
-      'To eliminate float from all activities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Identifying the critical path ensures coordination meetings, resources, and management attention focus on the work that determines project duration. Non-critical work has more flexibility.',
   },
@@ -215,8 +230,13 @@ const quizQuestions = [
     id: 12,
     question:
       "Activity B follows Activity A (FS). A has EF=10, B has duration=5, LF=18. What is B's free float?",
-    options: ['3 days', '0 days', '5 days', 'Cannot be determined without more information'],
-    correctAnswer: 3,
+    options: [
+      'Cannot be determined without more information',
+      'Overlapping activities that would normally be sequential',
+      'Free float is always less than or equal to total float',
+      'The successor can start before the predecessor finishes',
+    ],
+    correctAnswer: 0,
     explanation:
       "Free float requires knowing the Early Start of B's successor. Free Float = ES of successor - EF of activity. Without successor information, free float cannot be calculated.",
   },

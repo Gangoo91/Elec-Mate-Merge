@@ -535,27 +535,6 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                   />
                 </div>
 
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <Label htmlFor="insulationNeutralEarth" className="text-sm font-medium">
-                      Neutral-Earth (MΩ) *
-                    </Label>
-                    {getValidationBadge(
-                      validateTestResult(
-                        'insulationResistance',
-                        formData.insulationNeutralEarth || ''
-                      )
-                    )}
-                  </div>
-                  <Input
-                    id="insulationNeutralEarth"
-                    type="number"
-                    step="0.1"
-                    placeholder="Min 1.0"
-                    value={formData.insulationNeutralEarth || ''}
-                    onChange={(e) => onUpdate('insulationNeutralEarth', e.target.value)}
-                  />
-                </div>
               </div>
               <Alert className="border-blue-200 bg-blue-50/50 dark:border-blue-800 dark:bg-blue-950/20">
                 <AlertDescription className="text-blue-700 dark:text-blue-300 text-xs">

@@ -81,8 +81,13 @@ const quizQuestions = [
     id: 2,
     question:
       'Which type of trunking is best for industrial environments with high mechanical risks?',
-    options: ['PVC', 'Steel', 'Aluminium', 'Flexible'],
-    correctAnswer: 1,
+    options: [
+      'Aluminium',
+      'PVC',
+      'Steel',
+      'Flexible',
+    ],
+    correctAnswer: 2,
     explanation:
       'Steel trunking provides superior mechanical protection against impacts, making it ideal for harsh industrial environments with machinery and heavy equipment.',
   },
@@ -97,15 +102,25 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Name one limitation of PVC trunking.',
-    options: ['Too expensive', 'Low mechanical strength', 'Requires earthing', 'Cannot be painted'],
-    correctAnswer: 1,
+    options: [
+      'Low mechanical strength',
+      'Too expensive',
+      'Requires earthing',
+      'Cannot be painted',
+    ],
+    correctAnswer: 0,
     explanation:
       'PVC trunking has lower mechanical strength compared to steel, making it unsuitable for high-impact environments or areas with mechanical hazards.',
   },
   {
     id: 5,
     question: 'What should be used to protect cables from sharp edges inside trunking?',
-    options: ['Insulation tape', 'Grommets or bushes', 'Plastic sleeves', 'Heat shrink'],
+    options: [
+      'Insulation tape',
+      'Grommets or bushes',
+      'Heat shrink',
+      'Plastic sleeves',
+    ],
     correctAnswer: 1,
     explanation:
       'Grommets or bushes should be fitted at entry points and around sharp edges to prevent cable insulation damage during installation and thermal movement.',
@@ -114,12 +129,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why is it important to use barriers in trunking with mixed power and data cables?',
     options: [
-      'To make it look neat',
+      'Sustainable Drainage Systems',
+      'Earth fault loop impedance (Zs) tester',
       'To prevent electromagnetic interference',
-      'To reduce cable cost',
-      'To improve flexibility',
+      'Competent persons with appropriate qualifications',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Barriers separate power and data cables to prevent electromagnetic interference (EMI) from power cables affecting sensitive data and communication circuits.',
   },
@@ -128,19 +143,24 @@ const quizQuestions = [
     question: 'Give one reason why steel trunking might be galvanised.',
     options: [
       'To improve appearance',
-      'To prevent corrosion',
-      'To reduce weight',
       'To improve conductivity',
+      'To reduce weight',
+      'To prevent corrosion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Galvanising provides a protective zinc coating that prevents corrosion, extending the service life of steel trunking, especially in damp environments.',
   },
   {
     id: 8,
     question: 'Which regulation sets the requirements for trunking installation in the UK?',
-    options: ['BS 7909', 'BS 7671 (IET Wiring Regulations)', 'BS 5839', 'BS 6701'],
-    correctAnswer: 1,
+    options: [
+      'BS 7671 (IET Wiring Regulations)',
+      '10-30 seconds gradual transition',
+      'Unlimited fine and imprisonment',
+      'Medium Dependent Interface Crossover',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 7671 (IET Wiring Regulations) sets the requirements for electrical installations including trunking systems, support spacing, and segregation requirements.',
   },

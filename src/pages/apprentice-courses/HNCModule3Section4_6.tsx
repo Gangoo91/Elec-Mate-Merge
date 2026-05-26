@@ -34,11 +34,11 @@ const quickCheckQuestions = [
     question: 'In a TN-C-S (PME) system, what is the combined conductor called?',
     options: [
       'Protective conductor (PE)',
-      'Neutral conductor (N)',
       'PEN conductor',
+      'Neutral conductor (N)',
       'Earth electrode',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'In TN-C-S systems, the neutral and protective functions are combined in a single PEN (Protective Earth and Neutral) conductor in the supply network, which separates into PE and N at the origin of the installation.',
   },
@@ -47,12 +47,12 @@ const quickCheckQuestions = [
     question:
       'What must Zs be for a 32A Type B MCB to disconnect within 0.4s (given Zs max = 1.37 ohms)?',
     options: [
-      'Less than 0.4 ohms',
-      'Less than 1.37 ohms',
       'Exactly 1.37 ohms',
       'Greater than 1.37 ohms',
+      'Less than 1.37 ohms',
+      'Less than 0.4 ohms',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'For automatic disconnection, the measured Zs must be less than or equal to the maximum permitted value from BS 7671 tables. For a 32A Type B MCB, the maximum Zs is 1.37 ohms at 0.4s disconnection time.',
   },
@@ -60,8 +60,13 @@ const quickCheckQuestions = [
     id: 'rcd-three-phase',
     question:
       'What type of RCD is required for three-phase circuits supplying variable speed drives?',
-    options: ['Type AC', 'Type A', 'Type B', 'Type F'],
-    correctIndex: 2,
+    options: [
+      'Type AC',
+      'Type B',
+      'Type A',
+      'Type F',
+    ],
+    correctIndex: 1,
     explanation:
       'Type B RCDs are required for circuits supplying equipment that may produce smooth DC residual currents, such as variable speed drives (VSDs) and inverters. Type AC and A cannot detect DC fault currents.',
   },
@@ -69,8 +74,13 @@ const quickCheckQuestions = [
     id: 'discrimination',
     question:
       'What is the minimum discrimination ratio typically required between upstream and downstream MCBs?',
-    options: ['1.5:1', '2:1', '3:1', '5:1'],
-    correctIndex: 1,
+    options: [
+      '2:1',
+      '5:1',
+      '1.5:1',
+      '3:1',
+    ],
+    correctIndex: 0,
     explanation:
       "A minimum ratio of 2:1 between the upstream device rating and the downstream device rating is typically required for current discrimination. However, manufacturers' selectivity tables should always be consulted for confirmed discrimination.",
   },
@@ -81,7 +91,12 @@ const quizQuestions = [
     id: 1,
     question:
       'Which earthing system uses a separate earth conductor from the supply transformer to the installation?',
-    options: ['TT system', 'TN-S system', 'TN-C-S system', 'IT system'],
+    options: [
+      'TT system',
+      'TN-S system',
+      'TN-C-S system',
+      'IT system',
+    ],
     correctAnswer: 1,
     explanation:
       "TN-S (Terra-Neutral-Separate) uses a separate protective earth conductor (typically the cable sheath or a fifth core) all the way from the supply transformer to the installation's main earthing terminal.",
@@ -90,8 +105,13 @@ const quizQuestions = [
     id: 2,
     question:
       'What is the typical maximum external earth fault loop impedance (Ze) for a TN-C-S supply?',
-    options: ['0.2 ohms', '0.35 ohms', '0.8 ohms', '21 ohms'],
-    correctAnswer: 1,
+    options: [
+      '0.8 ohms',
+      '0.2 ohms',
+      '0.35 ohms',
+      '21 ohms',
+    ],
+    correctAnswer: 2,
     explanation:
       'TN-C-S (PME) supplies typically have Ze values around 0.35 ohms. TN-S supplies are typically 0.8 ohms, while TT systems can be 21 ohms or higher.',
   },
@@ -99,12 +119,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of the main earthing terminal (MET)?',
     options: [
-      'To connect the supply neutral only',
+      'It should never be removed or loosened by the first aider',
+      'Via a separate metallic connection to the distributor\\\\\\\\\\\\\\\'s earth',
+      'It displaces oxygen and can cause rapid asphyxiation without warning',
       'To provide a common connection point for all protective conductors',
-      'To measure insulation resistance',
-      'To connect lighting circuits only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The MET provides a common connection point for the earthing conductor, circuit protective conductors (CPCs), main protective bonding conductors, and any functional earthing conductors, ensuring equipotential bonding throughout the installation.',
   },
@@ -114,9 +134,9 @@ const quizQuestions = [
       'For a circuit protected by a 63A Type B MCB, if Ze = 0.35 ohms and (R1+R2) = 0.25 ohms, is automatic disconnection achieved?',
     options: [
       'Yes - Zs = 0.6 ohms which is less than maximum 0.69 ohms',
-      'No - Zs is too high',
-      'Cannot be determined without RCD',
-      'Only if additional bonding is installed',
+      'Only to ohmic materials (linear resistance)',
+      'Working at height, electrical hazards, manual handling, and site access',
+      'Higher rates and consistent demand in specialist areas',
     ],
     correctAnswer: 0,
     explanation:
@@ -126,10 +146,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the main advantage of MCCBs over MCBs in distribution systems?',
     options: [
-      'MCCBs are cheaper',
+      'In simple, clear language avoiding unnecessary jargon',
       'MCCBs have adjustable trip settings and higher fault ratings',
-      'MCCBs are smaller in size',
-      'MCCBs do not require maintenance',
+      'Test equipment failure or incorrect connections',
+      'The type of earthing system and circuit characteristics',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,12 +159,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is PME open PEN conductor risk and why is it significant?',
     options: [
-      'Risk of overcurrent in the neutral',
+      'Essential loads maximum demand plus starting currents',
+      'Access logging and remote control capabilities',
       'Risk of the earth becoming live if the PEN conductor breaks',
-      'Risk of voltage drop in long circuits',
-      'Risk of harmonic distortion',
+      'Accuracy requirements, satellite availability, and local coordinate systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'If the PEN conductor breaks in a PME system, the installation earth can rise to a dangerous potential relative to true earth. This is why PME has restrictions for certain installations (swimming pools, petrol stations) and requires adequate main bonding.',
   },
@@ -154,10 +174,10 @@ const quizQuestions = [
     options: [
       'The size of the lighting circuit conductors',
       'The size of the main supply neutral conductor',
-      'Half the size of the earthing conductor with a minimum of 6mm squared',
       'The same size as the largest circuit conductor',
+      'Half the size of the earthing conductor with a minimum of 6mm squared',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Per BS 7671 Table 54.8, main protective bonding conductors must be at least half the cross-sectional area of the earthing conductor, with minimum sizes of 6mm squared (Cu) for supplies up to 35mm squared.',
   },
@@ -166,27 +186,37 @@ const quizQuestions = [
     question:
       'Why might time-delayed RCDs (Type S) be used at the origin of a three-phase installation?',
     options: [
-      'They are cheaper than standard RCDs',
       'They provide discrimination with downstream instantaneous RCDs',
-      'They have higher current ratings',
-      'They are required by BS 7671 for all installations',
+      'Temporarily reducing non-essential loads during peak demand',
+      'Unlimited fine, remedial orders, publicity orders',
+      'V_rms = V_pk / root(2), approximately 0.707 x V_pk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Type S (selective/time-delayed) RCDs have a built-in time delay (typically 40-500ms) allowing downstream instantaneous RCDs to trip first for faults in their circuits, maintaining supply to unaffected circuits.',
   },
   {
     id: 9,
     question: 'What is the fault current at a point where Zs = 0.5 ohms on a 230V supply?',
-    options: ['115A', '230A', '460A', '575A'],
-    correctAnswer: 2,
+    options: [
+      '115A',
+      '460A',
+      '230A',
+      '575A',
+    ],
+    correctAnswer: 1,
     explanation:
       'Fault current If = Uo/Zs = 230/0.5 = 460A. This calculation is essential for verifying that protective devices will operate within required disconnection times.',
   },
   {
     id: 10,
     question: 'What type of earthing system requires an earth electrode at the installation?',
-    options: ['TN-S', 'TN-C-S', 'TT', 'All earthing systems'],
+    options: [
+      'TN-S',
+      'TN-C-S',
+      'TT',
+      'All earthing systems',
+    ],
     correctAnswer: 2,
     explanation:
       'TT systems use an earth electrode at the installation as the means of earthing, independent of any supply earth. This is common in rural areas where the DNO does not provide an earth terminal. RCD protection is essential due to higher Zs values.',

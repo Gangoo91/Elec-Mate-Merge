@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'bms-purpose',
     question: 'What is the primary function of a Building Management System (BMS)?',
     options: [
+      'To provide emergency lighting only',
       'To replace manual light switches',
       'To centralise monitoring and control of building services',
       'To generate electricity for the building',
-      'To provide emergency lighting only',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A BMS centralises monitoring and control of building services including HVAC, lighting, fire systems, and security, enabling optimised operation, energy management, and maintenance planning.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'bacnet-purpose',
     question: 'BACnet is primarily used in building automation for:',
     options: [
-      'Connecting domestic appliances to WiFi',
+      "Open plan offices over 60m² and sports halls",
+      "Person with technical knowledge and experience",
+      "Leakage currents can flow, creating safety hazards",
       "Interoperability between different manufacturers' equipment",
-      'High-speed video streaming',
-      'Mobile phone integration only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "BACnet (Building Automation and Control Networks) is an open protocol that enables interoperability between different manufacturers' building automation equipment, avoiding proprietary lock-in.",
   },
@@ -54,11 +54,11 @@ const quickCheckQuestions = [
     question: 'What is demand response in the context of BMS lighting control?',
     options: [
       'Lights responding to motion detection',
+      'Automatic lamp replacement scheduling',
       'Reducing lighting load during peak electricity demand periods',
       'Increasing light levels when requested by users',
-      'Automatic lamp replacement scheduling',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Demand response involves automatically reducing lighting load during peak electricity demand periods, typically in response to signals from the grid operator or based on tariff structures.',
   },
@@ -66,12 +66,12 @@ const quickCheckQuestions = [
     id: 'modbus-registers',
     question: "In Modbus protocol, what are 'registers' used for?",
     options: [
-      'User login credentials',
       'Storing and exchanging data values between devices',
-      'Physical cable connections',
-      'Emergency backup power',
+      'To store and recall preset lighting configurations',
+      'Suitable for hollow walls where back access is unavailable',
+      'To assist with cable pulling during installation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Modbus registers are memory locations used for storing and exchanging data values (such as dimming levels, status, or sensor readings) between the master controller and slave devices.',
   },
@@ -82,7 +82,12 @@ const quizQuestions = [
     id: 1,
     question:
       'Which protocol is specifically designed for building automation and uses object-oriented data modelling?',
-    options: ['Modbus RTU', 'BACnet', 'DMX512', 'Ethernet/IP'],
+    options: [
+      'Modbus RTU',
+      'BACnet',
+      'DMX512',
+      'Ethernet/IP',
+    ],
     correctAnswer: 1,
     explanation:
       'BACnet uses object-oriented data modelling where each device contains objects (analogue inputs, binary outputs, schedules) with properties, making it highly suitable for building automation applications.',
@@ -91,20 +96,25 @@ const quizQuestions = [
     id: 2,
     question: 'What is the typical BACnet object type used for a dimmable lighting circuit?',
     options: [
+      'Binary Input (BI)',
       'Binary Output (BO)',
       'Analogue Output (AO)',
-      'Binary Input (BI)',
       'Multi-State Value (MSV)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An Analogue Output (AO) object is typically used for dimmable lighting as it provides a variable output value (0-100%) rather than simple on/off control provided by Binary Outputs.',
   },
   {
     id: 3,
     question: 'Modbus RTU communicates over which physical medium?',
-    options: ['Fibre optic only', 'RS-485 serial connection', 'WiFi only', 'Power line carrier'],
-    correctAnswer: 1,
+    options: [
+      'WiFi only',
+      'Fibre optic only',
+      'Power line carrier',
+      'RS-485 serial connection',
+    ],
+    correctAnswer: 3,
     explanation:
       'Modbus RTU (Remote Terminal Unit) uses RS-485 serial connection, providing robust two-wire communication suitable for industrial and building environments with distances up to 1200 metres.',
   },
@@ -112,12 +122,12 @@ const quizQuestions = [
     id: 4,
     question: "In a KNX system, what is the function of a 'coupler'?",
     options: [
-      'To power the bus cable',
       'To connect different lines or areas of the KNX network',
-      'To dim lighting fixtures',
-      'To detect occupancy',
+      'Temporarily reducing non-essential loads during peak demand',
+      'kWh consumption, operating hours, and occupancy correlation',
+      'Recording historical data values over time for analysis',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'KNX couplers (line couplers, area couplers) connect different segments of the KNX network, managing traffic between areas and providing electrical isolation whilst enabling system-wide communication.',
   },
@@ -127,8 +137,8 @@ const quizQuestions = [
     options: [
       'Following popular building designs',
       'Recording historical data values over time for analysis',
-      'Predicting future equipment failures',
       'Adjusting setpoints based on weather',
+      'Predicting future equipment failures',
     ],
     correctAnswer: 1,
     explanation:
@@ -140,11 +150,11 @@ const quizQuestions = [
       'Which scheduling strategy allows different lighting scenes for different days of the week?',
     options: [
       'Exception scheduling',
-      'Calendar-based scheduling',
       'Override scheduling',
+      'Calendar-based scheduling',
       'Demand scheduling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Calendar-based scheduling allows different operational profiles for different days (weekdays vs weekends), holidays, and special events, providing flexibility for varying building usage patterns.',
   },
@@ -152,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the primary benefit of integrating DALI lighting with BACnet BMS?',
     options: [
-      'Eliminating the need for any wiring',
+      'To alert operators to faults, failures, or abnormal conditions',
+      'Temporary manual control mode for system setup and testing',
+      'kWh consumption, operating hours, and occupancy correlation',
       'Enabling enterprise-level monitoring whilst maintaining detailed luminaire control',
-      'Reducing the number of luminaires required',
-      'Automatic emergency lighting testing only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'DALI-BACnet integration enables the BMS to monitor and control lighting at enterprise level whilst DALI provides detailed individual luminaire addressing and control, combining the strengths of both systems.',
   },
@@ -165,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: "In demand response applications, what is 'load shedding'?",
     options: [
-      'Removing old luminaires',
       'Temporarily reducing non-essential loads during peak demand',
-      'Upgrading to more efficient lighting',
-      'Installing additional circuits',
+      'Temporary manual control mode for system setup and testing',
+      'To connect different lines or areas of the KNX network',
+      'To alert operators to faults, failures, or abnormal conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Load shedding involves temporarily reducing or switching off non-essential electrical loads (including lighting in unoccupied areas) during peak demand periods to reduce overall building consumption.',
   },
@@ -178,10 +188,10 @@ const quizQuestions = [
     id: 9,
     question: 'What data would a BMS typically collect for lighting energy analysis?',
     options: [
-      'Lamp colour temperature only',
+      'To connect different lines or areas of the KNX network',
       'kWh consumption, operating hours, and occupancy correlation',
-      'Luminaire weight and dimensions',
-      'Installation contractor details',
+      'Recording historical data values over time for analysis',
+      'Temporary manual control mode for system setup and testing',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,20 +201,25 @@ const quizQuestions = [
     id: 10,
     question: "What is 'commissioning override' in BMS lighting control?",
     options: [
-      'Bypassing safety interlocks permanently',
+      'Recording historical data values over time for analysis',
+      'To connect different lines or areas of the KNX network',
       'Temporary manual control mode for system setup and testing',
-      'Automatic fault correction',
-      'Emergency lighting activation',
+      'kWh consumption, operating hours, and occupancy correlation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Commissioning override provides temporary manual control of lighting circuits during system setup and testing, allowing engineers to verify operation before returning to automatic BMS control.',
   },
   {
     id: 11,
     question: 'Which optimisation strategy adjusts lighting based on available daylight?',
-    options: ['Demand response', 'Daylight harvesting', 'Task tuning', 'Absence detection'],
-    correctAnswer: 1,
+    options: [
+      'Demand response',
+      'Absence detection',
+      'Task tuning',
+      'Daylight harvesting',
+    ],
+    correctAnswer: 3,
     explanation:
       'Daylight harvesting uses photocells to measure ambient light levels and automatically dims artificial lighting to maintain target illuminance, reducing energy consumption when natural light is available.',
   },
@@ -212,12 +227,12 @@ const quizQuestions = [
     id: 12,
     question: "What is the purpose of a BMS 'alarm' for lighting systems?",
     options: [
-      'To wake up sleeping occupants',
       'To alert operators to faults, failures, or abnormal conditions',
-      'To schedule regular maintenance',
-      'To activate emergency lighting only',
+      'Temporary manual control mode for system setup and testing',
+      'Recording historical data values over time for analysis',
+      'kWh consumption, operating hours, and occupancy correlation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BMS alarms notify building operators of lighting system faults (lamp failures, communication errors, energy anomalies), enabling prompt maintenance response and maintaining system performance.',
   },

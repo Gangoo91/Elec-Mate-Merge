@@ -31,9 +31,9 @@ const quickCheckQuestions = [
     id: 'cop-definition',
     question: 'What does COP (Coefficient of Performance) measure in a heat pump system?',
     options: [
-      'The maximum temperature output',
-      'The ratio of heat output to electrical input',
       'The refrigerant flow rate',
+      'The ratio of heat output to electrical input',
+      'The maximum temperature output',
       'The compressor efficiency rating',
     ],
     correctIndex: 1,
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'ashp-vs-gshp',
     question: 'Why do GSHP systems typically achieve higher seasonal efficiency than ASHP systems?',
     options: [
-      'They use more powerful compressors',
       'Ground temperatures remain more stable throughout the year',
+      'They use more powerful compressors',
       'They operate at higher refrigerant pressures',
       'They have larger heat exchangers',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Ground temperatures at depth remain relatively constant (8-12°C in the UK) throughout the year, whilst air temperatures vary significantly. This stability allows GSHP systems to maintain higher efficiency across all seasons.',
   },
@@ -57,7 +57,12 @@ const quickCheckQuestions = [
     id: 'flow-temperature',
     question:
       'What is the maximum recommended flow temperature for heat pump systems to maintain good efficiency?',
-    options: ['65°C', '55°C', '45°C', '35°C'],
+    options: [
+      '35°C',
+      '55°C',
+      '45°C',
+      '65°C',
+    ],
     correctIndex: 2,
     explanation:
       'Heat pumps operate most efficiently at flow temperatures of 45°C or below. Higher temperatures significantly reduce COP and are typically only achieved using supplementary heating or during defrost cycles.',
@@ -66,12 +71,12 @@ const quickCheckQuestions = [
     id: 'mcs-requirement',
     question: 'What is the primary purpose of MCS certification for heat pump installations?',
     options: [
-      'To reduce installation costs',
       'To qualify for government incentive schemes like BUS',
-      'To allow higher operating temperatures',
-      'To eliminate commissioning requirements',
+      'Recording your progress makes you more likely to improve',
+      'Plant rooms, laboratories, industrial processes, operating theatres',
+      'Torque reduces to approximately one-third',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'MCS (Microgeneration Certification Scheme) certification is required for installations to qualify for government incentive schemes such as the Boiler Upgrade Scheme (BUS). It ensures quality standards and consumer protection.',
   },
@@ -82,7 +87,12 @@ const quizQuestions = [
     id: 1,
     question:
       'A heat pump produces 10 kW of heat output whilst consuming 2.5 kW of electrical power. What is the COP?',
-    options: ['2.5', '4.0', '7.5', '12.5'],
+    options: [
+      '2.5',
+      '4.0',
+      '7.5',
+      '12.5',
+    ],
     correctAnswer: 1,
     explanation:
       'COP = Heat Output ÷ Electrical Input = 10 kW ÷ 2.5 kW = 4.0. This means the heat pump delivers 4 units of heat for every 1 unit of electricity consumed.',
@@ -91,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: 'What does SCOP measure that COP does not?',
     options: [
-      'Peak efficiency only',
+      'Output reduces or stops whilst the outdoor unit defrosts',
+      'To reduce short-cycling and ensure minimum run times',
       'Efficiency including auxiliary energy over a heating season',
-      'Cooling mode performance',
-      'Defrost cycle efficiency only',
+      'Ability to modulate output to match heating demand',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SCOP (Seasonal Coefficient of Performance) measures the average efficiency across an entire heating season, including standby losses, auxiliary equipment energy, and varying outdoor conditions. COP is measured at a single test point.',
   },
@@ -104,8 +114,13 @@ const quizQuestions = [
     id: 3,
     question:
       'At what depth do horizontal ground loop collectors for GSHP systems typically need to be installed?',
-    options: ['0.5 to 0.8 metres', '1.0 to 1.5 metres', '2.0 to 2.5 metres', '3.0 to 4.0 metres'],
-    correctAnswer: 1,
+    options: [
+      '2.0 to 2.5 metres',
+      '0.5 to 0.8 metres',
+      '3.0 to 4.0 metres',
+      '1.0 to 1.5 metres',
+    ],
+    correctAnswer: 3,
     explanation:
       'Horizontal ground loops are typically installed at 1.0 to 1.5 metres depth, below the frost line but shallow enough to benefit from solar gain. This provides relatively stable temperatures whilst minimising excavation costs.',
   },
@@ -113,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'Why is a buffer vessel often required in heat pump installations?',
     options: [
-      'To increase the hot water storage capacity',
       'To reduce short-cycling and ensure minimum run times',
+      'To increase the hot water storage capacity',
       'To eliminate the need for a circulation pump',
       'To improve refrigerant charge levels',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Buffer vessels increase system water volume, preventing short-cycling (frequent on/off cycling) which reduces efficiency and compressor life. They ensure the heat pump can run for adequate periods, typically minimum 6-10 minutes.',
   },
@@ -126,16 +141,26 @@ const quizQuestions = [
     id: 5,
     question:
       'For MCS compliance, what is the maximum permitted design flow temperature for radiator systems?',
-    options: ['75°C', '65°C', '55°C', '45°C'],
-    correctAnswer: 2,
+    options: [
+      '65°C',
+      '55°C',
+      '45°C',
+      '75°C',
+    ],
+    correctAnswer: 1,
     explanation:
       'MCS Heat Pump Standard MIS 3005 permits a maximum design flow temperature of 55°C for radiator systems. Lower temperatures (35-45°C) are preferred for optimal efficiency, requiring correctly sized emitters.',
   },
   {
     id: 6,
     question: 'What is the approximate ground temperature at 100 metres depth in the UK?',
-    options: ['4-6°C', '8-12°C', '14-18°C', '20-24°C'],
-    correctAnswer: 1,
+    options: [
+      '4-6°C',
+      '14-18°C',
+      '8-12°C',
+      '20-24°C',
+    ],
+    correctAnswer: 2,
     explanation:
       'In the UK, ground temperatures at depth stabilise at approximately 8-12°C, close to the annual average air temperature. This remains relatively constant throughout the year, providing a stable heat source for GSHP systems.',
   },
@@ -146,10 +171,10 @@ const quizQuestions = [
     options: [
       '1.5 times larger',
       '2.0 times larger',
-      '2.5 to 3.0 times larger',
       '4.0 times larger',
+      '2.5 to 3.0 times larger',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'At 45°C flow temperature versus 75°C, radiators need to be approximately 2.5 to 3 times larger to deliver the same heat output. This is due to the significantly reduced temperature difference between the radiator surface and room air.',
   },
@@ -157,8 +182,13 @@ const quizQuestions = [
     id: 8,
     question:
       'What is the current grant value available under the Boiler Upgrade Scheme (BUS) for ASHP installations in England?',
-    options: ['£5,000', '£6,000', '£7,500', '£10,000'],
-    correctAnswer: 2,
+    options: [
+      '£7,500',
+      '£10,000',
+      '£5,000',
+      '£6,000',
+    ],
+    correctAnswer: 0,
     explanation:
       'The Boiler Upgrade Scheme provides £7,500 towards air source heat pump installations in England (as of 2024). The property must be existing (not new build) and the installer must be MCS certified.',
   },
@@ -166,20 +196,25 @@ const quizQuestions = [
     id: 9,
     question: "During defrost cycles, what happens to the ASHP's heating output?",
     options: [
-      'Output increases temporarily',
-      'Output is maintained at normal levels',
+      'Efficiency including auxiliary energy over a heating season',
       'Output reduces or stops whilst the outdoor unit defrosts',
-      'The system switches to cooling mode',
+      'Ability to modulate output to match heating demand',
+      'To reduce short-cycling and ensure minimum run times',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'During defrost cycles, the heat pump temporarily reverses to remove ice from the outdoor coil. This reduces or stops heating output for 2-10 minutes. Systems must be sized to account for defrost impact on overall capacity.',
   },
   {
     id: 10,
     question: 'What is the typical brine concentration used in GSHP ground loop systems?',
-    options: ['10% ethylene glycol', '25% propylene glycol', '50% methanol', 'Pure water'],
-    correctAnswer: 1,
+    options: [
+      '10% ethylene glycol',
+      'Pure water',
+      '25% propylene glycol',
+      '50% methanol',
+    ],
+    correctAnswer: 2,
     explanation:
       'Ground loops typically use 25-30% propylene glycol (food-grade antifreeze) mixed with water. This provides freeze protection to approximately -15°C whilst maintaining acceptable heat transfer properties and being environmentally safer than ethylene glycol.',
   },
@@ -188,12 +223,12 @@ const quizQuestions = [
     question:
       'According to MCS requirements, what must be provided to the customer after heat pump installation?',
     options: [
-      "Only the manufacturer's warranty certificate",
+      'Safety Integrity Level - quantitative measure of safety performance',
+      'The total opposition to AC current flow combining resistance and reactance',
+      'Safely isolate the circuit and prove dead using a voltage indicator and proving unit',
       'A handover pack including MCS certificate, operating instructions, and performance data',
-      'Just the electrical installation certificate',
-      'The commissioning data only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'MCS requires a comprehensive handover pack including the MCS certificate, user operating instructions, maintenance requirements, commissioning data, performance expectations, and warranty information. This ensures customers can operate and maintain their system correctly.',
   },
@@ -202,12 +237,12 @@ const quizQuestions = [
     question:
       'What is the primary advantage of inverter-driven (variable speed) compressors in heat pumps?',
     options: [
-      'Lower installation cost',
       'Ability to modulate output to match heating demand',
-      'Higher maximum temperatures',
-      'Elimination of defrost requirements',
+      'To reduce short-cycling and ensure minimum run times',
+      'Output reduces or stops whilst the outdoor unit defrosts',
+      'Efficiency including auxiliary energy over a heating season',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Inverter compressors modulate speed to match heating demand, avoiding the on/off cycling of fixed-speed units. This improves seasonal efficiency (SCOP), reduces wear, maintains more stable temperatures, and often eliminates the need for buffer vessels.',
   },

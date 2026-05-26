@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'fuse-purpose',
     question: 'What is the primary function of a fuse in an electrical circuit?',
     options: [
-      'To regulate voltage levels across the load',
-      'To disconnect the circuit automatically when current exceeds a safe level',
       'To provide a convenient switching point for maintenance',
       'To improve the power factor of the installation',
+      'To regulate voltage levels across the load',
+      'To disconnect the circuit automatically when current exceeds a safe level',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A fuse is a sacrificial overcurrent protective device. Its primary function is to disconnect the circuit by melting its fuse element when the current flowing through it exceeds a predetermined safe level for a specified time, thereby protecting conductors and equipment from damage due to overload or short-circuit conditions.',
   },
@@ -29,11 +29,11 @@ const quickCheckQuestions = [
       'A Type B MCB is designed to trip instantaneously (magnetically) at what multiple of its rated current?',
     options: [
       '2 to 3 times rated current',
-      '3 to 5 times rated current',
-      '5 to 10 times rated current',
       '10 to 20 times rated current',
+      '5 to 10 times rated current',
+      '3 to 5 times rated current',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A Type B MCB provides magnetic (instantaneous) tripping between 3 and 5 times its rated current (In). This makes it suitable for resistive loads such as lighting and socket circuits where high inrush currents are not expected. Type C (5-10 x In) and Type D (10-20 x In) are used where higher inrush currents occur.',
   },
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'bs88-application',
     question: 'BS 88 HRC fuses are most commonly used in which application?',
     options: [
-      'Domestic consumer units for socket circuits',
+      'To formally transfer the completed installation to the client with documentation',
       'Industrial distribution boards, motor circuits and commercial switchgear',
-      'Plug-top fuses for portable appliances',
-      'Telecommunications equipment protection',
+      'Skipping the manual test button after the 1×IΔn trip test',
+      'A contactor, an overload relay, and a control circuit (start/stop)',
     ],
     correctIndex: 1,
     explanation:
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'discrimination-fuses',
     question: "What is meant by 'discrimination' between protective devices?",
     options: [
-      'Choosing devices from the same manufacturer',
+      'Regularly (typically monthly) — and after every use; sterile items have expiry dates and must be replaced',
+      'Yes — the collapse of scaffolding over 5 metres in height is a reportable dangerous occurrence',
+      'The PLC input terminal, with the sensor sourcing current into the input',
       'Ensuring only the device nearest the fault operates, leaving upstream supplies intact',
-      'Using different colours to identify different circuits',
-      'Installing devices in order of physical size',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Discrimination (also called selectivity) means that in the event of a fault, only the protective device closest to the fault operates, disconnecting the faulty circuit whilst leaving all upstream devices and healthy circuits unaffected. This is achieved by coordinating the time/current characteristics of devices in series.',
   },
@@ -71,11 +71,11 @@ const quizQuestions = [
     question: 'A semi-enclosed (rewirable) fuse to BS 3036 has a fusing factor of approximately:',
     options: [
       '1.0 — it blows at exactly its rated current',
-      '1.45 — it requires 1.45 times rated current to blow',
       '1.8 to 2.0 — it requires nearly double its rated current to blow reliably',
+      '1.45 — it requires 1.45 times rated current to blow',
       '3.0 — it requires three times rated current to blow',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'BS 3036 semi-enclosed (rewirable) fuses have a fusing factor of approximately 1.8 to 2.0. This means the fuse element must carry nearly twice its rated current before it melts. This poor fusing factor requires a derating factor (typically 0.725) to be applied when selecting cable sizes, as specified in BS 7671 Appendix 4.',
   },
@@ -83,7 +83,12 @@ const quizQuestions = [
     id: 2,
     question:
       'Which standard covers miniature circuit breakers (MCBs) for household and similar installations?',
-    options: ['BS 88', 'BS 3036', 'BS EN 60898', 'BS EN 61009'],
+    options: [
+      'BS EN 61009',
+      'BS 88',
+      'BS EN 60898',
+      'BS 3036',
+    ],
     correctAnswer: 2,
     explanation:
       'BS EN 60898 covers miniature circuit breakers (MCBs) for overcurrent protection in household and similar installations. BS 88 covers industrial HRC fuses, BS 3036 covers semi-enclosed fuses, and BS EN 61009 covers residual current operated circuit breakers with integral overcurrent protection (RCBOs).',
@@ -92,12 +97,12 @@ const quizQuestions = [
     id: 3,
     question: 'The breaking capacity of a protective device refers to:',
     options: [
-      'The maximum continuous current it can carry',
-      'The maximum prospective fault current it can safely interrupt',
       'The minimum current at which it will operate',
+      'The maximum continuous current it can carry',
       'The number of times it can be reset',
+      'The maximum prospective fault current it can safely interrupt',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Breaking capacity (also called rupturing capacity) is the maximum prospective fault current that the device can safely interrupt without damage to itself or danger to its surroundings. BS 7671 Regulation 434.5.1 requires that the breaking capacity of every protective device must be not less than the prospective fault current at its point of installation.',
   },
@@ -105,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'A Type C MCB would be most appropriate for protecting:',
     options: [
-      'A domestic lighting circuit',
-      'A circuit supplying a fluorescent lighting installation with electronic ballasts',
       'A motor circuit with significant inrush current on starting',
+      'A circuit supplying a fluorescent lighting installation with electronic ballasts',
+      'A domestic lighting circuit',
       'A resistive heating circuit',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Type C MCBs trip magnetically between 5 and 10 times their rated current, making them suitable for circuits with moderate inrush currents such as small motors, fluorescent lighting with magnetic ballasts, and some commercial equipment. Motor circuits with very high inrush may require Type D (10-20 x In).',
   },
@@ -119,10 +124,10 @@ const quizQuestions = [
     question:
       'In BS 7671, Regulation 433.1 requires that every circuit shall be protected against:',
     options: [
-      'Undervoltage only',
+      'The maximum airborne concentration of a hazardous substance averaged over a reference period that a worker may be exposed to',
       'Overload current by a device that disconnects before conductors reach their limiting temperature',
-      'Lightning strikes and transient overvoltages',
-      'Harmonic distortion above 5%',
+      'To ensure the tester is working correctly and hasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t failed during testing',
+      'Calmly repeating your key message or boundary without being drawn into side arguments',
     ],
     correctAnswer: 1,
     explanation:
@@ -133,11 +138,11 @@ const quizQuestions = [
     question: 'An HRC fuse achieves arc extinction by:',
     options: [
       'Using a spring-loaded mechanical trip mechanism',
-      'Filling the fuse body with quartz sand which absorbs the arc energy',
       'Applying a magnetic field to deflect the arc',
+      'Filling the fuse body with quartz sand which absorbs the arc energy',
       'Using an electronic sensor to detect the fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'HRC (High Rupturing Capacity) fuses contain a silver or copper fuse element surrounded by granular quartz sand within a ceramic body. When the element melts due to fault current, the arc energy is absorbed by the sand, which vitrifies (turns to glass) around the arc path. This rapidly quenches the arc and limits the let-through energy (I squared t).',
   },
@@ -146,11 +151,11 @@ const quizQuestions = [
     question: 'The I squared t (I²t) characteristic of a fuse is important because it indicates:',
     options: [
       'The voltage rating of the fuse',
-      'The total energy let-through during fault clearance',
-      'The physical dimensions of the fuse carrier',
       'The ambient temperature rating',
+      'The physical dimensions of the fuse carrier',
+      'The total energy let-through during fault clearance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'I²t (current squared multiplied by time) represents the total energy let-through of the fuse during fault clearance. It is critical for ensuring that downstream cables and equipment can withstand the energy released during a fault. BS 7671 Regulation 434.5.2 requires that the I²t of the protective device does not exceed the I²t withstand of the cable (k²S²).',
   },
@@ -158,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which of the following is NOT an advantage of MCBs over fuses?',
     options: [
-      'MCBs can be reset after tripping without replacement',
-      'MCBs have more precise and consistent tripping characteristics',
       'MCBs always have a higher breaking capacity than HRC fuses',
       'MCBs provide visible trip indication',
+      'MCBs can be reset after tripping without replacement',
+      'MCBs have more precise and consistent tripping characteristics',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'MCBs do not always have a higher breaking capacity than HRC fuses. In fact, standard domestic MCBs typically have a breaking capacity of 6 kA or 10 kA, whereas BS 88 HRC fuses can have breaking capacities up to 80 kA. In high fault-level installations, HRC fuses or MCBs with enhanced breaking capacity must be selected.',
   },
@@ -172,10 +177,10 @@ const quizQuestions = [
     question:
       'When selecting a protective device for a circuit, the rated current (In) of the device must satisfy:',
     options: [
-      "In must equal the cable's current-carrying capacity exactly",
+      'Overload current by a device that disconnects before conductors reach their limiting temperature',
       'Ib <= In <= Iz, where Ib is design current and Iz is cable current-carrying capacity',
-      'In must be at least three times the design current',
-      'In must match the supply voltage',
+      'A motor circuit with significant inrush current on starting',
+      'Filling the fuse body with quartz sand which absorbs the arc energy',
     ],
     correctAnswer: 1,
     explanation:
@@ -198,12 +203,12 @@ const quizQuestions = [
     id: 11,
     question: 'The thermal element of an MCB provides protection against:',
     options: [
-      'Short-circuit faults only',
-      'Earth faults only',
+      'A motor circuit with significant inrush current on starting',
+      'MCBs always have a higher breaking capacity than HRC fuses',
+      'The total energy let-through during fault clearance',
       'Overload currents (sustained moderate overcurrents)',
-      'Voltage surges',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'An MCB contains two trip mechanisms: a thermal (bimetallic strip) element for overload protection and a magnetic (solenoid) element for short-circuit protection. The thermal element responds to sustained moderate overcurrents by heating and bending a bimetallic strip, which releases the trip mechanism after a time delay inversely proportional to the magnitude of the overcurrent.',
   },
@@ -212,12 +217,12 @@ const quizQuestions = [
     question:
       'Under BS 7671, if a BS 3036 semi-enclosed fuse is used, the cable current-carrying capacity (Iz) must be at least:',
     options: [
-      'Equal to In',
-      '1.25 times In',
       'In divided by 0.725 (approximately 1.38 times In)',
-      'Twice In',
+      'Overload currents (sustained moderate overcurrents)',
+      'A motor circuit with significant inrush current on starting',
+      'MCBs always have a higher breaking capacity than HRC fuses',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Because BS 3036 fuses have a high fusing factor, BS 7671 requires a correction factor of 0.725 to be applied. This means the cable must be sized so that its current-carrying capacity is at least In / 0.725 (approximately 1.38 x In). This compensates for the fuse's inability to operate precisely at its rated current and prevents cable overheating.",
   },

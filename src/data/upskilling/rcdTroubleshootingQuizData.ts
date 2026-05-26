@@ -12,12 +12,12 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     question:
       'What is the first step when troubleshooting an RCD that trips immediately upon reset?',
     options: [
-      'Replace the RCD immediately',
-      'Check the RCD test button',
+      'Isolate all circuits sharing neutrals together',
       'Disconnect all loads and test for earth faults',
-      'Reset the RCD multiple times',
+      'Switching transients and earth leakage during starting',
+      'Test equipment failure or incorrect connections',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Disconnecting all loads and testing for earth faults helps identify whether the problem is in the RCD itself or the connected circuits, ensuring safe diagnosis.',
   },
@@ -25,8 +25,13 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     id: 2,
     question:
       'Which test voltage should be used for insulation resistance testing when locating earth faults?',
-    options: ['250V DC', '500V DC', '1000V DC', '240V AC'],
-    correctAnswer: 1,
+    options: [
+      '250V DC',
+      '1000V DC',
+      '500V DC',
+      '240V AC',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 7671 specifies 500V DC for insulation resistance testing of low voltage installations to ensure appropriate stress testing of insulation systems.',
   },
@@ -34,12 +39,12 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     id: 3,
     question: 'What typically causes RCD nuisance tripping during motor starting?',
     options: [
-      'Motor overload',
+      'Disconnect all loads and test for earth faults',
+      'Test equipment failure or incorrect connections',
+      'Main earthing system and supply conditions',
       'Switching transients and earth leakage during starting',
-      'Incorrect motor rating',
-      'Supply voltage fluctuation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Motor starting creates switching transients and temporary increases in earth leakage current, which can cause sensitive RCDs to trip unnecessarily.',
   },
@@ -49,9 +54,9 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
       'If an RCD test button works but electrical testing shows no trip, what is the most likely cause?',
     options: [
       'Test equipment failure or incorrect connections',
-      'RCD internal failure',
-      'Environmental interference',
-      'Supply voltage problems',
+      'Complete failure to trip at any test current',
+      'Main earthing system and supply conditions',
+      'Switching transients and earth leakage during starting',
     ],
     correctAnswer: 0,
     explanation:
@@ -61,7 +66,12 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     id: 5,
     question:
       'What is the minimum acceptable insulation resistance value indicating no earth fault?',
-    options: ['0.1MΩ', '0.5MΩ', '1.0MΩ', '2.0MΩ'],
+    options: [
+      '0.1MΩ',
+      '0.5MΩ',
+      '1.0MΩ',
+      '2.0MΩ',
+    ],
     correctAnswer: 1,
     explanation:
       'BS 7671 specifies a minimum insulation resistance of 0.5MΩ for circuits. Values below this indicate potential earth fault conditions.',
@@ -70,10 +80,10 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     id: 6,
     question: 'When multiple RCDs trip simultaneously, what should be investigated first?',
     options: [
-      'Individual circuit loads',
-      'RCD calibration',
+      'Switching transients and earth leakage during starting',
+      'Isolate all circuits sharing neutrals together',
       'Main earthing system and supply conditions',
-      'Environmental factors',
+      'Disconnect all loads and test for earth faults',
     ],
     correctAnswer: 2,
     explanation:
@@ -86,10 +96,10 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     options: [
       'Digital multimeter',
       'Insulation resistance tester',
-      'Storage oscilloscope',
       'RCD tester',
+      'Storage oscilloscope',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'A storage oscilloscope can capture and store transient events that cause intermittent tripping, allowing analysis of the triggering conditions.',
   },
@@ -97,12 +107,12 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     id: 8,
     question: 'How should borrowed neutral circuits be handled during RCD troubleshooting?',
     options: [
-      'Test each circuit independently',
       'Isolate all circuits sharing neutrals together',
+      'Test each circuit independently',
       'Ignore neutral arrangements',
       'Test neutrals separately from lines',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Circuits sharing neutrals must be isolated together during testing to avoid incorrect readings and ensure proper fault diagnosis.',
   },
@@ -110,12 +120,12 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     id: 9,
     question: 'What is the primary safety consideration during RCD troubleshooting?',
     options: [
-      'Use calibrated test equipment',
       'Document all findings',
       'Assume RCD protection is compromised',
       'Work quickly to minimise downtime',
+      'Use calibrated test equipment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'During troubleshooting, RCD protection may be compromised, so additional safety measures must be implemented to protect against electric shock.',
   },

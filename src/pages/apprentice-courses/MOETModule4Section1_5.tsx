@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'eawr-reg4',
     question: 'Under EAWR 1989 Regulation 4(2), the duty to maintain electrical systems is:',
     options: [
-      'Advisory — it is a recommendation only',
-      "Qualified by 'so far as reasonably practicable'",
+      'To ensure accurate placement and avoid unsafe shadows or uneven coverage',
+      'You must assess eligibility and enrol them if they qualify, contributing at least 3%',
+      'Suitable for the environment and adequately protected',
       'An absolute duty — there is no defence based on cost or difficulty',
-      'Only applicable to high voltage installations',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Regulation 4(2) of the Electricity at Work Regulations 1989 is an absolute duty — it states that electrical systems shall be maintained so as to prevent danger. Unlike many health and safety duties, there is no 'so far as reasonably practicable' qualifier. If an electrical system is not maintained and danger results, the duty holder is guilty of a criminal offence.",
   },
@@ -27,8 +27,13 @@ const quickCheckQuestions = [
     id: 'eicr-interval',
     question:
       'According to IET Guidance Note 3, what is the recommended maximum interval between periodic inspections (EICRs) for a commercial office premises?',
-    options: ['1 year', '3 years', '5 years', '10 years'],
-    correctIndex: 2,
+    options: [
+      '5 years',
+      '10 years',
+      '1 year',
+      '3 years',
+    ],
+    correctIndex: 0,
     explanation:
       'IET Guidance Note 3 recommends a maximum interval of 5 years between periodic inspections for commercial premises. However, this is a maximum — the actual interval should be determined based on the type of installation, its condition, the environment and the use of the building. Higher-risk environments (e.g., construction sites — 3 months, swimming pools — 1 year) require more frequent inspection.',
   },
@@ -36,12 +41,12 @@ const quickCheckQuestions = [
     id: 'statutory-vs-non',
     question: 'Which of the following is an example of statutory (legally required) maintenance?',
     options: [
-      'Cleaning dust from inside a distribution board',
-      'Re-greasing motor bearings',
       'Testing fire alarm systems in compliance with the Regulatory Reform (Fire Safety) Order 2005',
-      'Replacing a luminaire that has reached end of life',
+      'After physical damage, unusual readings, failed checks, repairs, or exposure to extremes',
+      'The primary attachment point for fall arrest — it positions the arrest force at the centre of the back',
+      'Temporarily reducing or switching off non-critical loads when demand is high',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Fire alarm testing is a statutory requirement under the RRO 2005, which places a legal duty on the responsible person to maintain fire detection and alarm systems. Failure to comply is a criminal offence. The other activities, while important PPM tasks, are not directly mandated by specific legislation (though EAWR and PUWER create a general duty to maintain).',
   },
@@ -52,10 +57,10 @@ const quizQuestions = [
     id: 1,
     question: 'The Electricity at Work Regulations 1989 apply to:',
     options: [
-      'Only new electrical installations',
+      'Do not use the scaffold and report the missing tag to your supervisor immediately',
       'All work activities involving electrical systems, regardless of voltage or location',
-      'Only installations above 1,000 V',
-      'Only installations in domestic premises',
+      'To provide an energy rating and recommendations for the building',
+      'Be individually removable so other employees cannot access personal data',
     ],
     correctAnswer: 1,
     explanation:
@@ -65,12 +70,12 @@ const quizQuestions = [
     id: 2,
     question: 'PUWER 1998 Regulation 5 requires that work equipment is:',
     options: [
-      'Replaced every five years',
+      'Danger present — risk of injury; immediate remedial action required',
+      'Inspection, testing and verification of electrical installations including periodic inspection',
       'Maintained in an efficient state, in efficient working order and in good repair',
-      'Only maintained when it breaks down',
-      'Maintained by the manufacturer only',
+      'The duty holder — typically the employer, building owner or person in control of the premises',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'PUWER Regulation 5 requires that work equipment is maintained in an efficient state, in efficient working order and in good repair. Where the safety of the equipment depends on the installation conditions, it must be inspected at suitable intervals. A maintenance log must be kept up to date.',
   },
@@ -78,12 +83,12 @@ const quizQuestions = [
     id: 3,
     question: 'BS 7671 Part 6 covers:',
     options: [
-      'The design of new electrical installations',
+      'A maintained electrical installation with a satisfactory EICR and documented maintenance records',
+      'The duty holder — typically the employer, building owner or person in control of the premises',
+      'Danger present — risk of injury; immediate remedial action required',
       'Inspection, testing and verification of electrical installations including periodic inspection',
-      'The selection of cables and conductors',
-      'Lightning protection systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 Part 6 covers inspection, testing and verification. This includes initial verification of new installations and periodic inspection and testing of existing installations. It defines the scope of inspection, the tests required, and the criteria for certification including the Electrical Installation Condition Report (EICR).',
   },
@@ -91,12 +96,12 @@ const quizQuestions = [
     id: 4,
     question: 'An EICR (Electrical Installation Condition Report) is:',
     options: [
-      'A design document for new installations',
       'A formal report on the condition of an existing electrical installation, classifying defects by severity and recommending a next inspection date',
-      'An insurance policy for electrical installations',
-      'A building regulation approval certificate',
+      'Statutory maintenance is required by law; non-statutory maintenance is best practice recommended by standards, manufacturers or insurers',
+      'The type of installation, its use and operation, the frequency and quality of maintenance, and the external influences to which it is subjected',
+      'Carry out a fire risk assessment and ensure fire safety measures (including fire detection, alarm and emergency lighting) are maintained',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An EICR is a formal report produced following a periodic inspection and testing of an existing installation. It records the condition of the installation, classifies any defects or deviations using codes (C1 — danger present, C2 — potentially dangerous, C3 — improvement recommended, FI — further investigation), and recommends a date for the next inspection.',
   },
@@ -105,12 +110,12 @@ const quizQuestions = [
     question:
       'IET Guidance Note 3 recommends a maximum periodic inspection interval of 3 months for:',
     options: [
-      'Domestic dwellings',
       'Commercial offices',
       'Construction site installations',
       'Churches and religious buildings',
+      'Domestic dwellings',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Construction site installations are subject to the harshest conditions — exposure to weather, mechanical damage, temporary connections and frequent modification. IET GN3 recommends inspection at a maximum interval of 3 months. This reflects the high risk and rapidly changing nature of construction site electrical installations.',
   },
@@ -119,12 +124,12 @@ const quizQuestions = [
     question:
       "Under the Regulatory Reform (Fire Safety) Order 2005, the 'responsible person' must:",
     options: [
-      'Only call the fire brigade in an emergency',
+      'A maintained electrical installation with a satisfactory EICR and documented maintenance records',
+      'Statutory maintenance is required by law; non-statutory maintenance is best practice recommended by standards, manufacturers or insurers',
       'Carry out a fire risk assessment and ensure fire safety measures (including fire detection, alarm and emergency lighting) are maintained',
-      'Only install fire extinguishers',
-      'Only carry out fire drills',
+      'The type of installation, its use and operation, the frequency and quality of maintenance, and the external influences to which it is subjected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The RRO 2005 requires the responsible person to carry out a fire risk assessment, implement appropriate fire safety measures, and ensure they are maintained in working order. This includes fire detection and alarm systems (BS 5839-1) and emergency lighting (BS 5266-1). Weekly, monthly and annual testing is required with documented records.',
   },
@@ -132,12 +137,12 @@ const quizQuestions = [
     id: 7,
     question: 'The difference between statutory and non-statutory maintenance is:',
     options: [
-      'There is no difference',
+      'The type of installation, its use and operation, the frequency and quality of maintenance, and the external influences to which it is subjected',
+      'A maintained electrical installation with a satisfactory EICR and documented maintenance records',
+      'Carry out a fire risk assessment and ensure fire safety measures (including fire detection, alarm and emergency lighting) are maintained',
       'Statutory maintenance is required by law; non-statutory maintenance is best practice recommended by standards, manufacturers or insurers',
-      'Statutory maintenance is more expensive',
-      'Non-statutory maintenance is more important',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Statutory maintenance is required by specific legislation (EAWR, RRO, PUWER, LOLER, etc.) and failure to comply is a criminal offence. Non-statutory maintenance is recommended by industry standards, manufacturer guidelines, or insurance requirements — it is good practice but not directly mandated by law. Both are essential for a comprehensive maintenance programme.',
   },
@@ -146,9 +151,9 @@ const quizQuestions = [
     question: 'Insurance companies typically require evidence of:',
     options: [
       'A maintained electrical installation with a satisfactory EICR and documented maintenance records',
-      'Only that the building has electricity connected',
-      'The original installation certificate from when the building was first wired',
-      'A letter from the electricity supplier',
+      'The load can shift or the truck can run away if the handler loses control, particularly going downhill',
+      'One every ~600 mm — closer at ends and at any point where the lid might be lifted by passing traffic.',
+      'Discourage the disposal of waste to landfill by increasing costs, thereby encouraging waste reduction, reuse, and recycling',
     ],
     correctAnswer: 0,
     explanation:
@@ -158,12 +163,12 @@ const quizQuestions = [
     id: 9,
     question: 'The EICR classification code C1 means:',
     options: [
-      'Improvement recommended',
-      'Potentially dangerous — urgent remedial action required',
+      'Loose terminal, damaged cable, or incorrect routing',
       'Danger present — risk of injury; immediate remedial action required',
-      'Further investigation required',
+      'Simplified representation of circuits and equipment',
+      'Screened/shielded cable with symmetrical construction',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'C1 (Danger present) is the most serious classification, meaning there is a risk of injury and immediate remedial action is required. Examples include exposed live conductors, missing protective devices, and absent earthing. The inspector has a duty to inform the person ordering the inspection immediately and may need to make the situation safe before leaving site.',
   },
@@ -171,10 +176,10 @@ const quizQuestions = [
     id: 10,
     question: 'Under EAWR 1989, who has a duty to maintain electrical systems?',
     options: [
-      'Only qualified electricians',
-      'Only the HSE',
+      'Maintained in an efficient state, in efficient working order and in good repair',
+      'Danger present — risk of injury; immediate remedial action required',
       'The duty holder — typically the employer, building owner or person in control of the premises',
-      'Only the local electricity distribution company',
+      'Inspection, testing and verification of electrical installations including periodic inspection',
     ],
     correctAnswer: 2,
     explanation:
@@ -184,12 +189,12 @@ const quizQuestions = [
     id: 11,
     question: 'A periodic inspection (EICR) should include:',
     options: [
-      'Only a visual inspection of the consumer unit',
+      'Statutory maintenance is required by law; non-statutory maintenance is best practice recommended by standards, manufacturers or insurers',
+      'A formal report on the condition of an existing electrical installation, classifying defects by severity and recommending a next inspection date',
+      'Carry out a fire risk assessment and ensure fire safety measures (including fire detection, alarm and emergency lighting) are maintained',
       'Visual inspection, testing (insulation resistance, earth continuity, polarity, RCD, loop impedance) and sampling of circuits as appropriate',
-      'Only testing of the main switch',
-      'Only checking that the electricity meter is reading correctly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A periodic inspection involves a comprehensive visual inspection of the installation followed by appropriate testing. This includes insulation resistance, earth continuity, polarity, RCD operation, earth fault loop impedance, and prospective fault current measurements. The extent of testing (sampling percentage) depends on the type and age of the installation.',
   },
@@ -198,12 +203,12 @@ const quizQuestions = [
     question:
       'BS 7671 regulation 135.1 states that the period between inspections should be determined by:',
     options: [
-      'The insurance company only',
       'The type of installation, its use and operation, the frequency and quality of maintenance, and the external influences to which it is subjected',
-      'A fixed 5-year interval for all installations',
-      'The age of the building',
+      'Statutory maintenance is required by law; non-statutory maintenance is best practice recommended by standards, manufacturers or insurers',
+      'Carry out a fire risk assessment and ensure fire safety measures (including fire detection, alarm and emergency lighting) are maintained',
+      'A formal report on the condition of an existing electrical installation, classifying defects by severity and recommending a next inspection date',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 Regulation 135.1 requires that the interval between inspections is determined by considering the type of installation, its use and operation, the frequency and quality of maintenance, and the external influences to which it is subjected. IET Guidance Note 3 provides recommended maximum intervals, but these are guidance — the actual interval should reflect the specific conditions.',
   },

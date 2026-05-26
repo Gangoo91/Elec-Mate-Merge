@@ -36,12 +36,12 @@ const checks = [
     question:
       "It is the night before your Unit 305 (Electrical Systems Design) paper. You have done six full mocks across the last fortnight, averaging 72-78%. What is the most useful single hour of revision you can do tonight?",
     options: [
-      "Re-read all of BS 7671 from cover to cover.",
-      "Sit a seventh full mock under exam conditions.",
+      "Control of Asbestos Regulations 2012 — the principal UK asbestos regulation. Covers duty to manage (Reg 4), exposure assessment (Reg 6), prevention or reduction (Reg 7), licensed work (Reg 8), training (Reg 10), respiratory PPE, hygiene, monitoring, surveillance.",
+      "An event that could have caused injury but didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t. Slips without fall, tool drops without injury, almost-contact with energised conductors, RAMS-procedure shortcuts spotted before incident. Leading indicator of latent risk.",
+      "Lawfulness, fairness and transparency — personal data must be processed lawfully (one of the six bases), fairly (in a way the data subject would reasonably expect), and transparently (the data subject knows what's happening with their data via a privacy notice).",
       "Walk through your mock-result error log — review the questions you got wrong, confirm you understand the right answer, and refresh the formula bank (Vd, Zs, CCC after derating, three-phase line/phase). One hour, no new material, no panic-cramming.",
-      "Stay up until 2am cramming three-phase theory you've never properly understood.",
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Night-before revision should consolidate, not introduce. New material at this point creates anxiety and rarely sticks. Revisiting your error log targets the exact gaps you've already identified, refreshes the formula bank, and leaves you confident going into the morning. Full mocks the night before exhaust you. Cramming new material undermines sleep — and sleep is the single biggest performance multiplier on the day.",
   },
@@ -50,12 +50,12 @@ const checks = [
     question:
       "You're walking out the door for your Unit 304 (Inspection, Testing and Commissioning) paper. The centre is on-screen, closed-book, invigilated. What do you pack?",
     options: [
+      "Largest motor at 100 percent + 50-75 percent of remaining motors running, plus check that the supply can handle the largest motor starting on top of the others running. Sequence starts to avoid concurrent transients.",
+      "The older learner may resist taking direction from someone younger, and the younger mentor may feel uncomfortable asserting authority over someone with more life experience",
       "Photo ID, candidate confirmation letter or email, basic non-programmable scientific calculator (in case the on-screen one fails), bottle of water, snack for AFTER the exam, and a watch (analogue) — phones are not permitted in the exam room.",
-      "Your full BS 7671, the OSG, your revision notes, a smartphone for last-minute checking and a bag of energy drinks.",
-      "Just yourself — the centre provides everything.",
-      "A pencil case full of highlighters and your full revision binder.",
+      "Move the bond connection to a clean section of the same pipe (still consumer side, still before any branch, within 600 mm of point of entry where practicable per Reg 544.1.2). Clean to bare metal, apply paste, fit clamp.",
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       "L3 closed-book exam packing essentials: photo ID (the centre will not let you sit without it), the candidate confirmation letter, a basic non-programmable scientific calculator as backup (most centres provide on-screen but a backup is reassuring), water, post-exam snack, analogue watch (phones are banned). Notes, BS 7671 and the OSG are forbidden in the room — bringing them in is grounds for disqualification. Energy drinks spike then crash; water is better.",
   },
@@ -64,12 +64,12 @@ const checks = [
     question:
       "Your Unit 302 paper starts at 09:30. The centre is 20 minutes from home. What time do you aim to arrive?",
     options: [
-      "09:25 — five minutes early is plenty.",
       "09:00 — half an hour early. Gives you time to use the toilet, settle nerves, sign in, get briefed, and not start the paper with adrenaline still spiking from a rushed arrival.",
-      "08:00 — an hour and a half early so you can do last-minute revision in the car park.",
-      "Whenever — the start time is flexible.",
+      "The exact nature of the modification, why it was necessary, who authorised it, what was changed, and ensure that drawings and documentation are updated to reflect the as-built condition",
+      "The consequences of the failure are low (no safety or environmental impact, minimal operational disruption) and the cost of preventive maintenance would exceed the cost of allowing the failure to occur and repairing it",
+      "Acknowledge the uncertainty, explain what you do know, and describe how you would find the correct information in a real workplace situation",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Aim for 30 minutes early. Five minutes is too tight — any traffic delay and you're sitting the paper with cortisol still pumping. An hour and a half is too long — last-minute revision in the car park increases anxiety without adding knowledge, and your concentration is finite. 30 minutes is the sweet spot: time to sign in, use the toilet, settle, and walk into the room calm rather than rushed.",
   },

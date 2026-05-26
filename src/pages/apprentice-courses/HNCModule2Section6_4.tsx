@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'sbem-purpose',
     question: 'What is the primary purpose of SBEM (Simplified Building Energy Model)?',
     options: [
-      'Detailed HVAC system design',
+      'Installation drawings and plans',
       'Part L compliance for non-dwellings',
-      'Structural analysis',
-      'Cost estimation',
+      'An open-top skip in a well-ventilated yard',
+      'Spring return, normally open',
     ],
     correctIndex: 1,
     explanation:
@@ -46,20 +46,25 @@ const quickCheckQuestions = [
     id: 'ies-capability',
     question: 'Which of these is NOT a typical capability of IES VE?',
     options: [
-      'Dynamic thermal simulation',
-      'CFD analysis',
+      'BS 7671 IET Wiring Regulations',
       'Structural load calculations',
-      'Daylight modelling',
+      'Reason for incomplete testing',
+      'Medium Dependent Interface Crossover',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'IES VE is a building performance simulation tool covering thermal, energy, airflow, and daylight analysis. Structural load calculations require separate structural engineering software.',
   },
   {
     id: 'energyplus-origin',
     question: 'EnergyPlus is developed and maintained by:',
-    options: ['A commercial software company', 'The US Department of Energy', 'CIBSE', 'ASHRAE'],
-    correctIndex: 1,
+    options: [
+      'Tabulated current-carrying capacity',
+      'Engineering Recommendation G5/5',
+      'The US Department of Energy',
+      'Equal to the supply voltage',
+    ],
+    correctIndex: 2,
     explanation:
       'EnergyPlus is developed by the US Department of Energy and is freely available. Many commercial tools use EnergyPlus as their calculation engine.',
   },
@@ -67,12 +72,12 @@ const quickCheckQuestions = [
     id: 'when-dsm',
     question: 'Dynamic Simulation Modelling (DSM) is required instead of SBEM when:',
     options: [
-      'Building is residential',
-      'Building has simple rectangular geometry',
       'Building over 1,000m² or complex systems',
-      'Budget allows for it',
+      'Customer satisfaction through consistent quality',
+      'All three phases L1, L2, L3 and neutral',
+      'Valid, Authentic, Current, Sufficient, Reliable',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Part L requires DSM for buildings over 1,000m², buildings with complex HVAC systems, atria, or other features that SBEM cannot adequately model.',
   },
@@ -84,10 +89,10 @@ const quizQuestions = [
     question:
       'Which software tool is most appropriate for early-stage concept design energy assessment?',
     options: [
-      'Full dynamic simulation with detailed HVAC',
+      'Section 4: First Aid Measures',
       'SBEM or simplified steady-state tools',
-      'CFD analysis',
-      'BIM coordination software',
+      'Mercury content requiring specialist disposal',
+      'Every 5 years or at change of tenancy',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: 'TAS Building Designer is published by:',
     options: [
+      'Standard inputs and methods for Part L calculations',
+      'Daylight, thermal comfort, and energy credits',
       'EDSL (Environmental Design Solutions Ltd)',
-      'Integrated Environmental Solutions',
-      'US Department of Energy',
-      'BRE',
+      'An EPC rating and BER/TER comparison',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'TAS (Thermal Analysis Software) is developed by EDSL and is widely used in the UK for dynamic thermal simulation and Part L compliance.',
   },
@@ -110,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'The NCM (National Calculation Methodology) defines:',
     options: [
-      'Building structural requirements',
+      'EDSL (Environmental Design Solutions Ltd)',
+      'Team familiarity, licensing, and project requirements',
+      'A user-friendly interface for EnergyPlus',
       'Standard inputs and methods for Part L calculations',
-      'BREEAM credit requirements',
-      'Construction cost benchmarks',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The NCM specifies standard occupancy schedules, system efficiencies, and calculation methods that all Part L compliance tools must use, ensuring consistent comparisons.',
   },
@@ -123,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: "What does an 'iSBEM' assessment produce?",
     options: [
-      'A detailed energy breakdown',
       'An EPC rating and BER/TER comparison',
+      'A detailed energy breakdown',
       'HVAC sizing recommendations',
       'Construction cost estimates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'iSBEM is the interface for SBEM calculations and produces an EPC rating plus comparison of Building Emission Rate (BER) against Target Emission Rate (TER) for compliance.',
   },
@@ -136,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which tool would you use for detailed natural ventilation analysis in an atrium?',
     options: [
-      'SBEM',
+      'Circuit details and test conditions',
       'CFD software or IES MacroFlo',
-      'Degree-day spreadsheets',
-      'Standard Part L compliance tool',
+      'UV resistance and temperature rating',
+      'Verified by testing before repair',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,11 +155,11 @@ const quizQuestions = [
     question: 'DesignBuilder is primarily:',
     options: [
       'A standalone BIM modelling tool',
-      'A user-friendly interface for EnergyPlus',
       'A UK Part L compliance calculator',
+      'A user-friendly interface for EnergyPlus',
       'A CFD analysis package',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'DesignBuilder provides a graphical interface for the EnergyPlus simulation engine, making detailed energy simulation more accessible to designers.',
   },
@@ -162,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'For BREEAM assessments, which analyses typically require simulation software?',
     options: [
-      'Water consumption only',
+      'Standard inputs and methods for Part L calculations',
+      'EDSL (Environmental Design Solutions Ltd)',
+      'An EPC rating and BER/TER comparison',
       'Daylight, thermal comfort, and energy credits',
-      'Materials specification only',
-      'Acoustic assessment only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BREEAM awards credits for daylight factor achievement, thermal comfort compliance (TM52), and energy performance prediction - all requiring simulation analysis.',
   },
@@ -175,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the relationship between SBEM and approved DSM software?',
     options: [
-      'They are completely different calculation methods',
       'DSM must demonstrate equivalent or better results than SBEM baseline',
-      'SBEM is always more accurate',
-      'DSM can only be used for residential buildings',
+      'An open-source platform supporting EnergyPlus and other tools',
+      'Team familiarity, licensing, and project requirements',
+      'Hourly or sub-hourly temperature outputs for occupied hours',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Approved DSM software must use the same NCM assumptions as SBEM for notional building comparison, ensuring consistent baseline for compliance demonstration.',
   },
@@ -188,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which software capability is essential for TM52 overheating assessment?',
     options: [
-      'Monthly energy totals',
+      'An open-source platform supporting EnergyPlus and other tools',
       'Hourly or sub-hourly temperature outputs for occupied hours',
-      'Annual carbon emissions',
-      'Peak heating load',
+      'DSM must demonstrate equivalent or better results than SBEM baseline',
+      'Team familiarity, licensing, and project requirements',
     ],
     correctAnswer: 1,
     explanation:
@@ -201,12 +206,12 @@ const quizQuestions = [
     id: 10,
     question: 'OpenStudio is best described as:',
     options: [
-      'A commercial thermal simulation package',
+      'Hourly or sub-hourly temperature outputs for occupied hours',
+      'Standard inputs and methods for Part L calculations',
       'An open-source platform supporting EnergyPlus and other tools',
-      'The UK Part L compliance engine',
-      'A lighting design calculator',
+      'Daylight, thermal comfort, and energy credits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'OpenStudio is an open-source platform developed by NREL that provides graphical interfaces, scripting capabilities, and integrations for EnergyPlus and other simulation engines.',
   },
@@ -214,12 +219,12 @@ const quizQuestions = [
     id: 11,
     question: 'When choosing between IES VE and TAS, the primary consideration is usually:',
     options: [
-      'They produce different results',
+      'A user-friendly interface for EnergyPlus',
+      'An open-source platform supporting EnergyPlus and other tools',
+      'Daylight, thermal comfort, and energy credits',
       'Team familiarity, licensing, and project requirements',
-      'One is free and one is paid',
-      'Part L only accepts one of them',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Both IES VE and TAS are approved for Part L DSM. Choice typically depends on team expertise, available licences, specific project features, and client preferences.',
   },
@@ -228,12 +233,12 @@ const quizQuestions = [
     question:
       'For a simple office refurbishment under 1,000m², which approach is typically most appropriate?',
     options: [
-      'Full dynamic simulation',
       'SBEM with iSBEM interface',
-      'Manual degree-day calculations only',
       'CFD analysis',
+      'Full dynamic simulation',
+      'Manual degree-day calculations only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Simple buildings under 1,000m² without complex features can use SBEM for Part L compliance - it's quicker and provides adequate accuracy for straightforward projects.",
   },

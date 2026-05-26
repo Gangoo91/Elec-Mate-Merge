@@ -14,7 +14,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'Name one type of site documentation that must be stored.',
-    options: ['Shopping lists', 'Drawings and as-builts', 'Personal notes', 'Weather reports'],
+    options: [
+      'Personal notes',
+      'Drawings and as-builts',
+      'Weather reports',
+      'Shopping lists',
+    ],
     correctIndex: 1,
     explanation:
       'Drawings and as-builts are critical site documentation that must be properly stored, along with specifications, test certificates, RAMS, and manufacturer instructions.',
@@ -24,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'True or False: Out-of-date drawings can be used as long as they are close to the final design.',
     options: [
-      'True - close enough is acceptable',
-      'False - only current versions should be used',
-      'True - if no other copies available',
       'False - but only for large projects',
+      'True - if no other copies available',
+      'False - only current versions should be used',
+      'True - close enough is acceptable',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'False. Only current, up-to-date versions of drawings should be used. Out-of-date drawings can lead to serious mistakes and compliance issues.',
   },
@@ -37,12 +42,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Give one benefit of digital storage.',
     options: [
-      'Takes up physical space',
+      'Conduit bending machine or former',
+      'Seasonal Affective Disorder (SAD)',
+      'They must be competent or supervised',
       'Easy backup and instant access',
-      'Requires no maintenance',
-      'Cannot be shared',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Digital storage provides easy backup, instant access, version control, and can be shared with multiple team members simultaneously.',
   },
@@ -56,10 +61,10 @@ export default function Module5Section7_5() {
       id: 1,
       question: 'Name one type of site documentation that must be stored.',
       options: [
-        'Personal diary entries',
+        'An NO contact of the output coil wired in parallel with the start button to maintain the circuit',
         'Drawings, specifications, test certificates, RAMS, manufacturer instructions',
-        'Lunch menus',
-        'Personal contact lists',
+        'Product type (orite type), extent of damage/deterioration, surface treatment, and asbestos type',
+        'Part 4 — General requirements for all construction sites',
       ],
       correctAnswer: 1,
       explanation:
@@ -69,12 +74,12 @@ export default function Module5Section7_5() {
       id: 2,
       question: 'What is the purpose of test certificates?',
       options: [
-        'To look professional',
+        'Pulsed output meters connected to BMS or data logger',
+        'To confirm your voltage tester is working correctly',
         'To verify safety and compliance of installations',
-        'To increase project costs',
-        'For filing purposes only',
+        'Investigate, rectify, and retest before certification',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Test certificates verify safety and compliance of electrical installations, providing proof that work meets required standards.',
     },
@@ -83,12 +88,12 @@ export default function Module5Section7_5() {
       question:
         'True or False: Out-of-date drawings can be used as long as they are close to the final design.',
       options: [
-        'True - close enough is acceptable',
-        'False - only current versions should be used',
         'True - saves time and effort',
+        'True - close enough is acceptable',
         'False - but only on large projects',
+        'False - only current versions should be used',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'False. Only current, up-to-date versions should be used. Out-of-date drawings can lead to serious mistakes and compliance issues.',
     },
@@ -96,12 +101,12 @@ export default function Module5Section7_5() {
       id: 4,
       question: 'What is one risk of poor physical document storage?',
       options: [
-        'Documents look untidy',
         'Loss or damage from water, fire, or misplacement',
-        'Takes too much time to organise',
-        'Costs too much money',
+        'Durable and legible marking identifying each circuit',
+        'Record all test results with locations and conditions',
+        'Meet specific requirements for hazardous area classification',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Poor physical storage can lead to loss or damage from water, fire, theft, or misplacement of critical documents.',
     },
@@ -109,10 +114,10 @@ export default function Module5Section7_5() {
       id: 5,
       question: 'Give one benefit of digital storage.',
       options: [
-        'Takes up more space',
+        'Short-circuit AND earth fault conditions',
         'Easy backup, instant access, version control',
-        'Requires constant internet',
-        'Cannot be shared',
+        'They introduce twists that can stress the fibre',
+        'Reduce, Reuse, Recycle, Recover, Dispose',
       ],
       correctAnswer: 1,
       explanation:
@@ -122,12 +127,12 @@ export default function Module5Section7_5() {
       id: 6,
       question: 'What is the correct way to issue drawings to site staff?',
       options: [
-        'Any available version',
+        'Use intermediate pull points to reduce total tension',
+        '"The circuits were tested and found to be satisfactory."',
         'Ensure they are the latest, stamped/dated copies',
-        'Handwritten copies only',
-        'Photocopies without dates',
+        'Allow for reasonably anticipated additions',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Only the latest versions should be issued, clearly stamped or dated to ensure everyone is working from current information.',
     },
@@ -135,12 +140,12 @@ export default function Module5Section7_5() {
       id: 7,
       question: 'In the real-world scenario, what caused project delays?',
       options: [
-        'Equipment failure',
+        'The tower location, date, inspector details, findings, any defects and actions taken',
+        'Skilled personnel, calibrated instruments, test schedules, and documentation systems',
+        'A legal requirement imposed by an Act of Parliament or Regulations',
         'Paper drawings were destroyed by water damage, with no backups available',
-        'Staff shortage',
-        'Material delivery delays',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'The project was delayed because paper drawings were destroyed by water damage and no digital backups existed.',
     },
@@ -148,12 +153,12 @@ export default function Module5Section7_5() {
       id: 8,
       question: 'Who should have editing rights for site documents?',
       options: [
-        'Everyone on site',
         'Authorised supervisors/managers only',
-        'Only the client',
-        'Any electrician',
+        'Maintained mode for constant visibility',
+        'Generic cabling for customer premises',
+        'Control circuit with voltage monitoring',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Only authorised supervisors or managers should have editing rights to maintain document control and prevent unauthorised changes.',
     },
@@ -161,10 +166,10 @@ export default function Module5Section7_5() {
       id: 9,
       question: 'Why should documents be accessible to all relevant team members?',
       options: [
-        'To increase paperwork',
+        'Installing accessories and making final connections',
         'To allow safe, compliant, and efficient working',
-        'To create more work',
-        'For entertainment purposes',
+        'Insulated gloves and face protection',
+        'Avoid working at height altogether where possible',
       ],
       correctAnswer: 1,
       explanation:
@@ -174,12 +179,12 @@ export default function Module5Section7_5() {
       id: 10,
       question: 'List one best practice for protecting physical copies of documents.',
       options: [
-        'Leave them in the van',
+        'Technical problem-solving and site coordination responsibilities',
+        'Current, duration, path through body, frequency',
         'Store in waterproof folders or locked site cabinets',
-        'Keep them in your pocket',
-        'Store outside in the weather',
+        'Verify scheduled items match specification requirements',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Physical documents should be stored in waterproof folders or locked site cabinets to protect from damage and unauthorised access.',
     },

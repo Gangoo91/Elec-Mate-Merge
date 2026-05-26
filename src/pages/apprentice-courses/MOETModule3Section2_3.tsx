@@ -13,8 +13,13 @@ const quickCheckQuestions = [
   {
     id: 'current-reduction',
     question: 'By what factor is the starting current reduced in star compared to DOL?',
-    options: ['One-half (1/2)', 'One-third (1/3)', 'One-quarter (1/4)', 'Two-thirds (2/3)'],
-    correctIndex: 1,
+    options: [
+      'Two-thirds (2/3)',
+      'One-quarter (1/4)',
+      'One-third (1/3)',
+      'One-half (1/2)',
+    ],
+    correctIndex: 2,
     explanation:
       'In star connection, the starting current is reduced to approximately one-third of the DOL value. This is because the voltage across each winding is reduced to 58% (1/root 3), and since current is proportional to voltage, the line current is approximately 1/3 of DOL. The starting torque is also reduced to one-third, which limits the applications of this starting method.',
   },
@@ -22,28 +27,38 @@ const quickCheckQuestions = [
     id: 'open-transition',
     question: 'What is the main disadvantage of open transition in star-delta starting?',
     options: [
-      'Higher cost',
+      'Starting current and protection coordination',
+      'Mandatory energy audit for large UK organisations every 4 years',
+      'Mutual induction between two coils on a magnetic core',
       'A transient current spike may occur during changeover',
-      'The motor cannot reach full speed',
-      'It requires more contactors',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'During open transition, the motor is briefly disconnected from the supply (30-50 milliseconds). When the delta contactor reconnects, the residual motor voltage may be out of phase with the supply, causing a current transient that can exceed DOL levels. This is the most common transition method but must be timed correctly.',
   },
   {
     id: 'timer-setting',
     question: 'What speed should the motor reach in star before transition to delta?',
-    options: ['50-60%', '65-75%', '80-90%', '100%'],
-    correctIndex: 2,
+    options: [
+      '50-60%',
+      '65-75%',
+      '100%',
+      '80-90%',
+    ],
+    correctIndex: 3,
     explanation:
       'The motor should reach approximately 80-90% of full speed in star before transition occurs. This minimises the current transient at changeover and reduces mechanical shock to the drive coupling. The star-delta timer must be set to allow sufficient acceleration time.',
   },
   {
     id: 'cable-count',
     question: 'How many cables are required from a star-delta starter to the motor?',
-    options: ['Three', 'Four', 'Six', 'Nine'],
-    correctIndex: 2,
+    options: [
+      'Six',
+      'Nine',
+      'Four',
+      'Three',
+    ],
+    correctIndex: 0,
     explanation:
       'Six cables are needed because all six winding terminals (U1, V1, W1, U2, V2, W2) must be individually connected to the starter. This is a significant disadvantage compared to DOL or soft starters, which only require three cables, resulting in more copper, larger containment and higher installation costs.',
   },
@@ -53,7 +68,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'By what factor is the starting current reduced in star compared to DOL?',
-    options: ['1/2', '1/3', '1/4', '2/3'],
+    options: [
+      '1/2',
+      '1/3',
+      '1/4',
+      '2/3',
+    ],
     correctAnswer: 1,
     explanation:
       'Star connection reduces both starting current and starting torque to approximately one-third of DOL values.',
@@ -61,16 +81,26 @@ const quizQuestions = [
   {
     id: 2,
     question: 'By what factor is the starting torque reduced in star?',
-    options: ['1/2', '1/3', '1/4', 'Not reduced'],
-    correctAnswer: 1,
+    options: [
+      '1/4',
+      '1/2',
+      '1/3',
+      'Not reduced',
+    ],
+    correctAnswer: 2,
     explanation:
       'Starting torque is proportional to voltage squared. At 58% voltage (star), torque is approximately 33% (one-third) of DOL. This is the main limitation of the method.',
   },
   {
     id: 3,
     question: 'How many contactors does a standard star-delta starter require?',
-    options: ['One', 'Two', 'Three', 'Four'],
-    correctAnswer: 2,
+    options: [
+      'Two',
+      'One',
+      'Four',
+      'Three',
+    ],
+    correctAnswer: 3,
     explanation:
       'Three contactors: main (KM1), star (KM2) and delta (KM3). Closed transition requires additional contactors for the transition resistors.',
   },
@@ -78,28 +108,38 @@ const quizQuestions = [
     id: 4,
     question: 'What is the main advantage of closed transition over open transition?',
     options: [
-      'Lower cost',
-      'Simpler wiring',
       'Eliminates current transient at changeover',
-      'Higher starting torque',
+      'They move from negative to positive terminal',
+      'According to manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specifications',
+      'When a building is built, sold, or rented',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Closed transition maintains supply connection during changeover using transition resistors, preventing the current transient that occurs with open transition.',
   },
   {
     id: 5,
     question: 'How many cables are required from the starter to the motor?',
-    options: ['Three', 'Four', 'Six', 'Nine'],
-    correctAnswer: 2,
+    options: [
+      'Four',
+      'Six',
+      'Nine',
+      'Three',
+    ],
+    correctAnswer: 1,
     explanation:
       'Six cables are needed because all six winding terminals (U1, V1, W1, U2, V2, W2) must be individually connected to the starter.',
   },
   {
     id: 6,
     question: 'What is the typical star-delta timer setting range?',
-    options: ['0.1 to 0.5 seconds', '3 to 10 seconds', '30 to 60 seconds', '5 to 10 minutes'],
-    correctAnswer: 1,
+    options: [
+      '0.1 to 0.5 seconds',
+      '30 to 60 seconds',
+      '3 to 10 seconds',
+      '5 to 10 minutes',
+    ],
+    correctAnswer: 2,
     explanation:
       'The typical range is 3 to 10 seconds, depending on motor size, load inertia and starting torque requirements.',
   },
@@ -107,12 +147,12 @@ const quizQuestions = [
     id: 7,
     question: 'What happens if the timer is set too short?',
     options: [
-      'Motor overheats',
+      'Eliminates current transient at changeover',
+      'Conveyors and crushers (high starting torque loads)',
+      'To prevent a short circuit across the supply',
       'High current transient and mechanical shock at transition',
-      'Motor runs slowly',
-      'Overload relay resets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'If the motor has not reached sufficient speed, the transition to delta causes a large current spike and mechanical shock to the drive coupling.',
   },
@@ -120,12 +160,12 @@ const quizQuestions = [
     id: 8,
     question: 'What type of loads are NOT suitable for star-delta starting?',
     options: [
-      'Centrifugal pumps',
-      'Fans',
       'Conveyors and crushers (high starting torque loads)',
-      'Compressors',
+      'Timer too short -- high transition current trips overload',
+      'High current transient and mechanical shock at transition',
+      'Eliminates current transient at changeover',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Loads requiring high starting torque cannot be star-delta started because the starting torque in star is only one-third of DOL. The motor may stall or fail to accelerate.',
   },
@@ -133,19 +173,24 @@ const quizQuestions = [
     id: 9,
     question: 'Why must the star and delta contactors be interlocked?',
     options: [
-      'To save energy',
-      'To reduce noise',
+      'Timer too short -- high transition current trips overload',
       'To prevent a short circuit across the supply',
-      'To improve power factor',
+      'Conveyors and crushers (high starting torque loads)',
+      'Eliminates current transient at changeover',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'If both contactors close simultaneously, a short circuit occurs across the supply. Both electrical and mechanical interlocking are required.',
   },
   {
     id: 10,
     question: 'What motor nameplate voltage rating is required for star-delta on a 400 V supply?',
-    options: ['230 V only', '400 V only', '400/690 V (delta/star)', '690 V only'],
+    options: [
+      '230 V only',
+      '400 V only',
+      '400/690 V (delta/star)',
+      '690 V only',
+    ],
     correctAnswer: 2,
     explanation:
       'The motor must be rated 400/690 V so that in star (for 690 V supply), each winding receives 400 V, and in delta (for 400 V supply), each winding receives 400 V.',
@@ -154,12 +199,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the most common reason a motor trips on star-delta transition?',
     options: [
-      'Supply failure',
+      'Eliminates current transient at changeover',
+      'Conveyors and crushers (high starting torque loads)',
+      'High current transient and mechanical shock at transition',
       'Timer too short -- high transition current trips overload',
-      'Motor earthing fault',
-      'Control transformer failure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'If the timer is too short, the motor has not reached adequate speed and the delta transition current is excessive, tripping the overload relay.',
   },
@@ -167,12 +212,12 @@ const quizQuestions = [
     id: 12,
     question: 'What technology is increasingly replacing star-delta starters?',
     options: [
-      'DOL starters',
-      'Autotransformer starters',
       'Soft starters and VSDs',
       'Resistance starters',
+      'DOL starters',
+      'Autotransformer starters',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Soft starters and variable speed drives offer smoother starting, adjustable parameters, fewer components, only three motor cables, and superior motor protection.',
   },

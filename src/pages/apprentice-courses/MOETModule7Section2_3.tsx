@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       "When replacing an electrical component, why is 'like-for-like' replacement the preferred approach?",
     options: [
-      'It is the cheapest option',
       'It ensures the replacement has the same rating, characteristics and compatibility as the original, maintaining system integrity and compliance',
-      'It is the quickest method',
-      'Like-for-like is not actually preferred — upgrades are always better',
+      'A description of the project, management structure, site rules, arrangements for monitoring compliance, emergency procedures, and specific measures for high-risk activities',
+      'Generate a known reference voltage so you can verify the voltage indicator is working — when no known live supply is conveniently available.',
+      'The sideways distortion of the tower frame caused by horizontal forces, which can lead to collapse if bracing is missing or inadequate',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Like-for-like replacement ensures the new component has identical ratings (voltage, current, breaking capacity), physical dimensions, and operational characteristics. This maintains the original design intent, complies with BS 7671, and avoids introducing compatibility issues. Any deviation requires a full re-assessment of the circuit.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 'torque-settings',
     question: 'Why are correct torque settings important when terminating conductors?',
     options: [
-      'They are not important — just tighten as much as possible',
+      'SDS delivers a dedicated pneumatic hammering mechanism independent of the rotation, providing much greater impact energy for drilling into masonry, concrete and brick',
+      'To provide the framework for waste management, contaminated land control and statutory nuisance, protecting the environment from pollution',
+      '2016 — for Health and Safety Offences, Corporate Manslaughter and Food Safety and Hygiene Offences. Significant impact on fine levels (much higher than pre-2016).',
       'Under-tightened connections cause high resistance joints leading to overheating; over-tightened connections damage conductors and terminals',
-      'Torque settings only apply to HV installations',
-      'They are only checked during initial installation, not repairs',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Incorrect torque is a leading cause of electrical fires. Under-torqued connections create high-resistance joints that overheat, while over-torqued connections can damage conductor strands, crack terminal blocks, or strip threads. BS 7671 Regulation 526.1 requires connections to be mechanically and electrically sound. Using a calibrated torque screwdriver demonstrates professionalism.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'After replacing a component, what must you do before returning the system to normal service?',
     options: [
-      'Immediately re-energise and walk away',
       'Carry out functional verification testing to confirm the repair is successful and the system operates correctly',
-      'Fill in the paperwork and leave',
-      'Ask the assessor if it looks correct',
+      'Maintain contact with the ladder using two hands and one foot, or two feet and one hand, at all times',
+      'EngTech (Level 3 quals + competence) &rarr; IEng (BEng or equivalent + competence) &rarr; CEng (MEng or equivalent + leadership evidence)',
+      'To verify alarms activate at correct setpoints and route to appropriate recipients',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Functional verification confirms the replacement component works correctly within the system. This includes checking the component operates as intended, measuring key parameters (voltage, current, resistance), testing protective devices, and confirming the fault symptom is resolved. Skipping verification is a common cause of callback failures.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     id: 'waste-disposal',
     question: 'How should replaced electrical components be disposed of?',
     options: [
-      'Leave them on site for the client to deal with',
-      'Put everything in general waste',
+      'Professional responsibility, technical competence, and the ability to communicate complex technical information to support decision-making',
+      'Yes — Regulation 12(4) requires the construction phase plan to be reviewed, updated and revised as necessary throughout the project',
+      'Place the pads in the normal position but ensure the pad is at least 8 cm (approximately 3 inches) from the device',
       'Segregate according to waste type — WEEE for electronic items, hazardous waste for items containing harmful substances, general waste for inert materials',
-      'Take them home as souvenirs',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The Waste Electrical and Electronic Equipment (WEEE) Regulations require proper segregation and disposal. Components containing hazardous substances (capacitors with PCBs, mercury switches, fluorescent tubes) must be treated as hazardous waste. Demonstrating awareness of waste responsibilities shows the assessor you understand environmental compliance.',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'Before removing a faulty component from a circuit, the first step is to:',
     options: [
-      'Disconnect the component immediately',
+      'Earth the screen at both ends with 360-degree termination',
       'Confirm safe isolation of the circuit and verify the circuit is dead',
-      'Order the replacement part',
-      'Take a photograph for social media',
+      'An open circuit — a break in the conductor somewhere in the circuit',
+      'To get input from those who understand the work and risks',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: 'When selecting a replacement MCB, which characteristics must match the original?',
     options: [
-      'Only the current rating needs to match',
+      'Verifying the contactor operates, the motor starts and runs correctly, overload protection functions, and control circuit operates as intended',
+      'Strip the correct length of insulation without nicking or damaging the conductor strands, using an appropriate stripping tool',
       'Current rating, type (B, C, or D), number of poles, breaking capacity, and physical compatibility with the board',
-      'Only the physical size needs to match',
-      'Any MCB from the same manufacturer will work',
+      'Report the additional faults to the appropriate person, document them, and only repair them if authorised and within your competence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'All key characteristics must match: the current rating (e.g., 32 A), the type curve (B for domestic, C for motor loads, D for high inrush), the number of poles, the breaking capacity (e.g., 6 kA), and the physical format compatible with the distribution board. Mismatching any parameter could compromise protection.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 3,
     question: 'A calibrated torque screwdriver is used to:',
     options: [
-      'Speed up the installation process',
+      'To communicate project status, achievements, issues, and forecasts to stakeholders',
+      'An \\\\\\\\\\\\\\\'alert\\\\\\\\\\\\\\\' signal (intermittent) for staff followed by an \\\\\\\\\\\\\\\'evacuate\\\\\\\\\\\\\\\' signal (continuous) for all occupants',
+      'The power to impose requirements on how construction works are carried out to control noise',
       'Apply the correct, manufacturer-specified tightening force to terminal connections',
-      'Test whether the circuit is live',
-      'Remove stuck screws',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A calibrated torque screwdriver applies a precise, repeatable torque to terminal connections as specified by the component manufacturer. This ensures connections are neither under-tightened (risking high-resistance joints) nor over-tightened (risking mechanical damage). It is a key quality tool for professional electrical work.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'When stripping cable insulation for termination, you should:',
     options: [
-      'Use a knife and cut towards your body for control',
       'Strip the correct length of insulation without nicking or damaging the conductor strands, using an appropriate stripping tool',
-      'Remove as much insulation as possible for a better connection',
-      'Use your teeth if no tool is available',
+      'Consult the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s data, verify the alternative meets or exceeds all ratings, and document the change',
+      'Correct installation, secure fixings, proper cable dressing, no damage to adjacent components, and compliance with regulations',
+      'Provide durable electrical continuity, adequate mechanical strength, and be accessible for inspection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Correct cable preparation is essential for reliable connections. Strip only the length specified by the terminal manufacturer, use a proper cable stripping tool, and avoid nicking or cutting conductor strands (which reduces the current-carrying capacity and creates a weak point). The assessor will closely inspect your cable preparation.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     question:
       'After replacing a contactor in a motor starter circuit, functional verification should include:',
     options: [
-      'Only checking the contactor pulls in',
+      'Current rating, type (B, C, or D), number of poles, breaking capacity, and physical compatibility with the board',
       'Verifying the contactor operates, the motor starts and runs correctly, overload protection functions, and control circuit operates as intended',
-      'Asking someone to listen for unusual noises',
-      'Checking only the main contacts',
+      'Provide durable electrical continuity, adequate mechanical strength, and be accessible for inspection',
+      'Strip the correct length of insulation without nicking or damaging the conductor strands, using an appropriate stripping tool',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 6,
     question: 'When a like-for-like replacement is not available, you should:',
     options: [
-      'Fit any component that physically fits',
+      "Reconnecting cables incorrectly can cause short circuits, equipment damage, incorrect operation, or safety hazards",
+      "Strip the correct length of insulation without nicking or damaging the conductor strands, using an appropriate stripping tool",
       "Consult the manufacturer's data, verify the alternative meets or exceeds all ratings, and document the change",
-      'Leave the circuit out of service permanently',
-      'Fit a lower-rated component temporarily',
+      "Report the additional faults to the appropriate person, document them, and only repair them if authorised and within your competence",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'If a direct replacement is unavailable, the alternative must meet or exceed all specifications: voltage rating, current rating, breaking capacity, environmental rating (IP), and operational characteristics. The substitution must be documented, and in some cases may require a minor works certificate or design verification. Never fit a component with lower ratings.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 7,
     question: 'Correct identification of cables during component replacement is important because:',
     options: [
-      'It makes the job look professional',
+      'Provide durable electrical continuity, adequate mechanical strength, and be accessible for inspection',
+      'Report the additional faults to the appropriate person, document them, and only repair them if authorised and within your competence',
+      'Consult the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s data, verify the alternative meets or exceeds all ratings, and document the change',
       'Reconnecting cables incorrectly can cause short circuits, equipment damage, incorrect operation, or safety hazards',
-      'The assessor will not notice incorrect connections',
-      'Cable identification is only important in new installations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Incorrect reconnection is a serious and common error. Swapped line and neutral connections, reversed motor phases, or cross-connected control circuits can cause equipment damage, safety hazards, or dangerous mis-operation. Label or photograph connections before disconnecting, and verify correct reconnection using circuit diagrams.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: 'The purpose of a visual inspection after component replacement is to check:',
     options: [
-      'Only that the component is the right colour',
       'Correct installation, secure fixings, proper cable dressing, no damage to adjacent components, and compliance with regulations',
-      'That the label is facing the right way',
-      'Visual inspection is not necessary after replacement',
+      'Reconnecting cables incorrectly can cause short circuits, equipment damage, incorrect operation, or safety hazards',
+      'Consult the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s data, verify the alternative meets or exceeds all ratings, and document the change',
+      'Verifying the contactor operates, the motor starts and runs correctly, overload protection functions, and control circuit operates as intended',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A thorough visual inspection after replacement confirms: the component is correctly installed and oriented, all fixings are secure, cables are properly dressed and supported, no damage has occurred to adjacent equipment, and the installation complies with BS 7671. This attention to detail is a distinction-level behaviour.',
   },
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'When replacing a fuse, the key matching criteria are:',
     options: [
-      'Only the physical size',
+      'Apply the correct, manufacturer-specified tightening force to terminal connections',
       'Current rating, voltage rating, type (HRC, rewireable, cartridge), breaking capacity, and category of duty',
-      'The colour of the fuse carrier',
-      'Any fuse that fits will work',
+      'Consult the manufacturer\\\\\\\\\\\\\\\'s data, verify the alternative meets or exceeds all ratings, and document the change',
+      'Strip the correct length of insulation without nicking or damaging the conductor strands, using an appropriate stripping tool',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,12 +189,12 @@ const quizQuestions = [
     id: 10,
     question: 'BS 7671 Regulation 526.1 requires that all electrical connections shall:',
     options: [
-      'Be made using any convenient method',
+      'Strip the correct length of insulation without nicking or damaging the conductor strands, using an appropriate stripping tool',
+      'Consult the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s data, verify the alternative meets or exceeds all ratings, and document the change',
       'Provide durable electrical continuity, adequate mechanical strength, and be accessible for inspection',
-      'Be soldered for maximum security',
-      'Be wrapped in insulation tape',
+      'Current rating, type (B, C, or D), number of poles, breaking capacity, and physical compatibility with the board',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Regulation 526.1 sets the standard for all electrical connections: they must provide reliable electrical continuity, have adequate mechanical strength for the application, and (generally) be accessible for inspection, testing and maintenance. This applies to every connection you make during component replacement.',
   },
@@ -203,12 +203,12 @@ const quizQuestions = [
     question:
       'During the EPA, demonstrating correct cable management after component replacement means:',
     options: [
-      'Leaving cables loose for easy future access',
+      'Consult the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s data, verify the alternative meets or exceeds all ratings, and document the change',
+      'Current rating, voltage rating, type (HRC, rewireable, cartridge), breaking capacity, and category of duty',
+      'Verifying the contactor operates, the motor starts and runs correctly, overload protection functions, and control circuit operates as intended',
       'Neatly dressing, routing and securing cables using appropriate supports, maintaining bending radii, and ensuring no strain on terminations',
-      'Bundling all cables together tightly with cable ties',
-      'Cable management is not assessed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Professional cable management shows competence and attention to detail. Cables should be neatly routed, properly supported, not subjected to sharp bends (maintaining minimum bending radii), free from strain at terminations, and segregated where required (e.g., power and data). This workmanship quality is assessed during the EPA.',
   },
@@ -217,12 +217,12 @@ const quizQuestions = [
     question:
       'If you discover additional faults during a component replacement, the correct action is to:',
     options: [
-      'Ignore them and complete only the original task',
       'Report the additional faults to the appropriate person, document them, and only repair them if authorised and within your competence',
-      'Fix everything you find without telling anyone',
-      'Leave the job incomplete',
+      'Current rating, voltage rating, type (HRC, rewireable, cartridge), breaking capacity, and category of duty',
+      'Consult the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s data, verify the alternative meets or exceeds all ratings, and document the change',
+      'Verifying the contactor operates, the motor starts and runs correctly, overload protection functions, and control circuit operates as intended',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reporting additional faults demonstrates professionalism and safety awareness. You should document what you have found, report to your supervisor or the authorised person, and only undertake additional repairs if authorised and within the scope of your competence and any permit to work. In the EPA, explaining this approach to the assessor demonstrates mature professional judgement.',
   },

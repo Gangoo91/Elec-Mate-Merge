@@ -43,12 +43,12 @@ const checks = [
     question:
       'You isolate a circuit at the consumer unit, lock off the breaker, voltage-test it dead and start work. Halfway through, the customer slips into the cupboard and toggles the breaker back on. Which statutory instrument did THEY breach?',
     options: [
-      'BS 7671 — they touched a circuit without being competent.',
       'The Electricity at Work Regulations 1989 — Reg 14 covers work on or near live conductors and Reg 13 covers the precautions for dead working. Anyone interfering with an isolation in place breaches EAWR, not just the electrician.',
-      'Nothing — the regs only bind the installer.',
-      'The Building Regulations — interference with electrical work is a Part P offence.',
+      'Disconnecting the installation main earthing conductor at the MET, then loop-testing between supply L and the disconnected MET earth — with main switch OFF and circuits isolated for safety',
+      'To check that the arrangements set out in the construction phase plan are being implemented, that risks are being controlled, and to identify areas for improvement',
+      'It is made in accordance with Regulation 526.3 — for example, a compression joint to a manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions, a brazed/welded joint, or a connection forming part of equipment that complies with its product standard',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "EAWR binds 'every employer, employee and self-employed person'. That captures the customer once they touch the lock-off. In practice you flag it to the supervisor, retest dead, and document it — but legally the customer has put themselves on the wrong side of EAWR Reg 13/14, not you.",
   },
@@ -57,12 +57,12 @@ const checks = [
     question:
       'A customer rings up — incoming voltage at the head is reading 198 V on the multimeter. They want you to "fix it". What statutory framework actually governs this and whose problem is it?',
     options: [
-      'BS 7671 Appendix 12 — the electrician needs to upsize the tails.',
+      'Smoke and toxic gas emission during fire must be minimised — typically in public buildings, confined spaces and areas with high occupancy',
+      'Document the programme change and its impact, notify the main contractor in writing of any additional costs or delays, and follow up with a formal variation or claim if applicable',
+      'Physical fitness, medical conditions (e.g. vertigo, epilepsy), medication side effects, fatigue and the influence of alcohol or drugs',
       'ESQCR 2002 — the supply is meant to sit at 230 V −6% / +10% (216–253 V). 198 V is below the legal floor, so this is a DNO obligation under ESQCR, not an installer fix.',
-      "EAWR Reg 4 — it's a dead-working issue.",
-      'Nothing — voltage tolerance is a guideline, not a regulation.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "ESQCR is the supply-side statute. It binds the Distribution Network Operator (DNO), not the installer. Anything below 216 V at the cut-out is the DNO's compliance problem — you raise it with the customer, advise them to call the DNO (or call it in yourself if you've got a relationship), and don't start hacking around in their meter.",
   },
@@ -71,10 +71,10 @@ const checks = [
     question:
       "You're swapping a damaged socket-outlet in a domestic kitchen for a like-for-like replacement. Does this need notifying under Building Regs Part P?",
     options: [
-      'Yes — anything in a kitchen is notifiable.',
+      'Compile a proportionate file including the asbestos management survey/R&D survey data, as-built structural drawings showing concealed steelwork, details of the unusual pipework and heating system, and a register of residual risks',
       'No — replacements, repairs and maintenance of existing accessories on existing circuits are NOT notifiable work under Part P, even in a kitchen. Notifiable work is new circuits and consumer unit replacements (and additions/alterations in special locations under the older interpretation).',
-      'Yes — any kitchen work goes through the Local Authority Building Control regardless.',
-      "Only if it's an RCD-protected circuit.",
+      'Compressed into the EIC trio + customer handover pack: design notes (Zs calculations, RCBO selection, earthing review) typically held in the contractor file but not always issued separately to the customer; EIC + Schedules + manuals consolidated into the customer pack; verbal walk-through handles the operational handover.',
+      'Calibrated to a traceable standard, within current calibration date, and appropriate to the test (continuity instrument with output 200 mA at no-load voltage between 4 V and 24 V per Reg 643.2.1, IR tester at the correct test voltage per Table 64, RCD tester with appropriate test current and waveform).',
     ],
     correctIndex: 1,
     explanation:
@@ -90,12 +90,12 @@ const quizQuestions = [
     question:
       "A self-employed sub-contractor working on a commercial fit-out gets injured because his employer (the main contractor) didn't supply the agreed RCD-protected supply. Under HASAWA, who carries duties here?",
     options: [
-      "Only the main contractor — the sub is his responsibility.",
-      "Only the sub — he's self-employed.",
+      "The comparative health and safety risks of each method — bolted connections avoid hot works and associated fire and fume risks, while welded connections may require additional fire precautions and ventilation",
       "Both — HASAWA s.2 puts duties on employers towards employees, s.3 puts duties on employers towards non-employees affected by their work, and s.7 puts duties on every employee/self-employed person to take reasonable care for themselves and others.",
-      "Neither — HASAWA only covers the principal contractor on a CDM site.",
+      "20-30% above the calculated maximum demand of the loads it must supply, to allow for motor starting inrush, future load growth, power factor effects and the derating effect of harmonics",
+      "Blue — the standard DIN 46228-4 colour code for bootlace ferrules: red 1.0 mm², grey 0.75 mm², black 1.5 mm², blue 2.5 mm², grey 4.0 mm² (some makers use orange or grey here), yellow 6.0 mm², red 10.0 mm². For 2.5 mm² stranded, blue is the universal answer.",
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "HASAWA is layered. The main contractor owes duties to the sub under s.3 (people not in his employment but affected by his undertaking). The sub owes duties under s.7 (himself and others). Both can be prosecuted independently — and very often are, particularly post-incident.",
   },
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       "Which statutory instrument explicitly requires that 'no person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger or, where appropriate, injury, unless he possesses such knowledge or experience'?",
     options: [
-      'HASAWA s.2',
+      'Polarity testing with appropriate test instruments',
+      'XLPE often allows higher operating temperature',
       'EAWR Reg 16 — the competence regulation',
-      'ESQCR Reg 22',
-      'Part P P1',
+      'Loud machinery on a building site',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "EAWR Reg 16. This is the legal definition of 'competence' for electrical work in Great Britain. The HSE uses this regulation to prosecute unqualified or under-supervised work. Your apprentice card, your scheme membership, your supervisor's sign-off — all of it exists to demonstrate compliance with EAWR Reg 16.",
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     question:
       "A homeowner hires a non-registered handyman to install a new shower circuit and consumer unit in a domestic property. The work is competent and safe. Have any statutory regs been breached?",
     options: [
-      "No — if the work is safe, nothing has been broken.",
+      "Auto-disconnection occurs in the same disconnection times as the equivalent TN system (Table 41.1) — once a second fault establishes a fault loop through the protective conductor, fault current flows like a TN line-to-earth fault and the protective device disconnects",
+      "Re-make the junction box terminations correctly so line continues as line and neutral as neutral throughout. Document the corrected fault. Re-test polarity to confirm. Never compensate for one error by introducing another.",
+      "Higher-risk activities (live working, hot works, work in confined spaces, work near other live services) on commercial and industrial sites — issued by the responsible person with named conditions and time limits.",
       "Yes — Building Regulations Part P. New circuits and CU replacements in dwellings are notifiable. The handyman should have either been on a competent person scheme (self-certifying) or notified Local Authority Building Control before starting. Safe work doesn't excuse the notification breach.",
-      "Yes — only EAWR.",
-      "Yes — only BS 7671.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Part P is a separate notification offence from the technical safety of the work. Even a perfect installation is unlawful if it's a notifiable category and wasn't notified. The Local Authority can require it to be ripped out, made compliant by a registered person, and re-certificated — at the homeowner's cost.",
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     question:
       "EAWR Reg 4(3) requires that 'every work activity, including operation, use and maintenance' of an electrical system shall be carried out in such a manner as not to give rise to danger. What practical activity does this directly mandate?",
     options: [
-      "Only the install itself.",
       "A safe system of work — including risk assessment, isolation procedure, voltage proving (dead-test), lock-off, and a written method statement where appropriate. Reg 4(3) is the legal hook for everything you'd recognise as 'site safety procedure'.",
-      "Only the design.",
-      "Only the inspection and testing at the end.",
+      "Employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s assessment of the first-aid provision needed — kit, facilities, trained persons. Considers nature of work, hazards, employee numbers, accident history, location, vulnerable persons, distance to medical care. Documented; reviewed periodically and after changes.",
+      "Chapter 57 (Stationary Secondary Batteries) — Section 570 onwards covers scope, battery and PCE selection, energy management systems, isolation, fire and ventilation, labelling and warning notices.",
+      "Lower electricity bills (offset import + earn SEG on export), reduced carbon footprint, partial grid-independence (with battery), a hedge against rising electricity prices, often a positive impact on house value, and government incentive schemes that vary by year. Real benefits — but not “free electricity”.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Reg 4(3) is the everyday-work duty. It covers the whole lifecycle — operation, use, maintenance — not just the original install. That's why your safe-isolation procedure, your method statements and your daily site briefings are all legally framed by this single regulation.",
   },
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       "Under ESQCR, what is the legal nominal supply voltage and tolerance at the consumer's cut-out for a single-phase domestic supply?",
     options: [
-      "240 V ±10%",
+      "Sustained overcurrent or poor terminations",
       "230 V −6% to +10% (so 216 V to 253 V)",
-      "230 V ±5%",
-      "240 V −10% to +6%",
+      "EMI shielding and separation from power cables",
+      "To enforce fire safety regulations",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       "An electrician is prosecuted after an electrocution caused by a missing earth. Which statutory instrument is most likely to be the primary charge and which body would bring it?",
     options: [
-      "Building Regs Part P — Trading Standards.",
+      "To describe the safe system of work, step by step, for the specific tower operation including assembly, use, inspection and dismantling",
+      "The emotional residue of exposure to others' traumatic stories, which can lead to changes in the MHFA's own worldview, beliefs, and psychological functioning",
       "EAWR (almost always Reg 4, sometimes Reg 14 or 16) — brought by the Health and Safety Executive (HSE), or in a domestic context the Local Authority. HASAWA s.7 may be charged in parallel.",
-      "ESQCR — brought by Ofgem.",
-      "BS 7671 — brought by the IET.",
+      "Neatly dressed conductors, correct bending radii, no strain on terminals, clear labelling, and segregation of power and control circuits where required",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "EAWR is the workhorse regulation for electrical incident prosecutions. The HSE has primary enforcement on industrial/commercial sites; the Local Authority enforces in lower-risk premises (offices, shops, domestic-adjacent). HASAWA s.7 personal-duty charges often run alongside EAWR.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       "Maximum penalties on indictment (Crown Court) for a serious HASAWA / EAWR breach include:",
     options: [
-      "A £200 fixed penalty.",
+      "RCD ≤ 30 mA additional protection on the circuit OR earthed mechanical protection (e.g. metal capping continuous from accessory to safe zone) OR cable enclosed in earthed metallic conduit / trunking.",
+      "Refrigerant must be recovered by an F-Gas-certified person and sent for recycling/destruction; the equipment is then dealt with under WEEE Regulations through an authorised treatment facility",
+      "It contains gypsum which, when landfilled with biodegradable waste, can produce toxic hydrogen sulphide gas, so it must be segregated and sent to specialist facilities",
       "Unlimited fine and/or up to 2 years imprisonment for individuals; unlimited fine for companies. Sentencing follows the Definitive Guideline (HSE Sentencing Council, 2016) and turns on culpability, harm and turnover.",
-      "Maximum £5,000 fine.",
-      "A written warning only.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Unlimited fines, 2 years' custody for individuals on indictment. Companies have been hit with fines well into seven figures under the Sentencing Council guideline — culpability and turnover drive the number. This is why personal liability under HASAWA s.7 should genuinely focus the mind.",
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       "BS 7671 is referenced inside the Memorandum of Guidance to EAWR (HSR25). What does that referencing actually do legally?",
     options: [
-      "It makes BS 7671 statute by reference.",
       "It establishes BS 7671 as a means of demonstrating compliance with EAWR — meaning a court will treat following BS 7671 as strong evidence of having met the EAWR duty, and ignoring it as strong evidence of not having met it. BS 7671 itself remains non-statutory.",
-      "It overrides BS 7671 with EAWR.",
-      "It withdraws BS 7671 from legal relevance.",
+      "The designer must adopt the safer alternative unless the cost is grossly disproportionate to the risk reduction achieved — a 15% cost increase for eliminating a moderate risk is unlikely to be grossly disproportionate",
+      "Every point on every circuit. Conductors can be crossed at intermediate junctions, back-boxes, junction boxes — verifying only at the CU and the first accessory misses errors deeper in the circuit. Test at every accessory, every JB, every termination point.",
+      "Reviewing the job scope, checking availability of parts and materials, ensuring test equipment is calibrated and charged, obtaining necessary permits, informing production of the work window, and briefing any team members involved",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "This is the bridge between Sub 1.1 (statutory) and Sub 1.2 (non-statutory). HSR25 lists BS 7671 as a way to comply with EAWR Reg 4. So while BS 7671 is technically just a British Standard, ignoring it puts you on the wrong side of the statutory regulation that DOES carry criminal sanctions.",
   },

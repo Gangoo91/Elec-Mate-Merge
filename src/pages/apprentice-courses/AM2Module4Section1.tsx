@@ -54,20 +54,25 @@ const AM2Module4Section1 = () => {
       question:
         'What is the first electrical test that must be carried out before any live testing?',
       options: [
-        'Insulation resistance',
         'Continuity of protective conductors',
-        'Earth fault loop impedance',
-        'RCD testing',
+        'Grid connection requirements',
+        'That settings match designer\\\\\\\\\\\\\\\'s requirements',
+        'Gradual voltage increase to test voltage',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Continuity of protective conductors must be tested first to ensure safety before any live testing is undertaken.',
     },
     {
       id: 'insulation-voltage',
       question: 'At what voltage should insulation resistance be tested for circuits up to 500V?',
-      options: ['250V DC', '500V DC', '1000V DC', '100V DC'],
-      correctIndex: 1,
+      options: [
+        '500V DC',
+        '1000V DC',
+        '250V DC',
+        '100V DC',
+      ],
+      correctIndex: 0,
       explanation:
         'BS 7671 requires insulation resistance testing at 500V DC for circuits operating up to 500V.',
     },
@@ -75,12 +80,12 @@ const AM2Module4Section1 = () => {
       id: 'live-testing-rule',
       question: 'When can live testing commence during AM2 assessment?',
       options: [
-        'Immediately after isolation verification',
+        'Central battery systems require significantly more cable',
+        'Denial → Anger → Bargaining → Depression → Acceptance',
+        'An unlimited fine and/or up to two years\\\\\\\\\\\\\\\' imprisonment',
         'Only after all dead tests are complete and satisfactory',
-        'Any time during the assessment',
-        'Before polarity testing',
       ],
-      correctIndex: 1,
+      correctIndex: 3,
       explanation:
         'Live testing must ONLY commence after all dead tests are complete and satisfactory. This is critical for safety and assessment success.',
     },
@@ -90,7 +95,12 @@ const AM2Module4Section1 = () => {
     {
       id: 1,
       question: 'What is the minimum acceptable insulation resistance value for most circuits?',
-      options: ['0.5 MΩ', '1.0 MΩ', '2.0 MΩ', '5.0 MΩ'],
+      options: [
+        '0.5 MΩ',
+        '1.0 MΩ',
+        '2.0 MΩ',
+        '5.0 MΩ',
+      ],
       correctAnswer: 1,
       explanation:
         'The minimum insulation resistance is 1.0 MΩ for most installations, though some specific circuits may require higher values.',
@@ -99,10 +109,10 @@ const AM2Module4Section1 = () => {
       id: 2,
       question: 'During AM2 assessment, which aspect is most critical for assessor evaluation?',
       options: [
-        'Speed of testing',
-        'Expensive equipment use',
+        'At planned intervals (typically annually minimum)',
+        'Selecting specific data to focus on',
         'Following GN3 sequence methodically and safely',
-        'Perfect numerical results',
+        'A fixed ratio between two process variables',
       ],
       correctAnswer: 2,
       explanation:
@@ -112,12 +122,12 @@ const AM2Module4Section1 = () => {
       id: 3,
       question: 'What happens if you perform live tests before completing dead tests?',
       options: [
-        'Minor mark deduction',
-        'Warning from assessor',
+        'All conditions must be true',
+        'The site manager and responsible electricians',
+        'Ensure accurate measurements',
         'Automatic failure for unsafe practice',
-        'No consequence',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Performing live tests before completing dead tests is considered unsafe practice and results in automatic failure.',
     },
@@ -125,12 +135,12 @@ const AM2Module4Section1 = () => {
       id: 4,
       question: 'Which test must be performed to verify ring circuit integrity?',
       options: [
-        'Earth fault loop impedance',
         'Continuity of ring final circuit conductors',
-        'RCD testing',
-        'Voltage drop',
+        'Conformity with relevant health and safety standards',
+        'Within 600mm of meter, consumer side',
+        'Clear, accurate, complete, and timely information',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Continuity of ring final circuit conductors verifies the ring is complete and identifies any breaks or parallel paths.',
     },
@@ -138,10 +148,10 @@ const AM2Module4Section1 = () => {
       id: 5,
       question: 'What is the correct sequence for insulation resistance testing?',
       options: [
-        'Test all conductors to earth first',
+        'It keeps the header row visible while scrolling through data below',
         'Test line to neutral, then line to earth, then neutral to earth',
-        'Test randomly',
-        'Test only line to earth',
+        'It helps prevent recurrence and may identify systemic issues',
+        'Preserving the fire scene and any evidence for investigation',
       ],
       correctAnswer: 1,
       explanation:
@@ -151,8 +161,13 @@ const AM2Module4Section1 = () => {
       id: 6,
       question:
         'What is the maximum permitted Zs for a 32A Type B MCB at 230V under BS 7671:2018+A4:2026 Table 41.3?',
-      options: ['0.72Ω', '1.37Ω', '1.44Ω (pre-A4 figure)', '2.87Ω'],
-      correctAnswer: 1,
+      options: [
+        '0.72Ω',
+        '1.44Ω (pre-A4 figure)',
+        '1.37Ω',
+        '2.87Ω',
+      ],
+      correctAnswer: 2,
       explanation:
         'A4:2026 Table 41.3 gives 1.37Ω for B32 at 230V — the older 1.44Ω figure was the pre-A4 tabulated value before Cmin = 0.95 was formally applied to U0. Use 1.37Ω on AM2 day.',
     },
@@ -161,19 +176,24 @@ const AM2Module4Section1 = () => {
       question: 'At what test current should an RCD trip within 300ms?',
       options: [
         '50% of rated current',
-        '100% of rated current',
-        '150% of rated current',
         '500% of rated current',
+        '150% of rated current',
+        '100% of rated current',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'RCD must trip within 300ms at 100% of its rated current (IΔn). At 50% it should not trip.',
     },
     {
       id: 8,
       question: 'Which test voltage is used for insulation resistance on 230V circuits?',
-      options: ['250V DC', '500V DC', '1000V DC', '230V AC'],
-      correctAnswer: 1,
+      options: [
+        '500V DC',
+        '1000V DC',
+        '250V DC',
+        '230V AC',
+      ],
+      correctAnswer: 0,
       explanation:
         'BS 7671 requires 500V DC test voltage for circuits with nominal voltage up to 500V.',
     },
@@ -181,10 +201,10 @@ const AM2Module4Section1 = () => {
       id: 9,
       question: 'What must be disconnected before insulation resistance testing?',
       options: [
-        'Only fluorescent lamps',
+        'Current sources in parallel simply add algebraically',
         'Electronic equipment and surge protective devices',
-        'All switches',
-        'Nothing needs disconnecting',
+        'Electrical installations in buildings and their surrounds',
+        'Competence varies with work complexity',
       ],
       correctAnswer: 1,
       explanation:
@@ -193,8 +213,13 @@ const AM2Module4Section1 = () => {
     {
       id: 10,
       question: 'What is the acceptable voltage range for 230V single-phase supply?',
-      options: ['220V - 240V', '207V - 253V', '200V - 250V', '225V - 235V'],
-      correctAnswer: 1,
+      options: [
+        '220V - 240V',
+        '225V - 235V',
+        '207V - 253V',
+        '200V - 250V',
+      ],
+      correctAnswer: 2,
       explanation: 'BS 7671 accepts ±10% of nominal voltage: 230V ±10% = 207V to 253V range.',
     },
   ];

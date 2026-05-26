@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the sequence of operation in electrical circuits?',
     options: [
-      'Random component activation',
+      'Record the failure, rectify the issue, and reschedule the specific test',
       'The order in which current flows and components function',
-      'Circuit protection timing',
-      'Installation procedure',
+      'High circuit impedance that may affect device operation',
+      'Advance payments towards next year\\\\\\\'s tax bill based on the previous year',
     ],
     correctIndex: 1,
     explanation:
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'In a simple lighting circuit, what happens if the neutral conductor becomes loose?',
     options: [
-      'Light works normally',
+      'Verified against designer\\\\\\\'s specification',
+      'Roger Fisher, William Ury and Bruce Patton',
       'Circuit will not function as intended',
-      'Only efficiency is affected',
-      'Voltage increases',
+      '230V (equal sources in parallel)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A loose neutral breaks the sequence of operation, preventing the circuit from functioning correctly as current cannot return properly.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why is understanding sequence of operation important for fault finding?',
     options: [
+      'It improves circuit efficiency',
+      'It reduces installation time',
       "It's required by regulations",
       'It helps identify where the sequence breaks down',
-      'It reduces installation time',
-      'It improves circuit efficiency',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Understanding the sequence helps electricians logically identify where faults have interrupted normal operation.',
   },
@@ -59,10 +59,10 @@ const Module7Section3_2 = () => {
       id: 1,
       question: 'What does sequence of operation mean in electrical circuits?',
       options: [
-        'The installation order of components',
+        'Manual handling risks, storage requirements, and access routes',
         'The order in which current flows and devices interact',
-        'The testing procedure for circuits',
-        'The maintenance schedule',
+        'To reduce reflections by eliminating air gaps',
+        '50 percent reduction (3-4 x FLC instead of 6-8 x).',
       ],
       correctAnswer: 1,
       explanation:
@@ -72,12 +72,12 @@ const Module7Section3_2 = () => {
       id: 2,
       question: 'Why is sequence of operation important for fault finding?',
       options: [
-        'It reduces installation costs',
+        'Minimise and batch shallow work; protect time for deep work',
+        'Test location, values, device ratings, and compliance status',
         'It helps electricians logically identify where faults occur',
-        'It improves circuit efficiency',
-        "It's required by BS 7671",
+        'Clear speech, appropriate technical level, and confirmation of understanding',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Understanding the sequence helps electricians trace where the normal operation breaks down, making fault finding logical rather than guesswork.',
     },
@@ -85,12 +85,12 @@ const Module7Section3_2 = () => {
       id: 3,
       question: 'In a simple lighting circuit, what is the basic sequence of operation?',
       options: [
-        'Switch → Lamp → Distribution Board → Neutral',
+        'Operating the system step by step through its normal sequence and observing where it fails',
+        'When work is performed by registered competent person scheme members',
+        'DC provides stable readings without capacitive effects',
         'Distribution Board → Protective Device → Switch → Lamp → Neutral Return',
-        'Lamp → Switch → Distribution Board',
-        'Neutral → Lamp → Switch → Distribution Board',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Current flows from the distribution board, through the protective device, to the switch, then to the lamp, and returns via the neutral conductor.',
     },
@@ -98,12 +98,12 @@ const Module7Section3_2 = () => {
       id: 4,
       question: 'What happens if the neutral conductor is loose in this sequence?',
       options: [
-        'The circuit works normally',
         'The circuit will not function as current cannot return properly',
-        'Only voltage is affected',
-        'The lamp brightness increases',
+        'Productivity, profitability, and customer satisfaction',
+        'Fire performance classification and CE marking',
+        'An event that had the potential to cause injury or damage but did not',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'A loose neutral breaks the return path, preventing the circuit from completing and functioning properly.',
     },
@@ -111,10 +111,10 @@ const Module7Section3_2 = () => {
       id: 5,
       question: 'How can an electrician use sequence of operation to locate a fault?',
       options: [
-        'By replacing all components',
+        'Daylight, thermal comfort, and energy credits',
         'By mentally tracing the current path and testing each stage',
-        'By increasing circuit protection',
-        'By resetting all devices',
+        'The likelihood that a hazard will cause harm and the severity of that harm',
+        'Quantity, quality, and compliance with specifications',
       ],
       correctAnswer: 1,
       explanation:
@@ -125,12 +125,12 @@ const Module7Section3_2 = () => {
       question:
         'True or False: Sequence of operation is only relevant in simple domestic circuits.',
       options: [
-        'True - only for domestic circuits',
+        'Want to support colleagues and negotiate on industry issues',
+        'Online monitoring in the PLC programming software to view programme execution in real time',
         'False - applies to all circuits from simple to complex industrial systems',
-        'True - only for lighting circuits',
-        'False - only for industrial circuits',
+        'Full conversion to electrical, retiming, and retransmission as optical',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Sequence of operation applies to all electrical circuits, from simple domestic lighting to complex industrial control systems.',
     },
@@ -138,12 +138,12 @@ const Module7Section3_2 = () => {
       id: 7,
       question: 'Give one example of sequence of operation in an industrial circuit.',
       options: [
-        'Simple on/off switch',
+        'Removed safely from the platform and lowered to the ground',
+        'PM2.5 particles are smaller (2.5 micrometres or less) and can penetrate deeper into the lungs than PM10',
+        'A brief verbal review of the method statement at the work location before starting',
         'Motor control with safety interlocks, overload protection, and start/stop circuits',
-        'Basic lighting circuit',
-        'Single socket outlet',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Industrial motor control involves a complex sequence including safety interlocks, overload protection, and control circuits that must operate in order.',
     },
@@ -151,12 +151,12 @@ const Module7Section3_2 = () => {
       id: 8,
       question: 'What common mistake can occur if sequence of operation is not considered?',
       options: [
-        'Installing components incorrectly',
         'Replacing working components instead of finding the real fault',
-        'Using wrong cable sizes',
-        'Poor documentation',
+        'Specific reference conditions including 30°C ambient',
+        'Coefficient of Performance - ratio of heat output to electrical input',
+        'Whether the aid matches the specific task requirements and load characteristics',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Without understanding the sequence, electricians may replace components that are actually working correctly instead of finding where the sequence is broken.',
     },
@@ -164,10 +164,10 @@ const Module7Section3_2 = () => {
       id: 9,
       question: 'In the real-world example, what fault caused the light not to work?',
       options: [
-        'Faulty lamp holder',
+        'Connecting parts to same potential',
         'Loose line conductor at the switch',
-        'Blown lamp',
-        'Faulty distribution board',
+        'Health and Safety Executive (HSE)',
+        'Phase and neutral connections are reversed',
       ],
       correctAnswer: 1,
       explanation:
@@ -178,12 +178,12 @@ const Module7Section3_2 = () => {
       question:
         'Why did understanding the sequence of operation save replacing the motor in the factory example?',
       options: [
-        'The motor was expensive',
+        'Adequate illumination reduces fear, maintains orientation, and enables rational evacuation',
+        'Power that oscillates between source and load without doing useful work',
         'Testing the sequence revealed the overload relay had tripped, not motor failure',
-        'The motor was new',
-        'The sequence was documented',
+        'Zinc or copper fumes from welding, brazing, or galvanised steel cutting',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'By testing each stage of the control sequence, the electrician found the overload relay had tripped, avoiding unnecessary motor replacement.',
     },

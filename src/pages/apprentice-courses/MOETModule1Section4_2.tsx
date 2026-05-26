@@ -16,11 +16,11 @@ const quickCheckQuestions = [
       'Regulation 4(1) of the EAWR 1989 requires that all electrical systems shall at all times be of such construction as to prevent danger. What type of duty is this?',
     options: [
       "A duty qualified by 'so far as is reasonably practicable'",
-      'An absolute duty — no SFARP qualification',
-      'An advisory duty — compliance is recommended but not required',
       'A duty that only applies to new installations',
+      'An advisory duty — compliance is recommended but not required',
+      'An absolute duty — no SFARP qualification',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Regulation 4(1) is an absolute duty — it requires electrical systems to be constructed to prevent danger at all times, with no SFARP qualification. This means the duty holder must comply regardless of cost. Regulation 4(2) uses similar absolute language for maintenance, while 4(3) applies SFARP to systems of work.',
   },
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'Under Regulation 12 of the EAWR 1989, before working on electrical equipment, it must be:',
     options: [
-      'Tested using a multimeter only',
+      'Extend lamp life by warming filaments before ignition',
       'Made dead and disconnected from every source of electrical energy',
-      'Covered with insulating material',
-      'Labelled with a warning sign',
+      'Overheated or burnt insulation, possibly from an overloaded coil or cable',
+      'At least 10mm² copper or 16mm² aluminium minimum',
     ],
     correctIndex: 1,
     explanation:
@@ -43,9 +43,9 @@ const quickCheckQuestions = [
     question:
       'Under Regulation 14, live working is permitted ONLY when which three conditions are ALL met?',
     options: [
-      'The client approves, PPE is worn, and the work is supervised',
-      'It is unreasonable to make it dead, it is reasonable to work live, and suitable precautions are taken',
       'A risk assessment exists, the worker is qualified, and a permit is issued',
+      'It is unreasonable to make it dead, it is reasonable to work live, and suitable precautions are taken',
+      'The client approves, PPE is worn, and the work is supervised',
       'The voltage is below 230 V, barriers are in place, and two people are present',
     ],
     correctIndex: 1,
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     question:
       'Regulation 16 of the EAWR 1989 requires that no person shall engage in work involving electrical danger unless they:',
     options: [
-      'Hold a City & Guilds qualification',
-      'Have completed an apprenticeship',
       'Possess adequate technical knowledge or experience, or are under appropriate supervision',
-      'Are members of a professional body',
+      'Do not use the tower; report the issue so that the outrigger can be adjusted to make firm contact with the ground',
+      'Power that oscillates between source and load without doing useful work',
+      'Testing at the midpoint of a system to determine which half contains the fault, then repeating',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Regulation 16 does not specify particular qualifications. It requires 'such technical knowledge or experience as is necessary to prevent danger' — or appropriate supervision. This allows competence to be demonstrated through a combination of formal training, practical experience, and knowledge of the specific installation.",
   },
@@ -74,10 +74,10 @@ const quizQuestions = [
     question:
       'The Electricity at Work Regulations 1989 were made under powers granted by which Act?',
     options: [
-      'The Factories Act 1961',
+      'Avoid manual handling altogether wherever possible',
       'The Health and Safety at Work Act 1974 (Section 15)',
-      'The Building Act 1984',
-      'The Electricity Act 1989',
+      'Loss of RCD protection for affected circuits',
+      'Every 10 years, OR on change of occupancy — whichever is sooner.',
     ],
     correctAnswer: 1,
     explanation:
@@ -86,7 +86,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'How many regulations are contained in the Electricity at Work Regulations 1989?',
-    options: ['16 regulations', '25 regulations', '33 regulations', '47 regulations'],
+    options: [
+      '47 regulations',
+      '16 regulations',
+      '33 regulations',
+      '25 regulations',
+    ],
     correctAnswer: 2,
     explanation:
       'The EAWR 1989 contain 33 regulations. Regulations 1–3 cover citation, interpretation, and persons on whom duties are imposed. Regulations 4–16 contain the substantive safety requirements. Regulations 17–28 were revoked (they related to mines). Regulations 29–33 contain the defence of due diligence and other miscellaneous provisions.',
@@ -96,12 +101,12 @@ const quizQuestions = [
     question:
       'Which of the following EAWR regulations imposes an absolute duty (no SFARP qualification)?',
     options: [
-      'Regulation 4(3) — work on or near live conductors',
-      'Regulation 4(1) — construction of systems to prevent danger',
       'Regulation 4(4) — protective equipment',
+      'Regulation 4(3) — work on or near live conductors',
       'Regulation 3 — persons on whom duties are imposed',
+      'Regulation 4(1) — construction of systems to prevent danger',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Regulation 4(1) states 'All systems shall at all times be of such construction as to prevent, so far as reasonably practicable, danger.' Actually — note the careful wording: Regulations 4(1) does contain SFARP. The truly absolute regulations are those that use 'shall' without any practicability qualifier, such as Regulation 12 and 13. However, among the options listed, Reg 4(1) is closest since it requires systems to prevent danger.",
   },
@@ -109,12 +114,12 @@ const quizQuestions = [
     id: 4,
     question: 'Regulation 3 of the EAWR 1989 places duties on:',
     options: [
-      'Employers only',
       'Employers, self-employed persons, and employees',
-      'The HSE only',
-      'Building owners only',
+      'A ‘quick’ accessory swap that ‘only takes two minutes’',
+      'They increase the chance of accidental drilling',
+      '1 unit on the drawing equals 50 units in real life',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 3 imposes duties on employers (to comply with regulations relating to matters within their control), self-employed persons (so far as they relate to matters within their control), and employees (to co-operate with their employer and comply with regulations relating to matters within their control).',
   },
@@ -123,10 +128,10 @@ const quizQuestions = [
     question:
       'Under Regulation 13, which precautions must be taken before work on equipment that has been made dead?',
     options: [
-      'A visual inspection is sufficient',
+      'BS 7671 provides one means of meeting the requirements of the EAWR, but is not itself law',
       'Adequate precautions including isolation, securing the isolation, and proving dead',
-      'Only locking off the isolator',
-      'Wearing rubber gloves',
+      'Regulation 4(1) — construction of systems to prevent danger',
+      'They took all reasonable steps and exercised all due diligence to avoid committing the offence',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,12 +141,12 @@ const quizQuestions = [
     id: 6,
     question: 'Regulation 15 of the EAWR 1989 requires that:',
     options: [
-      'All electrical work be documented',
+      'Kept in such condition that danger is prevented — including regular inspection, testing and repair as necessary',
+      'They took all reasonable steps and exercised all due diligence to avoid committing the offence',
       'Adequate working space, access, and lighting be provided for work on electrical equipment',
-      'All circuits be protected by RCDs',
-      'Annual inspections be carried out',
+      'BS 7671 provides one means of meeting the requirements of the EAWR, but is not itself law',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Regulation 15 requires adequate working space, adequate means of access, and adequate lighting at every electrical equipment on which or near which work is being done in circumstances that may give rise to danger. Cramped switchrooms with poor lighting are a common breach of Regulation 15.',
   },
@@ -149,12 +154,12 @@ const quizQuestions = [
     id: 7,
     question: "The 'defence of due diligence' under Regulation 29 allows a person to prove that:",
     options: [
-      'They had insurance cover for the work',
+      'Adequate working space, access, and lighting be provided for work on electrical equipment',
+      'Kept in such condition that danger is prevented — including regular inspection, testing and repair as necessary',
+      'BS 7671 provides one means of meeting the requirements of the EAWR, but is not itself law',
       'They took all reasonable steps and exercised all due diligence to avoid committing the offence',
-      "They were following their employer's instructions",
-      'The equipment was less than five years old',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 29 provides a defence for regulations that impose absolute duties. A person charged with an offence under such a regulation can prove that they took all reasonable steps and exercised all due diligence to avoid committing the offence. The burden of proof lies with the defendant.',
   },
@@ -163,12 +168,12 @@ const quizQuestions = [
     question:
       "Regulation 4(2) states that electrical systems shall be maintained so as to prevent danger. The term 'maintained' in this context means:",
     options: [
-      'Repainted every five years',
       'Kept in such condition that danger is prevented — including regular inspection, testing and repair as necessary',
-      'Recorded on an asset management database',
-      'Covered by a maintenance contract',
+      'BS 7671 provides one means of meeting the requirements of the EAWR, but is not itself law',
+      'They took all reasonable steps and exercised all due diligence to avoid committing the offence',
+      'The EAWR define the legal duties that directly govern all electrical maintenance work activities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "In the context of Regulation 4(2), 'maintained' means kept in a condition that prevents danger. This includes regular inspection, testing, and repair or replacement as necessary. It does not mandate specific intervals but requires the duty holder to ensure the system remains safe throughout its life.",
   },
@@ -190,12 +195,12 @@ const quizQuestions = [
     id: 10,
     question: "Under the EAWR, the term 'electrical equipment' is defined to include:",
     options: [
-      'Only permanently installed wiring and switchgear',
+      'Identifying the vital few causes that account for the majority of failures (the 80/20 rule), allowing resources to be focused where they will have the greatest impact',
+      'Detect hidden failures in protective devices and standby systems by periodically testing them to confirm they can still perform their function when required',
       'Anything used, intended to be used, or installed for use to generate, provide, transmit, transform, rectify, convert, conduct, distribute, control, store, measure or use electrical energy',
-      'Only equipment rated above 230 V',
-      'Only equipment manufactured after 1989',
+      'You want to highlight transferable skills, have gaps in employment, are changing speciality, or have varied experience that doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t fit a straightforward chronology.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Regulation 2 defines 'electrical equipment' extremely broadly — it covers anything used or intended to be used in connection with the generation, provision, transmission, transformation, rectification, conversion, conduction, distribution, control, storage, measurement or use of electrical energy. This includes test instruments, portable appliances, batteries, and even a conductor.",
   },
@@ -203,12 +208,12 @@ const quizQuestions = [
     id: 11,
     question: 'How do the EAWR 1989 relate to BS 7671 (the IET Wiring Regulations)?',
     options: [
-      'The EAWR and BS 7671 are the same document',
-      'BS 7671 is a statutory requirement that replaces the EAWR',
+      'Adequate working space, access, and lighting be provided for work on electrical equipment',
+      'Kept in such condition that danger is prevented — including regular inspection, testing and repair as necessary',
+      'They took all reasonable steps and exercised all due diligence to avoid committing the offence',
       'BS 7671 provides one means of meeting the requirements of the EAWR, but is not itself law',
-      'The EAWR only applies where BS 7671 does not',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The EAWR 1989 are law — criminal regulations enforceable by the HSE. BS 7671 is a non-statutory British Standard that provides technical guidance on how to design, install, and maintain electrical systems. Compliance with BS 7671 is generally accepted as one means of satisfying the requirements of the EAWR, but BS 7671 itself is not legislation.',
   },
@@ -217,12 +222,12 @@ const quizQuestions = [
     question:
       'Under ST1426, why is knowledge of the EAWR 1989 essential for a maintenance technician?',
     options: [
-      'It is only needed for the written examination',
       'The EAWR define the legal duties that directly govern all electrical maintenance work activities',
-      'It is optional knowledge for experienced technicians',
-      'It only applies to new installations, not maintenance',
+      'BS 7671 provides one means of meeting the requirements of the EAWR, but is not itself law',
+      'Kept in such condition that danger is prevented — including regular inspection, testing and repair as necessary',
+      'Adequate precautions including isolation, securing the isolation, and proving dead',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The EAWR 1989 directly govern every aspect of electrical maintenance work — from the duty to maintain systems (Reg 4(2)), to working dead (Reg 12–13), live working controls (Reg 14), adequate working space (Reg 15), and competence (Reg 16). ST1426 requires maintenance technicians to demonstrate knowledge of these regulations as core statutory compliance.',
   },

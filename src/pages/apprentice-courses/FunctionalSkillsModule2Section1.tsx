@@ -28,11 +28,11 @@ const FunctionalSkillsModule2Section1 = () => {
       question: 'Which part of BS 7671 covers inspection and testing requirements?',
       options: [
         'Part 4 — Protection for Safety',
-        'Part 5 — Selection and Erection',
         'Part 6 — Inspection and Testing',
+        'Part 5 — Selection and Erection',
         'Part 7 — Special Installations',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Part 6 of BS 7671 covers initial verification (inspection and testing) of electrical installations. This is one of the most commonly referenced parts for electricians carrying out testing and certification work.',
     },
@@ -40,12 +40,12 @@ const FunctionalSkillsModule2Section1 = () => {
       id: 2,
       question: 'On a product datasheet, what does the rated voltage (Ue) indicate?',
       options: [
-        'The maximum fault current the device can handle',
+        'Appropriate PPE including breathing apparatus if required',
+        'To show you can follow instructions precisely',
         'The nominal voltage at which the device is designed to operate',
-        'The voltage drop across the device',
-        'The test voltage applied during manufacture',
+        'Escape route lighting at pedestrian walkways, exits, and stairs',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Rated voltage (Ue) indicates the nominal voltage at which the device is designed to operate under normal conditions. Selecting equipment with the correct rated voltage is essential for safe and reliable operation.',
     },
@@ -53,12 +53,12 @@ const FunctionalSkillsModule2Section1 = () => {
       id: 3,
       question: "What does 'Part P' of the Building Regulations specifically cover?",
       options: [
-        'Structural requirements for cable routes',
-        'Electrical safety in dwellings',
         'Fire alarm installation standards',
+        'Structural requirements for cable routes',
         'Energy efficiency of lighting',
+        'Electrical safety in dwellings',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Part P of the Building Regulations (England and Wales) specifically covers electrical safety in dwellings. It sets out requirements for the design, installation, inspection and testing of electrical installations in domestic properties.',
     },
@@ -66,12 +66,12 @@ const FunctionalSkillsModule2Section1 = () => {
       id: 4,
       question: 'What does an IP rating of IP65 tell you about a product?',
       options: [
-        'It is suitable for use in explosive atmospheres',
         'It is dust-tight and protected against water jets from any direction',
-        'It has a power rating of 65 watts',
-        'It can withstand temperatures up to 65 degrees Celsius',
+        'Completion of all inspection and testing, satisfactory results recorded',
+        'Stop the source, contain the spill, report to the Environment Agency',
+        'Installing containment systems and routing cables',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'IP65 means the product is completely protected against dust ingress (first digit 6) and protected against water jets from any direction (second digit 5). Understanding IP ratings is essential when selecting equipment for different environments such as bathrooms or outdoor locations.',
     },
@@ -81,8 +81,8 @@ const FunctionalSkillsModule2Section1 = () => {
       options: [
         'The order in which trades will arrive on site',
         'The step-by-step process for carrying out the work safely',
-        'The schedule of materials to be ordered',
         'The inspection dates for the project',
+        'The schedule of materials to be ordered',
       ],
       correctAnswer: 1,
       explanation:
@@ -92,12 +92,12 @@ const FunctionalSkillsModule2Section1 = () => {
       id: 6,
       question: 'Where would you typically find recommended maintenance intervals for an RCD?',
       options: [
-        'In BS 7671 Part 3',
+        'Stop work immediately and secure the area',
+        'Initial indication of voltage presence only',
         'In the Operation & Maintenance manual',
-        'On the building plans',
-        'In the risk assessment',
+        'Current flowing through the conductor',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The O&M manual for the installation or specific equipment will contain recommended maintenance intervals, including how often to test RCDs. While BS 7671 gives general guidance, the O&M manual provides site-specific schedules and manufacturer recommendations.',
     },
@@ -105,12 +105,12 @@ const FunctionalSkillsModule2Section1 = () => {
       id: 7,
       question: 'What does the breaking capacity (Icn) of an MCB tell you?',
       options: [
-        'The normal operating current of the device',
+        'Overlapping design and construction phases to reduce total duration',
+        'Authorised staff can view and control BMS functions off-site',
+        'Diagnose mental health conditions or prescribe treatment',
         'The maximum fault current the device can safely interrupt',
-        'The time taken to trip under overload',
-        'The ambient temperature rating',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Breaking capacity (Icn or Icu) is the maximum prospective fault current that the device can safely interrupt without damage. This must be equal to or greater than the prospective fault current at the point of installation.',
     },
@@ -119,12 +119,12 @@ const FunctionalSkillsModule2Section1 = () => {
       question:
         'When reading a cable schedule on a commercial project, which information would you NOT typically find?',
       options: [
-        'Cable type and size',
-        'Circuit reference number',
         'The electrician assigned to install it',
-        'Protective device rating',
+        'The householder who commissioned the work',
+        'Line to neutral, line to earth, neutral to earth',
+        'Material properties and wall thickness',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Cable schedules typically list the circuit reference, cable type and size, route, protective device rating, and design parameters. They do not normally include personnel assignments — that information would be found in a project programme or resource schedule.',
     },

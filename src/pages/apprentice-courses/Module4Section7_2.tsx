@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Which regulation covers the safe use of tools and equipment?',
     options: [
-      'PUWER 1998',
-      'Work at Height Regulations',
       'COSHH',
+      'PUWER 1998',
       'Manual Handling Operations Regulations',
+      'Work at Height Regulations',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The Provision and Use of Work Equipment Regulations 1998 (PUWER) specifically covers the safe use of tools and equipment in the workplace.',
   },
@@ -40,20 +40,25 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Why should you use insulated hand tools?',
     options: [
-      'To save money',
+      'Separated Extra Low Voltage',
+      'Current is the same everywhere',
       'To prevent electric shock',
-      'To improve grip',
-      'To make tools last longer',
+      'To the phase (line) conductor',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Insulated hand tools prevent electric shock by providing a barrier between the user and any electrical conductors, essential for electrical work safety.',
   },
   {
     id: 3,
     question: 'Name one PPE item essential when using a power drill.',
-    options: ['Insulated gloves', 'Safety goggles', 'Hi-vis vest', 'Steel toe boots'],
-    correctIndex: 1,
+    options: [
+      'Steel toe boots',
+      'Hi-vis vest',
+      'Insulated gloves',
+      'Safety goggles',
+    ],
+    correctIndex: 3,
     explanation:
       'Safety goggles protect the eyes from debris, dust, and fragments that can be generated when drilling, making them essential PPE for power drill use.',
   },
@@ -66,7 +71,12 @@ const Module4Section7_2 = () => {
     {
       id: 1,
       question: 'Which regulation specifically covers the safe use of hand and power tools?',
-      options: ['BS 7671', 'PUWER 1998', 'MHOR 1992', 'CDM 2015'],
+      options: [
+        'BS 7671',
+        'PUWER 1998',
+        'MHOR 1992',
+        'CDM 2015',
+      ],
       correctAnswer: 1,
       explanation:
         'The Provision and Use of Work Equipment Regulations 1998 (PUWER) specifically covers the safe provision and use of tools and equipment in the workplace.',
@@ -74,8 +84,13 @@ const Module4Section7_2 = () => {
     {
       id: 2,
       question: 'True or False: Only supervisors need to inspect tools before use.',
-      options: ['True', 'False', 'Only for power tools', 'Only for new tools'],
-      correctAnswer: 1,
+      options: [
+        'Only for power tools',
+        'True',
+        'False',
+        'Only for new tools',
+      ],
+      correctAnswer: 2,
       explanation:
         'False - every user must inspect tools before use to ensure they are safe and suitable for the task. This is a fundamental safety requirement under PUWER.',
     },
@@ -83,12 +98,12 @@ const Module4Section7_2 = () => {
       id: 3,
       question: 'Why should you use insulated screwdrivers and pliers?',
       options: [
-        'To save money',
+        '200 times the sign height',
+        'Capacitors and UPS systems',
+        'Heat resistant (90°C or higher)',
         'To prevent electric shock',
-        'To improve grip',
-        'To make tools last longer',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Insulated tools prevent electric shock by providing a barrier between the user and electrical conductors, essential for safe electrical work.',
     },
@@ -96,52 +111,77 @@ const Module4Section7_2 = () => {
       id: 4,
       question: 'Name two common hazards when using power tools.',
       options: [
-        'Good lighting and ventilation',
         'Cuts and electric shock',
+        'Good lighting and ventilation',
         'Proper storage and maintenance',
         'Training and supervision',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Cuts from sharp components and electric shock from faulty equipment are two major hazards associated with power tool use.',
     },
     {
       id: 5,
       question: 'What should you always check before drilling into a wall?',
-      options: ['Depth of plaster', 'Paint colour', 'Buried cables and pipes', 'Nail size'],
-      correctAnswer: 2,
+      options: [
+        'Paint colour',
+        'Buried cables and pipes',
+        'Nail size',
+        'Depth of plaster',
+      ],
+      correctAnswer: 1,
       explanation:
         'Always check for buried cables and pipes before drilling to prevent dangerous contact with electrical or water services.',
     },
     {
       id: 6,
       question: 'Which electrical protection should corded tools be connected to?',
-      options: ['MCB', 'RCD', 'Fuse only', 'Isolator'],
-      correctAnswer: 1,
+      options: [
+        'MCB',
+        'Fuse only',
+        'RCD',
+        'Isolator',
+      ],
+      correctAnswer: 2,
       explanation:
         'Corded tools should be connected to RCD (Residual Current Device) protection to provide additional safety against electric shock.',
     },
     {
       id: 7,
       question: 'Give one example of PPE required when grinding metal conduit.',
-      options: ['Hi-vis vest', 'Safety harness', 'Face shield or safety goggles', 'Knee pads'],
-      correctAnswer: 2,
+      options: [
+        'Forgetting vertical drops or rises',
+        'Second — after elimination',
+        'Use appropriate PPE and procedures',
+        'Face shield or safety goggles',
+      ],
+      correctAnswer: 3,
       explanation:
         'Face shield or safety goggles are essential when grinding to protect eyes from sparks, debris, and metal particles.',
     },
     {
       id: 8,
       question: 'True or False: Faulty tools should be repaired on site by the user.',
-      options: ['True', 'False', 'Only simple repairs', 'Only by experienced users'],
-      correctAnswer: 1,
+      options: [
+        'False',
+        'Only simple repairs',
+        'True',
+        'Only by experienced users',
+      ],
+      correctAnswer: 0,
       explanation:
         'False - faulty tools should be tagged, removed from service, and repaired only by competent persons. User repairs can create additional hazards.',
     },
     {
       id: 9,
       question: 'How often should portable power tools be PAT tested (approx.)?',
-      options: ['Weekly', 'Monthly', 'Every 6–12 months', 'Every 5 years'],
-      correctAnswer: 2,
+      options: [
+        'Weekly',
+        'Every 6–12 months',
+        'Monthly',
+        'Every 5 years',
+      ],
+      correctAnswer: 1,
       explanation:
         'Portable power tools typically require PAT testing every 6-12 months, depending on the work environment and usage frequency.',
     },
@@ -150,11 +190,11 @@ const Module4Section7_2 = () => {
       question: 'What three steps should you take if a tool is found unsafe?',
       options: [
         'Continue using with care',
+        'Share with colleagues',
         'Stop, tag, and report',
         'Repair and continue',
-        'Share with colleagues',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'If a tool is unsafe: Stop using it immediately, Tag it as defective, and Report it to your supervisor for proper disposal or repair.',
     },

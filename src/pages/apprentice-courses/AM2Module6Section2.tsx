@@ -59,8 +59,13 @@ const AM2Module6Section2 = () => {
     {
       id: 'insulation-resistance',
       question: 'What is the minimum acceptable insulation resistance for a circuit in AM2?',
-      options: ['0.5 MO', '1 MO', '2 MO', '5 MO'],
-      correctIndex: 1,
+      options: [
+        '0.5 MO',
+        '5 MO',
+        '2 MO',
+        '1 MO',
+      ],
+      correctIndex: 3,
       explanation:
         'The minimum acceptable insulation resistance for a circuit is 1 MO according to BS 7671.',
     },
@@ -68,12 +73,12 @@ const AM2Module6Section2 = () => {
       id: 'safe-isolation-regulation',
       question: 'Which regulation makes safe isolation a legal requirement?',
       options: [
-        'BS 7671',
-        'CDM Regulations 2015',
         'Electricity at Work Regulations 1989',
-        'Health and Safety at Work Act 1974',
+        'Glaser method (BS EN ISO 13788)',
+        'Allows current to flow in one direction only.',
+        'Public Interest Disclosure Act 1998',
       ],
-      correctIndex: 2,
+      correctIndex: 0,
       explanation:
         'The Electricity at Work Regulations 1989 make safe isolation a legal duty for all electrical work.',
     },
@@ -83,44 +88,74 @@ const AM2Module6Section2 = () => {
     {
       id: 1,
       question: "What's the minimum acceptable insulation resistance value?",
-      options: ['0.5 MO', '1 MO', '2 MO', '5 MO'],
+      options: [
+        '0.5 MO',
+        '1 MO',
+        '2 MO',
+        '5 MO',
+      ],
       correctAnswer: 1,
       explanation: '1 MO is the minimum acceptable insulation resistance value for circuits.',
     },
     {
       id: 2,
       question: 'Which of these is NOT a key regulation topic tested in AM2?',
-      options: ['Maximum Zs values', 'RCD requirements', 'Bathroom zones', 'Cable colour codes'],
-      correctAnswer: 3,
+      options: [
+        'Bathroom zones',
+        'Maximum Zs values',
+        'Cable colour codes',
+        'RCD requirements',
+      ],
+      correctAnswer: 2,
       explanation:
         'Cable colour codes are not a key regulation topic in AM2 - focus on Zs values, RCDs, and zones.',
     },
     {
       id: 3,
       question: "State Ohm's law in formula form:",
-      options: ['P = VI', 'V = IR', 'P = I squared R', 'I = V/R'],
-      correctAnswer: 1,
+      options: [
+        'P = I squared R',
+        'P = VI',
+        'I = V/R',
+        'V = IR',
+      ],
+      correctAnswer: 3,
       explanation: "Ohm's law states that Voltage = Current x Resistance (V = IR).",
     },
     {
       id: 4,
       question: 'A 2 kW heater on 230 V supply draws how many amps?',
-      options: ['6.7 A', '8.7 A', '10.2 A', '12.5 A'],
-      correctAnswer: 1,
+      options: [
+        '8.7 A',
+        '6.7 A',
+        '10.2 A',
+        '12.5 A',
+      ],
+      correctAnswer: 0,
       explanation: 'Using P = VI, therefore I = P/V = 2000/230 = 8.7 A approximately.',
     },
     {
       id: 5,
       question: "What's the maximum disconnection time for a socket circuit?",
-      options: ['0.2 seconds', '0.4 seconds', '5 seconds', 'No requirement'],
+      options: [
+        '0.2 seconds',
+        '0.4 seconds',
+        'No requirement',
+        '5 seconds',
+      ],
       correctAnswer: 1,
       explanation: 'Socket circuits require disconnection within 0.4 seconds under BS 7671.',
     },
     {
       id: 6,
       question: 'Which regulation makes safe isolation a legal duty?',
-      options: ['BS 7671', 'EAWR 1989', 'CDM 2015', 'HASAWA 1974'],
-      correctAnswer: 1,
+      options: [
+        'BS 7671',
+        'CDM 2015',
+        'EAWR 1989',
+        'HASAWA 1974',
+      ],
+      correctAnswer: 2,
       explanation:
         'The Electricity at Work Regulations 1989 make safe isolation legally mandatory.',
     },
@@ -128,12 +163,12 @@ const AM2Module6Section2 = () => {
       id: 7,
       question: 'What is the difference between line and phase voltage in three-phase?',
       options: [
-        'Line is 1.732 times phase',
+        'Line is twice phase',
         'Phase is 1.732 times line',
         'They are equal',
-        'Line is twice phase',
+        'Line is 1.732 times phase',
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation: 'In three-phase systems, line voltage is 1.732 times the phase voltage.',
     },
     {
@@ -141,9 +176,9 @@ const AM2Module6Section2 = () => {
       question: 'Which TWO are examples of PPE relevant to electrical work?',
       options: [
         'Safety boots and hard hat',
-        'Voltage detector and multimeter',
         'Isolation locks and tags',
         'Risk assessment forms',
+        'Voltage detector and multimeter',
       ],
       correctAnswer: 0,
       explanation:
@@ -162,11 +197,11 @@ const AM2Module6Section2 = () => {
       question: 'What are the three core categories of questions in the online test?',
       options: [
         'Theory, practical, safety',
+        'Design, install, inspect',
         'Regulations, science, safety',
         'Installation, testing, maintenance',
-        'Design, install, inspect',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The three core categories are regulations (BS 7671), electrical science, and safety.',
     },

@@ -38,8 +38,13 @@ const checks = [
     id: 'maths-transposition-check',
     question:
       'You know power (P = 2300 W) and voltage (V = 230 V). Which form of the power formula gives you the current?',
-    options: ['I = P × V', 'I = V ÷ P', 'I = P ÷ V', 'I = V × P'],
-    correctIndex: 2,
+    options: [
+      'I = V ÷ P',
+      'I = P ÷ V',
+      'I = V × P',
+      'I = P × V',
+    ],
+    correctIndex: 1,
     explanation:
       "Transposing P = V × I gives I = P ÷ V. Same triangle as Ohm's law — top divided by either bottom letter gives the other. 2300 ÷ 230 = 10 A.",
   },
@@ -47,7 +52,12 @@ const checks = [
     id: 'maths-percentage-check',
     question:
       'ESQCR allows the supply at the cut-out to sit between −6% and +10% of 230 V. What is the lowest voltage that still counts as compliant?',
-    options: ['200 V', '207 V', '216 V', '220 V'],
+    options: [
+      '220 V',
+      '207 V',
+      '216 V',
+      '200 V',
+    ],
     correctIndex: 2,
     explanation:
       '6% of 230 is 13.8. 230 − 13.8 = 216.2 V — round down to 216 V. The ±10% figure that gets quoted casually on site is wrong: ESQCR is asymmetric (−6% / +10%), so the legal floor is 216 V, not 207 V.',
@@ -55,7 +65,12 @@ const checks = [
   {
     id: 'maths-prefix-check',
     question: 'Your insulation tester reads 250 MΩ. What is that in ohms?',
-    options: ['250,000 Ω', '2,500,000 Ω', '250,000,000 Ω', '0.25 Ω'],
+    options: [
+      '0.25 Ω',
+      '2,500,000 Ω',
+      '250,000,000 Ω',
+      '250,000 Ω',
+    ],
     correctIndex: 2,
     explanation:
       'Mega means × 1,000,000. 250 × 1,000,000 = 250,000,000 Ω. Massive — which is exactly what you want from insulation between live and earth.',
@@ -69,8 +84,13 @@ const quizQuestions = [
     id: 1,
     question:
       "A 100 m cable run is split into four equal sub-sections to land junction boxes. What fraction of the run is each sub-section, and how many metres is that?",
-    options: ['1/2 = 50 m', '1/3 ≈ 33 m', '1/4 = 25 m', '1/5 = 20 m'],
-    correctAnswer: 2,
+    options: [
+      '1/2 = 50 m',
+      '1/4 = 25 m',
+      '1/3 ≈ 33 m',
+      '1/5 = 20 m',
+    ],
+    correctAnswer: 1,
     explanation:
       'Four equal splits = quarters. 1/4 = 0.25 = 25%. 100 ÷ 4 = 25 m per sub-section. Same fraction maths shows up on cable sets, conduit drops and trunking divisions every week.',
   },
@@ -78,7 +98,12 @@ const quizQuestions = [
     id: 2,
     question:
       'A 32 A ring final is loaded to 24 A. What percentage of its rated capacity is being used?',
-    options: ['60%', '67%', '75%', '80%'],
+    options: [
+      '80%',
+      '60%',
+      '75%',
+      '67%',
+    ],
     correctAnswer: 2,
     explanation:
       '24 ÷ 32 = 0.75 = 75%. Diversity calcs and load checks are this exact sum, just with bigger numbers.',
@@ -87,8 +112,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Transpose V = I × R to make R the subject.',
-    options: ['R = V × I', 'R = V ÷ I', 'R = I ÷ V', 'R = V + I'],
-    correctAnswer: 1,
+    options: [
+      'R = I ÷ V',
+      'R = V × I',
+      'R = V + I',
+      'R = V ÷ I',
+    ],
+    correctAnswer: 3,
     explanation:
       "R = V ÷ I. Cover R on the Ohm's law triangle — V is on top, I is at the bottom, so it's V over I.",
   },
@@ -96,32 +126,52 @@ const quizQuestions = [
     id: 4,
     question:
       'A two-gang light wired in parallel splits the current 1:1 between two identical lamps drawing 5 A total. What does each lamp draw?',
-    options: ['1 A', '2.5 A', '5 A', '10 A'],
-    correctAnswer: 1,
+    options: [
+      '2.5 A',
+      '1 A',
+      '5 A',
+      '10 A',
+    ],
+    correctAnswer: 0,
     explanation:
       "Identical loads in parallel split current evenly. 5 A ÷ 2 = 2.5 A per lamp. Same logic for any 1:1 ratio split.",
   },
   {
     id: 5,
     question: 'What is 4² (4 squared)?',
-    options: ['8', '12', '16', '24'],
-    correctAnswer: 2,
+    options: [
+      '12',
+      '16',
+      '24',
+      '8',
+    ],
+    correctAnswer: 1,
     explanation:
       '4 × 4 = 16. Indices appear in P = I²R and in cable cross-section areas (mm²) — get this wrong and you size the wrong cable.',
   },
   {
     id: 6,
     question: 'Convert 0.0035 A into milliamps.',
-    options: ['0.35 mA', '3.5 mA', '35 mA', '350 mA'],
-    correctAnswer: 1,
+    options: [
+      '0.35 mA',
+      '35 mA',
+      '3.5 mA',
+      '350 mA',
+    ],
+    correctAnswer: 2,
     explanation:
       'Milli means ÷ 1000, so to go FROM amps TO milliamps you × 1000. 0.0035 × 1000 = 3.5 mA.',
   },
   {
     id: 7,
     question: 'What is 4.7 × 10³ written as a normal number?',
-    options: ['47', '470', '4,700', '47,000'],
-    correctAnswer: 2,
+    options: [
+      '47',
+      '470',
+      '47,000',
+      '4,700',
+    ],
+    correctAnswer: 3,
     explanation:
       "Scientific notation: × 10³ moves the decimal three places right. 4.7 → 4700. You'll see it on capacitor markings and resistor tolerances.",
   },
@@ -129,8 +179,13 @@ const quizQuestions = [
     id: 8,
     question:
       "A circuit pulls 2.4 kW at 230 V. Using P = V × I transposed, roughly what current does it draw?",
-    options: ['5 A', '10 A', '13 A', '32 A'],
-    correctAnswer: 1,
+    options: [
+      '10 A',
+      '13 A',
+      '5 A',
+      '32 A',
+    ],
+    correctAnswer: 0,
     explanation:
       'I = P ÷ V = 2400 ÷ 230 ≈ 10.4 A. Sits comfortably under a 13 A plug fuse — which is why most kettles and irons land in this bracket.',
   },

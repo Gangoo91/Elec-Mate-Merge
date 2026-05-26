@@ -2,10 +2,10 @@ export const quizData = [
   {
     question: 'What is the key difference between self-contained and central battery systems?',
     options: [
-      'Self-contained systems use LED lamps, central systems use fluorescent',
+      'Sensible heat changes temperature without phase change; latent heat changes phase without temperature change',
       'Self-contained systems have integrated batteries in each luminaire, central systems use a single battery bank',
-      'Self-contained systems are only for commercial buildings',
-      "Central battery systems don't require testing",
+      'A possible inter-turn short circuit on that winding, reducing the effective number of turns',
+      'Two quick inhales through the nose followed by a long exhale through the mouth',
     ],
     correctAnswer:
       'Self-contained systems have integrated batteries in each luminaire, central systems use a single battery bank',
@@ -63,10 +63,10 @@ export const quizData = [
   {
     question: 'What type of buildings are best suited to self-contained systems?',
     options: [
-      'Large hospitals and airports',
+      'To maintain circuit integrity during fire conditions',
       'Small to medium-sized buildings like offices and schools',
-      'Only industrial warehouses',
-      'Buildings with central battery rooms',
+      'All batteries are in one location for servicing',
+      'Large, complex, or high-occupancy sites like hospitals and airports',
     ],
     correctAnswer: 'Small to medium-sized buildings like offices and schools',
     explanation:
@@ -75,10 +75,10 @@ export const quizData = [
   {
     question: 'What type of buildings are best suited to central battery systems?',
     options: [
-      'Small retail shops',
-      'Residential houses',
+      'Small to medium-sized buildings like offices and schools',
+      'To maintain circuit integrity during fire conditions',
       'Large, complex, or high-occupancy sites like hospitals and airports',
-      'Only outdoor facilities',
+      'All batteries are in one location for servicing',
     ],
     correctAnswer: 'Large, complex, or high-occupancy sites like hospitals and airports',
     explanation:
@@ -106,10 +106,10 @@ export const quizData = [
   {
     question: 'Why might a mixed system be chosen in a large building?',
     options: [
-      'To confuse maintenance staff',
+      'The average exposure over an 8-hour working day must not exceed 5 mg/m³',
       'To balance cost, reliability, and maintenance efficiency based on risk assessment',
-      "Because it's required by law",
-      'To avoid using fire-resistant cable',
+      'It receives signals from detection devices and controls the alarm outputs',
+      'Motor circuits and equipment with moderate inrush current',
     ],
     correctAnswer:
       'To balance cost, reliability, and maintenance efficiency based on risk assessment',

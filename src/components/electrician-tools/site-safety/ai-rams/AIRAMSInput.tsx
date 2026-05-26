@@ -1,12 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { MobileButton } from '@/components/ui/mobile-button';
-import { MobileInput } from '@/components/ui/mobile-input';
-import { Textarea } from '@/components/ui/textarea';
+import React, { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+import {
+  ArrowRight,
+  ChevronDown,
+  FileText,
+  Loader2,
+  Shield,
+  Sparkles,
+  TestTube2,
+} from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Sparkles, Zap, ChevronDown, Shield, TestTube2, FileText } from 'lucide-react';
+import { IOSInput } from '@/components/ui/ios-input';
+import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 import { JobScaleBadge } from './JobScaleBadge';
 import { QuoteSelectorSheet, type QuotePickerRow } from './QuoteSelectorSheet';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
+
+const MIN_DESCRIPTION = 50;
 
 export interface AIRAMSInputProps {
   onGenerate: (
@@ -30,7 +43,30 @@ export interface AIRAMSInputProps {
   isProcessing: boolean;
 }
 
+interface RecentJobRow {
+  id: string;
+  job_description: string;
+  project_info: {
+    projectName?: string;
+    location?: string;
+    assessor?: string;
+    contractor?: string;
+    supervisor?: string;
+    siteManagerName?: string;
+    siteManagerPhone?: string;
+    firstAiderName?: string;
+    firstAiderPhone?: string;
+    safetyOfficerName?: string;
+    safetyOfficerPhone?: string;
+    assemblyPoint?: string;
+  } | null;
+  job_scale: 'domestic' | 'commercial' | 'industrial' | null;
+  completed_at: string | null;
+}
+
 export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessing }) => {
+  const { user } = useAuth();
+
   const [jobDescription, setJobDescription] = useState('');
   const [projectInfo, setProjectInfo] = useState({
     projectName: '',
@@ -55,8 +91,45 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
   );
   const [scaleConfidence, setScaleConfidence] = useState<number>(0);
   const [showEmergencyContacts, setShowEmergencyContacts] = useState(false);
-  // ELE-300 — pre-fill from quote
   const [quoteSheetOpen, setQuoteSheetOpen] = useState(false);
+  const [recentJobs, setRecentJobs] = useState<RecentJobRow[]>([]);
+
+  // Pull the user's last 6 completed RAMS as quick-start chips. Tap to
+  // pre-fill the brief + project info with a previous job's setup.
+  useEffect(() => {
+    if (!user?.id) return;
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase
+        .from('rams_generation_jobs')
+        .select('id, job_description, project_info, job_scale, completed_at')
+        .eq('user_id', user.id)
+        .eq('status', 'complete')
+        .order('completed_at', { ascending: false, nullsFirst: false })
+        .limit(6);
+      if (!cancelled) setRecentJobs((data ?? []) as RecentJobRow[]);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.id]);
+
+  const applyRecentJob = (row: RecentJobRow) => {
+    if (row.job_description) setJobDescription(row.job_description);
+    if (row.project_info) {
+      setProjectInfo((prev) => ({
+        ...prev,
+        ...row.project_info,
+      } as typeof prev));
+    }
+    if (row.job_scale) setManualScale(row.job_scale);
+    toast({
+      title: 'Pre-filled from previous RAMS',
+      description: row.project_info?.projectName
+        ? `Using setup from "${row.project_info.projectName}".`
+        : 'Previous setup applied.',
+    });
+  };
 
   const handlePickQuote = (q: QuotePickerRow) => {
     const description =
@@ -68,9 +141,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
         q.job_details?.title?.trim() ||
         (q.client_data?.name ? `${q.client_data.name} job` : prev.projectName),
       location:
-        q.job_details?.location?.trim() ||
-        q.client_data?.address?.trim() ||
-        prev.location,
+        q.job_details?.location?.trim() || q.client_data?.address?.trim() || prev.location,
     }));
     toast({
       title: 'Pre-filled from quote',
@@ -107,7 +178,6 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
   ): { scale: 'domestic' | 'commercial' | 'industrial'; confidence: number } => {
     const text = `${description} ${location}`.toLowerCase();
 
-    // Industrial indicators (highest priority)
     const industrialKeywords = [
       'factory',
       'plant',
@@ -123,7 +193,6 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
     ];
     const industrialScore = industrialKeywords.filter((k) => text.includes(k)).length;
 
-    // Commercial indicators
     const commercialKeywords = [
       'office',
       'shop',
@@ -138,7 +207,6 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
     ];
     const commercialScore = commercialKeywords.filter((k) => text.includes(k)).length;
 
-    // Domestic indicators
     const domesticKeywords = [
       'house',
       'home',
@@ -153,7 +221,6 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
     ];
     const domesticScore = domesticKeywords.filter((k) => text.includes(k)).length;
 
-    // Determine scale with confidence
     if (industrialScore >= 2 || text.includes('factory')) {
       return { scale: 'industrial', confidence: Math.min(industrialScore * 30 + 40, 95) };
     } else if (commercialScore >= 2 || (commercialScore === 1 && industrialScore === 0)) {
@@ -162,7 +229,7 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
       return { scale: 'domestic', confidence: Math.min(domesticScore * 20 + 60, 85) };
     }
 
-    return { scale: 'commercial', confidence: 40 }; // Default fallback
+    return { scale: 'commercial', confidence: 40 };
   };
 
   useEffect(() => {
@@ -202,274 +269,308 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
     setShowEmergencyContacts(true);
   };
 
-  const isFormValid = jobDescription.trim() && projectInfo.projectName.trim();
-  const completionPercentage = Math.round(
-    ([jobDescription, projectInfo.projectName, projectInfo.location, projectInfo.assessor].filter(
-      Boolean
-    ).length /
-      4) *
-      100
-  );
+  const hasDescription = jobDescription.trim().length >= MIN_DESCRIPTION;
+  const hasProjectName = projectInfo.projectName.trim().length > 0;
+  const canGenerate = hasDescription && hasProjectName;
 
   return (
-    <div className="px-2 py-3 pb-24 md:pb-6 bg-elec-dark min-h-screen">
-      {/* Compact Header */}
-      <div
-        className="flex items-center justify-between mb-4 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
-        style={{ animationDelay: '0ms' }}
-      >
-        <div className="flex items-center gap-2.5">
-          <div className="h-9 w-9 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
-            <Sparkles className="h-5 w-5 text-elec-yellow" />
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-7 sm:space-y-10 pb-32 sm:pb-12"
+    >
+      {/* Recent RAMS templates — pulled once on mount, no realtime needed.
+          Surfaces as a quiet picker only if the user actually has any. */}
+      {recentJobs.length > 0 && (
+        <motion.section variants={itemVariants} className="space-y-2">
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+              Quick start from a recent RAMS
+            </span>
+            <span className="text-[11px] text-white/45 tabular-nums">
+              {recentJobs.length} saved
+            </span>
           </div>
-          <div>
-            <h2 className="text-lg font-bold text-white">RAMS Generator</h2>
-            <p className="text-xs text-white">Professional documentation</p>
+          <div className="flex flex-wrap gap-2">
+            {recentJobs.map((row) => {
+              const name = row.project_info?.projectName || 'Untitled RAMS';
+              return (
+                <button
+                  key={row.id}
+                  type="button"
+                  onClick={() => applyRecentJob(row)}
+                  disabled={isProcessing}
+                  className={cn(
+                    'h-9 px-3 rounded-xl text-[12.5px] font-medium border transition-colors touch-manipulation',
+                    'bg-[hsl(0_0%_10%)] border-white/[0.10] text-white/80',
+                    'hover:border-elec-yellow/40 hover:text-elec-yellow active:scale-[0.99]',
+                    'disabled:opacity-50 max-w-[220px] truncate'
+                  )}
+                  title={name}
+                >
+                  {name}
+                </button>
+              );
+            })}
+          </div>
+        </motion.section>
+      )}
+
+      {/* 01 — BRIEFING (hero) */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <div className="flex items-baseline justify-between gap-3">
+          <Eyebrow>01 · BRIEFING</Eyebrow>
+          <span
+            className={cn(
+              'text-[11px] tabular-nums',
+              hasDescription ? 'text-emerald-400/70' : 'text-white/45'
+            )}
+          >
+            {jobDescription.length} chars
+          </span>
+        </div>
+        <h2 className="text-[24px] sm:text-[30px] font-semibold tracking-tight leading-[1.1] text-white">
+          Describe the job.
+        </h2>
+        <p className="text-[13.5px] text-white/75 leading-relaxed max-w-2xl">
+          Tell us what work needs the RAMS — site, scope, scale. The more detail you give, the
+          sharper the risk assessment and method statement.
+        </p>
+
+        <div
+          className={cn(
+            'relative -mx-4 sm:mx-0 bg-[hsl(0_0%_10%)] border-y sm:border sm:rounded-2xl py-4 px-4 sm:p-5 transition-colors',
+            hasDescription
+              ? 'border-elec-yellow/40'
+              : 'border-white/[0.10] hover:border-white/15'
+          )}
+        >
+          <textarea
+            value={jobDescription}
+            onChange={(e) => setJobDescription(e.target.value)}
+            placeholder="e.g., Install new consumer unit in 3-bed house with full rewire of kitchen, including new sockets, lighting circuit, and connection of integrated appliances..."
+            disabled={isProcessing}
+            rows={6}
+            maxLength={1000}
+            className="w-full bg-transparent border-0 ring-0 focus:ring-0 focus:outline-none text-[15px] sm:text-[16px] text-white placeholder:text-white/35 resize-none touch-manipulation leading-relaxed"
+            style={{ fontSize: '16px' }}
+          />
+          <div className="pt-3 mt-3 border-t border-white/[0.06] flex items-baseline justify-between text-[11px]">
+            <span className="text-white/55">
+              {MIN_DESCRIPTION} chars minimum for a meaningful risk assessment
+            </span>
+            {hasDescription && (
+              <span className="text-emerald-400/80 uppercase tracking-[0.18em] font-semibold text-[10px]">
+                Ready
+              </span>
+            )}
           </div>
         </div>
 
-        {/* Compact Progress indicator */}
-        {completionPercentage > 0 && completionPercentage < 100 && (
-          <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/[0.08]">
-            <div className="h-1.5 w-16 bg-white/5 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-elec-yellow transition-all duration-700 ease-out rounded-full"
-                style={{ width: `${completionPercentage}%` }}
-              />
-            </div>
-            <span className="text-xs font-semibold text-elec-yellow tabular-nums">
-              {completionPercentage}%
-            </span>
-          </div>
-        )}
-      </div>
-
-      {/* Job Description Section */}
-      <div
-        className="space-y-3 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
-        style={{ animationDelay: '50ms' }}
-      >
-        <label className="text-sm font-medium text-white flex items-center gap-2">
-          <Zap className="h-4 w-4 text-elec-yellow" />
-          Describe your job <span className="text-elec-yellow">*</span>
-        </label>
-        <Textarea
-          value={jobDescription}
-          onChange={(e) => setJobDescription(e.target.value)}
-          placeholder="e.g., Install new consumer unit in 3-bed house with full rewire of kitchen..."
-          disabled={isProcessing}
-          className="resize-none min-h-[100px] text-sm bg-white/5 border-white/[0.08] focus-visible:border-elec-yellow/50 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 transition-all placeholder:text-white rounded-xl"
-          maxLength={1000}
-        />
-
-        {/* Horizontal Scrolling Example Chips */}
-        <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide">
+        {/* Quick-pick example chips — horizontal scroll on mobile, wrap on larger */}
+        <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-hide sm:flex-wrap sm:overflow-x-visible">
           {examplePrompts[manualScale || detectedScale].map((prompt, idx) => (
             <button
               key={idx}
+              type="button"
               onClick={() => setJobDescription(prompt)}
               disabled={isProcessing}
-              className="flex-shrink-0 px-3 py-2 text-xs rounded-lg bg-white/[0.03] border border-white/[0.08] hover:border-elec-yellow/30 hover:bg-elec-yellow/5 text-white hover:text-white transition-all active:scale-[0.98] disabled:opacity-50 whitespace-nowrap"
+              className="flex-shrink-0 h-9 px-3 rounded-xl text-[12.5px] font-medium bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white/80 hover:border-elec-yellow/40 hover:text-elec-yellow transition-colors touch-manipulation active:scale-[0.99] disabled:opacity-50 whitespace-nowrap"
             >
               {prompt}
             </button>
           ))}
         </div>
-      </div>
 
-      {/* Job Scale Badge */}
-      {scaleConfidence > 0 && (
-        <div
-          className="mt-4 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
-          style={{ animationDelay: '100ms' }}
-        >
-          <JobScaleBadge
-            scale={manualScale || detectedScale}
-            confidence={scaleConfidence}
-            onManualChange={setManualScale}
-          />
+        {/* Job scale auto-detect badge */}
+        {scaleConfidence > 0 && (
+          <div className="pt-1">
+            <JobScaleBadge
+              scale={manualScale || detectedScale}
+              confidence={scaleConfidence}
+              onManualChange={setManualScale}
+            />
+          </div>
+        )}
+      </motion.section>
+
+      {/* 02 — PROJECT DETAILS */}
+      <motion.section variants={itemVariants} className="space-y-5">
+        <div className="space-y-2">
+          <Eyebrow>02 · PROJECT DETAILS</Eyebrow>
+          <h3 className="text-[20px] sm:text-[24px] font-semibold tracking-tight leading-tight text-white">
+            Where, and who.
+          </h3>
+          <p className="text-[12.5px] text-white/65 leading-snug max-w-2xl">
+            Site, contractor, assessor. These are embedded into the document headers and footers.
+          </p>
         </div>
-      )}
-
-      {/* Divider */}
-      <div className="h-px bg-white/[0.08] my-4" />
-
-      {/* Project Details Section */}
-      <div
-        className="space-y-3 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
-        style={{ animationDelay: '150ms' }}
-      >
-        <h3 className="text-xs font-medium text-white">Project Details</h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <MobileInput
-            label="Project Name"
+          <IOSInput
+            label="Project name"
             value={projectInfo.projectName}
             onChange={(e) => setProjectInfo((prev) => ({ ...prev, projectName: e.target.value }))}
             placeholder="e.g., Warehouse Lighting Upgrade"
             disabled={isProcessing}
-            className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
           />
-
-          <MobileInput
-            label="Location"
+          <IOSInput
+            label="Site location"
             value={projectInfo.location}
             onChange={(e) => setProjectInfo((prev) => ({ ...prev, location: e.target.value }))}
             placeholder="e.g., Unit 5, Industrial Estate"
             disabled={isProcessing}
-            className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
           />
-
-          <MobileInput
+          <IOSInput
             label="Assessor"
             value={projectInfo.assessor}
             onChange={(e) => setProjectInfo((prev) => ({ ...prev, assessor: e.target.value }))}
             placeholder="Your name"
             disabled={isProcessing}
-            className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
           />
-
-          <MobileInput
+          <IOSInput
             label="Contractor"
             value={projectInfo.contractor}
             onChange={(e) => setProjectInfo((prev) => ({ ...prev, contractor: e.target.value }))}
             placeholder="Company name"
             disabled={isProcessing}
-            className="bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
           />
-
-          <MobileInput
-            label="Supervisor (Optional)"
-            value={projectInfo.supervisor}
-            onChange={(e) => setProjectInfo((prev) => ({ ...prev, supervisor: e.target.value }))}
-            placeholder="Site supervisor"
-            disabled={isProcessing}
-            className="sm:col-span-2 bg-white/5 border-white/[0.08] h-11 text-sm focus-visible:border-elec-yellow/50"
-          />
+          <div className="sm:col-span-2">
+            <IOSInput
+              label="Supervisor (optional)"
+              value={projectInfo.supervisor}
+              onChange={(e) =>
+                setProjectInfo((prev) => ({ ...prev, supervisor: e.target.value }))
+              }
+              placeholder="Site supervisor"
+              disabled={isProcessing}
+            />
+          </div>
         </div>
+      </motion.section>
 
-        {/* Emergency Contacts Section */}
+      {/* 03 — EMERGENCY CONTACTS (collapsible) */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <Eyebrow>03 · EMERGENCY CONTACTS</Eyebrow>
         <Collapsible open={showEmergencyContacts} onOpenChange={setShowEmergencyContacts}>
           <CollapsibleTrigger asChild>
             <button
               type="button"
-              className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/[0.08] hover:border-elec-yellow/30 transition-all touch-manipulation active:scale-[0.98]"
+              className="w-full flex items-center justify-between p-4 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.10] hover:border-elec-yellow/30 transition-colors touch-manipulation active:scale-[0.99]"
             >
-              <div className="flex items-center gap-2">
-                <Shield className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
-                <span className="text-xs font-medium text-white">Emergency Contacts</span>
-                <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/5 text-white font-medium">
-                  Optional
-                </span>
+              <div className="flex items-center gap-2.5 min-w-0">
+                <Shield className="h-4 w-4 text-elec-yellow shrink-0" />
+                <div className="flex flex-col items-start min-w-0">
+                  <span className="text-[13.5px] font-medium text-white">
+                    Site manager, first aider, H&S officer
+                  </span>
+                  <span className="text-[11px] text-white/55">
+                    Optional — embedded into the RAMS cover page if filled
+                  </span>
+                </div>
               </div>
               <ChevronDown
-                className={`h-3.5 w-3.5 text-white transition-transform duration-300 ${showEmergencyContacts ? 'rotate-180' : ''}`}
+                className={cn(
+                  'h-4 w-4 text-white/60 transition-transform duration-300 shrink-0',
+                  showEmergencyContacts && 'rotate-180'
+                )}
               />
             </button>
           </CollapsibleTrigger>
           <CollapsibleContent className="pt-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <MobileInput
-                label="Site Manager Name"
+              <IOSInput
+                label="Site manager name"
                 value={projectInfo.siteManagerName}
                 onChange={(e) =>
                   setProjectInfo((prev) => ({ ...prev, siteManagerName: e.target.value }))
                 }
                 placeholder="John Smith"
                 disabled={isProcessing}
-                className="bg-white/5 border-white/[0.08] h-11 text-sm"
               />
-              <MobileInput
-                label="Site Manager Phone"
+              <IOSInput
+                label="Site manager phone"
                 value={projectInfo.siteManagerPhone}
                 onChange={(e) =>
                   setProjectInfo((prev) => ({ ...prev, siteManagerPhone: e.target.value }))
                 }
                 placeholder="07XXX XXXXXX"
                 disabled={isProcessing}
-                className="bg-white/5 border-white/[0.08] h-11 text-sm"
               />
-              <MobileInput
-                label="First Aider Name"
+              <IOSInput
+                label="First aider name"
                 value={projectInfo.firstAiderName}
                 onChange={(e) =>
                   setProjectInfo((prev) => ({ ...prev, firstAiderName: e.target.value }))
                 }
                 placeholder="Jane Doe"
                 disabled={isProcessing}
-                className="bg-white/5 border-white/[0.08] h-11 text-sm"
               />
-              <MobileInput
-                label="First Aider Phone"
+              <IOSInput
+                label="First aider phone"
                 value={projectInfo.firstAiderPhone}
                 onChange={(e) =>
                   setProjectInfo((prev) => ({ ...prev, firstAiderPhone: e.target.value }))
                 }
                 placeholder="07XXX XXXXXX"
                 disabled={isProcessing}
-                className="bg-white/5 border-white/[0.08] h-11 text-sm"
               />
-              <MobileInput
-                label="H&S Officer Name"
+              <IOSInput
+                label="H&S officer name"
                 value={projectInfo.safetyOfficerName}
                 onChange={(e) =>
                   setProjectInfo((prev) => ({ ...prev, safetyOfficerName: e.target.value }))
                 }
-                placeholder="Safety Officer"
+                placeholder="Safety officer"
                 disabled={isProcessing}
-                className="bg-white/5 border-white/[0.08] h-11 text-sm"
               />
-              <MobileInput
-                label="H&S Officer Phone"
+              <IOSInput
+                label="H&S officer phone"
                 value={projectInfo.safetyOfficerPhone}
                 onChange={(e) =>
                   setProjectInfo((prev) => ({ ...prev, safetyOfficerPhone: e.target.value }))
                 }
                 placeholder="07XXX XXXXXX"
                 disabled={isProcessing}
-                className="bg-white/5 border-white/[0.08] h-11 text-sm"
               />
-              <MobileInput
-                label="Emergency Assembly Point"
-                value={projectInfo.assemblyPoint}
-                onChange={(e) =>
-                  setProjectInfo((prev) => ({ ...prev, assemblyPoint: e.target.value }))
-                }
-                placeholder="e.g., Main car park, Site entrance"
-                disabled={isProcessing}
-                className="sm:col-span-2 bg-white/5 border-white/[0.08] h-11 text-sm"
-              />
+              <div className="sm:col-span-2">
+                <IOSInput
+                  label="Emergency assembly point"
+                  value={projectInfo.assemblyPoint}
+                  onChange={(e) =>
+                    setProjectInfo((prev) => ({ ...prev, assemblyPoint: e.target.value }))
+                  }
+                  placeholder="e.g., Main car park, site entrance"
+                  disabled={isProcessing}
+                />
+              </div>
             </div>
           </CollapsibleContent>
         </Collapsible>
-      </div>
+      </motion.section>
 
-      {/* Divider */}
-      <div className="h-px bg-white/[0.08] my-4" />
-
-      {/* Test Data + Pre-fill Buttons */}
-      <div
-        className="mt-4 flex items-center gap-4 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
-        style={{ animationDelay: '250ms' }}
-      >
+      {/* Quick-fill actions */}
+      <motion.div variants={itemVariants} className="flex items-center gap-5 text-[12.5px]">
         <button
           type="button"
           onClick={() => setQuoteSheetOpen(true)}
           disabled={isProcessing}
-          className="flex items-center gap-1.5 text-xs text-elec-yellow hover:text-elec-yellow/80 transition-colors disabled:opacity-50 touch-manipulation"
+          className="inline-flex items-center gap-1.5 text-elec-yellow hover:text-elec-yellow/80 transition-colors disabled:opacity-50 touch-manipulation"
         >
           <FileText className="h-3.5 w-3.5" />
           <span>Pre-fill from quote</span>
         </button>
         <button
+          type="button"
           onClick={loadMockData}
           disabled={isProcessing}
-          className="flex items-center gap-1.5 text-xs text-white hover:text-white transition-colors disabled:opacity-50 touch-manipulation"
+          className="inline-flex items-center gap-1.5 text-white/55 hover:text-white transition-colors disabled:opacity-50 touch-manipulation"
         >
           <TestTube2 className="h-3.5 w-3.5" />
           <span>Load test data</span>
         </button>
-      </div>
+      </motion.div>
 
       <QuoteSelectorSheet
         open={quoteSheetOpen}
@@ -477,62 +578,43 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
         onPick={handlePickQuote}
       />
 
-      {/* Sticky Bottom CTA - Mobile */}
-      <div className="fixed bottom-0 left-0 right-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.08] md:hidden z-50 safe-area-bottom">
-        <div className="px-2 py-3">
-          <MobileButton
+      {/* Sticky generate CTA — single, adapts mobile + desktop */}
+      <div className="pb-safe">
+        <div className="sticky bottom-0 z-30 -mx-4 px-4 sm:mx-0 sm:px-0 py-3 sm:py-0 bg-elec-dark/95 backdrop-blur-sm border-t border-white/[0.06] sm:border-t-0 sm:bg-transparent">
+          <motion.button
+            type="button"
             onClick={handleSubmit}
-            disabled={!isFormValid || isProcessing}
-            loading={isProcessing}
-            size="lg"
-            variant="elec"
-            icon={<Sparkles className="h-4 w-4" />}
-            className="w-full text-sm font-semibold h-11 rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation active:scale-[0.98]"
+            disabled={!canGenerate || isProcessing}
+            whileTap={canGenerate && !isProcessing ? { scale: 0.98 } : undefined}
+            className={cn(
+              'w-full h-12 rounded-xl text-[14px] font-semibold inline-flex items-center justify-center gap-2 transition-colors touch-manipulation',
+              canGenerate && !isProcessing
+                ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
+                : 'bg-white/[0.05] text-white/40 cursor-not-allowed'
+            )}
           >
-            {isProcessing ? 'Generating RAMS...' : 'Generate RAMS'}
-          </MobileButton>
+            {isProcessing ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span>Generating RAMS</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4" />
+                <span>Generate RAMS</span>
+                <ArrowRight className="h-4 w-4" />
+              </>
+            )}
+          </motion.button>
+          {!canGenerate && !isProcessing && (
+            <p className="mt-2 text-center text-[11px] text-white/45">
+              {!hasDescription
+                ? `Describe the job (${MIN_DESCRIPTION}+ chars) and add a project name to continue`
+                : 'Add a project name to continue'}
+            </p>
+          )}
         </div>
       </div>
-
-      {/* Desktop CTA */}
-      <div
-        className="hidden md:block mt-6 opacity-0 animate-[fadeInUp_0.4s_ease-out_forwards]"
-        style={{ animationDelay: '350ms' }}
-      >
-        <MobileButton
-          onClick={handleSubmit}
-          disabled={!isFormValid || isProcessing}
-          loading={isProcessing}
-          size="lg"
-          variant="elec"
-          icon={<Sparkles className="h-4 w-4" />}
-          className="w-full text-sm font-semibold h-11 rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation active:scale-[0.98]"
-        >
-          {isProcessing ? 'Generating RAMS...' : 'Generate RAMS'}
-        </MobileButton>
-      </div>
-
-      {!isFormValid && (
-        <div className="text-center p-2.5 rounded-lg bg-white/5 border border-white/[0.08]">
-          <p className="text-xs text-white">
-            Please provide job description and project name to continue
-          </p>
-        </div>
-      )}
-
-      {/* Animation keyframes */}
-      <style>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(8px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
-    </div>
+    </motion.div>
   );
 };

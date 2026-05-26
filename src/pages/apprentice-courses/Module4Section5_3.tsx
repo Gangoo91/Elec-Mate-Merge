@@ -49,7 +49,12 @@ const quizQuestions = [
   {
     id: 1,
     question: "What does the 'Earth' in Twin & Earth refer to?",
-    options: ['The earth clamp', 'The CPC conductor', 'The outer sheath', 'A grounding rod'],
+    options: [
+      'The earth clamp',
+      'The CPC conductor',
+      'The outer sheath',
+      'A grounding rod',
+    ],
     correctAnswer: 1,
     explanation:
       "The 'Earth' refers to the Circuit Protective Conductor (CPC) that provides the earth connection for safety.",
@@ -57,16 +62,26 @@ const quizQuestions = [
   {
     id: 2,
     question: 'True or False: The CPC in T&E can be left unsleeved if it is clearly identifiable.',
-    options: ['True', 'False', 'Only in domestic installations', 'Only if marked with tape'],
-    correctAnswer: 1,
+    options: [
+      'Only in domestic installations',
+      'True',
+      'False',
+      'Only if marked with tape',
+    ],
+    correctAnswer: 2,
     explanation:
       'False – BS 7671 requires the CPC to be sleeved with green/yellow identification regardless of how identifiable it appears.',
   },
   {
     id: 3,
     question: 'What accessory prevents fine strands of a flexible conductor from spreading?',
-    options: ['Cable tie', 'Ferrule', 'Gland', 'Crimp'],
-    correctAnswer: 1,
+    options: [
+      'Gland',
+      'Cable tie',
+      'Crimp',
+      'Ferrule',
+    ],
+    correctAnswer: 3,
     explanation:
       'Ferrules are fitted to the ends of stranded conductors to keep the strands together and ensure reliable termination.',
   },
@@ -74,19 +89,24 @@ const quizQuestions = [
     id: 4,
     question: 'What is the recommended way to check if a conductor is securely connected?',
     options: [
-      'Visual inspection only',
       'Tug test',
+      'Visual inspection only',
       'Continuity test only',
       'Resistance measurement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A gentle tug test confirms mechanical security, ensuring the conductor is properly gripped by the terminal.',
   },
   {
     id: 5,
     question: 'Which BS standard covers requirements for secure and safe terminations?',
-    options: ['BS 5839', 'BS 7671', 'BS EN 50172', 'BS 5266'],
+    options: [
+      'BS 5839',
+      'BS 7671',
+      'BS 5266',
+      'BS EN 50172',
+    ],
     correctAnswer: 1,
     explanation:
       'BS 7671 (IET Wiring Regulations) specifies requirements for electrical terminations to ensure safety and reliability.',
@@ -95,12 +115,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why should insulation be just inside the terminal?',
     options: [
-      'To improve appearance',
+      'A tracker linking each credit to required evidence documents',
+      'Installation certificates and test results',
       'To ensure good electrical contact without exposed copper',
-      'To reduce heat generation',
-      'To comply with colour coding',
+      'Version control, backup procedures, access control, and format standards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Insulation just inside the terminal ensures full electrical contact while preventing exposed copper that could cause short circuits.',
   },
@@ -108,12 +128,12 @@ const quizQuestions = [
     id: 7,
     question: 'Give one reason for using IP-rated glands on terminations.',
     options: [
-      'To improve cable appearance',
+      'Applicable standards, specifications, and drawings',
+      'To identify actual handling techniques and conditions in real time',
+      'Unlimited fine and up to 2 years imprisonment',
       'To protect against moisture ingress and maintain IP rating',
-      'To reduce installation time',
-      'To increase conductor capacity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "IP-rated glands protect against moisture ingress, maintaining the enclosure's environmental protection rating.",
   },
@@ -121,12 +141,12 @@ const quizQuestions = [
     id: 8,
     question: 'Name one common error to avoid when terminating cables.',
     options: [
-      'Using the correct ferrule size',
       'Over-tightening terminals, damaging the conductor',
       'Following manufacturer instructions',
+      'Using the correct ferrule size',
       'Testing connections properly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Over-tightening can damage conductors and terminals, leading to poor connections and potential failure.',
   },

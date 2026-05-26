@@ -45,12 +45,12 @@ const checks = [
     question:
       'A rural cottage on a TT system has an earth electrode resistance of 180 Ω. The protective device for the installation is a 100 mA Type A RCD at the supply side. Does this satisfy Reg 411.5?',
     options: [
-      'No — RA is too high.',
+      'Annually, with interim accuracy checks (e.g. against a calibration check box) before each use',
+      'A target for total primary energy consumption including generation and distribution losses',
       'Yes — RA × IΔn = 180 × 0.1 = 18 V, which is comfortably below the 50 V touch-voltage limit. The criterion passes.',
-      'No — TT systems need RA below 100 Ω regardless.',
-      'Cannot tell without measuring Zs.',
+      'Schedules are taken from the schematic without accounting for actual routing — drops, rises, obstructions and termination tails always add length.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Reg 411.5 acceptance for TT systems: RA × IΔn ≤ 50 V, where RA is the sum of the earth electrode resistance and the protective conductor resistance, and IΔn is the rated residual operating current of the RCD. 180 × 0.1 = 18 V; below the 50 V limit. Passes. Note this is the touch-voltage criterion — the RCD must operate at or below its rated trip current to prevent the touch voltage rising above 50 V (the conventional safe AC limit) during a fault.',
   },
@@ -59,12 +59,12 @@ const checks = [
     question:
       'Which of the following is NOT recognised by BS 7671 Chapter 54 as a permitted earth electrode type for general TT installations?',
     options: [
-      'Driven copper-bonded earth rod (the standard 5/8" or 16 mm rod, typically 1.2 m, 1.5 m or 2.4 m long).',
+      'A length of metal water-supply pipe entering the property.',
       'Plate electrode (typically 600 mm × 600 mm copper or stainless steel buried at depth).',
       'Earth tape or strip electrode buried horizontally.',
-      'A length of metal water-supply pipe entering the property.',
+      'Driven copper-bonded earth rod (the standard 5/8" or 16 mm rod, typically 1.2 m, 1.5 m or 2.4 m long).',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'BS 7671 explicitly excludes metallic water-supply pipes from being used as earth electrodes — the supply pipe’s earth contact is uncontrolled (often replaced with plastic during repairs), the bond can be broken without anyone knowing, and the water company strongly objects to electrical earthing currents flowing through their distribution system. Permitted electrode types include driven rods, plates, tapes and strips, foundation earth electrodes, and structural metalwork in deliberate contact with the earth (e.g. piling). The water pipe is bonded as an extraneous-conductive-part for equipotential bonding, not used as an electrode.',
   },
@@ -73,10 +73,10 @@ const checks = [
     question:
       'A TT installation with measured RA = 100 Ω and 30 mA Type A RCD on every final circuit. What is the worst-case touch voltage during a fault, and does the install satisfy Reg 411.5?',
     options: [
-      '100 V — fails.',
+      'When readings vary significantly between similar circuits',
       '3 V (RA × IΔn = 100 × 0.03 = 3 V) — passes comfortably.',
-      '50 V — at the limit.',
-      '10 V — passes.',
+      'By measuring actual work executed against bill rates',
+      'Only 70% of connected load operates simultaneously at peak',
     ],
     correctIndex: 1,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       'When must you design a TT installation rather than TN-S or TN-C-S?',
     options: [
-      'Whenever the customer prefers it.',
+      'Operates the second-by-second balancing of the GB power system — calling generators on and off, dispatching reserve, managing frequency and constraint payments. NGET is the asset OWNER; NESO is the system OPERATOR.',
       'When the DNO does not provide an earth terminal at the supply (rural overhead supplies, some old undersea cables, certain industrial or specialist supply arrangements). The earthing arrangement is determined by the supply, not by choice.',
-      'Always for new installs.',
-      'Only for caravan parks.',
+      'To grip the cable inner sheath with the cone for strain relief, and to clamp the SWA armour wires between the gland body and locknut for earth continuity and mechanical retention',
+      'A target to reduce emissions consistent with limiting global warming to 1.5°C, set in line with the latest climate science, validated by the Science Based Targets initiative (SBTi)',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the structural difference between TT and TN earthing?',
     options: [
-      'No real difference.',
+      'Has its stator connected directly to the grid and its rotor connected via a partial-rated power converter (typically 30% of full power), allowing variable-speed operation with a smaller, cheaper converter than a full-power conversion system',
+      'To proactively identify hazards, check that risk controls are in place and effective, verify compliance with the construction phase plan and site rules, and identify areas for corrective action',
       'In TN, the earth at the consumer is connected back to the source neutral via the DNO supply (low Ze, high fault current, MCB-based ADS). In TT, the earth at the consumer is a local electrode in soil (high Ze, low fault current, RCD-based ADS).',
-      'TT uses copper, TN uses aluminium.',
-      'TT is only for industrial.',
+      'Investigate, isolate the affected circuit, find the fault (often an issue with a fixed appliance or wiring damage), repair, retest. Do NOT proceed to the next test stage on the failed circuit until the fault is resolved.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'TN systems share an earth path back to the source via the DNO supply (PEN in TN-C-S, separate PE in TN-S) — the resulting Ze is low (typically 0.35–0.8 Ω) and fault currents are high enough for MCB-based ADS to clear in time. TT systems have a local earth electrode at the consumer in soil — Ze is dominated by the soil resistance (typically 50–500 Ω depending on conditions) and fault currents are too small for an MCB to operate. RCD-based ADS is the only way to clear faults reliably on TT.',
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       'The TT acceptance criterion in BS 7671 Reg 411.5 is:',
     options: [
-      'Zs ≤ Table 41.3 max.',
+      'The client must provide pre-construction information as soon as is practicable to every designer and contractor appointed or being considered for appointment',
+      'Providing accessible, organised connection points between field wiring and control devices, simplifying fault diagnosis',
+      'The total greenhouse gas emissions associated with all activities and materials used throughout the project lifecycle, measured in CO2 equivalent',
       'RA × IΔn ≤ 50 V, where RA is the sum of earth electrode resistance and protective conductor resistance, IΔn is the rated residual operating current of the protective RCD.',
-      'Ze ≤ 200 Ω.',
-      'Insulation resistance ≥ 1 MΩ.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reg 411.5 acceptance for TT systems is RA × IΔn ≤ 50 V. The 50 V is the conventional safe AC touch voltage (UL); higher voltages cause harmful current to flow through the body. The product RA × IΔn is the worst-case touch voltage that would appear on exposed-conductive-parts during a fault before the RCD trips. Keeping that product below 50 V keeps the touch voltage safe even if the RCD takes its full rated time to operate.',
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       'Why is an RCD essential on a TT system, where it might be optional on a TN system?',
     options: [
-      'It is not — TT and TN are the same.',
       'Because the high earth electrode resistance limits fault current to a few amps, far below what an MCB or fuse needs to operate. Without an RCD the fault current can flow indefinitely through the earth path with no clearing — the RCD is the only practical means of automatic disconnection.',
-      'Because TT systems use heavier cables.',
-      'For shock prevention only, not for ADS.',
+      'A formal written authorisation that defines the work to be done, the hazards, the controls, the personnel authorised, the time period, and the sign-off conditions. Used for high-hazard activity (live working, hot work, confined space, work on safety-critical systems). Issued by the issuing authority; signed-on by the operative; signed-off when complete.',
+      'Comparing maintenance KPIs (PM compliance, planned ratio, MTBF, MTTR, maintenance cost as % of RAV, availability) against industry standards, similar organisations, and the organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s own historical trends to identify improvement opportunities',
+      'Verification of all drive parameters against the commissioning record, including motor nameplate data, acceleration/deceleration ramps, speed limits, protection settings, control interface configuration, and a test run at various speeds to confirm correct operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A TT fault current of (e.g.) 230 / 200 = 1.15 A is hundreds of times below the magnetic instantaneous trip of any MCB. Without an RCD the fault would never clear; the touch voltage on the exposed-conductive-part would persist indefinitely; eventually a person touching the part would be shocked or killed. The RCD detects the residual current to earth (the difference between line and neutral currents) and trips at much lower currents (typically 30 mA for additional protection, 100 mA for general). RCDs are essential on TT, optional but recommended on TN.',
   },
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       'A TT installation is being designed for a rural property. The soil is a damp clay loam. What is a realistic expected RA for a single 1.2 m driven rod in this soil?',
     options: [
-      '5 Ω — typical of urban TN-C-S.',
+      'Automatic fault detection triggering maintenance work orders, condition monitoring data feeding into the CMMS, and coordinated maintenance scheduling',
       '50–150 Ω — typical for a single 1.2 m rod in damp clay loam. Rocky or sandy / dry soils give substantially higher figures (200–500+ Ω) and may need a longer rod, multiple rods, or a different electrode geometry.',
-      '500–1000 Ω — typical for any TT.',
-      '0.35 Ω.',
+      'Mirror neurons provide a neurological basis for empathy — they help us automatically simulate others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' experiences in our own brain, which is why we wince when we see someone hurt or smile when we see someone happy',
+      'In TN, the earth at the consumer is connected back to the source neutral via the DNO supply (low Ze, high fault current, MCB-based ADS). In TT, the earth at the consumer is a local electrode in soil (high Ze, low fault current, RCD-based ADS).',
     ],
     correctAnswer: 1,
     explanation:
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       'BS 7671 A4:2026 introduced Reg 542.2.8 concerning earth electrodes. What is the practical effect on the designer?',
     options: [
-      'No effect.',
+      'Maintain manual inline stabilisation on the spinal casualty, shout for help, and instruct a bystander to clear the area around the seizing casualty to prevent injury; reassess priorities once additional help arrives',
+      'BSR can serve compliance notices; can ultimately direct evacuation if risk is severe; PAP can be prosecuted for failure to maintain safety case; Defective Premises Act + civil claims if defects later cause harm.',
       'It introduces additional requirements concerning earth electrodes in Chapter 54 — designers must consult the full text of Reg 542.2.8 in the published amendment to determine the obligations, exceptions and any required testing or labelling for earth electrodes installed under A4:2026.',
-      'It removes earth electrodes from BS 7671 entirely.',
-      'It only applies to PV installations.',
+      'Analyse consumption patterns to identify electrical faults, assess load profiles for circuit design, verify the performance of energy efficiency measures, and diagnose issues such as high standing loads (indicating equipment left on), sudden consumption changes, or power quality problems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 A4:2026 introduced Reg 542.2.8 as a new provision concerning earth electrodes within Chapter 54. The exact wording of the requirement is in the published amendment text — designers should consult Reg 542.2.8 directly when planning, installing or certifying earth electrodes under A4:2026. The introduction of this regulation reflects the increased importance of earthing as more installations move to TT (where DNO supply changes have been made) and as outdoor / agricultural / EV / heat pump installs proliferate.',
   },
@@ -173,12 +173,12 @@ const quizQuestions = [
     question:
       'A TT installation has measured RA = 250 Ω at handover, with a 100 mA Type A RCD protecting the installation. Does the install satisfy Reg 411.5?',
     options: [
-      'No — touch voltage = 250 × 0.1 = 25 V; passes.',
+      '0.5C — discharging at 5 kW from a 10 kWh pack means it would take roughly 2 hours to fully discharge, which is a 0.5C rate. Higher C-rates (1C+) heat the pack harder and shorten cycle life.',
+      'Prioritise critical loads by disconnecting non-essential loads when the generator cannot support the full installation load, ensuring essential services continue to operate',
+      'Teams with high collective EI can better understand client concerns, communicate their approach empathetically, build trust during interviews, handle challenging questions with composure, and demonstrate collaborative working relationships — all of which influence bid evaluations',
       'Yes — touch voltage = 250 × 0.1 = 25 V, comfortably below the 50 V limit. The install passes Reg 411.5. However, RA = 250 Ω is high; consider improving the electrode (longer rod, multiple rods, deeper install) for resilience to soil drying.',
-      'No — RA must be below 100 Ω.',
-      'Yes, but only with a 30 mA RCD.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mathematically the install passes (250 × 0.1 = 25 V ≤ 50 V). But 250 Ω is on the high side and may rise further during dry summer weather (soil resistivity goes up as soil dries) or if the rod is in marginal contact with the soil. Best practice is to aim for RA below 100 Ω at install so there is headroom for seasonal variation. Improving the electrode (driving a second rod in parallel at 4 m spacing typically halves the resistance, going from 1.2 m to 2.4 m halves it again, etc.) is cheap insurance.',
   },
@@ -187,12 +187,12 @@ const quizQuestions = [
     question:
       'On a TT verification you measure the earth electrode resistance using a "stake-out" three-electrode method and get 180 Ω. The 30 mA RCD on the consumer board trips at 27 ms. What records do you put on the EIC schedule of test results?',
     options: [
-      'Just the RCD trip time.',
       'Record: measured Ze (= electrode resistance for TT) = 180 Ω; RCD test results — IΔn trip at 30 mA / 27 ms (passes the 300 ms requirement for general use, 40 ms for additional protection); RA × IΔn = 180 × 0.03 = 5.4 V (passes Reg 411.5); and the test instrument used and its calibration date.',
-      'Just the electrode resistance.',
-      'Nothing — TT does not require these records.',
+      'Technicians are not trained on the importance of accurate data recording, or the failure code structure is too complex, too vague, or not aligned to actual failure modes — making it difficult or time-consuming to record meaningful information',
+      'BS 7671 defines the technical standards against which electrical systems are designed, installed, tested and maintained — a maintenance technician must understand these standards to maintain systems safely',
+      'That pressing the emergency stop immediately de-energises all hazardous motion, that the stop is maintained (latched) until manually reset, and that the machine cannot restart until the stop is released and a deliberate start action is taken',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TT verification records on the EIC schedule of test results: (1) Ze, which for TT is the electrode resistance measured by the three-electrode stake-out or equivalent method; (2) RCD test results — operating time at IΔn (must be ≤ 300 ms for general use or ≤ 40 ms at 1×IΔn for additional protection); (3) the calculated touch voltage RA × IΔn against the 50 V limit; (4) test instrument serial number and last calibration date. The complete record proves the install satisfies Reg 411.5 and gives the periodic inspector a baseline to compare against in 5 years.',
   },

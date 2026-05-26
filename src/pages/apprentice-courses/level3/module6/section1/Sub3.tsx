@@ -39,12 +39,12 @@ const checks = [
     question:
       'A homeowner asks you to add a single new socket in an existing bedroom (not in a special location). Is the work notifiable under Part P in England?',
     options: [
-      'Yes — every new electrical work item is notifiable.',
+      'To facilitate a structured conversation between the parties, helping them understand each other\\\\\\\\\\\\\\\'s perspectives and reach a mutually acceptable resolution',
+      'Cutting containment (trunking, basket tray, conduit), making openings in plasterboard, cutting cable tray, and general cutting tasks where a hacksaw would be too slow',
       'No — adding accessories to an existing circuit (without a new circuit) outside special locations is non-notifiable. The work still must comply with BS 7671 and produce a Minor Works Certificate.',
-      'Yes — Part P covers all new fittings.',
-      'Only if the customer asks for a certificate.',
+      'A SINGLE AC test at 1×IΔn — measured trip time must be within published maximum (BS EN 61008/61009: 300ms general purpose). 5×IΔn was DELETED',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Part P (England) was scaled back in 2013. Notifiable work is now: installation of a new circuit; replacement of a consumer unit; or any addition or alteration to existing circuits in a special location (bathroom zones, swimming pool, sauna). Adding accessories to an existing circuit outside a special location is non-notifiable, but a Minor Works Certificate (MWC) is still required to certify safety and compliance. Notification routes are: self-certify via a registered competent-person scheme (NICEIC, NAPIT, ELECSA), or formally notify Building Control before commencement.",
   },
@@ -53,12 +53,12 @@ const checks = [
     question:
       'Part L of the Building Regulations principally drives which design decision for the L3 electrician?',
     options: [
-      'Cable colour codes.',
+      'Genuine diagnostic work that cannot be done dead, by a competent person, with appropriate PPE/test kit and a justified plan — and even then, isolate as much as possible',
+      'Loss of one phase (in TPN supply), tripped MCB/RCBO, loose connection at a feeder, line conductor break in a junction box or pendant, and accidental switching off',
       'Energy efficiency — primarily lighting (lux levels and luminaire efficacy), heating control (thermostats and zoning), and increasingly EV / PV / battery / heat pump readiness in new dwellings (Future Homes Standard).',
-      'AFDD specifications.',
-      'Earth electrode design.',
+      'Annual leak check by F-Gas-certified personnel where charge ≥ 5 tonnes CO₂e, or every 2 years where charge < 5 tonnes; frequencies double if a leak detection system is installed and operational',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Part L covers conservation of fuel and power. The electrical design touches it through: efficient lighting (luminaire efficacy floors, controls, occupancy sensing), heating zoning and controls (thermostats per zone, time programs), and increasingly low-carbon-ready provisions — EV charging point per new dwelling (Approved Document S, 2022), PV and battery enabling provisions, and the Future Homes Standard 2025 push for heat-pump-ready electrical infrastructure. AFDD specs sit under BS 7671 (Reg 421.1.7), not Part L directly.",
   },
@@ -67,12 +67,12 @@ const checks = [
     question:
       'A residential building is 22 m tall (8 storeys) with a single staircase. Under the Building Safety Act 2022, what does this mean for the electrical designer?',
     options: [
-      'Nothing changes from a typical commercial design.',
+      'Because electronics with capacitive or low-impedance protection paths (SPDs, LED driver capacitors, EMC filters in inverters) will either short the test signal (giving a false low reading) or be destroyed by the 500 V DC stress they were never designed to withstand.',
+      'A formal procedure resulting from systematic examination of a task to identify hazards, define safe methods to eliminate or minimise those hazards. Documented in the Method Statement portion of RAMS. Permits-to-work are a specific form of SSoW for high-hazard activity.',
       'The building is a higher-risk residential building (HRRB). Design competence floor is higher (typically HNC/HND or degree, demonstrable CPD, scheme membership), the design must form part of the golden thread of building safety information that survives the building lifetime, and AFDDs are likely to harden from recommended to required for final circuits.',
-      'Only the cladding is regulated.',
-      'The Building Safety Regulator only audits at handover.',
+      'NICEIC scheme action — non-conformance notice, possible suspension, possible removal from the scheme. Removal from the CPS means: no more self-certification under Part P, customers\\\' insurance defences weakened, marketing claims (logo, badge) withdrawn, and frequently insurer-driven loss of public liability cover. The job stays civil, but the firm\\\'s ability to trade collapses.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The BSA 2022 defines HRRBs as residential buildings 18 m or more in height OR 7 or more storeys, with at least 2 residential units. The Act introduces the Building Safety Regulator, gateway approvals before construction can proceed, a duty-holder regime that makes designers and contractors specifically accountable, and the golden thread — a digital, structured record of design decisions and safety-critical information that must be maintained for the lifetime of the building. AFDD wording in BS 7671 is recommending today; on HRRBs the expectation is hardening rapidly.",
   },
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'Part P of the Building Regulations applies to which type of premises in England?',
     options: [
-      'All commercial premises.',
+      'A structured model such as: What happened? → What did I think/feel? → What was good/bad about the experience? → What have I learned? → What will I do differently next time?',
       'Dwellings (including any common parts of a dwelling, gardens, sheds and outbuildings of a dwelling, but NOT commercial or industrial premises).',
-      'Industrial premises only.',
-      'All buildings.',
+      'Isolate the electrical supply if it can be done quickly and safely, or use a non-conducting object to separate them from the source',
+      'Sufficient technical knowledge, experience, and (where lacking) appropriate supervision — proportionate to the work',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which work in a dwelling IS notifiable under Part P (England)?',
     options: [
-      'Replacing a damaged socket in a bedroom.',
+      'Tubes contain mercury vapour and phosphor powder — both regulated as hazardous; ventilate, don’t sweep up dry, double-bag',
+      'Recorded to the resolution displayed by the instrument and compared against design values (and BS 7671 maxima) BEFORE leaving site',
       'Replacing the consumer unit, installing a new circuit, or any addition or alteration in a special location (bathroom zones 0/1/2, swimming pool, sauna).',
-      'Replacing a light fitting.',
-      'Replacing a fuse in a plug.',
+      'Machine-produced, durable, securely fixed, clearly legible and resistant to the environmental conditions at the point of installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Three categories of notifiable work in dwellings (England): (1) new circuit, (2) consumer unit replacement, (3) any addition or alteration in a special location. Notification is via a competent-person scheme (self-certification) or formal Building Control notification before work starts.",
   },
@@ -109,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'A Minor Works Certificate is required for:',
     options: [
-      'Only new circuits.',
+      'Minimise disruption, keep the work area tidy, explain what you are doing if asked, and be courteous and professional at all times',
+      'Detection throughout all areas of the building for the purpose of protecting life — the highest category of life protection system',
+      'One month (extendable to three months for complex requests if the data subject is told of the extension within the first month)',
       'Any addition or alteration to an existing circuit that does not extend it to a new circuit — covers most non-notifiable work in dwellings AND the equivalent in commercial.',
-      'Consumer unit replacements only.',
-      'Fault-finding visits with no work.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "MWC documents non-notifiable additions or alterations to existing circuits. It is the entry-level BS 7671 certificate and applies in dwellings and in commercial premises. Anything that creates a new circuit or replaces a CU triggers an EIC, not an MWC.",
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     id: 4,
     question: 'The Future Homes Standard (England, 2025+) drives which electrical design changes in new dwellings?',
     options: [
-      'No change.',
       'Heat-pump-ready electrical infrastructure (typically a 16-32 A radial spare way), EV charging provision (Approved Document S), PV and battery enabling (capped cables, suitably sized supply), and zero gas connections from 2025 in many new builds.',
-      'Mandatory three-phase supplies.',
-      'Removal of ring final circuits.',
+      'Because in a broken-PEN fault on PME, the entire installation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s neutral return current can flow back to ground via the bonding to extraneous-conductive-parts (gas, water, structural steel). Sizing against the PEN ensures the bonding conductor doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t melt before it is reset.',
+      'Behave professionally, maintain confidentiality about internal matters, never criticise colleagues or competitors, only promise what the firm can deliver and refer complex issues to the right person rather than guess. You\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s public face on every call.',
+      'It continuously monitors the insulation resistance between the live DC conductors and earth, throughout the life of the array. A drop in insulation (a damaged cable, water in a connector) triggers an alarm or shuts down the inverter — catching insulation faults before they become DC arcing fires.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Future Homes Standard 2025 raises the energy-efficiency floor for new dwellings. Practically: gas heating is phased out in favour of heat pumps; new dwellings need EV charging provision per Approved Document S (typically a 7 kW charger or bonded provision); PV is widely expected; battery storage provisions are increasingly common. The designer must size the supply, the CU and the cable infrastructure for these end-state loads even when only some are installed at handover.",
   },
@@ -135,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'The Building Safety Act 2022 defines a higher-risk residential building (HRRB) as:',
     options: [
-      'Any building over 4 storeys.',
+      'PPE shouldn’t replace a higher control like isolation — gloves are the BACKSTOP, not the plan',
       'A residential building of at least 18 m in height OR at least 7 storeys, AND containing at least 2 residential units.',
-      'Any care home.',
-      'Any building with a balcony.',
+      'Yes — Local Authority enforcement officers have similar powers of entry under HASAWA s.20 for premises they enforce',
+      'All employers and workers — failure to follow it can affect tribunal awards in unfair dismissal and similar claims',
     ],
     correctAnswer: 1,
     explanation:
@@ -148,12 +148,12 @@ const quizQuestions = [
     id: 6,
     question: 'The "golden thread" of building safety information requires:',
     options: [
-      'A printed manual at handover.',
+      'To provide all information needed to safely operate, maintain, and modify the installation, including as-built drawings, equipment data sheets, test certificates, and maintenance schedules',
+      'Carry out the EICR based on what is on site. The EICR stands on its own — measurements and inspection findings against current BS 7671 standards. Note the absence of historical documentation as an observation in the report.',
       'A digital, structured record of design decisions, materials, products and safety-critical information that is created at design stage, maintained through construction, and handed over to the Accountable Person for the lifetime of the building.',
-      'Just the EIC.',
-      'A handwritten log book.',
+      'An ELCB detects voltage on the earthing conductor rather than current imbalance, so the test method and acceptance criteria are different from those for current-operated RCDs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The golden thread is the BSA 2022 mechanism for ensuring design and construction information is not lost over decades. For HRRBs it must be digital, structured, searchable, and maintained by the Accountable Person. The L3 designer contributes the design pack (Reg 132.13 documentation in BS 7671 terms) into the golden thread at design gateway approval and at handover.",
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     id: 7,
     question: 'You are designing a CU upgrade in a dwelling. Which of the following triggers Part P notification?',
     options: [
-      'Adding a fused spur.',
+      'Ib = P / (sqrt(3) x VL x cos φ) — three-phase line current uses sqrt(3) (1.732), line-to-line voltage VL (typically 400 V in UK LV), and power factor.',
+      'SAP/SBEM calculations, EPC, commissioning certificates, and operating instructions',
+      'The vertical frame that connects across the width of the tower, incorporating the rungs for climbing',
       'Replacing the consumer unit. This is one of the three notifiable categories regardless of any other work being done.',
-      'Replacing a light switch.',
-      'Replacing a damaged faceplate.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Consumer unit replacement is always notifiable in dwellings (England). Notify via competent-person scheme self-certification or Building Control before starting. The customer’s certificate (DESC or equivalent) is an additional output beyond the EIC.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     id: 8,
     question: 'For an HRRB, the Building Safety Regulator gateway approvals are:',
     options: [
-      'One gateway at handover.',
       'Three gateways: Gateway 1 at planning, Gateway 2 before construction begins (full design submitted), Gateway 3 before occupation. Each must demonstrate BSR sign-off.',
-      'No gateways — light-touch regime.',
-      'Six annual gateways for the building lifetime.',
+      'Trait EI models measure self-perceived emotional competencies through questionnaires, while ability EI models measure actual performance on emotion-related tasks',
+      'Breaking the entire task down into individual sequential steps, each describing a specific activity, the hazards present during that step, and the controls to be applied',
+      'Physical dependence can develop quickly, withdrawal can be dangerous, and combining them with alcohol or opioids can be fatal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Three gateways under the BSA 2022: Gateway 1 (planning), Gateway 2 (construction approval — design must be sufficiently detailed for the BSR to approve before any work starts), Gateway 3 (occupation approval — completed building must match the approved design and meet safety case). The L3 electrical design is part of the Gateway 2 submission for HRRBs and is signed off by the BSR.",
   },

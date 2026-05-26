@@ -28,8 +28,13 @@ const Module6Section2_1 = () => {
     {
       id: 2,
       question: 'Which regulation outlines cable routing safe zones?',
-      options: ['BS 5839', 'BS 7671', 'Building Regs Part L', 'BS 6004'],
-      correctAnswer: 1,
+      options: [
+        'Building Regs Part L',
+        'BS 5839',
+        'BS 7671',
+        'BS 6004',
+      ],
+      correctAnswer: 2,
       explanation:
         'BS 7671 (The IET Wiring Regulations) specifies the safe zones for cable installation in walls, floors, and ceilings.',
     },
@@ -37,12 +42,12 @@ const Module6Section2_1 = () => {
       id: 3,
       question: 'Name two defects to look for on socket outlets.',
       options: [
-        'Colour and size',
-        'Cracks and scorch marks',
         'Brand and model',
+        'Colour and size',
         'Age and warranty',
+        'Cracks and scorch marks',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Physical damage like cracks and signs of overheating such as scorch marks indicate potential safety hazards that must be addressed.',
     },
@@ -50,12 +55,12 @@ const Module6Section2_1 = () => {
       id: 4,
       question: 'True or False: Minor scratches on accessories must always be recorded.',
       options: [
-        'True - all defects must be recorded',
         'False - only safety-affecting defects',
+        'True - all defects must be recorded',
         'True - for insurance purposes',
         'False - scratches are acceptable',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         "Only defects that affect safety, functionality, or compliance need to be recorded. Minor cosmetic issues that don't impact safety are not required to be documented.",
     },
@@ -63,12 +68,12 @@ const Module6Section2_1 = () => {
       id: 5,
       question: 'What safety device must be present in bathrooms and outdoor circuits?',
       options: [
-        'MCB (Miniature Circuit Breaker)',
         'RCBO (RCD + MCB combined)',
         'RCD (Residual Current Device)',
         'SPD (Surge Protection Device)',
+        'MCB (Miniature Circuit Breaker)',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'RCDs are mandatory in bathrooms and outdoor circuits to provide additional protection against electric shock in higher-risk environments.',
     },
@@ -90,11 +95,11 @@ const Module6Section2_1 = () => {
       question: 'Why should earthing conductors be inspected?',
       options: [
         'To check conductor size',
-        'To ensure safety and compliance',
-        'To verify insulation colour',
         'To measure resistance',
+        'To verify insulation colour',
+        'To ensure safety and compliance',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Earthing conductors are critical for safety, providing a path for fault currents and ensuring effective operation of protective devices.',
     },
@@ -102,12 +107,12 @@ const Module6Section2_1 = () => {
       id: 8,
       question: 'At what stage should visual inspections be carried out?',
       options: [
-        'After all testing is complete',
         'Before any testing or energising',
         'Only during commissioning',
+        'After all testing is complete',
         'When faults are suspected',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Visual inspection must be the first step, carried out before any electrical testing or energising to identify obvious hazards and defects safely.',
     },
@@ -127,7 +132,12 @@ const Module6Section2_1 = () => {
     {
       id: 10,
       question: 'What tool is essential for ensuring no stage of inspection is missed?',
-      options: ['Multimeter', 'Insulation tester', 'A checklist', 'RCD tester'],
+      options: [
+        'Multimeter',
+        'Insulation tester',
+        'A checklist',
+        'RCD tester',
+      ],
       correctAnswer: 2,
       explanation:
         'A systematic checklist ensures all required inspection points are covered and nothing is overlooked during the visual inspection process.',

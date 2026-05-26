@@ -26,8 +26,13 @@ const quickCheckQuestions = [
   {
     id: 'pt100-resistance',
     question: 'What is the resistance of a Pt100 sensor at 0 degrees C?',
-    options: ['10 ohms', '100 ohms', '1000 ohms', '10000 ohms'],
-    correctIndex: 1,
+    options: [
+      '1000 ohms',
+      '10000 ohms',
+      '100 ohms',
+      '10 ohms',
+    ],
+    correctIndex: 2,
     explanation:
       "Pt100 means platinum with 100 ohms resistance at 0 degrees C. The 'Pt' indicates platinum and '100' indicates the resistance at the ice point (0 degrees C). At 100 degrees C, the resistance is approximately 138.5 ohms.",
   },
@@ -35,12 +40,12 @@ const quickCheckQuestions = [
     id: 'ntc-behaviour',
     question: 'How does an NTC thermistor behave as temperature increases?',
     options: [
-      'Resistance increases linearly',
-      'Resistance decreases',
-      'Resistance stays constant',
       'Resistance increases exponentially',
+      'Resistance stays constant',
+      'Resistance decreases',
+      'Resistance increases linearly',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'NTC (Negative Temperature Coefficient) thermistors decrease in resistance as temperature rises. This non-linear characteristic makes them highly sensitive but requires linearisation in the BMS for accurate readings.',
   },
@@ -48,20 +53,25 @@ const quickCheckQuestions = [
     id: '4-20ma-advantage',
     question: 'What is the main advantage of 4-20mA signals over 0-10V signals?',
     options: [
-      'Lower cost',
-      'Simpler wiring',
       'Immunity to cable resistance and noise',
-      'Higher resolution',
+      'Direction of induced current',
+      'Pushing is generally safer than pulling',
+      'Listen, Empathise, Ask, Paraphrase, Summarise',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       '4-20mA current loop signals are immune to cable resistance effects and electrical noise. The current remains constant throughout the loop regardless of cable length, and the 4mA zero point allows fault detection (0mA indicates a broken wire).',
   },
   {
     id: 'calibration-frequency',
     question: 'How often should critical HVAC sensors typically be calibrated?',
-    options: ['Every month', 'Every 6-12 months', 'Every 5 years', 'Only when faulty'],
-    correctIndex: 1,
+    options: [
+      'Every 6-12 months',
+      'Every month',
+      'Only when faulty',
+      'Every 5 years',
+    ],
+    correctIndex: 0,
     explanation:
       'Critical HVAC sensors should typically be calibrated every 6-12 months depending on the application criticality. Sensors in critical environments such as laboratories or cleanrooms may require more frequent calibration. Calibration records must be maintained for compliance.',
   },
@@ -71,15 +81,25 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What type of temperature sensor uses the Seebeck effect to generate a voltage?',
-    options: ['Pt100 RTD', 'NTC thermistor', 'Thermocouple', 'Pt1000 RTD'],
-    correctAnswer: 2,
+    options: [
+      'Pt100 RTD',
+      'Thermocouple',
+      'NTC thermistor',
+      'Pt1000 RTD',
+    ],
+    correctAnswer: 1,
     explanation:
       'Thermocouples use the Seebeck effect - when two dissimilar metals are joined and heated, a voltage is generated proportional to the temperature difference. Type K (chromel-alumel) and Type J (iron-constantan) are common in HVAC applications.',
   },
   {
     id: 2,
     question: 'A Pt1000 sensor has what resistance at 0 degrees C?',
-    options: ['100 ohms', '500 ohms', '1000 ohms', '10000 ohms'],
+    options: [
+      '10000 ohms',
+      '100 ohms',
+      '1000 ohms',
+      '500 ohms',
+    ],
     correctAnswer: 2,
     explanation:
       'Pt1000 sensors have 1000 ohms resistance at 0 degrees C. They offer 10 times the resistance change of Pt100 sensors, making them less susceptible to cable resistance errors over long cable runs.',
@@ -89,12 +109,12 @@ const quizQuestions = [
     question:
       'Which humidity sensor type measures the change in capacitance with moisture content?',
     options: [
-      'Resistive humidity sensor',
-      'Capacitive humidity sensor',
       'Thermal conductivity sensor',
+      'Resistive humidity sensor',
       'Psychrometric sensor',
+      'Capacitive humidity sensor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Capacitive humidity sensors use a polymer dielectric that absorbs moisture, changing the capacitance. They are the most common type in HVAC applications due to good accuracy (typically plus or minus 2-3% RH), stability and cost-effectiveness.',
   },
@@ -102,12 +122,12 @@ const quizQuestions = [
     id: 4,
     question: 'What does a differential pressure sensor measure in a VAV system?',
     options: [
-      'Room temperature',
       'Airflow rate via pressure drop across a flow station',
-      'Refrigerant charge',
-      'Motor speed',
+      'Plan equipment use and resolve potential conflicts',
+      'Verify the generator is isolated and cannot start automatically',
+      'Protective device may not operate quickly enough',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'In VAV systems, differential pressure sensors measure the pressure drop across a flow measuring station (such as a Pitot tube array). This pressure difference is proportional to the square of the airflow velocity, allowing airflow calculation.',
   },
@@ -115,16 +135,26 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the typical measurement range for a duct CO2 sensor in a ventilation system?',
-    options: ['0-100 ppm', '0-500 ppm', '0-2000 ppm', '0-10000 ppm'],
-    correctAnswer: 2,
+    options: [
+      '0-500 ppm',
+      '0-2000 ppm',
+      '0-10000 ppm',
+      '0-100 ppm',
+    ],
+    correctAnswer: 1,
     explanation:
       'Duct CO2 sensors typically measure 0-2000 ppm for demand-controlled ventilation. Outdoor air is around 400 ppm, and occupied spaces should be maintained below 1000 ppm (800 ppm above outdoor) for good air quality per CIBSE guidelines.',
   },
   {
     id: 6,
     question: 'A 4-20mA signal reading 12mA represents what percentage of the measured range?',
-    options: ['30%', '50%', '60%', '75%'],
-    correctAnswer: 1,
+    options: [
+      '30%',
+      '60%',
+      '50%',
+      '75%',
+    ],
+    correctAnswer: 2,
     explanation:
       'For 4-20mA signals: 4mA = 0%, 20mA = 100%. The span is 16mA. At 12mA: (12-4)/16 = 8/16 = 50% of the measured range.',
   },
@@ -133,12 +163,12 @@ const quizQuestions = [
     question:
       'Which sensor type is most suitable for measuring chilled water flow rate in a large AHU?',
     options: [
-      'Orifice plate',
+      'Conduction, convection, radiation',
+      'Output (V1 × I1 = V2 × I2)',
+      'Energy Use Intensity (EUI)',
       'Electromagnetic flow meter',
-      'Turbine flow meter',
-      'Thermal mass flow meter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Electromagnetic flow meters are ideal for chilled water as they have no moving parts, cause minimal pressure drop, and work well with conductive liquids. They provide accurate readings across a wide flow range and are suitable for large pipe diameters.',
   },
@@ -147,12 +177,12 @@ const quizQuestions = [
     question:
       'What is the typical accuracy specification for a building services grade temperature sensor?',
     options: [
-      'Plus or minus 0.01 degrees C',
       'Plus or minus 0.1 to 0.3 degrees C',
       'Plus or minus 1 to 2 degrees C',
+      'Plus or minus 0.01 degrees C',
       'Plus or minus 5 degrees C',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Building services grade temperature sensors typically have accuracy of plus or minus 0.1 to 0.3 degrees C (Class A or Class B RTDs). This is sufficient for HVAC control where setpoint dead bands are usually 0.5 to 1 degrees C.',
   },
@@ -160,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'Why is three-wire configuration preferred for Pt100 sensors over two-wire?',
     options: [
-      'It is cheaper to install',
+      'Plus or minus 0.1 to 0.3 degrees C',
       'It compensates for cable resistance',
-      'It provides faster response time',
-      'It uses less power',
+      'Capacitive humidity sensor',
+      'Electromagnetic flow meter',
     ],
     correctAnswer: 1,
     explanation:
@@ -173,10 +203,10 @@ const quizQuestions = [
     id: 10,
     question: 'What parameter does an ultrasonic flow meter measure to calculate flow rate?',
     options: [
-      'Pressure difference',
-      'Temperature change',
+      'Raise temperature without adding moisture',
+      'RCD test gives inconsistent results',
       'Transit time difference of sound waves',
-      'Magnetic field distortion',
+      'Inform the supervisor immediately',
     ],
     correctAnswer: 2,
     explanation:
@@ -186,12 +216,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the purpose of a sensor averaging element in a large duct?',
     options: [
-      'To increase signal voltage',
+      'High starting torque of series and good speed regulation of shunt',
+      'Upstream devices to wait for downstream to clear faults',
+      'To ensure medical equipment and procedures can continue during power failures',
       'To measure temperature at multiple points and provide a representative average',
-      'To filter electrical noise',
-      'To reduce installation cost',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Sensor averaging elements (typically 3m or 6m long) measure temperature at multiple points across a duct cross-section. This provides a representative average reading in applications where temperature stratification may occur, such as after mixing boxes or coils.',
   },
@@ -199,7 +229,12 @@ const quizQuestions = [
     id: 12,
     question:
       'A pressure transducer with 0.25% FS accuracy measuring 0-10 bar has what maximum error?',
-    options: ['0.025 bar', '0.25 bar', '2.5 bar', '0.0025 bar'],
+    options: [
+      '0.025 bar',
+      '0.0025 bar',
+      '2.5 bar',
+      '0.25 bar',
+    ],
     correctAnswer: 0,
     explanation:
       'Full Scale (FS) accuracy means the error is a percentage of the full measurement range. 0.25% of 10 bar = 0.025 bar maximum error, regardless of the actual reading. This is why sensors should be sized appropriately for the expected measurement range.',

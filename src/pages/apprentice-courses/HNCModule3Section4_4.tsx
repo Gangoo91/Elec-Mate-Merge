@@ -32,7 +32,12 @@ const quickCheckQuestions = [
   {
     id: 'three-phase-power-formula',
     question: 'What is the formula for three-phase real power?',
-    options: ['P = VL × IL', 'P = 3 × VL × IL', 'P = √3 × VL × IL × cos φ', 'P = VL × IL × cos φ'],
+    options: [
+      'P = VL × IL',
+      'P = 3 × VL × IL',
+      'P = √3 × VL × IL × cos φ',
+      'P = VL × IL × cos φ',
+    ],
     correctIndex: 2,
     explanation:
       'Three-phase real power P = √3 × VL × IL × cos φ, where VL is line voltage, IL is line current, and cos φ is the power factor. The √3 factor accounts for the 120° phase displacement between phases.',
@@ -40,8 +45,13 @@ const quickCheckQuestions = [
   {
     id: 'apparent-power',
     question: 'A three-phase load draws 100A at 400V. What is the apparent power?',
-    options: ['40 kVA', '69.3 kVA', '120 kVA', '173 kVA'],
-    correctIndex: 1,
+    options: [
+      '69.3 kVA',
+      '40 kVA',
+      '120 kVA',
+      '173 kVA',
+    ],
+    correctIndex: 0,
     explanation:
       'Apparent power S = √3 × VL × IL = 1.732 × 400 × 100 = 69,280 VA = 69.3 kVA. This is the total power supplied, before considering power factor.',
   },
@@ -49,20 +59,25 @@ const quickCheckQuestions = [
     id: 'power-factor-meaning',
     question: 'What does a power factor of 0.8 lagging indicate?',
     options: [
-      'The load is purely resistive',
-      'Current leads voltage by 36.87°',
       'Current lags voltage by 36.87° (inductive load)',
+      'Current leads voltage by 36.87°',
+      'The load is purely resistive',
       '20% of power is wasted as heat',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "A power factor of 0.8 lagging means cos φ = 0.8, so φ = 36.87°. 'Lagging' indicates an inductive load where current lags behind voltage - typical of motors and transformers.",
   },
   {
     id: 'two-wattmeter-reading',
     question: 'In the two-wattmeter method, if W1 = 50kW and W2 = 30kW, what is the total power?',
-    options: ['20 kW', '40 kW', '80 kW', '150 kW'],
-    correctIndex: 2,
+    options: [
+      '80 kW',
+      '150 kW',
+      '40 kW',
+      '20 kW',
+    ],
+    correctIndex: 0,
     explanation:
       'Total three-phase power P = W1 + W2 = 50 + 30 = 80 kW. The two-wattmeter method gives total power as the algebraic sum of both readings.',
   },
@@ -73,7 +88,12 @@ const quizQuestions = [
     id: 1,
     question:
       'What is the relationship between apparent power (S), real power (P), and reactive power (Q)?',
-    options: ['S = P + Q', 'S² = P² + Q²', 'S = P × Q', 'S = P - Q'],
+    options: [
+      'S = P + Q',
+      'S² = P² + Q²',
+      'S = P × Q',
+      'S = P - Q',
+    ],
     correctAnswer: 1,
     explanation:
       'The power triangle relationship is S² = P² + Q², or S = √(P² + Q²). Apparent power is the vector sum of real and reactive power, not their arithmetic sum.',
@@ -82,8 +102,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A 75kW three-phase motor operates at 0.85 power factor on 400V. What is the line current?',
-    options: ['108A', '127A', '150A', '220A'],
-    correctAnswer: 1,
+    options: [
+      '150A',
+      '108A',
+      '127A',
+      '220A',
+    ],
+    correctAnswer: 2,
     explanation:
       'Using P = √3 × VL × IL × cos φ: IL = P / (√3 × VL × cos φ) = 75,000 / (1.732 × 400 × 0.85) = 75,000 / 588.9 = 127.4A',
   },
@@ -91,8 +116,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the reactive power drawn by a load with 100kVA apparent power and 0.8 power factor?',
-    options: ['20 kVAr', '60 kVAr', '80 kVAr', '125 kVAr'],
-    correctAnswer: 1,
+    options: [
+      '80 kVAr',
+      '20 kVAr',
+      '125 kVAr',
+      '60 kVAr',
+    ],
+    correctAnswer: 3,
     explanation:
       'Using S² = P² + Q²: P = S × pf = 100 × 0.8 = 80kW. Q = √(S² - P²) = √(100² - 80²) = √3600 = 60 kVAr',
   },
@@ -100,12 +130,12 @@ const quizQuestions = [
     id: 4,
     question: 'Why do electricity suppliers penalise consumers with poor power factor?',
     options: [
-      'Poor power factor causes more harmonics',
       'It increases the current for a given real power, stressing infrastructure',
-      'It causes voltage spikes in the network',
-      'Low power factor increases energy consumption',
+      'Tracking how you spend your time over a period to identify patterns',
+      'Circuit diagrams, equipment manuals, and previous test records',
+      'Inventory tracking, usage monitoring, reorder points, and waste minimisation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Poor power factor means higher current is required to deliver the same real power. This increases I²R losses in cables and transformers, and requires larger capacity infrastructure - costs the supplier bears.',
   },
@@ -115,8 +145,8 @@ const quizQuestions = [
     options: [
       'The wattmeter is faulty',
       'Power factor is below 0.5',
-      'The load is unbalanced',
       'There is a phase reversal',
+      'The load is unbalanced',
     ],
     correctAnswer: 1,
     explanation:
@@ -126,16 +156,26 @@ const quizQuestions = [
     id: 6,
     question:
       'A commercial building has a maximum demand of 250kVA. If the power factor is improved from 0.7 to 0.95, what is the new kVA demand for the same kW load?',
-    options: ['184 kVA', '238 kVA', '175 kVA', '263 kVA'],
-    correctAnswer: 0,
+    options: [
+      '175 kVA',
+      '238 kVA',
+      '184 kVA',
+      '263 kVA',
+    ],
+    correctAnswer: 2,
     explanation:
       'Original kW = 250 × 0.7 = 175kW. With improved pf: New kVA = 175 / 0.95 = 184.2 kVA. Power factor correction reduces apparent power demand by 26%.',
   },
   {
     id: 7,
     question: 'What is the power factor of a purely resistive three-phase load?',
-    options: ['0', '0.85', '1.0', '1.732'],
-    correctAnswer: 2,
+    options: [
+      '0',
+      '0.85',
+      '1.732',
+      '1.0',
+    ],
+    correctAnswer: 3,
     explanation:
       'A purely resistive load has no reactive component - current and voltage are in phase. Therefore cos φ = cos 0° = 1.0 (unity power factor).',
   },
@@ -143,7 +183,12 @@ const quizQuestions = [
     id: 8,
     question:
       'A 500kVA transformer supplies a building at 0.8 power factor. What is the maximum real power available?',
-    options: ['400 kW', '500 kW', '625 kW', '300 kW'],
+    options: [
+      '400 kW',
+      '625 kW',
+      '300 kW',
+      '500 kW',
+    ],
     correctAnswer: 0,
     explanation:
       "Real power P = S × pf = 500 × 0.8 = 400kW. The transformer is rated in kVA because it must handle both real and reactive power - the actual kW depends on the load's power factor.",
@@ -152,12 +197,12 @@ const quizQuestions = [
     id: 9,
     question: 'What is the formula for calculating power factor from two-wattmeter readings?',
     options: [
-      'pf = W1 / W2',
-      'pf = (W1 - W2) / (W1 + W2)',
+      'Only if operation button present',
       'tan φ = √3(W1 - W2) / (W1 + W2)',
-      'pf = (W1 + W2) / √3',
+      'When disconnection times cannot be met',
+      'To provide earth fault protection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The power factor angle can be found from tan φ = √3(W1 - W2) / (W1 + W2). Then pf = cos φ. This allows power factor measurement without separate instrumentation.',
   },
@@ -165,8 +210,13 @@ const quizQuestions = [
     id: 10,
     question:
       "A factory's maximum demand is 800kW at 0.75 power factor. How much capacitive kVAr is needed to improve pf to 0.95?",
-    options: ['350 kVAr', '440 kVAr', '530 kVAr', '266 kVAr'],
-    correctAnswer: 0,
+    options: [
+      '266 kVAr',
+      '440 kVAr',
+      '350 kVAr',
+      '530 kVAr',
+    ],
+    correctAnswer: 2,
     explanation:
       'Original Q1 = P × tan(cos⁻¹ 0.75) = 800 × 0.882 = 705.6 kVAr. Target Q2 = 800 × tan(cos⁻¹ 0.95) = 800 × 0.329 = 263.2 kVAr. Capacitor kVAr = 705.6 - 263.2 = 442.4 kVAr ≈ 440 kVAr',
   },

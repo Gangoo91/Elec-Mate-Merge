@@ -6,11 +6,11 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     question: 'Where must single-pole switches and fuses be connected?',
     options: [
       'Neutral conductor only',
-      'Line conductor only',
       'Either line or neutral',
+      'Line conductor only',
       'Protective conductor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Single-pole devices must be connected in the LINE conductor only to ensure safe isolation when the switch is open.',
     category: 'Polarity Testing',
@@ -22,11 +22,11 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     question: 'On an Edison screw lampholder, which contact should be connected to line?',
     options: [
       'The outer screw shell',
-      'The centre contact',
-      'Either contact',
       'The earth terminal',
+      'Either contact',
+      'The centre contact',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The centre contact must be connected to line. The outer screw shell connects to neutral for safety (except E14/E27 to BS EN 60238).',
     category: 'Polarity Testing',
@@ -37,12 +37,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-3',
     question: 'When should polarity be verified?',
     options: [
-      'Only on three-phase circuits',
       'Before connection to supply on ALL circuits',
-      'Only on lighting circuits',
-      'After the installation is energised',
+      'Appliances may not be safely isolated by their switches',
+      'To ensure safe operation before energising',
+      'Check both line AND neutral are switched',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Polarity must be verified on ALL circuits before connection to supply to ensure correct and safe operation.',
     category: 'Polarity Testing',
@@ -52,7 +52,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-4',
     question: 'What instrument is used for polarity testing on dead circuits?',
-    options: ['Voltage tester', 'Ohmmeter or continuity tester', 'Clamp meter', 'RCD tester'],
+    options: [
+      'All switches and the light fitting',
+      'Ohmmeter or continuity tester',
+      'Specific LED pattern indicating fault',
+      'Continuity of protective conductors',
+    ],
     correctAnswer: 1,
     explanation:
       'An ohmmeter or the continuity range of an insulation/continuity tester is used for polarity testing on isolated circuits.',
@@ -64,12 +69,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-5',
     question: 'Why must polarity be checked at ALL points in an installation?',
     options: [
-      'To save time',
+      'Incorrect wiring at a junction box or accessory',
+      'Check both line AND neutral are switched',
       'To detect crossed conductors at junction boxes',
-      'To check cable colours',
-      'To measure voltage',
+      'Low resistance between expected conductors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Checking at all points detects crossed polarity that may occur at junction boxes, accessories, or intermediate connections.',
     category: 'Polarity Testing',
@@ -81,12 +86,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     question:
       'What should be done with other lamps on a circuit when testing polarity at a lampholder?',
     options: [
-      'Leave them connected',
+      'C2 - Potentially dangerous',
+      'The centre contact',
+      'Right terminal (looking at face)',
       'Remove or disconnect them',
-      'Add more lamps',
-      'Turn them on',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Remove all other lamps as they may provide a conductive path between line and neutral, giving misleading continuity readings.',
     category: 'Polarity Testing',
@@ -96,8 +101,13 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-7',
     question: 'What colour is the line conductor in modern UK wiring?',
-    options: ['Blue', 'Brown', 'Green/Yellow', 'Black'],
-    correctAnswer: 1,
+    options: [
+      'Brown',
+      'Blue',
+      'Green/Yellow',
+      'Black',
+    ],
+    correctAnswer: 0,
     explanation:
       'In modern harmonised colours, brown is line (live), blue is neutral, and green/yellow is earth.',
     category: 'Polarity Testing',
@@ -107,7 +117,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-8',
     question: 'What was the line conductor colour in old UK wiring?',
-    options: ['Brown', 'Red', 'Blue', 'Green'],
+    options: [
+      'Brown',
+      'Red',
+      'Blue',
+      'Green',
+    ],
     correctAnswer: 1,
     explanation:
       'In old UK colours, red was line (live), black was neutral, and green (or bare) was earth.',
@@ -119,12 +134,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-9',
     question: 'How can polarity also be verified during testing?',
     options: [
-      'By measuring voltage only',
+      'Correct or incorrect polarity for each circuit',
+      'Before connection to supply on ALL circuits',
       'By visually checking core colours at terminations',
-      'By counting conductors',
-      'By measuring current',
+      'To ensure safe isolation when switches are open',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Visual inspection of conductor colours at terminations can confirm correct polarity alongside electrical testing.',
     category: 'Polarity Testing',
@@ -135,12 +150,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-10',
     question: 'What helps confirm polarity during continuity testing?',
     options: [
-      'Voltage measurement',
+      'By visually checking core colours at terminations',
+      'Incorrect wiring at a junction box or accessory',
       'Continuity tests as per sections 2.6.5 and 2.6.6',
-      'RCD operation',
-      'Insulation resistance',
+      'Correct line and neutral to isolating transformer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Continuity tests (R1+R2 testing) help confirm polarity by verifying the line and CPC are correctly identified.',
     category: 'Polarity Testing',
@@ -151,10 +166,10 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-11',
     question: 'What is the consequence of reversed polarity at a socket outlet?',
     options: [
-      'No problem - appliances work normally',
+      'Correct or incorrect polarity for each circuit',
       'Appliances may not be safely isolated by their switches',
-      'Increased power consumption',
-      'RCDs will not work',
+      'Continuity tests as per sections 2.6.5 and 2.6.6',
+      'Incorrect wiring at a junction box or accessory',
     ],
     correctAnswer: 1,
     explanation:
@@ -167,12 +182,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-12',
     question: 'Which terminal on a 13A socket outlet should be connected to line?',
     options: [
-      'Left terminal (looking at face)',
       'Right terminal (looking at face)',
-      'Top terminal',
-      'Bottom terminal',
+      'Blue with brown sleeving at terminations',
+      'Continuity of protective conductors',
+      'The outer shell becomes live',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The right terminal (when looking at the socket face) is the line terminal for UK 13A sockets.',
     category: 'Polarity Testing',
@@ -183,12 +198,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-13',
     question: 'What must be verified regarding socket outlets during polarity testing?',
     options: [
-      'Colour only',
+      'To detect crossed conductors at junction boxes',
+      'Continuity tests as per sections 2.6.5 and 2.6.6',
+      'Before connection to supply on ALL circuits',
       'Correct connection of non-reversible plugs and socket-outlets',
-      'Number of sockets',
-      'Socket brand',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Verify that non-reversible plugs and socket-outlets are correctly connected with line, neutral, and earth in correct positions.',
     category: 'Polarity Testing',
@@ -199,12 +214,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-14',
     question: 'In a lighting circuit, what happens if line and neutral are swapped?',
     options: [
-      'Light works normally with no safety issue',
+      'Correct line and neutral to isolating transformer',
+      'Incorrectly identifying existing conductors',
       'Light switch disconnects neutral instead of line',
-      'Light will not work',
-      'Bulbs burn out faster',
+      'Low resistance between expected conductors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The switch would disconnect neutral instead of line, leaving the lampholder live even when the switch is off - a serious safety hazard.',
     category: 'Polarity Testing',
@@ -215,10 +230,10 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-15',
     question: 'What is the purpose of the polarity test?',
     options: [
-      'To measure cable length',
+      'Continuity tests as per sections 2.6.5 and 2.6.6',
       'To ensure safe isolation when switches are open',
-      'To check fuse ratings',
-      'To measure earth resistance',
+      'Blue with brown sleeving at terminations',
+      'Light switch disconnects neutral instead of line',
     ],
     correctAnswer: 1,
     explanation:
@@ -231,12 +246,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-16',
     question: 'When testing polarity using continuity, what reading indicates correct connection?',
     options: [
-      'Infinite resistance',
       'Low resistance between expected conductors',
-      'High voltage',
-      'Zero voltage',
+      'Before connection to supply on ALL circuits',
+      'Incorrectly identifying existing conductors',
+      'Warning labels at each distribution board',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A low resistance reading between the expected conductors (e.g., DB line terminal to socket line terminal) confirms correct polarity.',
     category: 'Polarity Testing',
@@ -246,8 +261,13 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-17',
     question: 'What phase colours are used in UK three-phase systems?',
-    options: ['Red, Yellow, Blue', 'Brown, Black, Grey', 'Red, White, Blue', 'Brown, Blue, Green'],
-    correctAnswer: 1,
+    options: [
+      'Red, Yellow, Blue',
+      'Brown, Blue, Green',
+      'Red, White, Blue',
+      'Brown, Black, Grey',
+    ],
+    correctAnswer: 3,
     explanation:
       'Modern UK three-phase colours are Brown (L1), Black (L2), and Grey (L3), with blue neutral.',
     category: 'Polarity Testing',
@@ -258,12 +278,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-18',
     question: 'What could cause a polarity fault?',
     options: [
-      'Using the wrong fuse rating',
+      'To ensure safe isolation when switches are open',
+      'Contact with water and earth increases shock hazard',
       'Incorrect wiring at a junction box or accessory',
-      'High ambient temperature',
-      'Cable length too long',
+      'To detect crossed conductors at junction boxes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Polarity faults typically occur from incorrect wiring at junction boxes, accessories, or terminals where conductors are swapped.',
     category: 'Polarity Testing',
@@ -273,7 +293,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-19',
     question: 'For polarity testing, the circuit must be:',
-    options: ['Energised', 'Isolated and proved dead', 'Under load', 'Connected to a generator'],
+    options: [
+      'Energised',
+      'Isolated and proved dead',
+      'Under load',
+      'Connected to a generator',
+    ],
     correctAnswer: 1,
     explanation:
       'Polarity testing using continuity methods requires the circuit to be isolated and proved dead for safety.',
@@ -285,10 +310,10 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-20',
     question: 'What additional check confirms polarity on a live installation?',
     options: [
-      'Continuity test',
+      'Before connection to supply on ALL circuits',
       'Voltage measurement between line and earth',
-      'Insulation resistance',
-      'Ring circuit test',
+      'Continuity tests as per sections 2.6.5 and 2.6.6',
+      'Incorrect wiring at a junction box or accessory',
     ],
     correctAnswer: 1,
     explanation:
@@ -300,8 +325,13 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-21',
     question: 'What is the neutral conductor colour in modern UK single-phase wiring?',
-    options: ['Black', 'Blue', 'Brown', 'Grey'],
-    correctAnswer: 1,
+    options: [
+      'Black',
+      'Brown',
+      'Blue',
+      'Grey',
+    ],
+    correctAnswer: 2,
     explanation: 'Blue is the neutral conductor in modern harmonised colours.',
     category: 'Polarity Testing',
     difficulty: 'Beginner',
@@ -310,8 +340,13 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-22',
     question: 'What was the old UK colour for the neutral conductor?',
-    options: ['Blue', 'Red', 'Black', 'Yellow'],
-    correctAnswer: 2,
+    options: [
+      'Blue',
+      'Red',
+      'Yellow',
+      'Black',
+    ],
+    correctAnswer: 3,
     explanation: 'In old UK wiring colours, black was neutral and red was line.',
     category: 'Polarity Testing',
     difficulty: 'Beginner',
@@ -320,8 +355,13 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-23',
     question: 'Which regulation requires single-pole devices in the line conductor?',
-    options: ['Regulation 411.3.3', 'Regulation 132.14.1', 'Regulation 643.3', 'Regulation 701.1'],
-    correctAnswer: 1,
+    options: [
+      'Regulation 132.14.1',
+      'Regulation 411.3.3',
+      'Regulation 643.3',
+      'Regulation 701.1',
+    ],
+    correctAnswer: 0,
     explanation:
       'Regulation 132.14.1 requires that single-pole switching devices shall be connected in the line conductor only.',
     category: 'Polarity Testing',
@@ -332,10 +372,10 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-24',
     question: 'What safety risk exists with reversed polarity at a bayonet lampholder?',
     options: [
-      'No risk',
+      'Continuity of protective conductors',
       'The outer shell becomes live',
-      'The lamp burns brighter',
-      'The switch fails',
+      'The protective conductor (earth)',
+      'Right terminal (looking at face)',
     ],
     correctAnswer: 1,
     explanation:
@@ -348,10 +388,10 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-25',
     question: 'Which test should be completed before polarity testing?',
     options: [
-      'RCD testing',
-      'Earth fault loop impedance',
+      'Infinite or very high resistance',
+      'To ensure safe operation before energising',
       'Continuity of protective conductors',
-      'Functional testing',
+      'Right terminal (looking at face)',
     ],
     correctAnswer: 2,
     explanation:
@@ -364,12 +404,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-26',
     question: 'What does E14/E27 to BS EN 60238 refer to regarding lampholders?',
     options: [
-      'Earth terminal sizes',
+      'To indicate the conductor is being used as a line despite its core colour',
+      'Loop terminal connected to line, switch wire returns to centre contact',
+      'Correct line and neutral to isolating transformer',
       'Edison screw lampholders that may have different polarity requirements',
-      'Emergency lighting standards',
-      'Cable entry sizes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'E14 and E27 Edison screw lampholders manufactured to BS EN 60238 have specific requirements that may differ from the standard centre-contact-to-line rule.',
     category: 'Polarity Testing',
@@ -381,12 +421,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     question:
       'What indication would suggest incorrect polarity at a socket outlet when using a socket tester?',
     options: [
-      'All lights off',
       'Specific LED pattern indicating fault',
-      'Loud buzzing',
-      'No power',
+      'At the cooker control unit and cooker outlet',
+      'To detect crossed conductors at junction boxes',
+      'To ensure safe isolation when switches are open',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Socket testers display specific LED patterns to indicate various faults including reversed polarity.',
     category: 'Polarity Testing',
@@ -397,12 +437,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-28',
     question: 'In a two-way switching circuit, polarity must be correct at:',
     options: [
-      'Only the first switch',
-      'Only the light fitting',
+      'Low resistance between expected conductors',
       'All switches and the light fitting',
-      'Only the distribution board',
+      'Voltage measurement between line and earth',
+      'Right terminal (looking at face)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Polarity must be correct throughout including at all switches and the light fitting to ensure safe operation.',
     category: 'Polarity Testing',
@@ -413,12 +453,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-29',
     question: 'What is a common cause of polarity issues in extension rings or additions?',
     options: [
-      'Using the wrong cable size',
+      'The protective conductor (earth)',
+      'Before connection to supply on ALL circuits',
       'Incorrectly identifying existing conductors',
-      'Installing too many sockets',
-      'Using the wrong fuse',
+      'At the cooker control unit and cooker outlet',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When extending circuits, incorrectly identifying existing conductor colours (especially mixing old and new colours) commonly causes polarity faults.',
     category: 'Polarity Testing',
@@ -428,8 +468,13 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-30',
     question: 'For a fused connection unit (FCU), the fuse must be in the:',
-    options: ['Neutral side', 'Line side', 'Earth conductor', 'Either side'],
-    correctAnswer: 1,
+    options: [
+      'Line side',
+      'Neutral side',
+      'Earth conductor',
+      'Either side',
+    ],
+    correctAnswer: 0,
     explanation:
       'The fuse in an FCU must be in the line conductor to ensure the load is properly isolated when the fuse operates.',
     category: 'Polarity Testing',
@@ -440,8 +485,13 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-31',
     question:
       'What should the reading be between line and neutral on a correctly wired dead circuit?',
-    options: ['Zero ohms', 'Infinite or very high resistance', 'Supply voltage', '1 MΩ'],
-    correctAnswer: 1,
+    options: [
+      'Right terminal (looking at face)',
+      'The protective conductor (earth)',
+      'Remove or disconnect them',
+      'Infinite or very high resistance',
+    ],
+    correctAnswer: 3,
     explanation:
       'With no load connected and circuit dead, line-neutral should show very high/infinite resistance (open circuit).',
     category: 'Polarity Testing',
@@ -451,7 +501,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-32',
     question: 'When was the change to harmonised cable colours implemented in the UK?',
-    options: ['1995', '2001', '2004 (mandatory from 2006)', '2010'],
+    options: [
+      'Right terminal (looking at face)',
+      'Remove or disconnect them',
+      '2004 (mandatory from 2006)',
+      'Regulation 132.14.1',
+    ],
     correctAnswer: 2,
     explanation:
       'Harmonised colours were introduced in 2004 with parallel use allowed until 31 March 2006, after which they became mandatory.',
@@ -462,8 +517,13 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-33',
     question: 'What identifies the line terminal on a 13A plug?',
-    options: ['Letter N', 'Letter L', 'Fuse position', 'Green dot'],
-    correctAnswer: 2,
+    options: [
+      'Letter N',
+      'Fuse position',
+      'Letter L',
+      'Green dot',
+    ],
+    correctAnswer: 1,
     explanation:
       'The line terminal is identified by the fuse position - the terminal that the fuse connects to is the line terminal.',
     category: 'Polarity Testing',
@@ -474,12 +534,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-34',
     question: 'Why is polarity testing done as part of initial verification?',
     options: [
-      'It is optional',
       'To ensure safe operation before energising',
-      'To calculate Zs values',
-      'To determine cable sizes',
+      'All switches and the light fitting',
+      'Low resistance between expected conductors',
+      'Correct or incorrect polarity for each circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Polarity testing ensures correct and safe wiring before the installation is energised for the first time.',
     category: 'Polarity Testing',
@@ -489,8 +549,13 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-35',
     question: 'What colour must be used to identify a protective conductor?',
-    options: ['Brown', 'Blue', 'Green and yellow', 'Black'],
-    correctAnswer: 2,
+    options: [
+      'Blue',
+      'Black',
+      'Brown',
+      'Green and yellow',
+    ],
+    correctAnswer: 3,
     explanation:
       'Protective conductors must be identified by the combination of green and yellow colours.',
     category: 'Polarity Testing',
@@ -501,12 +566,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-36',
     question: 'In installations with mixed old and new cable colours, what precaution is required?',
     options: [
-      'Replace all old cables',
+      'Before connection to supply on ALL circuits',
+      'The protective conductor (earth)',
       'Warning labels at each distribution board',
-      'Use only one colour system',
-      'No special precautions needed',
+      'Ohmmeter or continuity tester',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Where both colour systems exist, a warning label must be fitted at the distribution board indicating the presence of two cable colour systems.',
     category: 'Polarity Testing',
@@ -517,10 +582,10 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-37',
     question: 'What polarity check is required for equipment with a double-pole switch?',
     options: [
-      'None - both poles switch together',
+      'To ensure safe isolation when switches are open',
       'Check both line AND neutral are switched',
-      'Check earth continuity only',
-      'Check line only',
+      'Incorrectly identifying existing conductors',
+      'Continuity tests as per sections 2.6.5 and 2.6.6',
     ],
     correctAnswer: 1,
     explanation:
@@ -532,8 +597,13 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-38',
     question: 'A correctly wired 13A socket has which conductor at the top terminal?',
-    options: ['Line', 'Neutral', 'Earth', 'No terminal at top'],
-    correctAnswer: 2,
+    options: [
+      'Earth',
+      'Neutral',
+      'Line',
+      'No terminal at top',
+    ],
+    correctAnswer: 0,
     explanation:
       'The top (centre) terminal of a 13A socket is the earth terminal, connecting to the longer earth pin of the plug.',
     category: 'Polarity Testing',
@@ -543,8 +613,13 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-39',
     question: 'What is the minimum test current for polarity testing using continuity?',
-    options: ['50mA', '100mA', '200mA', '500mA'],
-    correctAnswer: 2,
+    options: [
+      '50mA',
+      '100mA',
+      '500mA',
+      '200mA',
+    ],
+    correctAnswer: 3,
     explanation:
       'Continuity testing (including for polarity) requires a minimum test current of 200mA.',
     category: 'Polarity Testing',
@@ -555,12 +630,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-40',
     question: 'When checking polarity at a ceiling rose, what indicates correct wiring?',
     options: [
-      'Both terminals are the same colour',
+      'Correct line and neutral to isolating transformer',
+      'Edison screw lampholders that may have different polarity requirements',
+      'To indicate the conductor is being used as a line despite its core colour',
       'Loop terminal connected to line, switch wire returns to centre contact',
-      'All terminals connected together',
-      'Only earth connected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Correct wiring has the permanent line at the loop terminal, with the switch wire (returning line) connected to the lamp centre contact.',
     category: 'Polarity Testing',
@@ -571,12 +646,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-41',
     question: 'What must never be used as a switched conductor?',
     options: [
-      'Brown cable',
       'The protective conductor (earth)',
-      'Blue cable marked brown',
-      'Line conductor',
+      'Specific LED pattern indicating fault',
+      'C2 - Potentially dangerous',
+      'Warning labels at each distribution board',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The protective conductor must never be used as a switched conductor - it must provide a continuous path to earth at all times.',
     category: 'Polarity Testing',
@@ -587,10 +662,10 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-42',
     question: 'In a switch-wire (loop-in) lighting system, how is the switched line identified?',
     options: [
-      'It is always brown',
+      'Contact with water and earth increases shock hazard',
       'Blue with brown sleeving at terminations',
-      'It is always black',
-      'Green and yellow',
+      'Before connection to supply on ALL circuits',
+      'Specific LED pattern indicating fault',
     ],
     correctAnswer: 1,
     explanation:
@@ -603,12 +678,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-43',
     question: 'Polarity testing at a shaver socket should confirm:',
     options: [
-      'Only earth connection',
+      'Light switch disconnects neutral instead of line',
+      'Specific LED pattern indicating fault',
       'Correct line and neutral to isolating transformer',
-      'Fuse rating only',
-      'SELV output voltage only',
+      'To ensure safe isolation when switches are open',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Shaver sockets contain an isolating transformer; polarity testing confirms correct line and neutral connections to the primary side.',
     category: 'Polarity Testing',
@@ -618,8 +693,13 @@ export const polarityTestingQuestions: QuizQuestion[] = [
   {
     id: 'pol-44',
     question: 'What is the correct sequence for connecting a 13A plug?',
-    options: ['Earth, Neutral, Line', 'Line, Neutral, Earth', 'Neutral, Line, Earth', 'Any order'],
-    correctAnswer: 0,
+    options: [
+      'Any order',
+      'Line, Neutral, Earth',
+      'Neutral, Line, Earth',
+      'Earth, Neutral, Line',
+    ],
+    correctAnswer: 3,
     explanation:
       'Connect earth first (longest pin), then neutral, then line - this ensures earth is always connected first and disconnected last.',
     category: 'Polarity Testing',
@@ -630,12 +710,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-45',
     question: 'A polarity fault found on a periodic inspection would be coded:',
     options: [
-      'C1 - Danger present',
       'C2 - Potentially dangerous',
+      'C1 - Danger present',
       'C3 - Improvement recommended',
       'FI - Further investigation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Polarity faults are typically coded C2 (potentially dangerous) as they create risk when equipment is assumed to be isolated.',
     category: 'Polarity Testing',
@@ -647,10 +727,10 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     question:
       'When testing polarity on a lighting circuit with electronic dimmer, what precaution is needed?',
     options: [
-      'No special precaution',
+      'Edison screw lampholders that may have different polarity requirements',
       'Ensure dimmer electronics do not provide a path affecting the test',
-      'Only test at full brightness',
-      'Disconnect all lamps',
+      'Incorrect wiring at a junction box or accessory',
+      'Correct line and neutral to isolating transformer',
     ],
     correctAnswer: 1,
     explanation:
@@ -663,12 +743,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-47',
     question: 'What is the purpose of sleeving identification on switch wires?',
     options: [
-      'To make cables look neater',
+      'Correct connection of non-reversible plugs and socket-outlets',
+      'Loop terminal connected to line, switch wire returns to centre contact',
       'To indicate the conductor is being used as a line despite its core colour',
-      'To increase insulation',
-      'To identify circuit numbers',
+      'Ensure dimmer electronics do not provide a path affecting the test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Sleeving identifies that a conductor of one colour (e.g., blue) is being used as a different function (e.g., switched line marked brown).',
     category: 'Polarity Testing',
@@ -679,12 +759,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-48',
     question: 'Where should polarity be confirmed on a cooker circuit?',
     options: [
-      'At the consumer unit only',
+      'Infinite or very high resistance',
+      'Incorrect wiring at a junction box or accessory',
+      'Incorrectly identifying existing conductors',
       'At the cooker control unit and cooker outlet',
-      'At the cooker only',
-      'Nowhere - cookers are double-pole',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Polarity should be confirmed at the cooker control unit switch and at the cooker connection point to ensure correct isolation.',
     category: 'Polarity Testing',
@@ -696,12 +776,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     question:
       'What creates increased risk from a polarity fault on circuits feeding outdoor equipment?',
     options: [
-      'Longer cable runs',
       'Contact with water and earth increases shock hazard',
-      'Lower ambient temperature',
-      'UV exposure',
+      'Before connection to supply on ALL circuits',
+      'Check both line AND neutral are switched',
+      'Warning labels at each distribution board',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Outdoor conditions increase contact with earth and moisture, making polarity faults more dangerous due to enhanced shock risk.',
     category: 'Polarity Testing',
@@ -712,12 +792,12 @@ export const polarityTestingQuestions: QuizQuestion[] = [
     id: 'pol-50',
     question: 'When documenting polarity test results, what should be recorded?',
     options: [
-      'Resistance values',
+      'Specific LED pattern indicating fault',
+      'Before connection to supply on ALL circuits',
       'Correct or incorrect polarity for each circuit',
-      'Temperature',
-      'Cable colours',
+      'By visually checking core colours at terminations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Test documentation should record whether polarity was correct or incorrect (with details of any faults) for each circuit tested.',
     category: 'Polarity Testing',

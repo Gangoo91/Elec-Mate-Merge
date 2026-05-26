@@ -8,20 +8,20 @@ export const bmsModule5Section1QuizData: QuizQuestion[] = [
   {
     question: 'What is a communication protocol in a BMS?',
     options: [
-      'A type of electrical cable',
+      'They can lock clients into using a single vendor',
       'A structured set of rules for devices to exchange data',
-      'A software program for controlling lights',
-      'A physical connection between devices',
+      'To prevent signal reflections that cause communication errors',
+      'Termination resistors were not installed',
     ],
     correctAnswer: 'A structured set of rules for devices to exchange data',
   },
   {
     question: 'What is the difference between an open and a proprietary protocol?',
     options: [
-      'Open protocols are faster than proprietary ones',
-      'Proprietary protocols are always better quality',
+      'Insurance may be invalid, enforcement notices issued, and Responsible Person may face prosecution',
+      'Being able to identify the component\'s manufacturer, batch/lot number, date of manufacture, specification, and supply chain — from manufacture to installation',
       'Open protocols are standardised and support multiple manufacturers, while proprietary protocols are owned by a single manufacturer',
-      'There is no difference between them',
+      'To vary the physical demands on different muscle groups, reducing cumulative loading on any single body area',
     ],
     correctAnswer:
       'Open protocols are standardised and support multiple manufacturers, while proprietary protocols are owned by a single manufacturer',
@@ -29,10 +29,10 @@ export const bmsModule5Section1QuizData: QuizQuestion[] = [
   {
     question: 'Give one disadvantage of proprietary protocols.',
     options: [
-      'They are too expensive to buy',
-      'They work too slowly',
+      'A structured set of rules for devices to exchange data',
+      'To prevent signal reflections that cause communication errors',
       'They can lock clients into using a single vendor',
-      'They use too much power',
+      'Termination resistors were not installed',
     ],
     correctAnswer: 'They can lock clients into using a single vendor',
   },
@@ -54,10 +54,10 @@ export const bmsModule5Section1QuizData: QuizQuestion[] = [
   {
     question: 'Why must RS-485 buses be terminated at both ends?',
     options: [
-      'To make the cables look neat',
+      'To report on the condition of an existing installation and identify defects',
       'To prevent signal reflections that cause communication errors',
-      'To reduce the cost of installation',
-      'To make the system work faster',
+      '5.6 weeks (28 days for a 5-day worker), which can include bank holidays',
+      'Whether the learners enjoyed the training and found it relevant',
     ],
     correctAnswer: 'To prevent signal reflections that cause communication errors',
   },

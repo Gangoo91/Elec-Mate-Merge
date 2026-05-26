@@ -5,10 +5,10 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
     id: 1,
     question: 'What should be done before taking continuity readings?',
     options: [
-      'Check the circuit is energised',
-      "Null the leads using the tester's calibration function",
-      'Set the tester to insulation resistance mode',
       'Connect the leads to random terminals',
+      "Null the leads using the tester's calibration function",
+      'Check the circuit is energised',
+      'Set the tester to insulation resistance mode',
     ],
     correctAnswer: 1,
     explanation:
@@ -19,11 +19,11 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
     question: 'Which of the following CPC readings would generally be acceptable?',
     options: [
       '2.5 ohms on a 10m radial circuit',
-      '0.4 ohms on a 20m radial circuit',
       '1.8 ohms on a 5m radial circuit',
+      '0.4 ohms on a 20m radial circuit',
       '3.0 ohms on any circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '0.4 ohms on a 20m radial circuit is reasonable and within expected values. The other readings are too high for their respective circuit lengths.',
   },
@@ -32,11 +32,11 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
     question: "True or False: It's acceptable to just write 'pass' if continuity seems fine.",
     options: [
       'True - pass/fail is sufficient for continuity testing',
-      'False - actual values must always be recorded',
-      'True - but only for EICR testing',
       'False - but estimates are acceptable',
+      'True - but only for EICR testing',
+      'False - actual values must always be recorded',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "False. Actual resistance values must always be recorded for proper assessment and future comparison. 'Pass' or tick marks are not acceptable.",
   },
@@ -44,12 +44,12 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
     id: 4,
     question: 'What could cause high resistance on a CPC reading?',
     options: [
-      'Circuit being too long',
       'Loose terminal, damaged cable, or incorrect routing',
-      'Using the wrong test instrument',
-      'Testing with the circuit energised',
+      'False - actual values must always be recorded',
+      'To avoid applying test voltage to an unsafe or incomplete circuit',
+      'Different criteria - typically ≤0.05Ω for main bonding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'High CPC resistance typically indicates loose connections, damaged conductors, or incorrect installation. These are serious safety issues requiring investigation.',
   },
@@ -58,10 +58,10 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
     question:
       'Why must continuity issues be resolved before moving to insulation resistance testing?',
     options: [
-      'To save time during testing',
+      'Investigate connections and retest until consistent',
       'To avoid applying test voltage to an unsafe or incomplete circuit',
-      "It's not necessary - tests can be done in any order",
-      'To prevent damage to the test equipment',
+      'Loose terminal, damaged cable, or incorrect routing',
+      'Null the leads using the tester\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s calibration function',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,16 +70,26 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
   {
     id: 6,
     question: 'What is the acceptable resistance range for a 2.5mm² CPC over 30 metres?',
-    options: ['0.1 - 0.3 ohms', '0.4 - 0.8 ohms', '1.0 - 1.5 ohms', '2.0 - 3.0 ohms'],
-    correctAnswer: 1,
+    options: [
+      '2.0 - 3.0 ohms',
+      '0.1 - 0.3 ohms',
+      '0.4 - 0.8 ohms',
+      '1.0 - 1.5 ohms',
+    ],
+    correctAnswer: 2,
     explanation:
       'For a 2.5mm² CPC over 30m, expect approximately 0.4-0.8 ohms depending on cable type and installation conditions. Values significantly higher suggest problems.',
   },
   {
     id: 7,
     question: 'What test current should be used for continuity testing according to BS 7671?',
-    options: ['10mA minimum', '200mA to 1A', '5A maximum', 'Any current is acceptable'],
-    correctAnswer: 1,
+    options: [
+      '5A maximum',
+      '10mA minimum',
+      'Any current is acceptable',
+      '200mA to 1A',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS 7671 requires a test current between 200mA and 1A for continuity testing to ensure adequate current flow to identify high-resistance joints.',
   },
@@ -87,12 +97,12 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
     id: 8,
     question: 'How should bonding conductor resistance values be assessed?',
     options: [
-      'Same criteria as CPCs',
       'Different criteria - typically ≤0.05Ω for main bonding',
-      'No specific limits apply',
-      'Visual inspection is sufficient',
+      'False - actual values must always be recorded',
+      'To avoid applying test voltage to an unsafe or incomplete circuit',
+      'Conductor material, cross-sectional area, and length',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Main bonding conductors have stricter resistance limits (≤0.05Ω) compared to CPCs due to their critical role in equipotential bonding.',
   },
@@ -100,12 +110,12 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
     id: 9,
     question: 'What action should be taken if continuity readings are inconsistent between tests?',
     options: [
-      'Record the lowest reading',
-      'Average the readings',
+      'To avoid applying test voltage to an unsafe or incomplete circuit',
       'Investigate connections and retest until consistent',
-      'Record as a limitation',
+      'False - actual values must always be recorded',
+      'Null the leads using the tester\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s calibration function',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Inconsistent readings indicate poor connections or intermittent faults that must be investigated and resolved before accepting any test results.',
   },
@@ -113,12 +123,12 @@ export const testProceduresQuizQuestions: QuizQuestion[] = [
     id: 10,
     question: 'Which factor most affects the expected resistance value for continuity testing?',
     options: [
-      'Ambient temperature only',
+      'False - actual values must always be recorded',
+      'Null the leads using the tester\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s calibration function',
       'Conductor material, cross-sectional area, and length',
-      'Installation method only',
-      'Test equipment calibration',
+      'Investigate connections and retest until consistent',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Resistance is primarily determined by conductor material (copper/aluminium), cross-sectional area, and length. These factors determine the expected values for comparison.',
   },

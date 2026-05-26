@@ -14,7 +14,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'What is the unit of measurement for insulation resistance?',
-    options: ['Ohms', 'Megohms (MΩ)', 'Volts', 'Amperes'],
+    options: [
+      'Volts',
+      'Megohms (MΩ)',
+      'Amperes',
+      'Ohms',
+    ],
     correctIndex: 1,
     explanation:
       'Insulation resistance is measured in megohms (MΩ), which represents millions of ohms. This large unit reflects the very high resistance values expected from good insulation.',
@@ -23,20 +28,25 @@ const quickCheckQuestions = [
     id: 2,
     question: 'When should you carry out an insulation resistance test?',
     options: [
-      'Only after faults occur',
-      'Before energising new circuits',
-      'Only on old installations',
       'During live working',
+      'Only on old installations',
+      'Before energising new circuits',
+      'Only after faults occur',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Insulation resistance testing should be performed before energising new circuits, during periodic inspections, and after alterations to ensure safety and compliance.',
   },
   {
     id: 3,
     question: 'Name one common cause of low insulation resistance.',
-    options: ['High load current', 'Moisture ingress', 'Correct cable size', 'Proper earthing'],
-    correctIndex: 1,
+    options: [
+      'Proper earthing',
+      'Correct cable size',
+      'High load current',
+      'Moisture ingress',
+    ],
+    correctIndex: 3,
     explanation:
       'Moisture ingress is a common cause of low insulation resistance, as water provides a path for current leakage through insulation materials.',
   },
@@ -50,10 +60,10 @@ const Module4Section6_3 = () => {
       id: 1,
       question: 'What does insulation resistance measure?',
       options: [
-        'The heat output of a cable',
+        'Estimate the order of magnitude with rounded numbers',
         'The ability of insulation to resist current flow',
-        'Voltage drop in a circuit',
-        'Cable bending radius',
+        'No, it only proves the mechanical trip mechanism',
+        'Safety, capacity, and protection requirements',
       ],
       correctAnswer: 1,
       explanation:
@@ -62,8 +72,13 @@ const Module4Section6_3 = () => {
     {
       id: 2,
       question: 'True or False: A reading of 0.5 MΩ is acceptable for most LV circuits.',
-      options: ['True', 'False', 'Only for lighting circuits', 'Only for power circuits'],
-      correctAnswer: 1,
+      options: [
+        'Only for lighting circuits',
+        'True',
+        'False',
+        'Only for power circuits',
+      ],
+      correctAnswer: 2,
       explanation:
         'False - BS 7671 requires a minimum of 1 MΩ for most LV circuits. A reading of 0.5 MΩ is below this minimum and unsatisfactory.',
     },
@@ -71,15 +86,25 @@ const Module4Section6_3 = () => {
       id: 3,
       question:
         'What is the typical test voltage for LV circuits in insulation resistance testing?',
-      options: ['250 V DC', '500 V DC', '1000 V DC', '230 V AC'],
-      correctAnswer: 1,
+      options: [
+        '1000 V DC',
+        '250 V DC',
+        '230 V AC',
+        '500 V DC',
+      ],
+      correctAnswer: 3,
       explanation:
         '500 V DC is the typical test voltage for most LV circuits, though 250 V DC is used for SELV or sensitive circuits.',
     },
     {
       id: 4,
       question: 'Name two points between which you would measure insulation resistance.',
-      options: ['L–N and L–E', 'Only L–N', 'Only L–E', 'Only N–E'],
+      options: [
+        'L–N and L–E',
+        'Only L–N',
+        'Only L–E',
+        'Only N–E',
+      ],
       correctAnswer: 0,
       explanation:
         'Insulation resistance is measured between Line to Neutral (L–N), Line to Earth (L–E), and Neutral to Earth (N–E).',
@@ -87,7 +112,12 @@ const Module4Section6_3 = () => {
     {
       id: 5,
       question: 'What is the minimum acceptable reading for most LV circuits under BS 7671?',
-      options: ['0.5 MΩ', '1 MΩ', '10 MΩ', '100 MΩ'],
+      options: [
+        '0.5 MΩ',
+        '1 MΩ',
+        '100 MΩ',
+        '10 MΩ',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 requires a minimum of 1 MΩ for most LV circuits, though higher values are preferable for better safety margins.',
@@ -96,12 +126,12 @@ const Module4Section6_3 = () => {
       id: 6,
       question: 'Why should sensitive equipment be disconnected before testing?',
       options: [
+        'Variation of wind speed with height',
+        'Plan equipment use and resolve potential conflicts',
         'To prevent damage from the high test voltage',
-        'To reduce test time',
-        'To improve accuracy',
-        'For convenience only',
+        'Operating below maximum ratings to ensure reliability',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'Sensitive electronic equipment must be disconnected to prevent damage from the high DC test voltage used during insulation resistance testing.',
     },
@@ -109,12 +139,12 @@ const Module4Section6_3 = () => {
       id: 7,
       question: 'What should you do if you get a reading below the minimum value?',
       options: [
-        'Continue with installation',
+        'Current type they can safely interrupt',
+        'To prioritise audit effort on areas with greatest saving potential',
+        'Enclosure IP rating is suitable for the location and environment',
         'Investigate and rectify the fault before re-testing',
-        'Lower the test voltage',
-        'Accept the reading as borderline',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Readings below the minimum value indicate a fault that must be investigated and corrected before the installation can be certified.',
     },
@@ -122,12 +152,12 @@ const Module4Section6_3 = () => {
       id: 8,
       question: 'Give one environmental factor that can lower insulation resistance.',
       options: [
-        'High ambient temperature',
         'Moisture ingress',
         'Low ambient temperature',
+        'High ambient temperature',
         'Good ventilation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Moisture ingress is a major environmental factor that reduces insulation resistance by providing conductive paths through insulation.',
     },

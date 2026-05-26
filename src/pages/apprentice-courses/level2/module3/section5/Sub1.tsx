@@ -42,12 +42,12 @@ const checks = [
     question:
       'A power source that runs flat-out 24/7 to supply the constant minimum demand on the grid is called:',
     options: [
-      'A peaker plant',
-      'A baseload plant',
-      'A pumped storage plant',
       'An intermittent source',
+      'A pumped storage plant',
+      'A baseload plant',
+      'A peaker plant',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Baseload = the always-on chunk of generation that meets the minimum demand the grid never drops below. Nuclear is the classic UK baseload source — built to run flat-out for months between refuels. Peakers (open-cycle gas turbines) fire up only at the morning kettle peak.',
   },
@@ -56,12 +56,12 @@ const checks = [
     question:
       'A 4 kW domestic solar PV array generates electricity at the panel as:',
     options: [
-      '230 V AC at 50 Hz, ready for the grid',
+      'To verify operation of emergency lighting for a short period',
+      'Task requirements, duration, weather conditions, and user competence',
+      'Monitors the scan cycle duration and triggers a fault if it exceeds a configured limit',
       'Low-voltage DC, which an inverter then converts to 230 V AC at 50 Hz',
-      '11 kV three-phase AC',
-      'Pulsating DC at mains frequency',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'PV cells produce DC at panel voltage (typically a few hundred volts string voltage). The inverter does the heavy lifting — chopping that DC into a 50 Hz 230 V sine wave that synchronises with the grid. That inverter is also why PV installs need RCDs that can handle DC fault currents (Type B or Type F, not plain Type AC).',
   },
@@ -70,12 +70,12 @@ const checks = [
     question:
       'Dinorwig in Snowdonia is a pumped-storage hydro plant. At 3am, when grid demand is low, it:',
     options: [
-      'Generates electricity for export to Europe',
+      'Pre-calculated transfer functions for heat flow through construction',
+      'The delay between sending a message and receiving a response',
+      'Improvement Notices, Prohibition Notices, and fines or prosecution',
       'Uses cheap off-peak electricity to pump water UP to its top reservoir',
-      'Switches off completely to save fuel',
-      'Burns gas to keep the turbines warm',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Pumped storage is the grid’s biggest battery. Off-peak (cheap, low demand) it runs the turbines backwards as pumps, lifting water up to the top reservoir. At peak demand (kettle-on after EastEnders) it lets the water back down through the turbines and generates within ~16 seconds of the call. Round-trip efficiency ~75%.',
   },
@@ -86,8 +86,13 @@ const quizQuestions = [
     id: 1,
     question:
       'Which of the following is currently the SINGLE largest source of electricity generation in Great Britain by annual share?',
-    options: ['Coal', 'Nuclear', 'Gas (CCGT)', 'Onshore wind'],
-    correctAnswer: 2,
+    options: [
+      'Coal',
+      'Gas (CCGT)',
+      'Nuclear',
+      'Onshore wind',
+    ],
+    correctAnswer: 1,
     explanation:
       'Combined-cycle gas turbine (CCGT) plants still produce roughly a third to 40% of GB electricity in a typical year. Wind is now in second place at around 30%, nuclear sits in the mid-teens, coal is effectively zero (the last coal station, Ratcliffe-on-Soar, closed in 2024). Figures shift year to year but gas is still the swing supplier.',
   },
@@ -96,12 +101,12 @@ const quizQuestions = [
     question:
       'Why does a solar PV system on a domestic roof need a Type B (or Type F) RCD on its dedicated supply, not a plain Type AC?',
     options: [
-      'Because PV produces more current than the grid',
+      'It is required by insurance providers to validate claims for stolen or damaged tools',
+      'When there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s exposure to specific hazards like noise, vibration, asbestos',
       'Because the inverter can produce smooth DC fault current that a Type AC RCD would be blind to',
-      'Because PV is only allowed on TT systems',
-      'Because the panels create harmonics above 1 kHz',
+      'Completion of all inspection and testing, satisfactory results recorded',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A PV inverter can leak smooth (non-pulsating) DC residual current into the AC side under fault. A Type AC RCD only sees pure sinusoidal AC residual current — DC saturates its core and blinds it. BS 7671 Section 712 (PV systems) requires a Type B RCD where DC fault current with a smooth component is possible, or Type F where pulsating DC is.',
   },
@@ -110,12 +115,12 @@ const quizQuestions = [
     question:
       'A 1 GW nuclear station like Hinkley Point B (now closed) was operated as baseload. What does that mean in practice?',
     options: [
-      'It only ran on weekends',
+      'A contactor is generally larger and rated for higher current loads, often with auxiliary contacts',
+      'Only as long as there is a legitimate business reason, such as warranty obligations, legal requirements, or ongoing service agreements',
+      'A digital meter that records energy use and communicates with the supplier remotely',
       'It ran flat-out at full output continuously, regardless of demand, until it was shut down for refuelling',
-      'It only ran when demand spiked',
-      'It supplied DC directly to the grid',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Baseload plants run at maximum continuous output for as long as fuel/maintenance allows. Nuclear is the classic baseload — high capital cost, low fuel cost, and physically difficult to ramp up and down. Peakers (gas, hydro, pumped storage) absorb the demand swing instead.',
   },
@@ -124,12 +129,12 @@ const quizQuestions = [
     question:
       'Combined Heat and Power (CHP) units on hospitals and factories are different from normal gas turbines because:',
     options: [
-      'They burn diesel, not gas',
       'They capture the waste heat from generation and use it for hot water and heating, raising overall efficiency to ~80%',
-      'They only run at night',
-      'They feed straight into the 11 kV network',
+      'Set out the H&S arrangements for the project, including site rules, RAMS for high-risk work and emergency procedures',
+      'Only as long as there is a legitimate business reason, such as warranty obligations, legal requirements, or ongoing service agreements',
+      'It’s the IEC 61010 measurement category — CAT III 600 V or higher for LV distribution work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A standalone CCGT plant throws roughly half its fuel energy away as heat up the cooling tower. CHP captures that heat for the building’s hot-water and space-heating loop — pushing total useful energy out of the fuel from ~50% to ~80%. Common on hospitals, leisure centres, food factories — anywhere with a constant heat demand.',
   },
@@ -138,10 +143,10 @@ const quizQuestions = [
     question:
       'An electrician is asked why the UK grid still keeps several large gas turbines on standby even on a day with strong wind. Best answer?',
     options: [
-      'Wind farms break down too often',
+      'Individual sprinkler heads activate when heated to their threshold, releasing water directly over the fire',
       'Wind is intermittent — output varies with the weather, so dispatchable gas plants must be available to fill any gap and keep frequency at 50 Hz',
-      'Gas is cheaper than wind',
-      'It is a legal requirement',
+      'Intentionally or recklessly interfering with or misusing anything provided for health, safety or welfare',
+      'Motor to run in REVERSE direction — potentially destructive on pumps, fans, compressors, lifts; trips on overload often follow',
     ],
     correctAnswer: 1,
     explanation:
@@ -151,7 +156,12 @@ const quizQuestions = [
     id: 6,
     question:
       'Roughly what share of GB annual electricity now comes from wind (onshore + offshore combined)?',
-    options: ['About 5%', 'About 15%', 'About 30%', 'About 60%'],
+    options: [
+      'About 5%',
+      'About 15%',
+      'About 30%',
+      'About 60%',
+    ],
     correctAnswer: 2,
     explanation:
       'Wind crossed 30% of annual generation in the early 2020s and has held there with year-to-year wobble. Offshore alone (Dogger Bank, Hornsea, etc.) is now bigger than onshore. The UK has the largest offshore wind capacity in Europe.',
@@ -160,8 +170,13 @@ const quizQuestions = [
     id: 7,
     question:
       'Which of the following is NOT a method of large-scale electricity generation currently used on the GB grid?',
-    options: ['CCGT (gas)', 'Tidal lagoon at gigawatt scale', 'Onshore wind', 'Nuclear'],
-    correctAnswer: 1,
+    options: [
+      'Requirements for test probes and leads',
+      'Mechanical fixings with gaskets',
+      '1 metre above highest point within 10m',
+      'Tidal lagoon at gigawatt scale',
+    ],
+    correctAnswer: 3,
     explanation:
       'Tidal stream and small wave devices exist (MeyGen in Pentland Firth, EMEC in Orkney) but no gigawatt-scale tidal lagoon has been built — Swansea Bay was rejected in 2018. Tidal is a credible future source but not yet a meaningful share. The other three are all in daily use.',
   },
@@ -170,12 +185,12 @@ const quizQuestions = [
     question:
       'Why does the electrician need to care about the generation MIX — not just the wires after the cut-out?',
     options: [
-      'They don’t — the mix is purely for energy traders',
       'Because the mix changes what protective devices have to handle (DC from PV inverters, harmonics from large inverters, voltage stability when wind drops)',
-      'Because gas-generated electricity is yellow and wind-generated is green',
-      'Because nuclear electricity costs more per kWh at the socket',
+      'Equipment producing smooth DC residual current (e.g. EV chargers without separation, three-phase VSDs/inverters) per Reg 531.3.3 / 722.531.3.101',
+      'The locations of points of demand, the loads expected on circuits, daily and yearly variation of demand, special conditions (such as harmonics), and special control or signalling requirements.',
+      'Proper preparation and stabilisation, systematic approach following procedures, comprehensive documentation, trend monitoring, and continuous process improvement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Once you understand WHAT is being injected into the network you understand the kit. PV inverters mean Type B RCDs. Big VFDs and inverters mean harmonics on the supply. Lots of behind-the-meter renewables mean voltage rise on long radial feeders. The mix is a real-world driver of design choices in BS 7671.',
   },

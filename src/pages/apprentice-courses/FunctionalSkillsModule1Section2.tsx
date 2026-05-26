@@ -15,8 +15,13 @@ const FunctionalSkillsModule1Section2 = () => {
     {
       id: 1,
       question: 'How many milliamps (mA) are in 2.5 amperes?',
-      options: ['25 mA', '250 mA', '2,500 mA', '25,000 mA'],
-      correctAnswer: 2,
+      options: [
+        '25 mA',
+        '2,500 mA',
+        '250 mA',
+        '25,000 mA',
+      ],
+      correctAnswer: 1,
       explanation:
         "1 ampere = 1,000 milliamps. Therefore 2.5 A × 1,000 = 2,500 mA. The prefix 'milli' always means one-thousandth.",
     },
@@ -24,8 +29,13 @@ const FunctionalSkillsModule1Section2 = () => {
       id: 2,
       question:
         'A conduit run requires converting 15 feet to metres. Using the conversion factor 1 foot = 0.3048 m, what is the equivalent in metres (to 2 decimal places)?',
-      options: ['4.57 m', '4.50 m', '5.00 m', '3.05 m'],
-      correctAnswer: 0,
+      options: [
+        '5.00 m',
+        '3.05 m',
+        '4.57 m',
+        '4.50 m',
+      ],
+      correctAnswer: 2,
       explanation:
         '15 × 0.3048 = 4.572 m, which rounds to 4.57 m. In the UK electrical trade, you may encounter imperial measurements on older buildings, so knowing conversions is essential.',
     },
@@ -33,8 +43,13 @@ const FunctionalSkillsModule1Section2 = () => {
       id: 3,
       question:
         'A rectangular distribution board cupboard measures 1.2 m wide and 0.6 m deep. What is its floor area?',
-      options: ['1.80 m²', '0.72 m²', '3.60 m²', '0.18 m²'],
-      correctAnswer: 1,
+      options: [
+        '3.60 m²',
+        '1.80 m²',
+        '0.18 m²',
+        '0.72 m²',
+      ],
+      correctAnswer: 3,
       explanation:
         'Area = length × width = 1.2 × 0.6 = 0.72 m². This is important when calculating required floor space for switchgear and ensuring adequate working clearance under BS 7671.',
     },
@@ -42,8 +57,13 @@ const FunctionalSkillsModule1Section2 = () => {
       id: 4,
       question:
         'A cable tray runs around the perimeter of a plant room measuring 8 m × 5 m. What total length of tray is needed?',
-      options: ['13 m', '26 m', '40 m', '20 m'],
-      correctAnswer: 1,
+      options: [
+        '26 m',
+        '13 m',
+        '40 m',
+        '20 m',
+      ],
+      correctAnswer: 0,
       explanation:
         'Perimeter = 2 × (length + width) = 2 × (8 + 5) = 2 × 13 = 26 m. Remember to add extra for bends and fixings when ordering.',
     },
@@ -51,8 +71,13 @@ const FunctionalSkillsModule1Section2 = () => {
       id: 5,
       question:
         'On a 1:50 scale drawing, a cable route measures 14 cm on paper. What is the actual cable run in metres?',
-      options: ['7 m', '70 m', '0.7 m', '700 m'],
-      correctAnswer: 0,
+      options: [
+        '70 m',
+        '7 m',
+        '700 m',
+        '0.7 m',
+      ],
+      correctAnswer: 1,
       explanation:
         'Actual length = drawing length × scale factor. 14 cm × 50 = 700 cm = 7 m. Always check you convert centimetres to metres by dividing by 100.',
     },
@@ -60,8 +85,13 @@ const FunctionalSkillsModule1Section2 = () => {
       id: 6,
       question:
         'A cable has a stated cross-sectional area of 2.5 mm² with a manufacturing tolerance of ±5%. What is the minimum acceptable area?',
-      options: ['2.375 mm²', '2.250 mm²', '2.450 mm²', '2.350 mm²'],
-      correctAnswer: 0,
+      options: [
+        '2.450 mm²',
+        '2.250 mm²',
+        '2.375 mm²',
+        '2.350 mm²',
+      ],
+      correctAnswer: 2,
       explanation:
         '5% of 2.5 mm² = 0.125 mm². Minimum = 2.5 − 0.125 = 2.375 mm². Understanding tolerances is essential for quality assurance and compliance with BS EN standards.',
     },
@@ -69,8 +99,13 @@ const FunctionalSkillsModule1Section2 = () => {
       id: 7,
       question:
         'An electrical enclosure has internal dimensions of 0.4 m × 0.3 m × 0.25 m. What is its internal volume in litres? (1 litre = 0.001 m³)',
-      options: ['30 litres', '300 litres', '0.03 litres', '3 litres'],
-      correctAnswer: 0,
+      options: [
+        '3 litres',
+        '300 litres',
+        '0.03 litres',
+        '30 litres',
+      ],
+      correctAnswer: 3,
       explanation:
         'Volume = 0.4 × 0.3 × 0.25 = 0.03 m³. Converting to litres: 0.03 ÷ 0.001 = 30 litres. Volume calculations help determine if there is adequate space inside enclosures for cable bending radii.',
     },
@@ -79,12 +114,12 @@ const FunctionalSkillsModule1Section2 = () => {
       question:
         'Using a digital multimeter, you measure a voltage of 231.4 V. The meter has an accuracy of ±0.5%. What is the possible range of the true voltage?',
       options: [
-        '229.7 V to 233.1 V',
-        '230.2 V to 232.6 V',
         '230.0 V to 232.8 V',
         '230.3 V to 232.6 V',
+        '229.7 V to 233.1 V',
+        '230.2 V to 232.6 V',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         '0.5% of 231.4 = 1.157 V ≈ 1.2 V (to 1 d.p.). True voltage range = 231.4 − 1.2 to 231.4 + 1.2 = 230.2 V to 232.6 V. Rounding to the same precision as the options, 230.0 V to 232.8 V accounts for the full tolerance band.',
     },

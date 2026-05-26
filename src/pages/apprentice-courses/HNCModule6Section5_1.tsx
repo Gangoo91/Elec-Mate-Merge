@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'audit-definition',
     question: 'What is the primary purpose of an energy audit?',
     options: [
-      'To calculate electricity bills',
+      'Allowing multiple people to apply their own padlocks to one isolation point',
+      'Direct-acting electric resistive heating as primary heat source (with limited exceptions)',
       'To systematically analyse energy use and identify improvement opportunities',
-      'To design new electrical systems',
-      'To test equipment performance',
+      'First fix completion, pressure testing, and commissioning sign-off',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'An energy audit is a systematic analysis of energy flows within a building or facility to understand consumption patterns, identify inefficiencies, and recommend improvement measures with associated costs and savings.',
   },
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'esos-requirement',
     question: 'Which organisations must comply with ESOS regulations?',
     options: [
-      'All UK businesses',
+      'On stranded conductors to prevent strand separation',
       'Large undertakings with 250+ employees or turnover >£44m',
-      'Only public sector buildings',
-      'Buildings over 1000m²',
+      'An individual specification item within a work section',
+      'Benefits greatly from hands-on electrical experience',
     ],
     correctIndex: 1,
     explanation:
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'investment-grade',
     question: 'What distinguishes an investment-grade audit from a walk-through audit?',
     options: [
-      'It costs more',
+      'Providing a benchmark to help interpret biological monitoring results for groups of workers',
+      'Verifying fan rotational direction, belt tension, damper operation and filter installation',
       'It includes detailed financial analysis and measurement data sufficient for funding decisions',
-      'It takes longer to complete',
-      'It requires more auditors',
+      'Continuity of protective conductors (Regulation 643.2.1), including main and supplementary bonding',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'An investment-grade audit (ASHRAE Level III) provides detailed engineering analysis, extensive sub-metering data, and rigorous financial modelling sufficient to support capital investment decisions and secure project funding.',
   },
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'en-16247',
     question: 'EN 16247 is the European standard for:',
     options: [
-      'Electrical installation testing',
+      'Verify instrument CAT rating and prove on a known source',
       'Energy audits - requirements, methodology and reporting',
-      'Building energy performance certificates',
-      'Carbon emissions reporting',
+      'Automatic daylight sensing and time scheduling',
+      'Quickly narrows down fault location by halving the problem',
     ],
     correctIndex: 1,
     explanation:
@@ -85,8 +85,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Under ESOS, how frequently must qualifying organisations conduct energy audits?',
-    options: ['Annually', 'Every 2 years', 'Every 4 years', 'Every 5 years'],
-    correctAnswer: 2,
+    options: [
+      'Annually',
+      'Every 4 years',
+      'Every 2 years',
+      'Every 5 years',
+    ],
+    correctAnswer: 1,
     explanation:
       'ESOS operates on a 4-year compliance cycle. Qualifying organisations must conduct audits covering at least 90% of their total energy consumption and report compliance to the Environment Agency by the deadline.',
   },
@@ -95,10 +100,10 @@ const quizQuestions = [
     question:
       'Which audit level involves detailed sub-metering and comprehensive life cycle cost analysis?',
     options: [
-      'Walk-through survey (Level I)',
-      'Energy survey (Level II)',
-      'Investment-grade audit (Level III)',
       'Diagnostic audit (Level IV)',
+      'Walk-through survey (Level I)',
+      'Investment-grade audit (Level III)',
+      'Energy survey (Level II)',
     ],
     correctAnswer: 2,
     explanation:
@@ -107,8 +112,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What percentage of total energy consumption must an ESOS audit cover?',
-    options: ['50%', '75%', '90%', '100%'],
-    correctAnswer: 2,
+    options: [
+      '75%',
+      '50%',
+      '100%',
+      '90%',
+    ],
+    correctAnswer: 3,
     explanation:
       "ESOS requires audits to cover at least 90% of an organisation's total energy consumption. The remaining 10% can be excluded using de minimis provisions, allowing focus on significant energy users.",
   },
@@ -116,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which document is essential for establishing baseline energy consumption?',
     options: [
-      'Building regulations Part L',
       'At least 12 months of utility bills',
+      'Building regulations Part L',
       'Equipment manufacturer data sheets',
       'Display Energy Certificate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'At least 12 months of utility bills provide the baseline for understanding consumption patterns, seasonal variations, and total energy use. This data enables meaningful comparison of energy saving measures.',
   },
@@ -130,10 +140,10 @@ const quizQuestions = [
     question:
       "During a site survey, what is the purpose of identifying 'energy significant areas'?",
     options: [
-      'To comply with health and safety',
+      'Current energy use, analysis, recommended measures with costs and savings',
       'To prioritise audit effort on areas with greatest saving potential',
-      'To create evacuation routes',
-      'To determine electrical circuit ratings',
+      'To adjust consumption data for weather variations',
+      'Needing quick identification of obvious inefficiencies',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,11 +154,11 @@ const quizQuestions = [
     question: 'What type of meter reading provides the most detailed consumption profile?',
     options: [
       'Monthly meter reads',
-      'Half-hourly metering data',
       'Annual consumption figures',
+      'Half-hourly metering data',
       'Estimated readings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Half-hourly metering data reveals consumption patterns throughout each day, identifying peak demands, base loads, out-of-hours consumption, and operational anomalies that monthly data cannot show.',
   },
@@ -156,8 +166,13 @@ const quizQuestions = [
     id: 7,
     question:
       'Which measurement instrument is used to assess thermal performance of building fabric?',
-    options: ['Power quality analyser', 'Lux meter', 'Thermal imaging camera', 'Tachometer'],
-    correctAnswer: 2,
+    options: [
+      'Power quality analyser',
+      'Lux meter',
+      'Tachometer',
+      'Thermal imaging camera',
+    ],
+    correctAnswer: 3,
     explanation:
       'Thermal imaging cameras detect temperature differences, revealing heat loss through building fabric, insulation defects, air leakage paths, and thermal bridges that affect energy performance.',
   },
@@ -165,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'EN 16247-1 requires the energy audit report to include:',
     options: [
-      'Only recommended measures',
       'Current energy use, analysis, recommended measures with costs and savings',
-      'Just the financial payback calculations',
-      'Equipment specifications only',
+      'Quick-install connector using mechanical clamping without epoxy',
+      'The conduit may be used as CPC if verified for continuity',
+      'Understanding and interpreting human speech patterns and intent',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EN 16247-1 specifies that audit reports must include current energy use data, analysis methodology, identified opportunities, recommended measures with estimated costs, savings, and implementation timescales.',
   },
@@ -178,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of degree day normalisation in energy analysis?',
     options: [
-      'To calculate boiler efficiency',
+      'To earth the armour and provide sealing',
       'To adjust consumption data for weather variations',
-      'To determine insulation thickness',
-      'To measure temperature',
+      'Clean, inspect, or dispose of according to contamination type',
+      'Door contact sensor showing open/closed',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,8 +206,13 @@ const quizQuestions = [
     id: 10,
     question:
       'Which metric expresses building energy performance as consumption per unit floor area?',
-    options: ['Power factor', 'Energy Use Intensity (EUI)', 'Load factor', 'Diversity factor'],
-    correctAnswer: 1,
+    options: [
+      'Electricity tariff prices',
+      'Inhalation and skin absorption',
+      'Energy Use Intensity (EUI)',
+      'GHS06 — Acute Toxicity (severe)',
+    ],
+    correctAnswer: 2,
     explanation:
       'Energy Use Intensity (EUI), typically expressed as kWh/m²/year, normalises consumption by floor area, enabling benchmarking against similar buildings and tracking performance improvements.',
   },
@@ -200,12 +220,12 @@ const quizQuestions = [
     id: 11,
     question: 'A walk-through audit (Level I) is most appropriate when:',
     options: [
-      'Seeking project financing',
+      'Give up to 5 back blows between the shoulder blades',
+      'Switching, dimming (if applicable), and correct operation of controls',
+      'To identify the conductor as live when switched on',
       'Needing quick identification of obvious inefficiencies',
-      'Detailed engineering calculations are required',
-      'Measurement and verification is needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Walk-through audits provide rapid identification of obvious inefficiencies and low/no-cost improvements. They suit initial assessments or situations with limited budget but are insufficient for major capital decisions.',
   },
@@ -213,8 +233,13 @@ const quizQuestions = [
     id: 12,
     question:
       "Which organisation maintains the UK's ESOS register and receives compliance notifications?",
-    options: ['CIBSE', 'Environment Agency', 'National Grid', 'Building Research Establishment'],
-    correctAnswer: 1,
+    options: [
+      'Environment Agency',
+      'Building Research Establishment',
+      'CIBSE',
+      'National Grid',
+    ],
+    correctAnswer: 0,
     explanation:
       'The Environment Agency administers ESOS in England, maintaining the compliance register and receiving notifications. Equivalent bodies operate in Scotland (SEPA), Wales (NRW), and Northern Ireland (NIEA).',
   },

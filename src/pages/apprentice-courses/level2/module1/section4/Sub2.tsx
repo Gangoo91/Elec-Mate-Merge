@@ -42,12 +42,12 @@ const checks = [
     id: 'glove-class-check',
     question: 'You’re working on a 230 V single-phase domestic CU. The tails could go live if the meter’s reconnected. Which IEC 60903 glove class is the minimum?',
     options: [
+      'Standard work gloves are fine',
       'Class 00 — 500 V AC',
       'Class 0 — 1000 V AC',
       'Class 2 — 17 000 V AC',
-      'Standard work gloves are fine',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Class 0 = 1000 V AC max use voltage, comfortably above 230 V. Class 00 (500 V AC) would also exceed 230 V but Class 0 is the standard call for any LV work — it’s the de facto industry minimum for electricians. Class 2 is HV-only — overkill, and stiffer to work with.',
   },
@@ -55,10 +55,10 @@ const checks = [
     id: 'insulated-tools-check',
     question: 'A screwdriver marked "VDE 1000V" with the BS EN 60900 logo — what does that mean?',
     options: [
-      'Tested up to 10 000 V, safe for HV',
+      'Power exchanged between source and reactive components',
       'Tested at 10 000 V AC, certified for use up to 1000 V AC live working',
-      'Just a brand name, no actual rating',
-      'OK for pulling cable, not for live work',
+      'Emergency duration, type, battery test information and location',
+      'No fixed maximum, but must be appropriate for the application',
     ],
     correctIndex: 1,
     explanation:
@@ -68,12 +68,12 @@ const checks = [
     id: 'arc-flash-rating-check',
     question: 'Your RAMS calls for arc-rated kit at "8 cal/cm² minimum". What does that number actually mean?',
     options: [
-      'How heavy the suit is',
+      'The cable can continuously carry 47A under standard conditions',
+      'It keeps the airway clear and lets fluids drain so they don’t choke',
+      'The air streams maintain maximum temperature difference throughout',
       'The incident energy the fabric is tested to withstand without breaking open / igniting',
-      'The thickness of the lining',
-      'The maximum voltage you can work near',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Arc Thermal Performance Value (ATPV) — measured in cal/cm². It’s the incident heat energy the fabric will resist before second-degree burn becomes likely on skin underneath. 8 cal/cm² is a common ‘Category 2’ specification for LV switchroom work; HV may need 25 or 40 cal/cm². The arc flash hazard analysis in the RAMS sets the number.",
   },
@@ -98,7 +98,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'IEC 60903 Class 0 gloves are rated for what maximum AC use voltage?',
-    options: ['230 V', '500 V', '1000 V', '7500 V'],
+    options: [
+      '7500 V',
+      '230 V',
+      '1000 V',
+      '500 V',
+    ],
     correctAnswer: 2,
     explanation:
       'Class 0 = 1000 V AC max use voltage (1500 V DC). Each glove is also tested at 5000 V AC during manufacture. Class 00 = 500 V AC, Class 1 = 7500 V AC, Class 2 = 17 000 V AC, Class 3 = 26 500 V AC, Class 4 = 36 000 V AC.',
@@ -107,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'How often must IEC 60903 insulating gloves be re-tested in service?',
     options: [
-      'Annually',
+      'To verify the RCD trips within the required time',
+      'Investigate the connection and clean/retighten as necessary',
+      'To identify variations in impedance along the circuit',
       'Every 6 months (and inspected before EVERY use)',
-      'Only when visibly damaged',
-      'Once at start of life — the manufacturer test is enough',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Periodic dielectric test every 6 months is standard practice (per IEC 60903 + UK industry guidance). Plus a VISUAL + AIR-INFLATION check before each use — roll the cuff to trap air and look for leaks. Test date is marked on the cuff. Past it = bin it.',
   },
@@ -120,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'A BS EN 60900 insulated screwdriver carries the "double triangle / 1000 V" mark. The maximum live-working voltage is:',
     options: [
-      '500 V AC',
       '1000 V AC and 1500 V DC',
+      '500 V AC',
       '10 000 V AC',
       'Any voltage if you have insulating gloves on too',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "BS EN 60900: factory tested at 10 000 V AC, rated for live use at 1000 V AC / 1500 V DC. That covers all LV (up to 1000 V AC). For HV you’d need different kit entirely. Wearing gloves doesn’t extend the rating of the tool.",
   },
@@ -133,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does "Category 2 / 8 cal/cm²" describe in arc-flash PPE?',
     options: [
-      'The brand name of the suit',
+      'BS 88, BS 3036, BS EN 60898, BS EN 60947-2 or BS EN 61009-1 RCBO at 30 A or 32 A',
       'The minimum incident energy rating of the fabric (ATPV ≥ 8 cal/cm²)',
-      'The number of layers in the garment',
-      'The CE certification level',
+      'Suitable first aid facilities and arrangements, including trained first aiders',
+      'Device ID (and possibly IP addresses or node IDs)',
     ],
     correctAnswer: 1,
     explanation:
@@ -146,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the minimum safety footwear standard for general electrical site work?',
     options: [
-      'Trainers with steel toe',
+      'The success rate rises to approximately 95%',
+      'The difference between entering and leaving water temperatures',
       'EN ISO 20345 SB (basic safety footwear with toe protection)',
-      'Wellington boots',
-      'EN ISO 20347 (occupational footwear, no toe-cap)',
+      'They can fall and strike people below, causing injury or death',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'EN ISO 20345 is THE safety footwear standard. The lowest grade SB has a 200 J impact-resistant toe-cap. S1, S2, S3 add features (S3 = penetration-resistant midsole, water-resistant, antistatic). For dedicated electrical isolation work — see EN 50321-1 dielectric footwear — that’s a separate specialist standard for live work, NOT general site wear.',
   },
@@ -160,11 +165,11 @@ const quizQuestions = [
     question: 'Which eye protection standard applies to safety glasses on an electrician’s site?',
     options: [
       'BS 7671',
-      'BS EN 166',
-      'EN ISO 20345',
       'IEC 60903',
+      'EN ISO 20345',
+      'BS EN 166',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS EN 166 is the eye protection standard. Look for "F" (low-energy impact, basic safety glasses) for general site, or higher impact ratings (B = medium, A = high) for grinding / power tool work. Also includes 2C-1.2 etc for UV / IR / glare from arc work.',
   },
@@ -172,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'You inflate the cuff of your IEC 60903 glove and feel a slow hiss of escaping air on the back of the index finger. What do you do?',
     options: [
-      'Patch it with electrical tape',
-      'Use it for low-current work only',
       'Bin it and get a new pair — it’s failed the in-use check',
-      'Wash it with soapy water and try again',
+      'High fault currents and electromagnetic interference',
+      'That the switch operates and makes/breaks the circuit',
+      '1×IΔn only — the 5×IΔn AC test was deleted in Amendment 4:2026',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A leak = pinhole = the dielectric protection has failed. Tape doesn’t restore the rating. Even on "low" voltage 230 V, a pinhole can be the path that drives a fatal current through your hand. Out of service immediately. Report it. Get the dated replacement and the failure logged.',
   },

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import {
   CheckCircle2,
   XCircle,
@@ -12,6 +12,7 @@ import {
 import { cn } from '@/lib/utils';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { deriveProgressKeys } from '@/lib/apprentice-progress';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 
 interface QuizQuestion {
   id?: number;
@@ -26,13 +27,20 @@ interface QuizProps {
   title?: string;
 }
 
-export const Quiz: React.FC<QuizProps> = ({ questions, title = 'Knowledge check' }) => {
+export const Quiz: React.FC<QuizProps> = ({ questions: rawQuestions, title = 'Knowledge check' }) => {
   const { recordProgress } = useCourseProgress();
   const hasRecorded = useRef(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [showResult, setShowResult] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  // Per-attempt salt — kept in state so re-renders don't reshuffle and
+  // shift the correct answer. Regenerated on restart for a fresh order.
+  const [shuffleSalt, setShuffleSalt] = useState(() => createShuffleSalt());
+  const questions = useMemo(
+    () => shuffleAllQuestionOptions(rawQuestions, shuffleSalt),
+    [rawQuestions, shuffleSalt]
+  );
 
   const getCorrectAnswerIndex = (q: QuizQuestion): number => {
     if (typeof q.correctAnswer === 'number') return q.correctAnswer;
@@ -84,6 +92,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = 'Knowledge check'
     setShowResult(false);
     setQuizCompleted(false);
     hasRecorded.current = false;
+    setShuffleSalt(createShuffleSalt());
   };
 
   const getScore = () => {

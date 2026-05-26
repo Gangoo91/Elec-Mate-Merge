@@ -41,8 +41,13 @@ const quizQuestions = [
   {
     id: 4,
     question: 'What shape does a back-to-back bend form?',
-    options: ['L shape', 'U shape', 'S shape', 'Straight line'],
-    correctAnswer: 1,
+    options: [
+      'U shape',
+      'L shape',
+      'S shape',
+      'Straight line',
+    ],
+    correctAnswer: 0,
     explanation:
       "A back-to-back bend produces a 'U' shape for drops from ceilings or looping around structures.",
   },
@@ -50,10 +55,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why is bend radius important?',
     options: [
-      'For appearance',
+      'It prevents clashes and ensures fair use of shared resources',
       'To prevent cable damage and maintain compliance',
-      'To save materials',
-      'To speed installation',
+      'Metalwork each side may need individual bonding',
+      'A storage tank that previously held chemicals',
     ],
     correctAnswer: 1,
     explanation:
@@ -62,7 +67,12 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Which bend is typically less than 30 degrees and used for fine alignment?',
-    options: ['90-degree bend', 'Offset bend', 'Kick bend', 'Saddle bend'],
+    options: [
+      '90-degree bend',
+      'Offset bend',
+      'Kick bend',
+      'Saddle bend',
+    ],
     correctAnswer: 2,
     explanation:
       'A kick bend provides a small directional adjustment (usually <30 degrees) for final alignment into boxes or accessories.',
@@ -70,16 +80,26 @@ const quizQuestions = [
   {
     id: 7,
     question: 'What factor determines whether to use single or double saddle bend?',
-    options: ['Cable type', 'Size of the obstacle', 'Material cost', 'Installation speed'],
-    correctAnswer: 1,
+    options: [
+      'Cable type',
+      'Installation speed',
+      'Material cost',
+      'Size of the obstacle',
+    ],
+    correctAnswer: 3,
     explanation:
       'The size of the obstacle determines whether to use a single saddle (small obstacles) or double saddle (larger obstacles).',
   },
   {
     id: 8,
     question: 'Which standard covers bend radius requirements?',
-    options: ['BS 5839', 'BS 7671', 'BS EN 50200', 'BS 5266'],
-    correctAnswer: 1,
+    options: [
+      'BS 7671',
+      'BS EN 50200',
+      'BS 5839',
+      'BS 5266',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 7671 covers bend radius requirements and other installation standards for electrical conduit systems.',
   },
@@ -89,7 +109,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'Which bend type would you use to pass over a medium-sized water pipe?',
-    options: ['90-degree bend', 'Double saddle bend', 'Kick bend', 'Offset bend'],
+    options: [
+      'Kick bend',
+      'Double saddle bend',
+      'Offset bend',
+      '90-degree bend',
+    ],
     correctIndex: 1,
     explanation:
       'A double saddle bend is used to pass over larger obstructions like medium-sized pipes while returning to the same line.',
@@ -98,12 +123,12 @@ const quickCheckQuestions = [
     id: 2,
     question: "What's the main purpose of a kick bend?",
     options: [
-      'Pass over obstacles',
+      'Pale, cold, clammy skin with a rapid pulse',
+      'Ensure power is isolated and use appropriate IP-rated equipment',
       'Provide small directional adjustment for final alignment',
-      'Make sharp turns',
-      'Connect multiple conduits',
+      'To prevent unauthorised re-energisation while work is being carried out',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A kick bend provides a small directional adjustment (usually <30 degrees) for final alignment into boxes or accessories.',
   },
@@ -111,12 +136,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why is maintaining minimum bend radius important?',
     options: [
-      'Saves materials',
+      'Be used only for genuinely unavoidable residual emissions',
+      'It focuses on human factors alongside engineering controls',
+      'The corrected continuity test results for the CPC',
       'Prevents cable damage and maintains compliance',
-      'Looks better',
-      'Easier to install',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Maintaining minimum bend radius prevents cable damage, ensures adequate internal space, and maintains compliance with BS 7671.',
   },

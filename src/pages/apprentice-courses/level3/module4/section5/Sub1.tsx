@@ -42,12 +42,12 @@ const checks = [
     question:
       "What's the typical 'cost-of-repair vs cost-of-replacement' threshold that should trigger the 'replace' decision?",
     options: [
-      "Always cheaper.",
       "60–70% of replacement cost. If the repair (parts + labour) is more than 60–70% of a new replacement, lean to replace. Reasoning: the repair retains the existing component's age + wear; the replacement gives full warranty + lifetime expectation. The threshold is approximate; other factors (lead time, customer urgency, availability) move the line. For high-reliability requirements (commercial / industrial / safety-critical), the threshold may shift lower (40–50%) — replacement preferred. For one-off / low-budget repairs, may shift higher (80%) — repair preferred.",
-      "100%.",
-      "10%.",
+      "Because the heat-loss calc determines what flow temperature the system will run at, which in turn determines what size emitters (radiators / underfloor) the property needs. If the existing radiators are small (sized for 70-80°C flow from a gas boiler) and the heat-loss calc shows the property needs 8 kW design heat output, the radiators may need to grow to deliver 8 kW at 45°C flow. Emitter design is downstream of heat-loss calc. Skipping the calc and reusing existing radiators is the headline cause of disappointing UK heat-pump SCOP figures.",
+      "Three scenarios. (1) Original device doesn't meet current standards — a 1990s 6 kA MCB in an installation now requiring 10 kA breaking capacity needs replacement. (2) A4:2026 has introduced new requirements that the original device can't satisfy — older RCBOs may not meet AFDD requirements for HMO bedrooms. (3) Building Regs change has made the original installation non-compliant — older lighting circuits may need RCD protection that the existing CU can't provide. In all three, repair perpetuates non-compliance; replacement brings the installation up to current spec. BS 7671 doesn't normally REQUIRE retrofit, but failures and alterations should bring the affected work to current spec.",
+      "Self-Awareness: notice your own stress response to the urgent call and any defensive thoughts (\\\\\\\"my installation was fine\\\\\\\"). Self-Regulation: manage the stress, resist defensiveness, and stay calm and professional. Motivation: connect to your core purpose — client safety and quality of service. Empathy: genuinely understand the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s fear (they do not have technical knowledge; to them, buzzing = danger) and validate it. Social Skills: communicate reassuringly (\\\\\\\"I understand this is worrying — you are right to call\\\\\\\"), ask clear diagnostic questions, arrange a prompt visit, and follow up after resolution to rebuild confidence. Every domain contributes to the response",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "60–70% is the trade rule of thumb. Above the threshold, replacement makes economic sense; below it, repair is reasonable. The L3 apprentice's role is to know the threshold and apply it; the supervisor / customer makes the final call on borderline cases.",
   },
@@ -56,12 +56,12 @@ const checks = [
     question:
       "What does 'parts availability' mean for the repair decision and how do you check?",
     options: [
-      "Always available.",
       "Three checks. (1) Manufacturer still produces the part — check manufacturer website (Hager, Schneider, Wylex, MK, Crabtree all list current ranges). (2) Local trade counter has stock — call your usual wholesaler (Edmundson, City Electrical Factors, Rexel, Newey & Eyre). (3) Lead time if not local — typical UK 1–3 days for standard items, 2–6 weeks for older / specialist items. Discontinued parts (older Crabtree, MEM, Dorman Smith) may be available second-hand only — not recommended for safety-critical applications. If parts unavailable, replacement of the parent assembly may be the only option.",
-      "Just check Amazon.",
-      "Doesn't matter.",
+      "Common causes (in approximate frequency order): (1) physical damage — nail / screw through cable during DIY, mouse damage in lofts, abrasion against sharp metalwork. (2) thermal damage — cable run alongside a heating pipe, conductors derated by enclosed installation method, prolonged overload heating. (3) moisture / contamination — water ingress into ceiling void, condensation in unheated buildings, salt-air corrosion in coastal properties. (4) UV degradation — exterior cables exposed to sunlight without UV protection. (5) ageing — polymer insulation breakdown after 30+ years (rubber-insulated cables from pre-1970s installations). (6) chemical attack — cables in contact with PVC pipes, certain adhesives, hydrocarbon spills.",
+      "Half-split = at each step you eliminate half the remaining circuit. Step 1: open the ring at a socket roughly half-way around the ring; test continuity from the DB to that point on each leg; if both legs read continuity, the break is between this socket and the OTHER end of the ring; if one leg reads OL, the break is between this socket and the DB on that leg. Step 2: pick the half that contains the break, repeat at its mid-point. With a 12-socket ring you locate the break in 4 measurements (log&#8322;12 &asymp; 3.6, rounded up). Random walking would take 6 measurements on average. The technique is from logarithmic search algorithms — formalised diagnostic discipline beats random.",
+      "PNB stands for Protective Neutral Bonded — it is the updated terminology for the earthing arrangement historically called TN-C-S or PME (Protective Multiple Earthing) in UK practice. The terminology change is aligned with international standards and clarifies the protective bonding role of the combined PEN conductor at the property. The technical arrangement is the same as before; the name is new. A4:2026 has updated cross-references throughout BS 7671 — including in Section 722 — to use PNB alongside the older PME term during the transition. As an L3 apprentice from 2026 onwards you should recognise both terms and understand they refer to the same arrangement.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Parts availability is one of the L3 engineering decision factors. A repair that needs a discontinued part may be impossible or take weeks; the customer's downtime cost may exceed the replacement cost. Check before quoting.",
   },
@@ -70,10 +70,10 @@ const checks = [
     question:
       "How does manufacturer warranty affect the repair / replace decision?",
     options: [
-      "Doesn't.",
+      "A statutory cost-recovery scheme (Health and Safety (Fees) Regulations) that allows the HSE to charge dutyholders for inspector time spent investigating 'material breaches' of H&S law. Charged at an hourly rate (currently around £170/hr — check HSE for the latest figure). Triggered when an inspector identifies a material breach and writes a letter, notice or report. The fee is for inspector time only, separate from any prosecution costs or fines.",
       "Significantly. (1) New components have manufacturer warranty (Hager 5 years on RCBOs, Schneider 5–10 years on Acti9, BG 10 years on accessories). Repaired components typically don't carry the warranty into the repair life. (2) Some manufacturers explicitly void warranty if the device has been opened / repaired — repairs DIY void the cover. (3) For domestic appliances, the customer's home insurance / appliance warranty may cover replacement but not repair, or vice versa. The L3 apprentice should ask 'is this still under warranty?' before quoting any repair — an in-warranty issue is the manufacturer's problem, not the firm's.",
-      "Always replace.",
-      "Always repair.",
+      "Three reasons. (1) Verbatim records the customer's actual experience — useful if the fault recurs and the customer reports it slightly differently second time. (2) Protects the firm if the customer later claims they reported something else (e.g. they said 'lights flicker', you wrote 'one bulb intermittent', they later claim they reported a serious shock hazard). (3) Helps future diagnosis if a different engineer attends — the original symptom in the customer's words is more useful than your interpretation. Standard practice — quote the customer in inverted commas on the job sheet, then your interpretation underneath.",
+      "You don't have to break the circuit — the clamp meter senses the magnetic field around the conductor and reads the current without electrical contact. Faster, safer (no need to disconnect), and possible on energised circuits without isolation. Standard for measuring load currents at distribution boards, on submains, on motor circuits, and for energy auditing. Most modern clamp meters also have voltage and continuity functions, making them effectively a multimeter + clamp in one.",
     ],
     correctIndex: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: "List the major factors that affect the repair-vs-replace decision.",
     options: [
-      "Just cost.",
+      "Fail at first glance (< 1 MΩ). But long parallel cables behave like resistors in parallel — three 200 m runs in parallel reduce the apparent IR by approximately 1/3. Each individual run could be reading roughly 2.4 MΩ. Test each parallel run independently to localise; document per-run IR. Long damp runs of underground cable show lower IR than short dry indoor runs — context matters.",
       "Six factors. (1) COST — repair vs replace (60–70% threshold). (2) PARTS AVAILABILITY — current production, stock, lead time. (3) RELIABILITY — repaired vs new component long-term performance. (4) COMPLIANCE — replacement may be required to meet current standards (A4:2026 may demand newer specification). (5) SCHEDULE — customer's downtime cost; emergency vs planned. (6) WARRANTY / INSURANCE — in-warranty repair is free; out-of-warranty paid. The decision is multi-factor; quote both options when not obvious.",
-      "Just lead time.",
-      "Random.",
+      "Resolve it informally first where possible. The ACAS Code recommends informal resolution as the starting point, then a written grievance under the employer's documented grievance procedure, then a meeting with management with the right to be accompanied by a colleague or trade-union representative, then a written outcome with a right of appeal. ACAS conciliation is available if the internal procedure fails. Employment tribunal is the last resort and tribunals will assess whether both parties followed the Code reasonably.",
+      "Section 4 — First aid measures. The SDS section 4 will tell you the immediate first aid response (typically: irrigate copiously with running water for at least 15 minutes, remove contaminated clothing, seek medical advice if irritation persists or if the skin is broken). The other sections matter but the response time on a corrosive spill is measured in seconds — Section 4 is the one you need first.",
     ],
     correctAnswer: 1,
     explanation:
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: "Which of these are typically REPAIRABLE and which are typically REPLACEMENT-ONLY?",
     options: [
-      "All same.",
+      "5-day course at an accredited training centre. Covers ATEX/UKEX directives, hazardous-area zone classification (zones 0/1/2 for gas, 20/21/22 for dust), Ex equipment marking and selection, installation methods (cable glanding, conduit, sealing), inspection regimes (visual / close / detailed). Mix of classroom and practical lab. Assessment includes written exam and practical inspection task. Cost typically £1,000-1,500 plus any travel/accommodation.",
+      "Professional Indemnity (PI) — covers the firm against claims arising from errors, omissions or negligent advice in their professional capacity (design, specification, recommendation). PL covers physical damage / injury from the contractor's activities; PI covers economic loss caused by bad advice or design. Increasingly relevant as installers move into design-and-build, EV charging design, solar PV design and prosumer's installations under BS 7671 Part 8.",
       "REPAIRABLE: cable terminations, accessory faceplates, individual lampholders, switch modules, dimmer cores, individual MCBs / RCBOs (within a CU), circuit cables (mid-run patch with junction box). REPLACEMENT-ONLY (typically): consumer units (sealed enclosures, integrated busbar), transformers and ballasts (factory-sealed), most LED drivers (sealed pots), AFDDs (electronic devices), most modern accessories (one-piece moulded). The boundary is usually 'is the failed item a single field-replaceable unit?'. Sealed devices are replacement-only; assembled devices with field-accessible components are repairable.",
-      "All repairable.",
-      "All replacement.",
+      "Treat the DC side as live until proven dead with a meter rated for the voltage. The DC isolator at the array end and the DC isolator at the inverter end must both be operated and locked-off, then verify dead with a meter at both ends of the string. Even with the inverter AC-side isolated and switched off, the array continues to generate as long as light hits the panels. Covering the panels reduces but does not eliminate the DC output. Inverter manufacturer's instructions usually require a dwell time after isolation to allow internal capacitors to discharge.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The repair / replace distinction often comes down to manufacturer design. Some devices are designed to be field-serviced (older fluorescent fittings with replaceable starters / ballasts); modern devices are increasingly sealed for cost / reliability / safety reasons.",
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: "What's the L3 apprentice's role in the repair-vs-replace decision?",
     options: [
-      "Make all decisions.",
+      "Pre-construction information (PC info from client/principal designer) → construction phase plan (principal contractor) → RAMS for each work package (contractor) → toolbox talks each shift (supervisor) → permit-to-work for specific high-risk activities (issued before, closed after). Each layer references the one above it. After an incident the inspector traces backwards from the incident to find the gap.",
+      "Annual calibration to a UKAS-traceable standard, with a calibration certificate kept in the firm's instrument register. Test instruments drift over time — a multimeter that reads 235 V on a 230 V supply, or an insulation tester that reads 200 MΩ on a 100 MΩ test, will produce wrong test results that fail BS 7671 612.x. Most certification schemes (NICEIC, NAPIT) require evidence of in-date calibration as part of audit. Sub 1.5 covers test instruments in detail.",
+      "A protective device opens a fault circuit by interrupting fault current. The breaking capacity (Icn) is the maximum current the device can safely interrupt without damage to the device or risk of the fault current continuing across the device contacts. If the actual fault current (PFC) exceeds Icn, the device may fail to clear the fault — contacts may weld together, the device case may rupture, the fault may persist. For a typical Type B 32 A MCB the Icn is typically 6 kA; for a CU the busbar Icn is typically 16 kA. Both must exceed the PFC at their installation point.",
       "Two responsibilities. (1) Identify the option set — what are the realistic repair / replace / redesign options for the specific fault? (2) Quantify the trade-offs — cost, lead time, reliability for each option. The DECISION is typically made by the senior / supervisor for non-trivial cases, OR by the customer based on the apprentice's options brief. The apprentice doesn't normally commit the firm to a specific repair / replace path on their own initiative — escalation to senior is the L3 expectation for commercial-impact decisions.",
-      "Just do whatever.",
-      "Customer decides everything.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Engineering decisions on repair / replace are professional judgment calls. The L3 apprentice supports the decision by providing the option set and trade-offs; the senior / customer makes the call. Building this judgment over years is the path to senior-level competence.",
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: "Why might 'compliance' force a replacement even when repair is technically possible?",
     options: [
-      "It doesn't.",
       "Three scenarios. (1) Original device doesn't meet current standards — a 1990s 6 kA MCB in an installation now requiring 10 kA breaking capacity needs replacement. (2) A4:2026 has introduced new requirements that the original device can't satisfy — older RCBOs may not meet AFDD requirements for HMO bedrooms. (3) Building Regs change has made the original installation non-compliant — older lighting circuits may need RCD protection that the existing CU can't provide. In all three, repair perpetuates non-compliance; replacement brings the installation up to current spec. BS 7671 doesn't normally REQUIRE retrofit, but failures and alterations should bring the affected work to current spec.",
-      "Always.",
-      "Never.",
+      "Reportable diseases (Reg 8 + Schedule 3) are work-related ill-health diagnoses — carpal tunnel syndrome from repetitive work, occupational asthma, hand-arm vibration syndrome, certain cancers attributable to a known carcinogen at work. Reportable dangerous occurrences (Reg 7 + Schedule 2) are events that COULD have caused injury — collapse of lifting equipment, escape of dangerous substances, electrical short circuit causing 24+ hours plant stoppage, structural collapse, certain hazardous-area incidents.",
+      "Rented domestic properties in England — including most assured shorthold tenancies, licences to occupy, and HMOs. Excludes social housing tenancies under separate regulation, lodger arrangements where the landlord shares the dwelling, long leases (7+ years), student halls of residence under separate regimes, and accommodation provided to family members. Wales has its own equivalent (Renting Homes Wales Act 2016 plus the Renting Homes — Fitness for Human Habitation Regulations 2022); Scotland has the Housing (Scotland) Act 2006 plus tolerable standard / repairing standard guidance; Northern Ireland follows similar requirements via the Housing (Northern Ireland) Order 2003.",
+      "Both are predominantly single-phase domestic in the UK. The differences are in the install scope, not the electrical interface. Air-source has an outdoor unit on the property exterior — a single electrical supply, refrigerant pipework to the indoor cylinder/buffer, controls cabling. Ground-source has either horizontal slinky coils in trenches or vertical boreholes — much larger civils scope, ground-loop pumps that are themselves loads on the electrical supply, and an indoor unit that contains the compressor (so no outdoor unit). Electrical sizing is similar (5-12 kW typical); cable runs are different (ground-source indoor unit is fed from the CU; air-source has cable to the outdoor unit). MCS MIS 3005 covers both.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Compliance-driven replacement is the regulator's lever. The L3 apprentice's role is recognising when the repair option doesn't bring the installation to compliance. The customer makes the commercial decision on whether to upgrade; the firm has a duty to advise on compliance gaps.",
   },
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: "What's the typical lead time for ordering specialised electrical components in the UK?",
     options: [
-      "Always next-day.",
+      "Significant. A south-facing roof at 30-40° pitch is the optimal UK orientation, posting 100% of reference yield. East-facing or west-facing roofs typically produce 80-85% of optimal. North-facing produces 50-65% (still positive but with much longer payback). Steeper pitches favour winter performance; shallower pitches favour summer performance. Flat roofs get an A-frame mount to set a target pitch and azimuth. The MCS Yield Calculator handles all of this — produces the kWh figure for the SAP and the customer handover.",
       "Standard items (MCBs, RCBOs, accessories from common brands): next-day from major wholesalers (Edmundson, CEF, Rexel) within working hours. Specialist items (commercial three-phase devices, specific fire-alarm modules, KNX components, EV charger spares): 2–10 working days from manufacturer or distributor. Discontinued items: weeks to months, sometimes second-hand only. International items: 2–6 weeks if available. The lead time goes into the customer's expectation-setting; some firms keep emergency stocks of common items to enable next-day repairs.",
-      "Always weeks.",
-      "Always months.",
+      "Reg 722.410.3.5 prohibits obstacles and placing out of reach (Section 417 measures). Reg 722.410.3.6 prohibits non-conducting location and earth-free local equipotential bonding. Designers must select alternative protective measures permitted within Chapter 72 and elsewhere in BS 7671 — typically ADS with appropriate RCDs, SELV / PELV where applicable, and double or reinforced insulation.",
+      "Hazardous-area work (ATEX zones, confined spaces, working at height in remote locations, work near live HV) carries higher risk than standard work. The 'lone working' precautions of Sub 1.2 are NOT enough — the risk profile demands two-person working as default. EAWR Reg 14(c) suitable precautions and HSE INDG73 + HSG85 + Confined Spaces Regulations 1997 + Work at Height Regulations 2005 all combine to require: documented permit-to-work, named authorised person, second person stationed within sight or comms, defined rescue procedure, dedicated emergency response. L3 apprentice never works hazardous-area solo; firm policy will explicitly forbid.",
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: "How do environmental factors (humidity, temperature, dust, vibration) affect the repair / replace decision?",
     options: [
-      "Don't.",
+      "Around 10% of the UK population is estimated to have dyslexia (British Dyslexia Association figure), with research suggesting prevalence may be materially higher in trade roles where visual-spatial reasoning is favoured. That means in a typical apprentice cohort of 20, two to four people are likely to be dyslexic. Plain English briefings, visual aids, audio material, extra time on written assessments and the option of practical demonstration are the standard reasonable adjustments — and they help non-dyslexic learners too.",
+      "MCS MIS 3002 is the installer-competence and installation-quality standard for solar PV. BS 7671 Section 712 is the electrical-design standard for the wiring, protection, isolation and labelling. Both apply on every install. MIS 3002 references BS 7671 explicitly for the electrical detail; BS 7671 applies regardless of whether the install is MCS-certified. MCS certification is required if the customer wants Smart Export Guarantee payments; BS 7671 compliance is required because it's the electrical regulation.",
       "Significantly. A repair that's exposed to harsh environment (outdoor, kitchen, plant room, washroom) may not last as long as the same repair in benign environment. The repair-vs-replace decision should consider: (a) what's the IP / environmental rating of the repaired vs replacement component? (b) Will the repair retain the original IP rating? (c) Is the new component IP-rated for the actual environment? Replacement often comes with current IP / environmental ratings; repair preserves the existing rating (which may have degraded). For harsh environments, replacement is usually the right call.",
-      "Same.",
-      "Random.",
+      "You can't make someone seek help, but you can keep listening, keep checking in, and keep signposting gently. Suggest the Lighthouse Club 24/7 helpline (0345 605 1956) — confidential, no referral needed, no qualifying period. Mention Samaritans (116 123). Mention Mates in Mind resources. Don't break their confidence without asking, but if you genuinely believe they're at imminent risk of harm to themselves, the right thing is to call 999 or take them to A&E — that's a safeguarding step, not a betrayal. Look after yourself too — supporting a peer can be heavy. The same charities are available to you.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Environmental factors affect long-term reliability of any electrical component. Outdoor-rated, kitchen-rated, plant-room-rated devices have specific design choices that benign-environment versions don't. Environment is one of the engineering decision factors.",
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: "What's the customer's role in the repair / replace decision?",
     options: [
-      "None.",
+      "A PCR is a published rulebook that defines the methodology for preparing an EPD for a specific product category — for example installation cable, luminaires, switchgear or insulation. It specifies the functional unit (e.g. one metre of cable of given specification), the system boundary, the data requirements, the calculation methodology and the reporting format. All manufacturers preparing EPDs for that product category follow the same PCR, ensuring like-for-like comparability across competing products. PCRs are managed by EPD programme operators such as EPD International, IBU and INIES.",
+      "The EIC carries the standard schedule of inspections and schedule of test results for the new circuit(s). For a PV install that includes the DC string circuits (with DC voltages and DC IR test results), the AC isolator and AC final connection back into the consumer unit, the labelling and signage at every isolation point, and the dual-supply warning at the consumer unit. Section 712 of BS 7671 (extensively revised in A4:2026) drives the inspection items. The 'designer' / 'constructor' / 'inspector and tester' boxes on the EIC may all be the MCS-certified installer's lead engineer; signatures still have to be physically present.",
+      "ATEX zones (Zone 0 / 1 / 2 for gas, Zone 20 / 21 / 22 for dust) require all equipment in the zone — including test instruments — to be ATEX-rated for the zone. Standard kit: intrinsically-safe two-pole tester (Martindale VI-15800 or Megger DET14C with Ex marking), no mobile phones in zone, no battery tools without Ex rating, no smoking, no metal tools that could spark on contact with steel. The fault diagnosis approach is — bring everything to a non-zoned area where possible, isolate at the boundary, only work in-zone with intrinsically-safe instruments and a hot-work permit.",
       "The customer makes the COMMERCIAL decision (cost / convenience trade-off). The firm makes the SAFETY / COMPLIANCE decision (which options satisfy BS 7671 + current standards). Apprentice presents options with trade-offs in plain English; customer chooses; firm executes the chosen option within the safety constraint. Customer cannot choose 'below BS 7671' — that's the firm's professional duty floor. The boundary: customer chooses between compliant options; firm refuses non-compliant requests.",
-      "All decisions.",
-      "Nothing.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The customer / firm decision split is critical. Commercial choices (which compliant option) are the customer's; safety choices (which options are compliant) are the firm's. Confusing the two leads to disputes — the customer pressuring the firm to bypass compliance, or the firm dictating the customer's commercial choice.",
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: "When is 'replace the entire system' the right answer rather than repair / replace individual components?",
     options: [
-      "Never.",
       "Five conditions. (1) Cumulative repair cost approaching system replacement cost (cumulative repairs at 70%+ of new system). (2) System at end-of-life (CU 25+ years old, multiple aging components). (3) Code 1 / Code 2 EICR findings affecting multiple aspects of the system. (4) Building work or change-of-use happening; opportunity to upgrade. (5) New regulatory requirements (A4:2026 or future) that the existing system can't meet without major rework. The decision is normally the senior / customer's; the L3 apprentice identifies the indicators and escalates.",
-      "Always.",
-      "Never.",
+      "Building Regulations Part L (Conservation of Fuel and Power) applies to new build, extensions and major renovations. Heat pump installs in those contexts must demonstrate compliance with the relevant Part L primary energy and carbon emissions targets, typically through SAP (Standard Assessment Procedure) for dwellings. The Future Homes Standard expected to bring fossil-fuel boilers off new-build from 2025 elevates heat pumps to the default route for new-build. MCS MIS 3005 sits alongside Part L — MCS proves the installer is competent, Part L sets the building energy targets, and the SAP calculation that informs Part L compliance uses MCS-style heat-loss and SCOP methodology.",
+      "The Duty of Care under section 34 of the Environmental Protection Act 1990. The waste producer must take all reasonable steps to ensure waste is contained, transferred only to authorised persons, properly described in a waste transfer note (or hazardous waste consignment note where applicable), and ultimately recovered or disposed of by an authorised facility. Duty of Care applies regardless of whether the waste is also covered by WEEE, Hazardous Waste Regulations or other regimes.",
+      "Stop and verify before testing. Unusual supply arrangements suggest either (a) the property is genuinely TT (rural, older, or specifically designed) which may need different fault-diagnosis approach, OR (b) the customer's installation isn't what you expected from the booking (e.g. an older commercial site with three-phase supply you weren't briefed on). Either way, the test plan needs to match the actual supply. Escalate to supervisor if unsure; update the RAMS to reflect the actual installation; brief the customer if the work scope changes. Never just push ahead with the test plan you arrived with if it doesn't match what you find.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "System replacement is a major commercial decision. The L3 apprentice's role is identifying the indicators (cumulative cost, age, EICR codes, change-of-use, regulatory) and escalating to senior. The decision is rarely an apprentice-level call.",
   },

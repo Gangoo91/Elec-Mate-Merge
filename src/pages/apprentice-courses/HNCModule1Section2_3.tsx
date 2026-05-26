@@ -34,7 +34,12 @@ const quickCheckQuestions = [
   {
     id: 'most-effective-control',
     question: 'Which control measure is considered the MOST effective in the hierarchy?',
-    options: ['PPE', 'Administrative controls', 'Elimination', 'Engineering controls'],
+    options: [
+      'PPE',
+      'Administrative controls',
+      'Elimination',
+      'Engineering controls',
+    ],
     correctIndex: 2,
     explanation:
       'Elimination is the most effective control as it completely removes the hazard. This should always be considered first before moving down the hierarchy to less effective controls.',
@@ -43,12 +48,12 @@ const quickCheckQuestions = [
     id: 'substitution-example',
     question: 'Which is an example of substitution in building services?',
     options: [
-      'Wearing gloves when handling cables',
+      'Transmitter cannot source enough voltage, signal drops',
+      'Mistakes and unsafe working practices',
+      'To level the tower on slightly uneven ground',
       'Replacing solvent-based adhesive with water-based',
-      'Installing warning signs',
-      'Providing training on safe working',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Substitution replaces a hazardous substance or process with a less hazardous alternative. Replacing solvent-based adhesive with water-based reduces exposure to harmful fumes.',
   },
@@ -56,12 +61,12 @@ const quickCheckQuestions = [
     id: 'engineering-control',
     question: 'Which of the following is an engineering control?',
     options: [
-      'Permit to work system',
-      'Safety goggles',
       'Local exhaust ventilation',
-      'Toolbox talk',
+      'Link budget or power budget',
+      'DC voltage at a specified level',
+      'To prevent strand separation',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Local exhaust ventilation (LEV) is an engineering control that physically removes hazardous fumes at source. It doesn't rely on worker behaviour or PPE.",
   },
@@ -69,12 +74,12 @@ const quickCheckQuestions = [
     id: 'ppe-position',
     question: "Why is PPE considered the 'last resort' in the hierarchy of control?",
     options: [
-      'It is too expensive',
       'It relies on correct usage and only protects the wearer',
-      'It is difficult to obtain',
-      'It slows down work too much',
+      'Faults introduce abnormal conditions and safety risks',
+      'Selecting efficient equipment and optimising circuit arrangements',
+      'Stay calm, reassure them, and help them focus on slow breathing',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "PPE is the least effective control because it relies entirely on correct selection, fitting and consistent use. It only protects the individual wearer and doesn't eliminate or reduce the hazard itself.",
   },
@@ -100,12 +105,12 @@ const quizQuestions = [
     question:
       'A contractor is planning to install cables in a ceiling void containing asbestos. What is the BEST control measure?',
     options: [
+      'Provide asbestos awareness training',
       'Provide RPE and protective clothing',
       'Use an alternative cable route that avoids the asbestos',
-      'Provide asbestos awareness training',
       'Install warning signs at access points',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Using an alternative route eliminates the asbestos exposure risk entirely. This is the most effective control and should be considered before relying on PPE or administrative controls.',
   },
@@ -113,12 +118,12 @@ const quizQuestions = [
     id: 3,
     question: "Which control measure would be classified as 'administrative'?",
     options: [
-      'Installing interlocked guards on machinery',
       'Using battery-powered tools instead of mains',
-      'Implementing a permit to work system',
+      'Installing interlocked guards on machinery',
       'Providing hearing protection in plant rooms',
+      'Implementing a permit to work system',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Permit to work systems are administrative controls - they rely on procedures and human behaviour rather than physical barriers. They manage how work is done rather than eliminating the hazard.',
   },
@@ -127,12 +132,12 @@ const quizQuestions = [
     question:
       'An electrician needs to work on a live distribution board. What combination of controls should be applied?',
     options: [
-      'PPE only - insulated gloves and face shield',
       'Elimination (isolate if possible), engineering (barriers), administrative (permit), PPE',
-      'Warning signs and safety briefing only',
-      'Training and competence checks only',
+      'Internal air movement is lower, reducing convective heat transfer',
+      'A legal requirement imposed by an Act of Parliament or Regulations',
+      'To provide legal evidence of compliance and demonstrate ongoing maintenance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Live working requires multiple layers of control. First consider if isolation is possible (elimination), use barriers (engineering), follow permit systems (administrative), and use appropriate PPE as additional protection.',
   },
@@ -140,8 +145,13 @@ const quizQuestions = [
     id: 5,
     question:
       'Installing acoustic enclosures around noisy plant equipment is an example of which control type?',
-    options: ['Elimination', 'Substitution', 'Engineering control', 'Administrative control'],
-    correctAnswer: 2,
+    options: [
+      'Substitution',
+      'Engineering control',
+      'Administrative control',
+      'Elimination',
+    ],
+    correctAnswer: 1,
     explanation:
       "Acoustic enclosures are engineering controls - they physically contain the noise at source. The hazard isn't eliminated but is controlled through physical measures that don't rely on worker behaviour.",
   },
@@ -150,11 +160,11 @@ const quizQuestions = [
     question: 'Why should controls higher in the hierarchy be prioritised?',
     options: [
       'They are always cheaper to implement',
-      "They are more reliable and don't depend on human behaviour",
       'They are required by law for all hazards',
+      "They are more reliable and don't depend on human behaviour",
       'They are easier to monitor and maintain',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Controls higher in the hierarchy (elimination, substitution, engineering) are more reliable because they don't depend on people remembering to follow procedures or wear PPE correctly. They provide consistent protection.",
   },
@@ -176,12 +186,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the main limitation of administrative controls?',
     options: [
-      'They are expensive to implement',
-      'They require specialist equipment',
       'They rely on people following procedures correctly',
       'They cannot be used for electrical hazards',
+      'They are expensive to implement',
+      'They require specialist equipment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Administrative controls depend entirely on human behaviour - people must follow procedures, read signs, and comply with rules. Human error, complacency or shortcuts can render them ineffective.',
   },
@@ -203,18 +213,23 @@ const quizQuestions = [
     question: 'Under the Management of Health and Safety at Work Regulations, employers must:',
     options: [
       'Always provide PPE regardless of other controls',
+      'Provide administrative controls before engineering controls',
       'Apply the hierarchy of control when assessing risks',
       'Use elimination for every identified hazard',
-      'Provide administrative controls before engineering controls',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The hierarchy of control is a legal requirement under MHSWR. Employers must consider controls in order of effectiveness, though the most reasonably practicable option for each specific situation should be selected.',
   },
   {
     id: 11,
     question: 'Providing toolbox talks on manual handling techniques is an example of:',
-    options: ['Elimination', 'Substitution', 'Engineering control', 'Administrative control'],
+    options: [
+      'Elimination',
+      'Substitution',
+      'Engineering control',
+      'Administrative control',
+    ],
     correctAnswer: 3,
     explanation:
       "Training and toolbox talks are administrative controls. They aim to change behaviour and improve awareness but rely on workers applying what they've learned consistently.",
@@ -223,12 +238,12 @@ const quizQuestions = [
     id: 12,
     question: 'Which combination represents applying multiple levels of the hierarchy correctly?',
     options: [
-      'Signs, training, and PPE only',
       'Eliminate where possible, guard remaining hazards, train staff, provide PPE',
-      'PPE for all hazards with training on correct use',
-      'Engineering controls only without any PPE',
+      'They are more reliable and don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t depend on human behaviour',
+      'Elimination (isolate if possible), engineering (barriers), administrative (permit), PPE',
+      'Use an alternative cable route that avoids the asbestos',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The best approach is layered: eliminate what you can, engineer controls for remaining hazards, implement administrative procedures, and provide PPE as additional protection. This provides defence in depth.',
   },

@@ -39,8 +39,13 @@ const checks = [
     id: 'm4-s6-sub5-rcd-trip-time-30ma',
     question:
       'A 30 mA Type AC RCD protecting a kitchen ring final. You instrument-test at 1 × IΔn (30 mA test current). What is the maximum permitted trip time per BS 7671 A4:2026 Reg 643.7.3 / 643.8?',
-    options: ['10 ms', '40 ms', '300 ms', '500 ms'],
-    correctIndex: 2,
+    options: [
+      '300 ms',
+      '40 ms',
+      '10 ms',
+      '500 ms',
+    ],
+    correctIndex: 0,
     explanation:
       'A4:2026 redrafted RCD testing — regardless of RCD Type, "an alternating current test at rated residual operating current (IΔn) is used to verify the effectiveness". For a general non-delay-type RCD: trip time ≤ 300 ms maximum at 1 × IΔn. (For delay "S" type RCDs: between 130 ms minimum and 500 ms maximum at 1 × IΔn.) Note: 40 ms is the older requirement for the 5 × IΔn test that A4:2026 deleted from the regulations — Table 3A in Appendix 3 was deleted in A4:2026.',
   },
@@ -49,12 +54,12 @@ const checks = [
     question:
       'Why is the integral RCD test button alone insufficient for verifying RCD effectiveness during initial verification?',
     options: [
-      'The button is unreliable.',
       'The button only proves the trip mechanism (electromechanical or electronic latch + tripping spring) operates — it does not prove the residual-current-sensing transformer and electronics are detecting an actual residual current. An instrument-based test injects a real residual current of 30 mA at IΔn and measures the trip time, verifying the complete protective function.',
-      'The button trips at the wrong current.',
-      'BS 7671 doesn\'t mention the test button.',
+      'Health hazard pictogram — silhouetted figure with star burst on chest. Covers carcinogenicity, mutagenicity, reproductive toxicity, respiratory sensitisation, target organ toxicity (single or repeated exposure), aspiration hazard. Distinguishes long-term / chronic risks from acute toxicity (skull).',
+      'Match the medium to the message. Quick coordination = verbal or radio. Contractual change = written. Geometry or position = visual (photo, sketch, redline). Permanent record = formal (RAMS, certificate, variation order). The wrong medium for the message either burns time (formal letter for a quick query) or burns money (WhatsApp message for a contract change).',
+      'Politely ask for two minutes to read it before signing. Signing the RAMS sign-on sheet is a positive declaration that you have read it, understood it, and will work to it. If something goes wrong later and the document had a defect you could have spotted on a quick read, your signature on the front is evidence against you. Two minutes of reading at the briefing is non-negotiable.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The integral test button connects a small resistor between line and earth on the load side of the RCD core, generating an artificial residual current sufficient to trip the device. It tests the trip latch and mechanical operation — but it does not exercise the full residual-current-sensing path with a calibrated current at IΔn. The instrument test (Reg 643.7.3 / 643.8) injects a known current via the test instrument and measures the actual response time. Both tests have their place: instrument test at initial verification and EICR; user test button at handover and recommended periodic operation by the user (typically every six months).',
   },
@@ -63,12 +68,12 @@ const checks = [
     question:
       'Which of the following falls within the scope of BS 7671 Reg 643.10 (functional testing)?',
     options: [
-      'Only RCDs.',
+      'The voltage factors C used in the determination of fault currents and earth fault loop impedances — including Cmax (1.05 or 1.10) and Cmin (0.95) and the rationale for their use in Reg 411.4.5 and Reg 434.5 calculations.',
+      'Account-for personnel from the firm; ensure customers / visitors in your care have evacuated; liaise with the building\\\\\\\\\\\\\\\'s responsible person and fire-marshal at the muster point; provide accurate information to fire service if asked; prevent re-entry; preserve the scene afterwards if relevant to your firm\\\\\\\\\\\\\\\'s work.',
+      'Gather and preserve facts at the scene; provide a contemporaneous written account; notify the responsible person immediately; assist with form completion if asked; provide witness information; preserve evidence; cooperate with any HSE follow-up. The operative isn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t normally the report-maker but is the source of the facts.',
       'All of: switchgear and controlgear assemblies; drives; controls and interlocks; emergency switching and emergency stopping systems; insulation monitoring (where fitted); plus the manual test facility on AFDDs and the test facility on RCDs. The list is non-exhaustive.',
-      'Only motor controls.',
-      'Functional testing is the same as IR testing.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Reg 643.10 lists examples (non-exhaustive): switchgear and controlgear assemblies, drives, controls and interlocks, emergency switching/stopping systems, insulation monitoring. The regulation also explicitly requires verification of any test facility on protective devices including RCDs and AFDDs. The test is not limited to the listed examples — anything in the installation that has a functional purpose (e.g. door interlocks, lift floor sensors, motor reversers, building management interfaces) must be functionally proven to work as designed.',
   },
@@ -79,10 +84,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS 7671 A4:2026 deleted Table 3A from Appendix 3 (the old time/current performance criteria for RCDs). What replaced it?',
     options: [
-      'A larger version of the same table.',
+      '(a) Every fuse and single-pole control / protective device is in the line conductor only; (b) for circuits with an earthed neutral, ES and BC lampholders have the outer or screwed contacts connected to neutral (except E14/E27 to BS EN 60238); (c) wiring is correctly connected throughout.',
       'A simplified rule: regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify effectiveness, with trip time ≤ 300 ms for general non-delay type and 130-500 ms for delay "S" type.',
-      'No replacement — RCD testing is no longer required.',
-      'A new test at 10 × IΔn instead.',
+      'Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process',
+      'To ensure correct phase identification is maintained across the joint — incorrect phasing can cause motor reversal, equipment damage, or dangerous cross-connections',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: 'A 30 mA Type A RCBO on a kitchen ring final tests at trip time 28 ms at 1 × IΔn. Pass or fail per A4:2026?',
     options: [
-      'Fail — should be slower than 100 ms.',
+      'Better heat dissipation allows higher current capacity because I²R losses can be removed more effectively',
+      'Prolonged crawling, lying, and dragging loads in extremely restricted space, with no ability to use normal lifting techniques',
       'Pass — well below the 300 ms maximum for general non-delay type, indicating a healthy RCD with margin.',
-      'Pass marginally.',
-      'Fail — should be exactly 300 ms.',
+      'It demonstrates genuine competence — a technician who can diagnose any fault, not just familiar ones',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       '28 ms at 1 × IΔn for a 30 mA general non-delay RCBO is comfortably below the 300 ms limit and well within typical performance for a healthy device (most quality RCBOs trip in 20-50 ms at IΔn). Document on the STR. If you also performed the optional 5 × IΔn test for confidence, expect ≤ 40 ms historically — though this is no longer a regulatory acceptance criterion under A4:2026, many test instruments and guidance still report it.',
   },
@@ -105,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'During functional testing of switchgear interlocks on a TP+N distribution board, what would you check?',
     options: [
-      'Just press the switches.',
+      'Older terminology — IV (Internal Verifier) was the predecessor name for what\\\\\\\'s now IQA (Internal Quality Assurer). Same role. Older qualifications used IV terminology (V1 / V2 awards); current qualifications use IQA terminology (Level 4 Award/Certificate in Internal Quality Assurance). If you see \\\\\\\'IV\\\\\\\' on a job advert it almost always means IQA in modern terminology.',
+      'Fluorescent tubes (mercury-containing, EWC 20 01 21* — the asterisk denotes hazardous), oil-filled transformers and capacitors containing PCBs (EWC 16 02 09*), batteries containing lead, mercury or cadmium (EWC 16 06 01* and similar), asbestos-cement consumer unit backplates from older installations (EWC 17 06 05*), and waste oils. The asterisk in the EWC code is the marker for absolute hazardous waste.',
       'Operation of mechanical interlocks (e.g. door interlock prevents opening while energised, key interlock prevents racking out a circuit-breaker without permit), confirmation that emergency-off devices break the supply, manual operation of the main switch under load (where safe), and that any control circuit logic (contactors, relays, time delays) operates as designed.',
-      'Polarity only.',
-      'Insulation only.',
+      'Apprentices complete practical tasks (Concrete Experience), reflect during the task (reflection-in-action), discuss afterwards (reflection-on-action and Reflective Observation), draw conclusions (Abstract Conceptualisation), and apply improvements on the next task (Active Experimentation)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Functional testing of switchgear is broader than just pressing buttons — it includes verifying mechanical interlocks, key interlocks, emergency stops, contactor and relay operation, control circuit logic, time-delay sequencing, and that the assembly operates as the design documents specify. The point is to prove the switchgear assembly does what it was designed to do under realistic operational conditions.',
   },
@@ -118,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'BS 7671 Reg 415.1.1 — the use of RCDs with a rated residual operating current not exceeding 30 mA is recognised in:',
     options: [
-      'AC systems as additional protection.',
+      'A diverse range including completed work orders, test certificates, risk assessments, method statements, witness testimonies, and reflective accounts that map to specific areas of the standard',
       'AC systems as additional protection in the event of failure of the provision for basic protection and/or the provision for fault protection or carelessness by users.',
-      'TT systems only.',
-      'Industrial installations only.',
+      'If used exclusively when problem-focused coping is possible, it can prevent the stressor from being resolved and prolong suffering',
+      'A fine mineral dust generated by cutting, drilling, or grinding materials containing silica such as concrete, sandstone, and morite',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reg 415.1.1 verbatim — defines the additional-protection function of 30 mA RCDs. Functional testing of these RCDs at IΔn confirms they will deliver that additional-protection function in service. The function is: catch faults that bypass basic and fault protection, and reduce the risk of fatal shock from user carelessness (e.g. cutting a cable while the device is plugged in).',
   },
@@ -131,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'BS 7671 Reg 411.3.3 in A4:2026 — RCD additional protection on socket-outlets:',
     options: [
-      'Removed entirely.',
+      'A poor power factor increases current draw for the same real power, causing overheating in cables and equipment, increased losses, higher electricity costs from reactive power charges, and may indicate failing capacitors that need replacement during maintenance',
       'Revised to apply to socket-outlets with a rated current not exceeding 32 A. There is an exception to omit RCD protection where, other than for a dwelling, a documented risk assessment determines that RCD protection is not necessary.',
-      'Now requires 100 mA RCDs.',
-      'Mandatory only on three-phase sockets.',
+      'Observe operatives at work, identify unsafe practices, intervene immediately, coach to correct method, document, follow up. The observation is not a "checking up" exercise but part of the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s monitoring under MHSWR Reg 5.',
+      'Each test depends on the previous (continuity of CPC must be proven before IR can be interpreted; earthing must be proven before live tests rely on it; functional last because it confirms the whole system works)',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'You are functional-testing the manual test button on an AFDD (arc fault detection device). The device clicks but the LED status indicator does not change. What action?',
     options: [
-      'Pass — the click is sufficient.',
-      'Suspect — verify per the manufacturer\'s procedure (Reg 643.10 explicitly requires the AFDD test facility to be verified per manufacturer recommendations). If the LED should change state and doesn\'t, the AFDD has a fault — replace.',
-      'Fail — replace the consumer unit.',
-      'Indeterminate — energise and observe.',
+      'The line conductor. The exposed screw thread of the lampholder must be connected to neutral so it is at near-zero potential when accessible (e.g. when changing a bulb). The deeper centre contact, less easily touched, is connected to line. Reverse polarity at a screw lampholder means a user changing a bulb can touch a live screw thread.',
+      'You must confirm that the rating and condition of the existing equipment, including that of the distributor (cut-out fuse, service cable capacity, declared earth fault loop impedance, declared maximum demand), is adequate for the altered circumstances. Only then do you design the addition.',
+      'Suspect — verify per the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s procedure (Reg 643.10 explicitly requires the AFDD test facility to be verified per manufacturer recommendations). If the LED should change state and doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t, the AFDD has a fault — replace.',
+      'Cooperate (HASAWA s.7 + CDM Reg 15). Confirm your name and role. Direct the inspector to the senior person on site (supervisor, contracts manager, site manager). Answer factual questions truthfully — interfering with an inspector is a separate offence under HASAWA s.33. If asked technical questions outside your competence, say so honestly. Do not speculate or guess. Notify your firm immediately.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'AFDDs introduced in A4:2026 require functional testing per the manufacturer\'s procedure. Most have a status LED that changes state when the manual test is operated correctly. If it doesn\'t, the device may have an internal fault — consult the manufacturer datasheet for the expected indication and follow the troubleshooting flow. If the device cannot be confirmed to operate correctly per manufacturer procedure, it must be replaced before sign-off.',
   },
@@ -157,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'A 100 mA delay-type S RCD at the incoming side of a sub-mains feed. You instrument-test at 1 × IΔn. What trip time range is acceptable per A4:2026?',
     options: [
-      '< 40 ms.',
+      'Disturbing existing terminations may have loosened them; the cpc integrity of the whole circuit (origin to all accessories) must be re-confirmed before energising',
+      'A duty to cooperate with their employer and other persons so far as is necessary to enable compliance with health and safety requirements',
+      'C2 — incorrect identification is potentially dangerous because the next person to work on the circuit may be misled into believing a conductor is dead when it is live.',
       'Between 130 ms minimum and 500 ms maximum — the delay range is built into the spec to provide selectivity with downstream 30 mA RCDs.',
-      '< 300 ms.',
-      'Up to 5 seconds.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Type S RCDs are designed with an intentional time delay so that downstream 30 mA RCDs can clear faults first (selectivity). At 1 × IΔn, an S-type must take at least 130 ms to allow the downstream RCD to operate, but no more than 500 ms to provide effective backup. Outside this window the device is faulty or wrongly specified and must be replaced.',
   },
@@ -170,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'After functional testing, where do RCD trip times go on the schedule of test results?',
     options: [
-      'Nowhere — assumed.',
       'Dedicated RCD column(s) on the per-circuit row of the STR — typically headed "RCD trip time at IΔn" with sub-columns for the test current used and the measured trip time. Plus a note that the user test facility was verified.',
-      'In the IR section.',
-      'Only on the EIC, not the STR.',
+      'High criticality (A) because its failure would stop production, there is no redundancy, and the consequences include significant lost production and potential supply chain impacts',
+      'A diverse range including completed work orders, test certificates, risk assessments, method statements, witness testimonies, and reflective accounts that map to specific areas of the standard',
+      'Maintain a balanced routine — light review of key topics, brief practical practice, adequate sleep, healthy eating, and activities that help you relax and maintain perspective',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IET model STR has dedicated columns for RCD operating data — typically rated residual operating current (IΔn) of the device, and the measured trip time. Modern instruments (Megger MFT1741, Fluke 1664FC) auto-record the test details and you transcribe to the form. The Schedule of Inspections also confirms RCD test was carried out at the high-level certificate stage.',
   },

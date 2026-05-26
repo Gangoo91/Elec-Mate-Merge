@@ -31,20 +31,25 @@ const quickCheckQuestions = [
     id: 'witness-test-purpose',
     question: 'What is the primary purpose of witness testing?',
     options: [
-      'To train the client on system operation',
       'To provide independent verification that systems meet specification',
-      'To identify defects before practical completion',
-      'To generate snagging lists',
+      'Reducing reactive power demand and improving efficiency',
+      'Polarity testing with appropriate test instruments',
+      'Cable route coordination, power supply planning, and interface requirements',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Witness testing provides independent verification that installed systems meet the specification requirements. It allows the client's representative to observe tests being performed and confirm acceptable results.",
   },
   {
     id: 'notification-period',
     question: 'What is the typical minimum notice period required for witness testing?',
-    options: ['24 hours', '48 hours', '5 working days', '10 working days'],
-    correctIndex: 2,
+    options: [
+      '5 working days',
+      '48 hours',
+      '24 hours',
+      '10 working days',
+    ],
+    correctIndex: 0,
     explanation:
       "Industry standard requires a minimum of 5 working days' notice for witness testing to allow client representatives to schedule attendance. This is typically specified in the contract preliminaries.",
   },
@@ -52,12 +57,12 @@ const quickCheckQuestions = [
     id: 'failed-test-action',
     question: 'If a witness test fails, what is the correct procedure?',
     options: [
-      'Continue with remaining tests and address failures later',
-      'Immediately terminate the testing session',
       'Record the failure, rectify the issue, and reschedule the specific test',
+      'Continue with remaining tests and address failures later',
       'Ask the client to sign off despite the failure',
+      'Immediately terminate the testing session',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Failed tests must be recorded in the witness test documentation with details of the deficiency. The contractor rectifies the issue and arranges a re-test with appropriate notice to the client.',
   },
@@ -65,12 +70,12 @@ const quickCheckQuestions = [
     id: 'sign-off-authority',
     question: 'Who should sign witness test documentation on behalf of the client?',
     options: [
-      'Any site visitor',
+      'The installing electrician',
       "The main contractor's site manager",
       'An authorised client representative named in the contract',
-      'The installing electrician',
+      'Any site visitor',
     ],
-    correctIndex: 3,
+    correctIndex: 0,
     explanation:
       'Only authorised client representatives (typically named in contract documents or formally delegated) have authority to sign witness test documentation. Their signature confirms the client accepts the test results.',
   },
@@ -81,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'What documentation should be prepared before a witness testing session?',
     options: [
-      'Test certificates only',
+      'Very low resistance path between conductors that should be separate',
       'Test procedure, acceptance criteria, equipment list, and blank results sheets',
-      'As-built drawings only',
-      'Operation and maintenance manuals',
+      'To verify protective conductor continuity from origin to each point',
+      'To allow for design changes and incomplete information',
     ],
     correctAnswer: 1,
     explanation:
@@ -94,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the purpose of a witness test schedule?',
     options: [
-      'To list all equipment on site',
+      'The site diary kept by whoever was supervising — that record carries weight in commercial disputes',
+      'Searchable, offsite backup, no physical storage, easy client copies',
       'To programme testing dates and notify all parties of attendance requirements',
-      'To record test results',
-      'To calculate final account values',
+      'Appropriate mechanical protection such as conduit or trunking',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A witness test schedule programmes all required tests with proposed dates, allowing coordination with the client's representative and ensuring adequate notice for attendance at each test.",
   },
@@ -108,12 +113,12 @@ const quizQuestions = [
     question:
       'During an emergency lighting witness test, the client representative arrives 30 minutes late. What should you do?',
     options: [
-      'Refuse to conduct the test',
-      'Complete the test without them and have them sign retrospectively',
+      'Not apply Ci at all — it is already built into the Method 100–103 tabulated It values.',
+      'The competent person who carried out the inspection and testing',
+      'The point where escape routes terminate at a place of ultimate safety',
       'Brief them on progress, allow them to witness the remaining duration test',
-      'Cancel and reschedule for another day',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Brief the late arrival on progress and allow them to witness the remaining test duration. Document their late arrival on the test sheet. The test can proceed if meaningful verification is still possible.',
   },
@@ -122,12 +127,12 @@ const quizQuestions = [
     question:
       'What should be recorded if the client fails to attend a properly notified witness test?',
     options: [
-      'Nothing - abandon the test',
       "Record non-attendance and proceed with the test as 'deemed witnessed'",
-      'Only record non-attendance',
-      'Send an invoice for wasted time',
+      "EPC is based on calculated/design performance; DEC shows actual measured energy use",
+      "Causes more severe burns, deeper tissue damage and a higher likelihood of cardiac arrest",
+      "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"The earth fault loop impedence was within acceptable limits.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "If proper notice was given (typically 5 working days) and the client fails to attend, record non-attendance, proceed with the test, and document results. Most contracts allow tests to be 'deemed witnessed' in these circumstances.",
   },
@@ -138,8 +143,8 @@ const quizQuestions = [
     options: [
       'Test every tenth detector and extrapolate',
       'Test each detector individually, recording device address and response',
-      'Conduct a general evacuation drill only',
       "Submit manufacturer's test certificates",
+      'Conduct a general evacuation drill only',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the role of hold points in commissioning and witness testing?',
     options: [
-      'To delay the project',
+      'Site supervisor, affected trades, and project coordinator',
+      'Motor overheating due to reduced cooling flow through pump',
       'To define stages where work must not proceed without client approval',
-      'To calculate interim payments',
-      'To schedule equipment deliveries',
+      'For flexible applications and harsh environments',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Hold points are defined stages in the commissioning process where work cannot proceed until the client has witnessed and approved the preceding tests. They are critical for quality assurance on complex installations.',
   },
@@ -162,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'What information must a witness test sign-off sheet contain?',
     options: [
-      'Test date only',
+      'The starting torque required by the load, the supply capacity, and the acceptable voltage dip',
+      'Verify the generator is isolated and cannot start automatically',
+      'Networked systems provide real-time centralised monitoring with instant alerts',
       'Test description, acceptance criteria, actual results, pass/fail status, and signatures',
-      'Equipment serial numbers only',
-      'Warranty information',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Witness test sign-off sheets must include: test description, acceptance criteria from specification, actual measured/observed results, clear pass/fail status, date, and signatures of both contractor and client representative.',
   },
@@ -176,12 +181,12 @@ const quizQuestions = [
     question:
       'During witness testing, the specified acceptance criterion is 85% of rated output. The system achieves 83%. What should happen?',
     options: [
-      'Round up and pass the test',
       'Record as failed, investigate cause, rectify, and re-test',
-      'Ask the client to accept a derogation',
-      "Ignore the shortfall if it's within 5%",
+      'Current flows briefly while the capacitor charges, then drops to zero.',
+      'Automatically reducing energy usage during peak demand periods',
+      'Continuous monitoring of system components and communication',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'If a test fails to meet the specified acceptance criteria, it must be recorded as failed regardless of how close the result. The contractor investigates, rectifies, and arranges a re-test. Any derogations require formal agreement.',
   },
@@ -189,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the significance of the Inspection Test Plan (ITP) in witness testing?',
     options: [
-      'It replaces the specification',
+      'Common applications like ring finals, radials, and lighting circuits',
       'It lists all tests required, inspection levels, hold points, and acceptance criteria',
-      'It is only used for quality audits',
-      'It records as-built information',
+      'Immediately withdraw the harness from service, tag it as defective, and report it to their supervisor',
+      'Running at full speed, so the grease is distributed immediately',
     ],
     correctAnswer: 1,
     explanation:
@@ -202,12 +207,12 @@ const quizQuestions = [
     id: 10,
     question: 'After successful witness testing, what must be handed over to the client?',
     options: [
-      'Verbal confirmation only',
+      'Moisture — from condensation, water ingress, or high humidity',
+      '3-5 metres or as specified for the application',
       'Signed test records, commissioning data, and certificates',
-      'Equipment user manuals only',
-      'Final account documentation',
+      'Better for heavy cables and heat dissipation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Successful witness testing requires handover of signed witness test records, commissioning data sheets showing all settings and results, and relevant compliance certificates. These form part of the O&M documentation.',
   },

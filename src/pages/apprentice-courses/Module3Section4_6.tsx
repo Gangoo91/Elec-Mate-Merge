@@ -25,8 +25,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the typical mounting height for switches in new builds under Part M?',
-    options: ['450 mm', '900 mm', '1200 mm', '1500 mm'],
-    correctAnswer: 2,
+    options: [
+      '450 mm',
+      '1200 mm',
+      '900 mm',
+      '1500 mm',
+    ],
+    correctAnswer: 1,
     explanation:
       'The typical mounting height for switches in new builds under Part M guidance is 1200 mm above finished floor level.',
   },
@@ -34,12 +39,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which BS 7671 requirement applies to almost all socket outlets?',
     options: [
+      'Earth-free installation',
       'RCBO protection',
       'RCD protection',
-      'Earth-free installation',
       'Overload protection only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'RCD protection is required for almost all socket outlets in accordance with BS 7671.',
   },
@@ -55,19 +60,24 @@ const quizQuestions = [
     id: 4,
     question: 'Name one reason to use an FCU.',
     options: [
-      'To reduce cable costs',
       'To provide a fused spur for a fixed appliance',
-      'To eliminate RCD protection',
-      'To increase socket capacity',
+      'Visual and noise impact on communities',
+      'For easy identification, maintenance, and troubleshooting',
+      'Vertical-Cavity Surface-Emitting Laser',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'FCUs provide a fused spur from a ring or radial circuit to supply fixed appliances and allow local isolation.',
   },
   {
     id: 5,
     question: 'What must be done before installing any accessory?',
-    options: ['Fit the faceplate first', 'Isolate the supply', 'Install the fuse', 'Test the load'],
+    options: [
+      'Fit the faceplate first',
+      'Isolate the supply',
+      'Test the load',
+      'Install the fuse',
+    ],
     correctAnswer: 1,
     explanation:
       'The supply must always be isolated before installing any electrical accessory for safety.',
@@ -76,32 +86,37 @@ const quizQuestions = [
     id: 6,
     question: 'Why is torqueing terminals important?',
     options: [
-      'To make them look neat',
+      "The effective diameter of the light-carrying region",
+      "A licensed asbestos removal contractor",
       "To ensure safe, secure connections that won't loosen",
-      'To comply with RCD regulations',
-      'To improve cable flexibility',
+      "Something with potential to cause harm",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Proper torqueing ensures safe, secure connections that won't loosen over time, preventing overheating and fire risk.",
   },
   {
     id: 7,
     question: 'Which type of switch is used to control a light from two locations?',
-    options: ['One-way', 'Two-way', 'Intermediate', 'Dimmer'],
-    correctAnswer: 1,
+    options: [
+      'One-way',
+      'Dimmer',
+      'Intermediate',
+      'Two-way',
+    ],
+    correctAnswer: 3,
     explanation: 'Two-way switches are used to control a light from two different locations.',
   },
   {
     id: 8,
     question: 'Name one safety consideration for installing sockets outdoors.',
     options: [
-      'Use standard indoor sockets',
       'Use weatherproof sockets with IP rating and RCD protection',
-      'Install at ground level',
-      'Use plastic conduit only',
+      'Steel toe-capped boots with anti-static soles',
+      'Use revision clouds, updated revision table, and maintain drawing history',
+      'Visual inspection, testing, documentation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Outdoor sockets must be weatherproof with appropriate IP rating and RCD protection for safety.',
   },
@@ -113,8 +128,13 @@ const quickCheckQuestions = [
     id: 'mounting-height',
     question:
       'What is the typical mounting height for sockets in new builds under Part M guidance?',
-    options: ['300-400 mm', '450-1200 mm', '1200-1500 mm', 'Above 1500 mm'],
-    correctIndex: 1,
+    options: [
+      '1200-1500 mm',
+      'Above 1500 mm',
+      '450-1200 mm',
+      '300-400 mm',
+    ],
+    correctIndex: 2,
     explanation:
       'Part M guidance specifies socket mounting height generally between 450 mm to 1200 mm above finished floor level in new builds.',
   },
@@ -122,12 +142,12 @@ const quickCheckQuestions = [
     id: 'rcd-protection',
     question: 'Why is RCD protection required for most socket outlets?',
     options: [
+      'To comply with manufacturer warranties',
       'To reduce installation costs',
       'To protect against electric shock',
       'To improve socket performance',
-      'To comply with manufacturer warranties',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'RCD protection is required for most socket outlets to protect against electric shock, especially in case of earth faults.',
   },

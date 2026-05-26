@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'ene01-purpose',
     question: 'What is the primary purpose of BREEAM Ene 01?',
     options: [
-      'To specify minimum insulation levels',
+      'They override normal operation to prevent life-threatening situations or equipment damage',
       'To reduce building CO2 emissions through improved energy performance beyond Building Regulations',
-      'To mandate renewable energy installation',
-      'To set maximum electricity consumption limits',
+      'Holding the nozzle of a Class H vacuum close to the point of work to capture fibres as they are released',
+      'Acting honestly, fairly, and transparently in professional relationships',
     ],
     correctIndex: 1,
     explanation:
@@ -44,20 +44,25 @@ const quickCheckQuestions = [
     id: 'sub-metering',
     question: 'What does BREEAM Ene 02 require for sub-metering?',
     options: [
-      'Only main incoming meter',
+      'Patch panel arrangement allowing flexible connections between systems',
+      'Following the guidance for new buildings or consequential improvements',
+      'Analysing chemical composition of process streams',
       'Sub-metering of major energy-consuming systems and tenancy areas',
-      'Smart meters on all circuits',
-      'Annual energy audits only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Ene 02 requires sub-metering of major energy-consuming systems (HVAC, lighting, small power) and tenant/occupancy areas to enable energy monitoring, management, and identification of wasteful consumption.',
   },
   {
     id: 'external-lighting',
     question: 'What is the average lamp efficacy requirement for external lighting under Ene 03?',
-    options: ['50 luminous lm/W', '60 luminous lm/W', '70 luminous lm/W', '80 luminous lm/W'],
-    correctIndex: 2,
+    options: [
+      '50 luminous lm/W',
+      '70 luminous lm/W',
+      '60 luminous lm/W',
+      '80 luminous lm/W',
+    ],
+    correctIndex: 1,
     explanation:
       'Ene 03 requires external lighting to achieve an average initial luminous efficacy of at least 70 luminous lm/W across all external luminaires, promoting energy-efficient external lighting design.',
   },
@@ -65,8 +70,13 @@ const quickCheckQuestions = [
     id: 'low-carbon-tech',
     question:
       'Under Ene 04, what is the minimum percentage of building energy demand that must be met by low or zero carbon technologies to achieve credits?',
-    options: ['5%', '10%', '15%', '20%'],
-    correctIndex: 1,
+    options: [
+      '10%',
+      '15%',
+      '20%',
+      '5%',
+    ],
+    correctIndex: 0,
     explanation:
       'Ene 04 awards credits where low or zero carbon (LZC) technologies contribute at least 10% of the total energy demand or carbon emissions reduction, encouraging renewable and low carbon energy sources.',
   },
@@ -90,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which document provides the regulatory baseline for BREEAM energy calculations?',
     options: [
-      'SAP calculations',
+      'Design stage BRUKL output and energy model report',
+      'Automatic daylight sensing and time scheduling',
       'BRUKL (Building Regulations UK Part L)',
-      'Display Energy Certificate',
-      'NABERS rating',
+      'SBEM (Simplified Building Energy Model)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BRUKL (Building Regulations UK Part L) compliance calculations provide the regulatory baseline. BREEAM Ene 01 rewards performance improvements beyond this minimum requirement.',
   },
@@ -103,8 +113,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the minimum credit threshold in Ene 01 that must be achieved for a BREEAM Excellent rating?',
-    options: ['4 credits', '6 credits', '8 credits', '10 credits'],
-    correctAnswer: 1,
+    options: [
+      '8 credits',
+      '4 credits',
+      '10 credits',
+      '6 credits',
+    ],
+    correctAnswer: 3,
     explanation:
       'For BREEAM Excellent rating, a minimum of 6 credits must be achieved in Ene 01. This ensures buildings targeting higher ratings demonstrate genuine energy performance improvements.',
   },
@@ -112,8 +127,13 @@ const quizQuestions = [
     id: 4,
     question:
       'Sub-metering under Ene 02 must enable monitoring of energy consumption at intervals of:',
-    options: ['Daily', 'Hourly or better', 'Weekly', 'Monthly'],
-    correctAnswer: 1,
+    options: [
+      'Hourly or better',
+      'Daily',
+      'Weekly',
+      'Monthly',
+    ],
+    correctAnswer: 0,
     explanation:
       'Ene 02 requires sub-metering systems capable of recording consumption data at hourly intervals or better, enabling detailed analysis of energy use patterns and identification of anomalies.',
   },
@@ -122,10 +142,10 @@ const quizQuestions = [
     question:
       'For external lighting (Ene 03), what additional control requirement supports the efficacy standard?',
     options: [
-      'Manual switching only',
+      'BRUKL (Building Regulations UK Part L)',
       'Automatic daylight sensing and time scheduling',
-      'Motion sensors on all luminaires',
-      'Central dimming to 50%',
+      'SBEM (Simplified Building Energy Model)',
+      'Design stage BRUKL output and energy model report',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,10 +158,10 @@ const quizQuestions = [
     options: [
       'Air source heat pumps',
       'Solar PV panels',
-      'Combined heat and power (CHP)',
       'High-efficiency gas boilers',
+      'Combined heat and power (CHP)',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'High-efficiency gas boilers, while efficient, are not classified as LZC technologies as they rely on fossil fuels. LZC technologies include heat pumps, solar PV, wind, biomass, and CHP systems.',
   },
@@ -149,8 +169,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What software tool is commonly used to produce BRUKL calculations for non-domestic buildings?',
-    options: ['SAP 10', 'SBEM (Simplified Building Energy Model)', 'RdSAP', 'EnergyPlus'],
-    correctAnswer: 1,
+    options: [
+      'Design stage BRUKL output and energy model report',
+      'Automatic daylight sensing and time scheduling',
+      'BRUKL (Building Regulations UK Part L)',
+      'SBEM (Simplified Building Energy Model)',
+    ],
+    correctAnswer: 3,
     explanation:
       'SBEM (Simplified Building Energy Model) is the National Calculation Methodology (NCM) tool for non-domestic buildings, producing BRUKL outputs that demonstrate Part L compliance.',
   },
@@ -158,12 +183,12 @@ const quizQuestions = [
     id: 8,
     question: 'Under Ene 02, which building type has specific enhanced sub-metering requirements?',
     options: [
-      'Residential developments',
       'Multi-tenanted buildings',
       'Single-occupancy offices',
+      'Residential developments',
       'Industrial warehouses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Multi-tenanted buildings have enhanced Ene 02 requirements, needing sub-metering for each tenancy to enable individual tenant energy monitoring and encourage responsible consumption.',
   },
@@ -171,8 +196,13 @@ const quizQuestions = [
     id: 9,
     question:
       'What is the maximum luminaire power density typically required for car park lighting under Ene 03?',
-    options: ['1.5 W/m²', '2.0 W/m²', '2.5 W/m²', '3.0 W/m²'],
-    correctAnswer: 2,
+    options: [
+      '1.5 W/m²',
+      '2.5 W/m²',
+      '2.0 W/m²',
+      '3.0 W/m²',
+    ],
+    correctAnswer: 1,
     explanation:
       'BREEAM guidance indicates car park lighting should achieve approximately 2.5 W/m² or less, depending on maintained illuminance requirements and luminaire efficacy.',
   },
@@ -181,11 +211,11 @@ const quizQuestions = [
     question: 'Evidence for Ene 01 credits must include:',
     options: [
       'Manufacturer product data only',
+      'Building user satisfaction surveys',
       'Design stage BRUKL output and energy model report',
       'Post-occupancy energy bills',
-      'Building user satisfaction surveys',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Ene 01 requires design stage evidence including BRUKL calculations, dynamic simulation model outputs (where applicable), and specification of energy efficiency measures achieving the claimed EPR.',
   },
@@ -193,12 +223,12 @@ const quizQuestions = [
     id: 11,
     question: "The 'energy model' used for BREEAM assessment must account for:",
     options: [
-      'Heating only',
+      'Resistance at mid-point approximately equal to end-to-end values',
+      'By providing rapid response to balance supply and demand',
+      'Temperature rise should not cause degradation of insulation or surrounding materials',
       'All regulated energy uses (heating, cooling, lighting, hot water, auxiliary)',
-      'Unregulated loads only',
-      'Renewable generation only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The energy model must account for all regulated energy uses as defined by Part L: space heating, space cooling, domestic hot water, lighting, and auxiliary energy (pumps, fans, controls).',
   },
@@ -206,12 +236,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the relationship between BREEAM energy credits and EPC ratings?',
     options: [
-      'They are identical calculations',
       'BREEAM uses EPR which correlates with but is distinct from EPC ratings',
-      'EPC replaces BREEAM energy assessment',
-      'BREEAM ignores EPC methodology',
+      'Avoiding work at height altogether if it is reasonably practicable to do so',
+      'Find an alternative specification and get client approval before starting',
+      'Without slip there\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s no relative motion → no induced EMF in the rotor → no torque',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BREEAM uses the Energy Performance Ratio (EPR) which builds upon Part L/EPC methodology but applies additional performance thresholds. A good EPC typically supports higher BREEAM energy credits.',
   },

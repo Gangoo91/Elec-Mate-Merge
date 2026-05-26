@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'evidence-categories',
     question: 'What are the two main stages of BREEAM evidence submission?',
     options: [
-      'Preliminary and Final',
+      'Better protection and flexibility for changes',
+      'Ignoring — making no effort to listen at all',
+      'Line conductor loose at the switch',
       'Design Stage and Post-Construction Stage',
-      'Planning and Building Control',
-      'Pre-assessment and Assessment',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'BREEAM assessments have two main evidence submission stages: Design Stage (DS) and Post-Construction Stage (PCS). Design Stage confirms credits based on design intent, while Post-Construction Stage verifies actual implementation.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'design-stage-evidence',
     question: 'What is the primary purpose of Design Stage evidence?',
     options: [
-      'To obtain building control approval',
+      'Sensitive electronic equipment requiring low-noise earth reference',
+      'Thermal imaging camera or IR thermometer',
       'To demonstrate design intent and specification compliance',
-      'To satisfy planning requirements',
-      'To calculate energy costs',
+      'Gearless permanent magnet synchronous motor (PMSM)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Design Stage evidence demonstrates that the design intent, specifications, and contractual requirements will achieve the targeted BREEAM credits. It confirms the design team's commitment to achieving specific performance levels.",
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'pcs-evidence',
     question: 'Post-Construction Stage evidence must demonstrate:',
     options: [
-      'Design calculations only',
-      'Planning compliance only',
+      'Provide illumination during power failures for safe evacuation',
       'That design commitments have been built as specified',
-      'Future maintenance plans',
+      'Regular exercise, social connection, and adequate sleep',
+      'The difference between predicted and actual energy performance',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Post-Construction Stage evidence must demonstrate that the design commitments made at Design Stage have actually been implemented and built as specified. This includes as-built drawings, commissioning records, and installation verification.',
   },
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'assessor-role',
     question: "What is the BREEAM assessor's primary responsibility?",
     options: [
-      'Designing the building systems',
+      'Determines testing approach and safety measures',
       'Independently verifying evidence and awarding credits',
-      'Obtaining planning permission',
-      'Managing the construction contract',
+      'Quality tools ensure safety, accuracy, and reliability',
+      'At RIBA Stage 2-3 (Concept/Spatial Coordination)',
     ],
     correctIndex: 1,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'Which document type provides the primary evidence for lighting design credits at Design Stage?',
     options: [
-      'Building control approval',
+      'Strip cores to different lengths for neat termination',
       'Lighting design specification with lux levels and controls strategy',
-      'Equipment delivery notes',
-      "Contractor's programme",
+      'The employer must weigh the risk against the cost, time and effort of removing it',
+      'Skin condition (wet/dry), contact area, voltage, frequency',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,10 +101,10 @@ const quizQuestions = [
     question:
       'What evidence is required to demonstrate Energy Sub-metering (Ene 02) compliance at Post-Construction Stage?',
     options: [
-      'Design drawings only',
-      'Equipment catalogues',
+      'To identify achievable credits and evidence requirements early in design',
+      'Clear images of installed systems with reference to specifications and dates',
       'As-built drawings, commissioning records, and meter schedule',
-      'Planning application',
+      'The credit is withdrawn and final rating may be affected',
     ],
     correctAnswer: 2,
     explanation:
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       "A BREEAM credit requires 'Confirmation from a Suitably Qualified Person'. What does this typically involve?",
     options: [
-      'A verbal confirmation',
+      'As-built drawings, commissioning records, and meter schedule',
+      'To identify achievable credits and evidence requirements early in design',
+      'Clear images of installed systems with reference to specifications and dates',
       'A signed letter or report from a professional with relevant expertise',
-      'An email from the contractor',
-      "A planning officer's approval",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Confirmation from a Suitably Qualified Person requires a formal signed letter or report from a professional with demonstrable expertise in the relevant field (e.g., chartered engineer, registered specialist) confirming compliance with specific criteria.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'When must Design Stage assessment be completed?',
     options: [
-      'After practical completion',
       'Before construction begins, based on developed design',
-      'During demolition',
-      'After building occupation',
+      'As-built drawings, commissioning records, and meter schedule',
+      'Building services engineer or ventilation specialist',
+      'A tracker linking each credit to required evidence documents',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Design Stage assessment should be completed before construction begins, typically at RIBA Stage 4 (Technical Design). This ensures design intent is locked in and contractually specified before work starts on site.',
   },
@@ -141,12 +141,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which of these is NOT acceptable as primary evidence for BREEAM assessment?',
     options: [
-      'Signed specifications',
-      'Detailed design drawings',
+      'Consistent quality and reduced installation time',
       'Verbal commitments from the design team',
-      'Commissioning certificates',
+      'Through-bolts or heavy-duty anchors',
+      'Moisture causing earth leakage on circuits',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Verbal commitments are not acceptable as BREEAM evidence. All evidence must be documented in written form - specifications, drawings, certificates, reports, or formal correspondence that can be verified and audited.',
   },
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is a Schedule of Evidence in BREEAM assessment?',
     options: [
-      'The project construction programme',
+      'To identify achievable credits and evidence requirements early in design',
+      'The credit is withdrawn and final rating may be affected',
       'A tracker linking each credit to required evidence documents',
-      "The building's energy certificate",
-      "The assessor's fee proposal",
+      'Clear images of installed systems with reference to specifications and dates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A Schedule of Evidence (Evidence Tracker) is a document linking each targeted BREEAM credit to the specific evidence documents required, responsible parties, and submission status. It ensures systematic evidence collection.',
   },
@@ -168,11 +168,11 @@ const quizQuestions = [
     question: 'For Wat 01 Water Consumption credits, which calculation tool must be used?',
     options: [
       'SAP calculation',
-      'BREEAM Wat 01 Calculator',
-      'Building Regulations Part G calculator',
       'SBEM model',
+      'Building Regulations Part G calculator',
+      'BREEAM Wat 01 Calculator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The BREEAM Wat 01 Calculator is the mandatory tool for calculating water consumption credits. It uses fixture specifications and flow rates to determine the building's water efficiency and corresponding credit achievement.",
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       'What happens if Post-Construction Stage evidence shows that a Design Stage credit cannot be achieved?',
     options: [
-      'The assessment fails completely',
       'The credit is withdrawn and final rating may be affected',
-      'Design Stage certificate is revoked',
-      'No action is required',
+      'A signed letter or report from a professional with relevant expertise',
+      'As-built drawings, commissioning records, and meter schedule',
+      'Before construction begins, based on developed design',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'If Post-Construction evidence shows a Design Stage credit cannot be achieved (e.g., system not installed as specified), the credit is withdrawn from the final assessment. This may affect the overall rating if insufficient credits remain.',
   },
@@ -195,10 +195,10 @@ const quizQuestions = [
     question:
       'Which professional typically provides evidence for Hea 02 Indoor Air Quality credits?',
     options: [
-      'Quantity surveyor',
+      'As-built drawings, commissioning records, and meter schedule',
       'Building services engineer or ventilation specialist',
-      'Structural engineer',
-      'Planning consultant',
+      'The credit is withdrawn and final rating may be affected',
+      'A tracker linking each credit to required evidence documents',
     ],
     correctAnswer: 1,
     explanation:
@@ -208,8 +208,13 @@ const quizQuestions = [
     id: 10,
     question:
       'A client wants to achieve BREEAM Excellent. At what percentage of available credits is this typically achieved?',
-    options: ['55%', '70%', '85%', '95%'],
-    correctAnswer: 1,
+    options: [
+      '55%',
+      '95%',
+      '70%',
+      '85%',
+    ],
+    correctAnswer: 2,
     explanation:
       'BREEAM Excellent rating typically requires achieving 70% or more of available credits. The exact threshold varies slightly by scheme version and building type, but 70% is the standard benchmark for Excellent.',
   },
@@ -217,12 +222,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the purpose of a BREEAM Pre-Assessment?',
     options: [
-      'To submit final evidence',
+      'A signed letter or report from a professional with relevant expertise',
+      'As-built drawings, commissioning records, and meter schedule',
+      'Building services engineer or ventilation specialist',
       'To identify achievable credits and evidence requirements early in design',
-      'To obtain the final certificate',
-      'To verify construction quality',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A BREEAM Pre-Assessment is conducted early in design (RIBA Stage 2-3) to identify which credits are achievable, their cost implications, and evidence requirements. This allows design decisions to be made while changes are still economical.',
   },
@@ -230,12 +235,12 @@ const quizQuestions = [
     id: 12,
     question: 'Site photographs as Post-Construction evidence should include:',
     options: [
-      'Marketing images only',
       'Clear images of installed systems with reference to specifications and dates',
-      'Aerial photographs of the site',
-      'Photos of the design team',
+      'A signed letter or report from a professional with relevant expertise',
+      'The credit is withdrawn and final rating may be affected',
+      'A tracker linking each credit to required evidence documents',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Site photographs for BREEAM evidence should clearly show installed systems, include references to relevant specifications or drawing details, be dated, and demonstrate that the photographed installations match the design intent.',
   },

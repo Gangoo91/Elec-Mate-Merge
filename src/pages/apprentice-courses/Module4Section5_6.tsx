@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the main purpose of a polarity test?',
     options: [
-      'To measure current rating',
+      'Take reasonable care and cooperate with the system',
       'To check correct connection of live, neutral, and earth',
-      'To test insulation resistance',
-      'To verify circuit protection',
+      'The call point tested, date, time, and any faults',
+      'Retake and pass the HS&E test before applying for renewal',
     ],
     correctIndex: 1,
     explanation:
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Name two instruments suitable for continuity testing.',
     options: [
-      'Multimeter and insulation tester',
-      'Low resistance ohmmeter and multimeter',
-      'Clamp meter and oscilloscope',
       'RCD tester and PAT tester',
+      'Clamp meter and oscilloscope',
+      'Low resistance ohmmeter and multimeter',
+      'Multimeter and insulation tester',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Low resistance ohmmeters and multimeters (set to resistance range) are the standard instruments for accurate continuity testing.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why should you always verify isolation before testing?',
     options: [
-      'To save battery',
+      'Regular configuration backups with tested restore procedures',
+      'The step-by-step process for carrying out the work safely',
+      'Balancing technical, practical, and business factors',
       'To ensure safety and prevent damage to test equipment',
-      'To get accurate readings',
-      'To comply with manufacturer instructions',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Verifying isolation ensures safety for the tester and prevents damage to test equipment from unexpected voltage presence.',
   },
@@ -57,10 +57,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does a polarity test check for?',
     options: [
-      'Correct current rating',
+      'Only if approved by manufacturer for switching duty',
       'Correct connection of live, neutral, and earth',
-      'Cable insulation integrity',
-      'Circuit breaker tripping speed',
+      'They may retain dangerous voltage even after isolation',
+      '3% lighting and 5% other circuits',
     ],
     correctAnswer: 1,
     explanation:
@@ -69,15 +69,25 @@ const quizQuestions = [
   {
     id: 2,
     question: 'True or False: Continuity testing can be done on a live circuit.',
-    options: ['True', 'False', 'Only with special equipment', 'Only on low voltage circuits'],
-    correctAnswer: 1,
+    options: [
+      'Only with special equipment',
+      'True',
+      'False',
+      'Only on low voltage circuits',
+    ],
+    correctAnswer: 2,
     explanation:
       'False - Continuity testing must always be performed with the circuit isolated for safety and accuracy.',
   },
   {
     id: 3,
     question: 'Name one tool used for continuity testing.',
-    options: ['Low resistance ohmmeter', 'Multimeter', 'Continuity tester', 'All of the above'],
+    options: [
+      'Continuity tester',
+      'Low resistance ohmmeter',
+      'Multimeter',
+      'All of the above',
+    ],
     correctAnswer: 3,
     explanation:
       'Low resistance ohmmeters, multimeters, and dedicated continuity testers are all suitable for continuity testing.',
@@ -87,9 +97,9 @@ const quizQuestions = [
     question: 'Why is a proving unit used before and after testing?',
     options: [
       'To ensure the tester is functioning correctly',
-      'To calibrate the instrument',
-      'To verify test lead integrity',
-      'To check battery level',
+      '1.5 kN applied over a 100 mm x 100 mm area',
+      'Continuing Professional Development',
+      'Actuator wired to wrong digital output',
     ],
     correctAnswer: 0,
     explanation:
@@ -98,7 +108,12 @@ const quizQuestions = [
   {
     id: 5,
     question: 'Which regulation covers verification during installation?',
-    options: ['BS 5839', 'BS 7671', 'BS EN 61439', 'BS 5266'],
+    options: [
+      'BS 5839',
+      'BS 7671',
+      'BS 5266',
+      'BS EN 61439',
+    ],
     correctAnswer: 1,
     explanation:
       'BS 7671 Part 6 covers initial verification requirements including polarity and continuity testing during installation.',
@@ -107,12 +122,12 @@ const quizQuestions = [
     id: 6,
     question: 'What should be done if continuity readings are unusually high?',
     options: [
-      'Ignore if within tolerance',
+      'Competing, collaborating, compromising, avoiding, accommodating',
+      'A building that generates more energy than it consumes over a year',
       'Investigate for loose connections or damaged cables',
-      'Increase test voltage',
-      'Record and continue',
+      'Excellent insulation, flexible, and durable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'High resistance readings indicate potential problems requiring immediate investigation and correction.',
   },
@@ -120,12 +135,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why is it important to label a circuit after testing?',
     options: [
+      'Record of all isolations and their status',
+      'Missed alerts due to system misconfiguration',
+      'To remove lead resistance from measurement',
       'To avoid retesting and ensure correct identification',
-      'To impress the client',
-      'To comply with colour coding',
-      'To save time during installation',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Labelling prevents duplication of testing and ensures correct circuit identification throughout the installation process.',
   },
@@ -134,12 +149,12 @@ const quizQuestions = [
     question:
       'When testing polarity at a socket, which two pins should you measure between for phase and neutral verification?',
     options: [
-      'Live pin and earth pin',
       'Live pin and neutral pin',
       'Neutral pin and earth pin',
+      'Live pin and earth pin',
       'All pins together',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Phase and neutral polarity verification requires testing between the live pin and neutral pin of the socket.',
   },

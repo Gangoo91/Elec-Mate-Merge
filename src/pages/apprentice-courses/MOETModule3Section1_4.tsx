@@ -13,8 +13,13 @@ const quickCheckQuestions = [
   {
     id: 'busbar-material',
     question: 'What is the approximate electrical conductivity of aluminium compared to copper?',
-    options: ['25% of copper', '40% of copper', '61% of copper', '85% of copper'],
-    correctIndex: 2,
+    options: [
+      '61% of copper',
+      '85% of copper',
+      '40% of copper',
+      '25% of copper',
+    ],
+    correctIndex: 0,
     explanation:
       'Aluminium has approximately 61% of the electrical conductivity of copper (measured against the IACS standard). This means aluminium busbars must have a larger cross-sectional area to carry the same current as copper equivalents.',
   },
@@ -24,19 +29,24 @@ const quickCheckQuestions = [
       'Which type of busbar trunking provides tap-off points at regular intervals for connecting loads?',
     options: [
       'Feeder busbar trunking',
+      'Rising main trunking',
       'Plug-in busbar trunking',
       'Lighting trunking',
-      'Rising main trunking',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Plug-in busbar trunking has tap-off openings at regular intervals along its length, allowing distribution boards, motor starters or other loads to be connected at any position. This provides excellent flexibility for future modifications.',
   },
   {
     id: 'cable-fill',
     question: 'What is the commonly used maximum fill percentage guideline for cable tray?',
-    options: ['25%', '35%', '45%', '60%'],
-    correctIndex: 2,
+    options: [
+      '45%',
+      '60%',
+      '35%',
+      '25%',
+    ],
+    correctIndex: 0,
     explanation:
       'A maximum fill of approximately 45% of the tray cross-sectional area is the common guideline. This ensures adequate ventilation around cables (preserving current ratings), leaves space for future additions, and keeps maintenance access practical.',
   },
@@ -44,8 +54,13 @@ const quickCheckQuestions = [
     id: 'thermal-load',
     question:
       'At what minimum load percentage should thermal imaging surveys be conducted for reliable results?',
-    options: ['10%', '20%', '40%', '80%'],
-    correctIndex: 2,
+    options: [
+      '10%',
+      '20%',
+      '80%',
+      '40%',
+    ],
+    correctIndex: 3,
     explanation:
       'Thermal surveys should be conducted with equipment under at least 40% of normal load. Higher loads generate larger temperature differentials between sound and faulty connections, producing more reliable and meaningful results.',
   },
@@ -56,12 +71,12 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary advantage of copper busbars over aluminium?',
     options: [
-      'Lower cost',
-      'Lower weight',
+      'Allow starting current while protecting against faults',
       'Higher electrical conductivity and easier jointing',
-      'Greater flexibility',
+      'Is the final assessment confirming overall competence',
+      'The patch may block energy delivery and cause a skin burn',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Copper has approximately 100% IACS conductivity compared to aluminium's 61%. Copper joints are also simpler because copper does not form the resistive oxide layer that makes aluminium jointing more complex.",
   },
@@ -69,20 +84,25 @@ const quizQuestions = [
     id: 2,
     question: 'Why do aluminium busbar joints require contact compound such as Penetrox?',
     options: [
-      'To improve the appearance',
+      'Cable ladder is a heavy-duty version designed for large, heavy cables',
+      'Where cables pass through fire-rated walls, floors and partitions',
       'To prevent oxide reformation and reduce contact resistance',
-      'To lubricate the bolts',
-      'To increase the current rating',
+      'To improve contact resistance at joints and protect against oxidation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Aluminium rapidly forms a hard, resistive oxide layer on its surface. Contact compound prevents this oxide reforming after the surface has been prepared, maintaining low contact resistance at the joint.',
   },
   {
     id: 3,
     question: 'What current range is typical for feeder busbar trunking?',
-    options: ['25 A to 63 A', '100 A to 400 A', '800 A to 5000 A', '10 A to 32 A'],
-    correctAnswer: 2,
+    options: [
+      '100 A to 400 A',
+      '25 A to 63 A',
+      '10 A to 32 A',
+      '800 A to 5000 A',
+    ],
+    correctAnswer: 3,
     explanation:
       'Feeder busbar trunking typically carries 800 A to 5000 A. It transfers power from the main switchboard to sub-distribution points and has no tap-off points along its length.',
   },
@@ -90,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is a rising main?',
     options: [
-      'A horizontal cable tray system',
       'A vertical busbar trunking system distributing power through a multi-storey building',
-      'A type of emergency lighting circuit',
-      'A fire alarm riser cable',
+      'Cable ladder is a heavy-duty version designed for large, heavy cables',
+      'Where cables pass through fire-rated walls, floors and partitions',
+      'To improve contact resistance at joints and protect against oxidation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A rising main is a vertical busbar trunking system that rises through a dedicated riser shaft from the main switchroom, with tap-off points at each floor level feeding the floor distribution boards.',
   },
@@ -103,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the key difference between cable tray and cable ladder?',
     options: [
-      'Cable tray is for outdoor use only',
+      'Where cables pass through fire-rated walls, floors and partitions',
       'Cable ladder is a heavy-duty version designed for large, heavy cables',
-      'Cable tray is made of plastic',
-      'Cable ladder cannot support more than 10 cables',
+      'Lighter weight, easier installation and better ventilation',
+      'To prevent oxide reformation and reduce contact resistance',
     ],
     correctAnswer: 1,
     explanation:
@@ -116,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'Where are fire barriers required in cable installations?',
     options: [
-      'At every junction box',
-      'Only at external walls',
+      'To prevent oxide reformation and reduce contact resistance',
+      'The barrier must be re-sealed to its original fire rating',
       'Where cables pass through fire-rated walls, floors and partitions',
-      'Only in domestic installations',
+      'A vertical busbar trunking system distributing power through a multi-storey building',
     ],
     correctAnswer: 2,
     explanation:
@@ -129,12 +149,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which legislation governs fire barrier maintenance in buildings?',
     options: [
-      'BS 7671 only',
-      'Electricity at Work Regulations 1989',
+      'Back-to-back thyristors (SCRs)',
+      'In each individual DALI driver/ballast',
+      'Because symbols may vary between drawings or projects',
       'Regulatory Reform (Fire Safety) Order 2005',
-      'CDM Regulations 2015',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "The Regulatory Reform (Fire Safety) Order 2005 requires fire barriers and penetration seals to be maintained as part of the building's fire safety management. Breached fire barriers must be re-sealed to the original fire rating.",
   },
@@ -142,12 +162,12 @@ const quizQuestions = [
     id: 8,
     question: 'What does a Delta T of 25-40 degrees C on a thermal image indicate?',
     options: [
-      'Normal operation',
-      'Minor issue -- monitor during next shutdown',
       'Serious fault -- arrange maintenance as soon as possible',
-      'Critical fault -- immediate shutdown required',
+      'To prevent oxide reformation and reduce contact resistance',
+      'To improve contact resistance at joints and protect against oxidation',
+      'The barrier must be re-sealed to its original fire rating',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A Delta T of 25-40 degrees C indicates a serious developing fault. Maintenance should be arranged as soon as possible and load reduction should be considered to prevent failure.',
   },
@@ -155,12 +175,12 @@ const quizQuestions = [
     id: 9,
     question: 'What is the main advantage of wire mesh cable basket over traditional cable tray?',
     options: [
-      'Higher load capacity',
-      'Better fire resistance',
+      'To prevent oxide reformation and reduce contact resistance',
       'Lighter weight, easier installation and better ventilation',
-      'Lower IP rating',
+      'To improve contact resistance at joints and protect against oxidation',
+      'Where cables pass through fire-rated walls, floors and partitions',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Wire mesh cable basket is lighter, quicker to install, provides excellent ventilation around cables, and is more economical. It is well suited to data cables and small power cables.',
   },
@@ -168,12 +188,12 @@ const quizQuestions = [
     id: 10,
     question: 'Why are copper busbars sometimes tin-plated or silver-plated?',
     options: [
-      'To reduce weight',
+      'Serious fault -- arrange maintenance as soon as possible',
+      'Cable ladder is a heavy-duty version designed for large, heavy cables',
       'To improve contact resistance at joints and protect against oxidation',
-      'To change the colour for identification',
-      'To increase flexibility',
+      'The barrier must be re-sealed to its original fire rating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Tin or silver plating improves contact resistance at bolted joints and provides a protective barrier against copper oxidation, extending the service life of busbar connections.',
   },
@@ -181,12 +201,12 @@ const quizQuestions = [
     id: 11,
     question: 'What must happen if cables are added through an existing fire barrier?',
     options: [
-      'Nothing -- the existing barrier is sufficient',
+      'To prevent oxide reformation and reduce contact resistance',
+      'Serious fault -- arrange maintenance as soon as possible',
+      'Where cables pass through fire-rated walls, floors and partitions',
       'The barrier must be re-sealed to its original fire rating',
-      'The cables must be painted red',
-      'A new distribution board must be installed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'If cables are added through a fire barrier, the barrier must be re-sealed using approved materials to restore its original fire rating. A fire stop certificate should be issued for the work.',
   },
@@ -194,8 +214,13 @@ const quizQuestions = [
     id: 12,
     question:
       'How often should thermal imaging surveys typically be carried out on main switchboards?',
-    options: ['Every 5 years', 'Monthly', 'Annually', 'Only after a fault occurs'],
-    correctAnswer: 2,
+    options: [
+      'Annually',
+      'Only after a fault occurs',
+      'Every 5 years',
+      'Monthly',
+    ],
+    correctAnswer: 0,
     explanation:
       'Annual thermal surveys are recommended for main switchboards and distribution equipment. Critical installations such as hospitals and data centres may require more frequent surveys (six-monthly or quarterly).',
   },

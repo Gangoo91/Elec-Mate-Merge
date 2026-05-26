@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     id: 'pump-curve',
     question: 'What does a centrifugal pump H-Q curve show?',
     options: [
-      'Pressure vs temperature',
-      'Head vs flow rate',
-      'Power vs speed',
       'Efficiency vs time',
+      'Head vs flow rate',
+      'Pressure vs temperature',
+      'Power vs speed',
     ],
     correctIndex: 1,
     explanation:
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'pump-bep',
     question: 'What is the Best Efficiency Point (BEP) of a pump?',
     options: [
-      'Maximum flow rate',
-      'Maximum head',
+      '8% plus Bank of England base rate',
       'Optimal operating point for efficiency',
-      'Minimum power consumption',
+      'To prevent damage and get accurate results',
+      'Within 40 milliseconds for 30mA types',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The BEP is where the pump operates at maximum efficiency. Operating significantly away from BEP wastes energy and can cause premature wear and vibration problems.',
   },
@@ -60,12 +60,12 @@ const quickCheckQuestions = [
     question:
       'Why should centrifugal pumps be started with the discharge valve closed or throttled?',
     options: [
-      'To prevent cavitation',
       'To reduce starting current and power',
-      'To avoid reverse flow',
       'To prime the pump faster',
+      'To prevent cavitation',
+      'To avoid reverse flow',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Starting with a closed discharge valve minimises the starting torque and current because the pump operates at shutoff head. The motor reaches full speed before the valve is opened to establish flow.',
   },
@@ -74,11 +74,11 @@ const quickCheckQuestions = [
     question: 'What does NPSH stand for in pump terminology?',
     options: [
       'Net Pressure System Head',
-      'Net Positive Suction Head',
       'Normal Pump Suction Height',
+      'Net Positive Suction Head',
       'Net Power Supply Horsepower',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'NPSH (Net Positive Suction Head) is the absolute pressure at the pump suction above the vapour pressure. It determines whether the pump will cavitate or operate satisfactorily.',
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'What type of pump is most commonly used for HVAC heating and chilled water systems?',
     options: [
-      'Positive displacement (gear pump)',
+      'Sharing current between parallel branches',
       'Centrifugal (end-suction or inline)',
-      'Reciprocating piston pump',
-      'Diaphragm pump',
+      'Before each use and regularly during use',
+      'Retest to verify the correction',
     ],
     correctAnswer: 1,
     explanation:
@@ -103,10 +103,10 @@ const quizQuestions = [
     question:
       'As flow rate increases through a centrifugal pump, what happens to the developed head?',
     options: [
-      'Head increases proportionally',
-      'Head remains constant',
-      'Head decreases',
       'Head fluctuates randomly',
+      'Head increases proportionally',
+      'Head decreases',
+      'Head remains constant',
     ],
     correctAnswer: 2,
     explanation:
@@ -116,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: 'A pump manufacturer states NPSHr = 3.5m. What does this mean?',
     options: [
-      'The pump needs 3.5m of discharge head',
+      'You produce higher quality work with less perceived effort and greater satisfaction',
+      'To assist with the safe evacuation of people and carry out fire prevention duties',
+      'Evacuation time, route effectiveness, alarm audibility, assembly procedures',
       'The pump requires minimum 3.5m pressure at suction to avoid cavitation',
-      'The pump efficiency is 3.5%',
-      'The pump must be 3.5m above the water level',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'NPSHr (required) is the minimum suction head the pump needs to operate without cavitation. The system must provide NPSHa (available) greater than NPSHr, typically with a safety margin of 0.5-1.0m.',
   },
@@ -142,8 +142,13 @@ const quizQuestions = [
   {
     id: 5,
     question: 'A pump has a duty point of 12 l/s at 25m head. Calculate the hydraulic power.',
-    options: ['2.94 kW', '3.0 kW', '0.3 kW', '29.4 kW'],
-    correctAnswer: 0,
+    options: [
+      '3.0 kW',
+      '2.94 kW',
+      '29.4 kW',
+      '0.3 kW',
+    ],
+    correctAnswer: 1,
     explanation:
       'Hydraulic power Ph = ρgQH = 1000 × 9.81 × 0.012 × 25 = 2943W = 2.94 kW. This is the useful power delivered to the water; shaft power will be higher due to pump efficiency.',
   },
@@ -151,8 +156,13 @@ const quizQuestions = [
     id: 6,
     question:
       'If the hydraulic power is 2.94 kW and pump efficiency is 72%, what shaft power is required?',
-    options: ['2.12 kW', '4.08 kW', '3.83 kW', '2.94 kW'],
-    correctAnswer: 1,
+    options: [
+      '2.12 kW',
+      '3.83 kW',
+      '4.08 kW',
+      '2.94 kW',
+    ],
+    correctAnswer: 2,
     explanation:
       'Shaft power = Hydraulic power / Efficiency = 2.94 / 0.72 = 4.08 kW. The motor must deliver at least this power to the pump shaft.',
   },
@@ -163,18 +173,23 @@ const quizQuestions = [
     options: [
       'Single-stage centrifugal',
       'Multi-stage centrifugal',
-      'Positive displacement',
       'Axial flow',
+      'Positive displacement',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Positive displacement pumps (gear, vane, piston, diaphragm) trap and move a fixed volume each cycle. Flow is nearly independent of pressure, making them suitable for dosing and high-pressure applications.',
   },
   {
     id: 8,
     question: 'What is the primary purpose of a multi-stage centrifugal pump?',
-    options: ['Increase flow rate', 'Increase total head', 'Reduce cavitation', 'Improve priming'],
-    correctAnswer: 1,
+    options: [
+      'Increase total head',
+      'Reduce cavitation',
+      'Increase flow rate',
+      'Improve priming',
+    ],
+    correctAnswer: 0,
     explanation:
       'Multi-stage pumps stack impellers in series, each adding to the total head. Flow rate remains the same through all stages, but heads add together. Used for high-rise buildings, booster sets, and pressure boosting.',
   },
@@ -182,12 +197,12 @@ const quizQuestions = [
     id: 9,
     question: 'At what point on the pump curve is vibration typically lowest?',
     options: [
-      'At shutoff (zero flow)',
-      'At maximum flow',
+      '0.3 L/s per m squared floor area',
       'At the Best Efficiency Point (BEP)',
-      'At 50% of rated flow',
+      'Pull, Aim, Squeeze, Sweep',
+      'Ionisation smoke detector',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'At the BEP, hydraulic forces are balanced and flow patterns are optimal. Operating far from BEP causes recirculation, turbulence, and increased vibration that can damage bearings and seals.',
   },
@@ -195,12 +210,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is specific speed (Ns) used to determine?',
     options: [
-      'The actual rotational speed of the pump',
+      'To prevent cavitation damage and noise',
+      'At the Best Efficiency Point (BEP)',
       'The type of impeller design suited to the duty',
-      'The motor power requirement',
-      'The NPSH requirement',
+      'Flow reduces to 80%, head to 64%, power to 51%',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Specific speed is a dimensionless number characterising pump design. Low Ns (500-2000) suits radial impellers for high head/low flow; high Ns (8000+) suits axial flow for low head/high flow.',
   },
@@ -208,8 +223,13 @@ const quizQuestions = [
     id: 11,
     question:
       'A HVAC system requires 8 l/s at 18m head. The pump selected has efficiency 68% at this duty. What is the absorbed power?',
-    options: ['1.41 kW', '2.07 kW', '1.0 kW', '3.5 kW'],
-    correctAnswer: 1,
+    options: [
+      '1.41 kW',
+      '3.5 kW',
+      '1.0 kW',
+      '2.07 kW',
+    ],
+    correctAnswer: 3,
     explanation:
       'Hydraulic power = ρgQH = 1000 × 9.81 × 0.008 × 18 = 1412W = 1.41 kW. Absorbed power = 1.41 / 0.68 = 2.07 kW.',
   },
@@ -217,12 +237,12 @@ const quizQuestions = [
     id: 12,
     question: 'Why is it important to maintain NPSHa > NPSHr + margin in pump installations?',
     options: [
-      'To prevent motor overload',
       'To prevent cavitation damage and noise',
-      'To increase flow rate',
-      'To reduce pipe sizes',
+      'The type of impeller design suited to the duty',
+      'Flow reduces to 80%, head to 64%, power to 51%',
+      'At the Best Efficiency Point (BEP)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'If NPSHa drops below NPSHr, the liquid boils at the impeller inlet creating vapour bubbles (cavitation). These collapse violently, causing noise, vibration, erosion damage, and reduced performance.',
   },

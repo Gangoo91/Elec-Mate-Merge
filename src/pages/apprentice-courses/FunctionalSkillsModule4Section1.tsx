@@ -23,7 +23,12 @@ const FunctionalSkillsModule4Section1 = () => {
     {
       id: 1,
       question: 'A 230V circuit supplies a 2.3kW load. What current does it draw?',
-      options: ['5A', '10A', '23A', '100A'],
+      options: [
+        '5A',
+        '10A',
+        '23A',
+        '100A',
+      ],
       correctAnswer: 1,
       explanation:
         'I = P / V = 2300 / 230 = 10A. This is a straightforward application of the power formula rearranged for current.',
@@ -32,16 +37,26 @@ const FunctionalSkillsModule4Section1 = () => {
       id: 2,
       question:
         'A cable run is 25m using 2.5mm² twin and earth (mV/A/m = 18). The load current is 20A. What is the voltage drop?',
-      options: ['4.5V', '9.0V', '18.0V', '45.0V'],
-      correctAnswer: 1,
+      options: [
+        '18.0V',
+        '4.5V',
+        '9.0V',
+        '45.0V',
+      ],
+      correctAnswer: 2,
       explanation:
         'Voltage drop = mV/A/m × I × L / 1000 = 18 × 20 × 25 / 1000 = 9.0V. This is within the 5% limit (11.5V) for a power circuit.',
     },
     {
       id: 3,
       question: 'Ze is measured as 0.35Ω and R1+R2 for the circuit is 0.95Ω. What is Zs?',
-      options: ['0.60Ω', '0.95Ω', '1.30Ω', '1.65Ω'],
-      correctAnswer: 2,
+      options: [
+        '0.95Ω',
+        '0.60Ω',
+        '1.65Ω',
+        '1.30Ω',
+      ],
+      correctAnswer: 3,
       explanation:
         'Zs = Ze + (R1+R2) = 0.35 + 0.95 = 1.30Ω. This must then be checked against the maximum Zs value for the protective device.',
     },
@@ -49,8 +64,13 @@ const FunctionalSkillsModule4Section1 = () => {
       id: 4,
       question:
         'A domestic lighting circuit has a total connected load of 1800W at 230V. Applying 66% diversity, what current should be allowed for in the maximum demand?',
-      options: ['7.83A', '5.17A', '11.88A', '3.42A'],
-      correctAnswer: 1,
+      options: [
+        '5.17A',
+        '7.83A',
+        '11.88A',
+        '3.42A',
+      ],
+      correctAnswer: 0,
       explanation:
         'Total current = 1800 / 230 = 7.83A. After 66% diversity = 7.83 × 0.66 = 5.17A. This is the figure used in the ADMD calculation.',
     },
@@ -58,8 +78,13 @@ const FunctionalSkillsModule4Section1 = () => {
       id: 5,
       question:
         'Three resistors of 10Ω, 15Ω and 25Ω are connected in series across a 230V supply. What is the current?',
-      options: ['23A', '9.2A', '4.6A', '2.3A'],
-      correctAnswer: 2,
+      options: [
+        '9.2A',
+        '4.6A',
+        '2.3A',
+        '23A',
+      ],
+      correctAnswer: 1,
       explanation:
         'In a series circuit, total resistance = 10 + 15 + 25 = 50Ω. Current I = V / R = 230 / 50 = 4.6A.',
     },
@@ -67,8 +92,13 @@ const FunctionalSkillsModule4Section1 = () => {
       id: 6,
       question:
         'A 3kW immersion heater is connected to a 230V supply. What is the resistance of the heating element?',
-      options: ['76.67Ω', '17.63Ω', '52.90Ω', '6.67Ω'],
-      correctAnswer: 1,
+      options: [
+        '76.67Ω',
+        '52.90Ω',
+        '17.63Ω',
+        '6.67Ω',
+      ],
+      correctAnswer: 2,
       explanation:
         'R = V² / P = 230² / 3000 = 52900 / 3000 = 17.63Ω. You can verify: I = P/V = 3000/230 = 13.04A, then R = V/I = 230/13.04 = 17.64Ω (slight rounding difference).',
     },
@@ -76,8 +106,13 @@ const FunctionalSkillsModule4Section1 = () => {
       id: 7,
       question:
         'The measured Ze at the origin of a TN-C-S supply is 0.10Ω. What is the prospective fault current?',
-      options: ['230A', '2,300A', '23,000A', '1,150A'],
-      correctAnswer: 1,
+      options: [
+        '230A',
+        '1,150A',
+        '23,000A',
+        '2,300A',
+      ],
+      correctAnswer: 3,
       explanation:
         'Ipf = Uoc / Zs = 230 / 0.10 = 2,300A = 2.3kA. This is well within the 6kA rating of a standard domestic MCB.',
     },
@@ -86,12 +121,12 @@ const FunctionalSkillsModule4Section1 = () => {
       question:
         'A TN-S supply has Ze = 0.8Ω. A 20A Type B MCB protects a radial circuit with measured R1+R2 of 1.05Ω. Applying the 1.20 correction factor, what is the Zs and does it comply?',
       options: [
-        'Zs = 1.85Ω — does not comply',
         'Zs = 2.06Ω — complies (max 2.19Ω)',
         'Zs = 1.26Ω — complies easily',
+        'Zs = 1.85Ω — does not comply',
         'Zs = 2.46Ω — does not comply',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Zs = Ze + (R1+R2 × 1.20) = 0.8 + (1.05 × 1.20) = 0.8 + 1.26 = 2.06Ω. Maximum Zs for a 20A Type B MCB = 2.19Ω (BS 7671:2018+A4:2026 Table 41.3). Since 2.06 < 2.19, it complies.',
     },

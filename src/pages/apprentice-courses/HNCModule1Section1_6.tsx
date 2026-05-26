@@ -35,12 +35,12 @@ const quickCheckQuestions = [
     id: 'part-p-scope',
     question: 'Which type of electrical work is NOT covered by Part P Building Regulations?',
     options: [
-      'New circuit in a kitchen',
       'Like-for-like socket replacement',
+      'New circuit in a kitchen',
       'Bathroom electrical installation',
       'New consumer unit installation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Like-for-like replacement of accessories (sockets, switches, light fittings) is minor work not covered by Part P. However, adding new circuits, work in special locations (bathrooms, kitchens), and consumer unit changes all require notification.',
   },
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     id: 'f-gas-qual',
     question: 'What minimum qualification is required to handle F-gas refrigerants?',
     options: [
-      'City & Guilds 2391',
+      'Comprehensive fire safety measures',
+      'Vd = (mV/A/m × Ib × L) / 1000',
+      'Moisture ingress or condensation',
       'F-gas Category I-IV certificate',
-      'BS 7671 certification',
-      'CSCS card only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'F-gas Regulation (EU 517/2014, retained in UK law) requires personnel handling fluorinated refrigerants to hold an appropriate Category I-IV certificate depending on the work undertaken. This is a legal requirement.',
   },
@@ -62,12 +62,12 @@ const quickCheckQuestions = [
     question:
       'Under WEEE Regulations, who is primarily responsible for proper disposal of commercial electrical equipment?',
     options: [
-      'The manufacturer only',
-      'The local council',
       'The business owner/last holder',
       'The installation contractor',
+      'The local council',
+      'The manufacturer only',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Under WEEE Regulations 2013, the 'holder' (typically the business owner) is responsible for ensuring waste electrical equipment is properly disposed of through an approved AATF (Approved Authorised Treatment Facility).",
   },
@@ -76,10 +76,10 @@ const quickCheckQuestions = [
     question:
       'Within what timeframe must notifiable electrical work be registered with Building Control?',
     options: [
-      'Within 5 working days',
+      'Risk evaluation/assessment',
       'Within 30 days of completion',
-      'Before work commences',
-      'Within 24 hours',
+      'Record and investigate the cause',
+      'PWM armature voltage control',
     ],
     correctIndex: 1,
     explanation:
@@ -92,10 +92,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of the Environmental Protection Act 1990?',
     options: [
-      'To regulate electrical installations only',
+      'Because you must give type, location, and rectification - assessor needs detail',
       'To control emissions, waste management, and environmental contamination',
-      'To enforce building regulations',
-      'To manage refrigerant gases',
+      'A defined point when changes become significantly more costly',
+      'Leads to confusion, duplication of work, or project delays',
     ],
     correctAnswer: 1,
     explanation:
@@ -105,7 +105,12 @@ const quizQuestions = [
     id: 2,
     question:
       'Which Part of the Building Regulations specifically deals with electrical safety in dwellings?',
-    options: ['Part A', 'Part L', 'Part P', 'Part M'],
+    options: [
+      'Part M',
+      'Part A',
+      'Part P',
+      'Part L',
+    ],
     correctAnswer: 2,
     explanation:
       'Part P (Electrical Safety - Dwellings) covers electrical installations in dwellings. Part A deals with structure, Part L with energy conservation, and Part M with access.',
@@ -114,12 +119,12 @@ const quizQuestions = [
     id: 3,
     question: "What does the 'duty of care' under EPA 1990 require of contractors handling waste?",
     options: [
-      'Simply placing waste in any skip',
+      'Windowless rooms represent potential entrapment areas requiring illuminated escape routes',
+      'Indoor temperature, outdoor temperature, and historical data',
+      'Identifying the location of underground services using plans, a CAT scanner, and trial holes',
       'Ensuring waste is transferred only to authorised persons with correct documentation',
-      'Burning waste on site',
-      'Disposing of waste in council bins',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The duty of care requires anyone handling waste to ensure it is only transferred to authorised carriers, with proper waste transfer notes describing the waste. This chain of responsibility applies from production to final disposal.',
   },
@@ -128,12 +133,12 @@ const quizQuestions = [
     question:
       'When installing a new circuit for an electric shower in a bathroom, what Building Control action is required?',
     options: [
-      'No action needed - bathrooms are exempt',
       'Notification to Building Control or registration via competent person scheme',
-      'Only a Part L certificate is needed',
-      'The homeowner self-certifies',
+      'The code of practice for emergency lighting design, installation, and maintenance',
+      'To ensure illumination from both directions regardless of which end occupants enter from',
+      'Tags are supplementary warnings — they must be used with locks, not instead of them',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'New circuits in bathrooms (special locations) are notifiable work under Part P. Either notify Building Control before work starts, or self-certify through a competent person scheme (NICEIC, NAPIT, etc.) within 30 days of completion.',
   },
@@ -141,8 +146,13 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the Global Warming Potential (GWP) threshold for F-gases that will be phased out under UK regulations?',
-    options: ['GWP above 150', 'GWP above 750', 'GWP above 2500', 'There is no GWP threshold'],
-    correctAnswer: 2,
+    options: [
+      'GWP above 750',
+      'GWP above 2500',
+      'There is no GWP threshold',
+      'GWP above 150',
+    ],
+    correctAnswer: 1,
     explanation:
       'The F-gas Regulation sets a phase-down schedule with bans on high-GWP refrigerants. From 2025, new equipment using refrigerants with GWP above 2500 (like R404A) is prohibited. Lower GWP alternatives such as R32 and R290 are encouraged.',
   },
@@ -150,12 +160,12 @@ const quizQuestions = [
     id: 6,
     question: 'Under WEEE Regulations, what is an AATF?',
     options: [
-      'Approved Authorised Treatment Facility',
-      'Automated Assembly Test Facility',
       'Alternative Appliance Transfer Form',
+      'Automated Assembly Test Facility',
+      'Approved Authorised Treatment Facility',
       'Annual Audit and Testing Framework',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'An AATF (Approved Authorised Treatment Facility) is a licensed facility for processing waste electrical and electronic equipment. WEEE must be taken to an AATF to ensure proper recycling and recovery of hazardous materials.',
   },
@@ -164,12 +174,12 @@ const quizQuestions = [
     question:
       'Which certificate must be issued upon completion of notifiable electrical work in a dwelling?',
     options: [
-      'Part P Certificate only',
-      'Building Regulations Compliance Certificate from Building Control',
+      'Keep them still, apply manual inline stabilisation to the head and neck, and call 999',
+      'To prove the fault has been eliminated and the installation is safe',
+      'Date, time, duration of evacuation, number of occupants, any issues identified, and actions taken',
       'Electrical Installation Certificate AND Building Regulations Compliance Certificate',
-      'Minor Works Certificate only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Notifiable electrical work requires both an Electrical Installation Certificate (to BS 7671) AND a Building Regulations Compliance Certificate (from Building Control or the competent person scheme). Both documents should be given to the property owner.',
   },
@@ -177,12 +187,12 @@ const quizQuestions = [
     id: 8,
     question: 'What type of waste would old fluorescent tubes containing mercury be classified as?',
     options: [
-      'General waste',
-      'Recyclable waste',
       'Hazardous waste requiring special disposal',
-      'Compostable waste',
+      'Approved Authorised Treatment Facility',
+      'NICEIC, NAPIT, or equivalent electrical scheme',
+      'Waste Transfer Note or Consignment Note',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Fluorescent tubes contain mercury and phosphor powder, classifying them as hazardous waste under the Hazardous Waste Regulations 2005. They require specialist collection and disposal through licensed facilities, not general waste streams.',
   },
@@ -191,10 +201,10 @@ const quizQuestions = [
     question:
       'Which competent person scheme allows electricians to self-certify Part P notifiable work?',
     options: [
-      'Gas Safe Register',
+      'Approved Authorised Treatment Facility',
       'NICEIC, NAPIT, or equivalent electrical scheme',
-      'CHAS only',
-      'Construction Skills Certification Scheme',
+      'Waste Transfer Note or Consignment Note',
+      'Energy efficiency and carbon emissions targets',
     ],
     correctAnswer: 1,
     explanation:
@@ -204,10 +214,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is the maximum penalty for illegal dumping (fly-tipping) under the EPA 1990?',
     options: [
-      '£500 fixed penalty',
-      '£50,000 fine only',
+      'Hazardous waste requiring special disposal',
+      'Approved Authorised Treatment Facility',
       'Unlimited fine and/or up to 5 years imprisonment',
-      'Community service only',
+      'Waste Transfer Note or Consignment Note',
     ],
     correctAnswer: 2,
     explanation:
@@ -217,12 +227,12 @@ const quizQuestions = [
     id: 11,
     question: 'What document must accompany waste when transferred to a licensed carrier?',
     options: [
-      'Insurance certificate',
+      'Hazardous waste requiring special disposal',
+      'Energy efficiency and carbon emissions targets',
+      'NICEIC, NAPIT, or equivalent electrical scheme',
       'Waste Transfer Note or Consignment Note',
-      'Risk assessment',
-      'Method statement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A Waste Transfer Note (for non-hazardous waste) or Consignment Note (for hazardous waste) must accompany all waste transfers. These documents must be retained for 2 years (WTN) or 3 years (CN) and describe the waste, its origin, and the receiving party.',
   },
@@ -231,12 +241,12 @@ const quizQuestions = [
     question:
       'Under Part L Building Regulations, what must be considered when upgrading building services?',
     options: [
-      'Only structural integrity',
       'Energy efficiency and carbon emissions targets',
-      'Paint colours only',
-      'Furniture layout',
+      'Unlimited fine and/or up to 5 years imprisonment',
+      'NICEIC, NAPIT, or equivalent electrical scheme',
+      'Approved Authorised Treatment Facility',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Part L (Conservation of Fuel and Power) requires building services upgrades to meet minimum energy efficiency standards. This includes consideration of lighting efficacy, HVAC efficiency, controls, and insulation to reduce carbon emissions.',
   },

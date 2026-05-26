@@ -39,8 +39,13 @@ const checks = [
     id: 'concealed-domestic-check',
     question:
       'You’re running a new socket circuit chased into a plastered partition wall in a domestic kitchen extension. The default wiring system is:',
-    options: ['SWA buried in the screed', 'T&E (6242Y) in the chase, capped, with RCD protection per 522.6.202', 'MICC clipped to the wall', 'Singles in plastic conduit'],
-    correctIndex: 1,
+    options: [
+      'Evaluating what coping resources and options are available',
+      'To prevent the shield from acting as an antenna and picking up more interference',
+      'Incoming supply, control voltages, capacitor banks, and spring-charged mechanisms',
+      'T&E (6242Y) in the chase, capped, with RCD protection per 522.6.202',
+    ],
+    correctIndex: 3,
     explanation:
       '6242Y T&E in the chase, oval PVC capping, finished with plaster. Reg 522.6.202 then requires either a prescribed zone, RCD additional protection (415.1.1), 50 mm depth, or 522.6.204 mechanical protection. T&E is fast, cheap and standard for concealed domestic.',
   },
@@ -48,8 +53,13 @@ const checks = [
     id: 'outdoor-buried-check',
     question:
       'Feeding a detached garage 18 m down the garden, buried at 600 mm. Best wiring system:',
-    options: ['T&E with capping', 'SWA copper-armoured with external glands', 'MICC laid on the surface', 'Flex from the consumer unit'],
-    correctIndex: 1,
+    options: [
+      'Open circuit heating element',
+      'Measuring pressure drop across a flow restriction',
+      'SWA copper-armoured with external glands',
+      'Trace signal paths and understand circuit operation',
+    ],
+    correctIndex: 2,
     explanation:
       'SWA. The steel armour gives mechanical protection against future spade strikes and (when properly glanded and bonded) acts as the CPC. T&E direct in soil is non-compliant; flex is for final connections only.',
   },
@@ -57,7 +67,12 @@ const checks = [
     id: 'data-separation-check',
     question:
       'You’re running Cat 6a data cable in the same trunking compartment as 230 V mains. What does BS 7671 521.6 / BS EN 50174 require?',
-    options: ['No restriction — same trunking is fine', 'Separation by a continuous earthed metal divider, or use a separate compartment / segregated trunking', 'Run them at right angles only', 'Wrap the data cable in foil'],
+    options: [
+      'To provide a chronological, auditable record of all maintenance activities on an asset',
+      'Separation by a continuous earthed metal divider, or use a separate compartment / segregated trunking',
+      'All motors fed from that control supply lose their control circuits — all contactors drop out simultaneously',
+      'The supplier’s combined neutral and earth (PEN) conductor, separated into N and PE at the cut-out',
+    ],
     correctIndex: 1,
     explanation:
       'BS 7671 528.1 (segregation of circuits) and BS EN 50174-2 require physical separation between Band I (extra-low voltage data) and Band II (mains). Either separate compartments, divided trunking with an earthed metal partition, or completely separate trunking.',
@@ -70,10 +85,10 @@ const quizQuestions = [
     question:
       'A "wiring system" in BS 7671 means:',
     options: [
-      'Just the cable',
+      'It applies a detectable signal to a specific service, making it easier for the CAT to locate',
       'The cable plus its method of support, enclosure or containment, considered together',
-      'Only the conduit and trunking, not the cable',
-      'The protective device and cable together',
+      'To ensure PPE is maintained in an efficient state, in efficient working order, and in good repair',
+      'Tool availability, suitability for task, and safety requirements',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,12 +99,12 @@ const quizQuestions = [
     question:
       'A non-sheathed single-core cable for fixed wiring in a commercial install must be:',
     options: [
-      'Run loose along the wall',
+      'Restart the computer and close unnecessary programs',
+      'Deadlines, complexity, and responsibility can create pressure',
       'Enclosed in conduit, ducting or trunking per Reg 521.10.1',
-      'Painted to match the décor',
-      'Used only for SELV circuits',
+      'Clearly and concisely summarise the purpose or action required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reg 521.10.1 — non-sheathed cables must be enclosed in conduit, ducting or trunking (or in trunking that meets at least IPXXD / IP4X with a tool-removable cover). Singles like 6491X are designed exactly for this — drawn into conduit, never run loose.',
   },
@@ -98,12 +113,12 @@ const quizQuestions = [
     question:
       'MICC (Pyro) cable’s headline advantage over PVC alternatives is:',
     options: [
-      'It’s cheaper to install',
+      'That it meets the essential health and safety requirements set out in UK/EU regulations',
+      'The goal is showing up consistently; you can scale up once the habit is established',
+      'Lights energised continuously, operating from normal and emergency supplies',
       'Inherent fire resistance — the copper sheath and mineral insulation maintain circuit integrity in a fire',
-      'Lighter weight',
-      'Easier to terminate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Pyro is rated for circuit integrity in fire — used where the supply must keep working through a fire (sprinkler pumps, smoke vents, escape lighting, fire alarm sounders). Expensive, slow to terminate (gland + pot + seal), but it survives 950°C+ where polymeric cables would have failed inside three minutes.',
   },
@@ -112,12 +127,12 @@ const quizQuestions = [
     question:
       'Twin-and-earth cable buried in plaster less than 50 mm deep, NOT in a prescribed zone, NOT on a metallic enclosure — what does Reg 522.6.202 require?',
     options: [
-      'Nothing extra — it’s permitted as is',
       'Additional protection by 30 mA RCD (415.1.1) OR comply with 522.6.204 (mechanical protection)',
-      'A blue sleeve over the brown core',
-      'Only single-core may be used',
+      'As long as necessary to communicate all safety-critical information clearly, with time for questions and clarification',
+      'The injury must be caused by work activity, conditions created by work, or the manner of conducting the work',
+      'External lighting uses weather-resistant luminaires and covers external escape routes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cable < 50 mm deep, no metallic protection, not in a prescribed zone — you need either a 30 mA RCD per 415.1.1 OR mechanical protection that satisfies 522.6.204 (typically earthed metal capping or conduit). Both achieve the same goal: a nail or screw doesn’t cause fatal shock.',
   },
@@ -126,10 +141,10 @@ const quizQuestions = [
     question:
       'A 32 A SWA submain feeding a garden office is glanded into a metal enclosure. The steel-wire armour:',
     options: [
-      'Is purely decorative',
+      'Supply characteristics, impedance of supply path, and transformer ratings',
       'Acts as the CPC when glanded with a CW gland and tested for continuity (Sub-clause 543.2)',
-      'Must be cut back and isolated',
-      'Replaces the line conductor',
+      'A list of items to be completed or corrected before final acceptance',
+      'Stop work immediately, leave the area, and report the situation so the risk assessment can be reviewed',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,7 +154,12 @@ const quizQuestions = [
     id: 6,
     question:
       'Flexible cord (flex) for a final connection to a fixed appliance can be a maximum length of:',
-    options: ['1.0 m', '1.5 m', '3.0 m', '5.0 m'],
+    options: [
+      '1.0 m',
+      '1.5 m',
+      '3.0 m',
+      '5.0 m',
+    ],
     correctAnswer: 2,
     explanation:
       'OSG / BS 7671 553.1.7 informal guidance: flex final connections to fixed equipment generally limited to 3.0 m max, supported and protected against mechanical damage. Longer than 3 m and you’re back into fixed-wiring territory (T&E or singles in conduit).',
@@ -149,12 +169,12 @@ const quizQuestions = [
     question:
       'On a hospital escape route, you would specify:',
     options: [
-      'Standard PVC T&E',
+      'The tongue withdraws from the switch head, breaking the safety circuit',
+      'To record defects or incomplete items requiring correction before handover',
+      'To control efficiency, safety, compliance, and comfort',
       'Low Smoke and Fume (LSF / LSZH) cable to limit toxic smoke in a fire',
-      'Bare aluminium busbar',
-      'Cat 6a data cable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'LSF / LSZH (Low Smoke Zero Halogen) cables don’t emit corrosive halogen gases when burning. Critical on escape routes, public buildings, hospitals and underground stations where survivable smoke conditions matter. Standard PVC produces hydrogen chloride — toxic and corrosive.',
   },
@@ -163,12 +183,12 @@ const quizQuestions = [
     question:
       'Data cable (Cat 6a) and 230 V mains share the same trunking. The compliant arrangement is:',
     options: [
-      'No barrier needed',
       'Separation by an earthed metal divider, OR multi-compartment trunking, OR wholly separate trunking',
-      'Run them in parallel less than 100 mm apart',
-      'Wrap the data cable in PVC tape',
+      'Walk both parties back down the ladder to the observable data and rebuild shared meaning from there',
+      'Adults need to understand why they are learning something before they engage with it',
+      'They provide guidance based on real experience, helping you avoid common mistakes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 528.1 segregation rules + BS EN 50174-2 (data cabling install practice) — Band I and Band II must be physically separated. Either compartment trunking with metal dividers, separate trunking, or a guaranteed minimum spacing per the standard.',
   },

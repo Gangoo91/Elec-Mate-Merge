@@ -41,7 +41,12 @@ const checks = [
     id: 'l3-m3-1-5-cat',
     question:
       'You are testing at the origin of an installation (cut-out). What CAT rating should the meter be?',
-    options: ['CAT II 300 V', 'CAT III 300 V', 'CAT IV 600 V', 'Any CAT rating'],
+    options: [
+      'CAT III 300 V',
+      'CAT II 300 V',
+      'CAT IV 600 V',
+      'Any CAT rating',
+    ],
     correctIndex: 2,
     explanation:
       "CAT IV is for measurements at the origin of the installation — utility connection, supply tails. CAT III is for distribution boards downstream. Using a lower-CAT meter at the origin risks the meter exploding if there's a transient overvoltage on the supply.",
@@ -50,7 +55,12 @@ const checks = [
     id: 'l3-m3-1-5-true-rms',
     question:
       'You are clamping a current that includes harmonic distortion (LED loads, VFDs). Which type of meter gives the correct reading?',
-    options: ['Average-responding multimeter', 'True-RMS multimeter', 'Analogue moving-coil meter', 'Any digital multimeter'],
+    options: [
+      'Average-responding multimeter',
+      'True-RMS multimeter',
+      'Analogue moving-coil meter',
+      'Any digital multimeter',
+    ],
     correctIndex: 1,
     explanation:
       'A true-RMS meter calculates RMS from the actual waveform. An average-responding meter assumes a pure sine wave and reads low (often 10-30 %) on distorted waveforms. With modern non-linear loads always use true-RMS.',
@@ -60,10 +70,10 @@ const checks = [
     question:
       "A standard clamp meter shows 0 A on a 32 A radial that you know is loaded. The likely cause:",
     options: [
-      'Battery is flat',
+      'Boosting optical signal strength without converting to electrical',
       'You are clamping ALL the conductors of the circuit (line + neutral) so the fields cancel',
-      'Cable is too thick',
-      'Current is DC and clamp is AC-only',
+      'All connections secure, covers replaced, no tools left, all tests complete',
+      'Verify all results are within limits and calculations are correct',
     ],
     correctIndex: 1,
     explanation:
@@ -75,7 +85,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'A voltmeter is connected:',
-    options: ['In series with the load', 'In parallel across the load', 'Between live and earth only', 'In the neutral conductor'],
+    options: [
+      'In series with the load',
+      'In parallel across the load',
+      'Between live and earth only',
+      'In the neutral conductor',
+    ],
     correctAnswer: 1,
     explanation:
       'Voltmeters have very high internal resistance and connect across (parallel to) the component being measured.',
@@ -83,24 +98,39 @@ const quizQuestions = [
   {
     id: 2,
     question: 'An ammeter is connected:',
-    options: ['In parallel across the load', 'In series with the load', 'Between live and earth', 'Anywhere in the circuit'],
-    correctAnswer: 1,
+    options: [
+      'Between live and earth',
+      'In parallel across the load',
+      'In series with the load',
+      'Anywhere in the circuit',
+    ],
+    correctAnswer: 2,
     explanation:
       'Ammeters have very low resistance and go in series so the circuit current flows through them. (Clamp meters are different — they sense the field around a conductor without breaking it.)',
   },
   {
     id: 3,
     question: 'CAT IV 600 V means the meter is rated for:',
-    options: ['600 V at any installation point', '600 V at the supply origin (CAT IV)', 'Up to 600 V transients only', 'The maximum DC voltage is 600 V'],
-    correctAnswer: 1,
+    options: [
+      'Up to 600 V transients only',
+      '600 V at any installation point',
+      'The maximum DC voltage is 600 V',
+      '600 V at the supply origin (CAT IV)',
+    ],
+    correctAnswer: 3,
     explanation:
       'CAT IV is for measurements at the source/origin. The 600 V is the working voltage; the rating includes withstand against the impulses typical at that point in the system.',
   },
   {
     id: 4,
     question: 'Insulation resistance test voltage for a 230/400 V circuit (BS 7671 Table 64):',
-    options: ['250 V dc', '500 V dc', '1000 V dc', '2500 V dc'],
-    correctAnswer: 1,
+    options: [
+      '500 V dc',
+      '250 V dc',
+      '1000 V dc',
+      '2500 V dc',
+    ],
+    correctAnswer: 0,
     explanation:
       'For circuits up to 500 V (excluding SELV/PELV), test at 500 V dc. The minimum acceptable reading is 1.0 MΩ.',
   },
@@ -108,15 +138,25 @@ const quizQuestions = [
     id: 5,
     question:
       'You need to measure earth fault loop impedance Zs. Which instrument?',
-    options: ['Multimeter on Ω range', 'Clamp meter', 'Loop tester', 'Megger insulation tester'],
-    correctAnswer: 2,
+    options: [
+      'Clamp meter',
+      'Loop tester',
+      'Megger insulation tester',
+      'Multimeter on Ω range',
+    ],
+    correctAnswer: 1,
     explanation:
       'A loop tester injects a known load briefly and measures the volt-drop to calculate Zs. Multimeter ohms cannot do this — it can\'t energise the live supply.',
   },
   {
     id: 6,
     question: 'Power factor is most accurately measured with:',
-    options: ['Voltmeter', 'Ammeter', 'Power-quality analyser', 'Megger'],
+    options: [
+      'Voltmeter',
+      'Ammeter',
+      'Power-quality analyser',
+      'Megger',
+    ],
     correctAnswer: 2,
     explanation:
       'A PQ analyser captures voltage AND current waveforms simultaneously, calculating cos φ, harmonics, true power, apparent power, etc. A clamp meter with PF function gives an approximation; a true PQ analyser gives data you can act on.',
@@ -124,15 +164,25 @@ const quizQuestions = [
   {
     id: 7,
     question: 'An oscilloscope shows you:',
-    options: ['Numerical RMS only', 'The voltage waveform shape vs time', 'Resistance', 'Insulation resistance'],
-    correctAnswer: 1,
+    options: [
+      'Dusts, fumes, and chemical vapours',
+      'Polarised Light Microscopy',
+      'Check for proper sealing and protection',
+      'The voltage waveform shape vs time',
+    ],
+    correctAnswer: 3,
     explanation:
       'An oscilloscope traces the actual waveform — sine, square, distorted, transient. Used for fault-finding, EMC investigation, and verifying inverter outputs. Not a daily install tool but essential in commissioning.',
   },
   {
     id: 8,
     question: 'When should you proof-test a meter on a known supply before and after use?',
-    options: ['Before AND after every isolation procedure', 'Only after testing', 'Only before testing', 'Only on Mondays'],
+    options: [
+      'Before AND after every isolation procedure',
+      'Manufacturing plants, factories, and heavy industry',
+      'Automatic failure for unsafe practice',
+      'O₂ at 20.8%, LEL at 0%, CO at 0 ppm, H₂S at 0 ppm',
+    ],
     correctAnswer: 0,
     explanation:
       'GS38 / safe isolation procedure: prove the meter on a known live source BEFORE testing for absence of voltage, then prove again AFTER. This catches a meter that has failed during the isolation check — the worst time to find out.',

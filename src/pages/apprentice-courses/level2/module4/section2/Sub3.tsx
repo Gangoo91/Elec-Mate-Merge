@@ -41,10 +41,10 @@ const checks = [
     question:
       "Under the Work at Height Regulations 2005 Reg 6, what's the order of priority for controlling work-at-height risk?",
     options: [
-      'Use a ladder, then if that fails use a tower.',
+      "Advisory ('recommending') the installation of AFDDs in AC final circuits of a fixed installation to mitigate fire risk arising from the effects of arc fault currents. Not a mandatory requirement at the BS 7671 level for general installations.",
       "Avoid working at height where reasonably practicable. Where it can't be avoided, use work equipment or other measures to PREVENT a fall. Where the risk of a fall remains, use work equipment or other measures to MINIMISE the distance and consequences of a fall. The hierarchy is in the Reg explicitly — avoid, prevent, minimise.",
-      "Whatever is in the back of the van.",
-      "Whatever the customer says they have.",
+      "You should have kept a copy in the firm's records (paper or digital). Most contractor schemes (NICEIC, NAPIT, ELECSA) require record retention of 6 years minimum, and the Limitation Act 1980 sets the same window for civil claims arising from negligence. Re-issuing a copy is straightforward if you have the records, embarrassing if you don't.",
+      "It is still energised — Reg 712.410.101 makes the point explicit. As long as light is on the panels, the string sits at its open-circuit voltage (often 300–500 V DC) and you have to open the DC isolator AND prove dead with a DC voltmeter before you go anywhere near it.",
     ],
     correctIndex: 1,
     explanation:
@@ -55,12 +55,12 @@ const checks = [
     question:
       "You're setting up an extension ladder against a wall to access a junction box at 3.5m. What angle should the ladder sit at and what's the rule of thumb for getting it right?",
     options: [
-      "Whatever feels stable — there's no fixed angle.",
       "75 degrees from the horizontal — the 1:4 rule. The base sits one unit out from the wall for every four units of vertical height. So for a ladder reaching 4m up the wall, the base sits 1m out. Steeper than 75 degrees and the ladder is liable to topple backwards; shallower and the feet can slip out.",
-      '45 degrees — leans gently against the wall.',
-      '90 degrees — vertical against the wall.',
+      "Normal — the live Zs measurement includes some additional impedance from the protective device internal contacts and from any small leakage paths at the time of the live measurement. A 0.03 Ω difference is well within the expected agreement between the two methods.",
+      "Mirror neurons provide a neurological basis for empathy — they help us automatically simulate others' experiences in our own brain, which is why we wince when we see someone hurt or smile when we see someone happy",
+      "A person on whom statute imposes a duty regardless of contract. Employer, self-employed, employee, occupier, manufacturer, designer, importer, controller of premises — each has statute-imposed duties under HASAWA, EAWR, MHSWR, CDM, PUWER etc. Cannot be contracted out.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "75 degrees / 1:4 ratio is the established safe angle for a leaning ladder. HSE INDG402 (Safe use of ladders and stepladders) gives this as the standard. Most professional ladders have a tilt-indicator strip on the side stile that aligns when the ladder is at the correct angle. Tying the top off (or footing the base if a second person is available) is required for any ladder being worked from for more than a few minutes. WAHR Schedule 6 sets out the requirements for ladder use.",
   },
@@ -69,12 +69,12 @@ const checks = [
     question:
       "You're asked to work from a scissor lift in a warehouse to install lighting at 8m. You've never used one before. What's the right next step?",
     options: [
-      'Climb in and have a go — the controls look intuitive.',
+      "A hole saw of the correct diameter on a cordless combi drill — cuts a clean circular hole sized exactly to the downlight aperture (typically 65 mm or 75 mm). For the rough access cut where you need a square hole or are running cable through, a multi-tool (oscillating multi-cutter, Bosch GOP / Fein MultiMaster) gives a controlled plunge cut without dust kicking up half the room.",
+      "Advanced cultural empathy: understanding that safety communication styles must be adapted to cultural context. In high power-distance cultures, a peer raising concerns directly may be uncomfortable. In indirect communication cultures, blunt safety warnings may cause face-loss. The electrician must find a culturally appropriate way to communicate urgency without causing shame, possibly involving the site supervisor or using visual demonstration rather than direct verbal confrontation",
+      "Re-make every disconnected termination, double-check via visual inspection that each conductor goes back to its correct terminal (brown to line, blue to neutral, green/yellow to CPC), refit all lamps and accessories, complete any remaining dead tests (e.g. earth electrode), then energise per the live test sequence in Section 4 — starting with Ze, PFC, then Zs and RCD/AFDD operation.",
       "Stop. MEWP operation requires an IPAF licence (or equivalent recognised training). The Provision and Use of Work Equipment Regulations 1998 Reg 9 requires the operator to be adequately trained, and LOLER 1998 Reg 9 requires the MEWP itself to be subject to thorough examination. Plus you need a harness for boom-type MEWPs (cherry pickers) clipped to the basket anchor, and a familiarisation on the specific machine. Until the training is in place, the work goes to a competent operator.",
-      'Get the customer to operate it for you.',
-      'Use it for ten minutes only.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "MEWP work is a legally specific category. PUWER Reg 9 requires the operator to be adequately trained for the equipment they're using. IPAF (International Powered Access Federation) holds the de facto training standard in the UK — categories 1a (static vertical), 1b (static boom), 3a (mobile vertical / scissor), 3b (mobile boom / cherry picker). LOLER Reg 9 requires the MEWP to have a current thorough examination report (every 6 months for MEWPs lifting people). Without the licence and the inspection, the work simply doesn't proceed.",
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       "What's the legal basis for selecting access equipment for an electrician's task?",
     options: [
-      'Whatever is in the van that day.',
+      "First-issue ECS card typically £36-40 (varies by grade and route). Three-yearly renewal similar cost. ECS H&S Assessment fee around £20-30 at most testing centres. Specialist endorsements have separate course costs (CompEx 5-day course around £1,000-1,500; AM2S around £400-600 plus prep). Employers often pay the card and H&S fees for employed staff; self-employed cover their own.",
       "The Work at Height Regulations 2005 (WAHR) — applies to any work where a person could fall a distance liable to cause personal injury. Reg 6 sets out the three-tier hierarchy (avoid > prevent > minimise). Reg 7 requires selection of the right equipment for the task. Reg 12 requires inspection of the equipment. PUWER 1998 sits underneath for the equipment itself, and LOLER 1998 covers MEWPs and other lifting kit.",
-      "BS 7671 Section 132.",
-      'A personal preference.',
+      "Around 10% of the UK population is estimated to have dyslexia (British Dyslexia Association figure), with research suggesting prevalence may be materially higher in trade roles where visual-spatial reasoning is favoured. That means in a typical apprentice cohort of 20, two to four people are likely to be dyslexic. Plain English briefings, visual aids, audio material, extra time on written assessments and the option of practical demonstration are the standard reasonable adjustments — and they help non-dyslexic learners too.",
+      "Three reasons. (1) Speed of selection — colour-coded ferrules let you grab the right size at a glance from a sorted ferrule kit. (2) Inspection — supervisor or QA can check at a glance that the ferrule colour matches the conductor CSA on every termination. (3) Standardisation — DIN 46228-4 is recognised across Europe, so any supplier's ferrules match any other's. The colour code IS the inspection mechanism.",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       "Why is a ladder at the BOTTOM of the prevent tier in the WAHR hierarchy?",
     options: [
-      'Because ladders are the cheapest option.',
+      "No person shall intentionally or recklessly interfere with or misuse anything provided in the interests of H&S. Examples — removing a machine guard, defeating an interlock, taking down a barrier, reaching round a lock-off, stuffing the door of an interlocked enclosure, switching off a smoke detector you find inconvenient. s.8 is a personal criminal offence and applies to everyone on site, employee or not.",
+      "The Information Commissioner's Office — the UK's independent regulator for data protection. The maximum fine for the most serious breaches is the higher of £17.5 million OR 4% of the firm's global annual turnover. Lower-tier breaches max out at £8.7 million OR 2% of turnover. In practice most fines on small businesses are far lower, but reputational damage (named-and-shamed in ICO enforcement notices) is often more painful than the fine itself.",
       "Because a ladder is a personal access platform that doesn't have a guardrail and depends on the user's three-point contact and footing for stability. It provides minimal collective protection. INDG401 and INDG402 (HSE guidance) limit ladder use to short-duration tasks (typically up to 30 minutes at one location), light work (one-handed work where reasonably practicable, with a free hand for grip) and where a higher control isn't reasonably practicable.",
-      'Because ladders are the heaviest option.',
-      'Because ladders are illegal.',
+      "Class A (solids — wood, paper, fabric) — Water (red label, all-red body legacy / red with white panel modern); Class B (flammable liquids) — Foam (cream label) or CO2 (black label); Class C (flammable gases) — Dry powder (blue label); Class D (metals) — specialist dry powder; Class F (cooking oils) — wet chemical (yellow label). Plus electrical fires (no class letter — addressed by CO2 or dry powder, never water).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Ladders are a permitted access option but they sit at the bottom of the 'prevent' tier because of the limited collective protection. HSE guidance is consistent — short duration, light task, low height, justified choice. A podium step or a tower offers a fully guarded platform; an MEWP offers a guarded basket. The ladder offers neither, which is why it gets the 30-minute / one-location / one-handed-work guidance.",
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     question:
       "You need to install a 4m run of trunking up a stairwell at first-floor landing height. Choose between ladder, podium step, or tower scaffold — which justifies on the WAHR hierarchy?",
     options: [
-      'Ladder — quickest to set up.',
+      "Parallel paths — every circuit\\\\\\\\'s insulation appears in parallel between the same L+N+E conductors at the CU. Twelve circuits each at 100 MΩ in parallel give 100/12 ≈ 8.3 MΩ. The reading is low because of summed leakage paths, not because of an insulation fault. Per-circuit testing is more diagnostically useful and is the recommended method.",
+      "Give as much advance notice as possible of the day's plan, the week's plan and any expected changes. Provide written or visual schedules where possible. When changes are unavoidable, explain the reason calmly and give the apprentice a moment to adjust. Provide clear, unambiguous instructions ('start at the kitchen, do the back-boxes first, the cable will be in the loft'). Avoid unwritten rules and 'common sense' assumptions. Many autistic workers thrive on predictability and clear structure — giving that structure costs nothing and improves performance.",
+      "Yes — apprentices have the same legal right to join (or not join) a union as any other worker. Unions typically offer reduced 'apprentice rate' subscriptions. Apprentice membership is a personal choice; on JIB-graded sites the union shop steward is typically available to support apprentices through workplace issues even if they're not yet members.",
       "Podium step or low tower scaffold. The work is two-handed (cutting trunking, fixing brackets, dropping cable in), of moderate duration (more than 30 minutes), and at a height where a fall would cause serious injury. A ladder fails the one-handed-work and short-duration tests. A tower fully boarded with guardrails is the prevent-a-fall control; a podium step gives the same protection over a smaller height range. PASMA training is required for tower assembly.",
-      'A ladder propped against the bannister rail.',
-      'Stand on the bannister rail.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Stairwell work is the textbook ladder-isn't-suitable scenario. Stairs are uneven, the work is two-handed, and the duration exceeds the 30-minute guidance. PASMA-trained tower assembly with the correct stair-edge configuration (often a podium with stair adjusters or a specially-rated stair tower) is the right call. The added cost in time and kit is well below the cost of a fall onto stairs.",
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       "What's PASMA training and when is it legally required?",
     options: [
-      'A site-passport scheme — required only on Crossrail.',
       "PASMA (Prefabricated Access Suppliers' and Manufacturers' Association) is the recognised training standard for assembling, dismantling and using mobile tower scaffolds. It's not a statutory licence in the way IPAF is for MEWPs, but PUWER 1998 Reg 9 requires anyone using or assembling work equipment to be adequately trained, and on construction sites the principal contractor's site rules typically require PASMA card-holders for tower assembly.",
-      'A safety-equipment supplier.',
-      'A type of harness.',
+      "BPEC (British Plumbing Employers Council, now expanded to other trades) runs an MCS-recognised Solar PV installer course typically delivered as a 4-5 day classroom + practical course covering PV system design, installation, MCS standards and commissioning. AM2S is the JIB practical assessment route — assumes prior PV training and tests practical competence. Both routes earn the ECS PV endorsement; BPEC is more course-based, AM2S is more assessment-based.",
+      "EAWR 'electrical systems' includes portable equipment supplied from those systems. A faulty 110 V SDS on a 110 V site supply is part of the electrical system in EAWR terms. The maintenance duty under Reg 4(2) covers the supply (transformer, leads, sockets) AND the equipment plugged into it. Visual checks, PAT, and competent-person inspection all sit under this duty — EAWR is the second statutory hook alongside PUWER.",
+      "Your JIB grade and ECS card go with you — they're tied to you, not to the employer. The new employer will accept your existing grade and pay you the corresponding JIB rate (assuming they're a JIB-graded firm). If you move to a non-JIB firm your contract with them might pay above or below JIB rates by mutual agreement, but your grade is still recorded with JIB.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "PASMA card holders have been trained on tower assembly per the manufacturer's instruction manual and the WAHR requirements. PUWER Reg 9 is the statutory hook for the training requirement. WAHR Reg 12 then requires the assembled tower to be inspected before use and at intervals. The card on its own isn't legally mandatory but on a notifiable construction site the principal contractor's CDM-driven site rules will almost always require it.",
   },
@@ -144,10 +144,10 @@ const quizQuestions = [
     question:
       "Under LOLER 1998 Reg 9, how often must a MEWP be subject to thorough examination?",
     options: [
-      'Once at purchase, never again.',
+      "The EIC records the AC-side verification — Zs at the inverter AC terminals, RCD trip times for any shared RCBO / RCD, continuity of CPC. The PV-specific commissioning record (often a separate sheet attached to the EIC) records: per-string Voc compared to expected; per-string Isc compared to expected; per-string polarity at the DC isolator; per-string insulation resistance positive-to-earth and negative-to-earth at 1000 V dc; AC isolator position and labelling check; DC isolator position and labelling check; signage at the consumer unit, meter position and inverter compliant with BS 7671 Section 712. The two records together evidence that both the AC and DC sides are safe.",
       "Lifting equipment used to lift persons (MEWPs, lift platforms, scaffolding hoists carrying personnel) requires thorough examination at 6-monthly intervals. Other lifting equipment (chain blocks, manual hoists, anchor points used for material lifting only) requires 12-monthly thorough examination, OR in accordance with an examination scheme drawn up by a competent person. Per LOLER 1998 Reg 9(3). The examination is by a competent person (typically an independent examiner) and a written report is provided. The current report must be available with the machine.",
-      'Once a year for everything.',
-      'Only when the operator complains.',
+      "Rotational — typically 2 weeks on platform / 2 weeks off, or 14/14 patterns. Offshore platform work involves helicopter transit (HUET training required), confined-space and working-at-height, harsh weather, extended periods away from home. Day rates typically £400-700+ on rotation but the family/relationship demands are significant. Common in North Sea (oil and gas) and offshore wind (East Coast UK, Scotland).",
+      "The current transformer (CT) clamp fits around one of the property's main supply tails (typically the live), measuring the total current the property is drawing. The charge point uses that measurement to throttle or pause its own current draw so the property total never exceeds a configured limit (commonly the main-fuse rating). This is dynamic load management — it lets a 7.4 kW charger live behind a constrained main fuse without the cut-out tripping when the shower comes on. The apprentice's job is to install the CT clamp around the correct tail in the correct orientation per the manufacturer's instructions; wrong orientation gives the unit the wrong measurement and load management does not work.",
     ],
     correctAnswer: 1,
     explanation:
@@ -158,12 +158,12 @@ const quizQuestions = [
     question:
       "What's the daily pre-use inspection for a tower scaffold cover and who has to do it?",
     options: [
-      'Nothing — once it\'s built it stays built.',
+      "Pre-Construction Information is the H&S information that the Client (with help from the Principal Designer) provides to designers and contractors before they start on the project. It covers the site (location, existing structures, services, ground conditions), the project (description, programme, key dates, design assumptions), the relevant H&S information (asbestos surveys, condition reports, environmental risks) and the Client's H&S file from any previous works.",
+      "Uses an EFLI tester to measure the loop impedance from the supply, with the installation\\\\\\\\'s earthing conductor disconnected from the electrode and connected to the EFLI tester instead. The reading gives total loop impedance — for TT, this approximates the electrode resistance plus the supply network impedance (small in comparison). Useful when stakes / clamps are not available, but requires the earthing conductor to be safely re-connected before re-energising.",
       "WAHR 2005 Reg 12 requires a tower used for working at height to be inspected before use after assembly, after any event likely to have affected it (high winds, impact, alteration), and at intervals not exceeding 7 days. The pre-use check covers stability (level base, outriggers deployed, brakes on), structural integrity (no missing components, all connectors locked), platform fully boarded with guardrails and toeboards, and a current inspection record (Form 91 / scaff tag). The user does the daily check; a more thorough inspection is by a competent person.",
-      'Only after the tower has been struck by a vehicle.',
-      'Once a year by a registered inspector.',
+      "Part L (Conservation of Fuel and Power) requires every new build and every notifiable refurbishment to demonstrate compliance via a SAP calculation that meets the Target Emission Rate (TER) and Target Fabric Energy Efficiency (TFEE) for the property type. A heat pump's contribution to the SAP calculation depends on its SCOP and the carbon intensity of grid electricity. Modern heat pumps in well-designed homes pass Part L comfortably. The Future Homes Standard (in force from 2025) effectively rules out fossil-fuel boilers from new-build because the SAP calculation cannot reach compliance with a gas boiler under the tightening targets. The MCS designer's SCOP estimate feeds the SAP calculation.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "WAHR Reg 12 + Schedule 7 set out the inspection regime. The 7-day interval for towers is the headline rule, with the daily / pre-use check by the user on top. The Form 91 / scaff tag system is the standard way of recording the formal inspection — the tag at the access point of the tower shows who inspected, when, and the next due date. No tag, or expired tag, the tower doesn't get used until re-inspected.",
   },
@@ -172,12 +172,12 @@ const quizQuestions = [
     question:
       "What does 'three-point contact' mean on a ladder?",
     options: [
-      'Three different ladders touching at once.',
+      "Several. (1) Approved Electrician JIB grading. (2) QS (Qualified Supervisor) role in a CPS-registered firm — required for Part P self-certification. (3) Periodic inspection contract work (EICR work pays well, particularly in commercial estate and rental property maintenance). (4) Standalone testing-led roles in M&E, FM and consultancy. (5) Bridge to 2396 design qualification.",
+      "Every 3 months — formal PAT (combined visual + electrical test) for harsh-environment use. HSE HSG107 'Maintaining portable electrical equipment' and the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th ed.) publish typical intervals; construction-site Class I portable tools are at the short end at 3 months. Office Class I equipment is 12 months (the low-risk regime in HSE INDG236). Class II (double-insulated) and battery chargers are typically longer.",
+      "Danger (check the scene is safe to approach), Response (is the casualty conscious and responding?), Airway (open the airway with head-tilt-chin-lift), Breathing (look, listen, feel for normal breathing for up to 10 seconds), Circulation (look for signs of normal life — colour, movement, response). If breathing absent or abnormal: 999, CPR, defibrillator.",
       "At all times the user must maintain three points of contact with the ladder — typically two feet and one hand, or two hands and one foot. The remaining hand is free to perform light work or for an extra grip while moving. The rule means: don't carry materials in both hands while climbing, don't lean far enough to break the contact, don't use a ladder for two-handed work like wall chasing.",
-      'Three legs on the ladder.',
-      'Three rungs visible above the platform.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Three-point contact is the foundational ladder safety rule — INDG402 and the manufacturer's guidance both reinforce it. The implication is that real two-handed work cannot be done from a ladder safely — and that's why ladders are limited to short, light, one-handed-work tasks where a higher tier of access (podium, tower, MEWP) isn't reasonably practicable.",
   },
@@ -186,12 +186,12 @@ const quizQuestions = [
     question:
       "On a notifiable construction site, what does the PC's induction typically cover regarding access equipment?",
     options: [
-      'Nothing — access kit isn\'t a site issue.',
       "Site rules on which categories of access equipment are permitted (e.g. ladders only with PC permission), the inspection / Form 91 regime for towers and MEWPs, the storage and overnight security arrangements for kit (so unauthorised use is prevented), the permit-to-work systems for any specialised access work (rope access, suspended platforms), and the chain of authorisation for hire-in equipment. CDM 2015 Reg 13 makes this part of the principal contractor's induction duty.",
-      'Lunch arrangements only.',
-      'The dress code.',
+      "When the worker may be exposed to a risk to their health or safety while at work, EXCEPT where and to the extent that the risk has been or will be adequately controlled by other means which are equally or more effective. The 2022 amendment also extended the duty to cover limb (b) workers (some categories of casual / gig workers) as well as employees.",
+      "On any multi-discipline project of meaningful size, BIM is how electrical coordinates with structural, mechanical, architectural and fire engineering disciplines. The L3 designer who cannot read or contribute to a BIM model is locked out of a growing share of commercial, public sector and HRRB work where BIM is the procurement default.",
+      "Delivery of the 2365 (or equivalent) syllabus, marking of coursework and exams, AM2 preparation, and the formal academic record. The Tutor sees the apprentice typically one day a week (day-release model) or in block release. They calibrate progress with the Workplace Mentor at three-way reviews and own the academic side of the apprenticeship.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Access equipment is one of the most regulated areas of construction site work because it accounts for the largest single category of fatalities (falls from height are the leading cause of UK construction fatalities). The PC's induction will typically restrict ladder use, require PASMA cards for tower work, require IPAF for MEWPs, and lay out the inspection and tagging system. Skipping the induction or ignoring the site rules is the fastest way to be sent off site.",
   },

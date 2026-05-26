@@ -33,27 +33,37 @@ const quickCheckQuestions = [
     id: 'u-value-definition',
     question: 'What does a U-value of 0.18 W/m²K mean?',
     options: [
-      'The wall stores 0.18 watts of heat',
+      'When cables pass through or are surrounded by thermal insulation',
+      'Evaluating and prioritising risks by plotting likelihood against severity',
       '0.18 watts pass through each m² for every 1K temperature difference',
-      'The wall has 0.18 m² of thermal resistance',
-      'The surface temperature is 0.18K above ambient',
+      'To provide a safe working environment, so far as is reasonably practicable',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'U-value represents the rate of heat transfer through a building element. 0.18 W/m²K means 0.18 watts of heat energy passes through each square metre of the element for every 1 Kelvin (or 1°C) temperature difference between inside and outside.',
   },
   {
     id: 'r-value-relationship',
     question: 'What is the relationship between U-value and total thermal resistance (RT)?',
-    options: ['U = RT × 2', 'U = 1/RT', 'U = RT + Rsi + Rse', 'U = RT²'],
-    correctIndex: 1,
+    options: [
+      'U = RT × 2',
+      'U = RT + Rsi + Rse',
+      'U = 1/RT',
+      'U = RT²',
+    ],
+    correctIndex: 2,
     explanation:
       'U-value is the reciprocal of total thermal resistance: U = 1/RT. This means higher thermal resistance gives lower U-values (better insulation). RT includes all layer resistances plus surface resistances.',
   },
   {
     id: 'surface-resistance',
     question: 'What is the typical internal surface resistance (Rsi) for walls?',
-    options: ['0.04 m²K/W', '0.10 m²K/W', '0.13 m²K/W', '0.17 m²K/W'],
+    options: [
+      '0.10 m²K/W',
+      '0.04 m²K/W',
+      '0.13 m²K/W',
+      '0.17 m²K/W',
+    ],
     correctIndex: 2,
     explanation:
       'The internal surface resistance (Rsi) for walls is 0.13 m²K/W. This accounts for the thin layer of still air at the surface and radiative heat transfer. External surface resistance (Rse) is typically 0.04 m²K/W due to wind effects.',
@@ -61,8 +71,13 @@ const quickCheckQuestions = [
   {
     id: 'part-l-wall',
     question: 'What is the limiting U-value for new external walls under Part L 2021?',
-    options: ['0.18 W/m²K', '0.26 W/m²K', '0.30 W/m²K', '0.35 W/m²K'],
-    correctIndex: 1,
+    options: [
+      '0.26 W/m²K',
+      '0.18 W/m²K',
+      '0.30 W/m²K',
+      '0.35 W/m²K',
+    ],
+    correctIndex: 0,
     explanation:
       'Part L 2021 (Conservation of fuel and power) sets a limiting U-value of 0.26 W/m²K for new external walls. This is a maximum - notional building specifications often target better values around 0.18 W/m²K.',
   },
@@ -72,7 +87,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the SI unit of U-value?',
-    options: ['m²K/W', 'W/m²K', 'W/mK', 'J/m²K'],
+    options: [
+      'm²K/W',
+      'W/m²K',
+      'W/mK',
+      'J/m²K',
+    ],
     correctAnswer: 1,
     explanation:
       'U-value is measured in W/m²K (Watts per square metre per Kelvin). This represents the rate of heat transfer through 1m² of the element per degree temperature difference.',
@@ -80,31 +100,51 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A wall has a total thermal resistance of 5.0 m²K/W. What is its U-value?',
-    options: ['0.10 W/m²K', '0.20 W/m²K', '0.50 W/m²K', '5.0 W/m²K'],
-    correctAnswer: 1,
+    options: [
+      '0.50 W/m²K',
+      '0.10 W/m²K',
+      '0.20 W/m²K',
+      '5.0 W/m²K',
+    ],
+    correctAnswer: 2,
     explanation:
       'U = 1/RT = 1/5.0 = 0.20 W/m²K. The U-value is simply the reciprocal of the total thermal resistance.',
   },
   {
     id: 3,
     question: 'How is the thermal resistance of a single homogeneous layer calculated?',
-    options: ['R = λ × d', 'R = d/λ', 'R = λ/d', 'R = d + λ'],
-    correctAnswer: 1,
+    options: [
+      'R = λ/d',
+      'R = λ × d',
+      'R = d + λ',
+      'R = d/λ',
+    ],
+    correctAnswer: 3,
     explanation:
       'R = d/λ where d is thickness in metres and λ (lambda) is thermal conductivity in W/mK. A thicker layer or lower conductivity gives higher resistance.',
   },
   {
     id: 4,
     question: 'Which building element typically has the worst (highest) U-value?',
-    options: ['Insulated cavity wall', 'Ground floor slab', 'Windows', 'Flat roof'],
-    correctAnswer: 2,
+    options: [
+      'Windows',
+      'Ground floor slab',
+      'Insulated cavity wall',
+      'Flat roof',
+    ],
+    correctAnswer: 0,
     explanation:
       'Windows typically have the highest U-values, often 1.4-2.0 W/m²K for double glazing. Even triple glazing rarely achieves below 0.8 W/m²K. This makes glazing a significant source of heat loss.',
   },
   {
     id: 5,
     question: 'What is the thermal conductivity (λ) of typical mineral wool insulation?',
-    options: ['0.022 W/mK', '0.035 W/mK', '0.18 W/mK', '1.0 W/mK'],
+    options: [
+      '0.022 W/mK',
+      '0.035 W/mK',
+      '1.0 W/mK',
+      '0.18 W/mK',
+    ],
     correctAnswer: 1,
     explanation:
       'Mineral wool has a thermal conductivity of approximately 0.035-0.040 W/mK. PIR/PUR foam boards are better at around 0.022 W/mK. Lower values indicate better insulating properties.',
@@ -112,8 +152,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'A 100mm layer of insulation has λ = 0.040 W/mK. What is its thermal resistance?',
-    options: ['0.4 m²K/W', '2.5 m²K/W', '4.0 m²K/W', '40 m²K/W'],
-    correctAnswer: 1,
+    options: [
+      '0.4 m²K/W',
+      '4.0 m²K/W',
+      '2.5 m²K/W',
+      '40 m²K/W',
+    ],
+    correctAnswer: 2,
     explanation:
       'R = d/λ = 0.100/0.040 = 2.5 m²K/W. Always convert thickness to metres before calculating.',
   },
@@ -122,11 +167,11 @@ const quizQuestions = [
     question: 'What does Rse represent in U-value calculations?',
     options: [
       'Structural element resistance',
-      'External surface resistance',
-      'Secondary element resistance',
       'Solar exposure resistance',
+      'Secondary element resistance',
+      'External surface resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Rse is the external surface resistance, accounting for the boundary layer effect and radiative heat transfer at the outside surface. Standard value is 0.04 m²K/W for exposed surfaces.',
   },
@@ -134,16 +179,26 @@ const quizQuestions = [
     id: 8,
     question:
       'A wall has layers with R-values of 0.13, 0.45, 2.50, 0.10, and 0.04 m²K/W. What is the U-value?',
-    options: ['0.28 W/m²K', '0.31 W/m²K', '0.35 W/m²K', '3.22 W/m²K'],
-    correctAnswer: 1,
+    options: [
+      '0.31 W/m²K',
+      '0.35 W/m²K',
+      '0.28 W/m²K',
+      '3.22 W/m²K',
+    ],
+    correctAnswer: 0,
     explanation:
       'RT = 0.13 + 0.45 + 2.50 + 0.10 + 0.04 = 3.22 m²K/W. U = 1/RT = 1/3.22 = 0.31 W/m²K',
   },
   {
     id: 9,
     question: 'What is the Part L 2021 limiting U-value for flat roofs?',
-    options: ['0.11 W/m²K', '0.16 W/m²K', '0.18 W/m²K', '0.25 W/m²K'],
-    correctAnswer: 2,
+    options: [
+      '0.11 W/m²K',
+      '0.18 W/m²K',
+      '0.16 W/m²K',
+      '0.25 W/m²K',
+    ],
+    correctAnswer: 1,
     explanation:
       'Part L 2021 sets a limiting U-value of 0.18 W/m²K for flat roofs. Pitched roofs have the same limit. These are maximum allowable values - better performance is often required to meet overall building targets.',
   },
@@ -152,11 +207,11 @@ const quizQuestions = [
     question: 'Why is thermal bridging important in U-value assessments?',
     options: [
       'It improves the overall insulation performance',
+      'It reduces condensation risk',
       'It creates localised areas of higher heat loss',
       'It is required for structural integrity',
-      'It reduces condensation risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Thermal bridges (cold bridges) are localised areas where heat bypasses insulation, creating higher heat loss and potential condensation. Common at junctions, around windows, and where structural elements penetrate insulation.',
   },
@@ -164,16 +219,26 @@ const quizQuestions = [
     id: 11,
     question:
       'An office wall is 50m² with U = 0.25 W/m²K. Inside temp is 21°C, outside is 1°C. What is the heat loss rate?',
-    options: ['125 W', '250 W', '500 W', '1000 W'],
-    correctAnswer: 1,
+    options: [
+      '125 W',
+      '1000 W',
+      '500 W',
+      '250 W',
+    ],
+    correctAnswer: 3,
     explanation:
       'Q = U × A × ΔT = 0.25 × 50 × (21-1) = 0.25 × 50 × 20 = 250 W. This is the continuous rate of heat loss through this wall section.',
   },
   {
     id: 12,
     question: 'What R-value should be used for an unventilated cavity 25mm or greater?',
-    options: ['0.04 m²K/W', '0.09 m²K/W', '0.18 m²K/W', '0.25 m²K/W'],
-    correctAnswer: 2,
+    options: [
+      '0.18 m²K/W',
+      '0.25 m²K/W',
+      '0.04 m²K/W',
+      '0.09 m²K/W',
+    ],
+    correctAnswer: 0,
     explanation:
       'An unventilated air cavity 25mm or greater has a thermal resistance of 0.18 m²K/W. This is due to still air being a reasonable insulator. Ventilated cavities have lower R-values due to air movement.',
   },

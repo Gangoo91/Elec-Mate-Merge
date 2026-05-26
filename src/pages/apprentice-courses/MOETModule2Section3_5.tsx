@@ -14,8 +14,13 @@ const quickCheckQuestions = [
     id: 'dol-starting-current',
     question:
       'A 15 kW three-phase induction motor has a full-load current of 28 A. When started direct-on-line (DOL), the typical starting current is approximately:',
-    options: ['28 A', '56 A', '168–224 A', '500 A'],
-    correctIndex: 2,
+    options: [
+      '28 A',
+      '56 A',
+      '500 A',
+      '168–224 A',
+    ],
+    correctIndex: 3,
     explanation:
       'DOL starting draws 6 to 8 times the full-load current. For a 28 A motor: 28 × 6 = 168 A to 28 × 8 = 224 A. This high inrush current lasts for several seconds until the motor reaches speed. While the motor can withstand this, the supply system, cables and protective devices must be rated to handle it. On weak supplies, the voltage dip caused by this inrush can affect other equipment — which is why reduced-voltage starting methods are often required.',
   },
@@ -24,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'During star-delta starting, the voltage applied to each motor winding during the star connection phase is:',
     options: [
-      'Full line voltage (400 V)',
+      'All-Dielectric Self-Supporting aerial cable',
       'Line voltage divided by √3 (approximately 230 V)',
-      'Half the line voltage (200 V)',
-      'Line voltage divided by 3 (approximately 133 V)',
+      'Ensure tools are PAT tested and use RCD protection',
+      'Reducing heating/cooling setpoints during unoccupied periods',
     ],
     correctIndex: 1,
     explanation:
@@ -37,10 +42,10 @@ const quickCheckQuestions = [
     id: 'soft-starter-principle',
     question: 'A soft starter reduces motor starting current by:',
     options: [
-      'Reducing the supply frequency during starting',
-      'Switching resistance into the motor circuit',
+      'LED forward voltage varies with temperature, making current control essential for consistent output',
+      'Customer premises equipment converting optical to electrical signals in PON',
       'Controlling the voltage applied to the motor using thyristors (phase-angle control)',
-      'Changing the motor winding connections',
+      'To confirm work is complete, the area is safe, and controls can be removed',
     ],
     correctIndex: 2,
     explanation:
@@ -51,12 +56,12 @@ const quickCheckQuestions = [
     question:
       'The primary advantage of using a variable speed drive (VSD) for motor starting, compared with a star-delta starter, is:',
     options: [
-      'Lower capital cost',
-      'Simpler installation with fewer cables',
+      'The installation is in a corrosive environment (chemical plants, swimming pools) or where a non-metallic, non-magnetic containment is required',
       'Controlled starting current with full torque available from zero speed, and continuous speed control during running',
-      'No need for motor overload protection',
+      'A battery or generator backup that powers the hydraulic system when the main engine fails',
+      'The total carbon emissions from material extraction through to demolition and disposal',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "A VSD controls both voltage and frequency, so the motor can develop full rated torque from zero speed with a starting current limited to the motor's full-load current or less. Star-delta starting reduces both current and torque to one-third of DOL values, which may be insufficient for high-inertia loads. Additionally, a VSD provides continuous speed control during running, energy savings on variable-torque loads, and controlled deceleration — none of which star-delta offers.",
   },
@@ -66,7 +71,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Direct-on-line (DOL) starting is suitable for motors up to approximately:',
-    options: ['0.5 kW', '7.5 kW (depending on supply capacity)', '50 kW', 'Any size of motor'],
+    options: [
+      'Electricity at Work Regulations 1989',
+      '7.5 kW (depending on supply capacity)',
+      'Potential earth faults or deterioration',
+      'Centralised monitoring and supervision',
+    ],
     correctAnswer: 1,
     explanation:
       'While there is no absolute limit, DOL starting is typically used for motors up to about 7.5 kW on standard commercial/industrial supplies. Larger motors may cause unacceptable voltage dips on the supply, affecting other connected equipment. The distribution network operator (DNO) may impose limits on starting current — typically no more than 60-100 A starting current without prior agreement. The exact limit depends on the supply capacity and the prospective fault level at the point of connection.',
@@ -75,12 +85,12 @@ const quizQuestions = [
     id: 2,
     question: 'A star-delta starter requires the motor to have:',
     options: [
-      'A single winding connection brought out to three terminals',
+      'A current transient (spike) occurs at the star-to-delta changeover point',
+      'A contactor, an overload relay, and a control circuit (start/stop)',
       'All six winding ends brought out to the terminal box (U1, V1, W1, U2, V2, W2)',
-      'A wound rotor with slip rings',
-      'A built-in centrifugal switch',
+      'The starting torque required by the load, the supply capacity, and the acceptable voltage dip',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Star-delta starting requires access to both ends of each of the three stator windings — six terminals in total, designated U1, V1, W1 (start) and U2, V2, W2 (finish). The contactor arrangement connects the windings in star for starting and then switches to delta for running. A motor with only three terminals (internally connected in star or delta) cannot be used with a star-delta starter.',
   },
@@ -88,12 +98,12 @@ const quizQuestions = [
     id: 3,
     question: 'During star-delta starting, the starting torque is approximately:',
     options: [
-      'Equal to DOL starting torque',
       'One-half of DOL starting torque',
-      'One-third of DOL starting torque',
+      'Equal to DOL starting torque',
       'Twice the DOL starting torque',
+      'One-third of DOL starting torque',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Torque is proportional to the square of the applied voltage. In star, each winding receives V_line/√3 voltage. Since torque ∝ V², the star torque = (1/√3)² = 1/3 of the DOL torque. Similarly, the starting current is reduced to one-third. This reduction in starting torque means star-delta is unsuitable for loads that require high starting torque (e.g., loaded conveyors, positive displacement pumps) — the motor may not accelerate to the changeover speed.',
   },
@@ -101,12 +111,12 @@ const quizQuestions = [
     id: 4,
     question: 'The main disadvantage of star-delta starting is:',
     options: [
-      'High starting current',
       'A current transient (spike) occurs at the star-to-delta changeover point',
-      'It requires a variable frequency drive',
-      'It can only be used with single-phase motors',
+      'Smooth, stepless voltage ramp with no changeover transient',
+      'All six winding ends brought out to the terminal box (U1, V1, W1, U2, V2, W2)',
+      'Applying a reduced voltage from a tapped auto-transformer during starting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When the star-delta starter switches from star to delta, the motor is momentarily disconnected from the supply. When delta is reconnected, the motor draws a transient current that can be as high as the DOL starting current. This current spike can trip protective devices, cause voltage dips, and impose mechanical stress on the drive train. Closed-transition star-delta starters use resistors to maintain a current path during changeover, reducing but not eliminating this transient.',
   },
@@ -114,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'An auto-transformer starter reduces starting current by:',
     options: [
-      'Changing the motor winding connections',
+      'A contactor, an overload relay, and a control circuit (start/stop)',
       'Applying a reduced voltage from a tapped auto-transformer during starting',
-      'Inserting resistance in the stator circuit',
-      'Reducing the supply frequency',
+      'Smooth, stepless voltage ramp with no changeover transient',
+      'All six winding ends brought out to the terminal box (U1, V1, W1, U2, V2, W2)',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,12 +137,12 @@ const quizQuestions = [
     id: 6,
     question: 'A soft starter provides which advantage over a star-delta starter?',
     options: [
-      'Higher starting torque',
+      'A contactor, an overload relay, and a control circuit (start/stop)',
+      'Applying a reduced voltage from a tapped auto-transformer during starting',
       'Smooth, stepless voltage ramp with no changeover transient',
-      'Lower capital cost',
-      'Speed control during running',
+      'A current transient (spike) occurs at the star-to-delta changeover point',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The key advantage of a soft starter is smooth, stepless voltage ramping from a set initial level to full voltage over a programmable time period. There is no abrupt changeover as with star-delta, so there is no current transient spike. The starting current and torque profiles can be adjusted to suit the application. However, a soft starter does not provide speed control during running — once at full speed, the thyristors are bypassed and the motor runs at mains frequency.',
   },
@@ -143,10 +153,10 @@ const quizQuestions = [
     options: [
       '6-8 times full-load current (same as DOL)',
       '3 times full-load current',
-      '100-150% of full-load current',
       '50% of full-load current',
+      '100-150% of full-load current',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "A VSD starts the motor by applying a low-frequency, low-voltage supply and gradually increasing both to ramp the motor up to speed. The starting current is typically limited to 100-150% of the motor's full-load current by the drive's current-limiting function. This is dramatically lower than DOL (600-800%) or star-delta (200-300%) starting currents, and the motor develops full rated torque throughout the starting period because the V/f ratio is maintained.",
   },
@@ -154,12 +164,12 @@ const quizQuestions = [
     id: 8,
     question: 'Rotor resistance starting is used with:',
     options: [
-      'Squirrel-cage induction motors',
       'Wound-rotor (slip-ring) induction motors',
-      'Synchronous motors',
-      'Single-phase motors',
+      'Fire-resistant, LSZH, or MICC cable where required',
+      'Safe identification and isolation',
+      'To test on both halves of the AC waveform',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Rotor resistance starting is used with wound-rotor (slip-ring) induction motors. External resistance is connected to the rotor windings via slip rings. The added resistance increases the rotor circuit impedance, reducing the starting current while simultaneously increasing the starting torque (up to the maximum value). As the motor accelerates, the resistance is progressively short-circuited in stages. This method provides excellent starting characteristics but is now largely superseded by VSDs.',
   },
@@ -167,8 +177,13 @@ const quizQuestions = [
     id: 9,
     question:
       'Which motor starting method provides the lowest starting current drawn from the supply?',
-    options: ['Direct-on-line (DOL)', 'Star-delta', 'Soft starter', 'Variable speed drive (VSD)'],
-    correctAnswer: 3,
+    options: [
+      '1.25mm for LC, 2.5mm for SC/ST',
+      'Variable speed drive (VSD)',
+      'When circumstances change',
+      'Earth continuity connection',
+    ],
+    correctAnswer: 1,
     explanation:
       'A VSD provides the lowest starting current because it controls both voltage and frequency, maintaining the V/f ratio to keep the motor flux constant while limiting the current to typically 100-150% of FLC. Soft starters typically limit starting current to 200-400% FLC, star-delta to approximately 200% FLC (one-third of DOL), and DOL draws 600-800% FLC. The VSD is the most technically advanced starting method and also provides the most controllable starting torque.',
   },
@@ -177,12 +192,12 @@ const quizQuestions = [
     question:
       'When selecting a motor starting method, which of the following is the MOST important consideration?',
     options: [
-      'The colour of the starter enclosure',
+      'Applying a reduced voltage from a tapped auto-transformer during starting',
+      'An overload protective device (for sustained overcurrent) and a short-circuit protective device (for fault current)',
       'The starting torque required by the load, the supply capacity, and the acceptable voltage dip',
-      'Whether the motor manufacturer is UK-based',
-      'The ambient temperature of the motor room',
+      'A contactor, an overload relay, and a control circuit (start/stop)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The three primary considerations for selecting a starting method are: (1) the starting torque required by the mechanical load — if the load needs high torque from standstill (e.g., a loaded conveyor), methods that reduce starting torque (star-delta) may be unsuitable; (2) the available supply capacity and acceptable voltage dip — the DNO limits on starting current may dictate reduced-current methods; and (3) the cost and complexity versus the frequency of starting and the criticality of the application.',
   },
@@ -190,12 +205,12 @@ const quizQuestions = [
     id: 11,
     question: 'A DOL starter typically consists of:',
     options: [
+      'Applying a reduced voltage from a tapped auto-transformer during starting',
+      'A current transient (spike) occurs at the star-to-delta changeover point',
+      'Smooth, stepless voltage ramp with no changeover transient',
       'A contactor, an overload relay, and a control circuit (start/stop)',
-      'Three contactors and a timer',
-      'A thyristor bridge and a control board',
-      'An auto-transformer and a bypass contactor',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'A DOL starter is the simplest motor starting arrangement: a main contactor (to switch the supply to the motor), an overload relay (thermal or electronic, to protect the motor from sustained overcurrent), and a control circuit with start and stop push-buttons plus a holding contact. The simplicity of DOL starters makes them reliable and inexpensive, which is why they are used wherever the supply can tolerate the high starting current.',
   },
@@ -203,12 +218,12 @@ const quizQuestions = [
     id: 12,
     question: 'BS 7671 requires that motor circuits are protected by:',
     options: [
-      'Only a fuse',
       'An overload protective device (for sustained overcurrent) and a short-circuit protective device (for fault current)',
-      'A residual current device only',
-      'A time-delay relay',
+      'DR ABC — Danger, Response, Airway, Breathing, Circulation. Call 999. Start CPR if not breathing. Send for an AED.',
+      'To separate oil and other hydrocarbons from surface water runoff before it enters the drainage system or watercourse',
+      'A formal documented procedure that authorises certain people to carry out specific high-risk work under controlled conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 Section 552 requires motor circuits to have two types of protection: overcurrent protection (to protect the motor and cables from sustained overloads — typically an overload relay set to the motor FLC) and short-circuit protection (to protect against fault currents — typically fuses or an MCCB rated to handle the high starting current without tripping). The overload device must allow the starting current to flow for the duration of the start without tripping, while still protecting against genuine overloads during running.',
   },

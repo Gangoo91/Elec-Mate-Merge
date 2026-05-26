@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'fire-triangle',
     question: 'What three elements make up the fire triangle?',
     options: [
-      'Fuel, water and oxygen',
       'Heat, fuel and oxygen',
+      'Fuel, water and oxygen',
       'Electricity, fuel and oxygen',
       'Heat, fuel and nitrogen',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The fire triangle consists of heat, fuel and oxygen. All three must be present for a fire to start and continue burning. Removing any one element will extinguish the fire — this is the principle behind all firefighting methods.',
   },
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'fire-alarm-category-l',
     question: 'What does an L-category fire alarm system protect?',
     options: [
-      'Property only',
+      'Personal Protective Equipment.',
       'Life safety — protection of occupants',
-      'Livestock in agricultural buildings',
-      'Low-risk areas only',
+      'Respirable crystalline silica (RCS) dust',
+      'Supervisory Control And Data Acquisition',
     ],
     correctIndex: 1,
     explanation:
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: 'electrical-fire-cause',
     question: 'Which of the following is the most common electrical cause of fire?',
     options: [
-      'Using LED lighting',
       'Overloaded circuits and loose connections',
-      'Having too many sockets in a room',
-      'Using surge protectors',
+      'Better air circulation for heat dissipation',
+      'PVC twin-and-earth cable installed in 2018.',
+      'To minimise harm and enable rapid, effective response',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Overloaded circuits and loose connections are the most common electrical causes of fire. Overloading causes conductors to overheat beyond their rated capacity, while loose connections create high-resistance joints that generate localised heat — both can ignite surrounding combustible materials.',
   },
@@ -70,12 +70,12 @@ const quizQuestions = [
     id: 1,
     question: 'The fire triangle consists of which three elements?',
     options: [
-      'Heat, fuel and oxygen',
       'Electricity, fuel and water',
+      'Heat, fuel and oxygen',
       'Heat, fuel and carbon dioxide',
       'Oxygen, fuel and nitrogen',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'The fire triangle requires heat, fuel and oxygen. All three must be present simultaneously for combustion to occur. Remove any one element and the fire will be extinguished.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: 'A Class B fire involves which type of material?',
     options: [
+      'Flammable gases such as propane and methane',
       'Solid combustible materials such as wood and paper',
       'Flammable liquids such as petrol and solvents',
-      'Flammable gases such as propane and methane',
       'Cooking oils and fats',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Class B fires involve flammable liquids such as petrol, diesel, solvents and paints. They require extinguishing agents that can smother the liquid surface — foam, CO2 or dry powder are appropriate.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 3,
     question: 'What colour band identifies a CO2 fire extinguisher?',
     options: [
-      'Red band on a red body',
       'Cream band on a red body',
-      'Black band on a red body',
+      'Red band on a red body',
       'Blue band on a red body',
+      'Black band on a red body',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'CO2 extinguishers have a black band on a red body, in accordance with BS EN 3. The all-red body is standard for all extinguisher types; the coloured band identifies the extinguishing agent.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'Before tackling an electrical fire, what should you do first if it is safe to do so?',
     options: [
-      'Open windows to ventilate the area',
       'Isolate the electrical supply',
+      'Open windows to ventilate the area',
       'Apply water to cool the equipment',
       'Cover the fire with a fire blanket',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The first action for an electrical fire is to isolate the electrical supply if it is safe to do so. This removes the ignition source, makes the area safer for firefighting, and reduces the risk of electric shock to anyone tackling the fire.',
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 5,
     question: 'An aspirating smoke detection system works by:',
     options: [
-      'Detecting visible flames using infrared sensors',
       'Measuring room temperature with thermocouples',
       'Continuously drawing air samples through a pipe network to a central detector',
       'Using water sprinklers that activate on smoke',
+      'Detecting visible flames using infrared sensors',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Aspirating smoke detection (ASD) systems, such as VESDA, continuously draw air samples through a pipe network to a highly sensitive central detector. They provide very early warning of smoke and are used in critical environments such as server rooms, switchrooms and data centres.',
   },
@@ -136,20 +136,25 @@ const quizQuestions = [
     id: 6,
     question: 'Under BS 5839, a P1 fire alarm category provides:',
     options: [
-      'Detection throughout the entire building for life safety',
+      'Continuously drawing air samples through a pipe network to a central detector',
+      'Fire detection and fire alarm systems for buildings',
       'Automatic detection throughout the building for property protection',
-      'Detection in defined areas only for property protection',
-      'Manual call point coverage only',
+      'Ensure fire stopping is applied to maintain the fire resistance of the wall',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A P1 system provides automatic fire detection throughout all areas of the building for the purpose of property protection. This is distinct from L-categories which focus on life safety. P1 and P2 (selected areas) categories ensure early detection to minimise property damage.',
   },
   {
     id: 7,
     question: 'Fire doors are required to provide a minimum fire resistance of:',
-    options: ['10 minutes (FD10)', '20 minutes (FD20)', '30 minutes (FD30)', '60 minutes (FD60)'],
-    correctAnswer: 2,
+    options: [
+      '10 minutes (FD10)',
+      '20 minutes (FD20)',
+      '60 minutes (FD60)',
+      '30 minutes (FD30)',
+    ],
+    correctAnswer: 3,
     explanation:
       'The minimum fire resistance for a fire door is typically 30 minutes (FD30), although FD60 doors are required in certain locations such as staircase enclosures in buildings over 18 metres. Fire doors must be properly maintained with intumescent strips and self-closing devices intact.',
   },
@@ -157,12 +162,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which regulation places a duty on employers to carry out fire risk assessments?',
     options: [
-      'The Health and Safety at Work etc. Act 1974',
       'The Regulatory Reform (Fire Safety) Order 2005',
       'The Electricity at Work Regulations 1989',
+      'The Health and Safety at Work etc. Act 1974',
       'The Building Regulations 2010 Part B',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Regulatory Reform (Fire Safety) Order 2005 (RRFSO) requires the 'responsible person' (usually the employer or building owner) to carry out a fire risk assessment and implement appropriate fire safety measures. It applies to virtually all non-domestic premises in England and Wales.",
   },
@@ -170,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: "A fire marshal's responsibilities include:",
     options: [
-      'Designing the fire alarm system for the building',
+      'Continuously drawing air samples through a pipe network to a central detector',
       'Sweeping their designated area and guiding occupants to the assembly point during an evacuation',
-      'Carrying out annual fire alarm maintenance',
-      'Issuing fire safety certificates to contractors',
+      'Automatic detection throughout the building for property protection',
+      'Ensure fire stopping is applied to maintain the fire resistance of the wall',
     ],
     correctAnswer: 1,
     explanation:
@@ -183,12 +188,12 @@ const quizQuestions = [
     id: 10,
     question: 'Arcing at a loose terminal connection can cause a fire because:',
     options: [
-      'The arc produces ultraviolet light which ignites plastics',
+      'Sweeping their designated area and guiding occupants to the assembly point during an evacuation',
+      'Continuously drawing air samples through a pipe network to a central detector',
       'The high-resistance joint generates localised heat that can ignite surrounding combustible materials',
-      'Arcing reduces the circuit voltage below safe levels',
-      'The arc causes the fuse to operate too slowly',
+      'Ensure fire stopping is applied to maintain the fire resistance of the wall',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A loose connection creates a high-resistance joint. Current flowing through this high resistance generates significant localised heat (P = I²R). Over time, this heat can carbonise insulation, melt plastic enclosures, and ignite surrounding combustible materials. This is one of the most common electrical causes of fire.',
   },
@@ -196,12 +201,12 @@ const quizQuestions = [
     id: 11,
     question: 'BS 5839-1 covers the design, installation and maintenance of:',
     options: [
-      'Emergency lighting systems',
-      'Portable fire extinguishers',
+      'Occupancy sensing with automatic shutoff',
+      'It optimises solar irradiance capture',
+      'The employer (with co-operation duties on the employee under s.7)',
       'Fire detection and fire alarm systems for buildings',
-      'Sprinkler systems',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'BS 5839-1 is the code of practice for the design, installation, commissioning and maintenance of fire detection and fire alarm systems in non-domestic buildings. It defines system categories (L and P), detector types, spacing requirements, and maintenance schedules.',
   },
@@ -209,12 +214,12 @@ const quizQuestions = [
     id: 12,
     question: 'When installing cables through a fire compartment wall, you must:',
     options: [
-      'Use plastic trunking to protect the cables',
       'Ensure fire stopping is applied to maintain the fire resistance of the wall',
-      'Run the cables through the wall at the highest point',
-      'Use steel conduit through the wall only',
+      'Sweeping their designated area and guiding occupants to the assembly point during an evacuation',
+      'Continuously drawing air samples through a pipe network to a central detector',
+      'Automatic detection throughout the building for property protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'When cables penetrate a fire compartment wall or floor, the openings must be sealed with approved fire stopping materials to maintain the fire resistance rating of the barrier. Failure to firestop penetrations is a major cause of fire spread in buildings and a common deficiency found during fire risk assessments.',
   },

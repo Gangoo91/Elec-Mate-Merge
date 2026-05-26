@@ -55,7 +55,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which fixing is commonly used for securing Twin and Earth cable to a wall?',
-    options: ['Round cable clip', 'Flat twin clip', 'Metal cleat', 'Cable tie'],
+    options: [
+      'Round cable clip',
+      'Flat twin clip',
+      'Metal cleat',
+      'Cable tie',
+    ],
     correctAnswer: 1,
     explanation:
       'Flat twin clips are specifically designed to secure the flat profile of Twin and Earth cable against walls and surfaces.',
@@ -63,7 +68,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which fixing is best for securing large SWA cables?',
-    options: ['Plastic clip', 'Nylon tie', 'Cable cleat or saddle', 'Adhesive pad'],
+    options: [
+      'Adhesive pad',
+      'Plastic clip',
+      'Cable cleat or saddle',
+      'Nylon tie',
+    ],
     correctAnswer: 2,
     explanation:
       'Cable cleats or saddles provide the mechanical strength and support needed for heavy steel wire armoured cables.',
@@ -81,28 +91,38 @@ const quizQuestions = [
     id: 4,
     question: 'What is the main reason for using non-combustible fixings in escape routes?',
     options: [
-      'They are cheaper',
       'To prevent cables falling and obstructing escape routes during a fire',
-      'They look more professional',
-      'They are easier to install',
+      'It may be unclear, inconsistent, and less durable',
+      'Safety rating appropriate for the voltage and environment',
+      'Non-Violent Communication (NVC), the STATE model, and the assertiveness formula',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Non-combustible fixings prevent cables from falling and blocking escape routes when plastic fixings melt in a fire.',
   },
   {
     id: 5,
     question: 'Name one type of cable tie that can be used in high-temperature environments.',
-    options: ['Nylon tie', 'Plastic tie', 'Stainless steel tie', 'Paper tie'],
-    correctAnswer: 2,
+    options: [
+      'Plastic tie',
+      'Stainless steel tie',
+      'Paper tie',
+      'Nylon tie',
+    ],
+    correctAnswer: 1,
     explanation:
       'Stainless steel ties maintain their strength and integrity in high-temperature environments where plastic ties would fail.',
   },
   {
     id: 6,
     question: 'Which material is best for fixings in corrosive or damp environments?',
-    options: ['Mild steel', 'Stainless steel', 'PVC', 'Aluminium'],
-    correctAnswer: 1,
+    options: [
+      'Mild steel',
+      'PVC',
+      'Stainless steel',
+      'Aluminium',
+    ],
+    correctAnswer: 2,
     explanation:
       'Stainless steel provides excellent corrosion resistance making it ideal for damp or chemically aggressive environments.',
   },
@@ -111,11 +131,11 @@ const quizQuestions = [
     question: 'Why should cable ties not be over-tightened?',
     options: [
       "They're expensive",
-      'They can damage cable insulation',
-      'They may cause cables to overheat',
       'They make the cable too flexible',
+      'They may cause cables to overheat',
+      'They can damage cable insulation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Over-tightening cable ties can cut into or damage cable insulation, potentially causing electrical faults or safety hazards.',
   },
@@ -123,12 +143,12 @@ const quizQuestions = [
     id: 8,
     question: 'Give one example of a fixing suitable for conduit systems.',
     options: [
-      'Flat twin clip',
       'Saddles, brackets, or conduit clips',
-      'Cable ties only',
-      'Adhesive strips',
+      'Within 15 days of the accident',
+      'Approximately half a million or more',
+      'Iz = It / correction factors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Saddles, brackets, and purpose-made conduit clips provide proper mechanical support for conduit systems.',
   },

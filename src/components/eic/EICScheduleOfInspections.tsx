@@ -1,8 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { bs7671EICInspectionItems, EICInspectionItem } from '@/data/bs7671EICChecklistData';
 import EICInspectionChecklistCard from './EICInspectionChecklistCard';
 import EICInspectionStatsSummary from './EICInspectionStatsSummary';
 import { useHaptic } from '@/hooks/useHaptic';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 interface EICScheduleOfInspectionsProps {
   formData: any;
@@ -24,6 +34,7 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
   onNavigateToObservations,
 }) => {
   const haptic = useHaptic();
+  const [showMarkAllConfirm, setShowMarkAllConfirm] = useState(false);
 
   const getInspectionItems = (): EICInspectionItem[] => {
     if (
@@ -54,6 +65,11 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
   };
 
   const handleMarkAllOk = () => {
+    // Open confirm — bulk action with no undo is too easy to fire by accident.
+    setShowMarkAllConfirm(true);
+  };
+
+  const confirmMarkAllOk = () => {
     haptic.success();
     onUpdate('inspectionItems', (prevItems: EICInspectionItem[]) => {
       const items =
@@ -64,6 +80,7 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
         item.outcome === '' ? { ...item, outcome: 'satisfactory' } : item
       );
     });
+    setShowMarkAllConfirm(false);
   };
 
   useEffect(() => {
@@ -92,6 +109,25 @@ const EICScheduleOfInspections: React.FC<EICScheduleOfInspectionsProps> = ({
         onAutoCreateObservation={onAutoCreateObservation}
         onNavigateToObservations={onNavigateToObservations}
       />
+
+      <AlertDialog open={showMarkAllConfirm} onOpenChange={setShowMarkAllConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Mark all unfilled items as Satisfactory?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will set every inspection item you haven't filled to Satisfactory.
+              Items you've already marked Sat / Unsat / N/A won't change. You can
+              still edit individual items after.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmMarkAllOk}>
+              Yes, mark all OK
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

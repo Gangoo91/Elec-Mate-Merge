@@ -34,16 +34,26 @@ const checks = [
   {
     id: 'flux-units',
     question: 'What’s the SI unit of magnetic flux Φ?',
-    options: ['Tesla (T)', 'Weber (Wb)', 'Ampere-turn (At)', 'Henry (H)'],
-    correctIndex: 1,
+    options: [
+      'Weber (Wb)',
+      'Tesla (T)',
+      'Henry (H)',
+      'Ampere-turn (At)',
+    ],
+    correctIndex: 0,
     explanation:
       'Flux is measured in webers (Wb). Flux DENSITY is measured in tesla (T). Don’t mix them up — flux is the total amount of magnetism through an area, flux density is how concentrated it is.',
   },
   {
     id: 'flux-density-calc',
     question: 'A field of 0.5 T passes through an area of 0.02 m². What is the total flux?',
-    options: ['0.01 Wb', '0.025 Wb', '25 Wb', '10 Wb'],
-    correctIndex: 0,
+    options: [
+      '25 Wb',
+      '10 Wb',
+      '0.025 Wb',
+      '0.01 Wb',
+    ],
+    correctIndex: 3,
     explanation:
       'Φ = B × A = 0.5 × 0.02 = 0.01 Wb. That’s 10 milliwebers — about the order of magnitude inside a small transformer core at full load.',
   },
@@ -52,11 +62,11 @@ const checks = [
     question: 'You double the area of a coil but keep the field the same. The flux through it:',
     options: [
       'Stays the same',
-      'Doubles',
       'Halves',
+      'Doubles',
       'Quadruples',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Flux is field × area. Double the area → double the flux. That’s exactly why bigger transformers have bigger core cross-sections — more flux per turn means more EMF for the same number of turns.',
   },
@@ -66,7 +76,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What does the symbol Φ (capital phi) represent?',
-    options: ['Flux density', 'Magnetic flux', 'Force', 'Frequency'],
+    options: [
+      'Flux density',
+      'Magnetic flux',
+      'Force',
+      'Frequency',
+    ],
     correctAnswer: 1,
     explanation:
       'Φ is magnetic flux — the total "amount" of magnetism passing through a surface, measured in webers (Wb).',
@@ -74,23 +89,38 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What does the symbol B represent?',
-    options: ['Magnetic flux', 'Magnetic flux density', 'Magnetic force', 'Magnetic charge'],
-    correctAnswer: 1,
+    options: [
+      'Magnetic force',
+      'Magnetic flux',
+      'Magnetic flux density',
+      'Magnetic charge',
+    ],
+    correctAnswer: 2,
     explanation:
       'B is flux density — the strength of the field at a particular point, measured in tesla (T) or webers per square metre (Wb/m²).',
   },
   {
     id: 3,
     question: 'One tesla is equal to:',
-    options: ['1 Wb', '1 Wb/m²', '1 m²/Wb', '1 V/Wb'],
-    correctAnswer: 1,
+    options: [
+      '1 m²/Wb',
+      '1 Wb',
+      '1 V/Wb',
+      '1 Wb/m²',
+    ],
+    correctAnswer: 3,
     explanation:
       '1 T = 1 Wb/m². The tesla is just the weber spread out over a square metre. That’s why bigger area for the same flux means lower density — and lower density means weaker pull.',
   },
   {
     id: 4,
     question: 'A flux of 0.02 Wb passes through an area of 0.04 m². What is B?',
-    options: ['0.5 T', '2 T', '0.0008 T', '0.08 T'],
+    options: [
+      '0.5 T',
+      '2 T',
+      '0.0008 T',
+      '0.08 T',
+    ],
     correctAnswer: 0,
     explanation:
       'B = Φ / A = 0.02 / 0.04 = 0.5 T. A typical small permanent magnet sits in this range; transformer iron operates around 1.0 to 1.7 T at peak.',
@@ -98,8 +128,13 @@ const quizQuestions = [
   {
     id: 5,
     question: 'A coil sits in a 0.8 T field. The cross-section of the coil is 50 cm². What is the flux through it?',
-    options: ['0.004 Wb', '4 Wb', '40 Wb', '0.0016 Wb'],
-    correctAnswer: 0,
+    options: [
+      '4 Wb',
+      '0.004 Wb',
+      '0.0016 Wb',
+      '40 Wb',
+    ],
+    correctAnswer: 1,
     explanation:
       'Convert area to m²: 50 cm² = 0.005 m². Φ = B × A = 0.8 × 0.005 = 0.004 Wb = 4 mWb. Watch the unit conversion — that’s where most apprentices lose marks.',
   },
@@ -107,20 +142,25 @@ const quizQuestions = [
     id: 6,
     question: 'Why do transformer cores use a high-permeability material like silicon steel?',
     options: [
-      'It’s cheaper than air',
+      'Recorded values on test schedule/certificate',
+      'Short safety discussion on specific topics relevant to current work',
       'It carries far more flux for the same magnetising current',
-      'It looks better',
-      'It conducts electricity better',
+      'A person with relevant knowledge, skills, and experience',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'High-permeability materials concentrate flux. The same magnetising current produces a much higher B in silicon steel than in air — which means a smaller, lighter, more efficient transformer.',
   },
   {
     id: 7,
     question: 'Roughly what flux density does the Earth’s magnetic field reach at the surface?',
-    options: ['About 50 µT', 'About 50 mT', 'About 0.5 T', 'About 5 T'],
-    correctAnswer: 0,
+    options: [
+      'About 5 T',
+      'About 50 mT',
+      'About 0.5 T',
+      'About 50 µT',
+    ],
+    correctAnswer: 3,
     explanation:
       'About 50 microtesla. Compare that to a fridge magnet (~5 mT) and a transformer core (~1.5 T) — the Earth’s field is a hundred times weaker than a fridge magnet, but enough to swing a compass.',
   },
@@ -128,12 +168,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why does this matter for an electrician?',
     options: [
-      'It doesn’t — it’s only relevant to designers',
       'Transformer ratings, motor torque and RCD sensitivity all come from how much flux is produced and how dense it is',
-      'It only matters for solar PV',
-      'Only matters for the maths exam',
+      'With KSBs listed in rows and evidence items in columns (or vice versa), with clear markings showing which evidence demonstrates which KSBs',
+      'Inhale sharply while covering the filters to check the mask draws inward against the face',
+      'A document setting out how health and safety will be managed during construction, prepared by the principal contractor (or sole contractor)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Every nameplate kVA rating, every motor torque figure, every RCD trip threshold traces back to controlled flux and density. Designers do the maths — but you need the vocabulary to read what they specified.',
   },

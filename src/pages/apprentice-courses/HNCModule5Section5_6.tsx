@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'om-manual-purpose',
     question: 'What is the primary purpose of an O&M manual?',
     options: [
-      'To satisfy building regulations only',
+      'Equipment may remain live when switched off, creating shock risks',
       'To enable safe and efficient operation throughout the building lifecycle',
-      'To provide marketing material for the building',
-      'To record construction defects',
+      'Data sheets give detailed technical specifications for a single product type',
+      'A self-reinforcing cycle where heat increases current, causing more heat, leading to failure',
     ],
     correctIndex: 1,
     explanation:
@@ -43,8 +43,13 @@ const quickCheckQuestions = [
   {
     id: 'bsria-bg26',
     question: 'Which BSRIA guide provides the industry standard for O&M manual structure?',
-    options: ['BSRIA BG 6', 'BSRIA BG 26', 'BSRIA BG 44', 'BSRIA BG 8'],
-    correctIndex: 1,
+    options: [
+      'BSRIA BG 44',
+      'BSRIA BG 8',
+      'BSRIA BG 26',
+      'BSRIA BG 6',
+    ],
+    correctIndex: 2,
     explanation:
       "BSRIA BG 26 'Operating and Maintenance Manuals for Building Services Installations' is the industry standard guide for O&M manual content, structure, and compilation.",
   },
@@ -52,10 +57,10 @@ const quickCheckQuestions = [
     id: 'as-built-timing',
     question: 'When should as-built drawings be prepared?',
     options: [
-      'Before construction begins',
+      'The neutral conductor was not tightened properly',
       'Progressively throughout construction as changes occur',
-      'Only after practical completion',
-      'At the end of the defects liability period',
+      'To allow design flexibility while maintaining total compliance',
+      'Public commitment to develop science-based targets within 24 months',
     ],
     correctIndex: 1,
     explanation:
@@ -67,10 +72,10 @@ const quickCheckQuestions = [
     options: [
       'Before practical completion',
       'During the first 12 months after handover',
-      'For 3 years post-completion',
       'Only during commissioning',
+      'For 3 years post-completion',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Soft Landings typically includes a 3-year extended aftercare period post-completion, with intensive support in Year 1, reducing in Years 2 and 3, to ensure the building performs as intended.',
   },
@@ -96,12 +101,12 @@ const quizQuestions = [
     question:
       'What minimum information must as-built drawings show for electrical distribution systems?',
     options: [
-      'Only the main switchboard location',
+      'To provide a safe working environment, so far as is reasonably practicable',
+      'Only change an answer if you have a clear reason to believe a different option is correct',
       'Circuit routes, cable sizes, protection settings, and final equipment positions',
-      'Just the metre position',
-      'Only emergency lighting circuits',
+      'Because actuator wiring often involves multiple conductors and control types',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'As-built drawings must accurately show circuit routes, cable sizes and types, protective device ratings and settings, and final installed positions of all equipment including any site variations.',
   },
@@ -109,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'How long should training records be retained as part of handover documentation?',
     options: [
-      '6 months',
-      '12 months',
+      'A unit of energy equal to using 1000 watts for one hour',
+      'Methods of use, risks involved, and precautions to take',
+      'Ice, creams, or adhesive dressings',
       'For the life of the building or until superseded',
-      'Only during the defects liability period',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Training records should be retained for the building's operational life, demonstrating that operators received adequate instruction. This supports liability protection and aids future retraining needs.",
   },
@@ -122,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the primary function of the building log book?',
     options: [
-      'To replace the O&M manual',
       'To record energy consumption and maintenance activities throughout building operation',
-      'To list construction defects only',
-      'To store design calculations',
+      'Design parameters, installed capacities, control strategies and target energy consumption',
+      'Independent body advising UK government on emissions targets and progress',
+      'It automatically prioritised critical systems like operating theatres and ICU',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The building log book is an ongoing operational document recording energy consumption, maintenance activities, system modifications, and performance data throughout the building's life.",
   },
@@ -138,8 +143,8 @@ const quizQuestions = [
     options: [
       'No further involvement after practical completion',
       'Regular seasonal visits and occupant feedback sessions',
-      'Full-time site presence for 3 years',
       'Only attending for emergency callouts',
+      'Full-time site presence for 3 years',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which document provides the framework for post-occupancy evaluation (POE)?',
     options: [
-      'BSRIA BG 26',
+      'The circuit remains live when switched off',
+      'All construction projects',
       'BSRIA BG 54 Soft Landings Framework',
-      'Building Regulations Part L',
-      'CDM Regulations',
+      'It doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t cause supply interruption',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "BSRIA BG 54 'Soft Landings Framework' provides the structured approach to post-occupancy evaluation, ensuring buildings perform as designed through extended aftercare and feedback mechanisms.",
   },
@@ -162,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'What format should O&M manuals be provided in for modern building handovers?',
     options: [
-      'Paper copies only',
+      'They must be removed before the tower is moved',
+      'Assess reactive power requirements and select appropriate compensation equipment',
+      'For minor additions not involving a new circuit',
       'Both hard copy and searchable electronic format (typically PDF)',
-      'DVD video format',
-      'Verbal instructions only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Modern practice requires both hard copy reference sets and searchable electronic copies. Electronic formats enable easy searching, updating, and backup, whilst hard copies provide reliable site access.',
   },
@@ -175,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'When should end-user training be scheduled for optimal effectiveness?',
     options: [
-      '6 months before practical completion',
-      'During construction phase',
       'Close to handover when systems are commissioned and operational',
-      'Only after 12 months of operation',
+      'EMF generated by the rotor cutting field flux as it spins',
+      'Heart muscle fibres contract randomly, stopping effective pumping',
+      'The casualty\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s skin is hot and dry, and their body temperature is above 40°C',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Training should occur close to handover when commissioned systems can be demonstrated in operation. Training too early means staff forget procedures; too late risks unsafe operation.',
   },
@@ -189,10 +194,10 @@ const quizQuestions = [
     question:
       'What must the building log book include regarding the DEC (Display Energy Certificate)?',
     options: [
-      'Nothing - DECs are separate from the log book',
+      'To ensure an adequate seal between the facepiece and the wearer\\\\\\\\\\\\\\\'s face',
       'Space to record annual DEC ratings and advisory report actions',
-      'Only the first DEC issued',
-      'DEC calculations only',
+      'Nausea, headaches, and increased anxiety in the first few weeks',
+      'Sum of all equipment ratings connected to the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -202,12 +207,12 @@ const quizQuestions = [
     id: 10,
     question: 'Which items should be included in the O&M manual asset register?',
     options: [
-      'Only major plant items over 10kW',
+      'Stopped, reported the risks, and waited for temporary lighting and rubber matting',
+      'To load control logic, mappings, and setpoints into controllers',
       'All maintainable assets with manufacturer, model, serial number, and location',
-      'Just electrical switchgear',
-      'Only items with warranty coverage',
+      'Alternative protection provided and risk assessment completed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The asset register should comprehensively list all maintainable items including manufacturer details, model numbers, serial numbers, locations, commissioning dates, and warranty information.',
   },

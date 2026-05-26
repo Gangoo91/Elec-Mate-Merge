@@ -40,12 +40,12 @@ const checks = [
     question:
       'A drawing shows socket centres at 450 mm. The screed is not in yet. What height do you mark from?',
     options: [
-      'From the existing slab (the floor you can stand on today).',
+      'Customer premises equipment converting optical to electrical signals in PON',
+      'Check the toaster for a series arc fault (loose terminal, broken element strand) using IR test on the appliance lead and visual inspection',
       'From the FFL (floor finish level) — the top of the finished floor as it will be when the customer walks in.',
-      'From the ceiling, working down.',
-      'Wherever the spirit level happens to land.',
+      'Because self-employed income is more variable and they have no sick pay or redundancy protection',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Setting out always references the FFL — the height the customer will perceive once the floor is laid. Mark from the slab and you end up with sockets that look low after the screed and finish go in. Take the FFL from the architect&rsquo;s drawing or set it out with the principal contractor before you mark anything.',
   },
@@ -54,12 +54,12 @@ const checks = [
     question:
       'A 1:50 drawing shows a wall 80 mm long on paper. What is the real-world wall length?',
     options: [
-      '0.8 m',
       '4.0 m',
       '8.0 m',
       '0.16 m',
+      '0.8 m',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       '1:50 means 1 mm on paper = 50 mm in real life. 80 × 50 = 4000 mm = 4.0 m. Always use the scale bar on the drawing as a sense-check; scales get overridden when drawings are reduced for printing, and the dimensions on the paper become unreliable. The numbered dimensions on the drawing always trump scaled measurements.',
   },
@@ -69,11 +69,11 @@ const checks = [
       'You need to mark a chalk line for back-box centres on a smooth, recently plastered wall. What is the right marking medium?',
     options: [
       'Chinagraph pencil — it bonds to the plaster.',
-      'Sharpie marker — it is permanent and visible.',
       'Pencil (HB or 2B), or low-tack masking tape with a Sharpie line on it.',
+      'Sharpie marker — it is permanent and visible.',
       'Centre punch directly into the plaster.',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'On smooth plaster you use pencil (light, easy to remove) or masking tape with a marker (lifts off cleanly without ghosting). Sharpie direct on plaster bleeds through paint and the painter will hate you. Centre punch into plaster cracks the surface. Different substrate, different medium — that is the whole skill.',
   },
@@ -84,8 +84,13 @@ const quizQuestions = [
     id: 1,
     question:
       'The standard mounting height for a domestic light switch (centre of switch) is approximately:',
-    options: ['450 mm', '900 mm', '1200 mm', '1500 mm'],
-    correctAnswer: 2,
+    options: [
+      '450 mm',
+      '1200 mm',
+      '900 mm',
+      '1500 mm',
+    ],
+    correctAnswer: 1,
     explanation:
       'Approximately 1200 mm to centre is the long-standing UK domestic standard for light switches, set out from FFL. Approved Document M (accessible buildings) often specifies 900-1200 mm to suit reach from a wheelchair, with 1200 mm being the common compromise. New build always references FFL, never the slab.',
   },
@@ -94,12 +99,12 @@ const quizQuestions = [
     question:
       'Approved Document M (accessibility) typically requires socket centres in new dwellings to be set at:',
     options: [
-      '150 mm above FFL.',
+      'High circuit impedance that may affect device operation',
+      'Set artificial earlier deadlines to increase efficiency',
       'Between 450 mm and 1200 mm above FFL — the "reach range".',
-      '300 mm above FFL.',
-      'Above worktop height only.',
+      'To prevent electric shock and equipment damage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Approved Doc M (volume 1, dwellings) specifies the accessible reach range of 450-1200 mm from FFL for sockets, switches and other controls. Common practice is 450 mm centres for sockets in habitable rooms (replacing the older 150 mm centres). Above worktops you mount roughly 150 mm above the worktop surface, which usually lands above the 1200 mm upper limit and is acceptable as a worktop-fitted accessory.',
   },
@@ -108,12 +113,12 @@ const quizQuestions = [
     question:
       'A datum line is best described as:',
     options: [
-      'Any horizontal line on the wall.',
+      'Equipment with rated current up to 16 A per phase (Class A, B, C, D equipment)',
+      'To physically prevent the switching device from being operated and ensure it cannot be inadvertently re-energised',
+      'That the route is clear of obstructions, well lit, and fire doors are operational',
       'A reference line on the wall at a known height (typically 1 m above FFL) from which other heights are measured.',
-      'The chalk line you snap for a row of sockets.',
-      'The bottom of the back-box.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A datum is your reference line — set at a known height above FFL (1 m is a common choice because it is easy to measure up or down from). All other heights on the wall are then dimensioned from the datum. Setting one good datum line per room lets you mark every accessory accurately without re-measuring from the floor each time.',
   },
@@ -122,12 +127,12 @@ const quizQuestions = [
     question:
       'For a long horizontal run (>5 m) of accessory centres at the same height, the most accurate setting-out tool is:',
     options: [
-      'A spirit level — repeatedly leap-frogged.',
-      'A chalk line snapped between two pre-marked end points.',
       'A laser level (rotary or cross-line) projected onto the wall.',
+      'A chalk line snapped between two pre-marked end points.',
+      'A spirit level — repeatedly leap-frogged.',
       'A tape measure off the floor at each socket position.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Over more than ~5 m the cumulative error in leap-frogging a spirit level becomes significant. A laser level projects a single horizontal reference across the whole wall in one operation, so every socket is set to the same plane. Chalk line is acceptable as a backup where two end points have already been precisely set out.',
   },
@@ -136,10 +141,10 @@ const quizQuestions = [
     question:
       'Why mark with chinagraph (wax pencil) on concrete or block, rather than a regular HB pencil?',
     options: [
-      'Chinagraph is more visible.',
+      'A purpose-formulated cable-pulling lubricant — wax-free for plastic conduit (some lubes attack PVC), and PVC-compatible. Polywater is a common brand.',
       'HB pencil leaves a graphite line that washes away with water-based marking and barely shows on rough textured surfaces; chinagraph is wax-bound and stays visible on dust, oil and rough mineral surfaces.',
-      'Chinagraph is harder.',
-      'It is the only pencil approved by BS 7671.',
+      'Compassionate empathy combines understanding (cognitive), feeling (emotional), AND being moved to take appropriate action to help — making it the most complete and practically useful form because it translates empathic awareness into constructive behaviour',
+      'Below-minimum or above-maximum values indicate a fault that prevents the protective measure from operating as designed — risking shock, fire, or equipment damage',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,10 +155,10 @@ const quizQuestions = [
     question:
       'Tolerances on accessory positioning. The drawing says 450 mm centres. Acceptable tolerance for first fix:',
     options: [
-      '±100 mm — broadly in the right area.',
-      '±5 mm — exact to the millimetre.',
+      'Continuously throughout the task, and whenever conditions change or something does not seem right',
+      'Heat mapping and aggregated counting without personal identification',
       '±10 mm typically; tighter for visible runs of accessories where misalignment shows.',
-      'No tolerance — the dimension is the dimension.',
+      'The downstream device must limit I²t to less than the upstream device\\\\\\\\\\\\\\\'s pre-arcing I²t',
     ],
     correctAnswer: 2,
     explanation:
@@ -163,8 +168,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A scale rule is graduated for both 1:50 and 1:100. You read a wall on the 1:100 scale and get 25 mm. What is the real-world dimension?',
-    options: ['0.25 m', '1.25 m', '2.5 m', '25 m'],
-    correctAnswer: 2,
+    options: [
+      '0.25 m',
+      '1.25 m',
+      '25 m',
+      '2.5 m',
+    ],
+    correctAnswer: 3,
     explanation:
       '1:100 means 1 mm = 100 mm. 25 × 100 = 2500 mm = 2.5 m. Read the scale bar on the drawing first to confirm what scale is in use — printed drawings often get reduced from A1 to A3 and the original scale becomes wrong; the printed dimensions always take precedence over scaled values for that reason.',
   },
@@ -173,12 +183,12 @@ const quizQuestions = [
     question:
       'You need to mark out a vertical line for a switch drop on a stud wall. The wall has a slight bow in it. Best tool:',
     options: [
-      'Spirit level held against the wall.',
       'Plumb bob (gravity-true vertical) or a self-levelling laser plumb.',
-      'Tape measure from the ceiling.',
-      'Chalk line eyeballed from the floor.',
+      'Understanding normal operation and basic troubleshooting',
+      'Verifying correct pull-in and drop-out operation',
+      'Measure end-to-end resistance of each conductor (L, N, E)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A plumb bob is gravity-true and ignores any bow or twist in the wall — it gives you the true vertical regardless of what the surface is doing. Self-levelling laser plumbs do the same job faster on a long drop. A spirit level held against a bowed surface measures the surface, not gravity. The switch drop must be true vertical or the cable will not sit in the chase straight.',
   },

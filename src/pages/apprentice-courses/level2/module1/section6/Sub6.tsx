@@ -49,12 +49,12 @@ const checks = [
     question:
       'You smell mains gas (rotten eggs / sulphur smell) on a job. What is the FIRST thing you must NOT do?',
     options: [
-      'Open windows for ventilation',
+      'Loop check sheet signed by the tester and witnessed, recording all test results, deviations, and corrective actions',
+      'The back-EMF nearly equals the supply voltage so net driving voltage is small',
+      'To provide starting torque (by induction motor action) and to damp oscillations during load changes',
       'Operate any electrical switch — don’t turn lights on or off, don’t use phones in the area',
-      'Turn off the gas at the meter if accessible',
-      'Evacuate everyone from the building',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A gas leak + a switch operation = potential ignition source. Don’t flick light switches, don’t plug or unplug anything, don’t use a phone IN the affected area (the spark from any contact can ignite gas at LEL concentrations). Evacuate, then call National Gas Emergency on 0800 111 999 from a safe distance.',
   },
@@ -63,12 +63,12 @@ const checks = [
     question:
       'You hear a section of suspended ceiling come down in the next room and a colleague’s shouted. What is the right immediate action?',
     options: [
-      'Run in to help them out',
+      'Describes performance, materials, finishes, standards and quality requirements in words; the drawing shows geometry and arrangement',
+      'Sourcing and measuring 4-20 mA signals for testing transmitters and control loop components',
+      'MHSWR 1999 Reg 19 — additional risk assessment for young persons, considering their inexperience and immaturity',
       'Stop, raise the alarm, evacuate everyone in adjacent areas, call 999, do not enter the collapsed area',
-      'Try to lift the debris off them yourself',
-      'Wait to see if they call out again',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Untrained rescue in a structural collapse kills rescuers. Once one section comes down, others may follow. Get others out of adjacent areas, call 999 and brief them on the situation. Fire and Rescue have specialist USAR (Urban Search and Rescue) teams — let them in first. Shout to the casualty to keep them awake but don’t enter.',
   },
@@ -77,12 +77,12 @@ const checks = [
     question:
       'A colleague tells you in confidence they’re thinking of ending their life. What do you do?',
     options: [
-      'Tell them to "cheer up" and get back to work',
-      'Promise to keep it secret and hope they’ll be OK',
       'Stay with them, take it seriously, and signpost them to emergency help (Samaritans 116 123, A&E, GP, 999 if in immediate danger) — confidentiality has to bend when life is at risk',
-      'Avoid the conversation, walk away',
+      'The face of the terminal box viewed from the front, including cable entry positions, gland plate, terminal layout and external dimensions',
+      'A feeling is an emotion (frustrated, anxious, relieved); a thought is an interpretation disguised as a feeling ("I feel that you are being unfair")',
+      'Wheels can sink, stick, or lose traction in mud, dramatically increasing the pushing force required and the risk of musculoskeletal injury',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Suicide is the leading cause of death for UK male construction workers under 45. The Samaritans (116 123) is the 24/7 helpline. If someone is in immediate danger of harming themselves, call 999 — this is a medical emergency, same as a heart attack. Confidentiality matters but it has to bend when life is at risk; tell the person you can’t keep it secret and get them proper help.',
   },
@@ -96,12 +96,12 @@ const quizQuestions = [
     question:
       'Which national emergency number do you call for a suspected gas leak in the UK?',
     options: [
-      '999',
-      '111',
+      'Physical damage and correct routing',
       '0800 111 999 (National Gas Emergency Service)',
-      '105 (Power Cut Hotline)',
+      'Supply leading reactive current to offset lagging current',
+      'Only 60% of connected load operates at peak',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       '0800 111 999 — National Gas Emergency Service, free, 24/7, the same number across the whole of the UK. They dispatch the local gas distribution network engineer to make the supply safe. 999 is for life-threatening emergencies (also valid in this case). 105 is the power cut / DNO hotline.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'What is the first action when a member of the public tells you they smell gas in a property where you’re working?',
     options: [
-      'Tell them not to worry, you’ll check it later',
+      'Date, time, duration of evacuation, number of occupants, any issues identified, and actions taken',
+      'Near exits, corridor intersections, changes of direction, changes of level, and every 2m throughout',
       'Stop work, don’t operate any electrical switches, ventilate by opening windows/doors if safe, evacuate, call 0800 111 999',
-      'Light a match to "check" if it’s really gas',
-      'Carry on — they probably imagined it',
+      'Clear warning signs indicating work in progress and prohibition against re-energising',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Stop. Don’t operate switches (no spark sources). Open windows/doors if you can do it without operating switches. Get everyone out. Call the National Gas Emergency Service from outside the affected area. Don’t re-enter until the engineer says so.',
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     question:
       'Working outdoors, lightning starts. What is the safe action for an apprentice on a flat roof?',
     options: [
-      'Carry on — lightning is unlikely to strike you specifically',
+      'To remain near the machine, maintain communication with the operator, and be trained to operate the ground controls',
+      'Stop, raise an RFI / Technical Query in writing, install nothing until the designer or specifier confirms the substitution in writing',
+      'The complete sequence including preparatory work, isolation, changeover procedure, testing, commissioning, reinstatement and handover',
       'Get off the roof immediately, take shelter inside the building or in a vehicle, wait until 30 minutes after the last thunder',
-      'Lie flat on the roof to be lower',
-      'Hold onto a metal ladder for protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Roofs and elevated structures are lightning targets. Get off, get inside (vehicle with metal roof, or substantial building). The "30/30 rule": if thunder is within 30 seconds of the lightning flash, take shelter; wait 30 minutes after the last thunder before going back up. Metal ladders are the worst place to be.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'You discover a suspect package on a commercial site — unattended, unmarked, doesn’t look like building stock. What do you do?',
     options: [
-      'Move it outside in case it goes off',
-      'Open it carefully to see what’s inside',
       'HOT protocol: don’t touch, evacuate the area, raise the alarm, call 999, brief security',
-      'Carry on working and assume it’s nothing',
+      'The branch of health care concerned with preventing and managing work-related ill health, disease, and injury',
+      'Controlled breathing, lowering your voice, and maintaining open body language',
+      'Maximum demand, load type, power factor, and growth expectations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'HOT — Hidden, Obvious, Typical. Apply 4 Cs: Confirm (is it suspicious?), Clear (evacuate the area), Cordon (keep people back), Control (call 999 and brief them). DO NOT TOUCH, DO NOT MOVE, DO NOT INVESTIGATE. The police EOD team handles it. False alarms are far better than the alternative.',
   },
@@ -152,10 +152,10 @@ const quizQuestions = [
     question:
       'A worker has collapsed and is unresponsive. You suspect a heart attack — not electrical, not trauma. What is the right sequence?',
     options: [
-      'Wait to see if they wake up on their own',
+      'Use plain English, short sentences, visual aids and check understanding by asking them to summarise back',
       'DR ABC — Danger, Response, Airway, Breathing, Circulation. Call 999. Start CPR if not breathing. Send for an AED.',
-      'Move them to a quieter area first',
-      'Give them water and aspirin',
+      'The ratio of real power to apparent power, indicating how efficiently power is used',
+      'It introduces powers to ban or restrict specific single-use plastic items and create extended producer responsibility schemes',
     ],
     correctAnswer: 1,
     explanation:
@@ -166,12 +166,12 @@ const quizQuestions = [
     question:
       'What is a "lone worker" and what extra emergency arrangements should be in place for them?',
     options: [
-      'Anyone who works night shifts; no special arrangements needed',
+      'Prolonged crawling, lying, and dragging loads in extremely restricted space, with no ability to use normal lifting techniques',
+      'The Electrical Installation Certificate (EIC) with associated Schedule of Inspections and Schedule of Test Results, required by Regulation 644.1.1',
       'Anyone working without close supervision (often by themselves on a site or in a property); needs check-in procedures, dynamic risk assessment, and a way to summon help',
-      'Apprentices only; they get a buddy by default',
-      'Self-employed workers; they’re responsible for their own safety',
+      'No removal from service, calibration under actual operating conditions, includes installation effects, and reduced downtime costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A lone worker is anyone working without close or direct supervision — common for a domestic electrician. HSE INDG73 covers lone working. Arrangements should include scheduled check-ins (text the office every couple of hours / on arrival/departure), dynamic risk assessment, lone-worker app or device with panic button, and a written escalation path if check-ins are missed.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     question:
       'A colleague is showing signs of severe heat exhaustion on a hot day — confused, very pale, sweating heavily, struggling to stand. What do you do?',
     options: [
-      'Tell them to rest in the shade for 5 minutes and crack on',
+      'Incorrect belt tension — whether too loose (causing slip and heat) or too tight (causing excessive bearing load) — increases energy losses',
+      'To provide continuous, conditioned power to critical loads during mains supply disturbances or failure, with no break in supply',
+      'An advanced system where each detector continuously reports its analogue sensor value to the control panel, allowing the panel to monitor trends, set dynamic thresholds, and make intelligent alarm decisions',
       'Move them to a cool place, loosen clothing, give cool water, cool the skin with damp cloths or fan, monitor — call 999 if they lose consciousness or become confused (heat stroke)',
-      'Give them a hot drink',
-      'Make them keep working to "sweat it out"',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Heat exhaustion (the early stage) → cool, hydrate, rest. Heat stroke (the medical emergency, if they’re confused / unconscious / stop sweating / core temp 40°C+) → 999 immediately, aggressive cooling. UK has had multiple construction fatalities in recent heatwaves — take it seriously.',
   },
@@ -194,12 +194,12 @@ const quizQuestions = [
     question:
       'Mental health emergency — when must you call 999 rather than signpost a colleague to other help?',
     options: [
-      'Never — mental health is private',
-      'When the colleague says they need someone to talk to',
       'When the colleague is in immediate danger of harming themselves or others — this is a medical emergency same as any other',
-      'Only if a manager tells you to',
+      'Extended recovery periods such as holidays and annual leave that allow deeper restoration than daily or weekly recovery can achieve',
+      'Prove the voltage indicator on a known source, test the circuit, prove the indicator again on the known source',
+      'No - against public policy to insure the cost of breaking the law. PI / EL covers legal defence costs and civil claims but NOT criminal fines.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Immediate self-harm risk = 999, same as a heart attack. The Samaritans (116 123) and SHOUT text line (text "SHOUT" to 85258) are 24/7 for non-emergency support. CALM (Campaign Against Living Miserably) is construction-aligned. If someone is in immediate danger, life trumps confidentiality — call for the help they need.',
   },

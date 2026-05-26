@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'circuit-chart',
     question: 'What does BS 7671 Regulation 514.9 require at every distribution board?',
     options: [
-      'A photograph of the installation',
+      'To build the habit of noticing and naming your current emotional state, catching unhelpful patterns early, and making conscious choices about how to proceed',
       'A durable circuit chart or schedule identifying every circuit, its protective device, its intended purpose and the areas served',
-      'Only the company logo',
-      'A list of authorised persons',
+      'To describe the safe system of work, step by step, for the specific tower operation including assembly, use, inspection and dismantling',
+      'Polarity defect — would normally be caught at testing (Reg 643.6) but the inspection item "identification of conductors" should also catch it visually.',
     ],
     correctIndex: 1,
     explanation:
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'What warning label is required on any enclosure where a voltage exceeding 230 V exists between simultaneously accessible terminals?',
     options: [
-      'A blue information sign',
       "A yellow warning triangle with the text 'Danger — 400 V' (or the actual voltage) in accordance with the Health and Safety (Safety Signs and Signals) Regulations 1996",
-      'A green first-aid sign',
-      'No label is required',
+      "Ideally in least-favourable ground conditions — for example when soil is frozen or very dry — to obtain conservative results.",
+      "Year 1: Complete C&amp;G 2396 &amp; 2919 &rarr; Year 2: Gain design experience &amp; register with NICEIC &rarr; Year 3: Begin IET IEng application &rarr; Year 4: Achieve Technician then Senior Technician grade",
+      "Stop all work immediately, seal the enclosure, and do not resume until the NPU is repaired or replaced and negative pressure is re-established",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BS 7671 Regulation 514.10 requires a warning label where a voltage exceeding 230 V to earth exists between simultaneously accessible terminals or where different nominal voltages exist within the same enclosure. The label format must comply with BS EN ISO 7010 and the Health and Safety (Safety Signs and Signals) Regulations 1996 — a yellow warning triangle with black text. This warns maintenance technicians of the voltage hazard before they open the enclosure.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'How should cables be identified at each end and at accessible points along their route?',
     options: [
-      'By colour only',
       'Using durable labels or tags showing the circuit number, voltage, origin and destination — matching the cable schedule and circuit chart',
-      'Cables do not need labelling',
-      "By the installer's initials",
+      'Not less than half the cross-sectional area required for the earthing conductor of the installation, with a 6 mm² minimum and 25 mm² maximum (in copper).',
+      'The conductor material, insulation type, installation method, ambient temperature, grouping, and thermal insulation proximity',
+      'To convert the DC output from the PV array into AC at the correct voltage, frequency and phase to synchronise with the grid supply, and to provide anti-islanding protection',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Good practice (and BS 7671 Regulation 514.8) requires cables to be identified at their origin, termination and at all accessible intermediate points. Labels should include the circuit reference number, origin (distribution board reference), destination, and cable type/size. Labels must be durable and legible throughout the installation's life. Without proper cable identification, maintenance work becomes dangerous — the wrong cable could be cut, disconnected or worked on while live.",
   },
@@ -56,10 +56,10 @@ const quickCheckQuestions = [
     question:
       'What is the most important characteristic of labels used for permanent electrical identification?',
     options: [
-      'They should be handwritten for a personal touch',
+      'Every employer must ensure that adequate information, instruction, and training is given to employees who are or may be exposed to asbestos, and to their supervisors',
       'They must be durable, legible and resistant to the environmental conditions at the point of installation throughout the life of the installation',
-      'They should match the wall colour',
-      'They only need to last for one year',
+      'An industrial wireless standard similar to WirelessHART but with more flexible network architecture options and protocol tunnelling',
+      'If heavier-than-air gases accumulate at the bottom, or if the work introduces fumes (e.g. solvent jointing), or if there is a risk of side collapse creating engulfment',
     ],
     correctIndex: 1,
     explanation:
@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'BS EN 81346 provides:',
     options: [
-      'Cable current ratings',
+      'Withdraw your colleague, report to the supervisor and the customer, and make a record — a hate-speech matter may need police involvement',
       'A structured system for the designation of industrial plant, systems and equipment using reference designations and aspect-based classification',
-      'Fire alarm zone numbering',
-      'Electrical test procedures',
+      'Giving the speaker your full attention, not interrupting, then summarising back what you heard to confirm understanding',
+      'Rotor and blades, gearbox (in geared designs), generator, power converter (rectifier/inverter), transformer, switchgear, control system and grid connection equipment',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,12 +85,12 @@ const quizQuestions = [
     id: 2,
     question: "A label stating 'Caution — dual supply' is required when:",
     options: [
-      'Two different cable sizes are used',
+      'BS 7671, which requires a notice at or near the RCD instructing that the device should be tested at quarterly intervals using the integral test button',
+      'Circuit number, protective device type and rating, conductor size, circuit description and areas served',
       'An installation or enclosure can be energised from more than one source of supply (e.g., normal and standby generator)',
-      'The neutral is shared between circuits',
-      'The installation has two distribution boards',
+      'A hierarchical structure: location code, system code, and equipment code, allowing unique identification of every item in the installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 Regulation 514.15 requires a warning label at the point of connection of every source of supply when an installation can be energised from more than one source. This is critical safety information — a maintenance technician who isolates one supply but is unaware of the second supply could be fatally injured. The label must be visible and positioned at every point where it is possible to isolate or access the installation.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 3,
     question: 'The minimum information required on a distribution board circuit chart includes:',
     options: [
-      'Just the circuit numbers',
+      'Reject it, require a site-specific RAMS, brief the team only after it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s been revised, and document the rejection',
+      'That the floor has adequate load-bearing capacity for the total tower load including dynamic forces during assembly',
+      '0.4 seconds for socket outlet circuits (or portable equipment), 5 seconds for fixed equipment',
       'Circuit number, protective device type and rating, conductor size, circuit description and areas served',
-      "Only the installer's name",
-      'Only the date of installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A compliant circuit chart must include: the circuit reference number; the type and rating of each protective device (MCB, RCBO, fuse); the conductor size; a clear description of what the circuit supplies; and the area(s) served. Additional useful information includes RCD rating, maximum Zs value and cable type. The chart must be accurate, durable and updated whenever modifications are made.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 4,
     question: 'Colour coding for safety signs follows:',
     options: [
-      'No particular standard',
       'BS EN ISO 7010 / Health and Safety Regulations: red for prohibition/fire, yellow for warning, blue for mandatory, green for safe condition',
-      "The installer's preference",
-      'BS 7671 cable colour codes',
+      'Replaced immediately with a new, durable label carrying the same information, and the maintenance record updated to reflect the replacement',
+      'Machine-produced, durable, securely fixed, clearly legible and resistant to the environmental conditions at the point of installation',
+      'Circuit number, protective device type and rating, conductor size, circuit description and areas served',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Safety sign colours are standardised: red for prohibition (no entry, do not switch on) and fire equipment; yellow for warning (danger, caution, risk of electric shock); blue for mandatory instruction (must wear PPE, switch off before opening); and green for safe condition (emergency exit, first aid). These colours are defined by BS EN ISO 7010 and enforced by the Health and Safety (Safety Signs and Signals) Regulations 1996.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Engraved or printed labels for switchgear identification should be:',
     options: [
-      'Handwritten for speed',
+      'Circuit number, protective device type and rating, conductor size, circuit description and areas served',
       'Machine-produced, durable, securely fixed, clearly legible and resistant to the environmental conditions at the point of installation',
-      'Written in pencil for easy update',
-      'Optional for industrial installations',
+      'An installation or enclosure can be energised from more than one source of supply (e.g., normal and standby generator)',
+      'BS 7671, which requires a notice at or near the RCD instructing that the device should be tested at quarterly intervals using the integral test button',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,12 +138,12 @@ const quizQuestions = [
     question:
       'When a periodic inspection finds an out-of-date circuit chart, the inspector should:',
     options: [
-      'Ignore it',
+      'Earthing and bonding connections that are not part of a circuit and may not be obviously necessary (e.g., main bonding conductors, supplementary bonding), to prevent their removal by uninformed persons',
+      'BS 7671, which requires a notice at or near the RCD instructing that the device should be tested at quarterly intervals using the integral test button',
       'Record it as a defect (typically C3 improvement recommended or C2 if circuit identification is inadequate for safe isolation), and recommend the chart be updated as part of remedial works',
-      'Replace the entire distribution board',
-      'Rewrite it themselves during the inspection',
+      'BS EN ISO 7010 / Health and Safety Regulations: red for prohibition/fire, yellow for warning, blue for mandatory, green for safe condition',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An out-of-date or missing circuit chart is recorded as a defect during periodic inspection. If the lack of accurate circuit identification could affect the ability to safely isolate circuits (making it potentially dangerous), it would be classified as C2 (requiring urgent attention). If the chart exists but has minor omissions, it may be classified as C3 (improvement recommended). The duty holder is responsible for ensuring the chart is updated.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'Cable identification at intermediate points (such as where cables pass through a switch room) is important because:',
     options: [
-      'It improves the appearance',
+      'Machine-produced, durable, securely fixed, clearly legible and resistant to the environmental conditions at the point of installation',
+      'Earthing and bonding connections that are not part of a circuit and may not be obviously necessary (e.g., main bonding conductors, supplementary bonding), to prevent their removal by uninformed persons',
+      'BS 7671, which requires a notice at or near the RCD instructing that the device should be tested at quarterly intervals using the integral test button',
       'It allows maintenance technicians to identify individual cables without tracing them from their origin, reducing the risk of working on the wrong cable and enabling faster fault diagnosis',
-      'It is only required for data cables',
-      'It has no practical purpose',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Intermediate cable identification prevents the dangerous and time-consuming process of cable tracing. In a switch room or cable basement with hundreds of cables, positive identification at the point of access is essential for safe isolation, fault diagnosis and modification work. Without labels, a technician may cut or disconnect the wrong cable, causing an unplanned outage or creating a safety hazard.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 8,
     question: "The label 'Safety Electrical Connection — Do Not Remove' is required on:",
     options: [
-      'All cable glands',
       'Earthing and bonding connections that are not part of a circuit and may not be obviously necessary (e.g., main bonding conductors, supplementary bonding), to prevent their removal by uninformed persons',
-      'All socket outlets',
-      'Circuit breaker handles',
+      'Record it as a defect (typically C3 improvement recommended or C2 if circuit identification is inadequate for safe isolation), and recommend the chart be updated as part of remedial works',
+      'Match the terminal markings on the circuit diagram exactly, allowing a technician to trace any circuit from drawing to panel without ambiguity',
+      'BS 7671, which requires a notice at or near the RCD instructing that the device should be tested at quarterly intervals using the integral test button',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 Regulation 514.13 requires permanent labels at earthing and bonding connections that might not be recognised as essential safety connections. Main equipotential bonding conductors, supplementary bonding conductors and earthing arrangements can appear as unnecessary wires to uninformed persons (plumbers, builders, decorators) who may remove them. The label provides a clear warning that removal could endanger lives.',
   },
@@ -179,10 +179,10 @@ const quizQuestions = [
     question:
       'In a large industrial installation, equipment reference designations following BS EN 81346 typically use:',
     options: [
-      'Random numbers',
+      'An installation or enclosure can be energised from more than one source of supply (e.g., normal and standby generator)',
       'A hierarchical structure: location code, system code, and equipment code, allowing unique identification of every item in the installation',
-      "The manufacturer's serial number",
-      'Only the floor number',
+      'BS 7671, which requires a notice at or near the RCD instructing that the device should be tested at quarterly intervals using the integral test button',
+      'Machine-produced, durable, securely fixed, clearly legible and resistant to the environmental conditions at the point of installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -192,12 +192,12 @@ const quizQuestions = [
     id: 10,
     question: "RCD test button labels ('Test quarterly') are required by:",
     options: [
+      'BS EN ISO 7010 / Health and Safety Regulations: red for prohibition/fire, yellow for warning, blue for mandatory, green for safe condition',
+      'Replaced immediately with a new, durable label carrying the same information, and the maintenance record updated to reflect the replacement',
       'BS 7671, which requires a notice at or near the RCD instructing that the device should be tested at quarterly intervals using the integral test button',
-      'Insurance requirements only',
-      'The RCD manufacturer only',
-      'They are optional',
+      'An installation or enclosure can be energised from more than one source of supply (e.g., normal and standby generator)',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'BS 7671 Regulation 514.12 requires a durable notice fixed at or near the origin of the installation or at the RCD stating that the device should be tested at regular intervals (typically quarterly) by pressing the integral test button, and that if the device does not trip when tested, the user should seek expert advice. This is a functional safety notice that is frequently missing during periodic inspections.',
   },
@@ -205,12 +205,12 @@ const quizQuestions = [
     id: 11,
     question: 'When labelling a control panel, the terminal identification should:',
     options: [
-      'Be left to the maintenance technician to figure out',
+      'An installation or enclosure can be energised from more than one source of supply (e.g., normal and standby generator)',
+      'Machine-produced, durable, securely fixed, clearly legible and resistant to the environmental conditions at the point of installation',
+      'BS EN ISO 7010 / Health and Safety Regulations: red for prohibition/fire, yellow for warning, blue for mandatory, green for safe condition',
       'Match the terminal markings on the circuit diagram exactly, allowing a technician to trace any circuit from drawing to panel without ambiguity',
-      'Use any convenient numbering system',
-      'Only identify power terminals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Terminal identification in a control panel must correspond exactly to the circuit diagrams, wiring diagrams and terminal schedules. This one-to-one relationship between drawing and physical installation is essential for fault diagnosis, modification and maintenance. If terminal labels do not match the drawings, every maintenance task becomes slower and more error-prone. IEC 61439 requires this correspondence as part of the technical documentation package.',
   },
@@ -218,12 +218,12 @@ const quizQuestions = [
     id: 12,
     question: 'During maintenance, a label that has become illegible should be:',
     options: [
-      'Ignored',
       'Replaced immediately with a new, durable label carrying the same information, and the maintenance record updated to reflect the replacement',
-      'Covered with tape',
-      'Left as is until the next periodic inspection',
+      'Match the terminal markings on the circuit diagram exactly, allowing a technician to trace any circuit from drawing to panel without ambiguity',
+      'BS 7671, which requires a notice at or near the RCD instructing that the device should be tested at quarterly intervals using the integral test button',
+      'Machine-produced, durable, securely fixed, clearly legible and resistant to the environmental conditions at the point of installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Illegible labels are a safety hazard — they defeat the purpose of the labelling system. Any illegible label discovered during maintenance should be replaced immediately with a new label carrying the correct information. This applies to circuit charts, cable labels, warning notices and equipment identification labels. Label replacement should be recorded in the maintenance log. Using the opportunity of maintenance access to check and replace worn labels is a best practice that improves overall installation safety.',
   },

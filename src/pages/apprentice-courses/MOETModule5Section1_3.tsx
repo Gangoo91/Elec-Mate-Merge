@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'thermocouple-principle',
     question: 'What is the operating principle of a thermocouple?',
     options: [
-      'The resistance of a platinum wire changes with temperature',
+      'You must use only the written dimension values, not measurements taken from the paper, as the printed size may not accurately represent the stated scale',
+      'A person must have the specific training, knowledge, and experience relevant to the particular task they are performing',
+      'To reduce building CO2 emissions through improved energy performance beyond Building Regulations',
       'Two dissimilar metals joined at a junction generate a voltage proportional to the temperature difference (Seebeck effect)',
-      'A semiconductor material changes capacitance with temperature',
-      'A piezoelectric crystal vibrates at a frequency dependent on temperature',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A thermocouple operates on the Seebeck effect: when two dissimilar metals are joined at a junction (the measuring junction) and exposed to a temperature, a small voltage (typically millivolts) is generated proportional to the temperature difference between the measuring junction and the reference (cold) junction. This makes thermocouples self-generating (passive) sensors.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'What is the main advantage of a Pt100 RTD over a thermocouple for temperature measurement?',
     options: [
-      'RTDs are cheaper than thermocouples',
-      'RTDs can measure higher temperatures than thermocouples',
+      'Falls from height (due to collapse, overturning, or falling from an unprotected platform)',
       'RTDs offer higher accuracy, better stability and more linear output over their range',
-      'RTDs do not require any signal conditioning',
+      '0.35 Ω — the recognised maximum for PME systems used in design where no DNO declared figure is available.',
+      'Validation means acknowledging someone\\\\\\\\\\\\\\\'s feelings as understandable; agreement means you share their position',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Pt100 RTDs (platinum resistance temperature detectors) provide superior accuracy (typically plus or minus 0.1 to 0.5 degrees C), excellent long-term stability and a nearly linear resistance-temperature relationship. Thermocouples cover a wider temperature range and are more robust, but their millivolt output is less accurate and requires cold junction compensation.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'gauge-vs-absolute',
     question: 'What is the difference between gauge pressure and absolute pressure?',
     options: [
-      'They are different units for the same measurement',
+      'No — under 5 employees the SIGNIFICANT FINDINGS don’t have to be recorded by law (but are still expected as good practice)',
+      'A tripod or davit with man-riding winch system, with the casualty secured in a rescue harness or stretcher',
       'Gauge pressure is measured relative to atmospheric pressure; absolute pressure is measured relative to a perfect vacuum',
-      'Gauge pressure is always higher than absolute pressure',
-      'Absolute pressure can only be measured with mercury manometers',
+      'Documented with variation description, reason, cost implication and written agreement before work is carried out',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Gauge pressure uses atmospheric pressure as its zero reference point — a tyre pressure gauge reads 0 when exposed to atmosphere. Absolute pressure uses a perfect vacuum as its zero reference. Absolute pressure = gauge pressure + atmospheric pressure (approximately 1.013 bar at sea level). Absolute pressure measurement is used in vacuum systems and altitude applications.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     id: '3-wire-rtd',
     question: 'Why are Pt100 RTDs commonly wired in a 3-wire configuration rather than 2-wire?',
     options: [
-      'To provide a redundant connection in case one wire breaks',
+      'To plan, manage, monitor and coordinate health and safety in the pre-construction phase, including identifying and eliminating foreseeable risks',
+      'Set out who can work alone, what risk assessment applies, communication/check-in arrangements, and high-risk activities that need a buddy',
+      'Continuity of CPCs and ring conductors, insulation resistance, polarity, earth electrode resistance (TT) — completed BEFORE energising',
       'To allow the measuring instrument to compensate for the resistance of the connecting cable, which would otherwise add error to the temperature reading',
-      'To enable simultaneous reading by two different instruments',
-      'To comply with BS 7671 requirements for screened cables',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'In a 2-wire RTD connection, the resistance of the connecting cable is added to the RTD resistance, causing a positive temperature error. A 3-wire configuration uses the third wire to measure the cable resistance and subtract it from the total, compensating for cable length. For highest accuracy, a 4-wire (Kelvin) connection eliminates cable resistance entirely.',
   },
@@ -70,10 +70,10 @@ const quizQuestions = [
     id: 1,
     question: 'A Type K thermocouple uses which pair of metals?',
     options: [
-      'Copper and constantan',
+      'Current lags voltage by 36.87° (inductive load)',
       'Chromel and alumel (nickel-chromium / nickel-aluminium)',
-      'Platinum and platinum-rhodium',
-      'Iron and constantan',
+      'The module\\\\\\\'s communication address and point configuration',
+      'Power supplied to field devices through communication cables',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,8 +83,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A Pt100 RTD has a resistance of 100 ohms at 0 degrees C. At 100 degrees C, its resistance is approximately:',
-    options: ['100 ohms', '138.5 ohms', '200 ohms', '1000 ohms'],
-    correctAnswer: 1,
+    options: [
+      '200 ohms',
+      '100 ohms',
+      '138.5 ohms',
+      '1000 ohms',
+    ],
+    correctAnswer: 2,
     explanation:
       'Platinum has a temperature coefficient of approximately 0.385 ohms per degree C for a Pt100 element. At 100 degrees C: R = 100 + (0.385 x 100) = 138.5 ohms. This near-linear relationship is one of the key advantages of platinum RTDs. A Pt1000 element has 1000 ohms at 0 degrees C and 1385 ohms at 100 degrees C.',
   },
@@ -93,12 +98,12 @@ const quizQuestions = [
     question:
       'Cold junction compensation in a thermocouple measurement system is necessary because:',
     options: [
-      'Thermocouples only work in cold environments',
+      'Noticing the thought and reframing it: "I am having the thought that I am a terrible leader. This is a thought, not a fact. Missing one deadline does not define my entire leadership capability" — creating distance between the self and the thought',
+      'The apprentice\\\\\\\\\\\\\\\'s understanding of continuous improvement, reliability engineering and the proactive maintenance mindset required of a competent maintenance technician',
+      'Describe: "We discovered asbestos in the ceiling void." Express: "I want to be transparent about cost impact." Specify: "The removal adds £2,400." Consequences: "This ensures safe, regulation-compliant completion"',
       'The thermocouple voltage is proportional to the temperature DIFFERENCE between the hot and cold junctions, so the cold junction temperature must be known to calculate the actual measurement temperature',
-      'The thermocouple wires become brittle at low temperatures',
-      'The PLC cannot process millivolt signals without compensation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A thermocouple generates a voltage proportional to the temperature difference between its two junctions. To determine the actual (hot junction) temperature, the system must know the cold junction temperature and add the equivalent voltage. Modern transmitters and PLC input cards perform this automatically using an internal temperature sensor at the termination point.',
   },
@@ -106,12 +111,12 @@ const quizQuestions = [
     id: 4,
     question: 'A thermistor differs from a Pt100 RTD in that:',
     options: [
-      'A thermistor is made of platinum; an RTD is made of semiconductor material',
       'A thermistor has a highly non-linear resistance-temperature characteristic and a much larger change in resistance per degree, making it very sensitive but over a narrow range',
-      'A thermistor is more accurate than an RTD',
-      'A thermistor can measure higher temperatures than an RTD',
+      'Map ECS renewal dates, BS 7671 amendment cycles, tax registration milestones, insurance renewals, and qualification targets onto a single timeline with 90-day execution sprints',
+      'Bond the armour to the gland, terminate the gland into the enclosure with banjo washer for earth continuity, strip and ferrule the conductors, terminate per the device terminal arrangement, torque to manufacturer spec.',
+      'Atmospheric conditions can change rapidly during work — continuous monitoring provides real-time warning of deteriorating conditions so workers can evacuate before reaching dangerous levels',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Thermistors are semiconductor devices with a large resistance change per degree C (typically 10 times that of a Pt100), making them very sensitive. However, their response is highly non-linear (exponential), limiting them to narrow temperature ranges where linearisation is applied. NTC (negative temperature coefficient) types decrease in resistance as temperature rises; PTC types increase.',
   },
@@ -119,7 +124,12 @@ const quizQuestions = [
     id: 5,
     question:
       'A pressure transmitter with a range of 0-10 bar gauge is reading 6.5 bar. The corresponding 4-20 mA output should be:',
-    options: ['6.5 mA', '14.4 mA', '10.4 mA', '16.0 mA'],
+    options: [
+      '6.5 mA',
+      '14.4 mA',
+      '16.0 mA',
+      '10.4 mA',
+    ],
     correctAnswer: 1,
     explanation:
       'The percentage of range = (6.5 / 10) x 100 = 65 %. The 4-20 mA output = 4 + (0.65 x 16) = 4 + 10.4 = 14.4 mA. This calculation is fundamental to verifying transmitter calibration: measure the loop current, calculate the expected pressure, and compare with an independent reference gauge.',
@@ -129,12 +139,12 @@ const quizQuestions = [
     question:
       'Which pressure sensing element is most commonly used in modern industrial pressure transmitters?',
     options: [
-      'Bourdon tube',
+      'Internal staircases at a comfortable angle',
+      'To automatically remove combustion residue from the grate',
       'Piezoresistive silicon strain gauge on a diaphragm',
-      'Mercury manometer',
-      'Bellows element',
+      'Identify safety-critical issues requiring immediate attention',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Modern electronic pressure transmitters predominantly use piezoresistive strain gauges on a silicon or stainless steel diaphragm. The diaphragm flexes under pressure, and the strain gauges (arranged in a Wheatstone bridge) change resistance proportionally. This provides a direct electrical output, excellent accuracy and fast response. Bourdon tubes are still used in mechanical gauges.',
   },
@@ -144,11 +154,11 @@ const quizQuestions = [
       'A maintenance technician suspects a Pt100 sensor has failed. The resistance measured across the sensor terminals reads 0 ohms. This most likely indicates:',
     options: [
       'The sensor is reading exactly 0 degrees C',
-      'A short circuit in the sensor element or wiring',
-      'The sensor is reading a very low temperature',
       'Normal operation — the sensor is warming up',
+      'The sensor is reading a very low temperature',
+      'A short circuit in the sensor element or wiring',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A Pt100 reads 100 ohms at 0 degrees C, not 0 ohms. A reading of 0 ohms indicates a short circuit — either the sensor element has failed with an internal short, or there is a wiring fault (e.g., the signal wires are shorted together at a terminal). An open circuit (infinite resistance) would indicate a broken element or disconnected wire.',
   },
@@ -156,12 +166,12 @@ const quizQuestions = [
     id: 8,
     question: 'Differential pressure measurement is used in industrial processes to:',
     options: [
-      'Measure the difference between two temperature readings',
       'Measure flow rate (using an orifice plate), level in sealed vessels, and filter condition',
-      'Measure the speed of pressure changes',
-      'Calibrate gauge pressure transmitters',
+      'To evaluate risks by likelihood and impact to prioritise responses',
+      'Combined distance and angle measurement for precise positioning',
+      'To allow the outer pair to be removed during decontamination while maintaining hand protection with the inner pair',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Differential pressure (DP) is the difference between two pressure points. In flow measurement, a DP transmitter measures the pressure drop across an orifice plate (flow is proportional to the square root of DP). In level measurement, DP between the bottom and top of a sealed vessel gives the liquid level. Filter condition is assessed by measuring DP across the filter element — rising DP indicates blockage.',
   },
@@ -169,10 +179,10 @@ const quizQuestions = [
     id: 9,
     question: 'Thermocouple compensating cable is necessary because:',
     options: [
-      'Standard copper cable would be too expensive for the long runs involved',
+      'It keeps the client informed, manages expectations about the next day\\\\\\\\\\\\\\\'s work and disruption, builds trust, prevents anxiety-driven complaints, and creates a record of project communication',
       'The cable must have the same thermoelectric properties as the thermocouple to avoid introducing additional junctions that would create measurement errors',
-      'Thermocouple signals are too weak for standard cable',
-      'It provides electromagnetic screening for the millivolt signal',
+      'A document setting out how health and safety will be managed during construction, prepared by the principal contractor (or sole contractor)',
+      'Final circuits supplying socket-outlets in higher-risk residential buildings (HRRBs), care homes, student accommodation, etc. (recommendation, not absolute requirement, in non-HRRB)',
     ],
     correctAnswer: 1,
     explanation:
@@ -182,12 +192,12 @@ const quizQuestions = [
     id: 10,
     question: 'An infrared (non-contact) temperature sensor measures temperature by:',
     options: [
-      'Heating the target with infrared radiation and measuring the reflected energy',
+      'To ensure that a clear procedure is in place to rescue a person who is stranded or injured on the tower, minimising the time they are at risk',
+      'It is never acceptable; the tower must only be built to the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instruction manual configurations',
       'Detecting the infrared radiation naturally emitted by the target surface, which is proportional to its temperature',
-      'Measuring the infrared absorption of the air between sensor and target',
-      'Using a thermocouple heated by infrared energy',
+      'Install the missing gland and inspect all other conduit entries for similar omissions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "All objects above absolute zero emit infrared radiation. The intensity and spectral distribution of this radiation is a function of the object's temperature (Stefan-Boltzmann law). An infrared sensor focuses this radiation onto a detector element to determine the surface temperature without contact. Emissivity of the target surface must be known or measured for accurate readings.",
   },
@@ -196,12 +206,12 @@ const quizQuestions = [
     question:
       'A process requires pressure measurement in a system that operates under vacuum (below atmospheric pressure). Which pressure measurement type is needed?',
     options: [
-      'Gauge pressure (positive only)',
+      'A splice using alignment fixtures and index-matching gel',
+      'Upstream fuse rated at least 1.6 times the downstream fuse',
+      'The resistance of the earth electrode to general mass of earth',
       'Absolute pressure or compound gauge (vacuum to positive range)',
-      'Differential pressure only',
-      'Any standard pressure gauge will work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A standard gauge pressure transmitter reads zero at atmospheric pressure and only measures positive pressures above atmosphere. For vacuum measurement, you need either an absolute pressure transmitter (zero reference is vacuum) or a compound gauge transmitter that can measure both vacuum (negative gauge) and positive pressure ranges.',
   },
@@ -209,12 +219,12 @@ const quizQuestions = [
     id: 12,
     question: 'When calibrating a temperature transmitter, the reference standard should be:',
     options: [
-      'Another transmitter of the same type',
       'A calibrated reference thermometer or dry-block calibrator traceable to national standards',
-      'The PLC display reading',
-      'A glass mercury thermometer from the maintenance stores',
+      'Intentionally or recklessly interfere with anything provided for health and safety',
+      'Real-time monitoring, simulation, optimisation, and predictive maintenance',
+      'Skipping isolation feels harmless once and gets normalised — and a single live touch is enough',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Calibration requires a reference standard of higher accuracy than the instrument being calibrated — typically 4:1 accuracy ratio. A calibrated reference thermometer (Pt100 or thermocouple) or a dry-block calibrator with a traceable calibration certificate provides the known temperature input. The calibration chain must be traceable to national standards (UKAS in the UK).',
   },

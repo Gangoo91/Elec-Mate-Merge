@@ -48,10 +48,10 @@ const checks = [
     question:
       "A customer is comparing PV warranties and asks why the panel manufacturer guarantees 'at least 80% output at year 25' rather than 100%. What's the honest answer?",
     options: [
-      "The panels are defective.",
+      "Where an offence under HASAWA is committed by a body corporate (a limited company) and is proved to have been committed with the consent or connivance of, or attributable to neglect on the part of, a director, manager, secretary or similar officer, that individual ALSO commits the offence and is liable to personal prosecution. Relevant once you become Approved Electrician, then a senior, then potentially a director — your personal liability scales with your role.",
       "Crystalline silicon PV panels degrade gradually — typically around 0.5% per year on a linear basis after a small initial light-induced degradation in the first few hundred hours. By year 25 a healthy panel is delivering somewhere between 80% and 87% of its nameplate output. Manufacturer linear warranties express this as 'at least 80% (or 85%) at year 25'. The customer has not been mis-sold; the degradation is intrinsic to the technology and is built into the MCS performance estimate. Premium panels with lower degradation rates (around 0.3% per year) hold output better and are warrantied accordingly.",
-      "All panels fail completely after 10 years.",
-      "Degradation is a sales myth — panels do not degrade.",
+      "The Operations and Maintenance (O&M) pack — typically a bound document or PDF with: signed EIC (top-level), Schedule of Inspections, Schedule of Test Results, design pack (single-line, panel schedules, calculations), as-built drawings, Building Control Compliance Certificate (or notification reference), commissioning test results, departures log, manufacturer manuals for installed equipment, recommended maintenance schedule.",
+      "HSE investigates. Charges can be laid against the firm (HASAWA s.2 / s.3, EAWR Reg 4 / 14), against directors personally if they consented or connived (HASAWA s.37), AND against the individual operative personally (HASAWA s.7, EAWR Reg 3). Magistrates' Court — up to £20,000 fine and / or 6 months prison per offence. Crown Court — unlimited fine and / or 2 years prison. The company and the apprentice can both be prosecuted in the same case.",
     ],
     correctIndex: 1,
     explanation:
@@ -62,12 +62,12 @@ const checks = [
     question:
       "A customer's 5-year-old 10 kWh battery now delivers about 7 kWh of usable capacity. They ask whether it has reached end-of-life. What's the right framing?",
     options: [
-      "Yes — it is dead and must be scrapped.",
+      "Toolbox talks are short, focused, structured verbal briefings to workers on a specific safety topic — typically a hazard relevant to that day or that week. They're documented (sign-on sheet) so the employer can demonstrate they've discharged the MHSWR Reg 10 duty to provide comprehensible information. The format works because it's short, in person, with the chance to ask questions — the opposite of a long written document nobody reads.",
+      "Three duties. (1) Make safe — any temporary leads, exposed conductors, removed accessories must be made electrically safe before you leave site (terminated, capped, isolated, signed). (2) Tidy — work area returned to its pre-work state or better; debris collected and disposed of (Hazardous Waste Regs 2005 for asbestos, batteries, fluorescent tubes); broken accessories handed to customer with explanation. (3) Document — what was found, what was done, what's left to do, what was disposed of. For fault diagnosis specifically, the area you've worked in may contain damaged parts that look normal but are actually compromised — those have to be made obviously safe (capped, labelled) so the customer or next tradesperson doesn't re-energise them.",
       "Battery end-of-life in the residential storage context is usually defined as when usable capacity falls to around 70-80% of nameplate (varies by manufacturer warranty wording). A 10 kWh battery delivering 7 kWh of usable capacity is at roughly 70% — close to the typical 10-year warranty threshold. Whether the customer replaces depends on economics: the existing battery may still serve daily PV self-consumption usefully even at 70% capacity; the manufacturer warranty may trigger a free or subsidised replacement; second-life battery applications are emerging. Decommissioning is hazardous-waste handling, not skip handling.",
-      "It must be replaced annually regardless of capacity.",
-      "Capacity loss is a fault that can always be repaired by re-flashing firmware.",
+      "Coordination with clinical estates / facilities team BEFORE isolation, because the circuit may serve clinical equipment with patient-safety implications. Hospitals have IPS (isolated power systems) for some clinical areas, UPS-backed circuits for others, and dual-redundant supplies for critical care. Isolating without coordination can take a ventilator off the grid. The estates team will have a planned outage window, an alternative supply route, and a documented permit-to-isolate that has to be agreed before any switching happens.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Lithium-ion battery degradation comes from cycle count, depth of discharge, temperature exposure and calendar age. A typical residential battery warranty guarantees around 70-80% capacity at year 10 or a defined cycle count, whichever comes first. As the L3 electrician you may be asked to facilitate decommissioning under the manufacturer's take-back scheme — never improvise; lithium-ion is hazardous waste under the WEEE Regulations and improperly handled batteries are a serious fire risk in waste streams.",
   },
@@ -76,12 +76,12 @@ const checks = [
     question:
       "What determines how often a domestic heat pump needs a mandatory F-Gas leak check?",
     options: [
-      "Every five years regardless of charge.",
+      "Six-point check. (1) ENERGISE the rectified circuit AND verify the affected sockets work (kettle test or known-good appliance). (2) ALL other circuits restored to their pre-visit state — check no breakers left off, no insulation tape on terminals. (3) DB closed and locked, cover screws back in. (4) NO TOOLS / OFFCUTS / WASTE left in the work area — sweep visually before walking out. (5) NO TRIP HAZARDS — cables clipped, carpet replaced, kitchen drawers closed. (6) CUSTOMER HANDOVER — show them the work, demonstrate the fix, hand over the certificate, explain any follow-up. The customer arriving home to a dark kitchen because you forgot to flick a breaker back on is the worst hand-back failure.",
+      "Mains-borne electromagnetic interference (EMI) from the induction hob's switching electronics coupling into the LED driver in the hood. Induction hobs run an inverter at 20–100 kHz that puts harmonic content on the supply; cheap LED drivers without proper EMC filtering pick this up and modulate their output, causing the flicker. The buzz is the magnetic coupling to the hood's transformer / driver chassis. The hob is compliant (BS EN IEC 61000-3 EMC standards) and the hood is compliant individually, but together they're a cumulative EMC failure. Fix options: (1) replace the hood's driver with a higher-spec unit with better EMC filtering, (2) fit a mains filter on the hood circuit, (3) escalate to the hood manufacturer as a product compatibility complaint. NOT a wiring fault.",
       "The refrigerant charge weight in CO2-equivalent tonnes (calculated as charge weight in kg multiplied by the refrigerant's global warming potential, divided by 1000). Under the F-Gas Regulations, equipment containing 5 tonnes CO2e or more requires a mandatory annual leak check; 50 tonnes or more requires six-monthly; 500 tonnes or more requires three-monthly. Most domestic ASHPs running R-32 or R-290 sit below the 5-tonne CO2e mandatory threshold (R-290 propane has a GWP of just 3, so even substantial charges fall well short). Manufacturer warranty often requires annual checks regardless of the regulatory threshold.",
-      "Only at decommissioning.",
-      "Never — domestic units are exempt.",
+      "Three separate containers. New batteries in their original packaging or a dedicated lithium-safe storage box, separated from the others. Used but undamaged batteries in a metal container with terminals taped or with cell-tray separation to prevent short circuits. The damaged battery in a separate fire-resistant container (vermiculite, sand or a purpose-made Li-ion bag), stored away from the van interior and away from other batteries, and returned to a battery recycling collection point as soon as practical. Never stack damaged with undamaged.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The F-Gas leak-check intervals are set by CO2-equivalent charge, not by application type. A small ASHP charged with around 1.2 kg of R-32 (GWP 675) carries roughly 0.8 tonnes CO2e — well below the 5-tonne threshold. The same physical kg of R-290 (GWP 3) is around 0.0036 tonnes CO2e. Manufacturer warranty terms typically require annual servicing including a visual leak check anyway, even where the regulatory threshold is not triggered. As an apprentice you do not perform the leak check — that is F-Gas-certified scope — but understanding the interval logic helps you talk customers through service contract pricing.",
   },
@@ -93,10 +93,10 @@ const quizQuestions = [
     question:
       "What is the typical linear degradation rate of a Tier-1 crystalline silicon PV panel?",
     options: [
-      "Around 10% per year.",
+      "The grievance and disciplinary policies, normally aligned to the ACAS Code of Practice on Discipline and Grievance. Grievance covers complaints raised BY the employee against the firm or another employee. Disciplinary covers action taken BY the firm against the employee for misconduct, capability or other concerns.",
       "Around 0.3 to 0.5% per year on a linear basis after a small initial light-induced degradation in the first few hundred hours of operation. By year 25 a healthy Tier-1 panel is delivering around 80-87% of its nameplate output. Premium panels with newer cell architectures (heterojunction, TOPCon) often quote 0.3% per year and warranty 87-90% at year 25.",
-      "Around 5% per year.",
-      "Zero — panels do not degrade.",
+      "Because it covers the whole work activity (not just the install), it covers operation, use AND maintenance, AND it covers work NEAR a system as well as on it. So it's the legal hook for safe-isolation procedures, lock-off, voltage-proving, and the way you organise the work around live equipment that you're not directly working on. Reg 4(3) is what the HSE charges most often after an electrical incident.",
+      "Wide range: textured ceilings (artex), insulation board (AIB), cement products (roofing, soffits, downpipes), pipe and boiler lagging, sprayed coatings, floor tiles and adhesive, gaskets and seals, electrical components (rare in UK but some old fuse boards), bath panels, window putty, wall claddings.",
     ],
     correctAnswer: 1,
     explanation:
@@ -107,12 +107,12 @@ const quizQuestions = [
     question:
       "When does a residential lithium-ion battery typically reach the manufacturer-defined end-of-life capacity threshold?",
     options: [
-      "After one year.",
+      "The arrangements for ensuring there are suitable welfare facilities, the site rules (if any), and any specific measures concerning work falling within Schedule 3 (high-risk work such as work near or over water, involving diving, in a caisson, involving explosives, etc.)",
+      "The installer red-lines deviations on a working copy of the design pack at handover. The designer reviews each red-line, re-runs any affected calc, updates the affected schedules, the SLD and the layouts, marks the new revision, and re-issues. The re-issued pack is the as-installed pack — the master that the building owner inherits.",
       "Around year 10 or a defined number of full-equivalent cycles (often 6,000-10,000 cycles), whichever comes first. The threshold is usually 70-80% of nameplate usable capacity. A 10 kWh battery delivering around 7 kWh after a decade is at typical end-of-warranty capacity; whether the customer replaces depends on the economics of remaining capacity vs replacement cost.",
-      "After 50 years.",
-      "Only when it physically catches fire.",
+      "The apprenticeship contract (a formal indenture under the Apprenticeships, Skills, Children and Learning Act 2009), the wages, the off-the-job training declaration (a minimum 20% of paid working hours under the Apprenticeship Standard), the provision of suitable work and supervision, and HASAWA s.2 duties to provide a safe place of work and adequate training.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Battery degradation comes from cycle count, depth of discharge, calendar ageing and temperature exposure. The 10-year / 70-80% capacity warranty is industry-standard for residential storage. Some manufacturers offer 12-15 year warranties on premium products. End-of-warranty does not always mean end-of-useful-life — many older batteries continue to serve daily self-consumption usefully even at reduced capacity.",
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       "What sets the mandatory F-Gas leak-check interval for refrigerant equipment under UK F-Gas Regulations?",
     options: [
-      "The customer's preference.",
+      "The Scottish Joint Industry Board (SJIB) is the equivalent of the JIB for the electrical contracting industry in Scotland. It sets working rules, pay rates and grades for Scottish electricians, working alongside SELECT (the Scottish trade association). SJIB grading uses similar terminology (Apprentice, Approved Electrician, Technician) but the rates and the ECS card variants are Scottish-specific.",
+      "Section 135 amends the Defective Premises Act 1972: extends the limitation period for claims relating to dwellings from 6 years to 30 years for retrospective claims (work completed before BSA commencement) and 15 years for prospective claims (work after commencement). Significantly extends contractor liability for residential work in particular.",
+      "The electrical contractor's Foreman or Charge-hand at the morning brief — they translate the day's programme into specific tasks for each pair of hands. The Approved Electrician you're paired with then directs your work at the face. Big-picture decisions (programme changes, design queries) escalate up via the Foreman to the Project Engineer or Contracts Manager.",
       "The CO2-equivalent refrigerant charge — kg of refrigerant multiplied by the refrigerant's global warming potential, divided by 1000. Mandatory intervals: 5+ tonnes CO2e annual; 50+ tonnes CO2e six-monthly; 500+ tonnes CO2e three-monthly. Most domestic ASHPs sit below 5 tonnes CO2e and are not subject to the mandatory regulatory intervals — but manufacturer warranty terms typically require annual servicing anyway.",
-      "Only the engineer's diary.",
-      "Only the local authority's policy.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The CO2-equivalent threshold structure recognises that high-GWP refrigerants in large charges pose more risk than small charges of low-GWP refrigerants. R-32 (GWP 675), R-290 propane (GWP 3) and R-410A (GWP 2088) all behave very differently when measured this way. Domestic heat pumps usually fall below the regulatory thresholds; commercial refrigeration often crosses them.",
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       "Why is R-290 (propane) increasingly used in modern domestic heat pumps?",
     options: [
-      "It is cheaper than electricity.",
       "Very low global warming potential — around 3, compared with R-32 at 675 and R-410A at 2088. Means less environmental impact per kg released, lower CO2-equivalent charge, less stringent F-Gas leak-check regime. Excellent thermodynamic properties — high efficiency, supports flow temperatures up to around 75°C suitable for retrofit on existing radiator systems. Trade-off: highly flammable (A3 safety classification), requires careful installation per ATEX and manufacturer rules around ventilation, charge limits and electrical zoning around the unit.",
-      "It is non-flammable.",
-      "It can replace water in the wet system.",
+      "Around eight hours of accredited training (typically delivered as a one-day workshop or split over two half-days) covering climate science, the carbon impact of the trainee role and sector, individual and workplace action, and the social and economic context of the climate transition. To become Certified Carbon Literate the trainee must demonstrate understanding through assessment and commit in writing to one personal action and one workplace action. The Carbon Literacy Project (a Manchester-based registered charity) accredits training providers and issues the certifications. Major UK construction and engineering firms run rolling Carbon Literacy programmes for their workforces.",
+      "Equality Act 2010 s.6 defines disability as a physical or mental impairment that has a substantial and long-term adverse effect on the person's ability to carry out normal day-to-day activities. 'Long-term' means it has lasted, or is likely to last, 12 months or more. This explicitly includes mental health conditions — depression, anxiety disorders, PTSD, bipolar disorder, schizophrenia and others — where they meet the substantial and long-term thresholds. Where a worker's mental health condition is a disability under the Act, the s.20 reasonable-adjustments duty applies in the same way as for physical disability.",
+      "This is a strong micro-hydro site. With 30 m head and 100 l/s flow, theoretical hydraulic power is approximately ρ × g × h × Q = 1000 × 9.81 × 30 × 0.1 ≈ 29 kW. After turbine and generator efficiency (typically 70-85%) the realistic output is 20-25 kW continuous — significant baseload renewable energy. Practical issues: SEPA (Scottish equivalent of Environment Agency) abstraction licensing, fish-friendly intake design, civils for weir / intake / penstock / power-house, grid connection (G99 for an installation of this size), and the cost of a buried cable from the power-house to the property. The right site is rare; where it exists, micro-hydro outperforms PV and wind by a wide margin on capacity factor.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "R-290 is the dominant low-GWP option in current heat-pump kit because it combines very low climate impact with strong thermodynamic performance at the higher flow temperatures retrofit installations sometimes need. The flammability is managed by sealed-system design, charge limits and outdoor placement of the refrigerant circuit. F-Gas-certified engineers handling R-290 carry additional flammable-refrigerant training.",
   },
@@ -149,10 +149,10 @@ const quizQuestions = [
     question:
       "What inspection cycle does OZEV require for grant-funded EV charge points under the EV Chargepoint Grant scheme?",
     options: [
-      "None — OZEV does not specify inspection cycles.",
+      "Directly — every tool in the cable-prep kit (auto strippers, ratchet crimpers, preset torque drivers, calibrated test instruments) exists to deliver consistent, repeatable, manufacturer-spec terminations. 'Good workmanship' is delivered through the tools as much as through the operative's skill. An apprentice using the right tool the right way produces 134.1.1-compliant work; using the wrong tool (knife strip, plier crimp, eyeballed torque) produces work that fails 134.1.1 even if it tests OK on the day.",
       "OZEV requires installations to comply with the Electric Vehicles (Smart Charge Points) Regulations 2021 and to be installed by an OZEV-authorised installer. Periodic inspection follows the BS 7671 framework — typically 5-yearly EICR for domestic, plus EV-specific tests including RCD operation (Type B or RDC-DD), open-PEN protection function (where the charger has built-in open-PEN), and Zs at the charge point. Landlord properties additionally subject to the Electrical Safety Standards Regulations 2020 (5-year EICR plus change of tenancy).",
-      "Daily inspection.",
-      "Once-only inspection at install.",
+      "Category II — intermediate risk, covers most cut/abrasion-resistant work gloves used for cable pulling, cable cutting, masonry handling. The key is matching the cut resistance level (EN 388 marking — A to F for cut, plus puncture, abrasion and tear ratings) to the actual task. A glove rated for general handling is not the right glove for cutting steel cable tray, and a heavily armoured glove makes fine termination work impossible.",
+      "Permitted — Reg 701.415.2 allows omission but doesn\\\\\\\\'t prohibit installation. Many electricians fit supplementary as a defensive standard despite the omission permission, on the basis that an additional layer of protection costs little and provides margin against any future loss of RCD protection. Code C3 finding on EICR if absent in older bathrooms; never a finding for fitting it as additional protection.",
     ],
     correctAnswer: 1,
     explanation:
@@ -163,12 +163,12 @@ const quizQuestions = [
     question:
       "What does the PV inverter's typical service life look like compared with the panels themselves?",
     options: [
-      "Inverters last longer than panels.",
+      "Reg 4(2) puts the duty on every employer and on every employee — and Reg 16 on every person working with electrical systems. For the L3 apprentice doing fault diagnosis: (1) the system you're working on must be assessed for its 'as-found' safety BEFORE work starts (visual inspection of CU, supply, bonding, signs of damage); (2) any departures from safe construction must be recorded and not made worse by your work; (3) when you correct the fault, the corrected system must satisfy Reg 4 — i.e. you don't leave the installation in a worse state than you found it; (4) any defect that you can't fix safely is escalated for further work or for advisory documentation to the customer.",
+      "No person shall be engaged in any work activity where technical knowledge or experience is necessary to prevent danger, unless they possess such knowledge or experience or are under appropriate supervision having regard to the nature of the work. So either you're competent yourself OR you're being supervised by someone who is. Working outside your competence without supervision is a Reg 16 breach.",
       "Panels are warrantied 25 years and often deliver useful output well beyond. Inverters are warrantied 5-12 years depending on type (string inverters typically 10-12 years; microinverters often 25 years). Most domestic PV systems will need at least one inverter replacement during the 25-year panel lifetime. The replacement is straightforward — disconnect old, fit replacement of compatible spec, recommission, update the EIC. The cost should be factored into the system's whole-life economic case rather than treated as a surprise.",
-      "Both fail at exactly the same point.",
-      "Inverters never need replacing.",
+      "The supervision is appropriate when the supervisor is themselves competent for the task, has direct visibility of the work AND the trainee, can intervene before a danger materialises, and the degree of supervision is matched to BOTH the task danger AND the trainee's experience level. A second-year on socket extensions is light supervision; a first-year on a CU change is direct, hands-on supervision throughout. Token oversight from elsewhere on site doesn't meet the regulation.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Inverter life is the headline reason a PV system's whole-life cost is not zero after the install. String inverters work hard — running every daylight hour, dealing with thermal cycling, often in lofts or south-facing walls where they get hot. The 5-12 year warranty range reflects this; replacement at year 10-15 is typical. Microinverters underneath each panel run cooler and often warranty-match the panels.",
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     question:
       "What is the typical heat pump service life and what sets it?",
     options: [
-      "One year.",
+      "Annex A722 Item A722.3 gives guidance on determining the maximum resistance required for the earth electrode in route (b). The resistance must be low enough to ensure that, under a PEN open-circuit fault, the MET-to-earth voltage does not exceed 70 V RMS. That keeps the touch voltage between the car body and the surrounding ground within the safe envelope. Acceptance on site requires the calculated maximum resistance, the measured electrode resistance, and a record showing the measured value is at or below the calculated maximum.",
+      "Workplace mentor is the unpaid (or informally paid) day-job mentor allocated to a specific apprentice within the employing firm. Different from college assessor (paid, formally qualified, employed by college). The mentor signs portfolio entries as evidence of on-site competence, attends three-way reviews, calibrates progress with the college tutor. Mentor competence is evidenced by JIB Approved Electrician grade plus experience — no specific qualification required.",
+      "Standard order: (1) Ze at the supply origin (incoming meter tails or the main switch). Establishes the supply impedance baseline. (2) Each circuit at its furthest point in turn — go in label order or by RCD group. Use no-trip mode on RCD-protected circuits. (3) For any borderline reading, retest in full trip mode after preparing for the trip. (4) For any failing reading, investigate (terminations, route length, CPC size). The order isn\\\\\\\\'t arbitrary — Ze first gives you the baseline you need to sanity-check the per-circuit readings.",
       "Around 15-20 years for a well-maintained domestic ASHP, comparable to a high-quality gas boiler. The compressor is the wear part; secondary wear includes the fan motor, expansion valve, controls electronics. Annual servicing including refrigerant leak check, wet-system maintenance, electrical inspection and performance verification keeps the unit at design SCOP for as long as possible. Skipped service typically halves the working life and voids the warranty.",
-      "100 years.",
-      "Only as long as the customer remembers to switch it on.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Modern inverter-driven ASHPs are designed for 15-20 year service lives. The compressor is the dominant wear part; modern variable-speed compressors avoid the on-off thermal stress that damaged older fixed-speed designs. Annual servicing is the planned-maintenance backbone that delivers the design life; the manufacturer warranty usually requires evidence of it.",
   },
@@ -191,12 +191,12 @@ const quizQuestions = [
     question:
       "What does responsible decommissioning of a PV array involve at end-of-life?",
     options: [
-      "Throw the panels in a skip.",
       "Isolate AC and DC sides, lock-off, prove dead. Disconnect strings panel by panel. Remove panels using safe roof-access procedures. Recover the panels for recycling — established PV recycling streams in the UK take aluminium frames, glass, copper wiring and silicon cells separately. Inverter and any battery component handled as WEEE (electronics) and hazardous waste (battery) respectively. Roof penetrations made good. Update the EIC to reflect the removal. The MCS-certified installer (or successor) typically arranges the decommissioning chain through authorised waste carriers.",
-      "Bury them in the garden.",
-      "Set fire to them.",
+      "AFDDs, RCBOs, RCCBs and SPDs all have internal electronic components that can present low resistance during a 500 V IR test, potentially skewing results or causing unacceptable current flow during testing. GN3 explicitly identifies these device categories. The standard practice is to either disconnect the device for the IR test (re-test after re-fitting), use 250 V if the device can\\\\\\\\'t tolerate 500 V (check manufacturer manual), or apply IR test only to the wiring (not through the device) by isolating at the load terminals.",
+      "Three reasons. (1) BS 7671 Reg 643.2 requires the test instruments to be appropriate to the test and in calibration — you have to be able to evidence that. (2) If the test result is later disputed (insurance, EICR follow-up, court), the instrument identification lets independent verification of calibration certificate and instrument capability. (3) Scheme providers (NICEIC, NAPIT, Stroma) audit certificates and look for instrument identification as evidence of competent practice. The standard fields are make + model + serial + last calibration date — usually pre-printed onto the certificate template by the firm's certification software.",
+      "Plan budget: scheme membership and update events typically £400-800/year if scheme-affiliated (NICEIC, NAPIT) include some CPD; one BS 7671 refresher per amendment year £150-300; one specialist training £400-800; IET Academy / scheme platform online learning typically included with subscription; manufacturer training often free; trade events (ECA Live etc.) £100-300. Total CPD spend typically £1,000-2,500/year for an active QS.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "PV decommissioning is becoming a mainstream activity as the first wave of UK installs reaches the 20-year mark. Recycling routes are established; the customer's installer or a specialist decommissioning firm handles the physical removal and the waste-stream consigning. As the L3 electrician on a decommissioning visit you handle the electrical isolation and the EIC update; the panel-recycling logistics are normally specialist scope.",
   },

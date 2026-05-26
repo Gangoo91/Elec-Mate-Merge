@@ -32,32 +32,52 @@ const quickCheckQuestions = [
   {
     id: 'true-power-formula',
     question: 'What is the formula for true (active) power in a single-phase AC circuit?',
-    options: ['P = VI', 'P = VI cos φ', 'P = VI sin φ', 'P = V/I'],
-    correctIndex: 1,
+    options: [
+      'P = VI',
+      'P = VI sin φ',
+      'P = VI cos φ',
+      'P = V/I',
+    ],
+    correctIndex: 2,
     explanation:
       'True power P = VI cos φ, where cos φ is the power factor. This accounts for the phase angle between voltage and current in AC circuits. Only the in-phase component of current does useful work.',
   },
   {
     id: 'reactive-power-unit',
     question: 'What is the unit of reactive power?',
-    options: ['Watts (W)', 'Volt-Amperes (VA)', 'Volt-Amperes reactive (VAr)', 'Joules (J)'],
-    correctIndex: 2,
+    options: [
+      'Maximum fault clearance time',
+      'Zigbee and Z-Wave mesh networks',
+      'By pressing the test button only',
+      'Volt-Amperes reactive (VAr)',
+    ],
+    correctIndex: 3,
     explanation:
       'Reactive power is measured in Volt-Amperes reactive (VAr) or kVAr. This distinguishes it from true power (Watts) and apparent power (VA), even though all three have the same dimensional units.',
   },
   {
     id: 'power-factor-calculation',
     question: 'A load draws 8kW at 10kVA. What is the power factor?',
-    options: ['0.6', '0.8', '1.0', '1.25'],
-    correctIndex: 1,
+    options: [
+      '0.6',
+      '1.25',
+      '0.8',
+      '1.0',
+    ],
+    correctIndex: 2,
     explanation:
       'Power factor = P/S = 8kW ÷ 10kVA = 0.8. This means 80% of the apparent power is doing useful work. The remaining 20% is reactive power circulating in the circuit.',
   },
   {
     id: 'three-phase-power',
     question: 'For a balanced three-phase load, which formula calculates true power?',
-    options: ['P = VL × IL', 'P = √3 × VL × IL', 'P = √3 × VL × IL × cos φ', 'P = 3 × VP × IP'],
-    correctIndex: 2,
+    options: [
+      'P = VL × IL',
+      'P = √3 × VL × IL × cos φ',
+      'P = √3 × VL × IL',
+      'P = 3 × VP × IP',
+    ],
+    correctIndex: 1,
     explanation:
       'Three-phase true power P = √3 × VL × IL × cos φ, where VL is line voltage (400V) and IL is line current. The √3 factor accounts for the phase relationships in a three-phase system.',
   },
@@ -69,11 +89,11 @@ const quizQuestions = [
     question: 'What does true power represent in an AC circuit?',
     options: [
       'The total power supplied by the source',
-      'The power stored in magnetic and electric fields',
       'The actual power consumed and converted to useful work',
+      'The power stored in magnetic and electric fields',
       'The power returned to the supply',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'True power (P) represents the actual power consumed by the load and converted to useful work such as heat, light, or mechanical energy. It is the only component that appears on energy bills.',
   },
@@ -81,8 +101,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A motor draws 15A at 230V with a power factor of 0.85. What is the true power consumed?',
-    options: ['2.93kW', '3.45kW', '4.06kW', '2.55kW'],
-    correctAnswer: 0,
+    options: [
+      '4.06kW',
+      '2.55kW',
+      '2.93kW',
+      '3.45kW',
+    ],
+    correctAnswer: 2,
     explanation:
       'P = V × I × cos φ = 230 × 15 × 0.85 = 2932.5W = 2.93kW. The power factor reduces the true power below the apparent power (VA) value.',
   },
@@ -90,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'What causes reactive power in an electrical system?',
     options: [
-      'Resistance in cables',
+      'Identify, isolate, secure, prove dead, prove tester',
+      'Dedicated green KNX bus cable (twisted pair)',
+      'Socket outlets rated up to 20A in domestic installations',
       'Inductive and capacitive loads storing and releasing energy',
-      'Poor electrical connections',
-      'Overloaded circuits',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Reactive power arises from inductors (motors, transformers) and capacitors storing energy in magnetic and electric fields respectively, then returning it to the supply each half cycle.',
   },
@@ -103,7 +128,12 @@ const quizQuestions = [
     id: 4,
     question:
       'A building has a maximum demand of 500kVA with a power factor of 0.7. What true power is available?',
-    options: ['350kW', '500kW', '714kW', '250kW'],
+    options: [
+      '350kW',
+      '500kW',
+      '714kW',
+      '250kW',
+    ],
     correctAnswer: 0,
     explanation:
       'P = S × cos φ = 500kVA × 0.7 = 350kW. The poor power factor means only 70% of the supply capacity is available for useful work.',
@@ -114,8 +144,8 @@ const quizQuestions = [
     options: [
       'Poor power factor damages transformers',
       'It increases cable losses and reduces network capacity',
-      'It causes voltage fluctuations',
       'It increases harmonic distortion',
+      'It causes voltage fluctuations',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,7 +154,12 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What type of instrument measures true power directly?',
-    options: ['Ammeter', 'Voltmeter', 'Wattmeter', 'VAr meter'],
+    options: [
+      'Ammeter',
+      'Voltmeter',
+      'Wattmeter',
+      'VAr meter',
+    ],
     correctAnswer: 2,
     explanation:
       'A wattmeter measures true power by multiplying instantaneous voltage and current, automatically accounting for the phase angle. Digital power analysers extend this to include reactive and apparent power.',
@@ -132,8 +167,13 @@ const quizQuestions = [
   {
     id: 7,
     question: 'Calculate the reactive power for a load with S = 100kVA and P = 80kW.',
-    options: ['20kVAr', '40kVAr', '60kVAr', '80kVAr'],
-    correctAnswer: 2,
+    options: [
+      '20kVAr',
+      '40kVAr',
+      '80kVAr',
+      '60kVAr',
+    ],
+    correctAnswer: 3,
     explanation:
       'Using the power triangle: Q = √(S² - P²) = √(100² - 80²) = √(10000 - 6400) = √3600 = 60kVAr',
   },
@@ -141,14 +181,24 @@ const quizQuestions = [
     id: 8,
     question:
       'A three-phase motor draws 25A per phase at 400V with pf = 0.9. What is the true power?',
-    options: ['10.4kW', '13.9kW', '15.6kW', '17.3kW'],
-    correctAnswer: 2,
+    options: [
+      '15.6kW',
+      '17.3kW',
+      '10.4kW',
+      '13.9kW',
+    ],
+    correctAnswer: 0,
     explanation: 'P = √3 × VL × IL × cos φ = 1.732 × 400 × 25 × 0.9 = 15,588W = 15.6kW',
   },
   {
     id: 9,
     question: 'What is the typical power factor threshold below which DNOs apply surcharges?',
-    options: ['0.95', '0.90', '0.85', '0.80'],
+    options: [
+      '0.95',
+      '0.90',
+      '0.85',
+      '0.80',
+    ],
     correctAnswer: 1,
     explanation:
       'Most UK DNOs apply reactive power charges when the power factor falls below 0.9 (or kVAr exceeds approximately 0.484 per kW). This encourages customers to install power factor correction.',
@@ -157,8 +207,13 @@ const quizQuestions = [
     id: 10,
     question:
       'An energy meter shows 50,000 kWh and a reactive meter shows 40,000 kVArh. What is the average power factor?',
-    options: ['0.78', '0.80', '0.85', '0.89'],
-    correctAnswer: 0,
+    options: [
+      '0.89',
+      '0.80',
+      '0.78',
+      '0.85',
+    ],
+    correctAnswer: 2,
     explanation:
       'kVAh = √(kWh² + kVArh²) = √(50000² + 40000²) = 64,031. Power factor = kWh/kVAh = 50000/64031 = 0.78',
   },

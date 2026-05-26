@@ -32,11 +32,11 @@ const quickCheckQuestions = [
     question: "What is a 'named' subcontractor in construction contracts?",
     options: [
       'A subcontractor chosen by the main contractor',
-      'A subcontractor specified in the main contract by the client/designer',
       'An emergency replacement subcontractor',
+      'A subcontractor specified in the main contract by the client/designer',
       'A subcontractor with a registered company name',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A named subcontractor is one specifically identified in the main contract documents by the client or designer. The main contractor is expected to use them but retains responsibility for their performance.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'back-to-back',
     question: "What does a 'back-to-back' subcontract clause achieve?",
     options: [
-      'Allows the subcontractor to contract directly with the client',
       'Passes identical obligations and risks from main contract to subcontract',
-      'Requires physical proximity of workers',
-      'Links two separate projects together',
+      'Inductive and capacitive loads storing and releasing energy',
+      'They vary with the square of the load current (I squared R)',
+      'Energy audits - requirements, methodology and reporting',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Back-to-back clauses mirror the main contract terms into the subcontract, passing down obligations, risks, and conditions so the subcontractor is bound by the same requirements as the main contractor.',
   },
@@ -58,10 +58,10 @@ const quickCheckQuestions = [
     question:
       'Under the Housing Grants, Construction and Regeneration Act 1996, pay-when-paid clauses are:',
     options: [
-      'Always enforceable',
+      'Additional strain relief and environmental sealing',
       'Unenforceable except where the payer is insolvent',
-      'Only valid for contracts under £50,000',
-      'Required in all subcontracts',
+      'Escalate the issue to the supervisor or project manager',
+      'Much faster communication and more scalable',
     ],
     correctIndex: 1,
     explanation:
@@ -71,12 +71,12 @@ const quickCheckQuestions = [
     id: 'flow-down',
     question: 'Flow-down clauses in subcontracts are used to:',
     options: [
-      'Specify water management responsibilities',
       'Transfer obligations from the main contract to subcontractors',
-      'Define groundwater drainage requirements',
-      'Establish payment flow timing',
+      'Specify accuracy requirements, calibration status, and training needs',
+      'Highest level of qualification and competence',
+      'Monitoring and updating material levels daily',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Flow-down clauses transfer specific obligations from the main contract to subcontractors, ensuring compliance with client requirements, specifications, health and safety standards, and quality procedures throughout the supply chain.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       'A main contractor on a hospital M&E project must ensure their electrical subcontractor complies with NHS-specific requirements. Which mechanism achieves this?',
     options: [
-      'Verbal instruction',
+      '1:4 ratio (1 out for every 4 up)',
+      'V_line = sqrt(3) x V_phase',
       'Flow-down clauses in the subcontract',
-      'Separate client contract',
-      'Insurance policy',
+      'The Risk Assessment & Method Statement (RAMS)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Flow-down clauses incorporate the client's specific requirements from the main contract into the subcontract, ensuring the subcontractor is bound by NHS standards, infection control procedures, and commissioning protocols.",
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       'An electrical subcontractor completes work on 15th March. Under the Construction Act, by when must they submit an application for payment?',
     options: [
-      'Immediately upon completion',
+      'To provide security for remedying defects discovered after completion',
+      'They should occur before work begins and regularly throughout the project',
+      'Submit a formal notice of delay and extension of time claim',
       'By the date specified in the contract or a reasonable time before the due date',
-      'Within 30 days of project completion',
-      'Only when the main contractor receives payment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Construction Act requires payment application by the date specified in the contract. If not specified, applications should be submitted a reasonable time before the due date to allow the paying party to process the claim.',
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the purpose of retention in subcontracts?',
     options: [
-      'To delay payment indefinitely',
       'To provide security for remedying defects discovered after completion',
-      "To fund the main contractor's overheads",
-      'To penalise slow progress',
+      'The main contractor should compensate the subcontractor',
+      'Submit a formal notice of delay and extension of time claim',
+      'To ensure designs comply with specifications and coordinate with other trades',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Retention (typically 3-5%) is held to provide the main contractor with funds to remedy any defects that become apparent during the defects liability period. Half is usually released at practical completion, half after the defects period.',
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       'A building services subcontractor is instructed to work weekends to recover programme delay. Who is responsible for the additional costs if the delay was caused by late information from the main contractor?',
     options: [
-      'The subcontractor bears their own costs',
+      'Submit a formal notice of delay and extension of time claim',
       'The main contractor should compensate the subcontractor',
-      'The client pays directly',
-      'Costs are always shared equally',
+      '7 days written notice after the final date for payment',
+      'To provide security for remedying defects discovered after completion',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: "What does 'contra-charging' mean in subcontract management?",
     options: [
-      'Charging for work done by others',
+      "Detailed activities, durations, dependencies, resource allocation and key milestones",
+      "They should occur before work begins and regularly throughout the project",
       "Deducting costs from a subcontractor's payment for work they should have done or damage they caused",
-      'Adding VAT to invoices',
-      'Changing the contract sum',
+      "To ensure designs comply with specifications and coordinate with other trades",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Contra-charging is when the main contractor deducts costs from a subcontractor's payment, typically for remedial work the main contractor had to arrange because the subcontractor failed to complete or correct defective work. Proper notice and evidence is required.",
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'Which statement about subcontractor coordination meetings is correct?',
     options: [
-      'They are optional social gatherings',
+      'To ensure designs comply with specifications and coordinate with other trades',
+      'Detailed activities, durations, dependencies, resource allocation and key milestones',
+      '7 days written notice after the final date for payment',
       'They should occur before work begins and regularly throughout the project',
-      'Only the main contractor and client attend',
-      'They are only required when problems occur',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Coordination meetings should begin in the pre-construction phase to resolve interface issues and continue regularly throughout the project. Attendance by all relevant trades ensures clash detection, sequencing agreement, and timely resolution of issues.',
   },
@@ -182,12 +182,12 @@ const quizQuestions = [
     question:
       "An M&E subcontractor's work is delayed because the structural frame is 4 weeks late. What should the subcontractor do first?",
     options: [
-      'Stop work and wait',
       'Submit a formal notice of delay and extension of time claim',
-      'Leave the site permanently',
-      'Complete unrelated work on another project',
+      '7 days written notice after the final date for payment',
+      'They should occur before work begins and regularly throughout the project',
+      'The main contractor should compensate the subcontractor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The subcontractor should immediately submit formal written notice of the delay event and its impact on their programme. Timely notification is essential—most contracts require notice within a specified period (often 14-28 days) or claims may be barred.',
   },
@@ -195,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: "What information should a subcontractor's programme contain?",
     options: [
-      'Only the start and finish dates',
+      'They should occur before work begins and regularly throughout the project',
       'Detailed activities, durations, dependencies, resource allocation and key milestones',
-      'Just the contract sum breakdown',
-      'Only the materials schedule',
+      'By the date specified in the contract or a reasonable time before the due date',
+      'To provide security for remedying defects discovered after completion',
     ],
     correctAnswer: 1,
     explanation:
@@ -209,12 +209,12 @@ const quizQuestions = [
     question:
       'Under JCT subcontract terms, what is the typical notice period required before suspending work for non-payment?',
     options: [
-      'Immediate suspension allowed',
+      'Submit a formal notice of delay and extension of time claim',
+      'To provide security for remedying defects discovered after completion',
       '7 days written notice after the final date for payment',
-      '30 days notice',
-      'No suspension right exists',
+      'The main contractor should compensate the subcontractor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Under JCT and the Construction Act, if payment is not made by the final date, the subcontractor may suspend work after giving 7 days written notice. The right to suspend provides a powerful remedy whilst not being as drastic as termination.',
   },
@@ -224,10 +224,10 @@ const quizQuestions = [
     options: [
       'Health and safety requirements',
       'Quality management systems',
-      "The main contractor's profit margin",
       'Programme obligations',
+      "The main contractor's profit margin",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Flow-down clauses pass on technical requirements, programme obligations, H&S standards, quality systems, and client-specific requirements. The main contractor's profit margin is a commercial matter not passed to subcontractors.",
   },
@@ -235,12 +235,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the primary purpose of subcontractor design submission reviews?',
     options: [
-      'To delay the project',
       'To ensure designs comply with specifications and coordinate with other trades',
-      'To transfer design liability entirely to the main contractor',
-      'To increase paperwork',
+      '7 days written notice after the final date for payment',
+      'By the date specified in the contract or a reasonable time before the due date',
+      'Detailed activities, durations, dependencies, resource allocation and key milestones',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Design submission reviews ensure subcontractor designs meet specification requirements, coordinate with architectural and other M&E elements, and identify clashes or issues before installation. This process is critical for building services coordination.',
   },

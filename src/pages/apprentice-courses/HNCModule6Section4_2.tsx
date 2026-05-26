@@ -33,10 +33,10 @@ const quickCheckQuestions = [
     options: [
       'Carbon emitted during construction',
       'Carbon emissions from building materials production',
-      'Carbon emissions from energy use during building operation',
       'Carbon sequestered by building vegetation',
+      'Carbon emissions from energy use during building operation',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       "Operational carbon refers to the greenhouse gas emissions resulting from the energy consumed during the operational phase of a building - heating, cooling, lighting, ventilation, and equipment use over the building's lifetime.",
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'regulated-energy',
     question: 'Which of these is classified as a regulated energy load under Part L?',
     options: [
+      'Lifts and escalators',
       'Desktop computers and monitors',
       'Kitchen appliances in a commercial building',
       'Space heating from the central HVAC system',
-      'Lifts and escalators',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Regulated loads are those controlled by Building Regulations Part L and include fixed building services: heating, cooling, hot water, ventilation, and fixed lighting. Space heating from central HVAC is regulated; computers, kitchen appliances, and lifts are unregulated.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'eui-benchmark',
     question: 'What does Energy Use Intensity (EUI) measure?',
     options: [
-      'Total building energy consumption in kWh',
       'Energy consumption per unit floor area per year (kWh/m²/year)',
-      'Carbon emissions per occupant',
-      'Cost of energy per square metre',
+      'Events that are likely to happen or could reasonably be expected',
+      'Record the significant findings of the COSHH assessment in writing',
+      'Report it to their employer and seek occupational health assessment',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Energy Use Intensity (EUI) measures energy consumption normalised by floor area, typically expressed as kWh/m²/year. This allows meaningful comparison between buildings of different sizes and enables benchmarking against sector targets.',
   },
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'carbon-hierarchy',
     question: 'In the carbon reduction hierarchy, which action should be prioritised first?',
     options: [
-      'Install renewable energy generation',
-      'Purchase carbon offsets',
+      'PVC degrades above 70°C — then it cracks, then it burns',
+      'Power supplied to field devices through communication cables',
       'Reduce energy demand through fabric and efficiency',
-      'Switch to low-carbon fuels',
+      'When additional insulation or identification is required',
     ],
     correctIndex: 2,
     explanation:
@@ -86,7 +86,12 @@ const quizQuestions = [
     id: 1,
     question:
       'According to CIBSE TM46, what is the typical electricity benchmark for a general office building?',
-    options: ['50 kWh/m²/year', '95 kWh/m²/year', '150 kWh/m²/year', '220 kWh/m²/year'],
+    options: [
+      '50 kWh/m²/year',
+      '95 kWh/m²/year',
+      '150 kWh/m²/year',
+      '220 kWh/m²/year',
+    ],
     correctAnswer: 1,
     explanation:
       'CIBSE TM46 provides benchmark values for Display Energy Certificates. A general office has a typical electricity benchmark of 95 kWh/m²/year and fossil-thermal benchmark of 120 kWh/m²/year.',
@@ -95,7 +100,12 @@ const quizQuestions = [
     id: 2,
     question:
       "What percentage of a typical commercial building's total carbon footprint does operational carbon represent over a 60-year lifespan?",
-    options: ['20-30%', '40-50%', '60-80%', '90-95%'],
+    options: [
+      '90-95%',
+      '20-30%',
+      '60-80%',
+      '40-50%',
+    ],
     correctAnswer: 2,
     explanation:
       "Operational carbon typically accounts for 60-80% of a building's whole-life carbon footprint over a 60-year period. As the grid decarbonises and buildings become more efficient, this proportion is decreasing, making embodied carbon relatively more significant.",
@@ -104,8 +114,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Which document defines the methodology for calculating regulated energy in new buildings?',
-    options: ['BS 7671', 'SAP/SBEM (Part L compliance)', 'CIBSE Guide F', 'ISO 50001'],
-    correctAnswer: 1,
+    options: [
+      'Yes, but only under supervision',
+      'Building Management System',
+      'Check documentation and plan tests',
+      'SAP/SBEM (Part L compliance)',
+    ],
+    correctAnswer: 3,
     explanation:
       'SAP (Standard Assessment Procedure) for dwellings and SBEM (Simplified Building Energy Model) for non-domestic buildings are the approved methodologies under Part L for calculating regulated energy and carbon emissions for Building Regulations compliance.',
   },
@@ -113,15 +128,25 @@ const quizQuestions = [
     id: 4,
     question:
       'In a typical office building, unregulated loads (plug loads) typically account for what percentage of total electricity consumption?',
-    options: ['10-20%', '25-40%', '50-60%', '70-80%'],
-    correctAnswer: 1,
+    options: [
+      '25-40%',
+      '10-20%',
+      '50-60%',
+      '70-80%',
+    ],
+    correctAnswer: 0,
     explanation:
       "Unregulated loads (computers, equipment, small power) typically account for 25-40% of total electricity consumption in offices. This significant proportion is not addressed by Part L compliance, creating a 'performance gap' between design predictions and actual consumption.",
   },
   {
     id: 5,
     question: 'What is the UK grid electricity carbon factor used for 2025 carbon calculations?',
-    options: ['0.136 kgCO₂e/kWh', '0.193 kgCO₂e/kWh', '0.233 kgCO₂e/kWh', '0.519 kgCO₂e/kWh'],
+    options: [
+      '0.136 kgCO₂e/kWh',
+      '0.193 kgCO₂e/kWh',
+      '0.519 kgCO₂e/kWh',
+      '0.233 kgCO₂e/kWh',
+    ],
     correctAnswer: 1,
     explanation:
       'The UK grid electricity carbon factor for 2025 is approximately 0.193 kgCO₂e/kWh (SAP 10.2 methodology). This represents significant decarbonisation from historical values (0.519 in 2013) due to renewable energy growth and coal phase-out.',
@@ -130,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: 'Display Energy Certificates (DECs) are required for which buildings?',
     options: [
-      'All buildings over 50m²',
+      'Investigate, rectify, and retest before certification',
+      'Not all loads operate at maximum simultaneously',
       'Public buildings over 250m² frequently visited by the public',
-      'Only new buildings',
-      'Commercial buildings over 1000m²',
+      'Adjusting artificial lighting based on available natural light',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'DECs are required for public authority buildings over 250m² that are frequently visited by the public. They display actual measured energy performance (A-G rating) based on operational data, unlike EPCs which show design predictions.',
   },
@@ -145,11 +170,11 @@ const quizQuestions = [
       'Which strategy provides the greatest operational carbon reduction per pound invested in a typical existing building?',
     options: [
       'Installing solar PV panels',
-      'Upgrading to LED lighting with controls',
-      'Replacing the boiler with a heat pump',
       'Installing battery storage',
+      'Replacing the boiler with a heat pump',
+      'Upgrading to LED lighting with controls',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'LED lighting upgrades with intelligent controls typically offer the best carbon reduction per pound invested, with payback periods of 2-4 years and 60-80% energy savings. They also reduce cooling loads. Heat pumps and PV are effective but have longer paybacks.',
   },
@@ -157,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: "What does the term 'performance gap' refer to in building energy?",
     options: [
-      'The difference between summer and winter energy use',
       'The difference between design predictions and actual operational energy consumption',
       'The gap between renewable generation and demand',
+      'The difference between summer and winter energy use',
       'The difference between peak and baseload consumption',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The performance gap refers to the difference between predicted energy consumption (from design calculations like SBEM) and actual measured operational consumption. Studies show buildings often use 2-5 times more energy than predicted.',
   },
@@ -170,7 +195,12 @@ const quizQuestions = [
     id: 9,
     question:
       'According to LETI (London Energy Transformation Initiative), what is the target operational energy use intensity for a new office building?',
-    options: ['35 kWh/m²/year', '55 kWh/m²/year', '90 kWh/m²/year', '120 kWh/m²/year'],
+    options: [
+      '35 kWh/m²/year',
+      '55 kWh/m²/year',
+      '90 kWh/m²/year',
+      '120 kWh/m²/year',
+    ],
     correctAnswer: 1,
     explanation:
       'LETI recommends an operational EUI target of 55 kWh/m²/year for new office buildings to achieve net zero carbon. This is significantly lower than typical practice (150-300 kWh/m²/year) and requires integrated design, efficient systems, and good controls.',
@@ -179,7 +209,12 @@ const quizQuestions = [
     id: 10,
     question:
       'Which building services system typically has the highest operational carbon impact in a UK office building?',
-    options: ['Lighting', 'Small power', 'Space heating and cooling', 'Hot water'],
+    options: [
+      'Basic operation verification',
+      'Cat5e or higher Ethernet cable',
+      'Space heating and cooling',
+      'Reduce current or resistance',
+    ],
     correctAnswer: 2,
     explanation:
       'Space heating and cooling (HVAC) typically accounts for 40-50% of operational energy in UK office buildings, making it the largest contributor to operational carbon. This makes HVAC efficiency and low-carbon heating critical for decarbonisation.',
@@ -188,12 +223,12 @@ const quizQuestions = [
     id: 11,
     question: "What is sub-metering's primary role in operational carbon management?",
     options: [
-      'To reduce energy costs through better tariffs',
-      'To comply with Part L requirements',
+      'The module\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s communication address and point configuration',
+      'Heat cannot dissipate effectively through thermal insulation',
+      'A detailed assessment focused on a particular activity or operation',
       'To identify consumption patterns and target reduction opportunities',
-      'To generate revenue from demand response',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Sub-metering enables disaggregation of energy consumption by end-use, time, and zone. This data identifies inefficiencies, tracks performance against benchmarks, verifies savings from interventions, and supports behavioural change programmes.',
   },
@@ -201,12 +236,12 @@ const quizQuestions = [
     id: 12,
     question: 'In the NABERS UK energy rating scheme, what does a 5-star rating represent?',
     options: [
+      'Market-leading, exceptional performance',
+      'Good practice performance',
       'Minimum legal compliance',
       'Typical market performance',
-      'Good practice performance',
-      'Market-leading, exceptional performance',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'NABERS UK rates operational energy performance from 1 to 6 stars. A 5-star rating represents market-leading performance (top 10-15% of buildings). A 6-star rating indicates exceptional, aspirational performance beyond current best practice.',
   },

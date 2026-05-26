@@ -38,7 +38,12 @@ const checks = [
     id: 'm3-s4-sub1-identify-pme',
     question:
       'You lift the cover on a domestic cut-out. There’s a single combined earth/neutral arriving from the DNO, and the earth strap to the MET clamps onto the neutral block. Which earthing system is this?',
-    options: ['TN-S', 'TN-C-S (PME)', 'TT', 'IT'],
+    options: [
+      'TT',
+      'TN-C-S (PME)',
+      'TN-S',
+      'IT',
+    ],
     correctIndex: 1,
     explanation:
       'PEN (combined Protective Earth + Neutral) arriving from the DNO and split into N + PE at the consumer’s service position is the signature of TN-C-S, specifically the PME variant. It’s the most common arrangement on new UK domestic supplies.',
@@ -48,12 +53,12 @@ const checks = [
     question:
       'A rural property has its own earth electrode driven into the ground next to the meter box. The DNO supply provides line and neutral only — no earth. Which protection is non-negotiable at the origin?',
     options: [
+      'Have a current thorough examination report (within 6 months), be operated by a trained person, and the lift must be planned',
+      'The embodied carbon of the material (emissions from extraction, processing and transport), recyclability, durability and suitability for the application',
       'A 100 mA time-delayed RCD (or 30 mA) at origin — TT systems require RCD protection because Ze is too high to clear faults via overcurrent devices alone.',
-      'Just an MCB main switch is fine.',
-      'A surge protection device only.',
-      'No special protection — TT is just like TN-C-S.',
+      'Without load, the speed rises uncontrollably to a dangerous level (runaway) because the weak field at light load allows the speed to increase, which further weakens the field',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'TT relies on a local earth electrode whose resistance is typically in the tens or even hundreds of ohms — far too high for an MCB to ever see fault current high enough to trip in 0.4 s. RCD protection at origin (often 100 mA S-type upstream of 30 mA RCDs/RCBOs on final circuits) is what makes a TT installation safe and compliant.',
   },
@@ -62,10 +67,10 @@ const checks = [
     question:
       'The new BS 7671 A4:2026 introduces a PNB layout under TN-C-S. What is the headline difference between PNB and the more familiar PME?',
     options: [
-      'PNB is the same as PME, just a new name.',
+      'Inform the supervisor that they have not been trained on this specific equipment, request appropriate training or supervision, and offer to assist a competent colleague to develop their skills in a controlled manner',
       'In PNB the PEN conductor is earthed at a single point close to the consumer’s installation (between transformer and supply terminals), not at multiple points along the network as in PME.',
-      'PNB has no earth at all.',
-      'PNB only applies to three-phase supplies.',
+      'Stay with them, take it seriously, and signpost them to emergency help (Samaritans 116 123, A&E, GP, 999 if in immediate danger) — confidentiality has to bend when life is at risk',
+      'Switchgear, controlgear, drives, controls, interlocks, monitoring devices etc. — verifying they operate as intended including after the protective device test',
     ],
     correctIndex: 1,
     explanation:
@@ -79,10 +84,10 @@ const quizQuestions = [
     question:
       'Which letters in "TN-C-S" tell you what about the system?',
     options: [
-      'T = isolated, N = no earth, C = combined, S = single phase',
+      'They contain specific installation requirements, torque settings, clearances and operating parameters that ensure the component works safely and correctly',
       'T = source directly earthed, N = installation exposed parts connected to that source earth via PE, C = combined N+PE in part of the system, S = separated N and PE in another part',
-      'T = transformer, N = neutral only, C = circuit, S = supplied',
-      'They’re just brand letters used by DNOs',
+      'The Network and Information Systems Regulations 2018 requiring operators of essential services to manage cybersecurity risks to their OT systems and report significant incidents',
+      'Because surge currents rise so quickly that even a few centimetres of conductor adds significant inductive impedance, raising the voltage the equipment downstream sees.',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,8 +97,13 @@ const quizQuestions = [
     id: 2,
     question:
       'You arrive at a Victorian terrace. The supply head is the old lead-sheathed cable, and a green/yellow strap clamps the lead sheath itself to the MET. Which earthing system is this?',
-    options: ['TN-C-S (PME)', 'TN-S', 'TT', 'IT'],
-    correctAnswer: 1,
+    options: [
+      'TT',
+      'TN-C-S (PME)',
+      'TN-S',
+      'IT',
+    ],
+    correctAnswer: 2,
     explanation:
       'Lead sheath of the supply cable used as the protective conductor with separate neutral all the way back to the source = classic TN-S. Increasingly rare on new supplies (DNOs convert to TN-C-S when they upgrade), but you’ll still meet plenty in older urban housing.',
   },
@@ -102,12 +112,12 @@ const quizQuestions = [
     question:
       'A TT installation has an earth electrode resistance of 80 Ω. A 30 mA RCD protects the final circuits. Roughly what is the prospective touch voltage in a fault, and is the RCD compliance rule (Ra × IΔn ≤ 50 V) satisfied?',
     options: [
-      'Touch voltage = 80 × 0.030 = 2.4 V — well within the 50 V limit, so compliant.',
-      'Touch voltage = 80 × 30 = 2400 V — fails badly.',
       'Touch voltage ≈ 50 V — exactly on the limit, so marginal.',
+      'Touch voltage = 80 × 30 = 2400 V — fails badly.',
       'Touch voltage = 230 V — always at full supply voltage in TT.',
+      'Touch voltage = 80 × 0.030 = 2.4 V — well within the 50 V limit, so compliant.',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'BS 7671 411.5.3 requires Ra × IΔn ≤ 50 V. With Ra = 80 Ω and IΔn = 0.030 A, that’s 2.4 V — comfortably inside 50 V. The Table 41.5 maximum Zs for a 30 mA RCD is 1667 Ω, so an 80 Ω electrode is more than fine. The RCD does the work; the electrode just gives the fault current somewhere to flow.',
   },
@@ -116,12 +126,12 @@ const quizQuestions = [
     question:
       'An IT system is most likely to be found in which of these locations?',
     options: [
-      'A typical UK semi-detached house.',
-      'A small office above a shop.',
       'A hospital operating theatre or a process plant where supply continuity matters more than instant disconnection.',
-      'A standard caravan park pitch.',
+      'Same sequence daily: brief planning, MIT identification, most important work first',
+      'Eliminate the substance from the process or substitute it with a non-sensitising alternative',
+      'They provide recognised standards that can be used as evidence of good practice',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'IT (source not directly earthed, or earthed via high impedance) is industrial/medical only. The point is that a first earth fault doesn’t immediately disconnect the supply — alarmed but kept running — because in a theatre or chemical process the loss of supply is the bigger danger than the fault itself.',
   },
@@ -130,10 +140,10 @@ const quizQuestions = [
     question:
       'Why is a Type AC RCD increasingly considered obsolete on modern domestic installations regardless of earthing system?',
     options: [
-      'It only works on TT systems.',
+      'A loose neutral connection (high-resistance N) shifting the star point — confirm with N-E and L-N tests, then isolate, prove dead, and remake the neutral termination',
       'It only detects sinusoidal AC fault currents — modern electronic loads (LED drivers, EV chargers, inverters) can produce DC components that magnetically saturate the RCD’s core, blinding it to a real fault.',
-      'It’s too sensitive.',
-      'It’s only rated for 110 V.',
+      'Tell him you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve noticed changes and you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re worried, ask directly if he\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s having thoughts of suicide, offer to help him make a safety plan, and call professional support if needed',
+      'To remove paint, oxide, scale and any non-conductive surface coating that would create a high-resistance joint between the clamp jaw and the pipe — Reg 526.1 requires durable electrical continuity.',
     ],
     correctAnswer: 1,
     explanation:
@@ -144,12 +154,12 @@ const quizQuestions = [
     question:
       'On a TN-C-S (PME) supply, why does BS 7671 set tighter conditions on bonding conductor sizes (often 10 mm² minimum) than on a TN-S supply with the same load?',
     options: [
-      'Because PME is a newer system.',
+      'Circuit ID, conductor csa (live + cpc), reference method, OCPD type/rating, R1+R2 (or R2), insulation resistance, polarity, Zs, RCD operating current and trip time, plus AFDD where fitted',
+      'Heat-pump-ready electrical infrastructure (typically a 16-32 A radial spare way), EV charging provision (Approved Document S), PV and battery enabling (capped cables, suitably sized supply), and zero gas connections from 2025 in many new builds.',
       'Because the PEN conductor carries normal neutral current — in an open-circuit fault on the PEN, the consumer’s earthing terminal can rise toward line voltage, and oversized bonding conductors limit the resulting current and voltage on extraneous parts.',
-      'Because PME uses aluminium cable.',
-      'Bonding conductors are always the same size regardless of system.',
+      'Lawfulness, fairness and transparency — personal data must be processed lawfully (one of the six bases), fairly (in a way the data subject would reasonably expect), and transparently (the data subject knows what\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s happening with their data via a privacy notice).',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A broken PEN (a PME open-circuit fault) is the headline risk: the customer’s "earth" lifts toward line voltage and dumps neutral return current through their bonding conductors and water/gas pipes. 10 mm² minimum main bonding (and thicker if Table 54.8 demands it for cables > 35 mm²) keeps the resulting touch voltages survivable.',
   },
@@ -158,12 +168,12 @@ const quizQuestions = [
     question:
       'You inherit a job where a previous electrician fitted a fuel-pump installation on a TT-derived supply but used the same 16 mm² earthing conductor specification as the adjacent TN-C-S domestic supply. Why is that wrong?',
     options: [
-      'It’s not — earthing conductor sizing is identical between systems.',
+      'Carrying out any building, civil engineering or engineering construction work; including alteration, renovation, demolition, conversion, repair, maintenance, decoration, removal of structures, installation, removal, maintenance of mechanical / electrical / similar services.',
+      'Twist the strands tightly, insert fully into the ferrule, and crimp with the correct tool using the matching die — verify the ferrule is correctly shaped with no strand visible outside the ferrule',
+      'Where an installation incorporates switching between sources of supply, the switching arrangement must prevent parallel operation of sources unless the installation is specifically designed for it',
       'The earthing conductor in TT runs to a buried earth electrode and must comply with Table 54.1 minimum sizes for buried conductors (e.g. 25 mm² Cu unprotected, 16 mm² Cu protected against corrosion only). 16 mm² unprotected Cu in soil corrodes and undersizes the run.',
-      'TT systems don’t need an earthing conductor.',
-      'TN-C-S earthing conductors must be larger than TT.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Table 54.1 sets minimum sizes for an earthing conductor buried in the ground, with separate columns for "protected against corrosion" and "not protected against corrosion". A 16 mm² unprotected Cu run buried in soil corrodes over years and the earth path silently degrades. Spec to the table, and use a corrosion-protected sheath where appropriate.',
   },
@@ -173,9 +183,9 @@ const quizQuestions = [
       'A forecourt’s petrol filling-station installation is fed from the same DNO as the adjoining shop, which is on TN-C-S (PME). Why is the forecourt typically converted to TT for the dispensers themselves?',
     options: [
       'PME conditions don’t apply on petrol forecourts because of the explosive-atmosphere risk — a PEN fault could cause sparks at the metalwork. Industry practice (and the energy networks’ guidance) is to derive a TT zone for the hazardous-area equipment.',
-      'TT is cheaper to install.',
-      'TN-C-S is illegal at any commercial site.',
-      'There’s no real reason; it’s personal preference.',
+      'The duty holder has a specified period to remedy the contravention identified; failure to comply is a criminal offence, and the duty holder has the right to appeal to an employment tribunal within 21 days',
+      'Acknowledge the person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s wish for confidentiality, explore the immediacy of risk, explain the limits of confidentiality where there is risk to life, and collaboratively agree next steps including whether crisis services are needed before the GP appointment',
+      'Connections of conductors, identification of conductors, routing of cables, conductor selection (csa, current capacity, voltage drop), choice and setting of protective devices, presence of fire barriers, methods of protection against electric shock — full list in Reg 642.3',
     ],
     correctAnswer: 0,
     explanation:

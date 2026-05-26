@@ -150,39 +150,74 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
         </div>
       </div>
 
-      <div className="px-4 space-y-4">
-        <div>
-          <h2 className="text-2xl font-bold text-white mb-1">Safety Templates</h2>
-          <p className="text-sm text-white">
-            UK electrical safety document templates ready to adopt and customise
+      <div className="px-4 space-y-6">
+        {/* Editorial hero */}
+        <div className="space-y-2 pt-2">
+          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow">
+            Safety templates
+          </div>
+          <h1 className="text-[26px] sm:text-[32px] font-semibold tracking-tight leading-[1.05] text-white">
+            Skip the writing.
+          </h1>
+          <p className="text-[13.5px] text-white/65 leading-relaxed max-w-xl">
+            UK electrical safety documents grounded in BS 7671 + HSE guidance. Adopt, fill your
+            company details, and you've got an inspector-ready document — no writing from scratch.
           </p>
         </div>
 
-        {/* Tab switcher */}
-        <div className="flex rounded-xl border border-white/[0.08] bg-white/[0.03] p-1">
+        {/* 3-stat value strip */}
+        <div className="-mx-4 sm:mx-0 grid grid-cols-3 gap-px bg-black sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]">
+          <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-5 sm:py-5">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+              Available
+            </div>
+            <div className="mt-2 text-[24px] sm:text-[28px] font-semibold tabular-nums tracking-tight leading-none text-elec-yellow">
+              {(templates ?? []).length}
+            </div>
+          </div>
+          <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-5 sm:py-5">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+              Adopted
+            </div>
+            <div className="mt-2 text-[24px] sm:text-[28px] font-semibold tabular-nums tracking-tight leading-none text-emerald-400">
+              {(userDocs ?? []).length}
+            </div>
+          </div>
+          <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-5 sm:py-5">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+              Time saved
+            </div>
+            <div className="mt-2 text-[24px] sm:text-[28px] font-semibold tabular-nums tracking-tight leading-none text-white">
+              ~{(userDocs ?? []).length * 4}h
+            </div>
+          </div>
+        </div>
+
+        {/* Editorial tab switcher — underline style */}
+        <div className="grid grid-cols-2 border-b border-white/[0.08]">
           <button
+            type="button"
             onClick={() => setTab('browse')}
-            className={`flex-1 h-10 rounded-lg text-sm font-semibold touch-manipulation transition-all flex items-center justify-center gap-2 ${
-              tab === 'browse' ? 'bg-elec-yellow text-black' : 'text-white'
+            className={`h-12 border-b-2 transition-colors touch-manipulation text-[12px] font-semibold uppercase tracking-[0.18em] ${
+              tab === 'browse'
+                ? 'border-elec-yellow text-elec-yellow'
+                : 'border-transparent text-white/55 hover:text-white'
             }`}
           >
-            <BookOpen className="h-4 w-4" />
             Browse
           </button>
           <button
+            type="button"
             onClick={() => setTab('my-docs')}
-            className={`flex-1 h-10 rounded-lg text-sm font-semibold touch-manipulation transition-all flex items-center justify-center gap-2 ${
-              tab === 'my-docs' ? 'bg-elec-yellow text-black' : 'text-white'
+            className={`h-12 border-b-2 transition-colors touch-manipulation text-[12px] font-semibold uppercase tracking-[0.18em] inline-flex items-center justify-center gap-2 ${
+              tab === 'my-docs'
+                ? 'border-elec-yellow text-elec-yellow'
+                : 'border-transparent text-white/55 hover:text-white'
             }`}
           >
-            <FolderOpen className="h-4 w-4" />
-            My Documents
+            Your adopted
             {(userDocs ?? []).length > 0 && (
-              <span
-                className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                  tab === 'my-docs' ? 'bg-black/20 text-black' : 'bg-white/[0.1] text-white'
-                }`}
-              >
+              <span className="text-[11px] font-medium tabular-nums text-white/55">
                 {(userDocs ?? []).length}
               </span>
             )}
@@ -245,72 +280,96 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                 }
               />
             ) : (
-              <div className="space-y-2 pb-8">
+              <div className="space-y-3 pb-8">
                 {filtered.map((template) => {
-                  const catConfig = CATEGORIES.find((c) => c.key === template.category);
-                  const CatIcon = catConfig?.icon ?? FileText;
                   const isAdopted = adoptedTemplateIds.has(template.id);
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  const v2: any = (template as any).structured_content_v2;
+                  const hasV2 = !!v2 && (template.version >= 2 || Array.isArray(v2.hazards));
+                  const v2Hazards = hasV2 && Array.isArray(v2.hazards) ? v2.hazards.length : 0;
+                  const v2Steps =
+                    hasV2 && Array.isArray(v2.method_steps) ? v2.method_steps.length : 0;
                   const stats = getTemplateStats(template.structured_content);
+                  const hazardCount = v2Hazards > 0 ? v2Hazards : stats.hazards;
+                  const stepCount = v2Steps > 0 ? v2Steps : stats.steps;
 
                   return (
                     <motion.button
                       key={template.id}
-                      whileTap={{ scale: 0.98 }}
+                      whileTap={{ scale: 0.99 }}
                       onClick={() => setViewingTemplate(template)}
-                      className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] active:bg-white/[0.06] transition-colors touch-manipulation"
+                      className="w-full text-left bg-[hsl(0_0%_10%)] border border-white/[0.08] sm:rounded-2xl hover:border-white/15 active:bg-[hsl(0_0%_12%)] transition-colors touch-manipulation"
                     >
-                      <div className="p-3 space-y-2">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-white/[0.05] flex items-center justify-center flex-shrink-0">
-                            <CatIcon className={`h-5 w-5 ${catConfig?.colour ?? 'text-white'}`} />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <h3 className="text-[13px] font-semibold text-white truncate">
-                                {template.name}
-                              </h3>
-                              {isAdopted && (
-                                <span className="text-[9px] font-bold text-green-400 bg-green-500/10 px-1.5 py-0.5 rounded-full flex-shrink-0">
-                                  Adopted
-                                </span>
-                              )}
-                            </div>
-                            <p className="text-[11px] text-white truncate">
-                              {template.category}
-                              {template.subcategory ? ` · ${template.subcategory}` : ''}
-                            </p>
-                          </div>
-                          <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
+                      <div className="p-4 sm:p-5 space-y-3">
+                        {/* Pills row */}
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-white/[0.05] text-white/85">
+                            {template.category}
+                          </span>
+                          {hasV2 && (
+                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-elec-yellow/15 text-elec-yellow">
+                              BS 7671 compliant
+                            </span>
+                          )}
+                          {isAdopted && (
+                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-emerald-500/15 text-emerald-400">
+                              Adopted
+                            </span>
+                          )}
+                          {template.work_type && (
+                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-medium uppercase tracking-[0.12em] text-white/45">
+                              {template.work_type}
+                            </span>
+                          )}
                         </div>
+
+                        {/* Title */}
+                        <h3 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-white leading-snug">
+                          {template.name}
+                        </h3>
 
                         {/* Summary */}
                         {template.summary && (
-                          <p className="text-[11px] text-white line-clamp-2 pl-[52px]">
+                          <p className="text-[13px] text-white/65 leading-relaxed line-clamp-2">
                             {template.summary}
                           </p>
                         )}
 
-                        {/* Stats + regulation badges */}
-                        {(stats.sections > 0 || template.regulatory_references.length > 0) && (
-                          <div className="flex items-center gap-1.5 pl-[52px] flex-wrap">
-                            <StatChip icon={AlertTriangle} label="Hazards" value={stats.hazards} />
-                            <StatChip icon={Footprints} label="Steps" value={stats.steps} />
-                            <StatChip
-                              icon={ListChecks}
-                              label="Check items"
-                              value={stats.checkItems}
-                            />
-                            {template.regulatory_references.slice(0, 3).map((ref) => (
+                        {/* Stats row (editorial, monochrome) */}
+                        {(hazardCount > 0 || stepCount > 0) && (
+                          <div className="flex items-baseline gap-4 text-[11.5px] text-white/55 tabular-nums">
+                            {hazardCount > 0 && (
+                              <span>
+                                <span className="text-white">{hazardCount}</span> hazards
+                              </span>
+                            )}
+                            {stepCount > 0 && (
+                              <span>
+                                <span className="text-white">{stepCount}</span> steps
+                              </span>
+                            )}
+                            {stats.ppeItems > 0 && (
+                              <span>
+                                <span className="text-white">{stats.ppeItems}</span> PPE items
+                              </span>
+                            )}
+                          </div>
+                        )}
+
+                        {/* Regulation pills — editorial, monochrome */}
+                        {template.regulatory_references.length > 0 && (
+                          <div className="flex items-center gap-1.5 flex-wrap pt-2 border-t border-white/[0.06]">
+                            {template.regulatory_references.slice(0, 4).map((ref) => (
                               <span
                                 key={ref}
-                                className="text-[9px] font-semibold text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded-full"
+                                className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-medium tabular-nums bg-[hsl(0_0%_13%)] border border-white/[0.10] text-white/85"
                               >
                                 {ref}
                               </span>
                             ))}
-                            {template.regulatory_references.length > 3 && (
-                              <span className="text-[9px] text-white">
-                                +{template.regulatory_references.length - 3}
+                            {template.regulatory_references.length > 4 && (
+                              <span className="text-[10.5px] text-white/45 tabular-nums">
+                                +{template.regulatory_references.length - 4}
                               </span>
                             )}
                           </div>
@@ -340,104 +399,113 @@ export function SafetyTemplateLibrary({ onBack }: SafetyTemplateLibraryProps) {
                 }
               />
             ) : (
-              <div className="space-y-2 pb-8">
+              <div className="space-y-3 pb-8">
                 {filteredDocs.map((doc) => {
                   const stats = getTemplateStats(doc.structured_content);
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  const v2: any = (doc as any).structured_content_v2;
+                  const isV2Doc =
+                    !!v2 && (doc.version === 2 || Array.isArray(v2.hazards));
+                  const v2H = isV2Doc && Array.isArray(v2.hazards) ? v2.hazards.length : 0;
+                  const v2S =
+                    isV2Doc && Array.isArray(v2.method_steps) ? v2.method_steps.length : 0;
+                  const hazardCount = v2H > 0 ? v2H : stats.hazards;
+                  const stepCount = v2S > 0 ? v2S : stats.steps;
                   const reviewWarning = reviewDateWarning(doc.review_date);
 
                   return (
                     <motion.div
                       key={doc.id}
-                      whileTap={{ scale: 0.98 }}
-                      className="w-full text-left rounded-xl border border-white/[0.08] bg-white/[0.03] transition-colors touch-manipulation"
+                      whileTap={{ scale: 0.99 }}
+                      className="bg-[hsl(0_0%_10%)] border border-white/[0.08] sm:rounded-2xl hover:border-white/15 transition-colors touch-manipulation"
                     >
                       <button
                         onClick={() => setEditingDocument(doc)}
-                        className="w-full text-left p-3 space-y-2"
+                        className="w-full text-left p-4 sm:p-5 space-y-3"
                       >
-                        {/* Top row: icon + title + status */}
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                            <FileText className="h-5 w-5 text-elec-yellow" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <h3 className="text-[13px] font-semibold text-white truncate">
-                                {doc.name}
-                              </h3>
-                              <Badge
-                                className={`border-none text-[9px] font-bold flex-shrink-0 ${
-                                  STATUS_COLOUR[doc.status] ?? STATUS_COLOUR.Draft
-                                }`}
-                              >
-                                {doc.status}
-                              </Badge>
-                            </div>
-                            {/* Meta row: company + last edited */}
-                            <div className="flex items-center gap-2 mt-0.5">
-                              {doc.company_name && (
-                                <span className="text-[10px] text-white truncate">
-                                  {doc.company_name}
-                                </span>
-                              )}
-                              {doc.company_name && doc.updated_at && (
-                                <span className="text-[10px] text-white">·</span>
-                              )}
-                              {doc.updated_at && (
-                                <span className="text-[10px] text-white flex items-center gap-0.5 flex-shrink-0">
-                                  <Clock className="h-2.5 w-2.5" />
-                                  {relativeDate(doc.updated_at)}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                          <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-                        </div>
-
-                        {/* Stats + review date row */}
-                        <div className="flex items-center gap-1.5 pl-[52px] flex-wrap">
-                          {stats.sections > 0 && (
-                            <StatChip icon={Layers} label="Sections" value={stats.sections} />
+                        {/* Pills row */}
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span
+                            className={`inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] ${
+                              STATUS_COLOUR[doc.status] ?? STATUS_COLOUR.Draft
+                            }`}
+                          >
+                            {doc.status}
+                          </span>
+                          {isV2Doc && (
+                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-elec-yellow/15 text-elec-yellow">
+                              BS 7671 compliant
+                            </span>
                           )}
-                          <StatChip icon={AlertTriangle} label="Hazards" value={stats.hazards} />
-                          <StatChip icon={Footprints} label="Steps" value={stats.steps} />
-                          <StatChip
-                            icon={ListChecks}
-                            label="Check items"
-                            value={stats.checkItems}
-                          />
                           {reviewWarning === 'overdue' && (
-                            <span className="text-[9px] font-bold text-red-400 bg-red-500/10 px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
-                              <Calendar className="h-2.5 w-2.5" />
-                              Overdue
+                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-red-500/15 text-red-400">
+                              Review overdue
                             </span>
                           )}
                           {reviewWarning === 'soon' && (
-                            <span className="text-[9px] font-bold text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
-                              <Calendar className="h-2.5 w-2.5" />
+                            <span className="inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] bg-amber-500/15 text-amber-400">
                               Review due
                             </span>
                           )}
                         </div>
+
+                        {/* Title */}
+                        <h3 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-white leading-snug">
+                          {doc.name}
+                        </h3>
+
+                        {/* Meta row: company + last edited */}
+                        <div className="flex items-baseline gap-2 text-[11.5px] text-white/55 tabular-nums">
+                          {doc.company_name && (
+                            <span className="truncate">{doc.company_name}</span>
+                          )}
+                          {doc.company_name && doc.updated_at && (
+                            <span className="text-white/30">·</span>
+                          )}
+                          {doc.updated_at && (
+                            <span className="shrink-0">{relativeDate(doc.updated_at)}</span>
+                          )}
+                        </div>
+
+                        {/* Stats row */}
+                        {(hazardCount > 0 || stepCount > 0 || stats.checkItems > 0) && (
+                          <div className="flex items-baseline gap-4 pt-2 border-t border-white/[0.06] text-[11.5px] text-white/55 tabular-nums">
+                            {hazardCount > 0 && (
+                              <span>
+                                <span className="text-white">{hazardCount}</span> hazards
+                              </span>
+                            )}
+                            {stepCount > 0 && (
+                              <span>
+                                <span className="text-white">{stepCount}</span> steps
+                              </span>
+                            )}
+                            {stats.checkItems > 0 && (
+                              <span>
+                                <span className="text-white">{stats.checkItems}</span> checks
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </button>
 
-                      {/* Action buttons row */}
-                      <div className="flex items-center gap-2 px-3 pb-3 pt-0 pl-[52px]">
+                      {/* Action buttons row — editorial text links */}
+                      <div className="flex items-center gap-5 px-4 sm:px-5 pb-4 border-t border-white/[0.06] pt-3">
                         <button
+                          type="button"
                           onClick={() => setEditingDocument(doc)}
-                          className="h-9 px-3 rounded-lg bg-white/[0.06] text-white text-[11px] font-semibold flex items-center gap-1.5 touch-manipulation active:bg-white/[0.1] transition-colors"
+                          className="text-[12px] font-semibold text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation"
                         >
-                          <Edit3 className="h-3.5 w-3.5" />
                           Edit
                         </button>
                         <button
+                          type="button"
                           onClick={(e) => {
                             e.stopPropagation();
                             setSharingDocument(doc);
                           }}
-                          className="h-9 px-3 rounded-lg bg-white/[0.06] text-white text-[11px] font-semibold flex items-center gap-1.5 touch-manipulation active:bg-white/[0.1] transition-colors"
+                          className="text-[12px] font-medium text-white/55 hover:text-white transition-colors touch-manipulation"
                         >
-                          <Share2 className="h-3.5 w-3.5" />
                           Share
                         </button>
                       </div>

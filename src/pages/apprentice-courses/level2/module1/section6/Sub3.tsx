@@ -48,12 +48,12 @@ const checks = [
     question:
       'A bricklayer slips on Tuesday. He’s off work the rest of that week and the following Monday. Does that hit the RIDDOR over-7-day threshold?',
     options: [
-      'No — it has to be over 14 consecutive days',
+      'Switches faster, has no mechanical wear, but can only switch DC loads (for NPN/PNP types)',
+      'High-frequency voltage pulses from a VSD inducing current through the motor bearings',
+      'The fracture may be compressing or damaging nerves or blood vessels — this is an urgent sign',
       'Yes — anything over 7 consecutive days off normal duties (excluding the day of the accident)',
-      'No — only over-3-day injuries are RIDDOR',
-      'Yes — anything that needed first aid is RIDDOR',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Over-7-day means more than 7 consecutive days unable to do their normal work, NOT counting the day of the accident itself. Tuesday (excluded) + Wed–Mon = 6 days. Doesn’t hit RIDDOR yet. If he’s still off on the following Tuesday, that’s 7 days — still not over. He needs to be off into the day AFTER, then it’s reportable. Three-day injuries went out in 2012.',
   },
@@ -62,12 +62,12 @@ const checks = [
     question:
       'You witness a serious accident on site. Who is legally required to make the RIDDOR report?',
     options: [
-      'You, because you witnessed it',
-      'The injured person',
+      'Review existing documentation such as site plans, previous risk assessments and incident reports',
+      'All parties who sign accept responsibility for their respective roles',
+      'Study for 25 minutes, take a 5-minute break, repeat four times, then take a longer 15-30 minute break',
       'The "responsible person" — usually the employer, or the person in control of the premises',
-      'The HSE inspector',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'RIDDOR puts the duty on the "responsible person" — for an employee, that’s their employer; for self-employed working on someone else’s premises, the person in control of those premises; for the self-employed at their own gaff, themselves. Witnesses report it INTERNALLY (accident book, supervisor) — the employer does the legal RIDDOR notification.',
   },
@@ -76,10 +76,10 @@ const checks = [
     question:
       'A worker breaks their wrist falling from a stepladder — definitely a specified injury. What’s the legal deadline to notify the HSE?',
     options: [
-      'Within 24 hours',
+      'Gnaw marks and stripped insulation',
       'Within 10 days of the accident',
-      'Within 28 days',
-      'When convenient',
+      '500W per m² or similar rules of thumb',
+      'Circuit will not function as intended',
     ],
     correctIndex: 1,
     explanation:
@@ -94,12 +94,12 @@ const quizQuestions = [
     id: 1,
     question: 'What does RIDDOR stand for?',
     options: [
-      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
       'Regulations for Industrial Death, Disease and Operating Risks',
+      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
       'Recording of Incidents, Diseases, Dangers and Outcome Reports',
       'Reporting of Industrial Damage and Operating Risks',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'RIDDOR 2013 — Reporting of Injuries, Diseases and Dangerous Occurrences Regulations. UK statutory instrument, made under HASAWA, defines what types of incidents must be reported to the HSE.',
   },
@@ -107,10 +107,10 @@ const quizQuestions = [
     id: 2,
     question: 'Who has the legal duty to make a RIDDOR report?',
     options: [
-      'Anyone who witnessed the accident',
-      'The injured person, in person, at the HSE office',
+      'To ensure fire extinguishers, hoses, and equipment remain visible and accessible',
+      'Claiming to have a growth mindset without genuinely embracing effort, struggle, and feedback',
       'The "responsible person" — typically the employer, self-employed person, or person in control of the premises',
-      'The first aider who treated the injury',
+      'Regular inspections, staged testing, compliance checks, and documented reviews',
     ],
     correctAnswer: 2,
     explanation:
@@ -120,12 +120,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which of the following is a Specified Injury under RIDDOR Schedule 1?',
     options: [
-      'A small cut needing a plaster',
-      'A bruised knee from a fall',
+      'Icn = max interrupt (may damage), Ics = max without loss of performance',
+      'V × I (the product of RMS voltage and current)',
+      'The smallest change in voltage it can detect and display is 0.1 V',
       'A bone fracture (other than to fingers, thumbs and toes)',
-      'A headache after a long shift',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Schedule 1 specified injuries include bone fractures (other than fingers/thumbs/toes), amputations, sight loss (temporary or permanent), serious burns, scalpings, loss of consciousness from head injury or asphyxia, crush injuries leading to internal organ damage, and 24-hour hospital admission for serious injuries.',
   },
@@ -134,12 +134,12 @@ const quizQuestions = [
     question:
       'An apprentice is off work for 9 consecutive days after a workplace injury. What category of RIDDOR report applies?',
     options: [
-      'Specified injury',
       'Over-7-day injury',
+      'Specified injury',
       'Dangerous occurrence',
       'No report needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Over-7-day means more than 7 consecutive days (excluding the day of the accident) unable to perform their normal work. Reportable within 15 days. The old "over-3-day" threshold was replaced in 2012.',
   },
@@ -147,12 +147,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which of these is a Dangerous Occurrence under RIDDOR Schedule 2?',
     options: [
-      'A late delivery',
-      'An employee is off sick with a cold',
+      'Simpler wiring using open/close signals without position feedback',
       'An overhead crane collapses, even though nobody is hurt',
-      'A delayed lunch break',
+      'Responding to changing technology and market conditions',
+      'To provide additional connection points for sensors and actuators',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Dangerous occurrences are near-miss events with serious harm potential — collapse of lifting gear, electrical short causing fire/explosion, unintended collapse of scaffold over 5 m, accidental release of biological agents, etc. Reportable even when nobody is injured.',
   },
@@ -161,12 +161,12 @@ const quizQuestions = [
     question:
       'A worker is killed in a workplace accident. What is the legal reporting requirement?',
     options: [
-      'Email the HSE within 30 days',
+      'Resistance at mid-point approximately equal to end-to-end values',
+      'To provide a safe working environment, so far as is reasonably practicable',
       'Notify the HSE by quickest practical means (phone), confirmed in writing within 10 days',
-      'Wait until the inquest concludes',
-      'Tell the family first, then HSE within 28 days',
+      'Conservation requirements, structural limitations, access restrictions, and specialist techniques',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Fatalities must be reported by the quickest practical means — usually the HSE Incident Contact Centre on 0345 300 9923 — followed by an F2508 form within 10 days. Out-of-hours, the same number routes to a duty officer for a fatal incident.',
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     question:
       'You discover a worker fell ill 8 days ago and they’ve only just told you they were off normal duties for 9 days. The original incident was 17 days ago. What now?',
     options: [
-      'Don’t bother — too late to report',
+      'Coordinating between employer, college, and apprentice to ensure learning progresses',
+      'Test location, values, device ratings, and compliance status',
+      'Use non-damaging, removable marking methods and seek conservation advice',
       'Submit the over-7-day RIDDOR report now and document why notification was late',
-      'Wait until the next monthly H&S meeting',
-      'Cover it up',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Late notifications still happen and are still better than no notification. Submit immediately. The HSE prefers a late report with an honest explanation over a missing one — but late notification IS a breach in itself, and persistent lateness can trigger an inspection.',
   },
@@ -189,12 +189,12 @@ const quizQuestions = [
     question:
       'What is the difference between the company accident book and a RIDDOR report?',
     options: [
-      'They’re the same thing',
       'The accident book is internal (every injury, near-miss, first-aid event); RIDDOR is the legal external report to the HSE for serious incidents only',
-      'The accident book is for visitors only',
-      'RIDDOR replaces the accident book',
+      'Identify hazards, decide who might be harmed, evaluate risks, record findings, implement controls, plan monitoring, provide information/training, review assessment',
+      'Incomplete scaffolds must not be used and must be marked with appropriate warning signs to prevent inadvertent use',
+      'Withdraw the harness from service as it has exceeded the 6-month formal inspection interval, obtain a currently inspected harness, and report the overdue inspection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Accident book = internal record of EVERY injury / near-miss / first-aid event, kept under the Social Security (Claims and Payments) Regulations and used for internal trend-spotting and any future insurance/Industrial Injuries claims. RIDDOR = legal duty to notify the HSE of SERIOUS incidents only. Both must happen — they don’t replace each other.',
   },

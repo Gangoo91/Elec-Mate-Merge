@@ -36,11 +36,11 @@ const checks = [
     question: 'Two bar magnets — north end pushed toward north end. What happens?',
     options: [
       'They snap together hard',
-      'They push each other away',
-      'Nothing — magnets only attract',
       'They spin to face the same way',
+      'Nothing — magnets only attract',
+      'They push each other away',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Like poles repel. North to north (or south to south) pushes apart. Unlike poles (N to S) attract. This is the core rule the rest of magnetism is built on.',
   },
@@ -50,10 +50,10 @@ const checks = [
     options: [
       'A copper 22mm pipe offcut',
       'A length of aluminium trunking',
-      'A galvanised steel cable cleat',
       'A brass meter terminal',
+      'A galvanised steel cable cleat',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Steel is ferromagnetic — iron-based, so a magnet grips it. Copper, aluminium and brass aren’t. That’s why your stud detector only picks up the steel screws and joist hangers, not the copper pipework behind them.',
   },
@@ -61,10 +61,10 @@ const checks = [
     id: 'magnets-field-direction',
     question: 'Which way do magnetic field lines run OUTSIDE a bar magnet?',
     options: [
-      'South to north',
+      'They don’t go anywhere — the field just sits there',
       'North to south',
       'Both ways at once',
-      'They don’t go anywhere — the field just sits there',
+      'South to north',
     ],
     correctIndex: 1,
     explanation:
@@ -76,7 +76,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'How many poles does every magnet have, no matter how big or small?',
-    options: ['One', 'Two', 'Three', 'Depends on the material'],
+    options: [
+      'One',
+      'Two',
+      'Three',
+      'Depends on the material',
+    ],
     correctAnswer: 1,
     explanation:
       'Two — always. Snap a bar magnet in half and you don’t get a lone north and a lone south. You get two smaller magnets, each with its own N and S. Magnetic monopoles don’t exist in nature.',
@@ -84,15 +89,25 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Like poles do what to each other?',
-    options: ['Attract', 'Repel', 'Cancel out', 'Nothing'],
-    correctAnswer: 1,
+    options: [
+      'Cancel out',
+      'Attract',
+      'Repel',
+      'Nothing',
+    ],
+    correctAnswer: 2,
     explanation:
       'Like poles repel. The same word as electric charges of the same sign — and like the rule for charges, it’s the foundation of every motor and generator that follows.',
   },
   {
     id: 3,
     question: 'A magnet sticks to which of these materials?',
-    options: ['Copper', 'Aluminium', 'Brass', 'Iron'],
+    options: [
+      'Brass',
+      'Copper',
+      'Aluminium',
+      'Iron',
+    ],
     correctAnswer: 3,
     explanation:
       'Iron, nickel, cobalt and most steels are ferromagnetic. Copper, aluminium and brass aren’t — they’re excellent conductors but completely ignore a permanent magnet.',
@@ -100,7 +115,12 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Outside a bar magnet, field lines run from:',
-    options: ['North to south', 'South to north', 'East to west', 'No fixed direction'],
+    options: [
+      'North to south',
+      'South to north',
+      'East to west',
+      'No fixed direction',
+    ],
     correctAnswer: 0,
     explanation:
       'External field lines leave the N pole, curve through the air and enter the S pole. Inside the magnet they run S to N so the loop closes.',
@@ -111,8 +131,8 @@ const quizQuestions = [
     options: [
       'In the middle of the magnet',
       'Right at the two poles',
-      'A few centimetres away from each pole',
       'It’s the same everywhere',
+      'A few centimetres away from each pole',
     ],
     correctAnswer: 1,
     explanation:
@@ -122,12 +142,12 @@ const quizQuestions = [
     id: 6,
     question: 'You drop a magnet hard onto a concrete floor. What can happen?',
     options: [
-      'Nothing — magnets are unbreakable',
+      'Calculate and record where significant',
+      'Isolation and lock-off procedures',
       'It can lose some of its magnetism',
-      'It gets stronger',
-      'It changes polarity',
+      '7.28Ω (Zs = 0.95 × 230 / (5 × 6) = 7.283Ω)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Knocks, heat and being held next to an opposing field can scramble the alignment of the domains inside the metal — the magnet weakens. That’s why proper magnets get stored with a "keeper" bar across the poles.',
   },
@@ -135,12 +155,12 @@ const quizQuestions = [
     id: 7,
     question: 'A compass needle is itself a small magnet. Why does it point north?',
     options: [
-      'The Earth pulls iron everywhere',
+      'A tube that spans between the inner and outer ledgers, supporting the platform boards',
+      'In an area of clean, uncontaminated air, away from exhaust fumes and other contaminant sources',
+      'Cherry-red colouration of the skin, along with headache and confusion',
       'The Earth has its own magnetic field — its south magnetic pole is near geographic north',
-      'Gravity drags the needle',
-      'Someone glued it that way',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Earth acts like a giant bar magnet. Its magnetic south pole sits near geographic north — so the north end of your compass needle (an unlike pole) is pulled towards it. Useful confusion for the odd exam question.',
   },
@@ -148,12 +168,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why does this matter to a UK electrician?',
     options: [
-      'It doesn’t — it’s just physics',
       'Every motor, transformer, RCD coil and contactor in the trade runs on this same poles-and-fields principle',
-      'Only generators use magnets',
-      'Only data cables use magnets',
+      'Automatic assumptions or prejudices that influence decisions without the person being aware of them',
+      'Use 1.2 Nm — the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s specific figure overrides the generic guidance',
+      'When there is an immediate risk to life, such as someone about to act on suicidal thoughts or who has seriously harmed themselves',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Every spinning motor, every step-down transformer, every RCD that detects an imbalance, every contactor that pulls in — they all rely on the same poles, the same fields and the same attract/repel rule you’ve just met.',
   },

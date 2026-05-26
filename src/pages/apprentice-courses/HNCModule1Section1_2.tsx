@@ -37,10 +37,10 @@ const quickCheckQuestions = [
     options: [
       'Only qualified electricians',
       'Only electrical contractors',
-      'All employers and employees at work',
       'Only building services engineers',
+      'All employers and employees at work',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'EAWR 1989 applies to ALL employers and employees who work with or near electrical systems. The regulations impose duties on everyone at work, not just electrical specialists.',
   },
@@ -48,10 +48,10 @@ const quickCheckQuestions = [
     id: 'regulation-14',
     question: 'Under Regulation 14, when is live working permitted?',
     options: [
-      'Whenever it is more convenient',
+      'Compensating for lamp depreciation to save energy',
       'Only when unreasonable to work dead and reasonable to work live',
-      'Only by qualified electricians',
-      'Never under any circumstances',
+      'Safe isolation, first aid and evacuation procedures',
+      'Nature of hazard, compatibility, comfort, fit, maintenance requirements',
     ],
     correctIndex: 1,
     explanation:
@@ -61,12 +61,12 @@ const quickCheckQuestions = [
     id: 'regulation-16',
     question: 'What does Regulation 16 require regarding competence?',
     options: [
-      'A minimum of 5 years experience',
-      'NVQ Level 3 qualification',
+      'Fire-resistant cable (e.g., MICC, FP cables)',
+      'Systematic process of verifying systems perform as designed',
+      'Want to support colleagues and negotiate on industry issues',
       'Technical knowledge, experience and ability to prevent danger',
-      'Registration with a competent persons scheme',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Regulation 16 requires persons to possess technical knowledge or experience, or be under appropriate supervision, to prevent danger and injury. It defines competence by outcome, not by specific qualifications.',
   },
@@ -74,10 +74,10 @@ const quickCheckQuestions = [
     id: 'due-diligence',
     question: "What is the 'defence of due diligence' under EAWR 1989?",
     options: [
-      'Ignorance of the law',
-      'Having insurance cover',
+      'Overload protects against moderate sustained overcurrent; short circuit protects against very high fault currents',
+      'Risk assessments, method statements, training records, insurance',
       'Taking all reasonable steps and exercising all due diligence to avoid committing an offence',
-      'Employing a qualified electrician',
+      'GS38 — with fused leads, finger guards and maximum 4 mm exposed tip',
     ],
     correctIndex: 2,
     explanation:
@@ -89,8 +89,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which regulation of EAWR 1989 deals with the construction of electrical systems?',
-    options: ['Regulation 4', 'Regulation 5', 'Regulation 8', 'Regulation 12'],
-    correctAnswer: 0,
+    options: [
+      'Regulation 5',
+      'Regulation 4',
+      'Regulation 8',
+      'Regulation 12',
+    ],
+    correctAnswer: 1,
     explanation:
       'Regulation 4 requires that all systems shall at all times be of such construction as to prevent danger, so far as is reasonably practicable. This covers initial design, selection and installation.',
   },
@@ -98,12 +103,12 @@ const quizQuestions = [
     id: 2,
     question: 'What does Regulation 12 require regarding means of cutting off supply?',
     options: [
-      'Main switch only at the origin of supply',
+      'Electrical equipment to be suitable for its environment or protected from adverse conditions',
+      'Adequate working space, means of access and lighting for safe working',
       'Suitable means for cutting off supply and isolation from every source of electrical energy',
-      'Circuit breakers on all circuits',
-      'Emergency stop buttons in all areas',
+      'Conductors must have earthing or other suitable precautions to prevent danger if they become charged',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Regulation 12 requires suitable means for cutting off the supply of electrical energy to any electrical equipment AND for isolation of any electrical equipment from every source of electrical energy.',
   },
@@ -111,20 +116,25 @@ const quizQuestions = [
     id: 3,
     question: "Under EAWR 1989, what is considered 'danger'?",
     options: [
-      'Any electrical installation',
+      'Conductors must have earthing or other suitable precautions to prevent danger if they become charged',
+      'Electrical equipment to be suitable for its environment or protected from adverse conditions',
+      'Adequate working space, means of access and lighting for safe working',
       'Risk of injury from electric shock, burn, fire or explosion arising from electricity',
-      'Working at height near electrical equipment',
-      'Exceeding design current ratings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Regulation 2 defines 'danger' as risk of injury from electric shock, electrical burn, electrical explosion or arcing, or from fire or explosion initiated by electrical energy.",
   },
   {
     id: 4,
     question: 'Which regulation deals with work on or near live conductors?',
-    options: ['Regulation 4', 'Regulation 13', 'Regulation 14', 'Regulation 16'],
-    correctAnswer: 2,
+    options: [
+      'Regulation 14',
+      'Regulation 13',
+      'Regulation 4',
+      'Regulation 16',
+    ],
+    correctAnswer: 0,
     explanation:
       'Regulation 14 specifically addresses work on or near live conductors. It requires that no person shall work on or near live conductors unless certain strict conditions are met.',
   },
@@ -132,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: 'What must be ensured before dead working according to Regulation 13?',
     options: [
-      'The circuit breaker is switched off',
+      'Risk of injury from electric shock, burn, fire or explosion arising from electricity',
       'Adequate precautions are taken to prevent the conductor becoming live',
-      'A permit to work is issued',
-      'The installation is less than 5 years old',
+      'Unless the cost and effort greatly outweigh the risk reduction',
+      'Insulated tools, barriers, PPE, accompaniment, and competent supervision',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,10 +155,10 @@ const quizQuestions = [
     id: 6,
     question: "What does 'so far as is reasonably practicable' mean under EAWR?",
     options: [
-      'If it is technically possible',
-      'When it is convenient',
+      'Adequate working space, means of access and lighting for safe working',
+      'Insulated tools, barriers, PPE, accompaniment, and competent supervision',
       'Unless the cost and effort greatly outweigh the risk reduction',
-      'Only if specifically requested',
+      'Both employers and employees with duties under the regulations',
     ],
     correctAnswer: 2,
     explanation:
@@ -157,8 +167,13 @@ const quizQuestions = [
   {
     id: 7,
     question: 'Which regulation requires that electrical systems be maintained to prevent danger?',
-    options: ['Regulation 4', 'Regulation 5', 'Regulation 6', 'Regulation 10'],
-    correctAnswer: 0,
+    options: [
+      'Regulation 10',
+      'Regulation 5',
+      'Regulation 6',
+      'Regulation 4',
+    ],
+    correctAnswer: 3,
     explanation:
       'Regulation 4(2) states that all systems shall be maintained so as to prevent, so far as is reasonably practicable, such danger. This is part of the overall Regulation 4 on systems construction.',
   },
@@ -166,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'What does Regulation 6 require for adverse or hazardous environments?',
     options: [
-      'Special training for all workers',
       'Electrical equipment to be suitable for its environment or protected from adverse conditions',
-      'Inspection every 6 months',
-      'Only IP68 rated equipment',
+      'Adequate precautions are taken to prevent the conductor becoming live',
+      'Conductors must have earthing or other suitable precautions to prevent danger if they become charged',
+      'Insulated tools, barriers, PPE, accompaniment, and competent supervision',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 6 requires that electrical equipment exposed to adverse or hazardous environments (mechanical damage, weather, temperature, wet, dirty, corrosive, flammable) shall be suitable or protected.',
   },
@@ -180,10 +195,10 @@ const quizQuestions = [
     question:
       'In a building services context, what does Regulation 7 require for conductors in a system?',
     options: [
-      'All conductors must be copper',
+      'Risk of injury from electric shock, burn, fire or explosion arising from electricity',
       'Conductors must have earthing or other suitable precautions to prevent danger if they become charged',
-      'Minimum 2.5mm² cable for all circuits',
-      'Conductors must be tested annually',
+      'Insulated tools, barriers, PPE, accompaniment, and competent supervision',
+      'Electrical equipment to be suitable for its environment or protected from adverse conditions',
     ],
     correctAnswer: 1,
     explanation:
@@ -193,10 +208,10 @@ const quizQuestions = [
     id: 10,
     question: 'Who can be prosecuted under EAWR 1989?',
     options: [
-      'Only employers',
-      'Only employees working with electricity',
+      'Insulated tools, barriers, PPE, accompaniment, and competent supervision',
+      'Adequate precautions are taken to prevent the conductor becoming live',
       'Both employers and employees with duties under the regulations',
-      'Only the client or building owner',
+      'Unless the cost and effort greatly outweigh the risk reduction',
     ],
     correctAnswer: 2,
     explanation:
@@ -206,12 +221,12 @@ const quizQuestions = [
     id: 11,
     question: 'What does Regulation 15 require regarding working space, access and lighting?',
     options: [
-      'Natural daylight in all electrical rooms',
+      'Risk of injury from electric shock, burn, fire or explosion arising from electricity',
+      'Unless the cost and effort greatly outweigh the risk reduction',
+      'Both employers and employees with duties under the regulations',
       'Adequate working space, means of access and lighting for safe working',
-      'Minimum 3 metre clearance around switchgear',
-      'Emergency lighting in all areas',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 15 requires adequate working space, adequate means of access, and adequate lighting for all work activities on or near electrical equipment where danger may arise.',
   },
@@ -220,12 +235,12 @@ const quizQuestions = [
     question:
       'Which precautions would satisfy Regulation 14 for live working on a building services distribution board?',
     options: [
-      'Simply informing colleagues you are working live',
       'Insulated tools, barriers, PPE, accompaniment, and competent supervision',
-      'Working quickly to minimise exposure time',
-      'Having a first aider on standby',
+      'Adequate precautions are taken to prevent the conductor becoming live',
+      'Unless the cost and effort greatly outweigh the risk reduction',
+      'Both employers and employees with duties under the regulations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 14 requires suitable precautions including: insulated tools, barriers/screens, appropriate PPE, accompaniment by another competent person, and competent supervision where appropriate.',
   },

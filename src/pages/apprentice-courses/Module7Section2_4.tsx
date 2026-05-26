@@ -16,11 +16,11 @@ const quizQuestions = [
       'An installation has a design current (Ib) of 25A. The protective device has a nominal current (In) of 32A, and the cable has a current-carrying capacity (Iz) of 30A. Is this design compliant?',
     options: [
       'Yes, it meets all requirements',
-      'No, the protective device rating is too high',
       'No, the cable capacity is insufficient',
+      'No, the protective device rating is too high',
       'No, both the device and cable are incorrectly sized',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'The design fails because In (32A) exceeds Iz (30A). The relationship Ib ≤ In ≤ Iz must be maintained, so either a larger cable (Iz ≥ 32A) or smaller protective device (In ≤ 30A) is required.',
   },
@@ -28,12 +28,12 @@ const quizQuestions = [
     id: 2,
     question: 'A Type B MCB has a magnetic trip setting of:',
     options: [
-      '3-5 times rated current',
-      '5-10 times rated current',
       '10-14 times rated current',
       '2-3 times rated current',
+      '3-5 times rated current',
+      '5-10 times rated current',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Type B MCBs have a magnetic trip characteristic of 3-5 times the rated current, making them suitable for general purpose applications with normal inrush currents.',
   },
@@ -41,8 +41,13 @@ const quizQuestions = [
     id: 3,
     question:
       'When applying correction factors for cable current-carrying capacity, the ambient temperature correction factor (Ca) for 35°C when the cable is rated at 30°C is:',
-    options: ['1.0', '0.94', '1.06', '0.87'],
-    correctAnswer: 1,
+    options: [
+      '1.06',
+      '1.0',
+      '0.87',
+      '0.94',
+    ],
+    correctAnswer: 3,
     explanation:
       "For thermoplastic cables, the correction factor for 35°C ambient (5°C above the 30°C reference) is 0.94, reducing the cable's current-carrying capacity.",
   },
@@ -63,12 +68,12 @@ const quizQuestions = [
     id: 5,
     question: 'Load diversity factors are applied to:',
     options: [
+      'Heat transfer coefficient increases, improving heat output',
       'Account for the probability that all loads will not operate simultaneously',
-      'Increase the safety margin in calculations',
-      'Compensate for voltage drop',
-      'Adjust for temperature variations',
+      'Equal to or greater than the actual PSCC at that point',
+      'Dizziness and nausea from inhaling solvent vapours in a confined space',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Diversity factors account for the realistic probability that all connected loads will not operate at full load simultaneously, allowing for more economical circuit design.',
   },

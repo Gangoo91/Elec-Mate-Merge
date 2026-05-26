@@ -33,8 +33,13 @@ const quickCheckQuestions = [
     id: 'star-voltage',
     question:
       'In a star-connected system, what is the relationship between line voltage (VL) and phase voltage (Vph)?',
-    options: ['VL = Vph', 'VL = √3 × Vph', 'VL = Vph / √3', 'VL = 2 × Vph'],
-    correctIndex: 1,
+    options: [
+      'VL = Vph',
+      'VL = Vph / √3',
+      'VL = √3 × Vph',
+      'VL = 2 × Vph',
+    ],
+    correctIndex: 2,
     explanation:
       'In star connection, line voltage is √3 (1.732) times the phase voltage. With UK 230V phase voltage: VL = 1.732 × 230V = 400V.',
   },
@@ -42,7 +47,12 @@ const quickCheckQuestions = [
     id: 'delta-current',
     question:
       'In a delta-connected system, what is the relationship between line current (IL) and phase current (Iph)?',
-    options: ['IL = Iph', 'IL = √3 × Iph', 'IL = Iph / √3', 'IL = 3 × Iph'],
+    options: [
+      'IL = 3 × Iph',
+      'IL = √3 × Iph',
+      'IL = Iph / √3',
+      'IL = Iph',
+    ],
     correctIndex: 1,
     explanation:
       'In delta connection, line current is √3 (1.732) times the phase current. This is the inverse of the star voltage relationship.',
@@ -52,19 +62,24 @@ const quickCheckQuestions = [
     question: 'What are the standard UK three-phase supply voltages?',
     options: [
       '380V line, 220V phase',
-      '400V line, 230V phase',
-      '415V line, 240V phase',
       '440V line, 254V phase',
+      '415V line, 240V phase',
+      '400V line, 230V phase',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'UK standard supply is 400V between lines and 230V phase-to-neutral (±10% tolerance). This was harmonised with European standards.',
   },
   {
     id: 'phase-sequence',
     question: 'What is the standard phase sequence for UK three-phase supplies?',
-    options: ['L1-L3-L2', 'L1-L2-L3', 'R-Y-B', 'A-B-C'],
-    correctIndex: 1,
+    options: [
+      'L1-L3-L2',
+      'R-Y-B',
+      'L1-L2-L3',
+      'A-B-C',
+    ],
+    correctIndex: 2,
     explanation:
       'UK standard phase sequence is L1-L2-L3 (formerly R-Y-B or Red-Yellow-Blue). Correct phase sequence is critical for motor rotation direction.',
   },
@@ -74,14 +89,24 @@ const quizQuestions = [
   {
     id: 1,
     question: 'A star-connected load has a phase voltage of 230V. What is the line voltage?',
-    options: ['133V', '230V', '400V', '690V'],
-    correctAnswer: 2,
+    options: [
+      '133V',
+      '400V',
+      '230V',
+      '690V',
+    ],
+    correctAnswer: 1,
     explanation: 'VL = √3 × Vph = 1.732 × 230V = 398.4V ≈ 400V',
   },
   {
     id: 2,
     question: 'In a delta connection, if the line voltage is 400V, what is the phase voltage?',
-    options: ['133V', '230V', '400V', '690V'],
+    options: [
+      '690V',
+      '133V',
+      '400V',
+      '230V',
+    ],
     correctAnswer: 2,
     explanation:
       'In delta connection, VL = Vph. The line voltage equals the phase voltage, so Vph = 400V.',
@@ -89,22 +114,37 @@ const quizQuestions = [
   {
     id: 3,
     question: 'A delta-connected motor draws 15A phase current. What is the line current?',
-    options: ['8.7A', '15A', '26A', '45A'],
-    correctAnswer: 2,
+    options: [
+      '15A',
+      '8.7A',
+      '45A',
+      '26A',
+    ],
+    correctAnswer: 3,
     explanation: 'IL = √3 × Iph = 1.732 × 15A = 26A (rounded)',
   },
   {
     id: 4,
     question: 'What is the phase angle between consecutive phases in a three-phase system?',
-    options: ['90°', '120°', '180°', '240°'],
-    correctAnswer: 1,
+    options: [
+      '120°',
+      '90°',
+      '180°',
+      '240°',
+    ],
+    correctAnswer: 0,
     explanation:
       'Three-phase systems have 120° phase displacement between each phase. This creates the rotating magnetic field essential for motors.',
   },
   {
     id: 5,
     question: 'A star-connected heater bank draws 40A line current. What is the phase current?',
-    options: ['23.1A', '40A', '69.3A', '120A'],
+    options: [
+      '23.1A',
+      '40A',
+      '120A',
+      '69.3A',
+    ],
     correctAnswer: 1,
     explanation:
       'In star connection, IL = Iph. The line current equals the phase current, so Iph = 40A.',
@@ -114,11 +154,11 @@ const quizQuestions = [
     question: 'Why is phase sequence important for three-phase motors?',
     options: [
       "It affects the motor's power factor",
-      'It determines the direction of motor rotation',
       "It changes the motor's rated current",
+      'It determines the direction of motor rotation',
       "It affects the motor's insulation class",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Phase sequence determines the direction of the rotating magnetic field, which controls motor rotation. Swapping any two phases reverses rotation.',
   },
@@ -126,8 +166,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A three-phase distribution board is fed at 400V. What voltage appears between a phase and neutral?',
-    options: ['133V', '230V', '346V', '400V'],
-    correctAnswer: 1,
+    options: [
+      '133V',
+      '400V',
+      '346V',
+      '230V',
+    ],
+    correctAnswer: 3,
     explanation:
       'Vph = VL / √3 = 400V / 1.732 = 230.9V ≈ 230V. This is the UK single-phase supply voltage.',
   },
@@ -135,27 +180,37 @@ const quizQuestions = [
     id: 8,
     question: 'For voltage drop calculations in three-phase cables, which voltage is used?',
     options: [
-      'Phase voltage only',
-      'Line voltage only',
       'Both, depending on the load connection',
-      'Neither - use current only',
+      'Reduced electromagnetic interference',
+      'Solvents used for cleaning switchgear contacts',
+      'Competent persons with appropriate qualifications',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Use phase voltage (230V) for star-connected loads and line voltage (400V) for delta-connected loads in percentage calculations.',
   },
   {
     id: 9,
     question: 'What instrument is used to determine phase sequence?',
-    options: ['Multimeter', 'Clamp meter', 'Phase rotation meter', 'Oscilloscope only'],
-    correctAnswer: 2,
+    options: [
+      'Multimeter',
+      'Phase rotation meter',
+      'Clamp meter',
+      'Oscilloscope only',
+    ],
+    correctAnswer: 1,
     explanation:
       "A phase rotation meter (phase sequence indicator) determines the rotation direction. It's essential before connecting three-phase motors.",
   },
   {
     id: 10,
     question: 'In a balanced three-phase system, what current flows in the neutral?',
-    options: ['Full phase current', '√3 × phase current', 'Zero', 'Three times phase current'],
+    options: [
+      'Full phase current',
+      '√3 × phase current',
+      'Zero',
+      'Three times phase current',
+    ],
     correctAnswer: 2,
     explanation:
       'In a balanced system, the three phase currents sum to zero (120° apart). Neutral current only flows when the system is unbalanced.',

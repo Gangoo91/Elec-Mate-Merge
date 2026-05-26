@@ -42,11 +42,11 @@ const AM2Module7Section1 = () => {
       question: 'How should you allocate your time for the AM2 knowledge test?',
       options: [
         'Spend equal time on each question',
-        'Rush through easy questions first',
         'Work systematically through each question in order',
+        'Rush through easy questions first',
         'Skip difficult questions and return later',
       ],
-      correctIndex: 2,
+      correctIndex: 1,
       explanation:
         "Work systematically through each question in order. Don't get stuck on difficult questions - mark for review and return if time permits. Rushing leads to careless errors.",
     },
@@ -54,10 +54,10 @@ const AM2Module7Section1 = () => {
       id: 'question-types',
       question: 'Which AM2 knowledge test format requires the most careful attention?',
       options: [
-        'True/False questions',
+        'Diagram interpretation',
         'Multiple choice with similar answers',
         'Calculation questions',
-        'Diagram interpretation',
+        'True/False questions',
       ],
       correctIndex: 1,
       explanation:
@@ -67,12 +67,12 @@ const AM2Module7Section1 = () => {
       id: 'feedback-usage',
       question: 'How should you use practice test feedback effectively?',
       options: [
-        'Only review incorrect answers',
-        'Focus on percentage scores achieved',
         'Review all explanations and identify knowledge gaps',
-        'Repeat tests until you get 100%',
+        'To provide protection against electric shock',
+        'Fibre To The x (various deployment architectures)',
+        'Isolating the wrong circuit and creating safety hazards',
       ],
-      correctIndex: 2,
+      correctIndex: 0,
       explanation:
         'Review all explanations, even for correct answers, to reinforce learning and identify any knowledge gaps or areas of uncertainty that need attention.',
     },
@@ -80,12 +80,12 @@ const AM2Module7Section1 = () => {
       id: 'exam-strategy',
       question: "What's the best strategy when unsure about an answer?",
       options: [
-        'Always guess the longest answer',
         'Use elimination to narrow down options',
+        'Always guess the longest answer',
         "Choose 'C' - it's most often correct",
         'Skip the question entirely',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         "Use elimination to rule out obviously incorrect answers, then make an educated guess from remaining options. Don't leave questions blank unless penalised for wrong answers.",
     },
@@ -94,11 +94,11 @@ const AM2Module7Section1 = () => {
       question: 'How do you identify knowledge gaps effectively?',
       options: [
         'Count how many questions you get wrong',
-        'Note which topics you consistently struggle with',
-        'Focus only on calculation errors',
         'Review only the hardest questions',
+        'Focus only on calculation errors',
+        'Note which topics you consistently struggle with',
       ],
-      correctIndex: 1,
+      correctIndex: 3,
       explanation:
         'Track which specific topics or regulation areas you consistently struggle with, then target these areas for focused study and additional practice.',
     },
@@ -108,7 +108,12 @@ const AM2Module7Section1 = () => {
     {
       id: 1,
       question: 'What percentage do you typically need to pass the AM2 knowledge test?',
-      options: ['60%', '65%', '70%', '75%'],
+      options: [
+        '60%',
+        '65%',
+        '70%',
+        '75%',
+      ],
       correctAnswer: 1,
       explanation:
         'Most AM2 knowledge tests require 65% to pass, though this can vary by provider. Check specific requirements with your assessment centre.',
@@ -116,7 +121,12 @@ const AM2Module7Section1 = () => {
     {
       id: 2,
       question: 'How long do you typically have for the AM2 knowledge test?',
-      options: ['30 minutes', '45 minutes', '60 minutes', '90 minutes'],
+      options: [
+        '90 minutes',
+        '30 minutes',
+        '60 minutes',
+        '45 minutes',
+      ],
       correctAnswer: 2,
       explanation:
         'The AM2 knowledge test is typically 60 minutes for around 50-60 questions, averaging about 1 minute per question.',
@@ -126,12 +136,12 @@ const AM2Module7Section1 = () => {
       question:
         'Section 4 of the AM2 online test is open-book BS 7671. Which regulation requires that exposed-conductive-parts are connected to a protective conductor and that a circuit protective conductor is run to and terminated at each point in wiring?',
       options: [
-        'Regulation 131.2.1',
         'Regulation 416.2.1',
-        'Regulation 411.3.1.1',
+        'Regulation 131.2.1',
         'Regulation 522.6.1',
+        'Regulation 411.3.1.1',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Regulation 411.3.1.1 (Protective earthing) states: "Exposed-conductive-parts shall be connected to a protective conductor under the specific conditions for each type of system earthing as specified in Regulations 411.4 to 411.6 ... A circuit protective conductor shall be run to and terminated at each point in wiring and at each accessory except a lampholder having no exposed-conductive-parts and suspended from such a point." Memorise where this lives in the regs — you will need to find it under time pressure on AM2 day.',
     },
@@ -139,8 +149,13 @@ const AM2Module7Section1 = () => {
       id: 4,
       question:
         "What's the maximum measured Zs for a 32A Type B MCB under BS 7671:2018+A4:2026 (corrected for conductor temperature)?",
-      options: ['1.44Ω', '1.37Ω', '0.87Ω', '2.3Ω'],
-      correctAnswer: 1,
+      options: [
+        '1.37Ω',
+        '1.44Ω',
+        '0.87Ω',
+        '2.3Ω',
+      ],
+      correctAnswer: 0,
       explanation:
         'Under A4:2026, the maximum measured Zs for a B32 is 1.37Ω. The older 1.44Ω figure was the tabulated value before the 0.95 temperature correction was rolled into the table — make sure you use the current A4 values on AM2 day.',
     },
@@ -148,28 +163,38 @@ const AM2Module7Section1 = () => {
       id: 5,
       question: 'Which test should be carried out first on a new installation?',
       options: [
-        'Insulation resistance',
-        'Earth fault loop impedance',
+        'Computer Aided Facilities Management',
         'Continuity of protective conductors',
-        'Polarity',
+        'Prosecution and imprisonment',
+        'Working space, access, and lighting',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Continuity of protective conductors should be tested first to ensure safety before proceeding with other tests.',
     },
     {
       id: 6,
       question: "What's the minimum insulation resistance for a 230V circuit?",
-      options: ['0.5MΩ', '1.0MΩ', '1.5MΩ', '2.0MΩ'],
-      correctAnswer: 1,
+      options: [
+        '0.5MΩ',
+        '1.5MΩ',
+        '1.0MΩ',
+        '2.0MΩ',
+      ],
+      correctAnswer: 2,
       explanation:
         'Minimum insulation resistance for circuits up to 500V is 1.0MΩ, as specified in BS 7671.',
     },
     {
       id: 7,
       question: 'Which cable type requires an earth wire to be run separately?',
-      options: ['Twin and earth', '3-core and earth', 'Single core cables in conduit', 'SWA cable'],
-      correctAnswer: 2,
+      options: [
+        'Horizontal movement to the left',
+        'Guard rails and safety nets',
+        'All of the listed verifications',
+        'Single core cables in conduit',
+      ],
+      correctAnswer: 3,
       explanation:
         "Single core cables in metallic conduit require a separate earth wire as the individual cables don't include an earth conductor.",
     },
@@ -178,9 +203,9 @@ const AM2Module7Section1 = () => {
       question: 'What does RCD stand for?',
       options: [
         'Residual Current Device',
-        'Resistant Current Detector',
         'Reliable Circuit Detector',
         'Remote Control Device',
+        'Resistant Current Detector',
       ],
       correctAnswer: 0,
       explanation:
@@ -189,7 +214,12 @@ const AM2Module7Section1 = () => {
     {
       id: 9,
       question: 'Which Part of BS 7671 covers inspection and testing?',
-      options: ['Part 6', 'Part 7', 'Part 5', 'Part 4'],
+      options: [
+        'Part 6',
+        'Part 7',
+        'Part 5',
+        'Part 4',
+      ],
       correctAnswer: 1,
       explanation:
         'Part 7 of BS 7671 covers inspection and testing requirements - crucial for AM2 practical assessment understanding.',
@@ -198,8 +228,13 @@ const AM2Module7Section1 = () => {
       id: 10,
       question:
         "What's the standard test voltage for insulation resistance testing of 230V circuits?",
-      options: ['250V DC', '500V DC', '1000V DC', '230V AC'],
-      correctAnswer: 1,
+      options: [
+        '250V DC',
+        '230V AC',
+        '500V DC',
+        '1000V DC',
+      ],
+      correctAnswer: 2,
       explanation:
         'Standard test voltage for insulation resistance of 230V circuits is 500V DC as specified in BS 7671.',
     },

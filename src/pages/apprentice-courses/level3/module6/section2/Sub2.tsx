@@ -40,12 +40,12 @@ const checks = [
     question:
       'A 9 kW free-standing electric cooker (39 A nameplate at 230 V) on a circuit with an integrated 13 A cooker socket. Apply OSG Table A1 dwelling cooker diversity. What is Ib?',
     options: [
-      '39 A (full nameplate).',
+      'An Insulated-Gate Bipolar Transistor — used in industrial inverters, EV chargers and VFDs to switch hundreds of volts at hundreds of amps.',
+      'A notice that must be issued by the payer within a prescribed period, specifying the sum they consider due and the basis on which it is calculated',
       '10 A + 30 percent of (39 - 10) + 5 A (cooker socket) = 10 + 8.7 + 5 = 23.7 A. Round up to 24 A. Specify 32 A breaker, 6 mm² T+E typical.',
-      '15 A.',
-      '100 A.',
+      'The equipment identity, nature of work, hazards identified, precautions required, and signatures of issuer and recipient',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "OSG Table A1 cooker diversity: first 10 A at full demand + 30 percent of remainder + 5 A for the integrated cooker socket if present. For a 9 kW cooker that gives 24 A. The 32 A B-curve breaker on 6 mm² T+E is the typical specification, well within the 30 A diversified demand. The cooker nameplate is misleading because the rings, oven and grill rarely all run at maximum simultaneously; the 30 percent factor reflects realistic kitchen behaviour.",
   },
@@ -54,12 +54,12 @@ const checks = [
     question:
       'An open-plan office floor has 60 desk positions, each with a 4-way socket strip plus desk lamp. The IET GN1 typical office socket diversity factor would be:',
     options: [
-      '100 percent.',
+      'Financial (rework, variations not invoiced, fines, warranty void), safety (near-miss escalating to RIDDOR-reportable incident, live-conductor exposure, injury), reputational (scheme withdrawal, social media damage, lost referrals), legal (breach of contract, professional negligence, prosecution under HASAWA s.7).',
+      'Employer to provide adequate and appropriate equipment, facilities and personnel for first aid to employees if injured or taken ill at work. Reg 3 main duty; ACOP L74 gives detail. Provision determined by needs assessment.',
+      'At handover — the installer red-lines any deviations (route change, length change, cable type substitution), the designer reviews and re-runs affected calcs, the schedule is updated to as-installed values, and the as-installed schedule becomes the master operational document held by the building owner.',
       'Around 50-65 percent of nameplate aggregate, because not every desk is fully loaded simultaneously and modern office equipment (laptops, LED screens, low-power printers) pulls much less than the socket rating. GN1 has worked examples; the actual factor depends on the equipment mix and use pattern.',
-      '20 percent.',
-      'No diversity for socket outlets.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Office socket diversity is typically 50-65 percent for typical knowledge work — laptops at 30-65 W, monitors at 30-50 W, no printer per desk, occasional kettle. Heavy-use workshops or labs are higher; light-use boardrooms are lower. The number is based on equipment mix and use pattern, not just headcount. Cite the GN1 worked example or your own measured data on similar projects.",
   },
@@ -68,10 +68,10 @@ const checks = [
     question:
       'A 12-dwelling apartment block has each dwelling assessed at 60 A diversified maximum demand. The sub-main coincidence factor for 12 dwellings (per IET GN1 typical) is approximately:',
     options: [
-      '1.0 (no coincidence reduction).',
+      'Hardwood dust is a recognised carcinogen (nasal cancer) and both hardwood and softwood dust can cause occupational asthma and dermatitis',
       'Around 0.5-0.6 — the realistic peak across 12 dwellings is about half the sum, because not all dwellings peak simultaneously.',
-      '0.1.',
-      '2.0.',
+      'Hard searches appear on your credit file and can affect your score, soft searches do not',
+      'A VI doesn’t rely on selecting the correct range, has integral fused leads and shrouded probes, and can’t give a misleading reading from a wrong setting',
     ],
     correctIndex: 1,
     explanation:
@@ -84,10 +84,10 @@ const quizQuestions = [
     id: 1,
     question: 'OSG Table A1 dwelling diversity for an instantaneous shower is typically:',
     options: [
-      '50 percent.',
+      'The starting torque required by the load, the supply capacity, and the acceptable voltage dip',
       '100 percent — no diversity. The shower is a high-demand short-duration load that justifies design at full demand.',
-      '25 percent.',
-      'Not given in the OSG.',
+      'The source impedance (Ze), the line conductor impedance (R1) and the circuit protective conductor impedance (R2)',
+      'A mesh panel fitted above the toe board to prevent materials and debris falling from the scaffold',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: 'A four-bed dwelling has two ring finals (kitchen and remainder of dwelling). OSG diversity for the second ring final is approximately:',
     options: [
-      '100 percent.',
+      'Sensors need time to reach equilibrium; rushing readings before stabilisation introduces errors that appear as linearity problems',
+      'Mechanically protected (capping/conduit), OR enclosed in earthed metallic covering, OR provided with 30mA RCD additional protection',
       'Around 40 percent of the nameplate of the second (smaller-use) ring, because the second ring rarely peaks at the same instant as the busier first ring.',
-      '0 percent.',
-      '30 A regardless.',
+      'A "your word against theirs" dispute about scope and price — usually resolved in the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s favour with no record',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Domestic ring final diversity logic: largest (busiest) ring runs at high demand; subsequent rings at lower percentage because their peaks rarely coincide. The exact percentages in the current OSG vary by edition; the principle is the same. For a 4-bed dwelling the kitchen ring is typically the dominant one and the bedroom/lounge ring runs at much lower realistic demand simultaneously.",
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 3,
     question: 'For a heat pump in a domestic dwelling, the diversity assumption should be:',
     options: [
-      'Same 30 percent as electric resistance heating.',
+      'Visually organise potential causes of a problem into categories (such as people, methods, machines, materials, environment and measurement), helping ensure all possible contributing factors are considered systematically',
+      'HSE guidance "Electricity at Work — Safe Working Practices". Detailed practitioner guidance on EAWR compliance including isolation procedures, live working defences, competence and supervision. The non-statutory companion to EAWR.',
+      'The minimum hourly/weekly rate of pay, the holiday entitlement, the travel/lodging allowances, the categorisation (Adult Trainee → Labourer → Apprentice → Electrician → Approved Electrician → Technician), and the H&S handbook obligations. Grading is verified by JIB card.',
       '100 percent at full nameplate, because heat pumps run for many hours per day at high duty cycle, particularly during the heating season cold-snap morning and evening peaks. Manufacturer data may give a refined profile but defaulting to 100 percent is the safer design floor.',
-      '0 percent.',
-      'Same as a kettle.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Heat pumps run for hours, not minutes. During cold-snap mornings the heat pump may run continuously at its rated output for the entire morning warm-up period (3-4 hours), often coinciding with shower use, kettle, EV charging and cooker. The diversity assumption that worked for short-duration immersion heating does not apply. Use 100 percent as the design floor; refine downward only with manufacturer-published duty-cycle data and peak demand evidence.",
   },
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'On a small commercial fit-out (cafe, retail, office), where do diversity factors typically come from?',
     options: [
-      'OSG Table A1.',
       'IET GN1 Section 7 — broader installation categories with worked examples for offices, retail, hospitality, education, healthcare and industrial.',
-      'BS 7671 itself.',
-      'Industry custom only.',
+      'To remain near the machine, maintain communication with the operator, and be trained to operate the ground controls',
+      'Each dutyholder must cooperate with the others so far as is necessary to enable them to comply with their duties',
+      'Because testing proves the system works at a specific moment, but certification provides legal documentation of compliance with recognised standards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "OSG Table A1 is the dwelling reference. For commercial work go to IET GN1 Section 7. The GN1 categories include office, retail, hospitality, education, healthcare, industrial, with worked examples per category for typical loads. Where the project type does not match a GN1 category exactly, pick the closest and document any adjustments.",
   },
@@ -136,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: 'Coincidence factors at sub-main level for an apartment block:',
     options: [
-      'Always 1.0.',
+      'Whenever the situation exceeds your competence, when an unsafe instruction is given, when an inspector arrives, when a serious near-miss occurs, when documents you need don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t exist, when a customer requests work outside your scope.',
       'Decrease with the number of dwellings — typically 1.0 for single dwelling, 0.7 for 4-6 dwellings, 0.5-0.6 for 10-15, 0.4-0.5 for 50+. Reflects statistical smoothing of peaks across many users.',
-      'Always 0.5 regardless.',
-      'Increase with number of dwellings.',
+      'ZigBee (IEEE 802.15.4) — a low-power, short-range wireless protocol operating at 2.4 GHz that connects the electricity meter, gas meter, in-home display and potentially future smart appliances within the home',
+      'Documented on the appropriate test schedule or commissioning record, including the test conditions, measured values, pass/fail assessment, and any observations or recommendations',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,12 +149,12 @@ const quizQuestions = [
     id: 6,
     question: 'Modern dwelling load profile changes (heat pumps, EVs, batteries) require what to traditional diversity factors?',
     options: [
-      'Nothing — the OSG values stand.',
+      'They are independent. ADS asks "does the device clear in time to limit shock voltage?" The adiabatic asks "given the device’s actual clearing time at the actual fault current, will the CPC survive the energy let-through?" Both must pass.',
+      'Stop using it. Apply a \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'DO NOT USE\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' label or tag. Inform the supervisor. At base, do a function check on a known live source, calibration check against a reference instrument, visual inspection. If anything fails — send for repair / re-calibration; substitute with backup. PUWER 1998 Reg 5 + Reg 6 put the duty on the employer; the operative\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s prompt action protects the next user.',
       'Re-evaluation. Heat pumps run for longer (longer plateau, less peaky), EV chargers concentrate demand in specific hours (often peak time without smart control), batteries can shift demand. The combined effect is to flatten and broaden peaks but raise sustained demand. Traditional dwelling diversity may understate.',
-      'Doubling all factors.',
-      'Halving all factors.',
+      'Brown for line (single-phase) or brown / black / grey for L1 / L2 / L3 (three-phase). Blue for neutral. Green-and-yellow exclusively for protective conductors. The pre-2004 colour code (red, yellow, blue) is now legacy — modern installations use the harmonised European colours.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The traditional OSG dwelling diversity assumed gas heating, occasional electric resistance loads (shower, immersion, cooker, kettle) and no EV. A 2026 dwelling with heat pump + EV + battery has a fundamentally different load profile: longer-duration heat pump baseline, evening EV charging peak, possible battery export/charge cycles. BEAMA and the IET are updating guidance; designers should not rely solely on 1990s diversity numbers for 2026 designs.",
   },
@@ -162,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'For an EV charger with OZEV-compliant smart functionality (load management), the design Ib can be:',
     options: [
-      'Always full charger rating.',
+      '~19,000°C — far hotter than the surface of the sun. The thermal radiation alone causes severe burns at distance; the pressure wave injuries; molten metal projectiles. PPE rated by ATPV (cal/cm²).',
+      'First secure a financial baseline that removes money anxiety, then progressively choose work that offers more autonomy, pursue mastery in a chosen specialism, and align work with personal purpose',
+      'The location of first aid provision, emergency procedures for the specific hazards of the task, rescue arrangements for confined spaces or working at height, and the procedure for reporting incidents',
       'Reduced to the load-managed throttle setpoint AT THE SUPPLY LEVEL only, with the failure-mode demand assessed per Reg 311.2 (A4:2026) — typically the EV charger reverts to a manufacturer fall-back rate (often a fixed reduced current).',
-      'Zero (no demand).',
-      'Half the rated current.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Load-managed EV chargers throttle their charging current when total household demand exceeds a setpoint. The design can use the throttled rate at the supply level — but Reg 311.2 (A4:2026) requires the failure-mode assessment. If the load management fails, what does the charger draw? Typically a manufacturer fall-back (e.g. 16 A or 20 A fixed). Confirm the supply still survives the fall-back demand.",
   },
@@ -175,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'On a hospitality fit-out (pub, restaurant, hotel), the diversity assumption for kitchen cooking equipment is typically:',
     options: [
-      '100 percent of every appliance simultaneously.',
       '70-90 percent of cooking equipment aggregate (high coincidence at service times — multiple hobs, oven, grill running together at lunch and dinner peaks). Refrigeration is 100 percent (compressors cycle independently). Lighting is 100 percent for opening hours. EPOS / IT is low.',
-      '30 percent for everything.',
-      'No diversity for hospitality.',
+      'Knowing where the emergency gas isolation valve sits before work starts means you (or any trade in the property) can shut the gas down quickly if there is a leak — including a leak you might cause by chasing into a concealed pipe. It is part of the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'services\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' family of hazards and forms part of a defensible safe-system-of-work record.',
+      'Both basic protection (insulation, barriers/enclosures, obstacles, placing out of reach) AND fault protection (ADS, double or reinforced insulation, electrical separation, ELV) — confirming both layers per Section 41.',
+      'The inverter must detect the loss of mains supply and disconnect itself within roughly 200 ms — it must not keep generating into a section of the network the DNO has switched off, otherwise the linesman repairing a fault on the street can be electrocuted.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Hospitality cooking has high coincidence at service times — multiple hobs, oven, grill, salamander, dishwasher all running together at lunch and dinner peaks. 70-90 percent of aggregate is realistic; some chains even design at 100 percent for the kitchen sub-main. Refrigeration is 100 percent (compressor-cycle independence). Lighting is 100 percent for opening hours. The diversity stack is very different from a dwelling.",
   },

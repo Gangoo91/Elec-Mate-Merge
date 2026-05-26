@@ -74,7 +74,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What regulation covers the safe use and maintenance of tools in the workplace?',
-    options: ['BS 7671', 'PUWER', 'COSHH', 'LOLER'],
+    options: [
+      'BS 7671',
+      'PUWER',
+      'COSHH',
+      'LOLER',
+    ],
     correctAnswer: 1,
     explanation:
       'PUWER (Provision and Use of Work Equipment Regulations) specifically covers the safe use and maintenance of work equipment including tools.',
@@ -82,8 +87,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which of the following is a sign that a cutting tool needs maintenance?',
-    options: ['Sharp edges', 'Blunt or chipped edges', 'Clean, polished surface', 'New packaging'],
-    correctAnswer: 1,
+    options: [
+      'Clean, polished surface',
+      'Sharp edges',
+      'Blunt or chipped edges',
+      'New packaging',
+    ],
+    correctAnswer: 2,
     explanation:
       'Blunt or chipped cutting edges indicate wear and reduce tool effectiveness, potentially causing poor cuts and increased effort.',
   },
@@ -99,12 +109,12 @@ const quizQuestions = [
     id: 4,
     question: 'Give one example of basic power tool maintenance.',
     options: [
-      'Changing the colour',
       'Cleaning vents and checking cables',
-      'Adding stickers',
-      'Increasing power output',
+      'Arc Fault Detection Device (AFDD)',
+      'The employer (or self-employed person)',
+      'During the planning phase before work begins',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cleaning vents prevents overheating, while checking cables ensures electrical safety - both are essential maintenance tasks.',
   },
@@ -112,10 +122,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why should tools be stored in a dry environment?',
     options: [
-      'To improve aesthetics',
+      'The HSE (and local authorities)',
       'To prevent corrosion and electrical damage',
-      'To reduce weight',
-      'To comply with recycling laws',
+      'False - actual values must always be recorded',
+      '1 fire marshal per 50 occupants',
     ],
     correctAnswer: 1,
     explanation:
@@ -126,11 +136,11 @@ const quizQuestions = [
     question: 'What should be done with damaged tools?',
     options: [
       'Continue using them until they fail completely',
-      'Repair immediately or remove from service',
       'Lend them to another worker',
+      'Repair immediately or remove from service',
       'Use them only on low-voltage systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Damaged tools should be immediately repaired by qualified personnel or removed from service to prevent injury and poor workmanship.',
   },
@@ -138,12 +148,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why is record-keeping important for tool maintenance?',
     options: [
-      'To increase tool value',
+      'The Principal Designer during construction, then the client',
+      'Class 1M (eye-safe with magnification restrictions)',
+      'Opposition of an inductor to AC, increasing with frequency',
       'To track inspections and comply with safety policies',
-      'To impress clients',
-      'To reduce insurance costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Records help track inspections, identify recurring issues, demonstrate compliance with safety regulations, and plan preventive maintenance.',
   },
@@ -151,12 +161,12 @@ const quizQuestions = [
     id: 8,
     question: 'Give one method of protecting tools during transport.',
     options: [
-      'Wrap in newspaper',
       'Use a toolbox with protective inserts',
-      'Carry them loose',
-      'Tie them together',
+      'Batteries, solar panels, DC power supplies',
+      'Connecting two tubes at 90 degrees to each other',
+      'GHS06 — Acute Toxicity (severe)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Toolboxes with protective foam inserts prevent tools from moving and damaging each other during transport.',
   },

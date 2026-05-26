@@ -22,24 +22,99 @@ const DESCRIPTION =
   'Generator step-up, grid, distribution, isolation, instrument, site, welding, EV, BESS and renewable export transformers — types, applications, vector groups, ventilation, oil bunding, and the regulatory anchors (Reg 132.1 design, BS 7671 §710 medical IT, ENA G98/G99 generation).';
 
 const checks = [
-  { id: 'l3-m3-4-6-grid', question: 'UK national grid transmission voltages include:', options: ['230 V only', '11 kV / 33 kV', '132 kV / 275 kV / 400 kV', '1 MV'], correctIndex: 2, explanation: 'UK transmission: 132 kV (older), 275 kV and 400 kV (super-grid). Distribution at 11 kV and 33 kV. Final step-down 11 kV → 400/230 V at the local substation.' },
-  { id: 'l3-m3-4-6-step', question: 'A site transformer 230 V / 110 V centre-tapped is used because:', options: ['Looks better', 'Reduces shock-risk: any line-to-earth voltage is only 55 V', 'Lower cost', 'Required by EU rules'], correctIndex: 1, explanation: 'BS 4363 / HSE site transformer: 110 V centre-tapped with the centre earthed gives 55 V line-to-earth. Below the threshold for ventricular fibrillation under most conditions. Standard for hand tools on construction sites.' },
-  { id: 'l3-m3-4-6-iso', question: 'A medical isolation transformer is required because:', options: ['Reduces voltage', 'Removes earth reference, so a single-fault doesn\'t create a shock hazard to a patient', 'Saves energy', 'Required for steel buildings'], correctIndex: 1, explanation: 'BS 7671 §710 medical IT systems: floating supply, no earth path. A single line-to-earth fault doesn\'t energise patient-touchable parts. Insulation monitoring trips on first fault.' },
-  { id: 'l3-m3-4-6-ct', question: 'You need to remove a CT-fed energy meter for replacement. What\'s the first step?', options: ['Disconnect the CT secondary leads.', 'Short the CT secondary at the test block before disconnecting anything downstream — the CT must never be open-circuited while the primary is energised.', 'Open the primary breaker only.', 'Photograph the meter.'], correctIndex: 1, explanation: 'Open-circuit CT on energised primary = induced kV → destroyed CT and operative injury risk. Always short the secondary first via the test block.' },
+  { id: 'l3-m3-4-6-grid', question: 'UK national grid transmission voltages include:', options: [
+    '132 kV / 275 kV / 400 kV',
+    '11 kV / 33 kV',
+    '230 V only',
+    '1 MV',
+  ], correctIndex: 0, explanation: 'UK transmission: 132 kV (older), 275 kV and 400 kV (super-grid). Distribution at 11 kV and 33 kV. Final step-down 11 kV → 400/230 V at the local substation.' },
+  { id: 'l3-m3-4-6-step', question: 'A site transformer 230 V / 110 V centre-tapped is used because:', options: [
+    'Capture, Clarify, Organise, Reflect, Engage',
+    'Device ratings, settings, clearing times, and coordination margins',
+    'Reduces shock-risk: any line-to-earth voltage is only 55 V',
+    'They may give false readings and cannot verify absence of voltage',
+  ], correctIndex: 2, explanation: 'BS 4363 / HSE site transformer: 110 V centre-tapped with the centre earthed gives 55 V line-to-earth. Below the threshold for ventricular fibrillation under most conditions. Standard for hand tools on construction sites.' },
+  { id: 'l3-m3-4-6-iso', question: 'A medical isolation transformer is required because:', options: [
+    'To verify protection settings, interlocks and control circuits operate correctly',
+    'Removes earth reference, so a single-fault doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t create a shock hazard to a patient',
+    'Installation method, ambient temperature, grouping, thermal insulation',
+    'A quotation is a fixed price that cannot change; an estimate is an approximate cost that may vary',
+  ], correctIndex: 1, explanation: 'BS 7671 §710 medical IT systems: floating supply, no earth path. A single line-to-earth fault doesn\'t energise patient-touchable parts. Insulation monitoring trips on first fault.' },
+  { id: 'l3-m3-4-6-ct', question: 'You need to remove a CT-fed energy meter for replacement. What\'s the first step?', options: [
+    'Restricted access and egress, reduced ventilation, and difficulty in carrying out a rescue in an emergency',
+    'Own up to it, put it right properly at your own expense, document the corrective action, and treat it as CPD — what went wrong and how to stop it recurring.',
+    'Read the questions first, then read the passage carefully, highlighting or noting key information relevant to each question',
+    'Short the CT secondary at the test block before disconnecting anything downstream — the CT must never be open-circuited while the primary is energised.',
+  ], correctIndex: 3, explanation: 'Open-circuit CT on energised primary = induced kV → destroyed CT and operative injury risk. Always short the secondary first via the test block.' },
 ];
 
 const quizQuestions = [
-  { id: 1, question: 'Power station alternator voltage is typically:', options: ['400 V', '11 kV', '132 kV', '400 kV'], correctAnswer: 1, explanation: 'Alternators output 11-25 kV. Step-up transformer raises to grid voltage (132/275/400 kV) for transmission.' },
-  { id: 2, question: 'Why transmit at high voltage?', options: ['Looks impressive', 'Lower current for same power → smaller cables, less I²R loss', 'Higher voltage carries more energy', 'Cheaper transformers'], correctAnswer: 1, explanation: 'P = V × I × √3 × pf. Higher V means lower I for the same P, so cable losses (I²R) drop. 400 kV transmission has 1/35 the loss of 11 kV for the same power.' },
-  { id: 3, question: 'A typical pole-mounted distribution transformer in rural UK is:', options: ['400 kVA, 11 kV / 400 V', '5-100 kVA, 11 kV / 400 V', '1 MVA, 33 kV / 11 kV', '100 kVA, 230 V / 110 V'], correctAnswer: 1, explanation: 'Small rural pole-mounted transformers 5-100 kVA serving a few houses. Larger are pad-mounted or in substations.' },
-  { id: 4, question: 'Auto-transformers are common as:', options: ['Distribution units', 'Site transformers and motor starters (autostart)', 'Isolation transformers', 'Welding'], correctAnswer: 1, explanation: 'Single-tapped winding, lighter and cheaper for small ratios. Common as star-delta motor starters and 230/110 V site transformers (where isolation isn\'t needed).' },
-  { id: 5, question: 'A welding transformer is unusual because:', options: ['Step-down ratio massive (230/30 V)', 'Heavy series leakage reactance to limit weld current', 'Always 3-phase', 'Has no core'], correctAnswer: 1, explanation: 'Welding transformer has deliberately high leakage reactance to limit short-circuit (welding-arc) current to a controlled value. Different design from regular transformers.' },
-  { id: 6, question: 'Renewable generation feeds into the UK grid via:', options: ['Direct DC', 'Inverter + step-up transformer matched to grid voltage', 'Battery banks only', 'No transformer'], correctAnswer: 1, explanation: 'PV/wind/battery inverters synthesise 50 Hz AC, then step up via transformer to local distribution voltage. Grid-tie inverters must comply with G99 (medium PV) or G98 (small PV).' },
-  { id: 7, question: 'CT secondaries should be left:', options: ['Open when not in use', 'Short-circuited via the test block when not connected to a relay/meter', 'Earthed', 'Disconnected'], correctAnswer: 1, explanation: 'Open secondary on energised CT = induced kV → destroyed CT. Short the secondary via the test block when removing meters or relays.' },
-  { id: 8, question: 'Constant-current transformers are used for:', options: ['Fluorescent lighting', 'Series-connected airfield runway lighting', 'Domestic supply', 'Mobile phone chargers'], correctAnswer: 1, explanation: 'Old-style series-string runway lighting needs constant current regardless of load (lamps in series). Constant-current transformer (saturable) provides this.' },
-  { id: 9, question: 'A 100 kVA oil-filled transformer with 250 litres of oil needs an oil bund of what minimum capacity?', options: ['100 litres', '250 litres', '275 litres', 'No bund needed'], correctAnswer: 2, explanation: 'Bund = 100 % of oil contents + 10 % allowance = 250 + 25 = 275 litres minimum. Required by Control of Pollution (Oil Storage) Regulations 2001.' },
-  { id: 10, question: 'Which RCD type is required for a transformerless string PV inverter?', options: ['Type AC', 'Type A', 'Type B', 'No RCD'], correctAnswer: 2, explanation: 'Transformerless inverters can pass DC fault current. Type B RCD detects AC + smooth DC + pulsating DC fault current. Standard requirement for transformerless PV.' },
-  { id: 11, question: 'An auto-transformer differs from an isolation transformer because:', options: ['Same thing.', 'Auto has a single tapped winding (input and output share copper, no isolation); isolation has two galvanically-separated windings (full isolation, four terminals).', 'Auto is bigger.', 'Auto is always 1:1 ratio.'], correctAnswer: 1, explanation: 'Critical distinction. Auto-transformer = three terminals on one winding; isolation = four terminals with two windings. Substituting one for the other in a medical, audio or laboratory context is a serious safety failure.' },
+  { id: 1, question: 'Power station alternator voltage is typically:', options: [
+    '400 V',
+    '11 kV',
+    '132 kV',
+    '400 kV',
+  ], correctAnswer: 1, explanation: 'Alternators output 11-25 kV. Step-up transformer raises to grid voltage (132/275/400 kV) for transmission.' },
+  { id: 2, question: 'Why transmit at high voltage?', options: [
+    'Inverter + step-up transformer matched to grid voltage',
+    'Heavy series leakage reactance to limit weld current',
+    'Lower current for same power → smaller cables, less I²R loss',
+    'Site transformers and motor starters (autostart)',
+  ], correctAnswer: 2, explanation: 'P = V × I × √3 × pf. Higher V means lower I for the same P, so cable losses (I²R) drop. 400 kV transmission has 1/35 the loss of 11 kV for the same power.' },
+  { id: 3, question: 'A typical pole-mounted distribution transformer in rural UK is:', options: [
+    '1 MVA, 33 kV / 11 kV',
+    '400 kVA, 11 kV / 400 V',
+    '100 kVA, 230 V / 110 V',
+    '5-100 kVA, 11 kV / 400 V',
+  ], correctAnswer: 3, explanation: 'Small rural pole-mounted transformers 5-100 kVA serving a few houses. Larger are pad-mounted or in substations.' },
+  { id: 4, question: 'Auto-transformers are common as:', options: [
+    'Site transformers and motor starters (autostart)',
+    'Lower current for same power → smaller cables, less I²R loss',
+    'Inverter + step-up transformer matched to grid voltage',
+    'Heavy series leakage reactance to limit weld current',
+  ], correctAnswer: 0, explanation: 'Single-tapped winding, lighter and cheaper for small ratios. Common as star-delta motor starters and 230/110 V site transformers (where isolation isn\'t needed).' },
+  { id: 5, question: 'A welding transformer is unusual because:', options: [
+    'Site transformers and motor starters (autostart)',
+    'Heavy series leakage reactance to limit weld current',
+    'Inverter + step-up transformer matched to grid voltage',
+    'Series-connected airfield runway lighting',
+  ], correctAnswer: 1, explanation: 'Welding transformer has deliberately high leakage reactance to limit short-circuit (welding-arc) current to a controlled value. Different design from regular transformers.' },
+  { id: 6, question: 'Renewable generation feeds into the UK grid via:', options: [
+    'Lower current for same power → smaller cables, less I²R loss',
+    'Series-connected airfield runway lighting',
+    'Inverter + step-up transformer matched to grid voltage',
+    'Short-circuited via the test block when not connected to a relay/meter',
+  ], correctAnswer: 2, explanation: 'PV/wind/battery inverters synthesise 50 Hz AC, then step up via transformer to local distribution voltage. Grid-tie inverters must comply with G99 (medium PV) or G98 (small PV).' },
+  { id: 7, question: 'CT secondaries should be left:', options: [
+    'Heavy series leakage reactance to limit weld current',
+    'Lower current for same power → smaller cables, less I²R loss',
+    'Inverter + step-up transformer matched to grid voltage',
+    'Short-circuited via the test block when not connected to a relay/meter',
+  ], correctAnswer: 3, explanation: 'Open secondary on energised CT = induced kV → destroyed CT. Short the secondary via the test block when removing meters or relays.' },
+  { id: 8, question: 'Constant-current transformers are used for:', options: [
+    'Series-connected airfield runway lighting',
+    'Investigate the cause before continuing',
+    'Building Regulations Approved Document P',
+    'Live parts are not accessible during normal use',
+  ], correctAnswer: 0, explanation: 'Old-style series-string runway lighting needs constant current regardless of load (lamps in series). Constant-current transformer (saturable) provides this.' },
+  { id: 9, question: 'A 100 kVA oil-filled transformer with 250 litres of oil needs an oil bund of what minimum capacity?', options: [
+    '100 litres',
+    '275 litres',
+    '250 litres',
+    'No bund needed',
+  ], correctAnswer: 1, explanation: 'Bund = 100 % of oil contents + 10 % allowance = 250 + 25 = 275 litres minimum. Required by Control of Pollution (Oil Storage) Regulations 2001.' },
+  { id: 10, question: 'Which RCD type is required for a transformerless string PV inverter?', options: [
+    'Type AC',
+    'Type A',
+    'Type B',
+    'No RCD',
+  ], correctAnswer: 2, explanation: 'Transformerless inverters can pass DC fault current. Type B RCD detects AC + smooth DC + pulsating DC fault current. Standard requirement for transformerless PV.' },
+  { id: 11, question: 'An auto-transformer differs from an isolation transformer because:', options: [
+    'The discrepancy between the values a person claims to hold and how they actually behave, which reveals areas where self-awareness is incomplete or self-deception is occurring',
+    'That all electrical systems are constructed, maintained, and used to prevent danger, so far as is reasonably practicable',
+    'Training 50 MHFAs distributed across all sites, covering all shift patterns, with a mix of roles and seniority levels, supported by Mental Health Champions on each site',
+    'Auto has a single tapped winding (input and output share copper, no isolation); isolation has two galvanically-separated windings (full isolation, four terminals).',
+  ], correctAnswer: 3, explanation: 'Critical distinction. Auto-transformer = three terminals on one winding; isolation = four terminals with two windings. Substituting one for the other in a medical, audio or laboratory context is a serious safety failure.' },
 ];
 
 const faqs = [

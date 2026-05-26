@@ -27,7 +27,12 @@ const FunctionalSkillsModule3Section2 = () => {
       id: 1,
       question:
         'Which Excel formula would you use to add up the total cost of all materials in cells B2 to B50?',
-      options: ['=ADD(B2:B50)', '=SUM(B2:B50)', '=TOTAL(B2:B50)', '=COUNT(B2:B50)'],
+      options: [
+        '=ADD(B2:B50)',
+        '=SUM(B2:B50)',
+        '=TOTAL(B2:B50)',
+        '=COUNT(B2:B50)',
+      ],
       correctAnswer: 1,
       explanation:
         '=SUM(B2:B50) adds together all values in the range from cell B2 to B50. SUM is the most commonly used spreadsheet formula and is essential for calculating totals in material lists, invoices, and cable schedules. COUNT counts the number of entries rather than adding their values.',
@@ -36,8 +41,13 @@ const FunctionalSkillsModule3Section2 = () => {
       id: 2,
       question:
         'You need to calculate the voltage drop across a cable. The formula is Vd = (mV/A/m × Ib × L) / 1000. In a spreadsheet where mV/A/m is in cell B2, Ib is in C2, and L is in D2, which formula is correct?',
-      options: ['=(B2+C2+D2)/1000', '=(B2*C2*D2)/1000', '=B2/C2/D2*1000', '=SUM(B2,C2,D2)/1000'],
-      correctAnswer: 1,
+      options: [
+        '=B2/C2/D2*1000',
+        '=(B2+C2+D2)/1000',
+        '=(B2*C2*D2)/1000',
+        '=SUM(B2,C2,D2)/1000',
+      ],
+      correctAnswer: 2,
       explanation:
         'The voltage drop formula multiplies the three values together and divides by 1000. In spreadsheet notation, the asterisk (*) represents multiplication. =(B2*C2*D2)/1000 correctly implements the formula Vd = (mV/A/m × Ib × L) / 1000.',
     },
@@ -45,12 +55,12 @@ const FunctionalSkillsModule3Section2 = () => {
       id: 3,
       question: 'What does the IF function do in a spreadsheet?',
       options: [
-        'Inserts a new row if the spreadsheet is full',
+        'Cutting the sides of an excavation back to a safe angle to prevent collapse',
+        'To maintain an open airway and allow fluids to drain',
+        'How much a material resists or slows down the flow of current',
         'Returns one value if a condition is true and another if it is false',
-        'Converts text to numbers automatically',
-        'Imports data from another file',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'The IF function tests a condition and returns different values depending on whether it is true or false. For example, =IF(B2>230, "FAIL", "PASS") would check if a voltage drop exceeds 230V and display either FAIL or PASS accordingly. This is invaluable for automating compliance checks in electrical spreadsheets.',
     },
@@ -59,12 +69,12 @@ const FunctionalSkillsModule3Section2 = () => {
       question:
         'When building a material takeoff spreadsheet, what should you include for each item?',
       options: [
-        'Just the item name and total cost',
         'Item description, quantity, unit, unit cost, and total cost',
-        "Only the manufacturer's catalogue number",
-        "The item name and the supplier's phone number",
+        'Terre-Neutre-Separés (separate earth and neutral)',
+        'Avoid working at height where you can — do it from the ground if possible',
+        'Refrigerant velocity and pressure drop affecting system capacity',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'A comprehensive material takeoff includes the item description, quantity needed, unit of measurement (metres, each, box), unit cost, and calculated total cost (quantity × unit cost). This level of detail enables accurate costing, easy comparison between suppliers, and clear records for invoicing.',
     },
@@ -72,8 +82,13 @@ const FunctionalSkillsModule3Section2 = () => {
       id: 5,
       question:
         'Which chart type is best for showing the breakdown of costs across different categories in a job?',
-      options: ['Line chart', 'Scatter plot', 'Pie chart', 'Histogram'],
-      correctAnswer: 2,
+      options: [
+        'Scatter plot',
+        'Pie chart',
+        'Histogram',
+        'Line chart',
+      ],
+      correctAnswer: 1,
       explanation:
         'A pie chart is ideal for showing the proportional breakdown of costs across categories (materials, labour, overheads, profit). Each slice represents a percentage of the total, making it easy to see at a glance where the money is being spent. Line charts are better for showing trends over time.',
     },
@@ -81,12 +96,12 @@ const FunctionalSkillsModule3Section2 = () => {
       id: 6,
       question: 'What is the purpose of freezing the top row in a spreadsheet?',
       options: [
-        'It prevents anyone from editing the spreadsheet',
+        'A 26-metre spider lift with non-marking rubber tracks',
+        'Verification based on tested components plus design rules',
         'It keeps the header row visible while scrolling through data below',
-        'It locks the spreadsheet with a password',
-        'It makes the spreadsheet read-only',
+        'Move the casualty into fresh air, ensuring it is safe for you to approach',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "Freezing the top row keeps your column headers (e.g. 'Circuit Ref', 'Cable Size', 'Length', 'Voltage Drop') visible as you scroll down through long lists of data. Without frozen headers, you quickly lose track of which column contains which data, leading to errors.",
     },
@@ -97,10 +112,10 @@ const FunctionalSkillsModule3Section2 = () => {
       options: [
         'Scroll through manually and look at each row',
         'Delete all rows that are not 6mm²',
-        'Use the Filter function on the cable size column',
         'Print it out and highlight with a pen',
+        'Use the Filter function on the cable size column',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'The Filter function allows you to show only rows matching your criteria — in this case, all circuits with a cable size of 6mm². Filters are non-destructive (they hide rows temporarily rather than deleting them) and can be removed to show all data again. This is far faster and more reliable than manual searching.',
     },
@@ -108,12 +123,12 @@ const FunctionalSkillsModule3Section2 = () => {
       id: 8,
       question: 'What is the AVERAGE function used for in electrical calculations?',
       options: [
-        'Finding the middle value in a sorted list',
         'Calculating the arithmetic mean of a range of values',
         'Counting how many values are above a threshold',
+        'Finding the middle value in a sorted list',
         'Finding the most common value in a range',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'The AVERAGE function calculates the arithmetic mean — the sum of all values divided by the count of values. In electrical work, this is useful for calculating average power consumption, mean test results across multiple readings, or typical material costs when comparing suppliers. Note: the middle of a sorted list is the MEDIAN, not the AVERAGE.',
     },

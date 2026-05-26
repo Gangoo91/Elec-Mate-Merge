@@ -19,20 +19,75 @@ const TITLE = 'HRRB dutyholders + safety case | Level 3 Module 1.6.2 | Elec-Mate
 const DESCRIPTION = 'L3 deeper on PAP duties, the safety case, golden thread requirements and the L3 contractor representative role on HRRB sites.';
 
 const checks = [
-  { id: 'l3-m1-s6-sub2-pap', question: 'PAP main duties?', options: ['Just paperwork.', 'Register building with BSR; prepare and revise safety case; engage residents on building safety; manage building safety risks; maintain golden thread; report to BSR; respond to BSR notices.', 'Anything.', 'None.'], correctIndex: 1, explanation: 'PAP duties are extensive and ongoing. Single role per HRRB.' },
-  { id: 'l3-m1-s6-sub2-safety-case', question: 'What\'s in a safety case?', options: ['Just photos.', 'Identification of building safety risks (fire and structural primary), strategies to manage them, evidence the strategies work, residents engagement strategy, links to golden thread, periodic review and update.', 'Insurance docs.', 'Customer ratings.'], correctIndex: 1, explanation: 'Safety case is the comprehensive evidence document. Living document; updated as the building changes.' },
-  { id: 'l3-m1-s6-sub2-electrical', question: 'How does electrical work integrate with the safety case?', options: ['Doesn\'t.', 'EIC at install; EICR cycles; alteration certs; commissioning records of fire detection and alarm, EV charging electrical infrastructure, emergency lighting; design records; product specifications. All become part of golden thread evidence the safety case relies on.', 'Random.', 'Customer driven.'], correctIndex: 1, explanation: 'Electrical records are foundational to the safety case for many risks. Fire detection, emergency lighting, EV charging all electrical-system dependent.' },
+  { id: 'l3-m1-s6-sub2-pap', question: 'PAP main duties?', options: [
+    'Register building with BSR; prepare and revise safety case; engage residents on building safety; manage building safety risks; maintain golden thread; report to BSR; respond to BSR notices.',
+    'Ensuring, so far as reasonably practicable, the H&S of all employees — including safe systems, training, premises and a written policy where 5+ employees',
+    'Listen non-judgementally, provide information about depression, encourage them to see their GP, and suggest self-help strategies such as NHS Talking Therapies self-referral',
+    'A simplified rule: regardless of RCD Type, an alternating current test at rated residual operating current (IΔn) is used to verify effectiveness, with trip time ≤ 300 ms for general non-delay type and 130-500 ms for delay "S" type.',
+  ], correctIndex: 0, explanation: 'PAP duties are extensive and ongoing. Single role per HRRB.' },
+  { id: 'l3-m1-s6-sub2-safety-case', question: 'What\'s in a safety case?', options: [
+    'Identification of building safety risks (fire and structural primary), strategies to manage them, evidence the strategies work, residents engagement strategy, links to golden thread, periodic review and update.',
+    'A statutory fallback scheme that implies payment and adjudication terms into construction contracts that do not already comply with the Construction Act',
+    'To communicate the status of equipment, ongoing maintenance activities, outstanding issues, and safety concerns between incoming and outgoing maintenance shifts',
+    'Refrigerant must be recovered by an F-Gas-certified person and sent for recycling/destruction; the equipment is then dealt with under WEEE Regulations through an authorised treatment facility',
+  ], correctIndex: 0, explanation: 'Safety case is the comprehensive evidence document. Living document; updated as the building changes.' },
+  { id: 'l3-m1-s6-sub2-electrical', question: 'How does electrical work integrate with the safety case?', options: [
+    'Reassess your diagnosis, consider what the failed attempt tells you about the problem, adjust your hypothesis, and try a different approach systematically — while knowing when to seek help',
+    'EIC at install; EICR cycles; alteration certs; commissioning records of fire detection and alarm, EV charging electrical infrastructure, emergency lighting; design records; product specifications. All become part of golden thread evidence the safety case relies on.',
+    'A pilot drill bit guides the hole saw, cutting fluid/lubricant should be used, speed should be moderate (high speed generates excessive heat), and the workpiece should be clamped or supported',
+    'Have RCD providing ADS suitable for the load — typically 30 mA Type B (or Type A with integral 6 mA DC RCD inside the EVSE), dedicated final circuit, isolator within reach, and PEN-fault protection per Section 722.411.4 where supplied from PME.',
+  ], correctIndex: 1, explanation: 'Electrical records are foundational to the safety case for many risks. Fire detection, emergency lighting, EV charging all electrical-system dependent.' },
 ];
 
 const quizQuestions = [
-  { id: 1, question: 'How often does the safety case need updating?', options: ['Never.', 'Living document - updated when significant changes occur (alterations, replacements, occupancy changes), after incidents / near-misses, periodically (PAP determines but typically annually). BSR can request review.', 'Once.', 'Every decade.'], correctAnswer: 1, explanation: 'Continuous; updated as the building evolves.' },
-  { id: 2, question: 'What\'s the residents engagement strategy?', options: ['Optional.', 'Required element of safety case. PAP must engage residents on building safety - communication, complaints procedure, opportunity to raise concerns, information about safety arrangements. BSA 2022 explicitly empowers resident voice.', 'Marketing.', 'Sales.'], correctAnswer: 1, explanation: 'Resident engagement is mandatory. Post-Grenfell direct response to lack of resident voice in pre-2017 framework.' },
-  { id: 3, question: 'Who can request to see the safety case?', options: ['No-one.', 'BSR (always); residents (rights under BSA 2022); contractors working on the building (so they can integrate their work safely); fire and rescue service (RRFSO 2005 powers).', 'Customer only.', 'Architect only.'], correctAnswer: 1, explanation: 'Multiple parties can / must access. Transparency is fundamental.' },
-  { id: 4, question: 'How does the golden thread work for electrical records?', options: ['Paper only.', 'Digital, accurate, accessible, secure. Cloud-based certification platforms (NICEIC online, NAPIT online, contractor systems) produce records suitable for golden-thread integration. Paper-only certs increasingly inadequate for HRRB work.', 'Verbal.', 'Random.'], correctAnswer: 1, explanation: 'Golden thread = digital. Paper certs need scanning and indexing; born-digital is preferred.' },
-  { id: 5, question: 'What happens if the safety case is inadequate?', options: ['Nothing.', 'BSR can serve compliance notices; can ultimately direct evacuation if risk is severe; PAP can be prosecuted for failure to maintain safety case; Defective Premises Act + civil claims if defects later cause harm.', 'Just a warning.', 'Customer complains.'], correctAnswer: 1, explanation: 'Real consequences. BSR has prosecution and notice powers.' },
-  { id: 6, question: 'What\'s the L3 contractor representative\'s role on HRRB work?', options: ['Same as any site.', 'Verify HRRB status; identify PAP / AP; integrate work plan with safety case; produce digital records suitable for golden thread; cooperate with PAP requests for information; brief team on HRRB-specific arrangements.', 'Random.', 'Customer focus only.'], correctAnswer: 1, explanation: 'L3 contractor representative operationalises BSA 2022 awareness and integration on site.' },
-  { id: 7, question: 'Are buy-to-let landlords typically PAPs?', options: ['Always.', 'Only if they own / control structure / exterior of HRRB. Most BTL landlords own individual flats, not the whole building - the freeholder / managing agent is typically PAP. Single ownership of an HRRB rare; multi-leasehold structures common.', 'Never.', 'Random.'], correctAnswer: 1, explanation: 'PAP determined by ownership / control of structure. Complex in multi-leasehold buildings.' },
-  { id: 8, question: "How does the L3 cooperate with the PAP's residents engagement?", options: ["Doesn't.", "Brief residents (where they're affected by work) per the PAP's strategy. Provide information for newsletter / notices. Respond to resident questions about the work. Handle complaints via PAP's route.", "Hide.", "Random."], correctAnswer: 1, explanation: "Resident engagement extends to contractors' work where relevant. L3 supervisor cooperates with PAP's strategy." },
+  { id: 1, question: 'How often does the safety case need updating?', options: [
+    'They may unintentionally alienate colleagues, miss important social cues, fail to adapt their communication style to different audiences, and receive repeated negative feedback they cannot understand or act upon',
+    'Living document - updated when significant changes occur (alterations, replacements, occupancy changes), after incidents / near-misses, periodically (PAP determines but typically annually). BSR can request review.',
+    'Managing the risk from ACMs in non-domestic premises — finding them, recording them, assessing risk, planning management, and providing the information to anyone liable to disturb them',
+    '30 mA RCD on all final circuits supplying the stands, double or reinforced insulation where applicable, careful management of cable routing to avoid trip hazards in public areas, and easy means of disconnection at the stand origin.',
+  ], correctAnswer: 1, explanation: 'Continuous; updated as the building evolves.' },
+  { id: 2, question: 'What\'s the residents engagement strategy?', options: [
+    'Natural England is the government\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s statutory adviser on the natural environment, responsible for issuing species licences, designating protected sites, and advising on ecological matters',
+    'Clearly show the assessor which evidence addresses which knowledge, skills and behaviour requirements from the standard — ensuring comprehensive coverage and making it easy to navigate your evidence',
+    'Required element of safety case. PAP must engage residents on building safety - communication, complaints procedure, opportunity to raise concerns, information about safety arrangements. BSA 2022 explicitly empowers resident voice.',
+    'A combination of early detection (off-gas sensors, thermal sensors, smoke detection), water mist or aerosol suppression to cool cells and prevent thermal runaway propagation, and ventilation systems to manage toxic gas accumulation',
+  ], correctAnswer: 2, explanation: 'Resident engagement is mandatory. Post-Grenfell direct response to lack of resident voice in pre-2017 framework.' },
+  { id: 3, question: 'Who can request to see the safety case?', options: [
+    'Restricted entry and exit points make it harder to escape in an emergency and harder for rescuers to reach a casualty, increasing the severity of any incident',
+    'Low psychological safety \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 the team fears blame. The mentor should model openness by sharing their own mistakes and ensuring reports lead to learning, not punishment',
+    '"Describe: You have arrived after 09:00 on four occasions. Express: This causes concern as it delays the programme. Specify: I need you on site by 08:00. Consequences: This keeps the project on track"',
+    'BSR (always); residents (rights under BSA 2022); contractors working on the building (so they can integrate their work safely); fire and rescue service (RRFSO 2005 powers).',
+  ], correctAnswer: 3, explanation: 'Multiple parties can / must access. Transparency is fundamental.' },
+  { id: 4, question: 'How does the golden thread work for electrical records?', options: [
+    'Digital, accurate, accessible, secure. Cloud-based certification platforms (NICEIC online, NAPIT online, contractor systems) produce records suitable for golden-thread integration. Paper-only certs increasingly inadequate for HRRB work.',
+    'Physiological response to electric current passing through the body. Effects scale with current (mA): perception (1mA), pain (5-10mA), can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t-let-go (10-20mA), respiratory paralysis (20-50mA), ventricular fibrillation (50-100mA+). Duration matters — long exposure at lower current can be lethal.',
+    'It is a potentially fatal condition where a person suspended motionless in a harness can suffer blood pooling in the legs, leading to loss of consciousness and death within 5-15 minutes',
+    'Adjusting the timing or level of electricity consumption in response to price signals, grid conditions, or other incentives, to reduce peak demand and support grid stability',
+  ], correctAnswer: 0, explanation: 'Golden thread = digital. Paper certs need scanning and indexing; born-digital is preferred.' },
+  { id: 5, question: 'What happens if the safety case is inadequate?', options: [
+    'A legitimate complaint identifies a genuine failure to meet agreed standards; an unreasonable complaint seeks outcomes beyond what was agreed or what is fair',
+    'BSR can serve compliance notices; can ultimately direct evacuation if risk is severe; PAP can be prosecuted for failure to maintain safety case; Defective Premises Act + civil claims if defects later cause harm.',
+    'Acute toxicity — substances harmful by single short-term exposure (oral, dermal, inhalation). Includes acutely toxic gases, liquids, solids. Distinguished from chronic / long-term toxicity.',
+    'Approximately (r1 + rn) ÷ 4 = 0.155 Ω at every socket, constant within a few percent. The divide-by-four comes from the parallel combination of two halves of the loop, each half being two quarters in series.',
+  ], correctAnswer: 1, explanation: 'Real consequences. BSR has prosecution and notice powers.' },
+  { id: 6, question: 'What\'s the L3 contractor representative\'s role on HRRB work?', options: [
+    'Providing centralised monitoring and control of all building services, enabling automated load shedding, demand limiting, scheduling of non-essential loads, and real-time power monitoring with alarm management',
+    'To take into account the general principles of prevention when carrying out design work and avoid foreseeable risks so far as is reasonably practicable',
+    'Verify HRRB status; identify PAP / AP; integrate work plan with safety case; produce digital records suitable for golden thread; cooperate with PAP requests for information; brief team on HRRB-specific arrangements.',
+    'Acknowledge that self-harm is currently helping them cope, validate their emotional pain, explore whether they would be open to learning alternative coping strategies over time, and gently encourage them to speak to a professional such as a counsellor when they feel ready',
+  ], correctAnswer: 2, explanation: 'L3 contractor representative operationalises BSA 2022 awareness and integration on site.' },
+  { id: 7, question: 'Are buy-to-let landlords typically PAPs?', options: [
+    'Report it to your insurer promptly within the timeframe specified in the policy (often within 7-30 days). Preserve evidence (photos, statements, certificates). Don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t admit liability — let the insurer handle the negotiation. Failure to notify within the policy timeframe can void cover for that claim.',
+    'Use 250V test voltage where the equipment manufacturer permits, OR test live conductors connected together to earth (without between live and neutral), interpreting accordingly',
+    'Earthing arrangement (TN-S/TN-C-S/TT), nominal voltage U/U0, frequency, prospective fault current Ipf, external loop impedance Ze, type and rating of supply protective device',
+    'Only if they own / control structure / exterior of HRRB. Most BTL landlords own individual flats, not the whole building - the freeholder / managing agent is typically PAP. Single ownership of an HRRB rare; multi-leasehold structures common.',
+  ], correctAnswer: 3, explanation: 'PAP determined by ownership / control of structure. Complex in multi-leasehold buildings.' },
+  { id: 8, question: "How does the L3 cooperate with the PAP's residents engagement?", options: [
+    "Brief residents (where they're affected by work) per the PAP's strategy. Provide information for newsletter / notices. Respond to resident questions about the work. Handle complaints via PAP's route.",
+    "A statutory fallback scheme that implies payment and adjudication terms into construction contracts that do not already comply with the Construction Act",
+    "Any project lasting longer than 30 working days and having more than 20 workers working simultaneously at any point, or exceeding 500 person days",
+    "It targets the organisation as a whole where a gross breach of duty causes death and substantially involves senior management — focuses on culture, not individuals",
+  ], correctAnswer: 0, explanation: "Resident engagement extends to contractors' work where relevant. L3 supervisor cooperates with PAP's strategy." },
 ];
 
 const faqs = [

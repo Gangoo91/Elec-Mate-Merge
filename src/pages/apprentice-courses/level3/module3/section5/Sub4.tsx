@@ -41,12 +41,12 @@ const checks = [
     id: 'l3-m3-5-4-sync',
     question: 'A synchronous motor:',
     options: [
-      'Has slip',
       'Locks exactly to N_s — no slip',
-      'Has rotating brushes',
-      'Runs only in one direction',
+      'XLPE has a higher temperature rating',
+      'A hazardous waste consignment note',
+      'Lithium Iron Phosphate (LiFePO4)',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Synchronous motors lock to the rotating field. Rotor (electromagnet or permanent magnet) follows the field exactly at N_s. Slip = 0.',
   },
@@ -54,10 +54,10 @@ const checks = [
     id: 'l3-m3-5-4-vfd',
     question: 'A VFD changes motor speed by:',
     options: [
-      'Rotating the stator',
+      'Lead measures track inputs you can control; lag measures track outcomes that follow',
       'Varying the supply frequency (and voltage proportionally to keep V/f constant)',
-      'Disconnecting windings',
-      'Changing pole count',
+      'To ensure all team members understand hazards and safety procedures',
+      'Helps in heavyweight construction by reducing peak temperatures',
     ],
     correctIndex: 1,
     explanation:
@@ -66,8 +66,13 @@ const checks = [
   {
     id: 'l3-m3-5-4-stardelta',
     question: 'Star-delta starting reduces inrush by approximately:',
-    options: ['Half', 'One-third (~3×)', 'One-tenth', 'No reduction'],
-    correctIndex: 1,
+    options: [
+      'Half',
+      'No reduction',
+      'One-tenth',
+      'One-third (~3×)',
+    ],
+    correctIndex: 3,
     explanation:
       'Star connection at start gives 1/√3 voltage per winding → 1/3 the current. After accel, switch to delta for full V and full torque. Cuts inrush ~3×.',
   },
@@ -78,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'Synchronous motors are commonly used as:',
     options: [
-      'Domestic fans',
+      'Locking facility and visible gap or positive indication',
       'Large grid generators (alternators) and PFC compensators',
-      'Toys',
-      'Drills',
+      'The frequency range between -3dB points (f2 - f1)',
+      'Pre-heats building to reach setpoint exactly at occupancy time',
     ],
     correctAnswer: 1,
     explanation:
@@ -91,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'VFD output is:',
     options: [
-      'Pure sine 50 Hz',
+      'A competent person with appropriate knowledge, training and experience',
+      'Planning, coordinating, and delivering electrical projects',
       'PWM (chopped) approximating a sine wave at variable frequency',
-      'DC',
-      'Square wave only',
+      'The contractor who employs the injured worker',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'IGBT switching at kHz creates PWM that the motor inductance smooths into approximately sinusoidal current. The voltage waveform is chopped; output filters can clean it up.',
   },
@@ -104,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'V/f control means:',
     options: [
-      'Voltage and frequency varied independently',
+      'Visual, audible, electrical, and thermal symptoms',
+      'Increased resistance, breaking the CPC path',
+      'Delta primary, star secondary with 11 o\\\\\\\\\\\\\\\'clock phase shift',
       'V scales linearly with f to keep magnetic flux constant',
-      'V is constant',
-      'f is constant',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Constant V/f keeps stator flux constant → constant torque capability across speed range. Below ~10 Hz, voltage is boosted slightly to compensate for stator resistance drop.',
   },
@@ -117,19 +122,24 @@ const quizQuestions = [
     id: 4,
     question: 'Soft-starter operation:',
     options: [
-      'Uses VFD',
       'Phases-on the supply gradually with thyristors, ramping voltage from 0 to full over a few seconds',
-      'Removes load',
-      'Reduces frequency',
+      'A step-by-step description of how the work will be carried out safely',
+      'Additional savings from occupancy sensors, daylight dimming, and scheduling',
+      'To prevent unnecessary battery discharge and avoid 24-hour recharge periods',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Soft-starter chops the supply waveform with phase-controlled thyristors during start-up. Ramped voltage = ramped torque, reduced inrush. Bypassed at full voltage to eliminate harmonic losses in steady state.',
   },
   {
     id: 5,
     question: 'A 100 kW motor with star-delta starter — peak motor inrush at start:',
-    options: ['Same as DOL', 'About 1/3 of DOL', 'About 1/10 of DOL', 'Zero'],
+    options: [
+      'Same as DOL',
+      'About 1/3 of DOL',
+      'Zero',
+      'About 1/10 of DOL',
+    ],
     correctAnswer: 1,
     explanation:
       'Star = 1/√3 V → 1/3 current at the line side. So if DOL would draw 700 A, star draws ~233 A. Big saving.',
@@ -137,8 +147,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'A VFD-fed motor running at 25 Hz:',
-    options: ['Same speed as 50 Hz', 'Half speed', 'Twice speed', 'Stopped'],
-    correctAnswer: 1,
+    options: [
+      'Same speed as 50 Hz',
+      'Twice speed',
+      'Half speed',
+      'Stopped',
+    ],
+    correctAnswer: 2,
     explanation:
       'N_s = 120f/P. Halving f halves synchronous speed. Useful for variable-flow pumps (cube law: half speed → 1/8 power).',
   },
@@ -146,12 +161,12 @@ const quizQuestions = [
     id: 7,
     question: 'A motor contactor (AC-3 rated):',
     options: [
-      'Is a fuse',
+      "Identify the root cause by repeatedly asking 'why' until the fundamental cause is found",
+      "Apply direct pressure with a large pad and maintain it firmly",
+      "Collapse or overturning of lifting equipment, or electrical short circuit causing fire",
       "Switches motor inrush AND load currents reliably for the contactor's rated life cycles",
-      'Is the same as an isolator',
-      'Replaces an MCB',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'AC-3 utilisation category covers normal motor switching. AC-4 covers reversing/jogging duty (more arduous). Always match contactor rating to actual motor inrush + duty cycle.',
   },
@@ -159,12 +174,12 @@ const quizQuestions = [
     id: 8,
     question: 'Direct-on-line (DOL) starting requires:',
     options: [
-      'VFD',
       'Contactor + overload + supply rated for inrush',
-      'Star-delta switch',
-      'Soft-starter',
+      'Record as failed, investigate cause, rectify, and re-test',
+      'Static friction preventing smooth valve movement',
+      'Integrated security and monitoring systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'DOL = simplest. Just a contactor (rated for motor inrush) and overload relay. Cable and protective device sized to handle 5-7× FLA inrush.',
   },

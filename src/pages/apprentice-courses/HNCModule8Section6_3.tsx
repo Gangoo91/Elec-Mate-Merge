@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'bim-clash-detection',
     question: 'What is the primary purpose of 3D clash detection in BIM coordination?',
     options: [
-      'To create construction drawings',
+      'Description of work, sequence of operations, equipment, control measures, responsible persons',
       'To identify spatial conflicts between building services before installation',
-      'To calculate material quantities',
-      'To schedule labour resources',
+      'The back-EMF nearly equals the supply voltage so net driving voltage is small',
+      'Systematic evaluation of fire hazards and risks to implement control measures',
     ],
     correctIndex: 1,
     explanation:
@@ -40,8 +40,13 @@ const quickCheckQuestions = [
     id: 'services-priority',
     question:
       'In a typical services priority hierarchy, which system generally takes precedence in spatial allocation?',
-    options: ['Electrical containment', 'Ventilation ductwork', 'Gravity drainage', 'Data cabling'],
-    correctIndex: 2,
+    options: [
+      'Gravity drainage',
+      'Electrical containment',
+      'Data cabling',
+      'Ventilation ductwork',
+    ],
+    correctIndex: 0,
     explanation:
       'Gravity drainage systems typically take highest priority in spatial allocation because they require specific gradients (falls) to function correctly and cannot be easily rerouted. Pressurised systems like water, electrical, and ventilation have more flexibility in routing.',
   },
@@ -50,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary purpose of a Request for Information (RFI) in the construction process?',
     options: [
-      'To order materials from suppliers',
+      'Evaluating environmental impacts throughout a product\\\'s life from raw materials to disposal',
+      'Use measures that minimise the distance and consequences of a fall',
+      'Multi-core cables clipped direct to a non-metallic surface in still air.',
       'To formally seek clarification on design information or resolve discrepancies',
-      'To approve completed work',
-      'To schedule site inspections',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'An RFI (Request for Information) is a formal document used to seek clarification on design information, resolve discrepancies between drawings or specifications, or request missing information from the design team. RFIs create an auditable record of design decisions and changes.',
   },
@@ -63,8 +68,13 @@ const quickCheckQuestions = [
     id: 'coordination-meetings',
     question:
       'What is the typical frequency for MEP coordination meetings during the active installation phase?',
-    options: ['Monthly', 'Weekly', 'Daily', 'Bi-annually'],
-    correctIndex: 1,
+    options: [
+      'Daily',
+      'Monthly',
+      'Bi-annually',
+      'Weekly',
+    ],
+    correctIndex: 3,
     explanation:
       'During active installation phases, MEP coordination meetings are typically held weekly. This frequency allows timely resolution of coordination issues, progress monitoring, and adjustment of installation sequences whilst maintaining project momentum.',
   },
@@ -88,7 +98,12 @@ const quizQuestions = [
     id: 2,
     question:
       'Which BIM Level of Detail (LOD) is typically required for detailed clash detection during construction coordination?',
-    options: ['LOD 100', 'LOD 200', 'LOD 300/350', 'LOD 500'],
+    options: [
+      'LOD 500',
+      'LOD 100',
+      'LOD 300/350',
+      'LOD 200',
+    ],
     correctAnswer: 2,
     explanation:
       'LOD 300/350 provides sufficient geometric detail for accurate clash detection, including specific element sizes, connection points, and routing details. LOD 100/200 are too schematic, whilst LOD 500 is as-built information.',
@@ -97,16 +112,26 @@ const quizQuestions = [
     id: 3,
     question:
       'In ceiling void coordination, what is the typical minimum clear zone required above electrical cable tray for cable installation and maintenance?',
-    options: ['50mm', '100mm', '150mm', '250mm'],
-    correctAnswer: 2,
+    options: [
+      '100mm',
+      '50mm',
+      '250mm',
+      '150mm',
+    ],
+    correctAnswer: 3,
     explanation:
       'A minimum clear zone of 150mm is typically required above cable tray to allow for cable installation, manipulation of cables during termination, and future maintenance access. This zone must be free of other services.',
   },
   {
     id: 4,
     question: 'What type of clash is identified when two building elements occupy the same space?',
-    options: ['Soft clash', 'Hard clash', 'Workflow clash', 'Clearance clash'],
-    correctAnswer: 1,
+    options: [
+      'Hard clash',
+      'Soft clash',
+      'Workflow clash',
+      'Clearance clash',
+    ],
+    correctAnswer: 0,
     explanation:
       'A hard clash occurs when two solid elements physically occupy the same space (e.g., a duct passing through a structural beam). These must be resolved as they represent impossible physical conditions.',
   },
@@ -117,8 +142,8 @@ const quizQuestions = [
     options: [
       'Building Regulations Part P',
       'BIM Execution Plan (BEP)',
-      'Method Statement',
       'Risk Assessment',
+      'Method Statement',
     ],
     correctAnswer: 1,
     explanation:
@@ -131,10 +156,10 @@ const quizQuestions = [
     options: [
       'Larger services always pass over smaller ones',
       'Electrical always passes over mechanical',
-      'The service installed first takes priority',
       'Services requiring least flexibility in routing pass below',
+      'The service installed first takes priority',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Services with least routing flexibility (e.g., gravity drainage, large ductwork) generally route at lower levels, whilst more flexible services (e.g., smaller pipes, cables) route above and around them.',
   },
@@ -143,11 +168,11 @@ const quizQuestions = [
     question: "What is a 'soft clash' in BIM coordination?",
     options: [
       'Two elements physically intersecting',
-      'An element violating required clearance or access zones',
-      'A scheduling conflict between trades',
       'Missing information in the model',
+      'A scheduling conflict between trades',
+      'An element violating required clearance or access zones',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A soft clash occurs when an element violates required clearance zones, access requirements, or maintenance space - not a physical intersection but a situation that would prevent proper installation, operation, or maintenance.',
   },
@@ -156,12 +181,12 @@ const quizQuestions = [
     question:
       'During a design coordination meeting, who typically chairs the meeting and leads clash resolution?',
     options: [
-      'The electrical subcontractor',
-      'The building owner',
       'The MEP coordinator or BIM manager',
-      'The architect',
+      'Cleaning vents and checking cables',
+      'Ask questions and repeat back to confirm',
+      'R1+R2 from continuity + Ze calculation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The MEP coordinator or BIM manager typically chairs coordination meetings, as they have oversight of all services disciplines and are responsible for facilitating clash resolution between the various trade contractors.',
   },
@@ -169,7 +194,12 @@ const quizQuestions = [
     id: 9,
     question:
       'What is the typical response timeframe expected for priority RFIs during active construction?',
-    options: ['24 hours', '3-5 working days', '2 weeks', '1 month'],
+    options: [
+      '24 hours',
+      '3-5 working days',
+      '2 weeks',
+      '1 month',
+    ],
     correctAnswer: 1,
     explanation:
       'Priority RFIs typically require response within 3-5 working days to prevent work stoppages. Critical RFIs affecting immediate work may require faster turnaround, whilst routine queries may allow longer response times.',
@@ -193,12 +223,12 @@ const quizQuestions = [
     question:
       'What documentation should be reviewed before attending a design coordination meeting?',
     options: [
-      'Only the meeting agenda',
+      'Services requiring least flexibility in routing pass below',
+      'A drawing overlaying all services to show spatial relationships and routing',
+      'An element violating required clearance or access zones',
       'Latest clash reports, updated drawings, and outstanding RFI responses',
-      'Only the project programme',
-      'Health and safety documentation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Effective participation in coordination meetings requires reviewing latest clash detection reports, current drawing revisions, outstanding RFIs, previous meeting minutes, and any technical submissions affecting coordination.',
   },
@@ -206,12 +236,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is a coordination drawing (sometimes called a combined services drawing)?',
     options: [
-      'A drawing showing only electrical services',
       'A drawing overlaying all services to show spatial relationships and routing',
-      'A drawing showing structural elements only',
-      'A drawing showing architectural finishes',
+      'Latest clash reports, updated drawings, and outstanding RFI responses',
+      'Services requiring least flexibility in routing pass below',
+      'An element violating required clearance or access zones',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A coordination drawing overlays all building services (mechanical, electrical, plumbing, fire protection) on a single drawing to show spatial relationships, identify potential conflicts, and establish agreed routing for all systems.',
   },

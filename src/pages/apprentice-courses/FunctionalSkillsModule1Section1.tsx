@@ -16,7 +16,12 @@ const FunctionalSkillsModule1Section1 = () => {
       id: 1,
       question:
         'An electrician needs three cable runs of 14.5m, 22.3m and 8.75m. What is the total length of cable required?',
-      options: ['44.55m', '45.55m', '45.05m', '44.05m'],
+      options: [
+        '44.55m',
+        '45.55m',
+        '45.05m',
+        '44.05m',
+      ],
       correctAnswer: 1,
       explanation:
         'Add the three lengths: 14.5 + 22.3 + 8.75 = 45.55m. When adding decimals, align the decimal points and work from right to left.',
@@ -24,7 +29,12 @@ const FunctionalSkillsModule1Section1 = () => {
     {
       id: 2,
       question: 'A 230V supply experiences a 10% voltage drop. What is the voltage at the load?',
-      options: ['220V', '210V', '207V', '203V'],
+      options: [
+        '203V',
+        '220V',
+        '207V',
+        '210V',
+      ],
       correctAnswer: 2,
       explanation:
         '10% of 230V = 23V drop. Therefore the voltage at the load = 230 - 23 = 207V. This exceeds the maximum permitted 5% drop for most circuits under BS 7671.',
@@ -32,8 +42,13 @@ const FunctionalSkillsModule1Section1 = () => {
     {
       id: 3,
       question: 'Using BIDMAS, what is the result of 2 + 3 × 4?',
-      options: ['20', '14', '24', '12'],
-      correctAnswer: 1,
+      options: [
+        '24',
+        '20',
+        '12',
+        '14',
+      ],
+      correctAnswer: 3,
       explanation:
         'BIDMAS tells us to perform Multiplication before Addition. So 3 × 4 = 12, then 2 + 12 = 14. A common mistake is to add first, giving 20.',
     },
@@ -41,7 +56,12 @@ const FunctionalSkillsModule1Section1 = () => {
       id: 4,
       question:
         'A drum contains 100m of cable. An electrician uses 3/8 of it. How many metres remain?',
-      options: ['62.5m', '37.5m', '60m', '65m'],
+      options: [
+        '62.5m',
+        '37.5m',
+        '60m',
+        '65m',
+      ],
       correctAnswer: 0,
       explanation:
         '3/8 of 100m = (3 ÷ 8) × 100 = 37.5m used. Remaining = 100 - 37.5 = 62.5m.',
@@ -50,8 +70,13 @@ const FunctionalSkillsModule1Section1 = () => {
       id: 5,
       question:
         'A circuit has a design current of 28.4A. Which standard BS 88 fuse rating should you select?',
-      options: ['25A', '28A', '30A', '32A'],
-      correctAnswer: 3,
+      options: [
+        '28A',
+        '32A',
+        '25A',
+        '30A',
+      ],
+      correctAnswer: 1,
       explanation:
         'The fuse rating must be equal to or greater than the design current. 28.4A exceeds 25A and 30A is not a standard BS 88 rating, so the next standard rating above 28.4A is 32A. Never round down — the fuse would be undersized.',
     },
@@ -59,8 +84,13 @@ const FunctionalSkillsModule1Section1 = () => {
       id: 6,
       question:
         'A motor has a power input of 2,400W and a useful output of 1,920W. What is its efficiency?',
-      options: ['75%', '80%', '85%', '90%'],
-      correctAnswer: 1,
+      options: [
+        '75%',
+        '85%',
+        '80%',
+        '90%',
+      ],
+      correctAnswer: 2,
       explanation:
         'Efficiency = (Power Out ÷ Power In) × 100 = (1,920 ÷ 2,400) × 100 = 80%. The remaining 20% is lost as heat, sound and vibration.',
     },
@@ -68,8 +98,13 @@ const FunctionalSkillsModule1Section1 = () => {
       id: 7,
       question:
         'The temperature in a cold workshop reads −5°C. A heater raises the temperature by 23°C. What is the new temperature?',
-      options: ['28°C', '18°C', '−28°C', '23°C'],
-      correctAnswer: 1,
+      options: [
+        '28°C',
+        '23°C',
+        '−28°C',
+        '18°C',
+      ],
+      correctAnswer: 3,
       explanation:
         'Starting at −5°C and adding 23°C: −5 + 23 = 18°C. When adding a positive number to a negative number, subtract the smaller absolute value from the larger and keep the sign of the larger.',
     },
@@ -77,8 +112,13 @@ const FunctionalSkillsModule1Section1 = () => {
       id: 8,
       question:
         'An estimate for a job includes 47 metres of cable at £1.85 per metre. Using estimation (rounding to convenient numbers), approximately how much will the cable cost?',
-      options: ['About £75', 'About £90', 'About £100', 'About £85'],
-      correctAnswer: 1,
+      options: [
+        'About £90',
+        'About £100',
+        'About £75',
+        'About £85',
+      ],
+      correctAnswer: 0,
       explanation:
         'Round 47m to 50m and £1.85 to £1.80. 50 × £1.80 = £90. The exact answer is £86.95, so £90 is the closest reasonable estimate. Estimation helps you quickly verify quotes and spot errors.',
     },

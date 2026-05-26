@@ -40,7 +40,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What is the minimum IP rating for Zone 1 in a bathroom?',
-    options: ['IPX2', 'IPX3', 'IPX4', 'IPX6'],
+    options: [
+      'IPX6',
+      'IPX2',
+      'IPX4',
+      'IPX3',
+    ],
     correctAnswer: 2,
     explanation:
       'Zone 1 in bathrooms requires minimum IPX4 protection against splashing water from any direction.',
@@ -56,8 +61,13 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Which IP rating is required for continuous immersion in water?',
-    options: ['IP65', 'IP67', 'IP68', 'IPX5'],
-    correctAnswer: 2,
+    options: [
+      'IP68',
+      'IP67',
+      'IP65',
+      'IPX5',
+    ],
+    correctAnswer: 0,
     explanation:
       'IP68 provides protection against continuous immersion in water under specified conditions.',
   },
@@ -65,10 +75,10 @@ const quizQuestions = [
     id: 5,
     question: 'Give one consequence of using an IP20 accessory outdoors.',
     options: [
-      'Improved performance',
+      'Before practical completion inspection',
       'Water ingress causing short circuits',
-      'Better ventilation',
-      'Enhanced durability',
+      'All methods have specific requirements',
+      'To subtract lead resistance from measurements',
     ],
     correctAnswer: 1,
     explanation:
@@ -79,19 +89,24 @@ const quizQuestions = [
     question: "What does the 'X' in IPX5 mean?",
     options: [
       'No protection',
-      'Not tested for solids',
       'Protection against dust',
+      'Not tested for solids',
       'Protection against fire',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The 'X' indicates that the solid object protection level hasn't been tested or isn't specified for that enclosure.",
   },
   {
     id: 7,
     question: 'Which IP rating is typically used for industrial washdown areas?',
-    options: ['IP44', 'IP55', 'IP66', 'IP20'],
-    correctAnswer: 2,
+    options: [
+      'IP44',
+      'IP55',
+      'IP20',
+      'IP66',
+    ],
+    correctAnswer: 3,
     explanation:
       'IP66 provides dust tight protection and protection against powerful water jets, suitable for industrial washdown areas.',
   },
@@ -99,12 +114,12 @@ const quizQuestions = [
     id: 8,
     question: 'Name one factor to consider when choosing an IP rating.',
     options: [
-      'Cable colour',
       'Environmental exposure conditions',
-      'Circuit voltage',
-      'Installation cost only',
+      'Ratio of real power to apparent power',
+      '+/-5mm tolerance for exact positioning',
+      'Compensate for lead wire resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Environmental conditions (water exposure, dust levels, temperature) are primary factors in IP rating selection.',
   },
@@ -116,10 +131,10 @@ const quickCheckQuestions = [
     id: 'first-digit',
     question: 'What does the first digit of an IP rating indicate?',
     options: [
-      'Water protection level',
+      'Rating is appropriate for the circuit and cable',
       'Protection against solid objects and dust',
-      'Temperature resistance',
-      'Impact resistance',
+      'Section 8 — Exposure controls/personal protection',
+      'Speed = 120 x f / p (where p = number of poles)',
     ],
     correctIndex: 1,
     explanation:
@@ -128,16 +143,26 @@ const quickCheckQuestions = [
   {
     id: 'dust-tight',
     question: 'Which IP rating is considered completely dust tight?',
-    options: ['IP54', 'IP55', 'IP64', 'IP65'],
-    correctIndex: 3,
+    options: [
+      'IP65',
+      'IP54',
+      'IP64',
+      'IP55',
+    ],
+    correctIndex: 0,
     explanation:
       "IP65 (and IP66) are considered dust tight with the first digit '6' indicating complete dust exclusion.",
   },
   {
     id: 'outdoor-rating',
     question: 'What is the minimum recommended IP rating for an outdoor socket?',
-    options: ['IP44', 'IP54', 'IP65', 'IP68'],
-    correctIndex: 2,
+    options: [
+      'IP44',
+      'IP68',
+      'IP54',
+      'IP65',
+    ],
+    correctIndex: 3,
     explanation:
       'IP65 is the minimum recommended rating for outdoor sockets, providing dust tight and water jet protection.',
   },

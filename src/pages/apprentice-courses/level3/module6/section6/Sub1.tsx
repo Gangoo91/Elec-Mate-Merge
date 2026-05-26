@@ -43,10 +43,10 @@ const checks = [
     question:
       'You are handed a job to produce the design pack for a 250 A three-phase commercial fit-out. Which document do you draft FIRST?',
     options: [
-      'The cable schedule — start sizing cables.',
+      '\\\\\\\\\\\\\\\'Most suitable\\\\\\\\\\\\\\\' means: pick the cable that satisfies BS 7671 for current-carrying capacity AND voltage drop AND the installation method, with reasonable economy. The right answer balances all three constraints — it is not the smallest cable that just-passes CCC, nor the largest \\\\\\\\\\\\\\\'safe\\\\\\\\\\\\\\\' cable.',
       'The single-line diagram (SLD) — it fixes the topology, the protective device layout and the fault paths. Every other document (schedules, layouts, calc sheets) hangs off the SLD topology. Drafting cables first means re-drafting them when the SLD topology shifts.',
-      'The lighting layout — the customer wants to see the rooms first.',
-      'The bill of materials — the procurement team needs lead times.',
+      'Affixed inside the CU door (for the immediate user reference) plus included in the handover pack as a stand-alone document. Future fault diagnosis depends on accurate circuit-to-board labelling at the CU itself.',
+      'To confirm that single-pole switching, fuses and circuit-breakers are connected in the line conductor only, and that socket polarity is correct, ensuring isolation devices break the line not the neutral',
     ],
     correctIndex: 1,
     explanation:
@@ -57,12 +57,12 @@ const checks = [
     question:
       'On a commercial SLD you need to show a 250 A four-pole moulded-case circuit-breaker (MCCB) with adjustable thermal-magnetic trip, feeding a 100 A three-phase TP+N sub-board through a 50 m run of XLPE four-core armoured. Which standard governs the symbols you use?',
     options: [
-      'Whatever your CAD package autocompletes.',
+      'NICEIC scheme action — non-conformance notice, possible suspension, possible removal from the scheme. Removal from the CPS means: no more self-certification under Part P, customers\\\\\\\' insurance defences weakened, marketing claims (logo, badge) withdrawn, and frequently insurer-driven loss of public liability cover. The job stays civil, but the firm\\\\\\\'s ability to trade collapses.',
+      'The CO2-equivalent refrigerant charge — kg of refrigerant multiplied by the refrigerant\\\\\\\'s global warming potential, divided by 1000. Mandatory intervals: 5+ tonnes CO2e annual; 50+ tonnes CO2e six-monthly; 500+ tonnes CO2e three-monthly. Most domestic ASHPs sit below 5 tonnes CO2e and are not subject to the mandatory regulatory intervals — but manufacturer warranty terms typically require annual servicing anyway.',
       'BS EN 60617 — the international graphical symbols standard adopted in the UK. It defines breaker symbols (with rectangular trip box and slash for poles), cable symbols (single-line cable with parallel-line annotation for armouring), and DB symbols (rectangular block with terminal grouping). Using the recognised symbol set means anyone reading the drawing — installer, tester, future designer — interprets it the same way.',
-      'Manufacturer marketing symbols.',
-      'BS 7671 — the regs include the symbols you must use.',
+      'The Foreman directs the work at the face — who pulls which cable, in what sequence, before what trade. They sign off small works, run the daily morning brief, allocate apprentices to electricians, and feed back any problems up the chain. The Project Engineer designs and resolves technical queries; the Contracts Manager owns the contract, programme and money. The Foreman is the only one of the three who is in the work area all day.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "BS EN 60617 (Graphical Symbols for Diagrams) is the international standard adopted in the UK for electrical drawings. It defines a recognised graphical alphabet for breakers, fuses, switches, isolators, cables, transformers, motors, generators, batteries, RCDs, RCBOs, AFDDs, contactors, indicator lamps, instruments and most of the building-services components an L3 designer specifies. BS 7671 mandates compliance with recognised standards but does not itself define the symbol set — that's the job of BS EN 60617. Manufacturer marketing symbols are decorative and not interchangeable; CAD package defaults are usually 60617-compatible but verify per package.",
   },
@@ -71,12 +71,12 @@ const checks = [
     question:
       'On the SLD the design Zs at the end of a Type C 32 A circuit-breaker final circuit comes out at 0.85 ohm. The 5 s tabulated maximum Zs for a Type C 32 A is around 0.6 ohm. What do you do at SLD level?',
     options: [
-      'Ignore it — Zs is a calc sheet issue, not an SLD issue.',
+      "Unlimited fine and/or up to 2 years' imprisonment. The Sentencing Council Definitive Guideline (2016) sets the sentencing bands by reference to culpability and harm. For individuals, custodial sentences are real — particularly under s.37 director-liability cases and s.7 personal-duty cases following a fatality.",
+      "No — Reg 701.415.2 allows supplementary bonding to be omitted when all three conditions are met (ADS compliance, all final circuits in the location have 30 mA RCD additional protection, main bonding on extraneous-conductive-parts is in place per Reg 411.3.1.2). Modern fully-RCD-protected new-builds typically meet all three.",
+      "Into the customer's installation record — Electrical Installation Certificate, schedule of circuits, schedule of test results, manufacturer data for the new board, and a copy of the final RAMS for your firm's own records. The customer's pack discharges the BS 7671 Reg 132.13 duty to provide information for safe operation, inspection and maintenance. Your firm's pack is what you produce to an HSE inspector if anything is challenged later.",
       "Annotate the SLD circuit with the calc'd Zs and the regs-required maximum, with a flag (often a coloured marker or revision-cloud bubble) showing the design fails. The SLD is the dashboard — every breaker on the dashboard either passes or fails. Then resolve: change to RCBO 30 mA so the 0.4 s table applies and the Zs ceiling is much higher; or upsize the cable to drop Zs; or change device type. Re-annotate the SLD and the calc sheet.",
-      'Pass it through and let the tester worry about it.',
-      'Just remove the breaker and substitute another rating.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The SLD is the design dashboard. Each protective device should be annotated with at least the design Zs vs the regs ceiling (Reg 411.4.5 / Table 41.3 / Table 41.4 — the 0.4 s and 5 s ceilings). When the design fails, the SLD shows the failure visually so it cannot be missed. The fix is then a design choice: RCBO (30 mA disconnects within 40 ms regardless of Zs, so the ceiling effectively becomes the 5 s table — much more headroom); upsize cable; change device characteristic; relocate DB closer; or accept and reduce circuit length. Re-annotate after the fix. If the SLD doesn't surface failures, calc errors slip into installs.",
   },
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does an SLD (single-line diagram) actually show?',
     options: [
-      'Every individual conductor on every cable.',
+      '£5 million per claim. The Act requires every UK employer (with limited specific exceptions) to hold an EL policy for at least £5m. Most policies offer £10m or more by default. The certificate must be displayed at the workplace where employees can see it. Failure to hold cover = fine up to £2,500 per day; failure to display = £1,000 fine.',
       'The topology of the installation — supply origin, every sub-main, every distribution board, every protective device, every final-circuit group — represented in single-line form (one line per cable regardless of how many conductors it actually has). Plus annotations: ratings, cable sizes, fault levels, Ze, PSCC, Zs, breaker types.',
-      'The physical positions of accessories on the floor plan.',
-      'Just the consumer unit layout.',
+      'Two-way radios on a pre-agreed channel, tested before the pull starts. Brief both ends on the agreed call-words (\\\\\\\'pull\\\\\\\', \\\\\\\'stop\\\\\\\', \\\\\\\'slack\\\\\\\', \\\\\\\'snag\\\\\\\'), confirm channel volume so both parties hear over background noise, and agree a default action if comms drop (\\\\\\\'stop\\\\\\\' is always the default). Phones are a backup, not the primary — they can ring while you\\\\\\\'re holding cable.',
+      'Risk-weighted — circuits in special locations (bathrooms, kitchens, outdoors), socket circuits used by ordinary persons, circuits supplying high-risk equipment (showers, EV chargers, electric heating), circuits showing visible signs of damage or modification, and the dedicated samples needed to characterise common features of the installation. Document the sampling logic.',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'BS EN 60617 is the standard for:',
     options: [
-      'Electrical safety standards.',
+      'Modern fire-resistant cables — silicone-rubber or insulating-tape construction with a stainless-steel screen. Easier to install than MICC, lower cost, BS 5839 compliant for fire alarm and emergency lighting circuits.',
+      'Three prongs of director liability. Consent — director knew and agreed. Connivance — director knew and turned a blind eye. Neglect — director should have known but didn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t take reasonable steps to find out / address. All three give personal liability for the corporate offence.',
       'Graphical symbols for diagrams — the recognised symbol set for breakers, fuses, switches, isolators, cables, transformers, motors, generators, batteries, RCDs, RCBOs, AFDDs, contactors, lamps, instruments and most building-services components used on UK electrical drawings.',
-      'Cable colour codes.',
-      'Cable current ratings.',
+      'As a social skill, active listening builds trust, reduces misunderstanding, and creates the psychological safety needed for effective collaboration — the speaker feels genuinely heard, which strengthens the working relationship and increases the quality of information shared',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "BS EN 60617 (Graphical Symbols for Diagrams) is the international IEC standard adopted in the UK as the symbol set for electrical drawings. It is the reason a circle with a diagonal slash means 'switch' on every drawing, regardless of who drafted it. Using the standard symbol set is the discipline that lets a tester two years later pick up the SLD and read it without translation. Manufacturer marketing or one-off symbols break that interoperability.",
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: 'A commercial SLD typically annotates each protective device with:',
     options: [
-      'Only the rating in amps.',
+      'The arrangements for ensuring there are suitable welfare facilities, the site rules (if any), and any specific measures concerning work falling within Schedule 3 (high-risk work such as work near or over water, involving diving, in a caisson, involving explosives, etc.)',
+      'Below 200 Ω for general installations; below 100 Ω is preferred. Soil resistance varies significantly with moisture (worst case dry summer); designing for an electrode well below the absolute Reg 411.5.3 maximum gives compliance margin year-round and reliability when soil dries out.',
+      'Because most domestic PME supplies have a PEN of 35 mm² or less, which Table 54.8 maps to a 10 mm² minimum copper-equivalent main bonding. On bigger supplies (commercial three-phase, 70 mm² PEN) the bonding steps up to 16 mm² or 25 mm². Always read the supplier neutral first, then Table 54.8.',
       'Device type and rating (e.g. MCCB 250 A 4P, MCB Type C 32 A, RCBO Type A 32 A 30 mA), curve characteristic where relevant, breaking capacity (Icu / Ics in kA), design Zs and regs maximum Zs, design discrimination check vs upstream device, and the BS 7671 reg references for the limits used.',
-      'Just the manufacturer name.',
-      'The colour of the breaker case.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Full annotation per device is the discipline that makes the SLD self-checking. Anyone reading it can verify the device is right for its position: rating matches the cable CCC, curve characteristic matches the load type and downstream protection, breaking capacity exceeds the local PSCC, design Zs sits below the regs ceiling, and discrimination with the upstream device is intact. Annotations don't replace the calc sheet but they are the fast visual cross-check that catches errors before they reach the install.",
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'CAD layer discipline on an SLD typically separates:',
     options: [
-      'Nothing — it is all one layer.',
       'At minimum: power topology (cables, breakers, DBs); annotations (ratings, calc results); revision clouds and notes; legend and title block. Some designers add layers for fault current, voltage drop, disconnection time and sub-discipline (e.g. emergency lighting circuits, fire alarm circuits, IT critical) so layers can be turned on or off for clarity.',
-      'Only power on one layer and lighting on another.',
-      'Only colour by department.',
+      'No — the test is Ib ≤ In ≤ Iz, so In = 32 A and Iz = 30 A means the cable cannot safely carry the device rating; either size up the cable to give Iz ≥ 32 A or drop In to 25 A (assuming Ib = 26 A still leaves you a fit — it does not, so the cable size must increase).',
+      'SELECT is the campaigning trade association for electrical contracting in Scotland. It\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the equivalent of the ECA but for Scotland, and it works alongside the SJIB (Scottish Joint Industry Board) which sets the Scottish equivalent of the JIB rules. Scottish apprentices are usually contracted under SJIB rules with SELECT-member firms.',
+      'Read it, follow it, sign on, work to the controls and steps as written, and flag anything on site that doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t match what the document describes. Writing RAMS is a Level 3 / 4 / supervisor competency — at Level 2 you\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re a reader and follower of RAMS, and a flagger when reality doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t match.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Layers let the reader filter the drawing. Topology layer always on. Annotation layers (ratings, fault, voltage drop) toggled per audit purpose. Revision clouds toggled when reviewing a specific revision change. Sub-discipline layers (emergency lighting, fire alarm, IT critical) toggled for that discipline's checks. Without layer discipline, an SLD becomes unreadable as the project grows. CAD packages enforce layers automatically; hand-drawn SLDs need explicit colour or hatching coding.",
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why does the SLD include Ze, PSCC and Zs values directly on the drawing?',
     options: [
-      'To make the drawing look full.',
+      'Most electricians take a 1-day refresher course within 3-6 months of an amendment, then sit the updated 2382 within 12 months. CPS schemes typically expect QS-named individuals to be current within 12 months. Working without updated knowledge means signing certificates against outdated standards — both a competence concern and a scheme compliance risk.',
       'So the tester can verify the design assumptions during initial verification — measured Ze at the origin and measured Zs at each circuit end can be compared against the design values on the SLD. Mismatch flags either a measurement issue or a design assumption that did not hold (e.g. cable installed differently to design).',
-      'They are not needed on the SLD.',
-      'The DNO requires them on the drawing.',
+      'They must not tamper with, remove, or bypass the meter without authority from the energy supplier — the meter is the property of the metering company, and interference is a criminal offence under the Theft Act 1968 and Electricity Act 1989',
+      '"I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve noticed tools left on the walkway on three occasions this week (observation). I feel worried (feeling) because someone could trip and be seriously injured (need for safety). Would you be willing to use the tool belt and return tools to the kit bag after each use? (request)"',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'The SLD is typically version-controlled with what convention?',
     options: [
-      'No version control.',
+      'Remove the cross-connection at the CU, re-land the line and neutral conductors into their correct terminals on the protective device, double-check polarity by visual inspection of the terminations, then proceed to insulation resistance testing (Sub 3) before energising.',
+      'Type (BS EN 60898 Type B or C), rating (32 A), breaking capacity (e.g. 6 kA Icn), trip characteristic family, RCD class if combined (e.g. RCBO 30 mA Type A), and the maximum Zs figure used for verification (Type B32 = 1.37 ohms per Table 41.3 A4:2026). Plus the manufacturer / part number for traceability.',
       'Revision letters (Rev A, B, C, D) or numbers (Rev 1, 2, 3) shown in the title block, with a revision history table listing each revision with date, drafter, reason for change and what changed. Superseded revisions are marked VOID and either physically destroyed or filed separately as historical record. The current revision is the only one in active use.',
-      'The drawing is undated.',
-      'Whichever copy is on the foreman desk.',
+      'Empathy involves understanding and sharing another person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s feelings from their perspective, while sympathy involves feeling pity or sorrow for someone\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s situation from your own perspective — empathy says "I feel with you," sympathy says "I feel for you"',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Version control on the SLD is critical because the SLD is the spine — every other document references it. Revisions go up alphabetically (Rev A first issue, B, C...) or numerically (Rev 1, 2, 3...). Each revision has a row in the revision history table: date, drafter initials, reason for change (e.g. 'added EV charger circuit at Customer request 2026-04-15'), what changed. Superseded SLDs are marked VOID. Working from a superseded SLD is the most common cause of expensive fit-out rework. CDE (Common Data Environment) tooling enforces this; for small jobs it is a manual discipline.",
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'Discrimination between two protective devices is shown on the SLD how?',
     options: [
-      'Not shown — discrimination is a calc-sheet only check.',
+      'Use physiological regulation (controlled breathing to manage cortisol), cognitive reappraisal (reframe as "this is a solvable technical challenge, not a personal attack"), psychological flexibility (accept discomfort while committing to values of professionalism), and measured vulnerability ("I understand this is frustrating — let me walk you through our resolution plan")',
+      'Strictly there\\\\\\\'s no formal pre-requisite — anyone can sit 2391-52 if they can pass the exam and practical. In practice most providers expect candidates to hold C&G 2365-03 (or equivalent NVQ Level 3) and to have meaningful site experience. AM2 isn\\\\\\\'t formally required but is the strong norm because the practical content assumes installation competence.',
+      'Gateway 1 — at planning, considers fire safety and access. Gateway 2 — before construction, the BSR reviews the design and construction control plan; no construction can start without approval. Gateway 3 — before occupation, the BSR signs off the as-built building against the approved design and the golden thread; no occupation without approval.',
       'A discrimination annotation against each upstream/downstream device pair, citing the test (current discrimination by ratio, time discrimination by curve overlap, energy discrimination by I²t for current-limiting devices). For full discrimination across the whole SLD, manufacturer coordination tables are referenced. Where discrimination is not achievable (very common at the origin with high PSCC), the SLD notes the design choice and the regs basis.',
-      'Just the upstream device size.',
-      'Just the breaking capacity.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Discrimination annotation is a visual check that the SLD topology gives selective tripping — a fault on a final circuit takes out only its own breaker, not the upstream sub-main breaker, not the origin device. Three test methods: current ratio (typically 1.6:1 minimum for MCB / MCCB pairs); time grading (the upstream device has a longer trip time at the fault current than the downstream); energy I²t (upstream withstand exceeds downstream let-through). Manufacturer coordination tables are the authority for specific device pairs. Where discrimination is not achievable, the SLD records the design choice (e.g. cascading allowed by the breaker manufacturer) and the basis.",
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which BS 7671 regulation underpins the requirement to produce and retain the SLD as part of the design pack?',
     options: [
-      'There is no regulation — SLDs are optional.',
       'Regulation 132.13 — the explicit requirement for design documentation. Plus Reg 514.9.1 which addresses the on-site distribution board diagram requirement (with the A4:2026 domestic exception). Plus Reg 644.1.1 which makes the EIC and supporting documentation conditional on defect rectification. Plus Section 514 series on identification and notices.',
-      'Regulation 132.13 — accessibility.',
-      'Reg 433 — overload.',
+      'Inversely proportional. Doubling the cable length doubles the surface area for leakage, halving the apparent IR. A 50 m run reading 200 MΩ would read approximately 100 MΩ at 100 m for the same insulation quality. On long runs (especially underground or in damp conditions), the absolute MΩ figure matters less than the consistency between runs of similar length.',
+      'The \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'workmanship\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' standard and \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'manufacturers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' instructions\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' obligation. So a faulty cable joint that\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s electrically OK at the moment of test but executed with poor workmanship breaches 134.1.1, AND ignoring an SPD lead-length spec or a CU manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s torque setting also breaches 134.1.1. This is the regulation a scheme inspector quotes when they\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'re calling out poor workmanship without it being a specific technical-test failure.',
+      'Recruitment (engage interest), reduction in degrees of freedom (break into steps), direction maintenance (keep on track), marking critical features (highlight safety-critical points), frustration control (manage difficulty), demonstration (show correct technique)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Reg 132.13 is the design documentation hook — the installation must be documented sufficiently for it to be operated, maintained, altered and extended. Reg 514.9.1 (amended in A4:2026 with a domestic exception) requires a diagram, chart or table at every distribution board sufficient to identify circuits — the SLD discharges this at the design level and a derived per-DB schedule discharges it at install level. Reg 644.1.1 makes the EIC conditional on documentation being in order. Section 514 covers labelling and notices. Together these regs make the SLD a regulatory requirement, not a nice-to-have.",
   },

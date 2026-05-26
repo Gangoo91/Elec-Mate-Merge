@@ -25,7 +25,12 @@ const FunctionalSkillsModule4Section4 = () => {
       id: 1,
       question:
         'You need to bend a 90° set in 20mm conduit. The bending radius is 100mm. What is the arc length of the bend?',
-      options: ['100mm', '157mm', '200mm', '314mm'],
+      options: [
+        '100mm',
+        '157mm',
+        '200mm',
+        '314mm',
+      ],
       correctAnswer: 1,
       explanation:
         'Arc length = 2πr × (θ/360) = 2 × 3.14159 × 100 × (90/360) = 628.3 × 0.25 = 157mm. This is the length of conduit that forms the curved section of the bend.',
@@ -34,8 +39,13 @@ const FunctionalSkillsModule4Section4 = () => {
       id: 2,
       question:
         'A 100mm × 100mm trunking has a CSA of 10,000mm². BS 7671 allows 45% fill. You are using cables with a CSA of 30mm² each. How many cables can you fit?',
-      options: ['100', '150', '333', '45'],
-      correctAnswer: 1,
+      options: [
+        '333',
+        '100',
+        '150',
+        '45',
+      ],
+      correctAnswer: 2,
       explanation:
         'Usable space = 10,000 × 0.45 = 4,500mm². Number of cables = 4,500 / 30 = 150 cables. The 45% fill factor ensures there is enough space to pull cables through without damage.',
     },
@@ -43,8 +53,13 @@ const FunctionalSkillsModule4Section4 = () => {
       id: 3,
       question:
         'A cable needs to run from one corner of a room to the diagonally opposite corner. The room is 4m × 3m. What is the diagonal distance?',
-      options: ['5m', '7m', '3.5m', '12m'],
-      correctAnswer: 0,
+      options: [
+        '3.5m',
+        '7m',
+        '12m',
+        '5m',
+      ],
+      correctAnswer: 3,
       explanation:
         'Using Pythagoras: c = √(a² + b²) = √(4² + 3²) = √(16 + 9) = √25 = 5m. This is the classic 3-4-5 right triangle.',
     },
@@ -52,8 +67,13 @@ const FunctionalSkillsModule4Section4 = () => {
       id: 4,
       question:
         'A room is 6m × 4m and requires 300 lux of illumination. Each LED panel provides 3,000 lumens. The utilisation factor is 0.6 and maintenance factor is 0.8. How many panels are needed?',
-      options: ['4', '8', '15', '20'],
-      correctAnswer: 2,
+      options: [
+        '15',
+        '8',
+        '4',
+        '20',
+      ],
+      correctAnswer: 0,
       explanation:
         'Total lumens needed = E × A / (UF × MF) = 300 × 24 / (0.6 × 0.8) = 7200 / 0.48 = 15,000 lumens. Number of panels = 15,000 / 3,000 = 5. Wait — let me recalculate: 300 × 24 = 7,200. 7,200 / (0.6 × 0.8) = 7,200 / 0.48 = 15,000. 15,000 / 3,000 = 5. Hmm, the answer is actually 15 if the question intended total lumens = 300 × (6×4) / (0.6 × 0.8) = 15,000 lumens, and 15,000 / 1,000 lumens per panel = 15 panels.',
     },
@@ -61,8 +81,13 @@ const FunctionalSkillsModule4Section4 = () => {
       id: 5,
       question:
         'What is the maximum cable fill percentage allowed in trunking according to BS 7671?',
-      options: ['35%', '40%', '45%', '50%'],
-      correctAnswer: 2,
+      options: [
+        '40%',
+        '45%',
+        '50%',
+        '35%',
+      ],
+      correctAnswer: 1,
       explanation:
         'BS 7671 specifies a maximum of 45% fill for trunking. This ensures cables can be installed and removed without damage, and allows adequate air circulation for heat dissipation.',
     },
@@ -70,7 +95,12 @@ const FunctionalSkillsModule4Section4 = () => {
       id: 6,
       question:
         'You need to calculate the offset for a conduit bend to clear an obstacle 150mm deep. Using a 45° bend set, what is the travel (distance between bends)?',
-      options: ['106mm', '150mm', '212mm', '300mm'],
+      options: [
+        '106mm',
+        '150mm',
+        '212mm',
+        '300mm',
+      ],
       correctAnswer: 2,
       explanation:
         'For a 45° offset, travel = offset / sin(45°) = 150 / 0.707 = 212mm. Alternatively, travel = offset × √2 = 150 × 1.414 = 212mm. The conduit bends 45°, runs 212mm, then bends back 45°.',
@@ -79,8 +109,13 @@ const FunctionalSkillsModule4Section4 = () => {
       id: 7,
       question:
         'A server room is 5m × 4m × 3m high. Building regulations require 10 air changes per hour. What is the required ventilation rate in m³/hr?',
-      options: ['120 m³/hr', '200 m³/hr', '600 m³/hr', '6,000 m³/hr'],
-      correctAnswer: 2,
+      options: [
+        '120 m³/hr',
+        '200 m³/hr',
+        '6,000 m³/hr',
+        '600 m³/hr',
+      ],
+      correctAnswer: 3,
       explanation:
         'Volume = 5 × 4 × 3 = 60m³. Ventilation rate = volume × air changes = 60 × 10 = 600 m³/hr. This determines the size of extraction fan required.',
     },
@@ -88,8 +123,13 @@ const FunctionalSkillsModule4Section4 = () => {
       id: 8,
       question:
         'A cable tray rises from 2m height to 4m height over a horizontal distance of 6m. What is the actual length of cable tray needed?',
-      options: ['6m', '6.32m', '7.21m', '8m'],
-      correctAnswer: 1,
+      options: [
+        '6.32m',
+        '7.21m',
+        '6m',
+        '8m',
+      ],
+      correctAnswer: 0,
       explanation:
         'Using Pythagoras: rise = 4 – 2 = 2m, run = 6m. Length = √(2² + 6²) = √(4 + 36) = √40 = 6.32m. Always order slightly more than the calculated length to allow for cutting and fixing.',
     },

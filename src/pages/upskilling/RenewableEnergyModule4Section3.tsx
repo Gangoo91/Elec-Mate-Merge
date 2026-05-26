@@ -744,9 +744,9 @@ export default function RenewableEnergyModule4Section3() {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 · Reg 551.6 — Precautions against parallel operation (when not intended)"
-            clause="Precautions complying with the relevant requirements of Chapter 46 and Section 537 for isolation shall be taken so that the generator cannot operate in parallel with the system for distribution of electricity to the public. Suitable precautions may include: (a) electrical, mechanical or electromechanical interlock between the operating mechanisms or control circuits of the changeover switching devices; (b) a system of locks with a single transferable key; (c) a three-position break-before-make changeover switch; (d) an automatic changeover switch with suitable interlock."
-            meaning="Reg 551.6 governs switched-alternative operation — generator alternates with inverter, never operates in parallel. The ATS provides the precaution. Most off-grid installs operate in switched-alternative mode. Where parallel operation IS intended (PowerAssist), Reg 551.7 applies instead."
+            source="BS 7671:2018+A4:2026 · Reg 551.6.1 — Precautions against parallel operation (when not intended)"
+            clause="Precautions complying with the relevant requirements of Chapter 46 and Section 537 for isolation shall be taken so that the generator cannot operate in parallel with the system for distribution of electricity to the public. Suitable precautions may include one or more of the following: (a) an electrical, mechanical or electromechanical interlock between the operating mechanisms or control circuits of the changeover switching devices; (b) a system of locks with a single transferable key; (c) a three-position break-before-make changeover switch; (d) an automatic changeover switching device with a suitable interlock; (e) other means providing equivalent security of operation."
+            meaning="Reg 551.6.1 governs switched-alternative operation — generator alternates with inverter, never operates in parallel. The ATS provides the precaution. Five suitable methods are listed (a)-(e), of which the automatic changeover switching device with interlock (d) is the modern norm for UK off-grid installs. Most off-grid installs operate in switched-alternative mode. Where parallel operation IS intended (PowerAssist), Reg 551.7 applies instead. Cert evidence bundle records which method (a)-(e) is used."
           />
 
           <InlineCheck {...inlineChecks[5]} />

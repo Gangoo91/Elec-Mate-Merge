@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'iso-50001',
     question: 'What is the purpose of ISO 50001?',
     options: [
-      'To set maximum electricity prices for industrial users',
+      'Inspection, testing and verification of electrical installations including periodic inspection',
+      'To prevent disputes about what work was and was not included in the agreed price',
+      'It creates a web of mutual referrals, shared knowledge, and collaborative problem-solving that benefits all parties',
       'To provide a framework for establishing an energy management system to improve energy performance',
-      'To specify the minimum efficiency of electric motors',
-      'To regulate the carbon emissions from power stations',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'ISO 50001 is an international standard that provides organisations with a systematic framework for establishing an energy management system (EnMS). It follows the Plan-Do-Check-Act cycle to continually improve energy performance, including energy efficiency, energy use and energy consumption. Many maintenance activities directly support the objectives of an ISO 50001 system.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'power-factor',
     question: 'What is the primary benefit of maintaining power factor correction (PFC) equipment?',
     options: [
-      'It reduces the voltage supplied to equipment',
+      'When there\\\\\\\'s risk from flying particles, chemicals, radiation, or bright light',
+      'Adding resources to critical tasks to reduce duration at increased cost',
       'It reduces reactive power demand, lowering electricity costs and freeing up system capacity',
-      'It increases the speed of electric motors',
-      'It eliminates the need for circuit protection',
+      'To avoid conflicts like lights switching on at full brightness in bright daylight',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Power factor correction capacitors reduce the reactive power (kVAr) drawn from the supply, bringing the power factor closer to unity (1.0). This reduces electricity costs (many suppliers charge reactive power penalties), frees up transformer and cable capacity, reduces network losses, and improves voltage regulation. Maintenance of PFC equipment is a direct contribution to energy efficiency.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'motor-misalignment',
     question: 'How does motor misalignment affect energy consumption?',
     options: [
-      'It has no effect on energy consumption',
-      'It reduces energy consumption by creating less friction',
+      'Operators ignored it, leading to boiler lockout and loss of heating across hospital wards',
       'It increases energy consumption due to additional mechanical losses, vibration and bearing wear',
-      'It only affects energy consumption if the motor is larger than 11 kW',
+      'Disconnected from all sources of electrical energy and unable to become live unintentionally',
+      'The employer must weigh the risk against the cost, time and effort of removing it',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Motor misalignment — angular or parallel offset between the motor shaft and the driven equipment shaft — causes increased mechanical losses through vibration, excessive bearing loading, coupling wear and heat generation. Studies show that misalignment can increase motor energy consumption by 2-5%, and in severe cases even more. Proper laser alignment during maintenance restores optimal efficiency.',
   },
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     question:
       'Why is compressed air leak detection an energy efficiency priority for maintenance technicians?',
     options: [
-      'Because compressed air leaks cause noise complaints',
+      'It helps you recognise when your habitual response may not suit the situation and consciously choose a better approach',
       'Because compressed air is one of the most energy-intensive utilities, and leaks can waste 20-30% of total compressor output',
-      'Because compressed air leaks are a safety hazard',
-      'Because regulatory inspections require annual leak surveys',
+      'Not permitted (per Section 701) except for shaver supply units complying with BS EN 61558-2-5 (which provide isolating transformer protection).',
+      'They must be kept available and any defects recorded; the machine must be taken out of service if found unsafe',
     ],
     correctIndex: 1,
     explanation:
@@ -70,8 +70,13 @@ const quizQuestions = [
     id: 1,
     question:
       'A maintenance technician discovers that a 55 kW motor is running with poor shaft alignment. The estimated energy waste is 3%. Over 8,000 operating hours per year at £0.25/kWh, what is the approximate annual energy cost of this misalignment?',
-    options: ['£165', '£330', '£3,300', '£33,000'],
-    correctAnswer: 2,
+    options: [
+      '£165',
+      '£3,300',
+      '£330',
+      '£33,000',
+    ],
+    correctAnswer: 1,
     explanation:
       'Energy waste = 55 kW x 0.03 (3%) = 1.65 kW wasted. Annual cost = 1.65 kW x 8,000 hours x £0.25/kWh = £3,300. This demonstrates why motor alignment is a significant energy efficiency activity — a relatively quick maintenance task can yield substantial energy savings on large motors.',
   },
@@ -80,12 +85,12 @@ const quizQuestions = [
     question:
       'Which of the following maintenance activities has the greatest potential impact on energy efficiency?',
     options: [
-      'Replacing a broken light switch',
+      'Electrical equipment being charged accidentally',
+      'It reduces energy waste through automated control',
       'Cleaning and maintaining heat exchanger surfaces on HVAC equipment',
-      'Labelling a distribution board',
-      'Replacing a damaged socket outlet faceplate',
+      'Planned, appropriately supervised and carried out in a safe manner',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cleaning heat exchanger surfaces (condenser and evaporator coils) on HVAC equipment directly affects system efficiency. Fouled heat exchangers force compressors to work harder, increasing energy consumption by 10-30%. Maintaining clean heat transfer surfaces is one of the highest-impact energy efficiency activities a maintenance technician can perform.',
   },
@@ -93,12 +98,12 @@ const quizQuestions = [
     id: 3,
     question: 'What does a variable speed drive (VSD) do to improve energy efficiency?',
     options: [
-      'It increases the voltage to the motor to make it run faster',
+      'Leakage currents flow through the degraded insulation, wasting energy as heat and potentially causing tripping',
+      'Incorrect belt tension — whether too loose (causing slip and heat) or too tight (causing excessive bearing load) — increases energy losses',
+      'Driver efficiency, luminaire cleanliness, control system operation (sensors/timers/daylight linking), and emergency lighting battery condition',
       'It varies the frequency and voltage supplied to the motor to match speed with demand, reducing energy waste at partial loads',
-      'It converts AC to DC to reduce losses',
-      'It bypasses the motor starter to save energy during start-up',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A VSD (also called a variable frequency drive or inverter) adjusts the frequency and voltage of the power supplied to an AC motor, allowing its speed to be varied to match the actual demand. For centrifugal loads (fans and pumps), the power consumption varies with the cube of the speed — so reducing speed by 20% reduces power consumption by approximately 49%. VSDs are one of the most effective energy efficiency technologies.',
   },
@@ -107,12 +112,12 @@ const quizQuestions = [
     question:
       'When maintaining LED lighting installations, what should be checked to ensure continued energy efficiency?',
     options: [
-      'Only the LED driver for visible damage',
       'Driver efficiency, luminaire cleanliness, control system operation (sensors/timers/daylight linking), and emergency lighting battery condition',
-      'The colour temperature of the LEDs only',
-      'Whether the LEDs have been approved by the Energy Saving Trust',
+      'Monitoring and controlling building services (heating, cooling, lighting, ventilation) to optimise energy use based on occupancy, time and conditions',
+      'Proper lubrication reduces friction losses in the bearings, lowering energy consumption and extending bearing life',
+      'Incorrect belt tension — whether too loose (causing slip and heat) or too tight (causing excessive bearing load) — increases energy losses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Maintaining LED energy efficiency requires checking multiple factors: driver condition and efficiency (failing drivers draw more power), luminaire cleanliness (dust reduces light output, potentially requiring higher settings), control system operation (faulty sensors or timers can leave lights on unnecessarily), and emergency lighting function. A holistic approach ensures the energy savings from the LED upgrade are sustained.',
   },
@@ -121,10 +126,10 @@ const quizQuestions = [
     question:
       'Insulation degradation on electrical cables and equipment leads to energy losses because:',
     options: [
-      'The cable becomes physically shorter',
+      'Installing additional meters on individual circuits, floors or equipment to identify where energy is being used and highlight waste',
       'Leakage currents flow through the degraded insulation, wasting energy as heat and potentially causing tripping',
-      'The cable resistance decreases, allowing too much current to flow',
-      'Insulation degradation only affects safety, not energy efficiency',
+      'Driver efficiency, luminaire cleanliness, control system operation (sensors/timers/daylight linking), and emergency lighting battery condition',
+      'It varies the frequency and voltage supplied to the motor to match speed with demand, reducing energy waste at partial loads',
     ],
     correctAnswer: 1,
     explanation:
@@ -134,12 +139,12 @@ const quizQuestions = [
     id: 6,
     question: 'A Building Energy Management System (BEMS) contributes to energy efficiency by:',
     options: [
-      'Generating renewable energy within the building',
+      'Voltage imbalance, harmonic distortion, power factor, and voltage regulation issues that cause additional losses in motors, transformers and cables',
+      'Installing additional meters on individual circuits, floors or equipment to identify where energy is being used and highlight waste',
       'Monitoring and controlling building services (heating, cooling, lighting, ventilation) to optimise energy use based on occupancy, time and conditions',
-      'Replacing the need for maintenance technicians',
-      'Measuring only electricity consumption',
+      'Leakage currents flow through the degraded insulation, wasting energy as heat and potentially causing tripping',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A BEMS uses sensors, controllers and actuators to monitor and control building services — adjusting heating, cooling, lighting and ventilation based on actual conditions (occupancy, time of day, external temperature, daylight levels). A well-commissioned and maintained BEMS can reduce building energy consumption by 10-20%. Maintenance of BEMS components (sensors, actuators, controllers, communications) is essential for sustained performance.',
   },
@@ -147,12 +152,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is sub-metering and why is it important for energy management?',
     options: [
-      'Using smaller electricity meters to save space',
+      'It varies the frequency and voltage supplied to the motor to match speed with demand, reducing energy waste at partial loads',
+      'Leakage currents flow through the degraded insulation, wasting energy as heat and potentially causing tripping',
+      'Driver efficiency, luminaire cleanliness, control system operation (sensors/timers/daylight linking), and emergency lighting battery condition',
       'Installing additional meters on individual circuits, floors or equipment to identify where energy is being used and highlight waste',
-      'Reading the main meter more frequently',
-      'Estimating energy use from equipment nameplates',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Sub-metering involves installing additional energy meters downstream of the main fiscal meter to measure consumption by individual circuits, floors, zones, departments or major items of equipment. This granular data allows energy managers to identify where energy is being wasted, set targets for specific areas, detect abnormal consumption patterns, and verify the impact of efficiency improvements. Maintenance technicians often install and maintain sub-meters.',
   },
@@ -161,12 +166,12 @@ const quizQuestions = [
     question:
       'During an energy audit of an electrical installation, a maintenance technician should look for:',
     options: [
-      'Only items that pose an immediate safety hazard',
       'Oversized equipment, poor power factor, lighting left on in unoccupied areas, worn drive belts, air leaks, and equipment running outside its optimal parameters',
-      'Expired warranties on equipment',
-      'Opportunities to increase the installed electrical load',
+      'Because maintenance technicians are uniquely positioned to identify and implement energy efficiency improvements during routine work, contributing to organisational sustainability and cost reduction',
+      'Driver efficiency, luminaire cleanliness, control system operation (sensors/timers/daylight linking), and emergency lighting battery condition',
+      'Installing additional meters on individual circuits, floors or equipment to identify where energy is being used and highlight waste',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An energy audit during maintenance identifies opportunities to reduce energy waste. This includes oversized motors and transformers (part-loaded equipment is less efficient), poor power factor, unnecessary lighting and HVAC operation, worn drive belts causing slip losses, compressed air leaks, poor insulation, and equipment operating outside its design parameters. These observations feed into the continuous improvement cycle.',
   },
@@ -175,10 +180,10 @@ const quizQuestions = [
     question:
       'Proper belt tension on a motor-driven system is important for energy efficiency because:',
     options: [
-      'Loose belts look unprofessional during audits',
+      'Monitoring and controlling building services (heating, cooling, lighting, ventilation) to optimise energy use based on occupancy, time and conditions',
       'Incorrect belt tension — whether too loose (causing slip and heat) or too tight (causing excessive bearing load) — increases energy losses',
-      'It makes the motor quieter',
-      'It extends the warranty on the motor',
+      'Installing additional meters on individual circuits, floors or equipment to identify where energy is being used and highlight waste',
+      'Oversized equipment, poor power factor, lighting left on in unoccupied areas, worn drive belts, air leaks, and equipment running outside its optimal parameters',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,12 +194,12 @@ const quizQuestions = [
     question:
       'What is the energy efficiency benefit of maintaining proper bearing lubrication on electric motors?',
     options: [
-      'Lubrication reduces the electrical resistance of the motor windings',
+      'Installing additional meters on individual circuits, floors or equipment to identify where energy is being used and highlight waste',
+      'Incorrect belt tension — whether too loose (causing slip and heat) or too tight (causing excessive bearing load) — increases energy losses',
       'Proper lubrication reduces friction losses in the bearings, lowering energy consumption and extending bearing life',
-      'Over-lubrication improves cooling of the motor',
-      'Lubrication has no effect on energy consumption',
+      'It varies the frequency and voltage supplied to the motor to match speed with demand, reducing energy waste at partial loads',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Bearing friction is a direct energy loss — it converts electrical energy into heat rather than useful mechanical work. Under-lubrication increases friction, raises operating temperature, and wastes energy. Over-lubrication can also increase losses as the bearing has to push through excess grease, and can cause overheating. Correct lubrication (right type, right quantity, right interval) minimises friction losses and extends bearing life.',
   },
@@ -203,12 +208,12 @@ const quizQuestions = [
     question:
       'Power quality monitoring during maintenance can identify energy efficiency issues such as:',
     options: [
-      'The colour of the cable insulation',
+      'It varies the frequency and voltage supplied to the motor to match speed with demand, reducing energy waste at partial loads',
+      'Driver efficiency, luminaire cleanliness, control system operation (sensors/timers/daylight linking), and emergency lighting battery condition',
+      'Incorrect belt tension — whether too loose (causing slip and heat) or too tight (causing excessive bearing load) — increases energy losses',
       'Voltage imbalance, harmonic distortion, power factor, and voltage regulation issues that cause additional losses in motors, transformers and cables',
-      'The brand of equipment installed',
-      'Whether the correct fuse ratings are installed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Power quality problems directly affect energy efficiency. Voltage imbalance on three-phase motors causes increased losses and overheating. Harmonic distortion from non-linear loads (VFDs, LED drivers, IT equipment) causes additional heating in cables, transformers and motors. Poor power factor increases reactive current and network losses. Voltage regulation issues can force equipment to operate outside optimal parameters. Power quality monitoring identifies these hidden energy wastes.',
   },
@@ -217,12 +222,12 @@ const quizQuestions = [
     question:
       'Under the ST1426 standard, why is energy efficiency knowledge important for maintenance technicians?',
     options: [
-      'Only because it is tested in the EPA exam',
       'Because maintenance technicians are uniquely positioned to identify and implement energy efficiency improvements during routine work, contributing to organisational sustainability and cost reduction',
-      'Because it allows technicians to charge higher rates',
-      'It is not mentioned in the ST1426 standard',
+      'Driver efficiency, luminaire cleanliness, control system operation (sensors/timers/daylight linking), and emergency lighting battery condition',
+      'Voltage imbalance, harmonic distortion, power factor, and voltage regulation issues that cause additional losses in motors, transformers and cables',
+      'Monitoring and controlling building services (heating, cooling, lighting, ventilation) to optimise energy use based on occupancy, time and conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "ST1426 recognises that maintenance technicians have unique opportunities to improve energy efficiency. Through regular contact with equipment and systems, technicians can identify waste, optimise performance, recommend improvements, and implement efficiency measures as part of routine maintenance. This contributes to the organisation's sustainability objectives, reduces operating costs, and demonstrates the professional value of skilled maintenance.",
   },

@@ -31,9 +31,9 @@ const quickCheckQuestions = [
     id: 'mep-definition',
     question: 'What does MEP stand for in building services coordination?',
     options: [
-      'Main Electrical Panel',
-      'Mechanical, Electrical, and Plumbing',
       'Maximum Equipment Priority',
+      'Mechanical, Electrical, and Plumbing',
+      'Main Electrical Panel',
       'Multi-Element Programme',
     ],
     correctIndex: 1,
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'clash-detection',
     question: 'What is the primary purpose of BIM clash detection?',
     options: [
-      'To create marketing materials',
       'To identify conflicts between services before installation',
-      'To calculate material costs',
-      'To design the building structure',
+      'Marks lost for non-compliance with BS 7671',
+      'Close proximity to distribution transformer',
+      'Efficiency = useful energy out ÷ total energy in (× 100 for percentage)',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'BIM clash detection identifies where different building services (pipes, ducts, cables) would physically occupy the same space, allowing resolution during design rather than costly on-site modifications.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'installation-priority',
     question: 'Which service typically has installation priority in ceiling voids?',
     options: [
-      'Electrical containment',
-      'Data cabling',
       'Drainage (gravity-fed)',
+      'Data cabling',
+      'Electrical containment',
       'Lighting fixtures',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Drainage and gravity-fed services have priority because they cannot be rerouted easily - they require specific gradients (falls) to function. All other services must work around them.',
   },
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'coordination-drawing',
     question: 'A coordination drawing shows:',
     options: [
-      'Only electrical installations',
+      'Longer cables give lower readings',
       'All services overlaid with routing agreements',
-      'Building structural details only',
-      'Equipment manufacturer details',
+      'Trunking, conduit, or cable tray',
+      'Opposite direction to conventional current',
     ],
     correctIndex: 1,
     explanation:
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: "In BIM clash detection, a 'hard clash' refers to:",
     options: [
+      'A clash requiring structural changes',
       'A difficult negotiation between trades',
       'Physical intersection of two objects',
-      'A clash requiring structural changes',
       'Software compatibility issues',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A hard clash is where two objects physically occupy the same space (e.g., a pipe passing through a duct). Soft clashes relate to clearance, access, or tolerance violations.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'Why do gravity drainage systems have installation priority?',
     options: [
-      'They are most expensive',
+      'Services requiring access go to the outside',
+      'Clearance violations for access or maintenance',
+      'To resolve routing conflicts and agree installation sequence',
       'They cannot be rerouted - require specific gradients',
-      'They are installed by the main contractor',
-      'Building regulations require it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Gravity drainage must maintain specific falls (gradients) to function. Unlike pumped or pressurised systems, the route cannot be altered significantly without affecting performance.',
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the purpose of a services coordination meeting?',
     options: [
-      'To award subcontracts',
       'To resolve routing conflicts and agree installation sequence',
-      'To review health and safety',
-      'To approve payment applications',
+      'Level of Development - accurate geometry and quantities',
+      'They cannot be rerouted - require specific gradients',
+      'During design development before construction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Coordination meetings bring all MEP contractors together to resolve clashes, agree routes, confirm installation sequences, and ensure all parties understand the coordination drawings.',
   },
@@ -138,8 +138,13 @@ const quizQuestions = [
     id: 5,
     question:
       'The minimum clearance typically required for electrical cable tray maintenance access is:',
-    options: ['50mm', '100mm', '150mm', '300mm'],
-    correctAnswer: 2,
+    options: [
+      '100mm',
+      '150mm',
+      '300mm',
+      '50mm',
+    ],
+    correctAnswer: 1,
     explanation:
       "150mm clear space is typically required above cable trays for pulling cables and maintenance access. This 'soft clash' requirement must be coordinated with other services.",
   },
@@ -148,11 +153,11 @@ const quizQuestions = [
     question: 'What does LOD 300 mean in BIM coordination?',
     options: [
       'Level of Detail - basic conceptual model',
-      'Level of Development - accurate geometry and quantities',
       'Level of Design - final approved design',
+      'Level of Development - accurate geometry and quantities',
       'Level of Documentation - complete specifications',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'LOD 300 (Level of Development) means model elements are geometrically accurate with specific dimensions and quantities - suitable for coordination and clash detection.',
   },
@@ -162,10 +167,10 @@ const quizQuestions = [
     options: [
       'Largest services go in the centre',
       'Electrical services always go on the left',
-      'Services requiring access go to the outside',
       'All services can be positioned anywhere',
+      'Services requiring access go to the outside',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Services requiring regular maintenance access (isolation valves, distribution boards, meters) must be positioned for accessibility, typically towards the riser door opening.',
   },
@@ -173,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: "A 'soft clash' in BIM coordination typically refers to:",
     options: [
-      'Objects that nearly touch',
       'Clearance violations for access or maintenance',
-      'Clashes between different software versions',
-      'Non-critical aesthetic clashes',
+      'Clear responsibility boundaries between disciplines',
+      'Physical intersection of two objects',
+      'They cannot be rerouted - require specific gradients',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Soft clashes occur when minimum clearances for access, maintenance, insulation, or operational requirements are violated - the objects don't physically intersect but are too close.",
   },
@@ -186,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of service zone allocation in coordination?',
     options: [
-      'To divide the building into contractor areas',
+      'To resolve routing conflicts and agree installation sequence',
       'To define specific vertical and horizontal zones for each service type',
-      'To allocate storage areas for materials',
-      'To schedule installation shifts',
+      'They cannot be rerouted - require specific gradients',
+      'Clear responsibility boundaries between disciplines',
     ],
     correctAnswer: 1,
     explanation:
@@ -200,11 +205,11 @@ const quizQuestions = [
     question: 'Interface management in MEP coordination ensures:',
     options: [
       'All contractors use the same software',
+      'Consistent working hours for all trades',
       'Clear responsibility boundaries between disciplines',
       'Uniform pricing across all trades',
-      'Consistent working hours for all trades',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Interface management defines where one contractor's work ends and another's begins, ensuring no gaps or overlaps in responsibility and clear accountability at connection points.",
   },
@@ -212,12 +217,12 @@ const quizQuestions = [
     id: 11,
     question: 'When should BIM clash detection ideally occur?',
     options: [
-      'During installation on site',
-      'At practical completion',
+      'Services requiring access go to the outside',
+      'Clear responsibility boundaries between disciplines',
+      'Physical intersection of two objects',
       'During design development before construction',
-      'Only when problems are reported',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Clash detection should occur during design development (RIBA Stage 4) when changes are cheap to make. Discovering clashes on site causes delays and cost overruns.',
   },
@@ -225,8 +230,13 @@ const quizQuestions = [
     id: 12,
     question:
       'What colour coding is typically used for electrical services on coordination drawings?',
-    options: ['Red', 'Blue', 'Green', 'Orange or Yellow'],
-    correctAnswer: 3,
+    options: [
+      'Orange or Yellow',
+      'Green',
+      'Red',
+      'Blue',
+    ],
+    correctAnswer: 0,
     explanation:
       'Electrical services are typically shown in orange or yellow on coordination drawings. Blue is usually HVAC/ductwork, green is pipework/plumbing, and red is fire services.',
   },

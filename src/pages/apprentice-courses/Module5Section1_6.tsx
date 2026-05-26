@@ -16,7 +16,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'What should always be checked to ensure a drawing is up to date?',
-    options: ['The scale', 'The revision number', 'The date', 'The title'],
+    options: [
+      'The date',
+      'The revision number',
+      'The title',
+      'The scale',
+    ],
     correctIndex: 1,
     explanation:
       "The revision number must always be checked to ensure you're working with the most current version of the drawing.",
@@ -24,15 +29,25 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'Who should you escalate conflicting information to first?',
-    options: ['The client', 'The site supervisor', 'The designer', 'Another apprentice'],
-    correctIndex: 1,
+    options: [
+      'Another apprentice',
+      'The designer',
+      'The site supervisor',
+      'The client',
+    ],
+    correctIndex: 2,
     explanation:
       'The site supervisor should be your first point of contact when dealing with conflicting or unclear information.',
   },
   {
     id: 3,
     question: 'What is the main risk of making assumptions about unclear drawings?',
-    options: ['Delays', 'Unsafe installations', 'Material waste', 'All of the above'],
+    options: [
+      'Delays',
+      'Material waste',
+      'Unsafe installations',
+      'All of the above',
+    ],
     correctIndex: 3,
     explanation:
       'Making assumptions can lead to all these issues: unsafe installations, delays, and material waste, plus failed inspections.',
@@ -48,12 +63,12 @@ const Module5Section1_6 = () => {
       id: 1,
       question: 'What is a common sign of conflicting information in drawings?',
       options: [
+        'To trade some motor speed for more torque (turning force) at the chuck',
         'A socket shown as single in one place but double in another',
-        'Missing title block',
-        'Wrong paper size',
-        'Poor print quality',
+        'They vary with the square of the load current (I squared R)',
+        'Openings are on opposite or adjacent walls',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'When the same component is shown differently in various parts of the drawing, this indicates conflicting information.',
     },
@@ -69,8 +84,13 @@ const Module5Section1_6 = () => {
     {
       id: 3,
       question: 'What should you always check to ensure drawings are current?',
-      options: ['The title', 'The revision number', 'The scale', 'The drawing number'],
-      correctAnswer: 1,
+      options: [
+        'The scale',
+        'The title',
+        'The drawing number',
+        'The revision number',
+      ],
+      correctAnswer: 3,
       explanation:
         "The revision number indicates which version of the drawing you have and ensures you're working with the most current information.",
     },
@@ -78,19 +98,24 @@ const Module5Section1_6 = () => {
       id: 4,
       question: 'If drawings and specifications disagree, what should you do?',
       options: [
-        'Follow the drawing',
-        'Follow the specification',
         'Escalate the issue to the supervisor or project manager',
-        'Ask another apprentice',
+        'Negative stress that overwhelms coping ability and impairs functioning',
+        'A short fibre length with a connector on one end for fusion splicing',
+        'Transmitter output power (dBm) - Receiver sensitivity (dBm)',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Always escalate conflicts between drawings and specifications to ensure the correct approach is taken.',
     },
     {
       id: 5,
       question: 'Who should be contacted first when information is unclear?',
-      options: ['The client', 'Site supervisor', 'The designer', 'Health and safety officer'],
+      options: [
+        'The client',
+        'Site supervisor',
+        'Health and safety officer',
+        'The designer',
+      ],
       correctAnswer: 1,
       explanation:
         'The site supervisor is your first point of contact for resolving unclear information on-site.',
@@ -99,20 +124,25 @@ const Module5Section1_6 = () => {
       id: 6,
       question: 'Why should clarifications always be documented?',
       options: [
-        "It's not necessary",
+        'Hydraulic benders or specialised forming equipment',
+        'Can cause insulation to dry out, crack, and break down',
         'To protect yourself and ensure consistent team understanding',
-        'To waste time',
-        'Only for legal reasons',
+        'Clients increasingly ask for systems that integrate with BMS',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Documentation protects you and ensures all team members have consistent understanding of any changes or clarifications.',
     },
     {
       id: 7,
       question: 'What is one risk of ignoring incomplete documentation?',
-      options: ['Nothing happens', 'Failed inspection', 'Improved efficiency', 'Cost savings'],
-      correctAnswer: 1,
+      options: [
+        'Nothing happens',
+        'Cost savings',
+        'Improved efficiency',
+        'Failed inspection',
+      ],
+      correctAnswer: 3,
       explanation:
         'Ignoring incomplete documentation can lead to failed inspections, requiring costly rework and delays.',
     },
@@ -141,10 +171,10 @@ const Module5Section1_6 = () => {
       id: 10,
       question: 'What happened in the real-world hospital project example?',
       options: [
-        'The project finished early',
-        'Everything went smoothly',
+        'To ensure measured values are accurate and traceable so certificates are valid and safe',
+        'Identify the circuit, isolate, secure isolation, prove dead, and apply necessary safeguards',
         'Emergency lighting requirements were missed because the drawing and specification conflicted, leading to reinstallation',
-        'The client was happy',
+        'Immediately by the quickest practicable means (usually telephone), followed by written notification within 10 days',
       ],
       correctAnswer: 2,
       explanation:

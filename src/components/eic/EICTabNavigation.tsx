@@ -54,8 +54,8 @@ const EICTabNavigation: React.FC<EICTabNavigationProps> = ({
   const isLastTab = currentTabIndex === totalTabs - 1;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-md border-t border-white/[0.06] px-4 py-3 safe-area-bottom">
-      <div className="flex gap-2 max-w-xl mx-auto">
+    <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-xl z-30 safe-area-bottom sm:pb-4 sm:px-4">
+      <div className="bg-background/95 backdrop-blur-md border-t border-white/[0.06] sm:border sm:rounded-2xl sm:shadow-2xl px-4 py-3 flex gap-2">
         {canNavigatePrevious && (
           <button
             onClick={handlePrevious}

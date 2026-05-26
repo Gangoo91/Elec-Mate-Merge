@@ -41,12 +41,12 @@ const checks = [
     question:
       "A four-bed dwelling has: 9.5 kW shower, 7.2 kW cooker (31.3 A), 3 kW immersion (uncontrolled), kitchen ring, lounge ring, upstairs ring, 1.2 kW LED lighting, 7.4 kW EV charger (32 A, OZEV-compliant load-managed to 16 A peak), 9 kW air-source heat pump (39 A nameplate). What is the rough diversified Ib at 230 V?",
     options: [
-      "About 38 A — apply 30 percent across everything.",
+      "T = source directly earthed, N = installation exposed parts connected to that source earth via PE, C = combined N+PE in part of the system, S = separated N and PE in another part",
+      "Because they extract a much larger quantity of heat from a renewable source (the outside air or ground) than the electricity input would deliver if used for direct resistive heating — typically 3:1, so they massively reduce the carbon footprint of heating.",
+      "Bonding internal copper water pipework where the incoming water service is plastic — the internal copper has no external earth path so is unlikely to be extraneous (NOTE to Reg 411.3.1.2)",
       "About 95-110 A — heat pump and shower at 100 percent + cooker diversified to ~22 A + ring finals at OSG percentages + lighting at 100 percent + load-managed EV at 16 A. Right at the 100 A service limit.",
-      "186 A — sum of nameplates.",
-      "60 A — same as a 1990s dwelling.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Run the OSG categories: shower 41 A (100 percent), cooker 10 + 30%(31-10) + 5 = ~22 A, immersion 13 A (100 percent uncontrolled), kitchen ring at peak ~20 A, other rings ~13 A combined diversified, lighting ~5 A, EV at managed setpoint 16 A, heat pump 39 A (100 percent). Sum ~169 A on paper but applying 0.65 inter-category coincidence (not all peaking at the same instant) gives ~110 A peak. With heat pump cold-snap morning + EV evening this can exceed the 100 A cut-out fuse. Either upgrade the supply or tighten the load-managed setpoint.",
   },
@@ -55,12 +55,12 @@ const checks = [
     question:
       "What goes on the diversity calc page in the design pack?",
     options: [
-      "Just the final Ib number.",
+      "Cable cutters (or T+E shears) to crop the tail square; a stripper sized for 6/10 mm² to remove the green/yellow PVC; long-nose pliers to form the conductor into the clamp aperture OR a ratchet crimper to fit a bootlace ferrule (red for 10 mm², blue for 6 mm²) before insertion. Squared cut + clean strip + correct termination = 526.1 compliant.",
+      "Because schedules give a sortable, filterable, totalisable list that drives procurement, install QC and as-installed verification — annotations on a layout cannot be totalised, sorted or counted at a glance. The SLD and the layouts show position and topology; the schedules give the bill.",
+      "They are Distribution Network Operator engineering recommendations governing how customer-owned generation is connected in parallel with the public supply network — separate from BS 7671 (a British Standard) and from MCS (a certification scheme).",
       "A table per load category: connected load (kW or A), diversity factor applied, source citation (OSG Table A1 entry, GN1 Section 7 reference, manufacturer datasheet, project measurement), resulting category Ib. Then the inter-category coincidence factor applied at supply level. Then the failure-mode assessment per Reg 311.2.",
-      "A single sentence saying diversity has been considered.",
-      "The customer's name and the date.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Reg 132.13 (Documentation) and Reg 311.1 / 311.2 stack to require an auditable diversity calc. A discrete table page with category, factor, source citation and resulting Ib lets a peer reviewer or the next contractor pick up the design without guessing. Reg 311.2 then needs the load-management failure-mode demand alongside the normal-operation demand.",
   },
@@ -69,12 +69,12 @@ const checks = [
     question:
       "Diversified Ib comes out at 95 A on a 100 A single-phase service. The right design move is:",
     options: [
-      "Approve the design — 95 A is under 100 A.",
+      "Lower electricity bills (offset import + earn SEG on export), reduced carbon footprint, partial grid-independence (with battery), a hedge against rising electricity prices, often a positive impact on house value, and government incentive schemes that vary by year. Real benefits — but not “free electricity”.",
+      "A highly sensitive system that continuously draws air samples through a pipe network to a central laser detection chamber, providing very early warning of smoke — used in data centres, clean rooms, heritage buildings, and high-value environments",
+      "Reflect on whether unconscious bias or personal factors are influencing their behaviour, seek peer feedback, and consider whether the apprentice\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s needs require a different mentoring approach",
       "Either tighten the load-management setpoint to bring peak down to ~80 A (giving 20 A headroom for transients and future creep), apply for a DNO supply upgrade to 125 A or three-phase, or document the customer's acceptance of the tight margin in writing.",
-      "Tell the customer to use less electricity.",
-      "Add a 30 mA RCD.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "95 A on a 100 A service is technically compliant but leaves no margin for inrush transients (heat pump compressor start, EV charger ramp, kettle), seasonal load creep, or future EV upgrade. Good practice is 75-85 A peak design on a 100 A service. Options: tighten load management, upgrade the supply, or document the constraint and the customer's acceptance. Never sign off a 95-99 A design and walk away.",
   },
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: 'For a domestic load assessment, the first step is:',
     options: [
-      'Pick a CU and work backwards.',
+      'Five — A (solids), B (flammable liquids), C (flammable gases), D (metals), F (cooking oils). Plus electrical (no class letter — uses CO2 or dry powder).',
       'Build the connected load schedule — every fixed appliance, every socket-outlet position, every dedicated circuit, with nameplate kW or A — before applying any diversity.',
-      'Ask the DNO what the supply rating is.',
-      'Start with the shower.',
+      'Using the CMMS effectively for day-to-day maintenance tasks, understanding how your data contributes to maintenance planning, and producing accurate records',
+      'The electrician is probably solving problems FOR team members rather than helping them think through solutions; they should use Socratic questions to guide self-discovery and ownership',
     ],
     correctAnswer: 1,
     explanation:
@@ -97,24 +97,39 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A 9.5 kW instantaneous electric shower at 230 V draws approximately:',
-    options: ['9.5 A', '41 A', '95 A', '230 A'],
-    correctAnswer: 1,
+    options: [
+      '95 A',
+      '9.5 A',
+      '41 A',
+      '230 A',
+    ],
+    correctAnswer: 2,
     explanation:
       "I = P / V = 9500 / 230 = 41.3 A. The OSG dwelling diversity for a single instantaneous shower is 100 percent — no reduction. Showers are short-duration high-demand loads that justify full design current.",
   },
   {
     id: 3,
     question: 'A 9 kW air-source heat pump at 230 V single-phase draws approximately:',
-    options: ['9 A', '20 A', '39 A', '90 A'],
-    correctAnswer: 2,
+    options: [
+      '20 A',
+      '9 A',
+      '90 A',
+      '39 A',
+    ],
+    correctAnswer: 3,
     explanation:
       "I = 9000 / 230 ≈ 39 A nameplate. Heat pumps are typically designed at 100 percent demand because of long duty cycle during cold-snap mornings. Some manufacturers publish refined duty-cycle data; default to 100 percent unless that data is in hand.",
   },
   {
     id: 4,
     question: 'Applying OSG cooker diversity to a 7.2 kW cooker (31.3 A) with integrated 13 A cooker socket gives Ib of approximately:',
-    options: ['31 A', '~22 A', '5 A', '13 A'],
-    correctAnswer: 1,
+    options: [
+      '~22 A',
+      '31 A',
+      '5 A',
+      '13 A',
+    ],
+    correctAnswer: 0,
     explanation:
       "OSG cooker formula: 10 A + 30 percent of (31.3 − 10) + 5 A = 10 + 6.4 + 5 = 21.4 A. Round up to 22 A. Specify a 32 A B-curve breaker on 6 mm² T+E typical, or stay at the as-built 32 A way if upgrading.",
   },
@@ -122,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: 'Inter-category coincidence factor at the supply origin for a single dwelling:',
     options: [
-      '1.0 (no smoothing).',
+      'Change the conduit size or add a draw box, then re-check the spacing factor (Sub 3.6) — sizing is not just electrical, it is mechanical too.',
       'Typically 0.6-0.8 for traditional dwellings (categories rarely peak at the same instant); pushing toward 0.8-0.95 for heat-pump and EV-rich dwellings (cold-morning categories align more).',
-      '0.1 always.',
-      'No coincidence applies inside a single dwelling.',
+      'The observable symptoms exactly as reported by the operator and as found during your investigation, without jumping to conclusions about the cause',
+      'The complete sequence including preparatory work, isolation, changeover procedure, testing, commissioning, reinstatement and handover',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,12 +150,12 @@ const quizQuestions = [
     id: 6,
     question: 'OZEV smart charge points regulations (2018 / 2021) require a domestic EV charger to:',
     options: [
-      'Charge at full rated current always.',
+      'Notifiable work under Approved Doc P must be done by a Competent Person Scheme registered installer OR notified to local authority building control (with associated fees and inspection). CPS registration is the normal industry route - NICEIC, NAPIT, ELECSA, Stroma etc.',
+      'Three-point fall-of-potential method (most accurate, requires auxiliary spikes), OR earth fault loop impedance test method (Ze test on TT, gives an approximation including supply contribution), OR clamp-meter method (loop impedance via stake current/voltage)',
       'Have smart functionality including default off-peak charging window, randomised start delay, and the ability to respond to a demand-side response signal — practically meaning the charger can be load-managed.',
-      'Be three-phase.',
-      'Have a separate consumer unit.',
+      'Cognitive distortions amplify perceived threats, trigger stronger amygdala responses, and create misinterpretations that provoke defensive reactions from others, creating escalation spirals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The OZEV smart charge points regulations (Electric Vehicles (Smart Charge Points) Regulations 2021) mandate smart functionality on new domestic EV chargers in Great Britain. This is the practical foundation that makes load management of EV chargers a credible diversity tool — the hardware already supports it.",
   },
@@ -148,12 +163,12 @@ const quizQuestions = [
     id: 7,
     question: 'When a load-managed EV charger fails, Reg 311.2 (A4:2026) requires the design to:',
     options: [
-      'Ignore the failure case.',
+      'Typically 0.6-0.8 for traditional dwellings (categories rarely peak at the same instant); pushing toward 0.8-0.95 for heat-pump and EV-rich dwellings (cold-morning categories align more).',
+      'A suitable and sufficient assessment of risks to employees and others affected by their work, recorded if 5+ employees, reviewed when significant changes occur',
+      'The installation uses a TN-S earthing arrangement with a separate neutral and earth, requiring the neutral to be switched along with the three phases to prevent neutral current circulating between sources',
       'Assess the maximum demand under the failure-mode condition, document the manufacturer fall-back behaviour (typically a fixed reduced current or full-rate), and confirm the supply still survives or specify additional protection.',
-      'Disconnect the EV charger automatically.',
-      'Trip the main switch.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Reg 311.2 (A4:2026) makes load-management failure-mode assessment a discrete design step. Most OZEV-compliant chargers have a manufacturer-defined fall-back state — often a fixed reduced rate (e.g. 16 A) but some default to full rated current. Read the datasheet; document the fall-back demand; confirm the supply margin survives the worst case.",
   },
@@ -161,12 +176,12 @@ const quizQuestions = [
     id: 8,
     question: 'A diversified Ib of 78 A on a 100 A service is best described as:',
     options: [
-      'Unacceptable — way over.',
       'Healthy headroom — 22 A margin for transients, future creep, and seasonal swings. Good design target.',
-      'Marginal — should upgrade to 125 A.',
-      'Below the minimum allowed.',
+      'It provides the overarching legal framework under which the Electricity at Work Regulations 1989 were made',
+      'A notice that immediately stops a dangerous work activity until the risk is adequately controlled',
+      'All electrical systems are constructed, maintained and worked on so as to prevent danger',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A typical good-practice design target is 75-85 percent of supply rating at full design demand. 78 A on 100 A leaves 22 A margin (22 percent) which absorbs heat pump compressor start transients, kettle bursts, and 5-10 years of load creep. Designs in the 90+ A range on a 100 A service are short-margin and risk nuisance trips on cold mornings.",
   },

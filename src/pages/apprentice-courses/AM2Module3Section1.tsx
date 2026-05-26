@@ -44,12 +44,12 @@ const AM2Module3Section1 = () => {
       question:
         "If the drawing calls for 4mm² radial and you install 2.5mm², is it acceptable if it's safe?",
       options: [
-        'Yes, as long as it passes testing',
-        'No - not to spec, marks lost',
-        'Yes, if you upgrade the MCB',
         'No, but only if assessor notices',
+        'Yes, if you upgrade the MCB',
+        'No - not to spec, marks lost',
+        'Yes, as long as it passes testing',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'Using incorrect cable size is non-compliance with specification regardless of safety - this loses marks and potentially fails the assessment for not following drawings exactly.',
     },
@@ -59,11 +59,11 @@ const AM2Module3Section1 = () => {
         "What's more important - finishing fast, or ensuring every trunking lid is flush and every bend neat?",
       options: [
         'Speed is critical in AM2 assessment',
-        'Neatness and compliance; rushing = lost marks',
-        'Balance speed and quality equally',
         'Focus on electrical safety only',
+        'Balance speed and quality equally',
+        'Neatness and compliance; rushing = lost marks',
       ],
-      correctIndex: 1,
+      correctIndex: 3,
       explanation:
         'Workmanship quality and compliance take priority over speed. Rushed work with poor containment installation loses significant marks even if electrically safe.',
     },
@@ -72,12 +72,12 @@ const AM2Module3Section1 = () => {
       question:
         'If the spec calls for segregated trunking for ELV cabling but you run it with mains, what happens?',
       options: [
-        'Warning but work can continue',
-        'Minor mark deduction only',
         'Fail for specification non-compliance and safety breach',
-        'Acceptable if properly terminated',
+        'Investigate the cause as it\\\\\\\\\\\\\\\'s below the minimum requirement',
+        'A plan showing ceiling-mounted items as if looking up',
+        'Calendar-based scheduling with smooth transitions',
       ],
-      correctIndex: 2,
+      correctIndex: 0,
       explanation:
         'Mixing ELV with mains violates specification compliance and safety segregation requirements - this is a fail situation for both compliance and safety.',
     },
@@ -85,12 +85,12 @@ const AM2Module3Section1 = () => {
       id: 'conduit-technique',
       question: 'Why must conduit edges be deburred after cutting?',
       options: [
-        'For aesthetic appearance only',
+        'Raise the alarm, call fire brigade, evacuate if safe to do so',
+        'The likelihood that a hazard will cause harm and the severity of that harm',
         'To prevent cable insulation damage and meet workmanship standards',
-        'Only required for metal conduit',
-        'Not essential if using cable protection',
+        'Reduced pumping energy while maintaining heat delivery',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'Deburring prevents cable insulation damage and demonstrates professional workmanship standards - sharp edges can cause cable failure and lose marks.',
     },
@@ -98,12 +98,12 @@ const AM2Module3Section1 = () => {
       id: 'cable-containment-space',
       question: 'What happens if trunking is overfilled beyond space factor requirements?',
       options: [
-        'No issue if cables fit physically',
-        'Minor warning from assessor',
         'Marks lost for non-compliance with BS 7671',
+        'Minor warning from assessor',
+        'No issue if cables fit physically',
         'Acceptable if installation looks neat',
       ],
-      correctIndex: 2,
+      correctIndex: 0,
       explanation:
         'Overfilling trunking breaches BS 7671 space factor requirements and loses marks for non-compliance, regardless of physical appearance.',
     },
@@ -114,12 +114,12 @@ const AM2Module3Section1 = () => {
       id: 1,
       question: 'Why is it important to follow cable size/type in the spec exactly?',
       options: [
+        'PEN fault detection and automatic disconnection',
         'For compliance and current-carrying capacity requirements',
-        'To make installation look professional',
-        'Only important for high-current circuits',
-        'Spec is just a guideline, safety is priority',
+        'Ensuring stable power and communication infrastructure',
+        'Anyone who prepares or modifies designs affecting H&S',
       ],
-      correctAnswer: 0,
+      correctAnswer: 1,
       explanation:
         'Cable specifications ensure compliance with design requirements and current-carrying capacity - deviation can cause failure and safety issues.',
     },
@@ -127,12 +127,12 @@ const AM2Module3Section1 = () => {
       id: 2,
       question: 'Name three workmanship points assessors look for in trunking:',
       options: [
+        'Cost-effectiveness, material quality, brand selection',
         'Speed, efficiency, cable capacity',
         'Straight runs, flush lids, secure fixings',
-        'Cost-effectiveness, material quality, brand selection',
         'Accessibility, maintenance, documentation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Assessors focus on straight runs, flush lids, and secure fixings as key workmanship indicators for professional trunking installation.',
     },
@@ -140,12 +140,12 @@ const AM2Module3Section1 = () => {
       id: 3,
       question: "What's the correct spacing for conduit saddles?",
       options: [
-        'Every 1000mm maximum',
-        '300-600mm apart depending on size',
         'As close together as possible',
+        'Every 1000mm maximum',
         "Manufacturer's recommendation only",
+        '300-600mm apart depending on size',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Conduit saddles should be spaced 300-600mm apart depending on conduit size to ensure adequate support and professional appearance.',
     },
@@ -153,12 +153,12 @@ const AM2Module3Section1 = () => {
       id: 4,
       question: 'What happens if trunking is overfilled?',
       options: [
-        'Nothing if cables fit',
-        'Minor appearance issue only',
         'Marks lost for BS 7671 space factor breach',
-        'Warning but work continues',
+        'Straight runs, flush lids, secure fixings',
+        'Fail for safety and specification breach',
+        '40% - it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the largest weighting',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         'Overfilling breaches BS 7671 space factor requirements and results in mark deduction for non-compliance with regulations.',
     },
@@ -168,8 +168,8 @@ const AM2Module3Section1 = () => {
       options: [
         'For visual appearance only',
         'To prevent cable insulation damage',
-        'Only required by some assessors',
         'Makes installation faster',
+        'Only required by some assessors',
       ],
       correctAnswer: 1,
       explanation:
@@ -180,11 +180,11 @@ const AM2Module3Section1 = () => {
       question: 'True or false: You can use tape to hold cables in tray.',
       options: [
         'True - any securing method works',
-        'False - only approved clips/ties allowed',
         'True - if it looks professional',
+        'False - only approved clips/ties allowed',
         'True - for temporary holding only',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'False - only approved clips and cable ties should be used. Insulation tape is not an acceptable cable securing method in tray systems.',
     },
@@ -194,10 +194,10 @@ const AM2Module3Section1 = () => {
       options: [
         'Making bends too slowly',
         'Using too many bends per run',
-        'Kinking or creating uneven bends',
         'Not marking bend positions',
+        'Kinking or creating uneven bends',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Kinking or creating uneven bends is a common error that loses marks for poor workmanship and can damage cables during installation.',
     },
@@ -205,12 +205,12 @@ const AM2Module3Section1 = () => {
       id: 8,
       question: 'What must be maintained into every accessory termination?',
       options: [
-        'Cable length for future modifications',
         'Cable sheath maintained into accessories',
         'Spare cores for expansion',
+        'Cable length for future modifications',
         'Original cable packaging labels',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Cable sheath must be maintained into accessories to prevent conductor exposure and demonstrate professional termination techniques.',
     },
@@ -218,12 +218,12 @@ const AM2Module3Section1 = () => {
       id: 9,
       question: "If segregation is missing between LV and ELV circuits, what's the consequence?",
       options: [
-        'Minor mark deduction',
-        'Warning only',
+        'To prevent cable insulation damage',
         'Fail for safety and specification breach',
-        'Acceptable if properly earthed',
+        'Straight runs, flush lids, secure fixings',
+        '40% - it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s the largest weighting',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Missing segregation between LV and ELV circuits violates safety requirements and specification compliance, resulting in assessment failure.',
     },
@@ -232,11 +232,11 @@ const AM2Module3Section1 = () => {
       question: "What's the golden rule before cutting trunking/conduit?",
       options: [
         'Check you have spare material',
+        'Ensure cutting tools are sharp',
         'Measure twice, cut once',
         "Mark the manufacturer's details",
-        'Ensure cutting tools are sharp',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Measure twice, cut once prevents waste and ensures accurate installation meeting specification requirements exactly.',
     },
@@ -245,11 +245,11 @@ const AM2Module3Section1 = () => {
       question: 'What percentage of AM2 marks typically relates to specification compliance?',
       options: [
         "20% - it's a minor factor",
-        "40% - it's the largest weighting",
-        '60% - it dominates assessment',
         '10% - workmanship is more important',
+        '60% - it dominates assessment',
+        "40% - it's the largest weighting",
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Specification compliance carries approximately 40% weighting in AM2 assessment - the largest single marking criteria.',
     },
@@ -258,9 +258,9 @@ const AM2Module3Section1 = () => {
       question: 'What tolerance do assessors typically allow for containment positioning?',
       options: [
         '±5mm for exact positioning requirements',
-        '±20mm if installation looks professional',
-        '±50mm for non-critical positions',
         'No tolerance - exact positioning required',
+        '±50mm for non-critical positions',
+        '±20mm if installation looks professional',
       ],
       correctAnswer: 0,
       explanation:

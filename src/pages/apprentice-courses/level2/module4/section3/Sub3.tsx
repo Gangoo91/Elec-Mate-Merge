@@ -40,12 +40,12 @@ const checks = [
     question:
       'You are mounting a 13 A switched FCU on a stud wall with 12.5 mm plasterboard. The terminals on the back of the FCU are deeper than a standard 16 mm shallow box can accommodate. Which back-box do you use?',
     options: [
-      '16 mm metal flush back-box.',
-      '25 mm metal flush back-box (next size up).',
       '35 mm metal flush back-box.',
+      '16 mm metal flush back-box.',
       'Surface pattress.',
+      '25 mm metal flush back-box (next size up).',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'A 13 A FCU has chunky terminals plus the integral fuse carrier — a 35 mm flush box is the standard depth. 25 mm is too shallow, the terminals foul the back of the box, the cable pinches and you risk a 526.1 termination failure. 16 mm shallow boxes are for low-profile sockets only. When in doubt, go deeper — the faceplate hides the back of the box.',
   },
@@ -54,12 +54,12 @@ const checks = [
     question:
       'A 35 mm metal flush back-box is being fixed into a solid brick wall, chased to the right depth. What fixing do you use through the back-box knockout fixing holes?',
     options: [
-      'Plasterboard plugs.',
       'Frame fixings or wood-style screws into nylon wall plugs sized for the screw.',
-      'Self-tappers straight into the brick.',
-      'Foam.',
+      'Varying both the supply frequency and the voltage proportionally (V/f control)',
+      'A competent person with sufficient training, experience, and knowledge',
+      'Phase rotation, starting current and defrost cycle operation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Solid brick takes a wall plug + screw, or a frame fixing for heavier accessories. Plasterboard plugs do nothing in solid masonry. Self-tappers strip out of brick. Frame fixings (combined plug + screw with a knurled shaft) are the modern choice for back-boxes in masonry — quick, secure, no separate plug needed. For lighter accessories a #8 brass or zinc-plated screw into a 6 mm nylon plug works fine.',
   },
@@ -68,12 +68,12 @@ const checks = [
     question:
       'You have just fixed a back-box flush in a chased masonry wall. The face of the box is sitting 3 mm proud of the surrounding plaster. What happens at second fix?',
     options: [
-      'Nothing — the faceplate covers it.',
+      'Any substance that can harm health, including dust, fumes, vapours, mists, gases, and biological agents',
+      'It confirms the component meets the essential safety requirements of relevant UK/EU product standards and can be legally placed on the market',
+      'They may be experiencing compassion fatigue or vicarious trauma and should access supervision, review their boundaries, and consider temporarily stepping back from the role',
       'The faceplate sits on the box and tilts slightly proud of the wall, the screws pinch the cable behind, and the faceplate edge gaps from the wall.',
-      'The faceplate is fine if the screws are over-tightened.',
-      'The plasterer can skim over it later.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A back-box proud of the plaster makes the faceplate sit proud and tilted. The screws then have to pull the plate down hard, which compresses the conductors against the back of the box (526.1 risk) and the gap around the faceplate is visible. Either chase deeper to set the box flush, or knock out the box and reset. Proud boxes are second-fix problems, and the cure is at first-fix only.',
   },
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'A 25 mm flush metal back-box has knockouts on which faces?',
     options: [
-      'Front face only.',
+      'Loosen both fixings, re-set the box flat, verify level and twist with a small spirit level, retighten.',
       'Back face and side faces; some boxes have a deeper rear knockout for cable entry.',
-      'Bottom face only.',
-      'No knockouts — you drill them yourself.',
+      'Provide a mechanical lifting aid such as a vacuum lifter or pallet to workbench height conveyor',
+      'Produces an output proportional to the current error signal',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,12 +99,12 @@ const quizQuestions = [
     question:
       'Plasterboard back-boxes (dry-line boxes) are fixed by:',
     options: [
-      'Wall plugs into the plasterboard.',
+      'A committee where employers and employee representatives discuss and review health and safety measures',
+      'To provide additional protection against electric shock by detecting earth leakage',
       'Spring-loaded jaws that hinge out behind the plasterboard and grip when the front screws are tightened.',
-      'Glue.',
-      'Stainless self-tappers into the plasterboard.',
+      'Quantity surveyor — measures work, values variations and prepares payment applications',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Dry-line / cavity boxes have integrated spring-loaded jaws (or a screw-actuated grip plate) that hinge out behind the board once the box is pushed through the cut hole. Tightening the front screws clamps the board between the jaws and the box face. Far more reliable than plasterboard plugs around the perimeter, which strip out under the side-load of plugging in a heavy charger.',
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     question:
       'A surface back-box (pattress) is mounted because:',
     options: [
-      'It is cheaper than a flush box.',
+      'To ensure the ground can support the weight of the MEWP without sinking, shifting, or collapsing',
+      'Incorrect — employers have a legal duty under HSWA 1974 and MHSWR 1999 to assess and manage work-related stress risks',
+      'Intense fear and avoidance of social situations due to worry about being judged or embarrassed',
       'The substrate cannot be chased (solid concrete, structural steel, glass) or the install is intended to be visible/temporary.',
-      'It is a faster install in every situation.',
-      'BS 7671 requires it.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Surface boxes go where flush is impossible (solid concrete plant rooms, structural steel, glass walls, asbestos surveys uncertain) or where the install is intentionally surface (industrial/agricultural, dado trunking on offices, garage and workshop). Wylex and MK metalclad pattress boxes plus a metalclad faceplate is the typical industrial finish. Flush is preferred where the substrate allows because it looks better and is harder to damage.',
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     question:
       'You are fixing a 47 mm deep back-box for a 45 A cooker switch. The brick wall is chased but the chase is only 42 mm deep. What do you do?',
     options: [
-      'Force the box in and hope the plasterer covers the proud face.',
-      'Cut the box flange to make it shallower.',
       'Stop and chase deeper to 50 mm so the box sits 3 mm below the finished plaster line.',
-      'Surface mount it.',
+      'The standard does not set a single limit; it depends on the manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instruction manual',
+      'Look for creative solutions where both parties get something they value',
+      'When they show signs of excessive warping, splitting, decay, or damage beyond acceptable limits',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'You always set the box slightly RECESSED below the finished plaster line (typically 1-3 mm), so the plaster skims up to the rim and the faceplate sits flat on the plaster, not on the box edge. A box that lands proud is a second-fix problem. The fix is at chasing — go deeper now, not later.',
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       'A back-box is being mounted into a stud wall but the stud lies right behind the box position. Best response?',
     options: [
-      'Chisel the stud away to fit the box.',
+      'To record energy consumption and maintenance activities throughout building operation',
       'Move the box ±50 mm sideways to clear the stud, or use a dry-line box with a side-fixing flange that catches the stud.',
-      'Use a smaller back-box.',
-      'Surface mount instead.',
+      'Manufacturer instructions, safety data sheets, accident records, industry guidance, and worker input',
+      'PM2.5 particles are smaller (2.5 micrometres or less) and can penetrate deeper into the lungs than PM10',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       'You are fixing a row of 6 dado trunking outlet boxes. The trunking has been pre-installed and is level. To get the boxes level with each other you should:',
     options: [
-      'Spirit-level each box independently against the wall behind.',
+      'Method 100, 101 or 103 (in thermal insulation) — these columns build the Ci derate into the tabulated value, so you do not double-apply.',
+      'That the label is present, legible, and the tower configuration matches the label\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s stated maximum platform height and load class',
       'Snap the boxes onto the dado trunking using its integral mounting clips/plates — the trunking sets the level.',
-      'Use a laser level on each box.',
-      'Fix them by eye.',
+      'Information, instruction, training and supervision necessary for health and safety',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Dado trunking has integral mounting points or accessory plates designed to clip the box to the trunking face. Once the trunking is level, every accessory mounted on it is level by definition. Don&rsquo;t fight the trunking — use it as the reference. Fixing the boxes to the wall behind the trunking and then aligning to the trunking face is double work and prone to error.',
   },
@@ -169,12 +169,12 @@ const quizQuestions = [
     question:
       'BS 7671 Reg 522.8 sets requirements for protection against mechanical stress. For a flush back-box this primarily means:',
     options: [
-      'Box must be earthed.',
+      'Impaired judgment + reaction time means you’re more likely to make a fatal mistake on a live system; HASAWA s.7 makes it personally on you',
+      'Without genuine commitment, even well-structured goals fail to direct behaviour because the individual does not invest sufficient effort or persistence',
+      'You have not confirmed quantity or condition — protects against signing for items you haven\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t verified, but limits a later claim',
       'Cable entries must be grommeted, the box must be deep enough that the cable does not pinch, and the box must be securely fixed so movement does not stress the conductors.',
-      'Box must be metal.',
-      'Box must be fire-rated.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '522.8 covers mechanical stress on cables — sharp edges, pinching, vibration, weight. A back-box satisfies it by being deep enough for the cable not to pinch, having grommets on every cable entry, being securely fixed so it does not work loose, and presenting no sharp internal edges. Box choice and fixing are part of cable protection.',
   },
@@ -183,12 +183,12 @@ const quizQuestions = [
     question:
       'You discover a back-box you fixed yesterday is sitting 5 mm twisted (one corner higher than the diagonally opposite corner). Best fix?',
     options: [
-      'Loosen one fixing, tap to level, retighten.',
       'Loosen both fixings, re-set the box flat, verify level and twist with a small spirit level, retighten.',
-      'Leave it — the faceplate will hide it.',
-      'Pull the box out completely and start again.',
+      'The psychological discomfort caused by bright luminaires in the field of view',
+      'Standard Assessment Procedure - the methodology for calculating dwelling energy performance',
+      'A water sampling technique that detects great crested newt DNA in pond water without the need to capture animals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A twisted box gives a twisted faceplate, which screws unevenly and shows a gap on one corner. The proper fix is to loosen the fixings completely, reset the box flat using a small spirit level (or by eye against the surrounding plaster), then retighten evenly. Tapping a partially fixed box rarely cures the twist — usually it just changes which corner is high.',
   },

@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'f10-notification',
     question: 'When must a F10 notification be submitted to the HSE?',
     options: [
-      'Within 7 days of work starting',
       'Before construction phase begins',
-      'After the first site induction',
       'Only for projects over 500 person-days',
+      'After the first site induction',
+      'Within 7 days of work starting',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The F10 notification must be submitted to the HSE before the construction phase begins. This applies to projects lasting more than 30 working days with more than 20 workers, or exceeding 500 person-days.',
   },
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'toolbox-talk',
     question: 'What is the primary purpose of a toolbox talk?',
     options: [
-      'To replace formal training requirements',
+      'Repetitive lifting combined with twisting',
       'To address specific hazards and reinforce safe practices',
-      'To fulfil CDM documentation requirements',
-      'To train new apprentices',
+      'Credit for relevant previous learning and experience',
+      'Vibration-resistant fasteners with thread-locking compounds',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'rams-requirement',
     question: 'RAMS must be prepared and communicated before:',
     options: [
-      'Any work begins on site',
+      'The project completion date',
       'High-risk activities only',
       'The work activity they relate to',
-      'The project completion date',
+      'Any work begins on site',
     ],
     correctIndex: 2,
     explanation:
@@ -85,7 +85,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which dutyholder role was introduced by CDM 2015 to replace the CDM coordinator?',
-    options: ['Principal contractor', 'Principal designer', 'Client advisor', 'CDM consultant'],
+    options: [
+      'Principal contractor',
+      'Principal designer',
+      'Client advisor',
+      'CDM consultant',
+    ],
     correctAnswer: 1,
     explanation:
       'CDM 2015 introduced the principal designer role to replace the CDM coordinator. The principal designer has design-phase health and safety coordination responsibilities.',
@@ -94,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: 'The construction phase plan must be in place before:',
     options: [
+      'Workers arrive on site',
       'The design is complete',
       'The construction phase begins',
-      'Workers arrive on site',
       'The F10 is submitted',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The construction phase plan must be prepared by the principal contractor and be in place before the construction phase begins. Work cannot lawfully start without it.',
   },
@@ -107,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the minimum content required in a construction phase plan?',
     options: [
-      'Project description only',
+      'Emergency procedures, site rules, hazards and welfare facilities',
+      'In a prominent position on site accessible to all workers',
+      'Risk assessment, method statement, and emergency procedures',
       'Management arrangements, site rules, specific measures for high-risk work',
-      'Contact details of all workers',
-      'Equipment specifications',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A construction phase plan must include management arrangements, communication protocols, site rules, and specific measures for controlling high-risk work as defined in Schedule 3 of CDM 2015.',
   },
@@ -120,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'Site inductions must cover which of the following?',
     options: [
-      'Technical installation methods only',
       'Emergency procedures, site rules, hazards and welfare facilities',
-      'Company history and values',
-      'Personal development goals',
+      'In a prominent position on site accessible to all workers',
+      'Risk assessment, method statement, and emergency procedures',
+      'Comply with the construction phase plan and site rules',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Site inductions must cover emergency procedures, site-specific rules, known hazards, first aid arrangements, welfare facilities, and reporting procedures. This ensures workers can work safely from day one.',
   },
@@ -133,7 +138,12 @@ const quizQuestions = [
     id: 5,
     question:
       'How often should toolbox talks typically be delivered on an active construction site?',
-    options: ['Monthly', 'Weekly or as new hazards arise', 'At project start only', 'Annually'],
+    options: [
+      'The principal contractor',
+      'Weekly or as new hazards arise',
+      'The construction phase begins',
+      'Health, safety and welfare',
+    ],
     correctAnswer: 1,
     explanation:
       "Toolbox talks should be delivered regularly, typically weekly, and whenever new hazards arise or work activities change. They keep safety fresh in workers' minds and address evolving site conditions.",
@@ -142,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'A RAMS document should include:',
     options: [
+      'Standard first fix electrical installation',
+      'Management arrangements, site rules, specific measures for high-risk work',
       'Risk assessment, method statement, and emergency procedures',
-      'Only the method statement for efficiency',
-      'Equipment costs and timelines',
-      'Worker qualifications only',
+      'In a prominent position on site accessible to all workers',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'RAMS should include a comprehensive risk assessment identifying hazards and control measures, a detailed method statement describing safe work procedures, and emergency procedures specific to the activity.',
   },
@@ -158,10 +168,10 @@ const quizQuestions = [
     options: [
       'The client',
       'The principal designer',
-      'The principal contractor',
       'Individual workers',
+      'The principal contractor',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The principal contractor is responsible for ensuring all workers, including subcontractors, receive adequate site-specific training and induction before commencing work on the construction site.',
   },
@@ -169,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'The F10 notification must be displayed:',
     options: [
-      'In the site office only',
       'In a prominent position on site accessible to all workers',
-      "On the principal contractor's website",
-      "At the client's premises",
+      'Site-specific and proportionate to the risks',
+      'Standard first fix electrical installation',
+      'Comply with the construction phase plan and site rules',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The F10 notification must be displayed in a prominent position on site where it is accessible to all workers. This ensures everyone knows the project is notifiable and who the key dutyholders are.',
   },
@@ -182,12 +192,12 @@ const quizQuestions = [
     id: 9,
     question: 'Which of the following is NOT a Schedule 3 high-risk activity under CDM 2015?',
     options: [
-      'Work at height',
-      'Work with asbestos',
+      'Weekly or as new hazards arise',
       'Standard first fix electrical installation',
-      'Work in confined spaces',
+      'Comply with the construction phase plan and site rules',
+      'Site-specific and proportionate to the risks',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Standard electrical installation is not specifically listed as a Schedule 3 high-risk activity. However, work at height, with asbestos, in confined spaces, near live services, and excavation work are all Schedule 3 activities requiring specific control measures.',
   },
@@ -195,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'Building services contractors attending site must:',
     options: [
-      'Only follow their own company procedures',
+      'Standard first fix electrical installation',
+      'Risk assessment, method statement, and emergency procedures',
       'Comply with the construction phase plan and site rules',
-      'Ignore toolbox talks if qualified',
-      'Report only to their own supervisor',
+      'In a prominent position on site accessible to all workers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'All contractors, including building services contractors, must comply with the construction phase plan and site rules established by the principal contractor. This ensures coordinated safety management across all trades.',
   },
@@ -209,11 +219,11 @@ const quizQuestions = [
     question: 'The principal contractor must consult and engage with workers on matters of:',
     options: [
       'Commercial contract terms',
-      'Health, safety and welfare',
-      'Design decisions',
       'Subcontractor selection',
+      'Design decisions',
+      'Health, safety and welfare',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Under CDM 2015, the principal contractor must consult and engage with workers on matters of health, safety and welfare. This includes involving workers in risk assessments and safety planning.',
   },
@@ -221,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'A construction phase plan should be:',
     options: [
-      'A generic template used on all projects',
       'Site-specific and proportionate to the risks',
-      'As detailed as possible regardless of project size',
       'Prepared by the client',
+      'A generic template used on all projects',
+      'As detailed as possible regardless of project size',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The construction phase plan must be site-specific and proportionate to the nature and scale of the work and the risks involved. A generic template is not sufficient for CDM compliance.',
   },

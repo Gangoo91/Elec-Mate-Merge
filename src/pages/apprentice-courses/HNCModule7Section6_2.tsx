@@ -28,11 +28,11 @@ const quickCheckQuestions = [
     question: 'What does the breaking capacity (Icn) of a protective device indicate?',
     options: [
       'The maximum continuous current the device can carry',
-      'The maximum fault current the device can safely interrupt',
-      'The time taken to trip at rated current',
       'The let-through energy during a fault',
+      'The time taken to trip at rated current',
+      'The maximum fault current the device can safely interrupt',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Breaking capacity (Icn for MCBs, Icu/Ics for MCCBs) indicates the maximum prospective fault current that the device can safely interrupt without damage or danger. It must exceed the prospective fault current at the installation point.',
   },
@@ -40,10 +40,10 @@ const quickCheckQuestions = [
     id: 'let-through-energy',
     question: 'Why is let-through energy (I²t) important when selecting protective devices?',
     options: [
-      "It determines the device's physical size",
+      "Details of injured person, accident circumstances, location, date/time, nature of injury",
       "It must be less than the cable's withstand capability to prevent damage",
-      "It indicates the device's voltage rating",
-      "It shows the device's response time",
+      "Uniform illumination with 40:1 maximum ratio prevents dark areas appearing as barriers",
+      "To assign unique short addresses (0-63) to each control gear",
     ],
     correctIndex: 1,
     explanation:
@@ -53,12 +53,12 @@ const quickCheckQuestions = [
     id: 'discrimination',
     question: 'What is the purpose of discrimination (selectivity) between protective devices?',
     options: [
-      'To reduce installation costs',
       'To ensure only the device nearest the fault operates',
-      'To increase the breaking capacity',
-      'To improve power factor',
+      'A closed triangle, each winding between two lines',
+      'Daily visual check, monthly brief test, annual full duration test',
+      'The manufacturer\\\\\\\\\\\\\\\'s instruction manual for the specific tower model',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Discrimination ensures that during a fault, only the protective device nearest to the fault operates, leaving the rest of the installation energised. This is achieved through time, current, or energy-based selectivity.',
   },
@@ -66,12 +66,12 @@ const quickCheckQuestions = [
     id: 'rcd-type-a',
     question: 'A Type A RCD can detect:',
     options: [
-      'AC residual currents only',
-      'AC and pulsating DC residual currents',
       'Pure DC residual currents only',
       'High-frequency residual currents only',
+      'AC residual currents only',
+      'AC and pulsating DC residual currents',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Type A RCDs can detect sinusoidal AC residual currents and pulsating DC residual currents. They are commonly required where electronic equipment with rectifiers may produce DC components in fault currents.',
   },
@@ -82,7 +82,12 @@ const quizQuestions = [
     id: 1,
     question:
       'For an MCB with a breaking capacity of 10kA, what is the maximum prospective fault current it can safely interrupt?',
-    options: ['6kA', '10kA', '16kA', '25kA'],
+    options: [
+      '6kA',
+      '10kA',
+      '16kA',
+      '25kA',
+    ],
     correctAnswer: 1,
     explanation:
       'The breaking capacity rating indicates the maximum fault current the device can interrupt. A 10kA MCB can safely break fault currents up to 10,000 amperes. The prospective fault current at the installation point must not exceed this value.',
@@ -92,12 +97,12 @@ const quizQuestions = [
     question:
       'Which parameter must be compared with k²S² to verify cable protection during a fault?',
     options: [
+      'Rated current (In)',
       'Breaking capacity (Icn)',
       'Let-through energy (I²t)',
-      'Rated current (In)',
       'Tripping current (It)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The let-through energy (I²t) must be less than k²S² where k is the cable constant and S is the conductor cross-sectional area. This ensures the cable can withstand the thermal stress during fault clearance.',
   },
@@ -105,8 +110,13 @@ const quizQuestions = [
     id: 3,
     question:
       'According to BS 7671, what is the maximum disconnection time for a 230V final circuit protected by a 32A device?',
-    options: ['0.1 seconds', '0.2 seconds', '0.4 seconds', '5 seconds'],
-    correctAnswer: 2,
+    options: [
+      '0.2 seconds',
+      '0.1 seconds',
+      '5 seconds',
+      '0.4 seconds',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS 7671 Regulation 411.3.2.2 requires a maximum disconnection time of 0.4 seconds for final circuits not exceeding 63A in TN systems at 230V nominal voltage. This ensures automatic disconnection of supply for fault protection.',
   },
@@ -114,12 +124,12 @@ const quizQuestions = [
     id: 4,
     question: 'What distinguishes an MCCB from an MCB?',
     options: [
-      'MCCBs are only for AC circuits',
       'MCCBs have adjustable trip settings and higher current ratings',
-      'MCBs have higher breaking capacities',
-      'MCBs can be used in three-phase systems',
+      'For circuits with three-phase rectifiers producing smooth DC components',
+      'The percentage of Icu at which the device can operate and remain functional',
+      'Composite residual currents including high-frequency components up to 1kHz',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'MCCBs (Moulded Case Circuit Breakers) feature adjustable trip settings, higher current ratings (typically 100A-1600A+), and often higher breaking capacities than MCBs. They provide greater flexibility for main distribution and industrial applications.',
   },
@@ -128,12 +138,12 @@ const quizQuestions = [
     question:
       'For time-based discrimination between an upstream and downstream MCB, the upstream device should:',
     options: [
-      'Have a lower current rating',
-      'Have a faster operating characteristic',
+      'The percentage of Icu at which the device can operate and remain functional',
       'Have a slower operating characteristic or time-delay function',
-      'Have the same rating as the downstream device',
+      'Composite residual currents including high-frequency components up to 1kHz',
+      'For circuits with three-phase rectifiers producing smooth DC components',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Time-based discrimination requires the upstream device to operate more slowly than the downstream device, allowing the device nearest the fault to clear it first. This can be achieved using time-delay settings or selecting devices with different time-current characteristics.',
   },
@@ -141,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'A Type F RCD is specifically designed to detect:',
     options: [
-      'AC residual currents only',
-      'Pulsating DC residual currents only',
+      'For circuits with three-phase rectifiers producing smooth DC components',
+      'MCCBs have adjustable trip settings and higher current ratings',
       'Composite residual currents including high-frequency components up to 1kHz',
-      'Pure DC residual currents only',
+      'The downstream device must limit I²t to less than the upstream device\\\\\\\\\\\\\\\'s pre-arcing I²t',
     ],
     correctAnswer: 2,
     explanation:
@@ -154,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is the purpose of back-up protection coordination?',
     options: [
-      'To provide redundancy in case the main protection fails',
+      'Acknowledge promptly, investigate fairly, respond in writing within a stated timescale, signpost to ADR (e.g. scheme provider) if unresolved',
+      'A dedicated Profibus tester or analyser that measures signal levels, timing, and bus topology',
+      'Detect if the scan cycle takes longer than expected, indicating a program or hardware fault',
       'To allow a device with lower breaking capacity to be used where a higher-rated upstream device provides protection',
-      'To increase the total installation cost',
-      'To eliminate the need for discrimination',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Back-up protection allows a protective device with a breaking capacity lower than the prospective fault current to be used, provided an upstream device with adequate capacity assists in clearing high-level faults. The combination must be tested and verified by manufacturers.',
   },
@@ -167,8 +177,13 @@ const quizQuestions = [
     id: 8,
     question:
       'According to BS 7671, what residual current rating is required for socket outlets in locations accessible to the general public?',
-    options: ['100mA', '300mA', '30mA', '10mA'],
-    correctAnswer: 2,
+    options: [
+      '30mA',
+      '10mA',
+      '100mA',
+      '300mA',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 7671 Regulation 411.3.3 requires RCD protection with a rated residual operating current (IΔn) not exceeding 30mA for socket outlets rated up to 32A for use by ordinary persons. This provides additional protection against electric shock.',
   },
@@ -176,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the service short-circuit breaking capacity (Ics) of an MCCB?',
     options: [
-      'The maximum current under normal operating conditions',
+      'Have a slower operating characteristic or time-delay function',
       'The percentage of Icu at which the device can operate and remain functional',
-      'The time delay before tripping',
-      'The minimum fault current for operation',
+      'For circuits with three-phase rectifiers producing smooth DC components',
+      'MCCBs have adjustable trip settings and higher current ratings',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,12 +204,12 @@ const quizQuestions = [
     id: 10,
     question: 'When is a Type B RCD required according to BS 7671?',
     options: [
-      'For all domestic installations',
+      'MCCBs have adjustable trip settings and higher current ratings',
+      'The downstream device must limit I²t to less than the upstream device\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s pre-arcing I²t',
       'For circuits with three-phase rectifiers producing smooth DC components',
-      'For outdoor socket outlets only',
-      'For lighting circuits only',
+      'Have a slower operating characteristic or time-delay function',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Type B RCDs are required where smooth DC fault currents may occur, such as with three-phase rectifiers in variable speed drives, EV chargers, or PV inverters. They can detect AC, pulsating DC, and smooth DC residual currents.',
   },
@@ -203,12 +218,12 @@ const quizQuestions = [
     question:
       'For energy-based discrimination (let-through energy coordination), what condition must be met?',
     options: [
-      'Both devices must have the same I²t value',
-      'The downstream device I²t must exceed the upstream device I²t',
+      "Composite residual currents including high-frequency components up to 1kHz",
+      "Have a slower operating characteristic or time-delay function",
+      "MCCBs have adjustable trip settings and higher current ratings",
       "The downstream device must limit I²t to less than the upstream device's pre-arcing I²t",
-      'The devices must have different rated currents',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'For energy-based discrimination, the total let-through energy (I²t) of the downstream device at maximum fault current must be less than the pre-arcing I²t of the upstream device. This ensures the downstream device clears the fault before the upstream device begins to operate.',
   },
@@ -216,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'An RCBO combines the functions of:',
     options: [
-      'MCB and surge protection device',
       'RCD and MCB in a single device',
-      'MCCB and isolator',
       'Contactor and overload relay',
+      'MCB and surge protection device',
+      'MCCB and isolator',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An RCBO (Residual Current Circuit Breaker with Overcurrent protection) combines RCD earth fault protection with MCB overcurrent protection in a single device. This provides both fault protection and additional protection while saving space in distribution boards.',
   },

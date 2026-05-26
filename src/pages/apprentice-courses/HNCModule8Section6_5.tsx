@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'om-manual-purpose',
     question: 'What is the primary purpose of an O&M manual?',
     options: [
-      'To record construction costs',
+      'Ensure use is restricted to designated persons and repairs by competent persons only',
       'To provide information for safe operation, maintenance and future modification of building systems',
-      'To satisfy planning requirements',
-      'To document site safety incidents',
+      'The lowest temperature at which the liquid gives off sufficient vapour to form an ignitable mixture with air near its surface',
+      'Deliberate practice targets specific weaknesses with focused effort and feedback',
     ],
     correctIndex: 1,
     explanation:
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'as-built-purpose',
     question: 'When should as-built drawings be prepared?',
     options: [
-      'Before construction begins',
-      'During the design development stage',
+      'Confirming calculations are correct through independent review',
+      'In at least two separate locations with version control, date stamps and change notes',
+      'They may be experiencing significant stress and should be approached with concern',
       'Progressively during construction, finalised at practical completion',
-      'Only if requested by the client',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'As-built drawings should be prepared progressively during construction and finalised at practical completion. This ensures they accurately reflect the installed works, including any variations from the original design drawings.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     question:
       'Under which regulation is a building log book required for new non-domestic buildings?',
     options: [
-      'Part P of the Building Regulations',
       'Part L of the Building Regulations',
-      'CDM Regulations 2015',
       'Health and Safety at Work Act',
+      'Part P of the Building Regulations',
+      'CDM Regulations 2015',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Part L (Conservation of Fuel and Power) of the Building Regulations requires a building log book for new non-domestic buildings. It must contain information about installed systems, their operation and maintenance to achieve energy efficiency.',
   },
@@ -67,12 +67,12 @@ const quickCheckQuestions = [
     id: 'cobie-definition',
     question: 'What does COBie stand for?',
     options: [
-      'Construction Operations Building information exchange',
-      'Certified Operations Building information exchange',
       'Construction Operational Building Interface Equipment',
+      'Construction Operations Building information exchange',
       'Consolidated Operations Building Information Environment',
+      'Certified Operations Building information exchange',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'COBie (Construction Operations Building information exchange) is a structured data format for exchanging building information from design through construction to operation. It enables digital handover of asset data without relying on proprietary software formats.',
   },
@@ -84,11 +84,11 @@ const quizQuestions = [
     question: 'Which BSRIA guide provides comprehensive guidance on O&M manuals?',
     options: [
       'BG 6 - The Design Framework',
-      'BG 49 - Soft Landings',
       'BG 8 - Model O&M Manual',
+      'BG 49 - Soft Landings',
       'BG 26 - Service Coordination',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'BSRIA BG 8 provides model templates and comprehensive guidance for producing O&M manuals for building services installations.',
   },
@@ -96,28 +96,38 @@ const quizQuestions = [
     id: 2,
     question: 'What information must be included in the Health and Safety File under CDM 2015?',
     options: [
-      'Only electrical installation certificates',
+      'Design parameters, installed capacities, control strategies and target energy consumption',
+      'Commissioning certificate, cause and effect matrix, zone plans and detector schedule',
       'Information about risks to health and safety during future construction, maintenance or demolition work',
-      'Daily site inspection records',
-      'Employee training records',
+      'Variations, actual cable routes, final equipment positions and any deviations from design',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The Health and Safety File must contain information about risks to health and safety during any future construction, maintenance, repair, renovation or demolition work on the building.',
   },
   {
     id: 3,
     question: 'What is the minimum retention period for electrical test certificates?',
-    options: ['5 years', '10 years', 'Life of the installation', 'Until next inspection'],
-    correctAnswer: 2,
+    options: [
+      '10 years',
+      '5 years',
+      'Until next inspection',
+      'Life of the installation',
+    ],
+    correctAnswer: 3,
     explanation:
       'Electrical test certificates should be retained for the life of the installation. They form an essential part of the electrical installation records and are needed for comparison at subsequent periodic inspections.',
   },
   {
     id: 4,
     question: 'Which document provides the format specification for digital asset data handover?',
-    options: ['BS 7671', 'BS 1192', 'BS 8536 (now incorporated into BS EN ISO 19650)', 'BS 5839'],
-    correctAnswer: 2,
+    options: [
+      'BS 8536 (now incorporated into BS EN ISO 19650)',
+      'The Principal Designer during construction, then the client',
+      'Energy efficient operation throughout the building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s life',
+      'Progressively throughout construction with staged reviews',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 8536 (now incorporated into BS EN ISO 19650) provides guidance on information management during the operational phase of assets, including requirements for digital handover using formats such as COBie.',
   },
@@ -125,10 +135,10 @@ const quizQuestions = [
     id: 5,
     question: 'What must be recorded in the building log book regarding HVAC systems?',
     options: [
-      "Only the manufacturer's contact details",
+      'Information about risks to health and safety during future construction, maintenance or demolition work',
       'Design parameters, installed capacities, control strategies and target energy consumption',
-      'Staff training attendance records',
-      'Construction programme dates',
+      'Commissioning certificate, cause and effect matrix, zone plans and detector schedule',
+      'To evidence that systems have been tested and perform to specification',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'Who is responsible for preparing and maintaining the Health and Safety File?',
     options: [
-      'The contractor',
-      'The architect',
+      'BS 8536 (now incorporated into BS EN ISO 19650)',
+      'To evidence that systems have been tested and perform to specification',
       'The Principal Designer during construction, then the client',
-      'The building control officer',
+      'Progressively throughout construction with staged reviews',
     ],
     correctAnswer: 2,
     explanation:
@@ -152,12 +162,12 @@ const quizQuestions = [
     question:
       'What type of drawings should show cable routes, containment systems and equipment locations?',
     options: [
-      'Schematic diagrams only',
-      'Block diagrams',
+      'Competence varies with work complexity',
+      'Within 24 hours of the request',
+      'Unique defect numbering and audit trail',
       'Installation or layout drawings',
-      'Single line diagrams',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Installation or layout drawings show physical cable routes, containment systems, equipment locations and spatial coordination. These are essential for maintenance access and future modifications.',
   },
@@ -165,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the purpose of commissioning records in handover documentation?',
     options: [
-      'To demonstrate design intent only',
       'To evidence that systems have been tested and perform to specification',
-      'To record construction costs',
-      'To satisfy planning requirements',
+      'Variations, actual cable routes, final equipment positions and any deviations from design',
+      'Progressively throughout construction with staged reviews',
+      'The Principal Designer during construction, then the client',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Commissioning records provide evidence that all systems have been installed, tested and adjusted to perform to their design specification. They form a baseline for future performance monitoring.',
   },
@@ -178,10 +188,10 @@ const quizQuestions = [
     id: 9,
     question: 'According to BSRIA Soft Landings, when should O&M manual content be reviewed?',
     options: [
-      'Only at practical completion',
+      'The Principal Designer during construction, then the client',
       'Progressively throughout construction with staged reviews',
-      'After 12 months occupation',
-      'Only when requested by the client',
+      'Energy efficient operation throughout the building\\\\\\\\\\\\\\\'s life',
+      'BS 8536 (now incorporated into BS EN ISO 19650)',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,12 +201,12 @@ const quizQuestions = [
     id: 10,
     question: 'What information should as-built drawings show that differs from design drawings?',
     options: [
-      'Original design intent only',
+      'Commissioning certificate, cause and effect matrix, zone plans and detector schedule',
+      'Information about risks to health and safety during future construction, maintenance or demolition work',
       'Variations, actual cable routes, final equipment positions and any deviations from design',
-      'Only the building outline',
-      'Manufacturer catalogue information',
+      'To evidence that systems have been tested and perform to specification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'As-built drawings must show the actual installed works including all variations from design, actual cable routes, final equipment positions, revised containment layouts and any site-initiated changes.',
   },
@@ -204,12 +214,12 @@ const quizQuestions = [
     id: 11,
     question: 'What does the building log book requirement under Part L help achieve?',
     options: [
-      'Fire safety compliance',
-      'Structural safety verification',
+      "BS 8536 (now incorporated into BS EN ISO 19650)",
+      "The Principal Designer during construction, then the client",
+      "To evidence that systems have been tested and perform to specification",
       "Energy efficient operation throughout the building's life",
-      'Acoustic performance standards',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The building log book requirement under Part L aims to enable energy efficient operation by providing building managers with information about design assumptions, installed systems and their intended operation.',
   },
@@ -217,12 +227,12 @@ const quizQuestions = [
     id: 12,
     question: 'Which testing records must be included for fire alarm systems?',
     options: [
-      'Only the initial commissioning certificate',
       'Commissioning certificate, cause and effect matrix, zone plans and detector schedule',
-      "Manufacturer's test data only",
-      'Training attendance records',
+      'The Principal Designer during construction, then the client',
+      'To evidence that systems have been tested and perform to specification',
+      'Variations, actual cable routes, final equipment positions and any deviations from design',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fire alarm testing records must include the commissioning certificate, cause and effect matrix showing all input/output relationships, zone plans, detector schedules and results of all function and integration tests.',
   },

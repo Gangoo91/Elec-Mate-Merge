@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'A contactor is buzzing loudly and the main contacts are chattering. The most likely cause is:',
     options: [
-      'The motor connected to the contactor is overloaded',
       'Low control voltage at the contactor coil, or a damaged shading ring on the coil pole face',
-      'The overload relay is set too high',
-      'The cable to the motor is too long',
+      'A framework for domestic retrofit projects ensuring quality and risk management',
+      'Fault current must exceed device rating for operation within required time',
+      'System design drawings, emergency lighting logbook, and commissioning certificate',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A buzzing, chattering contactor indicates the magnetic force is insufficient to hold the armature fully closed. This is typically caused by low control voltage (supply dip, high-resistance connection in the control circuit) or a damaged shading ring — a copper band on the pole face that prevents the armature releasing at each zero-crossing of the AC waveform. Both conditions cause rapid make-break cycling that damages the main contacts.',
   },
@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'A PLC input LED is illuminated on the I/O module, but the programme shows the input as OFF. This suggests:',
     options: [
-      'The field device (sensor/switch) is faulty',
+      'Positive psychological change experienced as a result of the struggle with highly challenging life circumstances',
+      'Information likely to be needed during future construction work, including cleaning, maintenance, and demolition',
       'A fault between the I/O module hardware and the PLC processor — possibly a faulty I/O module, backplane connection or configuration error',
-      'The output connected to the same channel is faulty',
-      'The PLC programme has a logic error',
+      'A thorough examination must be carried out before the machine is used again, as this constitutes an exceptional circumstance',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'If the hardware LED on the I/O module shows the input is active but the PLC programme does not reflect this, the fault lies between the I/O hardware and the processor. This could be a faulty I/O module, a loose backplane connection, a configuration error (wrong I/O address mapped), or in rare cases, a processor fault. The field device and wiring are working correctly because the LED is illuminated.',
   },
@@ -43,12 +43,12 @@ const quickCheckQuestions = [
     question:
       'A process sequence stalls at a stage that should advance after a timed delay. The timer output does not energise after the set time. What should you check FIRST?',
     options: [
-      'Replace the timer immediately',
+      'Affixed inside the CU door (for the immediate user reference) plus included in the handover pack as a stand-alone document. Future fault diagnosis depends on accurate circuit-to-board labelling at the CU itself.',
+      'Eliminate foreseeable risks so far as is reasonably practicable → reduce risks that remain → provide information about remaining risks to assist other duty holders',
+      'Withdraw from the immediate situation, report it as a grievance per the ACAS Code, and if the threat is criminal involve the police',
       'Verify the timer is receiving its enable/trigger signal, check the time setting, and confirm the timer type (on-delay, off-delay, pulse) is correct for the application',
-      'Increase the timer setting to allow more time',
-      'Bypass the timer to keep production running',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Before replacing any component, verify that it is receiving the correct input signals. A timer that does not start may simply not be receiving its enable signal due to an upstream fault. Also confirm the time base setting (seconds vs minutes — a common error) and that the timer type matches the application requirement. Replacing a timer without diagnosis wastes time and may not resolve the issue.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     question:
       'In a motor starter circuit with multiple series-connected interlock contacts, the most efficient way to locate a single open interlock is:',
     options: [
-      'Visually inspect every interlock in the circuit',
+      'A clearly identified DC isolator adjacent to the battery, an AC isolator at the inverter, plus emergency means of disconnection labelled and accessible',
+      'Asset identification, fault/task description, priority, requested completion date, and assigned technician or trade',
       'Use the half-split technique — measure voltage at the midpoint of the interlock chain to identify which half contains the open contact',
-      'Replace all the interlocks',
-      'Bypass the interlock circuit to identify which one is causing the problem',
+      'A full exclusion zone with barriers minimum 6 metres from the base, warning signs, and a banksman to manage public access',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The half-split technique is the most efficient method for locating a single open contact in a series chain. Measure voltage at the midpoint: if supply voltage is present, the open contact is downstream; if no voltage, it is upstream. Continue halving until the specific open contact is identified. Never bypass interlocks — they are safety devices and bypassing them creates a serious hazard.',
   },
@@ -74,10 +74,10 @@ const quizQuestions = [
     question:
       'In a conventional motor starter control circuit, the auxiliary contact (hold-on contact) across the start button serves to:',
     options: [
-      'Provide additional starting current to the motor',
+      'The comparison trap &mdash; measuring yourself against someone with vastly different experience',
       'Maintain the contactor coil circuit after the start button is released, creating a latching function',
-      'Protect the motor against overload',
-      'Reduce the voltage to the coil during running',
+      'A customer who has a problem resolved exceptionally well may become more loyal than one who never experienced a problem',
+      'A building with very high energy performance where remaining energy is largely from renewable sources',
     ],
     correctAnswer: 1,
     explanation:
@@ -88,12 +88,12 @@ const quizQuestions = [
     question:
       'A stop button in a motor control circuit is wired as a normally closed (NC) contact in series with the coil circuit. This means:',
     options: [
-      'The motor will only run while the stop button is held pressed',
+      'Excessive inrush current, frequent switching under load, or chattering due to low coil voltage',
+      'The contact is open — voltage is present across it because no current is flowing through the load beyond it',
       'Pressing the stop button opens the circuit, de-energising the coil; a broken wire to the stop button also stops the motor (fail-safe)',
-      'The stop button has no effect on the motor',
-      'The stop button must be pressed twice to stop the motor',
+      'Check the PLC diagnostic display for fault indicators and review the I/O status to identify unexpected states',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Using a normally closed stop button in series creates a fail-safe arrangement. If the wire to the stop button breaks, the circuit opens and the motor stops — the same as pressing the stop button. This is a fundamental safety design principle in control circuits: loss of the control signal results in a safe state (motor stopped).',
   },
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       'A relay coil measures 0 ohms (short circuit) when tested with a multimeter. This indicates:',
     options: [
-      'The relay is in good condition',
+      'The sensor is faulty, misadjusted, or detecting a metallic object that should not be in range',
+      'Both the timer/delta circuit fault and welded star contacts are possible causes',
+      'Excessive inrush current, frequent switching under load, or chattering due to low coil voltage',
       'The coil winding has a short circuit between turns — the relay must be replaced',
-      'The relay contacts are welded closed',
-      'The multimeter is on the wrong range',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A healthy relay coil should have a measurable resistance (typically tens to thousands of ohms depending on the coil type and voltage rating). A reading of 0 ohms indicates a short circuit within the coil winding, meaning the turns are shorted together. The relay must be replaced. Note: also check for an open circuit (infinite resistance), which indicates a broken coil winding.',
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 4,
     question: 'Welded contactor contacts (contacts stuck together) are typically caused by:',
     options: [
-      'The contactor being too large for the application',
       'Excessive inrush current, frequent switching under load, or chattering due to low coil voltage',
-      'The overload relay being set correctly',
-      'Clean, well-maintained contacts',
+      'The contact is open — voltage is present across it because no current is flowing through the load beyond it',
+      'A fault in the emergency stop circuit (broken wire, relay failure) results in the system stopping — fail-safe design',
+      'Both the timer/delta circuit fault and welded star contacts are possible causes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Welded contacts occur when excessive current flows through the contacts during making or breaking, generating enough heat to fuse the contact surfaces together. Common causes include high motor inrush current (especially DOL starting of large motors), frequent on/off cycling under load, and chattering (which causes repeated arcing). Welded contacts are a serious fault — the motor cannot be stopped by the control circuit.',
   },
@@ -128,10 +128,10 @@ const quizQuestions = [
     id: 5,
     question: 'When diagnosing a PLC-controlled system, the FIRST step should be:',
     options: [
-      'Modify the PLC programme to test different outputs',
+      'The sensor is faulty, misadjusted, or detecting a metallic object that should not be in range',
       'Check the PLC diagnostic display for fault indicators and review the I/O status to identify unexpected states',
-      'Replace the PLC processor module',
-      'Disconnect all field wiring',
+      'Voltage drop across the control circuit due to high-resistance connections, long cable runs or undersized conductors',
+      'A fault in the emergency stop circuit (broken wire, relay failure) results in the system stopping — fail-safe design',
     ],
     correctAnswer: 1,
     explanation:
@@ -142,12 +142,12 @@ const quizQuestions = [
     question:
       "A proximity sensor used as an interlock in a control circuit shows 'sensor active' (LED on) when no target is present. This indicates:",
     options: [
-      'Normal operation',
+      'The contact is open — voltage is present across it because no current is flowing through the load beyond it',
+      'Voltage drop across the control circuit due to high-resistance connections, long cable runs or undersized conductors',
       'The sensor is faulty, misadjusted, or detecting a metallic object that should not be in range',
-      'The PLC input is faulty',
-      'The sensor cable is too long',
+      'Excessive inrush current, frequent switching under load, or chattering due to low coil voltage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A proximity sensor showing active with no target present suggests the sensor is faulty (internal failure), misadjusted (sensitivity set too high), or detecting an unintended metallic object within its sensing range. Check the sensor's mounting position, sensing distance setting, and the surrounding area for metallic objects before replacing the sensor.",
   },
@@ -170,12 +170,12 @@ const quizQuestions = [
     question:
       'A 24 V DC control circuit relay coil is rated at 24 V DC but the measured voltage at the coil is only 18 V. The relay does not reliably pull in. The cause is likely:',
     options: [
-      'The relay is undersized',
       'Voltage drop across the control circuit due to high-resistance connections, long cable runs or undersized conductors',
-      'The 24 V DC power supply is brand new',
-      'The relay contacts are dirty',
+      'Excessive inrush current, frequent switching under load, or chattering due to low coil voltage',
+      'Check for contamination on the lenses, misalignment, loose mounting, vibration, or environmental interference',
+      'A fault in the emergency stop circuit (broken wire, relay failure) results in the system stopping — fail-safe design',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A 6 V drop (25%) across the control circuit indicates excessive resistance in the wiring. This could be caused by high-resistance connections (loose terminals, corroded contacts), excessively long cable runs with undersized conductors, or multiple series-connected contacts each adding resistance. Most relay coils require at least 80% of rated voltage to reliably pull in — 18 V on a 24 V coil (75%) is marginal to insufficient.',
   },
@@ -183,10 +183,10 @@ const quizQuestions = [
     id: 9,
     question: 'An emergency stop circuit using safety relays must be designed so that:',
     options: [
-      'The emergency stop only works when the system is running',
+      'The contact is open — voltage is present across it because no current is flowing through the load beyond it',
       'A fault in the emergency stop circuit (broken wire, relay failure) results in the system stopping — fail-safe design',
-      'The emergency stop can be overridden by the operator',
-      'The safety relays are tested only during annual servicing',
+      'All motors fed from that control supply lose their control circuits — all contactors drop out simultaneously',
+      'Excessive inrush current, frequent switching under load, or chattering due to low coil voltage',
     ],
     correctAnswer: 1,
     explanation:
@@ -197,12 +197,12 @@ const quizQuestions = [
     question:
       'When testing a control circuit with the power on, you measure 230 V across a closed contact. This indicates:',
     options: [
-      'The contact is closed and conducting — this is normal',
+      'A fault in the emergency stop circuit (broken wire, relay failure) results in the system stopping — fail-safe design',
+      'Excessive inrush current, frequent switching under load, or chattering due to low coil voltage',
       'The contact is open — voltage is present across it because no current is flowing through the load beyond it',
-      'The measurement is meaningless',
-      'The voltmeter is faulty',
+      'Check the PLC diagnostic display for fault indicators and review the I/O status to identify unexpected states',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'In a series circuit, a closed (conducting) contact has virtually zero voltage across it. If you measure full supply voltage across a contact, it means the contact is open-circuit (or extremely high resistance). The voltage appears across the open contact because it is the break in the circuit, with supply voltage on one side and the load circuit (at neutral potential) on the other. This is a fundamental diagnostic principle.',
   },
@@ -211,12 +211,12 @@ const quizQuestions = [
     question:
       'A safety light curtain protecting a machine access point trips the safety relay, but no obstruction is visible. You should:',
     options: [
-      'Bypass the light curtain to keep production running',
+      'The sensor is faulty, misadjusted, or detecting a metallic object that should not be in range',
+      'Pressing the stop button opens the circuit, de-energising the coil; a broken wire to the stop button also stops the motor (fail-safe)',
+      'The contact is open — voltage is present across it because no current is flowing through the load beyond it',
       'Check for contamination on the lenses, misalignment, loose mounting, vibration, or environmental interference',
-      'Replace the light curtain immediately',
-      'Reduce the sensitivity of the light curtain',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'False trips on safety light curtains are commonly caused by contaminated lenses (dust, oil, condensation), misalignment of sender and receiver units, loose mounting brackets that vibrate, or environmental factors (direct sunlight, steam, welding flash). Clean the lenses, check the alignment indicator LEDs, and verify the mounting is secure before considering replacement. Never bypass a safety device.',
   },
@@ -225,12 +225,12 @@ const quizQuestions = [
     question:
       'A motor control centre (MCC) has multiple starters sharing a common control supply transformer. If this transformer fails:',
     options: [
-      'Only one motor stops',
       'All motors fed from that control supply lose their control circuits — all contactors drop out simultaneously',
-      'The motors continue running normally',
-      'Only the lighting circuit is affected',
+      'The contact is open — voltage is present across it because no current is flowing through the load beyond it',
+      'The sensor is faulty, misadjusted, or detecting a metallic object that should not be in range',
+      'A fault in the emergency stop circuit (broken wire, relay failure) results in the system stopping — fail-safe design',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A common control supply transformer failure removes the control voltage from all starters it feeds. All contactor coils lose their supply, all contactors drop out, and all motors stop simultaneously. This is a single point of failure that should be considered in the design. Critical systems may use dual redundant control transformers or individual control transformers per starter.',
   },

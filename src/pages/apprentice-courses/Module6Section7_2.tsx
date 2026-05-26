@@ -29,10 +29,10 @@ const Module6Section7_2 = () => {
       id: 2,
       question: 'What type of work requires an EIC?',
       options: [
-        'Adding a single socket',
-        'Minor repairs',
+        'The ratio of true power to apparent power',
+        'Open plan offices over 60m² and sports halls',
         'New installations and major alterations',
-        'Testing only',
+        'Where cables penetrate fire-resistant construction',
       ],
       correctAnswer: 2,
       explanation:
@@ -41,8 +41,13 @@ const Module6Section7_2 = () => {
     {
       id: 3,
       question: 'Which certificate is used instead of an EIC for minor alterations?',
-      options: ['EICR', 'Minor Works Certificate', 'Test Certificate', 'Inspection Report'],
-      correctAnswer: 1,
+      options: [
+        'Test Certificate',
+        'EICR',
+        'Inspection Report',
+        'Minor Works Certificate',
+      ],
+      correctAnswer: 3,
       explanation:
         'Minor Works Certificates (MWC) are used for minor alterations like adding single sockets or lighting points.',
     },
@@ -50,12 +55,12 @@ const Module6Section7_2 = () => {
       id: 4,
       question: 'What key information is recorded on an EIC?',
       options: [
-        'Just test results',
         'Installation details, test results, and signatures',
-        'Only electrician details',
-        'Cost information',
+        'Dynamically assigning upstream time slots based on demand',
+        'Yes, it is within the 5% limit for final circuits',
+        'How many AC cycles happen per second',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'EICs record installation details, schedule of inspections and test results, and designer, installer, and tester signatures.',
     },
@@ -63,10 +68,10 @@ const Module6Section7_2 = () => {
       id: 5,
       question: 'Why must the EIC include signatures from the designer, installer, and tester?',
       options: [
-        'Legal requirement',
+        'Mechanical fasteners and plug-in connections',
         'To ensure accountability at every stage',
-        'For payment purposes',
-        'Building control requirement',
+        'The efficiency of time utilisation on the project',
+        'Meets European safety standards',
       ],
       correctAnswer: 1,
       explanation:
@@ -84,12 +89,12 @@ const Module6Section7_2 = () => {
       id: 7,
       question: 'Who is legally responsible for signing an EIC?',
       options: [
-        'Any electrician',
-        'The client',
+        'Issue corrected certificates',
+        'Warning of presence of more than one supply',
+        'Ignoring — making no effort to listen at all',
         'Only competent and qualified persons',
-        'Building control',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Only competent and qualified persons who carried out or supervised the work can legally sign an EIC.',
     },
@@ -97,12 +102,12 @@ const Module6Section7_2 = () => {
       id: 8,
       question: 'What risk does a client face if no EIC is issued for a new installation?',
       options: [
-        'Higher costs',
         'Non-compliance, insurance issues, and potential liability',
-        'Delayed completion',
-        'Building control complaints',
+        'Quick-install connector using mechanical clamping without epoxy',
+        'Difficulty concentrating, indecisiveness, and negative thinking patterns',
+        'Voltage monitoring and automatic switching to battery',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Without an EIC, work is non-compliant, insurers may deny coverage, and both client and electrician face potential liability.',
     },
@@ -110,10 +115,10 @@ const Module6Section7_2 = () => {
       id: 9,
       question: 'How does an EIC help future electricians?',
       options: [
-        'Provides pricing information',
+        'Predictive maintenance alerts based on system performance',
         'Shows original installation details and test baselines',
-        'Identifies the original contractor',
-        'Lists materials used',
+        'To guide occupants safely towards final exits during emergencies',
+        'Multiple variables and diagnostics over two wires',
       ],
       correctAnswer: 1,
       explanation:
@@ -124,12 +129,12 @@ const Module6Section7_2 = () => {
       question:
         "In the real-world example, why did the contractor's client face problems with insurance?",
       options: [
-        'Poor workmanship',
+        'Risk of electrocution or fire',
+        'To comply with regulations',
         'No EIC was issued to prove compliance',
-        'Late completion',
-        'Wrong certificate type',
+        'To avoid damage from high test voltages',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The contractor failed to issue an EIC, leaving no evidence of compliance for the insurance company to verify.',
     },

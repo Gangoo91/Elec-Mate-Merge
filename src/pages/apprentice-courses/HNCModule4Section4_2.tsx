@@ -32,8 +32,13 @@ const quickCheckQuestions = [
   {
     id: 'lumen-method',
     question: 'In the lumen method formula N = E×A / (Φ×UF×MF), what does N represent?',
-    options: ['Lumens required', 'Number of luminaires', 'Neutral factor', 'Nominal wattage'],
-    correctIndex: 1,
+    options: [
+      'Number of luminaires',
+      'Lumens required',
+      'Nominal wattage',
+      'Neutral factor',
+    ],
+    correctIndex: 0,
     explanation:
       'N represents the number of luminaires required to achieve the target illuminance. The formula calculates how many luminaires are needed based on the room area, target illuminance, lamp lumens, utilisation factor and maintenance factor.',
   },
@@ -41,12 +46,12 @@ const quickCheckQuestions = [
     id: 'room-index',
     question: 'What is the room index formula?',
     options: [
-      'K = L × W / (H × (L + W))',
+      'K = L × W × H',
       'K = (L + W) / (H × L × W)',
       'K = H × (L + W) / (L × W)',
-      'K = L × W × H',
+      'K = L × W / (H × (L + W))',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'The room index K = (L × W) / (Hm × (L + W)) where L = room length, W = room width, and Hm = mounting height above working plane. This ratio characterises room proportions for lighting calculations.',
   },
@@ -54,12 +59,12 @@ const quickCheckQuestions = [
     id: 'utilisation-factor',
     question: 'What two room properties most affect the utilisation factor?',
     options: [
-      'Length and width',
-      'Room index and surface reflectances',
       'Ceiling height and floor type',
       'Door positions and window area',
+      'Room index and surface reflectances',
+      'Length and width',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Utilisation factor depends primarily on room index (proportions) and surface reflectances (ceiling, walls, floor). These determine how much of the emitted light reaches the working plane versus being absorbed.',
   },
@@ -67,8 +72,13 @@ const quickCheckQuestions = [
     id: 'maintenance-factor',
     question:
       'A typical office installation has MF = 0.8. If initial illuminance is 625 lux, what is the maintained illuminance?',
-    options: ['781 lux', '625 lux', '500 lux', '400 lux'],
-    correctIndex: 2,
+    options: [
+      '500 lux',
+      '625 lux',
+      '781 lux',
+      '400 lux',
+    ],
+    correctIndex: 0,
     explanation:
       'Maintained illuminance = Initial illuminance × MF = 625 × 0.8 = 500 lux. The maintenance factor accounts for lamp depreciation and luminaire dirt accumulation over the maintenance period.',
   },
@@ -79,16 +89,26 @@ const quizQuestions = [
     id: 1,
     question:
       'What is the standard mounting height above the working plane (Hm) used in office lighting calculations?',
-    options: ['1.5m', '2.0m', '2.15m (2.8m ceiling - 0.65m desk)', '3.0m'],
-    correctAnswer: 2,
+    options: [
+      'Fabric loss + Ventilation loss',
+      '2.15m (2.8m ceiling - 0.65m desk)',
+      'Testing and commissioning',
+      'Capacitors and UPS systems',
+    ],
+    correctAnswer: 1,
     explanation:
       'For offices with 2.8m ceiling and 0.85m working plane, Hm = 2.8 - 0.85 = 1.95m (often rounded to 2.0m). However, the actual value depends on ceiling height and working plane height for the specific application.',
   },
   {
     id: 2,
     question: 'An office is 12m × 8m with 2m mounting height. What is the room index?',
-    options: ['0.8', '1.2', '2.0', '2.4'],
-    correctAnswer: 3,
+    options: [
+      '2.0',
+      '0.8',
+      '2.4',
+      '1.2',
+    ],
+    correctAnswer: 2,
     explanation:
       'Room index K = (L × W) / (Hm × (L + W)) = (12 × 8) / (2 × (12 + 8)) = 96 / 40 = 2.4',
   },
@@ -96,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: 'What happens to the utilisation factor as room index increases?',
     options: [
-      'It decreases significantly',
-      'It increases, then levels off',
       'It remains constant',
+      'It decreases significantly',
       'It decreases then increases',
+      'It increases, then levels off',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'As room index increases, UF increases but levels off at higher values. Large rooms (high K) are more efficient because less light is lost to walls. UF tables typically range from K = 0.75 to K = 5.0.',
   },
@@ -109,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which component is NOT part of the maintenance factor (MF) calculation?',
     options: [
-      'Lamp lumen depreciation (LLD)',
+      'Utilisation factor (UF)',
       'Luminaire dirt depreciation (LDD)',
       'Room surface depreciation (RSD)',
-      'Utilisation factor (UF)',
+      'Lamp lumen depreciation (LLD)',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'MF = LLD × LDD × RSDD. Utilisation factor (UF) is a separate factor in the lumen method formula. It relates to room geometry and reflectances, not maintenance over time.',
   },
@@ -122,8 +142,13 @@ const quizQuestions = [
     id: 5,
     question:
       'For a clean office environment with LED luminaires and 3-year maintenance cycle, what typical MF might be used?',
-    options: ['0.6', '0.7', '0.8', '0.9'],
-    correctAnswer: 2,
+    options: [
+      '0.7',
+      '0.8',
+      '0.9',
+      '0.6',
+    ],
+    correctAnswer: 1,
     explanation:
       'MF = 0.8 is typical for clean offices with LED sources. LEDs have good lumen maintenance (LLD ≈ 0.9), and clean environments have modest dirt accumulation (LDD ≈ 0.9). MF = 0.9 × 0.9 ≈ 0.8.',
   },
@@ -132,11 +157,11 @@ const quizQuestions = [
     question: 'What are standard room surface reflectances assumed in lighting calculations?',
     options: [
       'Ceiling 0.5, Walls 0.3, Floor 0.1',
-      'Ceiling 0.7, Walls 0.5, Floor 0.2',
       'Ceiling 0.9, Walls 0.7, Floor 0.4',
+      'Ceiling 0.7, Walls 0.5, Floor 0.2',
       'Ceiling 0.8, Walls 0.6, Floor 0.3',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Standard reflectances are: Ceiling 0.7 (70%), Walls 0.5 (50%), Floor 0.2 (20%). These represent typical light-coloured finishes and are used unless actual surface finishes are significantly different.',
   },
@@ -145,12 +170,12 @@ const quizQuestions = [
     question:
       "In DIALux software, what does 'point-by-point' calculation provide that the lumen method does not?",
     options: [
-      'Total lumen output',
-      'Energy consumption',
+      'At the furthest point from the distribution board',
+      'On the exterior facade or rooftop facing the sky',
+      'Breaking capacity ≥ Ipf at installation point',
       'Illuminance at specific grid points showing uniformity',
-      'Cable sizes',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Point-by-point calculation provides illuminance values at a grid of points across the room, enabling accurate uniformity assessment and identification of dark spots. The lumen method only provides average illuminance.',
   },
@@ -158,12 +183,12 @@ const quizQuestions = [
     id: 8,
     question: "What does the Flux Code on a luminaire's intensity distribution indicate?",
     options: [
-      'The total lumen output',
       'The proportion of light emitted in different directions',
-      'The power consumption',
-      'The colour temperature',
+      'Identifying whether the space meets the definition of a confined space',
+      'Revision number, approval status, and distribution list',
+      'The volume of air forcibly exhaled in the first one second',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Flux Code indicates the proportion of light emitted in zones: downward (0-40°), (40-60°), (60-90°) and upward. For example, 42/77/97/100/57 indicates percentages reaching each zone boundary.',
   },
@@ -172,12 +197,12 @@ const quizQuestions = [
     question:
       'A room requires 20 luminaires spaced on a 3m × 2m grid. What room dimensions would this suit?',
     options: [
-      '9m × 8m (4 × 5 grid)',
-      '12m × 8m (4 × 5 grid)',
-      '15m × 8m (5 × 4 grid)',
+      '0.90 or 0.85 (varies by supplier)',
       'Both B and C are possible arrangements',
+      'The Distribution Network Operator (DNO)',
+      'Learning user patterns and predictive automation',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       '20 luminaires could be arranged as 4 × 5 (12m × 10m at 3m × 2m spacing) or 5 × 4 (15m × 8m). The actual room dimensions and required spacing determine the best arrangement.',
   },
@@ -185,7 +210,12 @@ const quizQuestions = [
     id: 10,
     question:
       'What is the typical spacing-to-height ratio (SHR) for recessed LED panels in an office?',
-    options: ['0.5:1', '1.0:1', '1.2-1.5:1', '2.0:1'],
+    options: [
+      '0.5:1',
+      '1.0:1',
+      '1.2-1.5:1',
+      '2.0:1',
+    ],
     correctAnswer: 2,
     explanation:
       "SHR of 1.2-1.5:1 is typical for recessed LED panels. This provides good uniformity without excessive luminaire quantities. The specific ratio depends on the luminaire's light distribution.",

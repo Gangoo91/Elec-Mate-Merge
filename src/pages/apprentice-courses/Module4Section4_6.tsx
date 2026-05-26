@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the main reason for earthing metallic containment?',
     options: [
-      'To improve aesthetics',
       'To prevent corrosion',
       'To protect against electric shock',
       'To reduce installation cost',
+      'To improve aesthetics',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Earthing metallic containment protects against electric shock by providing a low-resistance path for fault current to operate protective devices quickly.',
   },
@@ -34,8 +34,13 @@ const quickCheckQuestions = [
   {
     id: 3,
     question: 'What tool is used to check continuity in metallic containment?',
-    options: ['Multimeter', 'Low-resistance ohmmeter', 'Insulation tester', 'Voltage indicator'],
-    correctIndex: 1,
+    options: [
+      'Voltage indicator',
+      'Insulation tester',
+      'Multimeter',
+      'Low-resistance ohmmeter',
+    ],
+    correctIndex: 3,
     explanation:
       'A low-resistance ohmmeter is specifically designed to measure the very low resistance values required for earth continuity testing.',
   },
@@ -47,11 +52,11 @@ const quizQuestions = [
     question: 'What is the main reason for earthing metallic containment?',
     options: [
       'To improve aesthetics',
-      'To prevent corrosion',
       'To protect against electric shock',
+      'To prevent corrosion',
       'To reduce installation cost',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Earthing metallic containment protects against electric shock by providing a low-resistance path for fault current to operate protective devices quickly.',
   },
@@ -67,20 +72,25 @@ const quizQuestions = [
     id: 3,
     question: 'Name two methods of maintaining electrical continuity.',
     options: [
-      'Earth straps and earth clamps',
-      'Cable ties and tape',
       'Screws and bolts',
+      'Cable ties and tape',
       'Paint and coating',
+      'Earth straps and earth clamps',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Earth straps, earth clamps, and internal earth links are proper methods for maintaining electrical continuity across joints and connections.',
   },
   {
     id: 4,
     question: 'What tool is used to check continuity?',
-    options: ['Multimeter', 'Low-resistance ohmmeter', 'Insulation tester', 'Voltage indicator'],
-    correctAnswer: 1,
+    options: [
+      'Low-resistance ohmmeter',
+      'Multimeter',
+      'Insulation tester',
+      'Voltage indicator',
+    ],
+    correctAnswer: 0,
     explanation:
       'A low-resistance ohmmeter is specifically designed to measure the very low resistance values required for earth continuity testing.',
   },
@@ -88,10 +98,10 @@ const quizQuestions = [
     id: 5,
     question: 'When should you fit a separate CPC alongside containment?',
     options: [
-      'Always for safety',
+      'Flow coefficient - gallons per minute at 1 psi pressure drop',
       'If containment is mechanically weak or has poor conductivity',
-      'Only for outdoor installations',
-      'When using steel containment',
+      'Individual temperature control for different areas',
+      'Check for danger and then check for a response',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,12 +111,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why should joint surfaces be cleaned before assembly?',
     options: [
-      'For appearance only',
+      'Prospective fault current function of EFLI/MFT',
+      'Loose terminals or poor connections',
       'To ensure good metal-to-metal contact',
-      'To prevent corrosion',
-      'To reduce installation time',
+      'Every 1.5-3 metres depending on load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cleaning joint surfaces removes paint, rust, and debris to ensure good metal-to-metal contact for electrical continuity.',
   },
@@ -114,20 +124,25 @@ const quizQuestions = [
     id: 7,
     question: 'What can happen if a painted surface interrupts continuity?',
     options: [
-      'Improved appearance',
-      'Better corrosion protection',
+      'Person with control of premises',
+      '3% of nominal voltage for lighting, 5% for other uses',
+      'BS EN 61537 and manufacturer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s instructions',
       'Increased resistance, breaking the CPC path',
-      'Reduced installation cost',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Paint acts as an insulator, increasing resistance and potentially breaking the earth continuity path, creating a safety hazard.',
   },
   {
     id: 8,
     question: 'Which regulation provides guidance on using containment as a CPC?',
-    options: ['BS 6423', 'BS 7671', 'BS 5839', 'BS 7909'],
-    correctAnswer: 1,
+    options: [
+      'BS 7671',
+      'BS 5839',
+      'BS 6423',
+      'BS 7909',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 7671 provides specific requirements and guidance for using metallic containment as a circuit protective conductor (CPC).',
   },

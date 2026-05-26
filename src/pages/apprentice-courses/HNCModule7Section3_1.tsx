@@ -26,8 +26,13 @@ const quickCheckQuestions = [
   {
     id: 'luminous-flux',
     question: 'What is the SI unit of luminous flux?',
-    options: ['Candela (cd)', 'Lux (lx)', 'Lumen (lm)', 'Watt (W)'],
-    correctIndex: 2,
+    options: [
+      'Watt (W)',
+      'Lumen (lm)',
+      'Lux (lx)',
+      'Candela (cd)',
+    ],
+    correctIndex: 1,
     explanation:
       'Luminous flux is measured in lumens (lm). It represents the total quantity of visible light emitted by a source in all directions, weighted according to human eye sensitivity.',
   },
@@ -35,19 +40,24 @@ const quickCheckQuestions = [
     id: 'illuminance-definition',
     question: 'Illuminance is defined as:',
     options: [
-      'Light emitted per unit solid angle',
       'Luminous flux incident per unit area',
-      'Light reflected from a surface',
       'Power consumed per lumen output',
+      'Light emitted per unit solid angle',
+      'Light reflected from a surface',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Illuminance (E) is the luminous flux incident on a surface per unit area, measured in lux (lx). One lux equals one lumen per square metre (lm/m²).',
   },
   {
     id: 'colour-temperature',
     question: 'A light source with a correlated colour temperature (CCT) of 2700K would appear:',
-    options: ['Cool white/bluish', 'Neutral white', 'Warm white/yellowish', 'Daylight'],
+    options: [
+      'Cool white/bluish',
+      'Neutral white',
+      'Warm white/yellowish',
+      'Daylight',
+    ],
     correctIndex: 2,
     explanation:
       'Lower colour temperatures (2700-3000K) produce warm white light with a yellowish appearance. Higher temperatures (5000-6500K) produce cool white to daylight appearance.',
@@ -57,11 +67,11 @@ const quickCheckQuestions = [
     question: 'A CRI (Ra) value of 95 indicates:',
     options: [
       'High luminous efficacy',
-      'Poor colour rendering',
       'Excellent colour rendering',
+      'Poor colour rendering',
       'High colour temperature',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'CRI (Colour Rendering Index) ranges from 0-100, with higher values indicating better colour rendering. Ra &gt; 90 is considered excellent, accurately revealing object colours compared to natural light.',
   },
@@ -86,10 +96,10 @@ const quizQuestions = [
     id: 2,
     question: 'What is the relationship between illuminance and distance from a point source?',
     options: [
-      'Directly proportional',
-      'Inversely proportional',
+      'Passive LC filters tuned to harmonic frequencies',
+      'Isolated system with no intentional connection to earth',
       'Inversely proportional to the square of distance',
-      'No relationship',
+      'Upstream devices to wait for downstream to clear faults',
     ],
     correctAnswer: 2,
     explanation:
@@ -99,8 +109,13 @@ const quizQuestions = [
     id: 3,
     question:
       'An LED luminaire consumes 40W and produces 4,400 lumens. What is its luminous efficacy?',
-    options: ['0.009 lm/W', '40 lm/W', '110 lm/W', '4,400 lm/W'],
-    correctAnswer: 2,
+    options: [
+      '40 lm/W',
+      '0.009 lm/W',
+      '4,400 lm/W',
+      '110 lm/W',
+    ],
+    correctAnswer: 3,
     explanation:
       'Luminous efficacy = luminous flux ÷ power = 4,400 lm ÷ 40 W = 110 lm/W. This is typical for modern LED luminaires and significantly higher than traditional incandescent lamps (~15 lm/W).',
   },
@@ -108,12 +123,12 @@ const quizQuestions = [
     id: 4,
     question: 'Luminance differs from illuminance in that luminance:',
     options: [
-      'Is measured in lumens',
       'Describes how bright a surface appears to an observer',
-      'Only applies to point sources',
-      'Is independent of surface reflectance',
+      'Colours of ideal black body radiators at different temperatures',
+      'A unit of solid angle in three-dimensional space',
+      'Inversely proportional to the square of distance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Luminance (cd/m²) describes the brightness of a surface as perceived by an observer. It depends on both the illuminance falling on the surface and the surface's reflective properties.",
   },
@@ -122,12 +137,12 @@ const quizQuestions = [
     question:
       'Which colour temperature would be most appropriate for a hospital operating theatre?',
     options: [
-      '2700K (warm white)',
       '3000K (warm white)',
-      '4000K (neutral white)',
       '5000K or higher (daylight)',
+      '2700K (warm white)',
+      '4000K (neutral white)',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'Operating theatres require high CCT (5000K+) for accurate tissue colour discrimination during surgery. This daylight-equivalent light ensures surgeons can clearly distinguish between tissue types.',
   },
@@ -135,7 +150,12 @@ const quizQuestions = [
     id: 6,
     question:
       "The luminous efficacy of a theoretical 'perfect' light source producing only light at 555nm would be:",
-    options: ['100 lm/W', '250 lm/W', '683 lm/W', '1000 lm/W'],
+    options: [
+      '100 lm/W',
+      '250 lm/W',
+      '683 lm/W',
+      '1000 lm/W',
+    ],
     correctAnswer: 2,
     explanation:
       'The maximum theoretical luminous efficacy is 683 lm/W, achieved at 555nm (green-yellow) where the human eye is most sensitive. Real sources are always lower due to spectral distribution.',
@@ -144,7 +164,12 @@ const quizQuestions = [
     id: 7,
     question:
       'For retail applications displaying fresh food, which CRI value would be considered acceptable?',
-    options: ['Ra &gt; 60', 'Ra &gt; 70', 'Ra &gt; 80', 'Ra &gt; 90'],
+    options: [
+      'Ra &gt; 60',
+      'Ra &gt; 70',
+      'Ra &gt; 80',
+      'Ra &gt; 90',
+    ],
     correctAnswer: 3,
     explanation:
       'Retail food displays typically require Ra &gt; 90 for accurate colour rendering, ensuring meat appears red, vegetables appear vibrant, and customers perceive food as fresh and appetising.',
@@ -153,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is a steradian?',
     options: [
-      'A unit of luminous flux',
       'A unit of solid angle in three-dimensional space',
-      'A unit of colour temperature',
-      'A type of light source',
+      'Different wavelengths travelling at different speeds',
+      'Not wearing safety glasses while cutting or drilling',
+      'Behaviour = Motivation, Ability, Prompt',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A steradian (sr) is the SI unit of solid angle in 3D space. A sphere contains 4π steradians. Luminous intensity uses steradians: 1 cd = 1 lm/sr.',
   },
@@ -166,8 +191,13 @@ const quizQuestions = [
     id: 9,
     question:
       'If a surface receives 500 lux of illuminance and has a reflectance of 0.8, what is the exitance?',
-    options: ['400 lm/m²', '500 lm/m²', '625 lm/m²', '4000 lm/m²'],
-    correctAnswer: 0,
+    options: [
+      '500 lm/m²',
+      '400 lm/m²',
+      '625 lm/m²',
+      '4000 lm/m²',
+    ],
+    correctAnswer: 1,
     explanation:
       'Exitance (M) is the luminous flux leaving a surface per unit area. M = E × ρ = 500 lx × 0.8 = 400 lm/m². The remaining 100 lm/m² is absorbed by the surface.',
   },
@@ -176,19 +206,24 @@ const quizQuestions = [
     question: 'The R9 value in extended CRI metrics specifically measures:',
     options: [
       'Overall colour rendering',
+      'Skin tone rendering',
       'Red colour rendering',
       'Green colour rendering',
-      'Skin tone rendering',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'R9 specifically measures the rendering of saturated red colours. Standard Ra averages R1-R8 only. R9 is critical for applications like retail, healthcare, and anywhere red discrimination matters.',
   },
   {
     id: 11,
     question: 'What luminous efficacy would you expect from a modern T5 fluorescent lamp?',
-    options: ['10-20 lm/W', '40-60 lm/W', '90-105 lm/W', '150-200 lm/W'],
-    correctAnswer: 2,
+    options: [
+      '10-20 lm/W',
+      '40-60 lm/W',
+      '150-200 lm/W',
+      '90-105 lm/W',
+    ],
+    correctAnswer: 3,
     explanation:
       'Modern T5 fluorescent lamps achieve approximately 90-105 lm/W. This is higher than older T8/T12 tubes but now surpassed by LED technology which can exceed 150 lm/W.',
   },
@@ -196,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'In the CIE 1931 chromaticity diagram, the Planckian locus represents:',
     options: [
-      'All visible colours',
       'Colours of ideal black body radiators at different temperatures',
-      'Saturated spectral colours',
-      'Standard illuminant positions',
+      'A unit of solid angle in three-dimensional space',
+      'Describes how bright a surface appears to an observer',
+      'Inversely proportional to the square of distance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Planckian locus traces the chromaticity coordinates of an ideal black body radiator as its temperature increases. It forms the basis for defining colour temperature of light sources.',
   },

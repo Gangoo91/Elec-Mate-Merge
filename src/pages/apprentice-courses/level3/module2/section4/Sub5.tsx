@@ -41,12 +41,12 @@ const checks = [
     question:
       "An electrician has fitted underfloor heating on a domestic kitchen extension. They have used a 100 mA RCD on the supply because there is a long cable run with potential standing leakage. Section 753 — accept or reject?",
     options: [
-      "Accept — 100 mA is fine for any heating circuit.",
       "Reject. All underfloor heating installations shall have additional protection by an RCD rated at 30 mA. Section 753 also requires that where a resistive fault may cause a fire (for example for overhead heating with heating film elements) the rated residual operating current shall not exceed 30 mA. The 100 mA RCD does not meet either requirement. The installer needs to fit a 30 mA RCD and address the standing leakage at source — typically by sectioning the heating into shorter zones or selecting Class II construction with the relevant Section 753 protective measure.",
-      "Accept if the RCD is Type B.",
-      "Accept if the heating is over 5 kW.",
+      "Header (your business name, address, VAT number if registered, contact details), customer details (name, address), invoice number (sequential), invoice date and payment due date, work description (line items: labour days/hours, materials line items, any extras), subtotal, VAT (if applicable, 20%), total, payment terms (e.g. 'Net 30'), payment methods (BACS details, cheque). Invoices over £250 must include a statement of how to complain (Consumer Rights Act 2015 for domestic).",
+      "Site rules, welfare arrangements, fire muster point, first-aid arrangements, accident and near-miss reporting routes, the Construction Phase Plan headlines, the specific hazards on this site, the PPE policy, the no-go areas, your duties as a worker under Reg 15, and any project-specific risks (asbestos survey results, live services, traffic management). The induction is the formal mechanism for transferring CDM information from the Principal Contractor to operatives joining the site.",
+      "No. Socket testers are first-pass verification only. They confirm basic polarity and earth presence (L-N-E in the correct positions) but they do NOT detect borrowed neutrals, reversed polarity at the supply, undersized or shared earths, high-impedance earths, or RCD failure. A socket tester showing 'wiring correct' is a starting point — the full verification needs an MFT for R1+R2, IR, Zs, RCD operating time, and polarity at every accessory.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Section 753 is explicit on RCD ratings for electrical heating. The 30 mA limit is a fire-prevention requirement for resistive faults in heating elements, not just the conventional shock-protection limit. Standing leakage on long heating runs is a real installation challenge, but the answer is to design around it (sectioning, lower-leakage heating mat, Class II construction with appropriate Section 753 routes) rather than to relax the RCD rating. The acceptance rules are direct — 30 mA for underfloor heating, 30 mA where resistive faults could cause fire.",
   },
@@ -55,12 +55,12 @@ const checks = [
     question:
       "Section 753 requires the maximum temperature of a heated floor to be limited where contact by skin or footwear is possible. What temperature limit applies and how is it achieved?",
     options: [
-      "60 degrees Celsius limited by the customer turning the thermostat down.",
+      "Section 722 of BS 7671 (Electric vehicle charging installations) is the regulation anchor. It applies in addition to the rest of BS 7671 and covers the supply, the charging point, the protective measures (especially the PEN-fault and additional protection requirements), the cable rating and the means of isolation. A4:2026 has refined Section 722 alongside the broader updates around TN-C-S systems (now PNB) and AFDD requirements.",
+      "Decline. Most firms have a drug-and-alcohol policy that prohibits consumption during working hours, including any time you're still in uniform, on customer premises or driving the van. Even if the working day is officially over, you're still representing the firm and you may have to drive. The policy protects the customer (no impaired work), the firm (no insurance issues, no reputational damage) and you (no DR10 driving conviction).",
       "Where floor or ceiling heating units are installed, at least one of the measures listed in 753.424.201(a) to (c) shall be implemented to ensure the maximum temperature does not exceed 80 degrees Celsius. The measures include thermostatic limitation, embedded sensor temperature cut-out, or design-time limitation through the heating element's intrinsic characteristics. Reg 753.423 requires this where contact with skin or footwear is possible — the obligation is not limited to barefoot contact.",
-      "100 degrees Celsius regardless of contact.",
-      "There is no temperature limit in Section 753.",
+      "All batteries store DC. The difference is where the conversion happens. In DC-coupled, the PV array, the battery and the inverter share a common DC bus inside a hybrid inverter; PV energy charges the battery directly with one DC-DC conversion (high efficiency). In AC-coupled, the PV inverter is independent and converts PV DC to AC; a separate battery inverter then converts AC back to DC to charge, and DC back to AC to discharge — two extra conversions, lower round-trip efficiency, but easier to retrofit because the existing PV install stays untouched.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Section 753 sets a hard 80 degrees Celsius limit on floor and ceiling heated surfaces where contact is possible, with at least one of the three permitted measures actively implemented. The acceptance rules are explicit — the 80 degrees Celsius cap is mandatory where heating units are installed, and skin or footwear contact triggers Reg 753.423. The customer turning the thermostat down is not an acceptance route — the limit must be designed into the install.",
   },
@@ -69,12 +69,12 @@ const checks = [
     question:
       "An apprentice electrician on a heat pump install is asked to top up the refrigerant on the unit's external pipework because the manufacturer commissioning report shows a slight charge loss. The apprentice holds an L3 electrical qualification but no F-Gas certification. Should they do the refrigerant work?",
     options: [
-      "Yes — refrigerant work is just plumbing.",
+      "Operative pre-use visual every shift — check the cutting edges aren't chipped or rolled, the pivot is tight, the handle insulation is intact (especially on VDE-rated drivers — any cracked or chipped insulation = take out of service). Periodic competent-person inspection — annually typical. No 'PAT' equivalent for non-powered hand tools, but the visual regime is just as important. PUWER applies to ALL work equipment, not just powered.",
+      "Compliance with the Building Regulations 2010 — specifically Approved Document P (Electrical Safety — Dwellings) which references BS 7671. The inspector is checking that the work was carried out by a competent person (or has been inspected and certified by a third party) and that it complies with BS 7671. They'll also check related Approved Documents (B for fire, M for accessibility, L for energy where relevant).",
       "No. The F-Gas Regulations require any work on a sealed refrigerant circuit (charging, recovery, leak testing, brazing into the circuit) to be carried out by an F-Gas-certified person. Refrigerant work also requires the company holding the refrigerant to hold a company F-Gas certificate. The L3 electrical scope is the supply, isolation, controls, smart integration and external bonding. The trade boundary is firm — the electrician calls in an F-Gas-certified engineer for any refrigerant work, and the warranty on the heat pump remains valid.",
-      "Yes — but only if the customer signs a waiver.",
-      "Yes — under any UK qualification.",
+      "Because PV arrays are unique — you cannot switch them off. As long as light hits the panels, the array generates DC voltage at the inverter terminals. The DC isolator gives the installer (and emergency responders) a means of breaking that DC circuit before working on the inverter or the strings. AC isolators downstream of the inverter only break the inverter-to-grid path; they do not de-energise the DC side. A4:2026 has refined the DC isolation requirements alongside the broader Section 712 update — typically the isolator is sited adjacent to the inverter on the DC entry side, accessible without disturbing the panel array.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The F-Gas Regulations (the EU regulation retained in UK law plus the UK Fluorinated Greenhouse Gases Regulations 2015) place strict competence requirements on anyone handling refrigerants. The reasoning is environmental (refrigerants are potent greenhouse gases — R-410A has GWP around 2088, R-32 around 675) and safety (refrigerant-circuit work involves pressurised fluids and brazing into pressure systems). The L3 electrician on a heat pump install does the electrical work and the F-Gas-certified engineer does the refrigerant work. Crossing the boundary breaches the regulations and voids the warranty. R-290 (propane) heat pumps add ATEX and flammable-refrigerant handling rules on top.",
   },
@@ -86,10 +86,10 @@ const quizQuestions = [
     question:
       "What is the scope of BS 7671:2018+A4:2026 Section 753, and what kinds of heating system fall within it?",
     options: [
-      "Only underfloor heating in new build.",
+      "Give as much advance notice as possible of the day's plan, the week's plan and any expected changes. Provide written or visual schedules where possible. When changes are unavoidable, explain the reason calmly and give the apprentice a moment to adjust. Provide clear, unambiguous instructions ('start at the kitchen, do the back-boxes first, the cable will be in the loft'). Avoid unwritten rules and 'common sense' assumptions. Many autistic workers thrive on predictability and clear structure — giving that structure costs nothing and improves performance.",
       "Section 753 covers heating cables and embedded electric heating systems — including underfloor heating, ceiling heating, wall heating, surface heating, trace heating, and the supply-side electrical work for heat pumps where the heating element forms part of the system. Provisions cover protection against electric shock (ADS, additional RCD protection at 30 mA for various configurations), surface temperature limitation (753.423 / 753.424.201 — 80 degrees Celsius cap), heating-free areas (753.522), heat-resistant cabling (753.522.1.3), and equipotential bonding interactions in special locations (702.55 floor heating in pool areas).",
-      "Only ceiling heating in commercial premises.",
-      "Only trace heating on industrial pipework.",
+      "Continuity reads OPEN (∞ Ω) on the affected conductor; IR reads infinity (no leakage path); EFLI reads OPEN (the loop is broken). The load doesn't operate (no current path). Customer symptom: 'the socket / light / appliance has stopped working'. Causes: broken conductor (cut, snapped at termination), failed terminal screw (loosened to no contact), failed component (broken switch, blown fuse, failed contactor). The classic L1 / L2 'why isn't this working?' fault — straightforward to diagnose, usually a localised termination or component issue.",
+      "Mode 3 is AC charging through a dedicated charger that controls and protects the charging session — typical domestic 7 kW units (single-phase) or 22 kW units (three-phase). The vehicle's onboard charger converts AC to DC for the battery. Mode 4 is DC fast charging — the off-vehicle equipment (typically 50-350 kW public rapid chargers) outputs DC directly to the battery, bypassing the vehicle's onboard charger. Domestic installations are essentially always Mode 3. BS 7671 Section 722 (significantly amended in A4:2026) governs the electrical installation requirements.",
     ],
     correctAnswer: 1,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     question:
       "What does Section 753 require for additional RCD protection on circuits supplying heating units?",
     options: [
-      "300 mA RCD on every circuit.",
+      "Setup: MFT in EFLI / Loop mode (typically position '4' on Megger MFT1741+). Test leads to L and CPC at the test point (typically a socket, an accessory, or the DB output). Safety: this is a LIVE test — circuit must be energised, RCD-protected (MFT injects a low-current test pulse that doesn't trip the RCD on most tests, but use the 'Hi' or 'no-trip' mode for verification on RCD-protected circuits). Press TEST. The MFT measures the current that flows during the brief test pulse and calculates Zs. Reading appears in 1–3 seconds. Compare to BS 7671 Appendix 3 / Table 41.3 maximum for the protective device.",
+      "(1) The site / customer's existing risk-assessment and method statement — what the principal contractor has identified as on-site hazards. (2) Your firm's task RAMS — the document specific to fault diagnosis at this premises, which you may need to produce or update on arrival. (3) A permit-to-work or equivalent authorisation — for commercial / industrial sites only, signed by the authorised manager, defining what you're allowed to do. Without these three you don't have a defensible position if something goes wrong, and the customer's safety policy will record you as an unauthorised worker.",
       "Circuits supplying heating units shall have additional protection by the use of RCDs in accordance with the characteristics specified in Regulation 415.1.1. Where a resistive fault may cause a fire, for example for overhead heating with heating film elements, the rated residual operating current shall not exceed 30 mA. All underfloor heating installations shall have additional protection by an RCD rated at 30 mA irrespective of location. In areas where occupants are not expected to be completely wet, a circuit supplying heating equipment of Class II construction (or equivalent insulation) shall be provided with additional protection by the use of an RCD with a rated residual operating current not exceeding 30 mA.",
-      "30 mA RCD only on circuits over 16 A.",
-      "No RCD requirement for embedded heating.",
+      "External label identifying the property as having a PV system (typically near the meter and at the main isolator); internal labels at the AC isolator (identifying it as the PV AC isolator, not a generic isolator), at the DC isolator (warning that the array remains energised in light), at the inverter (warning of dual supply), and on the consumer unit (identifying the PV final circuit). The labelling is for the customer (so they know what their isolators do), the next electrician (so they understand the install years later), and the fire-fighter (so they know the building has PV before forcing entry). Section 514 of BS 7671 covers identification; Section 712 and the IET CoP add PV-specific requirements.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The Section 753 RCD regime is layered. The base requirement is additional RCD protection per Reg 415.1.1. The fire-prevention overlay drops the rated residual operating current to at most 30 mA where a resistive fault could cause fire (for example overhead heating with heating film). The underfloor heating overlay applies a blanket 30 mA limit across all underfloor heating installations. Class II construction circuits in not-completely-wet areas also get the 30 mA limit. Section 753 captures all four rules.",
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     question:
       "What does Section 753 require for the maximum surface temperature of heated floors and ceilings, and how is the requirement evidenced?",
     options: [
-      "There is no temperature limit.",
+      "When you need to see the SHAPE of the voltage / current waveform over time — not just its RMS value. Typical L3 use cases: (1) Diagnosing harmonic distortion on a circuit where TRMS multimeter readings look fine but the load is mis-behaving. (2) Spotting voltage transients (spikes, sags, swells) that are too brief for a multimeter to capture but trip protective devices. (3) Diagnosing intermittent faults that show up as glitches. (4) Verifying VFD output waveforms. Modern handheld scopes (Fluke 125B, Megger Power Quality analysers, Hantek HT06) are battery-powered and field-usable. L3 apprentices don't usually own one but should know when to ask for one.",
+      "Two-way wiring uses two STRAPPER cables between the switches plus a COMMON to the lamp. If one strapper is broken or wrongly terminated, one switch becomes inoperative. Diagnostic: isolate, prove dead, remove both switch fronts. Use the MFT continuity tester on the strapper conductors between the two boxes — both should read low resistance (near zero ohms for a typical 1.0 mm&sup2; lighting cable run); if one is open, that's the fault. Inspect the terminations at both ends — most common cause is a loose terminal at one of the switches. CORRECTION: re-terminate; verify both switches now operate the light from any combination of positions. Re-energise; functional test (switch on at top, off at bottom; switch off at top, on at bottom).",
+      "Old radiators were sized for 70-80°C flow temperature from a gas boiler. To deliver the same heat output at lower flow temperature, the radiators need to be larger. If you ask a heat pump to drive undersized old radiators at 70-80°C flow, the temperature lift is much bigger than at 35-40°C flow — so the COP drops sharply. SCOP reflects the actual flow temperature the system runs at across the heating season. Properly designed heat-pump retrofits include a radiator survey and upsize plan, or convert to underfloor where possible.",
       "Where floor or ceiling heating units are installed, at least one of the measures listed in 753.424.201(a) to (c) shall be implemented to ensure the maximum temperature does not exceed 80 degrees Celsius. Reg 753.423 applies the surface temperature limit where contact with skin or footwear is possible — the obligation broadens application to include footwear contact, not only barefoot. Acceptance is by the documented presence of one of the three measures (thermostatic limit, embedded sensor cut-out, intrinsic element limitation) and by the commissioning record showing the installed cut-out responds at or below the design temperature.",
-      "120 degrees Celsius is the limit.",
-      "The customer chooses the limit.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The 80 degrees Celsius cap is set by Reg 753.424.201 with at least one of the three measures actively implemented. Reg 753.423 widens the contact trigger from barefoot to include footwear contact — the regulator recognised that a heated floor at 90 degrees can burn through a thin shoe sole. The acceptance rules are explicit on both points.",
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     question:
       "Why does the L3 electrician's scope on a heat pump install stop at the refrigerant circuit, and what regulation enforces the boundary?",
     options: [
-      "It does not stop — electricians can do refrigerant work.",
       "The F-Gas Regulations (the EU Fluorinated Greenhouse Gases Regulation retained in UK law plus the UK Fluorinated Greenhouse Gases Regulations 2015) require any work on a sealed refrigerant circuit (charging, recovery, leak testing, brazing into the circuit) to be carried out by an F-Gas-certified person. Companies handling F-Gas refrigerants must hold a company F-Gas certificate. The L3 electrician's scope is the electrical supply, isolation, controls, smart integration and external bonding. The trade boundary is firm — the electrician calls in an F-Gas-certified engineer for any refrigerant work.",
-      "The Building Regs forbid electricians from working on heating systems.",
-      "MCS rules restrict electricians to lighting work.",
+      "AFDDs, RCBOs, RCCBs and SPDs all have internal electronic components that can present low resistance during a 500 V IR test, potentially skewing results or causing unacceptable current flow during testing. GN3 explicitly identifies these device categories. The standard practice is to either disconnect the device for the IR test (re-test after re-fitting), use 250 V if the device can\\\\'t tolerate 500 V (check manufacturer manual), or apply IR test only to the wiring (not through the device) by isolating at the load terminals.",
+      "Because under the Environmental Permitting Regulations and the Waste (England and Wales) Regulations any business that transports waste it has produced from a customer site to a disposal point is carrying controlled waste and requires a waste carrier registration. Lower-tier registration (for businesses carrying only their own waste) is free and renewable; upper-tier (for businesses carrying other parties waste, or carrying construction and demolition waste from third parties) carries a fee. Failure to register is a criminal offence.",
+      "Three steps. (1) MINIMISE the damage during the work — score around the tile carefully; remove only the affected tile(s); save them for re-fit if intact. (2) MAKE SAFE the tile area — no exposed substrate, no sharp edges, no water-ingress path. (3) BRIEF THE CUSTOMER — explain what tiles were affected; recommend a tiler for re-fit (referrals are good business); document the damage on the job sheet. The electrician doesn't normally re-tile (specialist trade with tile-cutting tools, adhesives, grout) but is responsible for minimising damage AND informing the customer.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The F-Gas Regulations are environmental safety legislation — refrigerants are potent greenhouse gases (R-410A GWP around 2088, R-32 around 675) and uncontrolled release contributes substantially to climate impact. F-Gas certification ensures the engineer working the circuit knows how to recover, charge and leak-test without releasing refrigerant. Crossing the boundary breaches the regulations and voids the equipment warranty. R-290 (propane) heat pumps add ATEX and flammable-refrigerant handling rules. The L3 electrician's scope on a heat pump install is the electrical side, full stop.",
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     question:
       "What does MCS MIS 3005 govern in the context of heat pump installation in the UK?",
     options: [
-      "It governs the colour of the outdoor unit casing.",
+      "kWp (kilowatt-peak) is the array's nameplate output under Standard Test Conditions (1000 W/m² irradiance, 25°C cell temperature, AM 1.5 spectrum). It's a laboratory rating, not a real-world output. Annual yield in the UK is normally quoted as kWh per kWp per year — typically 800-1100 depending on roof orientation, pitch and shading. So a 4 kWp array on a south-facing roof in southern England might deliver 4 × 1000 = 4000 kWh per year; the same array on a north-facing roof might deliver 4 × 600 = 2400 kWh. The kWp tells you the size; the kWh per kWp tells you the real-world.",
       "MCS MIS 3005 is the Microgeneration Certification Scheme installer standard for heat pump systems — covering air-source, ground-source and water-source heat pumps. It sets competence requirements for the installing firm (design competence, installation competence, commissioning competence), defines the heat-loss calculation methodology, sets the SCOP estimation requirement, and defines the customer documentation pack. MCS MIS 3005 sits alongside BS 7671 (electrical install standard) and the F-Gas Regulations (refrigerant competence). The customer needs the MCS certificate to access the Boiler Upgrade Scheme grant and the heat pump SEG-equivalent payment routes.",
-      "It governs heat pumps over 100 kW only.",
-      "It is a voluntary marketing scheme with no funding link.",
+      "G98 fast-track applies to fully-type-tested generators with output up to and including 16 A per phase per inverter — that's 16 A × 230 V = 3.68 kW single-phase per inverter. G99 pre-application applies above 16 A per phase, and to all generators (regardless of size) at sites where pre-existing G98 or G99 generators already exist. Most domestic 4 kW PV inverters are deliberately limited to 3.68 kW max output to stay G98-eligible. Anything above triggers G99 with associated DNO assessment timeline (weeks to months depending on local network).",
+      "Three readings in combination. (1) R1+R2 higher than calculated expected (a 50 m run of 2.5 mm² ring should give R1+R2 of 0.5 Ω; if it reads 1.4 Ω something is adding resistance). (2) EFLI Zs higher than expected for the same reason. (3) Voltage drop on full load greater than calculated — an in-service measurement with a clamp meter showing &gt;5% volt drop confirms IR² heating at a high-resistance joint. The thermal camera (Sub 2.3) then locates the joint by its heat signature. Diagnostic combination: high R1+R2 + high Zs + thermal hotspot = HRJ at the hotspot location.",
     ],
     correctAnswer: 1,
     explanation:
@@ -156,12 +156,12 @@ const quizQuestions = [
     question:
       "What does Section 753 require for cold leads and control leads installed in the zone of heated surfaces?",
     options: [
-      "No special requirement — standard cable is fine.",
+      "Every employee must (a) take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions at work, and (b) co-operate with the employer or any other person in the discharge of any duty placed on the employer or that other person under the relevant statutory provisions. 'Following orders' is not a defence — the personal duty stays with the employee regardless of what they were told to do.",
+      "Accessible WC cubicle with: door switch reachable from wheelchair, light switch within reach, mirror at appropriate height, occupancy indicator, emergency pull-cord (red, reaching the floor, with a visible-from-corridor strobe and audible alarm at reception), and slow-acting timer on lights to avoid trapping users in darkness.",
       "Reg 753.522.1.3 requires that for cold leads (circuit wiring) and control leads installed in the zone of heated surfaces, the increase of ambient temperature shall be taken into account. This means conductor current-carrying capacity, derating, insulation temperature ratings and routing shall be adjusted to reflect the higher ambient temperature where the lead is installed in the heated surface zone.",
-      "Aluminium cable only.",
-      "Cables must be removed before commissioning.",
+      "Electricity at Work Regulations 1989 (EAWR), Statutory Instrument 1989/635. EAWR applies to ALL work activities involving electricity, in nearly all workplaces. It covers design, construction, operation and maintenance of electrical systems, and the competence of those carrying out the work. Reg 14 (live working) and Reg 16 (competence) are the two an apprentice meets first.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Reg 753.522.1.3 closes a real-world failure mode — cold-lead cables and control wiring run within the heated zone of the floor or ceiling experience higher ambient temperature than the rest of the install, and standard 70 degrees Celsius cable can degrade prematurely. The fix is in design — derate the cable, select higher-temperature insulation, and route the lead to minimise time in the heated zone. The acceptance rule is direct — the increased ambient must be taken into account.",
   },
@@ -170,12 +170,12 @@ const quizQuestions = [
     question:
       "What is the role of Building Regulations Part L in the heat pump install regulatory chain, and how does it interact with MCS?",
     options: [
-      "Part L is irrelevant to heat pumps.",
+      "BS 7671 Section 712 (extensively revised in A4:2026) requires specific signage at the consumer unit (presence of PV generator), at the meter (alternative supply source), at the inverter (DC and AC isolation points) and at any external DC isolators. The EICR inspector verifies presence and legibility of each sign; missing or illegible signage is recorded as an observation (typically C3 — improvement recommended — unless the absence creates an immediate safety risk for maintainers, in which case C2). The Code Breakers schedule and the EICR Best Practice Guide give the typical coding choice. Inspector recommendations should call for the missing signage to be reinstated.",
+      "OZEV requires installations to comply with the Electric Vehicles (Smart Charge Points) Regulations 2021 and to be installed by an OZEV-authorised installer. Periodic inspection follows the BS 7671 framework — typically 5-yearly EICR for domestic, plus EV-specific tests including RCD operation (Type B or RDC-DD), open-PEN protection function (where the charger has built-in open-PEN), and Zs at the charge point. Landlord properties additionally subject to the Electrical Safety Standards Regulations 2020 (5-year EICR plus change of tenancy).",
+      "Run the customer through: how the system operates (continuous low-temperature heating, not on-off cycles like a gas boiler); how to set the room thermostat (set and forget at desired temperature, modest setbacks only); how to use the hot water schedule (typically once or twice a day); when to expect higher running costs (cold spells push up consumption); what the smart controls do; what the warning lights / app notifications mean; who to call for support (warranty contact, manufacturer support, installer aftercare); annual service requirement. Five-to-ten minutes that prevents months of customer confusion.",
       "Building Regulations Part L (Conservation of Fuel and Power) applies to new build, extensions and major renovations. Heat pump installs in those contexts must demonstrate compliance with the relevant Part L primary energy and carbon emissions targets, typically through SAP (Standard Assessment Procedure) for dwellings. The Future Homes Standard expected to bring fossil-fuel boilers off new-build from 2025 elevates heat pumps to the default route for new-build. MCS MIS 3005 sits alongside Part L — MCS proves the installer is competent, Part L sets the building energy targets, and the SAP calculation that informs Part L compliance uses MCS-style heat-loss and SCOP methodology.",
-      "Part L only applies to commercial property.",
-      "Part L exempts heat pump installs from any energy reporting.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Part L is the building energy efficiency arm of the Building Regulations and it is the construction-side enforcement mechanism for the Climate Change Act 2008 net-zero target. Heat pumps are increasingly the default heating route for compliant new-build because they push the SAP carbon and primary energy numbers in the right direction. MCS provides the competence layer the SAP calculation depends on. Local Authority Building Control covers the notification chain — Part L compliance evidence goes via the registered Competent Persons Scheme or directly to Building Control depending on the route.",
   },
@@ -184,12 +184,12 @@ const quizQuestions = [
     question:
       "An apprentice on a Section 753 install proposes to omit the embedded mesh metal grid required by Reg 753.411.3.2 because the heating unit is Class II. Is this acceptable?",
     options: [
-      "Yes — Class II equipment is exempt from all bonding requirements.",
       "Conditionally yes — but only after the installer verifies and documents that the heating unit complies with Regulation 412.2.1.1 (Class II equipment type-tested and marked). Only when compliance with 412.2.1.1 is demonstrated may the mesh specified in Reg 753.411.3.2 be omitted. Verbal assurance is not acceptance — the documentary evidence of 412.2.1.1 conformity must be in the install file.",
-      "No — Class II is never enough.",
-      "Yes — Class II equipment is always exempt without checks.",
+      "Safeguarding. Children are present during term time, which restricts when work can be done, requires DBS-checked operatives for any work where unsupervised contact with pupils is foreseeable, and adds rules around photography, conversation and movement around the building. Most major electrical work in schools is done during holidays for exactly this reason. The school's safeguarding lead is a key contact during prep.",
+      "Full incident details — date, time, location, casualty(ies) details, what happened, what they were doing, what equipment/substance involved, the kind of accident, the injury, who else was involved, any witness information, action taken since. Full and accurate completion is the responsible person\\\\\\\\'s job; gathering the facts is often the L3 operative\\\\\\\\'s job.",
+      "Advisory, Conciliation and Arbitration Service — a non-departmental public body that provides free, impartial advice on workplace rights and conflict resolution. ACAS publishes the Codes of Practice on Discipline and Grievance, runs early conciliation (mandatory before most employment tribunal claims), provides advice through a national helpline, and trains employers and unions on workplace dispute resolution.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The mesh-omission route is conditional on documented Class II compliance per Reg 412.2.1.1. The acceptance rule is direct — verify and document before omitting the mesh. Class II equipment must be type-tested and marked to the relevant standards, and the install file must contain the evidence. A verifier confronted with a missing mesh and no Class II evidence shall record non-compliance.",
   },

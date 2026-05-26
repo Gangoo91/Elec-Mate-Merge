@@ -33,15 +33,25 @@ const quickCheckQuestions = [
     id: 'reynolds-transition',
     question:
       'At what Reynolds number does flow typically transition from laminar to turbulent in pipes?',
-    options: ['Re < 500', 'Re ≈ 2300', 'Re ≈ 4000', 'Re > 10,000'],
-    correctIndex: 1,
+    options: [
+      'Re > 10,000',
+      'Re ≈ 4000',
+      'Re < 500',
+      'Re ≈ 2300',
+    ],
+    correctIndex: 3,
     explanation:
       'The critical Reynolds number for pipe flow is approximately 2300. Below this, flow is laminar; above approximately 4000, flow is fully turbulent. Between 2300-4000 is the transition zone.',
   },
   {
     id: 'laminar-profile',
     question: 'What is the shape of the velocity profile in fully developed laminar pipe flow?',
-    options: ['Flat (uniform)', 'Parabolic', 'Triangular', 'Logarithmic'],
+    options: [
+      'Flat (uniform)',
+      'Parabolic',
+      'Triangular',
+      'Logarithmic',
+    ],
     correctIndex: 1,
     explanation:
       'Laminar flow has a parabolic velocity profile with maximum velocity at the centre (twice the average velocity) and zero velocity at the pipe wall due to the no-slip condition.',
@@ -49,15 +59,25 @@ const quickCheckQuestions = [
   {
     id: 'reynolds-formula',
     question: 'Which formula correctly calculates Reynolds number?',
-    options: ['Re = μvD/ρ', 'Re = ρvD/μ', 'Re = ρμ/vD', 'Re = vD/ρμ'],
-    correctIndex: 1,
+    options: [
+      'Re = μvD/ρ',
+      'Re = vD/ρμ',
+      'Re = ρvD/μ',
+      'Re = ρμ/vD',
+    ],
+    correctIndex: 2,
     explanation:
       'Re = ρvD/μ where ρ is density (kg/m³), v is velocity (m/s), D is diameter (m), and μ is dynamic viscosity (Pa·s). This can also be written as Re = vD/ν using kinematic viscosity.',
   },
   {
     id: 'flow-type-hvac',
     question: 'In typical HVAC pipe systems, flow is usually:',
-    options: ['Always laminar', 'Usually turbulent', 'Always transitional', 'Supersonic'],
+    options: [
+      'Always laminar',
+      'Usually turbulent',
+      'Always transitional',
+      'Supersonic',
+    ],
     correctIndex: 1,
     explanation:
       'HVAC systems typically operate with turbulent flow (Re > 4000) due to practical flow velocities of 1-3 m/s in pipes. This actually improves heat transfer but increases friction losses.',
@@ -82,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: 'What does the Reynolds number represent?',
     options: [
+      'The ratio of flow velocity to sound velocity',
       'The ratio of pressure forces to gravity forces',
       'The ratio of inertial forces to viscous forces',
-      'The ratio of flow velocity to sound velocity',
       'The ratio of pipe diameter to length',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reynolds number (Re) is the ratio of inertial forces to viscous forces in a fluid. High Re means inertial forces dominate (turbulent flow); low Re means viscous forces dominate (laminar flow).',
   },
@@ -95,8 +115,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Water flows at 2 m/s through a 50mm diameter pipe. Calculate the Reynolds number. (ρ = 1000 kg/m³, μ = 0.001 Pa·s)',
-    options: ['1,000', '10,000', '100,000', '1,000,000'],
-    correctAnswer: 2,
+    options: [
+      '10,000',
+      '1,000',
+      '1,000,000',
+      '100,000',
+    ],
+    correctAnswer: 3,
     explanation:
       'Re = ρvD/μ = (1000 × 2 × 0.05) / 0.001 = 100,000. This is well into the turbulent regime, typical for HVAC pipe systems.',
   },
@@ -104,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: 'In turbulent flow, the velocity profile is:',
     options: [
-      'Parabolic with maximum at centre',
       'Flat across most of the pipe with thin boundary layers',
-      'Maximum at the pipe wall',
-      'Constant throughout',
+      'Better mixing improves heat transfer coefficient',
+      'The ratio of inertial forces to viscous forces',
+      'Velocity is higher in the smaller branch',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Turbulent flow has a much flatter velocity profile than laminar flow, with thin boundary layers near the walls. The average velocity is closer to the maximum velocity (about 80-85%).',
   },
@@ -118,20 +143,25 @@ const quizQuestions = [
     question:
       'What is the maximum velocity in fully developed laminar pipe flow compared to the average velocity?',
     options: [
-      'Equal to average velocity',
       '1.5 times average velocity',
       '2 times average velocity',
       '3 times average velocity',
+      'Equal to average velocity',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'In laminar flow, the parabolic profile means the centreline (maximum) velocity is exactly twice the average velocity: v_max = 2 × v_avg.',
   },
   {
     id: 6,
     question: 'Which factor does NOT directly affect the Reynolds number?',
-    options: ['Fluid velocity', 'Pipe diameter', 'Fluid viscosity', 'Pipe material roughness'],
-    correctAnswer: 3,
+    options: [
+      'Fluid velocity',
+      'Pipe diameter',
+      'Pipe material roughness',
+      'Fluid viscosity',
+    ],
+    correctAnswer: 2,
     explanation:
       'Re = ρvD/μ involves density, velocity, diameter, and viscosity. Pipe roughness affects friction factor but not the Reynolds number itself.',
   },
@@ -139,20 +169,25 @@ const quizQuestions = [
     id: 7,
     question: 'Why is turbulent flow generally preferred for heat transfer in HVAC systems?',
     options: [
-      'Lower pumping energy required',
+      'The ratio of inertial forces to viscous forces',
+      'Velocity is higher in the smaller branch',
+      'Flat across most of the pipe with thin boundary layers',
       'Better mixing improves heat transfer coefficient',
-      'Simpler calculations',
-      'Lower noise levels',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Turbulent flow enhances heat transfer because the chaotic mixing brings more fluid into contact with heat transfer surfaces. Heat transfer coefficients can be 5-10 times higher than laminar flow.',
   },
   {
     id: 8,
     question: 'The transition zone for pipe flow occurs between Reynolds numbers of approximately:',
-    options: ['500 - 1000', '1000 - 2000', '2300 - 4000', '4000 - 10000'],
-    correctAnswer: 2,
+    options: [
+      '2300 - 4000',
+      '4000 - 10000',
+      '500 - 1000',
+      '1000 - 2000',
+    ],
+    correctAnswer: 0,
     explanation:
       'The transition zone is between Re ≈ 2300 (laminar breakdown) and Re ≈ 4000 (fully turbulent). Flow in this region is unstable and unpredictable.',
   },
@@ -161,10 +196,10 @@ const quizQuestions = [
     question:
       'How does increasing fluid temperature typically affect the Reynolds number for water flow?',
     options: [
-      'Decreases Re (more laminar tendency)',
+      'The ratio of inertial forces to viscous forces',
       'Increases Re (more turbulent tendency)',
-      'No effect on Re',
-      'Makes Re unpredictable',
+      'Better mixing improves heat transfer coefficient',
+      'Velocity is higher in the smaller branch',
     ],
     correctAnswer: 1,
     explanation:
@@ -174,12 +209,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the entry length for flow to become fully developed?',
     options: [
-      'Always 10 pipe diameters',
+      'Increases Re (more turbulent tendency)',
+      'Flat across most of the pipe with thin boundary layers',
       'Depends on Reynolds number - longer for laminar flow',
-      'Same for laminar and turbulent flow',
-      'Entry effects are negligible',
+      'The ratio of inertial forces to viscous forces',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Entry length depends on Re. For laminar flow: L_e ≈ 0.06 Re × D (can be very long). For turbulent flow: L_e ≈ 10-60 D (much shorter). This affects pressure drop calculations near fittings.',
   },
@@ -189,18 +224,23 @@ const quizQuestions = [
       'In a Y-junction where flow splits, what happens to velocity if one branch has twice the cross-sectional area of the other?',
     options: [
       'Velocity is equal in both branches',
-      'Velocity is higher in the smaller branch',
-      'Velocity is higher in the larger branch',
       'Velocity depends only on pressure difference',
+      'Velocity is higher in the larger branch',
+      'Velocity is higher in the smaller branch',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'From continuity (Q = Av), if flow splits based on resistance, the smaller area branch will have higher velocity. For equal pressure drop, more flow goes through the larger branch but at lower velocity.',
   },
   {
     id: 12,
     question: 'What is the continuity equation for incompressible flow?',
-    options: ['A₁v₁ = A₂v₂', 'P₁ + ρv₁² = P₂ + ρv₂²', 'F = ma', 'Q = ΔP/R'],
+    options: [
+      'A₁v₁ = A₂v₂',
+      'Q = ΔP/R',
+      'F = ma',
+      'P₁ + ρv₁² = P₂ + ρv₂²',
+    ],
     correctAnswer: 0,
     explanation:
       'The continuity equation A₁v₁ = A₂v₂ (or Q = constant) states that mass flow rate is conserved. For incompressible fluids, this means volumetric flow rate is constant through a system.',

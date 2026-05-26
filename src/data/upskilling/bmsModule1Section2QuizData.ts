@@ -5,10 +5,10 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the largest system typically controlled by a BMS?',
     options: [
-      'Lighting systems',
+      'Annual energy savings exceeded £250,000',
       'HVAC (Heating, Ventilation, and Air Conditioning)',
-      'Access control systems',
-      'Fire safety systems',
+      'To ensure accurate system feedback and proper BMS performance',
+      'Increase ventilation automatically to bring in fresh air',
     ],
     correctAnswer: 1,
     explanation:
@@ -19,11 +19,11 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     question: 'Name two types of sensors commonly used in HVAC integration with BMS.',
     options: [
       'Motion sensors and light sensors',
-      'Temperature sensors and humidity sensors',
       'Smoke sensors and CO sensors',
+      'Temperature sensors and humidity sensors',
       'Pressure sensors and flow sensors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Temperature and humidity sensors are fundamental to HVAC control, providing the data needed to maintain comfortable indoor conditions whilst optimising energy usage.',
   },
@@ -31,12 +31,12 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 3,
     question: 'How can a BMS respond if CO₂ levels rise in a room?',
     options: [
-      'Turn on the lights automatically',
-      'Sound an alarm immediately',
+      'To ensure accurate system feedback and proper BMS performance',
+      'HVAC (Heating, Ventilation, and Air Conditioning)',
+      'Temperature sensors and humidity sensors',
       'Increase ventilation automatically to bring in fresh air',
-      'Shut down all HVAC systems',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'When CO₂ levels rise, indicating poor air quality and high occupancy, the BMS automatically increases ventilation rates to bring in fresh outside air, maintaining healthy indoor air quality.',
   },
@@ -44,12 +44,12 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 4,
     question: 'Give one way lighting can be controlled via BMS.',
     options: [
-      'Manual switches only',
       'Automatic scheduling based on time of day and occupancy',
-      'Emergency lighting only',
-      'External lighting controls only',
+      'To ensure accurate system feedback and proper BMS performance',
+      'Annual energy savings exceeded £250,000',
+      'Temperature sensors and humidity sensors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BMS can control lighting through automated scheduling, turning lights on/off based on time schedules, occupancy detection, and daylight levels to minimise energy waste whilst ensuring adequate illumination.',
   },
@@ -57,10 +57,10 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 5,
     question: 'Why is daylight integration useful for energy savings in BMS lighting control?',
     options: [
-      'It makes rooms brighter',
+      'They allow real-time data entry at the point of work with access to asset history and technical documents',
       'It automatically dims or switches off artificial lights when natural daylight is sufficient',
-      'It only works during summer months',
-      'It increases the lifespan of light bulbs',
+      'Continuity of protective conductors, continuity of ring final conductors, insulation resistance, polarity',
+      'The ACAS Code of Practice on Disciplinary and Grievance Procedures',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,12 +70,12 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 6,
     question: 'How can access control and BMS integration improve security?',
     options: [
-      'By making doors harder to open',
+      'To prevent spread of smoke between fire compartments during fire conditions',
+      'Communicate hazards, restrictions, mandatory requirements, emergency information',
       'By logging entry events and automatically activating lights and CCTV when access cards are used',
-      'By only allowing access during daylight hours',
-      'By requiring multiple keys for entry',
+      'Individual sprinkler heads activate when heated to their threshold, releasing water directly over the fire',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BMS integration with access control creates comprehensive security by logging all access events, automatically triggering appropriate lighting and CCTV activation, and providing audit trails for security monitoring.',
   },
@@ -83,12 +83,12 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 7,
     question: 'What action might a BMS take when a fire alarm is triggered?',
     options: [
-      'Increase heating in all areas',
-      'Turn on all lights at full brightness',
+      'Automatic scheduling based on time of day and occupancy',
+      'Increase ventilation automatically to bring in fresh air',
+      'It automatically dims or switches off artificial lights when natural daylight is sufficient',
       'Shut down HVAC systems and unlock doors automatically for safe evacuation',
-      'Send an email notification only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'During a fire alarm, the BMS automatically shuts down HVAC systems to prevent smoke spread, unlocks doors to ensure safe evacuation routes, and may activate emergency lighting and communication systems.',
   },
@@ -109,10 +109,10 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     id: 9,
     question: 'Why must electricians install sensors correctly in BMS applications?',
     options: [
-      'To comply with colour coding standards',
+      'Increase ventilation automatically to bring in fresh air',
       'To ensure accurate system feedback and proper BMS performance',
-      'To make them easier to replace',
-      'To reduce installation costs',
+      'Shut down HVAC systems and unlock doors automatically for safe evacuation',
+      'HVAC (Heating, Ventilation, and Air Conditioning)',
     ],
     correctAnswer: 1,
     explanation:
@@ -123,10 +123,10 @@ export const bmsModule1Section2QuizData: QuizQuestion[] = [
     question:
       'In the real-world hospital example, what was one financial outcome of the BMS integration?',
     options: [
-      'Increased energy costs',
-      'No measurable financial impact',
+      'HVAC (Heating, Ventilation, and Air Conditioning)',
+      'Solar PV (photovoltaic) systems',
       'Annual energy savings exceeded £250,000',
-      'Reduced patient satisfaction',
+      'Temperature sensors and humidity sensors',
     ],
     correctAnswer: 2,
     explanation:

@@ -14,19 +14,24 @@ const quickCheckQuestions = [
     id: 'discrimination-purpose',
     question: 'What is the purpose of discrimination between protective devices?',
     options: [
-      'To increase the fault current',
+      'That all castors are present, undamaged, and that the brakes lock and release properly',
+      'Only one cable run is needed — both emitter and receiver are in the same housing',
+      'Plan key points, practise what you will say, choose the right time and place, execute with empathy',
       'To ensure only the device nearest the fault operates, minimising supply disruption',
-      'To reduce the cost of installation',
-      'To increase cable ratings',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Discrimination ensures that only the protective device nearest to the fault operates, while upstream devices remain closed. This limits the outage to the smallest possible section of the installation, maintaining supply to unaffected circuits.',
   },
   {
     id: 'time-grading-interval',
     question: 'What is the typical time grading interval between successive protective devices?',
-    options: ['0.01 to 0.05 seconds', '0.1 to 0.3 seconds', '1 to 2 seconds', '5 to 10 seconds'],
+    options: [
+      '0.01 to 0.05 seconds',
+      '0.1 to 0.3 seconds',
+      '1 to 2 seconds',
+      '5 to 10 seconds',
+    ],
     correctIndex: 1,
     explanation:
       'The typical time grading interval is 0.1 to 0.3 seconds. This accounts for the breaker operating time, relay operating time and a safety margin to ensure the downstream device clears the fault before the upstream device operates.',
@@ -36,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'What happens during cascading when a fault exceeds the breaking capacity of the downstream device?',
     options: [
-      'The downstream device handles it alone',
       'The upstream device assists in breaking the fault current',
-      'The fault is ignored',
-      'The cable acts as a fuse',
+      'Multi-core cables clipped direct to a non-metallic surface in still air.',
+      'To test all insulation and wiring in the circuit',
+      'By maintaining optimal temperature, lighting, and air quality conditions',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'In cascading, the upstream device assists the downstream device by contributing to fault current interruption. This allows downstream devices with lower breaking capacities to be used, but both devices may trip for high-level faults, causing a wider outage.',
   },
@@ -50,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'Why should a protective device never be replaced with a different type or make without engineering approval?',
     options: [
-      'It may be a different colour',
+      'Working around existing services, access restrictions, and unknown conditions',
+      'Paper drawings were destroyed by water damage, with no backups available',
       'The replacement may invalidate the protection coordination scheme',
-      'Different brands are always inferior',
-      'It will void the building insurance',
+      'Specificity eliminates ambiguity about what to do and when you\\\\\\\\\\\\\\\'ve succeeded',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Protection coordination is a designed system where devices are selected as a set to work together. Changing one device can invalidate the discrimination and cascading arrangements, potentially causing wider outages or safety hazards during fault conditions.',
   },
@@ -66,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is discrimination (selectivity) in protection coordination?',
     options: [
-      'All devices trip simultaneously',
+      'Background/context, findings/observations, analysis/diagnosis, recommendations/actions',
       'Only the device nearest the fault operates while upstream devices remain closed',
-      'The largest device always trips first',
-      'Devices trip in reverse order',
+      'The contractor had to retest circuits and lost reputation',
+      'Protect people below from falling objects, tools, and materials',
     ],
     correctAnswer: 1,
     explanation:
@@ -79,20 +84,25 @@ const quizQuestions = [
     id: 2,
     question: 'What is the difference between full and partial discrimination?',
     options: [
-      'Full uses fuses; partial uses MCBs',
+      'Transformer upgrade, parallel operation or on-site generation',
+      'Both devices may operate simultaneously in the crossover region',
       'Full works for all fault levels; partial works up to a discrimination limit',
-      'Full is more expensive; partial is free',
-      'There is no difference',
+      'Obtain engineering approval to verify coordination is maintained',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Full discrimination works for all fault levels up to the maximum Ipf. Partial discrimination works up to a certain fault level (discrimination limit), above which both devices may trip.',
   },
   {
     id: 3,
     question: 'What is the typical time grading interval between successive protection devices?',
-    options: ['0.01 s', '0.1 to 0.3 s', '1 to 2 s', '5 s'],
-    correctAnswer: 1,
+    options: [
+      '1 to 2 s',
+      '0.01 s',
+      '5 s',
+      '0.1 to 0.3 s',
+    ],
+    correctAnswer: 3,
     explanation:
       'The typical time grading interval is 0.1 to 0.3 seconds, accounting for device operating times and safety margins.',
   },
@@ -100,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'What does cascading (back-up protection) allow?',
     options: [
-      'Faster tripping',
       'Use of downstream devices with lower breaking capacity, assisted by upstream device',
-      'Elimination of all upstream devices',
-      'Parallel operation of transformers',
+      'Full works for all fault levels; partial works up to a discrimination limit',
+      'Both devices may operate simultaneously in the crossover region',
+      'Obtain engineering approval to verify coordination is maintained',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cascading allows downstream devices to have a breaking capacity lower than the prospective fault current, with the upstream device assisting in fault interruption for high-level faults.',
   },
@@ -113,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'What happens if time-current curves of two series devices cross?',
     options: [
-      'Perfect discrimination is achieved',
+      'Transformer upgrade, parallel operation or on-site generation',
       'Both devices may operate simultaneously in the crossover region',
-      'Neither device operates',
-      'The installation is safe',
+      'Full works for all fault levels; partial works up to a discrimination limit',
+      'Not less than the prospective fault current at the point of installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -126,20 +136,25 @@ const quizQuestions = [
     id: 6,
     question: 'What is the minimum breaking capacity requirement under Regulation 434.5.1?',
     options: [
-      '6 kA for all devices',
+      'Full works for all fault levels; partial works up to a discrimination limit',
+      'Use of downstream devices with lower breaking capacity, assisted by upstream device',
       'Not less than the prospective fault current at the point of installation',
-      '10 kA for commercial installations',
-      'Equal to the supply transformer rating',
+      'Both devices may operate simultaneously in the crossover region',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Every protective device must have a rated breaking capacity not less than the prospective fault current at its point of installation, unless back-up protection (cascading) is provided.',
   },
   {
     id: 7,
     question: 'What ratio of current ratings is generally needed for reliable current grading?',
-    options: ['1.1:1', '1.5:1', '2:1 or greater', '10:1'],
-    correctAnswer: 2,
+    options: [
+      '1.1:1',
+      '1.5:1',
+      '10:1',
+      '2:1 or greater',
+    ],
+    correctAnswer: 3,
     explanation:
       'A ratio of at least 2:1 between upstream and downstream device ratings is generally needed for reliable current grading, though exact requirements depend on specific device characteristics.',
   },
@@ -147,20 +162,25 @@ const quizQuestions = [
     id: 8,
     question: 'What can cause fault levels to increase in an existing installation?',
     options: [
-      'Adding more final circuits',
       'Transformer upgrade, parallel operation or on-site generation',
-      'Installing more lighting',
-      'Replacing MCBs with RCBOs',
+      'Both devices may operate simultaneously in the crossover region',
+      'Not less than the prospective fault current at the point of installation',
+      'Obtain engineering approval to verify coordination is maintained',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Transformer upgrades, parallel transformer operation, on-site generation and DNO network changes can all increase prospective fault current levels.',
   },
   {
     id: 9,
     question: 'Which BS 7671 Regulation requires discrimination where it is necessary for safety?',
-    options: ['Regulation 411.3', 'Regulation 434.5', 'Regulation 536.4', 'Regulation 612.1'],
-    correctAnswer: 2,
+    options: [
+      'Regulation 411.3',
+      'Regulation 536.4',
+      'Regulation 434.5',
+      'Regulation 612.1',
+    ],
+    correctAnswer: 1,
     explanation:
       'Regulation 536.4 requires that where discrimination between protective devices is necessary for safety, the characteristics shall be chosen accordingly.',
   },
@@ -169,12 +189,12 @@ const quizQuestions = [
     question:
       'What should a maintenance technician do before replacing a protective device with a different type?',
     options: [
-      'Just fit whatever is available',
+      'Both devices may operate simultaneously in the crossover region',
+      'Transformer upgrade, parallel operation or on-site generation',
       'Obtain engineering approval to verify coordination is maintained',
-      'Only check the current rating matches',
-      'Check the colour matches',
+      'Not less than the prospective fault current at the point of installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Engineering approval must be obtained because changing one device can invalidate the entire protection coordination scheme, including discrimination and cascading arrangements.',
   },
@@ -182,20 +202,25 @@ const quizQuestions = [
     id: 11,
     question: 'What tool is primarily used to verify discrimination between protective devices?',
     options: [
-      'A multimeter',
+      'kWh, kVAh, kVArh, power factor, and demand',
+      'The site manager or coordinator',
+      'Multiple-choice with one correct answer',
       'Time-current characteristic curves',
-      'An insulation resistance tester',
-      'A thermal imaging camera',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Time-current characteristic curves are plotted for each device and compared to verify that they do not cross within the expected fault current range.',
   },
   {
     id: 12,
     question: 'What is a typical breaking capacity range for MCCBs?',
-    options: ['6 to 10 kA', '10 to 15 kA', '25 to 70 kA', '100 to 150 kA'],
-    correctAnswer: 2,
+    options: [
+      '25 to 70 kA',
+      '100 to 150 kA',
+      '6 to 10 kA',
+      '10 to 15 kA',
+    ],
+    correctAnswer: 0,
     explanation:
       'MCCBs typically have breaking capacities ranging from 25 kA to 70 kA, making them suitable for main distribution where fault levels are higher than at final circuit level.',
   },

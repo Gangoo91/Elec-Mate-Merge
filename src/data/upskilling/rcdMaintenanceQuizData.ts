@@ -10,7 +10,12 @@ export const rcdMaintenanceQuizData: QuizQuestion[] = [
   {
     id: 1,
     question: 'How often should RCD test buttons be operated by building users?',
-    options: ['Weekly', 'Monthly', 'Quarterly', 'Annually'],
+    options: [
+      'Annually',
+      'Monthly',
+      'Weekly',
+      'Quarterly',
+    ],
     correctAnswer: 1,
     explanation:
       'BS 7671 recommends monthly test button operation by users to verify basic RCD functionality and maintain user familiarity with the device.',
@@ -18,7 +23,12 @@ export const rcdMaintenanceQuizData: QuizQuestion[] = [
   {
     id: 2,
     question: 'What is the minimum retention period for RCD test records?',
-    options: ['1 year', '2 years', '3 years', '5 years'],
+    options: [
+      '1 year',
+      '2 years',
+      '3 years',
+      '5 years',
+    ],
     correctAnswer: 2,
     explanation:
       'RCD test records should be retained for a minimum of 3 years to demonstrate ongoing compliance and maintenance history.',
@@ -29,10 +39,10 @@ export const rcdMaintenanceQuizData: QuizQuestion[] = [
     options: [
       'Monthly test button operation',
       'Visual inspection of RCD housing',
-      'Annual electrical testing with instruments',
       'Recording test results in logbook',
+      'Annual electrical testing with instruments',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Annual electrical testing requires qualified electricians with calibrated test equipment and knowledge of BS 7671 test procedures.',
   },
@@ -40,12 +50,12 @@ export const rcdMaintenanceQuizData: QuizQuestion[] = [
     id: 4,
     question: 'What should be done if an RCD fails to trip during test button operation?',
     options: [
-      'Try pressing the button harder',
-      'Reset the RCD and try again',
       'Contact a qualified electrician immediately',
+      'Reset the RCD and try again',
+      'Try pressing the button harder',
       'Wait 24 hours and test again',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Test button failure indicates the RCD may not provide protection. Immediately contact a qualified electrician and consider the protection compromised.',
   },
@@ -65,7 +75,12 @@ export const rcdMaintenanceQuizData: QuizQuestion[] = [
   {
     id: 6,
     question: 'When should an RCD be considered for replacement due to age?',
-    options: ['After 5 years', 'After 10 years', 'After 15 years', 'After 25 years'],
+    options: [
+      'After 25 years',
+      'After 10 years',
+      'After 15 years',
+      'After 5 years',
+    ],
     correctAnswer: 2,
     explanation:
       'While RCDs can last longer, consideration for replacement typically begins around 15 years due to component aging and potential reliability concerns.',
@@ -74,12 +89,12 @@ export const rcdMaintenanceQuizData: QuizQuestion[] = [
     id: 7,
     question: 'What is the primary purpose of RCD maintenance documentation?',
     options: [
-      'To satisfy insurance requirements only',
-      'To demonstrate ongoing compliance and safety',
       'To track warranty periods',
+      'To satisfy insurance requirements only',
       'To plan future electrical work',
+      'To demonstrate ongoing compliance and safety',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Documentation demonstrates ongoing compliance with regulations, provides evidence of due diligence, and supports safety management systems.',
   },
@@ -87,12 +102,12 @@ export const rcdMaintenanceQuizData: QuizQuestion[] = [
     id: 8,
     question: 'Which condition requires immediate RCD replacement?',
     options: [
-      'Slight discoloration of housing',
-      'Trip time of 250ms at rated current',
       'Complete failure to trip at any test current',
+      'Trip time of 250ms at rated current',
+      'Slight discoloration of housing',
       'Occasional nuisance tripping',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Complete failure to trip indicates total protection failure and requires immediate replacement as it presents a serious safety risk.',
   },
@@ -100,10 +115,10 @@ export const rcdMaintenanceQuizData: QuizQuestion[] = [
     id: 9,
     question: 'How should environmental conditions be recorded during RCD maintenance?',
     options: [
-      'Only if problems are found',
+      'Annual electrical testing with instruments',
       'As part of routine maintenance records',
-      'Only in extreme weather',
-      'Only for outdoor installations',
+      'Contact a qualified electrician immediately',
+      'Test button operation and emergency procedures',
     ],
     correctAnswer: 1,
     explanation:
@@ -114,11 +129,11 @@ export const rcdMaintenanceQuizData: QuizQuestion[] = [
     question: 'What training should building users receive for RCD maintenance?',
     options: [
       'Full electrical testing procedures',
-      'Test button operation and emergency procedures',
       'RCD replacement techniques',
+      'Test button operation and emergency procedures',
       'Complex fault diagnosis methods',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Users need training on test button operation, recognizing failure symptoms, emergency procedures, and when to contact professionals.',
   },

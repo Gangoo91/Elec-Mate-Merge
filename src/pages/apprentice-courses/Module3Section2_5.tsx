@@ -55,7 +55,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the typical maximum spacing for support brackets in underfloor trunking?',
-    options: ['300mm', '600mm', '900mm', '1200mm'],
+    options: [
+      '300mm',
+      '600mm',
+      '900mm',
+      '1200mm',
+    ],
     correctAnswer: 1,
     explanation:
       'Support brackets for underfloor trunking should typically be placed every 600mm to ensure adequate support and prevent sagging.',
@@ -64,31 +69,51 @@ const quizQuestions = [
     id: 2,
     question:
       'According to BS 7671, what is the minimum segregation distance between power and data cables in trunking?',
-    options: ['25mm', '50mm', '100mm', '150mm'],
-    correctAnswer: 1,
+    options: [
+      '100mm',
+      '25mm',
+      '50mm',
+      '150mm',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 7671 requires a minimum segregation distance of 50mm between power and data cables to prevent electromagnetic interference.',
   },
   {
     id: 3,
     question: 'Fire barriers in underfloor trunking must be installed at intervals of:',
-    options: ['5m', '10m', '15m', '20m'],
-    correctAnswer: 2,
+    options: [
+      '10m',
+      '5m',
+      '20m',
+      '15m',
+    ],
+    correctAnswer: 3,
     explanation:
       'Fire barriers must be installed at maximum 15m intervals in underfloor trunking to prevent fire spread and maintain compartmentation.',
   },
   {
     id: 4,
     question: 'What is the maximum fill factor for cables in trunking according to BS 7671?',
-    options: ['35%', '45%', '55%', '65%'],
-    correctAnswer: 1,
+    options: [
+      '45%',
+      '35%',
+      '55%',
+      '65%',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 7671 specifies a maximum fill factor of 45% for cables in trunking to ensure adequate heat dissipation and ease of installation.',
   },
   {
     id: 5,
     question: 'When using metal trunking, what additional requirement must be met?',
-    options: ['Painting', 'Earthing', 'Labelling', 'Insulation'],
+    options: [
+      'Painting',
+      'Earthing',
+      'Insulation',
+      'Labelling',
+    ],
     correctAnswer: 1,
     explanation:
       'Metal trunking must be properly earthed to provide electrical safety and comply with BS 7671 earthing requirements.',
@@ -96,8 +121,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the recommended spacing for access covers in dado trunking?',
-    options: ['1-2 metres', '3-4 metres', '5-6 metres', '7-8 metres'],
-    correctAnswer: 1,
+    options: [
+      '1-2 metres',
+      '5-6 metres',
+      '3-4 metres',
+      '7-8 metres',
+    ],
+    correctAnswer: 2,
     explanation:
       'Access covers should be positioned every 3-4 metres to allow reasonable access for cable installation and future maintenance.',
   },
@@ -105,8 +135,13 @@ const quizQuestions = [
     id: 7,
     question:
       'For a 200m² office with 25 workstations at 300W each, what is the design load with 0.8 diversity factor?',
-    options: ['6kW', '7.5kW', '6kW', '9kW'],
-    correctAnswer: 2,
+    options: [
+      '6kW',
+      '7.5kW',
+      '9kW',
+      '6kW',
+    ],
+    correctAnswer: 3,
     explanation:
       'Total load = 25 x 300W = 7.5kW. Design load = 7.5kW x 0.8 = 6kW with diversity factor applied.',
   },
@@ -114,8 +149,13 @@ const quizQuestions = [
     id: 8,
     question:
       'Which standard specifically covers trunking and ducting systems for electrical installations?',
-    options: ['BS 7671', 'BS EN 50085', 'BS 5839', 'BS 6701'],
-    correctAnswer: 1,
+    options: [
+      'BS EN 50085',
+      'BS 5839',
+      'BS 7671',
+      'BS 6701',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS EN 50085 specifically covers cable trunking and ducting systems for electrical installations, while BS 7671 provides the installation requirements.',
   },

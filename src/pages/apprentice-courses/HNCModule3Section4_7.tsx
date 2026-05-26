@@ -32,16 +32,26 @@ const quickCheckQuestions = [
   {
     id: 'triplen-harmonics',
     question: 'Which harmonic orders are classified as triplen harmonics?',
-    options: ['2nd, 4th, 6th', '3rd, 9th, 15th', '5th, 7th, 11th', '1st, 2nd, 3rd'],
-    correctIndex: 1,
+    options: [
+      '3rd, 9th, 15th',
+      '2nd, 4th, 6th',
+      '5th, 7th, 11th',
+      '1st, 2nd, 3rd',
+    ],
+    correctIndex: 0,
     explanation:
       'Triplen harmonics are odd multiples of the 3rd harmonic (3rd, 9th, 15th, 21st, etc.). These are particularly problematic as they sum in the neutral conductor rather than cancelling.',
   },
   {
     id: 'thd-limit',
     question: 'What is the typical THD voltage limit for LV supplies under EN 50160?',
-    options: ['3%', '5%', '8%', '12%'],
-    correctIndex: 2,
+    options: [
+      '5%',
+      '8%',
+      '12%',
+      '3%',
+    ],
+    correctIndex: 1,
     explanation:
       'EN 50160 specifies that THD voltage should not exceed 8% for 95% of 10-minute intervals over a week. Individual harmonics have specific limits, with lower-order harmonics having tighter restrictions.',
   },
@@ -49,10 +59,10 @@ const quickCheckQuestions = [
     id: 'k-factor',
     question: 'A K-factor transformer rated K-13 is designed for installations with:',
     options: [
-      'No harmonic loads',
-      'Light harmonic content',
+      'Current and the cable’s resistance',
+      'Proportional, Integral, Derivative',
       'Moderate to heavy harmonic loads',
-      'Linear loads only',
+      'Further Investigation required',
     ],
     correctIndex: 2,
     explanation:
@@ -63,10 +73,10 @@ const quickCheckQuestions = [
     question:
       'In a three-phase system, 5th harmonic currents create a rotating magnetic field that:',
     options: [
-      'Rotates in the same direction as fundamental',
+      'Describe behaviour, express feelings, state impact, request change',
       'Rotates in the opposite direction (negative sequence)',
-      'Does not rotate (zero sequence)',
-      'Rotates at double speed',
+      'Test lead connections and instrument battery',
+      'Proactive monitoring and preventive maintenance',
     ],
     correctIndex: 1,
     explanation:
@@ -78,7 +88,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the fundamental frequency of the UK mains supply?',
-    options: ['40Hz', '50Hz', '60Hz', '100Hz'],
+    options: [
+      '40Hz',
+      '50Hz',
+      '60Hz',
+      '100Hz',
+    ],
     correctAnswer: 1,
     explanation:
       'The UK mains frequency is 50Hz. The 3rd harmonic is therefore 150Hz, the 5th is 250Hz, and so on.',
@@ -88,12 +103,12 @@ const quizQuestions = [
     question:
       'In a balanced three-phase system with non-linear loads, which harmonics cancel in the neutral?',
     options: [
-      'All harmonics cancel',
-      '5th and 7th harmonics cancel',
       'Triplen harmonics cancel',
+      'All harmonics cancel',
       'Non-triplen harmonics cancel',
+      '5th and 7th harmonics cancel',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Non-triplen harmonics (5th, 7th, 11th, 13th, etc.) cancel in a balanced three-phase neutral. Triplen harmonics (3rd, 9th, 15th) add arithmetically, potentially causing neutral currents exceeding phase currents.',
   },
@@ -101,7 +116,12 @@ const quizQuestions = [
     id: 3,
     question:
       'A three-phase circuit supplies identical single-phase non-linear loads drawing 80A fundamental and 40A third harmonic each. What is the neutral current?',
-    options: ['0A', '40A', '80A', '120A'],
+    options: [
+      '80A',
+      '0A',
+      '40A',
+      '120A',
+    ],
     correctAnswer: 3,
     explanation:
       'Third harmonic currents from all three phases add: 3 × 40A = 120A. The fundamental currents cancel (120° phase shift), but triplen harmonics are in phase and sum directly.',
@@ -110,8 +130,13 @@ const quizQuestions = [
     id: 4,
     question:
       'Which power quality standard specifically addresses harmonic emissions from customer installations connected to UK distribution networks?',
-    options: ['BS 7671', 'EN 50160', 'G5/4-1', 'IEC 61000-3-2'],
-    correctAnswer: 2,
+    options: [
+      'G5/4-1',
+      'EN 50160',
+      'BS 7671',
+      'IEC 61000-3-2',
+    ],
+    correctAnswer: 0,
     explanation:
       'Engineering Recommendation G5/4-1 sets planning levels and assessment procedures for harmonic emissions from customer installations connecting to UK DNO networks.',
   },
@@ -120,12 +145,12 @@ const quizQuestions = [
     question:
       'What is the primary cause of additional heating in cables carrying harmonic currents?',
     options: [
-      'Increased RMS current value',
       'Skin effect at higher frequencies',
       'Both A and B',
       'Reduced insulation resistance',
+      'Increased RMS current value',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Harmonic currents increase both the RMS current value and cause skin effect at higher frequencies, pushing current to the conductor surface and increasing effective resistance. Both effects contribute to additional heating.',
   },
@@ -134,11 +159,11 @@ const quizQuestions = [
     question: 'An active harmonic filter operates by:',
     options: [
       'Blocking harmonic frequencies with LC circuits',
-      'Injecting anti-phase currents to cancel harmonics',
       'Absorbing harmonics through resistive elements',
+      'Injecting anti-phase currents to cancel harmonics',
       'Shifting harmonic phase angles',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Active filters measure harmonic content in real-time and inject equal but opposite currents to cancel harmonics at the point of common coupling. They are adaptive and effective across a wide frequency range.',
   },
@@ -146,8 +171,13 @@ const quizQuestions = [
     id: 7,
     question:
       'For a data centre with UPS systems and server power supplies, what K-factor transformer rating would typically be specified?',
-    options: ['K-1', 'K-4', 'K-13', 'K-20'],
-    correctAnswer: 2,
+    options: [
+      'K-1',
+      'K-4',
+      'K-20',
+      'K-13',
+    ],
+    correctAnswer: 3,
     explanation:
       'Data centres typically require K-13 transformers due to the high harmonic content from switch-mode power supplies, UPS systems, and variable speed drives. K-20 may be needed for particularly severe environments.',
   },
@@ -156,19 +186,24 @@ const quizQuestions = [
     question:
       'According to G5/4-1, what assessment is required before connecting a large non-linear load to the distribution network?',
     options: [
-      'Visual inspection only',
       'Harmonic current assessment at the point of connection',
-      'Temperature rise test',
-      'Insulation resistance test',
+      'The volume of air forcibly exhaled in the first one second',
+      'To identify obvious faults safely before applying power',
+      'Summarising and checking understanding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "G5/4-1 requires harmonic current assessment to ensure customer emissions don't cause voltage distortion at the point of common coupling to exceed planning levels.",
   },
   {
     id: 9,
     question: 'A passive harmonic filter tuned to 250Hz is designed to attenuate which harmonic?',
-    options: ['3rd harmonic', '5th harmonic', '7th harmonic', '11th harmonic'],
+    options: [
+      '3rd harmonic',
+      '5th harmonic',
+      '7th harmonic',
+      '11th harmonic',
+    ],
     correctAnswer: 1,
     explanation:
       'At 50Hz fundamental, the 5th harmonic frequency is 5 × 50Hz = 250Hz. Passive filters are tuned to specific harmonic frequencies using LC resonant circuits.',
@@ -177,10 +212,10 @@ const quizQuestions = [
     id: 10,
     question: 'What is Total Harmonic Distortion (THD)?',
     options: [
-      'The sum of all harmonic amplitudes',
-      'The ratio of fundamental to total RMS value',
+      'That they are fitted at the correct height (950mm minimum), secured and undamaged',
+      'To prevent the cable from overheating due to reduced heat dissipation',
       'The ratio of harmonic content to fundamental, expressed as a percentage',
-      'The phase angle between harmonics',
+      'Raise the alarm and ensure all persons in the area are alerted',
     ],
     correctAnswer: 2,
     explanation:

@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'wbs-definition',
     question: 'What is a Work Breakdown Structure (WBS)?',
     options: [
-      'A list of project team members',
+      'Sensitivity to dielectric constant changes in the medium',
       'A hierarchical decomposition of project scope into deliverables',
-      'A schedule of project milestones',
-      'A budget allocation document',
+      'To resolve routing conflicts and agree installation sequence',
+      'Maintain positive communication and verify isolation at point of work',
     ],
     correctIndex: 1,
     explanation:
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'wbs-purpose',
     question: 'What is the primary purpose of creating a WBS?',
     options: [
-      'To assign staff to tasks',
-      'To calculate project costs',
+      'UV resistance and temperature rating',
+      'It provides logical progression and prevents missing faults',
       'To define and organise the total project scope',
-      'To create the project schedule',
+      'Give up to 5 back blows between the shoulder blades',
     ],
     correctIndex: 2,
     explanation:
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'work-package',
     question: 'A work package in a WBS is:',
     options: [
-      'The highest level of decomposition',
+      'Ensuring fixed building services are installed and adjusted to operate efficiently',
       'The lowest level of deliverable that can be scheduled and estimated',
-      'A summary of all project work',
-      'The same as a milestone',
+      'Advance notification, coordination meetings, and progress updates',
+      'A smaller tube installed inside larger conduit to subdivide space',
     ],
     correctIndex: 1,
     explanation:
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'coding-system',
     question: 'Why do WBS elements require a coding system?',
     options: [
-      'For visual appeal',
+      'A possible high-resistance joint or break in the cpc at or near that socket',
+      'Standard inputs and methods for Part L calculations',
+      'Zero electrical resistance at very low temperatures',
       'For unique identification, tracking, and integration with cost systems',
-      'To comply with health and safety',
-      'To satisfy building regulations',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'WBS coding systems provide unique identification for each element, enabling tracking, cost allocation, progress monitoring, and integration with accounting and project management systems.',
   },
@@ -99,20 +99,25 @@ const quizQuestions = [
     id: 2,
     question: 'In a building services WBS, what would typically be at Level 2?',
     options: [
-      'Individual cable runs',
+      'Shown as a separate element with clear identification',
+      'Project 1, Phase 3, System 2, Work Package 4',
       'Major systems (Electrical, Mechanical, Controls)',
-      'Socket outlet installation',
-      'Testing and commissioning activities',
+      'It overlaps with other work packages to ensure coverage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Level 2 typically represents major deliverables or systems. For building services, this would include Electrical Installation, Mechanical Services, BMS/Controls, and Fire Systems as separate Level 2 elements.',
   },
   {
     id: 3,
     question: 'What is the recommended maximum number of decomposition levels in a WBS?',
-    options: ['3 levels', '4-6 levels', '8-10 levels', 'No limit'],
-    correctAnswer: 1,
+    options: [
+      '8-10 levels',
+      '3 levels',
+      'No limit',
+      '4-6 levels',
+    ],
+    correctAnswer: 3,
     explanation:
       'Best practice suggests 4-6 levels of decomposition. Fewer levels provide insufficient detail for control; more levels create excessive administrative overhead without proportionate benefit.',
   },
@@ -133,12 +138,12 @@ const quizQuestions = [
     id: 5,
     question: 'Which of these is NOT a characteristic of a well-defined work package?',
     options: [
-      'It has a single accountable owner',
       'It can be estimated for cost and duration',
       'It overlaps with other work packages to ensure coverage',
       'It produces a measurable deliverable',
+      'It has a single accountable owner',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Work packages must be mutually exclusive (no overlap) to avoid double-counting scope, cost, or effort. Overlap violates the 100% rule and creates confusion in cost allocation and progress tracking.',
   },
@@ -147,12 +152,12 @@ const quizQuestions = [
     question:
       'For an MEP project, what level of detail is typically appropriate for a work package?',
     options: [
-      'Install all electrical systems',
+      'Major systems (Electrical, Mechanical, Controls)',
+      'Project 1, Phase 3, System 2, Work Package 4',
       'Install power distribution to Level 3',
-      'Install single socket outlet',
-      'Electrical work',
+      'Deliverable/system-oriented',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Work packages should be sizeable enough to manage (typically 8-80 hours or 1-2 weeks duration) but detailed enough to estimate and control. 'Install power distribution to Level 3' represents an appropriate scope.",
   },
@@ -160,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'What is a WBS dictionary?',
     options: [
-      'A glossary of technical terms',
+      'Charging employees for anything provided in pursuance of health and safety requirements',
+      'Whether the sensor face is level with the mounting surface or protrudes from it',
+      'The physical wiring connections, terminal numbers, and cable routes needed to build the circuit',
       'A document describing the content, boundaries, and deliverables of each WBS element',
-      'A list of cost codes',
-      'A schedule of work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A WBS dictionary provides detailed descriptions of each WBS element including scope of work, deliverables, acceptance criteria, assumptions, constraints, and responsible parties.',
   },
@@ -173,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'How should contingency work be handled in a WBS?',
     options: [
-      'Hidden within other work packages',
-      "Not included as it's not defined scope",
       'Shown as a separate element with clear identification',
-      'Added at Level 1 only',
+      'Enabling accurate cost collection and analysis by WBS element',
+      'Project 1, Phase 3, System 2, Work Package 4',
+      'Major systems (Electrical, Mechanical, Controls)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Contingency should be shown as a separate, identifiable element (often called Management Reserve) to maintain transparency and allow proper tracking. Hidden contingency undermines cost control.',
   },
@@ -186,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'When integrating a WBS with cost codes, the primary benefit is:',
     options: [
-      'Creating longer code numbers',
+      'Shown as a separate element with clear identification',
       'Enabling accurate cost collection and analysis by WBS element',
-      'Satisfying auditors',
-      'Reducing the number of accounts',
+      'Project 1, Phase 3, System 2, Work Package 4',
+      'Major systems (Electrical, Mechanical, Controls)',
     ],
     correctAnswer: 1,
     explanation:
@@ -199,8 +204,13 @@ const quizQuestions = [
     id: 10,
     question:
       "A building services project WBS shows 'Commissioning' as a Level 2 element. This approach is called:",
-    options: ['Deliverable-oriented WBS', 'Phase-oriented WBS', 'Organisational WBS', 'Hybrid WBS'],
-    correctAnswer: 1,
+    options: [
+      'Deliverable-oriented WBS',
+      'Hybrid WBS',
+      'Phase-oriented WBS',
+      'Organisational WBS',
+    ],
+    correctAnswer: 2,
     explanation:
       'A phase-oriented WBS organises work by project phases (Design, Procurement, Installation, Commissioning). A deliverable-oriented WBS would show systems/outputs. Both are valid approaches.',
   },
@@ -209,11 +219,11 @@ const quizQuestions = [
     question: 'What is the relationship between WBS and project schedule?',
     options: [
       'They are identical documents',
-      'WBS defines what; schedule defines when',
-      'Schedule is created first, then WBS',
       'WBS only covers procurement activities',
+      'Schedule is created first, then WBS',
+      'WBS defines what; schedule defines when',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The WBS defines the scope (what work is included) while the schedule sequences that work over time (when it occurs). Work packages from the WBS become the basis for schedule activities.',
   },
@@ -221,8 +231,13 @@ const quizQuestions = [
     id: 12,
     question:
       'For a hospital MEP project, which WBS structure would best support separate subcontractor packages?',
-    options: ['Phase-oriented', 'Deliverable/system-oriented', 'Location-oriented', 'Single level'],
-    correctAnswer: 1,
+    options: [
+      'Deliverable/system-oriented',
+      'The Managers and Professionals test',
+      'Never until all tests pass',
+      'Metal trunking or conduit',
+    ],
+    correctAnswer: 0,
     explanation:
       'Deliverable/system-oriented WBS (Electrical, Mechanical, Plumbing, Fire, BMS) aligns with typical subcontractor packages, enabling clear scope definition, separate cost tracking, and accountability per trade.',
   },

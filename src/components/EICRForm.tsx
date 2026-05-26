@@ -5,6 +5,9 @@ import { draftStorage } from '@/utils/draftStorage';
 import EICRFormHeader from './eicr/EICRFormHeader';
 import EICRFormContent from './eicr/EICRFormContent';
 import DuplicatedFromBanner from './certificates/DuplicatedFromBanner';
+import LastCertSuggestionCard from './certificates/LastCertSuggestionCard';
+import EICRValidationPanel from './EICRValidationPanel';
+import { useCertPrefill } from '@/hooks/useCertPrefill';
 import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
 import { pickCableSize, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
 import { getMaxZsFromDeviceDetails, getMaxZsWithRcd } from '@/utils/zsCalculations';
@@ -50,6 +53,21 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
   const handleTabValueChange = useCallback((value: string) => {
     setCurrentTab(value as TabValue);
   }, []);
+
+  // Last-cert prompt — soft suggestion to copy supply / earthing / BS amendment
+  // from the user's most recent EICR at the same address.
+  const prefillAddress =
+    (formData.installationAddress as string) ||
+    (formData.clientAddress as string) ||
+    '';
+  const { suggestion: lastCertSuggestion, dismiss: dismissLastCert, buildPatch } =
+    useCertPrefill(prefillAddress, 'eicr', { excludeReportId: currentReportId || undefined });
+
+  const handleApplyLastCert = () => {
+    const patch = buildPatch();
+    Object.entries(patch).forEach(([key, value]) => updateFormData(key, value));
+    dismissLastCert();
+  };
 
   // Handle board scan completion - populate circuits
   // BoardPhotoCapture returns: { circuits, board, metadata, warnings, decisions }
@@ -299,8 +317,26 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         />
       )}
 
+      {/* Last cert at this address — soft suggestion to copy supply/earthing data forward */}
+      {lastCertSuggestion && (
+        <div className="px-4 pt-3">
+          <LastCertSuggestionCard
+            suggestion={lastCertSuggestion}
+            onApply={handleApplyLastCert}
+            onDismiss={dismissLastCert}
+          />
+        </div>
+      )}
+
       {/* Main Content — full-width mobile */}
       <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+        {/* Validation panel — always visible, tap a row to jump to that tab */}
+        <div className="px-4 mb-3 sm:px-0">
+          <EICRValidationPanel
+            formData={formData}
+            onJumpToTab={(tab) => setCurrentTab(tab)}
+          />
+        </div>
         <EICRFormContent
           formData={formData}
           onUpdate={updateFormData}

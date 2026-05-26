@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'self-assessment',
     question: 'What is the most reliable method for identifying knowledge gaps before the EPA?',
     options: [
-      'Asking a friend what they think you need to study',
       'Analysing your scores by topic across multiple practice tests to find consistent weak areas',
-      'Reading every module once more from start to finish',
-      'Guessing which topics are most likely to appear',
+      'Its energy band gap is small enough that doping or heat can free electrons into conduction',
+      'Stop, don\\\'t disturb the tile, isolate the area, ring the supervisor and ask the duty holder for the asbestos register',
+      'Previous certificates, circuit schedules, and instructions for operation',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Systematic analysis of practice test results by topic area is the most reliable gap identification method. It uses objective data from your own performance to pinpoint exactly where your knowledge is weakest, allowing targeted and efficient revision.',
   },
@@ -27,10 +27,10 @@ const quickCheckQuestions = [
     id: 'study-plan',
     question: 'A good study plan should prioritise:',
     options: [
-      'Topics you already know well, to boost confidence',
-      'Only the most recent module you studied',
+      'Mirroring back the speaker\\\\\\\'s feelings and content to show understanding',
+      'When site conditions change, after an incident, or when the work method changes',
       'Weak areas identified through practice test analysis, while maintaining revision of strong areas',
-      'Whatever is easiest to study',
+      'To measure the level of a substance or its metabolite in a worker\\\\\\\'s body (e.g., blood, urine)',
     ],
     correctIndex: 2,
     explanation:
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       "When self-assessing your knowledge using a confidence rating system, what does a rating of 'amber' typically indicate?",
     options: [
-      'You have no knowledge of the topic at all',
+      'Automated scheduling, searchable databases, error checking, and audit trails',
+      'Voltage can be easily changed with transformers for efficient transmission',
+      'Appropriate PPE, safe working practices, and correct procedures',
       'You have some understanding but are not confident you could answer exam questions reliably',
-      'You are completely confident in the topic',
-      'The topic is not relevant to the EPA',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'An amber rating in a traffic-light self-assessment indicates partial knowledge — you understand some aspects but have gaps or uncertainty that could lead to wrong answers under exam conditions. Amber topics need focused revision to move them to green.',
   },
@@ -57,10 +57,10 @@ const quizQuestions = [
     id: 1,
     question: 'The first step in identifying knowledge gaps is to:',
     options: [
-      'Start studying the hardest topic immediately',
+      'They reduce grip on loads and underfoot surfaces, increasing the risk of slips and dropped loads',
       'Complete a diagnostic assessment covering all module areas to establish a baseline',
-      'Ask your employer which topics to study',
-      'Read the EPA specification without testing yourself',
+      'Provide the price but clearly define what "fully inclusive" means by listing all inclusions and exclusions',
+      '0.18 watts pass through each m² for every 1K temperature difference',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,12 +70,12 @@ const quizQuestions = [
     id: 2,
     question: 'A traffic-light self-assessment system uses which categories?',
     options: [
-      'Easy, medium, hard',
+      'To vary motor speed for energy efficiency and demand matching',
+      'Version control, backup procedures, access control, and format standards',
       'Green (confident), amber (partial), red (significant gap)',
-      'Pass, merit, distinction',
-      'Level 1, Level 2, Level 3',
+      'Through voice control, automation, and remote monitoring capabilities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The traffic-light system provides a quick visual assessment: green means confident and consistent, amber means partial understanding with some gaps, and red means significant gap requiring substantial study. It helps prioritise revision time efficiently.',
   },
@@ -83,12 +83,12 @@ const quizQuestions = [
     id: 3,
     question: 'When tracking scores by topic, you should record data from:',
     options: [
-      'Only your best test result',
+      'Complete electrical path between two points',
+      'The body\\\\\\\\\\\\\\\'s automatic survival response to perceived danger',
+      'Work effectively with other trades and stakeholders',
       'Multiple tests over time to identify consistent patterns',
-      'Only the most recent test',
-      'Only tests where you scored above 70%',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Multiple data points show consistent patterns. A single bad score on a topic might be a one-off, but consistently low scores confirm a genuine gap. Tracking over time also shows whether your targeted revision is working.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     question:
       'Which approach to revision is most effective for addressing identified knowledge gaps?',
     options: [
-      'Re-reading the entire course from Module 1 to Module 6',
       'Focused study of the specific topics identified as weak, combined with practice questions on those topics',
-      'Watching videos on unrelated topics to relax',
-      'Only practising questions without studying the underlying material',
+      'A predecessor must complete before its successor can start (with FS relationship)',
+      'To provide legal documentation that the system meets recognised standards and establish professional accountability',
+      'A failure in the preventive maintenance programme to include functional testing of protective devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Focused study on identified weak topics, followed by practice questions to test your improved understanding, is the most efficient approach. Re-reading everything wastes time on topics you already know, and practice without study does not fill the knowledge gap.',
   },
@@ -113,8 +113,8 @@ const quizQuestions = [
     options: [
       'Module 2 — Electrical Science',
       'Module 1 — Health and Safety',
-      'Module 5 — Maintenance Strategies',
       'Module 6 — Technical Documentation',
+      'Module 5 — Maintenance Strategies',
     ],
     correctAnswer: 1,
     explanation:
@@ -126,11 +126,11 @@ const quizQuestions = [
       'What is the recommended balance of revision time between weak and strong topic areas?',
     options: [
       '100% on weak areas, ignore strong areas completely',
-      'Approximately 70% on weak areas, 30% on maintaining strong areas',
       'Equal time on all areas regardless of performance',
+      'Approximately 70% on weak areas, 30% on maintaining strong areas',
       '100% on strong areas to maximise confidence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Allocating roughly 70% of revision time to weak areas maximises improvement while the remaining 30% ensures strong areas do not deteriorate through neglect. This balance gives the best return on your study investment.',
   },
@@ -138,12 +138,12 @@ const quizQuestions = [
     id: 7,
     question: 'A study plan should include which of the following elements?',
     options: [
-      'Only the list of topics to study',
+      'Check for flat spots, bearing wear, brake mechanism function, axle condition and tyre/wheel integrity',
+      'At least every 7 days by a competent person, and after any event likely to have affected its stability',
+      'To determine the number of luminaires needed to achieve target illuminance',
       'Topics, time allocation, resources, practice test dates, and progress review points',
-      'Only the EPA date',
-      'A list of questions you expect to appear in the exam',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An effective study plan includes what to study (topics), when to study (schedule with time allocations), how to study (resources and methods), when to test (practice test schedule), and when to review progress (checkpoints to adjust the plan).',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     question:
       'If your practice test analysis shows you consistently score well on health and safety but poorly on electrical science, you should:',
     options: [
-      'Stop studying health and safety entirely',
       'Increase the proportion of study time allocated to electrical science while maintaining periodic H&S review',
-      'Only study electrical science for the rest of your preparation',
-      'Focus more on health and safety since you are already doing well',
+      'Delivery notes, compliance certificates, test certificates, and handling instructions',
+      'Stop, do not proceed with testing, and obtain a replacement indicator that passes the prove test',
+      'A ventilation system that recovers heat from exhaust air to warm incoming fresh air',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Increase focus on electrical science to address the gap, but maintain periodic health and safety review to keep that knowledge fresh. Completely abandoning a strong area risks it becoming a weak area by exam day.',
   },
@@ -165,10 +165,10 @@ const quizQuestions = [
     id: 9,
     question: 'The MOET course modules can be used for targeted review by:',
     options: [
-      'Re-reading every page of every module',
+      'Do not click the link. Contact the wholesaler directly using their known phone number to verify the request',
       'Identifying the specific sections that correspond to your weak topics and studying those sections in depth',
-      'Only reading the module summaries',
-      'Skipping the modules and using external resources only',
+      'Better heat dissipation allows higher current capacity because I²R losses can be removed more effectively',
+      'The area directly below the working area plus a margin for falling objects, typically established with barriers and warning signs',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 10,
     question: 'How often should you reassess your knowledge gaps during EPA preparation?',
     options: [
-      'Once at the beginning and never again',
+      'For flexible applications and harsh environments',
+      'To separate the chilled water circuit from the condenser water circuit',
       'After every practice test, with a formal review every 2-3 weeks',
-      'Only on the day before the EPA',
-      'Reassessment is not necessary if you follow a study plan',
+      'Achieving net zero greenhouse gas emissions by 2050',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Regular reassessment ensures your study plan remains targeted and effective. After each practice test, note any changes in performance by topic. Every 2-3 weeks, formally review your progress and adjust your study plan to reflect current strengths and weaknesses.',
   },

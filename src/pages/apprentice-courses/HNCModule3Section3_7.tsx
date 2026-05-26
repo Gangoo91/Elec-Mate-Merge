@@ -32,8 +32,13 @@ const quickCheckQuestions = [
   {
     id: 'power-triangle-relationship',
     question: 'In a power triangle, what is the relationship between S, P and Q?',
-    options: ['S = P + Q', 'S² = P² + Q²', 'S = P × Q', 'S = P - Q'],
-    correctIndex: 1,
+    options: [
+      'S = P × Q',
+      'S = P - Q',
+      'S² = P² + Q²',
+      'S = P + Q',
+    ],
+    correctIndex: 2,
     explanation:
       "The power triangle follows Pythagoras' theorem: S² = P² + Q². Apparent power (S) is the hypotenuse, with real power (P) as the adjacent side and reactive power (Q) as the opposite side.",
   },
@@ -42,19 +47,24 @@ const quickCheckQuestions = [
     question: 'What is the correct formula for efficiency?',
     options: [
       'η = Pin / Pout × 100%',
-      'η = Pout / Pin × 100%',
-      'η = (Pin - Pout) × 100%',
       'η = Pout + losses',
+      'η = (Pin - Pout) × 100%',
+      'η = Pout / Pin × 100%',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Efficiency η = Pout / Pin × 100%. This represents the percentage of input power that is converted to useful output power. The remainder is lost as heat, noise, or other forms.',
   },
   {
     id: 'ie3-motor',
     question: 'What IE efficiency class is mandatory for most new motors in the EU/UK since 2017?',
-    options: ['IE1 Standard', 'IE2 High', 'IE3 Premium', 'IE4 Super Premium'],
-    correctIndex: 2,
+    options: [
+      'IE3 Premium',
+      'IE2 High',
+      'IE1 Standard',
+      'IE4 Super Premium',
+    ],
+    correctIndex: 0,
     explanation:
       'IE3 Premium efficiency motors became mandatory for most applications (0.75kW to 375kW) from 2017. IE4 is increasingly required for certain applications from 2023.',
   },
@@ -62,8 +72,13 @@ const quickCheckQuestions = [
     id: 'transformer-efficiency',
     question:
       'A transformer has 500W iron losses and 800W copper losses at full load. With 50kW output, what is its efficiency?',
-    options: ['96.5%', '97.4%', '98.7%', '99.2%'],
-    correctIndex: 1,
+    options: [
+      '98.7%',
+      '99.2%',
+      '97.4%',
+      '96.5%',
+    ],
+    correctIndex: 2,
     explanation:
       'η = Pout / (Pout + losses) = 50000 / (50000 + 500 + 800) = 50000 / 51300 = 0.9746 = 97.4%. Transformer efficiency is typically very high at 95-99%.',
   },
@@ -73,16 +88,26 @@ const quizQuestions = [
   {
     id: 1,
     question: 'In a power triangle, which power component forms the horizontal (adjacent) side?',
-    options: ['Reactive power (Q)', 'Apparent power (S)', 'Real power (P)', 'Power factor'],
-    correctAnswer: 2,
+    options: [
+      'Reactive power (Q)',
+      'Real power (P)',
+      'Apparent power (S)',
+      'Power factor',
+    ],
+    correctAnswer: 1,
     explanation:
       'Real power (P) in kW forms the horizontal (adjacent) side of the power triangle. Reactive power (Q) is vertical (opposite), and apparent power (S) is the hypotenuse.',
   },
   {
     id: 2,
     question: 'A motor draws 50kVA at 0.8 power factor lagging. What is the reactive power?',
-    options: ['30 kVAr', '40 kVAr', '50 kVAr', '62.5 kVAr'],
-    correctAnswer: 0,
+    options: [
+      '50 kVAr',
+      '62.5 kVAr',
+      '30 kVAr',
+      '40 kVAr',
+    ],
+    correctAnswer: 2,
     explanation:
       'Using Q = S × sin φ, where sin φ = √(1 - cos²φ) = √(1 - 0.64) = 0.6. Therefore Q = 50 × 0.6 = 30 kVAr. Alternatively, P = 50 × 0.8 = 40kW, then Q = √(50² - 40²) = 30 kVAr.',
   },
@@ -90,20 +115,25 @@ const quizQuestions = [
     id: 3,
     question: 'What does the angle φ (phi) represent in the power triangle?',
     options: [
-      'The efficiency of the system',
+      'Photons knocking electrons free',
+      'To keep demand below a preset maximum threshold',
+      'Multi-factor authentication (biometrics + PIN/card)',
       'The phase angle between voltage and current',
-      'The power loss percentage',
-      'The harmonic distortion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The angle φ represents the phase angle between voltage and current. Its cosine (cos φ) gives the power factor. A larger angle means more reactive power and lower power factor.',
   },
   {
     id: 4,
     question: 'A 15kW motor operates at 92% efficiency. What is the input power required?',
-    options: ['13.8kW', '15kW', '16.3kW', '17.4kW'],
-    correctAnswer: 2,
+    options: [
+      '16.3kW',
+      '15kW',
+      '13.8kW',
+      '17.4kW',
+    ],
+    correctAnswer: 0,
     explanation:
       'Pin = Pout / η = 15kW / 0.92 = 16.3kW. The motor requires more input power than its output rating due to internal losses.',
   },
@@ -113,8 +143,8 @@ const quizQuestions = [
     options: [
       'Copper losses only',
       'Iron (core) losses only',
-      'Both copper and iron losses',
       'Neither - all losses are load-dependent',
+      'Both copper and iron losses',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'An IE4 motor compared to an IE2 motor of the same rating typically offers:',
     options: [
-      '2-3% higher efficiency',
-      '5-10% higher efficiency',
       'The same efficiency but longer life',
+      '5-10% higher efficiency',
+      '2-3% higher efficiency',
       'Lower efficiency but lower cost',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'IE4 Super Premium motors typically offer 2-3% higher efficiency than IE2 High efficiency motors. While this seems small, over years of operation, the energy savings are substantial.',
   },
@@ -137,8 +167,13 @@ const quizQuestions = [
     id: 7,
     question:
       'For a system with two components in series (η₁ = 95%, η₂ = 90%), what is the overall efficiency?',
-    options: ['185%', '92.5%', '85.5%', '90%'],
-    correctAnswer: 2,
+    options: [
+      '185%',
+      '92.5%',
+      '90%',
+      '85.5%',
+    ],
+    correctAnswer: 3,
     explanation:
       'For series components, multiply efficiencies: η_total = η₁ × η₂ = 0.95 × 0.90 = 0.855 = 85.5%. Each stage reduces overall efficiency.',
   },
@@ -147,19 +182,24 @@ const quizQuestions = [
     question:
       'Building Regulations Part L requires consideration of which aspect related to power and efficiency?',
     options: [
-      'Power factor correction only',
-      'Motor starting currents only',
       'Energy efficiency of fixed building services',
       'Harmonic distortion levels',
+      'Power factor correction only',
+      'Motor starting currents only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Part L requires consideration of energy efficiency for fixed building services including HVAC, lighting, and hot water systems. High-efficiency equipment helps achieve compliance.',
   },
   {
     id: 9,
     question: 'At what load condition does a transformer typically achieve maximum efficiency?',
-    options: ['No load', 'When copper losses equal iron losses', 'Full load', '150% overload'],
+    options: [
+      'Maximum power required at any given time',
+      'When copper losses equal iron losses',
+      'Three phases and a neutral',
+      '1.5 kN applied over a 100 mm x 100 mm area',
+    ],
     correctAnswer: 1,
     explanation:
       'Transformer efficiency is maximum when variable (copper) losses equal constant (iron) losses. This typically occurs at 50-75% of full load, making transformers most efficient at typical operating loads.',
@@ -168,7 +208,12 @@ const quizQuestions = [
     id: 10,
     question:
       'A building has 200kW of motor loads at average 90% efficiency running 3000 hours/year. If motors are upgraded to 95% efficiency, what is the annual energy saving?',
-    options: ['5,263 kWh', '11,696 kWh', '31,579 kWh', '35,088 kWh'],
+    options: [
+      '5,263 kWh',
+      '11,696 kWh',
+      '31,579 kWh',
+      '35,088 kWh',
+    ],
     correctAnswer: 2,
     explanation:
       'Original input: 200/0.90 = 222.2kW. New input: 200/0.95 = 210.5kW. Saving: (222.2 - 210.5) × 3000 = 11.7kW × 3000 = 35,100 kWh, closest to 35,088 kWh.',

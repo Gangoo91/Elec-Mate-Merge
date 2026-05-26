@@ -11,6 +11,7 @@ import { fireAlarmRoutes } from './upskilling/fireAlarmRoutes';
 import { industrialDataRoutes } from './upskilling/industrialDataRoutes';
 import { inspectionTestingRoutes } from './upskilling/inspectionTestingRoutes';
 import { patTestingRoutes } from './upskilling/patTestingRoutes';
+import { renewableEnergyRoutes } from './upskilling/renewableEnergyRoutes';
 import { specialisedCoursesRoutes } from './upskilling/specialisedCoursesRoutes';
 
 // Lazy load with retry for chunk failures
@@ -69,6 +70,9 @@ export default function UpskillingRoutes() {
 
         {/* PAT Testing Routes */}
         {patTestingRoutes}
+
+        {/* Renewable Energy Routes */}
+        {renewableEnergyRoutes}
 
         {/* Specialised Courses Routes */}
         {specialisedCoursesRoutes}

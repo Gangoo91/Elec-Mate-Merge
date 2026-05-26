@@ -13,8 +13,13 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'Which is NOT a common cause of cable damage during installation?',
-    options: ['Abrasion', 'Over-bending', 'Correct support spacing', 'Excessive pulling tension'],
-    correctIndex: 2,
+    options: [
+      'Over-bending',
+      'Correct support spacing',
+      'Excessive pulling tension',
+      'Abrasion',
+    ],
+    correctIndex: 1,
     explanation:
       'Correct support spacing prevents damage, whilst abrasion, over-bending and excessive tension are common causes of cable damage.',
   },
@@ -22,12 +27,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What is the primary purpose of cable rollers during installation?',
     options: [
-      'Increase pulling speed',
-      'Prevent dragging and abrasion',
-      'Reduce installation cost',
       'Improve cable appearance',
+      'Reduce installation cost',
+      'Prevent dragging and abrasion',
+      'Increase pulling speed',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Cable rollers prevent cables from dragging against surfaces, reducing abrasion and friction damage during pulling operations.',
   },
@@ -35,12 +40,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why should cable ties not be over-tightened?',
     options: [
-      'To save time',
+      'Main earthing terminal to means of earthing',
+      'Moisture ingress or corroded connections',
+      'Lost time injury frequency rate',
       'To prevent crushing the cable insulation',
-      'To allow easy removal',
-      'To reduce material costs',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Over-tightening cable ties can crush the cable insulation and conductors, potentially causing electrical faults and safety hazards.',
   },
@@ -50,8 +55,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which is NOT a common cause of cable damage during installation?',
-    options: ['Abrasion', 'Over-bending', 'Correct support spacing', 'Excessive pulling tension'],
-    correctAnswer: 2,
+    options: [
+      'Abrasion',
+      'Correct support spacing',
+      'Over-bending',
+      'Excessive pulling tension',
+    ],
+    correctAnswer: 1,
     explanation:
       'Correct support spacing prevents damage, whilst abrasion, over-bending and excessive tension are common causes of cable damage.',
   },
@@ -66,8 +76,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Name two fittings that protect cables from sharp edges.',
-    options: ['Bushes and grommets', 'Nuts and bolts', 'Washers and springs', 'Clips and brackets'],
-    correctAnswer: 0,
+    options: [
+      'Washers and springs',
+      'Nuts and bolts',
+      'Clips and brackets',
+      'Bushes and grommets',
+    ],
+    correctAnswer: 3,
     explanation:
       'Bushes, grommets, and trunking end caps protect cables from sharp edges at entry and exit points.',
   },
@@ -75,12 +90,12 @@ const quizQuestions = [
     id: 4,
     question: "What is the risk of exceeding a cable's maximum pulling tension?",
     options: [
-      'Faster installation',
       'Damage to insulation and conductor stretching',
-      'Better cable performance',
-      'Reduced installation cost',
+      'ISO 10816 (now superseded by ISO 20816)',
+      'High temperature and fire resistant applications',
+      'Ensure control measures are followed and remain effective',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Exceeding pulling tension limits can stretch conductors, damage insulation, and compromise cable integrity.',
   },
@@ -88,10 +103,10 @@ const quizQuestions = [
     id: 5,
     question: 'How should cables be stored before installation?',
     options: [
-      'Flat on the ground',
+      'Mid-morning to early afternoon',
       'On drums or reels, kept off the ground',
-      'Coiled in corners',
-      'Hanging from ceiling',
+      'Non-employees who may be affected by the work',
+      'Access points for junction boxes or pull points',
     ],
     correctAnswer: 1,
     explanation:
@@ -101,12 +116,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why must outdoor cables be UV-rated?',
     options: [
-      'To look better',
+      'Increases current for same real power, causing losses',
+      'It helps with fault finding, safety, and circuit design',
       'To prevent sheath degradation from sunlight',
-      'To reduce cost',
-      'To improve flexibility',
+      'One socket with higher resistance reading',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'UV radiation from sunlight can degrade cable sheaths, making them brittle and prone to cracking.',
   },
@@ -114,20 +129,25 @@ const quizQuestions = [
     id: 7,
     question: 'Name one method to prevent crushing during installation.',
     options: [
-      'Use soft-edged cleats',
+      'Install in wet conditions',
       'Pull cables faster',
       'Use smaller drums',
-      'Install in wet conditions',
+      'Use soft-edged cleats',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Soft-edged cleats or lined saddles prevent crushing of delicate cables during installation and support.',
   },
   {
     id: 8,
     question: 'Which regulation requires cables to be protected from damage during installation?',
-    options: ['BS 6423', 'BS 7671', 'BS 5839', 'BS 7909'],
-    correctAnswer: 1,
+    options: [
+      'BS 7671',
+      'BS 5839',
+      'BS 6423',
+      'BS 7909',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 7671 requires cables to be installed so they are not subject to damage under normal service conditions.',
   },

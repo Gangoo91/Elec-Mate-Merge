@@ -32,7 +32,12 @@ const quickCheckQuestions = [
   {
     id: 'stefan-boltzmann',
     question: 'In the Stefan-Boltzmann equation Q = εσAT⁴, what does the symbol σ represent?',
-    options: ['Emissivity', 'Surface area', 'Stefan-Boltzmann constant', 'Absorptivity'],
+    options: [
+      'Measure and cut carefully',
+      'Health, safety and welfare',
+      'Stefan-Boltzmann constant',
+      'SAP/SBEM (Part L compliance)',
+    ],
     correctIndex: 2,
     explanation:
       'σ (sigma) is the Stefan-Boltzmann constant with a value of 5.67 × 10⁻⁸ W/m²K⁴. It is a fundamental physical constant that relates radiated power to temperature.',
@@ -40,7 +45,12 @@ const quickCheckQuestions = [
   {
     id: 'black-body',
     question: 'What is the emissivity of a perfect black body?',
-    options: ['0', '0.5', '0.9', '1.0'],
+    options: [
+      '0',
+      '0.5',
+      '0.9',
+      '1.0',
+    ],
     correctIndex: 3,
     explanation:
       'A perfect black body has an emissivity of 1.0, meaning it absorbs and emits the maximum possible radiation at any given temperature. Real surfaces always have emissivity less than 1.',
@@ -48,16 +58,26 @@ const quickCheckQuestions = [
   {
     id: 'low-e-glazing',
     question: 'What is the typical emissivity of low-e coated glazing?',
-    options: ['0.84', '0.50', '0.20', '0.05'],
-    correctIndex: 3,
+    options: [
+      '0.84',
+      '0.50',
+      '0.05',
+      '0.20',
+    ],
+    correctIndex: 2,
     explanation:
       'Low-e (low emissivity) coatings typically have emissivity values around 0.05-0.10, compared to 0.84 for standard glass. This dramatically reduces radiant heat loss through windows.',
   },
   {
     id: 'view-factor',
     question: 'What is the sum of all view factors from any surface in an enclosure?',
-    options: ['0', '0.5', '1.0', 'Variable'],
-    correctIndex: 2,
+    options: [
+      '1.0',
+      '0.5',
+      '0',
+      'Variable',
+    ],
+    correctIndex: 0,
     explanation:
       'The sum of all view factors from any surface must equal 1.0 (summation rule). This ensures all radiation leaving a surface is accounted for - it must go somewhere within the enclosure.',
   },
@@ -69,19 +89,24 @@ const quizQuestions = [
     question: 'What is thermal radiation?',
     options: [
       'Heat transfer through direct contact',
-      'Heat transfer through fluid movement',
       'Heat transfer through electromagnetic waves',
+      'Heat transfer through fluid movement',
       'Heat transfer through phase change',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Thermal radiation is the transfer of heat energy through electromagnetic waves (primarily infrared). Unlike conduction and convection, radiation requires no medium and can occur through a vacuum.',
   },
   {
     id: 2,
     question: 'A surface at 300K radiates 459 W/m². What power would it radiate at 600K?',
-    options: ['918 W/m²', '1836 W/m²', '3672 W/m²', '7344 W/m²'],
-    correctAnswer: 3,
+    options: [
+      '3672 W/m²',
+      '918 W/m²',
+      '7344 W/m²',
+      '1836 W/m²',
+    ],
+    correctAnswer: 2,
     explanation:
       'Using Stefan-Boltzmann law, Q ∝ T⁴. Doubling the absolute temperature (600K/300K = 2) increases radiation by 2⁴ = 16 times. 459 × 16 = 7344 W/m².',
   },
@@ -89,9 +114,9 @@ const quizQuestions = [
     id: 3,
     question: 'Which surface would absorb the most solar radiation?',
     options: [
+      'Red brick (α = 0.65)',
       'Polished aluminium (α = 0.10)',
       'White paint (α = 0.25)',
-      'Red brick (α = 0.65)',
       'Black paint (α = 0.95)',
     ],
     correctAnswer: 3,
@@ -102,8 +127,13 @@ const quizQuestions = [
     id: 4,
     question:
       'For an opaque surface in thermal equilibrium, what is the relationship between absorptivity (α) and emissivity (ε)?',
-    options: ['α + ε = 1', "α = ε (Kirchhoff's Law)", 'α × ε = 1', 'α = 1 - ε'],
-    correctAnswer: 1,
+    options: [
+      "α = ε (Kirchhoff's Law)",
+      'α + ε = 1',
+      'α × ε = 1',
+      'α = 1 - ε',
+    ],
+    correctAnswer: 0,
     explanation:
       "Kirchhoff's Law states that for an opaque surface in thermal equilibrium, absorptivity equals emissivity (α = ε) at the same wavelength and temperature. This fundamental relationship is essential for radiation calculations.",
   },
@@ -111,7 +141,12 @@ const quizQuestions = [
     id: 5,
     question:
       'A radiant ceiling panel operates at 40°C (313K) in a room at 20°C (293K). The ceiling area is 10m² with ε = 0.95. What is the net radiant heat output?',
-    options: ['520W', '680W', '850W', '1100W'],
+    options: [
+      '520W',
+      '680W',
+      '1100W',
+      '850W',
+    ],
     correctAnswer: 1,
     explanation:
       'Net radiation Q = εσA(T₁⁴ - T₂⁴) = 0.95 × 5.67×10⁻⁸ × 10 × (313⁴ - 293⁴) = 0.95 × 5.67×10⁻⁸ × 10 × (9.60×10⁹ - 7.37×10⁹) = 680W',
@@ -119,7 +154,12 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the view factor F₁₂ for two parallel, infinite plates facing each other?',
-    options: ['0', '0.5', '1.0', 'Depends on distance'],
+    options: [
+      '0',
+      '0.5',
+      '1.0',
+      'Depends on distance',
+    ],
     correctAnswer: 2,
     explanation:
       'For two infinite parallel plates facing each other, F₁₂ = 1.0. All radiation leaving surface 1 must reach surface 2 since the plates extend infinitely in all directions.',
@@ -129,12 +169,12 @@ const quizQuestions = [
     question:
       'Why do radiant heating panels provide better thermal comfort than convective heating?',
     options: [
-      'They heat air more quickly',
+      'Separate different voltage levels and prevent interference',
+      'Annually or when systems change significantly',
+      'Any person who may need assistance to evacuate the building',
       'They directly warm occupants and surfaces, not air',
-      'They use less energy overall',
-      'They eliminate draughts completely',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Radiant panels directly warm occupants and building surfaces through radiation, providing thermal comfort at lower air temperatures. This 'radiant temperature' effect allows comfort with 2-3°C lower air temperatures.",
   },
@@ -142,8 +182,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A double-glazed window has standard glass (ε = 0.84) facing a cavity. Replacing one pane with low-e glass (ε = 0.05) reduces radiative heat transfer by approximately:',
-    options: ['50%', '70%', '85%', '94%'],
-    correctAnswer: 3,
+    options: [
+      '94%',
+      '85%',
+      '50%',
+      '70%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Radiative transfer between parallel surfaces depends on effective emissivity. Standard cavity: εeff ≈ 0.72. With low-e: εeff ≈ 0.05. Reduction = (0.72-0.05)/0.72 = 93% reduction.',
   },
@@ -153,11 +198,11 @@ const quizQuestions = [
       'What is the dominant wavelength range for thermal radiation from building surfaces at typical temperatures (20-40°C)?',
     options: [
       'Ultraviolet (0.1-0.4 μm)',
-      'Visible light (0.4-0.7 μm)',
-      'Near infrared (0.7-3 μm)',
       'Far infrared (3-100 μm)',
+      'Near infrared (0.7-3 μm)',
+      'Visible light (0.4-0.7 μm)',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       "According to Wien's displacement law, the peak wavelength for radiation at 20-40°C (293-313K) is approximately 10 μm, which falls in the far infrared range. This is why thermal cameras operate in this wavelength band.",
   },
@@ -167,10 +212,10 @@ const quizQuestions = [
     options: [
       'Temperature difference',
       'Surface emissivities',
-      'View factor between surfaces',
       'Thermal conductivity of surfaces',
+      'View factor between surfaces',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'Thermal conductivity affects conduction heat transfer, not radiation. Radiative exchange depends on temperatures (T⁴), emissivities, view factors, and surface areas - but not on how well the surfaces conduct heat internally.',
   },

@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'isolation-first-step',
     question: 'What is the FIRST step in the safe isolation procedure?',
     options: [
-      'Lock off the isolator',
-      'Test for dead',
+      'To certify that a new installation complies with BS 7671',
       'Identify the source of supply and switch off',
-      'Prove the voltage indicator',
+      'The site supervisor or project manager',
+      'Direction of induced EMF in a generator',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'The first step is always to identify the correct source of supply and switch off the equipment or circuit. Attempting to isolate or lock off without first confirming you have the correct supply can lead to working on a live circuit.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'According to HSE Guidance Note GS38, what must you do with a voltage indicator BEFORE and AFTER testing for dead?',
     options: [
+      'Check the expiry date only',
       'Calibrate it at a laboratory',
       'Prove it on a known live source',
       'Replace the batteries',
-      'Check the expiry date only',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'GS38 requires that you prove your voltage indicator works on a known live source (a proving unit) both before and after testing for dead. This confirms the instrument was working correctly at the time of the test — it could have failed between the two proving checks.',
   },
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'regulation-12-eawr',
     question: 'Regulation 12 of the Electricity at Work Regulations 1989 requires that:',
     options: [
-      'All work must be carried out live',
+      'Sound pressure levels vary over a huge range (1:10 million)',
       'Equipment must be made dead before work begins, where reasonably practicable',
-      'Only apprentices may carry out isolation',
-      'Isolation is only needed for three-phase supplies',
+      'To account for loads not operating simultaneously at full capacity',
+      'A two-pole voltage indicator (VI) — single function, GS38 leads, prove-test-prove',
     ],
     correctIndex: 1,
     explanation:
@@ -54,10 +54,10 @@ const quickCheckQuestions = [
     id: 'lock-off-purpose',
     question: 'What is the PRIMARY purpose of applying a personal safety lock to an isolator?',
     options: [
-      'To show that maintenance is in progress',
+      'Different absorption and scattering at different wavelengths',
       'To prevent unauthorised re-energisation while work is being carried out',
-      'To satisfy insurance requirements',
-      'To mark the isolator for future reference',
+      'Avoid hazardous manual handling operations so far as is reasonably practicable',
+      'Upsizing the neutral conductor relative to the lines',
     ],
     correctIndex: 1,
     explanation:
@@ -69,7 +69,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'How many people are fatally electrocuted in UK workplaces on average each year?',
-    options: ['1-2 per year', 'Around 5 per year', 'Around 10-12 per year', 'Over 50 per year'],
+    options: [
+      '1-2 per year',
+      'Around 5 per year',
+      'Around 10-12 per year',
+      'Over 50 per year',
+    ],
     correctAnswer: 1,
     explanation:
       'HSE statistics show that approximately 5 workers are fatally electrocuted in UK workplaces each year, with many more suffering serious burns and injuries. Many of these deaths are entirely preventable through correct isolation procedures.',
@@ -78,12 +83,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is an APPROVED voltage indicator according to GS38?',
     options: [
-      'A standard multimeter set to AC volts',
+      'The zero or minimum value of the measured range',
+      'Income shows significant volatility and seasonal variation',
       'A two-pole voltage indicator with GS38-compliant probes',
-      'A neon screwdriver',
-      'A non-contact voltage detector (volt stick)',
+      'To display project schedule showing tasks, durations, and dependencies',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GS38 recommends two-pole voltage indicators (such as Fluke T-series or Martindale) with compliant probes. Multimeters, neon screwdrivers, and non-contact detectors are not suitable as the primary test instrument for proving dead — though non-contact detectors may be used as a supplementary check.',
   },
@@ -92,12 +97,12 @@ const quizQuestions = [
     question:
       'When isolating a three-phase supply, between which conductors must you test for dead?',
     options: [
-      'L1-N and L2-N only',
-      'L1-L2-L3 (phase-to-phase) only',
+      'A competent person with appropriate training and experience',
+      'Isolate BOTH the mains supply and the generator supply, and prove dead at the point of work',
+      'The UPS batteries must also be isolated, as they provide an independent source of supply',
       'All phase-to-phase, all phase-to-neutral, and all phase-to-earth combinations',
-      'L1-Earth only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'For a three-phase supply you must test between ALL combinations: L1-L2, L2-L3, L1-L3 (phase-to-phase), L1-N, L2-N, L3-N (phase-to-neutral), and L1-E, L2-E, L3-E, N-E (phase/neutral-to-earth). This gives a total of 10 tests to confirm the circuit is fully dead.',
   },
@@ -105,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'What does Regulation 14 of BS 7671:2018+A3:2024 specifically require?',
     options: [
-      'All circuits must have RCD protection',
       'Every installation shall be provided with means of switching off and isolation',
-      'All cables must be fire rated',
-      'Earth fault loop impedance must be measured',
+      'A competent person with appropriate training and experience',
+      'Adequate precautions must be taken to prevent it becoming live during the work',
+      'Isolate BOTH the mains supply and the generator supply, and prove dead at the point of work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 14 (Chapter 13, Fundamental Principles) requires that every installation shall be provided with suitable means of switching off and isolation to prevent or remove dangers. This underpins the legal and technical requirement for effective isolation facilities.',
   },
@@ -118,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why must GS38-compliant test probes have a maximum of 2mm exposed metal tip?',
     options: [
-      'To fit into small terminal openings',
+      'All phase-to-phase, all phase-to-neutral, and all phase-to-earth combinations',
       'To reduce the risk of arc flash and accidental short circuits',
-      'To improve measurement accuracy',
-      'To comply with manufacturer warranty requirements',
+      'Adequate precautions must be taken to prevent it becoming live during the work',
+      'A two-pole voltage indicator with GS38-compliant probes',
     ],
     correctAnswer: 1,
     explanation:
@@ -132,12 +137,12 @@ const quizQuestions = [
     question:
       'A UPS (Uninterruptible Power Supply) system feeds a server room. What additional consideration applies when isolating this circuit?',
     options: [
-      'No additional considerations are needed',
+      'All phase-to-phase, all phase-to-neutral, and all phase-to-earth combinations',
+      'Every installation shall be provided with means of switching off and isolation',
       'The UPS batteries must also be isolated, as they provide an independent source of supply',
-      'Only the mains input needs isolating',
-      'UPS systems cannot be isolated',
+      'Confirm all personnel are clear, remove personal locks, remove danger notices, replace covers, then re-energise',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "UPS systems contain batteries that provide power independently of the mains supply. Even if the mains input is isolated, the UPS output may remain live from battery power. Both the mains input AND the battery/DC bus must be isolated and proved dead, following the manufacturer's isolation procedure.",
   },
@@ -146,12 +151,12 @@ const quizQuestions = [
     question:
       'Under Regulation 13 of the Electricity at Work Regulations 1989, what precautions are required for work on dead equipment?',
     options: [
-      'No specific precautions beyond switching off',
+      'The name of the person who isolated it, the date, and what work is being carried out',
+      'A two-pole voltage indicator with GS38-compliant probes',
+      'All phase-to-phase, all phase-to-neutral, and all phase-to-earth combinations',
       'Adequate precautions must be taken to prevent it becoming live during the work',
-      'Only a visual check is needed',
-      'A risk assessment is sufficient — no physical precautions required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 13 states that adequate precautions shall be taken to prevent conductors from becoming electrically charged during work. This means isolation, locking off, proving dead, and posting warning notices — the full safe isolation procedure.',
   },
@@ -159,12 +164,12 @@ const quizQuestions = [
     id: 8,
     question: 'Who is legally permitted to carry out safe isolation of electrical circuits?',
     options: [
-      'Any employee on site',
-      'Only a qualified electrician',
       'A competent person with appropriate training and experience',
-      'Only the site manager',
+      'To verify protective devices will operate within required time',
+      'They melt at 120-180°C causing cables to collapse',
+      'Consult with them in good time on health and safety matters',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The Electricity at Work Regulations require that persons carrying out electrical work must be competent — possessing adequate training, knowledge, and experience for the task. This could be a qualified electrician or a trained maintenance technician; the key requirement is demonstrated competence for the specific task.',
   },
@@ -172,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: 'After completing maintenance work, what is the correct re-energisation procedure?',
     options: [
-      'Remove locks and switch on immediately',
+      'Prove the voltage indicator on a known live source, then re-test for dead, then prove the indicator again',
       'Confirm all personnel are clear, remove personal locks, remove danger notices, replace covers, then re-energise',
-      'Ask anyone nearby to switch on',
-      'Re-energise first, then replace covers',
+      'The UPS batteries must also be isolated, as they provide an independent source of supply',
+      'The name of the person who isolated it, the date, and what work is being carried out',
     ],
     correctAnswer: 1,
     explanation:
@@ -186,10 +191,10 @@ const quizQuestions = [
     question:
       'A maintenance technician tests for dead and gets a zero reading, but did NOT prove the voltage indicator beforehand. What should they do?',
     options: [
-      'Proceed with the work — the reading was zero',
-      'Use a different meter and re-test',
+      'The UPS batteries must also be isolated, as they provide an independent source of supply',
+      'All phase-to-phase, all phase-to-neutral, and all phase-to-earth combinations',
       'Prove the voltage indicator on a known live source, then re-test for dead, then prove the indicator again',
-      'Ask a colleague to confirm',
+      'Every installation shall be provided with means of switching off and isolation',
     ],
     correctAnswer: 2,
     explanation:
@@ -200,12 +205,12 @@ const quizQuestions = [
     question:
       'What is the minimum safe isolation requirement when working on a circuit fed from a standby generator as well as a mains supply?',
     options: [
-      'Isolate the mains supply only',
-      'Isolate the generator only',
+      'The name of the person who isolated it, the date, and what work is being carried out',
+      'All phase-to-phase, all phase-to-neutral, and all phase-to-earth combinations',
+      'The UPS batteries must also be isolated, as they provide an independent source of supply',
       'Isolate BOTH the mains supply and the generator supply, and prove dead at the point of work',
-      'Turn off the generator and leave the changeover switch in auto',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Where multiple sources of supply exist (mains and standby generator), ALL sources must be isolated. Leaving either source connected means the circuit could become live — particularly dangerous with automatic changeover switches that can energise without warning.',
   },
@@ -214,12 +219,12 @@ const quizQuestions = [
     question:
       'What information should be written on a danger notice attached to an isolated supply?',
     options: [
-      'The company name only',
       'The name of the person who isolated it, the date, and what work is being carried out',
-      'The circuit number only',
-      'A general warning to keep out',
+      'To reduce the risk of arc flash and accidental short circuits',
+      'All phase-to-phase, all phase-to-neutral, and all phase-to-earth combinations',
+      'Every installation shall be provided with means of switching off and isolation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Danger notices must include the name of the person who applied the isolation, the date and time, and a description of the work being carried out. This allows anyone finding the notice to identify who is responsible and contact them before any attempt to re-energise.',
   },

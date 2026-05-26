@@ -29,8 +29,8 @@ const quickCheckQuestions = [
     options: [
       'Universal Glare Ratio',
       'Unified Glare Rating',
-      'Unit Glare Reduction',
       'Uniform Glare Resistance',
+      'Unit Glare Reduction',
     ],
     correctIndex: 1,
     explanation:
@@ -39,8 +39,13 @@ const quickCheckQuestions = [
   {
     id: 'ugr-office-limit',
     question: 'What is the maximum UGR limit for a typical office environment?',
-    options: ['UGR ≤ 16', 'UGR ≤ 19', 'UGR ≤ 22', 'UGR ≤ 28'],
-    correctIndex: 1,
+    options: [
+      'UGR ≤ 16',
+      'UGR ≤ 28',
+      'UGR ≤ 19',
+      'UGR ≤ 22',
+    ],
+    correctIndex: 2,
     explanation:
       'Offices and computer workstations require UGR ≤ 19 to ensure visual comfort during prolonged tasks. This limit is specified in BS EN 12464-1 for general office work.',
   },
@@ -48,12 +53,12 @@ const quickCheckQuestions = [
     id: 'shielding-angle',
     question: 'What is the primary purpose of a luminaire shielding angle?',
     options: [
-      'To increase light output',
+      'Through regular inspections, observations, and documented checks',
+      'Outriggers or stabilisers must be fitted to extend the effective base',
       'To prevent direct view of the lamp from normal viewing angles',
-      'To reduce energy consumption',
-      'To improve colour rendering',
+      'To enable rapid rescue of workers in emergency situations',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The shielding angle prevents direct view of high-luminance lamp surfaces from typical viewing positions. A higher shielding angle means the lamp is hidden at smaller angles from horizontal, reducing potential glare.',
   },
@@ -62,12 +67,12 @@ const quickCheckQuestions = [
     question:
       "Which type of glare occurs when light reflects off shiny surfaces into the observer's eyes?",
     options: [
-      'Direct glare',
-      'Discomfort glare',
       'Reflected glare (veiling reflections)',
-      'Disability glare',
+      'The intersection of fan and system curves',
+      'Flammable liquids such as petrol and solvents',
+      'To detect early signs of work-related ill health',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Reflected glare (also called veiling reflections) occurs when light reflects off glossy surfaces such as screens, paper, or worktops. This can reduce contrast and visibility of the task.',
   },
@@ -77,7 +82,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'According to BS EN 12464-1, what UGR limit applies to detailed drawing offices?',
-    options: ['UGR ≤ 13', 'UGR ≤ 16', 'UGR ≤ 19', 'UGR ≤ 22'],
+    options: [
+      'UGR ≤ 13',
+      'UGR ≤ 16',
+      'UGR ≤ 19',
+      'UGR ≤ 22',
+    ],
     correctAnswer: 1,
     explanation:
       'Technical drawing offices require UGR ≤ 16 due to the precision visual tasks involved. This more stringent limit reduces discomfort during detailed work requiring high visual accuracy.',
@@ -86,19 +96,24 @@ const quizQuestions = [
     id: 2,
     question: "In the UGR formula, what does the term 'Lb' represent?",
     options: [
-      'Luminaire background luminance',
+      'Reduced light output ratio (LOR) and efficiency',
+      'Decreases UGR (better glare control)',
       'Background luminance of the room surfaces',
-      'Lamp brightness',
-      'Light level at the task',
+      'Behind the screen relative to the user',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Lb represents the background luminance - the average luminance of the room surfaces (walls, ceiling) excluding the luminaires. Higher background luminance reduces the contrast with luminaires, lowering perceived glare.',
   },
   {
     id: 3,
     question: 'What UGR limit is appropriate for a warehouse or corridor?',
-    options: ['UGR ≤ 16', 'UGR ≤ 19', 'UGR ≤ 25', 'UGR ≤ 28'],
+    options: [
+      'UGR ≤ 25',
+      'UGR ≤ 16',
+      'UGR ≤ 19',
+      'UGR ≤ 28',
+    ],
     correctAnswer: 3,
     explanation:
       'Corridors, warehouses, and circulation areas permit UGR ≤ 28 as these spaces involve less demanding visual tasks and shorter occupation times. The relaxed limit allows more economical luminaire selection.',
@@ -108,12 +123,12 @@ const quizQuestions = [
     question:
       'Which factor in the UGR calculation accounts for luminaire position relative to the observer?',
     options: [
-      'Luminaire luminous area (A)',
       'Position index (p)',
+      'Luminaire luminous area (A)',
       'Background luminance (Lb)',
       'Luminaire luminance (L)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The position index (p) accounts for the luminaire's position in the observer's field of view. Luminaires directly ahead contribute more to glare than those at the periphery, reflected in the Guth position index.",
   },
@@ -121,16 +136,26 @@ const quizQuestions = [
     id: 5,
     question:
       'For a luminaire with high lamp luminance, what minimum shielding angle is typically recommended?',
-    options: ['10°', '20°', '30°', '45°'],
-    correctAnswer: 2,
+    options: [
+      '20°',
+      '30°',
+      '45°',
+      '10°',
+    ],
+    correctAnswer: 1,
     explanation:
       'Luminaires with high lamp luminance (&gt;50,000 cd/m²) typically require shielding angles of 30° or greater. This prevents direct view of the lamp from normal working positions and reduces discomfort glare.',
   },
   {
     id: 6,
     question: 'What is the recommended UGR limit for a school classroom?',
-    options: ['UGR ≤ 16', 'UGR ≤ 19', 'UGR ≤ 22', 'UGR ≤ 25'],
-    correctAnswer: 1,
+    options: [
+      'UGR ≤ 16',
+      'UGR ≤ 22',
+      'UGR ≤ 19',
+      'UGR ≤ 25',
+    ],
+    correctAnswer: 2,
     explanation:
       'School classrooms require UGR ≤ 19 to support reading, writing, and viewing whiteboards/screens. This aligns with general office requirements for visual comfort during prolonged concentration.',
   },
@@ -140,11 +165,11 @@ const quizQuestions = [
       'When assessing reflected glare on VDU screens, what luminaire position is most critical?',
     options: [
       'Directly above the workstation',
-      'Behind the screen relative to the user',
-      "In front of the screen in the user's direct view",
       'At 45° either side of the screen',
+      "In front of the screen in the user's direct view",
+      'Behind the screen relative to the user',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Luminaires behind the screen (in front of the user) are most likely to create reflections on the screen surface. The reflection zone depends on screen tilt angle and luminaire positioning relative to the user's viewing direction.",
   },
@@ -152,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'How does increasing room surface reflectance typically affect UGR?',
     options: [
-      'Increases UGR (worse glare)',
       'Decreases UGR (better glare control)',
       'Has no effect on UGR',
+      'Increases UGR (worse glare)',
       'Only affects direct glare, not UGR',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Higher room surface reflectance increases background luminance (Lb), reducing the contrast between luminaires and surroundings. This typically decreases UGR values, improving visual comfort.',
   },
@@ -165,10 +190,10 @@ const quizQuestions = [
     id: 9,
     question: 'What does a UGR table typically provide for a specific luminaire?',
     options: [
-      'Only the single UGR value for any room',
+      'Induction burn from proximity to high-frequency conductors',
       'UGR values for various room dimensions and reflectances',
-      "The luminaire's power consumption",
-      'Maintenance factor recommendations',
+      'Add capacitors to offset inductive effects',
+      'The design meets BS 7671 and client requirements',
     ],
     correctAnswer: 1,
     explanation:
@@ -178,7 +203,12 @@ const quizQuestions = [
     id: 10,
     question:
       'In controlling glare for VDU workstations, what luminaire luminance limit is recommended when viewed at 65° from vertical?',
-    options: ['500 cd/m²', '1,500 cd/m²', '3,000 cd/m²', '5,000 cd/m²'],
+    options: [
+      '500 cd/m²',
+      '1,500 cd/m²',
+      '3,000 cd/m²',
+      '5,000 cd/m²',
+    ],
     correctAnswer: 2,
     explanation:
       'BS EN 12464-1 recommends limiting luminaire luminance to 3,000 cd/m² at 65° from vertical for areas with VDU use. This reduces the likelihood of screen reflections and direct glare from luminaires in the peripheral vision.',
@@ -187,8 +217,13 @@ const quizQuestions = [
     id: 11,
     question:
       'What type of glare temporarily reduces visual performance without necessarily causing discomfort?',
-    options: ['Discomfort glare', 'Disability glare', 'Reflected glare', 'Contrast glare'],
-    correctAnswer: 1,
+    options: [
+      'Discomfort glare',
+      'Contrast glare',
+      'Reflected glare',
+      'Disability glare',
+    ],
+    correctAnswer: 3,
     explanation:
       'Disability glare reduces visual performance by scattering light within the eye, reducing contrast sensitivity. It can occur without discomfort, such as when driving towards low sun. UGR primarily addresses discomfort glare.',
   },
@@ -196,12 +231,12 @@ const quizQuestions = [
     id: 12,
     question: 'When using louvred luminaires for glare control, what is the primary trade-off?',
     options: [
-      'Higher energy consumption',
       'Reduced light output ratio (LOR) and efficiency',
-      'Increased maintenance requirements',
-      'Poor colour rendering',
+      'UGR values for various room dimensions and reflectances',
+      'Behind the screen relative to the user',
+      'Background luminance of the room surfaces',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Louvres and deep recessing reduce UGR effectively but absorb some light, reducing the luminaire's Light Output Ratio (LOR). This means more luminaires or higher wattage may be needed to achieve required illuminance levels.",
   },

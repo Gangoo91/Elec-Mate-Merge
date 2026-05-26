@@ -43,10 +43,10 @@ const checks = [
     question:
       "What's a 'Higher-Risk Building' (HRRB) under the Building Safety Act 2022?",
     options: [
-      "Any building above 4 storeys.",
+      "Lighting is part of the workplace under HASAWA s.2(2)(d) and the Workplace (Health, Safety and Welfare) Regulations 1992 Reg 8. Inadequate task lighting in a confined area is a hazard in itself — it hides other hazards (trip risks, services, structural defects) and increases the chance of an error. The fix: bring temporary task lighting, set it up before tools come out, and record the temporary supply on the dynamic assessment.",
       "A building of at least 18 metres in height OR at least 7 storeys, AND containing at least 2 residential units. Defined in the Higher-Risk Buildings (Descriptions and Supplementary Provisions) Regulations 2023. Other categories (hospitals, care homes) are also covered for design/construction phase but the in-occupation regime applies primarily to the residential definition.",
-      "Any building with a lift.",
-      "Any building owned by the council.",
+      "Don't move tools, equipment, locks, voltage indicators or anything else. Don't restore power. Don't continue work. Photograph the scene from multiple angles. Identify witnesses and ask them to record their observations. Notify the firm's responsible person. The scene as it was is the evidence.",
+      "England has its set; Wales has its own equivalent set (similar but not identical); Scotland has Building Standards Technical Handbooks (different framework); Northern Ireland has its own. Direction of travel is broadly aligned but specifics differ. Check the relevant jurisdiction.",
     ],
     correctIndex: 1,
     explanation:
@@ -57,12 +57,12 @@ const checks = [
     question:
       "What's the Building Safety Regulator (BSR) and where does it sit?",
     options: [
-      "A private company.",
+      "A document prepared by the principal contractor before the construction phase starts, setting out the health and safety arrangements for the site (welfare, induction, site rules, hazard controls, emergency procedures, monitoring). Required for any project where there is more than one contractor; the depth of the plan scales with the project size and risk profile. Sub-contractors are entitled to relevant extracts on induction.",
+      "Load management is doing its job. The CT clamp on the main supply detects the rising property total when the heat pump enters defrost cycle or fast-heat mode (drawing 3-7 kW) and the charger throttles its own draw to keep the total below the configured limit (typically the main-fuse rating). This is the design intent — better to throttle the charger temporarily than to trip the cut-out. The customer should be briefed on this at handover so the slowdown is not interpreted as a fault.",
       "Established under BSA 2022 as a function within the HSE. Three statutory functions: (1) overseeing the safety and standards of all buildings; (2) helping and encouraging the built-environment industry and building control to improve their competence; (3) leading implementation of the new HRRB regulatory regime including the gateway approval process during design / construction.",
-      "Part of the local authority.",
-      "An independent charity.",
+      "Phase 1 (Days 1-30): Foundation — self-assessment, identify target competency, establish baseline, begin daily reflection practice, and find an accountability partner. Phase 2 (Days 31-60): Practice — apply new skills in specific situations, gather feedback, adjust approach based on results. Phase 3 (Days 61-90): Integration — embed new behaviours into routine, measure progress against baseline, plan for ongoing development",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "BSR is hosted within the HSE and led by a Chief Inspector of Buildings. It has prosecution powers, can serve compliance notices, and runs the gateway regime (Gateway 1 at planning, Gateway 2 before construction, Gateway 3 before occupation). Failure at any gateway stops the project.",
   },
@@ -71,10 +71,10 @@ const checks = [
     question:
       "What's the 'golden thread' of information under BSA 2022?",
     options: [
-      "A copper cable colour code.",
+      "Politely tell the Site Manager you've been tasked by your own supervisor on a different priority, and offer to ask your supervisor to come over so the two managers can re-prioritise. You take instructions on the work face from your own contractor's chain (Site Supervisor → Project Engineer → Contracts Manager). The main contractor's Site Manager co-ordinates between contractors but does not give direct instructions to a sub-contractor's apprentice.",
       "A digital, accurate, accessible, secure information set covering the design, construction and ongoing management of an HRRB. Held by the Accountable Person during occupation. Includes design drawings, specifications, materials and product information, fire-safety strategy, evacuation arrangements, and changes through the building's life. Provides traceability of who designed/installed/changed what — including the electrical installation.",
-      "A mortgage document.",
-      "A type of fire-rated paint.",
+      "Zs = Ze + (R1 + R2 at 70 deg C) — R1 = 3.08 milliohm/m x 1.20 x 35 = 0.13 ohms; R2 = 7.41 milliohm/m x 1.20 x 35 = 0.31 ohms; Zs = 0.35 + 0.13 + 0.31 = 0.79 ohms. BS 7671:2018+A4:2026 Table 41.3 max Zs for Type C 40 A = 0.55 ohms — design Zs exceeds maximum, ADS via OPD does not work; rely on the 30 mA RCD for ADS, which is acceptable per Reg 411.4.205 / 411.4.4.",
+      "(a) Unreasonable in all the circumstances for the conductor to be dead; AND (b) reasonable in all the circumstances for the work to be done live; AND (c) suitable precautions taken to prevent injury. All three must be satisfied. The bar is deliberately high — the HSE prosecutes Reg 14 breaches harshly because the consequences are usually fatal.",
     ],
     correctIndex: 1,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: "Why was the Building Safety Act 2022 enacted?",
     options: [
-      "To increase house prices.",
+      "The Electrical Contractors' Association — the largest trade association for electrical contractors in England, Wales and Northern Ireland. Membership signals quality, access to ECA technical guidance, ECA insurance products, ECA Apprentice scheme (for member firms taking on apprentices), and joint co-running of the JIB. ECA is not a CPS — you still need separate CPS membership for Part P self-certification.",
       "Direct response to the Grenfell Tower fire (2017) and the Hackitt Review (2018), which identified a 'race to the bottom' on safety and accountability gaps in higher-risk buildings. BSA 2022 introduced the new regulatory regime, the Building Safety Regulator, the dutyholder framework, the gateways and the golden thread of information.",
-      "To deregulate construction.",
-      "To replace BS 7671.",
+      "Schedule 1 = list of severe injuries triggering immediate phone + F2508 within 10 days. Over-7-day = injury causing 8+ days off normal duties triggering F2508A within 15 days. Different categories, different timescales, different forms.",
+      "Each operative working on the isolated circuit fits their own lock to the isolation point (or to a hasp / multi-lock if multiple operatives). Tag identifies the operative, the circuit, the date / time, and the work. Lock removed only by the operative who fitted it (and only when their work is complete and safe to re-energise).",
     ],
     correctAnswer: 1,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: "What does the BSA 2022 dutyholder framework introduce for HRRBs?",
     options: [
-      "Nothing new.",
+      "Where the employee knew or ought reasonably to have known about the hazard, where they had an opportunity to communicate it to the colleague or supervisor, and where the failure to communicate caused or contributed to the colleague being exposed to risk. HSE has prosecuted individual employees under s.7 for failing to brief a successor on a permit-to-work, for not communicating that a circuit was still live, and for not raising a concern about a defective safe system of work. The s.7 duty is personal and cannot be delegated.",
+      "ASHP source is outdoor air, which in the UK varies from -10°C in cold spells to 25°C+ in summer. The cold-day source temperature drops the COP because the unit has a bigger temperature lift to make. GSHP source is the ground at 1-2 m depth (horizontal slinky) or at 50-150 m depth (borehole), which sits at a stable 8-12°C year-round. So GSHP doesn't suffer the cold-day SCOP penalty — typical SCOP 4.0-5.0 vs ASHP 2.8-3.8. The trade-off is GSHP capital cost (£20-35k vs £10-15k for ASHP) and constructability (boreholes / trenching).",
       "Three in-occupation duty holders: (1) Principal Accountable Person (the person who owns or has responsibility for the structure / external walls); (2) Accountable Persons (any person responsible for repair of any part of the common parts including the structure); (3) Responsible Person (under Regulatory Reform (Fire Safety) Order). The PAP must register the building, prepare a safety case, appoint a Building Safety Manager (where appropriate), and engage residents.",
-      "Just a new logo.",
-      "Only applies in Wales.",
+      "Micro-hydro can deliver excellent baseload renewable electricity if the site has the head (vertical drop) and flow rate to support it. Unlike wind and PV, hydro runs 24/7 and tracks demand reasonably well. Practical issues: Environment Agency / Natural Resources Wales abstraction licensing, fish protection requirements, weir and intake construction cost, and connection to the property (often hundreds of metres of buried cable). The right site is rare; where it exists, micro-hydro is one of the best-performing renewables per pound spent.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The dutyholder cascade for HRRBs is one of the most significant changes. For an electrical contractor working on a HRRB, identifying the Principal Accountable Person is part of the contractor due diligence — they're the person who must approve significant changes and hold the golden thread.",
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: "What are the three BSA 2022 'gateways' for HRRB construction?",
     options: [
-      "Three colours of cable.",
+      "The Achievement Measurement 2 — the long-standing JIB practical test for electrical installation. It's a multi-day practical assessment in a controlled environment covering installation, testing, fault-finding and inspection. Passing the AM2 is the line between 'Improver' and 'Electrician' on the JIB grading and is the practical centrepiece of the EPA for the Installation Electrician apprenticeship.",
+      "Are recommended by Reg 421.1.7 for AC final circuits supplying socket-outlets ≤ 32 A in dwellings — strengthened to a requirement in HRRBs under the Building Safety Act 2022, and treated as effectively required in HMOs / sleeping accommodation / care homes by fire-safety guidance. Not strictly required on this small commercial install, but a sensible fit on the IT rack and EV circuits.",
+      "SELV / PELV barriers, basic protection (insulation, barriers, enclosures, obstacles, placing out of reach), fault protection (ADS via overcurrent device or RCD, double or reinforced insulation, electrical separation, earth-free local equipotential bonding), additional protection (RCD ≤ 30 mA, supplementary equipotential bonding).",
       "Gateway 1 — at planning, considers fire safety and access. Gateway 2 — before construction, the BSR reviews the design and construction control plan; no construction can start without approval. Gateway 3 — before occupation, the BSR signs off the as-built building against the approved design and the golden thread; no occupation without approval.",
-      "Three fee bands.",
-      "Three building codes.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The gateways are project stage-gates. Gateway 2 in particular is a major change — building control approval used to be 'Building Regs sign-off'; now BSR holds the gate and won't open it until satisfied with the design and the construction control plan.",
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: "How does BSA 2022 affect the competence framework for the construction industry?",
     options: [
-      "It removes competence requirements.",
       "Section 2 requires the BSR to facilitate improvement of competence of those working on building safety and standards. Industry-led 'Competence Steering Group' has produced sector competence frameworks (engineers, fire engineers, principal designers, principal contractors, electrical installers among others). Mandatory competence is being introduced gradually for specified roles on HRRBs and is moving towards being mandatory more broadly.",
-      "Only applies to lawyers.",
-      "Only applies to accountants.",
+      "They share components — both depend on R1+R2 (the cable line + CPC resistance for Zs, line + neutral resistance for voltage drop). A high-Zs reading often correlates with a high voltage drop reading because both are dominated by the cable\\\\'s R1 contribution. If you find one is borderline, check the other. The two tests are complementary — Zs verifies fault-clearance (ADS), voltage drop verifies normal-operation quality. Both use cable resistance as a key input.",
+      "First, the customer cannot register the system for the Smart Export Guarantee (SEG), so they get no payment from the supplier for any electricity they export. Second, the install is still notifiable to the DNO under G98 / G99 and to building control under Part P — those obligations do not go away just because MCS is skipped.",
+      "It's a flag that the substance can cause an allergic respiratory response in some operatives — repeated exposure can sensitise even without a single high-dose event. Means tighter respiratory PPE control (FFP3 minimum, often a respirator), good extract ventilation, and health surveillance under COSHH 2002 Reg 11 if the exposure is regular. Two-pack epoxy isocyanates are the textbook example in the trade.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The competence framework affects electrical work indirectly via the JIB Approved Electrician / Electrotechnical Apprenticeship grading and through the IET / NICEIC / NAPIT competence schemes. Working on HRRBs is increasingly tied to demonstrable competence, and L3 + JIB grading is the apprentice route into that.",
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: "What's an 'Accountable Person' under BSA 2022 for an HRRB?",
     options: [
-      "Just the architect.",
+      "Avoid risks; evaluate unavoidable risks; combat at source; adapt work to the individual; adapt to technical progress; replace dangerous with less dangerous; develop coherent prevention policy; collective over individual measures; instruct workers",
       "The person or persons holding responsibility for the structure and exterior of an HRRB during occupation. Where there are multiple APs (e.g. block of flats with structure owned by one entity and external walls by another), the Principal Accountable Person is the one with the most significant responsibility for the structure.",
-      "Anyone in the building.",
-      "Only the fire brigade.",
+      "The handover pack — a single document (paper or digital) listing every piece of equipment installed with the manufacturer's part number, the serial number, the warranty period and a link to the user manual. Plus contact details for in-warranty service and the firm's after-care number.",
+      "Continuity of protective conductors then continuity of ring final live conductors then insulation resistance then polarity then earth electrode resistance (TT) then automatic disconnection of supply (live) then polarity (live) then RCD then functional checks.",
     ],
     correctAnswer: 1,
     explanation:
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: "How does BSA 2022 affect the standard liability period for defects?",
     options: [
-      "Reduces it to 1 year.",
+      "PV output is roughly proportional to the irradiance hitting the panel (W/m²). Cell efficiency does drop slightly as the cells heat up — typically 0.3-0.5% per °C above 25°C — but UK roofs rarely sit above 50°C and the irradiance variation between a sunny and cloudy day is far larger than the temperature derate. So total annual yield (kWh) is dominated by how much sunlight the array sees, not how warm it is.",
+      "Investigate the complaint fairly. Under CRA 2015 s.49 (reasonable care and skill), if the work is defective the consumer is entitled to remedies — re-performance, or price reduction / partial refund if re-performance isn't possible or proportionate. Address the issue promptly; don't make it adversarial unless the claim is obviously baseless.",
       "Section 135 amends the Defective Premises Act 1972: extends the limitation period for claims relating to dwellings from 6 years to 30 years for retrospective claims (work completed before BSA commencement) and 15 years for prospective claims (work after commencement). Significantly extends contractor liability for residential work in particular.",
-      "Removes liability entirely.",
-      "Only changes for landlords.",
+      "The Apprentice, the College Tutor and the Workplace Mentor (with the Employer's training lead or HR sometimes attending as a fourth voice). The three-way review is the formal sit-down where progress is calibrated, gaps identified, and the next month's targets agreed. It's the structural mechanism that stops academic and practical sides drifting apart.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The 30-year retrospective liability is one of the most commercially significant changes. Electrical contractors who installed work on residential buildings up to 30 years ago can now be sued for defects. PI insurance, document retention and historical records all become much more important.",
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: "What's the 'safety case' the Principal Accountable Person must prepare?",
     options: [
-      "A briefcase for documents.",
+      "Yes — IET subscriptions are tax-deductible against income tax under HMRC's List 3 of approved professional bodies. Effectively reduces the cost by your marginal tax rate. For a higher-rate taxpayer (40%) the £200/year MIET subscription costs £120 net. List 3 covers most major UK professional bodies including IET, RICS, IMechE, IChemE etc.",
+      "The more precisely you can identify your emotion (e.g., distinguishing \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"frustrated\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" from \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"disappointed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" from \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"overwhelmed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"), the more effectively you can select the appropriate regulation strategy — because different emotions require different responses",
+      "Establish a full exclusion zone with barriers minimum 6 metres from the base, deploy adequate task and area lighting, station banksmen at all access points, display warning signs, ensure all personnel wear enhanced high-visibility clothing, have a traffic management plan approved by the local authority, and confirm the rescue plan accounts for reduced visibility",
       "A document setting out how building safety risks are being identified, mitigated and managed for the HRRB. Includes the fire and structural risks, the strategies for managing them, the residents' engagement strategy, and the golden thread links. Must be kept under review and updated. Submitted to the BSR with the building registration.",
-      "A type of insurance policy.",
-      "A blueprint of the building.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The safety case is the document that proves the PAP understands the building's risks and is managing them. Electrical installation conditions, EICR currency, fire-detection-and-alarm system design and EV charging electrical infrastructure all sit inside a safety case for an HRRB.",
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       "How does BSA 2022 affect electrical contractors working on non-HRRB residential buildings?",
     options: [
-      "Not at all.",
       "Indirectly but significantly. (1) The 30-year extended limitation period for residential defect claims applies. (2) The competence framework drives certification body requirements upwards. (3) Building Regs amendments (especially Approved Doc B fire safety) tighten requirements that affect electrical installations. (4) The general regulatory direction emphasises traceability — EIC, EICR, designer competence, signed certificates — for all residential work, not just HRRBs.",
-      "Only on Tuesdays.",
-      "Only in winter.",
+      "Apprentice (graded by year of apprenticeship) → on completion of Level 3 + AM2/E + 18th Ed → Electrician → with additional experience and competence demonstration → Approved Electrician → with further design / fault-finding competence → Technician. Each grade unlocks higher pay (set by the JIB National Working Rules) and a wider scope of work the operative can carry out unsupervised on JIB-affiliated sites.",
+      "Reg 132.13 — 'The designer of the electrical installation shall provide ... the information necessary to allow the safe operation, inspection, alteration, repair, maintenance and dismantling of the electrical installation'. The information has to be available to whoever is going to operate or maintain it. That is the BS 7671 hook for site-folder paperwork (single line diagram, schedule of circuits, certificate, schedule of test results, mfr data).",
+      "LLP = Limited Liability Partnership, a hybrid form created by the Limited Liability Partnerships Act 2000. Partners have limited liability (like Ltd directors) but the partnership is taxed as a partnership (members file Self Assessment on share of profits, no Corporation Tax). Common in professional services (law, accountancy) but rare in trades. For an electrical firm with multiple working partners LLP is sometimes considered as an alternative to Ltd.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The L3 message: BSA 2022's HRRB regime is the headline, but the wider effect on competence, documentation and liability touches every residential job. The 30-year retrospective liability alone reshapes how firms think about record-keeping.",
   },

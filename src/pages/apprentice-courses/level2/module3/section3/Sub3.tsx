@@ -41,8 +41,13 @@ const checks = [
     id: 'inequality-check',
     question:
       'Reg 433.1.1 states the cable sizing inequality as:',
-    options: ['Ib ≤ Iz ≤ In', 'Ib ≤ In ≤ Iz', 'In ≤ Ib ≤ Iz', 'Iz ≤ In ≤ Ib'],
-    correctIndex: 1,
+    options: [
+      'Ib ≤ Iz ≤ In',
+      'Iz ≤ In ≤ Ib',
+      'In ≤ Ib ≤ Iz',
+      'Ib ≤ In ≤ Iz',
+    ],
+    correctIndex: 3,
     explanation:
       'Ib ≤ In ≤ Iz. Design current Ib must be ≤ device rating In, and device rating must be ≤ cable Iz (after all derating). Get the order wrong and either the cable cooks or the protective device never trips.',
   },
@@ -50,7 +55,12 @@ const checks = [
     id: 'derate-direction-check',
     question:
       'Cg, Ca, Ci and Cf are all correction factors that go in the denominator of the required-It calculation. Which way do they push the required tabulated cable size?',
-    options: ['Down — derating reduces required size', 'Up — derating increases required size', 'They cancel out', 'They have no effect on Iz'],
+    options: [
+      'The Managers and Professionals test',
+      'Up — derating increases required size',
+      'Inspect and clean connector end-faces',
+      'Poor workmanship and vibration',
+    ],
     correctIndex: 1,
     explanation:
       'Required It = In / (Ca × Cg × Ci × Cf). All four factors are <1 in their derating direction, so dividing by them makes the required tabulated capacity bigger — meaning a bigger CSA. Derating bumps you up the cable-size ladder.',
@@ -59,8 +69,13 @@ const checks = [
     id: 'reference-method-check',
     question:
       'Two T&E cables clipped directly to a wall surface, with no other cables touching, no insulation around them. Which Reference Method?',
-    options: ['Method A', 'Method B', 'Method C', 'Method 100'],
-    correctIndex: 2,
+    options: [
+      'Method 100',
+      'Method C',
+      'Method A',
+      'Method B',
+    ],
+    correctIndex: 1,
     explanation:
       'Method C — clipped direct to a non-metallic wall, in free air. Best heat dissipation of the typical concealed methods, so the highest tabulated It values. Method A is conduit in insulated wall; Method 100 is T&E in thermal insulation.',
   },
@@ -71,7 +86,12 @@ const quizQuestions = [
     id: 1,
     question:
       'A circuit has design current Ib = 28 A, protective device In = 32 A. The minimum cable Iz (after all derating) must be:',
-    options: ['≥ 28 A', '≥ 32 A', '≥ 40 A', '≥ 45 A'],
+    options: [
+      '≥ 28 A',
+      '≥ 32 A',
+      '≥ 40 A',
+      '≥ 45 A',
+    ],
     correctAnswer: 1,
     explanation:
       'Reg 433.1.1: Ib ≤ In ≤ Iz. Iz must be at least 32 A (the In value), not 28 A (the Ib value). Otherwise the device might never trip on a small overload because the cable is the weak link.',
@@ -80,7 +100,12 @@ const quizQuestions = [
     id: 2,
     question:
       'A T&E circuit clipped direct on a wall surface with no insulation around it sits at:',
-    options: ['Reference Method A', 'Reference Method B', 'Reference Method C', 'Reference Method 100 (in thermal insulation)'],
+    options: [
+      'Reference Method 100 (in thermal insulation)',
+      'Reference Method A',
+      'Reference Method C',
+      'Reference Method B',
+    ],
     correctAnswer: 2,
     explanation:
       'Method C — clipped direct, free air on at least one side. Read tabulated It values from Table 4D5 (PVC T&E sheathed) column for Method C. Method 100 applies when the cable is wrapped in or covered by thermal insulation.',
@@ -89,8 +114,13 @@ const quizQuestions = [
     id: 3,
     question:
       'Group of 4 circuits run together, all PVC T&E, clipped direct (Method C). The grouping correction factor Cg from Table 4C1 is approximately:',
-    options: ['1.0 (no correction)', '0.85', '0.65', '0.50'],
-    correctAnswer: 2,
+    options: [
+      '0.85',
+      '1.0 (no correction)',
+      '0.50',
+      '0.65',
+    ],
+    correctAnswer: 3,
     explanation:
       'Table 4C1 — 4 grouped multicore cables clipped direct, Cg ≈ 0.65. Add more cables and the factor falls further. The cables can’t shed heat into each other, so each one’s Iz drops.',
   },
@@ -98,8 +128,13 @@ const quizQuestions = [
     id: 4,
     question:
       'Ambient temperature 35°C around 70°C PVC cable. The Ca correction (from Table 4B1) is approximately:',
-    options: ['1.05', '1.00', '0.94', '0.79'],
-    correctAnswer: 2,
+    options: [
+      '0.94',
+      '1.00',
+      '1.05',
+      '0.79',
+    ],
+    correctAnswer: 0,
     explanation:
       'Ca for 35°C ambient with 70°C PVC ≈ 0.94. Hotter ambient = less ΔT available between cable and surroundings = less heat the cable can shed = lower Iz. Below 30°C ambient, Ca > 1 (no derating, slight up-rating).',
   },
@@ -107,8 +142,13 @@ const quizQuestions = [
     id: 5,
     question:
       'A BS 3036 rewireable fuse protects a circuit. The Cf correction factor for the cable is:',
-    options: ['1.00', '0.94', '0.725', '0.50'],
-    correctAnswer: 2,
+    options: [
+      '0.94',
+      '0.725',
+      '0.50',
+      '1.00',
+    ],
+    correctAnswer: 1,
     explanation:
       'BS 3036 fuses fuse at higher multiples of In than modern devices, so the cable sees more sustained current before disconnection. Cf = 0.725 derates the cable to keep it safe. Modern BS 88 / BS EN 60898 / RCBO devices: Cf = 1.0, no derate.',
   },
@@ -118,11 +158,11 @@ const quizQuestions = [
       'Required It (the tabulated current the cable must have) is calculated by:',
     options: [
       'It = In × Ca × Cg × Ci × Cf',
-      'It = In ÷ (Ca × Cg × Ci × Cf)',
       'It = Ib ÷ (Ca × Cg)',
+      'It = In ÷ (Ca × Cg × Ci × Cf)',
       'It = Iz × (Ca + Cg + Ci + Cf)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'It = In / (Ca × Cg × Ci × Cf). The In sits on top because the cable’s tabulated capacity has to handle the rated device current after the install conditions have eaten into it. All four factors multiply together in the denominator.',
   },
@@ -132,11 +172,11 @@ const quizQuestions = [
       'A cable is run for part of its length through thermal insulation in a stud wall (Reference Method 100), and the rest clipped direct (Method C). When sizing the cable you use:',
     options: [
       'The most favourable method (Method C)',
-      'The most onerous method (Method 100)',
-      'The average of the two methods',
       'Method A always',
+      'The average of the two methods',
+      'The most onerous method (Method 100)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Always size for the most onerous (worst) Reference Method along the run. The cable’s Iz is set by the worst point — the bit in thermal insulation can’t shed heat as well as the bit clipped direct, so the whole cable sizes against Method 100.',
   },
@@ -145,12 +185,12 @@ const quizQuestions = [
     question:
       'BS 7671 Appendix 4 contains:',
     options: [
-      'Earthing arrangements only',
       'Tabulated current-carrying capacities, voltage drop tables, Reference Methods and correction factors',
-      'Only the mV/A/m tables',
-      'Maximum demand and diversity tables',
+      'The employer must review and update the first aid needs assessment to reflect the new hazard',
+      'Each must be connected to the same earthing system, individually, in groups or collectively (Reg 411.3.1.1).',
+      'The solvent vapours are flammable and can cause narcotic effects in poorly ventilated areas',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Appendix 4 is the cable-sizer’s bible. Tables 4A1 onwards define Reference Methods. Tables 4B1 onwards give correction factors (Ca, Cg, Ci). Tables 4D, 4E etc give tabulated It values. Tables 4Ab onwards give mV/A/m for voltage drop. All in one appendix.',
   },

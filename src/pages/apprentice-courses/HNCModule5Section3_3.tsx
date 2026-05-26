@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'cvr-definition',
     question: 'What is Cost Value Reconciliation (CVR)?',
     options: [
-      'A method of tendering for contracts',
       'Comparing actual costs against the value of work completed',
+      'A method of tendering for contracts',
       'Calculating profit margins on materials',
       'Reconciling bank statements with invoices',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Cost Value Reconciliation (CVR) compares the actual costs incurred on a project against the value of work completed. It reveals whether the project is making or losing money at any given point.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'cpi-meaning',
     question: 'A Cost Performance Index (CPI) of 0.85 indicates:',
     options: [
+      'Project is 85% complete',
+      'Project is ahead of schedule',
       'Project is under budget',
       'Project is 15% over budget',
-      'Project is ahead of schedule',
-      'Project is 85% complete',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A CPI below 1.0 indicates cost overrun. CPI of 0.85 means for every £1 of value earned, £1.18 has been spent (1 ÷ 0.85 = 1.18), representing approximately 15% over budget.',
   },
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'spi-schedule',
     question: 'What does Schedule Performance Index (SPI) measure?',
     options: [
-      'Total project cost',
+      'Wash-down areas or external locations',
       'Efficiency of schedule performance',
-      'Number of workers on site',
-      'Material delivery times',
+      'Recording key details and instructions',
+      '850-1,100 kWh/m² per year',
     ],
     correctIndex: 1,
     explanation:
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'eac-purpose',
     question: 'Estimate at Completion (EAC) is used to:',
     options: [
-      'Set the original budget',
+      'To demonstrate compliance and enable verification',
+      'Water proximity, floating equipment, and maritime conditions',
+      'Gather information, analyse, hypothesise, test, rectify',
       'Forecast the total cost when the project finishes',
-      'Calculate monthly progress claims',
-      'Determine material quantities',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Estimate at Completion (EAC) forecasts what the total project cost will be when all work is finished, based on current performance trends. It helps identify potential budget overruns early.',
   },
@@ -100,28 +100,38 @@ const quizQuestions = [
     question:
       'A building services project has: Budget at Completion = £500,000, Planned Value = £200,000, Earned Value = £180,000, Actual Cost = £210,000. What is the Cost Variance?',
     options: [
+      '£10,000 favourable',
       '£20,000 favourable',
       '-£30,000 (unfavourable)',
-      '£10,000 favourable',
       '-£20,000 (unfavourable)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cost Variance = EV - AC = £180,000 - £210,000 = -£30,000. A negative cost variance indicates the project is over budget - spending more than the value of work completed.',
   },
   {
     id: 3,
     question: 'What frequency is typical for CVR reporting on building services projects?',
-    options: ['Daily', 'Weekly', 'Monthly', 'Quarterly'],
-    correctAnswer: 2,
+    options: [
+      'Weekly',
+      'Daily',
+      'Quarterly',
+      'Monthly',
+    ],
+    correctAnswer: 3,
     explanation:
       'Monthly CVR reporting is standard practice on building services projects. This aligns with payment cycles and provides sufficient time to collect accurate cost data while enabling timely corrective action.',
   },
   {
     id: 4,
     question: 'Which formula calculates Schedule Performance Index (SPI)?',
-    options: ['AC ÷ EV', 'EV ÷ PV', 'PV ÷ AC', 'BAC ÷ EV'],
-    correctAnswer: 1,
+    options: [
+      'EV ÷ PV',
+      'AC ÷ EV',
+      'PV ÷ AC',
+      'BAC ÷ EV',
+    ],
+    correctAnswer: 0,
     explanation:
       'SPI = EV ÷ PV (Earned Value ÷ Planned Value). This ratio shows schedule efficiency - how much work was accomplished compared to how much was planned for that period.',
   },
@@ -131,8 +141,8 @@ const quizQuestions = [
     options: [
       'Under budget and behind schedule',
       'Over budget and ahead of schedule',
-      'Under budget and ahead of schedule',
       'Over budget and behind schedule',
+      'Under budget and ahead of schedule',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,11 +153,11 @@ const quizQuestions = [
     question: "In a monthly cost report, 'committed costs' refers to:",
     options: [
       'Money already paid to suppliers',
-      'Orders placed but not yet invoiced',
       'Future budget estimates',
+      'Orders placed but not yet invoiced',
       'Contingency allowances',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Committed costs are contractual obligations for orders placed but not yet invoiced or paid. They must be included in cost forecasts as these costs will definitely be incurred.',
   },
@@ -156,11 +166,11 @@ const quizQuestions = [
     question: 'The formula EAC = BAC ÷ CPI assumes:',
     options: [
       'Future performance will match the original plan',
-      'Current cost performance trends will continue',
-      'The project will be completed early',
       'No further variations will occur',
+      'The project will be completed early',
+      'Current cost performance trends will continue',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "EAC = BAC ÷ CPI is the most common forecast formula and assumes current cost performance (good or bad) will continue for the remaining work. It's a realistic basis for forecasting.",
   },
@@ -168,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: "What is 'variance analysis' in cost control?",
     options: [
-      'Calculating the project profit margin',
       'Investigating differences between planned and actual performance',
-      'Preparing tender documentation',
-      'Scheduling resource requirements',
+      'Cherry-red colouration of the skin, along with headache and confusion',
+      'Industrial settings or retrofit installations',
+      'Item description, location, inspector name, date, result, and any defects noted',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Variance analysis investigates the causes of differences between planned and actual performance - both cost and schedule. It identifies specific problems and informs corrective action.',
   },
@@ -181,8 +191,13 @@ const quizQuestions = [
     id: 9,
     question:
       'A HVAC subcontract shows: Contract Value £120,000, Work Certified £80,000, Costs to Date £75,000. What is the margin to date?',
-    options: ['£5,000 profit', '£45,000 profit', '6.25% margin', '£40,000 profit'],
-    correctAnswer: 0,
+    options: [
+      '£45,000 profit',
+      '£5,000 profit',
+      '6.25% margin',
+      '£40,000 profit',
+    ],
+    correctAnswer: 1,
     explanation:
       'Margin = Value - Cost = £80,000 - £75,000 = £5,000 profit to date. This represents actual margin earned on work completed, not projected final margin.',
   },
@@ -190,12 +205,12 @@ const quizQuestions = [
     id: 10,
     question: 'To Complete Performance Index (TCPI) measures:',
     options: [
-      'Past project performance',
+      'Over budget and ahead of schedule',
+      'Current cost performance trends will continue',
       'Required future efficiency to meet budget',
-      'Current cost variance',
-      'Schedule compression needed',
+      'Orders placed but not yet invoiced',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'TCPI calculates the cost performance required on remaining work to achieve the budget target. TCPI = (BAC - EV) ÷ (BAC - AC). A TCPI > 1 means future performance must improve to meet budget.',
   },
@@ -203,8 +218,13 @@ const quizQuestions = [
     id: 11,
     question:
       'Which cost category would typically show the highest variance on a building services project?',
-    options: ['Management costs', 'Plant hire', 'Labour', 'Preliminaries'],
-    correctAnswer: 2,
+    options: [
+      'Management costs',
+      'Plant hire',
+      'Preliminaries',
+      'Labour',
+    ],
+    correctAnswer: 3,
     explanation:
       "Labour typically shows the highest variance due to productivity variations, rework, weather delays, and skill mix changes. It's often 40-50% of project cost and hardest to control precisely.",
   },
@@ -212,8 +232,13 @@ const quizQuestions = [
     id: 12,
     question:
       'A project has BAC = £1,000,000, EV = £400,000, AC = £450,000. Using EAC = BAC ÷ CPI, what is the forecast final cost?',
-    options: ['£1,000,000', '£1,125,000', '£1,250,000', '£900,000'],
-    correctAnswer: 1,
+    options: [
+      '£1,125,000',
+      '£900,000',
+      '£1,000,000',
+      '£1,250,000',
+    ],
+    correctAnswer: 0,
     explanation:
       'First calculate CPI = EV ÷ AC = £400,000 ÷ £450,000 = 0.889. Then EAC = BAC ÷ CPI = £1,000,000 ÷ 0.889 = £1,125,000. The project is forecast to exceed budget by £125,000.',
   },

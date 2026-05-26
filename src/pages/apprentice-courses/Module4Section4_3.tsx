@@ -56,10 +56,10 @@ const Module4Section4_3 = () => {
       id: 1,
       question: 'What is the function of a coupler?',
       options: [
-        'To support conduit',
+        'Viewing the measurement scale at an angle',
         'To join two sections of containment',
-        'To protect cables from sharp edges',
-        'To align saddles',
+        '132 kV, 275 kV and 400 kV',
+        'Its excellent thermal resistance',
       ],
       correctAnswer: 1,
       explanation:
@@ -76,8 +76,13 @@ const Module4Section4_3 = () => {
     {
       id: 3,
       question: 'Which accessory is used to secure conduit to a wall?',
-      options: ['Coupler', 'Bush', 'Saddle', 'Gland'],
-      correctAnswer: 2,
+      options: [
+        'Bush',
+        'Coupler',
+        'Gland',
+        'Saddle',
+      ],
+      correctAnswer: 3,
       explanation:
         'Saddles are used to support and secure conduit or trunking to a surface such as a wall or ceiling.',
     },
@@ -85,12 +90,12 @@ const Module4Section4_3 = () => {
       id: 4,
       question: 'Why is deburring important before fitting a coupler?',
       options: [
-        'For aesthetics only',
         'To prevent cable damage and ensure proper fit',
-        "It's not necessary",
-        'To reduce costs',
+        'They are unresponsive and not breathing normally',
+        'Implementing a permit to work system for HV switching',
+        'To identify and control emerging hazards',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Deburring removes sharp edges that could damage cables and ensures the coupler fits properly without interference.',
     },
@@ -99,10 +104,10 @@ const Module4Section4_3 = () => {
       question:
         "What should you do if two pieces of steel conduit don't make good electrical contact?",
       options: [
-        'Ignore it',
+        'BS 7671:2018 incorporating Amendment 4:2026',
         'Clean the surfaces or fit an earth strap',
-        'Use PVC instead',
-        'Add more saddles',
+        'Construction Design and Management',
+        'PWM (Pulse Width Modulation)',
       ],
       correctAnswer: 1,
       explanation:
@@ -112,12 +117,12 @@ const Module4Section4_3 = () => {
       id: 6,
       question: 'Name one situation where corrosion-resistant saddles are necessary.',
       options: [
-        'Indoor dry locations',
+        'A high temperature and a rash',
+        'Yes, with appropriate IP rating',
         'Outdoor or damp environments',
-        'Computer rooms',
-        'Domestic installations',
+        'Show circuit layouts and connections',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Outdoor or damp environments require corrosion-resistant saddles to maintain structural integrity over time.',
     },
@@ -125,12 +130,12 @@ const Module4Section4_3 = () => {
       id: 7,
       question: 'What is the risk of missing bushes at cable entry points?',
       options: [
-        'No risk',
+        'Certsure / NICEIC Certification Portal',
+        'Hear, Empathise, Apologise, Resolve, Do follow up',
+        'Enhanced safety measures and suitable equipment',
         'Cable insulation damage leading to faults',
-        'Reduced capacity',
-        'Poor aesthetics',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Without bushes, sharp edges can cut into cable insulation, causing short circuits and potentially dangerous faults.',
     },
@@ -138,12 +143,12 @@ const Module4Section4_3 = () => {
       id: 8,
       question: 'Why is alignment important when joining containment?',
       options: [
-        'For cost reduction',
         'Prevents strain on cables and ensures compliance',
-        'Reduces installation time',
-        'Improves colour matching',
+        'PPE must be correctly rated for the hazard level',
+        'To prevent device damage and safely interrupt faults',
+        'Increased light output from luminaires',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Proper alignment prevents strain on cables and ensures a neat, compliant installation that meets BS 7671 requirements.',
     },

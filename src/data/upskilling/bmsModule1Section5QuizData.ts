@@ -11,10 +11,10 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the purpose of ISO 16484?',
     options: [
-      'To define electrical safety requirements only',
-      'To provide international guidance for BMS design and operation',
-      'To regulate building construction methods',
       'To set energy efficiency targets for all buildings',
+      'To provide international guidance for BMS design and operation',
+      'To define electrical safety requirements only',
+      'To regulate building construction methods',
     ],
     correctAnswer: 1,
     explanation:
@@ -24,10 +24,10 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     id: 2,
     question: 'How does ISO 16484 improve BMS compatibility?',
     options: [
-      'By requiring all systems to use the same manufacturer',
-      'By standardising electrical connections only',
+      "They ensure safe, efficient, and future-proof installations",
+      "Efficiency levels achieved with automation (A to D)",
       "By ensuring interoperability between different manufacturers' systems",
-      'By limiting system complexity',
+      "By showing how BMS improves compliance and efficiency",
     ],
     correctAnswer: 2,
     explanation:
@@ -37,12 +37,12 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     id: 3,
     question: 'What is the focus of EN 15232?',
     options: [
-      'Building structural integrity',
-      'Fire safety systems',
+      'Efficiency levels achieved with automation (A to D)',
+      'To provide international guidance for BMS design and operation',
+      'It defines system architecture and data exchange protocols',
       'Energy performance of buildings through automation',
-      'Electrical installation methods',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'EN 15232 specifically focuses on how building automation and control systems affect energy efficiency and performance in buildings.',
   },
@@ -50,12 +50,12 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     id: 4,
     question: 'What do energy classes in EN 15232 represent?',
     options: [
-      'Building size categories',
       'Efficiency levels achieved with automation (A to D)',
-      'Construction material types',
-      'Electrical load classifications',
+      'To provide international guidance for BMS design and operation',
+      'By promoting automation for lighting, HVAC, and shading systems',
+      'Energy performance of buildings through automation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EN 15232 defines energy classes from A to D, where Class A represents the highest efficiency level achieved through building automation, and Class D represents basic or no automation.',
   },
@@ -76,12 +76,12 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     id: 6,
     question: 'What are the risks of not complying with standards?',
     options: [
+      'Slightly reduced system performance',
       'Minor inconvenience only',
       'Legal and financial penalties',
       'No significant consequences',
-      'Slightly reduced system performance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Failure to comply with BMS standards can result in serious legal and financial penalties, insurance issues, safety risks, and loss of professional credibility.',
   },
@@ -89,12 +89,12 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Give one way ISO 16484 affects system design.',
     options: [
-      'It only covers cable colours',
+      'By ensuring interoperability between different manufacturers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' systems',
+      'To provide international guidance for BMS design and operation',
+      'By showing how BMS improves compliance and efficiency',
       'It defines system architecture and data exchange protocols',
-      'It limits system size only',
-      'It specifies building materials',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'ISO 16484 significantly affects system design by defining proper system architecture, data exchange protocols, functionality requirements, and integration methods.',
   },
@@ -103,9 +103,9 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     question: 'Give one way EN 15232 encourages energy savings.',
     options: [
       'By promoting automation for lighting, HVAC, and shading systems',
-      'By limiting building size',
-      'By requiring manual controls only',
-      'By restricting system functionality',
+      'They ensure safe, efficient, and future-proof installations',
+      'Energy performance of buildings through automation',
+      'Efficiency levels achieved with automation (A to D)',
     ],
     correctAnswer: 0,
     explanation:
@@ -115,10 +115,10 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
     id: 9,
     question: 'How can electricians use standards as a selling point to clients?',
     options: [
-      'Standards are not relevant to clients',
+      'Standards only matter for large projects',
       'By showing how BMS improves compliance and efficiency',
       'By avoiding mention of standards completely',
-      'Standards only matter for large projects',
+      'Standards are not relevant to clients',
     ],
     correctAnswer: 1,
     explanation:
@@ -130,11 +130,11 @@ export const bmsModule1Section5QuizData: QuizQuestion[] = [
       'In the real-world example, what energy class improvement was achieved in the office building?',
     options: [
       'From class D to class B',
-      'From class C to class A',
       'From class B to class A',
+      'From class C to class A',
       'No class change occurred',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The London commercial office achieved an improvement from energy class C to class A through BMS upgrades, resulting in a 22% reduction in annual energy bills and meeting sustainability targets.',
   },

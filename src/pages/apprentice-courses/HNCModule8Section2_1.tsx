@@ -27,8 +27,13 @@ const quickCheckQuestions = [
     id: 'air-change-rate',
     question:
       'What is the typical air change rate recommended for a general office space according to CIBSE guidelines?',
-    options: ['2-4 ACH', '4-6 ACH', '6-10 ACH', '10-15 ACH'],
-    correctIndex: 1,
+    options: [
+      '10-15 ACH',
+      '6-10 ACH',
+      '2-4 ACH',
+      '4-6 ACH',
+    ],
+    correctIndex: 3,
     explanation:
       'CIBSE Guide A recommends 4-6 air changes per hour for general office spaces. This provides adequate fresh air whilst maintaining energy efficiency. Higher ACH rates are required for spaces with higher pollutant loads or occupancy densities.',
   },
@@ -36,8 +41,13 @@ const quickCheckQuestions = [
     id: 'fresh-air-rate',
     question:
       'What is the minimum fresh air supply rate per person specified in Building Regulations Approved Document F for offices?',
-    options: ['5 litres/second', '8 litres/second', '10 litres/second', '15 litres/second'],
-    correctIndex: 2,
+    options: [
+      '15 litres/second',
+      '5 litres/second',
+      '8 litres/second',
+      '10 litres/second',
+    ],
+    correctIndex: 3,
     explanation:
       'Approved Document F specifies a minimum of 10 litres/second per person for offices. This ensures adequate dilution of bioeffluents and maintains acceptable indoor air quality. The rate may need increasing for spaces with additional pollutant sources.',
   },
@@ -45,8 +55,13 @@ const quickCheckQuestions = [
     id: 'co2-level',
     question:
       'At what CO2 concentration level does indoor air quality typically become unacceptable according to UK standards?',
-    options: ['450 ppm', '800 ppm', '1000 ppm', '1500 ppm'],
-    correctIndex: 2,
+    options: [
+      '1000 ppm',
+      '800 ppm',
+      '1500 ppm',
+      '450 ppm',
+    ],
+    correctIndex: 0,
     explanation:
       'CO2 levels above 1000 ppm indicate inadequate ventilation. Outdoor air contains approximately 400-450 ppm CO2. CIBSE recommends maintaining indoor CO2 below 1000 ppm for good air quality, with 800 ppm being the target for well-ventilated spaces.',
   },
@@ -55,12 +70,12 @@ const quickCheckQuestions = [
     question:
       'What is the maximum recommended room depth for effective single-sided natural ventilation?',
     options: [
-      '2 x ceiling height',
       '2.5 x ceiling height',
+      '2 x ceiling height',
       '3 x ceiling height',
       '5 x ceiling height',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Single-sided natural ventilation is typically limited to 2.5 times the ceiling height in depth. Beyond this, air movement becomes insufficient for adequate ventilation. Cross-ventilation can extend this to approximately 5 times the ceiling height.',
   },
@@ -71,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of ventilation in occupied buildings?',
     options: [
-      'To provide cooling only',
+      'Convert units, write values, choose formula, calculate, round',
       'To dilute and remove indoor air pollutants whilst supplying fresh air',
-      'To create positive pressure throughout the building',
-      'To reduce heating energy consumption',
+      'Support structure - tray has solid/perforated base, ladder has rungs',
+      'Incompatible chemicals must be segregated, stored in separate areas or bunded containers',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,8 +99,13 @@ const quizQuestions = [
     id: 2,
     question:
       'According to CIBSE Guide B, what fresh air supply rate is recommended for a classroom?',
-    options: ['5 L/s per person', '8 L/s per person', '10 L/s per person', '12 L/s per person'],
-    correctAnswer: 1,
+    options: [
+      '10 L/s per person',
+      '5 L/s per person',
+      '8 L/s per person',
+      '12 L/s per person',
+    ],
+    correctAnswer: 2,
     explanation:
       'CIBSE Guide B recommends 8 L/s per person for classrooms. This accounts for the higher metabolic rates of children and the importance of maintaining good air quality for learning. Schools often require higher ventilation rates due to occupancy density.',
   },
@@ -94,12 +114,12 @@ const quizQuestions = [
     question:
       'Building Regulations Approved Document F requires what minimum whole building ventilation rate for dwellings?',
     options: [
-      '0.3 L/s per m squared floor area',
-      '0.5 L/s per m squared floor area',
       '1.0 L/s per m squared floor area',
+      '0.5 L/s per m squared floor area',
       '1.5 L/s per m squared floor area',
+      '0.3 L/s per m squared floor area',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Approved Document F requires a minimum whole building ventilation rate of 0.3 L/s per m squared of internal floor area for dwellings. This baseline rate ensures continuous background ventilation to maintain acceptable indoor air quality.',
   },
@@ -107,16 +127,26 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the recommended CO2 concentration for a well-ventilated space according to CIBSE guidance?',
-    options: ['Less than 600 ppm', 'Less than 800 ppm', 'Less than 1000 ppm', 'Less than 1500 ppm'],
-    correctAnswer: 1,
+    options: [
+      'Less than 800 ppm',
+      'Less than 600 ppm',
+      'Less than 1000 ppm',
+      'Less than 1500 ppm',
+    ],
+    correctAnswer: 0,
     explanation:
       'CIBSE recommends maintaining CO2 below 800 ppm for well-ventilated spaces. This provides a significant margin below the 1000 ppm threshold where occupants may begin to experience discomfort or reduced cognitive performance.',
   },
   {
     id: 5,
     question: 'What air change rate does CIBSE recommend for hospital operating theatres?',
-    options: ['6-10 ACH', '10-15 ACH', '15-25 ACH', '25-35 ACH'],
-    correctAnswer: 2,
+    options: [
+      '10-15 ACH',
+      '15-25 ACH',
+      '25-35 ACH',
+      '6-10 ACH',
+    ],
+    correctAnswer: 1,
     explanation:
       'Hospital operating theatres require 15-25 air changes per hour to maintain sterile conditions and remove anaesthetic gases. Ultra-clean ventilation (UCV) theatres for orthopaedic procedures may require even higher rates with laminar flow systems.',
   },
@@ -124,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'Which contaminant is primarily controlled by kitchen extract ventilation?',
     options: [
-      'Carbon monoxide only',
+      'Openings are on opposite or adjacent walls',
+      'Uncontrolled air leakage through the building envelope',
       'Grease-laden air, odours and combustion products',
-      'Radon gas',
-      'Carbon dioxide only',
+      'The buoyancy-driven air movement due to temperature difference',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Kitchen extract ventilation is designed to remove grease-laden air, cooking odours, moisture and combustion products from gas appliances. Grease filtration is essential to prevent fire hazards and ductwork contamination.',
   },
@@ -137,8 +167,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the minimum extract rate for a domestic bathroom with no openable window per Building Regulations?',
-    options: ['8 L/s', '15 L/s', '30 L/s', '60 L/s'],
-    correctAnswer: 1,
+    options: [
+      '8 L/s',
+      '60 L/s',
+      '30 L/s',
+      '15 L/s',
+    ],
+    correctAnswer: 3,
     explanation:
       'An internal bathroom without natural ventilation requires a minimum continuous extract rate of 8 L/s or an intermittent rate of 15 L/s during use. This removes moisture and odours to prevent condensation and maintain hygiene.',
   },
@@ -146,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: 'Cross-ventilation in buildings is most effective when:',
     options: [
-      'Openings are on the same wall',
       'Openings are on opposite or adjacent walls',
       'The building is fully sealed',
+      'Openings are on the same wall',
       'Wind speeds are below 1 m/s',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cross-ventilation requires openings on opposite or adjacent walls to create a pressure differential that drives airflow through the space. This is far more effective than single-sided ventilation and allows deeper floor plates to be naturally ventilated.',
   },
@@ -159,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: "What does the term 'infiltration' refer to in ventilation terminology?",
     options: [
-      'Intentional air supply through ventilation systems',
+      'Openings are on opposite or adjacent walls',
       'Uncontrolled air leakage through the building envelope',
-      'Extract of contaminated air',
-      'Recirculation of indoor air',
+      'The buoyancy-driven air movement due to temperature difference',
+      'Grease-laden air, odours and combustion products',
     ],
     correctAnswer: 1,
     explanation:
@@ -173,11 +208,11 @@ const quizQuestions = [
     question: 'What is the stack effect in natural ventilation?',
     options: [
       'The effect of wind on building pressure',
+      'The filtering effect of air handling units',
       'The buoyancy-driven air movement due to temperature difference',
       'The mechanical pressurisation of stairwells',
-      'The filtering effect of air handling units',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The stack effect occurs when warm air rises and exits at high level, drawing cooler air in at low level. The driving force is proportional to the temperature difference and the height of the stack. This principle is used in atria and chimney ventilation systems.',
   },
@@ -185,8 +220,13 @@ const quizQuestions = [
     id: 11,
     question:
       'According to CIBSE, what is the recommended ventilation effectiveness factor for displacement ventilation?',
-    options: ['0.5', '0.8-1.0', '1.0-1.2', '1.5-2.0'],
-    correctAnswer: 2,
+    options: [
+      '0.5',
+      '0.8-1.0',
+      '1.5-2.0',
+      '1.0-1.2',
+    ],
+    correctAnswer: 3,
     explanation:
       'Displacement ventilation achieves ventilation effectiveness of 1.0-1.2 because fresh air is supplied at low level and rises past occupants before being extracted at ceiling level. This creates stratification that improves air quality in the breathing zone compared to mixing ventilation.',
   },
@@ -194,12 +234,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the purpose of demand-controlled ventilation (DCV)?',
     options: [
-      'To provide maximum ventilation at all times',
       'To adjust ventilation rates based on actual occupancy or pollutant levels',
-      'To eliminate the need for outdoor air',
-      'To maintain constant positive pressure',
+      'The proximity of the workplace to emergency medical services',
+      'To assign unique short addresses (0-63) to each control gear',
+      'The cable from distribution point to individual customer premises',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Demand-controlled ventilation adjusts the outdoor air supply rate based on actual occupancy (using CO2 sensors, occupancy sensors or scheduling) rather than providing maximum ventilation continuously. This significantly reduces energy consumption whilst maintaining acceptable indoor air quality.',
   },
@@ -208,10 +248,10 @@ const quizQuestions = [
     question:
       'Which UK regulation sets minimum ventilation requirements for non-domestic buildings?',
     options: [
-      'Building Regulations Part L',
-      'Building Regulations Part F',
       'Building Regulations Part J',
+      'Building Regulations Part F',
       'Building Regulations Part M',
+      'Building Regulations Part L',
     ],
     correctAnswer: 1,
     explanation:
@@ -222,19 +262,24 @@ const quizQuestions = [
     question: 'What concentration of formaldehyde triggers concern for indoor air quality?',
     options: [
       'Greater than 0.01 ppm',
-      'Greater than 0.1 ppm',
       'Greater than 1.0 ppm',
+      'Greater than 0.1 ppm',
       'Greater than 10 ppm',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'WHO guidelines recommend formaldehyde concentrations remain below 0.1 ppm (100 micrograms per cubic metre). Higher levels can cause eye and respiratory irritation. Formaldehyde is emitted from building materials, furniture and cleaning products.',
   },
   {
     id: 15,
     question: 'For a restaurant dining area, what air change rate does CIBSE recommend?',
-    options: ['4-6 ACH', '6-10 ACH', '10-15 ACH', '15-20 ACH'],
-    correctAnswer: 2,
+    options: [
+      '15-20 ACH',
+      '6-10 ACH',
+      '4-6 ACH',
+      '10-15 ACH',
+    ],
+    correctAnswer: 3,
     explanation:
       'Restaurant dining areas typically require 10-15 ACH to remove cooking odours that migrate from the kitchen, body odours from high occupancy, and to maintain comfort. Kitchen areas themselves require even higher rates (20-30 ACH) with dedicated extract systems.',
   },

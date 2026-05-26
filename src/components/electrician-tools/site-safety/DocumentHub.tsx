@@ -321,32 +321,30 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
           </button>
         </div>
 
-        {/* Title + search */}
-        <div className="px-4 pb-3 space-y-3">
-          <div className="relative overflow-hidden glass-premium rounded-xl p-4">
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-            <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/[0.04] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-            <div className="relative flex items-center gap-3.5">
-              <div className="p-2.5 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-                <FolderOpen className="h-6 w-6 text-elec-yellow" />
+        {/* Editorial hero — eyebrow + headline + count + optional upload */}
+        <div className="px-4 pb-3 space-y-4">
+          <div className="flex items-baseline justify-between gap-3 pt-3">
+            <div className="space-y-1">
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+                Site safety
               </div>
-              <div className="flex-1 min-w-0">
-                <h1 className="text-lg font-bold text-white">Documents</h1>
-                <p className="text-xs text-white mt-0.5">
-                  {documents.length} document{documents.length !== 1 ? 's' : ''} across all modules
-                </p>
-              </div>
-              {/* Upload RAMS button — visible when RAMS filter active */}
-              {isRamsFilterActive && (
-                <button
-                  onClick={() => setUploadSheetOpen(true)}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-xs font-semibold touch-manipulation active:scale-[0.97] transition-all"
-                >
-                  <Upload className="h-3.5 w-3.5" />
-                  Upload
-                </button>
-              )}
+              <h1 className="text-[26px] sm:text-[32px] font-semibold tracking-tight leading-[1.05] text-white">
+                Documents.
+              </h1>
+              <p className="text-[12.5px] text-white/55 tabular-nums">
+                {documents.length} document{documents.length !== 1 ? 's' : ''} across all modules
+              </p>
             </div>
+            {isRamsFilterActive && (
+              <button
+                type="button"
+                onClick={() => setUploadSheetOpen(true)}
+                className="inline-flex items-center gap-1.5 h-9 px-3 rounded-xl text-[12.5px] font-semibold bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors active:scale-[0.98] touch-manipulation shrink-0"
+              >
+                <Upload className="h-3.5 w-3.5" />
+                Upload
+              </button>
+            )}
           </div>
 
           <div className="relative">
@@ -477,27 +475,12 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                     delay: Math.min(index * 0.02, 0.3),
                     duration: 0.15,
                   }}
-                  className="glass-premium rounded-xl active:bg-white/[0.02] transition-colors touch-manipulation overflow-hidden"
+                  className="bg-[hsl(0_0%_10%)] border border-white/[0.08] sm:rounded-2xl active:bg-white/[0.04] hover:border-white/15 transition-colors touch-manipulation overflow-hidden"
                 >
-                  {/* Coloured top accent */}
-                  <div className={`h-[2px] ${config.bg.replace('/10', '/40')}`} />
-
-                  <div className="p-4 space-y-3">
-                    {/* Top row: icon + title */}
-                    <div className="flex items-start gap-3">
-                      <div
-                        className={`flex-shrink-0 w-10 h-10 rounded-lg ${config.bg} flex items-center justify-center`}
-                      >
-                        <Icon className={`h-5 w-5 ${config.colour}`} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-[15px] font-semibold text-white leading-snug line-clamp-2">{doc.title}</h3>
-                      </div>
-                    </div>
-
-                    {/* Middle: badges */}
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${config.bg} ${config.colour}`}>
+                  <div className="p-4 sm:p-5 space-y-3">
+                    {/* Type pill + status pills */}
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className={`inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] ${config.bg} ${config.colour}`}>
                         {doc.type}
                       </span>
                       {(() => {
@@ -507,73 +490,81 @@ export function DocumentHub({ onBack }: DocumentHubProps) {
                           label: doc.status,
                         };
                         return (
-                          <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${statusStyle.bg} ${statusStyle.text}`}>
+                          <span className={`inline-flex items-center h-6 px-2 rounded-md text-[10.5px] font-medium uppercase tracking-[0.12em] ${statusStyle.bg} ${statusStyle.text}`}>
                             {statusStyle.label}
                           </span>
                         );
                       })()}
                       {doc.hasSignature && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-emerald-500/15 text-emerald-400">
-                          <Check className="h-3 w-3" />
+                        <span className="inline-flex items-center gap-1 h-6 px-2 rounded-md text-[10.5px] font-medium uppercase tracking-[0.12em] bg-emerald-500/15 text-emerald-400">
                           Signed
                         </span>
                       )}
                     </div>
 
-                    {/* Bottom row: metadata left, actions right */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 min-w-0">
-                        <span className="text-[11px] text-white flex-shrink-0">
-                          {formatRelativeDate(doc.updatedAt)}
-                        </span>
+                    {/* Title — editorial, no icon */}
+                    <h3 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-white leading-snug line-clamp-2">
+                      {doc.title}
+                    </h3>
+
+                    {/* Bottom row: metadata + actions, editorial chrome */}
+                    <div className="flex items-baseline justify-between gap-3 pt-2 border-t border-white/[0.06]">
+                      <div className="flex items-baseline gap-2 min-w-0 text-[11.5px] text-white/55 tabular-nums">
+                        <span className="shrink-0">{formatRelativeDate(doc.updatedAt)}</span>
                         {doc.siteAddress && (
                           <>
-                            <span className="w-1 h-1 rounded-full bg-white/20 flex-shrink-0" />
-                            <span className="text-[11px] text-white truncate">
-                              {doc.siteAddress}
-                            </span>
+                            <span className="text-white/30 shrink-0">·</span>
+                            <span className="truncate">{doc.siteAddress}</span>
                           </>
                         )}
                       </div>
 
-                      {/* Actions */}
-                      <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
+                      <div className="flex items-center gap-4 shrink-0">
                         {isRAMS && (
                           <button
+                            type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               setSelectedDocumentId(doc.sourceId);
                               setAmendDialogOpen(true);
                             }}
-                            className="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center touch-manipulation active:scale-[0.95] transition-all"
+                            className="text-[12px] font-medium text-white/55 hover:text-elec-yellow transition-colors touch-manipulation"
                           >
-                            <Edit3 className="h-4 w-4 text-blue-400" />
+                            Amend
                           </button>
                         )}
                         {getAvailableTransitions(doc).length > 0 && (
                           <button
+                            type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               setApprovalDoc(doc);
                             }}
-                            className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center touch-manipulation active:scale-[0.95] transition-all"
+                            className="text-[12px] font-medium text-emerald-400/80 hover:text-emerald-400 transition-colors touch-manipulation"
                           >
-                            <FileCheck className="h-4 w-4 text-emerald-400" />
+                            Approve
                           </button>
                         )}
                         {doc.hasPDF && (
                           <button
+                            type="button"
                             onClick={(e) => {
                               e.stopPropagation();
                               handleExport(doc);
                             }}
                             disabled={isThisExporting}
-                            className="w-9 h-9 rounded-lg bg-white/[0.06] flex items-center justify-center touch-manipulation active:scale-[0.95] active:bg-white/[0.10] transition-all disabled:opacity-50"
+                            className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-elec-yellow hover:text-elec-yellow/80 transition-colors touch-manipulation disabled:opacity-50"
                           >
                             {isThisExporting ? (
-                              <Loader2 className="h-4 w-4 text-white animate-spin" />
+                              <>
+                                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                                Exporting
+                              </>
                             ) : (
-                              <Download className="h-4 w-4 text-white" />
+                              <>
+                                <Download className="h-3.5 w-3.5" />
+                                PDF
+                              </>
                             )}
                           </button>
                         )}

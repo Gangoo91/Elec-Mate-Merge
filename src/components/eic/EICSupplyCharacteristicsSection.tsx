@@ -171,10 +171,76 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
     }
   };
 
+  // Common UK supply presets — one tap fills voltage + phases + earthing + PME + live conductor.
+  // Covers ~95% of UK domestic + small commercial. User can still edit any field after.
+  const applyPreset = (values: Record<string, string>) => {
+    Object.entries(values).forEach(([field, value]) => onUpdate(field, value));
+  };
+
   return (
     <div className="space-y-4">
       {/* Supply Details */}
       <SectionTitle title="Supply Details" />
+
+      {/* Quick-start presets — covers most UK installations */}
+      <div className="space-y-1.5">
+        <Label className="text-[10px] text-white/60 uppercase tracking-wider">
+          Quick start
+        </Label>
+        <div className="grid grid-cols-3 gap-1.5">
+          {[
+            {
+              key: 'dom-tncs',
+              label: 'Domestic',
+              sub: '1ph 230V TN-C-S',
+              values: {
+                supplyVoltage: '230V',
+                phases: 'single',
+                earthingArrangement: 'tncs',
+                supplyPME: 'yes',
+                liveCondutorType: 'ac-1ph-2w',
+              },
+            },
+            {
+              key: 'com-tncs',
+              label: 'Commercial',
+              sub: '3ph 400V TN-C-S',
+              values: {
+                supplyVoltage: '400V',
+                phases: 'three',
+                earthingArrangement: 'tncs',
+                supplyPME: 'yes',
+                liveCondutorType: 'ac-3ph-4w',
+              },
+            },
+            {
+              key: 'tt-1ph',
+              label: 'TT supply',
+              sub: '1ph 230V electrode',
+              values: {
+                supplyVoltage: '230V',
+                phases: 'single',
+                earthingArrangement: 'tt',
+                supplyPME: 'no',
+                liveCondutorType: 'ac-1ph-2w',
+              },
+            },
+          ].map((preset) => (
+            <button
+              key={preset.key}
+              type="button"
+              onClick={() => applyPreset(preset.values)}
+              className="h-12 rounded-lg bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow touch-manipulation active:scale-[0.98] flex flex-col items-center justify-center gap-0.5 px-1"
+            >
+              <span className="text-[11px] font-semibold leading-none">{preset.label}</span>
+              <span className="text-[9px] text-elec-yellow/70 leading-none text-center">
+                {preset.sub}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="space-y-3">
         {/* Voltage + Phases as toggle buttons */}
         <div className="grid grid-cols-2 gap-3">

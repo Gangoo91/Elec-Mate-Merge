@@ -43,12 +43,12 @@ const checks = [
     question:
       "A 4 mm² 70 °C T&E cable has a tabulated It of 36 A in Reference Method C. With Ca = 0.94 and Cg = 0.80 applied to a 32 A radial, what is Iz, and does the cable comply with Reg 433.1.1?",
     options: [
-      'Iz = 36 A, complies — the table figure is what counts.',
       'Iz = 36 × 0.94 × 0.80 ≈ 27.07 A, does NOT comply — Iz is below In = 32 A.',
-      'Iz = 36 / (0.94 × 0.80) ≈ 47.87 A, complies.',
       'Iz = 36 + (0.94 + 0.80) = 37.74 A, complies.',
+      'Iz = 36 A, complies — the table figure is what counts.',
+      'Iz = 36 / (0.94 × 0.80) ≈ 47.87 A, complies.',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Iz = It × (product of all derate factors) = 36 × 0.94 × 0.80 ≈ 27.07 A. The required compliance line is Ib ≤ In ≤ Iz, so 32 A ≤ 27.07 A is false — the cable does not satisfy Reg 433.1.1 in those install conditions. You either step up to 6 mm², change the install method to one with a higher It, or remove the derate cause (split the group, reduce ambient).",
   },
@@ -57,10 +57,10 @@ const checks = [
     question:
       'BS 7671 Appendix 4 quotes tabulated It values at a reference ambient air temperature of 30 °C. A loft cable will see 40 °C in summer. Which factor compensates for that, and from which Appendix 4 table?',
     options: [
-      'No factor needed — the table figure already covers UK climates.',
-      'Cg from Table 4C1.',
+      'To ensure safe isolation, rapid testing, and efficient inspections',
+      'It operates near its closed position where control is poor and wear increases',
       'Ca from Table 4B1 (correction factor for ambient air temperature, 70 °C cable).',
-      'Ci from Table 4D5 directly.',
+      'Electrical Installation Certificate or Minor Works Certificate as appropriate',
     ],
     correctIndex: 2,
     explanation:
@@ -71,12 +71,12 @@ const checks = [
     question:
       "Which IET On-Site Guide table is the everyday equivalent of BS 7671 Appendix 4 Table 4D5 for 70 °C thermoplastic two-core T&E flat cable?",
     options: [
-      'Table 1A.',
+      'Swapping the start-winding terminals OR the main-winding terminals (not both)',
+      'Weather, lighting, temperature, noise, ventilation, and access conditions',
       'Table F6 (current-carrying capacity, two-core 70 °C thermoplastic flat cable).',
-      'Table 41.3.',
-      'Table 7C (voltage drop only).',
+      'Testing at the midpoint to determine which half contains the fault',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "OSG Table F6 is the working tradesperson's everyday companion to Appendix 4 Table 4D5 — same data, condensed layout, mV/A/m alongside CCC. Inspectors accept either source. Most electricians use the OSG on the van and the full BS 7671 in the design office, but they have to agree.",
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     question:
       "What does the term 'current-carrying capacity' (CCC, symbol Iz) of a cable actually mean?",
     options: [
-      'The current at which the cable insulation melts.',
+      'Longer cable = MORE insulation surface in parallel = LOWER measured IR. Test result expected to be inversely proportional to length',
       'The maximum continuous current the cable can carry without exceeding its specified operating temperature limit (e.g. 70 °C for thermoplastic).',
-      'The current at which the protective device trips.',
-      'The current the cable can carry for one minute before failure.',
+      'The process of cleaning concrete from tools and equipment — the alkaline wash water can pollute watercourses',
+      'Typically 90 degrees C for copper busbars, with the temperature rise above ambient not exceeding values specified in IEC 61439 (typically 70 K for accessible surfaces)',
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     question:
       "Tabulated current-carrying capacity (It) in BS 7671 Appendix 4 is the value before or after correction factors are applied?",
     options: [
-      'After — the table already includes derates.',
+      'The original hormonal claims were not consistently replicated, though subjective confidence findings have more support',
+      'Test anxiety, unfamiliar exam environment, and inadequate exam technique under timed pressure conditions',
       'Before — the table assumes ideal conditions (30 °C ambient, no grouping, no insulation), and you apply Ca, Cg, Ci on top.',
-      'It is the same as Iz under any conditions.',
-      'It only matters for armoured cables.',
+      '5-30 minutes, to ensure the normal supply has genuinely stabilised and is not experiencing intermittent faults that would cause repeated transfers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "It is the as-tabulated baseline, taken from the relevant Appendix 4 table at the standard reference conditions: 30 °C ambient air, single circuit (no grouping), not in thermal insulation. Iz is the derated capacity actually available in your specific install: Iz = It × Ca × Cg × Ci × any other applicable factor.",
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     question:
       "Reg 433.1.1 of BS 7671 expresses the structural compliance line for cable selection as which inequality?",
     options: [
-      'Ib ≤ Iz ≤ In',
       'In ≤ Ib ≤ Iz',
-      'Ib ≤ In ≤ Iz',
+      'Ib ≤ Iz ≤ In',
       'Ib = In = Iz',
+      'Ib ≤ In ≤ Iz',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Reg 433.1.1: Ib ≤ In ≤ Iz. The protective device must let the design current through (In ≥ Ib), and the cable must be able to carry whatever the device passes, including overload, until the device operates (Iz ≥ In). The order is structural — load, then device, then cable.",
   },
@@ -130,12 +130,12 @@ const quizQuestions = [
     question:
       "A 6 mm² 70 °C T&E cable has tabulated It = 47 A (Method C). It is buried in 100 mm of loft insulation along most of its run. Which Reference Method's tabulated It column should you actually be reading?",
     options: [
-      'Method C still — the cable is the same.',
       'Method 100, 101 or 103 (in thermal insulation) — these columns build the Ci derate into the tabulated value, so you do not double-apply.',
-      'Method A or B — those are the highest figures.',
-      'Whichever gives the largest value.',
+      'Honestly assessing the apprentice\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s current skill level, identifying gaps, and acknowledging what they can already do',
+      'The designer who modifies the design — all designers have duties under Regulation 9 whenever they prepare or modify a design',
+      'Pumping groundwater or surface water from excavations — risk of polluting watercourses with sediment or contaminants',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Methods 100/101/102/103 cover cables in thermal insulation (loft, ceiling void, partial enclosure). The Ci derate is baked into those columns; you do not apply Ci separately. Reading Method C and then applying Ci on top would either over- or under-derate. Pick the column that matches the actual install.",
   },
@@ -143,7 +143,12 @@ const quizQuestions = [
     id: 5,
     question:
       "If a tabulated It is 27 A and the install conditions give Ca = 0.91, Cg = 0.85 and Ci = 1.0, what is Iz?",
-    options: ['27 A', '≈20.88 A', '≈34.91 A', '≈25.43 A'],
+    options: [
+      '27 A',
+      '≈20.88 A',
+      '≈25.43 A',
+      '≈34.91 A',
+    ],
     correctAnswer: 1,
     explanation:
       "Iz = It × Ca × Cg × Ci = 27 × 0.91 × 0.85 × 1.0 = 27 × 0.7735 = 20.88 A. That is the actual capacity available in the install. If your design current is above 20.88 A you must size up.",
@@ -153,12 +158,12 @@ const quizQuestions = [
     question:
       "Why does BS 7671 quote 70 °C and 90 °C operating limits rather than a single safe temperature?",
     options: [
-      'Two suppliers historically used different specs.',
+      "The battery and the PV strings both connect to the DC side of one inverter. PV power can charge the battery without first being inverted to AC and back, giving roughly 3–5 % higher round-trip efficiency than AC-coupling. Best for new PV plus battery installs that go in together.",
+      "Function within HSE. Three statutory functions: oversee building safety; facilitate competence improvement; lead implementation of HRRB regulatory regime including gateway approvals.",
       "The insulation chemistry differs — standard thermoplastic (PVC) softens above ~70 °C, modern thermosetting (LSF, XLPE) cross-links and tolerates 90 °C continuously. The cable's tabulated CCC depends on which insulation it has.",
-      'Different countries have different ambient temperatures.',
-      "It is a typographical error in older editions.",
+      "Stop work IMMEDIATELY. Treat the circuit as potentially live until you re-prove it dead with the voltage indicator (and verify the indicator is working). Re-secure the lockout properly before continuing.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Insulation type sets the temperature ceiling. Thermoplastic (PVC, BS 6004 T&E, BS 7211 LSF) is rated to 70 °C continuous. Thermosetting (XLPE, EPR) is rated to 90 °C continuous. Higher operating temperature means higher tabulated CCC for the same CSA — a 4 mm² thermosetting carries more current than a 4 mm² thermoplastic in the same install method.",
   },
@@ -167,12 +172,12 @@ const quizQuestions = [
     question:
       "The IET On-Site Guide and BS 7671 Appendix 4 should give matching CCC numbers for the same cable in the same install method. If they disagree, what should you do?",
     options: [
-      'Average the two.',
-      'Use the larger value to give yourself headroom.',
+      'IET is the professional body for engineers (publishes BS 7671 with BSI). ECA is a trade association for electrical contracting firms.',
+      'Cynicism, detachment from work, treating colleagues or clients as objects rather than people, and emotional withdrawal',
+      'Ask them to explain the correct procedure. If they can explain it but don\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019t do it, it is motivational. If they cannot explain it, it is a skill deficit.',
       'Use BS 7671 — it is the underlying standard, the OSG is a derivative work; check whether the OSG edition is older than the BS 7671 amendment you are designing to.',
-      'Use the OSG — it is friendlier to read.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "BS 7671 is the standard; the OSG is a derivative published by the IET to make the same data quicker to use on site. They should agree. When they disagree, it usually means one is from an older edition. Check the publication dates and use the version aligned with the current amendment (BS 7671:2018+A4:2026 at the time of writing).",
   },
@@ -181,12 +186,12 @@ const quizQuestions = [
     question:
       "On a typical job sheet the design pencils Ib = 26 A and the contractor fits a 32 A Type B MCB. The chosen cable, after derates, has Iz = 30 A. Does this comply with Reg 433.1.1?",
     options: [
-      'Yes — Iz ≥ Ib so the cable carries the load.',
       "No — the test is Ib ≤ In ≤ Iz, so In = 32 A and Iz = 30 A means the cable cannot safely carry the device rating; either size up the cable to give Iz ≥ 32 A or drop In to 25 A (assuming Ib = 26 A still leaves you a fit — it does not, so the cable size must increase).",
-      'Maybe — depends on Vd.',
-      'Yes — the device protects the cable so any Iz works.',
+      "Absence of trust — without trust, team members will not be vulnerable with each other, leading to fear of conflict, lack of commitment, avoidance of accountability, and ultimately inattention to collective results",
+      "I apply the requirements of the Health and Safety at Work Act 1974, the Electricity at Work Regulations 1989, and relevant ACoPs and British Standards such as BS 7671, through practical actions including risk assessment, safe isolation, use of appropriate PPE, maintenance of competence, and accurate record keeping",
+      "The construction phase plan should be developed using the pre-construction information as a key input, building on the hazard and risk information it contains to set out how the construction phase will be managed safely",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Reg 433.1.1 wants In ≤ Iz. With In = 32 A and Iz = 30 A, that fails: on overload, the device permits 1.45 × In = 46.4 A for a defined time before tripping, and the cable cannot survive that. The fix is either to size up the cable (more CSA, larger Iz) or pick a smaller device — but In must still be ≥ Ib, so if Ib = 26 A then In must be at least 32 A and the cable has to grow.",
   },

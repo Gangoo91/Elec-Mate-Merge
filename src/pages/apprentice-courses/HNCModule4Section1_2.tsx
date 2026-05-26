@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'diversity-def',
     question: 'What does a diversity factor of 0.6 mean?',
     options: [
-      '60% of loads are connected',
-      'Only 60% of connected load operates at peak',
-      'Loads operate 60% of the time',
       '60% voltage drop is acceptable',
+      'Loads operate 60% of the time',
+      'Only 60% of connected load operates at peak',
+      '60% of loads are connected',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A diversity factor of 0.6 means that at peak demand, only 60% of the total connected load is expected to operate simultaneously. This reduces the calculated maximum demand.',
   },
@@ -47,12 +47,12 @@ const quickCheckQuestions = [
     question:
       'According to BS 7671 guidance, what diversity applies to socket outlets in an office?',
     options: [
+      '1 metre above highest point within 10m',
+      'Predictive analytics and AI capabilities',
       '100% of first 10 sockets + 50% remainder',
-      '100% of all sockets',
-      '40% of total connected',
-      '25% of total connected',
+      'To adjust consumption data for weather variations',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'BS 7671 Appendix 1 recommends 100% of the first group of socket outlets plus a reduced percentage (typically 40-50%) of the remainder for commercial installations.',
   },
@@ -61,19 +61,24 @@ const quickCheckQuestions = [
     question: 'What does ADMD stand for?',
     options: [
       'Average Daily Maximum Demand',
-      'After Diversity Maximum Demand',
-      'Assessed Design Maximum Demand',
       'Annual Demand Measurement Data',
+      'Assessed Design Maximum Demand',
+      'After Diversity Maximum Demand',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'ADMD means After Diversity Maximum Demand - the expected peak demand after applying appropriate diversity factors to the connected load.',
   },
   {
     id: 'lighting-diversity',
     question: 'What diversity factor typically applies to office lighting?',
-    options: ['100% (no diversity)', '90%', '75%', '50%'],
-    correctIndex: 1,
+    options: [
+      '100% (no diversity)',
+      '50%',
+      '75%',
+      '90%',
+    ],
+    correctIndex: 3,
     explanation:
       "Office lighting typically uses 90% diversity - almost all lights operate during occupied hours, but some areas (meeting rooms, stores) won't be fully lit continuously.",
   },
@@ -84,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'Why is diversity applied to electrical load calculations?',
     options: [
-      'To increase safety margins',
+      'Workers who have passed the HS&E test but not yet achieved their full qualification',
       'To account for loads not operating simultaneously at full capacity',
-      'To simplify calculations',
-      'To meet planning requirements',
+      'Cross-check with different methods where possible',
+      'A certificate showing actual energy use in public buildings over 250m²',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,20 +101,25 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A building has 100 × 3kW heaters. With 0.6 diversity, what is the diversified load?',
-    options: ['300kW', '180kW', '100kW', '60kW'],
-    correctAnswer: 1,
+    options: [
+      '100kW',
+      '300kW',
+      '180kW',
+      '60kW',
+    ],
+    correctAnswer: 2,
     explanation: 'Total connected = 100 × 3kW = 300kW. Diversified load = 300kW × 0.6 = 180kW',
   },
   {
     id: 3,
     question: 'Which load type typically has the lowest diversity factor?',
     options: [
-      'Socket outlets',
-      'Emergency lighting',
       'Cooking equipment in domestic',
+      'Socket outlets',
       'Office small power',
+      'Emergency lighting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Emergency lighting has 100% diversity (no reduction) as all emergency luminaires operate simultaneously when activated - this is essential for life safety.',
   },
@@ -117,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'BS 7671 Appendix 1 Table 1A provides guidance on:',
     options: [
-      'Cable current ratings',
       'Diversity allowances for domestic installations',
-      'Earth fault loop impedance',
-      'RCD disconnection times',
+      'Ensures proper electrical contact and prevents overheating',
+      'Behind the screen relative to the user',
+      'Only a competent person responsible for the work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Table 1A in BS 7671 Appendix 1 provides diversity factors specifically for domestic installations. Commercial diversity requires engineering judgement.',
   },
@@ -130,7 +140,12 @@ const quizQuestions = [
     id: 5,
     question:
       'For a housing estate, ADMD is calculated per dwelling. A typical UK dwelling has ADMD of:',
-    options: ['1-2 kVA', '2-3 kVA', '5-8 kVA', '15-20 kVA'],
+    options: [
+      '1-2 kVA',
+      '2-3 kVA',
+      '15-20 kVA',
+      '5-8 kVA',
+    ],
     correctAnswer: 1,
     explanation:
       'Typical UK dwelling ADMD is 2-3 kVA (often 2.5 kVA used), though this varies with property size, heating type, and EV charging provision.',
@@ -140,12 +155,12 @@ const quizQuestions = [
     question:
       'When calculating ADMD for a block of 50 flats, the diversity factor between dwellings is:',
     options: [
-      '1.0 (no diversity)',
+      'Daylight-linked dimming with occupancy sensing',
+      'To protect cable insulation from sharp edges',
       'Applied - total is less than 50 × individual ADMD',
-      'Applied only to heating',
-      'Not permitted by BS 7671',
+      'A contactor (the first contactor in the circuit)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Inter-dwelling diversity is applied because not all flats experience peak demand simultaneously. 50 flats at 2.5kVA each would total 125kVA, but diversified demand might be 60-80kVA.',
   },
@@ -155,18 +170,23 @@ const quizQuestions = [
     options: [
       'Diversity can only be applied once at the main incomer',
       'Individual circuits should not have diversity applied',
-      'Diversity can be applied at each distribution level',
       'Only DNO-approved diversity factors can be used',
+      'Diversity can be applied at each distribution level',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Diversity can be applied at each distribution level (final circuits, distribution boards, sub-mains), but care must be taken not to compound diversity inappropriately.',
   },
   {
     id: 8,
     question: 'A commercial kitchen has 50kW of cooking equipment. What diversity might apply?',
-    options: ['20-30%', '40-50%', '80-90%', '100%'],
-    correctAnswer: 2,
+    options: [
+      '80-90%',
+      '100%',
+      '20-30%',
+      '40-50%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Commercial kitchens typically operate at 80-90% of connected load during peak service times. Diversity is lower than offices because most equipment operates simultaneously during service.',
   },
@@ -175,11 +195,11 @@ const quizQuestions = [
     question: 'How does diversity differ between daytime and 24-hour buildings?',
     options: [
       'No difference in diversity factors',
-      '24-hour buildings have higher diversity overall',
       '24-hour buildings have lower peak-to-average ratio',
+      '24-hour buildings have higher diversity overall',
       'Diversity only applies to daytime buildings',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       '24-hour buildings (hospitals, data centres) have lower peak-to-average ratios as loads are more evenly distributed. Peak demand may be similar but average demand is higher.',
   },
@@ -187,12 +207,12 @@ const quizQuestions = [
     id: 10,
     question: 'When should diversity NOT be applied?',
     options: [
+      'The risk of surface condensation at a thermal bridge',
+      'Investment-grade audit (Level III)',
       'For emergency systems and life safety equipment',
-      'For motor loads',
-      'For lighting circuits',
-      'For heating circuits',
+      'Pricing early activities higher to improve cash flow',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Emergency systems (emergency lighting, fire alarm, smoke extract) must be calculated at 100% - all equipment operates simultaneously during an emergency.',
   },

@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 'permit-purpose',
     question: 'What is the primary purpose of a permit to work system?',
     options: [
-      'To create paperwork for HSE',
+      'Replacing suspect components with known good ones',
       'To ensure a formal check is made that a safe system is in place',
-      'To transfer responsibility to the worker',
-      'To speed up hazardous work',
+      'They are unpredictable and likely to be drilled into',
+      'Solvents, chemicals, dusts, fumes, and biological agents',
     ],
     correctIndex: 1,
     explanation:
@@ -48,10 +48,10 @@ const quickCheckQuestions = [
     id: 'loto-first',
     question: 'What is the first step in a Lockout/Tagout (LOTO) procedure?',
     options: [
-      'Apply the lock',
-      'Verify isolation',
+      'Environmental Impact Assessment',
+      'The business owner/last holder',
       'Identify all energy sources',
-      'Start work immediately',
+      'Domestic (household) premises only.',
     ],
     correctIndex: 2,
     explanation:
@@ -60,7 +60,12 @@ const quickCheckQuestions = [
   {
     id: 'hot-work',
     question: 'How long should fire watch continue after hot work is completed?',
-    options: ['No fire watch needed', '30 minutes', 'At least 60 minutes', 'Only during work'],
+    options: [
+      '30 minutes',
+      'No fire watch needed',
+      'At least 60 minutes',
+      'Only during work',
+    ],
     correctIndex: 2,
     explanation:
       'Fire watch should continue for at least 60 minutes after hot work is completed, as many fires start from smouldering materials after the work has finished.',
@@ -69,12 +74,12 @@ const quickCheckQuestions = [
     id: 'permit-cancel',
     question: 'Who can cancel or close a permit to work?',
     options: [
-      'Anyone on site',
-      'Only the person who raised it',
+      'The value compared to BS 7671 maximum limits',
+      'Those working towards qualification with basic competence',
+      'Chest compressions without rescue breaths',
       'The authorising person or competent designated person',
-      'The worker carrying out the task',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Only the authorising person or a competent person designated to do so can cancel a permit. This ensures proper handback procedures are followed and the system is not bypassed.',
   },
@@ -85,12 +90,12 @@ const quizQuestions = [
     id: 1,
     question: 'When is a permit to work system required?',
     options: [
-      'For all work activities',
-      'Only when requested by the client',
+      'They present complex control systems as easy-to-read graphics and summaries',
       'For high-risk activities where normal controls are insufficient',
-      'Only for work lasting more than one day',
+      'Enforcement notices, prohibition notices, or prosecution',
+      'Smart building systems including BMS and integrated controls',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Permits are required for high-risk activities where normal safe systems of work are insufficient, such as work on live electrical systems, hot work, confined space entry, and work on pressurised systems.',
   },
@@ -98,12 +103,12 @@ const quizQuestions = [
     id: 2,
     question: 'What are the key elements of an effective permit to work?',
     options: [
-      'Title, date, and worker name only',
+      'Location, nature of work, fire precautions, fire watch requirements',
+      'A competent person with knowledge of the plant and authority to issue permits',
       'Hazard identification, precautions, authorisation, time limits, and handback',
-      'Cost estimate and completion date',
-      'Client signature only',
+      'To formally document that systems are isolated and safe for work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An effective permit includes: work description, hazards identified, precautions required, who authorises and accepts, time validity, cross-references to other permits, and formal handback procedure.',
   },
@@ -111,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: 'What does LOTO stand for?',
     options: [
-      'Lock On, Tag Off',
       'Limited Operation, Technical Override',
-      'Lockout/Tagout',
+      'Lock On, Tag Off',
       'Lock Out, Transfer Ownership',
+      'Lockout/Tagout',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'LOTO stands for Lockout/Tagout - a safety procedure ensuring that dangerous machines or energy sources are properly shut off and cannot be restarted until work is complete.',
   },
@@ -124,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: "Who is the 'Authorising Person' in a permit system?",
     options: [
-      'Anyone with a permit pad',
       'A competent person with knowledge of the plant and authority to issue permits',
-      'The site visitor signing in',
-      'The person doing the work',
+      'To formally document that systems are isolated and safe for work',
+      'Testing that no voltage is present using an approved voltage indicator',
+      'To ensure their personal safety - no one else can remove it',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Authorising Person (AP) must have detailed knowledge of the plant/system, understand the hazards, and have authority to issue permits. They take responsibility for ensuring precautions are adequate.',
   },
@@ -139,8 +144,8 @@ const quizQuestions = [
     options: [
       'Continue working until finished',
       'Cancel the permit and reapply for a new one',
-      'Have another worker take over',
       'Leave the work area open and return tomorrow',
+      'Have another worker take over',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: "What is 'proving dead' in electrical isolation?",
     options: [
-      'Checking the person is qualified',
+      'Remains outside to maintain communication and initiate rescue',
+      'To formally document that systems are isolated and safe for work',
       'Testing that no voltage is present using an approved voltage indicator',
-      'Reading the circuit diagram',
-      'Checking the isolator position',
+      'Location, nature of work, fire precautions, fire watch requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Proving dead means testing with an approved voltage indicator (that has been proved on a known live source) to confirm no voltage is present. Visual inspection of isolator position is not sufficient.',
   },
@@ -163,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'What information must a hot work permit include?',
     options: [
-      "Worker's home address",
+      'Hazard identification, precautions, authorisation, time limits, and handback',
+      'To control entry to dangerous areas during maintenance',
+      'Remains outside to maintain communication and initiate rescue',
       'Location, nature of work, fire precautions, fire watch requirements',
-      'Company turnover',
-      'Previous job references',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hot work permits must specify the exact location, type of hot work, fire precautions (extinguishers, clearance of combustibles), fire watch requirements, and duration of post-work monitoring.',
   },
@@ -176,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: "What is the purpose of a 'Limitation of Access' permit?",
     options: [
-      'To restrict who can leave site',
       'To control entry to dangerous areas during maintenance',
-      'To limit lunch break duration',
-      'To restrict overtime working',
+      'Location, nature of work, fire precautions, fire watch requirements',
+      'Remains outside to maintain communication and initiate rescue',
+      'Cancel the existing permit and raise a new one',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A Limitation of Access permit restricts entry to areas where work is in progress that creates additional hazards. It ensures only authorised personnel enter and are aware of the hazards.',
   },
@@ -189,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: "In confined space entry, what does the 'Top Man' or 'Standby Person' do?",
     options: [
-      'Does the work inside the confined space',
+      'Testing that no voltage is present using an approved voltage indicator',
       'Remains outside to maintain communication and initiate rescue',
-      'Signs the permit only',
-      'Operates the ventilation system',
+      'Cancel the permit and reapply for a new one',
+      'To formally document that systems are isolated and safe for work',
     ],
     correctAnswer: 1,
     explanation:
@@ -203,11 +208,11 @@ const quizQuestions = [
     question: 'What should happen to a permit if the scope of work changes significantly?',
     options: [
       'Amend it by crossing out and initialling',
+      'Get verbal approval and continue',
       'Cancel the existing permit and raise a new one',
       'Continue as the permit covers general work',
-      'Get verbal approval and continue',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Significant changes in scope require cancelling the existing permit and raising a new one. The new permit ensures all hazards from the changed work are reassessed and appropriate precautions identified.',
   },
@@ -215,12 +220,12 @@ const quizQuestions = [
     id: 11,
     question: "What is an 'isolation certificate' used for?",
     options: [
-      'To certify worker competence',
+      'Hazard identification, precautions, authorisation, time limits, and handback',
+      'Testing that no voltage is present using an approved voltage indicator',
+      'Remains outside to maintain communication and initiate rescue',
       'To formally document that systems are isolated and safe for work',
-      'To isolate the worker from colleagues',
-      'To prove insurance cover',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "An isolation certificate formally documents that an electrical or mechanical system has been isolated, locked off, tested, and is safe for work. It's often a supporting document to a permit to work.",
   },
@@ -228,12 +233,12 @@ const quizQuestions = [
     id: 12,
     question: 'Why must each worker apply their own personal lock during LOTO?',
     options: [
-      "It's company policy only",
       'To ensure their personal safety - no one else can remove it',
-      'To save money on locks',
-      'To speed up the process',
+      'Location, nature of work, fire precautions, fire watch requirements',
+      'Remains outside to maintain communication and initiate rescue',
+      'To control entry to dangerous areas during maintenance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Each worker applies their own lock so that the system cannot be re-energised while they are working on it. Only the worker who applied the lock should remove it, ensuring personal protection.',
   },

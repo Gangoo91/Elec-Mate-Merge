@@ -5,10 +5,10 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the primary purpose of time scheduling in BMS?',
     options: [
-      'To make the system more expensive',
+      'Weekly schedule with different weekday/weekend patterns',
       'To automatically operate equipment based on predetermined schedules',
-      'To confuse building users',
-      'To increase energy consumption',
+      'Systems gradually reduce operation after a delay period',
+      'A temporary manual override that reverts after a set time',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,10 +18,10 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 2,
     question: 'Which type of schedule is best for a standard office building?',
     options: [
-      '24/7 continuous operation',
-      'Random scheduling',
+      'Automatically adjusting systems based on actual space usage',
+      'A temporary manual override that reverts after a set time',
       'Weekly schedule with different weekday/weekend patterns',
-      'Manual operation only',
+      '24/7 continuous operation with varied intensity',
     ],
     correctAnswer: 2,
     explanation:
@@ -31,12 +31,12 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 3,
     question: 'What is occupancy detection primarily used for in BMS?',
     options: [
-      'Counting how many people enter the building',
+      'Systems automatically adjust start/stop times based on external temperature',
+      'A temporary manual override that reverts after a set time',
+      'Minimal operation with frost protection and security systems active',
       'Automatically adjusting systems based on actual space usage',
-      'Security monitoring only',
-      'Measuring temperature changes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Occupancy detection automatically adjusts HVAC, lighting, and other systems based on actual space usage, providing energy savings and comfort without manual intervention.',
   },
@@ -44,12 +44,12 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 4,
     question: 'Which sensor technology is most commonly used for occupancy detection?',
     options: [
-      'Temperature sensors',
       'PIR (Passive Infrared) sensors',
-      'Humidity sensors',
-      'Light sensors',
+      'Industry-wide retirement savings scheme',
+      'Spring return, normally open',
+      'Two-pole voltage indicator (GS38)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'PIR (Passive Infrared) sensors detect body heat and movement, making them the most common choice for occupancy detection in commercial buildings due to their reliability and cost-effectiveness.',
   },
@@ -57,10 +57,10 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 5,
     question: "What is an 'override' function in BMS scheduling?",
     options: [
-      'A permanent change to the schedule',
+      'Minimal operation with frost protection and security systems active',
       'A temporary manual override that reverts after a set time',
-      'A way to delete schedules',
-      'An emergency stop function',
+      'To automatically operate equipment based on predetermined schedules',
+      'Systems gradually reduce operation after a delay period',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 6,
     question: 'Which of these is a benefit of optimum start/stop control?',
     options: [
-      'Systems run continuously for reliability',
-      'Systems start and stop at exact scheduled times regardless of conditions',
+      'Minimal operation with frost protection and security systems active',
+      'Weekly schedule with different weekday/weekend patterns',
       'Systems automatically adjust start/stop times based on external temperature',
-      'Systems never turn off',
+      'To automatically operate equipment based on predetermined schedules',
     ],
     correctAnswer: 2,
     explanation:
@@ -83,12 +83,12 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 7,
     question: 'What happens when occupancy sensors detect no movement in a space?',
     options: [
-      'All systems immediately switch off',
-      'Systems continue normal operation',
+      'To automatically operate equipment based on predetermined schedules',
+      'Weekly schedule with different weekday/weekend patterns',
+      'Ventilation adjusted based on occupancy levels and CO2 readings',
       'Systems gradually reduce operation after a delay period',
-      'An alarm sounds',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'When no movement is detected, systems gradually reduce operation after a programmed delay period (typically 15-30 minutes) to account for brief absences while ensuring energy savings during actual vacancy.',
   },
@@ -96,12 +96,12 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 8,
     question: 'Which schedule type would be most appropriate for a hospital?',
     options: [
-      'Standard office hours only',
       '24/7 continuous operation with varied intensity',
-      'Weekend operation only',
-      'Summer operation only',
+      'Weekly schedule with different weekday/weekend patterns',
+      'Systems gradually reduce operation after a delay period',
+      'A temporary manual override that reverts after a set time',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Hospitals require 24/7 operation but with varied intensity - full operation in patient areas, reduced operation in administrative areas during off-hours, and different requirements for critical vs. non-critical spaces.',
   },
@@ -109,12 +109,12 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 9,
     question: 'What is demand-controlled ventilation (DCV)?',
     options: [
-      'Ventilation that runs at maximum speed always',
       'Ventilation controlled by outside air temperature only',
       'Ventilation adjusted based on occupancy levels and CO2 readings',
       'Ventilation that only works manually',
+      'Ventilation that runs at maximum speed always',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Demand-controlled ventilation adjusts ventilation rates based on actual occupancy levels and CO2 readings, providing adequate fresh air while minimising energy consumption during low occupancy periods.',
   },
@@ -122,10 +122,10 @@ export const bmsModule3Section3QuizData: QuizQuestion[] = [
     id: 10,
     question: 'How should holiday schedules be programmed in a BMS?',
     options: [
-      'Same as weekend schedules',
-      'Maximum operation to catch up on maintenance',
+      'A temporary manual override that reverts after a set time',
+      'Ventilation adjusted based on occupancy levels and CO2 readings',
       'Minimal operation with frost protection and security systems active',
-      'Complete system shutdown',
+      'Weekly schedule with different weekday/weekend patterns',
     ],
     correctAnswer: 2,
     explanation:

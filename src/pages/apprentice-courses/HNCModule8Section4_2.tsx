@@ -27,8 +27,13 @@ const quickCheckQuestions = [
     id: 'dol-current',
     question:
       'What is the typical starting current for a DOL (Direct On Line) starter expressed as a multiple of Full Load Current (FLC)?',
-    options: ['2-3 times FLC', '4-5 times FLC', '6-8 times FLC', '10-12 times FLC'],
-    correctIndex: 2,
+    options: [
+      '6-8 times FLC',
+      '2-3 times FLC',
+      '10-12 times FLC',
+      '4-5 times FLC',
+    ],
+    correctIndex: 0,
     explanation:
       'DOL starters apply full voltage directly to the motor terminals, resulting in starting currents typically 6-8 times the Full Load Current (FLC). This high inrush current can cause voltage dips on the supply system and may exceed supply authority limits.',
   },
@@ -37,12 +42,12 @@ const quickCheckQuestions = [
     question:
       'By what factor does star-delta starting reduce the starting current compared to DOL starting?',
     options: [
+      'Reduces by 75% (one-quarter)',
       'Reduces by 50% (half)',
       'Reduces by 67% (one-third)',
-      'Reduces by 75% (one-quarter)',
       'Reduces by 25% (three-quarters)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Star-delta starting reduces the starting current to approximately one-third (33%) of the DOL starting current. This is because the line current in star connection is 1/√3 times the delta current, and this reduction applies twice during the voltage transformation.',
   },
@@ -51,9 +56,9 @@ const quickCheckQuestions = [
     question: 'How does a soft starter reduce motor starting current?',
     options: [
       'By switching between star and delta connections',
-      'By using an autotransformer to reduce voltage',
-      'By gradually increasing the applied voltage using thyristors',
       'By inserting resistance in the motor circuit',
+      'By gradually increasing the applied voltage using thyristors',
+      'By using an autotransformer to reduce voltage',
     ],
     correctIndex: 2,
     explanation:
@@ -63,8 +68,13 @@ const quickCheckQuestions = [
     id: 'voltage-drop-limit',
     question:
       'What is the typical maximum permissible voltage drop during motor starting according to BS 7671 guidance?',
-    options: ['2%', '4%', '6%', '10%'],
-    correctIndex: 2,
+    options: [
+      '2%',
+      '4%',
+      '10%',
+      '6%',
+    ],
+    correctIndex: 3,
     explanation:
       'BS 7671 recommends that voltage drop during motor starting should not exceed 6% to prevent disturbance to other connected equipment. Some supply authorities may impose stricter limits depending on the installation location and supply characteristics.',
   },
@@ -75,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main disadvantage of DOL (Direct On Line) starting for large motors?',
     options: [
-      'Complex control circuitry required',
+      'External systems or people that track and reinforce your commitment',
       'High starting current causing voltage dips and supply disturbance',
-      'Slow motor acceleration',
-      'Requires special motor windings',
+      'The material is sealed, in good condition and unlikely to be disturbed',
+      'Popularising emotional intelligence and bringing it to mainstream awareness',
     ],
     correctAnswer: 1,
     explanation:
@@ -89,12 +99,12 @@ const quizQuestions = [
     question:
       'In a star-delta starter, during the star connection phase, the voltage applied to each motor winding is:',
     options: [
-      'Full line voltage (400V)',
+      'Reduced current spike during star-delta transition',
+      'A brief current spike occurs as the motor reconnects in delta',
       'Line voltage divided by √3 (approximately 230V)',
-      'Half the line voltage (200V)',
-      'Double the line voltage (800V)',
+      'When the motor has only 3 terminals available',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'In star connection, each winding receives line voltage divided by √3 (VL/√3 = 400/1.732 = 231V), reducing both voltage and current to approximately 58% of delta values.',
   },
@@ -103,12 +113,12 @@ const quizQuestions = [
     question:
       'What is the starting torque reduction when using star-delta starting compared to DOL?',
     options: [
-      'Starting torque is reduced to one-half',
-      'Starting torque is reduced to one-third',
       'Starting torque is reduced to one-quarter',
+      'Starting torque is reduced to one-half',
       'Starting torque remains the same',
+      'Starting torque is reduced to one-third',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Star-delta starting reduces starting torque to approximately one-third of DOL torque, as torque is proportional to voltage squared. This limits its use to applications with low starting torque requirements.',
   },
@@ -116,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: 'What happens during the transition from star to delta in a star-delta starter?',
     options: [
-      'The motor smoothly accelerates without interruption',
       'A brief current spike occurs as the motor reconnects in delta',
+      'The motor smoothly accelerates without interruption',
       'The motor decelerates before resuming acceleration',
       'The starting current gradually increases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'During star-delta transition, there is a momentary disconnection causing a current transient (spike) as the motor reconnects in delta. Closed-transition starters can minimise this effect.',
   },
@@ -132,8 +142,8 @@ const quizQuestions = [
     options: [
       '65% of DOL starting current',
       '42% of DOL starting current',
-      '35% of DOL starting current',
       '85% of DOL starting current',
+      '35% of DOL starting current',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,8 +153,13 @@ const quizQuestions = [
     id: 6,
     question:
       'Which starting method provides the smoothest acceleration and is most suitable for pumps and fans?',
-    options: ['DOL starter', 'Star-delta starter', 'Autotransformer starter', 'Soft starter'],
-    correctAnswer: 3,
+    options: [
+      'DOL starter',
+      'Star-delta starter',
+      'Soft starter',
+      'Autotransformer starter',
+    ],
+    correctAnswer: 2,
     explanation:
       'Soft starters provide continuously variable voltage control, resulting in smooth, stepless acceleration ideal for pumps (preventing water hammer) and fans (reducing mechanical stress).',
   },
@@ -152,8 +167,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the typical starting current range when using a properly configured soft starter?',
-    options: ['1.5-2 times FLC', '2-4 times FLC', '5-6 times FLC', '6-8 times FLC'],
-    correctAnswer: 1,
+    options: [
+      '1.5-2 times FLC',
+      '6-8 times FLC',
+      '5-6 times FLC',
+      '2-4 times FLC',
+    ],
+    correctAnswer: 3,
     explanation:
       'Soft starters typically limit starting current to 2-4 times FLC by controlling the voltage ramp. The exact value depends on the load characteristics and acceleration time setting.',
   },
@@ -161,8 +181,13 @@ const quizQuestions = [
     id: 8,
     question:
       'For a 75kW motor with FLC of 140A, what would be the approximate starting current with DOL starting?',
-    options: ['280-420A', '420-700A', '840-1120A', '1400-1680A'],
-    correctAnswer: 2,
+    options: [
+      '840-1120A',
+      '1400-1680A',
+      '280-420A',
+      '420-700A',
+    ],
+    correctAnswer: 0,
     explanation:
       'DOL starting current = 6-8 × FLC = 6-8 × 140A = 840A to 1120A. This high current may require reduced voltage starting methods for larger installations.',
   },
@@ -171,10 +196,10 @@ const quizQuestions = [
     question:
       'Which factor determines the maximum motor size that can be started DOL on a given supply?',
     options: [
-      'Motor efficiency rating',
+      'Starting torque is reduced to one-third',
       'Prospective fault current and voltage drop limits',
-      'Motor insulation class',
-      'Ambient temperature',
+      'A brief current spike occurs as the motor reconnects in delta',
+      'Prevention of water hammer through gradual acceleration',
     ],
     correctAnswer: 1,
     explanation:
@@ -185,12 +210,12 @@ const quizQuestions = [
     question:
       'What advantage does closed-transition star-delta starting offer over open-transition?',
     options: [
-      'Lower cost and simpler installation',
+      'Prevention of water hammer through gradual acceleration',
+      'Prospective fault current and voltage drop limits',
       'Reduced current spike during star-delta transition',
-      'Higher starting torque',
-      'Faster motor acceleration',
+      'Line voltage divided by √3 (approximately 230V)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Closed-transition star-delta starters maintain motor connection through resistors or capacitors during transition, reducing the current spike that occurs in open-transition starters.',
   },
@@ -198,12 +223,12 @@ const quizQuestions = [
     id: 11,
     question: 'When would an autotransformer starter be preferred over star-delta starting?',
     options: [
-      'When the motor has only 3 terminals available',
+      'When the motor has 6 accessible terminals',
       'When minimum cost is the priority',
       'When the motor runs continuously at light load',
-      'When the motor has 6 accessible terminals',
+      'When the motor has only 3 terminals available',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Autotransformer starters work with any three-phase motor regardless of terminal configuration, whereas star-delta requires 6 accessible terminals. This makes autotransformer starters suitable for motors with internal connections.',
   },
@@ -212,12 +237,12 @@ const quizQuestions = [
     question:
       'What is the primary consideration when selecting a starting method for centrifugal pumps?',
     options: [
-      'Maximum starting speed',
-      'Lowest initial cost',
       'Prevention of water hammer through gradual acceleration',
-      'Highest starting torque',
+      'Reduced current spike during star-delta transition',
+      'Starting torque is reduced to one-third',
+      'Prospective fault current and voltage drop limits',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Centrifugal pumps benefit from gradual acceleration to prevent water hammer (pressure surges) in pipework. Soft starters are ideal for this application due to their smooth, adjustable acceleration profile.',
   },

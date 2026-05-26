@@ -33,16 +33,26 @@ const quickCheckQuestions = [
     id: 'chart-x-axis',
     question:
       'What property is shown on the horizontal (x) axis of a standard psychrometric chart?',
-    options: ['Relative humidity', 'Dry bulb temperature', 'Moisture content', 'Enthalpy'],
-    correctIndex: 1,
+    options: [
+      'Dry bulb temperature',
+      'Enthalpy',
+      'Moisture content',
+      'Relative humidity',
+    ],
+    correctIndex: 0,
     explanation:
       'The horizontal axis shows dry bulb temperature in °C. This is the primary reference for locating any air condition on the chart.',
   },
   {
     id: 'chart-y-axis',
     question: 'What property is shown on the vertical (y) axis of a psychrometric chart?',
-    options: ['Wet bulb temperature', 'Enthalpy', 'Moisture content (g/kg)', 'Relative humidity'],
-    correctIndex: 2,
+    options: [
+      'Relative humidity',
+      'Moisture content (g/kg)',
+      'Wet bulb temperature',
+      'Enthalpy',
+    ],
+    correctIndex: 1,
     explanation:
       'The vertical axis shows moisture content (specific humidity) in g/kg of dry air. This scale typically runs from 0 to about 30 g/kg.',
   },
@@ -50,12 +60,12 @@ const quickCheckQuestions = [
     id: 'saturation-line',
     question: 'What does the curved saturation line on a psychrometric chart represent?',
     options: [
+      'Sea level pressure',
       'Constant enthalpy',
       '100% relative humidity',
       'Constant wet bulb',
-      'Sea level pressure',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The saturation curve represents 100% RH - air that is fully saturated with water vapour. All feasible air conditions lie on or below this curve.',
   },
@@ -63,7 +73,12 @@ const quickCheckQuestions = [
     id: 'two-properties',
     question:
       'How many independent properties are needed to fix an air state on the psychrometric chart?',
-    options: ['One', 'Two', 'Three', 'Four'],
+    options: [
+      'One',
+      'Two',
+      'Three',
+      'Four',
+    ],
     correctIndex: 1,
     explanation:
       'Any two independent psychrometric properties will fix the air state on the chart. Common combinations are: dry bulb + wet bulb, or dry bulb + RH, or dry bulb + moisture content.',
@@ -75,10 +90,10 @@ const quizQuestions = [
     id: 1,
     question: 'The psychrometric chart is valid for a specific:',
     options: [
-      'Temperature range only',
+      'Before construction begins, based on developed design',
       'Atmospheric pressure (typically 101.325 kPa)',
-      'Humidity range only',
-      'Time of year',
+      'To confirm the design meets BS EN 61439',
+      'Record new readings with date and signature',
     ],
     correctAnswer: 1,
     explanation:
@@ -88,10 +103,10 @@ const quizQuestions = [
     id: 2,
     question: 'On a psychrometric chart, lines of constant relative humidity are:',
     options: [
-      'Straight horizontal lines',
-      'Straight vertical lines',
+      'Horizontally to the left until hitting the saturation curve',
+      'Enthalpy remains approximately constant',
       'Curved lines following the saturation curve shape',
-      'Diagonal straight lines',
+      'It visualises processes and relationships between properties',
     ],
     correctAnswer: 2,
     explanation:
@@ -101,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: 'Wet bulb temperature lines on a psychrometric chart slope:',
     options: [
-      'Vertically upward',
-      'Horizontally to the right',
+      'The point moves horizontally to the right',
+      'Near-vertical lines sloping slightly',
+      'Enthalpy remains approximately constant',
       'Diagonally downward from left to right',
-      'Diagonally upward from left to right',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Wet bulb (and enthalpy) lines slope downward from left to right. They start from the saturation curve and extend into the body of the chart.',
   },
@@ -127,7 +142,12 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What is the specific enthalpy of moist air at the origin (0°C, 0 g/kg)?',
-    options: ['0 kJ/kg', 'Approximately 0 kJ/kg', '2501 kJ/kg', 'Undefined'],
+    options: [
+      '0 kJ/kg',
+      'Approximately 0 kJ/kg',
+      'Undefined',
+      '2501 kJ/kg',
+    ],
     correctAnswer: 1,
     explanation:
       'By convention, dry air at 0°C has zero enthalpy. The chart reference point is typically 0°C dry bulb, 0 g/kg moisture content.',
@@ -137,11 +157,11 @@ const quizQuestions = [
     question: 'Specific volume lines on a psychrometric chart are:',
     options: [
       'Horizontal lines',
-      'Near-vertical lines sloping slightly',
       'The same as constant RH lines',
+      'Near-vertical lines sloping slightly',
       'Only shown on the saturation curve',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Specific volume lines are nearly vertical, sloping very slightly to the right as temperature increases. They are often spaced at 0.01 m³/kg intervals.',
   },
@@ -152,10 +172,10 @@ const quizQuestions = [
     options: [
       'Enthalpy increases significantly',
       'Enthalpy decreases significantly',
-      'Enthalpy remains approximately constant',
       'Enthalpy becomes zero',
+      'Enthalpy remains approximately constant',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Along an adiabatic saturation (wet bulb) line, enthalpy is approximately constant. The sensible heat lost equals the latent heat gained from evaporation.',
   },
@@ -163,19 +183,24 @@ const quizQuestions = [
     id: 8,
     question: 'To find dew point from a chart, starting from the air state point, move:',
     options: [
-      'Horizontally to the right',
       'Horizontally to the left until hitting the saturation curve',
-      'Vertically downward',
-      'Diagonally along a wet bulb line',
+      'Directing light downward and using appropriate timing',
+      'In control panels or equipment rooms, close to the systems they link',
+      'Reduces trips, falls, fire risks and improves working conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Dew point is found by moving horizontally left (constant moisture content) until reaching the saturation curve. The temperature at that intersection is the dew point.',
   },
   {
     id: 9,
     question: 'The CIBSE psychrometric chart typically covers a temperature range of:',
-    options: ['-20°C to +20°C', '-10°C to +60°C', '0°C to +50°C', '+10°C to +40°C'],
+    options: [
+      '-20°C to +20°C',
+      '-10°C to +60°C',
+      '0°C to +50°C',
+      '+10°C to +40°C',
+    ],
     correctAnswer: 1,
     explanation:
       'The standard CIBSE chart covers approximately -10°C to +60°C dry bulb, which accommodates most UK HVAC applications including winter and summer design conditions.',
@@ -196,8 +221,13 @@ const quizQuestions = [
   {
     id: 11,
     question: 'The enthalpy scale on a CIBSE chart typically reads in:',
-    options: ['J/kg', 'kJ/kg of dry air', 'kJ/kg of moist air', 'BTU/lb'],
-    correctAnswer: 1,
+    options: [
+      'J/kg',
+      'BTU/lb',
+      'kJ/kg of moist air',
+      'kJ/kg of dry air',
+    ],
+    correctAnswer: 3,
     explanation:
       'CIBSE charts use kJ/kg of dry air for enthalpy. This convention ensures consistency as moisture content changes during processes.',
   },
@@ -205,12 +235,12 @@ const quizQuestions = [
     id: 12,
     question: 'Why is the psychrometric chart preferred over calculations for HVAC design?',
     options: [
-      'It is more accurate',
       'It visualises processes and relationships between properties',
-      'Calculations are not possible',
-      'Charts are required by regulations',
+      'They should be visually inspected for damage, distortion and missing parts',
+      'To verify wiring matches programming and test physical responses',
+      'The associated input is OFF (de-energised)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The chart provides visual understanding of air conditioning processes and shows how properties change together. It makes it easy to plot and analyse heating, cooling, mixing and humidification.',
   },

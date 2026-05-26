@@ -102,6 +102,12 @@ const GradientHeader = ({ title }: { title: string }) => (
 
 const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
   const [recentInstruments, setRecentInstruments] = useState<string[]>([]);
+  // Cross-connect ring readings are optional — only expand if user already filled them in.
+  const [showCrossConnect, setShowCrossConnect] = useState<boolean>(
+    !!(formData.ringR1Cross || formData.ringRnCross || formData.ringR2Cross)
+  );
+  // Manual override for Max Permitted Zs — auto-calc is off when user edits this field.
+  const [zsManualOverride, setZsManualOverride] = useState<boolean>(false);
 
   // Smart form hook for saved instruments from Business Settings
   const { getAvailableInstruments, hasSavedTestEquipment, loadTestEquipment } = useMinorWorksSmartForm();
@@ -220,8 +226,9 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
     return [...savedOptions, ...recentOptions, ...mainOptions];
   }, [recentInstruments, savedInstruments]);
 
-  // Auto-calculate max Zs from protective device details
+  // Auto-calculate max Zs from protective device details (skipped when sparky has manually overridden)
   useEffect(() => {
+    if (zsManualOverride) return;
     const bsEn = formData.overcurrentDeviceBsEn || formData.bsEnStandard || '';
     const deviceType = formData.protectiveDeviceType || '';
     const rating = formData.protectiveDeviceRating || '';
@@ -239,7 +246,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
         }
       }).catch(() => {});
     }
-  }, [formData.overcurrentDeviceBsEn, formData.bsEnStandard, formData.protectiveDeviceType, formData.protectiveDeviceRating]);
+  }, [formData.overcurrentDeviceBsEn, formData.bsEnStandard, formData.protectiveDeviceType, formData.protectiveDeviceRating, zsManualOverride]);
 
   // Check if Zs is within limits
   const isZsValid = () => {
@@ -392,29 +399,6 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
               ))}
             </div>
 
-            <span className="text-[10px] text-white uppercase tracking-wide">Cross-Connect</span>
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                { label: 'r₁ (L)', field: 'ringR1Cross', placeholder: '0.26' },
-                { label: 'rₙ (N)', field: 'ringRnCross', placeholder: '0.26' },
-                { label: 'r₂ (CPC)', field: 'ringR2Cross', placeholder: '0.43' },
-              ].map(({ label, field, placeholder }) => (
-                <FormField key={field} label={label}>
-                  <div className="relative">
-                    <Input
-                      value={formData[field] || ''}
-                      onChange={(e) => onUpdate(field, e.target.value)}
-                      placeholder={placeholder}
-                      className={cn(inputClasses, 'pr-8')}
-                    />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
-                      Ω
-                    </span>
-                  </div>
-                </FormField>
-              ))}
-            </div>
-
             <FormField label="R₁+R₂ (Ring Final)">
               <div className="relative">
                 <Input
@@ -428,6 +412,42 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
                 </span>
               </div>
             </FormField>
+
+            {/* Cross-connect readings — optional, hidden by default */}
+            <button
+              type="button"
+              onClick={() => setShowCrossConnect((v) => !v)}
+              className="w-full h-8 rounded-md text-[10px] font-medium bg-white/[0.04] border border-white/[0.06] text-white/70 touch-manipulation active:scale-[0.98]"
+            >
+              {showCrossConnect ? 'Hide cross-connect readings' : 'Show cross-connect readings (optional)'}
+            </button>
+
+            {showCrossConnect && (
+              <>
+                <span className="text-[10px] text-white uppercase tracking-wide">Cross-Connect</span>
+                <div className="grid grid-cols-3 gap-3">
+                  {[
+                    { label: 'r₁ (L)', field: 'ringR1Cross', placeholder: '0.26' },
+                    { label: 'rₙ (N)', field: 'ringRnCross', placeholder: '0.26' },
+                    { label: 'r₂ (CPC)', field: 'ringR2Cross', placeholder: '0.43' },
+                  ].map(({ label, field, placeholder }) => (
+                    <FormField key={field} label={label}>
+                      <div className="relative">
+                        <Input
+                          value={formData[field] || ''}
+                          onChange={(e) => onUpdate(field, e.target.value)}
+                          placeholder={placeholder}
+                          className={cn(inputClasses, 'pr-8')}
+                        />
+                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
+                          Ω
+                        </span>
+                      </div>
+                    </FormField>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         )}
 
@@ -447,22 +467,41 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
           {[
             { field: 'insulationLiveNeutral', label: 'L-N (MΩ)' },
             { field: 'insulationLiveEarth', label: 'L-E (MΩ)' },
-            { field: 'insulationNeutralEarth', label: 'N-E (MΩ)' },
-            { field: 'insulationLiveLive', label: 'L-L (MΩ)' },
+            // L-L only applicable to 3-phase
+            ...(formData.supplyPhases === '3' || formData.supplyPhases === 'Three'
+              ? [{ field: 'insulationLiveLive', label: 'L-L (MΩ)' }]
+              : []),
           ].map(({ field, label }) => {
             const isValid = checkInsulationValue(formData[field]);
+            const isInfinite = formData[field] === '>999' || formData[field] === '∞';
             return (
               <FormField key={field} label={label}>
-                <Input
-                  value={formData[field] || ''}
-                  onChange={(e) => onUpdate(field, e.target.value)}
-                  placeholder="≥1MΩ"
-                  className={cn(
-                    inputClasses,
-                    isValid === true && 'border-green-500/50',
-                    isValid === false && 'border-red-500/50'
-                  )}
-                />
+                <div className="flex gap-1.5">
+                  <Input
+                    value={formData[field] || ''}
+                    onChange={(e) => onUpdate(field, e.target.value)}
+                    placeholder="≥1MΩ"
+                    className={cn(
+                      inputClasses,
+                      'flex-1',
+                      isValid === true && 'border-green-500/50',
+                      isValid === false && 'border-red-500/50'
+                    )}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => onUpdate(field, '>999')}
+                    className={cn(
+                      'h-11 w-11 rounded-lg text-base font-semibold touch-manipulation active:scale-[0.97] transition-all shrink-0',
+                      isInfinite
+                        ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    )}
+                    aria-label="Set to infinite (no leakage)"
+                  >
+                    ∞
+                  </button>
+                </div>
                 {isValid === true && (
                   <span className="text-xs text-green-400 mt-0.5 block">Pass</span>
                 )}
@@ -499,13 +538,41 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
               </span>
             </div>
           </FormField>
-          <FormField label="Max Permitted Zs" hint="Auto-calculated">
-            <Input
-              value={formData.maxPermittedZs || ''}
-              readOnly
-              placeholder="Auto"
-              className={cn(inputClasses, 'cursor-not-allowed opacity-60')}
-            />
+          <FormField
+            label="Max Permitted Zs"
+            hint={zsManualOverride ? 'Manual override' : 'Auto-calculated'}
+          >
+            <div className="flex gap-1.5">
+              <div className="relative flex-1">
+                <Input
+                  value={formData.maxPermittedZs || ''}
+                  onChange={(e) => zsManualOverride && onUpdate('maxPermittedZs', e.target.value)}
+                  readOnly={!zsManualOverride}
+                  placeholder={zsManualOverride ? 'Enter Ω' : 'Auto'}
+                  inputMode="decimal"
+                  className={cn(
+                    inputClasses,
+                    'pr-8',
+                    !zsManualOverride && 'cursor-not-allowed opacity-60'
+                  )}
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
+                  Ω
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setZsManualOverride((v) => !v)}
+                className={cn(
+                  'h-11 px-2.5 rounded-lg text-[10px] font-semibold touch-manipulation active:scale-[0.97] transition-all shrink-0',
+                  zsManualOverride
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {zsManualOverride ? 'Auto' : 'Manual'}
+              </button>
+            </div>
           </FormField>
         </div>
 
@@ -583,6 +650,14 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
             value={formData.functionalTesting || ''}
             onChange={(v) => onUpdate('functionalTesting', v)}
           />
+          {formData.functionalTesting && formData.functionalTesting !== 'na' && (
+            <Input
+              value={formData.functionalTestingNotes || ''}
+              onChange={(e) => onUpdate('functionalTestingNotes', e.target.value)}
+              placeholder="What was tested? (e.g. RCD trip, switch operation, isolator)"
+              className={cn(inputClasses, 'mt-2')}
+            />
+          )}
         </FormField>
 
         {/* Phase Rotation - only for 3-phase supplies */}
@@ -874,9 +949,16 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
             if (equipment.testEquipmentCalDate) onUpdate('testEquipmentCalDate', equipment.testEquipmentCalDate);
           }
         }}
-        className="w-full h-9 rounded-lg text-xs font-medium bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow touch-manipulation active:scale-[0.98]"
+        className={cn(
+          'w-full h-9 rounded-lg text-xs font-medium touch-manipulation active:scale-[0.98]',
+          formData.testEquipmentModel && formData.testEquipmentSerial
+            ? 'bg-white/[0.05] border border-white/[0.08] text-white/70'
+            : 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+        )}
       >
-        Load from Business Settings
+        {formData.testEquipmentModel && formData.testEquipmentSerial
+          ? 'Reload from Business Settings'
+          : 'Load from Business Settings'}
       </button>
 
       <div className="space-y-3">
@@ -906,8 +988,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
               type="date"
               value={formData.testEquipmentCalDate || ''}
               onChange={(e) => onUpdate('testEquipmentCalDate', e.target.value)}
-              className={cn(inputClasses, 'text-xs')}
-              style={{ fontSize: '12px' }}
+              className={cn(inputClasses, 'text-sm')}
             />
           </FormField>
           <FormField label="Temp (°C)">
@@ -920,7 +1001,23 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
           </FormField>
         </div>
         {calibrationStatus === 'expired' && (
-          <p className="text-[10px] text-red-400">Calibration may be expired (&gt;12 months)</p>
+          <div className="rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 flex items-start gap-2">
+            <svg
+              className="h-4 w-4 text-red-400 shrink-0 mt-0.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M12 9v4M12 17h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+            </svg>
+            <div className="text-xs">
+              <p className="font-semibold text-red-300">Calibration expired</p>
+              <p className="text-red-200/80 mt-0.5">
+                Test equipment must be calibrated within the last 12 months. This certificate may not be valid.
+              </p>
+            </div>
+          </div>
         )}
       </div>
     </div>

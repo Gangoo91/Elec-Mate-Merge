@@ -40,12 +40,12 @@ const AM2Module3Section3 = () => {
       id: 'one-way-switching',
       question: 'In one-way switching, what happens to the neutral wire?',
       options: [
-        'It goes directly to the fitting only',
-        'It links through the switch to the fitting',
         'It bypasses the switch and goes straight to the fitting',
+        'It links through the switch to the fitting',
+        'It goes directly to the fitting only',
         "It's not required for one-way switching",
       ],
-      correctIndex: 2,
+      correctIndex: 0,
       explanation:
         'The neutral bypasses the switch completely and goes directly to the light fitting. Only the live conductor is switched in one-way switching.',
     },
@@ -53,12 +53,12 @@ const AM2Module3Section3 = () => {
       id: 'two-way-wiring',
       question: 'What cable is typically used for two-way strapper connections?',
       options: [
-        'Single core cable',
-        'Twin & earth cable',
         'Three-core and earth cable',
+        'Twin & earth cable',
+        'Single core cable',
         'Two separate single cables',
       ],
-      correctIndex: 2,
+      correctIndex: 0,
       explanation:
         'Three-core and earth cable is used between two-way switches to provide the two strapper connections (L1 and L2) plus the common.',
     },
@@ -66,9 +66,9 @@ const AM2Module3Section3 = () => {
       id: 'intermediate-switching',
       question: 'What makes intermediate switching different from two-way?',
       options: [
-        'It uses a different type of cable',
-        'It has four terminals instead of three',
         'It can control from unlimited positions',
+        'It has four terminals instead of three',
+        'It uses a different type of cable',
         'It requires a special MCB',
       ],
       correctIndex: 1,
@@ -81,7 +81,12 @@ const AM2Module3Section3 = () => {
     {
       id: 1,
       question: 'What cable size is typically used for lighting circuits in AM2?',
-      options: ['1.0mm²', '1.5mm²', '2.5mm²', '4.0mm²'],
+      options: [
+        '1.0mm²',
+        '1.5mm²',
+        '2.5mm²',
+        '4.0mm²',
+      ],
       correctAnswer: 1,
       explanation:
         'Lighting circuits typically use 1.5mm² twin & earth cable with 6A or 10A MCB protection in AM2 assessments.',
@@ -89,7 +94,12 @@ const AM2Module3Section3 = () => {
     {
       id: 2,
       question: 'In one-way switching, which wire is actually switched?',
-      options: ['Neutral wire', 'Earth wire', 'Live wire', 'All wires'],
+      options: [
+        'All wires',
+        'Neutral wire',
+        'Live wire',
+        'Earth wire',
+      ],
       correctAnswer: 2,
       explanation:
         'Only the live wire is switched in one-way switching. The neutral goes directly to the fitting, bypassing the switch.',
@@ -98,44 +108,64 @@ const AM2Module3Section3 = () => {
       id: 3,
       question: 'What happens if strappers are connected incorrectly in two-way switching?',
       options: [
-        'The circuit works normally',
-        "One switch position won't work",
         'The MCB will trip',
+        'The circuit works normally',
         'It creates a short circuit',
+        "One switch position won't work",
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "Incorrect strapper connections mean the switches can't communicate properly, resulting in one switch position being ineffective.",
     },
     {
       id: 4,
       question: 'How many terminals does an intermediate switch have?',
-      options: ['2 terminals', '3 terminals', '4 terminals', '6 terminals'],
-      correctAnswer: 2,
+      options: [
+        '4 terminals',
+        '3 terminals',
+        '2 terminals',
+        '6 terminals',
+      ],
+      correctAnswer: 0,
       explanation:
         'Intermediate switches have 4 terminals (numbered 1, 2, 3, 4) to allow crossing of the strapper connections when operated.',
     },
     {
       id: 5,
       question: 'What cable type is used between two-way switches?',
-      options: ['Single core cable', 'Twin & earth cable', '3-core & earth cable', 'Flex cable'],
-      correctAnswer: 2,
+      options: [
+        'Twin & earth cable',
+        '3-core & earth cable',
+        'Flex cable',
+        'Single core cable',
+      ],
+      correctAnswer: 1,
       explanation:
         '3-core & earth cable is required between two-way switches to provide the two strapper connections (L1 and L2) plus earth continuity.',
     },
     {
       id: 6,
       question: 'Which conductor requires brown sleeving when used as a switched live?',
-      options: ['Brown conductor', 'Blue conductor', 'Green/yellow conductor', 'Black conductor'],
-      correctAnswer: 1,
+      options: [
+        'Brown conductor',
+        'Green/yellow conductor',
+        'Blue conductor',
+        'Black conductor',
+      ],
+      correctAnswer: 2,
       explanation:
         'When a blue conductor is used as a switched live (rather than neutral), it must be identified with brown sleeving at both ends.',
     },
     {
       id: 7,
       question: 'What is the minimum insulation resistance required for lighting circuits?',
-      options: ['0.5MO', '1MO', '2MO', '5MO'],
-      correctAnswer: 1,
+      options: [
+        '0.5MO',
+        '5MO',
+        '2MO',
+        '1MO',
+      ],
+      correctAnswer: 3,
       explanation:
         'BS7671 requires a minimum insulation resistance of 1MO between live conductors when tested at 500V DC for low voltage circuits.',
     },
@@ -143,12 +173,12 @@ const AM2Module3Section3 = () => {
       id: 8,
       question: 'In intermediate switching, what happens when the intermediate switch is operated?',
       options: [
-        'It breaks the circuit completely',
         'It crosses the internal connections',
         'It adds an extra live feed',
+        'It breaks the circuit completely',
         'It isolates the earth connection',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'When operated, the intermediate switch crosses its internal connections (1-4, 2-3 instead of 1-3, 2-4), changing the circuit state.',
     },
@@ -156,12 +186,12 @@ const AM2Module3Section3 = () => {
       id: 9,
       question: 'What is the most common cause of two-way switching circuits not working properly?',
       options: [
-        'Wrong cable size used',
-        'MCB rating too high',
+        'Refrigerant evaporates inside the coil tubes',
         'Strappers connected to wrong terminals',
-        'Neutral wire broken',
+        'R_th = R_N and I_N = V_th/R_th',
+        'Monitoring exposure at the workplace',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Incorrect strapper connections (L1 and L2 mixed up) is the most common fault, resulting in the light not responding to one of the switches.',
     },

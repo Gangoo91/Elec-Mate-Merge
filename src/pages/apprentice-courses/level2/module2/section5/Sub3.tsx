@@ -43,9 +43,9 @@ const checks = [
       'You wrap your right hand round a vertical conductor with your thumb pointing UP (the current direction). Your fingers curl:',
     options: [
       'Anticlockwise looking down',
-      'Clockwise looking down',
-      'Straight up',
       'Anticlockwise looking up',
+      'Straight up',
+      'Clockwise looking down',
     ],
     correctIndex: 0,
     explanation:
@@ -56,12 +56,12 @@ const checks = [
     question:
       'A current flows anticlockwise through a coil when viewed from the right-hand end. Which end is the north pole?',
     options: [
-      'The right-hand end',
       'The left-hand end',
+      'The right-hand end',
       'Both ends are north',
       'Solenoids don’t have poles',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Right-hand grip rule for a coil: curl your fingers in the direction of conventional current — your thumb points to the north pole. Current anticlockwise viewed from the right means thumb points LEFT, so the left end is N.',
   },
@@ -69,8 +69,13 @@ const checks = [
     id: 'force-on-conductor',
     question:
       'A 2 m long conductor carrying 10 A sits in a 0.4 T field perpendicular to it. What force acts on it?',
-    options: ['8 N', '5 N', '20 N', '0.8 N'],
-    correctIndex: 0,
+    options: [
+      '0.8 N',
+      '20 N',
+      '8 N',
+      '5 N',
+    ],
+    correctIndex: 2,
     explanation:
       'F = B × I × L = 0.4 × 10 × 2 = 8 N. Same shape of formula as Ohm’s law — just learn it and plug in. This force is what spins every motor and pulls every contactor in.',
   },
@@ -80,7 +85,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Who first discovered that an electric current produces a magnetic field?',
-    options: ['Michael Faraday', 'Hans Christian Ørsted', 'Nikola Tesla', 'André-Marie Ampère'],
+    options: [
+      'Michael Faraday',
+      'Hans Christian Ørsted',
+      'Nikola Tesla',
+      'André-Marie Ampère',
+    ],
     correctAnswer: 1,
     explanation:
       'Hans Christian Ørsted, 1820. He noticed a compass needle deflect when he switched on a circuit nearby. Faraday, Tesla and Ampère all built on it — but Ørsted was first.',
@@ -88,8 +98,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A current flows out of the page (towards you). The magnetic field around it goes:',
-    options: ['Clockwise', 'Anticlockwise', 'Radially outward', 'Radially inward'],
-    correctAnswer: 1,
+    options: [
+      'Radially outward',
+      'Clockwise',
+      'Anticlockwise',
+      'Radially inward',
+    ],
+    correctAnswer: 2,
     explanation:
       'Right-hand grip rule: thumb out of the page (towards you), fingers curl anticlockwise. Reverse the current and the field reverses too.',
   },
@@ -97,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which rule do you use to find the direction of the magnetic field around a current-carrying conductor?',
     options: [
-      'Fleming’s left-hand rule',
       'Fleming’s right-hand rule',
-      'Right-hand grip rule',
+      'Fleming’s left-hand rule',
       'Lenz’s law',
+      'Right-hand grip rule',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The right-hand grip rule. Thumb along the current, fingers curl in the direction of B. Fleming’s rules come into play later for force and induced EMF — different problem, different rule.',
   },
@@ -110,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: 'A solenoid is best described as:',
     options: [
-      'A single straight wire',
       'A coil of wire that produces a magnetic field when current flows',
-      'A type of capacitor',
-      'A specific brand of relay',
+      'Detection range, sensitivity, and time delay settings',
+      'To prevent dark spots that could impair vision and cause disorientation',
+      'OTDR trace showing individual events along the link',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A solenoid is a coil — a series of loops of wire wound in a tube. When current flows it produces a field along its axis, just like a bar magnet, with a north and south end.',
   },
@@ -125,8 +140,8 @@ const quizQuestions = [
     options: [
       'Stays the same',
       'Doubles',
-      'Halves',
       'Quadruples',
+      'Halves',
     ],
     correctAnswer: 1,
     explanation:
@@ -135,8 +150,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'A 0.5 m conductor carrying 5 A sits at right angles in a 0.2 T field. The force on it is:',
-    options: ['0.5 N', '2 N', '5 N', '0.05 N'],
-    correctAnswer: 0,
+    options: [
+      '5 N',
+      '2 N',
+      '0.5 N',
+      '0.05 N',
+    ],
+    correctAnswer: 2,
     explanation:
       'F = B × I × L = 0.2 × 5 × 0.5 = 0.5 N. The "perpendicular" bit matters — if the conductor lies along the field instead of across it, F is zero.',
   },
@@ -144,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why does a contactor coil pull its armature in when you energise it?',
     options: [
-      'The current heats up the iron',
+      'Intentionally or recklessly interfere with safety provisions',
+      'Preventing lights switching off while someone walks through',
+      'Uses a single winding with a tapping point, providing no galvanic isolation',
       'The current creates a magnetic field that attracts the iron armature',
-      'It runs on a battery',
-      'The wire physically pushes it in',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Energising the coil makes it act like an electromagnet. The induced field pulls the soft-iron armature in against the spring. Cut the current and the spring throws it back.',
   },
@@ -157,12 +177,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why is the iron core inside an electromagnet so important?',
     options: [
-      'It conducts the current',
       'It concentrates the flux thousands of times more than air would',
-      'It makes the device heavier',
-      'It’s purely for looks',
+      'Lunch service, dinner service, cleaning, and closed',
+      'After completing full GS38 procedure and posting warning notices',
+      'Zone classifications, IP ratings, equipotential bonding, and RCD protection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Soft iron has high permeability — it carries far more flux than air for the same current. Without the core, the same coil would barely lift a paper clip. With it, you’ve got a contactor that can switch a 100 A motor.',
   },

@@ -22,7 +22,12 @@ const Module6Section5_4 = () => {
       id: 1,
       question:
         'What is the minimum insulation resistance value for most low-voltage circuits according to BS 7671?',
-      options: ['0.5 MΩ', '1 MΩ', '2 MΩ', '5 MΩ'],
+      options: [
+        '0.5 MΩ',
+        '1 MΩ',
+        '2 MΩ',
+        '5 MΩ',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 specifies a minimum of 1 MΩ for most low-voltage circuits, though higher values are typically expected in practice.',
@@ -31,12 +36,12 @@ const Module6Section5_4 = () => {
       id: 2,
       question: 'What does a reading significantly below 1 MΩ indicate?',
       options: [
-        'Perfect insulation',
+        'Make the reading artificially lower',
+        'Do not energise until fault is found and rectified',
         'Possible insulation breakdown or contamination',
-        'Normal wear',
-        'High efficiency',
+        'Investigate and rectify before energising',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'A reading well below 1 MΩ suggests potential insulation breakdown, moisture ingress, contamination, or physical damage.',
     },
@@ -44,12 +49,12 @@ const Module6Section5_4 = () => {
       id: 3,
       question: 'If you get a reading of 0.3 MΩ, what should you do?',
       options: [
-        'Accept it as satisfactory',
+        'Do not energise until fault is found and rectified',
+        'Make the reading artificially lower',
+        'Possible insulation breakdown or contamination',
         'Investigate and rectify before energising',
-        'Energise the circuit',
-        'Ignore the reading',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Any reading below 1 MΩ requires investigation and rectification before the circuit can be safely energised.',
     },
@@ -57,7 +62,12 @@ const Module6Section5_4 = () => {
       id: 4,
       question:
         'True or False: Environmental conditions can affect insulation resistance readings.',
-      options: ['True', 'False', 'Only in winter', 'Only outdoors'],
+      options: [
+        'True',
+        'False',
+        'Only in winter',
+        'Only outdoors',
+      ],
       correctAnswer: 0,
       explanation:
         'True. Temperature, humidity, moisture, and contamination can all significantly affect insulation resistance readings.',
@@ -65,7 +75,12 @@ const Module6Section5_4 = () => {
     {
       id: 5,
       question: "What is considered a 'good' insulation resistance reading in practice?",
-      options: ['Exactly 1 MΩ', 'Several MΩ or higher', '0.5 MΩ', 'Any positive reading'],
+      options: [
+        'Exactly 1 MΩ',
+        'Several MΩ or higher',
+        'Any positive reading',
+        '0.5 MΩ',
+      ],
       correctAnswer: 1,
       explanation:
         'In practice, good insulation typically shows readings of several megaohms or higher, well above the minimum 1 MΩ requirement.',
@@ -74,12 +89,12 @@ const Module6Section5_4 = () => {
       id: 6,
       question: 'If parallel paths exist during testing, how might this affect the reading?',
       options: [
-        'Increase the reading',
+        'Immediately after testing',
+        'Investigate and rectify before energising',
         'Make the reading artificially lower',
-        'Have no effect',
-        'Make it more accurate',
+        'Moisture in the installation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Parallel paths can make insulation resistance readings artificially lower, which is why proper isolation is crucial.',
     },
@@ -87,20 +102,25 @@ const Module6Section5_4 = () => {
       id: 7,
       question: 'What action should be taken if a circuit fails the insulation resistance test?',
       options: [
-        'Energise it anyway',
+        'Possible insulation breakdown or contamination',
+        'Investigate and rectify before energising',
+        'Make the reading artificially lower',
         'Do not energise until fault is found and rectified',
-        'Test it again tomorrow',
-        'Reduce the test voltage',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'A circuit that fails the insulation resistance test must not be energised until the fault is located and properly rectified.',
     },
     {
       id: 8,
       question: 'Which factor is most likely to cause temporarily low readings?',
-      options: ['Cold weather', 'Moisture or dampness', 'High voltage', 'New cables'],
-      correctAnswer: 1,
+      options: [
+        'Moisture or dampness',
+        'High voltage',
+        'Cold weather',
+        'New cables',
+      ],
+      correctAnswer: 0,
       explanation:
         'Moisture or dampness is the most common cause of temporarily low insulation resistance readings.',
     },
@@ -108,10 +128,10 @@ const Module6Section5_4 = () => {
       id: 9,
       question: 'When should insulation resistance results be recorded?',
       options: [
-        'The next day',
+        'The inverter can be damaged',
         'Immediately after testing',
-        'At the end of the week',
-        'Only if they fail',
+        'Isolate and lock off the supply',
+        'Outdoor temperature sensors',
       ],
       correctAnswer: 1,
       explanation:
@@ -121,12 +141,12 @@ const Module6Section5_4 = () => {
       id: 10,
       question: 'In the real-world example, what caused the apparent insulation fault?',
       options: [
-        'Damaged cables',
+        'Make the reading artificially lower',
+        'Immediately after testing',
         'Moisture in the installation',
-        'Faulty test equipment',
-        'High ambient temperature',
+        'Several MΩ or higher',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Moisture in a basement consumer unit caused low readings, which improved significantly once the moisture was removed and the installation dried out.',
     },

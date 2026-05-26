@@ -33,16 +33,26 @@ const quickCheckQuestions = [
     id: 'form-separation',
     question:
       'Which Form of separation provides compartmentalisation of functional units AND their terminals?',
-    options: ['Form 1', 'Form 2', 'Form 3', 'Form 4'],
-    correctIndex: 3,
+    options: [
+      'Form 1',
+      'Form 2',
+      'Form 4',
+      'Form 3',
+    ],
+    correctIndex: 2,
     explanation:
       'Form 4 provides the highest level of separation with compartmentalised functional units AND segregated terminals. Form 3 has compartmentalised units but shared terminal spaces.',
   },
   {
     id: 'spd-type',
     question: 'Which SPD Type is typically installed at the main intake?',
-    options: ['Type 1 (Class I)', 'Type 2 (Class II)', 'Type 3 (Class III)', 'Type 1+2 combined'],
-    correctIndex: 0,
+    options: [
+      'Type 3 (Class III)',
+      'Type 1 (Class I)',
+      'Type 1+2 combined',
+      'Type 2 (Class II)',
+    ],
+    correctIndex: 1,
     explanation:
       'Type 1 SPDs are installed at the origin of the installation to handle direct lightning strikes. Type 2 is for sub-distribution, and Type 3 for final circuits near sensitive equipment.',
   },
@@ -50,8 +60,13 @@ const quickCheckQuestions = [
     id: 'busbar-rating',
     question:
       'A 400A main busbar supplies three 100A outgoing ways. What is the minimum busbar rating for the outgoing section?',
-    options: ['100A', '200A', '300A', '400A'],
-    correctIndex: 2,
+    options: [
+      '300A',
+      '200A',
+      '100A',
+      '400A',
+    ],
+    correctIndex: 0,
     explanation:
       'The outgoing busbar section must be rated for the maximum possible load. With three 100A ways, diversity would typically allow 300A (or less), but engineering judgement and actual load analysis is required.',
   },
@@ -59,12 +74,12 @@ const quickCheckQuestions = [
     id: 'phase-rotation',
     question: 'In a UK three-phase system, what is the standard phase rotation?',
     options: [
+      'Any rotation is acceptable',
       'L1-L2-L3 (clockwise)',
       'L3-L2-L1 (anti-clockwise)',
       'L1-L3-L2',
-      'Any rotation is acceptable',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The UK standard phase rotation is L1-L2-L3 in clockwise sequence (positive sequence). This is critical for motor rotation direction and three-phase equipment operation.',
   },
@@ -75,10 +90,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary purpose of busbar segregation in distribution boards?',
     options: [
-      'To reduce installation cost',
+      'Customer information handling and smart device data',
       'To allow maintenance without total shutdown',
-      'To increase current capacity',
-      'To improve aesthetics',
+      'Gather information about the fault symptoms',
+      'Incorrectly identifying existing conductors',
     ],
     correctAnswer: 1,
     explanation:
@@ -88,12 +103,12 @@ const quizQuestions = [
     id: 2,
     question: 'According to BS EN 61439, what does IP rating XXB indicate?',
     options: [
+      'Protection against water spray',
       'Protection against dust ingress',
       'Protection against finger contact with live parts',
-      'Protection against water spray',
       'Protection against mechanical impact',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The B designation in IP ratings (e.g., IP2XB) indicates protection against access to hazardous parts using an articulated test finger (12mm diameter, 80mm length).',
   },
@@ -101,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: 'In a TN-C-S system, where should the main earthing terminal (MET) be located?',
     options: [
-      'At the furthest point from the intake',
-      'Adjacent to the main distribution board',
       'At each sub-distribution board',
+      'At the furthest point from the intake',
       'External to the building',
+      'Adjacent to the main distribution board',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The MET should be located as close as practicable to the main distribution board and incoming supply. It provides the single point of connection for all earthing and bonding conductors.',
   },
@@ -114,15 +129,25 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the maximum disconnection time for a Type B MCB on a 230V final circuit exceeding 32A?',
-    options: ['0.1s', '0.2s', '0.4s', '5s'],
-    correctAnswer: 2,
+    options: [
+      '0.4s',
+      '0.2s',
+      '0.1s',
+      '5s',
+    ],
+    correctAnswer: 0,
     explanation:
       'For TN systems with circuits exceeding 32A (but not >32A socket outlets), BS 7671 permits a maximum disconnection time of 0.4s. Final circuits ≤32A require 0.4s, and socket outlets >32A require 0.2s.',
   },
   {
     id: 5,
     question: 'Which distribution system type uses separate transformers for critical loads?',
-    options: ['Type A', 'Type B', 'Type C', 'Type D'],
+    options: [
+      'Type A',
+      'Type B',
+      'Type D',
+      'Type C',
+    ],
     correctAnswer: 1,
     explanation:
       'Type B distribution systems use independent transformers to supply critical and non-critical loads separately, providing enhanced resilience and power quality isolation.',
@@ -131,8 +156,13 @@ const quizQuestions = [
     id: 6,
     question:
       'A building has 150kVA of lighting (L1), 180kVA of small power (L2), and 200kVA of mechanical services (L3). What is the phase imbalance?',
-    options: ['10%', '14%', '18%', '25%'],
-    correctAnswer: 1,
+    options: [
+      '10%',
+      '18%',
+      '14%',
+      '25%',
+    ],
+    correctAnswer: 2,
     explanation:
       'Average load = (150+180+200)/3 = 176.7kVA. Maximum deviation = 200-176.7 = 23.3kVA. Imbalance = (23.3/176.7) × 100 = 13.2% ≈ 14%',
   },
@@ -140,12 +170,12 @@ const quizQuestions = [
     id: 7,
     question: 'What SPD residual current (Ires) indicates the device needs replacement?',
     options: [
-      'Any visible Ires',
-      'Ires > 1mA',
+      'Two — more than one contractor',
+      'Sleeved and properly connected',
+      'Clearly and systematically',
       'When indicator shows fault',
-      'When Imax is exceeded',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'SPDs have status indicators (mechanical or electronic) that show when the device has operated beyond its limits. The device should be replaced when the indicator shows a fault condition.',
   },
@@ -153,12 +183,12 @@ const quizQuestions = [
     id: 8,
     question: 'In Form 3b construction, what is segregated?',
     options: [
-      'Busbars only',
-      'Functional units from busbars',
       'Functional units, busbars, and terminals from each other',
-      'Functional units and terminals, but busbars are common',
+      'Insulation is good and preventing current leakage',
+      'Batteries require replacement every 3–5 years',
+      'Installation method, ambient temperature, and grouping with other cables',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Form 3b provides separation of functional units from each other, separation of functional units from busbars, but terminals are not separated from the functional units they serve.',
   },
@@ -181,10 +211,10 @@ const quizQuestions = [
     options: [
       'Circuit number, description, and cable size only',
       'Circuit number, protective device rating, cable size, and load',
-      'Circuit number, protective device rating, cable size, load, and design current',
       'All of the above plus phase allocation and route',
+      'Circuit number, protective device rating, cable size, load, and design current',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'A comprehensive panel schedule includes circuit number, description, protective device details, cable size, design current, connected load, phase allocation, cable route, and reference to the as-built drawings.',
   },

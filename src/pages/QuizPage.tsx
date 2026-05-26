@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { getAssessmentById } from '@/data/quizAssessments';
 import { getRandomQuestions } from '@/data/learning-hub-quiz';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 import EnhancedQuizInterface from '@/components/learning-hub/quiz/EnhancedQuizInterface';
 import EnhancedQuizResults from '@/components/learning-hub/quiz/EnhancedQuizResults';
 import QuizPassCelebration from '@/components/learning-hub/quiz/QuizPassCelebration';
@@ -41,7 +42,7 @@ const QuizPage = () => {
         setAssessment(assessmentData);
         const questionData = getRandomQuestions(id, 20);
         if (!questionData || questionData.length === 0) { setError(`No questions available for "${assessmentData.title}".`); setQuizState('error'); return; }
-        setQuestions(questionData);
+        setQuestions(shuffleAllQuestionOptions(questionData, createShuffleSalt()));
         setQuizState('ready');
       } catch (err) {
         setError('Failed to load quiz. Please try again.');
@@ -66,7 +67,7 @@ const QuizPage = () => {
   const handleCelebrationComplete = () => { setShowCelebration(false); setQuizState('results'); };
 
   const handleRetake = () => {
-    if (id) { const newQuestions = getRandomQuestions(id, 20); setQuestions(newQuestions); }
+    if (id) { const newQuestions = getRandomQuestions(id, 20); setQuestions(shuffleAllQuestionOptions(newQuestions, createShuffleSalt())); }
     setResult(null); setAnswers([]); setShowCelebration(false); setQuizState('ready');
   };
 

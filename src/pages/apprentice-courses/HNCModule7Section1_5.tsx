@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'thd-definition',
     question: 'What does THD stand for in power quality?',
     options: [
-      'Total Harmonic Detection',
-      'Total Harmonic Distortion',
       'Thermal Harmonic Deviation',
       'Technical Harmonic Distribution',
+      'Total Harmonic Detection',
+      'Total Harmonic Distortion',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'THD stands for Total Harmonic Distortion - a measure of the harmonic content present in a waveform expressed as a percentage of the fundamental frequency component.',
   },
@@ -42,8 +42,8 @@ const quickCheckQuestions = [
     options: [
       'Between 90% and 100% of nominal',
       'Between 1% and 90% of nominal',
-      'Below 1% of nominal',
       'Above 110% of nominal',
+      'Below 1% of nominal',
     ],
     correctIndex: 1,
     explanation:
@@ -52,7 +52,12 @@ const quickCheckQuestions = [
   {
     id: 'power-factor',
     question: 'A lagging power factor is caused by:',
-    options: ['Resistive loads', 'Capacitive loads', 'Inductive loads', 'Linear loads'],
+    options: [
+      'Linear loads',
+      'Capacitive loads',
+      'Inductive loads',
+      'Resistive loads',
+    ],
     correctIndex: 2,
     explanation:
       'Inductive loads such as motors, transformers, and fluorescent lighting ballasts cause a lagging power factor where current lags behind voltage.',
@@ -61,12 +66,12 @@ const quickCheckQuestions = [
     id: 'harmonic-source',
     question: 'Which equipment is a major source of harmonic distortion?',
     options: [
-      'Incandescent lamps',
-      'Resistance heaters',
       'Variable speed drives',
+      'Resistance heaters',
+      'Incandescent lamps',
       'Synchronous motors',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Variable speed drives (VSDs), along with other non-linear loads like switched-mode power supplies and LED drivers, are major sources of harmonic distortion due to their rectifier front-ends.',
   },
@@ -76,16 +81,26 @@ const quizQuestions = [
   {
     id: 1,
     question: 'According to G5/5, what is the typical planning level for voltage THD at 400V?',
-    options: ['3%', '5%', '8%', '10%'],
-    correctAnswer: 2,
+    options: [
+      '3%',
+      '8%',
+      '5%',
+      '10%',
+    ],
+    correctAnswer: 1,
     explanation:
       'The G5/5 planning level for voltage THD at 400V low voltage systems is 8%. Individual harmonic limits also apply, with lower limits for lower order harmonics.',
   },
   {
     id: 2,
     question: 'Which harmonic order is typically the largest in three-phase rectifier systems?',
-    options: ['3rd harmonic', '5th harmonic', '7th harmonic', '11th harmonic'],
-    correctAnswer: 1,
+    options: [
+      '7th harmonic',
+      '3rd harmonic',
+      '5th harmonic',
+      '11th harmonic',
+    ],
+    correctAnswer: 2,
     explanation:
       'The 5th harmonic (250Hz) is typically the largest in six-pulse three-phase rectifier systems. The harmonic spectrum follows the pattern 6k±1 where k is an integer, giving 5th, 7th, 11th, 13th, etc.',
   },
@@ -93,12 +108,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the effect of triplen harmonics (3rd, 9th, 15th) in a three-phase system?',
     options: [
-      'They cancel out in the neutral',
-      'They add arithmetically in the neutral',
       'They only affect phase conductors',
+      'They cancel out in the neutral',
       'They reduce power factor',
+      'They add arithmetically in the neutral',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Triplen harmonics (multiples of 3) are zero-sequence harmonics that add arithmetically in the neutral conductor, potentially causing neutral current to exceed phase current.',
   },
@@ -106,12 +121,12 @@ const quizQuestions = [
     id: 4,
     question: 'A power factor of 0.8 lagging means:',
     options: [
-      '80% of apparent power is reactive power',
       '80% of apparent power is real power',
+      '80% of apparent power is reactive power',
       'Current leads voltage by 36.87°',
       'Voltage leads current by 53.13°',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Power factor is the ratio of real power (kW) to apparent power (kVA). A PF of 0.8 means 80% of the apparent power is converted to real power, with current lagging voltage by cos⁻¹(0.8) = 36.87°.',
   },
@@ -120,10 +135,10 @@ const quizQuestions = [
     question:
       'Which mitigation measure is most effective for reducing 5th and 7th harmonics from VSDs?',
     options: [
-      'Power factor correction capacitors',
+      'They add arithmetically in the neutral',
       'Passive LC filters tuned to harmonic frequencies',
-      'Increasing cable sizes',
-      'Adding more transformers',
+      'Injecting currents equal and opposite to the harmonic currents',
+      'Pst (short-term) and Plt (long-term)',
     ],
     correctAnswer: 1,
     explanation:
@@ -133,10 +148,10 @@ const quizQuestions = [
     id: 6,
     question: 'Flicker is measured in units of:',
     options: [
-      'Hertz (Hz)',
-      'Percentage (%)',
+      'They add arithmetically in the neutral',
+      'Detuned or harmonic-filtered capacitor banks',
       'Pst (short-term) and Plt (long-term)',
-      'Volt-amperes reactive (VAr)',
+      'Engineering Recommendation G5/5',
     ],
     correctAnswer: 2,
     explanation:
@@ -145,8 +160,13 @@ const quizQuestions = [
   {
     id: 7,
     question: 'What is the typical voltage tolerance for LV supplies according to EN 50160?',
-    options: ['±5% of nominal', '±10% of nominal', '±6% of nominal', '±15% of nominal'],
-    correctAnswer: 1,
+    options: [
+      '±5% of nominal',
+      '±15% of nominal',
+      '±6% of nominal',
+      '±10% of nominal',
+    ],
+    correctAnswer: 3,
     explanation:
       'EN 50160 specifies that under normal operating conditions, 95% of the 10-minute mean RMS voltage values should be within ±10% of nominal voltage (i.e., 207V to 253V for 230V systems).',
   },
@@ -155,12 +175,12 @@ const quizQuestions = [
     question:
       'What type of power factor correction is most suitable for installations with significant harmonic content?',
     options: [
-      'Standard capacitor banks',
       'Detuned or harmonic-filtered capacitor banks',
-      'Synchronous condensers only',
-      'Oversized capacitors',
+      '80% of apparent power is real power',
+      'Between 110% and 180% of nominal',
+      'They add arithmetically in the neutral',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Detuned capacitor banks include series reactors (typically 7% or 14%) that shift the resonant frequency away from harmonic frequencies, preventing dangerous resonance and capacitor damage.',
   },
@@ -169,11 +189,11 @@ const quizQuestions = [
     question: 'A voltage swell is defined as a temporary increase in RMS voltage to:',
     options: [
       'Between 100% and 105% of nominal',
-      'Between 105% and 110% of nominal',
       'Between 110% and 180% of nominal',
+      'Between 105% and 110% of nominal',
       'Above 180% of nominal',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'A voltage swell is a temporary increase in RMS voltage to between 110% and 180% of nominal, typically lasting from 10ms to 1 minute. Swells often occur when large loads are switched off.',
   },
@@ -181,7 +201,12 @@ const quizQuestions = [
     id: 10,
     question:
       'Which document provides guidance on harmonic limits for connections to UK distribution networks?',
-    options: ['BS 7671', 'EN 50160', 'Engineering Recommendation G5/5', 'IEC 61000'],
+    options: [
+      'Pst (short-term) and Plt (long-term)',
+      'Between 110% and 180% of nominal',
+      'Engineering Recommendation G5/5',
+      'They add arithmetically in the neutral',
+    ],
     correctAnswer: 2,
     explanation:
       "Engineering Recommendation G5/5 'Limits for Harmonics in the UK Electricity Supply System' provides planning levels and assessment procedures for harmonic emissions from customer installations.",
@@ -190,12 +215,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the displacement power factor?',
     options: [
-      'The ratio of real power to apparent power at the fundamental frequency',
+      'The difference between leading and lagging power factors',
       'The total power factor including all harmonics',
       'The power factor of reactive components only',
-      'The difference between leading and lagging power factors',
+      'The ratio of real power to apparent power at the fundamental frequency',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Displacement power factor (DPF) is the power factor at the fundamental frequency only (cosφ₁). Total power factor (TPF) includes the effect of harmonics and is always less than or equal to DPF.',
   },
@@ -203,12 +228,12 @@ const quizQuestions = [
     id: 12,
     question: 'Active harmonic filters operate by:',
     options: [
-      'Providing a low-impedance path for harmonic currents',
       'Injecting currents equal and opposite to the harmonic currents',
-      'Blocking harmonic frequencies with high impedance',
       'Converting harmonics to heat energy',
+      'Providing a low-impedance path for harmonic currents',
+      'Blocking harmonic frequencies with high impedance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Active harmonic filters measure the harmonic content in real-time and inject compensating currents that are equal in magnitude but opposite in phase, effectively cancelling the harmonic distortion.',
   },

@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'soft-landings-purpose',
     question: 'What is the primary purpose of the Soft Landings framework?',
     options: [
-      'To reduce construction costs',
+      'To remove the resistance of the leads from the measurement',
+      'Dynamic effects synchronized with content or music',
+      'To show the project team structure and reporting relationships',
       'To bridge the gap between design intent and operational performance',
-      'To accelerate project completion',
-      'To eliminate the defects period',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Soft Landings is a building handover process designed to bridge the gap between design intent and operational performance. It ensures a smooth transition from construction to occupation through extended aftercare and performance monitoring.',
   },
@@ -40,8 +40,13 @@ const quickCheckQuestions = [
     id: 'defects-period',
     question:
       'What is the typical duration of the defects liability period for building services installations?',
-    options: ['3 months', '6 months', '12 months', '24 months'],
-    correctIndex: 2,
+    options: [
+      '3 months',
+      '12 months',
+      '6 months',
+      '24 months',
+    ],
+    correctIndex: 1,
     explanation:
       'The defects liability period (also known as the rectification period) is typically 12 months from practical completion. During this time, the contractor must return to rectify any defects that become apparent under normal use.',
   },
@@ -50,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'Which personnel must receive training before building handover under best practice guidance?',
     options: [
-      'Only the building owner',
+      'Varies with cable size and construction - from tables',
+      'Secure connections and accessibility',
+      'To ensure work is completed safely and efficiently',
       'Facilities management team and operational staff',
-      'Only security personnel',
-      'External maintenance contractors only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The facilities management team and all operational staff who will interact with building services must receive comprehensive training before handover. This ensures they can safely operate, maintain, and respond to emergencies affecting the electrical systems.',
   },
@@ -63,12 +68,12 @@ const quickCheckQuestions = [
     id: 'poe-timing',
     question: 'When should Post-Occupancy Evaluation (POE) typically be conducted?',
     options: [
-      'Before practical completion',
-      'During the defects period only',
       'At 12 months and optionally at 3 years post-occupation',
-      'Only if problems arise',
+      'Installing containment systems and routing cables',
+      'The difference between synchronous speed and actual rotor speed',
+      'By promoting automation for lighting, HVAC, and shading systems',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       "Post-Occupancy Evaluation is typically conducted at 12 months after occupation (end of defects period) and optionally at 3 years. This timing allows seasonal performance assessment and captures the building's performance under actual operational conditions.",
   },
@@ -92,12 +97,12 @@ const quizQuestions = [
     id: 2,
     question: "What is the contractor's obligation during the defects liability period?",
     options: [
-      'To provide unlimited free modifications',
+      'A minimum of one full day, with follow-up sessions',
+      'To optimise systems for heating and cooling seasons after initial occupation',
       'To rectify defects in workmanship and materials at their own cost',
-      'To replace all equipment regardless of condition',
-      'To provide 24-hour on-site support',
+      'Normal operation, emergency procedures, and basic fault diagnosis',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'During the defects liability period, the contractor must rectify defects in workmanship and materials that become apparent under normal use, at their own cost. This does not include damage caused by misuse, fair wear and tear, or client-requested changes.',
   },
@@ -106,12 +111,12 @@ const quizQuestions = [
     question:
       'Which document typically defines the aftercare arrangements following practical completion?',
     options: [
-      'The building regulations',
-      'The contract (e.g., JCT or NEC)',
       'The planning permission',
+      'The building regulations',
       "The architect's appointment",
+      'The contract (e.g., JCT or NEC)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Aftercare arrangements are defined in the construction contract (JCT, NEC, or bespoke). The contract specifies the defects period duration, contractor's obligations, retention release conditions, and any extended aftercare requirements.",
   },
@@ -120,12 +125,12 @@ const quizQuestions = [
     question:
       'What is the recommended minimum duration of operational training for complex building services?',
     options: [
-      '30 minutes per system',
-      'Half a day total',
       'A minimum of one full day, with follow-up sessions',
-      'Training is not required if O&M manuals are provided',
+      'Normal operation, emergency procedures, and basic fault diagnosis',
+      'To rectify defects in workmanship and materials at their own cost',
+      'Resident on-site support and fine-tuning of building systems',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Complex building services require a minimum of one full day of operational training, with follow-up sessions recommended during the initial occupation period. Training should be documented with signed attendance records and competency assessments.',
   },
@@ -134,10 +139,10 @@ const quizQuestions = [
     question:
       "BSRIA Soft Landings identifies which of the following as a key activity during the 'Initial Aftercare' stage?",
     options: [
-      'Design reviews only',
+      '1 year, 2 years, and 5 years post-occupation',
       'Resident on-site support and fine-tuning of building systems',
-      'Demolition planning',
-      'Tender preparation',
+      'To optimise systems for heating and cooling seasons after initial occupation',
+      'To rectify defects in workmanship and materials at their own cost',
     ],
     correctAnswer: 1,
     explanation:
@@ -147,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: 'Post-Occupancy Evaluation (POE) typically assesses which of the following?',
     options: [
-      'Only energy consumption',
+      'Resident on-site support and fine-tuning of building systems',
+      'To optimise systems for heating and cooling seasons after initial occupation',
       'Building performance, occupant satisfaction, and comparison with design predictions',
-      'Construction costs only',
-      'Contractor profit margins',
+      'The final certificate is issued after expiry of the defects period and rectification of notified defects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'POE assesses building performance (energy, comfort, indoor environment), occupant satisfaction, functionality, and compares actual performance against design predictions. This feedback loop helps identify improvements and informs future designs.',
   },
@@ -160,8 +165,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What percentage of construction contract value is typically held as retention during the defects period?',
-    options: ['1-2%', '2.5-5%', '10%', 'No retention is held'],
-    correctAnswer: 1,
+    options: [
+      '1-2%',
+      'No retention is held',
+      '10%',
+      '2.5-5%',
+    ],
+    correctAnswer: 3,
     explanation:
       'Typically 2.5-5% of the contract value is held as retention, with half released at practical completion and the remainder at the end of the defects period. This provides the client with security that defects will be rectified.',
   },
@@ -169,12 +179,12 @@ const quizQuestions = [
     id: 8,
     question: 'FM team training for electrical systems should include which of the following?',
     options: [
-      'Design calculations only',
       'Normal operation, emergency procedures, and basic fault diagnosis',
-      'Only reading meter displays',
-      'Detailed design changes',
+      'Representatives from the design team, contractor, and building services engineer',
+      'Building performance, occupant satisfaction, and comparison with design predictions',
+      'A minimum of one full day, with follow-up sessions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'FM training must cover normal operation procedures, emergency procedures (including isolation and lock-off), basic fault diagnosis, BMS/control system operation, and when to call specialist support. This ensures safe and efficient building operation.',
   },
@@ -183,10 +193,10 @@ const quizQuestions = [
     question:
       'The Building Performance Evaluation (BPE) programme recommends assessments at which intervals?',
     options: [
-      'Weekly during the first month',
+      'To facilitate maintenance and testing',
       '1 year, 2 years, and 5 years post-occupation',
-      'Only when requested by the client',
-      'Every 6 months indefinitely',
+      'Testing without disconnecting sensitive equipment',
+      'Automatic Disconnection of Supply',
     ],
     correctAnswer: 1,
     explanation:
@@ -196,12 +206,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the primary purpose of seasonal commissioning?',
     options: [
-      'To reduce costs',
+      'Building performance, occupant satisfaction, and comparison with design predictions',
+      'Normal operation, emergency procedures, and basic fault diagnosis',
       'To optimise systems for heating and cooling seasons after initial occupation',
-      'To avoid the defects period',
-      'To satisfy building control',
+      'Representatives from the design team, contractor, and building services engineer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Seasonal commissioning optimises HVAC and controls for both heating and cooling seasons under actual occupancy conditions. Initial commissioning may occur in one season, so return visits ensure optimal performance year-round.',
   },
@@ -210,12 +220,12 @@ const quizQuestions = [
     question:
       "Under Soft Landings, who should attend the 'resident on-site' period during initial aftercare?",
     options: [
-      'Only the architect',
+      'To optimise systems for heating and cooling seasons after initial occupation',
+      'To rectify defects in workmanship and materials at their own cost',
+      'Building performance, occupant satisfaction, and comparison with design predictions',
       'Representatives from the design team, contractor, and building services engineer',
-      "Only the client's representative",
-      'Building control officers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Soft Landings requires representatives from the design team, contractor, and building services engineer to provide resident on-site support during initial aftercare. This multi-disciplinary presence ensures queries can be addressed and systems fine-tuned effectively.',
   },
@@ -224,12 +234,12 @@ const quizQuestions = [
     question:
       'What is the relationship between the defects liability period and the final certificate?',
     options: [
-      'They are unrelated',
       'The final certificate is issued after expiry of the defects period and rectification of notified defects',
-      'The final certificate is issued before practical completion',
-      'The defects period begins after the final certificate',
+      'To optimise systems for heating and cooling seasons after initial occupation',
+      'Building performance, occupant satisfaction, and comparison with design predictions',
+      'Representatives from the design team, contractor, and building services engineer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The final certificate is issued after the defects liability period has expired and any notified defects have been rectified. It marks the formal conclusion of the contract and triggers release of the remaining retention.',
   },

@@ -41,11 +41,11 @@ const AM2Module3Section4 = () => {
       question: 'What is the most critical requirement for conductor terminations?',
       options: [
         'Using the correct cable size',
-        'No exposed copper beyond terminals',
         'Tight terminal connections only',
+        'No exposed copper beyond terminals',
         'Proper cable routing',
       ],
-      correctIndex: 1,
+      correctIndex: 2,
       explanation:
         'No exposed copper beyond terminals is critical for safety - prevents short circuits, electric shock, and ensures compliance with BS7671 Section 526.',
     },
@@ -53,12 +53,12 @@ const AM2Module3Section4 = () => {
       id: 'cpc-sleeving',
       question: 'When is CPC sleeving required?',
       options: [
-        'Only in metal accessories',
-        'Only where confusion could arise',
+        'It requires preparation and deepens understanding',
         'Everywhere - including plastic accessories',
-        'Only in distribution boards',
+        'Enhanced IP ratings and RCD protection',
+        'If one circuit fails, others continue to work',
       ],
-      correctIndex: 2,
+      correctIndex: 1,
       explanation:
         'CPC sleeving is mandatory everywhere according to BS7671, including plastic accessories. This ensures proper identification and compliance.',
     },
@@ -66,12 +66,12 @@ const AM2Module3Section4 = () => {
       id: 'swa-glands',
       question: 'What provides the earthing connection for SWA cable armour?',
       options: [
-        'The gland body only',
         'Banjo washer and earthing connection',
-        'Cable clamp mechanism',
-        'Internal armour contact',
+        'Appropriate mechanical protection is provided',
+        'Self-declaration without evidence',
+        'The rate of flow of charge past a point',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'The banjo washer provides the crucial earthing connection for SWA cable armour, ensuring continuity and safety.',
     },
@@ -81,7 +81,12 @@ const AM2Module3Section4 = () => {
     {
       id: 1,
       question: 'What BS 7671 section covers requirements for electrical connections?',
-      options: ['Section 512', 'Section 526', 'Section 541', 'Section 559'],
+      options: [
+        'Section 512',
+        'Section 526',
+        'Section 541',
+        'Section 559',
+      ],
       correctAnswer: 1,
       explanation:
         'Section 526 of BS 7671 covers electrical connections and terminations, setting out requirements for secure and safe connections.',
@@ -90,12 +95,12 @@ const AM2Module3Section4 = () => {
       id: 2,
       question: 'Why must conductor insulation run up to the terminal?',
       options: [
-        'For aesthetics',
+        'High humidity typically reduces insulation resistance',
+        'To ensure visibility and operability during power failures',
         'To prevent short circuits and maintain safety',
-        'To reduce cost',
-        'For easier identification',
+        'To contain and protect cables and wiring',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Insulation must run up to terminals to prevent exposed copper which could cause short circuits, electric shock, or arc faults.',
     },
@@ -103,12 +108,12 @@ const AM2Module3Section4 = () => {
       id: 3,
       question: 'In AM2 assessment, CPC sleeving is required:',
       options: [
-        'Only in metal back boxes',
-        'Only where confusion could arise',
+        'To convert millivolts (mV) into volts (V).',
+        'Add capacitors to offset inductive effects',
+        'Cognitive Behavioural Therapy',
         'Everywhere, including plastic accessories',
-        'Only in distribution boards',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'CPC sleeving is mandatory everywhere in AM2 - including plastic accessories. This demonstrates understanding of BS7671 requirements.',
     },
@@ -116,12 +121,12 @@ const AM2Module3Section4 = () => {
       id: 4,
       question: "What's the purpose of a banjo washer in an SWA gland?",
       options: [
-        'Aesthetic finishing',
         'Earthing connection for the armour',
-        'Cable strain relief',
-        'Weather sealing',
+        'Knowledge, Skills, and Attitudes',
+        'BACnet, Modbus, KNX, or DALI for lighting',
+        'The reciprocal of resistance',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'The banjo washer provides the earthing connection for the SWA cable armour, ensuring electrical continuity and safety.',
     },
@@ -129,10 +134,10 @@ const AM2Module3Section4 = () => {
       id: 5,
       question: 'Why must no copper be left exposed outside terminals?',
       options: [
-        'Regulation requirement only',
+        'Affects product compliance requirements',
         'Risk of short circuit and shock',
-        'Aesthetic reasons',
-        'Cost considerations',
+        'A measure of the sharpness of resonance',
+        'A to G (with A being most efficient)',
       ],
       correctAnswer: 1,
       explanation:
@@ -155,12 +160,12 @@ const AM2Module3Section4 = () => {
       id: 7,
       question: 'What type of screwdriver should you use in a DB?',
       options: [
-        'Any available screwdriver',
+        'Branch resistance and applied voltage',
+        'To allow safe shutdown of dangerous processes',
+        'A persistent fault still exists on the circuit',
         'Torque screwdriver for critical connections',
-        'Phillips head only',
-        'Flathead only',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Torque screwdrivers ensure connections meet manufacturer specifications and demonstrate professional standards expected in AM2.',
     },
@@ -168,12 +173,12 @@ const AM2Module3Section4 = () => {
       id: 8,
       question: 'How should you label circuits in a distribution board?',
       options: [
-        'Pencil markings',
-        'Masking tape and pen',
         'Permanent, legible labels',
         'No labelling needed',
+        'Pencil markings',
+        'Masking tape and pen',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         "Labels must be permanent and legible - pencil markings fade and temporary tape doesn't meet professional standards.",
     },
@@ -181,10 +186,10 @@ const AM2Module3Section4 = () => {
       id: 9,
       question: 'What cable preparation error causes most AM2 failures?',
       options: [
-        'Using wrong cable size',
+        'Isolation and lock-off procedures',
         'Over-stripped insulation exposing copper',
-        'Correct terminal selection',
-        'Proper cable routing',
+        'A contactor (the first contactor in the circuit)',
+        'Expansion joints and flexible supports',
       ],
       correctAnswer: 1,
       explanation:
@@ -195,11 +200,11 @@ const AM2Module3Section4 = () => {
       question: 'What marking strategy saves marks in AM2?',
       options: [
         'Label everything at the end',
+        'Use temporary labels',
         'Label as you go during installation',
         "Label only what's specified",
-        'Use temporary labels',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Labelling as you go prevents rushing at the end, ensures nothing is missed, and demonstrates systematic working methods.',
     },

@@ -35,12 +35,12 @@ const quickCheckQuestions = [
     id: 'puwer-definition',
     question: "Under PUWER, what constitutes 'work equipment'?",
     options: [
-      'Only powered machinery',
+      'To direct airflow away from occupants and optimise air distribution',
+      'Immediate investigation and response following security procedures',
       'Any machinery, appliance, apparatus, tool or installation used at work',
-      'Only electrical equipment',
-      'Equipment costing over £500',
+      'To prevent ground loop currents that can make interference worse',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "PUWER defines work equipment very broadly as 'any machinery, appliance, apparatus, tool or installation for use at work'. This includes everything from a simple hand tool to complex machinery.",
   },
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     id: 'puwer-suitability',
     question: 'Who has the primary duty to ensure work equipment is suitable under PUWER?',
     options: [
-      'The equipment manufacturer',
-      'The employee using it',
       'The employer',
+      'The employee using it',
+      'The equipment manufacturer',
       'The Health and Safety Executive',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'PUWER places the primary duty on employers to ensure that work equipment is suitable for the purpose for which it is used or provided, and for the conditions in which it will be used.',
   },
@@ -61,12 +61,12 @@ const quickCheckQuestions = [
     id: 'puwer-inspection',
     question: 'When must work equipment be inspected under PUWER?',
     options: [
-      'Only when new',
-      'Annually without exception',
+      'To ensure the health, safety and welfare of all employees at work',
       'After installation, after assembly, and at suitable intervals',
-      'Only when it breaks down',
+      'Hazard, design decisions, residual risks, information for others',
+      'Through lighting scenes and monitoring systems to prevent theft',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'PUWER requires inspection after installation and before first use, after assembly at a new location, and at suitable intervals depending on the nature of the equipment and conditions of use.',
   },
@@ -74,10 +74,10 @@ const quickCheckQuestions = [
     id: 'puwer-guards',
     question: 'What is the hierarchy of guarding measures under PUWER?',
     options: [
-      'PPE first, then guards',
+      'Unrealistic value - indicates copying, not measuring',
       'Fixed guards, then other guards/protection devices, then PPE',
-      'Warning signs only',
-      'Training instead of guards',
+      'Discharge through the test instrument or suitable resistor',
+      'Prove tester -> Test circuit -> Re-prove tester',
     ],
     correctIndex: 1,
     explanation:
@@ -89,7 +89,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What year did the Provision and Use of Work Equipment Regulations come into force?',
-    options: ['1992', '1998', '2002', '2005'],
+    options: [
+      '1992',
+      '1998',
+      '2002',
+      '2005',
+    ],
     correctAnswer: 1,
     explanation:
       'PUWER 1998 came into force on 5 December 1998, replacing the earlier 1992 regulations. It implements European Directive 89/655/EEC as amended by Directive 95/63/EC.',
@@ -97,7 +102,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which of the following is NOT considered work equipment under PUWER?',
-    options: ['A cordless drill', 'A ladder', 'Livestock', 'A multifunction tester'],
+    options: [
+      'A multifunction tester',
+      'A cordless drill',
+      'Livestock',
+      'A ladder',
+    ],
     correctAnswer: 2,
     explanation:
       'PUWER specifically excludes livestock from the definition of work equipment. However, it covers virtually all other equipment used at work, including hand tools, power tools, ladders, test equipment, and machinery.',
@@ -106,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: 'Under PUWER Regulation 4, equipment must be suitable for which of the following?',
     options: [
-      'Only the task it was designed for',
+      'Before first use at each site, and at intervals not exceeding 6 months',
+      'Equipment is maintained in efficient state, working order and good repair',
+      'A competent person with appropriate knowledge, training and experience',
       'The purpose used, conditions of use, and any foreseeable risk',
-      'Any task the employer requires',
-      'Only indoor use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 4 requires equipment to be suitable for the purpose for which it is used, suitable for the conditions of use (location, environment), and account for foreseeable risks to health and safety.',
   },
@@ -119,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: 'What must an employer ensure regarding maintenance under PUWER Regulation 5?',
     options: [
-      'Maintenance is carried out only by the manufacturer',
       'Equipment is maintained in efficient state, working order and good repair',
-      'Maintenance records are kept for 10 years minimum',
-      'Only electrical equipment requires maintenance',
+      'Appropriate guards, a dead man\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s switch, and is properly maintained',
+      'It is suitable, maintained, calibrated, and users are trained in its safe use',
+      'The purpose used, conditions of use, and any foreseeable risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Regulation 5 requires employers to ensure work equipment is maintained in an efficient state, in efficient working order and in good repair. Where there is a maintenance log, it must be kept up to date.',
   },
@@ -133,10 +143,10 @@ const quizQuestions = [
     question:
       'A building services engineer using a 110V angle grinder on a construction site must ensure the grinder has:',
     options: [
-      'A CE mark only',
+      "It is suitable, maintained, calibrated, and users are trained in its safe use",
       "Appropriate guards, a dead man's switch, and is properly maintained",
-      'Been purchased within the last year',
-      'A 13A plug',
+      "A deliberate action control requiring intentional operation",
+      "Before first use at each site, and at intervals not exceeding 6 months",
     ],
     correctAnswer: 1,
     explanation:
@@ -147,12 +157,12 @@ const quizQuestions = [
     question:
       'PUWER Regulation 9 requires that adequate training is provided. This training must include:',
     options: [
+      'A deliberate action control requiring intentional operation',
+      'Appropriate guards, a dead man\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s switch, and is properly maintained',
       'Methods of use, risks involved, and precautions to take',
-      'Only manufacturer instructions',
-      'Online courses exclusively',
-      'Training is optional for experienced workers',
+      'The purpose used, conditions of use, and any foreseeable risk',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Regulation 9 requires training to include methods of using the equipment, any risks arising from use, and precautions to be taken. This applies regardless of experience level.',
   },
@@ -161,12 +171,12 @@ const quizQuestions = [
     question:
       'What type of control does PUWER require to prevent accidental starting of dangerous machinery?',
     options: [
-      'A key switch',
-      'A password',
+      'The purpose used, conditions of use, and any foreseeable risk',
+      'Equipment is maintained in efficient state, working order and good repair',
+      'Methods of use, risks involved, and precautions to take',
       'A deliberate action control requiring intentional operation',
-      'Voice activation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'PUWER Regulation 14 requires controls to require a deliberate action to operate. This prevents accidental starting due to unintentional contact with controls.',
   },
@@ -174,12 +184,12 @@ const quizQuestions = [
     id: 8,
     question: 'Under PUWER, when must a mobile work platform (MEWP) be inspected?',
     options: [
-      'Only annually',
       'Before first use at each site, and at intervals not exceeding 6 months',
-      'Only when visibly damaged',
-      'Every 2 years',
+      'A deliberate action control requiring intentional operation',
+      'Methods of use, risks involved, and precautions to take',
+      'It is suitable, maintained, calibrated, and users are trained in its safe use',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'MEWPs must be thoroughly examined before first use, after assembly at each new site, and at intervals not exceeding 6 months (or in accordance with an examination scheme). Daily pre-use checks are also required.',
   },
@@ -187,10 +197,10 @@ const quizQuestions = [
     id: 9,
     question: "What is the employer's duty regarding specific risks under PUWER Regulation 7?",
     options: [
-      'Accept that some risks are unavoidable',
+      'Appropriate guards, a dead man\\\\\\\\\\\\\\\'s switch, and is properly maintained',
       'Ensure use is restricted to designated persons and repairs by competent persons only',
-      'Transfer risk to employees through disclaimers',
-      'Only address risks to visitors',
+      'It is suitable, maintained, calibrated, and users are trained in its safe use',
+      'Equipment is maintained in efficient state, working order and good repair',
     ],
     correctAnswer: 1,
     explanation:
@@ -201,12 +211,12 @@ const quizQuestions = [
     question:
       'A multifunction tester used for verification testing falls under PUWER. What must the employer ensure?',
     options: [
-      'It has a UKCA/CE mark only',
+      'Before first use at each site, and at intervals not exceeding 6 months',
+      'A competent person with appropriate knowledge, training and experience',
       'It is suitable, maintained, calibrated, and users are trained in its safe use',
-      'It was manufactured in the UK',
-      'It is replaced every year',
+      'Methods of use, risks involved, and precautions to take',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Test equipment under PUWER must be suitable for the tests being performed, properly maintained and calibrated (typically annually), and users must be trained in its correct and safe use including understanding limitations.',
   },
@@ -214,12 +224,12 @@ const quizQuestions = [
     id: 11,
     question: 'What does PUWER Regulation 11 require regarding dangerous parts of machinery?',
     options: [
-      'Dangerous parts should be painted red',
+      'It is suitable, maintained, calibrated, and users are trained in its safe use',
+      'A competent person with appropriate knowledge, training and experience',
+      'Before first use at each site, and at intervals not exceeding 6 months',
       'Effective measures to prevent contact with dangerous parts or arrest movement before contact',
-      'Warning labels are sufficient',
-      'Workers must sign a disclaimer',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Regulation 11 requires effective measures to prevent access to dangerous parts, or to stop the movement of dangerous parts before any part of a person can reach them.',
   },
@@ -227,12 +237,12 @@ const quizQuestions = [
     id: 12,
     question: 'Under PUWER, who can carry out inspections of work equipment?',
     options: [
-      'Any employee',
-      'Only HSE inspectors',
       'A competent person with appropriate knowledge, training and experience',
-      'Only the manufacturer',
+      'Equipment is maintained in efficient state, working order and good repair',
+      'Before first use at each site, and at intervals not exceeding 6 months',
+      'Methods of use, risks involved, and precautions to take',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'PUWER requires inspections to be carried out by a competent person - someone with sufficient training and experience or knowledge to enable them to detect defects and assess their significance.',
   },

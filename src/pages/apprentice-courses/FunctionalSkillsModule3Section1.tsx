@@ -29,10 +29,10 @@ const FunctionalSkillsModule3Section1 = () => {
       question:
         'Which file type is most commonly used for sharing electrical certificates and test reports?',
       options: [
-        '.docx (Word document)',
+        'A sack trolley or platform trolley',
         '.pdf (Portable Document Format)',
-        '.xlsx (Excel spreadsheet)',
-        '.jpg (Image file)',
+        'All of the above plus tester details',
+        'Greater than or equal to 25A',
       ],
       correctAnswer: 1,
       explanation:
@@ -42,12 +42,12 @@ const FunctionalSkillsModule3Section1 = () => {
       id: 2,
       question: 'What does the 3-2-1 backup rule recommend?',
       options: [
-        '3 computers, 2 hard drives, 1 USB stick',
+        'Testing notifications with trial alerts to all recipients',
+        'After isolation, verify terminations are torqued to manufacturer values',
         '3 copies of your data, on 2 different media types, with 1 stored off-site',
-        'Back up 3 times a day, 2 times a week, 1 time a month',
-        '3 folders, 2 subfolders, 1 file per subfolder',
+        'To ensure materials meet design requirements and installation conditions',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'The 3-2-1 rule means keeping 3 copies of your data, stored on 2 different types of media (e.g. hard drive and cloud), with 1 copy stored off-site or in the cloud. This protects against hardware failure, theft, and disaster — essential for safeguarding irreplaceable certificates and job records.',
     },
@@ -55,8 +55,13 @@ const FunctionalSkillsModule3Section1 = () => {
       id: 3,
       question:
         'Which keyboard shortcut allows you to quickly save a document in most applications?',
-      options: ['Ctrl + P', 'Ctrl + Z', 'Ctrl + S', 'Ctrl + C'],
-      correctAnswer: 2,
+      options: [
+        'Ctrl + Z',
+        'Ctrl + P',
+        'Ctrl + C',
+        'Ctrl + S',
+      ],
+      correctAnswer: 3,
       explanation:
         'Ctrl + S (or Cmd + S on Mac) is the universal shortcut for saving your current document. Building a habit of pressing Ctrl + S regularly means you will never lose work due to a crash or power cut — particularly important when filling in lengthy test schedules or reports.',
     },
@@ -64,12 +69,12 @@ const FunctionalSkillsModule3Section1 = () => {
       id: 4,
       question: 'What is the recommended file naming format for job-related documents?',
       options: [
-        'Document1.pdf, Document2.pdf',
         'YYYY-MM-DD_ClientName_DocumentType.pdf',
+        'Document1.pdf, Document2.pdf',
         'final_version_v2_FINAL_NEW.pdf',
         'random file name here.pdf',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Using the format YYYY-MM-DD_ClientName_DocumentType.pdf (e.g. 2025-06-15_SmithResidence_EICR.pdf) ensures files sort chronologically, are immediately identifiable, and can be located quickly. Consistent naming is critical when you may need to retrieve certificates years later for compliance audits.',
     },
@@ -80,8 +85,8 @@ const FunctionalSkillsModule3Section1 = () => {
       options: [
         'The ability to change font colours',
         'Automatic synchronisation across all devices',
-        'The ability to play music files',
         'Built-in calculator functions',
+        'The ability to play music files',
       ],
       correctAnswer: 1,
       explanation:
@@ -91,10 +96,10 @@ const FunctionalSkillsModule3Section1 = () => {
       id: 6,
       question: 'What is the purpose of the .dwg file extension?',
       options: [
-        'A compressed image format',
-        'A video file format',
+        'To handle variable loads that change power factor',
+        'An agreement to buy electricity from a third-party owned system',
         'An AutoCAD drawing file used for electrical plans and layouts',
-        'A database file for customer records',
+        'Adequate capacity, diversity factors, and future expansion',
       ],
       correctAnswer: 2,
       explanation:
@@ -105,12 +110,12 @@ const FunctionalSkillsModule3Section1 = () => {
       question:
         'When your computer runs slowly, which of the following is the best first troubleshooting step?',
       options: [
-        'Immediately buy a new computer',
-        'Delete the operating system',
+        'Maximising profit margins on construction projects',
+        'Using a safety net below the working area',
+        'Switches, contacts, and alarm devices',
         'Restart the computer and close unnecessary programs',
-        'Increase the screen brightness',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         'Restarting clears temporary files and frees up memory consumed by background processes. Closing unnecessary programs reduces the demand on your processor and RAM. This simple step resolves the majority of performance issues and should always be your first action before seeking further help.',
     },
@@ -118,12 +123,12 @@ const FunctionalSkillsModule3Section1 = () => {
       id: 8,
       question: 'Which folder structure best organises electrical job files?',
       options: [
-        'All files in one folder on the desktop',
         'Organised by year → client → job type (e.g. 2025/Smith/EICR/)',
         'Organised alphabetically by file name only',
+        'All files in one folder on the desktop',
         'Saved randomly across different drives',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'A hierarchical structure of Year → Client → Job Type mirrors how electrical work is tracked and audited. It allows you to find any document quickly, supports compliance requirements for record retention (typically 5-10 years for certificates), and scales effectively as your workload grows.',
     },

@@ -5,10 +5,10 @@ export const bmsModule3Section2QuizData: QuizQuestion[] = [
     id: 1,
     question: 'Why are control strategies important in BMS?',
     options: [
-      'They make the system look more professional',
+      'By using variable frequency drives (VFDs)',
       'They maintain stable and efficient building operation',
-      'They are required by law',
-      'They reduce the number of sensors needed',
+      'It provides smoother operation and better comfort',
+      'The differential pressure sensor was installed in the wrong location',
     ],
     correctAnswer: 1,
     explanation:
@@ -18,12 +18,12 @@ export const bmsModule3Section2QuizData: QuizQuestion[] = [
     id: 2,
     question: 'What is the difference between on/off and proportional control for temperature?',
     options: [
-      'On/off control is more expensive to implement',
+      'Increase neutral currents, affect cable sizing, and influence transformer selection',
+      'They extract renewable heat from the environment (air, ground, or water)',
       'On/off control switches at fixed points; proportional control gradually adjusts outputs',
-      'Proportional control only works with electric heating',
-      'There is no significant difference between them',
+      'Safety shoes/boots with toe protection, puncture resistance, electrical insulation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'On/off control switches equipment at fixed temperature points, causing wide comfort swings. Proportional control gradually adjusts outputs to maintain steady temperatures, providing smoother operation and better efficiency.',
   },
@@ -31,20 +31,25 @@ export const bmsModule3Section2QuizData: QuizQuestion[] = [
     id: 3,
     question: 'Give one advantage of proportional control.',
     options: [
-      "It's cheaper to install",
-      'It requires fewer sensors',
+      'They maintain stable and efficient building operation',
+      'By using variable frequency drives (VFDs)',
+      'It causes false readings leading to poor control',
       'It provides smoother operation and better comfort',
-      'It works without electricity',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Proportional control provides smoother operation, better comfort, and improved energy efficiency by gradually adjusting outputs rather than switching on/off abruptly.',
   },
   {
     id: 4,
     question: 'What sensor is used to maintain duct static pressure in ventilation systems?',
-    options: ['Temperature sensor', 'Flow sensor', 'Static pressure sensor', 'Humidity sensor'],
-    correctAnswer: 2,
+    options: [
+      'Static pressure sensor',
+      'Flow sensor',
+      'Temperature sensor',
+      'Humidity sensor',
+    ],
+    correctAnswer: 0,
     explanation:
       'Static pressure sensors monitor airflow in duct systems, allowing the BMS to adjust fan speed to maintain constant supply pressure as dampers open and close.',
   },
@@ -65,28 +70,38 @@ export const bmsModule3Section2QuizData: QuizQuestion[] = [
     id: 6,
     question: 'What type of pressure control is used in water systems?',
     options: [
+      'Vacuum pressure control',
       'Static pressure control',
       'Differential pressure control',
       'Atmospheric pressure control',
-      'Vacuum pressure control',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Differential pressure control is used in water systems, monitoring the pressure difference across pumps or coils to maintain proper flow and heat transfer.',
   },
   {
     id: 7,
     question: 'Give one example of a device used for airflow control.',
-    options: ['Thermostat', 'VAV (Variable Air Volume) box', 'Pressure switch', 'Humidistat'],
-    correctAnswer: 1,
+    options: [
+      'Motorised control valve',
+      'Static pressure sensor',
+      'Differential pressure control',
+      'VAV (Variable Air Volume) box',
+    ],
+    correctAnswer: 3,
     explanation:
       'VAV (Variable Air Volume) boxes adjust dampers to deliver only the required amount of air to each space, reducing fan energy and preventing over-ventilation.',
   },
   {
     id: 8,
     question: 'What type of valve regulates chilled water into coils?',
-    options: ['Ball valve', 'Gate valve', 'Motorised control valve', 'Check valve'],
-    correctAnswer: 2,
+    options: [
+      'Motorised control valve',
+      'Gate valve',
+      'Ball valve',
+      'Check valve',
+    ],
+    correctAnswer: 0,
     explanation:
       'Motorised control valves regulate chilled or hot water flow to coils, preventing wasted pumping energy and ensuring correct heat transfer for comfort control.',
   },
@@ -94,10 +109,10 @@ export const bmsModule3Section2QuizData: QuizQuestion[] = [
     id: 9,
     question: 'How can incorrect sensor wiring affect control strategies?',
     options: [
-      'It has no significant impact',
+      'It makes the system run faster',
       'It causes false readings leading to poor control',
       'It only affects system appearance',
-      'It makes the system run faster',
+      'It has no significant impact',
     ],
     correctAnswer: 1,
     explanation:
@@ -107,12 +122,12 @@ export const bmsModule3Section2QuizData: QuizQuestion[] = [
     id: 10,
     question: 'In the real-world example, what mistake caused pumps to waste energy?',
     options: [
-      'The pumps were too small',
+      'On/off control switches at fixed points; proportional control gradually adjusts outputs',
+      'It causes false readings leading to poor control',
       'The differential pressure sensor was installed in the wrong location',
-      'The building was too large',
-      'The water temperature was incorrect',
+      'They maintain stable and efficient building operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The differential pressure sensor was installed in the wrong part of the pipework, giving false readings. This prevented the BMS from properly modulating pump speed, causing energy waste.',
   },

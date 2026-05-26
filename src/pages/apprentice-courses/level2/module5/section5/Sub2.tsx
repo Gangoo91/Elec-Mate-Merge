@@ -46,12 +46,12 @@ const checks = [
     question:
       "A Polish-speaking labourer joins the site this morning. His English is limited — he can introduce himself and follow simple instructions but anything technical loses him. You need to brief him on the safe-isolation procedure for the work you're about to do together. What do you do?",
     options: [
-      "Print the standard RAMS document and hand it to him to read.",
+      "At least 6 years — set by the Limitation Act 1980 for defending civil claims, and required by most contractor schemes (NICEIC, NAPIT, ELECSA) as a condition of registration. UK GDPR Article 5(1)(e) (storage limitation) is satisfied because there's a clear, justifiable reason for the retention period.",
+      "Workers making a \\\\\\\"qualifying disclosure\\\\\\\" — a disclosure of information that the worker reasonably believes shows malpractice, including criminal offences, breach of legal obligations, miscarriage of justice, danger to health and safety, environmental damage. Protects from detriment and dismissal.",
       "Use plain English, slow your pace, demonstrate the procedure step-by-step on the actual board, ask him to demonstrate it back to you ('show me what you'd do'), and provide a written checklist in plain English (or translated if the firm has one). Ask whether there's a bilingual co-worker who can help if anything is still unclear. Document the briefing — date, who was present, what was covered, that a back-brief was given.",
-      "Carry on with the standard verbal briefing at normal pace.",
-      "Refuse to work with him until his English improves.",
+      "'Building Management System' — the central control system that orchestrates a building's heating, ventilation, lighting, security and energy use. BMS work is one of the fastest-growing specialisms in building services because every modern commercial building has one. Electricians who learn BMS programming and commissioning (often via Trend, Tridium, Siemens or Schneider training) are in high demand and can move into BMS specialist roles paying significantly above standard electrician rates.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "MHSWR 1999 Reg 10 requires safety information to be 'comprehensible' — that's the statutory hook. Equality Act 2010 doesn't directly cover language difference (it covers disability and a list of protected characteristics that don't include first language) but the comprehensibility duty under MHSWR 10 plus good practice from HSE multilingual guidance does the same job. The back-brief — asking the worker to demonstrate or explain back what's been briefed — is the gold standard for confirming understanding. The HSE has multilingual safety leaflets in Polish, Romanian, Lithuanian, Portuguese and several other languages — use them.",
   },
@@ -60,12 +60,12 @@ const checks = [
     question:
       "An apprentice on your team mentions she's dyslexic. The next training session is a written assessment on the safe isolation procedure. What's the right reasonable adjustment under the Equality Act 2010?",
     options: [
-      "Tell her dyslexia is a personal problem and she needs to deal with it on her own.",
       "Ask her what helps — she'll know better than you. Common adjustments include extra time on written assessments, the option of a verbal or practical demonstration assessment instead of (or alongside) written, the briefing material provided in advance with key terms highlighted, audio versions where available, a large clear font and a coloured background overlay for some readers. Confirm with the assessor that the adjustment is in place. Equality Act 2010 s.20 puts the duty on the employer (and the assessing centre) to make reasonable adjustments where a provision, criterion or practice puts a disabled person at a substantial disadvantage.",
-      "Adjust the assessment so it's only verbal, with no written component.",
-      "Allow her to copy answers from a colleague.",
+      "Informal coordination — 'I'm five minutes away', 'meet me at the welfare unit', 'have you got a 16mm fly lead in the van'. NOT for contractual changes, scope variations, formal warnings, grievances, safety briefings of record, or anything you might need to defend in a dispute. WhatsApp messages have been admitted as evidence in court, but they carry less evidential weight than a signed variation order and they sit on a personal device the employer doesn't control.",
+      "OZEV requires installations to comply with the Electric Vehicles (Smart Charge Points) Regulations 2021 and to be installed by an OZEV-authorised installer. Periodic inspection follows the BS 7671 framework — typically 5-yearly EICR for domestic, plus EV-specific tests including RCD operation (Type B or RDC-DD), open-PEN protection function (where the charger has built-in open-PEN), and Zs at the charge point. Landlord properties additionally subject to the Electrical Safety Standards Regulations 2020 (5-year EICR plus change of tenancy).",
+      "Six tests in order: (1) continuity of protective conductors (R1+R2 and earth), (2) continuity of ring final conductors, (3) insulation resistance (IR), (4) polarity, (5) earth fault loop impedance (EFLI), (6) operation of RCDs. Order matters because each test assumes the previous tests passed — IR can damage electronics if polarity is wrong; EFLI assumes IR is good (otherwise the test current goes through the fault); RCD assumes EFLI is healthy. Tests 1–4 are dead tests; tests 5–6 are live. The dead-then-live order keeps you safe and gives clean diagnostic data.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Equality Act 2010 s.20 is the reasonable adjustments duty. It's a positive duty — the employer (and the training provider, and the assessing centre) must take steps to remove the disadvantage. The core principle is 'ask the person what helps' — most people with a disability know what they need. Common dyslexia adjustments are extra time, alternative assessment format (verbal or practical demonstration), audio versions of written material, plain English at a B1/B2 reading level, larger fonts and coloured-overlay options. Removing the assessment entirely or letting someone copy answers isn't an adjustment — it's bypassing the assessment.",
   },
@@ -74,12 +74,12 @@ const checks = [
     question:
       "You're going to be working alongside a hearing-impaired co-worker for a week. He lip-reads well but doesn't sign. You need to brief him on a permit-to-work for live testing. What's the right communication approach?",
     options: [
-      "Shout — louder is always clearer.",
+      "The firm probably won't recover the cost of the additional work in court because there's no documented variation, no agreed price and no signed scope change. The half-day of labour, the additional materials, and the late completion of the job all sit on the firm's profit margin. If the customer's dispute escalates to the certification scheme (NICEIC, NAPIT, ELECSA) or to the local Trading Standards office, there's also reputational and scheme-membership risk. The variation should have been written, signed, and agreed before the work commenced.",
+      "Because they serve different protective functions. Main bonding (411.3.1.2) is the ADS strategy at building intake — equalising potential of all extraneous-conductive-parts to the MET so a fault anywhere in the installation produces a controlled potential rise. Supplementary bonding (415.2) is \\\"additional protection\\\" at a specific location where touch-voltage risk is unusually high (wet skin, bare feet) and the ADS disconnection times alone may not be fast enough to prevent shock.",
+      "Reg 4(2) puts the duty on every employer and on every employee — and Reg 16 on every person working with electrical systems. For the L3 apprentice doing fault diagnosis: (1) the system you're working on must be assessed for its 'as-found' safety BEFORE work starts (visual inspection of CU, supply, bonding, signs of damage); (2) any departures from safe construction must be recorded and not made worse by your work; (3) when you correct the fault, the corrected system must satisfy Reg 4 — i.e. you don't leave the installation in a worse state than you found it; (4) any defect that you can't fix safely is escalated for further work or for advisory documentation to the customer.",
       "Face him directly so he can see your mouth and expression, speak at normal pace and volume (not exaggerated), use written notes for technical details, provide the permit-to-work document in advance for him to read, confirm understanding by asking specific questions ('what's the agreed comms signal if I see something wrong?'). Don't cover your mouth, don't turn away mid-sentence, don't have him facing into bright light behind you. If the work involves shared comms (radio), agree visual hand signals as the primary channel for him.",
-      "Carry on with the standard verbal briefing as if he could hear normally.",
-      "Refuse to work with him on safety-critical work.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Hearing-impaired colleagues vary — some lip-read well, some sign, some use hearing aids that work in some environments and not others. The principle is to ask the person what helps. For a lip-reader the consistent factors are face-to-face position, normal pace and volume (not exaggerated mouth movements which actually make lip-reading harder), good lighting on your face, no covering your mouth, and written backup for technical detail. The Equality Act 2010 s.20 reasonable-adjustments duty applies — the employer is obliged to make the workplace accessible. Action on Hearing Loss (now RNID) provides guidance and BSL interpreter services where signing is needed.",
   },
@@ -93,10 +93,10 @@ const quizQuestions = [
     question:
       "What's the core duty under the Equality Act 2010 s.20 for an employer dealing with a disabled employee?",
     options: [
-      "There is no duty — it's the employee's responsibility.",
+      "On the metal consumer-side pipe, within 600 mm of the meter outlet union per Reg 544.1.2. The plastic supply pipe is not an extraneous-conductive-part (it can\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t introduce a potential) so doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t need bonding — but the metal consumer pipework downstream of the meter does.",
       "The duty to make reasonable adjustments. Where a provision, criterion or practice (PCP), a physical feature, or the absence of an auxiliary aid puts a disabled person at a substantial disadvantage compared to non-disabled people, the employer must take such steps as it's reasonable to take to avoid the disadvantage. The duty is positive — the employer must act, not just refrain from discriminating.",
-      "The duty to redesign the entire workplace.",
-      "The duty to dismiss the employee with reasonable notice.",
+      "Cutting (T+E shears, side cutters, hacksaw for trunking and conduit), stripping (auto-strippers and a sharp Stanley for outer sheath) and terminating (Pozidriv VDE drivers for accessory terminations, ratchet crimper for ferrules where used). Layered on top of that — measuring (tape, level), marking (pencil or chinagraph), and fixing (claw hammer for joist clips, club hammer for chasing). Six categories in two months.",
+      "Standard MCB ratings (6, 10, 16, 20, 25, 32, 40 A) with Type B or C overcurrent characteristic, combined with 30 mA Type A or Type AC residual current protection (Type B / F variants becoming available). Same form factor as a standard RCBO; same cascade and breaking-capacity specifications.",
     ],
     correctAnswer: 1,
     explanation:
@@ -107,12 +107,12 @@ const quizQuestions = [
     question:
       "Approximately what percentage of the UK population has dyslexia, and what does that mean for the trade?",
     options: [
-      "Less than 1% — it's rare.",
+      "Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (SI 2013/1471). It places a statutory duty on the employer (and certain self-employed people) to report specified workplace injuries, occupational diseases, dangerous occurrences and fatalities to the HSE. Reportable items include fatalities, specified injuries (amputation, fracture other than fingers/toes/thumbs, loss of sight, scalping, etc.), over-7-day absences, and a defined list of dangerous occurrences. Reporting is via the F2508 form on hse.gov.uk.",
+      "A live-working permit (or equivalent documented authorisation), a specific risk assessment justifying conditions (a) and (b), a method statement detailing the precautions for condition (c), evidence of operative competence specifically for live working (not just general electrical competence), and frequently a second authorised person present. Documented BEFORE the work, signed off by an authorising engineer, retained on file as the audit trail.",
       "Around 10% of the UK population is estimated to have dyslexia (British Dyslexia Association figure), with research suggesting prevalence may be materially higher in trade roles where visual-spatial reasoning is favoured. That means in a typical apprentice cohort of 20, two to four people are likely to be dyslexic. Plain English briefings, visual aids, audio material, extra time on written assessments and the option of practical demonstration are the standard reasonable adjustments — and they help non-dyslexic learners too.",
-      "Around 50% — it's the majority.",
-      "It only affects children and goes away in adulthood.",
+      "Consistently demonstrating: (1) framing work as a learning problem (\\\\\\\"what can we learn from this?\\\\\\\"), (2) acknowledging your own fallibility (\\\\\\\"I may have missed something — what do you see?\\\\\\\"), (3) modelling curiosity by asking genuine questions, (4) responding to mistakes with inquiry rather than blame, (5) following through on commitments made when people do speak up, and (6) explicitly thanking people for raising concerns even when the news is unwelcome",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Dyslexia is a lifelong condition affecting around 10% of the UK population (British Dyslexia Association). Some research suggests prevalence is higher in trade and creative roles where the cognitive strengths associated with dyslexia (visual-spatial reasoning, big-picture thinking, problem-solving) are valued. The trade implications are practical: a significant proportion of apprentices and qualified electricians are dyslexic, and the reasonable adjustments under Equality Act 2010 s.20 apply to apprenticeship training, end-point assessments and ongoing employment.",
   },
@@ -121,12 +121,12 @@ const quizQuestions = [
     question:
       "Which UK government scheme can fund reasonable adjustments and equipment for a disabled worker?",
     options: [
-      "There's no government scheme — the employer pays everything.",
+      "Are recommended by Reg 421.1.7 for AC final circuits supplying socket-outlets ≤ 32 A in dwellings — strengthened to a requirement in HRRBs under the Building Safety Act 2022, and treated as effectively required in HMOs / sleeping accommodation / care homes by fire-safety guidance. Not strictly required on this small commercial install, but a sensible fit on the IT rack and EV circuits.",
+      "Into the customer's installation record — Electrical Installation Certificate, schedule of circuits, schedule of test results, manufacturer data for the new board, and a copy of the final RAMS for your firm's own records. The customer's pack discharges the BS 7671 Reg 132.13 duty to provide information for safe operation, inspection and maintenance. Your firm's pack is what you produce to an HSE inspector if anything is challenged later.",
+      "Cooperate (HASAWA s.7 + CDM Reg 15). Confirm your name and role. Direct the inspector to the senior person on site (supervisor, contracts manager, site manager). Answer factual questions truthfully — interfering with an inspector is a separate offence under HASAWA s.33. If asked technical questions outside your competence, say so honestly. Do not speculate or guess. Notify your firm immediately.",
       "Access to Work — a Department for Work and Pensions (DWP) scheme that can fund equipment, support workers, transport and other adjustments for disabled workers. Both the worker and the employer can apply. Funding is means-tested for self-employed workers and the scheme is non-contributory for the employee. Many employers don't know about it and pay for adjustments themselves when Access to Work would have funded them.",
-      "Universal Credit.",
-      "The Construction Industry Training Board levy.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Access to Work is the DWP scheme that funds workplace adjustments where they exceed what's 'reasonable' for the employer to provide, and supports self-employed disabled workers directly. It can fund hearing aids, screen-reader software, support workers, BSL interpreters, taxi fares for disabled commuters and a range of other adjustments. Apprentices are eligible and the scheme is well-suited to the trade. The application is via gov.uk/access-to-work.",
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     question:
       "On a fit-out site where several Polish-speaking labourers are working, what's the appropriate way to deliver the daily safety briefing?",
     options: [
-      "Standard English-only briefing — they should learn English.",
       "Plain English at slow pace, supplemented by visual demonstration where appropriate, written translated handouts (HSE provides multilingual safety leaflets), use of a bilingual co-worker as informal interpreter, back-briefing to confirm understanding ('show me what you'd do if you saw a fire'), and provision of safety signage and PPE labels in the relevant languages where the workforce is consistently multilingual. The duty under MHSWR Reg 10 is for information to be 'comprehensible' — that's a statutory standard, not a courtesy.",
-      "No briefing — they can pick it up on the job.",
-      "Briefing in Polish only and ignore the English speakers.",
+      "The incongruence between calm words and stressed body language suggests the client is suppressing significant frustration or anxiety. The project manager should: acknowledge the difficulty of the situation empathically (\\\"I can see this is a stressful situation, and I understand why\\\"), address the emotional undercurrent rather than just the facts, and create space for the client to express genuine concerns — because unaddressed suppressed emotions often escalate",
+      "Unwanted conduct related to a relevant protected characteristic (age, race, sex, gender reassignment, religion or belief, sexual orientation, disability, marriage and civil partnership, pregnancy and maternity) that has the purpose or effect of violating the person's dignity or creating an intimidating, hostile, degrading, humiliating or offensive environment for them. Section 26 of the Act.",
+      "Sign in at the gate or welfare cabin, present ECS / CSCS / industry card if relevant, attend a visitor induction (shorter than the full operative induction), wear correct PPE for the area, and be escorted by a competent person from the site team. Visitors are not permitted to walk the site unaccompanied. CDM 2015 Reg 13(4)(b) requires the PC to take steps to prevent unauthorised access.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "MHSWR 1999 Reg 10 makes 'comprehensible' safety information statutory. The HSE provides safety leaflets in Polish, Lithuanian, Romanian, Portuguese, Bulgarian and several other languages commonly spoken by workers in UK construction. Plain English plus visual demonstration plus back-brief is the standard package and covers most situations. For a workforce with a consistent multilingual makeup the firm should also be looking at translated RAMS, signage and PPE labels — that's what 'comprehensible' means at the level of the whole site.",
   },
@@ -149,10 +149,10 @@ const quizQuestions = [
     question:
       "What's the right approach when working with an autistic apprentice who finds last-minute changes difficult?",
     options: [
-      "Force them to deal with it — life is full of changes.",
+      "Mates in Mind (mental health awareness in construction), the Lighthouse Construction Industry Charity (financial, physical and mental wellbeing support for construction workers and their families), the Electrical Industries Charity (EIC — financial and welfare support for electrical industry workers and their families). Both Lighthouse Club and EIC run helplines and offer practical support including financial grants, mental health support and bereavement counselling.",
       "Give as much advance notice as possible of the day's plan, the week's plan and any expected changes. Provide written or visual schedules where possible. When changes are unavoidable, explain the reason calmly and give the apprentice a moment to adjust. Provide clear, unambiguous instructions ('start at the kitchen, do the back-boxes first, the cable will be in the loft'). Avoid unwritten rules and 'common sense' assumptions. Many autistic workers thrive on predictability and clear structure — giving that structure costs nothing and improves performance.",
-      "Refuse to work with autistic apprentices.",
-      "Treat them differently from everyone else and exclude them from team activities.",
+      "Operative pre-use visual every shift — check the cutting edges aren't chipped or rolled, the pivot is tight, the handle insulation is intact (especially on VDE-rated drivers — any cracked or chipped insulation = take out of service). Periodic competent-person inspection — annually typical. No 'PAT' equivalent for non-powered hand tools, but the visual regime is just as important. PUWER applies to ALL work equipment, not just powered.",
+      "Annual calibration to a UKAS-traceable standard, with a calibration certificate kept in the firm's instrument register. Test instruments drift over time — a multimeter that reads 235 V on a 230 V supply, or an insulation tester that reads 200 MΩ on a 100 MΩ test, will produce wrong test results that fail BS 7671 612.x. Most certification schemes (NICEIC, NAPIT) require evidence of in-date calibration as part of audit. Sub 1.5 covers test instruments in detail.",
     ],
     correctAnswer: 1,
     explanation:
@@ -163,12 +163,12 @@ const quizQuestions = [
     question:
       "A customer has a guide dog and is registered blind. You're explaining your work in their home. What's the appropriate communication approach?",
     options: [
-      "Avoid speaking to them and address everything to whoever else is in the room.",
+      "Header (your business name, address, VAT number if registered, contact details), customer details (name, address), invoice number (sequential), invoice date and payment due date, work description (line items: labour days/hours, materials line items, any extras), subtotal, VAT (if applicable, 20%), total, payment terms (e.g. 'Net 30'), payment methods (BACS details, cheque). Invoices over £250 must include a statement of how to complain (Consumer Rights Act 2015 for domestic).",
+      "Annual service is the standard, with weekly to monthly customer-side tasks. Annual: full strip-down clean, ash compartment service, auger inspection, igniter check, fan check, flue inspection, controls firmware update, performance check. Monthly customer task: empty ash pan. Weekly customer task: top up pellet hopper, check fuel feed, visual check for blockages. Pellet quality matters — high-ash or wet pellets shorten component life. Some boilers need flue cleaning more frequently than annual; chimney sweep is a specialist trade.",
       "Speak directly to the customer, identify yourself by name when you arrive and when you leave a room, describe what you're doing and where ('I'm just going to the consumer unit by the front door now'), don't move furniture or leave tools where they could be a trip hazard for the guide dog or the customer, ask before touching the guide dog (don't pet a working guide dog without asking), and offer to provide written documentation in large print, audio or accessible PDF as required. Equality Act 2010 makes this a service-provider duty.",
-      "Treat the customer as if they can see normally.",
-      "Refuse to do the work.",
+      "SELECT is the Scottish trade association for electrical contractors — equivalent to ECA in England/Wales/NI. It campaigns on behalf of the Scottish electrical industry, runs technical events, and co-runs the SJIB. SELECT also operates a Member Approved scheme that signals quality to clients. Scottish firms typically hold SELECT membership plus a CPS (NICEIC, NAPIT or similar) for Part P self-certification.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Equality Act 2010 covers service providers (including tradespeople delivering services in the customer's home) under the goods, facilities and services provisions. The reasonable adjustments duty for service providers is anticipatory — you should be ready to make adjustments without waiting to be asked. The practical adjustments are simple: speak directly to the customer, narrate your movements, don't create new trip hazards, offer accessible-format documentation. The guide dog is a working dog — don't pet without asking, don't distract.",
   },
@@ -177,12 +177,12 @@ const quizQuestions = [
     question:
       "What does 'plain English' actually mean as a communication standard?",
     options: [
-      "Speaking very slowly and loudly.",
+      "Trip-time test injects a calibrated residual current and measures how long the RCD takes to disconnect. BS 7671 643.7 / Table 643.7 maximums: at I∆n (rated trip current, e.g. 30 mA): ≤ 300 ms (general type, ≤ 40 ms for type S); at 1×IΔn: ≤ 40 ms (general type). Modern RCDs typically trip at I∆n in 10–30 ms — well under the limit. Slow tripping (&gt;50 ms at I∆n) indicates a failing RCD. The MFT (Megger MFT1741+) tests at multiple injection levels and at 0° / 180° phase angles — the slowest of the four readings is the recorded trip time.",
+      "Smoke Control Areas (SCAs) are defined under the Clean Air Act 1993 — almost every UK urban / suburban area is in an SCA. In an SCA it is an offence to emit smoke from a domestic chimney unless burning an authorised fuel in an authorised appliance (the Defra exempt appliance list). For biomass this means new installs must use Defra-approved Ecodesign-compliant boilers / stoves burning approved pellets / logs. Many older biomass installs in SCAs do not meet current Ecodesign and may be operating in breach. Local Authorities have enforcement powers including fixed-penalty notices. The L3 apprentice does not enforce SCAs but should recognise that 'just fitting a wood-burning stove' is regulated in most populated areas — the customer needs to verify the unit and the fuel are SCA-compliant.",
+      "Under TN-C-S the neutral and the protective earth share a combined PEN conductor between the transformer and the cut-out. A break in the PEN somewhere upstream (the DNO side, not the consumer side) lifts the neutral — and therefore the customer's bonded metalwork — to a fraction of phase voltage relative to true earth. While you're investigating an unrelated fault, the system can be carrying a hidden TT-equivalent hazard if the PEN is compromised. Always read the voltage L–N AND L–E AND N–E at the cut-out before you start; if N–E is more than a few volts, stop and call the DNO.",
       "Plain English is writing or speaking that the intended audience can understand on first reading or hearing. Common standards include short sentences (15-20 words on average), common words rather than technical jargon, active voice rather than passive, one idea per sentence, and a reading age around 9-11 (that's not patronising — most UK adults read most comfortably at that level for safety-critical information). The Plain English Campaign provides guidance and the Crystal Mark accreditation. For safety briefings, RAMS summaries, customer-facing letters and apprentice-training material, plain English isn't 'dumbing down' — it's 'comprehensible' under MHSWR 1999 Reg 10.",
-      "Using only words from the dictionary.",
-      "Speaking with a Received Pronunciation accent.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Plain English is a defined communication standard, not vague advice. The Plain English Campaign has been promoting it in UK government and business writing since 1979 and the Crystal Mark is a recognised accreditation. The standard is the reader, not the writer — the test is whether the intended audience can understand on first reading. Most UK adults read most comfortably at a 9-11 year old reading level for safety-critical information; that's the target for toolbox talks, RAMS summaries and customer letters. Trade-specific terms (RCBO, MCB, R1+R2) are fine where the audience is trained — plain English doesn't mean removing technical vocabulary, it means using it precisely and only when needed.",
   },
@@ -191,12 +191,12 @@ const quizQuestions = [
     question:
       "Under what circumstances does a mental health condition count as a disability under the Equality Act 2010?",
     options: [
-      "Mental health conditions are never covered by the Equality Act.",
       "Equality Act 2010 s.6 defines disability as a physical or mental impairment that has a substantial and long-term adverse effect on the person's ability to carry out normal day-to-day activities. 'Long-term' means it has lasted, or is likely to last, 12 months or more. This explicitly includes mental health conditions — depression, anxiety disorders, PTSD, bipolar disorder, schizophrenia and others — where they meet the substantial and long-term thresholds. Where a worker's mental health condition is a disability under the Act, the s.20 reasonable-adjustments duty applies in the same way as for physical disability.",
-      "Only schizophrenia counts as a disability.",
-      "Mental health is fully covered without any conditions.",
+      "Personally bound under s.110 (helping someone else commit an unlawful act, e.g. participating in harassment) and as a witness who is duty-bound to co-operate with internal investigations. The apprentice's reputational and legal exposure grows if they participate in or condone discriminatory or harassing behaviour. The apprentice also has a route to RAISE concerns — internal complaints procedure, ACAS conciliation, Employment Tribunal claim — and is protected against victimisation under s.27 for raising them in good faith.",
+      "Every 3 months — formal PAT (combined visual + electrical test) for harsh-environment use. HSE HSG107 'Maintaining portable electrical equipment' and the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th ed.) publish typical intervals; construction-site Class I portable tools are at the short end at 3 months. Office Class I equipment is 12 months (the low-risk regime in HSE INDG236). Class II (double-insulated) and battery chargers are typically longer.",
+      "Three reasons. (1) Density — many terminations in a small space; many opportunities for one to be wrong. (2) Heat — control electronics generate heat; cooling is often inadequate; thermal cycling stresses components. (3) Vibration — panels in plant rooms and on walls near equipment vibrate; vibration loosens terminations over time. Approach: always work on de-energised, isolated panels under permit-to-work where applicable; identify each component's function from the panel schedule; check terminations with thermal imaging while running; replace components by part number from the schedule; retest each output to verify correct operation.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Equality Act 2010 s.6 includes mental impairment in the definition of disability where it meets the substantial and long-term thresholds. This is the legal hook for reasonable adjustments around mental health conditions — flexible hours during recovery, time off for therapy appointments, a phased return after a mental-health-related absence, adjustments to high-pressure deadlines. Sub 5.5 covers mental health in the trade in detail, including the construction-sector suicide rate and the support charities available.",
   },

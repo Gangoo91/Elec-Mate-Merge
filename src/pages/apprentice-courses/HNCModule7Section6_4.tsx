@@ -27,8 +27,13 @@ const quickCheckQuestions = [
     id: 'short-circuit-standard',
     question:
       'Which international standard provides the methodology for short-circuit current calculations in AC systems?',
-    options: ['BS 7671', 'IEC 60909', 'IEEE 141', 'BS EN 61439'],
-    correctIndex: 1,
+    options: [
+      'BS 7671',
+      'BS EN 61439',
+      'IEEE 141',
+      'IEC 60909',
+    ],
+    correctIndex: 3,
     explanation:
       'IEC 60909 (Short-circuit currents in three-phase a.c. systems) provides the internationally recognised methodology for calculating short-circuit currents, including calculation of initial symmetrical short-circuit current, peak short-circuit current, and breaking current.',
   },
@@ -36,10 +41,10 @@ const quickCheckQuestions = [
     id: 'coordination-purpose',
     question: 'What is the primary purpose of protective device coordination?',
     options: [
-      'To reduce cable costs',
+      'To confirm the routes are wide enough, strong enough, and clear of obstructions for the MEWP to travel safely',
       'To ensure only the device nearest the fault operates, isolating the minimum portion of the system',
-      'To maximise equipment utilisation',
-      'To simplify maintenance procedures',
+      'It releases endorphins, reduces cortisol, improves sleep, and builds neuroplasticity',
+      'Risk assessment names the hazards and controls; method statement says how the work will be done in safe order',
     ],
     correctIndex: 1,
     explanation:
@@ -49,12 +54,12 @@ const quickCheckQuestions = [
     id: 'tcc-curve',
     question: 'What does a time-current characteristic (TCC) curve display?',
     options: [
-      'Voltage drop versus distance',
+      'Change in process output per unit change in input',
+      'Millivolts (typically 0-50 mV depending on type)',
+      'Check connections first, then replace if still faulty',
       'Operating time versus fault current magnitude',
-      'Power factor versus load',
-      'Temperature rise versus current',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A TCC curve plots the operating time of a protective device against fault current magnitude on logarithmic scales. This enables comparison of multiple devices to verify coordination - curves must not overlap within the range of prospective fault currents.',
   },
@@ -62,10 +67,10 @@ const quickCheckQuestions = [
     id: 'software-tools',
     question: 'Which software packages are commonly used for coordination studies?',
     options: [
-      'AutoCAD and Revit only',
-      'Microsoft Excel exclusively',
+      'Density differences due to temperature gradients',
+      'Before plastering, during construction phase',
       'ETAP, SKM PowerTools, and Amtech ProDesign',
-      'BIM 360 and Navisworks',
+      'Moisture ingress or corroded connections',
     ],
     correctIndex: 2,
     explanation:
@@ -78,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: "In IEC 60909, what does the voltage factor 'c' account for?",
     options: [
-      'Cable capacitance',
+      'Psychological support and debriefing, recognising potential trauma',
       'Variation of system voltage and equipment impedance from nominal values',
-      'Power factor correction',
-      'Harmonic distortion',
+      'Multi-fibre Termination Push-on (trademarked MPO variant)',
+      'To ensure the building reaches setpoint at occupancy time',
     ],
     correctAnswer: 1,
     explanation:
@@ -91,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the initial symmetrical short-circuit current (I"k)?',
     options: [
-      'The steady-state fault current after transients decay',
+      'It affects the DC component and peak asymmetrical current',
+      'Initial contribution of 4-6 times full load current, decaying rapidly',
       'The RMS value of the AC symmetrical component at the instant of fault',
-      'The peak instantaneous current',
-      'The current at the moment of circuit breaker operation',
+      'Equipment dynamic withstand capability (making capacity)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'I"k is the RMS value of the AC symmetrical component of the prospective short-circuit current at the instant of short circuit, assuming the short-circuit impedance retains its value at time zero. It is the fundamental value used to determine breaking capacity requirements.',
   },
@@ -104,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the peak short-circuit current (ip) used to determine?',
     options: [
-      'Cable thermal withstand',
+      'It affects the DC component and peak asymmetrical current',
+      'The RMS value of the AC symmetrical component at the instant of fault',
+      'Device ratings, settings, clearing times, and coordination margins',
       'Equipment dynamic withstand capability (making capacity)',
-      'Discrimination time margins',
-      'Earth fault loop impedance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The peak short-circuit current (ip) determines the dynamic forces and mechanical stresses on equipment during the first cycle of fault current. Equipment must have adequate making capacity (dynamic withstand) to handle these electromechanical forces without damage.',
   },
@@ -117,8 +122,13 @@ const quizQuestions = [
     id: 4,
     question:
       'For a three-phase short-circuit at an LV busbar fed via a 1000 kVA transformer (Uk = 6%), what is the approximate fault level?',
-    options: ['6 kA', '16.7 kA', '24 kA', '36 kA'],
-    correctAnswer: 2,
+    options: [
+      '24 kA',
+      '16.7 kA',
+      '6 kA',
+      '36 kA',
+    ],
+    correctAnswer: 0,
     explanation:
       'Fault level ≈ kVA / (Uk × √3 × V). For 1000 kVA at 400V with 6% impedance: I"k = 1000000 / (0.06 × √3 × 400) = 1000000 / 41.6 ≈ 24 kA (ignoring upstream impedance). This demonstrates why transformer impedance significantly limits fault current.',
   },
@@ -126,10 +136,10 @@ const quizQuestions = [
     id: 5,
     question: "What is meant by 'selectivity' in protective device coordination?",
     options: [
-      'Selecting the cheapest protective devices',
+      'A communication scheme between protective devices to enhance selectivity',
       'The ability to isolate only the faulted circuit whilst maintaining supply to healthy circuits',
-      'Choosing devices from a single manufacturer',
-      'The process of selecting cable sizes',
+      'Device ratings, settings, clearing times, and coordination margins',
+      'Thermal energy passed through the protective device during fault clearance',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,8 +148,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What time margin is typically required between protective devices for coordination?',
-    options: ['0.1 seconds', '0.3-0.4 seconds minimum', '1.0 second', 'No margin required'],
-    correctAnswer: 1,
+    options: [
+      '0.1 seconds',
+      '1.0 second',
+      '0.3-0.4 seconds minimum',
+      'No margin required',
+    ],
+    correctAnswer: 2,
     explanation:
       'A minimum time margin of 0.3-0.4 seconds is typically required between the total clearing time of the downstream device and the minimum operating time of the upstream device. This accounts for tolerance in device characteristics and relay/breaker operating times.',
   },
@@ -147,12 +162,12 @@ const quizQuestions = [
     id: 7,
     question: 'What contribution do induction motors make to fault current?',
     options: [
-      'None - they only consume power',
+      'Equipment dynamic withstand capability (making capacity)',
+      'The RMS value of the AC symmetrical component at the instant of fault',
+      'Device ratings, settings, clearing times, and coordination margins',
       'Initial contribution of 4-6 times full load current, decaying rapidly',
-      'Sustained contribution equal to full load current',
-      'Contribution only for earth faults',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Induction motors act as generators during the initial cycles of a fault, contributing 4-6 times their full load current. This contribution decays rapidly (within 3-5 cycles) as the motor flux collapses. Large motor loads significantly increase initial fault currents.',
   },
@@ -160,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: "In a coordination study, what does the term 'let-through energy' (I²t) represent?",
     options: [
-      'Energy consumed by the load',
       'Thermal energy passed through the protective device during fault clearance',
-      'Standing losses in the cable',
-      'Energy stored in capacitors',
+      'A communication scheme between protective devices to enhance selectivity',
+      'The RMS value of the AC symmetrical component at the instant of fault',
+      'Equipment dynamic withstand capability (making capacity)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Let-through energy (I²t) represents the thermal energy that passes through a protective device during fault clearance. Downstream devices and cables must withstand this energy. Coordination requires the downstream device I²t to be less than the upstream device let-through.',
   },
@@ -173,10 +188,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is zone selective interlocking (ZSI)?',
     options: [
-      'Physical barriers between protection zones',
+      'Device ratings, settings, clearing times, and coordination margins',
       'A communication scheme between protective devices to enhance selectivity',
-      'Manual isolation switching',
-      'Geographical separation of substations',
+      'It affects the DC component and peak asymmetrical current',
+      'Equipment dynamic withstand capability (making capacity)',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,11 +203,11 @@ const quizQuestions = [
       'What type of coordination exists when devices coordinate only up to a certain fault level?',
     options: [
       'Total selectivity',
+      'Current-limited selectivity',
       'Partial selectivity',
       'Time-graded selectivity',
-      'Current-limited selectivity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Partial selectivity exists when coordination is achieved only up to a defined fault current level (the selectivity limit). Above this level, both devices may operate simultaneously. Total selectivity means coordination is maintained up to the maximum prospective fault current.',
   },
@@ -200,12 +215,12 @@ const quizQuestions = [
     id: 11,
     question: 'Why is the X/R ratio important in short-circuit calculations?',
     options: [
-      'It determines cable colour coding',
+      'Thermal energy passed through the protective device during fault clearance',
+      'A communication scheme between protective devices to enhance selectivity',
+      'The RMS value of the AC symmetrical component at the instant of fault',
       'It affects the DC component and peak asymmetrical current',
-      'It sets the protection relay settings',
-      'It determines the power factor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The X/R ratio of the fault circuit determines the magnitude and decay rate of the DC component in the asymmetrical fault current. Higher X/R ratios result in greater DC offset and higher peak currents, affecting equipment dynamic rating requirements and the calculation factor κ for peak current.',
   },
@@ -214,12 +229,12 @@ const quizQuestions = [
     question:
       'In coordination study documentation, what should be included in the protective device schedule?',
     options: [
-      'Only device part numbers',
       'Device ratings, settings, clearing times, and coordination margins',
-      'Manufacturer contact details only',
-      'Installation dates',
+      'It affects the DC component and peak asymmetrical current',
+      'A communication scheme between protective devices to enhance selectivity',
+      'The RMS value of the AC symmetrical component at the instant of fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A protective device schedule should include: device type and rating, trip unit type, instantaneous and time-delay settings, let-through characteristics, coordination margins with adjacent devices, and selectivity limits. This enables verification of settings and future modifications.',
   },

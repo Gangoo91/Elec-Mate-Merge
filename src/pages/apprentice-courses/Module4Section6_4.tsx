@@ -23,10 +23,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is the purpose of safe wiring zones?',
     options: [
-      'To reduce cable costs',
+      'Up to double the phase conductor size',
       'To protect cables from accidental damage',
-      'To improve electrical performance',
-      'To meet aesthetic requirements',
+      'V = I × R (ignoring reactance for small cables)',
+      'Cable management flexibility',
     ],
     correctIndex: 1,
     explanation:
@@ -35,8 +35,13 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'Name one tool that ensures terminations are tightened correctly.',
-    options: ['Standard screwdriver', 'Torque screwdriver', 'Wire strippers', 'Multimeter'],
-    correctIndex: 1,
+    options: [
+      'Multimeter',
+      'Wire strippers',
+      'Torque screwdriver',
+      'Standard screwdriver',
+    ],
+    correctIndex: 2,
     explanation:
       "A torque screwdriver ensures terminal screws are tightened to the manufacturer's specified torque, preventing over-tightening that could damage conductors or under-tightening that creates loose connections.",
   },
@@ -44,12 +49,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why should multi-stranded conductors be fitted with ferrules?',
     options: [
-      'To reduce cost',
+      'Ratchet mechanism ensuring complete crimp',
+      'Consulting, training, inspection, or reduced-hours roles',
+      'Mutual induction between two coils on a magnetic core',
       'To ensure secure connection and prevent strand breakage',
-      'To improve conductivity',
-      'To meet colour coding requirements',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Ferrules prevent individual strands of multi-stranded conductors from breaking or becoming loose in terminals, ensuring a secure and reliable electrical connection.',
   },
@@ -62,7 +67,12 @@ const Module4Section6_4 = () => {
     {
       id: 1,
       question: 'Which regulation covers electrical connections in BS 7671?',
-      options: ['522', '526', '421', '110'],
+      options: [
+        '522',
+        '526',
+        '421',
+        '110',
+      ],
       correctAnswer: 1,
       explanation:
         'BS 7671 Regulation 526 covers electrical connections, specifying that they must be suitable for the conditions and secure throughout the expected lifetime of the installation.',
@@ -72,12 +82,12 @@ const Module4Section6_4 = () => {
       question:
         'True or False: You can leave cables loosely supported if they will be hidden behind plaster.',
       options: [
+        'Only for low voltage circuits',
         'True',
         'False',
-        'Only for low voltage circuits',
         'Only temporarily during installation',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "False - all cables must be properly supported regardless of whether they're visible or hidden. Loose cables can cause damage, create hazards, and fail to meet BS 7671 requirements.",
     },
@@ -85,20 +95,25 @@ const Module4Section6_4 = () => {
       id: 3,
       question: 'Name two safe wiring zones.',
       options: [
-        'Diagonal and curved paths',
+        'Prevention, reuse, recycling, recovery, disposal',
+        'Delta primary, star secondary with neutral, 330 degrees (11 o\\\\\\\\\\\\\\\'clock) phase shift',
+        'To prevent short cycling and provide system volume',
         'Horizontal above switches/sockets, vertical from switches/sockets',
-        'Random routing for shortest path',
-        'Only vertical routes',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Safe wiring zones include horizontal routes within 150mm of the top of the room and within 150mm of angles between walls, and vertical routes within 150mm either side of switches and sockets.',
     },
     {
       id: 4,
       question: 'What should be used when terminating multi-stranded conductors?',
-      options: ['Wire nuts', 'Ferrules', 'Electrical tape', 'Cable ties'],
-      correctAnswer: 1,
+      options: [
+        'Ferrules',
+        'Wire nuts',
+        'Electrical tape',
+        'Cable ties',
+      ],
+      correctAnswer: 0,
       explanation:
         'Ferrules should be used when terminating multi-stranded conductors to prevent individual strands from breaking or becoming loose, ensuring a secure connection.',
     },
@@ -106,10 +121,10 @@ const Module4Section6_4 = () => {
       id: 5,
       question: 'Why is over-tightening terminal screws a problem?',
       options: [
-        'It improves conductivity',
+        'As close as possible to the inductive load',
         'It can damage conductors and reduce connection integrity',
-        'It makes maintenance easier',
-        'It prevents corrosion',
+        'To verify that controls, interlocks, and devices operate correctly',
+        'The duty holder (employer or person controlling the work)',
       ],
       correctAnswer: 1,
       explanation:
@@ -118,16 +133,26 @@ const Module4Section6_4 = () => {
     {
       id: 6,
       question: 'Which tool should be used to achieve manufacturer-specified torque?',
-      options: ['Standard screwdriver', 'Torque screwdriver', 'Power drill', 'Allen key'],
-      correctAnswer: 1,
+      options: [
+        'Standard screwdriver',
+        'Power drill',
+        'Torque screwdriver',
+        'Allen key',
+      ],
+      correctAnswer: 2,
       explanation:
         'A torque screwdriver (or torque wrench) ensures terminal screws are tightened to the exact torque specified by the manufacturer, preventing damage from over-tightening.',
     },
     {
       id: 7,
       question: 'Name one protective measure for cables passing through metal enclosures.',
-      options: ['Copper tape', 'Grommet or sleeve', 'Electrical tape', 'Cable marker'],
-      correctAnswer: 1,
+      options: [
+        'Copper tape',
+        'Cable marker',
+        'Electrical tape',
+        'Grommet or sleeve',
+      ],
+      correctAnswer: 3,
       explanation:
         'Grommets or sleeves protect cable insulation from damage when passing through sharp metal edges of enclosures, preventing potential short circuits and electric shock hazards.',
     },
@@ -135,12 +160,12 @@ const Module4Section6_4 = () => {
       id: 8,
       question: 'Give one consequence of loose terminations.',
       options: [
-        'Improved efficiency',
         'Overheating, arcing, potential fire hazard',
-        'Better conductivity',
-        'Reduced maintenance requirements',
+        'Proportional-Integral-Derivative control algorithm',
+        'Immediately, by the quickest practicable means',
+        '500W per m² or similar rules of thumb',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Loose terminations create high resistance connections that can cause overheating, arcing, and potentially fire hazards, as well as equipment failure and reduced system reliability.',
     },

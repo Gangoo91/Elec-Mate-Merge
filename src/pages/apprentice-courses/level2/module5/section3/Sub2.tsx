@@ -42,10 +42,10 @@ const checks = [
     question:
       "You're handed a RAMS at the morning briefing and asked to sign the front sheet. The supervisor is moving on to the next operative quickly. You haven't read it yet. What do you do?",
     options: [
-      'Sign it — you can read it later if there is time.',
+      "IQA Level 4 (Internal Quality Assurance) is the qualification for verifying assessment quality — you sample and second-mark other assessors' work to ensure consistency. Senior progression beyond TAQA L3. Typical course 5-10 days plus portfolio. Required for IQA roles at colleges and training providers, and for senior assessor positions. Can lead to EQA (External Quality Assurance) at L4 — the awarding body's own QA function.",
       "Politely ask for two minutes to read it before signing. Signing the RAMS sign-on sheet is a positive declaration that you have read it, understood it, and will work to it. If something goes wrong later and the document had a defect you could have spotted on a quick read, your signature on the front is evidence against you. Two minutes of reading at the briefing is non-negotiable.",
-      "Sign it but write 'not read' next to your signature.",
-      "Refuse to sign and walk off site.",
+      "Safety Data Sheet — a 16-section document required for all hazardous substances by the CLP Regulation (EU 1272/2008, retained as UK law after Brexit). The SDS is the manufacturer's authoritative source of hazard, handling, exposure and first-aid information for the product. Required by COSHH 2002 Reg 12 to be available to anyone handling the substance.",
+      "HSE acknowledges receipt and may follow up — desktop review, request for further information, site visit, inspection. Whether HSE attends depends on the severity of the incident and the wider context (e.g. recurrence, sector trends, public interest). For specified injuries and fatalities a follow-up visit is normally expected.",
     ],
     correctIndex: 1,
     explanation:
@@ -56,10 +56,10 @@ const checks = [
     question:
       "The RAMS specifies a podium step for working at height in the comms cupboard. When you arrive the cupboard is full of stored boxes and the only access kit on site is a step ladder. The supervisor says 'just use the step ladder, it'll be fine'. What's the right move?",
     options: [
-      "Use the step ladder — the supervisor has authorised it verbally.",
+      "Ze is a LIVE test — it requires the supply to be energised and the measurement is taken at the MET with the installation isolated. It is part of the live test sequence after first energisation, but its value is needed for the dead-test sequence Zs calculations (Zs = Ze + R1+R2). On a new install, Ze is typically measured early in the live-test phase but estimated from DNO published values during dead-test design verification.",
       "Stop, raise it in writing (text the supervisor or log it in the app). The RAMS specifies a podium for a reason — that is the documented control for the working-at-height risk on this task. Verbally swapping it out for a step ladder is an undocumented change to the safe system of work. Either the boxes get cleared and the podium gets used, or the RAMS gets formally amended and re-signed by everyone affected. WAHR 2005 Reg 6 puts the duty on the employer to use the most suitable equipment; verbally downgrading isn't a defence.",
-      "Use the step ladder but only for ten minutes.",
-      "Refuse and go home for the day.",
+      "Potentially yes. CDM 2015 Reg 2 defines a 'contractor' as any person (including a company) who in the course or furtherance of a business carries out, manages or controls construction work. If your firm is the only one carrying out construction work for the client, your firm is the contractor. As the operative on site you carry the Reg 8 (general worker) and Reg 15 (cooperation) duties, plus your firm carries Reg 9 (contractor duties — plan, manage, monitor). Contractor status is a function of the role, not the title.",
+      "The customer makes the COMMERCIAL decision (cost / convenience trade-off). The firm makes the SAFETY / COMPLIANCE decision (which options satisfy BS 7671 + current standards). Apprentice presents options with trade-offs in plain English; customer chooses; firm executes the chosen option within the safety constraint. Customer cannot choose 'below BS 7671' — that's the firm's professional duty floor. The boundary: customer chooses between compliant options; firm refuses non-compliant requests.",
     ],
     correctIndex: 1,
     explanation:
@@ -70,12 +70,12 @@ const checks = [
     question:
       "The RAMS for today's job is identical word-for-word to the RAMS you signed three weeks ago for a completely different site. The hazards listed are 'electrical hazards, working at height, manual handling' and the controls are 'use of PPE, safe working practices'. What does this tell you?",
     options: [
-      "Nothing — RAMS often look similar between jobs.",
+      "Competent-person schemes (CPS) are Government-authorised audit bodies that allow registered contractors to self-certify Building Regulations Part P notifiable work in dwellings. Trade associations are member bodies that lobby for the industry, run technical events, publish guidance and (in the case of ECA and SELECT) co-run the JIB / SJIB. A firm typically belongs to both — one CPS for self-certification, one trade association for representation.",
+      "Install a separate earth electrode (earth rod) for the EV charging circuit, creating TT earthing for that circuit, with an RCD providing earth fault protection — or use an EVSE that the manufacturer confirms has integral open-PEN protection meeting the requirements of BS 7671 Regulation 722.411.4",
       "It's a generic template-trap. The RAMS hasn't been tailored to this site, the actual hazards aren't listed, and the controls are too vague to be useful. MHSWR 1999 Reg 3 requires the assessment to be 'suitable and sufficient' — generic boilerplate is the opposite of that. Raise it with the supervisor before signing, ask for site-specific content, and don't start work on the basis of the generic version.",
-      'It is a perfectly valid RAMS — generic wording is fine as long as the cover sheet has the right address.',
-      'Sign it and crack on — the RAMS is for the office, not for actual safety.',
+      "The supervision is appropriate when the supervisor is themselves competent for the task, has direct visibility of the work AND the trainee, can intervene before a danger materialises, and the degree of supervision is matched to BOTH the task danger AND the trainee's experience level. A second-year on socket extensions is light supervision; a first-year on a CU change is direct, hands-on supervision throughout. Token oversight from elsewhere on site doesn't meet the regulation.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Generic RAMS that haven't been tailored to the specific site are a HSE inspector's first finding. The 'suitable and sufficient' test under MHSWR 1999 Reg 3 has been interpreted by the courts as requiring the assessment to reflect the actual conditions — not to recite a list of generic hazards that could apply anywhere. Recognising the template-trap and pushing back on it is part of becoming a tradesperson. By year three you should be able to spot it within thirty seconds of opening the document.",
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: "What does RAMS actually stand for, and what does each half do?",
     options: [
-      'Rules And Method Statements — a single document covering both rules and procedures.',
+      "The four stages — concrete experience (having an emotional interaction), reflective observation (thinking about what happened and how you felt), abstract conceptualisation (identifying patterns and principles), and active experimentation (trying a new approach next time) — create a systematic method for learning from emotional experiences rather than repeating the same patterns",
       "Risk Assessment + Method Statement. The Risk Assessment identifies hazards, evaluates the risk (likelihood × consequence) and lists the controls. The Method Statement turns the assessed risks into a step-by-step working procedure that builds in the controls. Together they convert MHSWR 1999 Reg 3 duty into specific instructions for specific work.",
-      'Regulations And Maintenance Schedules.',
-      'Risk Avoidance Management System.',
+      "Part 4 — protection for safety. Specifically Chapter 41 (protection against electric shock), where Reg 411.3.3 (RCD on socket-outlets up to 32 A) and Reg 411.3.4 (RCD on luminaires in domestic premises) live. Part 4 is where every shock / overcurrent / thermal protection question lands.",
+      "Rotational — typically 2 weeks on platform / 2 weeks off, or 14/14 patterns. Offshore platform work involves helicopter transit (HUET training required), confined-space and working-at-height, harsh weather, extended periods away from home. Day rates typically £400-700+ on rotation but the family/relationship demands are significant. Common in North Sea (oil and gas) and offshore wind (East Coast UK, Scotland).",
     ],
     correctAnswer: 1,
     explanation:
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: "Which statutory regulation is the basis for the risk-assessment half of RAMS?",
     options: [
-      'BS 7671 Reg 132.13.',
+      "Being proactive within your level of authority — asking questions, volunteering for learning opportunities, suggesting improvements, and taking appropriate action when you identify issues — while recognising when to seek guidance",
+      "A poor or loose termination at one end (most often the MET) or at the BS 951 clamp itself — oxidised contact face, screw not torqued, ferrule damaged. The cable resistance alone should be ~7 mOhm; 0.85 ohm means about 0.84 ohm of contact resistance somewhere.",
       "Management of Health and Safety at Work Regulations 1999 Reg 3 — every employer (and every self-employed person) must make a 'suitable and sufficient' assessment of risks to health and safety. Reg 3(6) requires firms with five or more employees to record the significant findings.",
-      'PUWER 1998.',
-      'Building Regulations Part P.',
+      "Carry out visual inspection (cable condition, connector pins, enclosure integrity, ventilation), electrical testing (earth continuity, insulation resistance, RCD operation, loop impedance), verify smart functionality (communication, scheduling, firmware version), and check the control pilot signal is within specification",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "MHSWR 1999 Reg 3 is the statutory hook for the risk-assessment regime in Great Britain. It's made under HASAWA's enabling powers, so a breach of Reg 3 also feeds into a HASAWA s.2 / s.3 breach. The 'five or more employees' recording threshold is low — almost every electrical contracting firm crosses it — so written RAMS are effectively required for the contracting industry.",
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: "What's the apprentice's specific job in the RAMS process?",
     options: [
-      'Write the RAMS for each job before starting.',
+      "A trained operative who attaches loads to a crane (slinging) and signals the crane operator (signalling) during a lift. Both functions require formal CPCS or equivalent training. Lift operations are governed by LOLER 1998 (Lifting Operations and Lifting Equipment Regulations) which requires lifts to be planned by a competent person and supervised throughout.",
+      "You must confirm that the rating and condition of the existing equipment, including that of the distributor (cut-out fuse, service cable capacity, declared earth fault loop impedance, declared maximum demand), is adequate for the altered circumstances. Only then do you design the addition.",
+      "Although the PD's primary duty is during the pre-construction phase (gathering and providing pre-construction information), they often make periodic visits during construction to verify that the design assumptions held up and that the pre-construction H&S information is being used. This is especially common on complex projects where design changes during construction.",
       "Read it, follow it, sign on, work to the controls and steps as written, and flag anything on site that doesn't match what the document describes. Writing RAMS is a Level 3 / 4 / supervisor competency — at Level 2 you're a reader and follower of RAMS, and a flagger when reality doesn't match.",
-      'Ignore it — RAMS are paperwork for the office.',
-      "File it at the end of the day.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "There's a clear progression of RAMS competency in the trade. Level 2 apprentices read and follow RAMS. Level 3 apprentices and competent operatives read, follow and contribute to RAMS amendments. Supervisors and project managers write the RAMS. Trying to leapfrog the progression — writing RAMS as a first-year — is how generic boilerplate ends up on site. Be a competent reader first.",
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: "What is the 'sign-on' on a RAMS and what does signing it commit you to?",
     options: [
-      "It's an attendance register — your signature just confirms you turned up.",
       "It's a positive declaration that you have read the RAMS, understood it, and will work to it. Once your signature is on the sheet you've personally adopted the document — including the working method, the controls and the residual risks. It's the contractor's evidence to the HSE that the operatives were properly briefed, and it's the reason your supervisor will push back if you sign without reading.",
-      'It is a contract for the day\'s wages.',
-      "It's just a courtesy — has no legal effect.",
+      "Reg 644.1.1 — 'Upon completion of inspection and testing of an installation or an addition or alteration to an installation, an Electrical Installation Certificate based on the model in Appendix 6, together with a Schedule of Inspections (or Schedule of Items Inspected) and a Schedule of Test Results, shall be given to the person ordering the work.'",
+      "Because a ladder is a personal access platform that doesn't have a guardrail and depends on the user's three-point contact and footing for stability. It provides minimal collective protection. INDG401 and INDG402 (HSE guidance) limit ladder use to short-duration tasks (typically up to 30 minutes at one location), light work (one-handed work where reasonably practicable, with a free hand for grip) and where a higher control isn't reasonably practicable.",
+      "Lower electricity bills (offset import + earn SEG on export), reduced carbon footprint, partial grid-independence (with battery), a hedge against rising electricity prices, often a positive impact on house value, and government incentive schemes that vary by year. Real benefits — but not “free electricity”.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The sign-on sheet is one of the most-checked documents on a site after an incident. The HSE inspector traces backwards: who was briefed, what did the briefing cover, did the briefing match the activity? Your signature is the firm's evidence that the answer is 'yes'. Signing without reading transfers the consequence of any defect in the document onto you personally as well as onto the firm.",
   },
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: "What's the difference between a generic RAMS and a site-specific RAMS?",
     options: [
-      "There is no real difference — both are RAMS.",
+      "Accountability structures are important because EI development involves changing habitual patterns, which is difficult without external support. An effective structure might include: a development partner (colleague or mentor who checks in regularly), a reflective journal (tracking specific incidents and responses), regular self-assessments, and scheduled review points to evaluate progress against goals",
       "A generic RAMS is template wording that could apply to any job — 'electrical hazards', 'working at height', 'use of PPE'. A site-specific RAMS names the actual site, the actual tasks, the hazards identified on the walk-round, the specific access kit, the specific controls and the specific steps. The HSE 'suitable and sufficient' test under MHSWR Reg 3 effectively requires site-specific content.",
-      'A generic RAMS is for domestic work and a site-specific RAMS is for commercial.',
-      'A site-specific RAMS is just a generic one with the address changed.',
+      "The 'workmanship' standard and 'manufacturers' instructions' obligation. So a faulty cable joint that's electrically OK at the moment of test but executed with poor workmanship breaches 134.1.1, AND ignoring an SPD lead-length spec or a CU manufacturer's torque setting also breaches 134.1.1. This is the regulation a scheme inspector quotes when they're calling out poor workmanship without it being a specific technical-test failure.",
+      "Four dead-test functions on the MFT: (1) Continuity of protective conductors (R1+R2 / R2), low-resistance ohms range; (2) Insulation resistance, 500 V DC test (250 V for SELV / 1000 V for over 500 V circuits); (3) Polarity, by continuity check from origin to accessory; (4) Earth electrode resistance (where TT system or earth electrode used). The live-test sequence then adds Ze, Zs, PFC and RCD time/current. Sub 6.x covers the full sequence in detail.",
     ],
     correctAnswer: 1,
     explanation:
@@ -153,12 +153,12 @@ const quizQuestions = [
     id: 6,
     question: "The RAMS says 'use a podium for working at height'. The site only has a step ladder. What's the legal status of the situation?",
     options: [
-      "It is fine — verbally substituting equipment is normal practice.",
+      "A document accompanying the transfer of controlled waste from the producer to the next holder. Must contain a description of the waste, the European Waste Catalogue (EWC) code, the SIC (Standard Industrial Classification) code of the producer's activity, the quantity, the carrier's licence details, the destination, and signatures of both parties. Kept for 2 years (3 years for Hazardous Waste Consignment Notes).",
+      "CompEx (Competency in Explosive Atmospheres) is the standard UK competence scheme for electrical work in hazardous areas — petrochemical, offshore, fuel storage, paint shops, anywhere with explosive atmospheres. The CompEx Ex01-04 modules cover gas-protected installations; Ex05-06 cover dust-protected. Holding CompEx earns you the Hazardous Areas endorsement on your ECS card and unlocks high-day-rate work in oil and gas.",
       "The RAMS is the documented safe system of work for the task. Substituting a step ladder for a podium is a deviation from the documented control. Either the podium gets sourced, or the RAMS gets formally amended and re-signed before any work proceeds. Verbally working around the document leaves you outside the safe system of work — and outside any legal protection if something goes wrong. WAHR 2005 Reg 6 puts the duty on the employer to use the most suitable equipment.",
-      'The supervisor can change the equipment with a verbal instruction.',
-      'The step ladder is fine if it is short.',
+      "Use physiological regulation (controlled breathing to manage cortisol), cognitive reappraisal (reframe as \\\\\\\"this is a solvable technical challenge, not a personal attack\\\\\\\"), psychological flexibility (accept discomfort while committing to values of professionalism), and measured vulnerability (\\\\\\\"I understand this is frustrating — let me walk you through our resolution plan\\\\\\\")",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "RAMS deviations have to be documented or they aren't real. The whole point of a written safe system of work is that it can be audited; an undocumented verbal swap defeats the audit. The legally and practically correct response is to stop, raise it in writing, and either get the right kit or get the document amended. The Employment Rights Act 1996 s.44 protects you from detriment for raising health and safety concerns.",
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     question:
       "Under HASAWA s.7, what personal duty does an operative owe in relation to the RAMS for their own work?",
     options: [
-      "None — H&S is the employer's responsibility.",
+      "Analyse the failure and condition monitoring history: if failures are occurring between PM intervals the frequency should be increased; if components are consistently in good condition at PM time the interval may be too short and can be extended",
+      "A bespoke evacuation plan for a person with a disability or specific need who cannot use the standard evacuation route unaided. Required under the Equality Act 2010 and embedded in fire safety arrangements under RRFSO 2005. Covers refuge points (typically protected lobbies for wheelchair users), designated buddies, communication aids and re-entry sequence.",
+      "When the circuit supplies multiple loads that will not all run simultaneously at full power. Apply diversity to the connected load before deriving Ib. For a dedicated single-load circuit (single shower, single hob), no diversity applies — Ib equals the rated current of the load.",
       "To take reasonable care for the health and safety of self and others, and to co-operate with the employer's safety arrangements. In RAMS terms that means reading the document, following the written method, raising defects in the document, and not working outside the documented controls. 'Following orders' is no defence to an s.7 prosecution.",
-      'Only to attend the toolbox talk.',
-      "Only to wear PPE — everything else is the supervisor's job.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "HASAWA s.7 puts a personal duty on every operative — including apprentices. The duty has two limbs: take reasonable care, and co-operate with the safety arrangements. Reading the RAMS and working to it is the most basic discharge of both limbs. Knowing the regulation by name is part of being a competent tradesperson; it's the regulation that says 'you can't blame the boss for everything'.",
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     question:
       "Where do toolbox talks fit alongside the RAMS in the daily safety routine?",
     options: [
-      'They replace the RAMS — toolbox talks are the new way of doing it.',
       "Toolbox talks are short pre-shift safety briefings on a single topic — the RAMS for the day, a recent near-miss, a seasonal hazard. They keep the formal RAMS active in the day-to-day work. Recorded with attendance. Together with the RAMS sign-on they form the daily safety briefing chain.",
-      "They are only for Friday morning.",
-      'Toolbox talks are for managers, not for apprentices.',
+      "A non-compliance with BS 7671 because when the switch is open the line conductor remains live to the load — anyone working on the load thinks it is dead but the line is still energised. Reg 643.6(a) requires single-pole switches in the line.",
+      "Installers of standard domestic and small commercial installations — it pulls the most-used BS 7671 tables (cable sizing, diversity, ratings) into a pocket-sized reference and explains the standard install methods.",
+      "Knowing where the emergency gas isolation valve sits before work starts means you (or any trade in the property) can shut the gas down quickly if there is a leak — including a leak you might cause by chasing into a concealed pipe. It is part of the 'services' family of hazards and forms part of a defensible safe-system-of-work record.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Toolbox talks are the day-to-day mechanism for keeping the formal RAMS alive. A RAMS signed off three weeks ago at the contract start is a dead document on its own; a five-minute toolbox talk at the start of the shift on the day's task is what makes the RAMS a working tool. Attendance is recorded — it's part of the same chain of evidence as the sign-on sheet.",
   },

@@ -36,12 +36,12 @@ const checks = [
     question:
       'You are filling the "Max Zs (Ω)" column on the STR for a circuit protected by a Type B 32 A RCBO. Where do you read the value from?',
     options: [
-      'IET On-Site Guide.',
+      '0.4 seconds for socket outlet circuits (or portable equipment), 5 seconds for fixed equipment',
+      'Automatic lighting control based on detecting presence or absence of people',
       'BS 7671 A4:2026 Table 41.3 — Type B 32 A at U₀ = 230 V → 1.37 Ω. (NOT the older A2 value of 1.44 Ω.)',
-      'Manufacturer\'s data sheet.',
-      'Make it up based on experience.',
+      'Information necessary for them to fulfil their functions, subject to certain restrictions',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Max Zs in the STR comes from BS 7671 A4:2026 Table 41.3 for the OCPD type and rating in question. For Type B 32 A: 1.37 Ω. Always quote the A4:2026 value on a current-edition certificate; the older A2 value (1.44 Ω) is obsolete and using it would be quoting a superseded standard. The IET OSG re-prints the table values for convenience but the source-of-truth is BS 7671 itself.',
   },
@@ -50,10 +50,10 @@ const checks = [
     question:
       'On the STR row for a circuit protected by a 32 A Type B RCBO with IΔn = 30 mA, the IΔn column is left blank. Acceptable?',
     options: [
-      'Yes — the IΔn is implied by the RCBO type.',
+      'Stop immediately. Re-isolate at the correct point. Prove dead again. Investigate why the original isolation was incomplete (wrong device locked off, back-fed circuit, alternative supply source, parallel CPC path, induced voltage). Document the near-miss.',
       'No — IΔn is a required field for any circuit protected by an RCD or RCBO. Leaving it blank could be misread as "no RCD function" or "RCD value not verified". Fill in 30 mA Type A (or whichever rating / type). Reg 642.4 requires complete recording.',
-      'Yes for Type AC RCDs only.',
-      'Only required on first-fix.',
+      'ISOLATE the supply first. If immediate isolation isn\\\\\\\'t possible, use a non-conductive item (dry wood, plastic) to break contact. Do NOT touch the casualty until they\\\\\\\'re separated from the source. Then DR ABC casualty assessment and 999.',
+      'Insulation resistance test, continuity check, visual inspection, verification that all tools and temporary earths have been removed, and confirmation that all personnel are clear',
     ],
     correctIndex: 1,
     explanation:
@@ -64,12 +64,12 @@ const checks = [
     question:
       'You write R1+R2 as "0.45" and IR L+N to E as "200" on an STR row. Is that sufficient documentation?',
     options: [
-      'Yes — the units are obvious from context.',
       'No — always write the units. R1+R2 should be "0.45 Ω" (or document column header units as Ω). IR should be "200 MΩ" (column header MΩ). Mixed units in the same form (mΩ for R1+R2 in some sections, Ω in others, MΩ vs GΩ for IR) is a common source of misreading. Be explicit.',
-      'Acceptable in mΩ but not Ω.',
-      'Only required for periodic inspections.',
+      'Ze = the external loop from the origin out through the supply transformer star point and back to the means of earthing; R1 = the line conductor from origin to the fault point; R2 = the protective conductor from the fault point back to the MET.',
+      'At regular intervals throughout the apprenticeship, with a formal final review before the EPA gateway decision — typically at least quarterly throughout and a dedicated gateway readiness review 2-3 months before the planned EPA date',
+      'The continuity and resistance of protective conductors (R1+R2), bonding conductors, and ring final circuit conductors — confirming that the earth fault path is complete and has acceptably low resistance',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'IET model STR forms have units in the column headers (e.g. "R1+R2 (Ω)", "IR L+N to E (MΩ)") so individual cells just need the number. But many proprietary forms and older IET versions vary, and mixing units (mΩ versus Ω versus kΩ) is a real-world cause of misreading. When in doubt, include the units in the cell. Better still: use a current standard digital form that auto-formats with column header units explicitly stated.',
   },
@@ -80,10 +80,10 @@ const quizQuestions = [
     id: 1,
     question: 'STR header section — which of these belongs in the header (top of the form, common to every per-circuit row)?',
     options: [
-      'R1+R2 readings.',
+      'Understanding others — sensing others\\\\\\\' feelings and perspectives, and taking an active interest in their concerns',
       'Address of installation, date of testing, name of person testing, instrument serial numbers, certificate reference number cross-referenced to the EIC.',
-      'Per-circuit IR results.',
-      'Customer\'s favourite colour.',
+      'Scope 1 = direct emissions (vans, gas heating); Scope 2 = indirect from purchased electricity; Scope 3 = value-chain (materials, subcontractors, waste, business travel) — usually the largest',
+      'Verify that protection coordination is maintained — the protective device rating, type and characteristics are still appropriate for the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -93,12 +93,12 @@ const quizQuestions = [
     id: 2,
     question: 'For a 2.5 mm² T&E ring final on Method 100 (Reference Method 100 — clipped direct), which "Reference Method" code goes in the column?',
     options: [
+      'C',
       'A',
       '100',
-      'C',
       'Method 7',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 7671 Appendix 4 Reference Methods: 100 = clipped direct; 101 = above plasterboard; 102 = enclosed in a building void with thermal insulation. The numerical methods (100, 101, 102) are UK-specific additions to the international A-G method codes (Method A-G covers the international methods like enclosed in conduit on a wall, in trunking, etc.). Use whichever method genuinely describes the cable installation — it affects the cable\'s current-carrying capacity from Appendix 4 tables.',
   },
@@ -106,12 +106,12 @@ const quizQuestions = [
     id: 3,
     question: 'The "Polarity" column on the STR is typically:',
     options: [
-      'A free-text note.',
+      'The fault found, diagnostic steps taken, root cause, corrective action performed, parts used, and verification of effectiveness',
+      'A person must have the specific training, knowledge, and experience relevant to the particular task they are performing',
+      'An \\\\\\\\\\\\\\\'alert\\\\\\\\\\\\\\\' signal (intermittent) for staff followed by an \\\\\\\\\\\\\\\'evacuate\\\\\\\\\\\\\\\' signal (continuous) for all occupants',
       'A simple tick (or P/F) confirming polarity has been verified per Reg 643.6 — i.e. all the dead polarity test items pass.',
-      'A numerical value.',
-      'Not present on the STR.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Polarity is binary — pass or fail. STR has a tick column (P or F, or just a tick / cross). The detail of how polarity was verified (continuity from CU to L of every accessory etc.) is implied by the regulation reference; the column just records the outcome. Live polarity verification is a separate step in the live test sequence and may be a separate column or noted on the EIC itself.',
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     id: 4,
     question: 'A 30 mA Type A RCBO on a kitchen ring tested at 28 ms trip time at 1 × IΔn. What goes in the RCD trip-time column?',
     options: [
-      '"Pass".',
       '"28 ms" — the actual measured trip time. Pass / fail status is implicit (28 ms < 300 ms = pass). Documenting the actual reading lets future inspectors compare values for drift or degradation.',
-      '"30 mA".',
-      'Leave blank.',
+      'Do NOT approach or touch the machine, keep all personnel at least 10 metres away, call 999 and the electricity network operator to isolate the supply, and only begin rescue once the supply is confirmed isolated',
+      'In stages — during erection (first-fix verification of buried items before cover-up), at second-fix completion, and final at energisation. Reg 641.1 explicitly covers "during erection and on completion".',
+      'Negotiation first, then the contract\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s formal dispute resolution route (often adjudication under the Construction Act for construction contracts)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Always record the actual measured value, not just pass/fail. 28 ms is a pass against the 300 ms maximum for general non-delay, and the actual reading is useful for future periodic inspections to compare for drift. If the device degrades over five years and trips at 200 ms next time, the inspector knows performance has dropped sharply even though both readings pass. Pass/fail-only documentation loses that diagnostic information.',
   },
@@ -132,10 +132,10 @@ const quizQuestions = [
     id: 5,
     question: 'The "Max Zs (Ω)" column on the STR for a Type B 16 A circuit per A4:2026:',
     options: [
-      '2.87 Ω',
+      'A device that converts chemical energy to electrical energy',
       '2.73 Ω (the A4:2026 value — the older A2 value of 2.87 Ω is obsolete)',
-      '1.37 Ω',
-      '4.37 Ω',
+      'Automatic lighting activation during security events for deterrence',
+      'Lower power consumption, longer life, better reliability, and reduced maintenance',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,12 +145,12 @@ const quizQuestions = [
     id: 6,
     question: 'Modern MFTs export test data via Bluetooth or USB. On a digital STR, the auto-imported data should:',
     options: [
-      'Be accepted without review.',
-      'Be reviewed by the inspector before signing — instrument glitches, mis-set test ranges or transcription errors during import can introduce nonsense values that the certification software will accept without complaint. The inspector\'s signature attests to the values, not the auto-import process.',
-      'Replace the inspector\'s judgement.',
-      'Only be used for periodic inspections.',
+      'The principles of prevention in Schedule 1: avoid risks, evaluate unavoidable risks, combat risks at source, adapt work to the individual, adapt to technical progress, replace dangerous with non/less dangerous, develop a coherent prevention policy, give collective measures priority, and give appropriate instructions',
+      '30 mA RCD at the pitch — TT installations require RCD protection because Ra x I-delta-n must satisfy the 50 V touch-voltage limit, and the high electrode resistance means an overcurrent device alone cannot achieve disconnection in the required time',
+      'Be reviewed by the inspector before signing — instrument glitches, mis-set test ranges or transcription errors during import can introduce nonsense values that the certification software will accept without complaint. The inspector\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s signature attests to the values, not the auto-import process.',
+      'Type (BS EN 60898 Type B or C), rating (32 A), breaking capacity (e.g. 6 kA Icn), trip characteristic family, RCD class if combined (e.g. RCBO 30 mA Type A), and the maximum Zs figure used for verification (Type B32 = 1.37 ohms per Table 41.3 A4:2026). Plus the manufacturer / part number for traceability.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Digital workflows have removed transcription errors from manual entry but introduced new ones from auto-import. Always review the auto-populated STR before signing — does R1+R2 of 4.5 Ω make sense for a 25 m kitchen ring? (No — that would be 30× the expected value; check that the meter wasn\'t set to mΩ when reading was actually Ω.) The inspector\'s signature certifies the data is correct, regardless of how it got onto the form.',
   },
@@ -158,12 +158,12 @@ const quizQuestions = [
     id: 7,
     question: 'AFDD column on the modern STR records:',
     options: [
-      'Trip current.',
-      'Tick or P/F confirming the AFDD\'s manufacturer-specified test facility was operated correctly per Reg 643.10. Plus a note for any abnormal indication.',
-      'Insulation resistance.',
-      'Cable size.',
+      'Provide a tagged accessible PDF (or large-print/braille if requested), an audio summary, and offer a verbal walk-through of any concerns',
+      'Representation of process control engineering in P&ID diagrams, including instrument identification and graphic symbols',
+      'Insulation method (Class II / equivalent), DC isolator at array, polarity, string fuses, earthing arrangement (functional vs protective), and labels at supply intake (Reg 514)',
+      'Tick or P/F confirming the AFDD\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s manufacturer-specified test facility was operated correctly per Reg 643.10. Plus a note for any abnormal indication.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'AFDDs (arc fault detection devices) are recommended by Reg 421.1.7 for AC final circuits supplying socket-outlets ≤ 32 A in dwellings; the recommendation strengthens to a requirement in HRRBs under the Building Safety Act 2022 framework, with supporting fire-safety guidance covering HMOs / sleeping accommodation / care homes. The STR has been updated to include a column for the AFDD test result — typically a tick that the manufacturer\'s test procedure was followed and the device responded as documented. Free-text note column captures any abnormal LED indication or fault code from the test.',
   },
@@ -171,12 +171,12 @@ const quizQuestions = [
     id: 8,
     question: 'Per Reg 642.4 and Section 644, the STR is part of:',
     options: [
-      'The Building Regulations only.',
       'The certification of the installation. The signed STR + Schedule of Inspections + EIC together form the certification pack required for a new installation or major alteration. The STR is not optional or supplementary — it is one of the three components of the certificate.',
-      'The DNO\'s records only.',
-      'The customer\'s tax return.',
+      'It continuously monitors the insulation resistance between the live DC conductors and earth, throughout the life of the array. A drop in insulation (a damaged cable, water in a connector) triggers an alarm or shuts down the inverter — catching insulation faults before they become DC arcing fires.',
+      'Hazard exists; risk is the quantified threat from the hazard given exposure; control reduces the risk; residual risk is what remains after control. ALARP is achieved when residual risk is reduced to a point where further reduction would be grossly disproportionate to the cost.',
+      'Sequencing tasks so that critical-path activities are completed first, ensuring all parts and tools are available before the shutdown begins, and allowing contingency time for unexpected findings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The STR is one of the three statutory parts of the certification pack along with the Schedule of Inspections and the EIC itself. Signed by the inspector, retained by customer / contractor / Competent Person Scheme. Not a working document or supplementary appendix — a signed, dated regulatory record.',
   },

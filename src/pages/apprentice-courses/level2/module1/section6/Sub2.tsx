@@ -49,12 +49,12 @@ const checks = [
     question:
       'You’ve cooled an electrical burn under cool running water for 5 minutes — the casualty says it feels better, can you stop?',
     options: [
-      'Yes, 5 minutes is enough',
+      'Unified control with voice commands executing hub automations',
+      'Increases with length and decreases with cross-sectional area',
       'No — cool burns under running water for at least 20 minutes, even if it feels better',
-      'Stop and wrap it in a wet cloth instead',
-      'Apply burn cream once it stops hurting',
+      'Training, written instructions, demonstrations, ongoing reinforcement',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       '20 minutes minimum, ideally with cool tap water — not ice, not freezing water. Heat keeps damaging tissue for ages after the source is gone. Stopping early lets the deep tissue keep cooking. After 20 min, cover with cling film or a non-fluffy sterile dressing.',
   },
@@ -62,10 +62,10 @@ const checks = [
     id: 'aed-rhythm-check',
     question: 'When will an AED actually deliver a shock?',
     options: [
-      'Whenever you press the button — it’s just a switch',
+      'The nominal voltage at which the device is designed to operate',
       'Only when it detects a shockable rhythm like ventricular fibrillation',
-      'Every time the casualty is unconscious',
-      'Only if the casualty is over 18',
+      'To prevent cable insulation damage and meet workmanship standards',
+      'Close the day: review completed work, capture loose ends, preview tomorrow',
     ],
     correctIndex: 1,
     explanation:
@@ -76,12 +76,12 @@ const checks = [
     question:
       'You scrape your hand on a piece of trunking — there’s a small graze, no bleed. The first aid box is on the wall. What’s the right call?',
     options: [
-      'Grab a sterile dressing and a couple of plasters — that’s what they’re for',
+      'Workers cannot see hazards, trip risks, or the edges of the platform, significantly increasing the risk of falls',
+      'Your BATNA sets your walkaway point, the other party BATNA sets theirs, and the ZOPA is the range between where agreement is possible',
       'Wash the graze under the tap, dry it, use ONE plaster, and tell the first aider you used one so it gets replaced',
-      'Don’t bother — leave the box alone, you’ll be fine',
-      'Take the whole box back to the van for the rest of the week',
+      'Implementing corrective actions, updating the risk assessment and safe system of work, and sharing the lessons learned across the organisation',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Use what you need (one plaster), don’t over-help yourself, and TELL THE FIRST AIDER. The box gets checked monthly and contents get replaced when they’re used. Quietly raiding it for non-medical jobs (taping a cable, plastering up a tatty pair of safety glasses) means it’s empty when someone’s actually bleeding.',
   },
@@ -94,10 +94,10 @@ const quizQuestions = [
     id: 1,
     question: 'How should you cool a fresh electrical burn?',
     options: [
-      'Apply ice directly to the burn for 20 minutes',
+      'Testing scheduled to avoid disrupting education',
       'Cool running water for at least 20 minutes, then cover loosely',
-      'Apply burn cream straight away',
-      'Wrap it tightly in cling film immediately',
+      'To prevent accidents during critical shutdown procedures',
+      'Site-specific hazards, emergency procedures, and PPE requirements',
     ],
     correctAnswer: 1,
     explanation:
@@ -108,12 +108,12 @@ const quizQuestions = [
     question:
       'What is "arc eye" and how does it present?',
     options: [
-      'A burn caused by direct current contact',
+      'At least 200 mA short-circuit test current with a no-load voltage in the range 4 V to 24 V AC or DC',
+      'Activate the emergency stop, attempt the APU, then try the manual lowering valve or hand pump, and call 999 if all methods fail',
       'Inflammation of the cornea from UV exposure during an arc flash, with symptoms appearing 4–12 hours later',
-      'A permanent loss of vision from looking at a working bulb',
-      'A small bruise around the eye after a knock',
+      'Automated systems that identify operational faults and their likely causes in building systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Arc eye (photokeratitis) is essentially sunburn of the cornea from the UV in an arc flash or welding arc. Symptoms — gritty feeling, watering, pain, light sensitivity — show up 4–12 hours after exposure, often catching the casualty off-shift. Cool compresses, dark room, A&E. It usually heals in 24–72 hours.',
   },
@@ -122,12 +122,12 @@ const quizQuestions = [
     question:
       'A casualty had a 230 V shock, jumped clear, says they feel fine. The next day they collapse. What likely killed them?',
     options: [
-      'A delayed burn',
+      'May require modified procedures and criteria',
+      'To maintain a strong grip and prevent slipping',
+      'The Management of Health and Safety at Work Regulations 1999',
       'Cardiac arrhythmia developing hours after the shock',
-      'Shock-induced asthma',
-      'Low blood sugar',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Electric current can disrupt the heart’s electrical system in ways that don’t show on a basic survey. Arrhythmias can develop minutes to hours after the original shock. This is why every electric-shock casualty gets a hospital check, even one who jumps up and says they’re fine.',
   },
@@ -135,12 +135,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of these belongs in a workplace first aid kit?',
     options: [
-      'Paracetamol and ibuprofen tablets',
-      'Antiseptic cream and antibiotic ointment',
       'Sterile dressings, plasters, eyewash, gloves, foil blanket, scissors',
-      'A defibrillator only',
+      'Implementing a permit to work system for HV switching',
+      'In locations with sleeping accommodation and high fire risk locations',
+      '"Complete weekly planning every Friday 4-4:30pm for the next 3 months"',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Workplace first aid kits hold sterile dressings, plasters, eyewash, gloves, a foil blanket, scissors and similar passive items. They do NOT hold medications — pills, creams, ointments. That’s a legal limit, not a budget thing: dispensing medication needs medical training.',
   },
@@ -149,10 +149,10 @@ const quizQuestions = [
     question:
       'You used the eyewash bottle on Tuesday for a small splash. What should happen next?',
     options: [
-      'Nothing — it’s done its job',
+      'When it burns it doesn’t give off thick smoke or toxic halogen gas — keeps the escape route survivable',
       'Tell the appointed first aider so the bottle is replaced before the next person needs it',
-      'Refill it from the kitchen tap',
-      'Hide the empty bottle so nobody notices',
+      'Validation means acknowledging someone\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s feelings as understandable; agreement means you share their position',
+      'To make the wearer visible in poor light or near moving vehicles',
     ],
     correctAnswer: 1,
     explanation:
@@ -176,12 +176,12 @@ const quizQuestions = [
     question:
       'You’re trained in EFAW. Your supervisor asks you to give a colleague a paracetamol from the first aid box. What do you do?',
     options: [
-      'Hand the paracetamol over — it’s in the box',
+      'Annually, with interim accuracy checks (e.g. against a calibration check box) before each use',
+      'A SINGLE AC test at 1×IΔn (the 5×IΔn test was DELETED in A4:2026; functional check via test button still required)',
+      'Clients requesting additional work beyond the original scope, often phrased casually to avoid formal pricing',
       'Refuse — paracetamol is not in a workplace first aid kit, and you’re not trained to administer medication',
-      'Ask the colleague to take two so it works faster',
-      'Give it but write it in the accident book',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Paracetamol shouldn’t be in the workplace kit in the first place. Even if it is (someone left it there), you’re not authorised to dispense medication. The colleague can buy their own from a shop. AC 3.6 — never administer something you’re not trained for, even if asked.',
   },
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'How often should the workplace first aid kit be checked, by whom?',
     options: [
-      'Once a year by anyone who fancies it',
       'Weekly visual check by the appointed first aider, monthly full audit, plus immediate top-up after any use',
-      'Only when the HSE inspector visits',
-      'It doesn’t need checking — kits last forever',
+      'To enable safe shutdown of critical systems and safe evacuation during power failures',
+      'The whole programme — successor trades cannot start, scaffold may be retained, plant hire is extended; the cumulative cost grows fast',
+      'Logical progression, safety requirements, and coordination with other trades',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Weekly quick check (seal intact, contents present), monthly full audit against the contents list, and immediate top-up after any use. Items have expiry dates — sterile dressings, eyewash, AED pads. A box full of expired kit is worse than an empty one because it gives false confidence.',
   },

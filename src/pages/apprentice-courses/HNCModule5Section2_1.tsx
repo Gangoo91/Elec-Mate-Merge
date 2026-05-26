@@ -32,9 +32,9 @@ const quickCheckQuestions = [
     question: 'In traditional procurement, who carries the majority of design risk?',
     options: [
       'The main contractor',
-      'The MEP subcontractor',
-      'The client/employer',
       'The quantity surveyor',
+      'The client/employer',
+      'The MEP subcontractor',
     ],
     correctIndex: 2,
     explanation:
@@ -44,20 +44,25 @@ const quickCheckQuestions = [
     id: 'design-build-advantage',
     question: 'What is a key advantage of design and build for the client?',
     options: [
+      'Longer programme duration',
       'Lower quality standards',
       'Single point of responsibility',
-      'Longer programme duration',
       'More design control',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Design and build provides single point of responsibility - the contractor is accountable for both design and construction, simplifying the client's contractual relationships.",
   },
   {
     id: 'construction-management-fee',
     question: 'In construction management, how is the construction manager typically paid?',
-    options: ['Fixed lump sum', 'Cost plus percentage', 'Management fee only', 'Per trade package'],
-    correctIndex: 2,
+    options: [
+      'Fixed lump sum',
+      'Management fee only',
+      'Cost plus percentage',
+      'Per trade package',
+    ],
+    correctIndex: 1,
     explanation:
       'The construction manager is paid a management fee for coordinating trade packages. They do not take construction risk - each trade contractor contracts directly with the client.',
   },
@@ -96,12 +101,12 @@ const quizQuestions = [
     question:
       'A hospital requiring complex medical gas systems and specialist equipment would typically suit which procurement route?',
     options: [
-      'Design and build',
+      'Two-stage or construction management',
+      'Design and build with a guaranteed maximum price',
       'Traditional with specialist subcontracts',
-      'Pure construction management',
-      'Single-stage competitive tender',
+      'Buildability input and early coordination is needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Healthcare projects with complex M&E requirements typically use traditional procurement, allowing specialist consultants to develop detailed designs and coordination with medical planners.',
   },
@@ -109,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'Under design and build, when can the client still influence MEP design decisions?',
     options: [
-      "Never - all design is the contractor's responsibility",
-      "During the employer's requirements stage",
       'Only after practical completion',
+      "Never - all design is the contractor's responsibility",
       'Throughout construction without cost implications',
+      "During the employer's requirements stage",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The client specifies their requirements in the Employer's Requirements document. Changes after contract award typically attract additional costs as variations.",
   },
@@ -123,12 +128,12 @@ const quizQuestions = [
     question:
       'What is a significant disadvantage of traditional procurement for building services?',
     options: [
-      'Poor quality control',
-      'No competitive tendering',
       'Longer overall programme',
+      'No competitive tendering',
+      'Poor quality control',
       'Single point of responsibility',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Traditional procurement requires complete design before tendering, leading to longer overall programmes. Design and construction cannot overlap significantly.',
   },
@@ -138,8 +143,8 @@ const quizQuestions = [
     options: [
       'The client directly',
       'The management contractor',
-      'The lead designer',
       'A novated consultant',
+      'The lead designer',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,11 +155,11 @@ const quizQuestions = [
     question: 'Construction management is most suitable when:',
     options: [
       'The client wants fixed price certainty from day one',
-      'The client is experienced and wants maximum control',
       'The project is simple with standard M&E',
+      'The client is experienced and wants maximum control',
       'The client wants to transfer all risk to contractors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Construction management suits sophisticated clients who want direct control over trade contractors and are willing to accept cost and programme risk in exchange for flexibility.',
   },
@@ -163,11 +168,11 @@ const quizQuestions = [
     question: 'Two-stage tendering is particularly valuable for MEP when:',
     options: [
       'The M&E design is fully complete',
-      'Buildability input and early coordination is needed',
-      'The client wants the lowest possible price',
       'The project has a simple services strategy',
+      'The client wants the lowest possible price',
+      'Buildability input and early coordination is needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Two-stage tendering allows MEP contractors to contribute buildability expertise during design development, improving coordination and reducing on-site problems.',
   },
@@ -175,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is novation in the context of design and build procurement?',
     options: [
-      'Appointing a new contractor mid-project',
       "Transferring the client's consultants to the contractor",
-      'Extending the contract period',
-      'Changing the project specification',
+      "Traditional with specialist subcontracts",
+      "During the employer's requirements stage",
+      "The client is experienced and wants maximum control",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Novation transfers the client's design consultants (including M&E designers) to the contractor post-contract, maintaining design continuity while giving the contractor design responsibility.",
   },
@@ -189,12 +194,12 @@ const quizQuestions = [
     question:
       'For a speculative office development requiring cost certainty, which route would typically be recommended?',
     options: [
-      'Construction management',
-      'Traditional with bills of quantities',
+      'The client is experienced and wants maximum control',
       'Design and build with a guaranteed maximum price',
-      'Management contracting',
+      'Transferring the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s consultants to the contractor',
+      'During the employer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s requirements stage',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Design and build with a guaranteed maximum price (GMP) provides cost certainty whilst maintaining reasonable programme efficiency - ideal for speculative development.',
   },
@@ -202,12 +207,12 @@ const quizQuestions = [
     id: 10,
     question: "The term 'contractor's designed portion' (CDP) refers to:",
     options: [
-      'A pure design and build contract',
+      'Transferring the client\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s consultants to the contractor',
+      'Buildability input and early coordination is needed',
       'Elements of traditional contracts designed by the contractor',
-      'Management contracting preliminaries',
-      'Two-stage tender requirements',
+      'Design and build with a guaranteed maximum price',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CDP is used within traditional contracts where specific elements (often MEP) are designed by the contractor to a performance specification, combining traditional and D&B approaches.',
   },
@@ -217,10 +222,10 @@ const quizQuestions = [
     options: [
       'Traditional lump sum',
       'Design and build',
-      'Construction management',
       'Single-stage competitive tender',
+      'Construction management',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Construction management typically has higher preliminaries because the construction manager's team is on site throughout, plus there are multiple trade contractor preliminaries rather than a single main contractor.",
   },
@@ -229,12 +234,12 @@ const quizQuestions = [
     question:
       'For a data centre with rapidly evolving technology requirements, which procurement approach allows the most flexibility?',
     options: [
-      'Fixed-price design and build',
-      'Traditional lump sum',
       'Two-stage or construction management',
       'Single-stage competitive tender',
+      'Fixed-price design and build',
+      'Traditional lump sum',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Two-stage or construction management allows design development to continue later into the programme, accommodating technology changes that are common in data centre projects.',
   },

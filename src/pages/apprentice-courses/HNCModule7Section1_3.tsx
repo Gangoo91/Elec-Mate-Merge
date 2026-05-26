@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'design-current',
     question: 'What is the design current (Ib) in cable sizing?',
     options: [
+      'The earth fault loop impedance current',
+      'The rated current of the protective device',
       'The maximum fault current the cable can withstand',
       'The current the cable is expected to carry in normal service',
-      'The rated current of the protective device',
-      'The earth fault loop impedance current',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'The design current (Ib) is the current intended to be carried by the circuit in normal service. It is determined from the connected load and forms the starting point for cable sizing calculations.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'correction-factors',
     question: 'What effect do correction factors have on tabulated current ratings?',
     options: [
-      'They always increase the current rating',
       'They reduce the effective current-carrying capacity',
       'They have no effect on single cables',
       'They only apply to armoured cables',
+      'They always increase the current rating',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Correction factors (Ca, Cg, Ci, Cc) account for conditions that reduce heat dissipation. Multiplying the tabulated rating by these factors (all less than or equal to 1) reduces the effective current-carrying capacity.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     question:
       'What is the maximum permitted voltage drop for a final circuit according to BS 7671?',
     options: [
+      '2.5% of nominal voltage',
+      '5% of nominal voltage',
       '3% of nominal voltage',
       '4% of nominal voltage',
-      '5% of nominal voltage',
-      '2.5% of nominal voltage',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'BS 7671 limits voltage drop to 5% of nominal voltage (11.5V for 230V circuits) for final circuits from the origin of the installation. This comprises 3% for distribution circuits and 5% for final circuits when combined.',
   },
@@ -68,11 +68,11 @@ const quickCheckQuestions = [
     question: 'The adiabatic equation S = sqrt(I squared t) / k is used to determine:',
     options: [
       'The voltage drop in a cable',
+      'The grouping factor for multiple cables',
       'The minimum cable size for fault protection',
       'The correction factor for ambient temperature',
-      'The grouping factor for multiple cables',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The adiabatic equation calculates the minimum conductor cross-sectional area required to withstand the thermal effects of fault current for the disconnection time. This ensures the cable can safely carry fault current until the protective device operates.',
   },
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'In the cable sizing equation It ≥ Ib / (Ca × Cg × Ci × Cc), what does It represent?',
     options: [
-      'The design current of the circuit',
+      'Safe isolation, first aid and evacuation procedures',
       'The tabulated current-carrying capacity from BS 7671',
-      'The rated current of the protective device',
-      'The earth fault current',
+      'Installing and commissioning solar photovoltaic systems',
+      'Yes — it must be recorded as failing BS 7671 requirements',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,8 +96,13 @@ const quizQuestions = [
     id: 2,
     question:
       'A circuit has Ib = 28A. The protective device In = 32A. Ca = 0.87, Cg = 0.65, Ci = 1.0. What is the minimum It required?',
-    options: ['28A', '32A', '49.5A', '56.6A'],
-    correctAnswer: 3,
+    options: [
+      '49.5A',
+      '28A',
+      '56.6A',
+      '32A',
+    ],
+    correctAnswer: 2,
     explanation:
       'It ≥ In / (Ca × Cg × Ci) = 32 / (0.87 × 0.65 × 1.0) = 32 / 0.566 = 56.6A. Note: We use In (not Ib) because the protective device may allow continuous current up to its rating.',
   },
@@ -105,8 +110,13 @@ const quizQuestions = [
     id: 3,
     question:
       'What is the ambient temperature correction factor (Ca) for a cable installed where ambient temperature is 40°C when the reference temperature is 30°C?',
-    options: ['0.71', '0.82', '0.87', '0.94'],
-    correctAnswer: 2,
+    options: [
+      '0.82',
+      '0.71',
+      '0.94',
+      '0.87',
+    ],
+    correctAnswer: 3,
     explanation:
       'From BS 7671 Table 4B1, for thermoplastic (PVC) cables at 40°C ambient, Ca = 0.87. Higher ambient temperatures reduce the temperature differential available for heat dissipation, requiring cable derating.',
   },
@@ -114,8 +124,13 @@ const quizQuestions = [
     id: 4,
     question:
       'Eight single-core cables are installed in a single conduit. What is the grouping factor (Cg)?',
-    options: ['0.38', '0.43', '0.52', '0.57'],
-    correctAnswer: 1,
+    options: [
+      '0.43',
+      '0.38',
+      '0.52',
+      '0.57',
+    ],
+    correctAnswer: 0,
     explanation:
       'From BS 7671 Table 4C1, for 8 cables (4 circuits) in a conduit or enclosed space, Cg = 0.43. Grouping multiple cables together reduces their ability to dissipate heat, requiring significant derating.',
   },
@@ -124,12 +139,12 @@ const quizQuestions = [
     question:
       'The voltage drop in a circuit is calculated as 8.2V. The nominal voltage is 230V. Does this comply with BS 7671?',
     options: [
-      'Yes, it is within the 5% limit for final circuits',
       'No, it exceeds the 3% limit for all circuits',
-      'Yes, it is within the 4% limit',
+      'Yes, it is within the 5% limit for final circuits',
       'No, voltage drop is never permitted',
+      'Yes, it is within the 4% limit',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       '5% of 230V = 11.5V. The calculated voltage drop of 8.2V is less than 11.5V, therefore it complies with the BS 7671 requirement for voltage drop in final circuits from the origin of the installation.',
   },
@@ -137,7 +152,12 @@ const quizQuestions = [
     id: 6,
     question:
       'A 2.5mm² thermoplastic cable has a tabulated voltage drop of 18 mV/A/m. For a 25A load over 30m, what is the voltage drop?',
-    options: ['7.5V', '10.5V', '13.5V', '18V'],
+    options: [
+      '7.5V',
+      '10.5V',
+      '13.5V',
+      '18V',
+    ],
     correctAnswer: 2,
     explanation:
       'Voltage drop = (mV/A/m × Ib × L) / 1000 = (18 × 25 × 30) / 1000 = 13.5V. This exceeds the 11.5V limit for a 230V final circuit, so a larger cable size would be required.',
@@ -146,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: "In the adiabatic equation S = √(I²t) / k, what does 'k' represent?",
     options: [
-      'The cable length in metres',
+      'Cable is totally surrounded by thermal insulation over 0.5m',
+      'All three: current capacity, voltage drop, and fault withstand',
+      'Starting current affects voltage drop but not continuous rating',
       'A factor dependent on conductor and insulation materials',
-      'The ambient temperature in Kelvin',
-      'The protective device rating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The 'k' factor is a constant that depends on the conductor material (copper or aluminium) and insulation type (thermoplastic or thermosetting). Values are given in BS 7671 Table 43.1, e.g., k = 115 for PVC-insulated copper conductors.",
   },
@@ -159,8 +179,13 @@ const quizQuestions = [
     id: 8,
     question:
       'A fault current of 1200A must be disconnected in 0.4s. Using k = 115, what is the minimum conductor size?',
-    options: ['1.5mm²', '2.5mm²', '4mm²', '6.6mm²'],
-    correctAnswer: 3,
+    options: [
+      '6.6mm²',
+      '4mm²',
+      '1.5mm²',
+      '2.5mm²',
+    ],
+    correctAnswer: 0,
     explanation:
       'S = √(I²t) / k = √(1200² × 0.4) / 115 = √(576000) / 115 = 758.9 / 115 = 6.6mm². A 10mm² cable would be the minimum standard size to satisfy this requirement.',
   },
@@ -170,11 +195,11 @@ const quizQuestions = [
       'Which installation method typically provides the highest current-carrying capacity for a given cable size?',
     options: [
       'Cables enclosed in conduit in thermally insulated walls',
-      'Cables clipped direct to a non-metallic surface',
       'Cables in free air with spacing',
+      'Cables clipped direct to a non-metallic surface',
       'Cables in trunking',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Cables in free air with adequate spacing (Reference Method E/F) have the highest current ratings because air circulation provides excellent heat dissipation. Enclosed installation methods restrict airflow and reduce ratings.',
   },
@@ -183,11 +208,11 @@ const quizQuestions = [
     question: 'Thermal insulation contact factor (Ci) of 0.5 applies when:',
     options: [
       'Cable is in contact with thermal insulation on one side',
+      'Cable is in ambient temperature above 50°C',
       'Cable is totally surrounded by thermal insulation over 0.5m',
       'Cable passes through thermal insulation',
-      'Cable is in ambient temperature above 50°C',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Ci = 0.5 applies when a cable is totally surrounded by thermal insulation for a distance greater than 0.5m. This severe derating reflects the significant reduction in heat dissipation when insulation prevents cooling.',
   },
@@ -196,12 +221,12 @@ const quizQuestions = [
     question:
       'For a motor circuit with starting current of 6× full load current, what consideration affects cable sizing?',
     options: [
-      'The starting current determines Ib',
+      'Cable is totally surrounded by thermal insulation over 0.5m',
+      'Yes, it is within the 5% limit for final circuits',
+      'All three: current capacity, voltage drop, and fault withstand',
       'Starting current affects voltage drop but not continuous rating',
-      'Motors do not require cable sizing calculations',
-      'Only the protective device rating matters',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'For motor circuits, Ib is based on full load current (not starting current) for thermal sizing. However, starting current causes increased voltage drop which may affect motor starting. BS 7671 Appendix 4 provides guidance on motor circuit voltage drop.',
   },
@@ -209,12 +234,12 @@ const quizQuestions = [
     id: 12,
     question: 'When selecting cable size, the final choice must satisfy:',
     options: [
-      'Current-carrying capacity only',
-      'Voltage drop requirements only',
-      'Fault current withstand only',
       'All three: current capacity, voltage drop, and fault withstand',
+      'Cable is totally surrounded by thermal insulation over 0.5m',
+      'Starting current affects voltage drop but not continuous rating',
+      'Yes, it is within the 5% limit for final circuits',
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
       'Cable sizing requires checking three criteria: (1) current-carrying capacity with all correction factors, (2) voltage drop limits, and (3) fault current withstand (adiabatic equation). The cable must satisfy ALL requirements; the largest size from these checks is selected.',
   },

@@ -25,7 +25,12 @@ const FunctionalSkillsModule4Section3 = () => {
       id: 1,
       question:
         'A job requires £800 of materials. You want a 25% markup. What do you charge for materials?',
-      options: ['£900', '£1,000', '£1,067', '£1,200'],
+      options: [
+        '£900',
+        '£1,000',
+        '£1,067',
+        '£1,200',
+      ],
       correctAnswer: 1,
       explanation:
         'Markup is calculated on cost price. 25% markup on £800 = £800 × 1.25 = £1,000. The £200 difference is your gross profit on materials.',
@@ -34,7 +39,12 @@ const FunctionalSkillsModule4Section3 = () => {
       id: 2,
       question:
         'Your overheads are £2,000/month. You work 20 days/month, 8 hours/day. You want to earn £2,400/month net. What is your minimum hourly rate (before profit)?',
-      options: ['£15.00/hr', '£22.50/hr', '£27.50/hr', '£30.00/hr'],
+      options: [
+        '£30.00/hr',
+        '£15.00/hr',
+        '£27.50/hr',
+        '£22.50/hr',
+      ],
       correctAnswer: 2,
       explanation:
         'Total needed = £2,400 (earnings) + £2,000 (overheads) = £4,400/month. Hours = 20 × 8 = 160. Rate = £4,400 / 160 = £27.50/hr. This covers your costs and desired earnings but includes no profit margin.',
@@ -43,8 +53,13 @@ const FunctionalSkillsModule4Section3 = () => {
       id: 3,
       question:
         'A quote totals £2,500 net. You need to add VAT at 20%. What is the gross (VAT-inclusive) price?',
-      options: ['£2,750', '£3,000', '£3,125', '£2,600'],
-      correctAnswer: 1,
+      options: [
+        '£3,125',
+        '£2,750',
+        '£2,600',
+        '£3,000',
+      ],
+      correctAnswer: 3,
       explanation:
         'VAT at 20% = £2,500 × 0.20 = £500. Gross price = £2,500 + £500 = £3,000. Alternatively, £2,500 × 1.20 = £3,000.',
     },
@@ -52,7 +67,12 @@ const FunctionalSkillsModule4Section3 = () => {
       id: 4,
       question:
         'A job has a total selling price of £1,200. The cost of materials and labour is £960. What is the profit margin?',
-      options: ['20%', '25%', '15%', '30%'],
+      options: [
+        '20%',
+        '25%',
+        '15%',
+        '30%',
+      ],
       correctAnswer: 0,
       explanation:
         'Margin = (Selling Price – Cost) / Selling Price × 100 = (1200 – 960) / 1200 × 100 = 240 / 1200 × 100 = 20%. Note: the markup is 240/960 = 25%, which is different from the 20% margin.',
@@ -62,10 +82,10 @@ const FunctionalSkillsModule4Section3 = () => {
       question:
         'You quote £4,500 fixed price for a rewire. During the job you discover the consumer unit needs upgrading, adding £450 in materials and 4 hours labour at £40/hr. What should you do?',
       options: [
-        'Absorb the cost — it was a fixed price',
+        'False - retesting is essential to verify safety and compliance',
         'Issue a written variation order and get it signed before proceeding',
-        'Add it to the final invoice without telling the customer',
-        'Refuse to do the extra work',
+        'The substance is a serious health hazard such as a carcinogen or respiratory sensitiser',
+        'Using apps, software, and digital tools for efficiency',
       ],
       correctAnswer: 1,
       explanation:
@@ -76,12 +96,12 @@ const FunctionalSkillsModule4Section3 = () => {
       question:
         'You are quoting for 12 twin sockets, 6 LED downlights, and a consumer unit upgrade. How would you structure the material takeoff?',
       options: [
-        'Estimate a total and add 10%',
+        'At each end of every wire or conductor, close to the termination point',
+        'Ultra-low energy demand through exceptional fabric and airtightness',
         'List each item, quantity, unit cost, and total cost in a spreadsheet',
-        'Ask the customer what they want to pay',
-        'Copy prices from last year’s job',
+        'Suspension or permanent removal from approved schemes',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'A proper material takeoff lists every item individually with quantity, unit cost and extended total. This ensures accuracy, makes it easy to check for errors, and provides a clear record if quantities change during the job.',
     },
@@ -90,11 +110,11 @@ const FunctionalSkillsModule4Section3 = () => {
       question: 'What is the key difference between markup and margin?',
       options: [
         'They are the same thing',
-        'Markup is on cost, margin is on selling price',
-        'Markup is on selling price, margin is on cost',
         'Margin includes VAT, markup does not',
+        'Markup is on selling price, margin is on cost',
+        'Markup is on cost, margin is on selling price',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Markup is calculated as a percentage of the cost price. Margin is calculated as a percentage of the selling price. A 25% markup on £100 cost gives £125 selling price, but the margin is only 20% (£25/£125). This distinction matters for profitability analysis.',
     },
@@ -102,8 +122,13 @@ const FunctionalSkillsModule4Section3 = () => {
       id: 8,
       question:
         'A customer wants a VAT-inclusive price of £3,600 for a job. What is the net (ex-VAT) amount you should put on your invoice?',
-      options: ['£2,880', '£3,000', '£3,120', '£3,600'],
-      correctAnswer: 1,
+      options: [
+        '£3,000',
+        '£3,120',
+        '£2,880',
+        '£3,600',
+      ],
+      correctAnswer: 0,
       explanation:
         'To find the net amount from a VAT-inclusive figure, divide by 1.20. Net = £3,600 / 1.20 = £3,000. The VAT element is £3,600 – £3,000 = £600.',
     },

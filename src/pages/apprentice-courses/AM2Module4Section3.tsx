@@ -53,12 +53,12 @@ const AM2Module4Section3 = () => {
       id: 'certificate-type',
       question: 'Which certificate is used to hand over completed installation results in AM2?',
       options: [
-        'Minor Works Certificate',
+        'Public Interest Disclosure Act 1998',
+        'Actual metered energy consumption',
+        'Wastewater from basins, showers, and baths',
         'Electrical Installation Certificate (EIC)',
-        'Periodic Inspection Report',
-        'Test Schedule Only',
       ],
-      correctIndex: 1,
+      correctIndex: 3,
       explanation:
         'The Electrical Installation Certificate (EIC) is the primary document used to hand over completed installation results and demonstrate compliance with BS 7671.',
     },
@@ -66,12 +66,12 @@ const AM2Module4Section3 = () => {
       id: 'realistic-values',
       question: "Why is writing '0.00 Ω' for Zs wrong?",
       options: [
-        'Wrong units used',
-        'Should be in MΩ',
         "Unrealistic reading - assessor knows it's a 'book answer'",
-        'Should be left blank',
+        "To identify at-risk behaviours and reinforce safe practices",
+        "Water, gas, oil, air conditioning and structural steelwork",
+        "Use proper stripping tools to avoid nicking the conductor",
       ],
-      correctIndex: 2,
+      correctIndex: 0,
       explanation:
         "0.00 Ω for earth fault loop impedance is unrealistic. All circuits have some impedance, and assessors recognise this as a copied 'book answer' rather than a genuine measurement.",
     },
@@ -79,10 +79,10 @@ const AM2Module4Section3 = () => {
       id: 'recording-timing',
       question: 'When should you record test results in AM2?',
       options: [
-        'At the end of all testing',
+        'Fail for non-compliance with specification',
         'Immediately as you test, not afterwards',
-        'During the break',
-        'When the assessor asks for them',
+        'Self-certify notifiable electrical work',
+        'Burn marks or discolouration',
       ],
       correctIndex: 1,
       explanation:
@@ -95,10 +95,10 @@ const AM2Module4Section3 = () => {
       id: 1,
       question: 'What certificate must you complete for AM2 test results?',
       options: [
-        'Minor Works Certificate',
+        'The Managers and Professionals test',
         'Electrical Installation Certificate (EIC)',
-        'Periodic Inspection Report',
-        'EICR only',
+        'Remove fuses, inform occupants, and post notices',
+        'Circuit will not function as intended',
       ],
       correctAnswer: 1,
       explanation:
@@ -108,12 +108,12 @@ const AM2Module4Section3 = () => {
       id: 2,
       question: 'Why must you avoid leaving blanks on paperwork?',
       options: [
-        'It looks untidy',
+        'Labels, handover notes, and record books/logs',
+        'Refractive index difference at glass-air interface',
         'You lose marks and paperwork is incomplete',
-        "Assessor won't notice",
-        'Only critical sections matter',
+        'You own the van at the end of the agreement',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Leaving blanks results in lost marks as the paperwork is considered incomplete. All applicable sections must be filled in.',
     },
@@ -121,20 +121,25 @@ const AM2Module4Section3 = () => {
       id: 3,
       question: "What's wrong with writing '∞' for insulation resistance?",
       options: [
-        'Wrong symbol',
+        'It sets targets for 2025 requiring homes to be zero-carbon ready',
+        'Knowledge, skills, and behaviours required for the occupation',
+        'Misreading questions and careless errors',
         'Should record meter limit (e.g. >200 MΩ) not infinity',
-        'Should be in Ω',
-        'Nothing wrong with it',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "Instead of infinity symbols, record the actual meter limit reading such as '>200 MΩ' to show the measured value.",
     },
     {
       id: 4,
       question: 'Which unit is used for earth fault loop impedance?',
-      options: ['MΩ', 'Ω (ohms)', 'V', 'A'],
-      correctAnswer: 1,
+      options: [
+        'Ω (ohms)',
+        'MΩ',
+        'V',
+        'A',
+      ],
+      correctAnswer: 0,
       explanation:
         'Earth fault loop impedance (Zs) is measured and recorded in ohms (Ω), typically as decimal values.',
     },
@@ -142,10 +147,10 @@ const AM2Module4Section3 = () => {
       id: 5,
       question: 'What result would you expect for continuity of CPCs?',
       options: [
-        'Very high values (MΩ)',
+        'It causes shadows and glare',
         'Small values (fractions of an ohm)',
-        'Always exactly 1.00 Ω',
-        'Negative values',
+        'Health and safety management',
+        'Safety - to prevent dangerous potentials',
       ],
       correctAnswer: 1,
       explanation:
@@ -155,8 +160,13 @@ const AM2Module4Section3 = () => {
       id: 6,
       question:
         "What's the correct way to record an insulation resistance result above the meter limit?",
-      options: ["Write '∞'", "Write '>200 MΩ' or meter limit", "Write 'High'", 'Leave blank'],
-      correctAnswer: 1,
+      options: [
+        "Elimination of the electrical hazard",
+        "Ipsc = U₀ ÷ (Ze + circuit impedance)",
+        "Write '>200 MΩ' or meter limit",
+        "The same through all components",
+      ],
+      correctAnswer: 2,
       explanation:
         "Record the actual meter limit reading (e.g. '>200 MΩ') rather than infinity symbols or vague descriptions.",
     },
@@ -165,11 +175,11 @@ const AM2Module4Section3 = () => {
       question: 'When should you record test results — during testing or at the end?',
       options: [
         'At the end of all testing',
-        'During testing as you go',
-        'During breaks only',
         'When assessor asks',
+        'During breaks only',
+        'During testing as you go',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Record results immediately as you test to ensure accuracy and prevent errors from trying to remember multiple readings.',
     },
@@ -177,12 +187,12 @@ const AM2Module4Section3 = () => {
       id: 8,
       question: "Why is '0.00 Ω' as a Zs result marked wrong?",
       options: [
-        'Wrong units',
-        'Should be in MΩ',
         'Unrealistic - all circuits have some impedance',
-        'Too precise',
+        'Adjusting PID parameters for optimal performance',
+        'In the pocket of the person doing the work',
+        'Periodically as part of maintenance schedule',
       ],
-      correctAnswer: 2,
+      correctAnswer: 0,
       explanation:
         "0.00 Ω is unrealistic as all electrical circuits have some impedance. This is recognised as a 'book answer' rather than a genuine measurement.",
     },
@@ -204,11 +214,11 @@ const AM2Module4Section3 = () => {
       question: 'Give one strategy to ensure paperwork is completed correctly in AM2.',
       options: [
         'Rush at the end to save time',
+        'Leave difficult sections blank',
         'Record results as you test and write clearly',
         'Copy from reference books',
-        'Leave difficult sections blank',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Recording results immediately as you test and maintaining clear handwriting ensures accuracy and completeness under time pressure.',
     },

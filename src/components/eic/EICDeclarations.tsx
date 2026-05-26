@@ -10,6 +10,11 @@ import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import { INSPECTOR_QUALIFICATIONS } from '@/constants/inspectorQualifications';
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 
 interface EICDeclarationsProps {
   formData: any;
@@ -56,7 +61,10 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
   const isConstructorComplete = formData.constructorName && formData.constructorSignature;
   const isInspectorComplete = formData.inspectorName && formData.inspectorSignature;
 
-  // Auto-fill from business settings on initial mount
+  // Auto-fill from business settings on initial mount. When all three signatories
+  // populate with the same person (90% of domestic jobs) pre-tick the "Same as"
+  // toggles so Constructor + Inspector blocks visually collapse — user sees one
+  // filled block instead of three.
   useEffect(() => {
     if (isInitialMount && companyProfile) {
       const areAllFieldsEmpty =
@@ -66,6 +74,10 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         loadProfileToSection('designer');
         loadProfileToSection('constructor');
         loadProfileToSection('inspector');
+        if (companyProfile.inspector_name) {
+          onUpdate('sameAsDesigner', true);
+          onUpdate('sameAsConstructor', true);
+        }
       }
       setIsInitialMount(false);
     }
@@ -90,7 +102,9 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
       ? companyProfile.inspector_qualifications.join(', ')
       : companyProfile.inspector_qualifications || '';
 
-    onUpdate(`${section}Name`, companyProfile.inspector_name || companyProfile.company_name || '');
+    // Inspector name only — never fall back to company_name, that polluted the Name field
+    // when business settings had only company filled.
+    onUpdate(`${section}Name`, companyProfile.inspector_name || '');
     onUpdate(`${section}Qualifications`, qualifications);
     onUpdate(`${section}Company`, companyProfile.company_name || '');
     onUpdate(`${section}Address`, companyProfile.company_address || '');
@@ -147,10 +161,29 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
             loadProfileToSection('designer');
             loadProfileToSection('constructor');
             loadProfileToSection('inspector');
-            toast({
-              title: 'Business Settings Loaded',
-              description: 'Your business settings have been applied to all declaration sections.',
-            });
+            // Pre-tick Same as toggles when one person fills all three signatories.
+            if (companyProfile.inspector_name) {
+              onUpdate('sameAsDesigner', true);
+              onUpdate('sameAsConstructor', true);
+            }
+            // Surface missing profile fields so user knows to top up Business Settings.
+            const missing: string[] = [];
+            if (!companyProfile.inspector_name) missing.push('Inspector name');
+            if (!companyProfile.company_name) missing.push('Company name');
+            if (!companyProfile.company_address) missing.push('Address');
+            if (!companyProfile.company_phone) missing.push('Phone');
+            if (missing.length > 0) {
+              toast({
+                title: 'Some details still need entering',
+                description: `Visit Business Settings to add: ${missing.join(', ')}.`,
+                variant: 'destructive',
+              });
+            } else {
+              toast({
+                title: 'Business Settings Loaded',
+                description: 'Applied to all three signatory blocks.',
+              });
+            }
           }}
           className="w-full h-10 rounded-lg font-semibold text-xs bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow touch-manipulation active:scale-[0.98]"
         >
@@ -195,23 +228,40 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         </div>
 
         <FormField label="Qualifications">
-          <div className="grid grid-cols-4 gap-1">
-            {QUALIFICATIONS.map((q) => (
-              <button
-                key={q}
-                type="button"
-                onClick={() => toggleQualification('designer', q)}
-                className={cn(
-                  'h-8 rounded-md font-medium transition-all touch-manipulation text-[9px] active:scale-[0.98]',
-                  (formData.designerQualifications || '').includes(q)
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                )}
-              >
-                {q}
-              </button>
-            ))}
-          </div>
+          <Collapsible>
+            <CollapsibleTrigger
+              className={cn(
+                'group w-full h-11 px-3 rounded-md bg-white/[0.06] border border-white/[0.08]',
+                'flex items-center justify-between text-xs text-white touch-manipulation active:scale-[0.98]'
+              )}
+            >
+              <span>
+                {(formData.designerQualifications || '').split(', ').filter(Boolean).length > 0
+                  ? `${(formData.designerQualifications || '').split(', ').filter(Boolean).length} selected`
+                  : 'Tap to select qualifications'}
+              </span>
+              <ChevronDown className="h-4 w-4 text-white/60 transition-transform group-data-[state=open]:rotate-180" />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="grid grid-cols-4 gap-1 mt-2">
+                {QUALIFICATIONS.map((q) => (
+                  <button
+                    key={q}
+                    type="button"
+                    onClick={() => toggleQualification('designer', q)}
+                    className={cn(
+                      'h-8 rounded-md font-medium transition-all touch-manipulation text-[9px] active:scale-[0.98]',
+                      (formData.designerQualifications || '').includes(q)
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    )}
+                  >
+                    {q}
+                  </button>
+                ))}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
         </FormField>
 
         <FormField label="Date">
@@ -371,25 +421,44 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
 
           <div className="mt-3">
             <FormField label="Qualifications">
-              <div className="grid grid-cols-4 gap-1">
-                {QUALIFICATIONS.map((q) => (
-                  <button
-                    key={q}
-                    type="button"
-                    disabled={formData.sameAsDesigner}
-                    onClick={() => toggleQualification('constructor', q)}
-                    className={cn(
-                      'h-8 rounded-md font-medium transition-all touch-manipulation text-[9px] active:scale-[0.98]',
-                      (formData.constructorQualifications || '').includes(q)
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] border border-white/[0.08] text-white',
-                      formData.sameAsDesigner && 'opacity-40 pointer-events-none'
-                    )}
-                  >
-                    {q}
-                  </button>
-                ))}
-              </div>
+              <Collapsible>
+                <CollapsibleTrigger
+                  disabled={formData.sameAsDesigner}
+                  className={cn(
+                    'group w-full h-11 px-3 rounded-md bg-white/[0.06] border border-white/[0.08]',
+                    'flex items-center justify-between text-xs text-white touch-manipulation active:scale-[0.98]',
+                    formData.sameAsDesigner && 'opacity-40 pointer-events-none'
+                  )}
+                >
+                  <span>
+                    {(formData.constructorQualifications || '').split(', ').filter(Boolean).length > 0
+                      ? `${(formData.constructorQualifications || '').split(', ').filter(Boolean).length} selected`
+                      : 'Tap to select qualifications'}
+                  </span>
+                  <ChevronDown className="h-4 w-4 text-white/60 transition-transform group-data-[state=open]:rotate-180" />
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <div className="grid grid-cols-4 gap-1 mt-2">
+                    {QUALIFICATIONS.map((q) => (
+                      <button
+                        key={q}
+                        type="button"
+                        disabled={formData.sameAsDesigner}
+                        onClick={() => toggleQualification('constructor', q)}
+                        className={cn(
+                          'h-8 rounded-md font-medium transition-all touch-manipulation text-[9px] active:scale-[0.98]',
+                          (formData.constructorQualifications || '').includes(q)
+                            ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                            : 'bg-white/[0.05] border border-white/[0.08] text-white',
+                          formData.sameAsDesigner && 'opacity-40 pointer-events-none'
+                        )}
+                      >
+                        {q}
+                      </button>
+                    ))}
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
             </FormField>
           </div>
 
@@ -485,25 +554,44 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
 
           <div className="mt-3">
             <FormField label="Qualifications">
-              <div className="grid grid-cols-4 gap-1">
-                {QUALIFICATIONS.map((q) => (
-                  <button
-                    key={q}
-                    type="button"
-                    disabled={formData.sameAsConstructor}
-                    onClick={() => toggleQualification('inspector', q)}
-                    className={cn(
-                      'h-8 rounded-md font-medium transition-all touch-manipulation text-[9px] active:scale-[0.98]',
-                      (formData.inspectorQualifications || '').includes(q)
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] border border-white/[0.08] text-white',
-                      formData.sameAsConstructor && 'opacity-40 pointer-events-none'
-                    )}
-                  >
-                    {q}
-                  </button>
-                ))}
-              </div>
+              <Collapsible>
+                <CollapsibleTrigger
+                  disabled={formData.sameAsConstructor}
+                  className={cn(
+                    'group w-full h-11 px-3 rounded-md bg-white/[0.06] border border-white/[0.08]',
+                    'flex items-center justify-between text-xs text-white touch-manipulation active:scale-[0.98]',
+                    formData.sameAsConstructor && 'opacity-40 pointer-events-none'
+                  )}
+                >
+                  <span>
+                    {(formData.inspectorQualifications || '').split(', ').filter(Boolean).length > 0
+                      ? `${(formData.inspectorQualifications || '').split(', ').filter(Boolean).length} selected`
+                      : 'Tap to select qualifications'}
+                  </span>
+                  <ChevronDown className="h-4 w-4 text-white/60 transition-transform group-data-[state=open]:rotate-180" />
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <div className="grid grid-cols-4 gap-1 mt-2">
+                    {QUALIFICATIONS.map((q) => (
+                      <button
+                        key={q}
+                        type="button"
+                        disabled={formData.sameAsConstructor}
+                        onClick={() => toggleQualification('inspector', q)}
+                        className={cn(
+                          'h-8 rounded-md font-medium transition-all touch-manipulation text-[9px] active:scale-[0.98]',
+                          (formData.inspectorQualifications || '').includes(q)
+                            ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                            : 'bg-white/[0.05] border border-white/[0.08] text-white',
+                          formData.sameAsConstructor && 'opacity-40 pointer-events-none'
+                        )}
+                      >
+                        {q}
+                      </button>
+                    ))}
+                  </div>
+                </CollapsibleContent>
+              </Collapsible>
             </FormField>
           </div>
 
@@ -529,167 +617,61 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         </div>
       </div>
 
-      {/* ── INSPECTED BY ── */}
-      <div className="space-y-3">
-        <div className="border-b border-white/[0.06] pb-1">
-          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-          <h3 className="text-xs font-medium text-white uppercase tracking-wider">Inspected By</h3>
-        </div>
-
-        {/* Same as Inspector toggle */}
-        <button
-          type="button"
-          onClick={() => {
-            haptic.light();
-            const newVal = !formData.eicSameAsInspectedBy;
-            onUpdate('eicSameAsInspectedBy', newVal);
-            if (newVal) {
-              onUpdate('inspectedByName', formData.inspectorName);
-              onUpdate('inspectedByPosition', formData.inspectorQualifications);
-              onUpdate('inspectedBySignature', formData.inspectorSignature);
-              onUpdate('inspectedByForOnBehalfOf', formData.inspectorCompany);
-              onUpdate(
-                'inspectedByAddress',
-                `${formData.inspectorAddress || ''}${formData.inspectorPostcode ? ', ' + formData.inspectorPostcode : ''}`
-              );
-            }
-          }}
-          className={cn(
-            'w-full h-10 rounded-lg font-semibold text-xs touch-manipulation active:scale-[0.98] transition-colors',
-            formData.eicSameAsInspectedBy
-              ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-              : 'bg-white/[0.05] border border-white/[0.08] text-white'
-          )}
-        >
-          Same as Inspector {formData.eicSameAsInspectedBy ? '\u2713' : ''}
-        </button>
-
-        <div className={cn('space-y-3', formData.eicSameAsInspectedBy && 'opacity-40 pointer-events-none')}>
-          <div className="grid grid-cols-2 gap-2 items-end">
-            <FormField label="Name">
-              <Input
-                placeholder="Full name"
-                value={formData.inspectedByName || ''}
-                onChange={(e) => onUpdate('inspectedByName', e.target.value)}
-                disabled={formData.eicSameAsInspectedBy}
-                className={inputClass}
-              />
-            </FormField>
-            <FormField label="Company">
-              <Input
-                placeholder="Company"
-                value={formData.inspectedByForOnBehalfOf || ''}
-                onChange={(e) => onUpdate('inspectedByForOnBehalfOf', e.target.value)}
-                disabled={formData.eicSameAsInspectedBy}
-                className={inputClass}
-              />
-            </FormField>
-          </div>
-
-          {/* Position — toggle buttons */}
-          <FormField label="Position">
-            <div className="grid grid-cols-3 gap-1">
-              {POSITION_PRESETS.map((pos) => (
-                <button
-                  key={pos}
-                  type="button"
-                  onClick={() => { haptic.light(); onUpdate('inspectedByPosition', pos); }}
-                  disabled={formData.eicSameAsInspectedBy}
-                  className={cn(
-                    'h-8 rounded-md font-medium text-[9px] touch-manipulation transition-all active:scale-[0.98]',
-                    formData.inspectedByPosition === pos
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                  )}
-                >
-                  {pos}
-                </button>
-              ))}
-            </div>
-          </FormField>
-
-          <FormField label="Business Address">
-            <Input
-              placeholder="Full business address including postcode"
-              value={formData.inspectedByAddress || ''}
-              onChange={(e) => onUpdate('inspectedByAddress', e.target.value)}
-              disabled={formData.eicSameAsInspectedBy}
-              className={inputClass}
-            />
-          </FormField>
-
-          <div className="grid grid-cols-2 gap-2 items-end">
-            <FormField label="CP Scheme Ref">
-              <div className="flex gap-1">
-                <Input
-                  placeholder="Membership no."
-                  value={formData.inspectedByCpScheme || ''}
-                  onChange={(e) => onUpdate('inspectedByCpScheme', e.target.value)}
-                  disabled={formData.eicSameAsInspectedBy || formData.inspectedByCpSchemeNA}
-                  className={cn(inputClass, 'flex-1', formData.inspectedByCpSchemeNA && 'opacity-50')}
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    onUpdate('inspectedByCpSchemeNA', !formData.inspectedByCpSchemeNA);
-                    if (!formData.inspectedByCpSchemeNA) onUpdate('inspectedByCpScheme', '');
-                  }}
-                  className={cn(
-                    'h-11 px-3 rounded-lg text-[10px] font-semibold shrink-0 touch-manipulation active:scale-[0.98]',
-                    formData.inspectedByCpSchemeNA
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                  )}
-                >
-                  N/A
-                </button>
-              </div>
-            </FormField>
-            <FormField label="Date">
-              <Input
-                type="date"
-                value={formData.inspectedByDate || new Date().toISOString().split('T')[0]}
-                onChange={(e) => onUpdate('inspectedByDate', e.target.value)}
-                disabled={formData.eicSameAsInspectedBy}
-                className={cn(inputClass, 'text-xs')}
-                style={{ fontSize: '12px' }}
-              />
-            </FormField>
-          </div>
-        </div>
-
-        {/* Inspected By Signature */}
-        <div className={cn(formData.eicSameAsInspectedBy && 'opacity-40 pointer-events-none')}>
-          <SignatureInput
-            value={formData.inspectedBySignature}
-            onChange={(signature) => onUpdate('inspectedBySignature', signature)}
-            placeholder="Draw or type signature"
-            required={false}
-          />
-        </div>
-      </div>
-
       {/* ── DEPARTURES ── */}
       <div className="space-y-3">
         <div className="border-b border-white/[0.06] pb-1">
           <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
           <h3 className="text-xs font-medium text-white uppercase tracking-wider">Departures from BS 7671</h3>
         </div>
-        <FormField label="Departures (Regs 120.3, 133.1.3, 133.5)">
-          <Input
-            value={formData.designerDepartures || ''}
-            onChange={(e) => onUpdate('designerDepartures', e.target.value)}
-            placeholder="Enter departures or 'None'"
-            className={inputClass}
-          />
+        <FormField label="Departures (Regs 120.3, 133.1.2, 133.1.3, 133.5)">
+          <div className="flex gap-2">
+            <Input
+              value={formData.designerDepartures || ''}
+              onChange={(e) => onUpdate('designerDepartures', e.target.value)}
+              placeholder="Enter departures or tap None"
+              className={cn(inputClass, 'flex-1')}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                haptic.light();
+                onUpdate('designerDepartures', 'None');
+              }}
+              className={cn(
+                'h-11 px-4 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] shrink-0',
+                formData.designerDepartures === 'None'
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              None
+            </button>
+          </div>
         </FormField>
         <FormField label="Permitted Exceptions (Reg 411.3.3)">
-          <Input
-            value={formData.permittedExceptions || ''}
-            onChange={(e) => onUpdate('permittedExceptions', e.target.value)}
-            placeholder="Enter exceptions or 'None'"
-            className={inputClass}
-          />
+          <div className="flex gap-2">
+            <Input
+              value={formData.permittedExceptions || ''}
+              onChange={(e) => onUpdate('permittedExceptions', e.target.value)}
+              placeholder="Enter exceptions or tap None"
+              className={cn(inputClass, 'flex-1')}
+            />
+            <button
+              type="button"
+              onClick={() => {
+                haptic.light();
+                onUpdate('permittedExceptions', 'None');
+              }}
+              className={cn(
+                'h-11 px-4 rounded-lg text-xs font-semibold touch-manipulation active:scale-[0.98] shrink-0',
+                formData.permittedExceptions === 'None'
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              None
+            </button>
+          </div>
         </FormField>
         <button
           type="button"
@@ -703,22 +685,6 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         >
           Risk Assessment Attached {formData.riskAssessmentAttached ? '✓' : ''}
         </button>
-      </div>
-
-      {/* ── COMMENTS ON EXISTING INSTALLATION ── */}
-      <div className="space-y-3">
-        <div className="border-b border-white/[0.06] pb-1">
-          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-          <h3 className="text-xs font-medium text-white uppercase tracking-wider">Comments on Existing Installation</h3>
-        </div>
-        <FormField label="Observations (for additions/alterations — Reg 644.1.2)">
-          <Input
-            value={formData.existingInstallationComments || ''}
-            onChange={(e) => onUpdate('existingInstallationComments', e.target.value)}
-            placeholder="Any observations or 'None'"
-            className={inputClass}
-          />
-        </FormField>
       </div>
 
       {/* ── NEXT INSPECTION ── */}

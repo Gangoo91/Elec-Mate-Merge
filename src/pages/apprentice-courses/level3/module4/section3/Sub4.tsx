@@ -45,10 +45,10 @@ const checks = [
     question:
       "What is 'cumulative leakage' on an RCD-protected installation and how does it cause nuisance trips?",
     options: [
-      "Doesn't exist.",
+      "A CPS is a Government-approved scheme that lets a contractor self-certify Part P notifiable work in dwellings (England/Wales). JIB is the joint employer/union body that sets pay grades, conditions and the national working rules for the contracting industry. CPS is contractor-level and licences the firm; JIB grading is operative-level and decides what you're paid and what you're allowed to sign for unsupervised on a JIB site. Different bodies, different scopes, different audiences.",
       "Cumulative leakage = the SUM of small earth-leakage currents from every appliance and circuit on the RCD's protected side. Modern installations: every LED driver leaks 0.1–0.3 mA, every PC PSU leaks 0.5–1 mA, every appliance with EMC filter leaks 0.5–2 mA. On a circuit with 30 LED downlighters + a TV + a router + a PC + 3 appliances — total leakage easily reaches 8–15 mA at no fault. Add a marginal additional load (kettle, toaster) with their own leakage and you cross the 30 mA threshold. RCD trips even though no individual circuit / appliance is faulty. Common on LED-retrofit / smart-home installations.",
-      "Always one source.",
-      "Random.",
+      "Directly. A correctly-sized stripper removes only the insulation, leaving the copper undamaged — full cross-section preserved, full current-carrying capacity, full mechanical strength. A knife strip nicks the copper, reducing the cross-section and creating a stress-riser fracture point. A few months of thermal cycling and the conductor breaks at the nick — high resistance, hot terminal, eventual failure on EICR or worse, on fire alarm. The stripping tool is part of the 526.1 chain.",
+      "Every 3 months — formal PAT (combined visual + electrical test) for harsh-environment use. HSE HSG107 'Maintaining portable electrical equipment' and the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th ed.) publish typical intervals; construction-site Class I portable tools are at the short end at 3 months. Office Class I equipment is 12 months (the low-risk regime in HSE INDG236). Class II (double-insulated) and battery chargers are typically longer.",
     ],
     correctIndex: 1,
     explanation:
@@ -59,12 +59,12 @@ const checks = [
     question:
       "What's the 'differential isolation' method for finding which appliance is causing an RCD trip?",
     options: [
-      "Just guess.",
+      "Flag the diversity calculation to the designer. A 60 A main fuse is approximately 14.4 kVA on single-phase 240 V. Concurrent operation of the shower (9.5 kW), oven element (3-4 kW) and EV charger (7.4 kW) would exceed it and trip the cut-out. Two solutions: (1) request a main-fuse upgrade from the DNO (free in many areas, can take weeks), or (2) fit a load-management device that throttles or pauses the EV charger when total property demand approaches the cut-out limit. Most modern Mode 3 chargers (Zappi, Ohme, Hypervolt, etc.) include built-in load-management with a CT clamp on the main supply tail for exactly this scenario. The choice is the designer's; the apprentice's contribution is to flag the constraint and not just bolt the charger on.",
+      "All of them, plus the main switch. (1) Open main switch / DNO cut-out cap (DNO call only) for incoming supply. (2) Open the EV charger isolator AND verify EV is unplugged (the EVSE may have its own contactor that closes on demand). (3) Open the PV AC isolator at the inverter AND the PV DC isolator at the array. (4) Open the battery storage AC isolator AND the battery DC isolator. (5) Confirm standby generator changeover switch is in MAINS position and lock-off the generator manual start. Then prove dead at the work point with a GS38 two-pole, AND a DC-rated tester for the PV/battery DC sides if you'll be near them.",
       "Six-step. (1) Energise the RCD with all appliances disconnected on the protected circuits. (2) Clamp meter L+N together at the RCD output — note baseline leakage (typically 1–3 mA on healthy installation). (3) Connect appliances ONE AT A TIME, watching the clamp reading. (4) The appliance whose connection causes a sudden jump (e.g. baseline 2 mA, jumps to 18 mA on connecting the dishwasher) is the leaky one. (5) For confirmation, disconnect that appliance only — leakage drops back. (6) For appliances with intermittent leakage (e.g. heating element fails on heat cycle only), trigger the operating mode and watch for the leakage rise. Identifies the leaky appliance without needing to repeat the trip-and-reset cycle.",
-      "Trip and guess.",
-      "Random.",
+      "The MCS Code of Practice is the over-arching code that all MCS-certified installers must comply with. It covers consumer protection (sales practices, contracts, performance estimates honestly disclosed), installation quality, commissioning records, customer handover documentation, complaints handling and after-sales support. The installer's MCS certification can be withdrawn for breaches of the Code. The Code references the technology-specific MCS Installation Standards (MIS 3001 solar thermal, 3002 PV, 3003 wind, 3004 biomass boiler, 3005 heat pump, 3006 biomass stove, 3007 EV, 3008 hydro, 3012 battery storage) for the technical detail.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Differential isolation is the L3 standard for diagnosing RCD nuisance trips. The clamp meter (Sub 2.3) is the key instrument — it lets you measure leakage WITHOUT operating the RCD. Standard time on a typical job: 30–60 minutes vs hours of trip-and-guess.",
   },
@@ -73,10 +73,10 @@ const checks = [
     question:
       "An AFDD (arc fault detection device) keeps tripping on a kitchen circuit. What's the diagnostic approach?",
     options: [
-      "Replace AFDD.",
+      "Part P (Electrical Safety in Dwellings) requires certain types of electrical work in dwellings to be notified to Building Control — either via a registered competent-person scheme (NICEIC, NAPIT, etc.) or directly to the Local Authority. Notifiable work currently includes new circuits, consumer unit changes, and work in special locations (bathrooms / locations 700). Most environmental tech installs are notifiable — adding a PV inverter circuit, an EV charging circuit or a heat-pump dedicated radial all create new circuits and trigger Part P notification. Non-notifiable work (e.g. like-for-like socket replacement on an existing circuit) doesn't trigger Part P.",
       "Three-step. (1) Confirm AFDD is genuinely tripping on arc detection (most modern AFDDs distinguish trip cause via LCD or LED indicators) — NOT a regular RCD/MCB trip with the AFDD blamed. (2) If genuine arc trip, identify the arc source: cumulative motor commutator brushes (tumble dryer, washing machine, vacuum), poorly-terminated accessories on the affected circuit (use thermal imaging), faulty appliance with internal arcing. (3) Modern AFDDs (Hager AFB, Schneider Vigi+AF, Eaton AFDD) have 'arc signature' analysis — typical false-trigger sources: switching mode power supplies (phone chargers, laptop PSUs) with high-frequency content. Some installations need replacement of cumulative-motor appliances or different AFDD model. A4:2026 mandates AFDD on certain dwelling final circuits.",
-      "Just reset.",
-      "Replace circuit.",
+      "Because a faulty proving-dead tester can show 'zero' on a live circuit — and you'd take a fatal shock. The function check confirms the tester responds to a known source. The proving-tester-on-known-source step is built into the JIB six-step (Sub 1.2) for exactly this reason. The Martindale GVD2 proving unit gives a portable known source; alternatively a known-live socket on a different circuit. Either way, the tester's response on a known source is the evidence the tester is working. Without that evidence, a 'zero' reading on the circuit you're about to work on means nothing.",
+      "Inside the MCS heat-loss calculation document and the MCS performance estimate that the MCS-certified installer is required to provide at handover under MIS 3005. The handover pack should also contain the manufacturer's commissioning record (with measured flow, return, ambient and instantaneous COP at commissioning conditions), the EIC, the G98 / G99 notification, the user instructions, the warranty paperwork, the F-Gas record (if applicable to the refrigerant fill), and the maintenance schedule. The MCS Code 4.0 makes the handover pack contents a customer-facing duty — the installer is contractually bound to hand over a complete, signed pack on the day, not weeks later.",
     ],
     correctIndex: 1,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: "What's the 30 mA RCD threshold designed to protect against and why is it set there?",
     options: [
-      "Random number.",
+      "Some MFTs have multiple Zs measurement ranges (e.g. low range 0-2 Omega, high range 0-200 Omega). If you\\\\\\\\\\\\'re testing a TT installation with expected Zs of 80-200 Omega and the meter is set to the low range, the reading will saturate or read inaccurately. GN3 wants you to consciously check the range matches the expected reading before pressing TEST — a failed test or wildly wrong reading wastes time and may damage the instrument if test current exceeds the range capacity.",
       "30 mA is the threshold below which a healthy adult is unlikely to suffer ventricular fibrillation from a sustained earth-fault current. Set by IEC 60479-1 (effects of current on the human body and livestock). Above 30 mA at typical contact times (200+ ms), fibrillation risk rises sharply. Below 30 mA, the heart can usually withstand the disturbance. The 30 mA RCD trips in 200 ms or less, limiting both the current AND the duration to safe levels. Higher-rated RCDs (100 mA, 300 mA) protect against fire risk (earth leakage that would cause heating) rather than electric shock.",
-      "Just legacy.",
-      "Just convenient.",
+      "PUWER 1998 Reg 6 (inspection of work equipment) requires records of inspection results 'kept until the next inspection is recorded'. For test instruments this typically means: (1) calibration certificates from each calibration cycle (kept for the working life of the instrument plus a tail period for legal hold); (2) inspection / function-check log (some firms have a daily sheet, some app-based); (3) defect / repair records; (4) instrument register listing each instrument by ID, type, calibration date, next-due. The records support PUWER compliance AND BS 7671 certification AND legal defence.",
+      "Address the 3 Ps first (the failures are specific and temporary, not permanent or pervasive), then restore intrinsic motivation: give the team autonomy in developing their own quality-check process (Pink), provide clear goals and feedback loops for each installation (flow conditions), and ensure the purpose of quality work is connected to genuine values (safety, professionalism). This multi-framework approach addresses both the setback response and the ongoing motivation system",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: "What's the difference between Type AC, Type A, Type F and Type B RCDs and which goes where?",
     options: [
-      "All same.",
+      "Three. (1) Field exposure limits — ICNIRP / HSE guidance on RF field strength; standby fields can couple to your body even when you're not in direct contact. (2) Pacemaker / metal implant warning — RF fields interfere with cardiac pacemakers and can heat metallic implants; warn anyone with implants to stay clear (signage at the equipment). (3) Capacitive discharge — RF tank circuits store significant energy in capacitor banks; isolation procedure includes wait period (manufacturer-specified, typically 5–15 minutes) for capacitor bleed before working near. The L3 apprentice doesn't typically commission RF equipment but does meet it on workshop sites; the precautions need to be respected.",
+      "The multimeter has 10 MΩ input impedance and will read induced voltages and 'phantom' voltages that aren't a real source — it can show 30–80 V on a dead conductor that has nothing dangerous on it, leading you to assume the circuit is live when it isn't (a false positive). The two-pole tester has low input impedance (typically a few kΩ) and 'loads' the circuit — phantom voltages collapse to zero, real sources hold. GS38 specifically prefers two-pole testers for proving dead because the low impedance gives an unambiguous answer.",
       "Type AC — detects AC residual currents only; obsolete for most new installations under BS 7671 A2:2022. Type A — detects AC and pulsating DC residual currents; current default for general use. Type F — detects AC + pulsating DC + composite multi-frequency residuals; required for circuits with VFDs, Class 1 PCs / servers. Type B — detects all of the above PLUS smooth DC residual currents; required for EV chargers (BS 7671 722.531), some PV inverters, three-phase rectifier loads. The choice depends on the load. Wrong type = won't detect the actual residual current = false sense of protection.",
-      "Just one type.",
-      "Doesn't matter.",
+      "Approximately 4.6 V or 2.0 percent of 230 V. Calculation: 6 mm copper cable has approximately 7.3 mV per A per metre voltage drop. 32 A x 35 m x 7.3 mV = 8.18 V single-direction. For circuit voltage drop the full path is line + neutral so multiply by 2 / cable factors per GN1: but the standard cable tables give the per-A-per-m value already accounting for the full loop. Check GN1 Table A1 for the exact value for the cable type. For 6 mm flat T+E with thermosetting insulation: typical 7.3 mV/A/m so 32 x 35 x 7.3 / 1000 = 8.18 V or 3.6 percent — within 5 percent socket limit but close. Worth checking the EV charger spec for its actual demand under typical use (often 28-30 A continuous, not full 32 A).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "RCD type selection is critical for modern installations with electronic loads. EV chargers MUST have Type B (or Type A + dedicated 6 mA DC RCM in the charger). VFDs need Type F minimum. PCs and servers benefit from Type A or F. The wrong type is undetected non-protection. Hager / Schneider / Wylex sell the full type range; the L3 apprentice needs to know which to fit where.",
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: "Why does the 30 mA RCD threshold cause more nuisance trips on modern installations than on older ones?",
     options: [
-      "RCDs are worse now.",
+      "Five-step. (1) MAKE SAFE immediately — isolate the affected circuit / component if you can do so within your competence. (2) LABEL the fault prominently — 'OUT OF SERVICE — DO NOT RE-ENERGISE' — with date and your name. (3) INFORM CUSTOMER in writing — Dangerous Condition Notification (DCN) form describing the hazard, action taken, recommended remedial work, urgency. (4) ESCALATE to supervisor immediately — phone call, not email. (5) DOCUMENT on job sheet — what found, what done, customer brief delivered, supervisor informed. The make-safe action is non-negotiable; the customer's permission is not required for emergency safety action.",
+      "On TN-C-S, the neutral and protective earth share the PEN conductor between transformer and cut-out. If the PEN breaks anywhere upstream, the customer's neutral floats relative to the transformer star point. Customer's bonded metalwork (kitchen taps, sinks, radiators, EV charger chassis, all bonded to the customer earth terminal) rises toward phase voltage relative to true earth. RCD doesn't see it (no residual current — the lifted-neutral voltage flows through bonding network as L–E volt-drop, not as imbalance). First sign: tingle on metal taps or 30+ V N–E reading at cut-out. A4:2026 added explicit Open PEN protection requirements (Reg 411.3.3, especially for EV chargers).",
+      "An MID-compliant generation meter measures the total electrical output of the PV array. Required by Smart Export Guarantee (the supplier needs accurate metering to pay the export tariff) and increasingly by BUS / SEG-equivalent schemes for performance monitoring. At commissioning the meter is verified to read correctly (display zero before energising, increment as the inverter delivers, accumulate accurately over the first day's run). The customer can read the meter themselves to verify ongoing performance. The smart meter at the property handles the import / export reading for the supplier.",
       "Three reasons. (1) Cumulative leakage from electronics — every LED, every PC PSU, every appliance with an EMC filter leaks a few mA; the sum can exceed 30 mA. (2) More circuits per RCD — older installations had separate RCDs per few circuits; modern dual-RCD CUs put many circuits on one RCD, accumulating leakage. (3) More appliances per circuit — modern kitchens have dishwasher + washing machine + tumble dryer + microwave + induction hob, each contributing leakage. The 30 mA threshold hasn't changed; the load behind it has multiplied. Solution: RCBO per circuit (instead of dual-RCD CU) to isolate each circuit's leakage; replacement of high-leakage appliances; redistribution of loads.",
-      "Random.",
-      "RCDs degrade.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The cumulative leakage problem is the modern installation's defining RCD challenge. The trade response is RCBO-per-circuit (every circuit has its own RCBO; leakage is isolated to its source circuit). Most new builds and rewires now spec RCBO-per-circuit rather than dual-RCD CUs.",
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: "What's the operational difference between a 'split-load' (dual-RCD) CU and an 'all-RCBO' CU?",
     options: [
-      "Same thing.",
       "DUAL-RCD CU — two main RCDs, each protecting a group of circuits via standard MCBs. Cheaper to install but a single fault on one circuit trips the entire RCD's group (e.g. a fault on the kitchen ring trips all circuits on RCD1, including the freezer and lights). ALL-RCBO CU — every circuit has its own RCBO with both overcurrent and earth-leakage protection. More expensive but a fault on one circuit only affects that circuit. Cumulative leakage is also limited per circuit. A4:2026 reinforces RCBO-per-circuit for higher-occupancy dwellings; trade preference is RCBO-per-circuit for any new install.",
-      "RCBO is worse.",
-      "Dual is newer.",
+      "Old radiators were sized for 70-80°C flow temperature from a gas boiler. To deliver the same heat output at lower flow temperature, the radiators need to be larger. If you ask a heat pump to drive undersized old radiators at 70-80°C flow, the temperature lift is much bigger than at 35-40°C flow — so the COP drops sharply. SCOP reflects the actual flow temperature the system runs at across the heating season. Properly designed heat-pump retrofits include a radiator survey and upsize plan, or convert to underfloor where possible.",
+      "Three tests, ALL of which must be satisfied: (a) it is unreasonable in all the circumstances for the conductor to be dead, AND (b) it is reasonable in all the circumstances for the work to be carried out live, AND (c) suitable precautions are taken to prevent injury. All three — not any one. Most fault diagnosis live working passes test (a) (you need voltage to measure) but tests (b) and (c) are where most risk-assessment failures sit.",
+      "Sequencing the trades that need to interact on the install: F-Gas-certified engineer for refrigerant; plumber for the wet system, cylinder, controls; electrician for supply, isolation, controls integration; sometimes a builder for cylinder cupboard alteration; sometimes a roofer / builder for outdoor unit mounting. Each trade has a sequence dependency — the electrical first-fix has to be ready before the F-Gas engineer commissions; the plumbing has to be charged and pressurised before the heat pump runs. Project management of the trade sequence is the certified installer's responsibility; as the apprentice you respect the sequence and don't get ahead.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "RCBO-per-circuit has become the trade standard for new installations and rewires. The selectivity advantage (one fault doesn't kill multiple circuits) and the cumulative-leakage advantage (each circuit's leakage isolated) both favour the design. Hager, Schneider, Wylex, MK all offer all-RCBO CUs at competitive price points now.",
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: "What's the difference between a Type AC RCD and a Type A RCD trip-time-test wise on the MFT?",
     options: [
-      "Same test.",
+      "NAPIT is multi-trade — registers electricians, plumbers, gas engineers and other trades under a single scheme structure. For multi-discipline firms (e.g. a heating engineer doing gas plus electrical wiring) NAPIT offers single-scheme coverage rather than dual scheme membership. Cost is broadly comparable to NICEIC for electrical-only registration; the saving comes if you also need other trade registrations.",
       "The MFT (Megger MFT1741+, Kewtech KT64+) injects different test currents based on the RCD type. Type AC test: pure sinusoidal AC at I∆n. Type A test: pure sinusoidal AC AT I∆n PLUS pulsating DC at 1.4× I∆n (because Type A must detect both). Type F test: all of the above PLUS composite multi-frequency. Type B test: all of the above PLUS smooth DC at twice I∆n. Selecting the wrong type on the MFT may show 'pass' on a Type B device (because you're only testing the AC capability, not the DC) — false confidence. Modern MFTs auto-detect or have explicit type selection.",
-      "Always same.",
-      "Doesn't matter.",
+      "G100 (active export limitation scheme) applies where the customer wants to install a system bigger than the DNO would otherwise accept, on the basis that an active limiter will cap exported power to a level the network can accommodate. It is a way to install (say) a 12 kWp PV array on a network that cannot accept 12 kW export, by limiting export to 3.68 kW with self-consumption and battery storage soaking up the rest. G100 sits within the broader G99 process — the DNO Connection Offer will include the G100 export limit and the limiter type-test requirement. The L3 apprentice will not run the G100 application but should recognise it as the technical mechanism behind 'oversized array, limited export' designs.",
+      "Segregation at source — separate stillages or skips for general / metal / WEEE / hazardous / wood / cardboard. Authorised carriers only, with WTNs / HWCNs accompanying every transfer. WEEE to AATF via specialist recycler. Hazardous (fluorescent tubes, batteries, asbestos) consigned and quarantined. Spillage kit on site for refrigerants and oils. Documentation kept for the legal retention periods (2y WTN, 3y HWCN).",
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: "BS 7671 A4:2026 reinforced AFDD requirements. What's the current requirement for AFDD on dwelling installations?",
     options: [
-      "Not required.",
+      "Cable is mixed-material waste — copper conductor, PVC insulation, sometimes aluminium tape, sometimes a steel wire armour. Pure copper is high-value scrap (£4–6 / kg in 2026) and most firms collect offcuts in a copper-only bag for the wholesaler weighbridge or a licensed scrap dealer. PVC-only sheath / insulation goes to general construction waste. SWA cable contains steel and is normally segregated. The L3 apprentice keeps offcuts segregated; the firm gets the scrap value back; the disposal is compliant. NEVER burn PVC insulation off scrap copper — releases dioxins and is a criminal offence under the Environmental Permitting Regulations.",
+      "Triggered when the property's existing supply capacity (typically 60 A or 80 A single-phase main fuse) is inadequate for the new combined load. Heat pump + EV charger + existing baseline can easily exceed this. DNO-managed process: customer / installer applies, DNO surveys, costs the work (cable upsize, possibly cut-out / meter replacement, possibly main-fuse upgrade), customer pays, work scheduled. Timeline 4-12 weeks for simple upgrades, longer for cable changes or three-phase conversions. Customer needs to factor this into the install date.",
       "BS 7671 421.1.7 (per A4:2026 progression) requires AFDD on certain final circuits in specified locations: (a) bedrooms in Houses in Multiple Occupation (HMOs), care homes, dwellings used for short-term accommodation, (b) circuits feeding bedrooms in higher-occupancy student / hostel-type dwellings, (c) circuits feeding combustible-construction buildings (timber-frame in some interpretations). Single-family domestic dwellings are not currently mandated but A4 wording is moving toward broader uptake. Manufacturers (Hager AFB, Schneider Vigi+AF) sell combined RCBO+AFDD devices that fit in standard CU positions. The L3 apprentice's exam expectation: know AFDD is required where, why, and how it's specified.",
-      "Always required.",
-      "Never required.",
+      "Type AC — detects AC residual currents only; obsolete for most new installations under BS 7671 A2:2022. Type A — detects AC and pulsating DC residual currents; current default for general use. Type F — detects AC + pulsating DC + composite multi-frequency residuals; required for circuits with VFDs, Class 1 PCs / servers. Type B — detects all of the above PLUS smooth DC residual currents; required for EV chargers (BS 7671 722.531), some PV inverters, three-phase rectifier loads. The choice depends on the load. Wrong type = won't detect the actual residual current = false sense of protection.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "BS 7671 A4:2026 strengthened AFDD requirements significantly compared to A2:2022. The progression has been toward broader application; market penetration is still building. By the time most L3 apprentices qualify (next 18 months), AFDD will be standard fit in many specifications. Knowing the requirement and the diagnostic approach is the L3 expectation.",
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: "An AFDD won't latch on after a trip — keeps tripping the moment you press the toggle. What's likely wrong?",
     options: [
-      "AFDD faulty.",
+      "CAT III 600 V minimum (CAT IV 600 V preferred). The DB is a fixed-installation distribution location, which is CAT III by definition. The Fluke 376FC is CAT IV 600 V / CAT III 1000 V — adequate. The Megger DCM340 is CAT IV 300 V / CAT III 600 V — adequate for 230/400 V three-phase. Cheap clamp meters with only CAT II rating are not safe at this location — they can fail catastrophically on a transient. Always check the CAT rating before using a borrowed or new clamp meter at a DB.",
+      "'Building Management System' — the central control system that orchestrates a building's heating, ventilation, lighting, security and energy use. BMS work is one of the fastest-growing specialisms in building services because every modern commercial building has one. Electricians who learn BMS programming and commissioning (often via Trend, Tridium, Siemens or Schneider training) are in high demand and can move into BMS specialist roles paying significantly above standard electrician rates.",
+      "Ask the manufacturer directly via their technical support or sustainability team — most major UK cable and accessory manufacturers publish EPDs on their website or supply on request. If the manufacturer does not publish an EPD for that product, that fact alone is relevant to the project specifier because the spec called for EPD-backed products. The right action is to flag the missing EPD to the project specifier and either source an EPD-backed equivalent from another manufacturer or request a written derogation from the spec. Documenting the search and the decision protects the contractor against later challenge.",
       "Two possibilities. (1) Active arc fault on the circuit — there's a real arc happening that the AFDD is correctly detecting and refusing to ignore. Investigate as a real fault: visual inspection, IR test, thermal imaging. (2) AFDD itself has failed in the 'trip' state — internal electronics fault. Test by removing the AFDD from the busbar (load disconnected) and trying to latch it; if it still won't latch, the AFDD is faulty and needs replacement. The L3 apprentice's protocol: investigate as real fault first; only if no fault is found, consider AFDD failure and substitute with known-good unit.",
-      "Reset breaker.",
-      "Try harder.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "AFDD won't-latch is a strong indicator of a real arc fault on the circuit — the AFDD doesn't permit the toggle to latch if it's detecting an arc signature. The investigative discipline is to treat it as a real fault (don't dismiss as 'AFDD glitch' without evidence). If investigation rules out a real fault, then AFDD failure is the diagnosis; substitute confirms.",
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: "What's an 'S-type' (selective) RCD and where is it used?",
     options: [
-      "Same as Type B.",
       "S-type (or 'selective time-delayed') RCD has a built-in delay before tripping (typically 100–300 ms intentional delay). Used UPSTREAM of standard 30 mA RCDs for selectivity — the standard RCD trips on a downstream fault before the S-type does, so only the affected sub-circuit loses supply. Common application: TT installation main switch (S-type 100 mA) feeding sub-DBs with 30 mA RCDs on individual circuits. Also: TN-C-S installation with EV charger has S-type 100 mA upstream of EV charger to provide additional protection without nuisance-tripping on the EV's own RCM. Marked 'S' on the device label.",
-      "Same as Type AC.",
-      "Random.",
+      "Partnership = two or more people trading together without forming a Ltd company. Partnership is governed by the Partnership Act 1890 (very old statute). Each partner has unlimited personal liability for partnership debts including those incurred by other partners. Tax: each partner files Self Assessment on their share of profits. Less common than sole trader (one-person) or Ltd (limited liability) because you get unlimited liability AND have to share decisions with another partner.",
+      "Wood-pellet or wood-chip boilers and stoves. Burns sustainably-sourced biomass to drive a wet heating system. Counts as 'low-carbon' because the CO₂ released is offset by what the trees absorbed during growth (debated within the carbon accounting community). Fuel storage, ash handling and air-quality regulation (Clean Air Act zones; the Ecodesign Directive for new appliances) make biomass operationally heavier than gas or heat pumps. Best fit: rural off-gas-grid properties with space for a fuel store. Worst fit: urban smoke-control areas with poor PM2.5 ratings.",
+      "A Request For Information is a formal written query from a contractor to the design team (architect, engineer, principal designer) when the drawings or specifications are unclear, contradictory or missing detail. It's logged, numbered, dated and tracked through to a written response. It protects the contractor from being held responsible for a design ambiguity and creates a paper trail for any later dispute. Use one whenever you'd otherwise be guessing.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "S-type RCDs are the upstream selective device in a layered protection scheme. The intentional delay allows downstream 30 mA devices to operate first on a localised fault. BS 7671 A4:2026 reinforces S-type usage at TT origins and upstream of EV chargers.",
   },

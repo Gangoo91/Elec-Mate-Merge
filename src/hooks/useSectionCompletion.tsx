@@ -47,7 +47,6 @@ export const useSectionCompletion = (formData: FormData) => {
           'ringFinalContinuity',
           'insulationLiveNeutral',
           'insulationLiveEarth',
-          'insulationNeutralEarth',
           'polarity',
           'earthFaultLoopImpedance',
           'prospectiveFaultCurrent',

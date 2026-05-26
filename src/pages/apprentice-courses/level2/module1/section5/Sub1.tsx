@@ -43,19 +43,24 @@ const checks = [
     id: 's5-1-default-state-check',
     question: 'Under EAWR 1989, what is the default state for any conductor you work on?',
     options: [
-      'Live, unless the customer asks for it off',
+      'Adequate immersion depth and good thermal contact',
+      'Contact manufacturer or supplier for guidance',
       'Dead, unless live working is justified, planned and authorised',
-      "Either — it’s the electrician’s call on the day",
-      'Live, but with insulated tools',
+      'Material verification, tool checks, safety equipment, and drawing reviews',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "EAWR Reg 14 is hard: no work on or near a live conductor unless it’s unreasonable to be dead, AND it’s reasonable for the work to be carried out live, AND suitable precautions are in place. All three. So in practice — dead, every time.",
   },
   {
     id: 's5-1-fatalities-check',
     question: 'Roughly how many people die from electrical accidents at work in the UK each year?',
-    options: ['About 3', 'About 30', 'About 300', 'About 3,000'],
+    options: [
+      'About 3',
+      'About 30',
+      'About 300',
+      'About 3,000',
+    ],
     correctIndex: 1,
     explanation:
       "HSE figures: around 30 fatal electrical accidents per year on average, plus around 1,000 reported electric-shock and burn incidents. Most of those fatalities are at 230 V or 400 V — not exotic HV gear.",
@@ -64,12 +69,12 @@ const checks = [
     id: 's5-1-personal-liability-check',
     question: "Your supervisor told you to crack on without proving dead. Something goes wrong. Who can the HSE prosecute?",
     options: [
-      'Only the company',
-      'Only the supervisor',
+      '11.04 kW three-phase or 3.68 kW single-phase',
       'You personally, the supervisor and the company — all three',
-      'Nobody if you were following orders',
+      'Investigate further and consider remedial action',
+      'To act as a switch or amplifier controlled by a small signal',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "HASAWA s.7 puts a duty on YOU. EAWR Reg 3 names every duty-holder, including employees. 'I was told to' is not a defence. The HSE regularly prosecutes individuals — apprentices, electricians and supervisors — alongside the company.",
   },
@@ -82,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main reason "safe isolation" exists as a procedure?',
     options: [
-      'To stop you damaging the customer’s appliances',
+      'Fault current is higher at the origin than downstream',
       'To make sure the conductors you’re working on can’t shock or burn you',
-      'To save energy while the work is done',
-      'To meet the customer’s warranty terms',
+      'Achieve comfortable conditions at start of occupancy',
+      'Typically 12 months to capture seasonal variations',
     ],
     correctAnswer: 1,
     explanation:
@@ -94,8 +99,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Roughly how many electric-shock and burn incidents are reported to the HSE each year in the UK?',
-    options: ['Around 100', 'Around 1,000', 'Around 10,000', 'Around 100,000'],
-    correctAnswer: 1,
+    options: [
+      'Around 10,000',
+      'Around 100',
+      'Around 1,000',
+      'Around 100,000',
+    ],
+    correctAnswer: 2,
     explanation:
       "Around 1,000 reported each year. About 30 are fatal. Most happen on Low Voltage systems (230 V / 400 V) — the same systems you work on every day.",
   },
@@ -103,20 +113,25 @@ const quizQuestions = [
     id: 3,
     question: 'Which regulation makes "dead by default" the legal rule for electrical work in the UK?',
     options: [
-      'BS 7671 Part 1',
+      'The Waste (England and Wales) Regulations 2011',
+      'To check insulation effectiveness',
+      'No, they cannot sign certificates',
       'Electricity at Work Regulations 1989, Reg 14',
-      'CDM 2015',
-      'PUWER 1998',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "EAWR 1989 Reg 14 — no work on or near live conductors unless it’s unreasonable for them to be dead, reasonable to do live AND suitable precautions are taken. All three. In practice that means: isolate, every time.",
   },
   {
     id: 4,
     question: "What's the maximum prison sentence on conviction for an individual under HASAWA / EAWR in the Crown Court?",
-    options: ['3 months', '6 months', '2 years', '10 years'],
-    correctAnswer: 2,
+    options: [
+      '2 years',
+      '6 months',
+      '3 months',
+      '10 years',
+    ],
+    correctAnswer: 0,
     explanation:
       "Up to 2 years in prison plus an unlimited fine. Add gross negligence manslaughter on top if someone dies — that’s up to life. Electricians have done time for it. It’s not theoretical.",
   },
@@ -126,8 +141,8 @@ const quizQuestions = [
     options: [
       'Nothing to do with them — it’s the supervisor’s job',
       'They have a duty under HASAWA s.7 and EAWR Reg 3 to raise it',
-      'Only the company’s safety officer can flag it',
       'Apprentices are exempt because they’re still learning',
+      'Only the company’s safety officer can flag it',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,8 +151,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Most UK electrical fatalities at work happen at which voltage?',
-    options: ['Extra-Low Voltage (under 50 V)', 'Low Voltage (230 V / 400 V)', 'High Voltage (above 1 kV)', 'It’s split equally'],
-    correctAnswer: 1,
+    options: [
+      'Extra-Low Voltage (under 50 V)',
+      'High Voltage (above 1 kV)',
+      'Low Voltage (230 V / 400 V)',
+      'It’s split equally',
+    ],
+    correctAnswer: 2,
     explanation:
       "230 V single-phase and 400 V three-phase — the bread-and-butter voltages on every domestic and commercial site. The 'Low' in Low Voltage is relative to HV. It’s still well above the fibrillation threshold for the human heart.",
   },
@@ -145,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'You disturb a 230 V circuit you "knew was off" and it shocks you. You feel fine ten minutes later. What do you do?',
     options: [
-      'Get on with the day, no harm done',
+      'Both the client (or Responsible Person) and the installer',
+      'Have a private, non-judgemental conversation expressing genuine concern',
+      'False - applies to all circuits from simple to complex industrial systems',
       'Stop, report it, get checked at A&E, log it under RIDDOR if it qualifies',
-      'Just sign the accident book and carry on',
-      'Tell nobody so it doesn’t hurt your apprenticeship',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Cardiac rhythm problems can show hours later. Internal burns can be hidden under tiny entry/exit marks. Stop, report, hospital — and if it caused unconsciousness, needed resuscitation, or kept you off >7 days, the responsible person reports under RIDDOR.",
   },
@@ -158,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why is "I just had a quick look" so often the moment people get killed?',
     options: [
-      'Quick jobs are usually badly designed',
       "Skipping isolation feels harmless once and gets normalised — and a single live touch is enough",
-      'Tools degrade faster on short jobs',
-      "Quick jobs aren’t covered by EAWR",
+      "It allows appropriate response to the unexpected while maintaining focus on priorities",
+      "To provide controlled pulling force for long or difficult cable runs",
+      "Keep it available for inspection by anyone who may need it for future construction work on the structure",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Most fatalities aren’t on big projects. They’re on routine maintenance, fuse swaps, accessory changes — exactly the moments you’re tempted to skip the procedure. EAWR covers ALL electrical work, no matter how small.",
   },

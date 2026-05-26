@@ -45,12 +45,12 @@ const checks = [
     question:
       "A small block has retail on ground (calculated MD 38 A per phase after diversity) and four one-bed flats above (each MD 18 A after diversity, all single-phase). Single TP+N intake. The consolidated MD on the heaviest phase using simple worst-case loading is closest to:",
     options: [
-      "All loads added on every phase: 38 + (4 x 18) = 110 A per phase.",
+      "A diverse range including completed work orders, test certificates, risk assessments, method statements, witness testimonies, and reflective accounts that map to specific areas of the standard",
+      "Charging a set rate per day (or hour) plus materials at cost (or cost-plus-markup), rather than a fixed job price. Used when scope is uncertain (maintenance, fault-finding, diagnostic work) or when the work is genuinely time-and-materials in nature.",
+      "Store safety glasses at eye level in every work area, display photos of eye injuries, make the glasses ultra-lightweight, and publicly recognise compliant workers daily",
       "Worst-case — retail on the heaviest phase (38 A) plus flats balanced across the three phases: 38 + 18 + 18 = 74 A on the worst phase (two flats land on the same phase as retail), about 56 A on the other two.",
-      "Just the retail figure: 38 A.",
-      "Average across phases: (38 + 4 x 18) / 3 = 37 A per phase.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Mixed-supply consolidation must respect phase balance. Retail (single-phase or balanced TP) lands on whichever phase the meter is wired to. The four flats are balanced two-and-two across the remaining phases: with four flats on three phases the heaviest phase will carry two flats. Worst case is therefore retail-phase plus two flats: 38 + 36 = 74 A. The L3 designer presents this to the DNO as the per-phase MD with a clear note on the assumed phasing. Adding everything on every phase (110 A) is wrong; using only retail (38 A) is wrong; averaging is wrong because the supply sizes for the worst phase, not the average.",
   },
@@ -59,12 +59,12 @@ const checks = [
     question:
       "On the same mixed block the DNO offers a TN-C-S (PME) supply with declared Ze of 0.35 ohms. The intake fuse is BS 88-3 100 A. Why does the L3 designer record the PME declaration on the load schedule rather than treat the supply as TN-S?",
     options: [
-      "Because PME and TN-S behave the same.",
+      "Reg 514.16.1 — introduced by A4:2026, requiring a label to indicate the presence of SPDs (with an exception for domestic / household premises). Located in Part 5 (selection and erection), Chapter 51 (common rules), Section 514 (identification and notices). Knowing the labelling regs live in Section 514 is faster than searching by reg number.",
+      "Tape measure (5 m or 8 m, lockable), spirit level (a torpedo level for short runs, a 600 mm level for socket lines), pencil OR a chinagraph pencil for darker surfaces, and a marker square (or just the level on edge) to keep the back box parallel to the line of the wall. Centre-mark with a small cross so the chaser knows where the centre is, not just the outline.",
+      "NICEIC scheme action — non-conformance notice, possible suspension, possible removal from the scheme. Removal from the CPS means: no more self-certification under Part P, customers' insurance defences weakened, marketing claims (logo, badge) withdrawn, and frequently insurer-driven loss of public liability cover. The job stays civil, but the firm's ability to trade collapses.",
       "Because the earthing arrangement governs Zs at every final circuit, governs the main earthing conductor and bonding sizes (Reg 544), and triggers the A4:2026 PNB / TN-C-S notes around BS 7430 conditions and metal water service interaction. The TN type is the single most consequential supply parameter on the schedule.",
-      "Because the DNO requires it.",
-      "Because PME supplies have a higher Ze.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "TN type is the parameter that propagates through the rest of the design. PME (TN-C-S) requires a 16 mm² minimum main earthing conductor for a 100 A supply (Table 54.7 / 544.1.1), 10 mm² minimum main bonding to gas, water and oil (Table 54.8), specific care around metal water service entries, and an EV charger O-PEN protection or earth electrode arrangement (Reg 722.411.4.1). TN-S has different defaults. Designing without knowing the TN type is designing without a foundation. The schedule records it on the cover page and every Zs calc downstream uses the declared Ze.",
   },
@@ -73,12 +73,12 @@ const checks = [
     question:
       "The retail tenant tells you they will add a 7 kW EV charger for staff in two years. The flats may add EV chargers individually as residents change. The right way to record this on the consolidated schedule today is:",
     options: [
-      "Ignore it — design for current loads only.",
       "Add a 'future load reservation' line for each foreseeable load with its expected MD after diversity, sum it into a 'design ultimate MD' that the supply, main switchgear and tails are sized for, with a note explaining what is committed today vs reserved.",
-      "Size everything for ten times current load just in case.",
-      "Tell the DNO informally and forget the schedule.",
+      "Employers, self-employed, employees and managers — Reg 3 places duties on each. Some duties are absolute, some are SFAIRP. The employee duty (Reg 3(2)) is to co-operate with the employer's compliance and to comply with EAWR personally so far as it relates to matters within their control.",
+      "Self-employed NI calculated as a percentage of profits over a threshold; paid alongside income tax via Self Assessment. Currently 9% on profits between the lower and upper limits, 2% above. (Rates and thresholds adjust annually — check current HMRC figures.)",
+      "It continuously adjusts the operating voltage of the string so the panels deliver their peak power as light, temperature and partial shade change throughout the day. The peak power point sits below open-circuit voltage and at a current below short-circuit — the MPPT hunts for the sweet spot.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Reg 132.13 documentation is for the whole installation life, not just today. The competent way is a 'design ultimate' column alongside 'design current' — supply, intake, main tails and CU busbars sized for the ultimate; circuit-level installs done as required. The DNO connection enquiry quotes the ultimate MD with the staging plan; the EIC notes which loads are commissioned vs reserved. This avoids the rip-out problem when the EV charger is added two years later and the tails are 16 mm where 25 mm was needed.",
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: "Why is consolidating diversity across mixed occupancy harder than the per-section calc?",
     options: [
-      "Because the maths is different.",
+      "Under CDM 2015 Reg 6 a project is notifiable when the construction work is scheduled to last longer than 30 working days AND have more than 20 workers working simultaneously at any point, OR exceed 500 person-days. The Client must notify the HSE in writing as soon as practicable before construction starts using F10 notification.",
       "Because each section uses its own diversity assumptions (commercial after-diversity factors, domestic per-Appendix-1 demand pattern, EV / heat pump behaviour) and the consolidated schedule has to add them on a phase-by-phase basis without losing the engineering logic behind each block.",
-      "Because there is no rule for it.",
-      "Because the DNO does the calc for you.",
+      "In TN, the earth at the consumer is connected back to the source neutral via the DNO supply (low Ze, high fault current, MCB-based ADS). In TT, the earth at the consumer is a local electrode in soil (high Ze, low fault current, RCD-based ADS).",
+      "The pelvis contains major blood vessels; a pelvic fracture can cause massive internal haemorrhage — call 999 immediately, keep the casualty still, treat for shock, and do not attempt to bind the pelvis unless trained",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: "The single most consequential supply parameter recorded on a consolidated load schedule is:",
     options: [
-      "The declared PSCC.",
+      "Self-healing capability — if one node fails or a signal path is blocked, data automatically routes via alternative paths through neighbouring nodes",
+      "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"There could be several causes, such as a loose connection or a faulty switch. I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ll carry out some tests to identify the exact issue and let you know what I find.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
       "The TN type — TN-S, TN-C-S (PME), TT — because earthing arrangement, main earthing conductor sizing, main bonding sizing, EV protection method, and Zs at every final circuit all depend on it.",
-      "The intake fuse rating.",
-      "The number of phases.",
+      "To ensure consistent measurement quality, regulatory compliance, optimised costs, and systematic management of all measuring equipment",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The TN type cascades through every later decision. Get it wrong on the cover sheet and every Zs calc is wrong, every conductor size is wrong, every EV protection scheme is wrong. The consolidated schedule records it boldly on page one along with declared Ze and PSCC.",
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: "On a mixed retail-plus-residential block sharing a single intake, the heaviest single-phase MD is found by:",
     options: [
-      "Adding everything on every phase.",
+      "Nick or score the conductor, reducing its effective cross-sectional area and creating a potential hot spot or point of mechanical failure",
+      "Visual inspection, continuity check, insulation resistance test, functional test, and confirmation that all safety interlocks and protection are operative",
+      "Ensure the replacement module is the correct type and that the I/O addressing configuration matches; back up the PLC programme before making changes",
       "Allocating each block to the phase it actually lands on — retail to its meter phases, flats balanced across the remaining capacity — and reporting the phase with the highest sum.",
-      "Dividing the total by three.",
-      "Picking the largest single load.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Per-phase loading sets the supply sizing. Retail meters land on whichever phases the DNO meter wires up. Domestic flats are balanced across phases (two-and-two for four flats on three phases means the heaviest phase carries two). The schedule shows the per-phase split openly so the DNO and the future designer can both see the worst-case.",
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: "Reg 311.1 (BS 7671 A4:2026) requires the designer to assess maximum demand. The consolidated schedule satisfies this when it shows:",
     options: [
-      "Just the headline total.",
       "Connected load, applied diversity factors per block with citations, after-diversity demand per block, per-phase consolidation, and a single-figure consolidated MD that the supply is sized against — all on the face of the schedule with the assumptions stated.",
-      "The calc on a separate spreadsheet only.",
-      "Just the EIC.",
+      "Toastmasters operationalises Bandura theory: mastery through progressive challenges, vicarious learning, social persuasion through evaluations, and managing anxiety through practice",
+      "PAT involves the regular inspection and testing of portable electrical appliances to identify faults (damaged cables, loose connections, insulation failure) that could cause electrical fires",
+      "Adult ego state (TA) for rational exchanges, SOLER for attentive body language, I-messages for raising concerns, and systematic barrier identification for troubleshooting breakdowns",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Reg 311.1 is satisfied by visible, traceable assessment. The consolidated schedule is the artefact — connected load shown, diversity assumption stated against each block, after-diversity figure proven, per-phase split shown, headline MD declared. A future inspector or designer can verify the calc without ringing you. A spreadsheet you keep in your inbox does not satisfy 311.1; what is on the design pack does.",
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: "When the DNO connection enquiry asks for the maximum demand, the value to give is:",
     options: [
-      "The sum of all connected load.",
+      "Ib = P / (V x cos φ) — real power divided by the product of voltage and power factor. The motor or inductive load draws apparent power = P / cos φ, and line current carries apparent power.",
       "The consolidated after-diversity per-phase MD plus a clearly labelled 'design ultimate' figure that includes foreseeable future loads, with the staging plan attached.",
-      "Only what is being installed today.",
-      "Whatever number leaves the most headroom.",
+      "The assessment must consider the 'cascade effect' where a hazardous atmosphere can overcome multiple people, and must limit the number of entrants and ensure rescue can handle multiple casualties",
+      "Set one WIG (pass the exam), identify 2&ndash;3 lead measures (study hours, practice tests), create a visible scoreboard, and hold weekly accountability check-ins",
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: "On the consolidated schedule, the line that triggers the most conversation with Building Control is usually:",
     options: [
-      "The protective device list.",
+      "The maximum let-through voltage at the SPD terminals during a surge — the voltage that the equipment downstream actually sees through the SPD. Lower Up = better protection. Manufacturer's Up is measured at a specified test current.",
+      "Goal: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Pass the I&T knowledge test within 6 weeks.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" Reality: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Currently scoring 40% on practice tests.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" Options: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Evening study, mentor-led revision, practice papers, college support.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" Will: \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"Two practice papers per week, mentor review every Friday.\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
       "The total floor area and occupancy classification — because that drives life-safety load assumptions (emergency lighting, fire alarm, smoke ventilation), Part B fire compliance, and whether the installation falls under HRRB / Building Safety Act 2022 scrutiny.",
-      "The cable schedule.",
-      "The earthing arrangement.",
+      "Are treated as any other electrical system — the duty holder must ensure they are properly installed, maintained, and that persons working on them are competent and use safe systems of work appropriate to the specific hazards of each technology",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Floor area and occupancy classification drive life-safety load. Emergency lighting on Cat 3 changeover, fire alarm panel and standby supply, smoke ventilation interlocks, accessibility lift if Part M applies — all of these add to the load schedule and bring Building Control questions. On a residential block above 18 m the Building Safety Regulator gateway 2 review will ask to see this line proven.",
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: "What does the consolidated schedule's 'per-phase balance' figure tell the design team?",
     options: [
-      "Nothing useful.",
+      "On the customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s side of any insulating section, and within 600 mm of the meter outlet union or, where this is impracticable, as near as practicable to the point of entry of the pipe into the building",
+      "L3 acts as the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s contractor representative on site — verifies client awareness (Reg 9(1)), implements the CPP, briefs operatives, monitors compliance, escalates issues. The Reg 9 contractor duties run through the firm\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s representative on the day.",
+      "The combination of thorough preparation, successful mock assessments, gateway sign-off from your employer and training provider, completed qualifications, and a well-organised portfolio — these are evidence of your competence, not just feelings of readiness",
       "Whether the load is well balanced (similar values on all three phases — efficient, low neutral current) or imbalanced (one phase dominant — high neutral, possible 4th-wire derate, possible voltage imbalance issues for the worst-loaded tenant).",
-      "Whether the supply is TT.",
-      "Whether the supply is overhead.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Per-phase balance is an indicator the L3 designer should always read. Imbalance above ~15-20 percent between phases at the consolidated MD point means heavy neutral current, possible voltage imbalance at the most-loaded tenant, and a derate consideration on the neutral conductor for harmonic-rich loads. Rebalance by re-assigning sub-meters to phases before going to the DNO with the enquiry.",
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: "The consolidated schedule for a four-flat-plus-retail block reports headline MD 74 A on the heaviest phase. The DNO standard is 80 A per phase domestic. The L3 designer's next step is:",
     options: [
-      "Submit the connection enquiry as-is — within standard.",
       "Confirm headroom for the future EV / heat-pump loads in the design ultimate column; if the ultimate exceeds the standard 80 A per phase capacity, request a 100 A or load-management upgrade now while the build is open, rather than reapplying when the spare way is wired in two years.",
-      "Reduce design loads to fit.",
-      "Pick a different DNO.",
+      "It is the last DNO-owned device — a sealed BS 1361 / BS 88-3 fuse plus the supplier earth terminal — and the protective device that limits the prospective fault current entering the customer installation.",
+      "The electrical contractor's Foreman or Charge-hand at the morning brief — they translate the day's programme into specific tasks for each pair of hands. The Approved Electrician you're paired with then directs your work at the face. Big-picture decisions (programme changes, design queries) escalate up via the Foreman to the Project Engineer or Contracts Manager.",
+      "The Construction (Design and Management) Regulations 2015 require that fire safety is considered during the design and construction phases of building projects, including safe means of escape from construction sites",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Designing only to today's MD is short-termism. If the design ultimate (with EVs and heat pumps that the brief flags as foreseeable) exceeds the standard 80 A per phase, ask now for the upgrade or for a load-management connection. The DNO charges for an upgrade later are usually more disruptive and more expensive than asking up front while the trench is open and the meters are being wired. This is the L3 design pen at its most useful.",
   },

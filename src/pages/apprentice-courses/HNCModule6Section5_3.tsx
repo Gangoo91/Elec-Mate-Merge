@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'mt-definition',
     question: 'What is the primary purpose of Monitoring and Targeting (M&T)?',
     options: [
-      'To measure electricity consumption only',
+      'Loads should be distributed across phases to minimise neutral current',
+      'When you reach a cause you can actually fix at a system level (not just blame an individual)',
       'To compare actual energy use against expected performance and identify variances',
-      'To calculate utility bills',
-      'To design heating systems',
+      'Reduces artificial lighting when natural daylight is sufficient',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'M&T compares actual energy consumption against expected performance targets, identifies variances, and enables corrective action to improve energy efficiency.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'degree-day-purpose',
     question: 'Why are degree days used in energy analysis?',
     options: [
-      'To measure indoor temperature',
-      'To calculate electricity tariffs',
+      'Only when dead working is not practicable and properly risk assessed',
       'To normalise energy consumption for weather variations',
-      'To determine ventilation rates',
+      'Misleadingly low insulation resistance readings',
+      'Clear fluid leaking from the ear or nose',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Degree days provide a method to normalise heating or cooling energy consumption for weather variations, enabling fair comparison between different periods regardless of outdoor conditions.',
   },
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'cusum-interpretation',
     question: 'On a cusum chart, a downward slope indicates:',
     options: [
-      'Increasing energy consumption',
-      'Performance better than target',
       'Equipment failure',
+      'Performance better than target',
       'Rising outdoor temperatures',
+      'Increasing energy consumption',
     ],
     correctIndex: 1,
     explanation:
@@ -70,10 +70,10 @@ const quickCheckQuestions = [
     id: 'exception-reporting',
     question: 'What triggers an exception report in an M&T system?',
     options: [
-      'Normal energy consumption patterns',
+      'Elimination of 5th and 7th harmonics',
       'Variance exceeding predetermined threshold limits',
-      'Monthly billing cycles',
-      'Annual energy reviews',
+      'General-purpose indoor cables (not plenum)',
+      'Protect themselves and deliver what\\\\\\\'s agreed',
     ],
     correctIndex: 1,
     explanation:
@@ -86,7 +86,12 @@ const quizQuestions = [
     id: 1,
     question:
       'A building has a base temperature of 15.5°C. If the mean daily outdoor temperature is 8°C, how many heating degree days occurred?',
-    options: ['8 degree days', '7.5 degree days', '15.5 degree days', '23.5 degree days'],
+    options: [
+      '8 degree days',
+      '7.5 degree days',
+      '15.5 degree days',
+      '23.5 degree days',
+    ],
     correctAnswer: 1,
     explanation:
       'Heating degree days = Base temperature - Mean outdoor temperature = 15.5°C - 8°C = 7.5 degree days. This represents the heating requirement for that day.',
@@ -96,12 +101,12 @@ const quizQuestions = [
     question:
       'In regression analysis of energy consumption, the y-intercept of the performance line represents:',
     options: [
+      'Peak demand',
       'Weather-dependent consumption',
       'Base load consumption',
-      'Peak demand',
       'Degree day total',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The y-intercept represents the base load - energy consumption that occurs regardless of weather, such as lighting, equipment, domestic hot water, and other non-heating/cooling loads.',
   },
@@ -109,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'Which formula correctly describes the standard performance line equation?',
     options: [
-      'Energy = Base load × Degree days',
-      'Energy = (Slope × Degree days) + Base load',
       'Energy = Degree days ÷ Base load',
+      'Energy = Base load × Degree days',
       'Energy = Base load - (Slope × Degree days)',
+      'Energy = (Slope × Degree days) + Base load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The performance line equation is E = (m × DD) + c, where E is energy, m is the slope (weather sensitivity), DD is degree days, and c is the base load (y-intercept).',
   },
@@ -123,20 +128,25 @@ const quizQuestions = [
     question:
       'A cusum chart shows a sudden upward step change in the line. This most likely indicates:',
     options: [
-      'Gradual equipment degradation',
       'A specific event causing increased consumption (e.g., new equipment, system fault)',
-      'Seasonal weather variation',
-      'Normal operating conditions',
+      'A step-by-step procedure to ensure electrical equipment is safely disconnected from supply before work',
+      'Fraction of lumens that reach the task surface vs lost to walls/ceiling',
+      'Body language, facial expressions, tone of voice, eye contact and physical gestures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A sudden step change in a cusum chart indicates a discrete event occurred at that point - perhaps equipment failure, new plant installation, occupancy change, or control system malfunction.',
   },
   {
     id: 5,
     question: 'What base temperature is typically used for UK heating degree day calculations?',
-    options: ['18°C', '20°C', '15.5°C', '12°C'],
-    correctAnswer: 2,
+    options: [
+      '20°C',
+      '15.5°C',
+      '12°C',
+      '18°C',
+    ],
+    correctAnswer: 1,
     explanation:
       'The UK standard base temperature for heating degree days is 15.5°C. This assumes internal heat gains (people, equipment, solar) reduce the heating requirement, so heating is only needed when outdoor temperature falls below this threshold.',
   },
@@ -145,11 +155,11 @@ const quizQuestions = [
     question: 'Exception reporting thresholds are typically set at:',
     options: [
       'Any deviation from target',
-      '5-10% variance from expected values',
       '50% variance from expected values',
+      '5-10% variance from expected values',
       'Only when consumption doubles',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Exception thresholds are typically set at 5-10% variance from expected performance. This captures significant deviations while avoiding false alarms from minor measurement variations or normal operational fluctuations.',
   },
@@ -157,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'The slope of a performance line (energy vs degree days) represents:',
     options: [
-      'Base load consumption',
+      '5-10% variance from expected values',
+      'Energy = (Slope × Degree days) + Base load',
+      'At least 12 months to capture seasonal variations',
       'Building thermal performance (weather sensitivity)',
-      'Total annual consumption',
-      'Occupancy hours',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The slope represents the building's thermal performance or weather sensitivity - how much additional energy is required per degree day. A steeper slope indicates poorer insulation or higher ventilation losses.",
   },
@@ -170,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which action should follow identification of an exception in M&T analysis?',
     options: [
-      'Immediately replace all equipment',
       'Investigation to identify root cause before taking action',
       'Ignore if less than 20% variance',
+      'Immediately replace all equipment',
       'Adjust the target to match actual consumption',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Exceptions require investigation to identify the root cause - is it a meter fault, operational change, equipment problem, or genuine efficiency loss? Only after understanding the cause can appropriate corrective action be determined.',
   },
@@ -183,8 +193,13 @@ const quizQuestions = [
     id: 9,
     question:
       "A building's performance line shows: E = 2.5DD + 1,200 (kWh). For a month with 300 degree days, expected consumption is:",
-    options: ['750 kWh', '1,200 kWh', '1,950 kWh', '3,600 kWh'],
-    correctAnswer: 2,
+    options: [
+      '750 kWh',
+      '1,950 kWh',
+      '1,200 kWh',
+      '3,600 kWh',
+    ],
+    correctAnswer: 1,
     explanation:
       'Expected consumption = (2.5 × 300) + 1,200 = 750 + 1,200 = 1,950 kWh. The 750 kWh is weather-dependent heating, and 1,200 kWh is the base load.',
   },
@@ -192,12 +207,12 @@ const quizQuestions = [
     id: 10,
     question: 'What does R² (coefficient of determination) indicate in regression analysis?',
     options: [
-      'The base load value',
+      'A specific event causing increased consumption (e.g., new equipment, system fault)',
+      'Building thermal performance (weather sensitivity)',
       'The percentage of consumption variation explained by degree days',
-      'The number of data points',
-      'The target consumption level',
+      'Investigation to identify root cause before taking action',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'R² indicates how well the regression line fits the data - specifically, the proportion of energy consumption variation that can be explained by degree day variation. Values above 0.9 indicate good correlation.',
   },
@@ -207,10 +222,10 @@ const quizQuestions = [
     options: [
       'Annual readings only',
       'Quarterly readings',
-      'Weekly or more frequent readings',
       'Monthly is always sufficient',
+      'Weekly or more frequent readings',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Weekly or more frequent readings (ideally half-hourly from smart meters) enable timely identification of problems. Annual or quarterly data may detect long-term trends but cannot identify issues quickly enough for effective intervention.',
   },
@@ -218,12 +233,12 @@ const quizQuestions = [
     id: 12,
     question: 'When establishing a baseline for M&T, what period should typically be used?',
     options: [
-      'One week of data',
-      'One month of data',
       'At least 12 months to capture seasonal variations',
-      'The previous day only',
+      'Building thermal performance (weather sensitivity)',
+      '5-10% variance from expected values',
+      'Investigation to identify root cause before taking action',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A minimum of 12 months of baseline data is needed to capture full seasonal variation, occupancy patterns, and establish reliable performance lines that account for all operating conditions throughout the year.',
   },

@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'rms-value',
     question: 'What is the RMS value of a 230 V AC supply, and why is it significant?',
     options: [
-      '230 V is the peak value — the RMS is 162.6 V',
-      '230 V IS the RMS value — it represents the equivalent DC heating effect',
-      '230 V is the average value — the RMS is higher',
       'RMS and peak values are always the same for AC',
+      '230 V IS the RMS value — it represents the equivalent DC heating effect',
+      '230 V is the peak value — the RMS is 162.6 V',
+      '230 V is the average value — the RMS is higher',
     ],
     correctIndex: 1,
     explanation:
@@ -26,8 +26,13 @@ const quickCheckQuestions = [
   {
     id: 'frequency-period',
     question: 'What is the time period of one complete cycle of the UK 50 Hz mains supply?',
-    options: ['50 seconds', '0.5 seconds', '0.02 seconds (20 ms)', '0.01 seconds (10 ms)'],
-    correctIndex: 2,
+    options: [
+      '50 seconds',
+      '0.02 seconds (20 ms)',
+      '0.01 seconds (10 ms)',
+      '0.5 seconds',
+    ],
+    correctIndex: 1,
     explanation:
       'The time period T is the reciprocal of frequency: T = 1/f = 1/50 = 0.02 seconds = 20 milliseconds. This means the UK mains completes 50 full cycles every second, with each complete cycle (one positive and one negative half-cycle) taking 20 ms.',
   },
@@ -35,12 +40,12 @@ const quickCheckQuestions = [
     id: 'phase-angle',
     question: "Two sinusoidal waveforms of the same frequency are said to be 'in phase' when:",
     options: [
-      'They have the same amplitude',
+      'Emergency lighting was isolated by mistake, creating a safety risk',
+      'Flow rate is directly proportional to speed (Q₁/Q₂ = N₁/N₂)',
       'They reach their peak values at the same instant in time',
-      'They have different frequencies',
-      'One is DC and the other is AC',
+      'Mastery experiences — succeeding at a task yourself',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Two waveforms are 'in phase' when they reach their corresponding peak, zero and trough values at the same instant in time — their phase difference is zero degrees. If they reach their peaks at different times, they have a phase difference measured in degrees, where 360 degrees equals one complete cycle.",
   },
@@ -48,10 +53,10 @@ const quickCheckQuestions = [
     id: 'ac-generation',
     question: 'In an AC generator (alternator), what determines the frequency of the output?',
     options: [
-      'The strength of the magnetic field only',
-      'The number of turns on the coil only',
-      'The speed of rotation and the number of pole pairs',
       'The resistance of the load connected to it',
+      'The strength of the magnetic field only',
+      'The speed of rotation and the number of pole pairs',
+      'The number of turns on the coil only',
     ],
     correctIndex: 2,
     explanation:
@@ -64,8 +69,13 @@ const quizQuestions = [
     id: 1,
     question:
       'The UK mains supply has a nominal voltage of 230 V and a frequency of 50 Hz. What is the peak voltage?',
-    options: ['115 V', '230 V', '325.3 V', '460 V'],
-    correctAnswer: 2,
+    options: [
+      '115 V',
+      '325.3 V',
+      '230 V',
+      '460 V',
+    ],
+    correctAnswer: 1,
     explanation:
       'The peak voltage Vpeak = VRMS x √2 = 230 x 1.414 = 325.3 V. The stated 230 V is the RMS value. The voltage actually swings between +325.3 V and -325.3 V, giving a peak-to-peak voltage of 650.6 V. This is important when selecting component voltage ratings — they must withstand the peak, not just the RMS value.',
   },
@@ -74,20 +84,25 @@ const quizQuestions = [
     question:
       'Which of the following correctly describes the relationship between RMS, peak and average values for a pure sine wave?',
     options: [
+      'VRMS = 0.637 x Vpeak, Vavg = 0.707 x Vpeak',
       'VRMS = Vpeak, Vavg = 0.5 x Vpeak',
       'VRMS = 0.707 x Vpeak, Vavg = 0.637 x Vpeak',
-      'VRMS = 0.637 x Vpeak, Vavg = 0.707 x Vpeak',
       'VRMS = 0.5 x Vpeak, Vavg = 0.318 x Vpeak',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'For a pure sine wave: VRMS = Vpeak / √2 = 0.707 x Vpeak, and Vavg (over one half-cycle) = (2/π) x Vpeak = 0.637 x Vpeak. The ratio of RMS to average is called the form factor: 0.707/0.637 = 1.11. These relationships only hold true for pure sine waves — distorted waveforms have different ratios.',
   },
   {
     id: 3,
     question: 'An AC voltage completes one full cycle in 20 milliseconds. What is its frequency?',
-    options: ['20 Hz', '50 Hz', '100 Hz', '200 Hz'],
-    correctAnswer: 1,
+    options: [
+      '100 Hz',
+      '20 Hz',
+      '200 Hz',
+      '50 Hz',
+    ],
+    correctAnswer: 3,
     explanation:
       'Frequency = 1 / period. If the period T = 20 ms = 0.02 s, then f = 1/0.02 = 50 Hz. This is the standard UK mains frequency. The supply completes 50 full cycles every second.',
   },
@@ -95,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'A phasor is best described as:',
     options: [
-      'A type of power tool used in electrical maintenance',
       'A rotating vector that represents the magnitude and phase angle of a sinusoidal quantity',
-      'A device for measuring AC frequency',
-      'The physical shape of an alternator rotor',
+      'Step 3 — High-intensity interventions for moderate to severe depression',
+      'Electrical short circuit or overload causing fire or explosion',
+      'It is an alternative international forest certification scheme that endorses national certification programmes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A phasor is a rotating vector (arrow) whose length represents the magnitude (RMS or peak value) of a sinusoidal quantity and whose angle represents the phase angle. Phasor diagrams are essential tools for analysing AC circuits containing resistance, inductance and capacitance, where voltages and currents are not in phase with each other.',
   },
@@ -110,8 +125,8 @@ const quizQuestions = [
     options: [
       'Peak value divided by average value',
       'RMS value divided by average value',
-      'Average value divided by RMS value',
       'Peak value divided by RMS value',
+      'Average value divided by RMS value',
     ],
     correctAnswer: 1,
     explanation:
@@ -121,10 +136,10 @@ const quizQuestions = [
     id: 6,
     question: 'Why is the UK mains frequency standardised at exactly 50 Hz?',
     options: [
-      'Because 50 Hz is the safest frequency for the human body',
-      'It was an arbitrary choice with no engineering basis',
+      'Fixed electrical installations in new and existing dwellings, and parts of buildings serving dwellings',
+      'Non-specific lower back pain (mechanical back pain) affecting the lumbar region',
       'It provides a practical balance between generator size, transformer efficiency and transmission characteristics',
-      'Because UK generators can only run at one speed',
+      'Information about risks to health and safety during future construction, maintenance or demolition work',
     ],
     correctAnswer: 2,
     explanation:
@@ -134,8 +149,13 @@ const quizQuestions = [
     id: 7,
     question:
       "If a voltage and current are 'in phase' in an AC circuit, this means the circuit is:",
-    options: ['Purely inductive', 'Purely capacitive', 'Purely resistive', 'An open circuit'],
-    correctAnswer: 2,
+    options: [
+      'Purely inductive',
+      'Purely capacitive',
+      'An open circuit',
+      'Purely resistive',
+    ],
+    correctAnswer: 3,
     explanation:
       'In a purely resistive circuit, voltage and current are in phase — they rise and fall together, reaching their peak values at the same instant. In an inductive circuit, current lags voltage by up to 90 degrees. In a capacitive circuit, current leads voltage by up to 90 degrees. Most practical circuits are a combination, with the phase angle depending on the relative proportions of R, L and C.',
   },
@@ -143,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: 'The angular frequency (omega, ω) of the 50 Hz UK mains supply is:',
     options: [
-      '50 rad/s',
       '100π rad/s (approximately 314 rad/s)',
-      '50π rad/s (approximately 157 rad/s)',
-      '2500 rad/s',
+      'Non-sinusoidal or distorted AC waveforms',
+      'VRMS = 0.707 x Vpeak, Vavg = 0.637 x Vpeak',
+      'Peak value divided by RMS value',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Angular frequency ω = 2πf = 2π x 50 = 100π ≈ 314.16 rad/s. Angular frequency is used in AC circuit calculations involving reactance and impedance. For example, inductive reactance XL = ωL = 2πfL, and capacitive reactance XC = 1/(ωC) = 1/(2πfC).',
   },
@@ -156,12 +176,12 @@ const quizQuestions = [
     id: 9,
     question: "A 'true-RMS' meter is essential when measuring:",
     options: [
-      'Pure DC voltages',
-      'Pure sine wave AC voltages',
+      'Peak value divided by RMS value',
       'Non-sinusoidal or distorted AC waveforms',
-      'Battery open-circuit voltage',
+      'The rate of change of magnetic flux linkage',
+      'VRMS = 0.707 x Vpeak, Vavg = 0.637 x Vpeak',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Standard AC meters are average-responding instruments calibrated to display RMS for pure sine waves only (using the 1.11 form factor). When measuring non-sinusoidal waveforms (e.g., output of VSDs, thyristor controllers, or supplies with harmonic distortion), they give incorrect readings. A true-RMS meter calculates the actual RMS value regardless of waveform shape — essential for accurate measurement in modern installations.',
   },
@@ -169,12 +189,12 @@ const quizQuestions = [
     id: 10,
     question: 'The instantaneous value of a sinusoidal voltage can be expressed as:',
     options: [
-      'v = Vpeak x sin(2πft)',
-      'v = VRMS x cos(t)',
-      'v = Vpeak / frequency',
       'v = Vavg x 2πf',
+      'v = VRMS x cos(t)',
+      'v = Vpeak x sin(2πft)',
+      'v = Vpeak / frequency',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'The instantaneous voltage at any moment in time is: v = Vpeak x sin(2πft) or equivalently v = Vpeak x sin(ωt), where ω = 2πf. At t = 0, v = 0 (starting from zero crossing). At t = T/4 (quarter cycle), sin = 1, so v = Vpeak. This mathematical description is fundamental to all AC circuit analysis.',
   },
@@ -184,10 +204,10 @@ const quizQuestions = [
     options: [
       'Average value divided by peak value',
       'RMS value divided by average value',
-      'Peak value divided by RMS value',
       'Peak-to-peak value divided by 2',
+      'Peak value divided by RMS value',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The peak factor (crest factor) = Vpeak / VRMS. For a pure sine wave, this equals √2 ≈ 1.414. The crest factor is important when selecting equipment — particularly UPS systems, which must handle the peak current drawn by non-linear loads. Distorted waveforms with sharp peaks have high crest factors and can overload equipment rated for pure sine waves.',
   },
@@ -196,12 +216,12 @@ const quizQuestions = [
     question:
       "In electromagnetic induction, Faraday's law states that the induced EMF is proportional to:",
     options: [
-      'The strength of the magnetic field only',
-      'The speed of the conductor only',
       'The rate of change of magnetic flux linkage',
       'The resistance of the conductor',
+      'The strength of the magnetic field only',
+      'The speed of the conductor only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Faraday's law of electromagnetic induction states that the magnitude of the induced EMF is directly proportional to the rate of change of magnetic flux linkage. Mathematically: e = -N x (dΦ/dt), where N is the number of turns and dΦ/dt is the rate of change of flux. This is the fundamental principle underlying all AC generators, transformers and inductors.",
   },

@@ -43,12 +43,12 @@ const checks = [
     question:
       "An HSE inspector visits a site and serves an improvement notice with a 28-day deadline. What does that actually mean?",
     options: [
-      "Just a friendly suggestion.",
+      "Separating the person from their past behaviour and responding to their current human experience with genuine compassion. Advanced empathy recognises that difficult people are often struggling, that past conflict does not negate present humanity, and that showing empathy in this moment may transform the entire working relationship — whilst still maintaining appropriate professional boundaries",
+      "The Work at Height Regulations 2005 (WAHR) — applies to any work where a person could fall a distance liable to cause personal injury. Reg 6 sets out the three-tier hierarchy (avoid > prevent > minimise). Reg 7 requires selection of the right equipment for the task. Reg 12 requires inspection of the equipment. PUWER 1998 sits underneath for the equipment itself, and LOLER 1998 covers MEWPs and other lifting kit.",
       "A statutory notice under HASAWA s.21. The dutyholder must comply within the time specified (usually 21+ days). Right of appeal to an Employment Tribunal within 21 days. Failure to comply is a separate offence carrying unlimited fines and (on indictment) up to 2 years imprisonment for the responsible person. The notice is published on the HSE Public Register of Convictions and Notices — visible to clients, insurers and competitors.",
-      "Optional advice.",
-      "Only applies if the inspector is a member of HSE.",
+      "Under CDM 2015 Reg 6 a project is notifiable when the construction work is scheduled to last longer than 30 working days AND have more than 20 workers working simultaneously at any point, OR exceed 500 person-days. The Client must notify the HSE in writing as soon as practicable before construction starts using F10 notification.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Improvement notices are statutory. HSE Public Register makes them visible — clients tendering for work routinely check the register. Reputational damage often outstrips the legal cost. Compliance within the deadline closes the matter; non-compliance escalates fast.",
   },
@@ -57,10 +57,10 @@ const checks = [
     question:
       "What's 'Fee for Intervention' (FFI) and when does it apply?",
     options: [
-      "A licence fee electricians pay annually.",
+      "Acknowledge the request verbally, then send a short written variation by email or in your job-management app before the end of the day. Quote the additional cost, get the customer's written confirmation back before you arrive on site, and only then carry out the extra work. The verbal yes is fine for tone; the written variation is what protects payment, scope and warranty.",
       "A statutory cost-recovery scheme (Health and Safety (Fees) Regulations) that allows the HSE to charge dutyholders for inspector time spent investigating 'material breaches' of H&S law. Charged at an hourly rate (currently around £170/hr — check HSE for the latest figure). Triggered when an inspector identifies a material breach and writes a letter, notice or report. The fee is for inspector time only, separate from any prosecution costs or fines.",
-      "A penalty for late RIDDOR reports.",
-      "An import tax.",
+      "Reg 134.1.1 requires that 'good workmanship by competent persons and proper materials shall be used in the erection of the electrical installation'. This is the workmanship hook — how the install is physically put together has to meet trade-standard quality. Includes correct torque, correct conductor preparation, neat termination, secure containment, proper labelling. Workmanship is what distinguishes a competent install from one that just barely passes test.",
+      "Decline. Most firms have a drug-and-alcohol policy that prohibits consumption during working hours, including any time you're still in uniform, on customer premises or driving the van. Even if the working day is officially over, you're still representing the firm and you may have to drive. The policy protects the customer (no impaired work), the firm (no insurance issues, no reputational damage) and you (no DR10 driving conviction).",
     ],
     correctIndex: 1,
     explanation:
@@ -71,10 +71,10 @@ const checks = [
     question:
       "How does a prohibition notice differ from an improvement notice?",
     options: [
-      "Prohibition notices are advisory.",
+      "Yes — reportable as an over-7-day incapacitation injury under RIDDOR 2013 Reg 4 / Reg 6. The 'responsible person' (usually the employer) makes the report. The clock is 10 working days from the day after the accident; the report goes to the HSE via the F2508 form on hse.gov.uk. The apprentice tells the supervisor; the firm's H&S contact files the report. Failure to report when required is itself a criminal offence under RIDDOR.",
       "A prohibition notice (HASAWA s.22) is served when the inspector judges that an activity involves OR will involve a risk of serious personal injury. It STOPS the activity immediately (or by a stated date) UNTIL the matters specified in the notice are remedied. There is no compliance period — the activity stops. Right of appeal exists but does NOT suspend the prohibition. Improvement notices give time to fix; prohibition notices stop the work.",
-      "Only the HSE can issue them.",
-      "They only apply to fatal accidents.",
+      "Safety documents (RAMS, COSHH, risk assessments, permits, fire muster, welfare info), design documents (drawings, specs, schedules, schematics, BIM, RFI logs), standards (BS 7671, IET OSG, manufacturer data), contract / commercial (programme, snag list, variations, delay notices) and HR (employment contract, JIB Working Rules, holiday and grievance procedures).",
+      "Cold (R1 + R2) = 50 × (12.10 + 18.10) / 1000 = 1.51 Ω. Hot at 70 degrees C: 1.51 × 1.20 = 1.812 Ω. Design Zs = 0.80 + 1.812 = 2.61 Ω. Table 41.3 max for B16 in A4:2026 = 2.73 Ω. Just passes (margin only 0.12 Ω) — design is borderline and any route-length error during install will push it over. Reconsider cable size or route.",
     ],
     correctIndex: 1,
     explanation:
@@ -87,10 +87,10 @@ const quizQuestions = [
     id: 1,
     question: "What's the HSE's primary statutory power?",
     options: [
-      "To set tax rates.",
+      "Because the install is a long-lived asset that will outlast the original installer's involvement. Notices communicate critical information — main earth location, RCD test interval, mixed supplies, isolator function — to whoever interacts with the install in future, including the customer in an emergency, the next electrician on a fault visit, and the EICR engineer in five years' time. The labels are how the install talks to people when the original installer isn't there.",
       "Powers under HASAWA Part I — inspection and entry (s.20), improvement notices (s.21), prohibition notices (s.22), seizure and rendering harmless of articles or substances (s.25), prosecution (s.33). HSE inspectors can enter premises at any reasonable time, take photos, take samples, take statements, examine documents, require production of records, dismantle equipment.",
-      "To run the National Lottery.",
-      "To enforce VAT.",
+      "GS38 — 'Electrical test equipment for use by electricians'. It's HSE guidance, not statute, but the courts treat it as the reference for what 'safe' test probes, leads and instruments look like in practice. It specifies probe finger barriers, exposed metal length (no more than 4 mm), insulated leads, fused leads where appropriate, and the use of voltage indicators rather than meters where possible.",
+      "Certify new installation work — that is the role of an Electrical Installation Certificate (EIC) per Reg 644.1, issued at the completion of new work or additions involving a new circuit. An EICR is for existing installations in service only and reports condition, not new compliance.",
     ],
     correctAnswer: 1,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: "Who else enforces H&S law besides the HSE?",
     options: [
-      "Only the HSE.",
+      "IET Academy is the IET's online learning platform — bite-sized technical courses, BS 7671 update training, design and engineering CPD content. Member access typically included with MIET subscription; some content open to non-members. Strong CPD resource alongside scheme-specific (NICEIC, NAPIT) and provider-specific (Elec-Mate) CPD platforms.",
+      "Prevailing \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"tough it out\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" and \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"leave feelings at the gate\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" cultures actively discourage emotional expression and reflection, creating an environment where acknowledging emotions is seen as weakness, which drives emotional suppression, reduces help-seeking, and increases the risk of unrecognised mental health deterioration",
       "Local Authority Environmental Health Officers (EHOs) for retail, offices, leisure, residential. Office of Rail and Road for railways. Marine and Coastguard Agency for shipping. Civil Aviation Authority for aviation. Office for Nuclear Regulation for nuclear sites. The HSE itself for construction, manufacturing, mines, quarries, agriculture and most other industrial settings.",
-      "Only the police.",
-      "Only the council.",
+      "Selling a non-MCS install means the customer can never claim SEG even later, may struggle to evidence compliance during a house sale, and may face insurance issues. The MCS install is also covered by the MCS workmanship warranty scheme. The cost difference is small and the protection is significant.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Enforcement is split by sector. For an electrical contractor working on construction sites, manufacturing or industrial premises, the HSE is the inspector. On a retail or office fit-out the local authority EHO may be the enforcer. Powers are essentially the same; the inspector is just from a different agency.",
   },
@@ -113,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: "What's a 'material breach' for FFI purposes?",
     options: [
-      "Any breach.",
+      "Reg 644.1.1 — 'Upon completion of inspection and testing of an installation or an addition or alteration to an installation, an Electrical Installation Certificate based on the model in Appendix 6, together with a Schedule of Inspections (or Schedule of Items Inspected) and a Schedule of Test Results, shall be given to the person ordering the work.'",
+      "CAR 2012 Reg 10 — anyone who is or may be exposed to asbestos must receive adequate training. UKATA / IATP-certified asbestos awareness (1-day) is the typical baseline for trades. Higher levels (non-licensed work, licensed work) require more advanced training.",
+      "When the worker may be exposed to a risk to their health or safety while at work, EXCEPT where and to the extent that the risk has been or will be adequately controlled by other means which are equally or more effective. The 2022 amendment also extended the duty to cover limb (b) workers (some categories of casual / gig workers) as well as employees.",
       "A material breach is one which an inspector reasonably opines is sufficiently serious that it warrants written notification — letter, notice or report. The HSE's Enforcement Management Model is the published decision tool. Once a material breach is identified, FFI invoicing starts from the inspector's first time spent on the matter.",
-      "Only fatal breaches.",
-      "Only breaches witnessed by two inspectors.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "'Material' is judged by the inspector against the EMM. The threshold is lower than 'serious enough to prosecute' — it covers any breach the inspector formally writes down. Verbal advice doesn't trigger FFI; a written letter does.",
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     id: 4,
     question: "Under HASAWA, where do summary and indictable offences sit?",
     options: [
-      "All H&S offences are summary only.",
       "Most HASAWA offences are triable either way — the prosecution chooses Magistrates' (summary) or Crown (indictment). Magistrates' Court can impose unlimited fines on H&S offences (since 2015) and up to 6 months imprisonment. Crown Court can impose unlimited fines and up to 2 years imprisonment for individuals (longer for some related offences like Corporate Manslaughter — life). The Sentencing Council Definitive Guideline applies in both courts.",
-      "All H&S offences require Crown Court.",
-      "All H&S offences are tried in Family Court.",
+      "Speak directly to the customer, identify yourself by name when you arrive and when you leave a room, describe what you're doing and where ('I'm just going to the consumer unit by the front door now'), don't move furniture or leave tools where they could be a trip hazard for the guide dog or the customer, ask before touching the guide dog (don't pet a working guide dog without asking), and offer to provide written documentation in large print, audio or accessible PDF as required. Equality Act 2010 makes this a service-provider duty.",
+      "The apprenticeship contract (a formal indenture under the Apprenticeships, Skills, Children and Learning Act 2009), the wages, the off-the-job training declaration (a minimum 20% of paid working hours under the Apprenticeship Standard), the provision of suitable work and supervision, and HASAWA s.2 duties to provide a safe place of work and adequate training.",
+      "Wide investigative powers — enter any premises (without warrant) at any reasonable time, take measurements / photographs / samples, inspect documents, require people to answer questions, take statements, take possession of articles or substances they think pose a risk, and seek a magistrate's warrant if entry is refused. Failure to co-operate is itself a separate criminal offence under s.33.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Magistrates' jurisdiction was extended in 2015 to include unlimited fines for H&S offences, removing the previous £20k cap. Most prosecutions are triable either way; the prosecution picks the venue based on case complexity and likely sentence.",
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: "What does the Corporate Manslaughter and Corporate Homicide Act 2007 do?",
     options: [
-      "Nothing — it was repealed.",
+      "When the circuit supplies multiple loads that will not all run simultaneously at full power. Apply diversity to the connected load before deriving Ib. For a dedicated single-load circuit (single shower, single hob), no diversity applies — Ib equals the rated current of the load.",
       "Creates a corporate offence where an organisation's activities cause a person's death and amount to a gross breach of a relevant duty of care, where the breach is the result of the way in which senior management organised or managed activities. Triable on indictment only; unlimited fines. Allows publicity orders and remedial orders. Sits alongside HASAWA prosecutions, not as a replacement.",
-      "Creates a personal offence for ordinary employees.",
-      "Only applies to public sector bodies.",
+      "Recognise that direct eye contact norms vary significantly across cultures — in many cultures, avoiding direct eye contact is a sign of respect, not evasion. Adjust your communication style to accommodate cultural differences rather than interpreting through your own cultural lens",
+      "The apprenticeship contract (a formal indenture under the Apprenticeships, Skills, Children and Learning Act 2009), the wages, the off-the-job training declaration (a minimum 20% of paid working hours under the Apprenticeship Standard), the provision of suitable work and supervision, and HASAWA s.2 duties to provide a safe place of work and adequate training.",
     ],
     correctAnswer: 1,
     explanation:
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: "What's the HSE Public Register of Convictions and Notices?",
     options: [
-      "Internal HSE only.",
+      "Management of Health and Safety at Work Regulations 1999 Reg 3 — every employer (and every self-employed person) must make a 'suitable and sufficient' assessment of risks to health and safety. Reg 3(6) requires firms with five or more employees to record the significant findings.",
+      "A document prepared by the principal contractor before the construction phase starts, setting out the health and safety arrangements for the site (welfare, induction, site rules, hazard controls, emergency procedures, monitoring). Required for any project where there is more than one contractor; the depth of the plan scales with the project size and risk profile. Sub-contractors are entitled to relevant extracts on induction.",
       "Public-facing online register of all HSE prosecutions and notices issued. Searchable by company name and inspector area. Used by clients during procurement, by insurers when underwriting, by competitors, by potential employees and by news organisations. Reputational impact often outstrips the legal cost — major clients delist firms with prohibition notices.",
-      "A printed book in every Magistrates' Court.",
-      "Only available via FOI request.",
+      "Witnesses fade fast — by the next day they've reconstructed events differently, by the next week they've forgotten details, by the next month their memory has merged with what they later read or heard. Asking each witness to write down what they saw, in their own words, on the day of the incident, captures evidence at its strongest. The HSE / insurer / firm's defence team will all want this evidence later.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The public register is the reputational consequence of enforcement that often hurts the firm more than the fine. Procurement frameworks routinely require declaration of any HSE notices in the past 5 years, and a prohibition notice can disqualify a firm from bidding on public-sector work for years.",
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: "How does the Sentencing Council Definitive Guideline (2016) determine corporate fines?",
     options: [
-      "By dice roll.",
+      "Type 2 SPD at the consumer unit, supply-side of the main switch where possible, with 6 mm² copper PE to MET (Reg 534.4.10(a)), 2.5 mm² live connections (Reg 534.4.10(c)), conductor lengths under 0.5 m total (Reg 534.4.8), dedicated 25 A or 32 A MCB for SPD overcurrent protection, BS EN 61643 product standard.",
+      "Minimum £5 million cover (most policies are written at £10m as standard). The certificate must be displayed at each place of business — historically a printed certificate on the wall; the 2008 amendment regulations allow electronic display provided employees can readily access it. Failure to insure is a criminal offence with daily-rate fines up to £2,500 for each day uninsured.",
+      "Because most domestic PME supplies have a PEN of 35 mm² or less, which Table 54.8 maps to a 10 mm² minimum copper-equivalent main bonding. On bigger supplies (commercial three-phase, 70 mm² PEN) the bonding steps up to 16 mm² or 25 mm². Always read the supplier neutral first, then Table 54.8.",
       "Three-step matrix: (1) Culpability — Very High / High / Medium / Low; (2) Harm — Category 1 (death/permanent), 2 (serious), 3 (minor) with adjustments for risk of higher harm or multiple persons; (3) Turnover band — Large (£50m+), Medium (£10-£50m), Small (£2-£10m), Micro (under £2m). Cell in the matrix gives a starting point and a range. Adjusted up for aggravating factors, down for mitigating.",
-      "By the magistrate's mood.",
-      "By the company's chosen donation level.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The matrix is published in the Definitive Guideline. Largest cell (high culpability × Cat 1 harm × very large turnover) starts at £4m with a range up to £20m+ before mitigation. Smaller firms aren't immune — the percentage-of-turnover effect can be severe even for £2m firms.",
   },
@@ -179,12 +179,12 @@ const quizQuestions = [
     question:
       "When an HSE inspector arrives on site unannounced, what's the L3 operative response?",
     options: [
-      "Refuse entry — it's not a public area.",
       "Cooperate (HASAWA s.7 + CDM Reg 15). Confirm your name and role. Direct the inspector to the senior person on site (supervisor, contracts manager, site manager). Answer factual questions truthfully — interfering with an inspector is a separate offence under HASAWA s.33. If asked technical questions outside your competence, say so honestly. Do not speculate or guess. Notify your firm immediately.",
-      "Demand to see ID and a warrant.",
-      "Tell them everyone is on lunch.",
+      "Automated bank feed (transactions imported from your bank), invoice generation and tracking (sent invoices visible, paid status tracked), VAT return preparation (Making Tax Digital compliant), expense tracking with photo receipts, integration with payroll for staff/apprentices, real-time profit and loss view. Cost £15-30/month for sole trader; saves hours of manual bookkeeping each month.",
+      "IET Online = large technical document archive (standards, journals, conference papers) for searching and reference. IET Academy = structured online learning platform with bite-sized courses on technical topics (BS 7671, PV, EV, motor control, power quality, etc.). Both included with MIET membership. Online for reference; Academy for structured learning.",
+      "Marine electrical work covers commercial shipping, naval, offshore (oil and gas, wind), ports and marinas. Specific competence requirements include marine-grade equipment standards (BS EN 60092), corrosion-protection methods, DC systems (24V/48V common on vessels), shore-power connections. Specialist routes via the Royal Navy, Merchant Navy or commercial marine contractors. Often combined with CompEx for offshore work.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "HSE inspectors can enter at any reasonable time without a warrant under HASAWA s.20. Refusal is an offence. The L3 operative's job is cooperate, escalate to the senior person, and answer factual questions truthfully without speculating. The firm's legal/H&S team handles the formal interview.",
   },

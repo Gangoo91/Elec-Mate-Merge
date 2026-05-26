@@ -27,8 +27,13 @@ const quickCheckQuestions = [
     id: 'bacnet-transport',
     question:
       'Which BACnet transport layer is most commonly used for backbone communications in large commercial buildings?',
-    options: ['BACnet MS/TP', 'BACnet/IP', 'BACnet ARCNET', 'BACnet PTP'],
-    correctIndex: 1,
+    options: [
+      'BACnet/IP',
+      'BACnet MS/TP',
+      'BACnet PTP',
+      'BACnet ARCNET',
+    ],
+    correctIndex: 0,
     explanation:
       'BACnet/IP uses standard Ethernet and IP infrastructure, providing high speed (100 Mbps+), native IT integration, and leverages existing building network cabling. MS/TP is used for field-level device communications.',
   },
@@ -36,10 +41,10 @@ const quickCheckQuestions = [
     id: 'modbus-difference',
     question: 'What is the key difference between Modbus RTU and Modbus TCP?',
     options: [
-      'RTU supports more devices than TCP',
+      'TCP requires proprietary software',
       'TCP uses Ethernet, RTU uses serial RS-485',
       'RTU is faster than TCP',
-      'TCP requires proprietary software',
+      'RTU supports more devices than TCP',
     ],
     correctIndex: 1,
     explanation:
@@ -48,8 +53,13 @@ const quickCheckQuestions = [
   {
     id: 'knx-topology',
     question: 'What is the maximum number of devices per KNX line segment?',
-    options: ['32 devices', '64 devices', '127 devices', '256 devices'],
-    correctIndex: 1,
+    options: [
+      '256 devices',
+      '127 devices',
+      '64 devices',
+      '32 devices',
+    ],
+    correctIndex: 2,
     explanation:
       'A KNX line segment supports up to 64 devices. Lines can be connected via line couplers to form areas, and areas via backbone couplers, creating a hierarchical topology supporting thousands of devices.',
   },
@@ -57,12 +67,12 @@ const quickCheckQuestions = [
     id: 'gateway-purpose',
     question: 'What is the primary function of a protocol gateway in a BMS installation?',
     options: [
-      'To increase communication speed',
+      'Rate of heat transfer through a building element (thermal transmittance)',
+      'BS 88, BS 3036, BS EN 60898, BS EN 60947-2 or BS EN 61009-1 RCBO at 30 A or 32 A',
       'To translate between different protocols enabling interoperability',
-      'To provide backup communications',
-      'To encrypt data transmissions',
+      'Central point connecting all earthing and bonding conductors',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Protocol gateways translate messages between different protocols (e.g., Modbus to BACnet), enabling devices from different manufacturers to communicate within an integrated BMS.',
   },
@@ -73,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'Which organisation developed and maintains the BACnet standard?',
     options: [
-      'International Electrotechnical Commission (IEC)',
+      'The sum of EMFs equals the sum of voltage drops (algebraic sum = 0)',
       'ASHRAE (American Society of Heating, Refrigerating and Air-Conditioning Engineers)',
-      'European Committee for Standardization (CEN)',
-      'Building Automation and Control Networks Association',
+      'Identify the terminal with the lowest percentage of design flow',
+      'Stop, Take a breath, Observe what you are feeling, Proceed with awareness',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,7 +95,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What baud rate is typically used for BACnet MS/TP communications?',
-    options: ['9600 bps', '19200 bps', '38400 or 76800 bps', '115200 bps'],
+    options: [
+      '115200 bps',
+      '9600 bps',
+      '38400 or 76800 bps',
+      '19200 bps',
+    ],
     correctAnswer: 2,
     explanation:
       'BACnet MS/TP commonly operates at 38400 or 76800 bps over RS-485. Higher baud rates (76800) are preferred for larger networks to improve response times.',
@@ -94,12 +109,12 @@ const quizQuestions = [
     id: 3,
     question: 'In Modbus protocol, what is the function code for reading holding registers?',
     options: [
-      '01 (Read Coils)',
       '02 (Read Discrete Inputs)',
-      '03 (Read Holding Registers)',
+      '01 (Read Coils)',
       '04 (Read Input Registers)',
+      '03 (Read Holding Registers)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Function code 03 reads holding registers, which are typically used for setpoints, configuration data, and read/write values. Function code 04 reads input registers (read-only sensor values).',
   },
@@ -107,27 +122,37 @@ const quizQuestions = [
     id: 4,
     question: 'What physical medium does standard KNX TP (Twisted Pair) use?',
     options: [
-      'Cat 6 Ethernet cable',
       'Dedicated green KNX bus cable (twisted pair)',
-      'Coaxial cable',
-      'Fibre optic cable',
+      'Identify all hazards and required isolation points',
+      'Mechanical stress and flexing damage assessment',
+      'The scheduled maintenance date being overdue',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'KNX TP uses dedicated bus cable (typically green) with a twisted pair for communication. The same cable carries both data and 30V DC bus power for devices.',
   },
   {
     id: 5,
     question: 'What is the maximum cable length for a single RS-485 segment used in Modbus RTU?',
-    options: ['100 metres', '500 metres', '1200 metres', '2000 metres'],
-    correctAnswer: 2,
+    options: [
+      '500 metres',
+      '1200 metres',
+      '2000 metres',
+      '100 metres',
+    ],
+    correctAnswer: 1,
     explanation:
       'RS-485 supports cable lengths up to 1200 metres (4000 feet) at lower baud rates. This long distance capability makes it ideal for industrial and building automation applications.',
   },
   {
     id: 6,
     question: 'Which protocol was specifically designed for utility metering applications?',
-    options: ['BACnet', 'LonWorks', 'M-Bus (Meter Bus)', 'KNX'],
+    options: [
+      'BACnet',
+      'LonWorks',
+      'M-Bus (Meter Bus)',
+      'KNX',
+    ],
     correctAnswer: 2,
     explanation:
       'M-Bus was specifically designed for remote reading of utility meters (gas, water, electricity, heat). It uses a two-wire bus with master-slave communication and supports long cable runs.',
@@ -137,11 +162,11 @@ const quizQuestions = [
     question: 'What does PICS stand for in BACnet terminology?',
     options: [
       'Protocol Interface Communication Standard',
-      'Protocol Implementation Conformance Statement',
-      'Primary Integration Communication System',
       'Programmable Interface Control Specification',
+      'Primary Integration Communication System',
+      'Protocol Implementation Conformance Statement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PICS (Protocol Implementation Conformance Statement) documents exactly which BACnet objects, services, and data link layers a device supports, enabling specifiers to verify interoperability.',
   },
@@ -149,12 +174,12 @@ const quizQuestions = [
     id: 8,
     question: 'In a LonWorks network, what is the function of a router?',
     options: [
-      'To provide power to network devices',
       'To connect subnets and manage message routing between domains',
-      'To store historical data',
-      'To provide a user interface',
+      'Open protocols enable competitive procurement and reduce vendor lock-in',
+      'Protocol Implementation Conformance Statement',
+      'Dedicated green KNX bus cable (twisted pair)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'LonWorks routers connect subnets within or between domains, managing message routing and limiting local traffic to its origin subnet. They enable large, hierarchical network topologies.',
   },
@@ -163,11 +188,11 @@ const quizQuestions = [
     question: 'Which statement about open protocols versus proprietary systems is correct?',
     options: [
       'Proprietary systems always perform better than open protocols',
-      'Open protocols guarantee multi-vendor interoperability without testing',
       'Open protocols enable competitive procurement and reduce vendor lock-in',
+      'Open protocols guarantee multi-vendor interoperability without testing',
       'Proprietary systems are always less expensive to maintain',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Open protocols (BACnet, Modbus, KNX) enable competitive procurement by allowing products from multiple vendors. This reduces vendor lock-in and typically lowers lifecycle costs.',
   },
@@ -175,12 +200,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is BACnet Broadcast Management Device (BBMD) used for?',
     options: [
-      'Managing device alarms',
+      'To connect subnets and manage message routing between domains',
+      'Points list, protocol details, and communication parameters',
       'Routing BACnet/IP messages across different IP subnets',
-      'Storing trend data',
-      'Providing time synchronisation',
+      'Dedicated green KNX bus cable (twisted pair)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BBMD enables BACnet/IP devices on different IP subnets to discover and communicate with each other by forwarding broadcast messages. Essential for large multi-subnet installations.',
   },
@@ -188,8 +213,13 @@ const quizQuestions = [
     id: 11,
     question:
       'What is the typical polling interval recommended for energy monitoring points in a BMS?',
-    options: ['Every second', 'Every 5-15 minutes', 'Once per hour', 'Once per day'],
-    correctAnswer: 1,
+    options: [
+      'Every second',
+      'Once per day',
+      'Once per hour',
+      'Every 5-15 minutes',
+    ],
+    correctAnswer: 3,
     explanation:
       'Energy monitoring typically uses 5-15 minute intervals, balancing granularity for analysis against network traffic. Critical control points may poll more frequently (1-5 seconds).',
   },
@@ -198,12 +228,12 @@ const quizQuestions = [
     question:
       'When integrating a third-party chiller with a BMS, what information is essential from the chiller manufacturer?',
     options: [
-      'Marketing brochures and case studies',
       'Points list, protocol details, and communication parameters',
-      'Installation photographs',
-      'Warranty documentation only',
+      'To connect subnets and manage message routing between domains',
+      'Protocol Implementation Conformance Statement',
+      'Routing BACnet/IP messages across different IP subnets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Integration requires a detailed points list (available data points), protocol specification (BACnet PICS, Modbus register map), and communication parameters (baud rate, addressing, IP settings).',
   },

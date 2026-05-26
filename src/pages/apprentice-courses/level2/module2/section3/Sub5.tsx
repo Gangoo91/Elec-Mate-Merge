@@ -35,7 +35,12 @@ const checks = [
   {
     id: 'i-squared-r-check',
     question: 'The power dissipated as heat in a conductor of resistance R carrying current I is:',
-    options: ['P = V × I', 'P = I × R', 'P = I² × R', 'P = V² × R'],
+    options: [
+      'P = V × I',
+      'P = V² × R',
+      'P = I² × R',
+      'P = I × R',
+    ],
     correctIndex: 2,
     explanation:
       "P = I²R. Double the current and you quadruple the heating. That's why a small overload heats a cable badly out of proportion, and why bigger CSA (lower R) is the fix.",
@@ -45,12 +50,12 @@ const checks = [
     question:
       'A 70°C PVC-insulated cable run is left in a hot loft. The ambient is 45°C and the cable is also bunched with three other circuits. What does BS 7671 want you to do?',
     options: [
-      'Nothing — the rating is the rating',
+      'By evaluating whether the space is substantially enclosed and whether there is a foreseeable risk of serious injury from hazardous conditions',
+      'Golden thread of digital information including electrical certification, accountability through dutyholder roles, and AFDD-related design considerations',
+      'Could be a short circuit (L-N), an earth fault (L-PE), or both — depends what the nail bridges',
       'Apply Appendix 4 correction factors (ambient + grouping) and check the corrected rating still covers the design current',
-      'Run a continuous-load test for an hour',
-      'Cover the cable with thermal insulation to keep it warm',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Appendix 4 has correction factors (Ca for ambient, Cg for grouping, Ci for thermal insulation). Multiply them together with the tabulated It value to get the actual usable rating in that environment. If your design current exceeds it, upsize.",
   },
@@ -58,8 +63,13 @@ const checks = [
     id: 'loose-joint-check',
     question:
       "A consumer-unit terminal at 25 A has 0.05 Ω of contact resistance because it's loose. How much heat is dissipated at that single screw?",
-    options: ['1.25 W', '12.5 W', '31.25 W', '125 W'],
-    correctIndex: 2,
+    options: [
+      '125 W',
+      '31.25 W',
+      '12.5 W',
+      '1.25 W',
+    ],
+    correctIndex: 1,
     explanation:
       "P = I²R = 25² × 0.05 = 31.25 W. That's a 30 W heater concentrated on the head of one terminal screw — easily enough to brown the insulation, melt the bus-bar coating, and start an arc fault.",
   },
@@ -70,19 +80,24 @@ const quizQuestions = [
     id: 1,
     question: 'Heat in a current-carrying cable is best described by:',
     options: [
-      'I²R losses (Joule heating)',
       'Magnetic induction',
+      'I²R losses (Joule heating)',
       'Capacitive reactance',
       'Frequency drift',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       "Joule heating: every conductor with resistance dissipates power = I²R as heat. Bigger I or bigger R = more heat. It's the underlying mechanism behind every cable rating, every fuse, every kettle element.",
   },
   {
     id: 2,
     question: 'Doubling the current in a cable does what to the heat dissipated?',
-    options: ['Doubles it', 'Halves it', 'Quadruples it', 'No change'],
+    options: [
+      'No change',
+      'Doubles it',
+      'Quadruples it',
+      'Halves it',
+    ],
     correctAnswer: 2,
     explanation:
       "P = I²R. Square of two = four. That's why a small overload heats a cable disproportionately — and why protective devices have to act quickly above the rated current.",
@@ -90,8 +105,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Standard PVC cable insulation is rated for a maximum continuous temperature of:',
-    options: ['40°C', '70°C', '90°C', '120°C'],
-    correctAnswer: 1,
+    options: [
+      '90°C',
+      '40°C',
+      '120°C',
+      '70°C',
+    ],
+    correctAnswer: 3,
     explanation:
       "70°C for PVC, 90°C for XLPE. Above the limit, the insulation softens and ages rapidly — a 10°C overrun roughly halves its remaining life.",
   },
@@ -100,9 +120,9 @@ const quizQuestions = [
     question: 'Why does grouping cables together reduce their current rating?',
     options: [
       "Bunched cables can't dissipate heat as well, so they run hotter for the same current",
-      'Grouping changes the resistivity',
-      'It increases the supply voltage',
-      'It has no effect',
+      "Apply for supply upgrade, consider on-site generation, or implement load management",
+      "A target for total primary energy consumption including generation and distribution losses",
+      "To take reasonable care of themselves and others, and cooperate with employers",
     ],
     correctAnswer: 0,
     explanation:
@@ -112,12 +132,12 @@ const quizQuestions = [
     id: 5,
     question: 'A circuit-protective device (fuse or MCB) trips on overload because:',
     options: [
+      'Evaluating and prioritising risks by plotting likelihood against severity',
       'Current creates heat in the device, which triggers the trip mechanism above the rated value',
-      'It detects voltage drop',
-      'It tests insulation resistance',
-      'It measures power factor',
+      'Activating event, Beliefs (about the event), Consequences (emotional and behavioural)',
+      'Location, type, condition, pressure gauge reading (if applicable), seal integrity, and any damage or obstruction',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       "Fuse element melts (I²R heating in a deliberately weak link). MCB thermal element bends as I²R heat builds. Both are using the heating effect of current to disconnect before the cable insulation cooks.",
   },
@@ -125,12 +145,12 @@ const quizQuestions = [
     id: 6,
     question: 'A loose terminal in a junction box typically causes:',
     options: [
-      'The breaker to trip immediately',
+      'After every practice test, with a formal review every 2-3 weeks',
+      'Gradually increase lighting based on time of day',
       'High contact resistance, localised I²R heating and possible fire',
-      'Overvoltage at the load',
-      'Resistance to drop to zero',
+      'A solar system connected to the mains grid, exporting excess generation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Loose joint = high local R. Same I, much bigger R at one point = a lot of heat in one spot. Browns insulation, melts plastic, can ignite materials nearby. Doesn't usually trip the protection because total circuit current is unchanged.",
   },
@@ -138,12 +158,12 @@ const quizQuestions = [
     id: 7,
     question: 'BS 7671 Sections 525 and 526 between them cover:',
     options: [
-      'Voltage drop and connections',
+      'Surge protection',
       'Earthing arrangements',
       'Special locations',
-      'Surge protection',
+      'Voltage drop and connections',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       "525 = voltage drop. 526 = connections (durable continuity, mechanical strength, accessibility for inspection). Together they cover the two main thermal failure modes: long undersized runs and bad joints.",
   },
@@ -151,12 +171,12 @@ const quizQuestions = [
     id: 8,
     question: 'Best initial response to a strong burning smell from a consumer unit:',
     options: [
-      'Open it up to investigate',
       'Isolate the supply, lock-off, evacuate if heavy smoke, then investigate',
-      'Wait and see',
-      'Reset the breakers',
+      'Only if trained, it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safe to do so, you have the right extinguisher, and the fire is small',
+      'Eliminate where possible, guard remaining hazards, train staff, provide PPE',
+      'To provide fixed reference points for accurate positioning',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Safety first. Burning smell means insulation is already cooking, possibly arcing inside. Open the door of a unit that's actively faulting and you risk a flash. Isolate, lock-off, evacuate if smoke is significant, then make safe before opening up.",
   },

@@ -24,10 +24,10 @@ const quizQuestions = [
     question:
       "A lighting circuit at the end of a long corridor is noticeably dimmer than at the consumer unit. What's the most likely cause?",
     options: [
-      'Faulty lamps',
+      'Larger cable CSA or shorter route',
       'Excessive voltage drop due to cable resistance',
-      'RCD tripping',
-      'Phase imbalance',
+      'Isolate immediately and investigate',
+      'Contact resistance increases, causing I²R losses',
     ],
     correctAnswer: 1,
     explanation:
@@ -38,12 +38,12 @@ const quizQuestions = [
     question:
       "You find a socket outlet that's warm to touch and has slight discolouration. What should you do first?",
     options: [
-      "Ignore it if it's working",
+      'Larger cable CSA or shorter route',
+      'Slower fault disconnection',
       'Isolate immediately and investigate',
-      'Reduce the load',
-      'Replace the socket',
+      'Both resistance and current rating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Warm outlets with discolouration indicate overheating, often from loose connections. Isolate immediately for safety before investigating.',
   },
@@ -52,12 +52,12 @@ const quizQuestions = [
     question:
       'An EV charger keeps derating from 32A to 16A during charging. The most likely cause is:',
     options: [
-      'Faulty charger',
+      'Soft or brittle insulation',
+      'Isolate immediately and investigate',
+      'Larger cable CSA or shorter route',
       'Voltage drop on the supply cable',
-      'Wrong MCB size',
-      'Earth fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'EV chargers monitor supply voltage. Excessive voltage drop under load causes automatic derating to maintain safe operation.',
   },
@@ -65,12 +65,12 @@ const quizQuestions = [
     id: 4,
     question: 'A motor circuit has high Zs readings. This could cause:',
     options: [
-      'Faster protection',
       'Slower fault disconnection',
-      'Better motor performance',
-      'No effect',
+      'Soft or brittle insulation',
+      'Voltage drop on the supply cable',
+      'Resistance increases',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'High Zs reduces fault current, potentially causing protective devices to operate more slowly or not at all.',
   },
@@ -78,12 +78,12 @@ const quizQuestions = [
     id: 5,
     question: 'When checking for overheating, the best method is:',
     options: [
-      'Visual inspection only',
-      'Touch test',
+      'Soft or brittle insulation',
       'Thermal imaging under load',
-      'Multimeter readings',
+      'Resistance increases',
+      'Voltage drop on the supply cable',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Thermal imaging under load reveals hot spots that may not be visible or safely touchable, providing accurate temperature data.',
   },
@@ -92,10 +92,10 @@ const quizQuestions = [
     question:
       'A 50m cable run to a workshop keeps tripping the MCB when high-current tools are used. Best solution:',
     options: [
-      'Larger MCB',
-      'RCD instead of MCB',
+      'Voltage drop on the supply cable',
+      'Thermal imaging under load',
       'Larger cable CSA or shorter route',
-      'Lower current tools only',
+      'Soft or brittle insulation',
     ],
     correctAnswer: 2,
     explanation:
@@ -105,12 +105,12 @@ const quizQuestions = [
     id: 7,
     question: 'Loose terminations cause heating because:',
     options: [
-      'More current flows',
+      'Isolate immediately and investigate',
+      'Both resistance and current rating',
+      'Excessive voltage drop due to cable resistance',
       'Contact resistance increases, causing I²R losses',
-      'Voltage increases',
-      'Insulation breaks down',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Loose connections create high contact resistance. Power loss = I²R, so higher resistance with same current creates more heat.',
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     id: 8,
     question: 'Signs of thermal damage to cables include:',
     options: [
-      'Bright copper conductors',
       'Soft or brittle insulation',
       'Increased flexibility',
+      'Bright copper conductors',
       'Better conductivity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Heat damages insulation, making it either soft and deformable or hard and brittle, both indicating thermal stress.',
   },
@@ -147,11 +147,11 @@ const quizQuestions = [
       'Multiple cables are grouped in a conduit, causing higher temperatures. This affects:',
     options: [
       'Only the cable current rating',
+      'Nothing significant',
       'Both resistance and current rating',
       'Only the insulation colour',
-      'Nothing significant',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Higher temperatures increase cable resistance AND reduce current-carrying capacity. Both effects must be considered in design calculations.',
   },

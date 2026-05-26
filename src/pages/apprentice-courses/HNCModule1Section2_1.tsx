@@ -35,10 +35,10 @@ const quickCheckQuestions = [
     id: 'hazard-vs-risk',
     question: 'What is the key difference between a hazard and a risk?',
     options: [
-      'Hazards are more dangerous than risks',
+      'Providing a benchmark to help interpret biological monitoring results for groups of workers',
       'A hazard is a potential source of harm; risk is the likelihood and severity of harm occurring',
-      'Risks are physical, hazards are procedural',
-      'There is no difference - they mean the same thing',
+      'Workers know the practical requirements and comfort needed for effective use',
+      'Pedestrians, other workers, and members of the public in the vicinity',
     ],
     correctIndex: 1,
     explanation:
@@ -49,12 +49,12 @@ const quickCheckQuestions = [
     question:
       'How often should formal workplace inspections be conducted in building services environments?',
     options: [
-      'Only after an accident occurs',
-      'Once per year',
       'Regularly - typically weekly, monthly, or quarterly depending on risk level',
-      'Only when requested by the HSE',
+      'Channel includes equipment cords; permanent link tests only installed cabling',
+      'Calculated loss based on core alignment - verify with OTDR',
+      'Multi-fibre Termination Push-on (trademarked MPO variant)',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Regular scheduled inspections are essential for proactive hazard identification. Higher-risk environments require more frequent inspections. Daily informal checks complement formal scheduled inspections.',
   },
@@ -62,12 +62,12 @@ const quickCheckQuestions = [
     id: 'jsa-purpose',
     question: 'What is the primary purpose of a Job Safety Analysis (JSA)?',
     options: [
-      'To record accidents after they happen',
+      'Flow coefficient - gallons per minute at 1 psi pressure drop',
+      'Mechanical support preventing cable pull from reaching the fibre',
       'To break down tasks into steps and identify hazards at each stage',
-      'To calculate project costs',
-      'To assign blame for safety failures',
+      'AC polarity alternates; equipment is marked L/N for safety and function',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "JSA systematically breaks down a job into its component steps, identifies potential hazards at each step, and determines appropriate control measures. It's a proactive tool for preventing incidents before work begins.",
   },
@@ -76,11 +76,11 @@ const quickCheckQuestions = [
     question: 'Why is reporting near misses important for hazard identification?',
     options: [
       "It's not important - only actual injuries need reporting",
-      'Near misses reveal hazards before they cause actual harm',
       "It's only required for RIDDOR purposes",
+      'Near misses reveal hazards before they cause actual harm',
       'Near miss reports are only for insurance claims',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Near misses are 'free lessons' - they reveal hazards and system failures without injury occurring. Research shows for every serious injury, there are hundreds of near misses. Capturing this data helps prevent future incidents.",
   },
@@ -105,12 +105,12 @@ const quizQuestions = [
     question:
       'During a workplace inspection, which area should receive PARTICULAR attention in a building services environment?',
     options: [
-      'Staff canteen facilities',
+      'Buildings to be net zero carbon ready with no fossil fuel heating',
+      'Have a slower operating characteristic or time-delay function',
       'Distribution boards, switch rooms, and plant areas',
-      'Car parking arrangements',
-      'Office desk layouts',
+      'The resistance of the earth electrode to general mass of earth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Electrical distribution areas, switch rooms, and plant rooms present the highest hazard potential in building services. These areas combine electrical, mechanical, and sometimes chemical hazards requiring thorough inspection.',
   },
@@ -119,12 +119,12 @@ const quizQuestions = [
     question:
       'What does the hierarchy of controls prioritise as the most effective control measure?',
     options: [
-      'Personal protective equipment',
       'Administrative controls',
-      'Elimination of the hazard',
+      'Personal protective equipment',
       'Warning signs and labels',
+      'Elimination of the hazard',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'The hierarchy prioritises: Elimination > Substitution > Engineering controls > Administrative controls > PPE. Eliminating a hazard entirely is always the most effective solution, though not always practicable.',
   },
@@ -133,12 +133,12 @@ const quizQuestions = [
     question:
       'A task analysis reveals that an electrician must work at height to install luminaires. What type of hazard category does this primarily represent?',
     options: [
-      'Electrical hazard',
-      'Environmental hazard',
       'Physical/mechanical hazard',
+      'Environmental hazard',
+      'Electrical hazard',
       'Ergonomic hazard',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Working at height is a physical/mechanical hazard - the potential for falls from height. While the task is electrical installation, the work at height hazard must be assessed separately and often presents the greater risk.',
   },
@@ -146,10 +146,10 @@ const quizQuestions = [
     id: 5,
     question: 'Which document would you consult to determine if an incident is RIDDOR reportable?',
     options: [
-      'BS 7671 Wiring Regulations',
+      'Submittal number, description, date submitted, and approval status',
       'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013',
-      'Construction (Design and Management) Regulations 2015',
-      'Electricity at Work Regulations 1989',
+      'To prevent signal reflections and communication errors',
+      'Adequate support to prevent mechanical damage from cable weight',
     ],
     correctAnswer: 1,
     explanation:
@@ -159,10 +159,10 @@ const quizQuestions = [
     id: 6,
     question: 'What is the recommended frequency for reviewing and updating Job Safety Analyses?',
     options: [
-      'Only when an accident occurs',
-      'Every five years',
+      'Continuous monitoring and recreating fault conditions',
+      'An approved body for electrical contractor registration',
       'When work methods, equipment, or conditions change, or after incidents',
-      'JSAs never need updating once created',
+      'EAWR 1989 Regulation 4(2) — "as may be necessary to prevent danger"',
     ],
     correctAnswer: 2,
     explanation:
@@ -172,8 +172,13 @@ const quizQuestions = [
     id: 7,
     question:
       'An electrician develops back pain from repeatedly lifting heavy cable drums. This is primarily which type of hazard?',
-    options: ['Electrical hazard', 'Chemical hazard', 'Ergonomic hazard', 'Environmental hazard'],
-    correctAnswer: 2,
+    options: [
+      'Electrical hazard',
+      'Chemical hazard',
+      'Environmental hazard',
+      'Ergonomic hazard',
+    ],
+    correctAnswer: 3,
     explanation:
       'Ergonomic hazards relate to the physical demands of work that can cause musculoskeletal injuries. Manual handling, repetitive movements, awkward postures, and prolonged standing are common ergonomic hazards in building services.',
   },
@@ -182,12 +187,12 @@ const quizQuestions = [
     question:
       'Which observation technique involves watching workers perform their normal tasks without prior notice?',
     options: [
-      'Scheduled safety audit',
-      'Formal inspection',
       'Behavioural safety observation',
       'Incident investigation',
+      'Scheduled safety audit',
+      'Formal inspection',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       "Behavioural safety observations capture how work is actually performed, not how workers think it should be done when they know they're being watched. This reveals genuine hazardous behaviours and unsafe conditions.",
   },
@@ -195,8 +200,13 @@ const quizQuestions = [
     id: 9,
     question:
       "According to Heinrich's Triangle, for every serious injury there are approximately how many near misses?",
-    options: ['10', '29', '300', '1000'],
-    correctAnswer: 2,
+    options: [
+      '10',
+      '300',
+      '29',
+      '1000',
+    ],
+    correctAnswer: 1,
     explanation:
       "Heinrich's research suggested a ratio of 1:29:300 - for every serious injury, there are 29 minor injuries and 300 near misses. Modern studies suggest the near-miss ratio may be even higher. This demonstrates the importance of near-miss reporting.",
   },

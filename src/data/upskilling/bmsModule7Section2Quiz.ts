@@ -5,10 +5,10 @@ export const bmsModule7Section2Quiz: QuizQuestion[] = [
     id: 1,
     question: 'What are function blocks in BMS programming?',
     options: [
-      'Physical building blocks used in construction',
+      'Details of faulty component and replacement specifications',
       'Graphical building blocks used to create control logic',
-      'Electrical connection blocks',
-      'Network communication modules',
+      'Ingress Protection against solids and liquids',
+      'Largest motor at 125% or higher, others at full load',
     ],
     correctAnswer: 1,
     explanation:
@@ -17,16 +17,26 @@ export const bmsModule7Section2Quiz: QuizQuestion[] = [
   {
     id: 2,
     question: 'Give one example of a common function block.',
-    options: ['Electrical panel', 'AND/OR gate', 'Cable tray', 'Power supply'],
-    correctAnswer: 1,
+    options: [
+      'Electrical panel',
+      'Cable tray',
+      'AND/OR gate',
+      'Power supply',
+    ],
+    correctAnswer: 2,
     explanation:
       'AND/OR gates are common function blocks used in BMS programming for logic decisions. Other examples include timers, comparators, and switching blocks.',
   },
   {
     id: 3,
     question: 'What does Boolean logic use as its two states?',
-    options: ['On and Off', 'True (1) and False (0)', 'High and Low', 'Yes and No'],
-    correctAnswer: 1,
+    options: [
+      'On and Off',
+      'Yes and No',
+      'High and Low',
+      'True (1) and False (0)',
+    ],
+    correctAnswer: 3,
     explanation:
       'Boolean logic uses True (1) and False (0) as its two basic states. These binary conditions form the foundation of all digital decision-making in BMS systems.',
   },
@@ -34,12 +44,12 @@ export const bmsModule7Section2Quiz: QuizQuestion[] = [
     id: 4,
     question: 'What does an AND logic require for a true output?',
     options: [
-      'Any one condition to be true',
       'All conditions must be true',
       'No conditions to be true',
+      'Any one condition to be true',
       'Alternating true and false conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'AND logic requires ALL conditions to be true for the output to be true. If any condition is false, the output will be false.',
   },
@@ -60,12 +70,12 @@ export const bmsModule7Section2Quiz: QuizQuestion[] = [
     id: 6,
     question: 'What does a NOT logic do to an input?',
     options: [
+      'Filters the signal',
       'Amplifies the signal',
       'Inverts the input signal',
       'Delays the signal',
-      'Filters the signal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'NOT logic inverts the input signal. If the input is True (1), the output becomes False (0), and if the input is False (0), the output becomes True (1).',
   },
@@ -73,20 +83,25 @@ export const bmsModule7Section2Quiz: QuizQuestion[] = [
     id: 7,
     question: 'What are the three components of PID control?',
     options: [
-      'Power, Input, Display',
-      'Proportional, Integral, Derivative',
       'Primary, Internal, Direct',
+      'Power, Input, Display',
       'Process, Interface, Device',
+      'Proportional, Integral, Derivative',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The three components of PID control are Proportional (reacts to current error), Integral (reacts to accumulated error over time), and Derivative (reacts to rate of change of error).',
   },
   {
     id: 8,
     question: 'Which part of PID corrects long-term offset from setpoint?',
-    options: ['Proportional (P)', 'Integral (I)', 'Derivative (D)', 'All three equally'],
-    correctAnswer: 1,
+    options: [
+      'Integral (I)',
+      'Proportional (P)',
+      'Derivative (D)',
+      'All three equally',
+    ],
+    correctAnswer: 0,
     explanation:
       'The Integral (I) component corrects long-term offset from setpoint. It accumulates error over time and gradually increases the control output to eliminate steady-state drift.',
   },
@@ -94,10 +109,10 @@ export const bmsModule7Section2Quiz: QuizQuestion[] = [
     id: 9,
     question: 'Why is programming/testing done with electricians present?',
     options: [
-      "It's a legal requirement",
+      'To ensure fault protection is functional before live testing',
       'To verify wiring matches programming and test physical responses',
-      'To operate the computer software',
-      'To write the control programs',
+      'How refractive index varies across the fibre cross-section',
+      'A temporary manual override that reverts after a set time',
     ],
     correctAnswer: 1,
     explanation:
@@ -108,12 +123,12 @@ export const bmsModule7Section2Quiz: QuizQuestion[] = [
     question:
       'In the real-world example, what programming error caused a fan to run during a fire alarm?',
     options: [
-      'Missing timer function',
+      'In every room with windows providing natural light',
+      'Privacy modes with scheduled/triggered recording',
       'Incorrect OR logic instead of AND/NOT logic',
-      'Wrong PID parameters',
-      'Broken function block',
+      'By showing equipment running outside of scheduled hours',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The programming error was using OR logic instead of proper AND/NOT logic. The incorrect OR logic meant the fan would run if ANY condition was true, including during a fire alarm when it should have stopped.',
   },

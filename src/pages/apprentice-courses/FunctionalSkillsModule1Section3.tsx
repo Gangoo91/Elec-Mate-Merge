@@ -16,8 +16,13 @@ const FunctionalSkillsModule1Section3 = () => {
       id: 1,
       question:
         "Using Ohm's Law (V = IR), what is the voltage across a 12 Ω resistor carrying 5 A?",
-      options: ['2.4 V', '17 V', '60 V', '7 V'],
-      correctAnswer: 2,
+      options: [
+        '2.4 V',
+        '60 V',
+        '17 V',
+        '7 V',
+      ],
+      correctAnswer: 1,
       explanation:
         "V = I × R = 5 × 12 = 60 V. Ohm's Law is the single most-used formula in electrical work.",
     },
@@ -25,8 +30,13 @@ const FunctionalSkillsModule1Section3 = () => {
       id: 2,
       question:
         'Rearrange the power formula P = IV to find the current drawn by a 3 kW immersion heater on a 230 V supply.',
-      options: ['13.04 A', '690,000 A', '0.077 A', '76.7 A'],
-      correctAnswer: 0,
+      options: [
+        '0.077 A',
+        '76.7 A',
+        '13.04 A',
+        '690,000 A',
+      ],
+      correctAnswer: 2,
       explanation:
         'P = 3,000 W. Rearranging: I = P ÷ V = 3,000 ÷ 230 = 13.04 A. This tells you a 16 A MCB is the minimum required protection.',
     },
@@ -34,8 +44,13 @@ const FunctionalSkillsModule1Section3 = () => {
       id: 3,
       question:
         'Using P = I²R, what power is dissipated in a 6 Ω resistance element carrying 10 A?',
-      options: ['60 W', '600 W', '360 W', '160 W'],
-      correctAnswer: 1,
+      options: [
+        '360 W',
+        '60 W',
+        '160 W',
+        '600 W',
+      ],
+      correctAnswer: 3,
       explanation:
         'P = I² × R = 10² × 6 = 100 × 6 = 600 W. This formula is particularly useful when calculating heat losses in cables.',
     },
@@ -43,15 +58,25 @@ const FunctionalSkillsModule1Section3 = () => {
       id: 4,
       question:
         'The formula for voltage drop is Vd = (mV/A/m × Ib × L) ÷ 1,000. If mV/A/m = 18, Ib = 20 A and L = 25 m, what is the voltage drop?',
-      options: ['9,000 V', '9 V', '0.9 V', '90 V'],
-      correctAnswer: 1,
+      options: [
+        '9 V',
+        '9,000 V',
+        '0.9 V',
+        '90 V',
+      ],
+      correctAnswer: 0,
       explanation:
         'Vd = (18 × 20 × 25) ÷ 1,000 = 9,000 ÷ 1,000 = 9 V. The maximum permitted voltage drop for a 230 V circuit (5%) is 11.5 V, so 9 V is compliant.',
     },
     {
       id: 5,
       question: 'Rearrange V = IR to find R when V = 230 V and I = 10 A.',
-      options: ['2,300 Ω', '23 Ω', '0.043 Ω', '24 Ω'],
+      options: [
+        '2,300 Ω',
+        '23 Ω',
+        '24 Ω',
+        '0.043 Ω',
+      ],
       correctAnswer: 1,
       explanation:
         'Rearranging: R = V ÷ I = 230 ÷ 10 = 23 Ω. This is used to calculate the total resistance of a circuit when you know the voltage and current.',
@@ -60,7 +85,12 @@ const FunctionalSkillsModule1Section3 = () => {
       id: 6,
       question:
         'Two resistors of 10 Ω and 15 Ω are connected in parallel. What is the combined resistance?',
-      options: ['25 Ω', '5 Ω', '6 Ω', '12.5 Ω'],
+      options: [
+        '25 Ω',
+        '5 Ω',
+        '6 Ω',
+        '12.5 Ω',
+      ],
       correctAnswer: 2,
       explanation:
         'For two resistors in parallel: R = (R1 × R2) ÷ (R1 + R2) = (10 × 15) ÷ (10 + 15) = 150 ÷ 25 = 6 Ω. The combined resistance is always less than the smallest individual resistor.',
@@ -69,8 +99,13 @@ const FunctionalSkillsModule1Section3 = () => {
       id: 7,
       question:
         'A circuit has a design current (Ib) of 22 A. Using the adiabatic equation S = √(I²t) ÷ k, what minimum cable CSA is needed if fault current I = 800 A, disconnection time t = 0.4 s and k = 115?',
-      options: ['4.0 mm²', '4.4 mm²', '2.5 mm²', '6.0 mm²'],
-      correctAnswer: 1,
+      options: [
+        '4.0 mm²',
+        '6.0 mm²',
+        '2.5 mm²',
+        '4.4 mm²',
+      ],
+      correctAnswer: 3,
       explanation:
         'S = √(I² × t) ÷ k = √(800² × 0.4) ÷ 115 = √(256,000) ÷ 115 = 506 ÷ 115 = 4.4 mm². You would select the next standard cable size of 6 mm².',
     },
@@ -78,8 +113,13 @@ const FunctionalSkillsModule1Section3 = () => {
       id: 8,
       question:
         'Rearrange the formula for energy (E = P × t) to find how long it takes a 2 kW heater to use 5 kWh of energy.',
-      options: ['10 hours', '2.5 hours', '0.4 hours', '10,000 hours'],
-      correctAnswer: 1,
+      options: [
+        '2.5 hours',
+        '0.4 hours',
+        '10 hours',
+        '10,000 hours',
+      ],
+      correctAnswer: 0,
       explanation:
         'Rearranging: t = E ÷ P = 5 ÷ 2 = 2.5 hours. This is useful when estimating running costs from appliance ratings.',
     },

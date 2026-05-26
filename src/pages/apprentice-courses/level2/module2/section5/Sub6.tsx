@@ -37,15 +37,25 @@ const checks = [
   {
     id: 'rms-peak',
     question: 'UK mains is 230 V RMS. Approximately what is the peak voltage?',
-    options: ['230 V', '253 V', '325 V', '460 V'],
-    correctIndex: 2,
+    options: [
+      '230 V',
+      '253 V',
+      '460 V',
+      '325 V',
+    ],
+    correctIndex: 3,
     explanation:
       'V_peak = V_RMS × √2 ≈ 230 × 1.414 ≈ 325 V. Same equipment but designed for the peak — that’s why insulation, clearances and component voltage ratings have to handle 325 V even though "the supply" is "only" 230 V.',
   },
   {
     id: 'frequency-period',
     question: 'What is the period of UK 50 Hz mains?',
-    options: ['10 ms', '20 ms', '50 ms', '100 ms'],
+    options: [
+      '10 ms',
+      '20 ms',
+      '100 ms',
+      '50 ms',
+    ],
     correctIndex: 1,
     explanation:
       'T = 1 / f = 1 / 50 = 0.02 s = 20 ms. Each complete cycle takes 20 milliseconds. The voltage crosses zero twice per cycle, so 100 zero-crossings every second on UK mains.',
@@ -54,8 +64,13 @@ const checks = [
     id: 'sync-speed',
     question:
       'A 4-pole induction motor on UK 50 Hz mains has a synchronous speed of about:',
-    options: ['750 rpm', '1500 rpm', '3000 rpm', '6000 rpm'],
-    correctIndex: 1,
+    options: [
+      '1500 rpm',
+      '750 rpm',
+      '3000 rpm',
+      '6000 rpm',
+    ],
+    correctIndex: 0,
     explanation:
       'n_s = (120 × f) / poles = (120 × 50) / 4 = 1500 rpm. Real running speed is a bit less (typically 1440–1470 rpm) due to slip — that’s how an induction motor produces torque.',
   },
@@ -66,10 +81,10 @@ const quizQuestions = [
     id: 1,
     question: 'What does RMS represent for an AC waveform?',
     options: [
-      'The average of the peaks',
+      'Reduced toxic gas emission in fire conditions',
       'The DC voltage that gives the same heating effect',
-      'The highest possible voltage',
-      'The frequency of the waveform',
+      'To test on both halves of the AC waveform',
+      'Sum of all equipment ratings connected to the circuit',
     ],
     correctAnswer: 1,
     explanation:
@@ -78,31 +93,51 @@ const quizQuestions = [
   {
     id: 2,
     question: 'For a pure sine wave, V_RMS in terms of V_peak is:',
-    options: ['V_p × 2', 'V_p / √2', 'V_p / 2', 'V_p × √2'],
-    correctAnswer: 1,
+    options: [
+      'V_p / 2',
+      'V_p × 2',
+      'V_p / √2',
+      'V_p × √2',
+    ],
+    correctAnswer: 2,
     explanation:
       'V_RMS = V_p / √2 ≈ 0.707 × V_p. The 1/√2 factor falls out of the maths of squaring a sine wave and averaging it. Memorise the number — examiners love asking it both ways round.',
   },
   {
     id: 3,
     question: 'If V_RMS = 230 V (UK mains), V_p is approximately:',
-    options: ['230 V', '253 V', '325 V', '460 V'],
-    correctAnswer: 2,
+    options: [
+      '253 V',
+      '230 V',
+      '460 V',
+      '325 V',
+    ],
+    correctAnswer: 3,
     explanation:
       'V_p ≈ V_RMS × √2 ≈ 230 × 1.414 ≈ 325 V. Insulation and clearances must handle this peak even though "the supply" is quoted at 230 V.',
   },
   {
     id: 4,
     question: 'What is the frequency of UK public mains?',
-    options: ['60 Hz', '50 Hz', '25 Hz', '400 Hz'],
-    correctAnswer: 1,
+    options: [
+      '50 Hz',
+      '60 Hz',
+      '25 Hz',
+      '400 Hz',
+    ],
+    correctAnswer: 0,
     explanation:
       '50 Hz, set by ESQCR 2002. The grid keeps it within ±1% (49.5 Hz to 50.5 Hz) by balancing generation and load in real time. The US uses 60 Hz, aircraft typically 400 Hz.',
   },
   {
     id: 5,
     question: 'Increasing frequency does what to the period?',
-    options: ['Increases T', 'Decreases T', 'No change', 'Makes T negative'],
+    options: [
+      'Increases T',
+      'Decreases T',
+      'Makes T negative',
+      'No change',
+    ],
     correctAnswer: 1,
     explanation:
       'f and T are inverses: T = 1/f. Higher f = shorter T. 50 Hz → 20 ms. 100 Hz → 10 ms. 1 kHz → 1 ms.',
@@ -112,10 +147,10 @@ const quizQuestions = [
     question:
       'When MUST you use a true-RMS meter rather than an average-responding one?',
     options: [
-      'Only on DC supplies',
-      'Only on perfect sine waves',
+      'Avoid working at height altogether where possible',
+      'A motor designed to run on single-phase supply using starting mechanisms',
       'On distorted or non-sinusoidal waveforms (drives, SMPS, LED drivers)',
-      'Never — they read the same',
+      'Show sizes, support spacing, and load capacity information',
     ],
     correctAnswer: 2,
     explanation:
@@ -124,8 +159,13 @@ const quizQuestions = [
   {
     id: 7,
     question: 'A 6-pole induction motor on UK 50 Hz mains. Synchronous speed:',
-    options: ['1500 rpm', '1000 rpm', '750 rpm', '3000 rpm'],
-    correctAnswer: 1,
+    options: [
+      '1500 rpm',
+      '3000 rpm',
+      '750 rpm',
+      '1000 rpm',
+    ],
+    correctAnswer: 3,
     explanation:
       '(120 × 50) / 6 = 1000 rpm. That’s the magnetic synchronous speed. Real running speed sits 2–5% below it due to slip — typically 950–980 rpm at full load.',
   },
@@ -133,12 +173,12 @@ const quizQuestions = [
     id: 8,
     question: 'Your meter shows 49.8 Hz on a domestic socket. What should you do?',
     options: [
-      'Panic and isolate the property',
       'Nothing — variation within ±1% of 50 Hz is normal under ESQCR 2002',
-      'Phone the DNO straight away',
-      'Reset the consumer unit',
+      'When inductive reactance equals capacitive reactance',
+      'Translating between different communication protocols',
+      'Record all test results with locations and conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ESQCR 2002 Reg 27 allows ±1% on declared frequency — that’s 49.5 to 50.5 Hz. 49.8 is well inside. Daily fluctuations of ±0.2 Hz are normal as the grid balances supply against demand minute by minute.',
   },

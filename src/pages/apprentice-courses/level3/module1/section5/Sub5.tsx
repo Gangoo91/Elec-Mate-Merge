@@ -15,20 +15,75 @@ const TITLE = 'Risk assessment as a supervisor | Level 3 Module 1.5.5 | Elec-Mat
 const DESCRIPTION = 'L3 supervisor RA judgement — beyond compliance, the suitable-and-sufficient test, dynamic-vs-static, escalation when RAMS no longer fits, contributing to firm RAMS process.';
 
 const checks = [
-  { id: 'l3-m1-s5-sub5-supervisor', question: 'What\'s the L3 supervisor add over L2 RA?', options: ['Same.', 'Reviewing the static RAMS, signing off the dynamic version, deciding when conditions diverge enough to need a fresh RAMS, contributing to writing RAMS for routine jobs, coaching L2 mates through assessment.', 'Less.', 'Random.'], correctIndex: 1, explanation: 'L3 = reviewer / signer / decider / contributor / coach. L2 = follower.' },
-  { id: 'l3-m1-s5-sub5-suitable', question: 'How is "suitable and sufficient" judged?', options: ['By gut feel.', 'By reference to the actual hazards present, the controls implemented, and whether industry good practice (HSG guidance, BS 7671 etc) was followed. The HSE inspector after an incident asks: did this RA engage with the actual conditions?', 'By colour.', 'By price.'], correctIndex: 1, explanation: 'Objective test against actual conditions and good practice. Templates that don\'t engage fail the test.' },
-  { id: 'l3-m1-s5-sub5-conflict', question: 'What if the static RAMS and the dynamic conditions clearly conflict?', options: ['Use static anyway.', 'Stop. Write a fresh dynamic assessment that supplements the RAMS. If divergences are significant, escalate for a fresh RAMS rather than try to manage on the fly. Document the decision.', 'Use neither.', 'Customer decides.'], correctIndex: 1, explanation: 'Significant divergence = escalate. Don\'t paper over with a tweaked dynamic assessment.' },
+  { id: 'l3-m1-s5-sub5-supervisor', question: 'What\'s the L3 supervisor add over L2 RA?', options: [
+    'The ratio of useful heat output to electrical energy input — a COP of 3.0 means the heat pump delivers 3 kW of heat for every 1 kW of electricity consumed, by extracting additional energy from the air, ground or water source',
+    'Under-tightened connections can overheat and cause fires; over-tightened connections can damage conductors and terminals — correct torque ensures safe, durable connections',
+    'The construction phase plan should be developed using the pre-construction information as a key input, building on the hazard and risk information it contains to set out how the construction phase will be managed safely',
+    'Reviewing the static RAMS, signing off the dynamic version, deciding when conditions diverge enough to need a fresh RAMS, contributing to writing RAMS for routine jobs, coaching L2 mates through assessment.',
+  ], correctIndex: 3, explanation: 'L3 = reviewer / signer / decider / contributor / coach. L2 = follower.' },
+  { id: 'l3-m1-s5-sub5-suitable', question: 'How is "suitable and sufficient" judged?', options: [
+    'By reference to the actual hazards present, the controls implemented, and whether industry good practice (HSG guidance, BS 7671 etc) was followed. The HSE inspector after an incident asks: did this RA engage with the actual conditions?',
+    'CAR 2012 Reg 10 — anyone who is or may be exposed to asbestos must receive adequate training. UKATA / IATP-certified asbestos awareness (1-day) is the typical baseline for trades. Higher levels (non-licensed work, licensed work) require more advanced training.',
+    'Adequate lighting of the tower and surrounding area, increased fatigue risk in night workers, reduced visibility for inspections, and the availability of rescue personnel throughout the night',
+    'Providing genuine value beyond the contracted scope — such as helpful maintenance advice, energy-saving tips, or pointing out potential issues — without expecting immediate return',
+  ], correctIndex: 0, explanation: 'Objective test against actual conditions and good practice. Templates that don\'t engage fail the test.' },
+  { id: 'l3-m1-s5-sub5-conflict', question: 'What if the static RAMS and the dynamic conditions clearly conflict?', options: [
+    'Acknowledge promptly, investigate fairly, respond in writing within a stated timescale, signpost to ADR (e.g. scheme provider) if unresolved',
+    'On the Schedule of Inspections, item 6 (connection of conductors), as ✗ with a brief description; flag the supervisor and fix before energising.',
+    'In the Blind Spot \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 the mentor should provide specific, factual feedback using the SBI model to bring it into the Open area',
+    'Stop. Write a fresh dynamic assessment that supplements the RAMS. If divergences are significant, escalate for a fresh RAMS rather than try to manage on the fly. Document the decision.',
+  ], correctIndex: 3, explanation: 'Significant divergence = escalate. Don\'t paper over with a tweaked dynamic assessment.' },
 ];
 
 const quizQuestions = [
-  { id: 1, question: 'What\'s the L3 supervisor RA mindset?', options: ['Compliance tick.', 'Active engagement — does the RAMS match the site? Are the controls in place AND working? Is anyone slipping? What\'s changed since last visit? The mindset is operational, not paperwork.', 'Random.', 'Customer-led.'], correctAnswer: 1, explanation: 'Active engagement; operational mindset; verification not just compliance.' },
-  { id: 2, question: 'What\'s the legal source of the RA duty?', options: ['BS 7671.', 'MHSWR 1999 Reg 3 — every employer makes a "suitable and sufficient" assessment of risks to employees and non-employees. 5+ employees = recording mandatory.', 'Customer ask.', 'Council bylaws.'], correctAnswer: 1, explanation: 'Reg 3 is the statutory hook.' },
-  { id: 3, question: 'What\'s the Reg 5 link?', options: ['No link.', 'MHSWR Reg 5 — effective arrangements for planning, organising, controlling, monitoring, reviewing the preventive measures (POCMR). RA is one input; Reg 5 runs the system that operationalises it.', 'Same as Reg 3.', 'Random.'], correctAnswer: 1, explanation: 'Reg 3 = assess. Reg 5 = run the system. POCMR cycle.' },
-  { id: 4, question: 'How does the L3 supervisor verify "suitable and sufficient"?', options: ['Take the customer\'s word.', 'Compare RAMS to actual site conditions; check controls are in place; observe operatives; ask &quot;could anyone reading this assessment understand the hazards and controls?&quot;; verify any HSE / industry guidance has been considered.', 'Random.', 'Customer-led.'], correctAnswer: 1, explanation: 'Verification by comparison and observation. Templates that fail the &quot;could anyone reading this understand?&quot; test fail suitable and sufficient.' },
-  { id: 5, question: 'What\'s the role of HSE INDG163 (5 steps)?', options: ['Just guidance.', 'Withdrawn but still the conceptual basis — Identify hazards / Decide who might be harmed / Evaluate risks / Record significant findings / Review. Practical structure for any RA.', 'Mandatory law.', 'Customer doc.'], correctAnswer: 1, explanation: '5 steps remain the conceptual structure even though INDG163 itself withdrawn.' },
-  { id: 6, question: 'When should L3 escalate for a fresh RAMS rather than tweak the dynamic?', options: ['Never.', 'When divergences from the original RAMS are significant — different conditions, different hazards, different occupancy, different scope. Tweaking is for minor divergences; fresh RAMS for significant ones.', 'Always.', 'Random.'], correctAnswer: 1, explanation: 'Significant divergence = fresh RAMS. Tweaking only for minor.' },
-  { id: 7, question: 'What\'s the L3 contribution to the firm\'s RAMS process?', options: ['Nothing.', 'Feedback from site (what\'s actually working / not); contribution to writing RAMS for routine jobs; review of generic templates; coaching of L2 mates on dynamic assessment; near-miss data feeding the next RAMS update.', 'Customer service.', 'Sales.'], correctAnswer: 1, explanation: 'L3 increasingly contributes to the firm\'s RAMS process. Site experience feeds template improvement.' },
-  { id: 8, question: 'How does the L3 supervisor coach L2 mates on RA?', options: ['Tell them.', 'Walk them through hazard identification on real jobs; ask "what hazards do you see here?"; explain reasoning behind controls; show them how to write a dynamic assessment note; review their attempts; correct calibration over time.', 'Random.', 'Read aloud.'], correctAnswer: 1, explanation: 'Coaching by guided practice. Building L2 RA capability is part of the L3 supervisor contribution.' },
+  { id: 1, question: 'What\'s the L3 supervisor RA mindset?', options: [
+    'Boredom or apathy — because the challenge is too low relative to their skill level, offering no opportunity for engagement or growth',
+    'Active engagement — does the RAMS match the site? Are the controls in place AND working? Is anyone slipping? What\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s changed since last visit? The mindset is operational, not paperwork.',
+    'The health and safety arrangements and site rules for the construction phase, and specific measures concerning work falling within Schedule 3',
+    'Recommended; the recommendation strengthens to a requirement in higher-risk residential buildings (HRRBs) under the Building Safety Act 2022 framework',
+  ], correctAnswer: 1, explanation: 'Active engagement; operational mindset; verification not just compliance.' },
+  { id: 2, question: 'What\'s the legal source of the RA duty?', options: [
+    'Prepare to cease operations and lower the platform to a safe position, as gusts may exceed 12.5 m/s and conditions are deteriorating',
+    'Ensure all personnel, tools, and materials are removed from the platform and the height is reduced if required',
+    'MHSWR 1999 Reg 3 — every employer makes a "suitable and sufficient" assessment of risks to employees and non-employees. 5+ employees = recording mandatory.',
+    'The dynamic and concentrated forces from hoisting can exceed the tower\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s design capacity and cause collapse or overturning',
+  ], correctAnswer: 2, explanation: 'Reg 3 is the statutory hook.' },
+  { id: 3, question: 'What\'s the Reg 5 link?', options: [
+    'The total amount of greenhouse gases produced directly and indirectly by an activity, individual, organisation, or product, expressed as carbon dioxide equivalent (CO2e)',
+    'Indirectly - 30-year DPA liability, competence framework changes, Building Regs amendments (Approved Doc B fire safety especially), regulatory direction-of-travel emphasising traceability and certified competence.',
+    'Arc-rated clothing matched to the prospective incident energy, insulated gloves rated to the working voltage, eye/face protection, and insulated footwear',
+    'MHSWR Reg 5 — effective arrangements for planning, organising, controlling, monitoring, reviewing the preventive measures (POCMR). RA is one input; Reg 5 runs the system that operationalises it.',
+  ], correctAnswer: 3, explanation: 'Reg 3 = assess. Reg 5 = run the system. POCMR cycle.' },
+  { id: 4, question: 'How does the L3 supervisor verify "suitable and sufficient"?', options: [
+    'Compare RAMS to actual site conditions; check controls are in place; observe operatives; ask &quot;could anyone reading this assessment understand the hazards and controls?&quot;; verify any HSE / industry guidance has been considered.',
+    'Thank the worker for reporting the concern, investigate the allegation confidentially, take appropriate action against the unsafe management practice, reinforce that safety procedures are non-negotiable, and protect the worker from retaliation',
+    'Auto-disconnection occurs in the same disconnection times as the equivalent TN system (Table 41.1) — once a second fault establishes a fault loop through the protective conductor, fault current flows like a TN line-to-earth fault and the protective device disconnects',
+    'Segregate at source — recyclable cable scrap, WEEE for accessories with electronics, mixed waste, and asbestos suspect material handled separately under CAR 2012 / HSG264',
+  ], correctAnswer: 0, explanation: 'Verification by comparison and observation. Templates that fail the &quot;could anyone reading this understand?&quot; test fail suitable and sufficient.' },
+  { id: 5, question: 'What\'s the role of HSE INDG163 (5 steps)?', options: [
+    'Timed exclusion zones with physical barriers and signage, a dedicated banksman, a traffic management plan, and coordination with the local authority',
+    'Withdrawn but still the conceptual basis — Identify hazards / Decide who might be harmed / Evaluate risks / Record significant findings / Review. Practical structure for any RA.',
+    '50–150 Ω — typical for a single 1.2 m rod in damp clay loam. Rocky or sandy / dry soils give substantially higher figures (200–500+ Ω) and may need a longer rod, multiple rods, or a different electrode geometry.',
+    'Non-approved spare parts are fitted, the drive is opened by non-authorised personnel, parameter settings are changed without manufacturer approval, or the drive is operated outside its specified environmental conditions',
+  ], correctAnswer: 1, explanation: '5 steps remain the conceptual structure even though INDG163 itself withdrawn.' },
+  { id: 6, question: 'When should L3 escalate for a fresh RAMS rather than tweak the dynamic?', options: [
+    'Receive and verify the gateway submission from the training provider, confirm that all mandatory pre-requisites have been met, and then schedule the EPA assessment components within the specified timeframe',
+    'A root cause is the fundamental reason the failure occurred; a contributing factor increases the likelihood or severity but would not cause the failure alone',
+    'When divergences from the original RAMS are significant — different conditions, different hazards, different occupancy, different scope. Tweaking is for minor divergences; fresh RAMS for significant ones.',
+    'That you have completed all required on-programme qualifications, achieved the learning outcomes, built a portfolio that meets the minimum requirements, and are educationally ready for the EPA',
+  ], correctAnswer: 2, explanation: 'Significant divergence = fresh RAMS. Tweaking only for minor.' },
+  { id: 7, question: 'What\'s the L3 contribution to the firm\'s RAMS process?', options: [
+    'Empathetic listening to acknowledge feelings, SOLER body language to show presence, reflective statements to validate, and clear signposting to appropriate support services',
+    'The plan must rely entirely on self-rescue and on-site assisted rescue by trained personnel with rescue equipment, a satellite communication device should be provided, and the nearest emergency services response time must be factored into planning',
+    'He may be experiencing drug-induced psychosis triggered by heavy cannabis use; he should be supported calmly, kept safe, and guided towards urgent professional help',
+    'Feedback from site (what\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s actually working / not); contribution to writing RAMS for routine jobs; review of generic templates; coaching of L2 mates on dynamic assessment; near-miss data feeding the next RAMS update.',
+  ], correctAnswer: 3, explanation: 'L3 increasingly contributes to the firm\'s RAMS process. Site experience feeds template improvement.' },
+  { id: 8, question: 'How does the L3 supervisor coach L2 mates on RA?', options: [
+    'Walk them through hazard identification on real jobs; ask "what hazards do you see here?"; explain reasoning behind controls; show them how to write a dynamic assessment note; review their attempts; correct calibration over time.',
+    'Connected load, diversity factor with source citation, category Ib, sub-main coincidence with source, sub-main Ib, origin coincidence with source, origin Ib, per-phase distribution, phase imbalance percent, and supply rating with margin.',
+    'Still largely at demonstration and pre-commercial stage in the UK, with several prototype devices being tested in Scottish waters and the Severn Estuary — they offer predictable generation but face engineering challenges from the harsh marine environment',
+    'Atmospheric conditions can change rapidly during work — continuous monitoring provides real-time warning of deteriorating conditions so workers can evacuate before reaching dangerous levels',
+  ], correctAnswer: 0, explanation: 'Coaching by guided practice. Building L2 RA capability is part of the L3 supervisor contribution.' },
 ];
 
 const faqs = [

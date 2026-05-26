@@ -33,15 +33,25 @@ const quickCheckQuestions = [
     id: 'ohm-relationship',
     question:
       "According to Ohm's Law, if voltage remains constant and resistance doubles, what happens to current?",
-    options: ['Current doubles', 'Current halves', 'Current stays the same', 'Current quadruples'],
-    correctIndex: 1,
+    options: [
+      'Current quadruples',
+      'Current doubles',
+      'Current halves',
+      'Current stays the same',
+    ],
+    correctIndex: 2,
     explanation:
       'From I = V/R, if R doubles while V stays constant, current is halved. This is an inverse relationship between current and resistance.',
   },
   {
     id: 'basic-calculation',
     question: 'A 230V circuit has a load resistance of 23Ω. What current flows?',
-    options: ['5A', '10A', '23A', '230A'],
+    options: [
+      '5A',
+      '10A',
+      '230A',
+      '23A',
+    ],
     correctIndex: 1,
     explanation:
       "Using I = V/R: I = 230V ÷ 23Ω = 10A. This is a straightforward application of Ohm's Law.",
@@ -49,8 +59,13 @@ const quickCheckQuestions = [
   {
     id: 'non-ohmic',
     question: "What type of component does NOT follow Ohm's Law?",
-    options: ['Fixed resistor', 'Copper wire', 'LED', 'Heating element'],
-    correctIndex: 2,
+    options: [
+      'Copper wire',
+      'Heating element',
+      'Fixed resistor',
+      'LED',
+    ],
+    correctIndex: 3,
     explanation:
       'LEDs are non-linear (non-ohmic) devices - their resistance changes with current. Fixed resistors, copper wire and heating elements are approximately linear (ohmic) devices.',
   },
@@ -73,8 +88,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A 2kW heater operates at 230V. What is its operating resistance?',
-    options: ['8.7Ω', '26.5Ω', '115Ω', '460Ω'],
-    correctAnswer: 1,
+    options: [
+      '115Ω',
+      '8.7Ω',
+      '26.5Ω',
+      '460Ω',
+    ],
+    correctAnswer: 2,
     explanation:
       'First find current: I = P/V = 2000/230 = 8.7A. Then R = V/I = 230/8.7 = 26.5Ω. Alternatively, R = V²/P = 230²/2000 = 26.45Ω',
   },
@@ -82,8 +102,13 @@ const quizQuestions = [
     id: 3,
     question:
       'If the voltage across a fixed resistor increases by 50%, what happens to the current?',
-    options: ['Decreases by 50%', 'Increases by 50%', 'Doubles', 'Stays the same'],
-    correctAnswer: 1,
+    options: [
+      'Doubles',
+      'Decreases by 50%',
+      'Stays the same',
+      'Increases by 50%',
+    ],
+    correctAnswer: 3,
     explanation:
       'For a fixed (ohmic) resistor, current is directly proportional to voltage (I = V/R). If V increases by 50%, current also increases by 50%.',
   },
@@ -91,27 +116,37 @@ const quizQuestions = [
     id: 4,
     question: "Why do NTC thermistors not follow Ohm's Law exactly?",
     options: [
-      'They only work on AC',
       'Their resistance changes with temperature',
-      'They require DC supply',
-      'They have no resistance',
+      '2-3 metres for optimal coverage',
+      '"EICR_2024_Thompson_42-High-Street.pdf"',
+      'In appropriate conditions to prevent damage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "NTC (Negative Temperature Coefficient) thermistors have resistance that decreases as temperature increases. This non-linear behaviour means they don't follow Ohm's Law strictly.",
   },
   {
     id: 5,
     question: 'A cable with 0.5Ω resistance carries 20A. What is the voltage drop?',
-    options: ['0.025V', '2.5V', '10V', '40V'],
-    correctAnswer: 2,
+    options: [
+      '2.5V',
+      '10V',
+      '40V',
+      '0.025V',
+    ],
+    correctAnswer: 1,
     explanation:
       "Using V = I × R: V = 20A × 0.5Ω = 10V. This voltage is 'dropped' across the cable resistance.",
   },
   {
     id: 6,
     question: 'What is the maximum voltage drop allowed for power circuits in BS 7671?',
-    options: ['3%', '4%', '5%', '10%'],
+    options: [
+      '3%',
+      '4%',
+      '5%',
+      '10%',
+    ],
     correctAnswer: 2,
     explanation:
       'BS 7671 allows a maximum 5% voltage drop for power circuits (11.5V at 230V). Lighting circuits are limited to 3%.',
@@ -120,24 +155,39 @@ const quizQuestions = [
     id: 7,
     question:
       'A 40m cable run supplies a 13A load. Using 2.5mm² cable (7.41mΩ/m), what is the voltage drop?',
-    options: ['3.85V', '7.7V', '15.4V', '30.8V'],
-    correctAnswer: 1,
+    options: [
+      '3.85V',
+      '30.8V',
+      '15.4V',
+      '7.7V',
+    ],
+    correctAnswer: 3,
     explanation:
       'Total cable length = 40m × 2 = 80m (go and return). R = 80 × 0.00741 = 0.593Ω. Vd = 13 × 0.593 = 7.7V',
   },
   {
     id: 8,
     question: "Which rearrangement of Ohm's Law calculates current?",
-    options: ['I = VR', 'I = V/R', 'I = R/V', 'I = V + R'],
-    correctAnswer: 1,
+    options: [
+      'I = V/R',
+      'I = R/V',
+      'I = VR',
+      'I = V + R',
+    ],
+    correctAnswer: 0,
     explanation: 'Rearranging V = IR gives I = V/R. Current equals voltage divided by resistance.',
   },
   {
     id: 9,
     question:
       'A LED has a forward voltage of 3V and requires 20mA. What series resistor is needed from a 24V DC supply?',
-    options: ['105Ω', '150Ω', '1050Ω', '1200Ω'],
-    correctAnswer: 2,
+    options: [
+      '105Ω',
+      '1050Ω',
+      '150Ω',
+      '1200Ω',
+    ],
+    correctAnswer: 1,
     explanation: 'Voltage across resistor = 24V - 3V = 21V. R = V/I = 21V / 0.02A = 1050Ω',
   },
   {
@@ -145,11 +195,11 @@ const quizQuestions = [
     question: "Why is Ohm's Law important for earth fault loop impedance (Zs) calculations?",
     options: [
       'It determines cable colour',
+      'It defines cable sizes',
       'It calculates fault current: If = U₀/Zs',
       'It sets the supply voltage',
-      'It defines cable sizes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Fault current If = U₀/Zs uses Ohm's Law where U₀ is nominal voltage and Zs is earth fault loop impedance. This determines if protective devices will operate fast enough.",
   },

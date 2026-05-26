@@ -28,12 +28,12 @@ const FunctionalSkillsModule3Section4 = () => {
       question:
         'You receive an email claiming to be from your electrical wholesaler asking you to verify your account by clicking a link. The email address is support@electrcal-wholesale-uk.com (note the misspelling). What should you do?',
       options: [
-        'Click the link immediately — it looks urgent',
-        'Forward it to all your colleagues as a warning',
+        'Arrangements that enable the principal contractor and workers to cooperate effectively in developing, promoting and checking health and safety measures',
         'Do not click the link — this is likely a phishing attempt. Contact the wholesaler directly using their known phone number or website',
-        'Reply to the email asking if it is genuine',
+        'A preliminary roost assessment followed by dusk emergence and/or dawn re-entry surveys if potential is identified',
+        'The rapid transition to a state of full involvement of all combustible materials in a compartment, caused by intense radiant heat',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         "This is a classic phishing attempt. The misspelled domain name ('electrcal' instead of 'electrical') is a red flag. Never click links in suspicious emails. Instead, contact the company directly using contact details from their genuine website or your existing records — not the contact details in the suspicious email. Replying confirms your email address is active, which invites more phishing.",
     },
@@ -42,19 +42,24 @@ const FunctionalSkillsModule3Section4 = () => {
       question:
         "Under GDPR, how long can you retain a customer's personal data (name, address, contact details) after completing their electrical work?",
       options: [
-        'Forever — once you have it, it is yours',
+        'Provide a tagged accessible PDF (or large-print/braille if requested), an audio summary, and offer a verbal walk-through of any concerns',
+        'Complex PTSD includes all PTSD symptoms plus difficulties with emotional regulation, self-concept, and relationships',
         'Only as long as there is a legitimate business reason, such as warranty obligations, legal requirements, or ongoing service agreements',
-        'Exactly 30 days after the last invoice',
-        'Personal data cannot be stored under any circumstances',
+        'A step-by-step procedure to ensure electrical equipment is safely disconnected from supply before work',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'GDPR requires that personal data is retained only for as long as there is a legitimate purpose. For electricians, this typically includes the warranty period, legal record retention requirements (electrical certificates should be kept for the life of the installation), and ongoing maintenance agreements. You should have a data retention policy and delete data when it is no longer needed.',
     },
     {
       id: 3,
       question: 'What is the recommended minimum length for a strong password?',
-      options: ['4 characters', '6 characters', '8 characters', '12 characters or more'],
+      options: [
+        '8 characters',
+        '4 characters',
+        '6 characters',
+        '12 characters or more',
+      ],
       correctAnswer: 3,
       explanation:
         "Security experts recommend passwords of 12 characters or more. Longer passwords are exponentially harder to crack by brute force. A 12-character password using letters, numbers, and symbols would take billions of years to crack using current technology. Better still, use a passphrase — a series of random words like 'correct horse battery staple' — which is both long and memorable.",
@@ -64,12 +69,12 @@ const FunctionalSkillsModule3Section4 = () => {
       question:
         'Which of the following is the best practice for professional email communication with a client?',
       options: [
-        "Use text speak and abbreviations to save time (e.g. 'ur rewire is done m8')",
         'Use a clear subject line, professional greeting, concise body text, and a signature block with your contact details and registration numbers',
-        'Write entirely in capital letters to emphasise importance',
-        'Include as many emoji as possible to seem friendly',
+        'Calmly restate the concern using another I-message, such as "I understand it might seem that way, but this is about safety and I need us to follow the procedure"',
+        'Rapid deterioration requiring urgent attention — the machine may be approaching catastrophic failure',
+        'The tower must be immediately taken out of use and reduced to a compliant configuration or dismantled entirely',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         "Professional emails should have a clear subject line (e.g. 'EICR Report — 14 Oak Street'), a proper greeting, concise and well-structured body text, and a signature block containing your name, company, phone number, email, and registration details (NICEIC/ELECSA number). This builds client confidence and presents a professional image.",
     },
@@ -78,12 +83,12 @@ const FunctionalSkillsModule3Section4 = () => {
       question:
         'A customer posts a negative review about your work on social media. What is the best response?',
       options: [
-        'Delete the review and block the customer',
-        'Post an angry response defending yourself',
+        'The step-by-step safe sequence of work, including the hazards, controls, and responsibilities for each stage',
         'Respond politely and professionally, acknowledge their concern, and offer to discuss the matter privately to resolve it',
-        'Ignore it completely and hope nobody sees it',
+        'The SPD has reached end of life and needs replacement — it is no longer providing protection',
+        '60 Ω is well below 1667 Ω → extraneous → bond to the MET via a main protective bonding conductor sized per Reg 544.1 (typically 10 mm² Cu).',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'A professional, empathetic response demonstrates maturity and commitment to customer service. Acknowledge their concern, apologise for their experience, and offer to resolve the issue privately (by phone or in person). Potential customers reading the exchange will judge you more on how you handle the complaint than on the complaint itself. Never respond angrily — it damages your reputation far more than the original review.',
     },
@@ -91,12 +96,12 @@ const FunctionalSkillsModule3Section4 = () => {
       id: 6,
       question: 'What is a password manager and why should electricians use one?',
       options: [
-        'A person who remembers passwords for you',
+        'Pass — well below the 300 ms maximum for general non-delay type, indicating a healthy RCD with margin.',
+        'A high-resistance joint, loose connection, damaged conductor, or incorrect cable size in the circuit',
         'Software that securely stores and generates unique, strong passwords for all your accounts, so you only need to remember one master password',
-        'A feature that disables passwords on all devices',
-        'A type of antivirus software',
+        'That there is a continuous, low-resistance connection between the main earthing terminal and each extraneous-conductive-part (gas, water, structural steelwork)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'A password manager (e.g. Bitwarden, 1Password, LastPass) generates and securely stores unique, strong passwords for every account. You only need to remember one master password. This eliminates the dangerous practice of reusing the same password across multiple sites. If one site is breached, your other accounts remain safe because each has a different password.',
     },
@@ -104,12 +109,12 @@ const FunctionalSkillsModule3Section4 = () => {
       id: 7,
       question: 'Which of the following would constitute a GDPR breach if done by an electrician?',
       options: [
-        'Sending a certificate to a client via email',
+        "It structures a clinical/safety handover so nothing important is missed — increasingly used in construction safety briefings too",
+        "Any person who is or may be lawfully on the premises, and any person in the immediate vicinity who is at risk from a fire on the premises",
+        "That the scaffold is not overloaded and that materials are evenly distributed as per the design loading class",
         "Sharing a customer's name, address, and phone number with a third party without their consent for marketing purposes",
-        'Keeping a record of the work carried out at a property',
-        'Taking photographs of your own completed electrical work',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         "Sharing personal data (name, address, phone number) with a third party for marketing purposes without the individual's explicit consent violates GDPR. The other options are legitimate business activities — sending certificates to the data subject, retaining records for legal compliance, and photographing your work (though photographs showing identifiable individuals would need consideration).",
     },
@@ -117,12 +122,12 @@ const FunctionalSkillsModule3Section4 = () => {
       id: 8,
       question: "What is 'screen fatigue' and how can electricians manage it?",
       options: [
-        'A physical crack in your phone screen from dropping it on site',
         'Tiredness, eye strain, and reduced concentration from prolonged screen use — managed through regular breaks, the 20-20-20 rule, and limiting non-essential screen time',
-        'A type of computer virus',
-        'When your phone battery runs out',
+        'Use a clear subject line, professional greeting, concise body text, and a signature block with your contact details and registration numbers',
+        'Provide detailed fault history including dates, frequencies, measurements, conditions, and your analysis of potential root causes',
+        'Be polite and helpful, but tell them you cannot give access without the householder\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s permission and call your supervisor for guidance',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Screen fatigue (or digital eye strain) affects anyone who spends extended periods looking at screens. Symptoms include tired eyes, headaches, neck pain, and difficulty concentrating. The 20-20-20 rule helps: every 20 minutes, look at something 20 feet away for 20 seconds. Also, take regular breaks from screens, adjust brightness to match your environment, and use night mode in the evening.',
     },

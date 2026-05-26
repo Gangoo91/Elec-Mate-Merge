@@ -152,18 +152,17 @@ const InspectionItemRow: React.FC<{
               </button>
             </div>
 
-            {/* Notes — only when outcome is set */}
-            {item.outcome && (
-              <div className="mt-2">
-                <Textarea
-                  placeholder="Notes..."
-                  value={localNotes}
-                  onChange={(e) => handleNotesChange(e.target.value)}
-                  className="min-h-[40px] text-xs bg-white/[0.04] border-white/[0.06] resize-none focus:ring-1 focus:ring-elec-yellow/30 placeholder:text-white"
-                  style={{ fontSize: '13px' }}
-                />
-              </div>
-            )}
+            {/* Notes — always visible. Small + low-contrast until focused so it
+                doesn't clutter; discovery problem fix from EIC audit. */}
+            <div className="mt-2">
+              <Textarea
+                placeholder="Notes (optional)…"
+                value={localNotes}
+                onChange={(e) => handleNotesChange(e.target.value)}
+                className="min-h-[32px] text-xs bg-white/[0.03] border-white/[0.05] resize-none focus:ring-1 focus:ring-elec-yellow/30 placeholder:text-white/40"
+                style={{ fontSize: '13px' }}
+              />
+            </div>
           </div>
         </div>
       </div>

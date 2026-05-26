@@ -32,31 +32,51 @@ const quickCheckQuestions = [
   {
     id: 'uk-frequency',
     question: 'What is the standard UK mains supply frequency?',
-    options: ['40Hz', '50Hz', '60Hz', '100Hz'],
-    correctIndex: 1,
+    options: [
+      '40Hz',
+      '60Hz',
+      '50Hz',
+      '100Hz',
+    ],
+    correctIndex: 2,
     explanation:
       'The UK mains supply operates at 50Hz, meaning the voltage completes 50 full cycles per second. This is standard across Europe, whilst North America uses 60Hz.',
   },
   {
     id: 'period-calc',
     question: 'What is the period of a 50Hz waveform?',
-    options: ['0.01s (10ms)', '0.02s (20ms)', '0.05s (50ms)', '0.1s (100ms)'],
-    correctIndex: 1,
+    options: [
+      '0.01s (10ms)',
+      '0.05s (50ms)',
+      '0.02s (20ms)',
+      '0.1s (100ms)',
+    ],
+    correctIndex: 2,
     explanation:
       'Period T = 1/f = 1/50 = 0.02 seconds = 20ms. Each complete cycle of the UK mains supply takes 20 milliseconds.',
   },
   {
     id: 'angular-frequency',
     question: 'What is the angular frequency (ω) for a 50Hz supply?',
-    options: ['50 rad/s', '100 rad/s', '157 rad/s', '314 rad/s'],
-    correctIndex: 3,
+    options: [
+      '100 rad/s',
+      '50 rad/s',
+      '314 rad/s',
+      '157 rad/s',
+    ],
+    correctIndex: 2,
     explanation:
       'Angular frequency ω = 2πf = 2 × π × 50 = 314.16 rad/s ≈ 314 rad/s. This is used in instantaneous value calculations.',
   },
   {
     id: 'peak-voltage',
     question: 'If UK mains is 230V RMS, what is the peak voltage (Vm)?',
-    options: ['230V', '325V', '400V', '460V'],
+    options: [
+      '460V',
+      '325V',
+      '400V',
+      '230V',
+    ],
     correctIndex: 1,
     explanation:
       'Peak voltage Vm = Vrms × √2 = 230 × 1.414 = 325.3V ≈ 325V. Equipment insulation must withstand this peak value.',
@@ -67,7 +87,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the relationship between frequency (f) and period (T)?',
-    options: ['T = f', 'T = 1/f', 'T = 2πf', 'T = f/2'],
+    options: [
+      'T = f',
+      'T = 1/f',
+      'T = 2πf',
+      'T = f/2',
+    ],
     correctAnswer: 1,
     explanation:
       'Period and frequency are reciprocals: T = 1/f. If frequency is 50Hz, period is 1/50 = 0.02s (20ms). This fundamental relationship is essential for all AC calculations.',
@@ -75,8 +100,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'A motor is designed for 60Hz operation. What is its design period?',
-    options: ['10ms', '16.67ms', '20ms', '25ms'],
-    correctAnswer: 1,
+    options: [
+      '20ms',
+      '10ms',
+      '16.67ms',
+      '25ms',
+    ],
+    correctAnswer: 2,
     explanation:
       'T = 1/f = 1/60 = 0.01667s = 16.67ms. This is important when considering 50Hz/60Hz equipment compatibility.',
   },
@@ -84,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'What does angular frequency (ω) represent?',
     options: [
-      'The number of cycles per second',
-      'The rate of change of phase angle in radians per second',
       'The peak voltage divided by frequency',
+      'The number of cycles per second',
       'The power factor of the circuit',
+      'The rate of change of phase angle in radians per second',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Angular frequency ω represents the rate at which the phase angle changes, measured in radians per second. It equals 2πf because one complete cycle equals 2π radians.',
   },
@@ -97,15 +127,25 @@ const quizQuestions = [
     id: 4,
     question:
       'The instantaneous voltage equation v = Vm sin(ωt) at t = 5ms for 50Hz, 230V RMS supply gives:',
-    options: ['0V', '230V', '325V', '162.5V'],
-    correctAnswer: 2,
+    options: [
+      '325V',
+      '230V',
+      '0V',
+      '162.5V',
+    ],
+    correctAnswer: 0,
     explanation:
       'Vm = 230 × √2 = 325V. ω = 314 rad/s. At t = 5ms: v = 325 × sin(314 × 0.005) = 325 × sin(1.57) = 325 × 1 = 325V (peak of sine wave at 90°)',
   },
   {
     id: 5,
     question: 'How many complete cycles occur in one second at 50Hz?',
-    options: ['25 cycles', '50 cycles', '100 cycles', '314 cycles'],
+    options: [
+      '25 cycles',
+      '50 cycles',
+      '314 cycles',
+      '100 cycles',
+    ],
     correctAnswer: 1,
     explanation:
       'Frequency directly defines cycles per second: 50Hz means exactly 50 complete cycles per second. This is the fundamental definition of frequency in Hertz.',
@@ -115,11 +155,11 @@ const quizQuestions = [
     question: 'A 60Hz motor operates on UK 50Hz supply. What happens to its speed?',
     options: [
       'Speed increases by 20%',
-      'Speed decreases by approximately 17%',
       'Speed remains the same',
+      'Speed decreases by approximately 17%',
       'The motor will not run',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Motor speed is proportional to frequency. At 50Hz instead of 60Hz: speed ratio = 50/60 = 0.833 (83.3%), so speed decreases by approximately 17%.',
   },
@@ -127,16 +167,26 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the wavelength of a 50Hz signal in a cable with propagation velocity 2 × 10⁸ m/s?',
-    options: ['4,000m', '4,000km', '400m', '40km'],
-    correctAnswer: 1,
+    options: [
+      '4,000m',
+      '40km',
+      '400m',
+      '4,000km',
+    ],
+    correctAnswer: 3,
     explanation:
       'Wavelength λ = v/f = (2 × 10⁸)/(50) = 4 × 10⁶m = 4,000km. At power frequencies, wavelengths are very long compared to building dimensions.',
   },
   {
     id: 8,
     question: 'If peak-to-peak voltage is 650V, what is the amplitude (peak value)?',
-    options: ['162.5V', '230V', '325V', '460V'],
-    correctAnswer: 2,
+    options: [
+      '325V',
+      '460V',
+      '162.5V',
+      '230V',
+    ],
+    correctAnswer: 0,
     explanation:
       'Amplitude (peak) = peak-to-peak ÷ 2 = 650 ÷ 2 = 325V. The amplitude is measured from zero to positive (or negative) peak.',
   },
@@ -158,10 +208,10 @@ const quizQuestions = [
     question:
       'A building in the UK receives equipment designed for 60Hz, 120V. Which issue is most critical?',
     options: [
-      'Only the voltage difference',
-      'Only the frequency difference',
+      'An unlimited fine and/or up to 2 years imprisonment',
+      'Resistance increases as temperature increases',
       'Both voltage and frequency differences affect operation',
-      'Neither - equipment is compatible',
+      'To maintain battery charge during normal operation',
     ],
     correctAnswer: 2,
     explanation:
@@ -170,8 +220,13 @@ const quizQuestions = [
   {
     id: 11,
     question: 'At what time does v = Vm sin(ωt) first equal zero (after t = 0) for 50Hz?',
-    options: ['5ms', '10ms', '15ms', '20ms'],
-    correctAnswer: 1,
+    options: [
+      '5ms',
+      '20ms',
+      '15ms',
+      '10ms',
+    ],
+    correctAnswer: 3,
     explanation:
       'sin(ωt) = 0 when ωt = π. So t = π/ω = π/314 = 0.01s = 10ms. This is half the period (T/2 = 20ms/2 = 10ms), representing the zero crossing.',
   },
@@ -179,12 +234,12 @@ const quizQuestions = [
     id: 12,
     question: 'What is the effect of frequency on inductive reactance (XL)?',
     options: [
-      'XL decreases with increasing frequency',
       'XL increases proportionally with frequency',
-      'XL is independent of frequency',
       'XL increases with the square of frequency',
+      'XL decreases with increasing frequency',
+      'XL is independent of frequency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'XL = 2πfL. Inductive reactance increases directly with frequency. Motors designed for 50Hz have higher reactance and draw less current at 60Hz.',
   },

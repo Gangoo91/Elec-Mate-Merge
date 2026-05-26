@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Which regulation requires housekeeping to be maintained on construction sites?',
     options: [
-      'CDM 2015',
-      'PUWER 1998',
       'PPE Regulations 1992',
+      'CDM 2015',
       'Manual Handling Operations Regulations',
+      'PUWER 1998',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       'The Construction (Design and Management) Regulations 2015 (CDM) require housekeeping standards to be maintained throughout construction projects.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 2,
     question: 'Name one hazard caused by leaving waste in the work area.',
     options: [
+      'The employer (or self-employed person)',
+      'System with earthing electrode',
       'Fire hazards from flammable materials',
-      'Improved organisation',
-      'Better visibility',
-      'Reduced work time',
+      'Appropriate cable type, depth, and route marking',
     ],
-    correctIndex: 0,
+    correctIndex: 2,
     explanation:
       'Waste materials, particularly flammable packaging and offcuts, can create fire hazards if left near heat sources or ignition points.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why should heavy items be stored at waist height where possible?',
     options: [
+      'Deemed-to-satisfy guidance',
+      'Horizontally or vertically only',
+      'Self-declaration without evidence',
       'To reduce manual handling risks',
-      'To save floor space',
-      'To improve appearance',
-      'To prevent theft',
     ],
-    correctIndex: 0,
+    correctIndex: 3,
     explanation:
       'Storing heavy items at waist height reduces the need for lifting from floor level or reaching overhead, significantly reducing manual handling injury risks.',
   },
@@ -59,7 +59,12 @@ const Module4Section7_5 = () => {
     {
       id: 1,
       question: 'Which regulation requires safe housekeeping on construction projects?',
-      options: ['PUWER 1998', 'CDM 2015', 'PPE Regulations 1992', 'EAWR 1989'],
+      options: [
+        'PUWER 1998',
+        'CDM 2015',
+        'PPE Regulations 1992',
+        'EAWR 1989',
+      ],
       correctAnswer: 1,
       explanation:
         'The Construction (Design and Management) Regulations 2015 (CDM) specifically require safe housekeeping standards to be maintained throughout construction projects.',
@@ -68,8 +73,13 @@ const Module4Section7_5 = () => {
       id: 2,
       question:
         "True or False: It is acceptable to leave waste in voids as long as it's out of sight.",
-      options: ['True', 'False', 'Only non-flammable waste', 'Only for short periods'],
-      correctAnswer: 1,
+      options: [
+        'Only non-flammable waste',
+        'True',
+        'False',
+        'Only for short periods',
+      ],
+      correctAnswer: 2,
       explanation:
         'False - leaving waste in voids poses fire risks, breaches regulations, and can interfere with building services or future maintenance access.',
     },
@@ -77,12 +87,12 @@ const Module4Section7_5 = () => {
       id: 3,
       question: 'Name two hazards of poor housekeeping.',
       options: [
-        'Better organisation and efficiency',
-        'Slips/trips and fire hazards',
         'Improved visibility and access',
+        'Better organisation and efficiency',
         'Reduced material costs',
+        'Slips/trips and fire hazards',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Poor housekeeping creates slip, trip and fall hazards from debris, and fire hazards from accumulation of flammable materials near ignition sources.',
     },
@@ -90,19 +100,24 @@ const Module4Section7_5 = () => {
       id: 4,
       question: 'Why should cable reels be stored off the floor?',
       options: [
-        'To save space',
         'To prevent damage and trip hazards',
-        'To make them look tidy',
-        'To avoid colour fading',
+        'Conduit bending machine or former',
+        'Simultaneous heating and cooling operation',
+        'C_total = C₁ + C₂ + C₃ (arithmetic sum)',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Storing cable reels off the floor prevents damage from moisture, impact, and wheeled traffic, while also eliminating trip hazards for site personnel.',
     },
     {
       id: 5,
       question: 'What is the recommended safe storage level for heavy materials?',
-      options: ['Floor level', 'Waist height', 'Shoulder height', 'Above head height'],
+      options: [
+        'Floor level',
+        'Waist height',
+        'Above head height',
+        'Shoulder height',
+      ],
       correctAnswer: 1,
       explanation:
         'Waist height storage minimises manual handling risks by reducing the lifting distance and awkward postures required to access heavy materials.',
@@ -110,16 +125,26 @@ const Module4Section7_5 = () => {
     {
       id: 6,
       question: 'Which piece of equipment helps to manage trailing cables safely?',
-      options: ['Cable ties', 'Cable stands or hooks', 'Plastic bags', 'Tool boxes'],
-      correctAnswer: 1,
+      options: [
+        'Cable ties',
+        'Plastic bags',
+        'Cable stands or hooks',
+        'Tool boxes',
+      ],
+      correctAnswer: 2,
       explanation:
         'Cable stands or hooks keep trailing leads off the floor and organised, preventing trip hazards and cable damage from foot traffic.',
     },
     {
       id: 7,
       question: 'True or False: Only supervisors are responsible for site housekeeping.',
-      options: ['True', 'False', 'Only for major clean-ups', 'Only in designated areas'],
-      correctAnswer: 1,
+      options: [
+        'True',
+        'Only in designated areas',
+        'Only for major clean-ups',
+        'False',
+      ],
+      correctAnswer: 3,
       explanation:
         'False - everyone on site is responsible for housekeeping. Good organisation and cleanliness are shared responsibilities that contribute to overall safety.',
     },
@@ -128,12 +153,12 @@ const Module4Section7_5 = () => {
       question:
         "Give one reason why 'clear as you go' is better than tidying up at the end of the day only.",
       options: [
-        'Uses less time overall',
         'Reduces hazards during work, not just at the end',
-        'Requires fewer people',
-        'Creates less waste',
+        'To prove safety and compliance with regulations',
+        'To verify battery capacity and autonomy',
+        'One socket with higher resistance reading',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         "'Clear as you go' maintains safety throughout the working day, preventing accidents during work activities rather than allowing hazards to accumulate.",
     },
@@ -142,10 +167,10 @@ const Module4Section7_5 = () => {
       question:
         'Name one legal duty under the Health and Safety at Work Act related to the work area.',
       options: [
-        'Provide expensive equipment',
+        'The client failed an audit and the project was delayed',
         'Duty to keep workplace safe and without risks to health',
-        'Hire additional staff',
-        'Work longer hours',
+        'Single insulation providing equivalent protection to double',
+        'To maintain circuit integrity during fire conditions',
       ],
       correctAnswer: 1,
       explanation:
@@ -155,12 +180,12 @@ const Module4Section7_5 = () => {
       id: 10,
       question: 'Why should all access and escape routes be kept clear?',
       options: [
+        'Translating between different communication protocols',
+        'The conductor material and insulation type',
         'To meet fire safety and emergency requirements',
-        'To reduce waste collection times',
-        'To improve airflow',
-        'To prevent tool loss',
+        'Multi-factor authentication (biometrics + PIN/card)',
       ],
-      correctAnswer: 0,
+      correctAnswer: 2,
       explanation:
         'Clear access and escape routes are essential for fire safety and emergency evacuation, allowing rapid exit in case of incidents or emergencies.',
     },

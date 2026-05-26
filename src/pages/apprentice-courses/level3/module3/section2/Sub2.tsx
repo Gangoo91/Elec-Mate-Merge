@@ -44,8 +44,13 @@ const checks = [
     id: 'l3-m3-2-2-resistivity',
     question:
       'Calculate the resistance of a 50 m, 2.5 mm² copper conductor at 20 °C. (ρ = 1.72 × 10⁻⁸ Ω·m)',
-    options: ['0.034 Ω', '0.172 Ω', '0.344 Ω', '3.44 Ω'],
-    correctIndex: 2,
+    options: [
+      '0.034 Ω',
+      '0.344 Ω',
+      '0.172 Ω',
+      '3.44 Ω',
+    ],
+    correctIndex: 1,
     explanation:
       'R = ρL/A = (1.72 × 10⁻⁸ × 50) / (2.5 × 10⁻⁶) = (8.6 × 10⁻⁷) / (2.5 × 10⁻⁶) = 0.344 Ω. Note CSA in m², not mm².',
   },
@@ -53,8 +58,13 @@ const checks = [
     id: 'l3-m3-2-2-parallel',
     question:
       'Two resistors in parallel: R1 = 6 Ω and R2 = 3 Ω. Total resistance is:',
-    options: ['9 Ω', '4.5 Ω', '2 Ω', '1.5 Ω'],
-    correctIndex: 2,
+    options: [
+      '4.5 Ω',
+      '2 Ω',
+      '1.5 Ω',
+      '9 Ω',
+    ],
+    correctIndex: 1,
     explanation:
       'For two resistors in parallel: R = (R1 × R2) / (R1 + R2) = (6 × 3) / (6 + 3) = 18 / 9 = 2 Ω. Always less than the smallest single resistor.',
   },
@@ -62,7 +72,12 @@ const checks = [
     id: 'l3-m3-2-2-vdrop',
     question:
       'A 32 A circuit, 6 mm² T&E, 25 m long, mV/A/m = 7.3. Voltage drop is:',
-    options: ['1.46 V', '5.84 V', '58.4 V', '0.58 V'],
+    options: [
+      '1.46 V',
+      '5.84 V',
+      '58.4 V',
+      '0.58 V',
+    ],
     correctIndex: 1,
     explanation:
       'V_drop = (mV/A/m × I × L) / 1000 = (7.3 × 32 × 25) / 1000 = 5840 / 1000 = 5.84 V. Within the 6.9 V (3 %) limit for a final circuit.',
@@ -74,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: 'The formula R = ρL/A means resistance:',
     options: [
-      'Increases with cross-sectional area',
+      'To ensure exact positioning as per drawings',
       'Increases with length and decreases with cross-sectional area',
-      'Decreases with length',
-      'Is unrelated to length',
+      'Time-current characteristics and adjustable settings',
+      'Section 9 — identification and warning notices.',
     ],
     correctAnswer: 1,
     explanation:
@@ -87,16 +102,26 @@ const quizQuestions = [
     id: 2,
     question:
       'Three 30 Ω resistors in series. Total resistance:',
-    options: ['10 Ω', '30 Ω', '60 Ω', '90 Ω'],
-    correctAnswer: 3,
+    options: [
+      '60 Ω',
+      '10 Ω',
+      '90 Ω',
+      '30 Ω',
+    ],
+    correctAnswer: 2,
     explanation: 'In series, resistances add. 30 + 30 + 30 = 90 Ω.',
   },
   {
     id: 3,
     question:
       'Three 30 Ω resistors in parallel. Total resistance:',
-    options: ['10 Ω', '30 Ω', '60 Ω', '90 Ω'],
-    correctAnswer: 0,
+    options: [
+      '60 Ω',
+      '30 Ω',
+      '90 Ω',
+      '10 Ω',
+    ],
+    correctAnswer: 3,
     explanation:
       'For n equal parallel resistors: R = R/n = 30/3 = 10 Ω. Or 1/R = 1/30 + 1/30 + 1/30 = 3/30 → R = 10 Ω.',
   },
@@ -105,12 +130,12 @@ const quizQuestions = [
     question:
       "Kirchhoff's voltage law states that around any closed loop:",
     options: [
-      'The sum of currents equals zero',
       'The sum of EMFs equals the sum of voltage drops (algebraic sum = 0)',
-      'Voltage rises only',
-      'Voltages all equal',
+      'Providing professional counselling for mental health conditions',
+      'Suitable for the environment and adequately protected',
+      'Regular progress reports, milestone notifications, and problem alerts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'KVL: ΣV around any closed loop = 0 (or sum of EMF rises = sum of IR drops). It\'s conservation of energy applied to electric circuits.',
   },
@@ -119,12 +144,12 @@ const quizQuestions = [
     question:
       "Kirchhoff's current law at a junction states:",
     options: [
-      'Current in = current out (algebraic sum = 0)',
       'Voltage at all junctions equals zero',
-      'Current splits equally always',
+      'Current in = current out (algebraic sum = 0)',
       'Current rises with voltage',
+      'Current splits equally always',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'KCL: at any node, ΣI in = ΣI out. Conservation of charge — electrons can\'t pile up indefinitely.',
   },
@@ -132,7 +157,12 @@ const quizQuestions = [
     id: 6,
     question:
       'A 10 Ω resistor passes 5 A. Power dissipated is:',
-    options: ['2 W', '50 W', '250 W', '500 W'],
+    options: [
+      '2 W',
+      '50 W',
+      '250 W',
+      '500 W',
+    ],
     correctAnswer: 2,
     explanation: 'P = I²R = 25 × 10 = 250 W. Or P = V × I = 50 × 5 = 250 W (V = IR = 50).',
   },
@@ -140,16 +170,26 @@ const quizQuestions = [
     id: 7,
     question:
       'A 230 V supply across a 23 Ω element. Power dissipated:',
-    options: ['10 W', '230 W', '2.3 kW', '5.3 kW'],
-    correctAnswer: 2,
+    options: [
+      '10 W',
+      '230 W',
+      '5.3 kW',
+      '2.3 kW',
+    ],
+    correctAnswer: 3,
     explanation:
       'P = V²/R = 230² / 23 = 52 900 / 23 = 2300 W = 2.3 kW. Typical immersion-heater element.',
   },
   {
     id: 8,
     question: 'Voltage drop on a final circuit is limited to:',
-    options: ['1 % of nominal', '3 % of nominal', '5 % of nominal', 'No limit'],
-    correctAnswer: 1,
+    options: [
+      '3 % of nominal',
+      '5 % of nominal',
+      '1 % of nominal',
+      'No limit',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 7671 §525 / Appendix 4: 3 % for lighting circuits, 5 % for other circuits, but 3 % is commonly applied to all final circuits as a design limit. From the supply origin: 3 % lighting + 5 % power.',
   },

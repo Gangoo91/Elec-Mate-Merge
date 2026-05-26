@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     question:
       'What is the key difference between a maintained and a non-maintained emergency luminaire?',
     options: [
-      'Maintained luminaires are more expensive',
+      'The fraction of airborne particles that is inhaled through the nose and mouth during breathing',
       'Maintained luminaires operate continuously; non-maintained only operate when the mains supply fails',
-      'Non-maintained luminaires have larger batteries',
-      'Maintained luminaires do not require testing',
+      'For complex, high-risk activities or when required by clients/principal contractors',
+      'Reverse the lifting technique — bend the knees and hips, keep the back straight',
     ],
     correctIndex: 1,
     explanation:
@@ -28,8 +28,13 @@ const quickCheckQuestions = [
     id: 'duration-requirement',
     question:
       'What is the minimum emergency lighting duration required for most premises under BS 5266?',
-    options: ['30 minutes', '1 hour', '2 hours', '3 hours'],
-    correctIndex: 2,
+    options: [
+      '1 hour',
+      '3 hours',
+      '30 minutes',
+      '2 hours',
+    ],
+    correctIndex: 3,
     explanation:
       'BS 5266-1 requires a minimum of 3 hours duration for most premises, particularly sleeping accommodation and premises that cannot be evacuated immediately. A 1-hour duration is only permitted where the premises can be evacuated immediately and are not used for sleeping, and where the premises will not be reoccupied until the system has fully recharged.',
   },
@@ -37,10 +42,10 @@ const quickCheckQuestions = [
     id: 'monthly-test',
     question: 'What is the purpose of the monthly functional test on emergency lighting?',
     options: [
-      'To verify the full rated duration of the batteries',
+      'Increasing excitation beyond the normal value causes the motor to operate at a leading power factor',
       'To confirm that each luminaire illuminates correctly when the mains supply is simulated to fail',
-      'To measure the lux levels on escape routes',
-      'To check the wiring insulation resistance',
+      'Adequate ventilation must be provided to prevent accumulation of hazardous vapours or gases',
+      'Changes to layout, occupancy, or use may affect emergency lighting requirements',
     ],
     correctIndex: 1,
     explanation:
@@ -50,8 +55,13 @@ const quickCheckQuestions = [
     id: 'annual-test',
     question:
       'During the annual full-duration test, for how long must a 3-hour rated emergency lighting system be tested?',
-    options: ['1 hour', '2 hours', '3 hours (the full rated duration)', '30 minutes'],
-    correctIndex: 2,
+    options: [
+      'ETAP, SKM PowerTools, and Amtech ProDesign',
+      '3 hours (the full rated duration)',
+      'A multimeter set to DC volts',
+      'To divert transient overvoltages to earth',
+    ],
+    correctIndex: 1,
     explanation:
       'The annual full-duration test requires the emergency lighting system to operate on battery power for the full rated duration — 3 hours for a 3-hour system. At the end of this period, each luminaire must still be providing adequate illumination. After the test, the system must be allowed to fully recharge (typically 24 hours) before the premises are occupied.',
   },
@@ -62,8 +72,13 @@ const quizQuestions = [
     id: 1,
     question:
       'Under BS 5266-1, what is the minimum illuminance required on the centre line of an escape route?',
-    options: ['0.2 lux', '0.5 lux', '1 lux', '5 lux'],
-    correctAnswer: 2,
+    options: [
+      '0.2 lux',
+      '1 lux',
+      '0.5 lux',
+      '5 lux',
+    ],
+    correctAnswer: 1,
     explanation:
       'BS 5266-1 requires a minimum of 1 lux on the centre line of an escape route (measured at floor level). The central band, which is not less than half the width of the route, must be illuminated to at least 50% of this value. Additionally, the ratio of maximum to minimum illuminance on the centre line must not exceed 40:1 to avoid excessive bright and dark spots.',
   },
@@ -71,12 +86,12 @@ const quizQuestions = [
     id: 2,
     question: 'In a self-contained emergency luminaire, where is the battery located?',
     options: [
-      'In a central plant room',
+      'In every room with windows providing natural light',
+      'The building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s responsible person (employer, owner or occupier)',
       'Within or immediately adjacent to the luminaire itself',
-      'In the distribution board',
-      'In a dedicated battery cabinet on each floor',
+      'A centralised monitoring panel with fault indication for each circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Self-contained emergency luminaires have the battery, charger and control electronics built into or immediately adjacent to the luminaire. Each unit is independent. This is the most common arrangement for small to medium-sized installations. The advantage is simplicity; the disadvantage is that each battery must be individually maintained and replaced.',
   },
@@ -85,12 +100,12 @@ const quizQuestions = [
     question:
       'A central battery system for emergency lighting typically uses which monitoring arrangement?',
     options: [
-      'No monitoring is required',
-      'Manual weekly checks only',
+      'In every room with windows providing natural light',
+      'Within or immediately adjacent to the luminaire itself',
+      '10% of the normal maintained illuminance or 15 lux, whichever is greater',
       'A centralised monitoring panel with fault indication for each circuit',
-      'Individual test buttons on each luminaire',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Central battery systems typically incorporate a centralised monitoring panel that provides indication of mains supply status, battery condition, charger operation, earth faults and individual circuit monitoring. This allows faults to be identified quickly and reduces the manual inspection burden compared to self-contained systems.',
   },
@@ -98,12 +113,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which of the following areas would typically require maintained emergency lighting?',
     options: [
-      'A general office during normal working hours',
-      'A warehouse storage area',
       'A cinema auditorium',
+      'A warehouse storage area',
+      'A general office during normal working hours',
       'An external car park',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Maintained emergency lighting is required in areas where sudden darkness would cause particular danger or panic. Cinemas, theatres, and places of entertainment are the classic example — the normal lighting may be dimmed or off during a performance, so the emergency lighting must be maintained (always on) to ensure immediate illumination if evacuation is required. Toilets in public buildings also typically require maintained fittings.',
   },
@@ -111,8 +126,13 @@ const quizQuestions = [
     id: 5,
     question:
       'What is the typical recharge time required for emergency lighting batteries after a full-duration test?',
-    options: ['4 hours', '12 hours', '24 hours', '48 hours'],
-    correctAnswer: 2,
+    options: [
+      '12 hours',
+      '24 hours',
+      '48 hours',
+      '4 hours',
+    ],
+    correctAnswer: 1,
     explanation:
       'After a full-duration discharge test, emergency lighting batteries typically require 24 hours to fully recharge. During this recharge period, the emergency lighting system may not be able to provide the full rated duration if a mains failure occurs. This is why full-duration tests should be planned carefully and the responsible person must ensure the premises are not occupied without adequate emergency lighting cover.',
   },
@@ -122,10 +142,10 @@ const quizQuestions = [
     options: [
       'Changes of direction on escape routes',
       'At each exit door',
-      'Near fire alarm call points and fire-fighting equipment',
       'In every room with windows providing natural light',
+      'Near fire alarm call points and fire-fighting equipment',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'BS 5266-1 requires emergency lighting at specific locations including escape route changes of direction, at each exit door, near fire alarm call points and fire-fighting equipment, at stairways, at changes of floor level, and at final exits. Emergency lighting is NOT required in every room with windows — the requirement is based on the escape route and high-risk areas.',
   },
@@ -133,12 +153,12 @@ const quizQuestions = [
     id: 7,
     question: "What is an 'open area' or 'anti-panic' emergency luminaire designed to achieve?",
     options: [
-      'Maximum light output for CCTV operation',
+      'Within or immediately adjacent to the luminaire itself',
+      'The date of test, type of test, any defects found and remedial action taken',
+      'The building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s responsible person (employer, owner or occupier)',
       'Illumination to prevent panic and enable safe movement towards escape routes',
-      'Decorative lighting effect during mains failure',
-      'Spotlighting of fire exits only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Open area (anti-panic) emergency lighting provides illumination in large open areas to prevent panic and enable occupants to identify and reach escape routes. BS 5266-1 requires a minimum of 0.5 lux at floor level across the open area, excluding a 0.5 m border around the perimeter. This is particularly important in spaces such as open-plan offices, retail floors and reception areas.',
   },
@@ -147,12 +167,12 @@ const quizQuestions = [
     question:
       'NiCd (nickel-cadmium) batteries in emergency luminaires are being phased out in favour of:',
     options: [
-      'Lead-acid batteries',
       'NiMH (nickel-metal hydride) and LiFePO4 (lithium iron phosphate) batteries',
-      'Zinc-carbon batteries',
-      'Alkaline batteries',
+      'A centralised monitoring panel with fault indication for each circuit',
+      'Illumination to prevent panic and enable safe movement towards escape routes',
+      'The building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s responsible person (employer, owner or occupier)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'NiCd batteries contain cadmium, which is toxic and restricted under the EU Battery Directive and WEEE Regulations. NiMH (nickel-metal hydride) and LiFePO4 (lithium iron phosphate) batteries are the preferred replacements. LiFePO4 batteries offer longer life, lighter weight, better high-temperature performance and are cadmium-free. NiMH batteries are also cadmium-free and widely available.',
   },
@@ -161,10 +181,10 @@ const quizQuestions = [
     question:
       'Under BS 5266, who is responsible for ensuring emergency lighting is properly maintained and tested?',
     options: [
-      'The local fire brigade',
+      "To ensure the sign is visible from the required viewing distance and angle",
       "The building's responsible person (employer, owner or occupier)",
-      'The emergency lighting manufacturer',
-      'The electrical contractor who installed the system',
+      "NiMH (nickel-metal hydride) and LiFePO4 (lithium iron phosphate) batteries",
+      "Illumination to prevent panic and enable safe movement towards escape routes",
     ],
     correctAnswer: 1,
     explanation:
@@ -174,12 +194,12 @@ const quizQuestions = [
     id: 10,
     question: 'A high-risk task area emergency luminaire must provide a minimum illuminance of:',
     options: [
-      '0.5 lux',
-      '1 lux',
-      '5 lux',
+      'NiMH (nickel-metal hydride) and LiFePO4 (lithium iron phosphate) batteries',
+      'To ensure the sign is visible from the required viewing distance and angle',
       '10% of the normal maintained illuminance or 15 lux, whichever is greater',
+      'Within or immediately adjacent to the luminaire itself',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
       'BS 5266-1 requires that high-risk task areas are illuminated to at least 10% of the normal maintained illuminance or 15 lux (whichever is greater) during an emergency. This ensures that potentially dangerous processes can be safely shut down. The illuminance must be achieved within 0.5 seconds of mains failure. Examples include machinery areas, chemical processing and switchrooms.',
   },
@@ -188,12 +208,12 @@ const quizQuestions = [
     question:
       'When recording emergency lighting test results, which of the following must be documented?',
     options: [
-      'Only failures — passed tests do not need recording',
+      'The building\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s responsible person (employer, owner or occupier)',
+      'Illumination to prevent panic and enable safe movement towards escape routes',
+      '10% of the normal maintained illuminance or 15 lux, whichever is greater',
       'The date of test, type of test, any defects found and remedial action taken',
-      'Only the name of the person who carried out the test',
-      'Only the date and a pass/fail result',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 5266-1 requires comprehensive records of all emergency lighting tests. The log book must include: the date of each test, the type of test (monthly functional or annual full-duration), the results of the test, details of any defects found, remedial action taken, and the date the remedial work was completed. This log book must be available for inspection by the enforcing authority.',
   },
@@ -202,12 +222,12 @@ const quizQuestions = [
     question:
       "What is the purpose of the 'fish-tail' or directional lens on an emergency exit sign luminaire?",
     options: [
-      'To increase the brightness of the sign',
-      'To direct the light output towards the floor below the sign',
       'To ensure the sign is visible from the required viewing distance and angle',
-      'To reduce energy consumption',
+      'The date of test, type of test, any defects found and remedial action taken',
+      'Within or immediately adjacent to the luminaire itself',
+      '10% of the normal maintained illuminance or 15 lux, whichever is greater',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The directional lens on an emergency exit sign luminaire is designed to ensure the sign is visible from the required viewing distance and angle. BS 5266 specifies viewing distances based on sign size — typically the viewing distance should not exceed 200 times the height of the sign for externally illuminated signs, or specific distances based on the luminance for internally illuminated signs.',
   },

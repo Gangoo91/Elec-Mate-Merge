@@ -41,12 +41,12 @@ const checks = [
     question:
       "What's the difference between an Apprentice Stage 1 and an Apprentice Stage 4 on the JIB ladder?",
     options: [
-      "Nothing — they're the same.",
+      "Approximately 50 N/mm² (≈ 5 kg per mm² of conductor CSA) per the published manufacturer / IET Electrical Installation Design Guide figure when pulling via a stocking grip on the cable sheath. Pulling on the conductor itself (rather than via a grip) drops this to ~30 N/mm². Many sites use a conservative 1.5-2 kg/mm² no-thinking-required field rule.",
+      "Pre-Construction Information is the H&S information that the Client (with help from the Principal Designer) provides to designers and contractors before they start on the project. It covers the site (location, existing structures, services, ground conditions), the project (description, programme, key dates, design assumptions), the relevant H&S information (asbestos surveys, condition reports, environmental risks) and the Client's H&S file from any previous works.",
       "Stage 1 is your first year of apprenticeship (typically pre-college foundation), Stage 4 is your final year (post-2365-03, gateway to AM2). Each Stage carries a different JIB minimum hourly rate, rising as you complete more of the syllabus and accumulate evidence in your portfolio. Stages are progressed by your employer on JIB rules — you don't apply, your employer signs you off as you hit the milestones.",
-      "Stage 1 is for under-18s only.",
-      "Stages are only used in Scotland.",
+      "Smart charging enables the charge rate, timing and duration to be managed dynamically in response to grid conditions, electricity tariffs, local network constraints and user preferences — it is essential to prevent network overloading as millions of EVs connect to a grid that was not designed for their combined demand",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "JIB Apprentice Stages 1-4 (sometimes called 'Year 1 / Year 2 / Year 3 / Year 4') are the rungs inside the apprentice grade. The exact pay rate at each Stage is set by the annual JIB Working Rule Agreement (negotiated between ECA and Unite). Your employer moves you up a Stage as you complete the syllabus milestones — typically tied to passing each year of the C&G 2365 (or equivalent NVQ units). The 2024 JIB rates put Stage 1 at around £8-9/hr and Stage 4 at around £14-15/hr (London weighting adds more). Knowing the Stages matters because the difference between Stage 3 and Stage 4 pay is significant.",
   },
@@ -55,12 +55,12 @@ const checks = [
     question:
       "Why is the AM2 described as 'the line between final-year Apprentice and Electrician'?",
     options: [
-      "It isn't — AM2 has nothing to do with grading.",
       "Because the JIB rules require you to hold the practical assessment (AM2 or equivalent) before they'll grade you as Electrician. After college and 2365-03 you remain on the final-year Apprentice (or Adult Trainee) rate — qualifications complete, AM2 not yet passed (colloquially called the 'Improver' stage, though that is NOT a formal JIB grade). After AM2 your employer applies to JIB to upgrade you to Electrician grade, which carries the full Electrician pay rate (around £19-20/hr in 2024 outside London). The jump to Electrician is the biggest single pay rise in the apprenticeship.",
-      "AM2 is only for Scottish apprentices.",
-      "AM2 is purely academic.",
+      "(1) Confirm with the panel display whether it's a system fault (resolved by a panel reset) or a circuit fault (suggests your work has caused damage). (2) If a system fault — reset the panel, confirm restoration, document. (3) If a circuit fault — STOP, isolate again, retest the affected circuit (continuity, IR, polarity), find and rectify the cause. (4) During the period the alarm was in fault — the building's fire-safety arrangements have been compromised; the customer's responsible person under the RR(FS)O 2005 should have been notified BEFORE the work and a fire watch should have been in place during the work. Document the period of fault on the alarm log book. Inform the alarm-receiving centre.",
+      "AC-coupled — leave the existing PV inverter in place and add a separate battery inverter on the AC side. The PV continues to feed the consumer unit at AC; the battery inverter charges from surplus AC and discharges back to AC when the property load exceeds PV output. Less efficient at one round-trip than DC-coupled (extra DC-AC-DC conversion), but lets the customer keep the existing PV install untouched and avoids a full re-commissioning of the PV system.",
+      "Set the meter to INRUSH mode. Clamp around one phase (or the L of a single-phase motor). Press start to arm the capture. Operate the load (start the motor). The meter captures the peak current in the first 100 ms after the rising edge of current — typically 6–10× the running current for an induction motor, higher for HVAC compressors. Useful for diagnosing nuisance trips on an undersized breaker (the inrush exceeds the magnetic trip threshold on a Type B breaker; replace with Type C or D for high-inrush loads).",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The JIB Electrician grade requires both the Level 3 qualifications AND the AM2 (or equivalent JIB-recognised practical assessment). Without AM2 you stay on the final-year Apprentice or Adult Trainee rate even if you've finished college. The pay differential between that pre-AM2 stage (sometimes informally called the 'Improver' period) and Electrician is typically £4-5/hr — over a year that's £8,000+ in extra gross pay. This is why employers, college tutors and mentors take AM2 readiness seriously — it's not just a certificate, it's a step-change in your earnings.",
   },
@@ -69,12 +69,12 @@ const checks = [
     question:
       "What's the practical difference between an Electrician and an Approved Electrician on JIB rules?",
     options: [
-      "There's no difference.",
+      "Cutting (T+E shears, side cutters, hacksaw for trunking and conduit), stripping (auto-strippers and a sharp Stanley for outer sheath) and terminating (Pozidriv VDE drivers for accessory terminations, ratchet crimper for ferrules where used). Layered on top of that — measuring (tape, level), marking (pencil or chinagraph), and fixing (claw hammer for joist clips, club hammer for chasing). Six categories in two months.",
+      "Because PPE protects only the wearer (and only when worn correctly), it relies on the operative remembering, fitting and inspecting it, and it doesn't reduce the hazard itself. The hierarchy puts elimination, substitution, engineering controls and administrative controls ahead of PPE because each of those reduces the risk for everyone in the area without depending on individual behaviour.",
       "An Approved Electrician has additional time-served experience (typically 2+ years post-AM2) plus an Inspection and Testing qualification (2391-52 or equivalent), and is recognised by JIB as competent to supervise others, sign off completed work, and lead a gang. The Approved grade carries a higher hourly rate (around £21-22/hr in 2024) and is the JIB grade typically required for site Foreman, Qualified Supervisor and Senior Electrician roles.",
-      "Approved Electricians only work on solar PV.",
-      "Only the company can be 'approved', not the person.",
+      "Creating a wellbeing programme that includes: team-building activities (Connect), active travel schemes and lunchtime walks (Be Active), mindfulness sessions and reflective practice groups (Take Notice), CPD opportunities and skills-sharing workshops (Keep Learning), and volunteering days and peer support schemes (Give)",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Approved Electrician is the JIB's recognition that you've moved beyond execution into supervision and certification. The 2391-52 (Inspection and Testing) is the typical academic anchor — it gives you the formal authority to inspect, test and certify, which is what supervision and sign-off requires. Time-served experience is the practical anchor. Together they earn the Approved grade. Most contractors require Approved status for QS (Qualified Supervisor) roles and competent-person scheme registration.",
   },
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: "Who negotiates the annual JIB pay rates?",
     options: [
-      "The HSE.",
+      "PSCC (Prospective Short Circuit Current) = the current that would flow in an L-N short-circuit fault, measured by the MFT applying brief test current via the L-N loop. Represents short-circuit fault scenarios. PEFC (Prospective Earth Fault Current) = the current that would flow in an L-E earth fault, measured by the MFT applying brief test current via the L-E loop. Represents earth-fault scenarios. The two are measured separately during a 3-lead Zs test; the higher value is reported as Ipf (PFC) for breaking-capacity verification.",
       "The Electrical Contractors' Association (ECA, employer side) and Unite the Union (worker side) negotiate annually under the JIB Working Rule Agreement. Rates are typically reviewed in autumn for the following January. The negotiated rates set minimum hourly pay for each JIB grade across England, Wales and Northern Ireland; SJIB does the equivalent in Scotland. JIB-graded firms are bound to pay at least the negotiated rates.",
-      "The Government.",
-      "Only NICEIC.",
+      "Yes — properly so. Lighthouse, Samaritans, EIC, Mind all operate strict confidentiality. Calls are not recorded for sharing; staff are bound by confidentiality agreements; details are not shared with employers or any third party (except in specific circumstances of immediate risk to life under safeguarding rules). You can call anonymously if you prefer. The fear of being identified is one of the things that keeps people from calling — but the confidentiality is real.",
+      "EU Regulation 517/2014 was retained as UK law under the European Union (Withdrawal) Act 2018 and continues to apply with minor UK-specific amendments. The UK F-Gas Regulation is enforced by the Environment Agency in England, SEPA in Scotland, NRW in Wales and the NIEA in Northern Ireland. It controls the placing on market, leak checking, recovery, certification of personnel and certification of companies handling fluorinated greenhouse gases.",
     ],
     correctAnswer: 1,
     explanation:
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 2,
     question: "What's the SJIB and how does it differ from the JIB?",
     options: [
-      "SJIB is a typo for JIB.",
+      "Pass. The maximum trip time at 1 x I delta n for a general-purpose 30 mA RCD is 300 ms per the product standard, and the system disconnection time is 400 ms (TN) or 200 ms (TT) per Table 41.1. 35 ms is well under all limits. A trip time of 35 ms is typical for a healthy modern RCD; older RCDs may give 80-200 ms — also within limits. Trip times near or exceeding 300 ms suggest the RCD is approaching end of life and should be replaced.",
+      "Our site uses a balanced approach combining planned preventive maintenance for critical assets, condition-based monitoring using thermography and vibration analysis, and run-to-failure for non-critical items, all managed through a CMMS with KPIs including MTBF, MTTR, and maintenance backlog",
       "The Scottish Joint Industry Board (SJIB) is the equivalent of the JIB for the electrical contracting industry in Scotland. It sets working rules, pay rates and grades for Scottish electricians, working alongside SELECT (the Scottish trade association). SJIB grading uses similar terminology (Apprentice, Approved Electrician, Technician) but the rates and the ECS card variants are Scottish-specific.",
-      "SJIB only applies to oil-rig work.",
-      "SJIB sets pay for English firms.",
+      "Reg 132.13 — 'The designer of the electrical installation shall provide ... the information necessary to allow the safe operation, inspection, alteration, repair, maintenance and dismantling of the electrical installation'. The information has to be available to whoever is going to operate or maintain it. That is the BS 7671 hook for site-folder paperwork (single line diagram, schedule of circuits, certificate, schedule of test results, mfr data).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "SJIB and JIB are functionally similar collective-bargaining bodies for two different territories. Apprentices working in Scotland will be on SJIB grading and SJIB pay rates; those in England, Wales or NI will be on JIB. The grade names are similar but the administrative bodies, the ECS card colour variants and the pay rates are separately negotiated.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: "Are JIB pay rates the same across the UK?",
     options: [
-      "Yes — single national rate.",
+      "A highly sensitive system that continuously draws air samples through a pipe network to a central laser detection chamber, providing very early warning of smoke — used in data centres, clean rooms, heritage buildings, and high-value environments",
+      "Normal — the live Zs measurement includes some additional impedance from the protective device internal contacts and from any small leakage paths at the time of the live measurement. A 0.03 Ω difference is well within the expected agreement between the two methods.",
+      "Acknowledge that self-harm is currently helping them cope, validate their emotional pain, explore whether they would be open to learning alternative coping strategies over time, and gently encourage them to speak to a professional such as a counsellor when they feel ready",
       "No — there's a London weighting (typically £2-3/hr extra for work inside the M25), a separate set of SJIB rates for Scotland, and travel allowances vary. The headline JIB hourly rate is the national minimum for the grade; London-weighted rates apply on top for inner-London work. Always check your contract for which rate applies.",
-      "Yes, but only outside London.",
-      "Only London has JIB rates.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "London rates reflect the higher cost of living. The JIB Working Rule Agreement publishes both 'national' and 'London' rates each year. Apprentices working on London projects typically receive the London-weighted rate while on those projects, even if their home depot is outside London. Travel and lodging allowances also kick in for distant work — read your firm's JIB-aligned travel policy.",
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     id: 4,
     question: "What evidence does an apprentice need to move from Stage 3 to Stage 4?",
     options: [
-      "Nothing — it happens automatically with age.",
       "Completion of the relevant year's college units (typically C&G 2365-03 Year 2 / NVQ Level 3 progress), portfolio entries signed by the workplace mentor, and your employer's formal approval through the JIB grading update. Stage progression is evidence-based, not time-based — you can't just 'wait' for the next Stage; you have to demonstrate you've earned it.",
-      "Two years on the job, no qualifications needed.",
-      "Only an HSE inspector can promote you.",
+      "If you process personal data for business purposes — almost every business does (customer names, addresses, phone numbers, photos). Small businesses (turnover < £632k AND fewer than 11 staff) pay the Tier 1 annual fee of £40 under the Data Protection (Charges and Information) Regulations 2018.",
+      "A loose termination at one end has oxidised over the three years — surface oxide film grows when contact pressure is insufficient, contact resistance climbs, the cable resistance hasn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t changed but the joint has degraded. Investigate, identify the bad terminal, re-make the joint, retest.",
+      "The principles of prevention in Schedule 1: avoid risks, evaluate unavoidable risks, combat risks at source, adapt work to the individual, adapt to technical progress, replace dangerous with non/less dangerous, develop a coherent prevention policy, give collective measures priority, and give appropriate instructions",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "JIB Stages are tied to syllabus completion, not chronological time. Apprentices who fall behind on coursework can find themselves stuck at a lower Stage even if they've been on the apprenticeship for the standard number of years. Conversely, fast-track apprentices can progress Stages quicker if they complete the syllabus ahead of schedule. The College Tutor and Workplace Mentor calibrate readiness; the Employer formally moves you up.",
   },
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: "What's the JIB Technician grade and what does it require?",
     options: [
-      "Same as Apprentice.",
+      "To co-operate with the client, principal designer, principal contractor, contractor and any other person performing a duty under CDM, AND to report to the principal contractor (or contractor where there is no principal contractor) anything that they consider is likely to endanger their own or another person's health or safety, AND to comply with the requirements of CDM.",
       "Technician is the highest of the standard JIB grades — typically requires Approved Electrician status PLUS additional formal qualifications (HNC, HND, foundation degree or BEng) PLUS specific time-served experience in design, commissioning or senior installation roles. Technician grade carries the highest standard JIB pay rate and is the gateway to design and senior project engineer roles.",
-      "Only for university graduates.",
-      "Only used in maintenance work.",
+      "An EICR carried out and signed by a competent person (usually a CPS-registered contractor) in accordance with BS 7671 Part 6 / IET GN3, at the recommended frequency for the premises type, with a satisfactory or remediated outcome. Without that, the insurer's claim that the installation wasn't maintained to current standards is hard to refute.",
+      "Because in a broken-PEN fault on PME, the entire installation's neutral return current can flow back to ground via the bonding to extraneous-conductive-parts (gas, water, structural steel). Sizing against the PEN ensures the bonding conductor doesn't melt before it is reset.",
     ],
     correctAnswer: 1,
     explanation:
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 6,
     question: "How is JIB grading shown on your ECS card?",
     options: [
-      "It isn't.",
+      "Construction (Design and Management) Regulations 2015 (CDM 2015), Statutory Instrument 2015/51. CDM 2015 covers ALL construction work, with extra duties triggered when the project is 'notifiable' (longer than 30 working days with more than 20 workers simultaneously, or exceeding 500 person-days). It sets duties for clients, principal designers, principal contractors, contractors and workers — including the apprentice's duty under Reg 8 to co-operate, take reasonable care and report defects.",
+      "The right of access under UK GDPR Article 15 (a 'subject access request' or SAR). The firm has one calendar month to respond, free of charge in most cases. The response must include the personal data being processed, the purposes, the categories, the recipients, the retention period, and the source of the data if not from the data subject.",
       "Your JIB grade is printed on the front of the ECS card alongside your photo, qualifications and any specialist endorsements (PV, EV, etc). Card colour can also indicate grade tier — the 'Gold' card is the most common Electrician/Approved card. Site security and main contractor compliance teams check the ECS card on entry to verify your grade matches the role you're being paid for.",
-      "Only in Scotland.",
-      "Only on union members' cards.",
+      "Creates a corporate offence where an organisation's activities cause a person's death and amount to a gross breach of a relevant duty of care, where the breach is the result of the way in which senior management organised or managed activities. Triable on indictment only; unlimited fines. Allows publicity orders and remedial orders. Sits alongside HASAWA prosecutions, not as a replacement.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "ECS card is the portable evidence of your JIB grade. The card includes your photo, name, JIB grade, qualifications listed and the date of your last CSCS-equivalent H&S test. Sites scan the card on entry; payroll cross-checks the card grade against the agreed pay rate. Carry your card every shift — most sites refuse entry without it.",
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 7,
     question: "What happens to your JIB grade if you change employer?",
     options: [
-      "You start again at Apprentice.",
+      "Fluorinated greenhouse gases — refrigerants used in air conditioning, heat pumps and refrigeration equipment. Hydrofluorocarbons (HFCs) particularly. Phase-down quotas, mandatory leak-checking on equipment containing 5+ tonnes CO2e of F-Gas, certified personnel for installation/maintenance, and ban on certain F-Gases in new equipment from set dates.",
+      "Whenever they design, supply or commission an article (including a control panel, a bespoke distribution board, a prefabricated assembly) for use at work — they must ensure it is safe and without risks to health when properly used, and supply adequate information about safe use, installation and dismantling. So a contractor designing a one-off control panel for a commercial customer is captured by s.6 as well as by EAWR.",
+      "Electrical-specific design suites that combine BS 7671 calculation engines with schedule generation and CAD drafting in one environment. They produce SLDs, schedules, calc sheets and Revit-exportable models from one shared dataset, removing the duplication between calc tool and CAD tool.",
       "Your JIB grade and ECS card go with you — they're tied to you, not to the employer. The new employer will accept your existing grade and pay you the corresponding JIB rate (assuming they're a JIB-graded firm). If you move to a non-JIB firm your contract with them might pay above or below JIB rates by mutual agreement, but your grade is still recorded with JIB.",
-      "Your grade gets cancelled.",
-      "You have to re-take AM2.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "JIB grade is portable. The ECS card is the evidence — and any new JIB-graded employer will pay you the grade rate without re-assessment. Non-JIB firms are not bound to JIB rates but typically pay close to them (because the JIB rate is the market reference point for electrician pay). Keep your ECS card current; if your card lapses you may need to re-evidence to JIB to keep your recorded grade.",
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     id: 8,
     question: "What's a 'JIB-graded' employer and why does it matter to an apprentice?",
     options: [
-      "Means the firm sells JIB merchandise.",
       "A JIB-graded employer is a firm that has signed up to the JIB Working Rule Agreement and undertakes to pay at least JIB minimum rates and follow JIB conditions (holiday, sick pay, pension, apprentice training rules). For an apprentice this matters because JIB-graded firms are bound to follow the JIB Apprentice Code of Practice — named mentor, structured training, Stage progression on evidence, paid college time.",
-      "Means the firm is Scottish only.",
-      "Means the firm is non-union.",
+      "Eye protection (impact-rated, EN 166 F minimum — chop saws produce hot metal sparks at speed), hearing protection (chop saws regularly exceed 100 dB), cut-resistant gloves (sharp edges on the cut tray), respiratory protection if cutting indoors with no extraction (galvanised steel coating produces zinc oxide fume at cutting temperature — the cause of metal-fume fever, sometimes called 'zinc shakes'), and sturdy boots with toe protection. Long sleeves to protect arms from sparks.",
+      "(1) Two-pole voltage tester with proving unit (Martindale VI-13800 + GVD2). (2) Clamp meter (Fluke 376FC, Megger DCM330). (3) MFT in continuity range (Megger MFT1741+, Fluke 1664FC). (4) Socket tester (Kewtech KT1717) — first pass only, NOT for sign-off. Four different tasks, four different instruments — each engineered for its specific job.",
+      "The protective device rating In must be greater than or equal to the design current Ib (8 kW heat pump on 230 V at cos φ 0.95 = 36.6 A so In greater than or equal to 40 A) AND less than or equal to the cable Iz (6 mm² T&E in Reference Method C clipped direct = 47 A typically, derated by Cg / Ca / Ci to a lower Iz that must still be greater than or equal to In). So In = 40 A; Iz must be greater than or equal to 40 A; cable selected accordingly.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "JIB-graded status signals that the employer plays by industry-collective rules. For an apprentice it's a meaningful protection — the JIB Apprentice Code of Practice gives you structured training expectations and your pay automatically tracks the negotiated Stages. Non-JIB firms vary widely — some pay above JIB rates and follow good practice; others pay below and skip the structured training. Always ask in interview whether the firm is JIB-graded.",
   },

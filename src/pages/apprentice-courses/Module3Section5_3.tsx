@@ -42,12 +42,12 @@ const quizQuestions = [
     id: 2,
     question: "What's one method to protect cables from UV damage?",
     options: [
-      'Paint them',
+      'Combine multiple string circuits',
+      'Person with control of premises',
       'Use UV-resistant cable or conduit',
-      'Wrap them in insulation tape',
-      'Install them indoors only',
+      'The Control of Asbestos Regulations 2012',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'UV-resistant cables or protective conduit/trunking provide effective protection against solar radiation damage.',
   },
@@ -62,8 +62,13 @@ const quizQuestions = [
   {
     id: 4,
     question: 'What factor in BS 7671 adjusts cable current ratings for heat?',
-    options: ['Loop impedance', 'Derating factor', 'Voltage drop', 'Discrimination factor'],
-    correctAnswer: 1,
+    options: [
+      'Derating factor',
+      'Loop impedance',
+      'Voltage drop',
+      'Discrimination factor',
+    ],
+    correctAnswer: 0,
     explanation:
       'Derating factors (Ca, Cg, Ci) reduce cable current-carrying capacity based on ambient temperature, grouping, and thermal insulation.',
   },
@@ -71,10 +76,10 @@ const quizQuestions = [
     id: 5,
     question: 'Name one protective measure against mechanical damage.',
     options: [
-      'Use thinner cables',
+      'Responsible, Accountable, Consulted, Informed',
       'Install cables in steel conduit or use SWA',
-      'Paint cable routes',
-      'Use lower voltages',
+      'Injecting equal and opposite harmonic currents',
+      'Document and report them to the customer',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,7 +88,12 @@ const quizQuestions = [
   {
     id: 6,
     question: 'Which type of cable is best for high impact risk environments?',
-    options: ['Twin & Earth', 'SY cable', 'Steel Wire Armoured (SWA)', 'Data cable'],
+    options: [
+      'LED lighting with SMPS drivers',
+      'Family history of depression',
+      'Steel Wire Armoured (SWA)',
+      'Continuity and functional tests',
+    ],
     correctAnswer: 2,
     explanation:
       'Steel Wire Armoured (SWA) cables have steel wire armour providing excellent protection against mechanical damage.',
@@ -93,19 +103,24 @@ const quizQuestions = [
     question: 'Give one effect of high temperature on electrical cables.',
     options: [
       'Improves insulation properties',
-      'Accelerates insulation breakdown',
-      'Increases current capacity',
       'Reduces resistance',
+      'Increases current capacity',
+      'Accelerates insulation breakdown',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'High temperatures accelerate chemical breakdown of insulation materials and reduce current-carrying capacity.',
   },
   {
     id: 8,
     question: 'Name a protective fitting used to prevent abrasion at cable entry points.',
-    options: ['Cable tie', 'Grommet or bushing', 'Terminal block', 'Cable marker'],
-    correctAnswer: 1,
+    options: [
+      'Grommet or bushing',
+      'Terminal block',
+      'Cable tie',
+      'Cable marker',
+    ],
+    correctAnswer: 0,
     explanation:
       'Grommets and bushings protect cables from sharp edges and abrasion at entry points to enclosures.',
   },
@@ -117,12 +132,12 @@ const quickCheckQuestions = [
     id: 'uv-damage',
     question: 'How does UV radiation damage electrical cable insulation?',
     options: [
-      'It makes cables conduct electricity better',
       'It breaks down polymer chains causing brittleness',
+      'It makes cables conduct electricity better',
       'It increases cable flexibility',
       'It improves weather resistance',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'UV radiation breaks down polymer chains in plastic materials, causing them to become brittle, crack, and lose their protective properties.',
   },
@@ -130,12 +145,12 @@ const quickCheckQuestions = [
     id: 'temperature-protection',
     question: 'Give one way to protect cables from high temperature environments.',
     options: [
-      'Use smaller cable sizes',
+      'To ensure visibility and accessibility',
+      'Delivers training and assesses learner competence',
+      'Electrical installation requirements',
       'Apply derating factors and ensure ventilation',
-      'Increase voltage levels',
-      'Use standard PVC cables',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Proper derating calculations, adequate ventilation, and selection of cables with appropriate temperature ratings protect against heat damage.',
   },
@@ -143,12 +158,12 @@ const quickCheckQuestions = [
     id: 'mechanical-protection',
     question: 'Name one type of cable suitable for areas with high risk of mechanical damage.',
     options: [
-      'Standard twin and earth',
+      'Autonomy, competence, and relatedness',
+      'Safe isolation, correct PPE, tool use',
       'Steel Wire Armoured (SWA) cable',
-      'Flexible cord',
-      'Ribbon cable',
+      'Correct conductor connections (L/N/PE)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Steel Wire Armoured (SWA) cables have steel wire protection making them ideal for high mechanical damage risk areas.',
   },

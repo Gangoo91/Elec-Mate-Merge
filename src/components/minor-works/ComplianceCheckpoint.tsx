@@ -151,7 +151,6 @@ export function ComplianceCheckpoint({
           test_voltage: formData.insulationTestVoltage || '500V',
           live_neutral: formData.insulationLiveNeutral || '',
           live_earth: formData.insulationLiveEarth || '',
-          neutral_earth: formData.insulationNeutralEarth || '',
         },
         live_tests: {
           earth_fault_loop_impedance: formData.earthFaultLoopImpedance || '',

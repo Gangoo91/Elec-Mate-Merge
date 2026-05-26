@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'gantt-purpose',
     question: 'What is the primary purpose of a Gantt chart in MEP project management?',
     options: [
-      'To calculate material costs',
+      'Phone for calling 999, but nothing that delays you',
+      'Stepping down high voltage for measurement and protection circuits',
       'To visualise task durations and dependencies over time',
-      'To record quality inspections',
-      'To allocate budget codes',
+      'Power stored and returned by inductors and capacitors',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A Gantt chart is a horizontal bar chart that displays project tasks against time, showing task durations, start/end dates, dependencies, and overlaps at a glance.',
   },
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'milestone-definition',
     question: 'In construction programming, a milestone represents:',
     options: [
-      'A long-duration activity',
+      'The voltage at which an insulator fails and becomes conductive',
       'A significant achievement point with zero duration',
-      'A resource allocation',
-      'A cost centre',
+      '24 V DC or 110/240 V AC depending on the module type',
+      'To ensure accuracy and avoid dangerous errors',
     ],
     correctIndex: 1,
     explanation:
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'fs-dependency',
     question: 'A Finish-to-Start (FS) dependency means:',
     options: [
-      'Both activities finish together',
-      'Both activities start together',
       'The successor cannot start until the predecessor finishes',
-      'Activities can overlap freely',
+      'Stairwells are key escape routes requiring continuous illumination',
+      'It accurately models the statistical distribution of wind speeds',
+      'The sequence and interaction of multiple bend angles',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Finish-to-Start is the most common dependency type. The successor activity cannot begin until the predecessor activity is complete, such as cable pulling cannot start until containment is installed.',
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'critical-path',
     question: 'The critical path in a construction programme is:',
     options: [
-      'The shortest route through the project',
       'The longest sequence of dependent activities determining minimum duration',
-      'The path with most resources',
-      'The path with highest cost',
+      'At the approximate midpoint of the circuit or system',
+      'Allocating different time slots to different users for upstream transmission',
+      'The time an activity can be delayed without affecting project completion',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The critical path is the longest sequence of dependent activities that determines the minimum project duration. Any delay on the critical path delays the entire project.',
   },
@@ -87,11 +87,11 @@ const quizQuestions = [
     question: 'What information does a Gantt chart NOT typically display?',
     options: [
       'Task durations and start/end dates',
-      'Dependencies between activities',
       'Detailed cost breakdowns per task',
+      'Dependencies between activities',
       'Milestone achievements',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Gantt charts show task timing, durations, dependencies, and milestones. Detailed cost breakdowns are typically managed in separate cost schedules or earned value reports.',
   },
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: 'Which dependency type allows a successor to start before the predecessor finishes?',
     options: [
+      'Finish-to-Finish (FF)',
       'Finish-to-Start (FS)',
       'Start-to-Start (SS)',
-      'Finish-to-Finish (FF)',
       'Start-to-Finish (SF)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Start-to-Start (SS) allows activities to overlap, with the successor starting when or after the predecessor starts. This enables parallel working, such as cable pulling starting as containment progresses.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is float (or slack) in programme logic?',
     options: [
+      'The successor waits 2 days after the predecessor finishes before starting',
+      'Adjusting activity timing to avoid resource overallocation',
+      'Provide detailed short-term planning from the master programme',
       'The time an activity can be delayed without affecting project completion',
-      'Additional resources allocated to critical activities',
-      'The time between project phases',
-      'Buffer stock of materials',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Float is the amount of time an activity can be delayed without delaying the project finish date. Critical path activities have zero float.',
   },
@@ -126,12 +126,12 @@ const quizQuestions = [
     question:
       'For a large MEP installation on a commercial building, which scheduling software is typically specified?',
     options: [
-      'Microsoft Excel only',
       'Primavera P6 or Microsoft Project',
+      'Microsoft Excel only',
       'Basic calendar applications',
       'Word processing documents',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Large commercial projects typically require professional scheduling software like Primavera P6 or Microsoft Project, which offer critical path analysis, resource levelling, and multi-user collaboration.',
   },
@@ -139,10 +139,10 @@ const quizQuestions = [
     id: 5,
     question: "A 'two-week look-ahead programme' is used to:",
     options: [
-      'Replace the master programme',
+      'Adjusting activity timing to avoid resource overallocation',
       'Provide detailed short-term planning from the master programme',
-      'Calculate final account values',
-      'Record completed work only',
+      'The time an activity can be delayed without affecting project completion',
+      'To show the original approved programme for comparison',
     ],
     correctAnswer: 1,
     explanation:
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 6,
     question: "What does 'levelling' resources in a programme mean?",
     options: [
-      'Reducing the project budget',
+      'Provide detailed short-term planning from the master programme',
+      'The time an activity can be delayed without affecting project completion',
       'Adjusting activity timing to avoid resource overallocation',
-      'Making all bars the same length',
-      'Removing dependencies',
+      'To show the original approved programme for comparison',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Resource levelling adjusts activity timing within available float to prevent overallocation of resources (such as having more electricians scheduled than available), smoothing demand peaks.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 7,
     question: 'MEP coordination in programme development primarily addresses:',
     options: [
-      'Financial reconciliation',
+      'The successor waits 2 days after the predecessor finishes before starting',
+      'The time an activity can be delayed without affecting project completion',
+      'Provide detailed short-term planning from the master programme',
       'Sequencing between mechanical, electrical, and plumbing trades to avoid clashes',
-      'Legal contract review',
-      'Marketing activities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'MEP coordination ensures that mechanical, electrical, and plumbing trades work in the correct sequence, avoiding physical clashes in risers and ceiling voids, and optimising workflow efficiency.',
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: 'A lag of 2 days on a Finish-to-Start dependency means:',
     options: [
-      'The successor starts 2 days before the predecessor finishes',
       'The successor waits 2 days after the predecessor finishes before starting',
-      'Both activities are 2 days long',
-      'The predecessor is delayed by 2 days',
+      'Sequencing between mechanical, electrical, and plumbing trades to avoid clashes',
+      'Provide detailed short-term planning from the master programme',
+      'The time an activity can be delayed without affecting project completion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A lag adds waiting time between activities. A 2-day lag on an FS dependency means the successor cannot start until 2 days after the predecessor completes, allowing for curing time or inspections.',
   },
@@ -191,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which MEP activity typically appears on the critical path of a commercial building?',
     options: [
-      'Final decorations',
+      'Adjusting activity timing to avoid resource overallocation',
       'Main switchboard installation and energisation',
-      'Furniture installation',
-      'Car park lighting',
+      'Primavera P6 or Microsoft Project',
+      'To show the original approved programme for comparison',
     ],
     correctAnswer: 1,
     explanation:
@@ -204,12 +204,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of a programme baseline?',
     options: [
+      'Main switchboard installation and energisation',
+      'Provide detailed short-term planning from the master programme',
       'To show the original approved programme for comparison',
-      'To delete completed activities',
-      'To hide sensitive information',
-      'To reduce the number of activities',
+      'Adjusting activity timing to avoid resource overallocation',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'A baseline captures the original approved programme. Progress is tracked against this baseline to identify variances, delays, and acceleration, essential for project control and claims.',
   },
@@ -218,11 +218,11 @@ const quizQuestions = [
     question: 'In Primavera P6, WBS stands for:',
     options: [
       'Weekly Budget Summary',
-      'Work Breakdown Structure',
-      'Wiring Budget Schedule',
       'Workforce Balance Sheet',
+      'Wiring Budget Schedule',
+      'Work Breakdown Structure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Work Breakdown Structure (WBS) is a hierarchical decomposition of the project scope into manageable sections, organising activities by location, system, or phase.',
   },
@@ -230,8 +230,13 @@ const quizQuestions = [
     id: 12,
     question:
       'When scheduling containment installation before cable pulling, what dependency type is used?',
-    options: ['Start-to-Start', 'Finish-to-Finish', 'Finish-to-Start', 'No dependency needed'],
-    correctAnswer: 2,
+    options: [
+      'Finish-to-Start',
+      'No dependency needed',
+      'Start-to-Start',
+      'Finish-to-Finish',
+    ],
+    correctAnswer: 0,
     explanation:
       'Containment must be complete before cable pulling can begin in that area, requiring a Finish-to-Start dependency. This reflects the physical reality that cables cannot be pulled through uninstalled containment.',
   },

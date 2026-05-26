@@ -5,10 +5,10 @@ export const bmsModule2Section5QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the purpose of I/O modules in a BMS?',
     options: [
-      'To replace the main controller when it fails',
-      'To provide additional connection points for sensors and actuators',
-      'To reduce the power consumption of the system',
       'To convert analog signals to digital signals only',
+      'To provide additional connection points for sensors and actuators',
+      'To replace the main controller when it fails',
+      'To reduce the power consumption of the system',
     ],
     correctAnswer: 1,
     explanation:
@@ -44,12 +44,12 @@ export const bmsModule2Section5QuizData: QuizQuestion[] = [
     id: 4,
     question: 'What type of sensors connect to analog input modules?',
     options: [
-      'Door contact switches and motion detectors',
       'Temperature, humidity, CO₂, and pressure sensors',
       'Fire alarm contacts and emergency stops',
+      'Door contact switches and motion detectors',
       'Pump status indicators and fan run signals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Analog input modules connect sensors that provide variable signals representing measurements, such as temperature, humidity, CO₂, and pressure sensors.',
   },
@@ -57,12 +57,12 @@ export const bmsModule2Section5QuizData: QuizQuestion[] = [
     id: 5,
     question: 'What type of devices connect to analog output modules?',
     options: [
-      'Emergency lighting circuits',
-      'Fire alarm sounders',
+      'BACnet, Modbus, and proprietary protocols',
       'Modulating valves, dampers, and variable speed drives',
-      'Door access control systems',
+      'For easy identification, maintenance, and troubleshooting',
+      'To provide additional connection points for sensors and actuators',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Analog output modules connect to devices requiring variable control signals, such as modulating valve actuators, damper actuators, and variable speed drives.',
   },
@@ -70,12 +70,12 @@ export const bmsModule2Section5QuizData: QuizQuestion[] = [
     id: 6,
     question: 'What communication protocols might expansion modules use?',
     options: [
-      'HTTP and FTP only',
+      'To reduce cable runs and installation costs',
+      'Switches, contacts, and alarm devices',
       'BACnet, Modbus, and proprietary protocols',
-      'Email and SMS protocols',
-      'WiFi and Bluetooth only',
+      'Modulating valves, dampers, and variable speed drives',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Expansion modules communicate with the main BMS controller using industrial protocols such as BACnet, Modbus, or manufacturer-specific proprietary protocols.',
   },
@@ -83,12 +83,12 @@ export const bmsModule2Section5QuizData: QuizQuestion[] = [
     id: 7,
     question: 'What must be configured so the BMS recognises an I/O module?',
     options: [
-      "The module's IP address only",
+      "Temperature, humidity, CO₂, and pressure sensors",
+      "BACnet, Modbus, and proprietary protocols",
+      "To provide additional connection points for sensors and actuators",
       "The module's communication address and point configuration",
-      "The module's power consumption rating",
-      "The module's physical location coordinates",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Each expansion module must be assigned a unique communication address and have its input/output points properly configured so the BMS controller can recognise and communicate with it.',
   },
@@ -109,10 +109,10 @@ export const bmsModule2Section5QuizData: QuizQuestion[] = [
     id: 9,
     question: 'Why is wiring and labelling critical in I/O panels?',
     options: [
-      'To meet insurance requirements only',
+      "To improve the system's energy efficiency",
       'For easy identification, maintenance, and troubleshooting',
       'To reduce electromagnetic interference',
-      "To improve the system's energy efficiency",
+      'To meet insurance requirements only',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,11 +124,11 @@ export const bmsModule2Section5QuizData: QuizQuestion[] = [
       'In the real-world example, what problem was solved by adding an analog input module?',
     options: [
       'The main controller was damaged and needed replacement',
-      'Extra CO₂ sensors were added but the main controller had no free analog inputs',
       'The existing sensors were providing inaccurate readings',
+      'Extra CO₂ sensors were added but the main controller had no free analog inputs',
       'The system needed better communication protocols',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The analog input expansion module solved the problem of insufficient analog inputs on the main controller when extra CO₂ sensors were added during construction, allowing all classrooms to be monitored effectively.',
   },

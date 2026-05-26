@@ -5,10 +5,10 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     id: 1,
     question: 'What is the purpose of initial inspection in emergency lighting?',
     options: [
-      'To test battery duration only',
+      'Because airborne fibres may still be present on the worker\\\\\\\\\\\\\\\'s body and clothing during decontamination',
       'To confirm installation matches design, identify faults, and form the basis of certification',
-      'To replace faulty luminaires',
-      'To train building occupants',
+      'A failure to implement condition-based monitoring that would have provided early warning of deterioration',
+      'To safely discharge stored energy when disconnected, preventing shock hazard',
     ],
     correctAnswer: 1,
     explanation:
@@ -19,11 +19,11 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     question: 'Which two British Standards govern inspection requirements for emergency lighting?',
     options: [
       'BS 5839 and BS 6004',
-      'BS 5266 and BS 7671',
       'BS 7909 and BS 7430',
+      'BS 5266 and BS 7671',
       'BS 1363 and BS 4662',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 5266-1 provides the code of practice for emergency lighting systems, while BS 7671 (IET Wiring Regulations) covers the electrical installation requirements. Both standards must be followed during inspection.',
   },
@@ -31,12 +31,12 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     id: 3,
     question: 'What type of cable must be verified for emergency circuits?',
     options: [
-      'Any standard PVC cable',
+      'To prevent equipment being live when \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'off\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'',
+      'Resume CPR immediately for 2 minutes before the AED re-analyses',
+      'To maintain autonomy and reliability',
       'Fire-resistant, LSZH, or MICC cable where required',
-      'Flexible cord only',
-      'Coaxial cable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Emergency lighting circuits must use appropriate fire-resistant cables such as FP200, LSZH (Low Smoke Zero Halogen), or MICC (Mineral Insulated Copper Clad) cables to maintain circuit integrity during a fire.',
   },
@@ -44,12 +44,12 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     id: 4,
     question: 'Why must plastic fixings not be used for emergency lighting cables?',
     options: [
-      'They are too expensive',
       'They do not meet non-combustible fixing requirements in BS 7671 Reg. 521.10.202',
-      'They are difficult to install',
-      'They cause electromagnetic interference',
+      'Non-maintained luminaires installed where maintained fittings were specified',
+      'Emergency circuits must be kept separate from normal supply',
+      'To confirm installation matches design, identify faults, and form the basis of certification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 Regulation 521.10.202 requires non-combustible supports and fixings for emergency lighting cables to ensure they remain secure during a fire. Plastic fixings would melt and fail, potentially causing cable failure.',
   },
@@ -70,12 +70,12 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     id: 6,
     question: 'Name one electrical verification test carried out before energising.',
     options: [
+      'Acoustic testing',
       'Visual inspection only',
       'Continuity of conductors',
       'Colour temperature measurement',
-      'Acoustic testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Continuity testing confirms that all conductors are properly connected throughout the circuit. Other essential tests include insulation resistance, polarity, and earth fault loop impedance testing.',
   },
@@ -83,20 +83,25 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     id: 7,
     question: 'Which test confirms correct polarity of circuits?',
     options: [
-      'Insulation resistance test',
-      'Polarity test',
       'Earth fault loop impedance test',
+      'Insulation resistance test',
       'Continuity test',
+      'Polarity test',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A polarity test specifically confirms that live and neutral conductors are correctly connected throughout the circuit, preventing potentially dangerous reversed connections.',
   },
   {
     id: 8,
     question: 'What pictogram standard must be used for exit signs?',
-    options: ['ISO 9001', 'ISO 7010', 'BS EN 12464', 'IEC 60364'],
-    correctAnswer: 1,
+    options: [
+      'ISO 7010',
+      'ISO 9001',
+      'BS EN 12464',
+      'IEC 60364',
+    ],
+    correctAnswer: 0,
     explanation:
       'ISO 7010 is the international standard for safety signs, including emergency exit signs. It ensures consistent, universally recognizable pictograms for safe evacuation guidance.',
   },
@@ -104,10 +109,10 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     id: 9,
     question: 'Why should defects be recorded during inspection?',
     options: [
-      'To increase project costs',
+      'The contractor who employs the injured worker',
       'So they can be corrected before commissioning',
-      'For decoration purposes',
-      'To delay the project',
+      'Immediately, by the quickest practicable means',
+      'It affects visual performance at mesopic light levels',
     ],
     correctAnswer: 1,
     explanation:
@@ -117,12 +122,12 @@ export const emergencyLightingModule5Section1QuizData: QuizQuestion[] = [
     id: 10,
     question: 'In the Manchester office case study, what error was found during commissioning?',
     options: [
-      'Incorrect cable type was used',
+      'To confirm installation matches design, identify faults, and form the basis of certification',
+      'They do not meet non-combustible fixing requirements in BS 7671 Reg. 521.10.202',
       'Non-maintained luminaires installed where maintained fittings were specified',
-      'Exit signs were missing',
-      'Battery capacity was insufficient',
+      'Emergency circuits must be kept separate from normal supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The case study highlighted that non-maintained luminaires were incorrectly installed in areas where the design specified maintained fittings. This mistake caused delays and rework, demonstrating the importance of verifying luminaire types against design drawings during initial inspection.',
   },

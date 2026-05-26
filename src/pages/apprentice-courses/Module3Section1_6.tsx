@@ -13,7 +13,12 @@ const quickCheckQuestions = [
   {
     id: 'elv-application',
     question: 'Name one example of a low voltage application using ELV cable.',
-    options: ['Lighting circuits', 'Doorbell systems', 'Socket outlets', 'Cooker circuits'],
+    options: [
+      'Lighting circuits',
+      'Doorbell systems',
+      'Cooker circuits',
+      'Socket outlets',
+    ],
     correctIndex: 1,
     explanation:
       'Doorbell systems operate at extra-low voltage (typically 12-24V) making them safe from electric shock risk.',
@@ -21,8 +26,13 @@ const quickCheckQuestions = [
   {
     id: 'cat6-distance',
     question: 'What is the maximum standard run length for Cat6 cable without boosting?',
-    options: ['50 metres', '75 metres', '100 metres', '150 metres'],
-    correctIndex: 2,
+    options: [
+      '50 metres',
+      '100 metres',
+      '75 metres',
+      '150 metres',
+    ],
+    correctIndex: 1,
     explanation:
       'Cat6 Ethernet cable has a maximum run length of 100 metres before signal degradation requires repeaters or switches.',
   },
@@ -30,10 +40,10 @@ const quickCheckQuestions = [
     id: 'cable-separation',
     question: 'Why should data cables be kept separate from mains cables?',
     options: [
-      'To save space',
+      'VFD - energy saving in standby mode',
       'To reduce electromagnetic interference',
-      'To meet colour coding',
-      'To reduce cost',
+      'Through site supervision and formal procedures',
+      'Within 600mm of the meter or point of entry',
     ],
     correctIndex: 1,
     explanation:
@@ -45,15 +55,25 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which cable type is commonly used for Ethernet networking?',
-    options: ['Cat6', 'SWA', 'PVC twin and earth', 'HOFR'],
-    correctAnswer: 0,
+    options: [
+      'SWA',
+      'Cat6',
+      'PVC twin and earth',
+      'HOFR',
+    ],
+    correctAnswer: 1,
     explanation:
       'Cat6 (Category 6) cable is a standard twisted pair cable designed for Ethernet networking up to 1 Gigabit speeds.',
   },
   {
     id: 2,
     question: 'What is the maximum recommended length for a Cat6 cable run without a repeater?',
-    options: ['50 m', '75 m', '100 m', '150 m'],
+    options: [
+      '150 m',
+      '50 m',
+      '100 m',
+      '75 m',
+    ],
     correctAnswer: 2,
     explanation:
       'Cat6 cable has a maximum run length of 100 metres before signal attenuation requires network equipment to boost the signal.',
@@ -70,7 +90,12 @@ const quizQuestions = [
   {
     id: 4,
     question: 'Which voltage level defines Extra-Low Voltage (ELV) for AC circuits?',
-    options: ['Below 50 V', 'Below 100 V', 'Below 230 V', 'Below 400 V'],
+    options: [
+      'Below 50 V',
+      'Below 100 V',
+      'Below 230 V',
+      'Below 400 V',
+    ],
     correctAnswer: 0,
     explanation:
       'Extra-Low Voltage (ELV) is defined as below 50V AC or 120V DC, providing enhanced safety from electric shock.',
@@ -79,10 +104,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why should the bend radius of a data cable be observed during installation?',
     options: [
-      'To make it easier to pull',
+      'Working on live low voltage equipment with high fault current',
       'To avoid damaging insulation or signal performance',
-      'To increase flexibility',
-      'To reduce cost',
+      'Breathe in for 4, hold for 4, out for 4, hold for 4',
+      'High assertiveness, high cooperativeness',
     ],
     correctAnswer: 1,
     explanation:
@@ -92,12 +117,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the main purpose of shielding in signal cables?',
     options: [
-      'Increase current capacity',
+      'Gas and oil fault protection',
+      'Risk Assessment and Method Statement',
       'Reduce electromagnetic interference',
-      'Improve flexibility',
-      'Reduce cost',
+      '100π rad/s (approximately 314 rad/s)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Shielding protects signal cables from electromagnetic interference (EMI) that can degrade signal quality.',
   },
@@ -105,15 +130,25 @@ const quizQuestions = [
     id: 7,
     question:
       'What regulation covers general wiring standards in the UK, including separation of ELV and mains cables?',
-    options: ['BS 6701', 'BS EN 50173', 'BS 7671', 'BS 6004'],
-    correctAnswer: 2,
+    options: [
+      'BS 6701',
+      'BS EN 50173',
+      'BS 6004',
+      'BS 7671',
+    ],
+    correctAnswer: 3,
     explanation:
       'BS 7671 (IET Wiring Regulations) covers general electrical installation requirements including cable separation rules.',
   },
   {
     id: 8,
     question: 'Which cable type would be most suitable for IP-based CCTV systems?',
-    options: ['Cat5e or Cat6', 'Twin and earth', 'SWA cable', 'HOFR flex'],
+    options: [
+      'Cat5e or Cat6',
+      'SWA cable',
+      'HOFR flex',
+      'Twin and earth',
+    ],
     correctAnswer: 0,
     explanation:
       'IP-based CCTV systems use network protocols and require Cat5e or Cat6 structured cabling for data transmission.',

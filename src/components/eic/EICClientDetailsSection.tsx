@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -96,6 +96,23 @@ const EICClientDetailsSection = ({ formData, onUpdate }: EICClientDetailsSection
     },
     [haptic, localValues.sameAsClientAddress, setValues, flush]
   );
+
+  // On new certs (no client data yet), default the three dates to today.
+  // Guard: never overwrite dates on an existing cert that has any client info loaded.
+  useEffect(() => {
+    const isNewCert = !localValues.clientName && !localValues.installationAddress;
+    if (!isNewCert) return;
+    const today = new Date().toISOString().split('T')[0];
+    const updates: Partial<ClientSectionFields> = {};
+    if (!localValues.installationDate) updates.installationDate = today;
+    if (!localValues.constructionDate) updates.constructionDate = today;
+    if (!localValues.testDate) updates.testDate = today;
+    if (Object.keys(updates).length > 0) {
+      setValues(updates);
+      flush();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="space-y-6">

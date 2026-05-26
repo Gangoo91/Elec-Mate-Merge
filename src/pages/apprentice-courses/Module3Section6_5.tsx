@@ -15,7 +15,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the UK colour for single-phase neutral conductors?',
-    options: ['Black', 'Blue', 'Grey', 'Yellow'],
+    options: [
+      'Black',
+      'Blue',
+      'Grey',
+      'Yellow',
+    ],
     correctAnswer: 1,
     explanation:
       'Blue is the standard colour for neutral conductors in UK single-phase systems since harmonisation in 2004.',
@@ -23,8 +28,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which phase colour is used for L2 in a modern three-phase system?',
-    options: ['Brown', 'Black', 'Grey', 'Blue'],
-    correctAnswer: 1,
+    options: [
+      'Grey',
+      'Brown',
+      'Black',
+      'Blue',
+    ],
+    correctAnswer: 2,
     explanation:
       'In post-2004 UK three-phase systems: L1=Brown, L2=Black, L3=Grey, with Blue for neutral and Green/Yellow for earth.',
   },
@@ -52,8 +62,13 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What is the earth conductor colour code in the UK?',
-    options: ['Blue', 'Brown', 'Green/Yellow', 'Grey'],
-    correctAnswer: 2,
+    options: [
+      'Brown',
+      'Green/Yellow',
+      'Grey',
+      'Blue',
+    ],
+    correctAnswer: 1,
     explanation:
       'Green/Yellow striping is the universal colour code for earth (CPC) conductors in the UK and internationally.',
   },
@@ -61,10 +76,10 @@ const quizQuestions = [
     id: 6,
     question: 'Which labelling method is most suitable for marine environments?',
     options: [
-      'Self-adhesive vinyl',
-      'Heat-shrink marker',
+      'At both the control unit and outlet',
+      'Assertiveness and cooperativeness',
       'Laser-etched stainless steel',
-      'Paper tag',
+      'Colour temperature and RGB control',
     ],
     correctAnswer: 2,
     explanation:
@@ -74,12 +89,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why is it important to mark spare conductors?',
     options: [
-      'For aesthetic reasons',
+      'Explosion risk and chemical compatibility of equipment',
+      'Specialist earth electrode tester with auxiliary electrodes',
+      'Lower breaking capacity, slower operation, less precise',
       'To prevent accidental connection and confusion',
-      'To meet colour coding standards',
-      'To reduce installation costs',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Marking spare conductors prevents dangerous accidental connections and helps future engineers understand the system layout.',
   },
@@ -87,12 +102,12 @@ const quizQuestions = [
     id: 8,
     question: 'What must be displayed where both pre- and post-2004 wiring colours exist?',
     options: [
-      'Circuit schedule only',
       'Warning notice indicating mixed wiring colours',
-      'New cable colour chart',
-      'Electrical certificate',
+      'Investigate and retest if necessary',
+      'Phone for calling 999, but nothing that delays you',
+      'Equal to or greater than the actual PSCC at that point',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Warning notices must identify where both old and new colour codes exist to prevent dangerous confusion during maintenance.',
   },
@@ -103,8 +118,13 @@ const quickCheckQuestions = [
   {
     id: 'live-colour',
     question: 'What is the UK cable colour for a single-phase live conductor?',
-    options: ['Red', 'Brown', 'Black', 'Blue'],
-    correctIndex: 1,
+    options: [
+      'Blue',
+      'Black',
+      'Brown',
+      'Red',
+    ],
+    correctIndex: 2,
     explanation:
       'Brown is the standard colour for single-phase live (line) conductors in post-2004 UK installations.',
   },
@@ -112,12 +132,12 @@ const quickCheckQuestions = [
     id: 'durable-labels',
     question: 'Name one type of durable label suitable for industrial environments.',
     options: [
-      'Paper stickers',
       'Engraved Traffolyte labels',
-      'Masking tape',
-      'Marker pen on cable',
+      'Stagnation (total) pressure',
+      'Voltage at the supply point',
+      'Potential difference (voltage)',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Engraved Traffolyte labels provide excellent durability and legibility for industrial applications.',
   },
@@ -125,12 +145,12 @@ const quickCheckQuestions = [
     id: 'label-durability',
     question: 'Why must labels be legible for the life of the installation?',
     options: [
-      'For aesthetic purposes only',
+      'Non-linear effects (Brillouin/Raman scattering)',
+      'For minor work not involving a new circuit',
+      'Ipsc = U₀ ÷ (Ze + circuit impedance)',
       'To ensure ongoing safety and efficient maintenance',
-      'To meet insurance requirements',
-      'To reduce material costs',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Label legibility throughout the installation's life ensures continued safety and enables efficient maintenance and fault-finding.",
   },

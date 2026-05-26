@@ -267,6 +267,22 @@ const RenewableEnergyModule4Section6 = lazy(() =>
     )
   )
 );
+const RenewableEnergyModule4Section7 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule4Section7',
+      () => import('@/pages/upskilling/RenewableEnergyModule4Section7')
+    )
+  )
+);
+const RenewableEnergyModule4Section8 = lazy(() =>
+  withTimeout(() =>
+    trackImport(
+      'RenewableEnergyModule4Section8',
+      () => import('@/pages/upskilling/RenewableEnergyModule4Section8')
+    )
+  )
+);
 const RenewableEnergyModule5 = lazy(() =>
   withTimeout(() =>
     trackImport('RenewableEnergyModule5', () => import('@/pages/upskilling/RenewableEnergyModule5'))
@@ -659,6 +675,14 @@ export const renewableEnergyRoutes = (
     <Route
       path="renewable-energy-module-4-section-6"
       element={<RenewableEnergyModule4Section6 />}
+    />
+    <Route
+      path="renewable-energy-module-4-section-7"
+      element={<RenewableEnergyModule4Section7 />}
+    />
+    <Route
+      path="renewable-energy-module-4-section-8"
+      element={<RenewableEnergyModule4Section8 />}
     />
     <Route path="renewable-energy-module-5" element={<RenewableEnergyModule5 />} />
     <Route

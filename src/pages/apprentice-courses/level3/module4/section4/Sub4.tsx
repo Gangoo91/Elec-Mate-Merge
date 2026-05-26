@@ -41,10 +41,10 @@ const checks = [
     question:
       "What's the 5-Whys discipline and how does it apply to electrical fault diagnosis?",
     options: [
-      "Just guessing.",
+      "Six fault-specific categories on top of the generic shock + arc + burn list: (1) hidden parallel paths and borrowed neutrals, (2) induced voltages from adjacent live circuits, (3) capacitive / inductive stored energy in equipment, (4) compromised protective conductors (CPC missing or high-resistance), (5) compromised supply earthing (open PEN, lost main earth), (6) unverified circuit identification (the breaker label says 'lights' but actually feeds the boiler). All six are present BECAUSE the system is in fault — the fault itself created or revealed the hazard.",
       "5-Whys is a root-cause analysis technique from manufacturing (Toyota Production System). Ask 'why?' five times to drill from symptom to root cause. Example: (1) Why did the breaker trip? — earth leakage. (2) Why was there earth leakage? — water in junction box. (3) Why was there water? — ceiling void leak. (4) Why was there a leak? — failed valve seal. (5) Why did the valve fail? — installed wrong rating for the pressure. Root cause: wrong-rated valve at install. Without the 5-Whys, you'd fix the JB (level 2 cause) but the leak returns. With it, you fix the valve too (root cause). Customer needs both fixes; firm needs to specify both in quotes.",
-      "Just one why.",
-      "Random.",
+      "Stop. Make the board safe (re-isolate properly, lock-off, dead-test, prove the tester). Tell your supervisor immediately and explain exactly what happened — what you expected, what you found, what action you took. Document the near-miss in writing. The employer is required by HSE guidance to investigate near-misses; they're the leading indicator of next month's RIDDOR-reportable incident. Mgmt H&S Regs 1999 Reg 14 puts a personal duty on you as the employee to inform the employer of any matter you reasonably consider represents a serious and immediate danger — that includes a near-miss that exposed a defect in the safe system of work.",
+      "UKAS (United Kingdom Accreditation Service) traces every reference standard back through an unbroken chain to NPL (National Physical Laboratory) primary standards. A UKAS-traceable calibration certificate proves the lab measured your instrument against references whose accuracy is documented through the chain. For BS 7671 certification (EICR, EIC, MWC) and any EAWR Reg 14 evidence pack, the readings on the certificate must come from instruments with UKAS-traceable calibration in date. A calibration without UKAS traceability is technically inadmissible — and that means certificates signed off using it are challengeable.",
     ],
     correctIndex: 1,
     explanation:
@@ -55,10 +55,10 @@ const checks = [
     question:
       "What's the engineering decision framework for 'repair vs replace' on a faulty component?",
     options: [
-      "Always replace.",
+      "Pre-Construction Information is the H&S information that the Client (with help from the Principal Designer) provides to designers and contractors before they start on the project. It covers the site (location, existing structures, services, ground conditions), the project (description, programme, key dates, design assumptions), the relevant H&S information (asbestos surveys, condition reports, environmental risks) and the Client's H&S file from any previous works.",
       "Four factors. (1) COST — cost of repair (parts + labour) vs cost of replacement; if repair is more than 60–70% of replacement cost, lean to replacement. (2) RELIABILITY — repaired component vs new component reliability; refurbished electrical components rarely match new for long-term reliability. (3) COMPLIANCE — replacement may be required to meet current standards (older accessories may not meet A4:2026 specifications). (4) SCHEDULE — repair time vs replacement time + lead time for parts. The decision is multi-factor; quote both options to the customer when the choice isn't obvious.",
-      "Always repair.",
-      "Random.",
+      "AFDDs, RCBOs, RCCBs and SPDs all have internal electronic components that can present low resistance during a 500 V IR test, potentially skewing results or causing unacceptable current flow during testing. GN3 explicitly identifies these device categories. The standard practice is to either disconnect the device for the IR test (re-test after re-fitting), use 250 V if the device can\\\\\\\\\\\\'t tolerate 500 V (check manufacturer manual), or apply IR test only to the wiring (not through the device) by isolating at the load terminals.",
+      "Because the terminal is engineered to clamp at a specific force range — too little, the conductor isn't held firmly and the joint runs hot; too much, the parts deform and crack. The published value is the engineering specification. BS 7671 134.1.1 says installations must comply with manufacturers' instructions; ignoring the published torque value breaches 134.1.1 directly. NICEIC / NAPIT scheme assessments check this at audit.",
     ],
     correctIndex: 1,
     explanation:
@@ -69,12 +69,12 @@ const checks = [
     question:
       "What's the difference between a 'symptom-level fix' and a 'root-cause fix'?",
     options: [
-      "Same thing.",
+      "Scope 1 (direct emissions from sources owned or controlled by the company): diesel combustion in the ten transit vans plus any natural gas burnt in the workshop heating boiler. Scope 2 (indirect emissions from purchased energy): grid electricity drawn for workshop lighting and small power. Scope 3 (other indirect emissions across the value chain): embodied carbon in the cable, accessories and tools purchased from the wholesaler, employee commuting, business travel by means other than company vehicles, waste disposal, and the use-phase emissions of the systems the contractor installs at customer sites.",
+      "Toolbox talks are short, focused, structured verbal briefings to workers on a specific safety topic — typically a hazard relevant to that day or that week. They're documented (sign-on sheet) so the employer can demonstrate they've discharged the MHSWR Reg 10 duty to provide comprehensible information. The format works because it's short, in person, with the chance to ask questions — the opposite of a long written document nobody reads.",
       "SYMPTOM-LEVEL — addresses the visible / immediate problem (replace the burnt socket, reset the tripped breaker, replace the failed bulb). Quick, low-cost, but doesn't prevent recurrence if the root cause persists. ROOT-CAUSE — addresses the design / installation / maintenance failure that produced the symptom (redesign the ring final to handle the actual load, re-train the customer to avoid overload, replace the undersized cable to current spec). Slower, higher-cost, but prevents recurrence. Engineering decision: do BOTH where possible; fix the symptom AND the root cause; quote both in the customer brief.",
-      "Symptom is enough.",
-      "Root is unnecessary.",
+      "Older fixed-speed heat pumps run the compressor at full output or off — short-cycling repeatedly to match a partial load. Each start consumes electricity and stresses the compressor. Modern inverter-driven units vary the compressor speed continuously to match the actual heat demand — running at 30 to 100 percent capacity smoothly. The result is better SCOP (less wasted starting energy), longer compressor life, quieter operation and more comfortable indoor temperatures. Almost every new domestic ASHP sold in the UK is inverter-driven. The L3 electrician sizes the supply to the rated nameplate current (the compressor at full speed); the variable-speed control is internal to the unit.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The two-level fix is the L3 engineering approach. Symptom-level fix gets the customer back in service quickly; root-cause fix prevents the comeback. Both are needed for true diagnostic completion. The customer makes the commercial call on whether to authorise both; the firm has a duty to recommend both.",
   },
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: "Apply the 5-Whys to a customer reporting 'breaker keeps tripping when I plug in the kettle' and identify each level.",
     options: [
-      "Just one cause.",
+      "Most integrated systems use a mix of WiFi, Cat5e/Cat6 wired Ethernet, Modbus RS485 between specific pairs of devices, and CAN bus between battery BMS and inverter. At first fix the apprentice should run Cat5e/Cat6 cable to: (1) the consumer unit / metering location (for the HEMS and any smart meter interface), (2) the battery and inverter location (for BMS comms and remote monitoring), (3) the heat pump indoor controller location, (4) the EV charger location. CT clamps on the supply tail need a comms / signal cable back to whichever device is consuming the measurement (charger, HEMS, battery inverter — varies by system). Skipping the wired infrastructure at first fix and relying on WiFi alone is the most common reason integrated systems become unreliable later.",
       "(1) Why does the breaker trip? — overload current exceeds B-rating magnetic threshold (kettle 12 A inrush + existing load). (2) Why does the existing load + kettle exceed threshold? — too many loads on the same circuit. (3) Why too many loads? — kitchen ring designed in 1995 for fewer high-current appliances; modern kitchen has more. (4) Why the design is inadequate? — original installer specified to current consumption at the time, no margin for future appliance growth. (5) Why no margin? — no design standard for future-proofing kitchen circuits in 1995; standard practice was to size to immediate need. Root cause: undersized circuit for modern usage. Fix: upgrade to 32 A circuit with appropriate protection, OR redistribute appliances across multiple circuits, OR add additional kitchen circuit.",
-      "Random.",
-      "Buy new kettle.",
+      "Required for any high-risk task that needs documented authorisation — typically: live working above 50 V AC, work in hazardous areas (zoned ATEX environments), work on supply-side equipment, work that affects safety-critical systems (fire alarm, emergency lighting under test), work in confined spaces, hot work in close proximity to electrical equipment. The permit documents — task scope, authorised persons, date/time window, isolation steps already taken, residual hazards, PPE required, emergency response. Issued by an authorised manager, signed back at the end. Common on commercial / industrial sites; rare on domestic.",
+      "Inadmissible for any purpose where the accuracy of the measurement matters legally — BS 7671 certification, EAWR evidence, EICR coding, dispute resolution. The reasoning: without UKAS-traceable calibration in date, you can't prove the measurement is accurate to the stated tolerance, so the measurement itself is unreliable. A circuit signed off as 'satisfactory IR ≥ 1 MΩ' using an instrument with expired calibration may actually have been 0.1 MΩ (instrument drift) — and any subsequent fire / shock incident will trace back to that signature. The instrument's calibration sticker is the front-line evidence; the certificate is the back-up.",
     ],
     correctAnswer: 1,
     explanation:
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 2,
     question: "What questions should you ask when assessing whether to repair or replace a faulty 25-year-old MCB?",
     options: [
-      "Always replace.",
+      "Around 15-20 years for a well-maintained domestic ASHP, comparable to a high-quality gas boiler. The compressor is the wear part; secondary wear includes the fan motor, expansion valve, controls electronics. Annual servicing including refrigerant leak check, wet-system maintenance, electrical inspection and performance verification keeps the unit at design SCOP for as long as possible. Skipped service typically halves the working life and voids the warranty.",
+      "Adding a battery changes the maximum potential export from the property and changes the inverter behaviour as seen from the network. ENA G98 (single-phase up to 16 A per phase) and G99 (above 16 A or three-phase) require the combined system to be notified. For a connect-and-notify install (G98) the installer notifies the DNO within 28 days of energising. For G99 the installer applies in advance and the DNO returns connection conditions before energising. The MCS-certified installer handles the paperwork; the apprentice should understand that the existing PV notification does not cover the added storage.",
       "Five questions. (1) IS PARTS AVAILABLE? Older MCBs may be obsolete; replacement requires new model. (2) IS REPAIR EVEN POSSIBLE? Most MCBs are sealed units; 'repair' usually means swap. (3) IS THE EXISTING DESIGN STILL APPROPRIATE? Modern installations may need RCBO (RCD + MCB combined) instead of MCB-only. (4) WILL THE NEW COMPONENT FIT THE BUSBAR? Some old CUs need full CU replacement to fit modern devices. (5) WHAT'S THE OVERALL CU AGE / CONDITION? If the CU itself is approaching end of life (typical 25–30 years), full CU replacement may be the right call. Engineering decision is rarely just 'repair vs replace one device'.",
-      "Random.",
-      "Just replace.",
+      "Type A RCDs detect AC residual currents and pulsating DC residual currents. They cannot detect smooth (continuous) DC residual currents — these can blind the device. Type B RCDs detect AC, pulsating DC and smooth DC residual currents. EV charge points produce smooth DC fault currents that a Type A alone cannot reliably trip. Two acceptable solutions per Section 722: (1) the unit includes its own RDC-DD (6 mA DC detection per IEC 62752 / 61851-1) and the upstream RCD can be Type A; (2) the unit does not include an RDC-DD and the upstream device must be Type B. Modern UK domestic units almost universally include the RDC-DD, so Type A upstream is the dominant choice. Always confirm against the unit's data sheet.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "MCB / RCBO replacement decisions usually involve broader CU considerations. A 25-year-old CU with one failed MCB may be approaching the point where full replacement makes sense; replacing one MCB just prolongs the inevitable. The L3 engineering decision considers the system, not just the component.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: "When is the right answer to 'recommend rewire' rather than 'repair'?",
     options: [
-      "Never.",
+      "Polarity test confirms that the line conductor is connected to the line terminal at every accessory and switching device, AND that switches break the line conductor (not the neutral). BS 7671 643.6 requires polarity verification at every accessory and at the origin. Failed polarity findings: switch breaks neutral instead of line (entire fitting remains live when off — common older-installation fault); reversed polarity at a socket (line and neutral swapped — appliances work but earth/neutral references are wrong); two-way switching wired wrong (intermittent operation). MFT has a polarity test mode; socket testers do polarity-only on 13A sockets.",
+      "Reportable diseases (Reg 8 + Schedule 3) are work-related ill-health diagnoses — carpal tunnel syndrome from repetitive work, occupational asthma, hand-arm vibration syndrome, certain cancers attributable to a known carcinogen at work. Reportable dangerous occurrences (Reg 7 + Schedule 2) are events that COULD have caused injury — collapse of lifting equipment, escape of dangerous substances, electrical short circuit causing 24+ hours plant stoppage, structural collapse, certain hazardous-area incidents.",
+      "BS 7671 applies regardless of whether the install is MCS-certified — it's the electrical safety regulation, not an MCS option. On both MCS and non-MCS installs the L3 electrician is responsible for BS 7671 compliance — design, installation, inspection and testing, certification (EIC). On MCS installs the certified installer additionally signs off the MCS install pack and accesses the funding incentives. On non-MCS installs there's no MCS sign-off and no incentive access, but BS 7671 compliance is unchanged. The distinction matters for the customer's funding access; it doesn't matter for the L3 electrician's electrical responsibility.",
       "Five conditions. (1) Cable type at end of life (rubber-insulated, VIR, lead-sheathed pre-1970s) — IR readings declining year-on-year, regular faults. (2) Multiple Code 1 / Code 2 EICR findings on the same installation that aren't economically repairable individually. (3) Repair would require destruction of significant building fabric (chasing whole rooms). (4) Customer planning a renovation — economical to rewire while building work is happening. (5) Property change-of-use (e.g. residential to HMO) requiring different specification. The L3 apprentice doesn't normally make this call — it's improver / Approved Electrician / consultant level — but should recognise the conditions and escalate.",
-      "Always.",
-      "Just bigger jobs.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Rewire recommendation is an engineering judgment call, not a default. The L3 apprentice's role is recognising the indicators (cable age, multiple EICR codes, future plans) and escalating to senior for the decision. Rewire is a major capital decision for the customer; the recommendation needs to be defensible.",
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     id: 4,
     question: "What's an 'engineering compromise' and when is it appropriate in fault diagnosis?",
     options: [
-      "Just lazy.",
       "Engineering compromise = solution that's less than ideal but acceptable given constraints (cost, time, building fabric, customer budget). Examples: (1) Add a dedicated circuit for high-load appliance instead of full kitchen rewire. (2) Replace one tripping RCBO instead of upgrading to all-RCBO CU. (3) Patch a damaged cable section instead of replacing the full run. Each compromise is acceptable IF: (a) it brings the installation to BS 7671 compliance, (b) the limitations are documented and communicated to the customer, (c) the customer has accepted the compromise in writing, (d) the firm's professional indemnity covers the chosen approach. Compromise is engineering, not corner-cutting.",
-      "Always wrong.",
-      "Always right.",
+      "MCS certificate; Electrical Installation Certificate (BS 7671); G98 or G99 DNO notification copy; manufacturer commissioning record(s); MCS performance estimate (SCOP, kWh / kWp / yr, payback, etc.); warranty documentation for all major components; user instruction manuals; maintenance schedule and service intervals; F-Gas record (where refrigerant work was carried out); contact details for fault reporting; and the MCS Code complaints process. Pack is provided in physical or durable digital form on handover day.",
+      "Domestic ASHP installs usually include an unvented hot water cylinder (typically 200 to 300 L for a family home) with two heat sources — the heat pump heating coil (primary, low-temperature) and an electric immersion heater (secondary, higher-temperature). The heat pump heats the cylinder to 45 to 50 °C for normal hot water demand. The immersion heater is run periodically (typically weekly) to lift the cylinder temperature to 60 °C for at least 60 minutes for legionella pasteurisation per the WHS guidance under HSWA 1974 / L8 ACoP. Some heat pumps can do the legionella cycle themselves at high flow temperature without the immersion. The programmable thermostat on the immersion is the L3 electrician's wiring scope. Hot water at 60 °C is hot enough to scald — anti-scald TMVs are required at outlets per Building Regs Part G.",
+      "Three reasons. (1) Density — many terminations in a small space; many opportunities for one to be wrong. (2) Heat — control electronics generate heat; cooling is often inadequate; thermal cycling stresses components. (3) Vibration — panels in plant rooms and on walls near equipment vibrate; vibration loosens terminations over time. Approach: always work on de-energised, isolated panels under permit-to-work where applicable; identify each component's function from the panel schedule; check terminations with thermal imaging while running; replace components by part number from the schedule; retest each output to verify correct operation.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Real engineering involves compromise. The customer's budget, the building fabric, the time available, the firm's competence — all constrain the ideal solution. The L3 apprentice's role is recognising when a compromise is appropriate (within compliance) vs a corner-cut (below compliance). The supervisor / senior makes the call on borderline cases.",
   },
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: "How do you communicate engineering decisions to a customer who isn't technical?",
     options: [
-      "Just tell them.",
+      "Anti-islanding is the inverter's ability to detect when the grid has gone down and to disconnect itself within milliseconds — preventing the inverter from continuing to feed a portion of the local network ('islanding') with the DNO's workers expecting that section to be dead. ENA G98 (and G99 for larger systems) defines the protection settings the inverter must implement (typically G99/1-7 or earlier G83/G59 protection settings depending on inverter age). Modern inverters self-test the anti-islanding regularly. A4:2026 has refined the BS 7671 cross-references to G98/G99.",
       "Plain English + cost. Example: 'Your kitchen circuit can't handle the load you're putting on it. There are three options. (1) Cheap — rearrange your appliances so you don't run kettle, microwave and toaster at the same time. £0 cost; reduced convenience. (2) Medium — add a dedicated socket for the kettle on a separate circuit. £450 cost; same convenience. (3) Expensive — rewire the kitchen for full modern capacity. £2,500 cost; future-proofed. Each option is safe; they differ on cost and convenience. Which fits your situation best?'. Customer makes the commercial decision; you've explained the technical position; the firm has a defensible record.",
-      "Use jargon.",
-      "Make decision for them.",
+      "They share components — both depend on R1+R2 (the cable line + CPC resistance for Zs, line + neutral resistance for voltage drop). A high-Zs reading often correlates with a high voltage drop reading because both are dominated by the cable\\\\\\\\'s R1 contribution. If you find one is borderline, check the other. The two tests are complementary — Zs verifies fault-clearance (ADS), voltage drop verifies normal-operation quality. Both use cable resistance as a key input.",
+      "Three-step BS 7671 643.2.2 test. (1) Measure end-to-end resistance of L (r1), N (rn), CPC (r2) — disconnect at the DB. (2) Cross-connect L1 of one leg to N2 of the other leg, and N1 of one leg to L2 of the other leg, at the DB. (3) Measure resistance L–N at every socket on the ring — readings should all be within 0.05 Ω of each other (the geometric average of the ring) for a healthy ring. A socket showing wildly different reading is on a spur or the ring is broken at that point. The test physically confirms the ring topology, not just continuity.",
     ],
     correctAnswer: 1,
     explanation:
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 7,
     question: "When should an L3 apprentice escalate a diagnosis decision to the supervisor rather than make it themselves?",
     options: [
-      "Never.",
+      "A workmanship warranty is your written guarantee that the work you've done will be free from workmanship defects for a specified period — typically 1-2 years for standard electrical work, sometimes longer for renewables (RECC requires minimum 2-year workmanship warranty for MCS-registered work). Materials usually carry separate manufacturer warranties (passed through to customer). Clear warranty terms reduce disputes by setting expectations upfront.",
+      "It binds whoever is the duty-holder for the system at the time — most often the duty-holder under HASAWA who controls the premises (employer, dutyholder, landlord). The duty-holder discharges the maintenance obligation by arranging periodic inspection (an EICR) to a recommended frequency, acting on the resulting condition codes (C1 / C2 / FI), and keeping records. The electrician carrying out the EICR is the technical evidence the duty-holder is meeting Reg 4(2).",
+      "When the inspector believes a specific activity involves or will involve a risk of SERIOUS personal injury. The notice prohibits the activity (immediately, or from a stated time) until the risk has been remedied. Like an Improvement Notice, it can be appealed to an Employment Tribunal within 21 days — but the appeal does NOT suspend the notice (unlike an Improvement Notice). The activity must stop while the appeal is heard.",
       "Six triggers. (1) Cost decision &gt; £500 (budget threshold typically defined by firm policy). (2) Code 1 / Code 2 EICR finding requiring engineering judgment on coding. (3) Engineering compromise that may not be straightforward compliance. (4) Customer dispute about scope or quality. (5) Specialist work outside L3 competence (HV, three-phase plant, BMS, fire alarm signal-only work). (6) Anything you're not sure about. Escalation is competence, not weakness — the EAWR Reg 16 'competent person' duty includes knowing where your competence stops. The supervisor is paid to make the harder calls.",
-      "Always.",
-      "Just buy time.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Escalation triggers are part of the L3 apprentice's professional discipline. Knowing what's within your scope and what isn't — and acting accordingly — is the EAWR Reg 16 duty. The firm's policy will define specific thresholds; the apprentice's habit of escalating early is a sign of competence, not a sign of weakness.",
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     id: 8,
     question: "What's the role of customer education in fault diagnosis outcomes?",
     options: [
-      "Not your job.",
       "Significant. Many faults recur because the customer's behaviour caused or contributed to them — overloaded extensions, plug-in heaters on lighting circuits, kettle + microwave + toaster simultaneously. Educating the customer on the actual cause AND how to avoid recurrence is part of preventing the comeback. Format: brief verbal explanation during the work + written summary in the job sheet that the customer signs at completion. 'Your circuit is rated for X amps; running these appliances together exceeds that; consider running them sequentially OR add a dedicated circuit'. The customer's informed cooperation prevents 60–80% of behaviour-related comebacks.",
-      "Just bill them.",
-      "Never explain.",
+      "MCS commissioning certificate (the MCS-certified installer sign-off — required to claim Smart Export Guarantee tariff), the inverter type-test certificate, the array layout drawing, the single-line electrical schematic, the DC and AC isolator location plan, the BS 7671 EIC for the electrical work, the manufacturer manuals for inverter and panels, and the G98 notification copy filed with the DNO. The pack lives with the property — when the customer sells, the next owner needs it for their EICR and to maintain SEG eligibility. Lost packs cost real money to replace, especially the MCS commissioning certificate. Hand the pack over physically and email a digital copy.",
+      "The F-Gas Regulations (the EU Fluorinated Greenhouse Gases Regulation retained in UK law plus the UK Fluorinated Greenhouse Gases Regulations 2015) require any work on a sealed refrigerant circuit (charging, recovery, leak testing, brazing into the circuit) to be carried out by an F-Gas-certified person. Companies handling F-Gas refrigerants must hold a company F-Gas certificate. The L3 electrician's scope is the electrical supply, isolation, controls, smart integration and external bonding. The trade boundary is firm — the electrician calls in an F-Gas-certified engineer for any refrigerant work.",
+      "The full life cycle is broken into modules: A1-A3 product stage (raw material supply, transport to factory, manufacturing); A4-A5 construction stage (transport to site, installation); B1-B7 use stage (use, maintenance, repair, replacement, refurbishment, operational energy and water use); C1-C4 end-of-life stage (deconstruction, transport, waste processing, disposal); and D benefits and loads beyond the system boundary (recycling and recovery beyond end of life). Different EPDs cover different module sets — A1-A3 cradle-to-gate is the most common minimum; A1-C4 plus D is the most complete cradle-to-grave with recycling credits.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Customer education is one of the highest-leverage things an electrician does. A 5-minute brief on what caused the fault and how to avoid it can prevent the next comeback. The L3 apprentice builds the habit through deliberate practice — every job ends with a brief explanation to the customer.",
   },

@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'Before using a multimeter to measure voltage on a live circuit, what must you check?',
     options: [
-      'Only that the battery is charged',
       'That the meter is set to the correct voltage range (AC or DC), the test leads are in the correct sockets (not the current socket), the probes comply with GS38, and the meter category rating is appropriate for the circuit',
-      'That the meter is the most expensive model available',
-      'Nothing — modern multimeters are always safe to use',
+      'Anyone in the construction chain who needs design clarification or wants to propose a change — site supervisor, install electrician, commissioning engineer, M&E coordinator, fire engineer, customer.',
+      'Initially feeling disappointed, then reframing the feedback as an opportunity to improve quality and catch a potential issue before inspection — reducing the negative emotional intensity',
+      'Comprehensive condition monitoring (annual thermographic survey, scheduled IR testing of busbars), detailed PPM (annual inspection, torque checks, cleaning), priority spare parts holding, and documented failure investigation for any breakdown',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Before any live voltage measurement: (1) set the meter to the correct function (AC or DC voltage) and an appropriate range (or auto-range); (2) verify the test leads are plugged into the voltage/common sockets — not the current (A) socket, which has a low-impedance path that would create a short-circuit; (3) ensure the probes comply with GS38 (finger guards, limited exposed metal, fused leads); (4) check the meter's CAT rating matches or exceeds the installation category (e.g., CAT III for distribution boards, CAT IV for origin). A test lead in the wrong socket is a common cause of serious injury.",
   },
@@ -29,12 +29,12 @@ const quickCheckQuestions = [
     question:
       'What is the minimum acceptable insulation resistance value for a circuit up to 500 V according to BS 7671?',
     options: [
-      '0.5 megohms',
+      'Alarm responses notify and may trigger corrective actions; safety shutdowns override normal operation to protect life and property',
+      'Consistently arriving when promised, completing work on time, and following through on every commitment — large and small',
+      'Allowing silences, reflecting back what they have said, and using minimal encouragers such as nodding',
       '1 megohm (1 MΩ), tested at 500 V DC — though in practice, healthy installations should read significantly higher',
-      '10 megohms',
-      '100 ohms',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'BS 7671 Table 6A specifies a minimum insulation resistance of 1 MΩ for circuits with a nominal voltage up to 500 V, tested at 500 V DC. For SELV and PELV circuits (up to 50 V), the minimum is 0.5 MΩ tested at 250 V DC. In practice, a new installation should give readings of 50 MΩ or more. Readings between 1 and 2 MΩ, while technically compliant, indicate deteriorating insulation that warrants investigation. Readings below 1 MΩ are non-compliant and the circuit must not be energised until the fault is found and rectified.',
   },
@@ -42,12 +42,12 @@ const quickCheckQuestions = [
     id: 'clamp-meter',
     question: 'A clamp meter measures current by:',
     options: [
-      'Making direct contact with the conductor',
       'Clamping around a single conductor and detecting the magnetic field produced by the current flowing through it — the circuit does not need to be broken',
-      'Measuring the voltage drop across a known resistance',
-      'Injecting a test current into the circuit',
+      'Operating procedures, maintenance schedules, as-built drawings, test certificates, and spare parts information',
+      'Embodied carbon relates to the materials and construction; operational carbon relates to energy used during the building\\\\\\\\\\\\\\\'s life',
+      'Each test relies on the integrity of a previous test (e.g. IR cannot be safely interpreted without continuity of cpc; live tests require dead-test confirmation of earthing)',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A clamp meter uses a split-core current transformer (for AC) or a Hall-effect sensor (for AC and DC) that clamps around a single conductor. The magnetic field produced by the current induces a proportional signal in the clamp, which the meter displays as a current reading. The key advantage is that the circuit does not need to be broken — the measurement can be made on a live, operating circuit. Only one conductor must be clamped at a time; clamping around a complete cable (line and neutral together) would give a reading of approximately zero as the magnetic fields cancel.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     id: 'proving-unit',
     question: "Why must a voltage indicator be 'proved' before and after use with a proving unit?",
     options: [
-      'It is a legal requirement to use a proving unit',
+      "The pelvis contains major blood vessels; a pelvic fracture can cause massive internal haemorrhage — call 999 immediately, keep the casualty still, treat for shock, and do not attempt to bind the pelvis unless trained",
+      "The Schedule of Accessories is a design document — every accessory by location, type, IP rating and circuit reference, used for install QC and as-installed verification. The BOM is a procurement document — totals by part number for ordering. The schedule drives the BOM, but the schedule survives long after the BOM is closed.",
+      "HASAWA s.3 — duty of every employer (and self-employed person) to conduct their undertaking in such a way as to ensure, so far as is reasonably practicable, that persons NOT in their employment who may be affected are not exposed to risks to their health or safety. Visitors, neighbours, members of the public — all caught.",
       "Proving before use confirms the indicator is working correctly (it will detect voltage); proving after use confirms it was still working when the 'dead' reading was taken — this eliminates the risk of relying on a faulty indicator that falsely shows 'dead'",
-      "The proving unit charges the indicator's battery",
-      'A proving unit is only needed for analogue meters',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "The prove-test-prove procedure is a fundamental electrical safety practice recommended by GS38 and required by safe working procedures. Before testing for voltage absence, the indicator is proved on a known live source (or proving unit) to confirm it detects voltage. The circuit under test is then tested. After testing, the indicator is proved again on the known source. If the indicator does not respond on the second prove, the 'dead' reading cannot be trusted — the indicator may have failed during the test. A proving unit provides a convenient, portable known-voltage source for this purpose.",
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'The CAT (Category) rating on a multimeter indicates:',
     options: [
-      'The country of manufacture',
+      'A Minor Electrical Installation Works Certificate (MEIWC) for additions/alterations to a single circuit, or an Electrical Installation Certificate (EIC) for new circuits/installations',
       'The overvoltage protection category — higher CAT numbers indicate locations closer to the supply origin with higher prospective fault energy, requiring more robust protection',
-      'The number of functions the meter has',
-      'The battery type required',
+      'Directing someone to appropriate professional support services, providing names, numbers, and resources relevant to their needs',
+      '50-75 percent of peak nameplate (intermittent duty cycle reduces RMS demand) but ensure cable and protection coordinate with the peak transient.',
     ],
     correctAnswer: 1,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: 'When performing an insulation resistance test, the circuit under test must be:',
     options: [
-      'Energised and under load',
+      'Quick preliminary detection of the presence or absence of AC voltage on cables and conductors — it does NOT replace a proper voltage indicator for confirming \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'dead\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' before work begins',
+      'A single conductor only (line or neutral) — clamping around both line and neutral together would give a reading of approximately zero because the currents flow in opposite directions and their magnetic fields cancel',
       'Isolated from the supply, with all loads disconnected and all switches closed (to test the fixed wiring), and any electronic equipment or surge protection devices disconnected to prevent damage',
-      'Connected to an RCD',
-      'Tested with the supply on to check normal operation',
+      'Calibrated to a traceable standard (typically annually), with current calibration certificates, and compliant with the relevant parts of BS EN 61557 for the specific test function',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Insulation resistance testing applies a high DC voltage (250 V, 500 V or 1,000 V depending on the circuit voltage) between conductors and between conductors and earth. The circuit must be isolated from the mains supply and all loads disconnected — electronic equipment, lamps, appliances and SPDs can be damaged by the test voltage. All switches should be closed to include all wiring in the test. Two-way switching circuits need particular attention to ensure all wiring is tested. The megohmmeter applies the test voltage and measures the resulting leakage current to calculate the insulation resistance.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 3,
     question: 'A loop impedance tester measures:',
     options: [
-      'The resistance of the cable insulation',
+      'A single conductor only (line or neutral) — clamping around both line and neutral together would give a reading of approximately zero because the currents flow in opposite directions and their magnetic fields cancel',
+      'Isolated from the supply, with all loads disconnected and all switches closed (to test the fixed wiring), and any electronic equipment or surge protection devices disconnected to prevent damage',
+      'Quick preliminary detection of the presence or absence of AC voltage on cables and conductors — it does NOT replace a proper voltage indicator for confirming \\\\\\\\\\\\\\\'dead\\\\\\\\\\\\\\\' before work begins',
       'The total impedance of the earth fault loop path (Zs) — from the point of measurement, through the CPC back to the transformer, and returning via the line conductor — to verify that protective devices will operate within the required disconnection time',
-      'The current flowing in the circuit',
-      'The voltage at the socket outlet',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The earth fault loop impedance (Zs) is the total impedance of the complete fault current path: from the point of the fault, through the CPC to the main earthing terminal, through the earthing conductor to the means of earthing, through the supply earth return path to the transformer, and back through the line conductor to the point of the fault. A low Zs value means high fault current, which ensures the protective device (MCB, fuse, RCD) operates quickly enough to meet the disconnection times specified in BS 7671. The loop impedance tester injects a brief test current and measures the resulting voltage drop to calculate Zs.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'An RCD tester verifies that an RCD:',
     options: [
-      'Is correctly wired',
       'Trips within the required time when a fault current of the rated sensitivity (e.g., 30 mA) is applied — tests at 50%, 100% and 500% (5x) of the rated residual current, plus ramp tests',
-      'Has the correct voltage rating',
-      'Is the correct physical size',
+      'A single conductor only (line or neutral) — clamping around both line and neutral together would give a reading of approximately zero because the currents flow in opposite directions and their magnetic fields cancel',
+      'The continuity and resistance of protective conductors (R1+R2), bonding conductors, and ring final circuit conductors — confirming that the earth fault path is complete and has acceptably low resistance',
+      'Finger barriers (guards), spring-loaded retractable tips with maximum 2-4 mm exposed metal, fused test leads, and clearly marked voltage and current ratings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An RCD tester simulates earth leakage by passing a controlled test current between line and earth through the RCD. Standard tests include: 50% rated current (e.g., 15 mA for a 30 mA RCD) — the RCD must NOT trip; 100% rated current (30 mA) — must trip within 300 ms (or 200 ms for Type S); 5x rated current (150 mA) — must trip within 40 ms (non-delayed types). Additional tests include ramp testing (gradually increasing current to find the exact trip point) and testing on both positive and negative half-cycles. BS 7671 requires these tests during initial verification and periodic inspection.',
   },
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'GS38 (HSE Guidance Note) specifies that test probes should have:',
     options: [
-      'Long exposed metal tips for deep reach into terminals',
+      'Trips within the required time when a fault current of the rated sensitivity (e.g., 30 mA) is applied — tests at 50%, 100% and 500% (5x) of the rated residual current, plus ramp tests',
       'Finger barriers (guards), spring-loaded retractable tips with maximum 2-4 mm exposed metal, fused test leads, and clearly marked voltage and current ratings',
-      'No metal parts at all',
-      'Wooden handles for insulation',
+      'Calibrated to a traceable standard (typically annually), with current calibration certificates, and compliant with the relevant parts of BS EN 61557 for the specific test function',
+      'Continuity of protective conductors first, then insulation resistance, then reconnect the supply for live tests: loop impedance, RCD testing, and prospective fault current',
     ],
     correctAnswer: 1,
     explanation:
@@ -136,12 +136,12 @@ const quizQuestions = [
     id: 6,
     question: 'A low-resistance ohmmeter (continuity tester) is used to verify:',
     options: [
-      'Insulation resistance between conductors',
+      'The total impedance of the earth fault loop path (Zs) — from the point of measurement, through the CPC back to the transformer, and returning via the line conductor — to verify that protective devices will operate within the required disconnection time',
+      'Quick preliminary detection of the presence or absence of AC voltage on cables and conductors — it does NOT replace a proper voltage indicator for confirming \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'dead\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' before work begins',
       'The continuity and resistance of protective conductors (R1+R2), bonding conductors, and ring final circuit conductors — confirming that the earth fault path is complete and has acceptably low resistance',
-      'The supply voltage',
-      'The current flowing in a circuit',
+      'Finger barriers (guards), spring-loaded retractable tips with maximum 2-4 mm exposed metal, fused test leads, and clearly marked voltage and current ratings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The low-resistance ohmmeter measures very small resistances (typically 0.01 to 99.99 ohms) at a test current of at least 200 mA (BS 7671 requirement). It is used for: continuity of protective conductors (R1+R2 at each point); continuity of main and supplementary bonding conductors; ring final circuit testing (end-to-end resistance, cross-connection verification); and continuity of equipotential bonding. The test leads must be zeroed before use (null the lead resistance) to ensure accurate readings.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     question:
       'When measuring current with a clamp meter on a single-phase cable, you should clamp around:',
     options: [
-      'The entire cable (all conductors together)',
+      'Continuity (low-resistance ohmmeter), insulation resistance, loop impedance (Zs), RCD testing, and often earth electrode resistance — all the tests required for BS 7671 initial verification and periodic inspection',
+      'Quick preliminary detection of the presence or absence of AC voltage on cables and conductors — it does NOT replace a proper voltage indicator for confirming \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'dead\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' before work begins',
+      'Finger barriers (guards), spring-loaded retractable tips with maximum 2-4 mm exposed metal, fused test leads, and clearly marked voltage and current ratings',
       'A single conductor only (line or neutral) — clamping around both line and neutral together would give a reading of approximately zero because the currents flow in opposite directions and their magnetic fields cancel',
-      'The earth conductor only',
-      'Two cables at the same time for a combined reading',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In a single-phase circuit, the current flowing in the line conductor is equal and opposite to the current in the neutral (assuming no earth leakage). Clamping around both conductors together results in the magnetic fields cancelling, giving a reading near zero. To measure the load current, clamp around the line OR neutral conductor only. Note: clamping around all conductors and getting a non-zero reading actually indicates earth leakage current — this is the principle used by some leakage clamp meters for diagnostic purposes.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: 'A multifunction tester (MFT) typically combines which tests in a single instrument?',
     options: [
-      'Only voltage and current measurement',
       'Continuity (low-resistance ohmmeter), insulation resistance, loop impedance (Zs), RCD testing, and often earth electrode resistance — all the tests required for BS 7671 initial verification and periodic inspection',
-      'Only insulation resistance testing',
-      'Only RCD testing',
+      'Finger barriers (guards), spring-loaded retractable tips with maximum 2-4 mm exposed metal, fused test leads, and clearly marked voltage and current ratings',
+      'The total impedance of the earth fault loop path (Zs) — from the point of measurement, through the CPC back to the transformer, and returning via the line conductor — to verify that protective devices will operate within the required disconnection time',
+      'Quick preliminary detection of the presence or absence of AC voltage on cables and conductors — it does NOT replace a proper voltage indicator for confirming \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'dead\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' before work begins',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The multifunction tester (MFT) is the primary test instrument for electrical installation testing to BS 7671. It combines: low-resistance ohmmeter for continuity (at 200 mA minimum); insulation resistance tester (megohmmeter) at 250 V, 500 V and 1,000 V DC; earth fault loop impedance (Zs and Ze); prospective fault current (PSCC/PEFC); RCD testing (trip time and trip current at 50%, 100%, 5x); and often earth electrode resistance. Having all functions in one calibrated instrument ensures consistent, traceable results.',
   },
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'Test instruments used for BS 7671 verification must be:',
     options: [
-      'The most expensive models available',
+      'Quick preliminary detection of the presence or absence of AC voltage on cables and conductors — it does NOT replace a proper voltage indicator for confirming \\\\\\\\\\\\\\\'dead\\\\\\\\\\\\\\\' before work begins',
       'Calibrated to a traceable standard (typically annually), with current calibration certificates, and compliant with the relevant parts of BS EN 61557 for the specific test function',
-      'Brand new — recalibration is not possible',
-      'Only manufactured in the UK',
+      'Continuity of protective conductors first, then insulation resistance, then reconnect the supply for live tests: loop impedance, RCD testing, and prospective fault current',
+      'Finger barriers (guards), spring-loaded retractable tips with maximum 2-4 mm exposed metal, fused test leads, and clearly marked voltage and current ratings',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,12 +190,12 @@ const quizQuestions = [
     question:
       'When measuring voltage at a distribution board, the minimum meter CAT rating should be:',
     options: [
-      'CAT I',
+      'Leadership in Energy and Environmental Design - an international green building rating',
+      'Maximum demand, supply characteristics (Ze, Ipf, U0), earthing arrangement, type and composition of circuits, designer details, and Schedule of design data',
       'CAT III (distribution level) at the appropriate voltage rating — e.g., CAT III 600 V for a standard UK distribution board',
-      'CAT II is always sufficient',
-      'The CAT rating does not matter for voltage measurements',
+      'Share your interpretation, conclusion, or theory about the facts — tentatively, not as absolute truth',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Distribution boards, consumer units, sub-mains and fixed wiring are CAT III locations. Instruments used at these locations must be rated CAT III at the appropriate voltage (CAT III 300 V minimum for 230 V systems, CAT III 600 V provides additional margin). At the supply origin (meter, service head, main switch), CAT IV is required. Using a meter with an inadequate CAT rating at a location with high prospective fault energy risks explosive failure of the meter if a transient overvoltage occurs — this is a serious safety hazard.',
   },
@@ -203,12 +203,12 @@ const quizQuestions = [
     id: 11,
     question: 'A non-contact voltage detector (voltage stick) is used for:',
     options: [
-      'Accurate voltage measurement',
+      "Trips within the required time when a fault current of the rated sensitivity (e.g., 30 mA) is applied — tests at 50%, 100% and 500% (5x) of the rated residual current, plus ramp tests",
+      "Continuity of protective conductors first, then insulation resistance, then reconnect the supply for live tests: loop impedance, RCD testing, and prospective fault current",
+      "Calibrated to a traceable standard (typically annually), with current calibration certificates, and compliant with the relevant parts of BS EN 61557 for the specific test function",
       "Quick preliminary detection of the presence or absence of AC voltage on cables and conductors — it does NOT replace a proper voltage indicator for confirming 'dead' before work begins",
-      'Measuring insulation resistance',
-      'Testing RCD operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Non-contact voltage detectors (NCVDs, 'voltage sticks') detect the electric field around an AC conductor without making contact. They are useful for quick identification of live cables, tracing circuits, and preliminary checks. However, they have significant limitations: they can give false negatives (fail to detect voltage) through screened cables, in metal conduit, or with certain cable configurations. They cannot detect DC. They must NEVER be relied upon as the sole means of confirming a circuit is dead — a proper two-pole voltage indicator (GS38 compliant), proved before and after use, is required.",
   },
@@ -216,12 +216,12 @@ const quizQuestions = [
     id: 12,
     question: 'During periodic inspection and testing, the correct sequence of tests is:',
     options: [
-      'Any order is acceptable',
       'Continuity of protective conductors first, then insulation resistance, then reconnect the supply for live tests: loop impedance, RCD testing, and prospective fault current',
-      'Loop impedance first, then continuity last',
-      'Only insulation resistance needs to be tested',
+      'CAT III (distribution level) at the appropriate voltage rating — e.g., CAT III 600 V for a standard UK distribution board',
+      'Calibrated to a traceable standard (typically annually), with current calibration certificates, and compliant with the relevant parts of BS EN 61557 for the specific test function',
+      'Isolated from the supply, with all loads disconnected and all switches closed (to test the fixed wiring), and any electronic equipment or surge protection devices disconnected to prevent damage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BS 7671 specifies a logical test sequence: dead tests first (circuit isolated), then live tests (circuit energised). Dead tests: (1) continuity of protective conductors (R1+R2); (2) continuity of ring final circuit conductors; (3) insulation resistance. Then reconnect the supply for live tests: (4) polarity verification; (5) earth fault loop impedance (Zs); (6) prospective fault current (PSCC/PEFC); (7) RCD operation. This sequence ensures safety — the earth path is verified (continuity) and insulation is confirmed before the supply is reconnected for live tests.',
   },

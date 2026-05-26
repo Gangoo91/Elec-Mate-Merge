@@ -29,7 +29,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 1,
     question: 'What is the phenomenon that allows light to travel through an optical fibre?',
-    options: ['Refraction only', 'Total internal reflection', 'Diffraction', 'Polarisation'],
+    options: [
+      '20× cable diameter',
+      'Total internal reflection',
+      'Bend-insensitive fibre standards',
+      '2:1 (two fibres per outlet)',
+    ],
     correctAnswer: 1,
     explanation:
       'Total internal reflection occurs when light hits the core/cladding boundary at an angle greater than the critical angle, causing it to reflect back into the core rather than escaping.',
@@ -41,7 +46,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 2,
     question: 'What is the typical core diameter of singlemode fibre?',
-    options: ['50 micrometres', '62.5 micrometres', '8-9 micrometres', '125 micrometres'],
+    options: [
+      '50 micrometres',
+      '62.5 micrometres',
+      '8-9 micrometres',
+      '125 micrometres',
+    ],
     correctAnswer: 2,
     explanation:
       'Singlemode fibre has a small core diameter of 8-9 micrometres (typically 9µm for OS2), which allows only one mode of light to propagate. The 125µm dimension refers to the cladding diameter.',
@@ -53,8 +63,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 3,
     question: 'Which fibre type is best suited for long-distance telecommunications applications?',
-    options: ['OM1 multimode', 'OM4 multimode', 'OS2 singlemode', 'OM3 multimode'],
-    correctAnswer: 2,
+    options: [
+      'OM1 multimode',
+      'OM4 multimode',
+      'OM3 multimode',
+      'OS2 singlemode',
+    ],
+    correctAnswer: 3,
     explanation:
       'OS2 singlemode fibre has the lowest attenuation (0.35 dB/km at 1310nm, 0.22 dB/km at 1550nm) and no modal dispersion, making it ideal for long-distance transmission.',
     section: 'Module 1',
@@ -66,12 +81,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 4,
     question: "What does the 'numerical aperture' (NA) of an optical fibre describe?",
     options: [
-      "The fibre's resistance to bending",
       'The light-gathering ability and acceptance angle',
       'The maximum data rate supported',
+      "The fibre's resistance to bending",
       "The fibre's tensile strength",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Numerical aperture describes the range of angles over which the fibre can accept light. A higher NA means the fibre can gather light over a wider acceptance cone.',
     section: 'Module 1',
@@ -83,10 +98,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 5,
     question: 'What is the primary cause of attenuation in optical fibre at 1550nm?',
     options: [
-      'Modal dispersion',
+      'Stop immediately and investigate the cause',
       'Rayleigh scattering and absorption',
-      'Connector reflections',
-      'Temperature variations',
+      'Total internal reflection',
+      'Outdoor cables - moisture and UV resistant',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,12 +115,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 6,
     question: 'What is the critical angle in optical fibre transmission?',
     options: [
-      'The angle at which light exits the fibre',
+      'The bandwidth when using laser sources accounting for launch conditions',
+      'Launch condition exciting all modes uniformly',
       'The minimum angle for total internal reflection to occur',
-      'The maximum acceptance angle',
-      'The angle of the fibre end-face polish',
+      'Data centre infrastructure and telecommunications standards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The critical angle is the minimum angle of incidence (measured from normal) at which light is totally internally reflected. Below this angle, light refracts out of the core.',
     section: 'Module 1',
@@ -117,12 +132,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 7,
     question: 'What is chromatic dispersion in optical fibre?',
     options: [
-      'Light changing colour as it travels',
-      'Different wavelengths travelling at different speeds',
       'Multiple modes interfering with each other',
+      'Light changing colour as it travels',
       'Light being absorbed by the core material',
+      'Different wavelengths travelling at different speeds',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Chromatic dispersion occurs because different wavelengths travel at slightly different speeds in glass. This spreads the signal pulse over distance, limiting bandwidth.',
     section: 'Module 1',
@@ -133,8 +148,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 8,
     question: 'What is the refractive index of pure glass fibre core typically?',
-    options: ['1.0', '1.33', '1.46-1.48', '2.0'],
-    correctAnswer: 2,
+    options: [
+      '1.46-1.48',
+      '1.33',
+      '1.0',
+      '2.0',
+    ],
+    correctAnswer: 0,
     explanation:
       'The refractive index of silica glass fibre core is typically 1.46-1.48. The cladding has a slightly lower index (by about 1%) to enable total internal reflection.',
     section: 'Module 1',
@@ -145,8 +165,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 9,
     question: "What wavelength window is commonly called the 'S-band' in fibre optics?",
-    options: ['850nm', '1260-1360nm', '1460-1530nm', '1565-1625nm'],
-    correctAnswer: 2,
+    options: [
+      '1260-1360nm',
+      '1460-1530nm',
+      '1565-1625nm',
+      '850nm',
+    ],
+    correctAnswer: 1,
     explanation:
       'The S-band (Short wavelength band) covers 1460-1530nm. The O-band is 1260-1360nm, C-band is 1530-1565nm, and L-band is 1565-1625nm.',
     section: 'Module 1',
@@ -159,12 +184,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question:
       'What phenomenon limits the maximum power that can be transmitted through singlemode fibre?',
     options: [
-      'Modal dispersion',
+      'Splice enclosure or joint closure',
+      'Structured housing for fibre termination and patching',
       'Non-linear effects (Brillouin/Raman scattering)',
-      'Chromatic dispersion only',
-      'Connector reflection',
+      'Ratio of signal power to noise power in optical systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'At high optical powers, non-linear effects like Stimulated Brillouin Scattering (SBS) and Stimulated Raman Scattering (SRS) cause signal degradation and power limitations.',
     section: 'Module 1',
@@ -176,12 +201,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 11,
     question: "What is the 'mode field diameter' in singlemode fibre?",
     options: [
-      'The physical core diameter',
+      'Installing fibre units into pre-installed tubes using air pressure',
+      'Different wavelengths travelling at different speeds',
+      '3-5 metres or as specified for the application',
       'The effective diameter of the light-carrying region',
-      'The cladding diameter',
-      'The buffer coating diameter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Mode field diameter (MFD) is larger than the physical core, as light extends slightly into the cladding. For OS2 fibre at 1310nm, MFD is typically 9.2µm.',
     section: 'Module 1',
@@ -193,12 +218,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 12,
     question: 'Why is the 1310nm wavelength historically important for singlemode fibre?',
     options: [
-      'Lowest attenuation of all wavelengths',
       'Zero chromatic dispersion in conventional fibre',
+      'Lowest attenuation of all wavelengths',
       'Cheapest laser sources available',
       'Maximum power handling capability',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Conventional singlemode fibre (G.652) has zero chromatic dispersion around 1310nm, eliminating dispersion-related signal spreading at this wavelength.',
     section: 'Module 1',
@@ -210,12 +235,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 13,
     question: "What is the 'water peak' in optical fibre attenuation?",
     options: [
-      'Increased loss around 1383nm due to hydroxyl ions',
       'Damage caused by water entering the cable',
+      'Increased loss around 1383nm due to hydroxyl ions',
       'Maximum water pressure the cable can withstand',
       'Humidity limit for installation',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'The water peak is increased attenuation around 1383nm caused by hydroxyl (OH) ions in the glass. Low water peak (LWP) fibres like G.652.D eliminate this for CWDM use.',
     section: 'Module 1',
@@ -227,7 +252,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 14,
     question: 'What is the modal bandwidth rating of OM4 multimode fibre at 850nm?',
-    options: ['500 MHz·km', '2000 MHz·km', '4700 MHz·km', '200 MHz·km'],
+    options: [
+      '500 MHz·km',
+      '200 MHz·km',
+      '4700 MHz·km',
+      '2000 MHz·km',
+    ],
     correctAnswer: 2,
     explanation:
       'OM4 fibre has an effective modal bandwidth of 4700 MHz·km at 850nm with laser sources, enabling longer reach for high-speed applications compared to OM3 (2000 MHz·km).',
@@ -241,11 +271,11 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: "What does 'G.657' refer to in singlemode fibre specifications?",
     options: [
       'Maximum attenuation coefficient',
-      'Bend-insensitive fibre standards',
-      'Connector specifications',
       'Testing requirements',
+      'Connector specifications',
+      'Bend-insensitive fibre standards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'ITU-T G.657 defines bend-insensitive singlemode fibre specifications, with variants A1, A2, B2, and B3 specifying increasingly tight bend radius tolerance.',
     section: 'Module 2',
@@ -257,12 +287,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 16,
     question: 'What distinguishes OM5 fibre from OM4?',
     options: [
-      'Larger core diameter',
       'Optimised for SWDM (multiple wavelengths 850-953nm)',
-      'Higher tensile strength',
-      'Better performance at 1550nm',
+      'Standard singlemode fibre with low water peak',
+      'To enable safe jacket removal without cutting tools',
+      'Different modes travelling at different speeds in multimode fibre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'OM5 (wideband multimode) is optimised for shortwave wavelength division multiplexing (SWDM) across 850-953nm, enabling higher capacity over duplex connections.',
     section: 'Module 2',
@@ -273,8 +303,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 17,
     question: 'What is the cladding diameter for both singlemode and standard multimode fibres?',
-    options: ['50 micrometres', '62.5 micrometres', '125 micrometres', '250 micrometres'],
-    correctAnswer: 2,
+    options: [
+      '250 micrometres',
+      '125 micrometres',
+      '50 micrometres',
+      '62.5 micrometres',
+    ],
+    correctAnswer: 1,
     explanation:
       'The cladding diameter is standardised at 125 micrometres for both singlemode (9/125) and multimode (50/125 or 62.5/125) fibres to ensure mechanical compatibility.',
     section: 'Module 2',
@@ -285,7 +320,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 18,
     question: 'What is the maximum attenuation for OS2 singlemode fibre at 1550nm?',
-    options: ['0.5 dB/km', '0.35 dB/km', '0.22 dB/km', '1.0 dB/km'],
+    options: [
+      '0.5 dB/km',
+      '1.0 dB/km',
+      '0.22 dB/km',
+      '0.35 dB/km',
+    ],
     correctAnswer: 2,
     explanation:
       'OS2 singlemode fibre specifies maximum attenuation of 0.22 dB/km at 1550nm and 0.35 dB/km at 1310nm, making it excellent for long-distance transmission.',
@@ -297,8 +337,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 19,
     question: "What does 'OM' stand for in multimode fibre designations?",
-    options: ['Optical Mode', 'Optical Multimode', 'Optimised Multimode', 'Outer Measurement'],
-    correctAnswer: 1,
+    options: [
+      'Optical Mode',
+      'Outer Measurement',
+      'Optimised Multimode',
+      'Optical Multimode',
+    ],
+    correctAnswer: 3,
     explanation:
       'OM stands for Optical Multimode, as defined in ISO/IEC 11801. OM1 through OM5 designate different performance grades of multimode fibre.',
     section: 'Module 2',
@@ -309,8 +354,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 20,
     question: 'What is the core diameter of OM1 multimode fibre?',
-    options: ['50µm', '62.5µm', '9µm', '100µm'],
-    correctAnswer: 1,
+    options: [
+      '62.5µm',
+      '50µm',
+      '9µm',
+      '100µm',
+    ],
+    correctAnswer: 0,
     explanation:
       'OM1 fibre has a 62.5µm core (62.5/125). OM2 through OM5 all use 50µm cores but with improved modal bandwidth characteristics.',
     section: 'Module 2',
@@ -321,8 +371,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 21,
     question: 'What colour jacket typically identifies OM3/OM4 multimode fibre?',
-    options: ['Orange', 'Yellow', 'Aqua', 'Blue'],
-    correctAnswer: 2,
+    options: [
+      'Orange',
+      'Aqua',
+      'Yellow',
+      'Blue',
+    ],
+    correctAnswer: 1,
     explanation:
       'Aqua (light blue) jackets identify laser-optimised 50µm multimode (OM3/OM4). Orange is OM1/OM2, yellow is singlemode, and lime green is OM5.',
     section: 'Module 2',
@@ -334,12 +389,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 22,
     question: "What is 'effective modal bandwidth' (EMB)?",
     options: [
-      'The bandwidth measured with LED sources',
+      'Separating loose-tube fibres for individual termination',
+      'A splice between fibres with different backscatter coefficients',
       'The bandwidth when using laser sources accounting for launch conditions',
-      'The theoretical maximum bandwidth',
-      'The bandwidth per kilometre of fibre',
+      'Where external cables enter the building and transition to internal cabling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "EMB measures bandwidth with laser sources, accounting for real-world launch conditions. It's more relevant for modern high-speed applications than overfilled launch bandwidth.",
     section: 'Module 2',
@@ -350,8 +405,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 23,
     question: 'What is the typical attenuation of OM3 multimode fibre at 850nm?',
-    options: ['0.22 dB/km', '1.5 dB/km', '3.5 dB/km', '5.0 dB/km'],
-    correctAnswer: 2,
+    options: [
+      '0.22 dB/km',
+      '1.5 dB/km',
+      '5.0 dB/km',
+      '3.5 dB/km',
+    ],
+    correctAnswer: 3,
     explanation:
       'Multimode fibre has higher attenuation than singlemode. OM3 specifies maximum 3.5 dB/km at 850nm, compared to 0.35 dB/km for OS2 at 1310nm.',
     section: 'Module 2',
@@ -363,12 +423,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 24,
     question: 'What does ITU-T G.652.D specify?',
     options: [
-      'Bend-insensitive singlemode fibre',
       'Standard singlemode fibre with low water peak',
-      'Dispersion-shifted fibre',
-      'Multimode fibre specifications',
+      '2000 metres (campus) / 3000 metres (building)',
+      'Vertical-Cavity Surface-Emitting Laser',
+      'To provide rigidity and resist crushing/bending forces',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'G.652.D specifies conventional singlemode fibre with low water peak, enabling full spectrum (O through L band) CWDM transmission without the 1383nm absorption peak.',
     section: 'Module 2',
@@ -379,8 +439,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 25,
     question: 'What is the minimum bend radius specification for G.657.A1 fibre?',
-    options: ['30mm', '15mm', '10mm', '5mm'],
-    correctAnswer: 2,
+    options: [
+      '30mm',
+      '10mm',
+      '15mm',
+      '5mm',
+    ],
+    correctAnswer: 1,
     explanation:
       'G.657.A1 bend-insensitive fibre specifies 10mm minimum bend radius with negligible added loss. G.657.B3 allows even tighter 5mm bends for extreme applications.',
     section: 'Module 2',
@@ -391,7 +456,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 26,
     question: 'What is the maximum distance for 100GBASE-SR4 over OM4 fibre?',
-    options: ['70 metres', '100 metres', '150 metres', '300 metres'],
+    options: [
+      '70 metres',
+      '100 metres',
+      '150 metres',
+      '300 metres',
+    ],
     correctAnswer: 2,
     explanation:
       '100GBASE-SR4 using parallel optics over OM4 reaches 150 metres maximum. OM3 supports 100 metres for the same application.',
@@ -404,12 +474,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 27,
     question: 'What differentiates G.654 fibre from standard G.652?',
     options: [
-      'Smaller core diameter',
+      'It eliminates gainer effects and gives true splice loss',
+      'Increased attenuation from radiation or hydrogen exposure over time',
+      'Small-scale deformations in the fibre axis causing localised loss',
       'Optimised for 1550nm with larger effective area for submarine/long-haul',
-      'Multimode capability',
-      'Improved bend performance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'G.654 fibre has ultra-low loss at 1550nm and larger effective area to reduce non-linear effects, making it ideal for submarine and ultra-long-haul terrestrial links.',
     section: 'Module 2',
@@ -422,12 +492,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 28,
     question: 'What is the primary function of water-blocking gel or tape in loose-tube cables?',
     options: [
-      'To increase fibre count capacity',
       'To prevent water migration along the cable',
-      'To reduce attenuation',
-      'To improve bend radius',
+      'Small Form-factor Pluggable (transceiver module)',
+      'Rayleigh scattering and absorption',
+      'Zero chromatic dispersion in conventional fibre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Water-blocking compounds (gel or dry-block tape) prevent water from entering and migrating along the cable, protecting fibres from moisture damage and freezing.',
     section: 'Module 3',
@@ -456,12 +526,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 30,
     question: 'What type of cable construction is best suited for direct burial without conduit?',
     options: [
-      'Tight-buffered indoor cable',
+      'Wavelength Division Multiplexing',
+      'A spike upward followed by the normal trace',
       'Armoured loose-tube with PE jacket',
-      'LSZH distribution cable',
-      'Ribbon cable',
+      'Total internal reflection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Armoured loose-tube cables with polyethylene (PE) outer jackets provide mechanical protection (rodents, crushing) and moisture resistance needed for direct burial applications.',
     section: 'Module 3',
@@ -473,12 +543,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 31,
     question: 'What is an advantage of ribbon fibre cable construction?',
     options: [
-      'Better flexibility around corners',
+      'Additional optical power needed to overcome system impairments',
+      'Class 1M (eye-safe with magnification restrictions)',
+      'Water-based or gel polymer compounds safe for cables',
       'High fibre density and mass-fusion splice capability',
-      'Easier individual fibre access',
-      'Lower cost per fibre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Ribbon cables enable high fibre counts in compact packages and allow mass-fusion splicing of 12 fibres simultaneously, significantly reducing splicing time for high-count cables.',
     section: 'Module 3',
@@ -490,12 +560,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 32,
     question: 'What is the purpose of aramid yarn (Kevlar) in fibre optic cables?',
     options: [
-      'Provides electrical grounding',
       'Provides tensile strength and strain relief',
-      'Reduces signal attenuation',
-      'Prevents water ingress',
+      'Stable modal power distribution after long fibre length',
+      'Zero chromatic dispersion in conventional fibre',
+      'It eliminates gainer effects and gives true splice loss',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Aramid (Kevlar) strength members provide tensile strength to handle pulling forces during installation without transferring stress to the fibres.',
     section: 'Module 3',
@@ -506,8 +576,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 33,
     question: 'What is the typical diameter of tight-buffered fibre including the buffer?',
-    options: ['125µm', '250µm', '900µm', '2.0mm'],
-    correctAnswer: 2,
+    options: [
+      '125µm',
+      '900µm',
+      '250µm',
+      '2.0mm',
+    ],
+    correctAnswer: 1,
     explanation:
       'Tight-buffered fibre has a 900µm (0.9mm) outer diameter. The buffer is applied directly over the 250µm coated fibre, making it more robust for indoor handling.',
     section: 'Module 3',
@@ -519,12 +594,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 34,
     question: 'What is the purpose of the central strength member in loose-tube cables?',
     options: [
-      'To carry optical signals',
+      'Multiple channels over a single fibre pair',
+      'Legacy single-channel long-haul links (not DWDM)',
       'To provide rigidity and resist crushing/bending forces',
-      'To enable electrical grounding',
-      'To identify the cable manufacturer',
+      'Small-scale deformations in the fibre axis causing localised loss',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The central strength member (steel, glass-reinforced plastic, or aramid) provides structural support, prevents excessive bending, and resists crushing forces.',
     section: 'Module 3',
@@ -537,11 +612,11 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: "What does 'SWA' mean in cable specifications?",
     options: [
       'Single Wire Armour',
-      'Steel Wire Armoured',
-      'Standard Waterproof Assembly',
       'Stranded Wire Application',
+      'Standard Waterproof Assembly',
+      'Steel Wire Armoured',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SWA (Steel Wire Armoured) cables have steel wire armour providing mechanical protection against impact, crushing, and rodent attack for direct burial.',
     section: 'Module 3',
@@ -553,12 +628,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 36,
     question: 'Why are loose-tube cables preferred for outdoor installations?',
     options: [
-      'They are cheaper to manufacture',
       'Fibres are isolated from external mechanical and thermal stresses',
-      'They have better optical performance',
-      'They are easier to terminate',
+      'Support and tensile strength for suspending the cable',
+      'Unlit fibre capacity available for future use or lease',
+      'Adding elements to counteract chromatic dispersion effects',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'In loose-tube construction, fibres float freely in gel-filled tubes, isolating them from cable expansion/contraction with temperature changes and external mechanical forces.',
     section: 'Module 3',
@@ -570,10 +645,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 37,
     question: "What is a 'breakout' style cable construction?",
     options: [
-      'Cable designed to be split at failure points',
+      'To provide rigidity and resist crushing/bending forces',
       'Individual sub-cables that can be separated for direct termination',
-      'Emergency access cable design',
-      'Pre-terminated cable assemblies',
+      'Increased loss around 1383nm due to hydroxyl ions',
+      'Loss when joining fibres with different light-gathering capabilities',
     ],
     correctAnswer: 1,
     explanation:
@@ -587,12 +662,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 38,
     question: 'What is the purpose of ripcords in fibre optic cables?',
     options: [
-      'To provide additional strength',
+      'Controlling which modes are excited for better performance',
+      'To prevent water migration along the cable',
       'To enable safe jacket removal without cutting tools',
-      'To identify fibre colours',
-      'To block water migration',
+      'To provide redundant physical routes for resilience',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Ripcords are embedded strings that can be pulled to slit the cable jacket lengthwise, enabling safe jacket removal without risk of damaging the fibres inside.',
     section: 'Module 3',
@@ -604,12 +679,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 39,
     question: 'What type of outer jacket material is required for plenum-rated cables?',
     options: [
-      'Standard PVC',
-      'Polyethylene (PE)',
+      'Optical fibre combined with overhead ground wire on power lines',
+      'The distance after a reflective event where events cannot be detected',
+      'High-density parallel connections for 40G/100G+',
       'Low-smoke materials meeting fire safety standards (e.g., FEP, PVDF)',
-      'Rubber',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Plenum-rated cables use special jacket materials (FEP, PVDF) that meet strict fire safety codes for air-handling spaces, limiting smoke and flame spread.',
     section: 'Module 3',
@@ -621,12 +696,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 40,
     question: "What is a 'micro-cable' in fibre optics?",
     options: [
-      'Cable with micro-sized connectors',
       'High-density cable with very small outer diameter for microduct installation',
-      'Cable for microscope fibre illumination',
-      'Pre-terminated patch cord',
+      'Advanced detection using phase, amplitude, and polarisation of light',
+      'Providing access for intermediate pulls and cable management at changes of direction',
+      'A splice using alignment fixtures and index-matching gel',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Micro-cables have very small outer diameters (typically 2-6mm) for installation in microducts, maximising duct utilisation in congested pathways.',
     section: 'Module 3',
@@ -638,10 +713,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 41,
     question: "What is 'blown fibre' technology?",
     options: [
-      'Fibre manufactured using blown glass techniques',
+      'To enable safe jacket removal without cutting tools',
       'Installing fibre units into pre-installed tubes using air pressure',
-      'Air-cooled laser transmission',
-      'Pneumatic testing of fibre connections',
+      'Self-supporting cable with messenger attached in figure-8 profile',
+      'Non-linear effects (Brillouin/Raman scattering)',
     ],
     correctAnswer: 1,
     explanation:
@@ -656,12 +731,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 42,
     question: 'What is the ferrule diameter for standard fibre optic connectors (LC, SC, ST)?',
     options: [
-      '1.25mm for LC, 2.5mm for SC/ST',
       '2.5mm for all types',
-      '1.25mm for all types',
       '3.0mm for SC, 2.5mm for LC/ST',
+      '1.25mm for LC, 2.5mm for SC/ST',
+      '1.25mm for all types',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'LC connectors use a 1.25mm ferrule (small form factor), while SC and ST connectors use 2.5mm ferrules. The smaller LC size enables higher port density.',
     section: 'Module 4',
@@ -673,8 +748,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 43,
     question:
       'What is the typical return loss specification for a UPC (Ultra Physical Contact) connector?',
-    options: ['>30 dB', '>50 dB', '>70 dB', '>20 dB'],
-    correctAnswer: 1,
+    options: [
+      '>30 dB',
+      '>20 dB',
+      '>70 dB',
+      '>50 dB',
+    ],
+    correctAnswer: 3,
     explanation:
       'UPC connectors typically achieve >50 dB return loss (some specify >55 dB). The slightly domed end-face creates good physical contact, minimising reflections.',
     section: 'Module 4',
@@ -686,12 +766,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 44,
     question: 'Why cannot APC (Angled Physical Contact) connectors be mated with UPC connectors?',
     options: [
-      'Different ferrule diameters',
       'The 8° angle prevents proper end-face contact, causing high loss',
-      'Different wavelength requirements',
-      'Incompatible housing sizes',
+      'The minimum angle for total internal reflection to occur',
+      'A short fibre length with a connector on one end for fusion splicing',
+      'Standardised launch conditions for repeatable measurements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'APC connectors have an 8° angled end-face. When mated with flat UPC connectors, they make contact at only one point (or no contact), causing extremely high loss and potential damage.',
     section: 'Module 4',
@@ -702,8 +782,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 45,
     question: 'What is the typical loss achieved by a properly executed fusion splice?',
-    options: ['0.3-0.5 dB', '0.5-0.75 dB', '0.02-0.05 dB', '0.1-0.2 dB'],
-    correctAnswer: 2,
+    options: [
+      '0.3-0.5 dB',
+      '0.02-0.05 dB',
+      '0.5-0.75 dB',
+      '0.1-0.2 dB',
+    ],
+    correctAnswer: 1,
     explanation:
       'Modern fusion splicers achieve very low losses, typically 0.02-0.05 dB for singlemode and slightly higher for multimode. This is much lower than connector losses.',
     section: 'Module 4',
@@ -715,12 +800,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 46,
     question: 'What is the purpose of a splice protector sleeve (heat shrink)?',
     options: [
-      'To improve optical performance',
+      'To enable safe jacket removal without cutting tools',
+      'Applications sensitive to back-reflections (CATV, PON, analogue)',
       'To provide mechanical protection and rigidity to the splice point',
-      'To reduce splice loss',
-      'To enable re-splicing if needed',
+      'The fibre core being off-centre from the cladding',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The splice protector (heat-shrink sleeve with strength rod) provides mechanical protection and maintains the alignment of the fused fibres to prevent breakage at this vulnerable point.',
     section: 'Module 4',
@@ -731,8 +816,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 47,
     question: "What does 'PC' stand for in connector polishing terminology?",
-    options: ['Perfect Connection', 'Physical Contact', 'Polished Core', 'Precision Cut'],
-    correctAnswer: 1,
+    options: [
+      'Perfect Connection',
+      'Precision Cut',
+      'Polished Core',
+      'Physical Contact',
+    ],
+    correctAnswer: 3,
     explanation:
       'PC (Physical Contact) refers to the slightly curved (domed) end-face polish that ensures the fibre cores make direct physical contact, reducing air gaps and reflections.',
     section: 'Module 4',
@@ -743,8 +833,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 48,
     question: 'What return loss is typically achieved by APC connectors?',
-    options: ['>30 dB', '>50 dB', '>60-70 dB', '>20 dB'],
-    correctAnswer: 2,
+    options: [
+      '>60-70 dB',
+      '>30 dB',
+      '>50 dB',
+      '>20 dB',
+    ],
+    correctAnswer: 0,
     explanation:
       'APC connectors achieve excellent return loss (>60-70 dB) because the 8° angle directs any reflected light away from the fibre core, preventing it from travelling back to the source.',
     section: 'Module 4',
@@ -755,7 +850,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 49,
     question: 'What is the standard colour coding for an SC/UPC connector?',
-    options: ['Green', 'Blue', 'Orange', 'White'],
+    options: [
+      'Green',
+      'Blue',
+      'White',
+      'Orange',
+    ],
     correctAnswer: 1,
     explanation:
       'Blue housing identifies UPC (flat/domed) polished connectors. Green identifies APC (angled) connectors. This colour coding prevents accidental mismating of different polish types.',
@@ -768,12 +868,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 50,
     question: "What is a 'mechanical splice'?",
     options: [
-      'A splice made by heat fusion',
+      'To reduce friction and pulling tension during installation',
+      'Standard singlemode fibre with low water peak',
       'A splice using alignment fixtures and index-matching gel',
-      'A temporary test connection',
-      'A splice requiring special mechanical tools',
+      'A spike upward followed by the normal trace',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Mechanical splices align fibres in a precision fixture and use index-matching gel to reduce reflections. They're faster than fusion splicing but have higher loss (typically 0.1-0.5 dB).",
     section: 'Module 4',
@@ -786,11 +886,11 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: 'What is the purpose of index-matching gel in fibre connections?',
     options: [
       'To improve mechanical strength',
-      'To reduce reflections by eliminating air gaps',
-      'To clean the fibre end-face',
       'To provide electrical insulation',
+      'To clean the fibre end-face',
+      'To reduce reflections by eliminating air gaps',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Index-matching gel has a refractive index similar to glass, filling air gaps between fibre ends to reduce Fresnel reflections and improve signal transmission.',
     section: 'Module 4',
@@ -802,12 +902,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 52,
     question: "What is a 'pigtail' in fibre optic terminations?",
     options: [
-      'A loose fibre end in a splice closure',
       'A short fibre length with a connector on one end for fusion splicing',
-      'A damaged fibre that has curled',
-      'A type of cable strain relief',
+      'Slow crack growth under constant stress eventually causing failure',
+      'Advanced detection using phase, amplitude, and polarisation of light',
+      'Increased attenuation, potential crack initiation, and long-term failure risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A pigtail is a short (typically 1-3m) fibre with a factory-terminated connector on one end. The bare end is fusion spliced to the cable fibre for high-quality terminations.',
     section: 'Module 4',
@@ -818,8 +918,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 53,
     question: 'What is the typical cleave angle tolerance for quality fusion splices?',
-    options: ['Less than 5°', 'Less than 2°', 'Less than 1° (ideally <0.5°)', 'Less than 10°'],
-    correctAnswer: 2,
+    options: [
+      'Erbium-Doped Fibre Amplifier',
+      'Less than 1° (ideally <0.5°)',
+      'Fibre To The Building',
+      'Low Smoke Zero Halogen',
+    ],
+    correctAnswer: 1,
     explanation:
       'High-quality fusion splices require cleave angles less than 1°, with <0.5° ideal. Poor cleave angles cause fibre misalignment and increased splice loss.',
     section: 'Module 4',
@@ -831,12 +936,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 54,
     question: "What is the function of the 'arc' in fusion splicing?",
     options: [
-      'To clean the fibre ends',
+      'Provides tensile strength and strain relief',
+      'Central office equipment managing multiple PON connections',
       'To melt and fuse the glass fibre ends together',
-      'To test the splice quality',
-      'To align the fibres precisely',
+      'Cable rated for vertical runs between floors (CMR)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The electric arc creates intense localised heat that melts the glass fibre ends, allowing them to fuse together into a continuous optical path when cooled.',
     section: 'Module 4',
@@ -848,12 +953,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 55,
     question: "What does 'MTP' stand for in high-density connectors?",
     options: [
-      'Multi-Terminal Port',
+      'An interconnection point in the horizontal pathway for flexibility',
+      'Maximum 50% fill for cable management and future additions',
+      'Increased loss around 1383nm due to hydroxyl ions',
       'Multi-fibre Termination Push-on (trademarked MPO variant)',
-      'Mechanical Transfer Point',
-      'Maximum Transmission Protocol',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "MTP is US Conec's trademarked, enhanced version of the MPO connector with improved performance features. MPO is the generic TIA standard for multi-fibre connectors.",
     section: 'Module 4',
@@ -865,12 +970,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 56,
     question: "What causes 'Fresnel reflection' at fibre connections?",
     options: [
-      'Contamination on the end-face',
       'Refractive index difference at glass-air interface',
-      'Core misalignment',
-      'Damaged cladding',
+      'A splice between fibres with different backscatter coefficients',
+      'Water-based or gel polymer compounds safe for cables',
+      'How bandwidth decreases with increasing fibre length',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fresnel reflection occurs at any interface between materials of different refractive indices (glass-air). Approximately 4% of light is reflected at each glass-air interface.',
     section: 'Module 4',
@@ -899,12 +1004,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 58,
     question: "What is 'core eccentricity' in fibre splicing?",
     options: [
+      'Transmitter output power (dBm) - Receiver sensitivity (dBm)',
+      'To prevent water migration along the cable',
       'The fibre core being off-centre from the cladding',
-      'An elliptical core shape',
-      'Core diameter variation',
-      'Refractive index irregularities',
+      'Different absorption and scattering at different wavelengths',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Core eccentricity is when the fibre core is not perfectly centred within the cladding. This causes splice loss when joining fibres, as the cores may not align even with cladding alignment.',
     section: 'Module 4',
@@ -916,8 +1021,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 59,
     question: 'What is the maximum recommended pulling tension for standard fibre optic cables?',
-    options: ['50N', '600N (varies by cable type)', '2000N', '100N'],
-    correctAnswer: 1,
+    options: [
+      'Fibre To The Building',
+      'Total internal reflection',
+      '650nm (visible red)',
+      '600N (varies by cable type)',
+    ],
+    correctAnswer: 3,
     explanation:
       'Maximum pulling tension varies by cable type—typically 600N for standard indoor cables, up to 2700N for outdoor cables with appropriate strength members. Always check manufacturer specifications.',
     section: 'Module 5',
@@ -930,12 +1040,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question:
       'Why should fibre optic cables not be routed in the same pathway as high-voltage electrical cables?',
     options: [
-      'Electromagnetic interference affects optical signals',
       'To comply with separation requirements and prevent physical damage',
+      'Electromagnetic interference affects optical signals',
       'The fibre will absorb electrical energy',
       'Optical fibres are conductors at high voltage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'While fibre is immune to EMI, codes require separation for safety (avoiding contact with high voltage), maintenance access, and preventing physical damage during electrical work.',
     section: 'Module 5',
@@ -947,10 +1057,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 61,
     question: 'What is the purpose of using cable lubricant during fibre cable installation?',
     options: [
-      'To improve optical transmission',
+      'The light-gathering ability and acceptance angle',
       'To reduce friction and pulling tension during installation',
-      'To seal the conduit against water',
-      'To prevent static buildup',
+      'Very small diameter tubing for blown fibre installation',
+      'A reference cable at the far end for loss measurement',
     ],
     correctAnswer: 1,
     explanation:
@@ -964,7 +1074,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 62,
     question:
       'What percentage of conduit cross-sectional area should be filled when installing fibre cables?',
-    options: ['75%', '50%', '40% maximum', '25%'],
+    options: [
+      '75%',
+      '50%',
+      '40% maximum',
+      '25%',
+    ],
     correctAnswer: 2,
     explanation:
       'The 40% fill ratio allows for cable movement during pulling and temperature expansion/contraction, and leaves space for future cable additions.',
@@ -977,8 +1092,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 63,
     question:
       'What tool should be used to verify fibre continuity and identify break locations during installation?',
-    options: ['Optical power meter', 'Visual Fault Locator (VFL)', 'OTDR only', 'Multimeter'],
-    correctAnswer: 1,
+    options: [
+      '2:1 (two fibres per outlet)',
+      'Erbium-Doped Fibre Amplifier',
+      '600N (varies by cable type)',
+      'Visual Fault Locator (VFL)',
+    ],
+    correctAnswer: 3,
     explanation:
       'A VFL (Visual Fault Locator) injects visible red light (650nm) that escapes at breaks, tight bends, and faulty connections, allowing visual identification of fault locations.',
     section: 'Module 5',
@@ -991,12 +1111,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question:
       'What is the typical minimum bend radius for loose-tube cable during installation (under tension)?',
     options: [
-      '5× cable diameter',
-      '10× cable diameter',
       '20× cable diameter',
+      '10× cable diameter',
+      '5× cable diameter',
       '30× cable diameter',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Under tension during installation, minimum bend radius is typically 20× cable diameter. After installation (no tension), this relaxes to 10× diameter.',
     section: 'Module 5',
@@ -1008,10 +1128,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 65,
     question: 'Why should figure-8 cable loops be avoided when coiling fibre?',
     options: [
-      'They waste cable length',
+      'Protecting internal components from environment and handling',
       'They introduce twists that can stress the fibre',
-      'They make the cable harder to uncoil',
-      'They increase attenuation temporarily',
+      'Standardised launch conditions for repeatable measurements',
+      'Non-linear effects (Brillouin/Raman scattering)',
     ],
     correctAnswer: 1,
     explanation:
@@ -1026,11 +1146,11 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: 'What is the recommended practice when pulling fibre cable through multiple bends?',
     options: [
       'Use maximum pulling speed to reduce time',
-      'Use intermediate pull points to reduce total tension',
       'Apply heat to soften the cable',
+      'Use intermediate pull points to reduce total tension',
       'Remove all bends from the route first',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Intermediate pulling (pull-in from multiple access points) reduces cumulative friction and tension, preventing cable damage when routes have many bends.',
     section: 'Module 5',
@@ -1042,12 +1162,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 67,
     question: 'What should be done if the maximum pulling tension is reached during installation?',
     options: [
-      'Continue pulling slowly',
+      'Ratio of errored bits to total transmitted bits',
+      'Vertical-Cavity Surface-Emitting Laser',
+      'Class 1M (eye-safe with magnification restrictions)',
       'Stop immediately and investigate the cause',
-      'Increase lubrication and continue',
-      'Switch to a stronger pulling grip',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Exceeding rated tension can damage fibres. Stop immediately, identify the obstruction or friction source, and resolve before continuing.',
     section: 'Module 5',
@@ -1059,12 +1179,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 68,
     question: "What is a 'cable pull box' used for?",
     options: [
-      'Storing spare cable',
       'Providing access for intermediate pulls and cable management at changes of direction',
-      'Testing cable during installation',
-      'Distributing cables to multiple destinations',
+      'A splice between fibres with different backscatter coefficients',
+      'The 8° angle prevents proper end-face contact, causing high loss',
+      'The amount of light naturally scattered back toward the source',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Pull boxes provide access points for intermediate pulls on long runs, allow cable to be re-gripped, and provide space for managing cable at direction changes.',
     section: 'Module 5',
@@ -1076,10 +1196,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 69,
     question: "What is the purpose of a 'cable sock' or 'pulling grip'?",
     options: [
-      'To protect the cable end during storage',
+      'Different absorption and scattering at different wavelengths',
       'To distribute pulling force evenly over the cable strength members',
-      'To identify the cable type',
-      'To seal the cable end against moisture',
+      'Small Form-factor Pluggable (transceiver module)',
+      'Unlit fibre capacity available for future use or lease',
     ],
     correctAnswer: 1,
     explanation:
@@ -1094,12 +1214,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question:
       'What environmental factor must be monitored when installing fibre cable in cold conditions?',
     options: [
-      'Humidity only',
+      'To comply with separation requirements and prevent physical damage',
+      'The light-gathering ability and acceptance angle',
       'Cable temperature - cables become brittle below rated temperature',
-      'Wind speed',
-      'Atmospheric pressure',
+      'Data centre infrastructure and telecommunications standards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Most cables have minimum installation temperature ratings (typically 0°C to -30°C depending on type). Below this, jackets become brittle and fibres can be damaged.',
     section: 'Module 5',
@@ -1111,12 +1231,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 71,
     question: 'How should fibre slack loops be stored in a splice enclosure?',
     options: [
-      'Coiled as tightly as possible to save space',
-      'In figure-8 patterns for easy access',
+      "Telecommunications equipment and cabling inside buildings",
+      "The minimum angle for total internal reflection to occur",
+      "Installing fibre units into pre-installed tubes using air pressure",
       "Following the enclosure's fibre management guides, respecting bend radius",
-      'Randomly placed to prevent pattern stress',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Splice enclosures have specific fibre management trays and routing guides. Following these ensures minimum bend radius is maintained and fibres are organised for future access.',
     section: 'Module 5',
@@ -1128,12 +1248,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 72,
     question: 'What must be done before entering a confined space for fibre installation?',
     options: [
-      'Check optical power levels',
       'Follow confined space entry procedures including atmosphere testing',
-      'Pre-terminate all connectors',
-      'Complete all documentation',
+      'Boosting optical signal strength without converting to electrical',
+      'Optimised for SWDM (multiple wavelengths 850-953nm)',
+      'A reference cable at the far end for loss measurement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Confined spaces (manholes, vaults) require proper safety procedures including atmosphere testing for oxygen levels and hazardous gases, ventilation, and rescue provisions.',
     section: 'Module 5',
@@ -1145,10 +1265,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 73,
     question: "What is 'innerduct' used for in fibre cable installation?",
     options: [
-      'Indoor cable protection only',
+      'Patch panel arrangement allowing flexible connections between systems',
       'A smaller tube installed inside larger conduit to subdivide space',
-      'Grounding pathway',
-      'Cable identification',
+      'Point where service provider responsibility ends and customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s begins',
+      'An interconnection point in the horizontal pathway for flexibility',
     ],
     correctAnswer: 1,
     explanation:
@@ -1162,10 +1282,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 74,
     question: 'What is the recommended service loop length at termination points?',
     options: [
-      '0.5 metres',
-      '1-2 metres',
+      'OTDR trace showing individual events along the link',
+      'To ensure they meet specifications and haven\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t been damaged',
       '3-5 metres or as specified for the application',
-      '10 metres minimum',
+      'Standardised launch conditions for repeatable measurements',
     ],
     correctAnswer: 2,
     explanation:
@@ -1180,8 +1300,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 75,
     question:
       'According to TIA-568, what is the maximum allowable loss for a mated connector pair in loss budget calculations?',
-    options: ['0.2 dB', '0.5 dB', '0.75 dB', '1.0 dB'],
-    correctAnswer: 1,
+    options: [
+      '0.75 dB',
+      '0.2 dB',
+      '1.0 dB',
+      '0.5 dB',
+    ],
+    correctAnswer: 3,
     explanation:
       'TIA-568 specifies 0.5 dB maximum loss per mated connector pair for loss budget calculations. Actual field measurements should be better than this value.',
     section: 'Module 6',
@@ -1192,8 +1317,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 76,
     question: 'What safety margin is typically included in optical loss budget calculations?',
-    options: ['1 dB', '3 dB', '6 dB', '0.5 dB'],
-    correctAnswer: 1,
+    options: [
+      '3 dB',
+      '1 dB',
+      '6 dB',
+      '0.5 dB',
+    ],
+    correctAnswer: 0,
     explanation:
       "A 3 dB safety margin is standard to account for future repairs (additional splices), connector degradation, temperature effects, and cable aging over the system's lifetime.",
     section: 'Module 6',
@@ -1205,7 +1335,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 77,
     question:
       'In structured cabling design, what is the maximum horizontal cable length from telecommunications room to work area outlet?',
-    options: ['50 metres', '90 metres', '100 metres', '300 metres'],
+    options: [
+      '50 metres',
+      '90 metres',
+      '100 metres',
+      '300 metres',
+    ],
     correctAnswer: 1,
     explanation:
       'TIA-568 specifies 90 metres maximum for the horizontal permanent link, with an additional 10 metres allowed for equipment cords and patch leads (100m total channel).',
@@ -1218,12 +1353,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 78,
     question: 'What is the formula for calculating optical power budget?',
     options: [
-      'Transmitter power × Receiver sensitivity',
+      'Potential eye damage - never view without confirmed safe conditions',
+      'A reference cable at the far end for loss measurement',
       'Transmitter output power (dBm) - Receiver sensitivity (dBm)',
-      'Total link loss ÷ Safety margin',
-      'Cable length × Attenuation coefficient',
+      'To provide redundant physical routes for resilience',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Power budget equals transmitter output power minus receiver sensitivity (both in dBm). This gives the maximum allowable link loss in dB for reliable communication.',
     section: 'Module 6',
@@ -1235,12 +1370,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 79,
     question: 'What is the primary purpose of the TIA-942 standard?',
     options: [
-      'Residential fibre installation',
+      'Standard singlemode fibre with low water peak',
+      'To detect and identify live traffic on a fibre without breaking the circuit',
+      'Launch condition exciting all modes uniformly',
       'Data centre infrastructure and telecommunications standards',
-      'Outdoor cable installation',
-      'Connector testing procedures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'TIA-942 provides comprehensive standards for data centre telecommunications infrastructure, including structured cabling topology, redundancy, and environmental requirements.',
     section: 'Module 6',
@@ -1252,8 +1387,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 80,
     question:
       'What maximum distance can OM4 multimode fibre support at 10 Gigabit Ethernet (850nm)?',
-    options: ['100 metres', '300 metres', '400 metres', '550 metres'],
-    correctAnswer: 2,
+    options: [
+      '400 metres',
+      '300 metres',
+      '100 metres',
+      '550 metres',
+    ],
+    correctAnswer: 0,
     explanation:
       'OM4 supports 10GbE (10GBASE-SR) up to 400 metres at 850nm, compared to 300 metres for OM3. The limitation is modal bandwidth, not attenuation.',
     section: 'Module 6',
@@ -1265,10 +1405,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 81,
     question: "What distinguishes 'channel' testing from 'permanent link' testing?",
     options: [
-      'Channel testing is less accurate',
+      'A short fibre length with a connector on one end for fusion splicing',
       'Channel includes equipment cords; permanent link tests only installed cabling',
-      'They use different test equipment',
-      'Permanent link testing is obsolete',
+      'It can be monitored without interfering with traffic wavelengths',
+      'Potential eye damage - never view without confirmed safe conditions',
     ],
     correctAnswer: 1,
     explanation:
@@ -1283,11 +1423,11 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: 'What does ISO/IEC 11801 specify?',
     options: [
       'Connector cleaning procedures',
-      'Generic cabling for customer premises',
       'Fibre manufacturing standards',
+      'Generic cabling for customer premises',
       'OTDR testing procedures',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'ISO/IEC 11801 is the international standard for structured cabling in commercial buildings, defining topology, distances, and performance categories.',
     section: 'Module 6',
@@ -1299,12 +1439,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 83,
     question: 'What is the maximum backbone distance for singlemode fibre in TIA-568?',
     options: [
-      '300 metres',
-      '500 metres',
+      'Straight Tip bayonet-style connector',
+      'High fibre density and mass-fusion splice capability',
+      'Rayleigh scattering and absorption',
       '2000 metres (campus) / 3000 metres (building)',
-      '5000 metres',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'TIA-568 specifies 3000m maximum for intra-building backbone and 2000m for inter-building (campus) backbone using singlemode fibre.',
     section: 'Module 6',
@@ -1315,7 +1455,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 84,
     question: 'What loss budget allowance does TIA-568 specify per splice?',
-    options: ['0.3 dB', '0.5 dB', '0.1 dB', '0.75 dB'],
+    options: [
+      '0.3 dB',
+      '0.1 dB',
+      '0.75 dB',
+      '0.5 dB',
+    ],
     correctAnswer: 0,
     explanation:
       'TIA-568 allows 0.3 dB per splice in loss budget calculations, though actual fusion splice losses should be much lower (0.02-0.05 dB).',
@@ -1328,12 +1473,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 85,
     question: "What does 'star topology' mean in structured cabling?",
     options: [
-      'All cables radiate from a central point',
-      'Cables connect in a ring pattern',
       'Cables run in parallel lines',
+      'All cables radiate from a central point',
       'Random interconnection pattern',
+      'Cables connect in a ring pattern',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Star topology has all horizontal cables radiating from a central telecommunications room, providing dedicated home-runs for each outlet with no daisy-chaining.',
     section: 'Module 6',
@@ -1345,12 +1490,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 86,
     question: 'What is the purpose of an equipment room (ER) in structured cabling?',
     options: [
-      'Storage for spare cables only',
+      'To prevent contamination and protect the polished end-face',
+      'Optimised for 1550nm with larger effective area for submarine/long-haul',
       'To house major network equipment and backbone terminations',
-      'Temporary workspace for technicians',
-      'Emergency power systems only',
+      'Standardised launch conditions for repeatable measurements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The equipment room houses core network equipment (switches, servers), backbone terminations, and provides the main connection point for external services.',
     section: 'Module 6',
@@ -1362,12 +1507,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 87,
     question: "What does 'entrance facility' refer to in building cabling design?",
     options: [
-      'The main building lobby',
+      'Very small diameter tubing for blown fibre installation',
+      'Allocating different time slots to different users for upstream transmission',
+      'Simultaneous two-way transmission over a single fibre using different wavelengths',
       'Where external cables enter the building and transition to internal cabling',
-      'Security checkpoint for cable installers',
-      'The first telecommunications room',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The entrance facility is where external (carrier/campus) cables enter and connect to building cabling. It includes demarcation points, protection, and transition equipment.',
     section: 'Module 6',
@@ -1379,8 +1524,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 88,
     question:
       'What cable management ratio is recommended between fibre count in backbone and horizontal outlets?',
-    options: ['1:1', '2:1 (two fibres per outlet)', '4:1', '10:1'],
-    correctAnswer: 1,
+    options: [
+      '2:1 (two fibres per outlet)',
+      'Armoured loose-tube with PE jacket',
+      'Steel Wire Armoured',
+      'Passive optical splitters',
+    ],
+    correctAnswer: 0,
     explanation:
       'Typically 2 fibres per work area outlet (one pair Tx/Rx) is planned, though centralised architectures may use different ratios based on splitter designs.',
     section: 'Module 6',
@@ -1392,10 +1542,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 89,
     question: "What is a 'consolidation point' in horizontal cabling?",
     options: [
-      'Where backbone cables terminate',
+      'To distribute pulling force evenly over the cable strength members',
       'An interconnection point in the horizontal pathway for flexibility',
-      'The main cross-connect location',
-      'Where cables consolidate for external routing',
+      'A reference cable at the far end for loss measurement',
+      'Customer-owned outside plant telecommunications infrastructure',
     ],
     correctAnswer: 1,
     explanation:
@@ -1408,8 +1558,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 90,
     question: 'What tier rating indicates the highest data centre reliability in TIA-942?',
-    options: ['Tier 1', 'Tier 2', 'Tier 3', 'Tier 4 (fault tolerant)'],
-    correctAnswer: 3,
+    options: [
+      'Tier 1',
+      'Tier 2',
+      'Tier 4 (fault tolerant)',
+      'Tier 3',
+    ],
+    correctAnswer: 2,
     explanation:
       'Tier 4 data centres provide fault tolerance with 2N redundancy for all systems, 99.995% availability, and concurrent maintainability without service interruption.',
     section: 'Module 6',
@@ -1421,12 +1576,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 91,
     question: 'What is the purpose of pathway diversity in network design?',
     options: [
-      'To allow different cable types',
+      'Plastic tube containing one or more fibres with gel filling',
+      'Maintaining performance with tight bends in restricted spaces',
+      'Use intermediate pull points to reduce total tension',
       'To provide redundant physical routes for resilience',
-      'To separate voice and data',
-      'To meet accessibility requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Pathway diversity means routing redundant cables through physically separate paths so a single event (fire, construction damage) cannot disable all connections.',
     section: 'Module 6',
@@ -1438,8 +1593,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 92,
     question: 'What is the most common cause of fibre optic connection failures?',
-    options: ['Fibre breaks', 'Connector contamination', 'Wrong fibre type', 'Temperature damage'],
-    correctAnswer: 1,
+    options: [
+      'Connector contamination',
+      'Wrong fibre type',
+      'Temperature damage',
+      'Fibre breaks',
+    ],
+    correctAnswer: 0,
     explanation:
       'Studies consistently show that connector contamination causes the majority (up to 80%) of fibre connection problems. Proper cleaning and inspection prevents most failures.',
     section: 'Module 7',
@@ -1450,7 +1610,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 93,
     question: 'What magnification is typically required for proper fibre end-face inspection?',
-    options: ['10× to 50×', '200× to 400×', '1000× or higher', 'Any magnification works'],
+    options: [
+      '10× to 50×',
+      '200× to 400×',
+      'Any magnification works',
+      '1000× or higher',
+    ],
     correctAnswer: 1,
     explanation:
       '200-400× magnification is standard for fibre inspection scopes, providing sufficient detail to see contamination in the core and cladding zones while maintaining adequate field of view.',
@@ -1463,12 +1628,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 94,
     question: "What does a 'gainer' event on an OTDR trace indicate?",
     options: [
-      'Signal amplification',
+      'Cable rated for vertical runs between floors (CMR)',
+      'The minimum angle for total internal reflection to occur',
       'A splice between fibres with different backscatter coefficients',
-      'OTDR malfunction',
-      'A connector with gain',
+      'The light-gathering ability and acceptance angle',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "A gainer (apparent gain) occurs when testing from lower-backscatter fibre into higher-backscatter fibre. It's not real gain—bi-directional testing and averaging reveals true loss.",
     section: 'Module 7',
@@ -1480,12 +1645,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 95,
     question: "What is the OTDR 'dead zone'?",
     options: [
-      'A faulty section of fibre',
+      'Follow confined space entry procedures including atmosphere testing',
+      'A short fibre length with a connector on one end for fusion splicing',
+      'Blue, orange, green, brown, slate, white, red, black, yellow, violet, rose, aqua',
       'The distance after a reflective event where events cannot be detected',
-      'The maximum testing range',
-      'An area of zero signal',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Dead zones occur after reflective events (connectors) where the OTDR receiver is saturated. The attenuation dead zone determines how close together non-reflective events can be measured.',
     section: 'Module 7',
@@ -1497,12 +1662,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 96,
     question: 'What cleaning method should be used first when cleaning fibre connectors?',
     options: [
-      'Wet cleaning with IPA',
       'Dry cleaning',
+      'Wet cleaning with IPA',
       'Ultrasonic cleaning',
       'Compressed air only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Dry cleaning should be attempted first as it effectively removes most contamination without risk of solvent residue. Wet cleaning with IPA is used only if dry cleaning fails.',
     section: 'Module 7',
@@ -1513,8 +1678,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 97,
     question: 'Which wavelength is most affected by macrobend losses in singlemode fibre?',
-    options: ['850nm', '1310nm', '1550nm (and higher)', 'All wavelengths equally'],
-    correctAnswer: 2,
+    options: [
+      'All wavelengths equally',
+      '1550nm (and higher)',
+      '850nm',
+      '1310nm',
+    ],
+    correctAnswer: 1,
     explanation:
       'Longer wavelengths are more sensitive to bend losses because they have a larger mode field diameter. Testing at 1550nm or 1625nm helps detect bend-related problems.',
     section: 'Module 7',
@@ -1525,8 +1695,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 98,
     question: 'What IEC standard defines cleanliness grades for fibre connector end-faces?',
-    options: ['IEC 61300-3-35', 'IEC 60793', 'IEC 61280', 'IEC 60794'],
-    correctAnswer: 0,
+    options: [
+      'IEC 61280',
+      'IEC 60793',
+      'IEC 61300-3-35',
+      'IEC 60794',
+    ],
+    correctAnswer: 2,
     explanation:
       'IEC 61300-3-35 defines inspection zones (core, cladding, contact) and cleanliness requirements for each zone, providing pass/fail criteria for connector end-face quality.',
     section: 'Module 7',
@@ -1538,12 +1713,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 99,
     question: 'Why is bi-directional OTDR testing recommended?',
     options: [
-      'It tests twice as fast',
+      'To provide redundant physical routes for resilience',
+      'A smaller tube installed inside larger conduit to subdivide space',
+      'Applications sensitive to back-reflections (CATV, PON, analogue)',
       'It eliminates gainer effects and gives true splice loss',
-      'Standards require it',
-      'It uses less battery power',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Bi-directional testing and averaging eliminates the gainer effect caused by different backscatter coefficients between fibre types, revealing the true splice loss value.',
     section: 'Module 7',
@@ -1555,12 +1730,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 100,
     question: 'What is the purpose of a launch fibre when using an OTDR?',
     options: [
-      'To protect the OTDR port',
       "To move the first connector outside the OTDR's dead zone",
-      'To extend testing range',
-      'To convert connector types',
+      "Fibres are isolated from external mechanical and thermal stresses",
+      "Minimum distance after a reflective event where loss can be measured",
+      "The fibre core being off-centre from the cladding",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "A launch fibre (100-500m) moves the first connection of the link under test beyond the OTDR's dead zone, allowing proper characterisation of that connector.",
     section: 'Module 7',
@@ -1571,7 +1746,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 101,
     question: 'What labelling standard is referenced for structured cabling administration?',
-    options: ['TIA-568', 'TIA-606', 'TIA-942', 'ISO 11801'],
+    options: [
+      'TIA-568',
+      'TIA-606',
+      'TIA-942',
+      'ISO 11801',
+    ],
     correctAnswer: 1,
     explanation:
       'ANSI/TIA-606 (currently 606-C) provides comprehensive administration standards for telecommunications infrastructure labelling, including cables, pathways, and spaces.',
@@ -1584,12 +1764,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 102,
     question: "What causes 'modal dispersion' in multimode fibre?",
     options: [
-      'Different wavelengths travelling at different speeds',
+      'Loss when joining fibres with different core sizes',
+      'Multiple channels over a single fibre pair',
       'Different light modes (paths) arriving at different times',
-      'Temperature variations along the fibre',
-      'Connector reflections',
+      'Increased loss around 1383nm due to hydroxyl ions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'In multimode fibre, different modes (light ray paths) travel slightly different distances through the core, arriving at different times. This spreads the signal and limits bandwidth over distance.',
     section: 'Module 7',
@@ -1601,8 +1781,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 103,
     question:
       'What is the typical splice loss allowance used in loss budget calculations for fusion splices?',
-    options: ['0.3 dB', '0.5 dB', '0.1 dB', '0.75 dB'],
-    correctAnswer: 2,
+    options: [
+      '0.75 dB',
+      '0.3 dB',
+      '0.5 dB',
+      '0.1 dB',
+    ],
+    correctAnswer: 3,
     explanation:
       'Loss budget calculations typically use 0.1 dB per fusion splice as a worst-case allowance. Actual fusion splice losses are often much lower (0.02-0.05 dB).',
     section: 'Module 6',
@@ -1614,12 +1799,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 104,
     question: 'What does the green colour of an APC connector end-face indicate?',
     options: [
-      'The fibre is multimode',
       'It has an angled (8°) physical contact end-face',
-      "It's a high-power laser rated connector",
-      'The connector is pre-polished',
+      'A splice using alignment fixtures and index-matching gel',
+      'Unlit fibre capacity available for future use or lease',
+      'Non-linear effects (Brillouin/Raman scattering)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Green colour coding indicates APC (Angled Physical Contact) connectors with an 8° angled end-face. Blue indicates UPC connectors. This prevents accidental mismating.',
     section: 'Module 4',
@@ -1631,10 +1816,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 105,
     question: 'What is the primary advantage of MPO/MTP connectors in data centres?',
     options: [
-      'Lower cost than LC connectors',
+      'Unlit fibre capacity available for future use or lease',
       'High-density parallel connections for 40G/100G+',
-      'Better signal quality',
-      'Easier to clean',
+      'Loss caused by large-scale bending of the fibre',
+      'To move the first connector outside the OTDR\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s dead zone',
     ],
     correctAnswer: 1,
     explanation:
@@ -1648,12 +1833,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 106,
     question: 'How should fibre optic cables be stored before installation?',
     options: [
-      'In direct sunlight to prevent moisture',
+      'It eliminates gainer effects and gives true splice loss',
+      'Outdoor cables - moisture and UV resistant',
       'In original packaging, clean dry location, ends capped',
-      'Uncoiled and stretched out',
-      'In refrigerated storage',
+      'Launch condition exciting all modes uniformly',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cables should be stored in original packaging (maintains bend radius), in clean dry conditions, with ends capped or sealed to prevent contamination and moisture ingress.',
     section: 'Module 5',
@@ -1665,12 +1850,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 107,
     question: 'What is the consequence of exceeding the minimum bend radius during installation?',
     options: [
-      'Immediate fibre breakage always occurs',
+      'Very small diameter tubing for blown fibre installation',
+      'Full conversion to electrical, retiming, and retransmission as optical',
+      'Setting reference with single test cord, excluding one link connector from measurement',
       'Increased attenuation, potential crack initiation, and long-term failure risk',
-      'No effect if temporary',
-      'Only affects multimode fibre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Exceeding bend radius causes increased loss and can initiate micro-cracks in the glass. Even if no immediate failure occurs, the stressed fibre may fail later through static fatigue.',
     section: 'Module 5',
@@ -1681,8 +1866,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 108,
     question: 'What test equipment is used to measure absolute optical power levels?',
-    options: ['OTDR', 'Optical power meter', 'Visual fault locator', 'Fibre identifier'],
-    correctAnswer: 1,
+    options: [
+      'Optical power meter',
+      'Visual fault locator',
+      'Fibre identifier',
+      'OTDR',
+    ],
+    correctAnswer: 0,
     explanation:
       'An optical power meter measures absolute optical power in dBm. When used with a calibrated light source, it measures insertion loss (the difference between reference and measured power).',
     section: 'Module 7',
@@ -1712,12 +1902,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 110,
     question: 'What documentation should be retained for the lifetime of a fibre installation?',
     options: [
-      'Only the as-built drawings',
+      'Adding elements to counteract chromatic dispersion effects',
+      'The 8° angle prevents proper end-face contact, causing high loss',
       'Test results, as-built drawings, labelling schedules, and material certificates',
-      'Only the test results',
-      'Just the purchase records',
+      'The minimum angle for total internal reflection to occur',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Comprehensive documentation (drawings, test results, labelling schedules, material certificates) provides baseline data for troubleshooting, proof of compliance, and planning for future upgrades.',
     section: 'Module 6',
@@ -1728,8 +1918,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 111,
     question: 'At what concentration should isopropyl alcohol (IPA) be used for fibre cleaning?',
-    options: ['70%', '85%', '99% or higher', '50%'],
-    correctAnswer: 2,
+    options: [
+      '70%',
+      '85%',
+      '50%',
+      '99% or higher',
+    ],
+    correctAnswer: 3,
     explanation:
       '99%+ IPA is recommended because it evaporates quickly without leaving residue. Lower concentrations (70%) contain more water which evaporates slowly and can leave water marks.',
     section: 'Module 7',
@@ -1741,12 +1936,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 112,
     question: "What is a 'microbend' in fibre optics?",
     options: [
-      'A very small radius macrobend',
       'Small-scale deformations in the fibre axis causing localised loss',
-      'A microscopic crack in the fibre',
-      'Bending at the microscopic core level',
+      'The light-gathering ability and acceptance angle',
+      'Adding elements to counteract chromatic dispersion effects',
+      'A splice using alignment fixtures and index-matching gel',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Microbends are tiny axial deformations caused by pressure points or cable manufacturing defects. They cause loss by allowing light to escape the core at deviation points.',
     section: 'Module 7',
@@ -1757,7 +1952,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 113,
     question: 'What OTDR parameter determines how far it can measure?',
-    options: ['Pulse width only', 'Dynamic range', 'Resolution only', 'Display size'],
+    options: [
+      'Pulse width only',
+      'Dynamic range',
+      'Resolution only',
+      'Display size',
+    ],
     correctAnswer: 1,
     explanation:
       'Dynamic range (measured in dB) determines how much total loss the OTDR can measure. Higher dynamic range allows testing longer fibres or fibres with more splices/connectors.',
@@ -1770,12 +1970,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 114,
     question: "What does a 'reflective event' look like on an OTDR trace?",
     options: [
-      'A gradual slope downward',
+      'The total loss through a connection point',
+      'The fibre core being off-centre from the cladding',
       'A spike upward followed by the normal trace',
-      'A flat horizontal line',
-      'A sudden drop to zero',
+      'Zero chromatic dispersion in conventional fibre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Reflective events (connectors, mechanical splices, breaks) appear as upward spikes due to light reflecting back to the OTDR. Fusion splices are non-reflective (no spike).',
     section: 'Module 7',
@@ -1787,12 +1987,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 115,
     question: 'What is the recommended first step when troubleshooting a failed fibre link?',
     options: [
-      'Replace all connectors',
+      'Insertion loss and length testing',
+      'Armoured loose-tube with PE jacket',
+      'All cables radiate from a central point',
       'Inspect and clean connector end-faces',
-      'Re-splice all joints',
-      'Replace the entire cable',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Contamination causes most fibre failures. Always inspect and clean connectors first - this simple step resolves the majority of problems without further intervention.',
     section: 'Module 7',
@@ -1804,12 +2004,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 116,
     question: "What does 'attenuation dead zone' mean in OTDR specifications?",
     options: [
-      'Distance where the OTDR cannot detect any events',
       'Minimum distance after a reflective event where loss can be measured',
-      'The maximum testing range',
-      'Distance where signal is completely absorbed',
+      'Test results, as-built drawings, labelling schedules, and material certificates',
+      'Slight asymmetry causing different propagation speeds for light polarisation states',
+      'To allow light in one direction only, blocking reflections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Attenuation dead zone is the minimum distance after a reflective event before the OTDR can accurately measure the loss of a non-reflective event (splice).',
     section: 'Module 7',
@@ -1821,10 +2021,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 117,
     question: "What is a 'receive reference' in fibre testing?",
     options: [
-      'The receiver sensitivity specification',
+      'Fibre with gradually changing refractive index across the core',
       'A reference cable at the far end for loss measurement',
-      "The OTDR's internal reference",
-      'Documentation of received power levels',
+      'To house major network equipment and backbone terminations',
+      'Use intermediate pull points to reduce total tension',
     ],
     correctAnswer: 1,
     explanation:
@@ -1838,12 +2038,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 118,
     question: "Why might an OTDR show a 'gainer' at a splice between identical fibres?",
     options: [
-      'Equipment malfunction',
+      'A list of all detected events with distance and loss values',
+      'Optimised for 1550nm with larger effective area for submarine/long-haul',
       'Slight differences in fibre backscatter characteristics',
-      'The splice is actually amplifying the signal',
-      'Contamination at the splice',
+      'To reduce friction and pulling tension during installation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Even fibres of the same type can have slightly different backscatter coefficients. This causes apparent gains when testing from one direction; bi-directional averaging resolves this.',
     section: 'Module 7',
@@ -1855,12 +2055,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 119,
     question: "What does 'event dead zone' specify in an OTDR?",
     options: [
+      'Individual sub-cables that can be separated for direct termination',
+      'Ratio of signal power to noise power in optical systems',
+      'The amount of light naturally scattered back toward the source',
       'Minimum separation to detect two adjacent reflective events',
-      'Distance where no events can occur',
-      'Maximum testing range',
-      'Time between measurements',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Event dead zone is the minimum distance between two reflective events for the OTDR to recognise them as separate events rather than one combined event.',
     section: 'Module 7',
@@ -1872,12 +2072,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 120,
     question: 'What is the correct sequence for using one-click cleaners on connectors?',
     options: [
-      'Push, rotate, and pull',
       'Insert connector and push forward with one motion',
-      'Rotate while pressing',
-      'Push repeatedly until clean',
+      'It eliminates gainer effects and gives true splice loss',
+      'General-purpose indoor cables (not plenum)',
+      'Calculated loss based on core alignment - verify with OTDR',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'One-click cleaners use a lint-free tape advanced by a push motion. Insert the connector and push forward once - the mechanism advances fresh tape across the end-face.',
     section: 'Module 7',
@@ -1889,10 +2089,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 121,
     question: "What is 'static fatigue' in optical fibre?",
     options: [
-      'Fatigue from repeated movement',
+      'Plastic tube containing one or more fibres with gel filling',
       'Slow crack growth under constant stress eventually causing failure',
-      'Loss of optical performance over time',
-      'Static electricity damage',
+      'Potential eye damage - never view without confirmed safe conditions',
+      'Customer premises equipment converting optical to electrical signals in PON',
     ],
     correctAnswer: 1,
     explanation:
@@ -1906,12 +2106,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 122,
     question: 'Why should protective caps be replaced on unused fibre connectors?',
     options: [
-      'To identify unused ports',
+      'A short fibre length with a connector on one end for fusion splicing',
+      'Horizontal fibres home-run to a central location, bypassing floor TRs',
       'To prevent contamination and protect the polished end-face',
-      'To prevent unauthorised connections',
-      'For aesthetic purposes',
+      'Zero dispersion point moved to 1550nm for single-channel systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Dust caps prevent airborne contamination from settling on the polished end-face. Even brief exposure can contaminate connectors, causing connection problems later.',
     section: 'Module 7',
@@ -1922,8 +2122,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 123,
     question: "What is the IEC 61300-3-35 'core zone' for singlemode fibre inspection?",
-    options: ['0-9µm diameter', '0-25µm diameter', '0-65µm diameter', '0-125µm diameter'],
-    correctAnswer: 1,
+    options: [
+      '0-125µm diameter',
+      '0-65µm diameter',
+      '0-9µm diameter',
+      '0-25µm diameter',
+    ],
+    correctAnswer: 3,
     explanation:
       'The core zone extends to 25µm diameter (well beyond the 9µm core) because mode field diameter extends into the cladding. No defects or contamination are allowed in this zone.',
     section: 'Module 7',
@@ -1935,12 +2140,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 124,
     question: 'What advantage does CWDM offer over traditional point-to-point fibre?',
     options: [
-      'Lower latency',
       'Multiple channels over a single fibre pair',
-      'Simpler equipment',
-      'Better bend performance',
+      'Increased loss around 1383nm due to hydroxyl ions',
+      'Different wavelengths travelling at different speeds',
+      'It has an angled (8°) physical contact end-face',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'CWDM (Coarse Wavelength Division Multiplexing) transmits multiple wavelengths (typically 8-18 channels) over a single fibre, multiplying capacity without adding fibres.',
     section: 'Module 6',
@@ -1951,8 +2156,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 125,
     question: 'What is the typical channel spacing in CWDM systems?',
-    options: ['0.8nm', '2nm', '20nm', '100nm'],
-    correctAnswer: 2,
+    options: [
+      '0.8nm',
+      '20nm',
+      '2nm',
+      '100nm',
+    ],
+    correctAnswer: 1,
     explanation:
       'CWDM uses 20nm channel spacing, allowing use of lower-cost uncooled lasers. DWDM uses much tighter spacing (0.8nm or less) for more channels but requires temperature-controlled lasers.',
     section: 'Module 6',
@@ -1964,12 +2174,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 126,
     question: "What is 'encircled flux' in multimode fibre testing?",
     options: [
-      'Total optical power measurement',
+      'Wavelength below which the fibre supports more than one mode',
+      'Slight differences in fibre backscatter characteristics',
       'Standardised launch conditions for repeatable measurements',
-      'Power confined to the core',
-      'Reflected power measurement',
+      'The light-gathering ability and acceptance angle',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Encircled flux defines launch conditions (power distribution across the core) for multimode testing. Standardised launch ensures consistent, repeatable measurements between different test equipment.',
     section: 'Module 7',
@@ -1983,10 +2193,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     options: [
       '10 kpsi (0.7 GPa)',
       '50 kpsi (0.35 GPa)',
-      '100 kpsi (0.7 GPa)',
       '200 kpsi (1.4 GPa)',
+      '100 kpsi (0.7 GPa)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Standard telecom fibre is proof-tested at 100 kpsi (approximately 0.7 GPa or 1% strain). This ensures fibres can withstand normal installation and service stresses.',
     section: 'Module 2',
@@ -1998,12 +2208,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 128,
     question: "What causes 'polarisation mode dispersion' (PMD)?",
     options: [
-      'Different wavelengths travelling at different speeds',
       'Slight asymmetry causing different propagation speeds for light polarisation states',
-      'Multiple modes in multimode fibre',
-      'Temperature variations',
+      'Fibres are isolated from external mechanical and thermal stresses',
+      'Optimised for 1550nm with larger effective area for submarine/long-haul',
+      'Customer premises equipment converting optical to electrical signals in PON',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "PMD occurs in singlemode fibre due to slight core asymmetries causing the two polarisation states to travel at different speeds. It's a concern for very high-speed long-distance links.",
     section: 'Module 1',
@@ -2015,10 +2225,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 129,
     question: "What does 'dispersion-shifted fibre' (G.653) optimise?",
     options: [
-      'Bend performance',
+      'Controlled breaking to create a flat, perpendicular end-face',
       'Zero dispersion point moved to 1550nm for single-channel systems',
-      'Modal bandwidth',
-      'Connector compatibility',
+      'Loss when joining fibres with different light-gathering capabilities',
+      'Factory-polished stub fibre in connector, field-spliced to cable fibre',
     ],
     correctAnswer: 1,
     explanation:
@@ -2032,12 +2242,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 130,
     question: "What is the purpose of a 'mandrel wrap' in multimode testing?",
     options: [
-      'To protect the fibre during testing',
+      'Individual sub-cables that can be separated for direct termination',
+      'Different modes travelling at different speeds in multimode fibre',
       'To filter out higher-order modes for consistent launch conditions',
-      'To increase test cable length',
-      'To mark the test direction',
+      'Providing access for intermediate pulls and cable management at changes of direction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Wrapping multimode fibre around a mandrel causes higher-order modes to leak out, creating a more consistent modal distribution similar to what occurs in longer installed fibres.',
     section: 'Module 7',
@@ -2050,11 +2260,11 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: 'What fire rating indicates a cable can be installed in air-handling spaces?',
     options: [
       'Riser rated (CMR)',
-      'Plenum rated (CMP)',
-      'General purpose (CM)',
       'Outdoor rated (OSP)',
+      'General purpose (CM)',
+      'Plenum rated (CMP)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Plenum-rated (CMP) cables meet stringent smoke and flame requirements for installation in air-handling spaces (plenums) where air circulates for HVAC systems.',
     section: 'Module 3',
@@ -2066,12 +2276,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 132,
     question: "What is 'span loss' in a fibre optic link?",
     options: [
-      'Loss at a single connector',
       'Total loss from transmitter to receiver including all components',
-      'Loss per kilometre of fibre',
-      'Splice-only loss',
+      'Allocating different time slots to different users for upstream transmission',
+      'Ultra-low loss G.654 fibre with large effective area',
+      'Ratio of signal power to noise power in optical systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Span loss is the total optical loss of the complete link including fibre attenuation, connectors, splices, and any other components between transmitter and receiver.',
     section: 'Module 6',
@@ -2083,10 +2293,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 133,
     question: "What is the function of a 'fibre identifier'?",
     options: [
-      'To label fibres with barcodes',
+      'Signal fluctuations caused by mode interference in multimode fibre',
       'To detect and identify live traffic on a fibre without breaking the circuit',
-      'To measure fibre type',
-      'To clean fibre end-faces',
+      'Channel includes equipment cords; permanent link tests only installed cabling',
+      'Minimum separation to detect two adjacent reflective events',
     ],
     correctAnswer: 1,
     explanation:
@@ -2099,7 +2309,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 134,
     question: 'What wavelength do most visual fault locators (VFLs) use?',
-    options: ['850nm (infrared)', '1310nm (infrared)', '650nm (visible red)', '1550nm (infrared)'],
+    options: [
+      '850nm (infrared)',
+      '1310nm (infrared)',
+      '650nm (visible red)',
+      '1550nm (infrared)',
+    ],
     correctAnswer: 2,
     explanation:
       'VFLs use visible red light (typically 635-650nm) so faults can be visually located. The red light is visible escaping at breaks, tight bends, or bad connectors.',
@@ -2112,12 +2327,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 135,
     question: "What is an 'OTDR event table'?",
     options: [
-      'A schedule of testing dates',
+      'Maximum input power before receiver saturates or is damaged',
+      'Separating loose-tube fibres for individual termination',
+      'General-purpose indoor cables (not plenum)',
       'A list of all detected events with distance and loss values',
-      'Equipment inventory list',
-      'Calibration records',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The event table summarises all events (connectors, splices, bends, end of fibre) detected on the OTDR trace, listing distance, loss, and reflectance for each event.',
     section: 'Module 7',
@@ -2129,12 +2344,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 136,
     question: 'Why is 1625nm wavelength used for fibre monitoring in live systems?',
     options: [
-      'It has the lowest attenuation',
       'It can be monitored without interfering with traffic wavelengths',
-      'It provides the best resolution',
-      'Standard test equipment only works at 1625nm',
+      'To melt and fuse the glass fibre ends together',
+      'Full conversion to electrical, retiming, and retransmission as optical',
+      'Where external cables enter the building and transition to internal cabling',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '1625nm (L-band) is outside the typical traffic wavelength bands. OTDR testing or monitoring at 1625nm can occur while the fibre carries live traffic at other wavelengths.',
     section: 'Module 7',
@@ -2146,10 +2361,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 137,
     question: 'What is the primary purpose of ANSI/TIA-758 standard?',
     options: [
-      'Indoor cabling design',
+      'Optical fibre combined with overhead ground wire on power lines',
       'Customer-owned outside plant telecommunications infrastructure',
-      'Data centre cabling',
-      'Connector specifications',
+      'Fibre Optic Test Procedure (standardised test methods)',
+      'Blue, orange, green, brown, slate, white, red, black, yellow, violet, rose, aqua',
     ],
     correctAnswer: 1,
     explanation:
@@ -2163,12 +2378,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 138,
     question: "What does 'centralised cabling' architecture mean?",
     options: [
-      'All equipment in one room',
+      'Individual sub-cables that can be separated for direct termination',
+      'Loss when joining fibres with different core sizes',
       'Horizontal fibres home-run to a central location, bypassing floor TRs',
-      'Star topology only',
-      'Single fibre serving all outlets',
+      'Central office equipment managing multiple PON connections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Centralised cabling runs fibres directly from work areas to a central equipment room, using splices or interconnects instead of active equipment in each floor TR.',
     section: 'Module 6',
@@ -2180,12 +2395,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 139,
     question: "What is a 'work area' in structured cabling terminology?",
     options: [
-      'The telecommunications room',
+      'Standardised launch conditions for repeatable measurements',
+      'A spike upward followed by the normal trace',
+      'Maintaining performance with tight bends in restricted spaces',
       'The space where occupants use telecommunications services',
-      'The cable installation zone',
-      'The equipment room',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The work area is where end users interact with the telecommunications system - offices, workstations, etc. It includes the outlet to equipment cord connection.',
     section: 'Module 6',
@@ -2197,12 +2412,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 140,
     question: "What does 'dB' measure in fibre optics?",
     options: [
-      'Absolute power level',
       'Ratio of two power levels (logarithmic)',
-      'Distance',
-      'Wavelength',
+      'To reduce reflections by eliminating air gaps',
+      'General-purpose indoor cables (not plenum)',
+      'Inspect and clean connector end-faces',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Decibels (dB) measure the ratio between two power levels logarithmically. 3 dB represents a factor of 2 (doubling or halving), 10 dB represents a factor of 10.',
     section: 'Module 1',
@@ -2214,12 +2429,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 141,
     question: "What does 'dBm' represent?",
     options: [
+      'To ensure they meet specifications and haven\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t been damaged',
       'Decibels relative to milliwatt (absolute power)',
-      'Decibels per metre',
-      'Maximum decibels',
-      'Minimum decibels',
+      'The light-gathering ability and acceptance angle',
+      'Optimised for SWDM (multiple wavelengths 850-953nm)',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'dBm is absolute power referenced to 1 milliwatt. 0 dBm = 1mW. Positive values are more than 1mW, negative values are less (e.g., -10 dBm = 0.1mW).',
     section: 'Module 1',
@@ -2231,12 +2446,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 142,
     question: 'What is the advantage of using LC connectors over SC connectors?',
     options: [
-      'Better optical performance',
+      'Stop immediately and investigate the cause',
+      'Legacy single-channel long-haul links (not DWDM)',
       'Smaller size enabling higher port density',
-      'Lower cost',
-      'Easier to clean',
+      'The light-gathering ability and acceptance angle',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "LC connectors use a 1.25mm ferrule versus SC's 2.5mm, enabling approximately double the port density in the same panel space - critical in high-density environments.",
     section: 'Module 4',
@@ -2248,12 +2463,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 143,
     question: "What is 'insertion loss' in a fibre connection?",
     options: [
-      'Loss caused by inserting the wrong fibre type',
-      'The total loss through a connection point',
       'Loss when first installing a connector',
+      'Loss caused by inserting the wrong fibre type',
       'Temporary loss during connection',
+      'The total loss through a connection point',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Insertion loss is the optical power lost when a component (connector, splice, coupler) is inserted into a link. It's measured in dB and should be minimised.",
     section: 'Module 4',
@@ -2265,12 +2480,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 144,
     question: "What is 'return loss'?",
     options: [
-      'Power lost in the return cable',
       'The ratio of reflected power to incident power at a connection',
-      'Loss when returning equipment',
-      'Backward transmission loss',
+      'Loss when fibre cores are not perfectly aligned side-to-side',
+      'To reduce friction and pulling tension during installation',
+      'Minimum distance after a reflective event where loss can be measured',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Return loss measures how much light is reflected back toward the source. Higher return loss values (e.g., 50 dB) mean less reflection, which is better for system performance.',
     section: 'Module 4',
@@ -2282,10 +2497,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 145,
     question: "What is 'optical time domain reflectometry' (OTDR)?",
     options: [
-      'A method for cleaning connectors',
+      'It can be monitored without interfering with traffic wavelengths',
       'Measuring fibre characteristics by analysing backscattered light over distance',
-      'Timing data transmission',
-      'Testing connector reflections only',
+      'A splice between fibres with different backscatter coefficients',
+      'To reduce friction and pulling tension during installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -2299,12 +2514,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 146,
     question: "What is the 'backscatter coefficient' of optical fibre?",
     options: [
-      'Connector reflection level',
+      'It can be monitored without interfering with traffic wavelengths',
+      'An interconnection point in the horizontal pathway for flexibility',
       'The amount of light naturally scattered back toward the source',
-      'Splice loss',
-      'Cladding mode power',
+      'Ratio of signal power to noise power in optical systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The backscatter coefficient describes how much light is naturally scattered backward (Rayleigh scattering). It varies slightly between fibres and affects OTDR measurements.',
     section: 'Module 7',
@@ -2316,12 +2531,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 147,
     question: 'Why should fibre patch cords be tested before use?',
     options: [
-      'To verify the colour code',
+      "Transmitter output power (dBm) - Receiver sensitivity (dBm)",
+      "Non-linear effects (Brillouin/Raman scattering)",
+      "The effective diameter of the light-carrying region",
       "To ensure they meet specifications and haven't been damaged",
-      'To break in the connectors',
-      'To remove factory packaging residue',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Factory patches can be damaged in transit or storage. Testing verifies loss and return loss meet requirements before installation, preventing hard-to-diagnose problems later.',
     section: 'Module 7',
@@ -2333,12 +2548,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 148,
     question: "What is 'mode conditioning' in multimode fibre?",
     options: [
-      'Adjusting connector angle',
       'Controlling which modes are excited for better performance',
-      'Temperature stabilisation',
-      'Cleaning the fibre core',
+      'Fibre with uniform core refractive index and abrupt change at cladding',
+      'Plastic tube containing one or more fibres with gel filling',
+      'Loss caused by large-scale bending of the fibre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Mode conditioning uses an offset launch or mode-conditioning patch cord to excite specific modes in multimode fibre, improving performance with laser sources.',
     section: 'Module 2',
@@ -2352,8 +2567,8 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     options: [
       'Variable Capacity Single Emitting Laser',
       'Vertical-Cavity Surface-Emitting Laser',
-      'Visual Connector System Equipment Level',
       'Very Compact Singlemode Emission Laser',
+      'Visual Connector System Equipment Level',
     ],
     correctAnswer: 1,
     explanation:
@@ -2367,12 +2582,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 150,
     question: "What is 'dispersion compensation'?",
     options: [
-      'Removing contamination from connectors',
+      'Where external cables enter the building and transition to internal cabling',
+      'An interconnection point in the horizontal pathway for flexibility',
       'Adding elements to counteract chromatic dispersion effects',
-      'Equalising power levels',
-      'Balancing fibre counts',
+      'Non-linear effects (Brillouin/Raman scattering)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Dispersion compensation uses special fibre (DCF) or electronic processing to counteract chromatic dispersion accumulated over long distances, enabling higher speeds.',
     section: 'Module 6',
@@ -2383,8 +2598,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 151,
     question: 'What is the typical operating temperature range for indoor fibre cables?',
-    options: ['-40°C to +85°C', '0°C to +50°C', '-60°C to +70°C', '10°C to 30°C'],
-    correctAnswer: 1,
+    options: [
+      '-40°C to +85°C',
+      '10°C to 30°C',
+      '-60°C to +70°C',
+      '0°C to +50°C',
+    ],
+    correctAnswer: 3,
     explanation:
       'Indoor cables typically specify 0°C to +50°C operating range. Outdoor cables have wider ranges, often -40°C to +70°C, to handle environmental extremes.',
     section: 'Module 3',
@@ -2396,12 +2616,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 152,
     question: "What is 'fibre darkening'?",
     options: [
-      'Fibre covered in dirt',
       'Increased attenuation from radiation or hydrogen exposure over time',
-      'Fibre with no light signal',
-      'Dark-coloured fibre jacket',
+      'Advanced detection using phase, amplitude, and polarisation of light',
+      'In original packaging, clean dry location, ends capped',
+      'It has an angled (8°) physical contact end-face',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Fibre darkening is increased attenuation caused by long-term exposure to radiation or hydrogen (in harsh environments). Special 'rad-hard' fibres resist this effect.",
     section: 'Module 2',
@@ -2413,10 +2633,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 153,
     question: "What is 'optical amplification'?",
     options: [
-      'Using larger fibre cores',
+      'Channel includes equipment cords; permanent link tests only installed cabling',
       'Boosting optical signal strength without converting to electrical',
-      'Magnifying the fibre end-face',
-      'Increasing connector size',
+      'Dynamically assigning upstream time slots based on demand',
+      'To reduce friction and pulling tension during installation',
     ],
     correctAnswer: 1,
     explanation:
@@ -2429,8 +2649,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 154,
     question: 'What is the typical insertion loss for a mated LC connector pair?',
-    options: ['1.0-1.5 dB', '0.1-0.3 dB', '0.5-1.0 dB', '0.01-0.05 dB'],
-    correctAnswer: 1,
+    options: [
+      '1.0-1.5 dB',
+      '0.5-1.0 dB',
+      '0.1-0.3 dB',
+      '0.01-0.05 dB',
+    ],
+    correctAnswer: 2,
     explanation:
       'High-quality LC connector pairs typically achieve 0.1-0.3 dB insertion loss. TIA-568 allows 0.5 dB maximum for loss budget calculations.',
     section: 'Module 4',
@@ -2442,12 +2667,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 155,
     question: "What causes 'differential mode delay' (DMD)?",
     options: [
-      'Temperature variations',
+      'Advanced detection using phase, amplitude, and polarisation of light',
+      'Insert connector and push forward with one motion',
+      'High-density cable with very small outer diameter for microduct installation',
       'Different modes travelling at different speeds in multimode fibre',
-      'Connector misalignment',
-      'Splice reflections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "DMD occurs because different modes in multimode fibre travel slightly different distances and speeds. It's a significant limitation for high-speed multimode systems.",
     section: 'Module 2',
@@ -2459,12 +2684,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 156,
     question: "What is 'WDM' in fibre optics?",
     options: [
-      'Wire Distribution Method',
       'Wavelength Division Multiplexing',
-      'Wide Data Mode',
-      'Wideband Digital Modulation',
+      'One direction only, not back and forth',
+      'Passive Optical Network',
+      'Inspect and clean connector end-faces',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'WDM transmits multiple wavelengths (colours) of light simultaneously through a single fibre, multiplying capacity. CWDM and DWDM are specific implementations.',
     section: 'Module 6',
@@ -2476,10 +2701,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 157,
     question: "What is the function of an 'optical isolator'?",
     options: [
-      'To separate different fibre types',
+      'Non-linear effects (Brillouin/Raman scattering)',
       'To allow light in one direction only, blocking reflections',
-      'To isolate damaged sections',
-      'To provide electrical isolation',
+      'Smaller size enabling higher port density',
+      '3-5 metres or as specified for the application',
     ],
     correctAnswer: 1,
     explanation:
@@ -2493,12 +2718,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 158,
     question: "What is 'PON' technology?",
     options: [
-      'Power Over Network',
-      'Passive Optical Network',
       'Point-to-point Optical Node',
       'Protected Optical Network',
+      'Passive Optical Network',
+      'Power Over Network',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'PON uses passive optical splitters to share a single fibre among multiple users, commonly deployed for FTTH (Fibre To The Home) services. GPON and EPON are common variants.',
     section: 'Module 6',
@@ -2511,11 +2736,11 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: 'What splits the optical signal in a PON network?',
     options: [
       'Active switches',
-      'Passive optical splitters',
-      'Wavelength filters',
       'Electronic routers',
+      'Wavelength filters',
+      'Passive optical splitters',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PON uses unpowered (passive) optical splitters that divide the light signal among multiple outputs. Typical split ratios are 1:32 or 1:64.',
     section: 'Module 6',
@@ -2527,12 +2752,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 160,
     question: "What is 'coherent detection' in fibre optics?",
     options: [
-      'Using matched equipment',
       'Advanced detection using phase, amplitude, and polarisation of light',
-      'Detecting consistent signal strength',
-      'Coordinated testing methods',
+      'The amount of light naturally scattered back toward the source',
+      'Channel includes equipment cords; permanent link tests only installed cabling',
+      'Controlling which modes are excited for better performance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Coherent detection uses advanced modulation and detection techniques to extract more data from light by using phase, amplitude, and polarisation states, enabling 100G+ per wavelength.',
     section: 'Module 6',
@@ -2544,10 +2769,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 161,
     question: "What is 'connector keying'?",
     options: [
-      'Locking connectors in place',
+      'Decibels relative to milliwatt (absolute power)',
       'Mechanical alignment features ensuring correct orientation',
-      'Security encoding',
-      'Serial number identification',
+      'A splice using alignment fixtures and index-matching gel',
+      'The bandwidth when using laser sources accounting for launch conditions',
     ],
     correctAnswer: 1,
     explanation:
@@ -2561,12 +2786,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 162,
     question: 'What happens if you look into a live fibre carrying infrared light?',
     options: [
-      "Nothing - it's invisible so it's safe",
+      'Dynamically assigning upstream time slots based on demand',
+      'The fibre core being off-centre from the cladding',
       'Potential eye damage - never view without confirmed safe conditions',
-      "You'll see a red light",
-      'The light is too weak to cause harm',
+      'Increased attenuation, potential crack initiation, and long-term failure risk',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Infrared light is invisible but can damage eyes. Never look into fibres or connectors until confirmed safe with a power meter. Class 1M lasers can cause injury.',
     section: 'Module 5',
@@ -2578,12 +2803,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 163,
     question: 'What is the standard fibre colour code sequence for the first 12 fibres?',
     options: [
-      'Red, orange, yellow, green, blue, violet...',
+      'To comply with separation requirements and prevent physical damage',
+      'Channel includes equipment cords; permanent link tests only installed cabling',
+      'Using stimulated Raman scattering for distributed amplification',
       'Blue, orange, green, brown, slate, white, red, black, yellow, violet, rose, aqua',
-      'White, red, black, yellow, violet, blue, orange, green, brown, slate, rose, aqua',
-      'There is no standard sequence',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'TIA-598 defines the standard colour sequence: blue, orange, green, brown, slate, white, red, black, yellow, violet, rose (pink), aqua for fibres 1-12.',
     section: 'Module 3',
@@ -2595,12 +2820,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 164,
     question: "What does 'fusion splice estimated loss' indicate on a splicer display?",
     options: [
-      'Guaranteed actual loss',
       'Calculated loss based on core alignment - verify with OTDR',
-      'Maximum possible loss',
-      'Loss after aging',
+      'The light-gathering ability and acceptance angle',
+      'Fibres are isolated from external mechanical and thermal stresses',
+      'A splice between fibres with different backscatter coefficients',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Fusion splicers estimate loss from observed core alignment but this is calculated, not measured. Actual loss should be verified with OTDR testing.',
     section: 'Module 4',
@@ -2612,10 +2837,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 165,
     question: "What is 'fan-out' in fibre optic terminations?",
     options: [
-      'Spreading heat from equipment',
+      'A short fibre length with a connector on one end for fusion splicing',
       'Separating loose-tube fibres for individual termination',
-      'Distributing signal to multiple outputs',
-      'Cooling splice protectors',
+      'Signal fluctuations caused by mode interference in multimode fibre',
+      'Push-pull connector design for reliable mating',
     ],
     correctAnswer: 1,
     explanation:
@@ -2629,12 +2854,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 166,
     question: "What is 'mode stripper' used for?",
     options: [
+      'Controlling which modes are excited for better performance',
+      'High fibre density and mass-fusion splice capability',
       'Removing cladding modes that cause measurement errors',
-      'Removing jacket material',
-      'Converting multimode to singlemode',
-      'Stripping buffer coating',
+      'Use intermediate pull points to reduce total tension',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Mode strippers remove unwanted cladding modes (light travelling in the cladding) that can cause measurement errors, ensuring only core-guided light is measured.',
     section: 'Module 7',
@@ -2645,8 +2870,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 167,
     question: 'What is the typical lifetime expectancy of properly installed fibre infrastructure?',
-    options: ['5-10 years', '10-15 years', '25+ years', '50+ years guaranteed'],
-    correctAnswer: 2,
+    options: [
+      '5-10 years',
+      '10-15 years',
+      '50+ years guaranteed',
+      '25+ years',
+    ],
+    correctAnswer: 3,
     explanation:
       'Properly installed fibre infrastructure typically has a 25+ year physical lifetime. The passive components can outlast multiple generations of active equipment.',
     section: 'Module 6',
@@ -2658,12 +2888,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 168,
     question: "What does 'dark fibre' mean?",
     options: [
-      'Fibre with no light passing through',
       'Unlit fibre capacity available for future use or lease',
-      'Faulty fibre with high attenuation',
-      'Fibre in an unlit conduit',
+      'To provide rigidity and resist crushing/bending forces',
+      'It can be monitored without interfering with traffic wavelengths',
+      'How refractive index varies across the fibre cross-section',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Dark fibre refers to installed but unused fibre capacity - fibres without active equipment. It can be 'lit' when needed or leased to other operators.",
     section: 'Module 6',
@@ -2675,10 +2905,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 169,
     question: "What causes 'spectral attenuation' variation in fibre?",
     options: [
-      'Contaminated connectors',
+      'Small-scale deformations in the fibre axis causing localised loss',
       'Different absorption and scattering at different wavelengths',
-      'Poor splice quality',
-      'Incorrect installation',
+      'Where external cables enter the building and transition to internal cabling',
+      'Non-linear effects (Brillouin/Raman scattering)',
     ],
     correctAnswer: 1,
     explanation:
@@ -2692,12 +2922,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 170,
     question: "What is 'launch cable' also known as?",
     options: [
-      'Test lead',
+      'Refractive index difference at glass-air interface',
+      'Insert connector and push forward with one motion',
       'Reference cable or pulse suppressor cable',
-      'Start fibre',
-      'Initial connector',
+      'Provides tensile strength and strain relief',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Launch cables (also reference or pulse suppressor cables) move the first connector beyond the OTDR dead zone. They should match the fibre type being tested.',
     section: 'Module 7',
@@ -2708,8 +2938,13 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
   {
     id: 171,
     question: 'What is the recommended length for an OTDR launch cable?',
-    options: ['10-20 metres', '100-500 metres', '1-5 kilometres', '5 metres maximum'],
-    correctAnswer: 1,
+    options: [
+      '10-20 metres',
+      '5 metres maximum',
+      '1-5 kilometres',
+      '100-500 metres',
+    ],
+    correctAnswer: 3,
     explanation:
       'Launch cables should be 100-500m long, sufficient to clear the OTDR dead zone (which varies with pulse width setting). Longer cables for wider pulse widths.',
     section: 'Module 7',
@@ -2721,12 +2956,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 172,
     question: "What is 'optical budget' also called?",
     options: [
-      'Equipment cost',
       'Link budget or power budget',
-      'Testing allowance',
-      'Installation estimate',
+      'Armoured loose-tube with PE jacket',
+      'Tier 4 (fault tolerant)',
+      'Fibre To The Building',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Optical/link/power budget is the available margin between transmitter output and receiver sensitivity. The link must have less loss than this budget to work reliably.',
     section: 'Module 6',
@@ -2738,10 +2973,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 173,
     question: "What is 'overfilled launch' in multimode testing?",
     options: [
-      'Using too much power',
+      'Different wavelengths travelling at different speeds',
       'Launch condition exciting all modes uniformly',
-      'Overfilling the connector with gel',
-      'Testing at maximum capacity',
+      'Central office equipment managing multiple PON connections',
+      'Smaller size enabling higher port density',
     ],
     correctAnswer: 1,
     explanation:
@@ -2755,12 +2990,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 174,
     question: 'What safety class are most fibre communication systems?',
     options: [
-      'Class 1 (eye-safe)',
+      'Maximum input power before receiver saturates or is damaged',
+      'Straight Tip bayonet-style connector',
       'Class 1M (eye-safe with magnification restrictions)',
-      'Class 3B (hazardous)',
-      'Class 4 (highly hazardous)',
+      'Vertical-Cavity Surface-Emitting Laser',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Most telecom systems are Class 1M - safe for naked eye viewing but potentially hazardous with magnifying optics (microscopes, telescopes) that concentrate the beam.',
     section: 'Module 5',
@@ -2772,12 +3007,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 175,
     question: "What is 'cross-connect' in a telecommunications room?",
     options: [
-      'Interconnecting cables across different rooms',
+      'Loss when joining fibres with different core sizes',
+      'Stable modal power distribution after long fibre length',
+      'Boosting optical signal strength without converting to electrical',
       'Patch panel arrangement allowing flexible connections between systems',
-      'Crossing cables over each other',
-      'Emergency backup connections',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A cross-connect allows any backbone or horizontal cable to be connected to any equipment port via patch cords, providing flexible, reconfigurable connectivity.',
     section: 'Module 6',
@@ -2789,12 +3024,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 176,
     question: "What is 'inter-connect' versus 'cross-connect'?",
     options: [
-      'They are the same thing',
       'Inter-connect directly connects equipment without patch panels between',
-      'Inter-connect uses longer cables',
-      'Cross-connect is for data, inter-connect for voice',
+      'To ensure they meet specifications and haven\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t been damaged',
+      'To filter out higher-order modes for consistent launch conditions',
+      'Applications sensitive to back-reflections (CATV, PON, analogue)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Inter-connect connects equipment directly to cable terminations (one patch cord). Cross-connect uses two patch panels with jumpers between (two patch cords).',
     section: 'Module 6',
@@ -2806,10 +3041,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 177,
     question: "What does 'FOTP' stand for?",
     options: [
-      'Fibre Optic Testing Protocol',
+      'Fibres are isolated from external mechanical and thermal stresses',
       'Fibre Optic Test Procedure (standardised test methods)',
-      'First Order Transmission Parameter',
-      'Fibre Output Terminal Point',
+      'Data centre infrastructure and telecommunications standards',
+      'Zero dispersion point moved to 1550nm for single-channel systems',
     ],
     correctAnswer: 1,
     explanation:
@@ -2823,12 +3058,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 178,
     question: "What is 'strain relief' at connector terminations?",
     options: [
-      'Relaxing fibre tension during installation',
+      'Splice connecting different cable types (e.g., loose-tube to tight-buffer)',
+      'Low-smoke materials meeting fire safety standards (e.g., FEP, PVDF)',
       'Mechanical support preventing cable pull from reaching the fibre',
-      'Relieving stress in the glass',
-      'Testing under load',
+      'To melt and fuse the glass fibre ends together',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Strain relief (boot, crimp, or adhesive) secures the cable at the connector so pulling or bending forces don't transfer to the delicate fibre/ferrule junction.",
     section: 'Module 4',
@@ -2840,12 +3075,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 179,
     question: "What is 'FTTx'?",
     options: [
-      'Fibre Testing Technology Extended',
+      'Standard singlemode fibre with low water peak',
+      'To move the first connector outside the OTDR\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s dead zone',
+      'Optimised for SWDM (multiple wavelengths 850-953nm)',
       'Fibre To The x (various deployment architectures)',
-      'Fast Transmission Technology',
-      'Fibre Termination Type X',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'FTTx is a general term for fibre deployment architectures where x represents the endpoint: H (home), P (premises), B (building), C (curb/cabinet), etc.',
     section: 'Module 6',
@@ -2857,12 +3092,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 180,
     question: "What is 'FTTB'?",
     options: [
-      'Fibre To The Box',
       'Fibre To The Building',
+      'Fibre To The Box',
       'Fibre Termination Test Board',
       'Fibre To The Basement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "FTTB (Fibre To The Building) brings fibre to a building's telecommunications room, with copper or other technology distributing to individual units/floors.",
     section: 'Module 6',
@@ -2874,10 +3109,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 181,
     question: "What is 'splice closure' also called?",
     options: [
-      'Fusion splicer',
+      'Generic cabling for customer premises',
       'Splice enclosure or joint closure',
-      'Splice protector',
-      'Splice terminator',
+      'Upgrading transceivers on existing fibres',
+      'Vertical-Cavity Surface-Emitting Laser',
     ],
     correctAnswer: 1,
     explanation:
@@ -2891,12 +3126,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 182,
     question: "What is 'wavelength-selective' component?",
     options: [
-      'A coloured cable jacket',
+      'Provides tensile strength and strain relief',
+      'Follow confined space entry procedures including atmosphere testing',
       'A device that passes some wavelengths while blocking others',
-      'A multimode-singlemode converter',
-      'Variable power attenuator',
+      'An interconnection point in the horizontal pathway for flexibility',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Wavelength-selective devices (filters, WDM multiplexers) separate or combine specific wavelengths. They're essential for WDM systems and bi-directional transmission.",
     section: 'Module 6',
@@ -2908,12 +3143,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 183,
     question: "What is 'bend-insensitive' fibre optimised for?",
     options: [
-      'Higher bandwidth',
+      'Small Form-factor Pluggable (transceiver module)',
+      'To ensure they meet specifications and haven\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t been damaged',
+      'A device that passes some wavelengths while blocking others',
       'Maintaining performance with tight bends in restricted spaces',
-      'Lower cost manufacturing',
-      'Longer transmission distances',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Bend-insensitive fibre (G.657) is designed for FTTH and indoor applications where tight bends around corners and in small enclosures are unavoidable.',
     section: 'Module 2',
@@ -2925,12 +3160,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 184,
     question: "What is 'drop cable' in FTTH deployments?",
     options: [
-      'Cable that has been dropped and damaged',
       'The cable from distribution point to individual customer premises',
-      'Spare cable for emergencies',
-      'Low-priority installation cable',
+      'Small Form-factor Pluggable (transceiver module)',
+      'In original packaging, clean dry location, ends capped',
+      'They introduce twists that can stress the fibre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Drop cable is the final cable segment connecting from a distribution point (pole, pedestal, or building entry) to an individual customer's premises.",
     section: 'Module 3',
@@ -2942,10 +3177,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 185,
     question: "What is 'cable tray' fill ratio recommendation?",
     options: [
-      '100% fill is acceptable',
+      'Launch condition exciting all modes uniformly',
       'Maximum 50% fill for cable management and future additions',
-      '25% maximum',
-      '75% minimum required',
+      'Provides tensile strength and strain relief',
+      'Follow confined space entry procedures including atmosphere testing',
     ],
     correctAnswer: 1,
     explanation:
@@ -2959,12 +3194,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 186,
     question: "What does 'cleave' mean in fibre preparation?",
     options: [
-      'Cleaning the fibre',
+      'The light-gathering ability and acceptance angle',
+      'Horizontal fibres home-run to a central location, bypassing floor TRs',
       'Controlled breaking to create a flat, perpendicular end-face',
-      'Stripping the coating',
-      'Polishing the end',
+      'To ensure they meet specifications and haven\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t been damaged',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cleaving uses a precision tool to score and break the fibre, creating a flat end-face perpendicular to the fibre axis - essential for quality fusion splices.',
     section: 'Module 4',
@@ -2976,12 +3211,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 187,
     question: "What is 'epoxy polish' connector termination?",
     options: [
-      'A type of connector cleaning',
+      'A short fibre length with a connector on one end for fusion splicing',
+      'Fibre To The x (various deployment architectures)',
+      'Ratio of errored bits to total transmitted bits',
       'Traditional termination using adhesive and mechanical polishing',
-      'Coating connectors for protection',
-      'Factory-only termination method',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Epoxy polish termination uses heat-cured or anaerobic epoxy to secure the fibre, followed by multi-step polishing. It produces excellent results but is time-consuming.',
     section: 'Module 4',
@@ -2993,12 +3228,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 188,
     question: "What is a 'no-epoxy' or 'crimp' connector?",
     options: [
-      'A connector without any adhesive',
       'Quick-install connector using mechanical clamping without epoxy',
-      'Reusable connector',
-      'A connector for temporary use only',
+      'Adding elements to counteract chromatic dispersion effects',
+      'The effective diameter of the light-carrying region',
+      'The distance after a reflective event where events cannot be detected',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'No-epoxy connectors use mechanical clamping and pre-polished ferrules for faster field termination. They may have slightly higher loss than epoxy-polish but offer speed advantages.',
     section: 'Module 4',
@@ -3010,10 +3245,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 189,
     question: "What is 'pre-polished' or 'splice-on' connector technology?",
     options: [
-      'Connectors polished before shipping',
+      'Mechanical alignment features ensuring correct orientation',
       'Factory-polished stub fibre in connector, field-spliced to cable fibre',
-      'Connectors requiring no field work',
-      'Pre-terminated cable assemblies',
+      'How refractive index varies across the fibre cross-section',
+      'Slight differences in fibre backscatter characteristics',
     ],
     correctAnswer: 1,
     explanation:
@@ -3027,12 +3262,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 190,
     question: "What is 'cable pulling lubricant' made of?",
     options: [
+      'The fibre core being off-centre from the cladding',
+      'Follow confined space entry procedures including atmosphere testing',
       'Water-based or gel polymer compounds safe for cables',
-      'Petroleum-based oils',
-      'Silicone grease',
-      'Any household lubricant works',
+      'Maximum 50% fill for cable management and future additions',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Cable pulling lubricants are specially formulated (usually water-based polymer) to reduce friction without damaging cable jackets. Never use petroleum products that can degrade plastics.',
     section: 'Module 5',
@@ -3045,11 +3280,11 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: "What is the function of 'subscriber connector' (SC)?",
     options: [
       'Connects subscribers to the network',
-      'Push-pull connector design for reliable mating',
-      'Used only for subscription services',
       'Secure connection requiring a key',
+      'Used only for subscription services',
+      'Push-pull connector design for reliable mating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "SC (Subscriber/Square Connector) features a push-pull engagement mechanism. The name comes from its original use, but it's now used throughout networks, not just at subscriber points.",
     section: 'Module 4',
@@ -3061,12 +3296,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 192,
     question: "What is 'ST' connector?",
     options: [
-      'Standard Termination connector',
       'Straight Tip bayonet-style connector',
+      'Standard Termination connector',
       'Secure Terminal connector',
       'Single Thread connector',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ST (Straight Tip) is a bayonet-style connector with twist-lock engagement. It was popular in early LANs but is now largely superseded by SC and LC connectors.',
     section: 'Module 4',
@@ -3078,10 +3313,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 193,
     question: "What does 'duplex' connector mean?",
     options: [
-      'Double-strength connector',
+      'Customer-owned outside plant telecommunications infrastructure',
       'Two fibre connectors joined for paired Tx/Rx connections',
-      'Connector for duplex cables only',
-      'Two-way communication connector',
+      'To provide redundant physical routes for resilience',
+      'Wavelength below which the fibre supports more than one mode',
     ],
     correctAnswer: 1,
     explanation:
@@ -3095,12 +3330,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 194,
     question: "What is 'fibre channel' in networking?",
     options: [
-      'The physical path of the fibre',
+      'Increased loss around 1383nm due to hydroxyl ions',
+      'Customer-owned outside plant telecommunications infrastructure',
       'High-speed storage networking protocol commonly using fibre',
-      'A TV channel transmitted over fibre',
-      'Communication channel within a fibre',
+      'A smaller tube installed inside larger conduit to subdivide space',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Fibre Channel is a high-speed network protocol primarily used for storage area networks (SANs). Despite the name, it can run over copper, though fibre is common for performance.',
     section: 'Module 6',
@@ -3112,12 +3347,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 195,
     question: "What is 'SFP' in fibre networking?",
     options: [
-      'Single Fibre Protocol',
+      'Additional optical power needed to overcome system impairments',
+      'The amount of light naturally scattered back toward the source',
+      'How bandwidth decreases with increasing fibre length',
       'Small Form-factor Pluggable (transceiver module)',
-      'Standard Fibre Port',
-      'Secure Fibre Pathway',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SFP is a hot-pluggable transceiver form factor used in network switches. SFP+ (enhanced) supports 10G, QSFP supports 40G/100G using multiple channels.',
     section: 'Module 6',
@@ -3129,12 +3364,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 196,
     question: "What is 'bi-directional' (BiDi) transmission?",
     options: [
-      'Transmission in both directions alternately',
       'Simultaneous two-way transmission over a single fibre using different wavelengths',
-      'Transmission requiring two fibres',
-      'Bidding for transmission rights',
+      'Full conversion to electrical, retiming, and retransmission as optical',
+      'High-speed storage networking protocol commonly using fibre',
+      'Ratio of optical power in \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' state to power in \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'0\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' state',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BiDi transmission uses different wavelengths for each direction (e.g., 1310nm upstream, 1490nm downstream) over a single fibre, halving fibre count requirements.',
     section: 'Module 6',
@@ -3146,10 +3381,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 197,
     question: "What is 'simplex' fibre cable?",
     options: [
-      'Simple, low-cost cable',
+      'Rayleigh scattering and absorption',
       'Single fibre cable for one-way or BiDi links',
-      'Cable for simple installations only',
-      'Outdoor-only cable type',
+      'Multiple channels over a single fibre pair',
+      'The light-gathering ability and acceptance angle',
     ],
     correctAnswer: 1,
     explanation:
@@ -3163,12 +3398,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 198,
     question: "What is 'fibre count' in cable specifications?",
     options: [
+      'How many times the cable can be bent',
       'The quality rating of the fibre',
       'The number of individual optical fibres in the cable',
-      'How many times the cable can be bent',
       'The number of strands in the strength member',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Fibre count indicates how many individual optical fibres are contained in the cable. Counts range from 1 (simplex) to thousands in high-capacity cables.',
     section: 'Module 3',
@@ -3180,12 +3415,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 199,
     question: "What is 'micro-duct'?",
     options: [
+      'To prevent water migration along the cable',
+      'The effective diameter of the light-carrying region',
+      'Loss when joining fibres with different core sizes',
       'Very small diameter tubing for blown fibre installation',
-      'Duct for microwave cables',
-      'Indoor-only duct',
-      'Temporary installation duct',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Micro-ducts are small diameter tubes (typically 5-14mm) into which micro-cables or fibre units can be blown using compressed air, maximising pathway utilisation.',
     section: 'Module 5',
@@ -3197,12 +3432,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 200,
     question: "What is 'optical distribution frame' (ODF)?",
     options: [
-      'Equipment for splitting optical signals',
       'Structured housing for fibre termination and patching',
+      'Equipment for splitting optical signals',
       'Framework for outdoor cables only',
       'Display showing optical power distribution',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'An ODF provides organised housing for fibre cable terminations, splice trays, and patch panel connectors. It enables structured cable management and easy patching.',
     section: 'Module 6',
@@ -3214,10 +3449,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 201,
     question: "What is 'optical network terminal' (ONT)?",
     options: [
-      'End-of-fibre test point',
+      'In original packaging, clean dry location, ends capped',
       'Customer premises equipment converting optical to electrical signals in PON',
-      'Network termination documentation',
-      'Central office equipment',
+      'Blue, orange, green, brown, slate, white, red, black, yellow, violet, rose, aqua',
+      'The bandwidth when using laser sources accounting for launch conditions',
     ],
     correctAnswer: 1,
     explanation:
@@ -3231,12 +3466,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 202,
     question: "What is 'optical line terminal' (OLT)?",
     options: [
-      'Equipment at customer premises',
+      'Total loss from transmitter to receiver including all components',
+      'The 8° angle prevents proper end-face contact, causing high loss',
       'Central office equipment managing multiple PON connections',
-      'Line testing equipment',
-      'Terminal for optical line workers',
+      'Using stimulated Raman scattering for distributed amplification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The OLT is located at the service provider's central office in PON networks, managing communication with multiple ONTs over shared fibre infrastructure.",
     section: 'Module 6',
@@ -3248,12 +3483,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 203,
     question: "What is 'time division multiplexing' (TDM) in PON?",
     options: [
-      'Sharing fibre by dividing wavelengths',
+      'Unlit fibre capacity available for future use or lease',
+      'To move the first connector outside the OTDR\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s dead zone',
+      'Advanced detection using phase, amplitude, and polarisation of light',
       'Allocating different time slots to different users for upstream transmission',
-      'Scheduling maintenance windows',
-      'Dividing installation time among crews',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PON uses TDM for upstream transmission - each ONT transmits in assigned time slots to prevent collisions at the shared splitter point.',
     section: 'Module 6',
@@ -3265,12 +3500,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 204,
     question: "What is 'dynamic bandwidth allocation' (DBA) in PON?",
     options: [
-      'Automatically adjusting laser power',
       'Dynamically assigning upstream time slots based on demand',
+      'Automatically adjusting laser power',
       'Changing fibre paths automatically',
       'Balancing traffic between fibres',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "DBA efficiently allocates upstream bandwidth by dynamically adjusting time slot assignments based on each ONT's traffic demand, rather than fixed allocation.",
     section: 'Module 6',
@@ -3282,10 +3517,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 205,
     question: "What does 'APC' connector provide better performance for?",
     options: [
-      'High-speed data transmission',
+      'Point where service provider responsibility ends and customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s begins',
       'Applications sensitive to back-reflections (CATV, PON, analogue)',
-      'Outdoor installations only',
-      'Multimode fibre systems',
+      'The 8° angle prevents proper end-face contact, causing high loss',
+      'Optimised for SWDM (multiple wavelengths 850-953nm)',
     ],
     correctAnswer: 1,
     explanation:
@@ -3299,12 +3534,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 206,
     question: 'What is the recommended cleaning direction for fibre end-faces?',
     options: [
-      'Circular motions',
+      'Ratio of two power levels (logarithmic)',
+      '2000 metres (campus) / 3000 metres (building)',
       'One direction only, not back and forth',
-      'Any direction works',
-      'Always from centre outward',
+      'Insertion loss and length testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Clean in one direction only to avoid redistributing contamination. Back-and-forth or circular motions can spread particles rather than remove them.',
     section: 'Module 7',
@@ -3316,12 +3551,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 207,
     question: "What is 'refractive index profile' in fibre?",
     options: [
-      'External surface finish',
+      'The minimum angle for total internal reflection to occur',
+      'Decibels relative to milliwatt (absolute power)',
+      'An interconnection point in the horizontal pathway for flexibility',
       'How refractive index varies across the fibre cross-section',
-      'Light reflection pattern',
-      "Manufacturer's test profile",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The refractive index profile shows how index varies from core centre to cladding. Step-index has an abrupt change; graded-index has a gradual variation to reduce modal dispersion.',
     section: 'Module 1',
@@ -3333,12 +3568,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 208,
     question: "What is 'graded-index' multimode fibre?",
     options: [
-      'Fibre with quality grades',
       'Fibre with gradually changing refractive index across the core',
-      'Fibre sorted by performance',
-      'Premium-grade fibre',
+      'Non-linear effects (Brillouin/Raman scattering)',
+      'Zero dispersion point moved to 1550nm for single-channel systems',
+      'Patch panel arrangement allowing flexible connections between systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Graded-index fibre has refractive index highest at centre, decreasing toward the cladding. This equalises mode velocities, reducing modal dispersion versus step-index multimode.',
     section: 'Module 2',
@@ -3350,10 +3585,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 209,
     question: "What is 'step-index' fibre?",
     options: [
-      'Fibre with stepped construction',
+      'Follow confined space entry procedures including atmosphere testing',
       'Fibre with uniform core refractive index and abrupt change at cladding',
-      'Premium tier fibre',
-      'Multimode only design',
+      'Minimum optical power required for acceptable BER',
+      'It eliminates gainer effects and gives true splice loss',
     ],
     correctAnswer: 1,
     explanation:
@@ -3367,12 +3602,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 210,
     question: "What is 'modal noise' in fibre systems?",
     options: [
-      'Mechanical vibration affecting fibre',
+      'The number of individual optical fibres in the cable',
+      'The cable from distribution point to individual customer premises',
       'Signal fluctuations caused by mode interference in multimode fibre',
-      'Acoustic noise in telecommunications rooms',
-      'Electrical noise on power cables',
+      'Advanced detection using phase, amplitude, and polarisation of light',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Modal noise occurs when modes in multimode fibre interfere at connection points, causing random intensity fluctuations. It's worse with coherent (laser) sources and mode-selective loss.",
     section: 'Module 2',
@@ -3384,12 +3619,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 211,
     question: "What is 'equilibrium mode distribution' (EMD)?",
     options: [
-      'Even power distribution in the core',
+      'Multi-fibre Termination Push-on (trademarked MPO variant)',
+      '3-5 metres or as specified for the application',
+      'Zero chromatic dispersion in conventional fibre',
       'Stable modal power distribution after long fibre length',
-      'Equal number of fibres per tube',
-      'Balanced system loading',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'EMD is the stable modal power distribution achieved after light has propagated through sufficient multimode fibre length, where mode coupling has reached steady state.',
     section: 'Module 2',
@@ -3401,12 +3636,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 212,
     question: "What is 'cutoff wavelength' in singlemode fibre?",
     options: [
-      'Maximum operating wavelength',
       'Wavelength below which the fibre supports more than one mode',
-      'Wavelength where attenuation is zero',
-      'Minimum operating wavelength',
+      'How refractive index varies across the fibre cross-section',
+      'Stop immediately and investigate the cause',
+      'Zero dispersion point moved to 1550nm for single-channel systems',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Cutoff wavelength is the shortest wavelength at which only the fundamental mode propagates. Below this, higher-order modes exist, effectively making the fibre multimode.',
     section: 'Module 2',
@@ -3418,10 +3653,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 213,
     question: "What is 'macrobend loss'?",
     options: [
-      'Loss from manufacturing defects',
+      'Intrinsic fibre attenuation',
       'Loss caused by large-scale bending of the fibre',
       'Loss at connector interfaces',
-      'Intrinsic fibre attenuation',
+      'Loss from manufacturing defects',
     ],
     correctAnswer: 1,
     explanation:
@@ -3435,12 +3670,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 214,
     question: "What is 'numerical aperture mismatch' loss?",
     options: [
-      'Loss from incorrect connector angle',
+      'Point where service provider responsibility ends and customer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s begins',
+      'Individual sub-cables that can be separated for direct termination',
       'Loss when joining fibres with different light-gathering capabilities',
-      'Loss from numerical calculation errors',
-      'Aperture damage loss',
+      'To move the first connector outside the OTDR\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s dead zone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'NA mismatch loss occurs when connecting fibres with different numerical apertures. Light from a high-NA fibre may not be captured by a lower-NA fibre, causing loss.',
     section: 'Module 4',
@@ -3452,12 +3687,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 215,
     question: "What is 'core diameter mismatch' loss?",
     options: [
-      'Loss from damaged cores',
+      'To allow light in one direction only, blocking reflections',
+      'To reduce friction and pulling tension during installation',
+      'Additional optical power needed to overcome system impairments',
       'Loss when joining fibres with different core sizes',
-      'Loss from eccentric cores',
-      'Manufacturing tolerance loss',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Core diameter mismatch causes loss when light from a larger core enters a smaller core - some light misses the receiving core. Loss is direction-dependent.',
     section: 'Module 4',
@@ -3469,12 +3704,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 216,
     question: "What is 'angular misalignment' loss at a splice?",
     options: [
-      'Loss from angled end-faces',
       'Loss when fibre axes are not parallel',
+      'Loss from angled end-faces',
       'Loss from incorrect splice parameters',
       'APC connector loss',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Angular misalignment loss occurs when spliced fibres are not perfectly parallel. Light exits one fibre at an angle that doesn't couple efficiently into the other fibre.",
     section: 'Module 4',
@@ -3486,10 +3721,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 217,
     question: "What is 'lateral offset' loss at a splice?",
     options: [
-      'Loss from incorrect cleave length',
+      'Maximum input power before receiver saturates or is damaged',
       'Loss when fibre cores are not perfectly aligned side-to-side',
-      'Loss from cladding mode coupling',
-      'End separation loss',
+      'Using stimulated Raman scattering for distributed amplification',
+      'Structured housing for fibre termination and patching',
     ],
     correctAnswer: 1,
     explanation:
@@ -3503,12 +3738,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 218,
     question: "What is 'end separation' loss?",
     options: [
-      'Loss at fibre end-of-life',
+      'A short fibre length with a connector on one end for fusion splicing',
+      'Full conversion to electrical, retiming, and retransmission as optical',
       'Loss caused by a gap between fibre end-faces at a connection',
-      'Loss from damaged fibre ends',
-      'Separation of core and cladding',
+      'Controlling which modes are excited for better performance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "End separation loss occurs when there's an air gap between fibre end-faces. Light diverges in the gap, causing both reflection and transmission loss.",
     section: 'Module 4',
@@ -3521,11 +3756,11 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: "What does 'Tier 1' testing refer to in fibre certification?",
     options: [
       'Basic visual inspection only',
-      'Insertion loss and length testing',
-      'Full OTDR characterisation',
       "Manufacturer's factory testing",
+      'Full OTDR characterisation',
+      'Insertion loss and length testing',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Tier 1 testing verifies insertion loss and length using a light source and power meter. It confirms the link meets performance requirements but doesn't locate individual events.",
     section: 'Module 7',
@@ -3537,12 +3772,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 220,
     question: "What does 'Tier 2' testing add beyond Tier 1?",
     options: [
-      'Visual inspection',
       'OTDR trace showing individual events along the link',
-      'Bandwidth testing',
-      'Environmental testing',
+      'Dynamically assigning upstream time slots based on demand',
+      'All-Dielectric Self-Supporting aerial cable',
+      'The amount of light naturally scattered back toward the source',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Tier 2 testing adds OTDR analysis, showing the location and loss of individual events (connectors, splices) along the link, useful for troubleshooting and quality verification.',
     section: 'Module 7',
@@ -3554,10 +3789,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 221,
     question: "What is the 'three test cord' reference method?",
     options: [
-      'Using three different length test cords',
+      'The minimum angle for total internal reflection to occur',
       'Setting reference with launch, receive, and link test cords',
-      'Testing three fibres simultaneously',
-      'Three-point calibration',
+      'Maximum input power before receiver saturates or is damaged',
+      'Installing fibre units into pre-installed tubes using air pressure',
     ],
     correctAnswer: 1,
     explanation:
@@ -3571,12 +3806,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 222,
     question: "What is 'one jumper' reference method?",
     options: [
-      'Testing with minimal equipment',
+      'To detect and identify live traffic on a fibre without breaking the circuit',
+      'Maintaining performance with tight bends in restricted spaces',
       'Setting reference with single test cord, excluding one link connector from measurement',
-      'Single fibre testing',
-      'Quick verification method',
+      'Customer-owned outside plant telecommunications infrastructure',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The one jumper method sets reference with a single cord, then connects to the link. This excludes one end connector from the measurement, requiring careful interpretation.',
     section: 'Module 7',
@@ -3588,12 +3823,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 223,
     question: "What is 'bandwidth-length product' in multimode fibre?",
     options: [
-      'Cable price calculation',
+      'Zero chromatic dispersion in conventional fibre',
+      'Non-linear effects (Brillouin/Raman scattering)',
+      'Individual sub-cables that can be separated for direct termination',
       'How bandwidth decreases with increasing fibre length',
-      'Physical dimensions multiplied',
-      'Storage capacity specification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Bandwidth-length product (e.g., MHz·km) describes how bandwidth decreases with length. A 500 MHz·km fibre supports 500 MHz over 1km, or 250 MHz over 2km.',
     section: 'Module 2',
@@ -3605,12 +3840,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 224,
     question: "What is 'power penalty' in fibre systems?",
     options: [
-      'Extra power consumption',
       'Additional optical power needed to overcome system impairments',
-      'Penalty for exceeding power limits',
-      'Power cost calculation',
+      'To ensure they meet specifications and haven\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t been damaged',
+      'How refractive index varies across the fibre cross-section',
+      'Potential eye damage - never view without confirmed safe conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Power penalty is the additional transmitter power (in dB) required to maintain the same bit error rate when system impairments (dispersion, noise) are present.',
     section: 'Module 6',
@@ -3622,10 +3857,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 225,
     question: "What is 'bit error rate' (BER)?",
     options: [
-      'Data transmission speed',
+      'All cables radiate from a central point',
       'Ratio of errored bits to total transmitted bits',
-      'Error correction capability',
-      'Bandwidth efficiency',
+      'Different light modes (paths) arriving at different times',
+      'A device that passes some wavelengths while blocking others',
     ],
     correctAnswer: 1,
     explanation:
@@ -3639,12 +3874,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 226,
     question: "What is 'receiver sensitivity'?",
     options: [
-      'How quickly the receiver responds',
+      '2000 metres (campus) / 3000 metres (building)',
+      'Unlit fibre capacity available for future use or lease',
       'Minimum optical power required for acceptable BER',
-      'Receiver input impedance',
-      'Dynamic range of receiver',
+      'Stable modal power distribution after long fibre length',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Receiver sensitivity is the minimum input power (in dBm) at which the receiver achieves the specified bit error rate. It sets the lower limit for the power budget.',
     section: 'Module 6',
@@ -3656,12 +3891,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 227,
     question: "What is 'receiver overload'?",
     options: [
-      'Processing too much data',
+      'Telecommunications equipment and cabling inside buildings',
+      'The light-gathering ability and acceptance angle',
+      'High fibre density and mass-fusion splice capability',
       'Maximum input power before receiver saturates or is damaged',
-      'Electrical overload protection',
-      'Buffer overflow condition',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Receiver overload is the maximum acceptable input power. Exceeding this causes signal distortion (saturation) or permanent damage. Attenuators may be needed for short links.',
     section: 'Module 6',
@@ -3673,12 +3908,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 228,
     question: "What is 'extinction ratio' in optical transmitters?",
     options: [
-      'Laser power at end of life',
       "Ratio of optical power in '1' state to power in '0' state",
-      'How completely light is blocked',
-      'Fade margin calculation',
+      "Optimised for 1550nm with larger effective area for submarine/long-haul",
+      "Legacy single-channel long-haul links (not DWDM)",
+      "Fibre To The x (various deployment architectures)",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Extinction ratio measures how completely the transmitter turns off for '0' bits compared to '1' bits. Higher ratios (more contrast) enable better receiver discrimination.",
     section: 'Module 6',
@@ -3690,10 +3925,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 229,
     question: "What is 'optical signal-to-noise ratio' (OSNR)?",
     options: [
-      'Ratio of fibre core to cladding',
+      'Protecting internal components from environment and handling',
       'Ratio of signal power to noise power in optical systems',
-      'Signal strength indicator',
-      'Cable quality rating',
+      'Structured housing for fibre termination and patching',
+      'Fibre with gradually changing refractive index across the core',
     ],
     correctAnswer: 1,
     explanation:
@@ -3707,12 +3942,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 230,
     question: "What is 'regeneration' in optical networks?",
     options: [
-      'Cable replacement',
+      'Traditional termination using adhesive and mechanical polishing',
+      'It eliminates gainer effects and gives true splice loss',
       'Full conversion to electrical, retiming, and retransmission as optical',
-      'Fibre repair process',
-      'System restart procedure',
+      'To move the first connector outside the OTDR\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s dead zone',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Regeneration (3R: re-amplify, reshape, retime) converts optical to electrical, cleans up the signal, and retransmits. It eliminates accumulated noise and dispersion but is expensive.',
     section: 'Module 6',
@@ -3724,12 +3959,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 231,
     question: "What is 'all-optical amplification'?",
     options: [
+      'The fibre core being off-centre from the cladding',
+      'The number of individual optical fibres in the cable',
+      'The effective diameter of the light-carrying region',
       'Amplifying without any electrical conversion',
-      'Using optical attenuators in reverse',
-      'Sound amplification using light',
-      'Theoretical concept only',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'All-optical amplification (using EDFAs, Raman amplifiers) boosts signal power without converting to electrical. It amplifies multiple wavelengths simultaneously but also amplifies noise.',
     section: 'Module 6',
@@ -3741,12 +3976,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 232,
     question: "What is 'EDFA'?",
     options: [
-      'Electronic Data Fibre Adapter',
       'Erbium-Doped Fibre Amplifier',
       'Extended Distance Fibre Application',
+      'Electronic Data Fibre Adapter',
       'Emergency Data Failover Architecture',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'EDFA (Erbium-Doped Fibre Amplifier) uses erbium-doped fibre pumped by laser to provide all-optical amplification in the C-band (1530-1565nm), enabling long-haul transmission.',
     section: 'Module 6',
@@ -3758,10 +3993,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 233,
     question: "What is 'Raman amplification'?",
     options: [
-      'Amplification named after its inventor',
+      'Optimised for SWDM (multiple wavelengths 850-953nm)',
       'Using stimulated Raman scattering for distributed amplification',
-      'Chemical amplification process',
-      'Mechanical signal boosting',
+      'Boosting optical signal strength without converting to electrical',
+      'A splice between fibres with different backscatter coefficients',
     ],
     correctAnswer: 1,
     explanation:
@@ -3775,12 +4010,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 234,
     question: "What is 'submarine cable' fibre typically?",
     options: [
-      'Standard G.652 fibre',
+      'Small-scale deformations in the fibre axis causing localised loss',
+      'Plastic tube containing one or more fibres with gel filling',
       'Ultra-low loss G.654 fibre with large effective area',
-      'Multimode for short repeater spacing',
-      'Plastic optical fibre',
+      'A splice using alignment fixtures and index-matching gel',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Submarine cables use special ultra-low loss fibre (G.654 variants) with large effective area to minimise attenuation and non-linear effects over very long repeater spans.',
     section: 'Module 2',
@@ -3792,12 +4027,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 235,
     question: "What is 'dispersion-shifted fibre' now mainly used for?",
     options: [
-      'High-speed LANs',
+      'Support and tensile strength for suspending the cable',
+      'Vertical-Cavity Surface-Emitting Laser',
+      'The minimum angle for total internal reflection to occur',
       'Legacy single-channel long-haul links (not DWDM)',
-      'Data centre connections',
-      'Multimode applications',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Dispersion-shifted fibre (G.653) is mainly found in legacy systems. Its zero dispersion at 1550nm causes four-wave mixing problems in DWDM, limiting modern use.',
     section: 'Module 2',
@@ -3809,12 +4044,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 236,
     question: "What is 'non-zero dispersion-shifted fibre' (NZDSF)?",
     options: [
-      'Fibre with no dispersion',
       'Fibre with small, non-zero dispersion at 1550nm to reduce non-linear effects in DWDM',
-      'Standard singlemode fibre',
-      'Multimode design',
+      'Minimum separation to detect two adjacent reflective events',
+      'Fibres are isolated from external mechanical and thermal stresses',
+      'Customer premises equipment converting optical to electrical signals in PON',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'NZDSF (G.655) has small but non-zero dispersion at 1550nm, which suppresses four-wave mixing in DWDM systems while keeping dispersion manageable.',
     section: 'Module 2',
@@ -3826,10 +4061,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 237,
     question: "What is 'cable jacket' primary purpose?",
     options: [
-      'Improving optical performance',
+      'An interconnection point in the horizontal pathway for flexibility',
       'Protecting internal components from environment and handling',
-      'Providing tensile strength',
-      'Colour coding',
+      'Different light modes (paths) arriving at different times',
+      'Where external cables enter the building and transition to internal cabling',
     ],
     correctAnswer: 1,
     explanation:
@@ -3843,12 +4078,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 238,
     question: "What is 'polyethylene' (PE) jacket used for?",
     options: [
-      'Indoor cables only',
+      'Water-based or gel polymer compounds safe for cables',
+      'Optimised for SWDM (multiple wavelengths 850-953nm)',
       'Outdoor cables - moisture and UV resistant',
-      'High-temperature applications',
-      'Plenum-rated cables',
+      'Increased loss around 1383nm due to hydroxyl ions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Polyethylene jackets are used for outdoor cables due to excellent moisture resistance, UV stability, and durability in outdoor environments.',
     section: 'Module 3',
@@ -3860,12 +4095,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 239,
     question: "What is 'PVC' jacket used for?",
     options: [
-      'Outdoor direct burial only',
+      'Fibre To The x (various deployment architectures)',
+      'To melt and fuse the glass fibre ends together',
+      'Different wavelengths travelling at different speeds',
       'General-purpose indoor cables (not plenum)',
-      'Submarine cables',
-      'All cable types',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'PVC jackets are common for general-purpose indoor cables. However, PVC produces toxic smoke when burned, so it cannot be used in plenum spaces.',
     section: 'Module 3',
@@ -3877,12 +4112,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 240,
     question: "What is 'buffer tube' in loose-tube cables?",
     options: [
-      'Data buffer storage',
       'Plastic tube containing one or more fibres with gel filling',
-      'Signal buffer zone',
-      'Protective end cap',
+      'Support and tensile strength for suspending the cable',
+      'To melt and fuse the glass fibre ends together',
+      'The 8° angle prevents proper end-face contact, causing high loss',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Buffer tubes in loose-tube cables contain fibres floating freely in gel. This construction isolates fibres from external stress and temperature expansion/contraction.',
     section: 'Module 3',
@@ -3894,10 +4129,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 241,
     question: "What does 'messenger wire' provide in aerial cable?",
     options: [
-      'Communication capability',
+      'Small Form-factor Pluggable (transceiver module)',
       'Support and tensile strength for suspending the cable',
-      'Lightning protection',
-      'Signal amplification',
+      'Controlling which modes are excited for better performance',
+      'Minimum distance after a reflective event where loss can be measured',
     ],
     correctAnswer: 1,
     explanation:
@@ -3912,11 +4147,11 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     question: "What is 'ADSS' cable?",
     options: [
       'Advanced Digital Signal System',
-      'All-Dielectric Self-Supporting aerial cable',
       'Automated Data Switching System',
+      'All-Dielectric Self-Supporting aerial cable',
       'Armoured Direct-burial Shielded System',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'ADSS (All-Dielectric Self-Supporting) cable contains no metallic elements and supports itself between poles without a separate messenger wire, ideal for power line environments.',
     section: 'Module 3',
@@ -3928,12 +4163,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 243,
     question: "What is 'OPGW'?",
     options: [
-      'Optical Power Ground Wire',
+      'Water-based or gel polymer compounds safe for cables',
+      '3-5 metres or as specified for the application',
+      'The bandwidth when using laser sources accounting for launch conditions',
       'Optical fibre combined with overhead ground wire on power lines',
-      'Optical Protocol Gateway',
-      'Outside Plant Ground Wire',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'OPGW (Optical Ground Wire) combines optical fibres within the ground wire of high-voltage power transmission lines, providing communications along power routes.',
     section: 'Module 3',
@@ -3945,12 +4180,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 244,
     question: "What is 'figure-8' cable construction?",
     options: [
-      'Cable with 8 fibres',
       'Self-supporting cable with messenger attached in figure-8 profile',
-      'Cable rated for 8 bends',
-      'Indoor riser cable',
+      'The amount of light naturally scattered back toward the source',
+      'A splice using alignment fixtures and index-matching gel',
+      'Zero chromatic dispersion in conventional fibre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Figure-8 cable has the messenger wire attached alongside (or surrounding) the fibre unit, creating a cross-sectional figure-8 shape. It's self-supporting for aerial installation.",
     section: 'Module 3',
@@ -3962,10 +4197,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 245,
     question: "What is 'riser-rated' cable?",
     options: [
-      'Cable for stairwells only',
+      'To provide redundant physical routes for resilience',
       'Cable rated for vertical runs between floors (CMR)',
-      'Premium quality cable',
-      'Elevator cable',
+      'The effective diameter of the light-carrying region',
+      'Non-linear effects (Brillouin/Raman scattering)',
     ],
     correctAnswer: 1,
     explanation:
@@ -3979,12 +4214,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 246,
     question: "What is 'outside plant' (OSP)?",
     options: [
-      'Factory manufacturing facility',
+      'Stable modal power distribution after long fibre length',
+      'Stop immediately and investigate the cause',
       'Telecommunications infrastructure located outdoors',
-      'Equipment stored outside',
-      'Backup power generators',
+      'Boosting optical signal strength without converting to electrical',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Outside plant refers to all telecommunications infrastructure located outside buildings: underground ducts, aerial cables, manholes, pedestals, and associated equipment.',
     section: 'Module 5',
@@ -3996,12 +4231,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 247,
     question: "What is 'inside plant'?",
     options: [
-      'Indoor botanical facilities',
+      'Customer-owned outside plant telecommunications infrastructure',
+      'Unlit fibre capacity available for future use or lease',
+      'Outdoor cables - moisture and UV resistant',
       'Telecommunications equipment and cabling inside buildings',
-      'Internal manufacturing',
-      'Network operations centre',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Inside plant refers to telecommunications infrastructure within buildings: cables, equipment rooms, patch panels, and associated equipment.',
     section: 'Module 5',
@@ -4013,12 +4248,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 248,
     question: "What is 'demarcation point'?",
     options: [
-      'End of cable run',
       "Point where service provider responsibility ends and customer's begins",
-      'Equipment room location',
-      'Test access point',
+      "Increased loss around 1383nm due to hydroxyl ions",
+      "Water-based or gel polymer compounds safe for cables",
+      "To allow light in one direction only, blocking reflections",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The demarcation point (demarc) defines where service provider infrastructure ends and customer premises equipment begins, establishing maintenance responsibilities.',
     section: 'Module 6',
@@ -4030,10 +4265,10 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 249,
     question: "What is 'transition splice' in fibre installation?",
     options: [
-      'Splice during system upgrade',
+      'To comply with separation requirements and prevent physical damage',
       'Splice connecting different cable types (e.g., loose-tube to tight-buffer)',
-      'Temporary splice',
-      'Splice at entrance facility',
+      'Setting reference with single test cord, excluding one link connector from measurement',
+      'Separating loose-tube fibres for individual termination',
     ],
     correctAnswer: 1,
     explanation:
@@ -4047,12 +4282,12 @@ export const fiberOpticsQuestionBank: StandardMockQuestion[] = [
     id: 250,
     question: "What is 'attenuation coefficient' of fibre?",
     options: [
-      'Total link loss',
+      'Adding elements to counteract chromatic dispersion effects',
+      'To distribute pulling force evenly over the cable strength members',
       'Loss per unit length (dB/km) at a specific wavelength',
-      'Connector loss rating',
-      'Splice loss average',
+      'Using stimulated Raman scattering for distributed amplification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Attenuation coefficient specifies the fibre's inherent loss rate in dB/km at a particular wavelength. For OS2 at 1550nm, maximum specification is 0.22 dB/km.",
     section: 'Module 2',

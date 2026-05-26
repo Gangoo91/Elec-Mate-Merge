@@ -13,8 +13,13 @@ const quickCheckQuestions = [
   {
     id: 'sync-speed',
     question: 'What is the synchronous speed of a 4-pole motor on a 50 Hz supply?',
-    options: ['750 RPM', '1000 RPM', '1500 RPM', '3000 RPM'],
-    correctIndex: 2,
+    options: [
+      '1500 RPM',
+      '1000 RPM',
+      '750 RPM',
+      '3000 RPM',
+    ],
+    correctIndex: 0,
     explanation:
       'Synchronous Speed = (120 x Frequency) / Number of Poles = (120 x 50) / 4 = 1500 RPM. The actual rotor speed will be slightly less due to slip, typically around 1450 RPM at full load. This formula is fundamental for understanding motor speed selection.',
   },
@@ -22,12 +27,12 @@ const quickCheckQuestions = [
     id: 'tefc-meaning',
     question: 'What does TEFC stand for in motor cooling terminology?',
     options: [
-      'Thermally Enhanced Full Capacity',
-      'Totally Enclosed Fan Cooled',
       'Temperature Efficient Fan Controlled',
       'Thermally Enclosed Forced Cooled',
+      'Thermally Enhanced Full Capacity',
+      'Totally Enclosed Fan Cooled',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'TEFC stands for Totally Enclosed Fan Cooled, designated IC411 under IEC 60034-6. It is the most common motor enclosure type, with a sealed motor body and an external shaft-mounted fan that draws air over the ribbed frame for cooling. The motor internals are protected from the external environment.',
   },
@@ -35,15 +40,25 @@ const quickCheckQuestions = [
     id: 'star-voltage',
     question:
       'In star connection on a 400 V supply, what voltage appears across each motor winding?',
-    options: ['400 V', '230 V', '110 V', '690 V'],
-    correctIndex: 1,
+    options: [
+      '400 V',
+      '110 V',
+      '230 V',
+      '690 V',
+    ],
+    correctIndex: 2,
     explanation:
       'In star connection, the voltage across each winding is the line voltage divided by the square root of 3. For a 400 V supply: 400 / 1.732 = approximately 230 V per winding. This is why a motor rated 400/690 V is connected in star for 690 V (giving 400 V per winding) and delta for 400 V (giving 400 V per winding).',
   },
   {
     id: 'bearing-failure',
     question: 'What is the single largest cause of premature bearing failure in electric motors?',
-    options: ['Overvoltage', 'Overloading', 'Shaft misalignment', 'Poor insulation'],
+    options: [
+      'Overloading',
+      'Overvoltage',
+      'Shaft misalignment',
+      'Poor insulation',
+    ],
     correctIndex: 2,
     explanation:
       'Misalignment between the motor shaft and the driven equipment is the single largest cause of premature bearing failure. It causes excessive radial and axial vibration, uneven loading on the bearings, and accelerated wear. Laser alignment tools should be used to achieve tolerances within 0.05 mm.',
@@ -54,8 +69,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the synchronous speed of a 2-pole motor on a 50 Hz supply?',
-    options: ['750 RPM', '1000 RPM', '1500 RPM', '3000 RPM'],
-    correctAnswer: 3,
+    options: [
+      '750 RPM',
+      '3000 RPM',
+      '1500 RPM',
+      '1000 RPM',
+    ],
+    correctAnswer: 1,
     explanation:
       'Synchronous Speed = (120 x 50) / 2 = 3000 RPM. With slip, the actual full-load speed would be approximately 2900 RPM.',
   },
@@ -63,20 +83,25 @@ const quizQuestions = [
     id: 2,
     question: 'What type of rotor does a squirrel-cage induction motor have?',
     options: [
-      'Wound rotor with slip rings',
+      'Continuity, insulation, polarity (dead), then Zs, RCD (live)',
+      'Close the door immediately, remove the wedge, and report the issue',
       'Aluminium or copper bars short-circuited by end rings',
-      'Permanent magnets',
-      'Commutator and brushes',
+      'Earth the screen at both ends with 360-degree termination',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The squirrel-cage rotor has aluminium or copper bars embedded in slots around the rotor core, short-circuited at each end by end rings to form a cage structure. It has no electrical connections, slip rings or brushes.',
   },
   {
     id: 3,
     question: 'What percentage slip is typical for an induction motor at full load?',
-    options: ['0.1 to 0.5%', '2 to 5%', '10 to 15%', '20 to 30%'],
-    correctAnswer: 1,
+    options: [
+      '10 to 15%',
+      '0.1 to 0.5%',
+      '20 to 30%',
+      '2 to 5%',
+    ],
+    correctAnswer: 3,
     explanation:
       'Typical full-load slip is 2-5%. A 4-pole motor with 1500 RPM synchronous speed might have a full-load speed of 1450 RPM (3.3% slip). Slip is essential for torque production.',
   },
@@ -84,19 +109,24 @@ const quizQuestions = [
     id: 4,
     question: 'What does TEFC stand for?',
     options: [
-      'Thermally Enclosed Fan Controlled',
       'Totally Enclosed Fan Cooled',
+      'Thermally Enclosed Fan Controlled',
       'Temperature Efficient Full Capacity',
       'Totally Enclosed Forced Cooled',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'TEFC = Totally Enclosed Fan Cooled (IEC IC411). The motor is sealed and cooled by an external shaft-mounted fan drawing air over the ribbed motor frame.',
   },
   {
     id: 5,
     question: 'Which bearing type is most common in motors up to 200 kW?',
-    options: ['Sleeve bearings', 'Ball bearings', 'Magnetic bearings', 'Roller bearings'],
+    options: [
+      'Sleeve bearings',
+      'Ball bearings',
+      'Roller bearings',
+      'Magnetic bearings',
+    ],
     correctAnswer: 1,
     explanation:
       'Ball bearings (rolling element bearings) are most common in small to medium motors up to approximately 200 kW. They are grease-lubricated and available in sealed or re-greaseable types.',
@@ -105,39 +135,64 @@ const quizQuestions = [
     id: 6,
     question:
       'What motor terminal configuration gives 400 V across each winding on a 400 V supply?',
-    options: ['Star', 'Delta', 'Series', 'Parallel'],
-    correctAnswer: 1,
+    options: [
+      'Star',
+      'Series',
+      'Delta',
+      'Parallel',
+    ],
+    correctAnswer: 2,
     explanation:
       'In delta connection, the full line voltage (400 V) appears directly across each winding. In star connection, the winding voltage would be 400/1.732 = 230 V.',
   },
   {
     id: 7,
     question: 'What is the minimum efficiency class for new motors in the EU?',
-    options: ['IE1', 'IE2', 'IE3', 'IE4'],
-    correctAnswer: 2,
+    options: [
+      'IE1',
+      'IE2',
+      'IE4',
+      'IE3',
+    ],
+    correctAnswer: 3,
     explanation:
       'IE3 (Premium Efficiency) is the minimum requirement for most new motors from 0.75 kW to 375 kW. Higher classes (IE4, IE5) are available for further energy savings. The classification is defined in IEC 60034-30.',
   },
   {
     id: 8,
     question: 'What is the most common motor duty cycle designation for continuous operation?',
-    options: ['S2', 'S1', 'S3', 'S6'],
-    correctAnswer: 1,
+    options: [
+      'S1',
+      'S3',
+      'S2',
+      'S6',
+    ],
+    correctAnswer: 0,
     explanation:
       'S1 is the continuous duty rating -- the motor can run continuously at rated load indefinitely. S2 is short-time duty, and S3-S8 are various intermittent duty cycles.',
   },
   {
     id: 9,
     question: 'What is the single largest cause of premature bearing failure?',
-    options: ['Overvoltage', 'Overloading', 'Misalignment', 'Undervoltage'],
-    correctAnswer: 2,
+    options: [
+      'Overvoltage',
+      'Misalignment',
+      'Overloading',
+      'Undervoltage',
+    ],
+    correctAnswer: 1,
     explanation:
       'Shaft misalignment is the single largest cause of premature bearing failure, causing excessive vibration and uneven bearing loads.',
   },
   {
     id: 10,
     question: "Which mounting configuration is described as 'foot mounted with horizontal shaft'?",
-    options: ['B5', 'B14', 'B3', 'V1'],
+    options: [
+      'B5',
+      'B14',
+      'B3',
+      'V1',
+    ],
     correctAnswer: 2,
     explanation:
       'B3 is the standard foot-mounted configuration with a horizontal shaft. It is the most common motor mounting type, bolted to a baseplate or plinth.',
@@ -148,18 +203,23 @@ const quizQuestions = [
     options: [
       'Straightedge and feeler gauges',
       'Dial indicators',
-      'Laser alignment',
       'Visual inspection',
+      'Laser alignment',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Laser alignment tools provide accuracy to within 0.01 mm and display a clear graphical representation of the correction needed in real time. They are the preferred modern method.',
   },
   {
     id: 12,
     question: 'What insulation class has a maximum temperature of 155 degrees C?',
-    options: ['Class A', 'Class B', 'Class F', 'Class H'],
-    correctAnswer: 2,
+    options: [
+      'Class F',
+      'Class H',
+      'Class A',
+      'Class B',
+    ],
+    correctAnswer: 0,
     explanation:
       'Class F insulation has a maximum operating temperature of 155 degrees C. Class B is 130 degrees C and Class H is 180 degrees C.',
   },

@@ -15,7 +15,12 @@ const Module6Section1_2 = () => {
     {
       id: 1,
       question: 'What year were the Electricity at Work Regulations introduced?',
-      options: ['1987', '1989', '1991', '1995'],
+      options: [
+        '1987',
+        '1989',
+        '1991',
+        '1995',
+      ],
       correctAnswer: 1,
       explanation:
         'The Electricity at Work Regulations were introduced in 1989 and remain the primary legal framework for electrical safety.',
@@ -24,12 +29,12 @@ const Module6Section1_2 = () => {
       id: 2,
       question: 'What do Regulations 4(1) & 4(2) of EAWR require?',
       options: [
+        'That systems must be energy efficient',
         'That systems must be cost-effective',
         'That systems must be safe and maintained in a safe condition',
-        'That systems must be energy efficient',
         'That systems must be inspected annually',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Regulations 4(1) & 4(2) require that electrical systems must be constructed to be safe and maintained in a safe condition.',
     },
@@ -37,12 +42,12 @@ const Module6Section1_2 = () => {
       id: 3,
       question: 'Which standard sets out the technical requirements for inspection and testing?',
       options: [
-        'EAWR 1989',
-        'BS 7671 Wiring Regulations',
         'Building Regulations Part P',
+        'EAWR 1989',
         'IET Code of Practice',
+        'BS 7671 Wiring Regulations',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'BS 7671 Wiring Regulations provides the detailed technical requirements for inspection and testing procedures.',
     },
@@ -59,10 +64,10 @@ const Module6Section1_2 = () => {
       id: 5,
       question: 'What are the two key types of inspection required under BS 7671?',
       options: [
-        'Visual and instrumental',
+        'Check internal diameter and remove any restrictions',
         'Initial verification and periodic inspection',
-        'Internal and external',
-        'Basic and advanced',
+        'No, proper testing with measured currents is required',
+        'To correct for internal resistance',
       ],
       correctAnswer: 1,
       explanation:
@@ -73,11 +78,11 @@ const Module6Section1_2 = () => {
       question: 'What must all test instruments be?',
       options: [
         'Expensive and new',
-        'Calibrated and approved',
         'Digital only',
+        'Calibrated and approved',
         'Imported from Germany',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'All test instruments must be properly calibrated and approved to ensure accurate and reliable test results.',
     },
@@ -85,12 +90,12 @@ const Module6Section1_2 = () => {
       id: 7,
       question: 'Give one legal consequence of failing to comply with EAWR 1989.',
       options: [
-        'Verbal warning only',
+        'Very high — 100 000 to 1 000 000',
+        'A 22 mm copper incoming water service pipe',
+        'An impulse line filled with fill fluid',
         'Prosecution, fines, or imprisonment',
-        'Loss of tools',
-        'Temporary suspension',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Failing to comply with EAWR 1989 can result in prosecution, substantial fines, or even imprisonment in serious cases.',
     },
@@ -99,12 +104,12 @@ const Module6Section1_2 = () => {
       question:
         'Who is legally responsible for safety once they sign the Electrical Installation Certificate?',
       options: [
-        'The employer only',
         'The person who signs the certificate',
-        'The client',
-        'The supply company',
+        'Requires skilled installation',
+        'At junction boxes or connection points',
+        'Pellet boiler with vacuum feed',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'The person who signs the Electrical Installation Certificate takes full legal responsibility for the safety of that installation.',
     },
@@ -113,10 +118,10 @@ const Module6Section1_2 = () => {
       question:
         'What could happen to an employer if an employee is injured due to unsafe electrics?',
       options: [
-        'Nothing if it was an accident',
+        'Before every shift the machine is used',
         'The employer can be prosecuted and held liable',
-        'Only the injured person is responsible',
-        'Insurance covers everything',
+        'For the life of the electrical installation',
+        'Only to ohmic materials (linear resistance)',
       ],
       correctAnswer: 1,
       explanation:
@@ -126,12 +131,12 @@ const Module6Section1_2 = () => {
       id: 10,
       question: 'Why is BS 7671 updated periodically?',
       options: [
-        'To increase costs',
+        'Programming step-based sequential control processes with defined transitions',
+        'Plan work during quietest periods, often nights or weekends',
         'To keep regulations up to date with technology and safety requirements',
-        'To confuse electricians',
-        'For commercial reasons',
+        'Hard hat, high-visibility clothing, safety boots, and gloves',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'BS 7671 is regularly updated to incorporate new technologies, improved safety knowledge, and lessons learned from incidents.',
     },

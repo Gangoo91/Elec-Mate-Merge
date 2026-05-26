@@ -32,12 +32,12 @@ const quickCheckQuestions = [
     id: 'capacitor-formula',
     question: 'What is the formula for calculating the required reactive power for PFC?',
     options: [
-      'Qc = P(cos phi1 - cos phi2)',
       'Qc = P(tan phi1 - tan phi2)',
+      'Qc = P(cos phi1 - cos phi2)',
       'Qc = P(sin phi1 - sin phi2)',
       'Qc = P x power factor',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The correct formula is Qc = P(tan phi1 - tan phi2), where P is the real power, phi1 is the original phase angle and phi2 is the target phase angle. This calculates the kVAr of capacitance needed.',
   },
@@ -46,11 +46,11 @@ const quickCheckQuestions = [
     question: 'When should automatic power factor correction be used instead of fixed capacitors?',
     options: [
       'When load is constant',
-      'When load varies significantly',
-      'When power factor is already 0.95',
       'When only lighting loads exist',
+      'When power factor is already 0.95',
+      'When load varies significantly',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Automatic PFC systems are essential when loads vary significantly. The controller monitors power factor continuously and switches capacitor stages on/off to maintain target pf. Fixed capacitors risk leading power factor during light loads.',
   },
@@ -58,12 +58,12 @@ const quickCheckQuestions = [
     id: 'delta-connection',
     question: 'What is the advantage of delta-connected capacitors over star-connected?',
     options: [
-      'Lower cost',
-      'Simpler wiring',
       'Each capacitor sees line voltage, providing 3x more kVAr per unit',
-      'Better for single-phase loads',
+      'Isolation arrangements to prevent parallel operation with supply',
+      'Being regularly reviewed, communicated, and implemented',
+      'Proactively identifying and addressing risks and opportunities',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Delta-connected capacitors see line voltage (400V) rather than phase voltage (230V). Since Q = V squared / Xc, the higher voltage means each capacitor provides approximately 3 times more reactive power than the same capacitor in star connection.',
   },
@@ -71,12 +71,12 @@ const quickCheckQuestions = [
     id: 'harmonic-detuning',
     question: 'What is the purpose of detuned reactors in PFC systems?',
     options: [
-      'Increase power factor',
+      'Knowledge, skills and safety understanding',
+      'Ceiling height and wall material',
+      'A point where two or more components connect',
       'Prevent harmonic resonance with capacitors',
-      'Reduce capacitor voltage',
-      'Improve switching speed',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Detuned reactors shift the resonant frequency of the capacitor bank below dominant harmonic frequencies (typically 189Hz or 135Hz). This prevents dangerous resonance that could amplify harmonics and damage capacitors in systems with significant harmonic content.',
   },
@@ -87,8 +87,13 @@ const quizQuestions = [
     id: 1,
     question:
       'A factory has a 200kW load operating at 0.75 power factor. What capacitor bank size is needed to improve to 0.95 pf?',
-    options: ['75 kVAr', '88 kVAr', '100 kVAr', '113 kVAr'],
-    correctAnswer: 3,
+    options: [
+      '75 kVAr',
+      '113 kVAr',
+      '100 kVAr',
+      '88 kVAr',
+    ],
+    correctAnswer: 1,
     explanation:
       'Qc = P(tan phi1 - tan phi2). At 0.75 pf, phi1 = 41.4 degrees, tan phi1 = 0.882. At 0.95 pf, phi2 = 18.2 degrees, tan phi2 = 0.329. Qc = 200 x (0.882 - 0.329) = 200 x 0.553 = 110.6 kVAr. Nearest standard size would be 112.5 or 120 kVAr, so 113 kVAr is the best answer.',
   },
@@ -97,10 +102,10 @@ const quizQuestions = [
     question:
       'What is the relationship between kVAr rating of a capacitor connected in star versus delta?',
     options: [
-      'Star provides more kVAr',
-      'They are equal',
+      'Approximately 25% of the end-to-end reading',
+      'It heats the air while removing moisture',
       'Delta provides approximately 3x more kVAr',
-      'Delta provides approximately root3 x more kVAr',
+      'Causes degradation and brittleness',
     ],
     correctAnswer: 2,
     explanation:
@@ -109,8 +114,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What is the typical target power factor for commercial buildings in the UK?',
-    options: ['0.85 lagging', '0.90 lagging', '0.95 lagging or better', 'Unity (1.0)'],
-    correctAnswer: 2,
+    options: [
+      '0.90 lagging',
+      '0.85 lagging',
+      'Unity (1.0)',
+      '0.95 lagging or better',
+    ],
+    correctAnswer: 3,
     explanation:
       'UK DNOs (Distribution Network Operators) typically require 0.95 lagging or better to avoid reactive power charges. Over-correction to unity or leading is avoided as it can cause voltage rise issues.',
   },
@@ -118,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'Individual motor correction involves:',
     options: [
-      'One large capacitor bank at the main switchboard',
       'Capacitors fitted directly at each motor',
+      'One large capacitor bank at the main switchboard',
       'Capacitors at each distribution board',
       'External automatic PFC equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Individual correction places capacitors directly at each motor, switched with the motor contactor. This provides the most effective correction as reactive current is reduced at source, minimising cable losses throughout the installation.',
   },
@@ -131,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why might fixed capacitor banks cause problems with variable loads?',
     options: [
-      'They are too expensive',
+      'It can damage conductors and reduce connection integrity',
       'They can cause leading power factor during light load periods',
-      'They generate harmonics',
-      'They increase voltage drop',
+      'Valid, Authentic, Current, Sufficient, Reliable',
+      'The bill of quantities or material schedule',
     ],
     correctAnswer: 1,
     explanation:
@@ -143,7 +153,12 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the tuning frequency typically used for 7% detuned reactors?',
-    options: ['50 Hz', '135 Hz', '189 Hz', '250 Hz'],
+    options: [
+      '50 Hz',
+      '135 Hz',
+      '189 Hz',
+      '250 Hz',
+    ],
     correctAnswer: 2,
     explanation:
       '7% detuned reactors tune the capacitor circuit to 189Hz (50Hz x root(1/0.07) is approximately 189Hz). This is below the 5th harmonic (250Hz), preventing resonance with common harmonic frequencies in electrical systems.',
@@ -152,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'Active Power Factor Correction (APFC) in building services typically refers to:',
     options: [
+      'Capacitors fitted directly at each motor',
+      'They can cause leading power factor during light load periods',
+      'Delta provides approximately 3x more kVAr',
       'Using active filters to inject compensating current',
-      'Manual switching of capacitor banks',
-      'Using synchronous condensers',
-      'Fixed capacitor installations',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'APFC in modern building services uses power electronics (active filters) to inject current that cancels reactive and harmonic currents. Unlike passive capacitors, active filters can correct power factor and eliminate harmonics simultaneously.',
   },
@@ -165,8 +180,13 @@ const quizQuestions = [
     id: 8,
     question:
       'For a 45kW motor with 0.8 power factor, what approximate capacitor size would correct to 0.95 pf?',
-    options: ['10 kVAr', '15 kVAr', '20 kVAr', '25 kVAr'],
-    correctAnswer: 2,
+    options: [
+      '20 kVAr',
+      '25 kVAr',
+      '10 kVAr',
+      '15 kVAr',
+    ],
+    correctAnswer: 0,
     explanation:
       'Qc = P(tan phi1 - tan phi2) = 45 x (tan 36.9 degrees - tan 18.2 degrees) = 45 x (0.75 - 0.329) = 45 x 0.421 = 19 kVAr. Nearest standard size is 20 kVAr.',
   },
@@ -174,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the main disadvantage of central power factor correction?',
     options: [
-      'Higher cost than individual correction',
+      'They prevent the platform from being elevated unless all outriggers are correctly deployed',
       'Reactive current still flows through all cables between loads and central capacitors',
-      'Cannot achieve high power factor',
-      'Requires larger capacitors',
+      'The willingness to try new experiences, take appropriate risks, and connect with others for support',
+      'Document the change, get written approval, and issue a variation or change order',
     ],
     correctAnswer: 1,
     explanation:
@@ -189,11 +209,11 @@ const quizQuestions = [
       'Fluorescent lighting with magnetic ballasts typically requires PFC capacitors rated at:',
     options: [
       '1-2 microF per lamp',
+      'No capacitor needed',
       '5-8 microF per 58W lamp',
       '15-20 microF per lamp',
-      'No capacitor needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Traditional fluorescent fittings with magnetic ballasts have poor power factor (0.5-0.6). A 5-8 microF capacitor per 58W lamp typically improves this to 0.85-0.95. Modern electronic ballasts have built-in PFC and do not require additional capacitors.',
   },
@@ -201,8 +221,13 @@ const quizQuestions = [
     id: 11,
     question:
       'What percentage of total harmonic distortion (THD) typically indicates the need for detuned capacitors?',
-    options: ['THD below 5%', 'THD above 10-15%', 'THD above 50%', 'Any THD requires detuning'],
-    correctAnswer: 1,
+    options: [
+      'THD below 5%',
+      'Any THD requires detuning',
+      'THD above 50%',
+      'THD above 10-15%',
+    ],
+    correctAnswer: 3,
     explanation:
       'When THD exceeds 10-15%, standard capacitors risk resonance with harmonic frequencies. Detuned reactor-capacitor combinations should be specified to prevent harmonic amplification and capacitor damage.',
   },
@@ -210,8 +235,13 @@ const quizQuestions = [
     id: 12,
     question:
       'A building has 150kW lighting (pf 0.95), 100kW heating (pf 1.0), and 200kW motors (pf 0.8). What is the overall power factor?',
-    options: ['0.85', '0.88', '0.91', '0.93'],
-    correctAnswer: 2,
+    options: [
+      '0.91',
+      '0.93',
+      '0.85',
+      '0.88',
+    ],
+    correctAnswer: 0,
     explanation:
       'Total P = 450kW. Lighting Q = 150 x tan(18.2 degrees) = 49.4 kVAr. Heating Q = 0. Motors Q = 200 x tan(36.9 degrees) = 150 kVAr. Total Q = 199.4 kVAr. S = root(450 squared + 199.4 squared) = 492.2 kVA. Overall pf = 450/492.2 = 0.914 which rounds to 0.91',
   },

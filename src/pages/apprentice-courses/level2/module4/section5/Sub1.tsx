@@ -42,12 +42,12 @@ const checks = [
     question:
       'You are at the consumer unit on a finished first-fix domestic install. Which statement best separates inspection from testing under BS 7671 Part 6?',
     options: [
-      'Inspection and testing are the same thing — both use the multifunction tester.',
       'Inspection is the visual + accessible-parts walk-round, normally with the install disconnected from supply, and it precedes testing per Reg 642.1.',
-      'Inspection happens after the install is energised — testing happens before.',
-      'Inspection is only required on EICRs, not on a new install.',
+      'Increase the proportion of study time allocated to electrical science while maintaining periodic H&S review',
+      'The employer must identify and implement additional control measures immediately to reduce exposure below the WEL',
+      'Fixed monthly payments, milestone billing, or a retainer that provides predictability while maintaining your rate',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Reg 642.1 is explicit — inspection precedes testing and is normally carried out with the part of the installation under inspection disconnected from the supply. Inspection is the eyes-on, accessible-parts check. Testing comes after, with instruments. New installs and EICRs both follow the same Section 642 inspection rhythm.',
   },
@@ -56,12 +56,12 @@ const checks = [
     question:
       'You open up a switched-fuse spur and find the fuse is sitting in the neutral conductor instead of the line. The Schedule of Inspections item that catches this is:',
     options: [
-      'Item 4.0 — routing of cables.',
+      'One controller output operating two final control elements sequentially',
+      'Disconnected from all sources of electrical energy and unable to become live unintentionally',
+      'To reduce building CO2 emissions through improved energy performance beyond Building Regulations',
       'Item 8.0 — connection of single-pole devices for protection or switching in line conductors only.',
-      'Item 11.0 — earthing arrangements.',
-      'Item 1.0 — distributor&rsquo;s facility.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Reg 642.3(e) and the matching Schedule of Inspections item check that single-pole devices — fuses, MCBs, single-pole switches — are connected in the line conductor only. A fuse in the neutral leaves the circuit live when the fuse blows and is a fail. This is one of the most common defects found by inspection on cheap or imported gear.',
   },
@@ -70,12 +70,12 @@ const checks = [
     question:
       'A finished consumer unit is taped up and labelled. The supervisor asks you to inspect the terminations on every RCBO without removing the busbar shroud. What is the right call?',
     options: [
-      'Refuse — every termination must be physically pulled to verify torque.',
+      'Ensuring that consumer units, distribution boards, socket outlets, switches, trunking runs and conduit are installed level and plumb for a professional finish and correct operation',
+      'Wind is intermittent — output varies with the weather, so dispatchable gas plants must be available to fill any gap and keep frequency at 50 Hz',
       'Inspect what is visible without disturbing the install where practicable, record any item where access was limited as a limitation in the Schedule of Inspections, and flag the supervisor.',
-      'Energise the board first, then inspect with cover off.',
-      'Skip the inspection — the install is already labelled.',
+      'Adequate and appropriate equipment, facilities, and personnel to enable first aid to be given to employees who are injured or become ill at work',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'BS 7671 Section 642 inspection is visual and accessible-parts based — you do not break the install apart to inspect it where that is impracticable. The Schedule of Inspections has a "Limitation" code (LIM) for exactly this situation — inspect what you can, record what you could not access. Torque verification is a separate check carried out at first-fix terminations, not by un-taping a finished CU.',
   },
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'BS 7671 Reg 642.1 says inspection shall normally be done:',
     options: [
-      'After the installation is energised.',
+      'To provide safety, visibility, and reassurance while occupants await assisted evacuation',
       'With the part of the installation under inspection disconnected from the supply, before testing.',
-      'Only by an inspector certificated under the EAS.',
-      'Once a year, after the EICR is issued.',
+      'People who talk about suicide are just seeking attention and won\\\\\\\'t actually do it',
+      'The schedule that prescribes what must be included in a scaffold inspection report',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,8 +100,13 @@ const quizQuestions = [
     id: 2,
     question:
       'The Schedule of Inspections checklist item "connection of conductors" maps back to which BS 7671 section?',
-    options: ['Section 522', 'Section 526', 'Section 514', 'Section 411'],
-    correctAnswer: 1,
+    options: [
+      'Section 514',
+      'Section 522',
+      'Section 526',
+      'Section 411',
+    ],
+    correctAnswer: 2,
     explanation:
       'Section 526 covers electrical connections — Reg 526.1 in particular. Every termination at every accessory, at the consumer unit, in junction boxes and at appliance outlet points has to provide durable electrical continuity and adequate mechanical strength. The inspection item asks you to verify, by eye and by gentle tug-test where practicable, that this is the case.',
   },
@@ -110,12 +115,12 @@ const quizQuestions = [
     question:
       'Reg 642.3 lists items the inspection shall include "where relevant". Which of the following is NOT in that list?',
     options: [
-      'Connection of conductors.',
       'Identification of conductors.',
-      'The disconnection time for an L-N fault on the ring final.',
+      'Connection of conductors.',
       'Selection of equipment and protective measures appropriate to external influences.',
+      'The disconnection time for an L-N fault on the ring final.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Disconnection time is a calculated / tested value — it lives in the testing stage (Reg 643) and on the Schedule of Test Results, not the Schedule of Inspections. Reg 642.3 lists visual / verification items only. Confusing inspection items with test results is one of the easiest ways to fail an Schedule of Inspections walk-through at college.',
   },
@@ -123,8 +128,13 @@ const quizQuestions = [
     id: 4,
     question:
       'The IET model Schedule of Inspections lets you record each item with a code. Which code do you use for an item that does not apply to the installation under inspection?',
-    options: ['LIM', '✓', 'N/A', '✗'],
-    correctAnswer: 2,
+    options: [
+      'N/A',
+      '✓',
+      'LIM',
+      '✗',
+    ],
+    correctAnswer: 0,
     explanation:
       'N/A means the item is not applicable to this installation — for example, "earth electrode" on a TN-C-S supply, or "main bonding to oil" on a building with no oil supply. LIM means the item applies but you could not access it. ✓ means it was inspected and complies. ✗ means non-compliant and must be reported.',
   },
@@ -133,10 +143,10 @@ const quizQuestions = [
     question:
       'You are inspecting a new domestic CU. The label "Caution: this installation has wiring colours to two versions of BS 7671. Great care should be taken before undertaking extension, alteration or repair" is a requirement under:',
     options: [
-      'Reg 411 — automatic disconnection.',
+      'Business skills, insurance, and scheme registration',
       'Reg 514 — identification, including warning notices.',
-      'Reg 522 — selection and erection.',
-      'Reg 642 — inspection.',
+      'To describe how a task will be carried out safely',
+      'Manufacturing plants, factories, and heavy industry',
     ],
     correctAnswer: 1,
     explanation:
@@ -161,12 +171,12 @@ const quizQuestions = [
     question:
       'On a finished install you find the line conductor of a lighting circuit landed in the neutral terminal of a switched ceiling rose, with the neutral landed in the line terminal. This is a:',
     options: [
-      'Compliance — colours do not matter at the rose.',
+      'A reference line on the wall at a known height (typically 1 m above FFL) from which other heights are measured.',
+      'Regular cannabis use, particularly high-strength varieties, is linked to increased risk of anxiety, depression, and psychosis',
+      'Any person who controls the work of others, including employers, the self-employed and those who control others\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' work',
       'Polarity defect — would normally be caught at testing (Reg 643.6) but the inspection item "identification of conductors" should also catch it visually.',
-      'Inspection-only defect — does not need a test.',
-      'Acceptable on lighting circuits as long as the lamp works.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Polarity reversal at an accessory is a defect — the lamp may still light, but the switch will leave the lamp permanently live, which is a shock risk during lamp changes. Inspection (Section 642) and testing (Reg 643.6 polarity) both target this — inspection by checking conductor identification at every accessory, testing by instrument verification.',
   },
@@ -175,12 +185,12 @@ const quizQuestions = [
     question:
       'You have completed a Section 642 inspection on a new install. Two items are LIM (limitations — could not access), one item is ✗ (non-compliant) and the rest are ✓. The next step is:',
     options: [
-      'Energise the install — most items passed.',
       'Hand the Schedule of Inspections to the supervisor for review, fix the ✗ item, decide whether to record the two LIM items as observations on the EIC or revisit them, then proceed to Section 6 dead testing.',
-      'Skip dead testing and go straight to live testing.',
-      'Issue the EIC immediately.',
+      'An uncontrolled release or escape of a substance that could cause injury (e.g., a counterweight falling from a crane being used for work at height)',
+      'Regularly reporting to the board on mental health KPIs including sickness absence, EAP utilisation, staff survey wellbeing scores, MHFA interaction data, and benchmarking against sector norms',
+      'BS 7671 provides one means of complying with the EAWR, but compliance with BS 7671 does not guarantee compliance with the EAWR in all circumstances',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A non-compliant item must be rectified before the install is energised — that is the whole point of inspection-before-energisation. LIM items get flagged to the supervisor and either revisited (preferred) or recorded as a limitation on the certificate. Only once everything is ✓ or recorded as a limitation does dead testing begin (Section 6 / Sub 5.3). The EIC cannot be issued until both inspection and testing are complete.',
   },

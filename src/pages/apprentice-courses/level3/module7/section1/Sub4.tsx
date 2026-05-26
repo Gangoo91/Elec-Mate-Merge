@@ -41,12 +41,12 @@ const checks = [
     question:
       "What's the difference between a competent-person scheme (NICEIC, NAPIT, ELECSA) and a trade association (ECA, SELECT)?",
     options: [
-      "There's no difference.",
       "Competent-person schemes (CPS) are Government-authorised audit bodies that allow registered contractors to self-certify Building Regulations Part P notifiable work in dwellings. Trade associations are member bodies that lobby for the industry, run technical events, publish guidance and (in the case of ECA and SELECT) co-run the JIB / SJIB. A firm typically belongs to both — one CPS for self-certification, one trade association for representation.",
-      "Trade associations issue ECS cards.",
-      "Schemes only cover Scotland.",
+      "The policy covers claims notified during the policy period, regardless of when the underlying work was done. Distinct from 'occurrence' basis (covers events during policy period regardless of when claim made). Claims-made is standard for PI; means you need continuous cover (or run-off cover after ceasing) to protect against late-emerging claims.",
+      "Combination pliers — heavy-duty grip, twisting solid conductors, pulling cable through tight runs, light cutting of soft material. Side cutters (sometimes called diagonal cutters or 'snips') — flush cutting of insulated and bare conductor, trimming cable ends. Long-nose pliers — forming loops, reaching into recessed terminals, holding small components while you tighten. One job each, no overlap if you can help it.",
+      "To plan, manage, monitor and co-ordinate matters relating to H&S during the pre-construction phase. The PD identifies, eliminates or controls foreseeable risks via the design, ensures designers comply with their Reg 9 duties, prepares the pre-construction information and liaises with the Principal Contractor for the duration of the appointment.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Two distinct functions. CPS = self-certification authority (regulatory). Trade association = member representation (industry voice). NICEIC, NAPIT, ELECSA and STROMA are the main UK electrical CPS schemes (Certsure is the operating company behind NICEIC and ELECSA, not a separate scheme). ECA, SELECT are trade associations. Confusion arises because some firms market 'NICEIC-approved' as a quality mark, when really it's a regulatory authorisation. Both have value; they're different things.",
   },
@@ -55,12 +55,12 @@ const checks = [
     question:
       "Roughly what does it cost a one-person electrical firm to register with NICEIC or NAPIT for the first year?",
     options: [
-      "Free.",
+      "ISOLATE the supply at the nearest accessible point — the local switch, the breaker, the supplier's main fuse if necessary. Do NOT touch the casualty until isolation is confirmed. If isolation isn't immediately achievable, use a non-conductive item (dry wood, plastic chair) to break the contact, but isolation is always the first preference. Once free of the source, casualty assessment (DR ABC) and 999.",
+      "A Request For Information is a formal written query from a contractor to the design team (architect, engineer, principal designer) when the drawings or specifications are unclear, contradictory or missing detail. It's logged, numbered, dated and tracked through to a written response. It protects the contractor from being held responsible for a design ambiguity and creates a paper trail for any later dispute. Use one whenever you'd otherwise be guessing.",
+      "Battery platforms are not interchangeable — Milwaukee M18 batteries don't fit Makita LXT tools and vice versa. If the firm runs Milwaukee, that's the platform whose chargers and spare packs are on every van and in every site box. A loose Makita drill is an outlier — one tool with no spare batteries when you need them, and no compatible charger nearby. Either ask for the matching Milwaukee tool, or accept you're working with one battery on the clock.",
       "Typical first-year cost is £700-1,200 covering application fee, annual subscription, the initial assessment visit (where the assessor visits and reviews your QS, your records and a sample of recent work), plus the cost of the QS qualification (2391-52 typically £1,200-1,800 if you don't already hold it). Year 2+ total ongoing cost is typically £700-1,500/year once subscription, assessment, insurance and calibration are stacked together — the exact range depends on which CPS and which bolt-ons.",
-      "£10,000.",
-      "£50.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Scheme registration is a meaningful business cost — but it's the gateway to Part P self-certification, which removes the need to pay LABC for every notifiable job. For a busy domestic installer the cost pays back many times over per year because each LABC notification would otherwise cost £150-300 per job. NAPIT and NICEIC are roughly comparable on cost; ELECSA (also Certsure-operated) is broadly similar. Always factor in the QS qualification cost if you don't already hold 2391-52.",
   },
@@ -69,12 +69,12 @@ const checks = [
     question:
       "What happens during an annual scheme assessment visit?",
     options: [
-      "Nothing — they just take your money.",
+      "Make a contemporaneous note in your own records — date, time, location, what was said, by whom, who else was present, your response. Keep the note factual and unemotional. Don't share with the co-worker (it's your private record at this stage). If the conflict continues and you escalate, the contemporaneous notes are your evidence base and they carry significant weight because they were written at the time, not from memory weeks later.",
+      "FAIL — well above the BS 7671 Table 41.3 maximum of 1.37 Ω for B32 at 0.4 s disconnection. The protective device cannot guarantee disconnection within the required time. Action: (1) Verify the reading. (2) Check supply Ze first — is the high Zs caused by high origin Ze (possible PEN issue) or by added impedance on the circuit (HRJ, undersized cable)? (3) Make safe — isolate the affected circuit. (4) Investigate and rectify. (5) Document as Code 1 if safety is at imminent risk; Code 2 if safety is compromised but not immediately dangerous.",
       "An accredited assessor (employed or contracted by NICEIC / NAPIT etc.) visits your premises annually. They review your QS qualification (must be current and someone in the firm must hold it), inspect a sample of recent jobs (typically 1-2 jobs visited and certificates reviewed), check your test equipment is calibrated, review your insurance, and audit your record-keeping. Pass = scheme registration continues; fail = re-visit required and registration may be suspended.",
-      "Only test your tools.",
-      "Just collect membership fees.",
+      "(1) Two-pole voltage tester with proving unit (Martindale VI-13800 + GVD2). (2) Clamp meter (Fluke 376FC, Megger DCM330). (3) MFT in continuity range (Megger MFT1741+, Fluke 1664FC). (4) Socket tester (Kewtech KT1717) — first pass only, NOT for sign-off. Four different tasks, four different instruments — each engineered for its specific job.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Annual assessment is the substance behind the scheme. The assessor looks at your QS, your work, your records, your insurance and your test equipment calibration. Most firms pass first time but the visit isn't a rubber stamp — assessors flag genuinely unsafe work and require remediation. The assessment is also how the scheme verifies you're still operating to the competence standard you were originally registered against.",
   },
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 1,
     question: "Who needs to hold the QS (Qualified Supervisor) qualification in a CPS-registered firm?",
     options: [
-      "Nobody.",
+      "A detailed itemised document prepared by a quantity surveyor (or the design team) listing every item of work — material quantities, units of measure, descriptions — with blank rate columns for tenderers to insert their unit prices. Allows like-for-like comparison of competing tenders.",
       "At least one person in the firm must hold a QS qualification (typically C&G 2391-52 Inspection and Testing, or equivalent) and that person is named on the scheme registration as the firm's QS. The QS doesn't have to do every job personally but is responsible for the standard of work and for signing off certification. For a sole trader the QS is normally the sole trader themselves.",
-      "Everyone in the firm.",
-      "Only the receptionist.",
+      "When the worker may be exposed to a risk to their health or safety while at work, EXCEPT where and to the extent that the risk has been or will be adequately controlled by other means which are equally or more effective. The 2022 amendment also extended the duty to cover limb (b) workers (some categories of casual / gig workers) as well as employees.",
+      "A trained operative who attaches loads to a crane (slinging) and signals the crane operator (signalling) during a lift. Both functions require formal CPCS or equivalent training. Lift operations are governed by LOLER 1998 (Lifting Operations and Lifting Equipment Regulations) which requires lifts to be planned by a competent person and supervised throughout.",
     ],
     correctAnswer: 1,
     explanation:
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 2,
     question: "What's the practical advantage of CPS Part P self-certification over LABC notification?",
     options: [
-      "No advantage.",
+      "SMART goals transform vague EI intentions (\\\\\\\"I want to be more empathetic\\\\\\\") into actionable commitments (\\\\\\\"I will practise active listening in every team meeting for the next 4 weeks, paraphrasing at least once per conversation, and ask my colleague for feedback on my listening quality each Friday\\\\\\\")",
+      "Sign in at the gate or welfare cabin, present ECS / CSCS / industry card if relevant, attend a visitor induction (shorter than the full operative induction), wear correct PPE for the area, and be escorted by a competent person from the site team. Visitors are not permitted to walk the site unaccompanied. CDM 2015 Reg 13(4)(b) requires the PC to take steps to prevent unauthorised access.",
       "CPS-registered firms can self-certify notifiable Part P work and issue compliance certificates direct to the Local Authority on the homeowner's behalf. The LABC route requires a Building Notice or Building Regulations application before work starts, plus an LABC inspection during/after work — typically £150-300 per job and several weeks of LABC scheduling delay. Self-certification removes the cost and the delay.",
-      "Only legal route.",
-      "Just for marketing.",
+      "Notices must be 'clearly and durably marked' (Reg 514.13.1) and 'shall be securely fixed in a visible position'. The practical interpretation: typed/printed labels on durable substrate (BS 951 plates for earthing, laminated card for inside-CU notices), securely fixed (screwed, riveted, or industrial adhesive), readable from a normal stand-back distance. Hand-written sticky labels degrade fast and aren't compliant.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Self-certification is the practical reason most domestic-focused electrical firms join a CPS. The cost and delay of LABC for every consumer-unit replacement, every full rewire, every kitchen extension circuit would make domestic work uneconomic at scale. CPS membership turns each notifiable job into a self-certified job that's compliant and cheaper.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: "What's NICEIC's 'Approved Contractor' versus 'Domestic Installer' stream?",
     options: [
-      "Same thing.",
+      "That the design — every Ib, every In, every Iz, every Zs, every RCD class, every AFDD decision, every SPD specification, the consolidated MD, the cable schedule, the device specification, the test schedule and the design pack documentation — complies with BS 7671 to the best of the designer's knowledge and belief, having exercised reasonable skill and care.",
+      "A hole saw of the correct diameter on a cordless combi drill — cuts a clean circular hole sized exactly to the downlight aperture (typically 65 mm or 75 mm). For the rough access cut where you need a square hole or are running cable through, a multi-tool (oscillating multi-cutter, Bosch GOP / Fein MultiMaster) gives a controlled plunge cut without dust kicking up half the room.",
+      "A formal legal notice issued by an HSE inspector when the inspector is of the opinion that activities are being carried out involving (or likely to involve) a risk of serious personal injury. The notice prohibits the activity until the matters specified in it are remedied. Can take immediate effect — the work stops the moment the notice is served.",
       "Two NICEIC streams. Domestic Installer (DI) is the entry tier — covers Part P self-certification for dwellings only. Approved Contractor (AC) is the higher tier — covers wider scope including commercial and industrial work, generally with stricter assessment criteria. Many sole traders start with DI and upgrade to AC as the business grows or as they take on more commercial work.",
-      "Only Approved exists.",
-      "Only DI exists.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "DI vs AC reflects the firm's scope. A pure domestic installer (consumer units, rewires, EV chargers) usually only needs DI. A firm doing commercial fit-out alongside domestic typically needs AC. Both let you self-certify Part P; AC lets you also evidence wider competence to commercial clients. Cost difference is modest — choose based on the work you actually do.",
   },
@@ -124,12 +124,12 @@ const quizQuestions = [
     id: 4,
     question: "What's NAPIT's main differentiator from NICEIC?",
     options: [
-      "It's cheaper for everyone.",
       "NAPIT is multi-trade — registers electricians, plumbers, gas engineers and other trades under a single scheme structure. For multi-discipline firms (e.g. a heating engineer doing gas plus electrical wiring) NAPIT offers single-scheme coverage rather than dual scheme membership. Cost is broadly comparable to NICEIC for electrical-only registration; the saving comes if you also need other trade registrations.",
-      "Only operates in Scotland.",
-      "Only does commercial.",
+      "Yes. NICEIC, NAPIT, ELECSA all require members to hold PL (typically £5m+), EL if employing anyone, and (often) PI if doing design work. Specific minimum cover levels are set in scheme rules; the assessor checks evidence at annual assessment. Some schemes offer affiliated insurance products (NICEIC Insurance, NAPIT Insurance) at member rates.",
+      "TULRCA 1992 is the consolidating UK statute on trade union law and collective labour relations. It covers the right to join (and not join) a union, protection from anti-union discrimination, recognition for collective bargaining, industrial action ballot requirements, picketing rules, and union internal governance. It's the foundational statute that protects union members.",
+      "A dutyholder named under BSA 2022 for an occupied higher-risk residential building. The Accountable Person is responsible for the building's safety case, for managing building safety risks, and for maintaining the golden thread of information. The Principal Accountable Person is the lead AP where multiple APs exist.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "NAPIT positions itself as the multi-trade scheme. For a sole trader doing only electrical the choice between NICEIC and NAPIT is largely about service preferences (assessor relationship, online portals, reputation in your local market). For multi-trade firms NAPIT often wins on cost and admin overhead because it covers everything in one membership.",
   },
@@ -137,10 +137,10 @@ const quizQuestions = [
     id: 5,
     question: "What's the ECA and what does ECA membership give an electrical firm?",
     options: [
-      "ECA is the same as NICEIC.",
+      "Three documents. (1) Updated EICR (or supplementary report) — codes the previously-failed item as now compliant; references the rectification work. (2) Minor Electrical Installation Works Certificate (MEIWC) for the rectification work — formal compliance certificate for the new / repaired work under BS 7671. (3) Customer-friendly summary — what the certificates mean in plain English. The customer keeps all three; the firm retains copies for 7+ years. NICEIC / NAPIT registration audits will check the certificate trail.",
       "The Electrical Contractors' Association — the largest trade association for electrical contractors in England, Wales and Northern Ireland. Membership signals quality, access to ECA technical guidance, ECA insurance products, ECA Apprentice scheme (for member firms taking on apprentices), and joint co-running of the JIB. ECA is not a CPS — you still need separate CPS membership for Part P self-certification.",
-      "Only does Scotland.",
-      "Only for sole traders.",
+      "Site induction covering the relevant parts of the construction phase plan, the site rules, the welfare arrangements, the emergency procedures, and the specific hazards on that site. Plus access to relevant information from the pre-construction phase. CDM 2015 Reg 13 makes this a duty on the principal contractor and Reg 15 makes it a duty on the worker to co-operate with it.",
+      "Installation in accordance with the manufacturer's instructions, including torque values, conductor preparation, environmental conditions and any product registration the manufacturer requires. Deviation gives the manufacturer grounds to void the warranty. Some manufacturers (especially EV charger and solar manufacturers) require product registration within a specified period after install.",
     ],
     correctAnswer: 1,
     explanation:
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 6,
     question: "What's SELECT in Scotland?",
     options: [
-      "A football team.",
+      "Combination pliers — heavy-duty grip, twisting solid conductors, pulling cable through tight runs, light cutting of soft material. Side cutters (sometimes called diagonal cutters or 'snips') — flush cutting of insulated and bare conductor, trimming cable ends. Long-nose pliers — forming loops, reaching into recessed terminals, holding small components while you tighten. One job each, no overlap if you can help it.",
+      "Compliance with HASAWA s.2(2)(a) — 'safe systems of work' for an electrical installation. Because EAWR is a regulation made under HASAWA, demonstrating EAWR compliance through BS 7671 also demonstrates discharge of the underlying HASAWA s.2 / s.3 duties for the electrical-system part of the work.",
       "SELECT is the Scottish trade association for electrical contractors — equivalent to ECA in England/Wales/NI. It campaigns on behalf of the Scottish electrical industry, runs technical events, and co-runs the SJIB. SELECT also operates a Member Approved scheme that signals quality to clients. Scottish firms typically hold SELECT membership plus a CPS (NICEIC, NAPIT or similar) for Part P self-certification.",
-      "Only does plumbing.",
-      "Only operates in England.",
+      "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'ve noticed tools left on the walkway on three occasions this week (observation). I feel worried (feeling) because someone could trip and be seriously injured (need for safety). Would you be willing to use the tool belt and return tools to the kit bag after each use? (request)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "SELECT is the Scottish equivalent of ECA. Scottish firms operating north of the border join SELECT for representation and the SELECT Member Approved scheme; CPS membership stays as the regulatory layer. The two together cover the same ground that ECA + CPS cover in England.",
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 7,
     question: "Roughly what does the LABC charge per Part P notifiable job if you DON'T have CPS membership?",
     options: [
-      "Free.",
+      "Yes — written T&Cs protect both you and the customer. Cover: scope of work, payment terms, materials warranty, workmanship warranty, complaints procedure, cooling-off period (consumer), variations and extras, cancellation, retention of title (you own materials until paid for), data protection (GDPR). T&C templates available from CPS schemes (NICEIC, NAPIT), trade associations (ECA), or solicitors specialising in trade.",
+      "Where an offence under HASAWA is committed by a body corporate (a limited company) and is proved to have been committed with the consent or connivance of, or attributable to neglect on the part of, a director, manager, secretary or similar officer, that individual ALSO commits the offence and is liable to personal prosecution. Relevant once you become Approved Electrician, then a senior, then potentially a director — your personal liability scales with your role.",
+      "At L2 you sat firmly inside Reg 15 (worker). At L3 you start carrying weight inside Reg 9 (contractor) — you may run a small job alone, you may be the senior trade on site, your firm may be 'the Contractor' for a domestic job where the homeowner is the client. Recognising that the contractor duties apply to your firm (and to your conduct as the firm's representative) is the planning-duty step.",
       "£150-300 per notifiable job — varies by Local Authority. Each notifiable Part P job (consumer unit replacement, new circuit in kitchen/bathroom, full rewire) requires either a Building Notice or full Building Regulations application before work, plus an LABC inspection during/after. Cost adds up fast for a busy domestic installer; CPS membership pays for itself in a handful of jobs.",
-      "£10 flat fee.",
-      "£10,000.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "LABC Building Notice fees vary widely by Council — typically £150-300 per notifiable electrical job. For a busy domestic installer doing 50+ notifiable jobs a year that's £7,500-15,000 in LABC fees that simply disappear with CPS membership. The CPS economic case is overwhelming for any firm doing meaningful domestic work.",
   },
@@ -176,12 +176,12 @@ const quizQuestions = [
     id: 8,
     question: "If you change your firm's QS, what do you have to do?",
     options: [
-      "Nothing.",
       "Notify the CPS within the timeframe specified in the scheme rules (typically 28 days). The new QS must hold a current QS qualification (2391-52 or equivalent) and must be available to the firm. Failure to notify, or failure to maintain a QS, can result in scheme registration suspension. CPS rules expect continuous QS coverage — the firm shouldn't operate notifiable work without one.",
-      "Wait for the next annual assessment.",
-      "Tell only HMRC.",
+      "Because the retail trading hours can't be disrupted. Floor lifts, ceiling tile removal, dust generation and circuit isolation all interfere with shoppers and staff. Out-of-hours work (typically 8pm to 6am for high-street retail) lets the work proceed without affecting trade. Prep includes agreed access times, security pass arrangements, fire-alarm coordination (if temporary detector covers are needed) and a formal hand-back at end of shift.",
+      "Separating the person from their past behaviour and responding to their current human experience with genuine compassion. Advanced empathy recognises that difficult people are often struggling, that past conflict does not negate present humanity, and that showing empathy in this moment may transform the entire working relationship — whilst still maintaining appropriate professional boundaries",
+      "No — the STR is the regulatory document. The instrument download is a useful audit trail and a way to capture test data at the point of testing, but the completed STR with all required fields and signatures is what satisfies Reg 642.4 and Section 644. Most professionals use the download to populate the STR rather than as a standalone replacement.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "QS continuity is a scheme rule. If your QS leaves and you don't immediately replace them, your registration is at risk. For sole traders the QS is normally the proprietor — but if the proprietor's qualification lapses (CPD requirements not met) the same issue arises. Plan QS coverage with the same care as plant calibration or insurance renewal.",
   },

@@ -14,8 +14,13 @@ const quickCheckQuestions = [
     id: 'gs38-probes',
     question:
       'Under GS38, what is the maximum exposed metal tip length permitted on a test probe for use on low voltage systems?',
-    options: ['2 mm', '4 mm', '10 mm', '20 mm'],
-    correctIndex: 1,
+    options: [
+      '4 mm',
+      '10 mm',
+      '20 mm',
+      '2 mm',
+    ],
+    correctIndex: 0,
     explanation:
       'GS38 specifies that test probes must have a maximum of 4 mm exposed metal tip (or 2 mm for some applications), with the remainder insulated to prevent accidental contact with adjacent live parts. The short tip length reduces the risk of bridging between terminals or creating a short circuit during testing.',
   },
@@ -23,12 +28,12 @@ const quickCheckQuestions = [
     id: 'proving-unit-purpose',
     question: 'What is the purpose of a proving unit in electrical testing?',
     options: [
-      'To calibrate the test instrument annually',
       'To provide a known voltage source to verify the voltage indicator is working correctly before and after testing',
-      'To measure earth fault loop impedance',
-      'To check the battery level of the multimeter',
+      'To minimise I²R (resistive) losses in the transmission conductors for a given amount of power',
+      'A written plan (management plan) that sets out how the risk from asbestos is to be managed',
+      'Raise the concern immediately, verify the facts jointly, and resolve the discrepancy before completing the handover',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'A proving unit provides a known voltage source (typically 50 V or 230 V) to verify that the voltage indicator is functioning correctly. GS38 requires that you prove your voltage indicator on a known live source BEFORE testing for dead and AGAIN AFTER testing. This three-stage process (prove-test-prove) confirms the instrument was working at the time of the test.',
   },
@@ -36,7 +41,12 @@ const quickCheckQuestions = [
     id: 'insulated-tools',
     question:
       'What standard must VDE-rated insulated hand tools comply with for electrical work up to 1000 V AC?',
-    options: ['BS EN 60900', 'BS 7671', 'BS EN 61010', 'BS EN 60529'],
+    options: [
+      'BS EN 60900',
+      'BS 7671',
+      'BS EN 61010',
+      'BS EN 60529',
+    ],
     correctIndex: 0,
     explanation:
       'VDE-rated insulated hand tools must comply with BS EN 60900 (IEC 60900), which specifies requirements for hand-operated insulated tools for work on or near live parts at voltages up to 1000 V AC or 1500 V DC. Tools meeting this standard are individually tested to 10,000 V AC and rated for continuous use at 1000 V AC.',
@@ -45,12 +55,12 @@ const quickCheckQuestions = [
     id: 'pat-testing',
     question: 'What does a PAT test typically include for a Class I portable power tool?',
     options: [
-      'Visual inspection only',
+      'It contains leaks and spills to prevent environmental contamination and spread',
+      'Client, principal designer, principal contractor, designers, and contractors',
+      'LED lighting systems powered and controlled through Ethernet cables',
       'Visual inspection, earth continuity, insulation resistance and functional test',
-      'Voltage measurement and current draw test only',
-      'A calibration check at an approved laboratory',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'A PAT test for a Class I power tool includes a visual inspection (checking the plug, flex, casing and strain relief), an earth continuity test (verifying the CPC is intact), an insulation resistance test (checking insulation integrity), and a functional test (operating the tool to confirm safe operation). The specific tests vary by equipment class and type.',
   },
@@ -61,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: "The GS38 'prove-test-prove' procedure for safe isolation requires:",
     options: [
-      'Prove the circuit is dead, test with a multimeter, prove with a second instrument',
+      'That the relay settings match the protection coordination study and the relay operates correctly when tested with a secondary injection test set',
       'Prove the voltage indicator on a known live source, test the circuit for dead, prove the voltage indicator again on the known live source',
-      'Prove the fuse is removed, test the MCB is off, prove the isolator is locked',
-      'Prove the RCD trips, test the circuit, prove the RCD resets',
+      'The life of the asset, or as specified by the organisation\\\\\\\'s retention policy (typically 5+ years minimum)',
+      'A common-mode transient (lightning, switching surge) reaching the equipment via mains, data cable or earth — investigate SPDs, data isolation, surge events',
     ],
     correctAnswer: 1,
     explanation:
@@ -74,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: 'GS38 requires that test leads should incorporate:',
     options: [
-      'Bare metal clips for maximum contact area',
+      '250 V DC, 500 V DC or 1000 V DC depending on the circuit being tested',
+      'The highest AC voltage range first, then reduced — or use auto-ranging mode',
       'Fused test leads with a fuse rating not exceeding 500 mA, and finger guards',
-      'Standard banana plugs and crocodile clips',
-      'Spring-loaded retractable leads',
+      'BS EN 61010 (safety) and relevant measurement standards such as BS EN 61557',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'GS38 requires test leads to incorporate fuses (not exceeding 500 mA for voltage indication) to protect against fault currents, finger guards on the probes to prevent accidental contact with live parts, a maximum 4 mm exposed tip, and leads of adequate current rating with good insulation. Standard unfused test leads do not comply with GS38.',
   },
@@ -88,12 +98,12 @@ const quizQuestions = [
     question:
       'A two-pole voltage indicator (such as a Fluke T150) is preferred over a single-pole indicator (neon screwdriver) because:',
     options: [
-      'It is cheaper to purchase',
+      'The plug, flex condition, casing integrity, guards in place, PAT label in date, and correct voltage/supply',
+      'At intervals specified by the manufacturer or company policy, typically annually, by a UKAS-accredited laboratory',
+      'The total impedance of the earth fault current loop from the point of test back to the source',
       'It provides a definitive indication by testing between two points — line-to-neutral, line-to-earth and neutral-to-earth',
-      'It can measure current as well as voltage',
-      'It does not require batteries',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "A two-pole voltage indicator tests the potential difference between two points, providing a definitive indication of the presence or absence of voltage. A single-pole indicator (neon screwdriver) relies on the user's body capacitance to complete the circuit, can give false readings, and is not recommended by GS38 as the sole means of testing for dead.",
   },
@@ -101,12 +111,12 @@ const quizQuestions = [
     id: 4,
     question: 'Insulation resistance testers (meggers) typically test at voltages of:',
     options: [
-      '12 V DC and 50 V DC',
-      '230 V AC and 400 V AC',
       '250 V DC, 500 V DC or 1000 V DC depending on the circuit being tested',
-      '50 V AC only',
+      'Fused test leads with a fuse rating not exceeding 500 mA, and finger guards',
+      'Measuring the magnetic field around a conductor using a current transformer jaw',
+      'The highest AC voltage range first, then reduced — or use auto-ranging mode',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Insulation resistance testers apply a DC test voltage: 250 V DC for SELV/PELV circuits, 500 V DC for circuits up to 500 V (including standard 230 V and 400 V installations), and 1000 V DC for circuits between 500 V and 1000 V. The test voltage must match the circuit voltage rating per BS 7671 Table 6.1.',
   },
@@ -116,8 +126,8 @@ const quizQuestions = [
     options: [
       'Breaking the circuit and inserting the meter in series',
       'Measuring the magnetic field around a conductor using a current transformer jaw',
-      'Measuring the voltage drop across a known resistance',
       'Using a direct electrical connection to the conductor',
+      'Measuring the voltage drop across a known resistance',
     ],
     correctAnswer: 1,
     explanation:
@@ -127,12 +137,12 @@ const quizQuestions = [
     id: 6,
     question: 'An earth fault loop impedance tester measures:',
     options: [
-      'The resistance of the earth electrode only',
+      'Fused test leads with a fuse rating not exceeding 500 mA, and finger guards',
+      'BS EN 61010 (safety) and relevant measurement standards such as BS EN 61557',
       'The total impedance of the earth fault current loop from the point of test back to the source',
-      'The voltage at the earth terminal',
-      'The resistance of the main protective bonding conductors',
+      'The plug, flex condition, casing integrity, guards in place, PAT label in date, and correct voltage/supply',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An earth fault loop impedance tester measures the total impedance of the complete fault current path (Zs): the source impedance, the line conductor impedance, the protective conductor impedance, and the earth return path. This measurement confirms that sufficient fault current will flow to operate the protective device within the required disconnection time specified in BS 7671.',
   },
@@ -140,12 +150,12 @@ const quizQuestions = [
     id: 7,
     question: 'Before using a power tool on site, a pre-use inspection should check:',
     options: [
-      'Only that the tool switches on',
+      'The total impedance of the earth fault current loop from the point of test back to the source',
+      'Fused test leads with a fuse rating not exceeding 500 mA, and finger guards',
+      'It provides a definitive indication by testing between two points — line-to-neutral, line-to-earth and neutral-to-earth',
       'The plug, flex condition, casing integrity, guards in place, PAT label in date, and correct voltage/supply',
-      'The serial number matches the asset register',
-      "The manufacturer's warranty is still valid",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A pre-use inspection is a visual and functional check carried out by the user before each use. It should cover the plug (no damage, correct fuse, cord grip secure), flex (no cuts, fraying or repairs), casing (no cracks or damage), guards and safety devices (in place and functioning), PAT test label (in date), and confirmation the tool is suitable for the supply voltage and environment.',
   },
@@ -153,8 +163,13 @@ const quizQuestions = [
     id: 8,
     question:
       'VDE 1000 V rated insulated tools are individually tested at what voltage during manufacture?',
-    options: ['1,000 V AC', '2,500 V AC', '5,000 V AC', '10,000 V AC'],
-    correctAnswer: 3,
+    options: [
+      '10,000 V AC',
+      '5,000 V AC',
+      '1,000 V AC',
+      '2,500 V AC',
+    ],
+    correctAnswer: 0,
     explanation:
       "VDE-rated insulated tools complying with BS EN 60900 are individually tested at 10,000 V AC during manufacture (10 times the rated working voltage). This provides a substantial safety margin. The tools are then marked with the '1000 V' rating and the distinctive red/yellow insulation colour coding that identifies them as electrically rated.",
   },
@@ -162,10 +177,10 @@ const quizQuestions = [
     id: 9,
     question: 'Calibration of electrical test instruments should be carried out:',
     options: [
-      'Only when the instrument gives obviously incorrect readings',
+      'The plug, flex condition, casing integrity, guards in place, PAT label in date, and correct voltage/supply',
       'At intervals specified by the manufacturer or company policy, typically annually, by a UKAS-accredited laboratory',
-      'Every five years as specified by BS 7671',
-      'Only before major commissioning projects',
+      'It provides a definitive indication by testing between two points — line-to-neutral, line-to-earth and neutral-to-earth',
+      'The total impedance of the earth fault current loop from the point of test back to the source',
     ],
     correctAnswer: 1,
     explanation:
@@ -176,12 +191,12 @@ const quizQuestions = [
     question:
       'When using a multimeter to check for voltage on a circuit believed to be dead, the meter should be set to:',
     options: [
-      'The lowest AC voltage range for maximum sensitivity',
+      '250 V DC, 500 V DC or 1000 V DC depending on the circuit being tested',
+      'Measuring the magnetic field around a conductor using a current transformer jaw',
       'The highest AC voltage range first, then reduced — or use auto-ranging mode',
-      'The DC voltage range',
-      'The resistance range to check continuity',
+      'Fused test leads with a fuse rating not exceeding 500 mA, and finger guards',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'When checking for voltage, always start on the highest voltage range (or use auto-ranging mode) to prevent damage to the meter from an unexpectedly high voltage. If the meter is set to a low range and encounters 400 V, the meter could be damaged or destroyed. Auto-ranging meters eliminate this risk but always confirm the meter is set to voltage mode, not current or resistance.',
   },
@@ -189,8 +204,13 @@ const quizQuestions = [
     id: 11,
     question:
       'A 110 V centre-tapped supply (CTE) used on construction sites provides a maximum shock voltage of:',
-    options: ['110 V', '55 V', '230 V', '25 V'],
-    correctAnswer: 1,
+    options: [
+      '110 V',
+      '25 V',
+      '230 V',
+      '55 V',
+    ],
+    correctAnswer: 3,
     explanation:
       'A 110 V centre-tapped earth (CTE) transformer provides a maximum voltage to earth of 55 V (half of 110 V), because the centre tap of the secondary winding is earthed. This means that a single fault to earth will only expose the user to 55 V — significantly reducing the shock risk compared to a 230 V supply. This is why 110 V CTE is the standard for portable tools on UK construction sites.',
   },
@@ -198,12 +218,12 @@ const quizQuestions = [
     id: 12,
     question: 'Test instruments used for electrical installation work must comply with:',
     options: [
-      'BS 7671 only',
       'BS EN 61010 (safety) and relevant measurement standards such as BS EN 61557',
-      'Any EU consumer product standard',
-      "The manufacturer's specification only",
+      'The highest AC voltage range first, then reduced — or use auto-ranging mode',
+      'Measuring the magnetic field around a conductor using a current transformer jaw',
+      'The total impedance of the earth fault current loop from the point of test back to the source',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Test instruments must comply with BS EN 61010 (safety requirements for electrical measurement equipment) and the relevant functional standard — typically BS EN 61557 series for installation testing instruments (covering insulation resistance, loop impedance, RCD testing, etc.). GS38 also specifies additional safety requirements for voltage indicators and test leads used on LV systems.',
   },

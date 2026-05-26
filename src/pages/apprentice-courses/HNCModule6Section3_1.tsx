@@ -31,19 +31,24 @@ const quickCheckQuestions = [
     id: 'breeam-definition',
     question: 'What does BREEAM stand for?',
     options: [
-      'Building Research Establishment Environmental Assessment Method',
       'British Regulation for Energy and Environmental Assessment Measures',
+      'Building Research Establishment Environmental Assessment Method',
       'Building Requirements for Ecological and Environmental Assessment Methods',
       'British Research Establishment Energy Assessment Methodology',
     ],
-    correctIndex: 0,
+    correctIndex: 1,
     explanation:
       "BREEAM stands for Building Research Establishment Environmental Assessment Method. Developed by BRE in 1990, it was the world's first environmental assessment method for buildings.",
   },
   {
     id: 'breeam-ratings',
     question: 'What is the highest BREEAM rating that can be achieved?',
-    options: ['Excellent', 'Superior', 'Outstanding', 'Exceptional'],
+    options: [
+      'Superior',
+      'Excellent',
+      'Outstanding',
+      'Exceptional',
+    ],
     correctIndex: 2,
     explanation:
       'Outstanding is the highest BREEAM rating, requiring a score of 85% or above. The five rating levels in ascending order are: Pass (30%), Good (45%), Very Good (55%), Excellent (70%), and Outstanding (85%).',
@@ -53,11 +58,11 @@ const quickCheckQuestions = [
     question: 'Who is responsible for conducting a BREEAM assessment?',
     options: [
       'The building owner',
+      'The local authority building control',
       'Any qualified architect',
       'A licensed BREEAM assessor',
-      'The local authority building control',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'BREEAM assessments must be conducted by a licensed BREEAM assessor who has completed specific BRE training and maintains their accreditation. The assessor is independent and acts as the interface between the project team and BRE.',
   },
@@ -66,11 +71,11 @@ const quickCheckQuestions = [
     question: 'What happens if a BREEAM project fails to achieve mandatory credits?',
     options: [
       'The rating is reduced by one level',
-      'The project cannot achieve certification',
-      'Additional points are required elsewhere',
       'The project receives a conditional pass',
+      'Additional points are required elsewhere',
+      'The project cannot achieve certification',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Mandatory credits (also called minimum standards) must be achieved for any rating level. If a project fails to meet the mandatory requirements for its target rating, it cannot achieve certification at that level regardless of overall score.',
   },
@@ -95,16 +100,26 @@ const quizQuestions = [
     id: 2,
     question:
       'In BREEAM New Construction 2018, which assessment category typically carries the highest weighting?',
-    options: ['Management', 'Energy', 'Materials', 'Health and Wellbeing'],
-    correctAnswer: 1,
+    options: [
+      'Materials',
+      'Management',
+      'Energy',
+      'Health and Wellbeing',
+    ],
+    correctAnswer: 2,
     explanation:
       'Energy typically carries the highest weighting in BREEAM assessments (around 15-19% depending on building type). This reflects the significant environmental impact of building energy consumption over its operational lifetime.',
   },
   {
     id: 3,
     question: 'A project scores 72% in a BREEAM assessment. What rating does this achieve?',
-    options: ['Good', 'Very Good', 'Excellent', 'Outstanding'],
-    correctAnswer: 2,
+    options: [
+      'Very Good',
+      'Good',
+      'Outstanding',
+      'Excellent',
+    ],
+    correctAnswer: 3,
     explanation:
       'A score of 72% achieves an Excellent rating. The thresholds are: Pass (≥30%), Good (≥45%), Very Good (≥55%), Excellent (≥70%), Outstanding (≥85%).',
   },
@@ -112,20 +127,25 @@ const quizQuestions = [
     id: 4,
     question: 'What is the purpose of the BREEAM pre-assessment?',
     options: [
-      'To submit the final certification application',
       'To identify achievable credits and inform design decisions early',
+      'To submit the final certification application',
       'To verify post-construction compliance',
       'To train the project team on BREEAM requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Pre-assessment is conducted early in design to identify which credits are achievable, highlight potential issues, and inform design decisions while changes are still cost-effective. It helps set a realistic target rating.',
   },
   {
     id: 5,
     question: 'Which of these is NOT a BREEAM assessment category?',
-    options: ['Land Use and Ecology', 'Pollution', 'Cost Efficiency', 'Transport'],
-    correctAnswer: 2,
+    options: [
+      'Pollution',
+      'Cost Efficiency',
+      'Transport',
+      'Land Use and Ecology',
+    ],
+    correctAnswer: 1,
     explanation:
       'Cost Efficiency is not a BREEAM assessment category. The nine categories are: Management, Health and Wellbeing, Energy, Transport, Water, Materials, Waste, Land Use and Ecology, and Pollution.',
   },
@@ -133,12 +153,12 @@ const quizQuestions = [
     id: 6,
     question: 'How are innovation credits used in BREEAM?',
     options: [
-      'They replace mandatory credits',
+      'To verify assessor submissions and maintain assessment consistency',
+      'To identify achievable credits and inform design decisions early',
       'They provide additional percentage points above the standard 100%',
-      'They are only available for Outstanding ratings',
-      'They reduce the overall assessment cost',
+      'Energy modelling results from approved software (e.g., IES, TAS)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Innovation credits allow projects to earn additional percentage points (typically up to 10%) above the standard 100% for exemplary performance or innovative solutions. This can help push a project into a higher rating band.',
   },
@@ -146,12 +166,12 @@ const quizQuestions = [
     id: 7,
     question: 'At which project stage is the Design Stage assessment typically completed?',
     options: [
-      'Planning application',
+      'The number of poles and rotational speed',
+      'Energy let-through during fault clearance',
+      'They are unpredictable and likely to be drilled into',
       'End of RIBA Stage 3/4 (Technical Design)',
-      'During construction',
-      'After practical completion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Design Stage assessment is typically completed at the end of RIBA Stage 3 or 4 when technical design is substantially complete. This provides an interim certificate based on design intent and commitments.',
   },
@@ -160,12 +180,12 @@ const quizQuestions = [
     question:
       'What evidence would an assessor require for the Ene 01 (Reduction of energy use and carbon emissions) credit?',
     options: [
-      'Building user guide only',
       'Energy modelling results from approved software (e.g., IES, TAS)',
-      'Contractor method statements',
-      'Material delivery receipts',
+      'To identify achievable credits and inform design decisions early',
+      'They provide additional percentage points above the standard 100%',
+      'To verify assessor submissions and maintain assessment consistency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Ene 01 requires dynamic thermal modelling results from approved software such as IES-VE, TAS, or EnergyPlus. This demonstrates the predicted energy performance and carbon emissions compared to the Part L notional building.',
   },
@@ -173,8 +193,13 @@ const quizQuestions = [
     id: 9,
     question:
       'Which BREEAM category addresses internal air quality, lighting levels, and acoustic performance?',
-    options: ['Management', 'Energy', 'Health and Wellbeing', 'Pollution'],
-    correctAnswer: 2,
+    options: [
+      'Management',
+      'Health and Wellbeing',
+      'Energy',
+      'Pollution',
+    ],
+    correctAnswer: 1,
     explanation:
       'Health and Wellbeing (Hea) addresses factors affecting building occupants including visual comfort, indoor air quality, safe access, thermal comfort, acoustic performance, and water quality.',
   },
@@ -182,12 +207,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the role of the BREEAM Quality Assurance (QA) process?',
     options: [
-      'To train new assessors',
+      'To identify achievable credits and inform design decisions early',
+      'Energy modelling results from approved software (e.g., IES, TAS)',
       'To verify assessor submissions and maintain assessment consistency',
-      'To set credit weightings',
-      'To issue building completion certificates',
+      'They provide additional percentage points above the standard 100%',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "BRE's Quality Assurance process reviews assessor submissions to verify compliance, maintain consistency across assessments, and ensure the integrity of BREEAM certification. This independent review is mandatory before certification.",
   },
@@ -197,11 +222,11 @@ const quizQuestions = [
       'A healthcare building requires BREEAM Excellent. Which scheme-specific version would be used?',
     options: [
       'BREEAM New Construction (generic)',
-      'BREEAM Healthcare',
-      'BREEAM In-Use Healthcare',
       'BREEAM Clinical',
+      'BREEAM In-Use Healthcare',
+      'BREEAM Healthcare',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BREEAM Healthcare is a building type-specific scheme with tailored criteria for hospitals and clinical facilities. It includes credits relevant to healthcare environments such as infection control and clinical functionality.',
   },
@@ -209,8 +234,13 @@ const quizQuestions = [
     id: 12,
     question:
       "What is the minimum percentage score required to achieve a BREEAM 'Very Good' rating?",
-    options: ['30%', '45%', '55%', '70%'],
-    correctAnswer: 2,
+    options: [
+      '55%',
+      '70%',
+      '30%',
+      '45%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Very Good requires a minimum score of 55%. The full scale is: Pass (≥30%), Good (≥45%), Very Good (≥55%), Excellent (≥70%), Outstanding (≥85%). Each level also requires achievement of specific mandatory credits.',
   },

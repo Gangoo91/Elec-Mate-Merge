@@ -42,12 +42,12 @@ const checks = [
     question:
       "Who are the three people in the 'apprenticeship triangle' that drives a UK electrical apprenticeship?",
     options: [
-      "The HSE, the Building Inspector and the customer.",
       "The College Tutor (delivers the 2365 syllabus, marks coursework, owns the AM2 prep), the Workplace Mentor (your day-job teacher, signs portfolio entries, calibrates your gradings), and the Employer (pays you, owns your apprenticeship contract, signs the off-the-job training declaration). The three meet monthly for the three-way review.",
-      "The Apprentice, the Foreman and the Site Manager.",
-      "The Project Engineer, the Contracts Manager and the Apprentice.",
+      "Stop work, leave tools, follow the planned escape route (identified during your dynamic risk assessment on arrival) to the muster point, ensure non-employees evacuate with you, await account-for and the all-clear from the responsible person.",
+      "Wide statutory powers under s.20 — enter premises at any reasonable time, take photographs / measurements, take samples, require any person to answer questions, require production of documents, take possession of articles. Plus the power under s.21/s.22 to issue improvement and prohibition notices on the spot. Refusing or obstructing an inspector is itself a criminal offence under s.33.",
+      "Mode 1 (domestic socket, no protection), Mode 2 (domestic socket with in-cable control device — ICCD), Mode 3 (dedicated EVSE with control pilot — the standard for home and workplace charging), and Mode 4 (DC rapid charging with the charger converting AC to DC externally)",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "The apprenticeship triangle is the formal partnership that runs the apprenticeship. Each corner has a different job — the Tutor handles the syllabus and the qualifications, the Mentor handles the on-site teaching and portfolio, the Employer handles the contract and the time. The monthly three-way review is the formal sit-down where all three calibrate progress with the apprentice. Treat the triangle as the structure that keeps everyone aligned.",
   },
@@ -56,12 +56,12 @@ const checks = [
     question:
       "What's the End-Point Assessment (EPA) and how does it differ from the AM2?",
     options: [
-      "EPA is just a longer name for AM2.",
       "EPA (End-Point Assessment) is the apprenticeship-standard's formal assessment at the end of the apprenticeship, conducted by an independent End-Point Assessment Organisation (EPAO). For the Installation Electrician apprenticeship the EPA is built around the AM2, the AM2E and additional knowledge tests and a professional discussion. AM2 is the practical test; EPA is the holistic wrap that also includes the trade test, the knowledge tests and the discussion.",
-      "EPA is only for plumbing apprenticeships.",
-      "EPA is taken halfway through the apprenticeship.",
+      "The MCS certificate, accompanied by the G98 (or G99) DNO notification copy. The customer applies to a Smart Export Guarantee licensee (typically a major electricity supplier) and uploads both. Without the MCS certificate the supplier will not register the customer for export payments. The smart export meter (the customer's existing smart meter, usually) provides the half-hourly export data that the tariff is paid against.",
+      "Not yet. MVHR only delivers net energy benefit in airtight, well-insulated buildings where controlled ventilation is the dominant air-change pathway. In a leaky 1960s house with single glazing, the building loses heat through uncontrolled air leakage faster than the MVHR can recover it from the extract air. The fan power consumed (typically 50-150 W continuous) outweighs the heat recovered. Fabric upgrades — insulation, glazing, draught-proofing, air permeability test below ~3 m³/h/m² @ 50 Pa — must come first. Then MVHR earns its keep.",
+      "Safely isolate. At the CU, identify the line and CPC of the circuit under test. Disconnect the line from the protective device and the CPC from the earth bar. Link the disconnected L and CPC together at the CU end with a low-resistance jumper. Test between L and CPC (or L and earth at the accessory) at the furthest accessory — the reading is R1+R2 for the circuit.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Apprenticeship Standards (the post-2017 model) require an EPA delivered by an independent EPAO. For the Installation and Maintenance Electrician standard the EPA includes the AM2 (the long-standing practical test from the JIB) plus knowledge tests and a professional discussion. The EPA is taken at the gateway — when your Employer, Tutor and Mentor agree you're ready. It's holistic — it assesses the whole apprenticeship, not just the practical skills.",
   },
@@ -70,10 +70,10 @@ const checks = [
     question:
       "What does the JIB do and why does an apprentice care?",
     options: [
-      "Nothing — the JIB doesn't exist any more.",
+      "Very high, high, medium, low — with starting-point fines that scale with both the culpability finding AND the harm category (1–4) AND the organisation's annual turnover band (micro / small / medium / large). A 'very high culpability + Category 1 harm + large organisation' combination has produced fines well into seven figures.",
       "The Joint Industry Board (JIB) is the body that sets the working rules, pay rates, holiday entitlements, sick-pay and pension arrangements for electricians in England, Wales and Northern Ireland. It also runs the JIB grading structure (Apprentice / Improver / Electrician / Approved / Technician) and the Apprentice Code of Practice. As an apprentice your pay rate, your training requirements and your grading are set by JIB rules.",
-      "The JIB only handles disputes.",
-      "The JIB only applies to Scotland.",
+      "(1) Isolate the supply at the meter or cut-out if safely accessible (NOT by reaching into the burning CU). (2) Evacuate the area — yourself and any non-employees. (3) Use a CO2 or dry powder extinguisher ONLY if trained, the fire is small, the route to a safe exit is behind you, and you can do so without putting yourself at risk. (4) 999. (5) Stay outside; await fire service. Don't restore power. Preserve the scene.",
+      "Specified injuries (RIDDOR Reg 4) are the most serious named injuries — fatalities, fractures other than to fingers/toes/thumbs, amputations, loss of sight, scalpings, serious burns, crush injuries, unconsciousness from electric shock, and so on. They must be reported as soon as possible and within 10 days. Over-7-day incapacitation (Reg 6) is when a worker is off normal work for more than 7 consecutive days (excluding accident day, including weekends) — must be reported within 15 days. Different categories, different timeframes, both reportable.",
     ],
     correctIndex: 1,
     explanation:
@@ -89,10 +89,10 @@ const quizQuestions = [
     question:
       "What's the Workplace Mentor's main role on a UK electrical apprenticeship?",
     options: [
-      "To drive the apprentice to college.",
+      "A damaged or over-charged lithium cell can heat itself by internal short-circuit. Above a chemistry-dependent threshold (around 200 °C for NMC, around 270 °C for LFP) the cell\\\\\\\\\\\\'s internal materials decompose exothermically — releasing more heat that propagates to neighbouring cells. The reaction is self-sustaining and standard water-based extinguishers do not stop it. Hence the emphasis on chemistry, BMS, segregation and detection.",
       "To be the apprentice's day-job teacher and portfolio signer-off. The Mentor is an experienced electrician (typically Approved or Technician grade) who is formally allocated to support a specific apprentice. They sign portfolio entries as evidence of on-site competence, calibrate gradings with the College Tutor, attend the monthly three-way reviews, and act as the first point of escalation for apprentice-specific issues.",
-      "Only to attend the AM2.",
-      "Only to make the tea.",
+      "G99 pre-application. Even though each individual inverter (4 kW PV inverter + 3 kW battery inverter) is below the 16 A G98 threshold, G99 applies to all generators (regardless of size) at sites where pre-existing G98 or G99 generators already exist. Adding a second grid-connected generator triggers G99 because the combined export capacity now matters and the DNO needs to assess. The MCS-certified installer submits the G99 application; the connection cannot be commissioned until the DNO has approved.",
+      "Explaining the situation in person, leading with the safety reason (\\\"I have found a section of wiring that does not meet current safety standards\\\"), showing the specific issue where possible, expressing empathy for the inconvenience (\\\"I understand this is not what you were expecting\\\"), presenting options rather than a single demand, and giving the client time to process before requiring a decision",
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     question:
       "What does the College Tutor own in the apprenticeship?",
     options: [
-      "Only the canteen at the college.",
+      "A notice served by the fire authority prohibiting or restricting the use of all or part of the premises because the use involves a risk of death or serious injury to relevant persons that is so serious that the use should be prohibited or restricted",
+      "A document prepared by the principal contractor before the construction phase starts, setting out the health and safety arrangements for the site (welfare, induction, site rules, hazard controls, emergency procedures, monitoring). Required for any project where there is more than one contractor; the depth of the plan scales with the project size and risk profile. Sub-contractors are entitled to relevant extracts on induction.",
       "Delivery of the 2365 (or equivalent) syllabus, marking of coursework and exams, AM2 preparation, and the formal academic record. The Tutor sees the apprentice typically one day a week (day-release model) or in block release. They calibrate progress with the Workplace Mentor at three-way reviews and own the academic side of the apprenticeship.",
-      "Only the marketing of the college.",
-      "Nothing — the college tutor is a ceremonial role.",
+      "External \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"if-then\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" rewards can undermine intrinsic motivation by shifting focus from the inherent satisfaction of the work to the external reward, narrowing thinking and reducing creativity — a phenomenon known as the \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"overjustification effect\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The Tutor is the academic anchor of the apprenticeship. They own the syllabus delivery, the coursework marking and the AM2 prep. They're also the apprentice's first point of contact for academic difficulties (struggling with maths, complications with assessments). The two-way calibration with the Workplace Mentor at the monthly three-way review is what stops the academic and the practical sides drifting apart.",
   },
@@ -117,12 +117,12 @@ const quizQuestions = [
     question:
       "What does the Employer own in the apprenticeship?",
     options: [
-      "Only the apprentice's tools.",
+      "(1) Supply cable — full length for cuts, abrasion, kinks, exposed conductor; (2) Plug — body intact, pins straight, cord-grip in place; (3) Tool casing — cracks, missing screws, contamination ingress; (4) Guard or shield — present, correctly fitted, not damaged; (5) Switch — operates positively, no stuck contacts, anti-restart works after release; (6) PAT label — current, in date, legible. Plus check the tool is the right one for the job.",
+      "It establishes BS 7671 as a means of demonstrating compliance with EAWR — meaning a court will treat following BS 7671 as strong evidence of having met the EAWR duty, and ignoring it as strong evidence of not having met it. BS 7671 itself remains non-statutory.",
+      "An IET volunteer (typically MIET or above) in your local region who supports new and prospective members, advises on professional registration applications, and runs regional member activities. Free service. Particularly useful for vocational-route practitioners considering EngTech application — the ambassador can review your CV and tell you whether you're eligible plus suggest what to strengthen.",
       "The apprenticeship contract (a formal indenture under the Apprenticeships, Skills, Children and Learning Act 2009), the wages, the off-the-job training declaration (a minimum 20% of paid working hours under the Apprenticeship Standard), the provision of suitable work and supervision, and HASAWA s.2 duties to provide a safe place of work and adequate training.",
-      "Only the apprentice's transport.",
-      "Only the welfare facilities.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "The Employer is the legal anchor of the apprenticeship — they sign the apprenticeship contract, they pay the wages, they provide the work and supervision, they ensure the 20% off-the-job training. The Apprenticeships, Skills, Children and Learning Act 2009 sets the legal framework for apprenticeship contracts; the Apprenticeship Standards (post-2017 model) set the off-the-job training requirement; HASAWA s.2 sets the safety and training duties.",
   },
@@ -131,12 +131,12 @@ const quizQuestions = [
     question:
       "Who attends the monthly three-way review?",
     options: [
-      "Only the College Tutor.",
       "The Apprentice, the College Tutor and the Workplace Mentor (with the Employer's training lead or HR sometimes attending as a fourth voice). The three-way review is the formal sit-down where progress is calibrated, gaps identified, and the next month's targets agreed. It's the structural mechanism that stops academic and practical sides drifting apart.",
-      "Only the Apprentice.",
-      "The Apprentice and the customer only.",
+      "Employers, employees and the self-employed — all three categories carry duties under EAWR. Employers have the heaviest set of duties (Reg 4 systems, Reg 13 isolation, Reg 16 competence, etc.). Employees have a duty to cooperate (Reg 3(2)(b)). Self-employed contractors have employer-equivalent duties when working on their own account.",
+      "The apprenticeship contract (a formal indenture under the Apprenticeships, Skills, Children and Learning Act 2009), the wages, the off-the-job training declaration (a minimum 20% of paid working hours under the Apprenticeship Standard), the provision of suitable work and supervision, and HASAWA s.2 duties to provide a safe place of work and adequate training.",
+      "Unauthorised access to grid control systems could enable: remote disconnection of millions of consumers; manipulation of demand-side response to cause grid instability; theft of consumer data; interference with energy billing; and potentially cascading failures across interconnected networks",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Three-way reviews (sometimes 'tri-partite reviews') are the standard apprenticeship mechanism for keeping the College Tutor, the Workplace Mentor and the Apprentice aligned. The Employer's HR or training lead often attends as a fourth voice on the contract and pastoral side. Most college courses build these reviews into the apprenticeship calendar — typically monthly or six-weekly.",
   },
@@ -145,10 +145,10 @@ const quizQuestions = [
     question:
       "What is the ECA?",
     options: [
-      "A type of consumer unit.",
+      "Collaborate when the issue is important to both parties and there is time to find a solution that fully meets both needs (e.g., designing a shared services route). Compromise when time is limited and a \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"good enough\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" solution is acceptable to both parties (e.g., sharing a limited workspace). The key difference is that collaboration seeks to expand the pie while compromise divides it",
       "The Electrical Contractors' Association — the trade association for electrical contractors in England, Wales and Northern Ireland. Founded 1901. ECA membership is a quality mark for the contractor; ECA also lobbies on behalf of the industry, runs technical events, publishes guidance and runs the JIB jointly with the trade union (Unite).",
-      "An electrical accreditation course.",
-      "A circuit type.",
+      "Because most domestic PME supplies have a PEN of 35 mm² or less, which Table 54.8 maps to a 10 mm² minimum copper-equivalent main bonding. On bigger supplies (commercial three-phase, 70 mm² PEN) the bonding steps up to 16 mm² or 25 mm². Always read the supplier neutral first, then Table 54.8.",
+      "At least 6 years — set by the Limitation Act 1980 for defending civil claims, and required by most contractor schemes (NICEIC, NAPIT, ELECSA) as a condition of registration. UK GDPR Article 5(1)(e) (storage limitation) is satisfied because there's a clear, justifiable reason for the retention period.",
     ],
     correctAnswer: 1,
     explanation:
@@ -159,12 +159,12 @@ const quizQuestions = [
     question:
       "What does SELECT do?",
     options: [
-      "Selects which colleges to attend.",
+      "Because the principal contractor (or main installer) carries practical and often legal responsibility for what happens on their site, including the conduct, safety and quality of sub-contractor work. CDM 2015 places duties on the PC for site coordination. The firm's policies typically require sub-contractors to be vetted, briefed, given clear scope, paid promptly and held to the same conduct standards as employees.",
+      "The scheme flags a missed notification (audit risk + potential scheme penalty); the Building Control Compliance Certificate to the customer is delayed; in some cases late notification fees apply; persistent missed notifications can put scheme membership at risk.",
       "SELECT is the campaigning trade association for electrical contracting in Scotland. It's the equivalent of the ECA but for Scotland, and it works alongside the SJIB (Scottish Joint Industry Board) which sets the Scottish equivalent of the JIB rules. Scottish apprentices are usually contracted under SJIB rules with SELECT-member firms.",
-      "Only deals with Scottish football.",
-      "Only deals with English universities.",
+      "For minor additions or alterations to an existing circuit (e.g. adding a single socket on an existing ring) that do NOT require a new circuit. New circuits, CU replacements and major alterations require an EIC + Schedule of Inspections + STR.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "SELECT is the Scottish equivalent of the ECA. The Scottish electrical contracting landscape uses SELECT (employer body) and the SJIB (Scottish JIB) for the bargaining and grading framework. The two are functionally similar to ECA + JIB but Scottish-specific. UK apprentices working in Scotland will encounter SJIB grading and SELECT-member firms.",
   },
@@ -173,12 +173,12 @@ const quizQuestions = [
     question:
       "Name a UK industry charity that an apprentice might encounter or use.",
     options: [
-      "There are no industry charities.",
+      "Personally bound under s.110 (helping someone else commit an unlawful act, e.g. participating in harassment) and as a witness who is duty-bound to co-operate with internal investigations. The apprentice's reputational and legal exposure grows if they participate in or condone discriminatory or harassing behaviour. The apprentice also has a route to RAISE concerns — internal complaints procedure, ACAS conciliation, Employment Tribunal claim — and is protected against victimisation under s.27 for raising them in good faith.",
+      "(a) Unreasonable in all the circumstances for the conductor to be dead; AND (b) reasonable in all the circumstances for the work to be done live; AND (c) suitable precautions taken to prevent injury. All three must be satisfied. The bar is deliberately high — the HSE prosecutes Reg 14 breaches harshly because the consequences are usually fatal.",
+      "A missing 514.13.1 main-earth notice is typically C3 (improvement recommended) where the earthing connection itself is sound, but can escalate to C2 (potentially dangerous) where the connection is at risk of being disturbed. A missing 514.9.1 schematic is normally C3. Codes depend on the specific install context and the inspector's professional judgement — these are typical not absolute.",
       "Mates in Mind (mental health awareness in construction), the Lighthouse Construction Industry Charity (financial, physical and mental wellbeing support for construction workers and their families), the Electrical Industries Charity (EIC — financial and welfare support for electrical industry workers and their families). Both Lighthouse Club and EIC run helplines and offer practical support including financial grants, mental health support and bereavement counselling.",
-      "Only the Red Cross.",
-      "Only Greenpeace.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Construction industry mental health and welfare is now a recognised priority. Mates in Mind raises awareness of mental health in construction. The Lighthouse Club runs the Construction Industry Helpline (24/7 free) and provides financial grants in crisis. The Electrical Industries Charity (EIC) provides similar support specifically for the electrical industry. Knowing these exist is itself important — apprentices should not feel they have to suffer in silence.",
   },
@@ -187,12 +187,12 @@ const quizQuestions = [
     question:
       "What's the AM2?",
     options: [
-      "A type of cable.",
       "The Achievement Measurement 2 — the long-standing JIB practical test for electrical installation. It's a multi-day practical assessment in a controlled environment covering installation, testing, fault-finding and inspection. Passing the AM2 is the line between 'Improver' and 'Electrician' on the JIB grading and is the practical centrepiece of the EPA for the Installation Electrician apprenticeship.",
-      "An MCB rating.",
-      "A type of consumer unit.",
+      "Consistently demonstrating: (1) framing work as a learning problem (\\\\\\\"what can we learn from this?\\\\\\\"), (2) acknowledging your own fallibility (\\\\\\\"I may have missed something — what do you see?\\\\\\\"), (3) modelling curiosity by asking genuine questions, (4) responding to mistakes with inquiry rather than blame, (5) following through on commitments made when people do speak up, and (6) explicitly thanking people for raising concerns even when the news is unwelcome",
+      "Some electrical work in dwellings (e.g. installation of fixed lighting in new builds, installation of certain controls and metering) falls within Part L scope as well as Part P. The contractor needs to confirm both Part P (electrical safety notifiable) AND Part L (energy efficiency requirements — minimum lamp efficacy, controls, etc.) compliance where applicable.",
+      "Self-Awareness: recognise the emotional response (possibly frustration or anxiety about change). Self-Regulation: manage the resistance impulse and reappraise the change as professional development. Motivation: connect the update to professional purpose and mastery. Empathy: understand that colleagues may be at different stages of acceptance. Social Skills: communicate the change constructively, help the team adapt, and create a learning environment for the new requirements",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "AM2 has been the standard practical test for UK electricians for decades. It's run by NET (National Electrotechnical Training) at approved centres around the country. The AM2 (and the more advanced AM2E and AM2S variants for renewables and supplementary topics) is the practical anchor of the EPA. Apprentices typically take the AM2 in the final months of the apprenticeship after the Employer, Tutor and Mentor agree they're ready.",
   },

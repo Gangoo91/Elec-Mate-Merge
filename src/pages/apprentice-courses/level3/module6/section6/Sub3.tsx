@@ -44,12 +44,12 @@ const checks = [
     question:
       "Which of the following SHOULD trigger a formal RFI rather than a verbal call between site and designer?",
     options: [
-      "The installer wants to swap one socket brand for an equivalent of the same spec.",
+      "To plan, manage, and coordinate health and safety during the pre-construction phase, including identifying and eliminating or controlling foreseeable risks",
+      "Ensuring that consumer units, distribution boards, socket outlets, switches, trunking runs and conduit are installed level and plumb for a professional finish and correct operation",
+      "Be DC-rated and within easy reach for emergency disconnection of the DC array. The AC isolator is separate. Both labelled per Reg 514 with relevant warnings (DC live during daylight even when AC is off).",
       "The installer needs a sub-main route changed because of an unforeseen structural beam, which will increase cable length from 42 m to 51 m and may move voltage drop closer to the 5 percent ceiling.",
-      "The installer needs to know what time the site cabin opens.",
-      "The installer wants to know the customer name.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "An RFI exists for changes that affect the design — anything that may move a calc, a cable spec, a device rating or a regulation compliance line. A route change that pushes voltage drop is exactly the case. Brand-equivalent substitutions of like-for-like spec do not need an RFI; they are normal install discretion. The test is: does this change require the designer to re-run a calc, update a schedule or sign off a deviation? If yes, it is an RFI.",
   },
@@ -58,10 +58,10 @@ const checks = [
     question:
       "BS 7671 splits installation responsibility into three roles. Which combination is correct?",
     options: [
-      "Architect (design), electrician (install), Building Control (test).",
+      "After a stressful incident (e.g., a near-miss or heated confrontation), you should delay important decisions and conversations for at least 20 minutes where possible, allowing the physiological stress response to subside before engaging",
       "Designer under Reg 132, constructor under Reg 134.1.1, and inspector / tester under Part 6 (Chapter 64). The same person can hold all three on a small job; they are different people on a larger one.",
-      "Project manager, foreman, supervisor.",
-      "QS (cost), site manager (build), client (sign-off).",
+      "A schematic shows the functional relationship between components using standard symbols, while a wiring diagram shows the physical routing and connections of cables and conductors",
+      "The third-party component must meet or exceed all critical specifications of the original including voltage, current, temperature ratings, certifications and dimensional compatibility",
     ],
     correctIndex: 1,
     explanation:
@@ -72,12 +72,12 @@ const checks = [
     question:
       "A formal RFI should ALWAYS include which of the following?",
     options: [
-      "The customer's signature.",
+      "The contractor (employer) for failing to provide adequate training under HSWA s.2 and WAH Regs; the supervisor for directing untrained persons; and potentially the principal contractor for failing to monitor under CDM 2015",
+      "The standard Schedule of Test Results captures the readings, but the spec or the contract often requires a separate countersigned witness sheet for safety-critical items (RCD trip, Zs, IR) — counter-signed by the commissioning engineer or a third-party inspector. Provides an additional audit trail and supports any subsequent dispute.",
       "Unique RFI number, date raised, raised by, drawing or document references, the question or proposed change, sketch or photo if helpful, requested response date, and a closeout section for the designer's response with date, name and any drawing revisions triggered.",
-      "The QS estimate of cost impact.",
-      "Just the question — formality slows things down.",
+      "They detect different fault current waveforms — Type AC: sinusoidal AC only. Type A: AC + pulsating DC. Type B: AC + pulsating DC + smooth DC. Modern installs with EVs/inverters need Type A or B.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "A formal RFI is a self-contained record. The unique number lets it be tracked through the project log. The drawing references show which document the question relates to. The proposed change with sketch lets the designer assess without a site visit. The closeout section captures the answer, the name of the designer who answered, and any revisions triggered. Without this structure the RFI becomes an undocumented chat that nobody can audit.",
   },
@@ -88,10 +88,10 @@ const quizQuestions = [
     id: 1,
     question: "What is an RFI in design and construction practice?",
     options: [
-      "A written warning from Building Control.",
+      "Yes — design Zs ≤ Table 41.3 max, ADS will clear in time. The design should still target lower Zs (under 0.8 × 2.73 = 2.18 Ω) to leave headroom for measurement uncertainty and operating-temperature confidence at handover.",
       "A Request For Information — the formal documented question raised by the installer or contractor when site reality needs the designer to clarify, decide or amend the design. The designer's response is the official record of the change.",
-      "A type of breaker.",
-      "A test instrument calibration certificate.",
+      "Cover today’s scope, the significant hazards relevant to today’s work, the controls in place, the emergency arrangements, and check understanding by asking questions back",
+      "Plan the apprentice\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s involvement across first fix (containment, cabling), second fix (accessories, connections), testing (dead and live tests), and certification \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2014 mapping each activity to specific NVQ criteria",
     ],
     correctAnswer: 1,
     explanation:
@@ -101,12 +101,12 @@ const quizQuestions = [
     id: 2,
     question: "Why is the RFI process structured rather than verbal?",
     options: [
-      "Because designers like paperwork.",
+      "Higher than the typical maximum expected value of 0.35 Ω for a TN-C-S supply, indicating a possible problem with the supply neutral-earth connection that should be reported to the DNO",
+      "Personal prosecution of the named individual director/manager/officer alongside (not instead of) the company. Same conviction, same fines, and on indictment up to two years' custody. s.37 is the legal mechanism for piercing the corporate veil in H&S prosecutions.",
       "Because verbal changes leave no audit trail. Reg 644.1.1 requires the EIC to be backed by documentation that matches the install; a phone call between site and office does not produce that documentation. Structured RFIs produce the trail.",
-      "Because the customer pays per RFI.",
-      "Because verbal is illegal under CDM 2015.",
+      "The return path for fault current includes the resistance of the mass of earth between the installation earth electrode and the supply transformer earth, which is much higher than a metallic return path",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Verbal change is the single largest source of EIC validity problems. Six months after a job, nobody remembers what the phone call decided, who agreed it, or whether the calc was re-run. The RFI structure forces every change through a paper trail that survives. Reg 644.1.1, CDM 2015 designer duty, and Building Safety Act 2022 golden thread all need that trail.",
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: "On a typical commercial fit-out, who can RAISE an RFI?",
     options: [
-      "Only the project manager.",
+      "IoT data must be extracted from the OT network via one-way data diodes or secured gateways in a DMZ, never by bridging the control network directly to the internet",
+      "BS 7671 537.2.4 lets you not isolate N where it can be reliably regarded as at earth potential — common for TN-S/TN-C-S, but isolate everything if you’re in any doubt",
+      "The instrument has been verified against traceable reference standards within a defined period, and a calibration certificate has been issued confirming its accuracy is within acceptable limits",
       "Anyone in the construction chain who needs design clarification or wants to propose a change — site supervisor, install electrician, commissioning engineer, M&E coordinator, fire engineer, customer.",
-      "Only chartered engineers.",
-      "Only the designer.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "RFIs are deliberately open at the raise end because design questions arise from anyone touching the work. The closeout end is restricted — only the responsible designer can answer an RFI that affects their design. Open raise, controlled close is the pattern that surfaces issues early without creating a bottleneck on questions.",
   },
@@ -127,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: "What is the typical SLA (service-level agreement) on RFI closeout for a commercial fit-out?",
     options: [
-      "There is no SLA.",
       "Typically 5 working days for non-urgent RFIs and 24 hours for urgent (work-stopping) RFIs. The contract usually specifies the SLA. Missed SLAs become a cost and programme issue and trigger escalation.",
-      "30 days for everything.",
-      "Same hour or the project is cancelled.",
+      "All the KSBs that the evidence genuinely demonstrates, including knowledge applied, skills used, and behaviours exhibited during the activity",
+      "A fixed or portable arm-and-base system that provides an anchor point above a confined space entry, functioning similarly to a tripod but suited to spaces where a tripod cannot be positioned",
+      "That the employer conducts their undertaking in a way that ensures, so far as reasonably practicable, that persons not in their employment are not exposed to risks to their health or safety",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "RFI SLAs are normally written into the construction contract. 5 working days for non-urgent and 24 hours for urgent is the typical commercial benchmark. Designers who miss SLAs slow the install and become the contractual cause of delay; designers who answer too quickly without checking the calc become the cause of safety issues. The discipline is to acknowledge fast and answer correctly within SLA.",
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     question:
       "Which BS 7671 regulation makes the EIC conditional on the design pack matching the install at handover?",
     options: [
-      "Reg 132.13.",
+      "Method 1 (R1+R2 — link line and cpc at distribution board, measure end-to-end at each accessory) and Method 2 (R2 only — using a long lead with one end at the MET)",
       "Reg 644.1.1 — for a new installation, any defect or omission revealed during inspection and testing shall be corrected before the Certificate is issued. A pack that disagrees with the install is a defect.",
-      "Reg 411.4.",
-      "Reg 514.13.",
+      "Break tasks into shorter segments with clear milestones, provide visual checklists, build in movement breaks, and use varied activities to maintain engagement",
+      "Up to 50 kW; the connection is governed by the same generation rules as PV — BS 7671 Section 551 (low voltage generating sets) and the ENA G98/G99 framework.",
     ],
     correctAnswer: 1,
     explanation:
@@ -155,12 +155,12 @@ const quizQuestions = [
     question:
       "Under the Building Safety Act 2022, the 'golden thread' of information includes which of the following?",
     options: [
-      "Only the EIC.",
+      "Product-specific minimum cable, fuse or breaker rating; protective device characteristic curves; PME compatibility statements; specific environmental ratings (IP / IK / temperature); installation method and clearances.",
+      "It requires effective planning, organisation, control, monitoring and review of the preventive measures. Reg 3 is 'do the assessment'; Reg 5 is 'run the management system that turns the assessment into actual on-site protection'. The 5+ employees recording threshold also applies.",
       "All design information, including drawings, calculations, schedules, RFIs, change orders, as-installed records and operations and maintenance documentation — kept current throughout the building's life and accessible to the dutyholders for the building.",
-      "Only the customer's signature.",
-      "Only the BIM model.",
+      "EAWR (almost always Reg 4, sometimes Reg 14 or 16) — brought by the Health and Safety Executive (HSE), or in a domestic context the Local Authority. HASAWA s.7 may be charged in parallel.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The golden thread is the BSA 2022 requirement that higher-risk residential buildings (HRRBs) carry a continuous, accessible record of every design and construction decision throughout their life. RFIs are part of that record because they are how design decisions are communicated and confirmed during construction. Sub 5 covers the golden thread in detail; the RFI workflow in this Sub is what feeds it.",
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: "What is 'chain of accountability' in the design-construct-inspect model?",
     options: [
-      "A type of cable.",
+      "Treat as confined space until proven otherwise. If unsure whether the foreseeable specified risk applies, escalate to specialist. The cost of treating-as-confined is small (extra controls); the cost of not treating-as-confined when warranted is potentially fatal.",
+      "That the installation incorporates an RCD, that the user should test it quarterly (or six-monthly per the older guidance) by pressing the test button, that the RCD should trip when tested, and that if it doesn't trip the user should call a competent electrician immediately. Maintains the protection by catching RCD failure before it matters.",
+      "To enable the customer to operate the install correctly, recognise fault conditions, perform any user-level routine checks (e.g. weekly fire-alarm test) and know when to call you back. Without them the customer can't discharge their own legal duties (e.g. fire-alarm log under the Regulatory Reform (Fire Safety) Order 2005) and is more likely to mis-use or under-maintain the kit.",
       "The named-person trail across the three BS 7671 roles. Designer of record (named on Reg 132 declaration), constructor of record (named on Reg 134.1.1 declaration), inspector / tester of record (named on Part 6 declaration). Each named role is accountable for the work in their box, and the chain is auditable from start to finish.",
-      "The list of subcontractors on a project.",
-      "The CDM 2015 Principal Designer's tasks.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Chain of accountability is the named-person trail through the three BS 7671 declarations on the EIC. Each name is accountable for the work in that role. The chain is what makes accident investigation, insurance claims and Building Safety Regulator audits work — the regulator can name the responsible person for any phase of the build.",
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: "An installer signs the construction declaration on the EIC. They are certifying:",
     options: [
-      "That they paid for the cable.",
       "That the construction work for which they have been responsible is to the best of their knowledge and belief in accordance with BS 7671. They are NOT certifying the design — that signature is in a separate box for the designer.",
-      "That the customer is happy.",
-      "That the test results are accurate.",
+      "Connect L of leg 1 (outgoing) to N of leg 2 (incoming) at the CU. The cross-connection forces measured current around the full loop in both directions when the meter is connected at any socket. Equivalent: link the line from one end of the ring to the neutral from the other.",
+      "To confirm the indicator was working immediately before AND immediately after the dead test, eliminating the risk of a faulty indicator giving a false dead reading",
+      "EAWR Reg 13/14 breach; HASAWA s.2/3/7 breach; potential RIDDOR; insurance void; personal prosecution; firm prosecution; reputational damage on HSE Public Register; possible JIB / scheme-body deregistration; criminal record for individuals at director level under s.37.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The construction declaration is specifically about workmanship — that the install was carried out competently, with correct materials, to acceptable standards and in accordance with the design pack. It does not certify the design (designer's box) and does not certify the inspection and testing (inspector's box). Each signature certifies its own scope. Honesty about scope is what the EIC structure requires.",
   },

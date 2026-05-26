@@ -37,8 +37,13 @@ const checks = [
     id: 'm4-s4-sub1-pme-25mm',
     question:
       'A single-phase domestic supply is TN-C-S (PME) with 25 mm² tails. What is the minimum cross-sectional area for the main protective bonding conductor to gas and water?',
-    options: ['6 mm²', '10 mm²', '16 mm²', '25 mm²'],
-    correctIndex: 1,
+    options: [
+      '6 mm²',
+      '25 mm²',
+      '16 mm²',
+      '10 mm²',
+    ],
+    correctIndex: 3,
     explanation:
       'BS 7671 Table 54.8 — for a PEN conductor of 35 mm² or less (which 25 mm² Cu equivalent is), the minimum copper-equivalent main bonding is 10 mm². Reg 544.11 mandates the PME bonding sizing comes from the PEN (supplier neutral), not the line conductor.',
   },
@@ -47,10 +52,10 @@ const checks = [
     question:
       'On a TN-S supply where PME conditions do NOT apply, how is the minimum main protective bonding conductor sized under Reg 544.11?',
     options: [
-      'Always 10 mm² regardless of installation.',
+      'To take reasonable care of their own health and safety and that of others who may be affected by their acts or omissions',
       'Not less than half the cross-sectional area required for the earthing conductor of the installation, with a 6 mm² minimum and 25 mm² maximum (in copper).',
-      'Always equal to the line conductor.',
-      'Always equal to the supplier neutral.',
+      'Court fees, time investment, enforcement difficulty, relationship damage, and whether the debtor has the means to pay — sometimes a negotiated settlement or write-off is more commercially sensible',
+      'To identify, quantify, and evaluate the potential ecological effects of a development, and to recommend avoidance, mitigation, and compensation measures',
     ],
     correctIndex: 1,
     explanation:
@@ -73,12 +78,12 @@ const quizQuestions = [
     question:
       'Which BS 7671 table sets the minimum main protective bonding conductor size for an installation supplied under PME conditions?',
     options: [
-      'Table 41.1',
-      'Table 51',
-      'Table 54.7',
+      'Escape route lighting plus high-risk task area lighting near switchgear',
       'Table 54.8 — main protective bonding conductor in relation to the PEN conductor of the supply.',
+      'Only the device nearest the fault operates, leaving other circuits unaffected',
+      'The changeover timer, the delta contactor, and the changeover auxiliary contacts',
     ],
-    correctAnswer: 3,
+    correctAnswer: 1,
     explanation:
       'Table 54.8 is the PME bonding sizing table. PEN ≤ 35 mm² → 10 mm² Cu equivalent bonding; PEN over 35 to 50 mm² → 16 mm²; over 50 to 95 mm² → 25 mm²; over 95 to 150 mm² → 35 mm²; over 150 mm² → 50 mm². Reg 544.11 mandates its use whenever PME applies.',
   },
@@ -86,7 +91,12 @@ const quizQuestions = [
     id: 2,
     question:
       'On a TN-C-S (PME) supply with a 70 mm² PEN, what is the minimum copper-equivalent CSA of the main protective bonding conductor to each extraneous-conductive-part?',
-    options: ['10 mm²', '16 mm²', '25 mm²', '35 mm²'],
+    options: [
+      '35 mm²',
+      '10 mm²',
+      '25 mm²',
+      '16 mm²',
+    ],
     correctAnswer: 2,
     explanation:
       'Table 54.8 — PEN over 50 mm² up to 95 mm² → 25 mm² Cu equivalent main bonding. A 70 mm² PEN typically appears on three-phase commercial supplies. The table assumes the worst-case PEN-broken scenario where the bonding may carry full neutral return current.',
@@ -95,8 +105,13 @@ const quizQuestions = [
     id: 3,
     question:
       'A small commercial unit has a TT supply with a 16 mm² Cu earthing conductor (corrosion-protected, mechanical protection). Reg 544.11 applies. What is the minimum main protective bonding conductor?',
-    options: ['4 mm²', '6 mm²', '10 mm²', '16 mm²'],
-    correctAnswer: 2,
+    options: [
+      '6 mm²',
+      '4 mm²',
+      '16 mm²',
+      '10 mm²',
+    ],
+    correctAnswer: 3,
     explanation:
       'Reg 544.11 — bonding "not less than half the cross-sectional area required for the earthing conductor". 16 ÷ 2 = 8 mm². Standard sizes are 6 / 10 / 16, so round up to the next standard size: 10 mm². Minimum allowed is 6 mm² but the half rule pushes it to 10. Maximum need not exceed 25 mm² Cu.',
   },
@@ -105,12 +120,12 @@ const quizQuestions = [
     question:
       'Why does BS 7671 size PME main bonding against the supplier neutral and not against the installation line conductor?',
     options: [
-      'For aesthetic consistency.',
       "Because in a broken-PEN fault on PME, the entire installation's neutral return current can flow back to ground via the bonding to extraneous-conductive-parts (gas, water, structural steel). Sizing against the PEN ensures the bonding conductor doesn't melt before it is reset.",
-      'Because copper is cheaper.',
-      'Because the regulation was a typo.',
+      "A tethered charger has the charging cable permanently attached to the EVSE unit (convenient for home use — just plug into the vehicle), while a socketed charger has a Type 2 socket on the unit and the user provides their own cable (more flexible for workplace/public use where different cable lengths and vehicle connectors may be needed)",
+      "A file containing information needed to manage health and safety during future construction, maintenance and demolition — handed to the client at project end and kept by them for the life of the structure",
+      "~17 A continuous, but sized to the inverter’s manufacturer spec (typically 16 A or 20 A, often a 16 A MCB feeding 2.5 mm² T&E for short runs). Allow for the inverter’s actual continuous AC output rating, not the panel DC rating.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A broken PEN on PME is the design case. Without the supplier neutral, every amp of installation current looks for a path back to source. The local earthing and bonding conductors become that path. Table 54.8 sizes them to handle it. That is why a 10 mm² bond is considered the floor for PME, even though half the CPC math would sometimes give a smaller answer.',
   },
@@ -119,12 +134,12 @@ const quizQuestions = [
     question:
       'A protective conductor (CPC, earthing conductor or bonding conductor) up to and including 6 mm² requires what level of insulation cover under Reg 543.3.201?',
     options: [
-      'No covering required.',
-      'A bare conductor is acceptable.',
+      'It is unreasonable in all the circumstances to make the conductor dead AND it is reasonable to work live AND suitable precautions are taken — all three tests must be met',
       'Covering at least equivalent to the insulation of a single-core non-sheathed cable, voltage rating at least 450/750 V — except where it forms part of a multicore cable or is run inside a metal enclosure used as the protective conductor.',
-      'PVC tape only.',
+      'Redesign the ductwork route to avoid the confined space entirely, or if that is not reasonably practicable, redesign to minimise the need for entry and provide information about the residual confined space risk',
+      'It connects to the metal casing of the heater. The casing is an exposed-conductive-part — Class I equipment requires CPC connection so a fault from the heating element to the casing causes fault current to flow back through the CPC and trip the protective device.',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Reg 543.3.201 — protective conductors up to 6 mm² must be covered by insulation equivalent to a 450/750 V single-core non-sheathed cable. The standard green/yellow single core sold for bonding meets this. Bare strap is allowed only inside metallic conduit/enclosure used as the protective conductor itself, or as part of a multicore.',
   },
@@ -132,8 +147,13 @@ const quizQuestions = [
     id: 6,
     question:
       'You are sizing a main earthing conductor for a TT installation where the buried portion runs through soil, protected against corrosion by a copper sheath but NOT mechanically protected. What is the minimum CSA from BS 7671 Table 54.1?',
-    options: ['10 mm² Cu', '16 mm² Cu', '25 mm² Cu', '50 mm² Cu'],
-    correctAnswer: 1,
+    options: [
+      '10 mm² Cu',
+      '25 mm² Cu',
+      '16 mm² Cu',
+      '50 mm² Cu',
+    ],
+    correctAnswer: 2,
     explanation:
       'Table 54.1 — buried earthing conductor, protected against corrosion (copper sheath) but not against mechanical damage → 16 mm² copper minimum. If neither protected, 25 mm² Cu / 50 mm² steel. If mechanically protected and corrosion protected, 2.5 mm² Cu (rare in practice).',
   },
@@ -142,12 +162,12 @@ const quizQuestions = [
     question:
       'A first-year asks why every main bonding conductor he sees on PME jobs is 10 mm² regardless of building. What is the right answer?',
     options: [
-      'Because 10 mm² is always required by law.',
+      'Visually inspect the tool for damage (cracked handles, worn insulation, damaged cutting edges, loose heads), check that VDE-rated tools show no insulation breaches, and confirm the tool is suitable for the task',
+      'Like parallel resistors. Two equal-IR cables in parallel halve the apparent IR. Three reduce it to one-third. To localise a low-IR fault on parallel cables, isolate one cable at a time and retest — the cable whose disconnection raises the reading is the lower-IR run.',
+      'Address each factor individually while recognising they interact: arrange ADHD-appropriate learning methods, provide language support for written work, signpost financial assistance, and coordinate with the college\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s support services',
       'Because most domestic PME supplies have a PEN of 35 mm² or less, which Table 54.8 maps to a 10 mm² minimum copper-equivalent main bonding. On bigger supplies (commercial three-phase, 70 mm² PEN) the bonding steps up to 16 mm² or 25 mm². Always read the supplier neutral first, then Table 54.8.',
-      'Because that size is the cheapest.',
-      'Because the DNO mandates 10 mm².',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Domestic 100 A single-phase PME supplies typically have 16 mm² or 25 mm² PEN (well under 35 mm²) → Table 54.8 minimum is 10 mm². So 10 mm² is the routine answer for domestic. Commercial supplies have larger PEN, larger bonding. The local DNO can require larger still — Table 54.8 says "Local distributor\'s network conditions may require a larger conductor."',
   },
@@ -156,12 +176,12 @@ const quizQuestions = [
     question:
       'Identify the standard cable colour code for a main protective bonding conductor under BS 7671 Reg 514.4.2.',
     options: [
-      'Black.',
-      'Brown with green sleeve.',
       'Green-and-yellow combination, exclusive to protective conductors. One colour at least 30% and at most 70% of the surface, the other colour the remainder.',
-      'Blue throughout.',
+      'Both towers must be from the same manufacturer and be the same type, and must be assembled to the same height before the bridge is fitted',
+      'A common-mode transient (lightning, switching surge) reaching the equipment via mains, data cable or earth — investigate SPDs, data isolation, surge events',
+      'Connect simultaneously-accessible exposed and extraneous conductive parts AND have continuity-test resistance per Reg 415.2.2: R <= 50V/Ia',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Reg 514.4.2 — green-and-yellow is reserved exclusively for protective conductors (earthing, CPC, main bonding, supplementary bonding, equipotential bonding). Cannot be used for any other purpose. The 30/70 ratio rule prevents the colour being mistaken for solid green (which is forbidden for live or protective conductors per 514.4.5).',
   },

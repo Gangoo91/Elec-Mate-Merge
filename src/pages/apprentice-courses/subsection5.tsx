@@ -32,10 +32,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'What is a proving unit used for?',
     options: [
-      'To measure voltage accurately',
+      'Record, rectify, and re-inspect before sign-off',
       'To check that your voltage indicator is working',
-      'To test continuity of cables',
-      'To measure current flow',
+      'Earthing connection for the armour',
+      'Before any person enters the confined space',
     ],
     correctIndex: 1,
     explanation:
@@ -45,10 +45,10 @@ const quickCheckQuestions = [
     id: 2,
     question: "Why shouldn't you use a multimeter to prove dead?",
     options: [
-      "It's too expensive",
+      "It's too complicated to use",
       "It doesn't work properly",
       "It's not safe for isolation work",
-      "It's too complicated to use",
+      "It's too expensive",
     ],
     correctIndex: 2,
     explanation:
@@ -57,7 +57,12 @@ const quickCheckQuestions = [
   {
     id: 3,
     question: 'What is a good continuity reading typically close to?',
-    options: ['1000 ohms', '500 ohms', '100 ohms', '0 ohms'],
+    options: [
+      '1000 ohms',
+      '100 ohms',
+      '500 ohms',
+      '0 ohms',
+    ],
     correctIndex: 3,
     explanation:
       'A good continuity reading should be close to 0 ohms, indicating low resistance and good electrical connection.',
@@ -72,10 +77,10 @@ const Section1_4 = () => {
       id: 1,
       question: 'What is a proving unit used for?',
       options: [
-        'To measure voltage accurately',
+        'DC does not produce a changing magnetic flux',
         'To check that your voltage indicator is working',
-        'To test continuity of cables',
-        'To measure current flow',
+        'Loose connections, overloaded circuits, or supply problems',
+        'Chrysotile, amosite, and crocidolite',
       ],
       correctAnswer: 1,
       explanation:
@@ -85,12 +90,12 @@ const Section1_4 = () => {
       id: 2,
       question: 'Name two quantities a multimeter can measure.',
       options: [
+        'Weight and length',
         'Temperature and pressure',
         'Voltage and resistance',
-        'Weight and length',
         'Speed and frequency',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Multimeters can measure voltage (AC/DC), resistance (Ω), and current (A) in some models, making them versatile for electrical testing.',
     },
@@ -98,20 +103,25 @@ const Section1_4 = () => {
       id: 3,
       question: "Why shouldn't you use a multimeter to prove dead?",
       options: [
-        "It's too expensive",
         "It doesn't work properly",
-        "It's not safe for isolation work",
+        "It's too expensive",
         "It's too complicated to use",
+        "It's not safe for isolation work",
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         "Multimeters are not designed for proving dead - they're not safe for isolation work. Use GS38-compliant voltage indicators instead.",
     },
     {
       id: 4,
       question: 'What is a good continuity reading typically close to?',
-      options: ['1000 ohms', '500 ohms', '100 ohms', '0 ohms'],
-      correctAnswer: 3,
+      options: [
+        '0 ohms',
+        '500 ohms',
+        '100 ohms',
+        '1000 ohms',
+      ],
+      correctAnswer: 0,
       explanation:
         'A good continuity reading should be close to 0 ohms, indicating low resistance and good electrical connection.',
     },
@@ -127,8 +137,13 @@ const Section1_4 = () => {
     {
       id: 6,
       question: 'Which instrument is specifically designed for proving dead?',
-      options: ['Multimeter', 'Two-pole voltage indicator', 'Continuity tester', 'Clamp meter'],
-      correctAnswer: 1,
+      options: [
+        'Upsize the cable to the next CSA',
+        'Isolate the circuit from supply',
+        'Two-pole voltage indicator',
+        'Insulation resistance test',
+      ],
+      correctAnswer: 2,
       explanation:
         'Two-pole voltage indicators that comply with GS38 are specifically designed for safely proving circuits dead during isolation procedures.',
     },
@@ -136,20 +151,25 @@ const Section1_4 = () => {
       id: 7,
       question: 'What does CPC continuity testing verify?',
       options: [
+        'To prevent electric shock and equipment damage',
+        'A competent person who carried out or supervised the work',
+        'Using a lux meter to set light levels to industry standards',
         'Circuit protective conductor connection integrity',
-        'Current flow in the circuit',
-        'Voltage levels are correct',
-        'Insulation resistance values',
       ],
-      correctAnswer: 0,
+      correctAnswer: 3,
       explanation:
         'CPC (Circuit Protective Conductor) continuity testing verifies that the earth/protective conductor has a continuous, low-resistance path.',
     },
     {
       id: 8,
       question: 'Which safety standard applies to electrical test probes?',
-      options: ['BS 7671', 'GS38', 'BS EN 60204', 'IEC 61439'],
-      correctAnswer: 1,
+      options: [
+        'GS38',
+        'BS EN 60204',
+        'BS 7671',
+        'IEC 61439',
+      ],
+      correctAnswer: 0,
       explanation:
         'GS38 specifies safety requirements for electrical test equipment, including finger guards, fused leads, and insulated probes.',
     },

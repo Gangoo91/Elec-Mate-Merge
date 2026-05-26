@@ -81,8 +81,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which tool is best for cutting shapes in a sheet of plywood?',
-    options: ['SDS drill', 'Jigsaw', 'Hammer drill', 'Angle grinder'],
-    correctAnswer: 1,
+    options: [
+      'Hammer drill',
+      'SDS drill',
+      'Jigsaw',
+      'Angle grinder',
+    ],
+    correctAnswer: 2,
     explanation:
       'Jigsaws are specifically designed for cutting curves, shapes, and intricate cuts in wood, making them ideal for plywood cutting tasks.',
   },
@@ -99,12 +104,12 @@ const quizQuestions = [
     id: 4,
     question: 'Name one feature of a standard drill.',
     options: [
-      'Hammer action only',
       'Variable speed control',
+      'Hammer action only',
       'SDS chuck system',
       'Reciprocating blade',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Standard drills typically feature variable speed control, forward/reverse action, and keyless or keyed chucks for general drilling tasks.',
   },
@@ -112,10 +117,10 @@ const quizQuestions = [
     id: 5,
     question: 'Why should you let an SDS drill do the work rather than applying excessive force?',
     options: [
-      'It saves battery life',
+      'The relationship between valve stem position (travel) and flow rate',
       'It prevents damage to the bit and improves drilling efficiency',
-      'It reduces noise',
-      'It speeds up charging time',
+      'A risk matrix combining likelihood and severity',
+      'Cease work, secure tools and materials, and descend the tower safely',
     ],
     correctAnswer: 1,
     explanation:
@@ -125,28 +130,38 @@ const quizQuestions = [
     id: 6,
     question: 'Give one safety check to perform before using a power tool.',
     options: [
+      'Setting reference with launch, receive, and link test cords',
+      'Carbon dioxide (CO2) emissions per unit of energy',
       'Check for damage to the tool casing or power cord',
-      'Ensure the battery is fully charged',
-      'Clean the exterior surface',
-      'Check the instruction manual',
+      'Multimeter with data logging capability',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Inspecting for damage to the tool, cord, or battery pack is essential to identify potential electrical or mechanical hazards before use.',
   },
   {
     id: 7,
     question: 'What type of blade should be used in a jigsaw when cutting metal?',
-    options: ['Wood blade', 'Fine-tooth metal blade', 'Carbide tile blade', 'SDS shank'],
-    correctAnswer: 1,
+    options: [
+      'Wood blade',
+      'SDS shank',
+      'Carbide tile blade',
+      'Fine-tooth metal blade',
+    ],
+    correctAnswer: 3,
     explanation:
       'Fine-tooth metal blades are specifically designed for cutting metal materials, providing clean cuts and preventing overheating.',
   },
   {
     id: 8,
     question: 'Name one PPE item that should be worn when using a drill.',
-    options: ['Hard hat', 'Safety glasses', 'High-vis vest', 'Steel toe boots'],
-    correctAnswer: 1,
+    options: [
+      'Safety glasses',
+      'High-vis vest',
+      'Hard hat',
+      'Steel toe boots',
+    ],
+    correctAnswer: 0,
     explanation:
       'Safety glasses protect eyes from flying debris, dust, and particles that are commonly generated during drilling operations.',
   },

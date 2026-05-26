@@ -16,11 +16,11 @@ const quickCheckQuestions = [
       'Which UPS topology provides the highest level of power protection with zero transfer time?',
     options: [
       'Offline (standby) UPS',
-      'Line-interactive UPS',
       'Online double-conversion UPS',
+      'Line-interactive UPS',
       'All topologies provide the same level of protection',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Online double-conversion UPS provides the highest level of protection because the load is always powered from the inverter, which is continuously supplied by the rectifier/charger. There is zero transfer time because the load never experiences a switch from mains to battery — it is always on the inverter output. The rectifier converts AC to DC, and the inverter converts DC back to clean, regulated AC.',
   },
@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     id: 'ups-sizing',
     question: 'When sizing a UPS, what two parameters must be determined?',
     options: [
-      'Voltage and frequency',
+      'Mechanical Ventilation with Heat Recovery',
+      'Reduced current flow or open circuit',
       'kVA/kW rating and autonomy (runtime) required',
-      'Physical dimensions and weight',
-      'Number of outlets and cable length',
+      'Verify instrument CAT rating and prove on a known source',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'The two critical sizing parameters are: (1) the kVA/kW rating, which must be sufficient to support the total connected load, and (2) the autonomy (runtime), which is the time the UPS must support the load on battery power during a mains failure. The kVA rating is determined by the total load, and the autonomy is determined by the battery capacity.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 'ups-bypass',
     question: 'What is the purpose of the UPS bypass system?',
     options: [
-      'To increase the power output of the UPS',
       'To allow the load to be transferred to raw mains supply for UPS maintenance or in case of UPS failure',
-      'To charge the batteries faster',
-      'To reduce the noise level of the UPS',
+      'To ensure immediate activation when normal lighting fails, without requiring human intervention',
+      'A performance goal focuses on proving ability; a learning goal focuses on developing ability',
+      'To provide a formal documented system that authorises specific work at specific locations under defined safety conditions',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The bypass system allows the load to be transferred directly to the raw mains supply, bypassing the UPS electronics. This is essential for two purposes: (1) maintenance bypass — allows the UPS to be completely de-energised for servicing while maintaining power to the load; and (2) automatic bypass — transfers the load to mains if the UPS inverter fails or is overloaded, preventing a complete power loss.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'How often should UPS batteries typically be tested under a preventive maintenance programme?',
     options: [
-      'Once every 5 years',
       'Annually, with more frequent checks for critical installations',
-      'Only when a fault is suspected',
-      'Every month',
+      'The process of measuring quantities from drawings for pricing',
+      'BS EN 60903 (live working — insulating gloves)',
+      'Continuity and insulation resistance testing',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'UPS batteries should be tested at least annually as part of a preventive maintenance programme. Critical installations (data centres, hospitals) may require more frequent testing — quarterly or even monthly. Testing includes impedance testing of individual cells/blocks, visual inspection, temperature measurement, float voltage checks and periodic discharge testing.',
   },
@@ -71,12 +71,12 @@ const quizQuestions = [
     id: 1,
     question: 'In an offline (standby) UPS, during normal mains operation, the load is powered by:',
     options: [
-      'The inverter at all times',
-      'The battery at all times',
+      'Key design calculations, assumptions, and any as-built revisions',
       'The raw mains supply, filtered by a basic surge suppressor',
-      'A combination of mains and inverter',
+      'Sending consumption data to BMS or external counters',
+      'Regulation 4(1) — construction of systems to prevent danger',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'In an offline UPS, the load is powered directly from the mains supply during normal operation, with basic filtering and surge suppression. The inverter only activates when the mains fails, resulting in a brief transfer time (typically 5-12 ms). This is the simplest and cheapest UPS topology but provides the least protection.',
   },
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 2,
     question: 'A line-interactive UPS improves on the offline topology by adding:',
     options: [
-      'A second battery bank',
+      'SNMP (Simple Network Management Protocol) over Ethernet',
+      'To detect internal degradation that indicates a block approaching end of life',
       'An autotransformer (AVR) that regulates voltage without switching to battery',
-      'A diesel generator',
-      'Additional surge protection',
+      'Longer life, higher energy density and better high-temperature performance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A line-interactive UPS incorporates an autotransformer or buck-boost regulator that can adjust the output voltage without switching to battery operation. This allows the UPS to handle voltage sags and surges (within a range) without battery drain. Transfer to battery only occurs if the mains voltage falls outside the AVR correction range or fails completely.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 3,
     question: 'The power factor of a UPS load is important because:',
     options: [
-      'It determines the colour of the indicator lights',
+      'An autotransformer (AVR) that regulates voltage without switching to battery',
+      'Overheating of power electronics, leading to thermal shutdown or component failure',
+      'To detect internal degradation that indicates a block approaching end of life',
       'It affects the real power (kW) the UPS can deliver for a given kVA rating',
-      'It determines the battery type required',
-      'It affects the noise level of the UPS',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'UPS systems are rated in kVA (apparent power) and kW (real power). The relationship is: kW = kVA x power factor. A 10 kVA UPS with a power factor of 0.8 can deliver 8 kW of real power. Modern UPS systems typically have a unity (1.0) power factor, meaning kVA = kW. Older UPS systems with 0.8 power factor deliver 20% less real power than their kVA rating suggests.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     id: 4,
     question: 'VRLA batteries used in UPS systems stand for:',
     options: [
-      'Variable Resistance Lead Acid',
       'Valve Regulated Lead Acid',
+      'Variable Resistance Lead Acid',
       'Voltage Regulated Lithium Alkaline',
       'Very Reliable Long-life Acid',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'VRLA stands for Valve Regulated Lead Acid. These are sealed batteries with a pressure relief valve. They are maintenance-free (no electrolyte topping up required) and can be installed in any orientation. VRLA batteries include AGM (Absorbed Glass Mat) and gel types. They are the most common battery type in commercial UPS systems due to their reliability and lower maintenance requirements.',
   },
@@ -123,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the typical design life of VRLA batteries in a UPS system?',
     options: [
-      '1-2 years',
+      'Equal load on each phase with equal phase angles',
       '3-5 years (standard) or 10-12 years (long-life)',
-      '15-20 years',
-      '25+ years',
+      'Good conductivity, ductility, and corrosion resistance',
+      'Socket outlets rated up to 20A in domestic installations',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'During UPS maintenance, what is the purpose of impedance testing individual battery blocks?',
     options: [
-      'To check the voltage of each block',
+      'It affects the real power (kW) the UPS can deliver for a given kVA rating',
+      'An autotransformer (AVR) that regulates voltage without switching to battery',
       'To detect internal degradation that indicates a block approaching end of life',
-      'To verify the battery charger is working correctly',
-      'To measure the temperature of each block',
+      'Longer life, higher energy density and better high-temperature performance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Impedance testing measures the internal impedance of each battery block/cell. As a battery degrades, its internal impedance increases. By trending impedance values over time, it is possible to identify blocks that are approaching end of life before they fail during a mains outage. A block with impedance significantly higher than its baseline or its neighbours should be flagged for replacement.',
   },
@@ -150,20 +150,25 @@ const quizQuestions = [
     id: 7,
     question: 'A UPS maintenance bypass switch (external wrap-around bypass) allows:',
     options: [
-      'The batteries to be charged faster',
+      'SNMP (Simple Network Management Protocol) over Ethernet',
+      'Longer life, higher energy density and better high-temperature performance',
+      'To detect internal degradation that indicates a block approaching end of life',
       'The entire UPS to be isolated while maintaining power to the critical load',
-      'The UPS output voltage to be adjusted',
-      'Remote monitoring of the UPS',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An external maintenance bypass switch (often called a wrap-around bypass) allows the entire UPS — including the internal electronics, bypass and batteries — to be completely isolated while the load continues to receive power directly from the mains. This is essential for safe UPS maintenance, repair and replacement without shutting down the critical load.',
   },
   {
     id: 8,
     question: 'Which environmental factor most significantly reduces UPS battery life?',
-    options: ['Humidity', 'Elevated ambient temperature', 'Altitude', 'Vibration'],
-    correctAnswer: 1,
+    options: [
+      'Elevated ambient temperature',
+      'VAV (Variable Air Volume) box',
+      'Sagging cables creating trip hazards',
+      'They are inversely proportional',
+    ],
+    correctAnswer: 0,
     explanation:
       'Elevated ambient temperature is the single most significant factor in reducing UPS battery life. The Arrhenius equation states that for every 10°C increase above the recommended 20°C, battery life is approximately halved. A battery rated for 5 years at 20°C may last only 2.5 years at 30°C. This is why battery rooms and UPS installations must be adequately ventilated or air-conditioned.',
   },
@@ -171,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: 'UPS monitoring systems typically communicate using which protocol?',
     options: [
-      'Bluetooth only',
+      'Severity of generalised anxiety disorder symptoms',
       'SNMP (Simple Network Management Protocol) over Ethernet',
-      'Infrared',
-      'FM radio',
+      'Wild birds, certain wild animals and plants, and their habitats',
+      'Conductors are connected incorrectly, creating safety risks',
     ],
     correctAnswer: 1,
     explanation:
@@ -184,12 +189,12 @@ const quizQuestions = [
     id: 10,
     question: 'Capacitors in UPS systems require periodic replacement because:',
     options: [
-      'They run out of charge',
+      'An autotransformer (AVR) that regulates voltage without switching to battery',
+      'To detect internal degradation that indicates a block approaching end of life',
       'Electrolytic capacitors dry out over time, leading to increased ripple and potential failure',
-      'They become physically larger with age',
-      'Their colour changes indicating degradation',
+      'The entire UPS to be isolated while maintaining power to the critical load',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Electrolytic capacitors (used in rectifiers, inverters and DC bus filtering) dry out over time as the electrolyte evaporates, particularly at elevated temperatures. This leads to increased ESR (equivalent series resistance), higher ripple current, and eventually capacitor failure. Preventive replacement of capacitors is typically recommended at 7-10 year intervals for critical UPS systems.',
   },
@@ -198,12 +203,12 @@ const quizQuestions = [
     question:
       'Lithium-ion batteries are increasingly being used in UPS systems because they offer:',
     options: [
-      'Lower purchase cost than VRLA',
+      'Electrolytic capacitors dry out over time, leading to increased ripple and potential failure',
+      'SNMP (Simple Network Management Protocol) over Ethernet',
+      'It affects the real power (kW) the UPS can deliver for a given kVA rating',
       'Longer life, higher energy density and better high-temperature performance',
-      'No need for a battery management system',
-      'Simpler disposal requirements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Lithium-ion batteries offer several advantages over VRLA for UPS applications: 2-3x longer life (10-15+ years), 3x higher energy density (smaller and lighter), better performance at elevated temperatures, faster recharge times, and integrated BMS for cell-level monitoring. The higher purchase cost is offset by the longer life and reduced replacement frequency.',
   },
@@ -212,12 +217,12 @@ const quizQuestions = [
     question:
       'A common failure mode in UPS systems is the fan failure. What is the consequence of a failed cooling fan?',
     options: [
-      'No effect on UPS operation',
-      'Increased noise level only',
       'Overheating of power electronics, leading to thermal shutdown or component failure',
-      'Reduced battery charging speed',
+      'Longer life, higher energy density and better high-temperature performance',
+      'An autotransformer (AVR) that regulates voltage without switching to battery',
+      'The entire UPS to be isolated while maintaining power to the critical load',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'UPS power electronics (rectifier, inverter, IGBT modules) generate significant heat during operation. Cooling fans are essential to maintain safe operating temperatures. If a fan fails, internal temperatures will rise, potentially triggering a thermal alarm and automatic shutdown, or causing premature failure of capacitors, IGBTs and other heat-sensitive components. Fan replacement is a routine preventive maintenance task.',
   },

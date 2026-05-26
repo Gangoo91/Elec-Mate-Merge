@@ -51,10 +51,10 @@ const AM2Module5Section4 = () => {
       id: 'polarity-rectification',
       question: 'If polarity is reversed at a socket, what rectification must you record?',
       options: [
-        'Fix the polarity problem',
-        'Replace the socket',
+        'Q = A × v (volume flow rate equals area times velocity)',
+        'Eliminate the hazard at source, or substitute with something less hazardous',
         'Swap line and neutral connections into correct terminals at the socket outlet',
-        'Test the polarity again',
+        '3 V (RA × IΔn = 100 × 0.03 = 3 V) — passes comfortably.',
       ],
       correctIndex: 2,
       explanation:
@@ -64,12 +64,12 @@ const AM2Module5Section4 = () => {
       id: 'high-resistance-test',
       question: 'After correcting a high resistance joint, which test proves rectification?',
       options: [
-        'Continuity test',
         'Re-check Zs to confirm impedance is now within limits',
-        'Insulation resistance test',
-        'RCD test',
+        'Test armour and internal CPC separately',
+        'That the circuit is isolated and disconnected',
+        'Technical understanding helps manage building services',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'High resistance joints affect earth fault loop impedance (Zs), so re-testing Zs proves the repair is effective.',
     },
@@ -77,12 +77,12 @@ const AM2Module5Section4 = () => {
       id: 'rectification-components',
       question: 'What are the three essential components of professional rectification recording?',
       options: [
-        'Location + Time + Cost',
         'Action + Location + Re-test',
-        'Problem + Solution + Signature',
         'Fault + Tools + Materials',
+        'Problem + Solution + Signature',
+        'Location + Time + Cost',
       ],
-      correctIndex: 1,
+      correctIndex: 0,
       explanation:
         'Professional rectification must include: the specific action needed, exact location, and the re-test that proves safety.',
     },
@@ -93,10 +93,10 @@ const AM2Module5Section4 = () => {
       id: 1,
       question: 'Do you physically repair faults in AM2?',
       options: [
-        'Yes, repairs must be completed',
+        'Injecting anti-phase currents to cancel harmonics',
         'No - just describe rectification and re-testing',
-        'Only simple repairs',
-        'Depends on the fault type',
+        'Isolated system with no intentional connection to earth',
+        'Typically 0.9 or 0.95 lagging minimum',
       ],
       correctAnswer: 1,
       explanation:
@@ -106,10 +106,10 @@ const AM2Module5Section4 = () => {
       id: 2,
       question: 'How should rectification be phrased?',
       options: [
-        'As briefly as possible',
-        'Using technical jargon',
-        'Action + Location + Re-test',
         'In your own words',
+        'As briefly as possible',
+        'Action + Location + Re-test',
+        'Using technical jargon',
       ],
       correctAnswer: 2,
       explanation:
@@ -119,20 +119,25 @@ const AM2Module5Section4 = () => {
       id: 3,
       question: 'Give an example of rectification for an open circuit fault.',
       options: [
-        'Fix the break',
-        'Test continuity',
+        'Protection by double or reinforced insulation without earthing',
+        'Placing more weight on the scaffold than its design allows, which can cause collapse',
+        'To ensure the health, safety and welfare of all employees at work',
         'Reconnect line conductor at loose termination, then re-test continuity',
-        'Replace the cable',
       ],
-      correctAnswer: 2,
+      correctAnswer: 3,
       explanation:
         "Specific example: 'Reconnect line conductor at loose termination, then re-test continuity' shows exact action, location, and verification.",
     },
     {
       id: 4,
       question: 'What re-test confirms correction of a short circuit?',
-      options: ['Continuity test', 'Polarity test', 'Insulation resistance test', 'RCD test'],
-      correctAnswer: 2,
+      options: [
+        'Insulation resistance test',
+        'Daily or weekly for key metrics',
+        'Exactly as displayed on the meter',
+        'Total path length (out and back)',
+      ],
+      correctAnswer: 0,
       explanation:
         'Short circuits are detected by insulation resistance testing, so re-testing insulation resistance confirms the repair.',
     },
@@ -140,12 +145,12 @@ const AM2Module5Section4 = () => {
       id: 5,
       question: 'What rectification is required for a reversed polarity at a socket?',
       options: [
-        'Replace the socket',
-        'Test again',
+        'Apply safety factors to limits',
         'Swap conductors into correct terminals',
-        'Call supervisor',
+        'Visitor sign-in / fire register',
+        'It operates at the correct temperature setting',
       ],
-      correctAnswer: 2,
+      correctAnswer: 1,
       explanation:
         'Polarity faults require swapping line and neutral conductors into their correct terminals at the affected accessory.',
     },
@@ -153,10 +158,10 @@ const AM2Module5Section4 = () => {
       id: 6,
       question: 'After remaking a high resistance joint, what test proves safety?',
       options: [
-        'Visual inspection',
-        'Continuity test',
+        'Viewing the measurement scale at an angle',
+        'Borderline overcurrent due to undersized cable',
         'Zs test to confirm impedance within limits',
-        'Insulation resistance',
+        'The reduction factor applied to total connected load',
       ],
       correctAnswer: 2,
       explanation:
@@ -174,12 +179,12 @@ const AM2Module5Section4 = () => {
       id: 8,
       question: 'Why must you always include re-testing in your rectification statement?',
       options: [
-        "It's required by law",
         'To prove the circuit is safe after repair',
-        'To show your knowledge',
-        'To waste time',
+        'The purchase price of the equipment',
+        'To advise the employer on health and safety matters',
+        'The householder who commissioned the work',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Re-testing proves the circuit is safe and compliant after rectification - this is essential for professional electrical work.',
     },
@@ -187,10 +192,10 @@ const AM2Module5Section4 = () => {
       id: 9,
       question: 'How should you record a faulty accessory fault?',
       options: [
-        'Remove accessory',
+        'Employer, training provider (college), and apprentice',
         'Replace defective accessory with new unit, then re-test circuit',
-        'Mark as dangerous',
-        'Leave disconnected',
+        'Low resistance ohmmeter with 200mA minimum test current',
+        'Avoid hazardous manual handling so far as is reasonably practicable',
       ],
       correctAnswer: 1,
       explanation:
@@ -200,10 +205,10 @@ const AM2Module5Section4 = () => {
       id: 10,
       question: "What's the simple rule for rectification phrasing?",
       options: [
-        'Keep it brief',
-        'Use technical terms',
+        'Dust-tight and water jet protected',
+        'Interference between cables',
         'Action + Location + Re-test',
-        'Copy from textbooks',
+        'High humidity decreases resistance',
       ],
       correctAnswer: 2,
       explanation:

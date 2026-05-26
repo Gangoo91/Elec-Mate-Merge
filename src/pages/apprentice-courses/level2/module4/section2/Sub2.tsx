@@ -40,12 +40,12 @@ const checks = [
     question:
       "Why is PPE described as the LAST line of defence in the HSE's hierarchy of control?",
     options: [
-      'Because PPE is too expensive to use first.',
+      "Refuse. Reg 543.3.2 requires every connection or joint in a protective conductor to be accessible for inspection, testing and maintenance. A junction box buried in a wall void is not accessible. The right answer is to fit a continuous run by going back to the wholesaler for a longer length, or by terminating both ends at an accessible MJB inside the meter cabinet.",
+      "It catches a voltage indicator that failed silently between step 3 (prove before) and step 6 (test for dead). If the indicator broke after step 3, the \\\\\\\\\\\\\\\"dead\\\\\\\\\\\\\\\" reading at step 6 was unreliable; the step 7 re-prove confirms the indicator was still working when step 6 happened.",
       "Because PPE protects only the wearer (and only when worn correctly), it relies on the operative remembering, fitting and inspecting it, and it doesn't reduce the hazard itself. The hierarchy puts elimination, substitution, engineering controls and administrative controls ahead of PPE because each of those reduces the risk for everyone in the area without depending on individual behaviour.",
-      "Because PPE always fails — it's just for show.",
-      'Because the regulations forbid using PPE first.',
+      "Section 702 of BS 7671 — extensive supplementary bonding inside Zone 0, 1 and 2 around the pool (between the pool liner reinforcement, surrounding metalwork, ladders, lighting frames etc.) and tighter restrictions on equipment in each zone. Supplementary bonding generally cannot be omitted in pool zones — the wet skin / immersed body risk is far higher than a domestic bathroom.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The hierarchy is set out in Schedule 1 of MHSWR 1999 — eliminate, substitute, engineering controls (e.g. dust extraction), admin controls (e.g. work rotation), then PPE. PPE Regulations 1992 (as amended 2022) Reg 4 reinforces this — the employer must provide suitable PPE to employees who may be exposed to a risk to their health or safety while at work, EXCEPT where and to the extent that such risk has been adequately controlled by other means which are equally or more effective. PPE is what's left when you've exhausted the other controls.",
   },
@@ -54,12 +54,12 @@ const checks = [
     question:
       "You're about to start chasing a vertical channel into a sand-and-cement plastered wall to drop a 2.5 mm² T&E to a new socket. Walk-round done. What's the minimum PPE before you switch the chaser on?",
     options: [
-      'Safety glasses and gloves only.',
       "FFP3 dust mask (sand-and-cement chasing produces respirable crystalline silica), eye protection (impact-rated, Z87 / EN 166 F or higher), hearing protection (chasers run at 95-105 dB), cut-resistant gloves (debris and the chaser wheel), and ideally on-tool dust extraction (Class M for masonry dust). Boots and hi-vis are baseline site PPE on top of the task PPE.",
-      'A baseball cap and a t-shirt.',
-      'Nothing — the dust will settle quickly.',
+      "A culture in which near-misses are reported, analysed, learned from and used to improve the system. Typically supported by no-blame reporting, structured analysis (e.g. 5-whys), feedback to the team, and visible changes in practice. Heinrich\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s pyramid frames near-misses as the leading indicator of major incidents.",
+      "Accountability structures are important because EI development involves changing habitual patterns, which is difficult without external support. An effective structure might include: a development partner (colleague or mentor who checks in regularly), a reflective journal (tracking specific incidents and responses), regular self-assessments, and scheduled review points to evaluate progress against goals",
+      "It brings DC isolation requirements, additional DC overcurrent protection, fire-segregation considerations and (for grid-tied operation) the same G98/G99 anti-islanding requirements that apply to the PV inverter — typically all wrapped up by a hybrid inverter that handles PV plus battery.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Respirable crystalline silica is now an HSE priority and the workplace exposure limit is being kept under review. Chasing brick or sand-and-cement plaster generates fine silica dust that causes silicosis, COPD and lung cancer. FFP3 is the bare minimum and engineering controls (on-tool extraction) should be in place where reasonably practicable. The combination of dust + noise + impact debris is why chasing has the heaviest PPE load of any common electrician task short of live work.",
   },
@@ -68,12 +68,12 @@ const checks = [
     question:
       "Your colleague has a beard and is wearing a disposable FFP3 mask while chasing. Why is that a serious problem?",
     options: [
-      'It looks unprofessional.',
+      "PV output is roughly proportional to the irradiance hitting the panel (W/m²). Cell efficiency does drop slightly as the cells heat up — typically 0.3-0.5% per °C above 25°C — but UK roofs rarely sit above 50°C and the irradiance variation between a sunny and cloudy day is far larger than the temperature derate. So total annual yield (kWh) is dominated by how much sunlight the array sees, not how warm it is.",
+      "It's a generic template-trap. The RAMS hasn't been tailored to this site, the actual hazards aren't listed, and the controls are too vague to be useful. MHSWR 1999 Reg 3 requires the assessment to be 'suitable and sufficient' — generic boilerplate is the opposite of that. Raise it with the supervisor before signing, ask for site-specific content, and don't start work on the basis of the generic version.",
       "Disposable filtering facepiece masks rely on a tight face seal to filter the air. Facial hair (stubble or beard) inside the seal area allows leakage past the seal — typically 10-20% of inhaled air bypasses the filter. The mask is no longer providing the rated protection. INDG479 (HSE guidance on RPE fit testing) is explicit that disposable masks are not suitable for bearded workers — they need a powered air-purifying respirator (PAPR) with a loose-fitting hood.",
-      'Beards filter dust naturally.',
-      'It is fine if the mask is the right size.',
+      "LFP has a much higher thermal runaway threshold (around 270 degC vs around 150 degC for NMC) and a flatter, safer failure mode. In a fault scenario LFP releases far less energy and far less toxic gas. Energy density is lower (kWh per kg), so an LFP pack is physically larger than an NMC pack of equivalent capacity, but for a domestic wall-mounted unit space is rarely the binding constraint and the safety margin is worth the size penalty. UK insurers and the IET Code of Practice for Electrical Energy Storage Systems both lean strongly toward LFP for indoor domestic installations.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "RPE fit-testing under INDG479 is mandatory for tight-fitting masks (HSG53 puts the duty on the employer). A bearded worker cannot pass a face-fit test on a disposable FFP3 — there is no fix short of shaving or switching to a PAPR. Allowing a bearded worker to use a disposable mask is a breach of the COSHH Regulations 2002 Reg 7 (control of exposure) AND of PPE Regs 1992 Reg 4 (suitable PPE) because the PPE is not suitable for the user. It also voids the manufacturer's stated protection rating.",
   },
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       "What does 'the hierarchy of control' refer to in the context of selecting PPE?",
     options: [
-      'A military-style chain of command on site.',
+      "Most career-focused electricians start the 2391-52 within 12-18 months of AM2 — long enough to consolidate site experience but soon enough to keep momentum on qualifications. Earlier than that is technically possible but the practical content is easier to absorb after some installation experience. Later than that risks losing study habit and falling behind peers in pay and progression.",
       "The order in which the HSE expects risks to be controlled — eliminate the hazard first, then substitute with something less dangerous, then engineering controls (extraction, guards, RCDs), then administrative controls (work rotation, signage, training), and only then PPE. PPE is the last line because it depends on individual behaviour and only protects the wearer.",
-      'The pecking order of which apprentice carries which kit.',
-      'The order in which PPE is put on in the morning.',
+      "True adaptability requires actively regulating emotional resistance to change, maintaining effectiveness during ambiguity, proactively seeking new approaches, and flexing strategies without losing core values — it is an emotionally regulated, intentional process, not passive compliance",
+      "Safeguarding. Children are present during term time, which restricts when work can be done, requires DBS-checked operatives for any work where unsupervised contact with pupils is foreseeable, and adds rules around photography, conversation and movement around the building. Most major electrical work in schools is done during holidays for exactly this reason. The school's safeguarding lead is a key contact during prep.",
     ],
     correctAnswer: 1,
     explanation:
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       "Under the Personal Protective Equipment at Work Regulations 1992 (as amended 2022) Reg 4, when must an employer provide PPE?",
     options: [
-      'Only when the worker asks for it.',
+      "Identifying ways to deliver the required functionality and quality at lower cost — alternative materials with equivalent performance, alternative installation methods, alternative design approaches. Done collaboratively with the client / design team. Different from corner-cutting (which reduces quality).",
+      "The person or persons holding responsibility for the structure and exterior of an HRRB during occupation. Where there are multiple APs (e.g. block of flats with structure owned by one entity and external walls by another), the Principal Accountable Person is the one with the most significant responsibility for the structure.",
       "When the worker may be exposed to a risk to their health or safety while at work, EXCEPT where and to the extent that the risk has been or will be adequately controlled by other means which are equally or more effective. The 2022 amendment also extended the duty to cover limb (b) workers (some categories of casual / gig workers) as well as employees.",
-      "Only on construction sites.",
-      'Only for tasks involving electricity.',
+      "It establishes BS 7671 as a means of demonstrating compliance with EAWR — meaning a court will treat following BS 7671 as strong evidence of having met the EAWR duty, and ignoring it as strong evidence of not having met it. BS 7671 itself remains non-statutory.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The 2022 amendment (in force 6 April 2022) extended the regulations to cover limb (b) workers — broadly anyone who personally performs work for the employer and isn't a client of theirs. Before the amendment only employees in the strict sense were covered. The substantive PPE duty (Reg 4) still has the same wording — provide suitable PPE unless the risk is controlled by other means.",
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       "Which PPE category covers most electrical-installer hand protection — and what's the key consideration when choosing the right glove?",
     options: [
-      'Category I — minimal risk, comfort gloves.',
+      "Customer personal data (names, addresses, phone numbers, photos of their property), commercially sensitive information (the firm's pricing strategy, supplier discounts, employee salaries), and anything covered by a customer's NDA on commercial sites. The policy applies whether you're at work, in the pub, or on social media — the duty is on the data, not the location.",
+      "The EPC should be re-issued to reflect the new performance — heat pump, PV, MVHR, insulation upgrades all change the SAP rating. The MCS-certified installer normally arranges the EPC update. An updated EPC matters for: (a) future house sale (the buyer's solicitor sees current performance); (b) mortgage applications (lenders increasingly weight EPC ratings); (c) insurance (some insurers now adjust premium for low-EPC properties); (d) BUS grant requires a valid EPC at the time of install. EPCs are valid for 10 years from issue.",
+      "The inspector based on the installation type, condition, use, environment, and any defects identified — drawing on GN3 frequency tables as a starting point and adjusting for the specific installation. A property in good condition might justify the standard 5-year interval; one with multiple recent defects might justify a shorter cycle.",
       "Category II — intermediate risk, covers most cut/abrasion-resistant work gloves used for cable pulling, cable cutting, masonry handling. The key is matching the cut resistance level (EN 388 marking — A to F for cut, plus puncture, abrasion and tear ratings) to the actual task. A glove rated for general handling is not the right glove for cutting steel cable tray, and a heavily armoured glove makes fine termination work impossible.",
-      'Category III — complex risk, all electrical gloves.',
-      'Category IV — bespoke risk, custom only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "PPE is grouped into three categories under the EU/UK regulations: Category I (minimal risk — sun, gardening), Category II (intermediate — most general work PPE), Category III (complex / serious risk — voltage-rated gloves, fall arrest, RPE protecting against gases). EN 388 is the cut/abrasion standard; the marking on the glove tells you the resistance levels. Picking by EN rating against the task is what makes the choice defensible.",
   },
@@ -129,12 +129,12 @@ const quizQuestions = [
     question:
       "When are voltage-rated insulating gloves (Class 0, Class 1, Class 2 etc.) actually required?",
     options: [
-      'On every electrical job, all the time.',
       "Only when work has to be carried out on or near LIVE conductors and live work has been specifically authorised under EAWR 1989 Reg 14 (which itself requires specific justification — the work cannot reasonably be done dead, the operative is competent, suitable precautions are in place). For dead working — which is the default for almost all installation work after safe isolation — voltage-rated insulating gloves are not the relevant PPE.",
-      'When the customer asks for them.',
-      'Only on three-phase installs.',
+      "Significant. A south-facing roof at 30-40° pitch is the optimal UK orientation, posting 100% of reference yield. East-facing or west-facing roofs typically produce 80-85% of optimal. North-facing produces 50-65% (still positive but with much longer payback). Steeper pitches favour winter performance; shallower pitches favour summer performance. Flat roofs get an A-frame mount to set a target pitch and azimuth. The MCS Yield Calculator handles all of this — produces the kWh figure for the SAP and the customer handover.",
+      "Part 4, Chapter 41, Section 411, sub-section 3, regulation 4. So it lives in Part 4 (protection for safety), Chapter 41 (protection against electric shock), Section 411 (protective measure: automatic disconnection of supply), sub-section 411.3 (additional protection), regulation 411.3.4 (RCD on luminaires in domestic premises). The numbering encodes the location.",
+      "Your JIB grade and ECS card go with you — they're tied to you, not to the employer. The new employer will accept your existing grade and pay you the corresponding JIB rate (assuming they're a JIB-graded firm). If you move to a non-JIB firm your contract with them might pay above or below JIB rates by mutual agreement, but your grade is still recorded with JIB.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "EAWR 1989 Reg 14 makes live work the exception, not the rule. Voltage-rated gloves are PPE for live work — Class 0 to 4 referenced to the system voltage they're rated against. Most installation work is done dead following safe isolation, in which case the relevant gloves are mechanical-protection (cut/abrasion) gloves, not insulating gloves. Wearing voltage-rated gloves on dead work isn't dangerous, but it isn't required and they wear out faster on rough work.",
   },
@@ -143,10 +143,10 @@ const quizQuestions = [
     question:
       "You're about to use a 110V chop saw to cut a length of galvanised steel cable tray. The walk-round is done. What PPE combination is required for this single task?",
     options: [
-      'Just safety glasses.',
+      "No — the STR is the regulatory document. The instrument download is a useful audit trail and a way to capture test data at the point of testing, but the completed STR with all required fields and signatures is what satisfies Reg 642.4 and Section 644. Most professionals use the download to populate the STR rather than as a standalone replacement.",
       "Eye protection (impact-rated, EN 166 F minimum — chop saws produce hot metal sparks at speed), hearing protection (chop saws regularly exceed 100 dB), cut-resistant gloves (sharp edges on the cut tray), respiratory protection if cutting indoors with no extraction (galvanised steel coating produces zinc oxide fume at cutting temperature — the cause of metal-fume fever, sometimes called 'zinc shakes'), and sturdy boots with toe protection. Long sleeves to protect arms from sparks.",
-      'A hard hat only.',
-      'Trainers and shorts in summer.',
+      "An earth-loop tester is a dedicated instrument (Megger LRCD-M, Kewtech KT200) that measures earth fault loop impedance ONLY — typically faster, more accurate at low impedance values, and with higher injected test current than the EFLI function on a general MFT. Used by 2391 / 2394 testers and by commissioning engineers who need to verify many EFLI values quickly. The MFT's EFLI function is fine for L3 fault-diagnosis use; dedicated loop testers are improver-level kit.",
+      "Partnership = two or more people trading together without forming a Ltd company. Partnership is governed by the Partnership Act 1890 (very old statute). Each partner has unlimited personal liability for partnership debts including those incurred by other partners. Tax: each partner files Self Assessment on their share of profits. Less common than sole trader (one-person) or Ltd (limited liability) because you get unlimited liability AND have to share decisions with another partner.",
     ],
     correctAnswer: 1,
     explanation:
@@ -157,12 +157,12 @@ const quizQuestions = [
     question:
       "An apprentice arrives on site without their hi-vis vest because they forgot it in the van. The site rule says hi-vis is mandatory. What should they do?",
     options: [
-      'Carry on without — nobody will notice.',
+      "A loose terminal was not gas-tight, oxidisation built up at the contact face over weeks, contact resistance climbed, the joint heated under any current draw, the heat softened the terminal screw and conductor, and the connection failed mechanically. Reg 526.1 (durable electrical continuity and adequate mechanical strength) failure.",
+      "Free smartphone app from Lighthouse Construction Industry Charity providing wellbeing resources, helpline access, financial planning tools, mental health self-help content, and signposting to support services. Designed for construction workers; quick access to crisis helpline if needed. Available on App Store and Google Play.",
       "Stop. Either fetch the hi-vis from the van, borrow a spare from the site office (most large sites keep loaners), or step off site until properly equipped. Working without required PPE is a breach of HASAWA s.7 (failure to co-operate with the employer's safety arrangements) AND a breach of CDM 2015 Reg 15 (worker's duties). It's also a fast way to get sent home by the principal contractor and recorded against the firm's safety performance.",
-      'Borrow a customer\'s hi-vis from the kitchen.',
-      'Phone the office and complain about the rule.',
+      "The diary is the source from which NVQ portfolio entries are written up. The portfolio needs evidence of competence against specific units and learning outcomes — circuit installs, fault-finding, testing, customer interaction. The diary is where the contemporaneous record of those activities lives, with the level of detail needed to write up a portfolio entry months later. Portfolio entries written from a thin diary tend to be thin themselves.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Hi-vis on a construction site is administrative + PPE — it makes the wearer visible to plant operators and other trades. Skipping it is a textbook s.7 breach. The fix is procedural — fetch, borrow or step off — not 'work around it'. Small breaches like this are how a firm's safety culture either holds up or falls apart, and inspectors specifically look for them on routine site visits.",
   },
@@ -171,12 +171,12 @@ const quizQuestions = [
     question:
       "Why does the PPE Regulations require employees to inspect their PPE before each use, and what should they do if they find damage?",
     options: [
-      'To slow down the start of the working day.',
+      "Near-misses are the leading indicator of serious incidents. The HSE's accident triangle (and similar industrial-safety models) consistently shows that for every serious incident there are dozens or hundreds of near-misses with similar root causes that didn't quite escalate. Investigating and acting on near-misses is the most effective way to prevent the serious incident. Failing to report a near-miss leaves the same defect in place for the next person — who may not be as lucky.",
+      "Wide investigative powers — enter any premises (without warrant) at any reasonable time, take measurements / photographs / samples, inspect documents, require people to answer questions, take statements, take possession of articles or substances they think pose a risk, and seek a magistrate's warrant if entry is refused. Failure to co-operate is itself a separate criminal offence under s.33.",
+      "Pregnancy and maternity (s.18). The Act prohibits unfavourable treatment of women because of pregnancy or maternity leave during the 'protected period' (broadly, from the start of pregnancy to the end of maternity leave). This is a separate category to sex discrimination — pregnancy / maternity claims don't need a male comparator. It's one of the most enforced parts of the Act and a leading source of Employment Tribunal awards.",
       "PPE Regs Reg 7 places a duty on the employer to maintain (and replace) PPE. The corresponding duty on the employee under Reg 10 is to use the PPE in accordance with training and to report any loss of, or obvious defect in, the PPE. Damaged PPE doesn't provide the rated protection — a cracked safety glass lens, a dust mask with a broken strap, a hi-vis with the reflective material peeling off — all need to be taken out of service and replaced before use.",
-      'Because PPE is too cheap to last.',
-      'Because the customer wants to see it.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "PPE Regs split the maintenance duty between Reg 7 (employer) and Reg 10 (employee). The employee inspection is the day-to-day check; the employer's wider regime covers cleaning, replacement schedules and storage. Continuing to use damaged PPE breaches both regs and any post-incident investigation will use the damaged item as direct evidence of breach.",
   },
@@ -185,12 +185,12 @@ const quizQuestions = [
     question:
       "Hot work — using a gas torch to make a soldered joint on a copper bonding tail to a water pipe. What PPE and additional controls do you need beyond the standard install kit?",
     options: [
-      'Just the usual gloves.',
       "Leather (heat-resistant) gloves rather than synthetic, eye protection rated for thermal hazards (EN 166 with thermal-hazard marking is preferable), long sleeves of natural fibre (synthetics melt onto skin), a fire blanket or extinguisher within arm's reach, and clearance of combustible materials from the work area. On commercial premises a hot-works permit is usually required as an admin control on top of the PPE — see Sub 5 of this section.",
-      'A baseball cap.',
-      'Safety boots only.',
+      "Approved Electrician is a competence grade — the JIB grade above Electrician, awarded after AM2 plus experience and CPD. Mentor is a role — an experienced electrician (usually Approved or above) who is formally allocated to support a specific apprentice through portfolio, on-site learning and the AM2. The same person is often both.",
+      "Reg 14(2) requires every employee to inform their employer (or any other employee with specific responsibility for safety) of any work situation which they reasonably consider represented a serious and immediate danger to health and safety, AND any matter which they reasonably consider represented a shortcoming in the employer's protection arrangements for health and safety. The duty extends to near-misses, defective safe systems of work, and any condition the employee believes presents danger.",
+      "Capability to handle the 10/350 microsecond impulse waveform — partial direct-lightning current. Required at the installation origin where the building has an external lightning protection system (LPS) per BS EN 62305-3 or where direct-strike risk to the supply exists. Higher Iimp rating, higher Up than Type 2 / 3.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Hot work has its own controls because the consequence (fire) extends well beyond the moment of the work — a smouldering ember can ignite hours later. PPE is layered with admin controls (hot-works permit, fire watch for 30-60 minutes after work ceases) and engineering controls (clearance of combustibles, fire blanket on the substrate). On modern installs the soldered earth bond is being replaced by clamp-on connections precisely to design out the hot-work risk.",
   },

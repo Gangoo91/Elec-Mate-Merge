@@ -34,7 +34,12 @@ const checks = [
   {
     id: 'vd-formula-check',
     question: 'The simplest equation for voltage drop along a cable is:',
-    options: ['Vd = V/I', 'Vd = I × R', 'Vd = P × t', 'Vd = ρ/L'],
+    options: [
+      'Vd = V/I',
+      'Vd = I × R',
+      'Vd = P × t',
+      'Vd = ρ/L',
+    ],
     correctIndex: 1,
     explanation:
       "Vd = I × R. Current times the resistance of the cable. That's it. Method A in Appendix 4 is just this with the right R for the cable run.",
@@ -44,12 +49,12 @@ const checks = [
     question:
       'BS 7671 Appendix 4 gives recommended voltage drop limits of:',
     options: [
-      '1% lighting and 2% other circuits',
       '3% lighting and 5% other circuits',
+      '1% lighting and 2% other circuits',
       '5% lighting and 10% other circuits',
       'No limit specified',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "3% for lighting, 5% for other final circuits, measured from the supply intake. Lighting gets the tighter limit because filament/discharge lamps lose noticeable output below ~95% of rated voltage.",
   },
@@ -57,12 +62,12 @@ const checks = [
     id: 'vd-loop-length-check',
     question: "Calculating voltage drop using mV/A/m, the 'L' is:",
     options: [
-      'The one-way length to the load',
+      'Both a 6 kW reduction and 50% improvement',
+      '3% of the nominal supply voltage',
       'The total loop length (out and back)',
-      'The CSA in mm²',
-      'Always 1 metre',
+      '70-95% depending on size and type',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "The mV/A/m table value is per metre of cable run. Single-phase circuit: the current goes out the line and back the neutral, so use the one-way route length — the table value already accounts for both legs of the loop.",
   },
@@ -86,28 +91,38 @@ const quizQuestions = [
     id: 2,
     question: 'Method B uses the formula:',
     options: [
-      'Vd = I × R',
+      '5 g/year for F-gas systems',
+      'Both series and shunt fields',
       'Vd = (mV/A/m × I × L) ÷ 1000',
-      'Vd = V × I × t',
-      'Vd = P / V',
+      'Overheating and increased losses',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Method B is the Appendix 4 shortcut: tabulated mV per amp per metre, multiplied by current and length, divided by 1000 to convert millivolts to volts.",
   },
   {
     id: 3,
     question: "What's the recommended voltage drop limit for a domestic socket circuit?",
-    options: ['1%', '3%', '5%', '10%'],
-    correctAnswer: 2,
+    options: [
+      '3%',
+      '1%',
+      '10%',
+      '5%',
+    ],
+    correctAnswer: 3,
     explanation:
       "5% for non-lighting final circuits — that's 11.5 V on a 230 V supply. 3% for lighting. Anything above and equipment misbehaves; motors struggle to start and electronics drop out.",
   },
   {
     id: 4,
     question: 'A 30 m run of 2.5 mm² copper T&E (mV/A/m = 18) carrying 16 A. Voltage drop ≈',
-    options: ['4.3 V', '8.6 V', '17.3 V', '0.86 V'],
-    correctAnswer: 1,
+    options: [
+      '8.6 V',
+      '4.3 V',
+      '17.3 V',
+      '0.86 V',
+    ],
+    correctAnswer: 0,
     explanation:
       "Vd = (18 × 16 × 30) ÷ 1000 = 8.64 V. As a percentage: 8.64 / 230 = 3.8%. Inside the 5% socket limit.",
   },
@@ -117,8 +132,8 @@ const quizQuestions = [
     options: [
       'CSA increases',
       'Length increases',
-      'Voltage increases',
       'Cable is shortened',
+      'Voltage increases',
     ],
     correctAnswer: 1,
     explanation:
@@ -128,12 +143,12 @@ const quizQuestions = [
     id: 6,
     question: 'Quickest fix when a circuit fails the voltage drop limit?',
     options: [
-      'Use thinner cable',
+      'Age, environment, and original standards',
+      'Misreading questions and careless errors',
       'Upsize the cable to the next CSA',
-      'Increase the load',
-      'Increase the supply voltage',
+      'Decreases (derating required)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Doubling the CSA roughly halves the resistance and the voltage drop. You can rarely change route length, can't change ρ, can't change the load — A is the lever.",
   },
@@ -141,12 +156,12 @@ const quizQuestions = [
     id: 7,
     question: 'On a three-phase balanced load, voltage drop calculations use:',
     options: [
-      'The same mV/A/m as single-phase',
+      'Equipment is maintained in efficient state, working order and good repair',
+      'That employers prevent or adequately control exposure to hazardous substances',
+      'Licensed, notifiable non-licensed (NNLW), and non-licensed',
       'A different mV/A/m value from the three-phase column of Appendix 4',
-      'The line-to-line voltage divided by 3',
-      'No calculation needed',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Appendix 4 has separate single-phase and three-phase mV/A/m columns. The √3/2 ratio between them is geometric, not 'small neutral current': single-phase mV/A/m is loop voltage drop (line + neutral, 2 conductors), three-phase mV/A/m is line-only (in a balanced 3-phase system the neutral current is approximately zero, so the neutral conductor doesn't contribute). Multiply by √3 for three-phase line-to-line, divide by 2 for single-leg vs loop.",
   },
@@ -154,12 +169,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why does excessive voltage drop matter beyond just regulations?',
     options: [
-      'It increases the supply voltage',
       'It cuts equipment output, makes motors struggle to start, dims lights and wastes energy as cable heat',
-      'It improves efficiency',
-      "It doesn't actually matter",
+      'The apprentice is at R1 readiness and needs S1 Directing — full step-by-step guidance and close supervision',
+      'Suitable first aid facilities and arrangements, including trained first aiders',
+      'A new installation OR an addition/alteration that introduces a new circuit',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The volts you lose in the cable are dissipated as heat (I²R losses) and the load doesn't get its rated voltage. Motors stall, lamps dim, electronics drop out, kettle takes longer. The reg limit is the symptom, not the cause.",
   },

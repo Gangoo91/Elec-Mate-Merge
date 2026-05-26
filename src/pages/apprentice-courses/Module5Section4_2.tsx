@@ -15,10 +15,10 @@ const quickCheckQuestions = [
     id: 1,
     question: 'Why should deliveries be scheduled to match project phases?',
     options: [
-      'To save money',
+      'BRUKL (Building Regulations UK Part L)',
       'To prevent overcrowding, damage, and theft',
-      'To impress suppliers',
-      "It's not necessary",
+      'Both overcurrent and earth leakage',
+      'It\\\\\\\'s converted to heat, sound, or other forms',
     ],
     correctIndex: 1,
     explanation:
@@ -28,10 +28,10 @@ const quickCheckQuestions = [
     id: 2,
     question: 'What should you always check upon receiving a delivery?',
     options: [
-      'Only the quantity',
-      'Only the condition',
+      'Digital contact signal (dry contact)',
+      'Trips on AC sinusoidal, pulsating DC and smooth DC',
       'Quantities, specifications, and condition',
-      'Just sign the delivery note',
+      'Write \\\\\\\\\\\\\\\'>200 MΩ\\\\\\\\\\\\\\\' or meter limit',
     ],
     correctIndex: 2,
     explanation:
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Name one risk of ordering materials too early.',
     options: [
-      'Better prices',
+      'Less than 1° (ideally <0.5°)',
+      'During design development before construction',
+      'Controlling fresh air intake in HVAC systems',
       'Theft, damage, or cluttered storage',
-      'Faster installation',
-      'Happier clients',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Early deliveries create risks of theft, weather damage, and cluttered storage that can impede other work.',
   },
@@ -57,10 +57,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the main purpose of scheduling phased deliveries?',
     options: [
-      'To save on delivery costs',
+      'Transformer upgrade, parallel operation or on-site generation',
       'To match project phases and prevent overcrowding or damage',
-      'To reduce paperwork',
-      'To speed up installation',
+      'A safe location where evacuated personnel gather to be accounted for',
+      'At least 1.6 times the downstream fuse rating',
     ],
     correctAnswer: 1,
     explanation:
@@ -77,8 +77,13 @@ const quizQuestions = [
   {
     id: 3,
     question: 'Name one factor you must consider when planning material orders.',
-    options: ['Weather conditions', 'Supplier lead times', 'Site parking', 'Worker preferences'],
-    correctAnswer: 1,
+    options: [
+      'Site parking',
+      'Weather conditions',
+      'Worker preferences',
+      'Supplier lead times',
+    ],
+    correctAnswer: 3,
     explanation:
       'Supplier lead times are critical for ensuring materials arrive when needed, especially for specialist items.',
   },
@@ -86,12 +91,12 @@ const quizQuestions = [
     id: 4,
     question: 'What should be checked immediately when deliveries arrive?',
     options: [
-      "Only the delivery driver's ID",
       'Quantities, specifications, and condition',
-      'Just the price',
-      'Only the delivery time',
+      'Ensuring balanced loading across all phases',
+      'Pressure measured relative to atmospheric pressure',
+      'Power ratings, current capacity, and safety margins',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'All deliveries must be checked for correct quantities, right specifications, and good condition before acceptance.',
   },
@@ -99,10 +104,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the risk of ordering specialist items late?',
     options: [
-      'Higher costs',
+      'To all conductors that could become live',
       'Project delays due to long lead times',
-      'Poor quality',
-      'Delivery problems',
+      'Upgrading to LED lighting with controls',
+      'Gas and oil fault protection',
     ],
     correctAnswer: 1,
     explanation:
@@ -113,11 +118,11 @@ const quizQuestions = [
     question: 'Name one storage best practice for cables.',
     options: [
       'Store outside for easy access',
-      'Store in dry, secure conditions',
       'Stack as high as possible',
+      'Store in dry, secure conditions',
       'Leave on delivery pallets',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Cables must be stored in dry, secure conditions to prevent moisture damage and theft.',
   },
@@ -125,12 +130,12 @@ const quizQuestions = [
     id: 7,
     question: 'What should you do if goods arrive damaged?',
     options: [
-      'Use them anyway',
+      'Isolate, Test, Prove dead, Lock off',
+      'Safety override functions',
+      'Building Regulations Part B and BS 7671',
       'Reject or return them immediately',
-      'Repair them on site',
-      'Accept and claim later',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Damaged goods should be rejected immediately and replacements requested to avoid safety and quality issues.',
   },
@@ -138,19 +143,24 @@ const quizQuestions = [
     id: 8,
     question: 'Why should you avoid bulk deliveries too early?',
     options: [
-      "It's more expensive",
       'Risk of damage, theft, or cluttered storage',
-      'Workers prefer smaller deliveries',
-      "Suppliers don't like it",
+      'To highlight changes and modifications',
+      'Current and the cable’s resistance',
+      'Regulations 411.3.1.1 and 411.3.1.2',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Early bulk deliveries create storage problems and increase risks of theft, damage, and site congestion.',
   },
   {
     id: 9,
     question: 'What document confirms the details of delivered goods?',
-    options: ['Invoice', 'Delivery note', 'Purchase order', 'Receipt'],
+    options: [
+      'Invoice',
+      'Delivery note',
+      'Purchase order',
+      'Receipt',
+    ],
     correctAnswer: 1,
     explanation:
       'The delivery note details what was actually delivered and must be checked against the original order.',
@@ -159,12 +169,12 @@ const quizQuestions = [
     id: 10,
     question: 'Give one benefit of building strong relationships with suppliers.',
     options: [
-      'Free materials',
+      'Quickly narrows down fault location by halving the problem',
+      'Prevent fire spread through containment openings',
       'Better service, reliable deliveries, or priority during shortages',
-      'No delivery charges',
-      'Automatic ordering',
+      'Inhalation, skin absorption, ingestion, and injection',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Strong supplier relationships provide better service, priority during shortages, and more reliable deliveries.',
   },

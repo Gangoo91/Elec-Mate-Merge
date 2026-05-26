@@ -19,21 +19,81 @@ const DESCRIPTION =
   'Efficiency at any load, voltage regulation %, per-unit impedance, all-day efficiency, Ecodesign Tier 2 caps, vector groups and the loss-evaluation maths used on commercial transformer specifications.';
 
 const checks = [
-  { id: 'l3-m3-4-5-eta', question: '50 kVA transformer, P_fe = 0.3 kW, P_cu_FL = 0.7 kW. Efficiency at full load with pf 0.9:', options: ['90 %', '95 %', '97.8 %', '99 %'], correctIndex: 2, explanation: 'P_out = 50 × 0.9 = 45 kW. Loss = 0.3 + 0.7 = 1 kW. P_in = 46. η = 45/46 = 97.83 %.' },
-  { id: 'l3-m3-4-5-reg', question: 'Transformer no-load secondary 232 V, full-load secondary 220 V. Regulation:', options: ['3 %', '5.2 %', '5.5 %', '12 %'], correctIndex: 1, explanation: 'Regulation = (V_NL - V_FL) / V_NL × 100 = (232-220)/232 × 100 = 5.17 % ≈ 5.2 %.' },
-  { id: 'l3-m3-4-5-30pct', question: 'Same 50 kVA transformer at 30 % load, pf 0.85, efficiency:', options: ['90 %', '95 %', '97 %', '99 %'], correctIndex: 2, explanation: 'P_out = 0.3 × 50 × 0.85 = 12.75 kW. P_cu = 0.7 × 0.09 = 0.063 kW. Loss = 0.3 + 0.063 = 0.363 kW. η = 12.75/(12.75+0.363) = 97.2 %.' },
-  { id: 'l3-m3-4-5-peak', question: 'Peak efficiency for that 50 kVA transformer occurs at what load fraction?', options: ['25 %', '50 %', '65 %', '100 %'], correctIndex: 2, explanation: 'Peak η at x = √(P_fe/P_cu_FL) = √(0.3/0.7) = √0.429 = 0.655 ≈ 65 %. Above this point copper loss dominates; below, iron loss dominates.' },
+  { id: 'l3-m3-4-5-eta', question: '50 kVA transformer, P_fe = 0.3 kW, P_cu_FL = 0.7 kW. Efficiency at full load with pf 0.9:', options: [
+    '90 %',
+    '97.8 %',
+    '95 %',
+    '99 %',
+  ], correctIndex: 1, explanation: 'P_out = 50 × 0.9 = 45 kW. Loss = 0.3 + 0.7 = 1 kW. P_in = 46. η = 45/46 = 97.83 %.' },
+  { id: 'l3-m3-4-5-reg', question: 'Transformer no-load secondary 232 V, full-load secondary 220 V. Regulation:', options: [
+    '12 %',
+    '3 %',
+    '5.5 %',
+    '5.2 %',
+  ], correctIndex: 3, explanation: 'Regulation = (V_NL - V_FL) / V_NL × 100 = (232-220)/232 × 100 = 5.17 % ≈ 5.2 %.' },
+  { id: 'l3-m3-4-5-30pct', question: 'Same 50 kVA transformer at 30 % load, pf 0.85, efficiency:', options: [
+    '90 %',
+    '95 %',
+    '99 %',
+    '97 %',
+  ], correctIndex: 3, explanation: 'P_out = 0.3 × 50 × 0.85 = 12.75 kW. P_cu = 0.7 × 0.09 = 0.063 kW. Loss = 0.3 + 0.063 = 0.363 kW. η = 12.75/(12.75+0.363) = 97.2 %.' },
+  { id: 'l3-m3-4-5-peak', question: 'Peak efficiency for that 50 kVA transformer occurs at what load fraction?', options: [
+    '65 %',
+    '25 %',
+    '100 %',
+    '50 %',
+  ], correctIndex: 0, explanation: 'Peak η at x = √(P_fe/P_cu_FL) = √(0.3/0.7) = √0.429 = 0.655 ≈ 65 %. Above this point copper loss dominates; below, iron loss dominates.' },
 ];
 
 const quizQuestions = [
-  { id: 1, question: 'Voltage regulation is:', options: ['Same as efficiency', '(V_NL - V_FL) / V_NL × 100 %', 'V_FL / V_NL', 'Tap changer setting'], correctAnswer: 1, explanation: 'Regulation = drop in secondary voltage from no-load to full-load, expressed as % of no-load.' },
-  { id: 2, question: 'Typical UK distribution transformer regulation:', options: ['1 %', '3-7 %', '15 %', '25 %'], correctAnswer: 1, explanation: '4-6 % typical for distribution units. Higher reg means more drop on load — limits LV network reach.' },
-  { id: 3, question: 'Energy efficiency over a day depends on:', options: ['Only the peak load', 'Load profile through 24 h, plus iron loss being constant', 'Frequency', 'Phase angle'], correctAnswer: 1, explanation: 'All-day efficiency factors the time spent at each load level. Iron loss runs 24 h regardless.' },
-  { id: 4, question: 'A transformer running 24 h with 5 kW iron loss wastes how many kWh per year (approximate)?', options: ['4380', '8760', '43800', '0'], correctAnswer: 2, explanation: '5 kW × 8760 h/year = 43800 kWh/year. At 15 p/kWh that\'s £6570/year just on no-load loss.' },
-  { id: 5, question: 'Regulation increases with:', options: ['Lower load', 'Higher load and worse pf', 'Iron loss', 'Frequency'], correctAnswer: 1, explanation: 'Regulation = I × Z_eq drop. More current = more drop. Inductive loads make it worse.' },
-  { id: 6, question: 'Per-unit impedance Z_pu of typical UK distribution transformer:', options: ['1 %', '4-6 %', '20 %', '50 %'], correctAnswer: 1, explanation: '4-6 % is standard. Compromise between regulation (low Z preferred) and fault current limiting (high Z preferred).' },
-  { id: 7, question: 'Higher Z_pu means:', options: ['Lower regulation', 'Lower fault current and higher regulation', 'Lower no-load loss', 'Lower copper loss'], correctAnswer: 1, explanation: 'Z_pu acts as a series impedance. Higher Z = more voltage drop on load AND lower fault current downstream.' },
-  { id: 8, question: 'Tap changers compensate for:', options: ['Frequency drift', 'Variable load and supply voltage to keep secondary voltage near nominal', 'Phase rotation', 'Power factor'], correctAnswer: 1, explanation: 'Off-circuit tap changers select different turns to bias the ratio up or down — used when supply voltage drifts away from design.' },
+  { id: 1, question: 'Voltage regulation is:', options: [
+    'Centrifugal (end-suction or inline)',
+    '(V_NL - V_FL) / V_NL × 100 %',
+    'To prove safety and compliance',
+    'Omnidirectional operation',
+  ], correctAnswer: 1, explanation: 'Regulation = drop in secondary voltage from no-load to full-load, expressed as % of no-load.' },
+  { id: 2, question: 'Typical UK distribution transformer regulation:', options: [
+    '15 %',
+    '1 %',
+    '3-7 %',
+    '25 %',
+  ], correctAnswer: 2, explanation: '4-6 % typical for distribution units. Higher reg means more drop on load — limits LV network reach.' },
+  { id: 3, question: 'Energy efficiency over a day depends on:', options: [
+    'Measuring pressure drop across a flow restriction',
+    'Anxiety, depression, stress, worry, panic, dread, terror',
+    'Offsets should only be used for residual emissions after 90%+ reduction',
+    'Load profile through 24 h, plus iron loss being constant',
+  ], correctAnswer: 3, explanation: 'All-day efficiency factors the time spent at each load level. Iron loss runs 24 h regardless.' },
+  { id: 4, question: 'A transformer running 24 h with 5 kW iron loss wastes how many kWh per year (approximate)?', options: [
+    '43800',
+    '8760',
+    '4380',
+    '0',
+  ], correctAnswer: 0, explanation: '5 kW × 8760 h/year = 43800 kWh/year. At 15 p/kWh that\'s £6570/year just on no-load loss.' },
+  { id: 5, question: 'Regulation increases with:', options: [
+    'Lower load',
+    'Higher load and worse pf',
+    'Frequency',
+    'Iron loss',
+  ], correctAnswer: 1, explanation: 'Regulation = I × Z_eq drop. More current = more drop. Inductive loads make it worse.' },
+  { id: 6, question: 'Per-unit impedance Z_pu of typical UK distribution transformer:', options: [
+    '1 %',
+    '20 %',
+    '4-6 %',
+    '50 %',
+  ], correctAnswer: 2, explanation: '4-6 % is standard. Compromise between regulation (low Z preferred) and fault current limiting (high Z preferred).' },
+  { id: 7, question: 'Higher Z_pu means:', options: [
+    'DC isolation and dual energy source considerations',
+    'A blue circular sign (e.g., \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'Hard hats must be worn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\')',
+    '1 unit on the drawing equals 50 units in real life',
+    'Lower fault current and higher regulation',
+  ], correctAnswer: 3, explanation: 'Z_pu acts as a series impedance. Higher Z = more voltage drop on load AND lower fault current downstream.' },
+  { id: 8, question: 'Tap changers compensate for:', options: [
+    'Variable load and supply voltage to keep secondary voltage near nominal',
+    'Adults need to understand why they are learning something before they engage with it',
+    'Your brain needs time to refocus on the new task, losing momentum',
+    'A crane, chain block, or hydraulic gantry rated for the transformer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s weight',
+  ], correctAnswer: 0, explanation: 'Off-circuit tap changers select different turns to bias the ratio up or down — used when supply voltage drifts away from design.' },
 ];
 
 const faqs = [

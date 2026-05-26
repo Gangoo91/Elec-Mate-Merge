@@ -33,8 +33,13 @@ const quickCheckQuestions = [
   {
     id: 'car-park-lux',
     question: 'What is the recommended illuminance for a multi-storey car park to EN 12464-2?',
-    options: ['20 lux', '50 lux', '75 lux', '100 lux'],
-    correctIndex: 2,
+    options: [
+      '75 lux',
+      '100 lux',
+      '50 lux',
+      '20 lux',
+    ],
+    correctIndex: 0,
     explanation:
       'EN 12464-2 recommends 75 lux for parking areas in multi-storey car parks during hours of use. Open air car parks may be designed to lower levels (20-50 lux) depending on risk assessment.',
   },
@@ -42,8 +47,13 @@ const quickCheckQuestions = [
     id: 'light-pollution-zones',
     question:
       'In the ILP Environmental Zone classification, which zone has the strictest controls?',
-    options: ['E0 - Protected', 'E1 - Natural', 'E3 - Suburban', 'E4 - Urban'],
-    correctIndex: 0,
+    options: [
+      'E4 - Urban',
+      'E3 - Suburban',
+      'E0 - Protected',
+      'E1 - Natural',
+    ],
+    correctIndex: 2,
     explanation:
       'E0 (Protected) has the strictest controls - areas like UNESCO starlight reserves or areas specifically designated for astronomical observation. E1 (Natural) includes national parks and rural areas.',
   },
@@ -64,12 +74,12 @@ const quickCheckQuestions = [
     id: 'part-l-external',
     question: 'What does Part L require for external lighting installations?',
     options: [
-      'No requirements for external lighting',
+      'Socket outlets ≤32A and mobile equipment outdoors',
+      'Slight differences in fibre backscatter characteristics',
+      'At least 3-7 days covering different work scenarios',
       'Efficacy limits, controls and upward light restrictions',
-      'Only emergency lighting requirements',
-      'Aesthetic guidelines only',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Part L requires external lighting to meet minimum efficacy (70 luminaire lumens/circuit-watt), include controls (daylight sensing, time scheduling), and limit upward light output ratio (ULOR) to control light pollution.',
   },
@@ -79,7 +89,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the primary standard for external workplace lighting design?',
-    options: ['EN 12464-1', 'EN 12464-2', 'BS 5489', 'ILP PLG04'],
+    options: [
+      'EN 12464-1',
+      'EN 12464-2',
+      'BS 5489',
+      'ILP PLG04',
+    ],
     correctAnswer: 1,
     explanation:
       'EN 12464-2 covers lighting for outdoor work places. BS 5489 covers road lighting, and ILP guidance covers light pollution. EN 12464-1 is for indoor workplaces.',
@@ -88,20 +103,25 @@ const quizQuestions = [
     id: 2,
     question: 'What does ULOR stand for in external lighting?',
     options: [
+      'Uniform Light Operating Range',
       'Universal Light Output Rating',
       'Upward Light Output Ratio',
-      'Uniform Light Operating Range',
       'Upper Luminaire Operating Regulation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Upward Light Output Ratio (ULOR) is the percentage of luminaire output directed above horizontal. Lower ULOR reduces light pollution. Part L limits ULOR for new installations.',
   },
   {
     id: 3,
     question: 'What illuminance is recommended for pedestrian areas near building entrances?',
-    options: ['5 lux', '20 lux', '50 lux', '100 lux'],
-    correctAnswer: 2,
+    options: [
+      '20 lux',
+      '5 lux',
+      '100 lux',
+      '50 lux',
+    ],
+    correctAnswer: 3,
     explanation:
       '50 lux is typically recommended for building entrances and surrounding pedestrian areas to EN 12464-2. This ensures safe movement and facial recognition for security purposes.',
   },
@@ -109,8 +129,13 @@ const quizQuestions = [
     id: 4,
     question:
       'What ILP Environmental Zone would a new suburban housing estate typically fall into?',
-    options: ['E1 - Natural', 'E2 - Rural', 'E3 - Suburban', 'E4 - Urban'],
-    correctAnswer: 2,
+    options: [
+      'E3 - Suburban',
+      'E2 - Rural',
+      'E1 - Natural',
+      'E4 - Urban',
+    ],
+    correctAnswer: 0,
     explanation:
       'E3 (Suburban) applies to suburban residential areas. This zone allows moderate lighting levels with controls on spill light and ULOR. E4 (Urban) applies to city centres and town centres.',
   },
@@ -118,12 +143,12 @@ const quizQuestions = [
     id: 5,
     question: "What is 'spill light' in external lighting design?",
     options: [
-      'Light that falls outside the intended area',
       'Emergency backup lighting',
-      'Reflected light from surfaces',
+      'Light that falls outside the intended area',
       'Light from adjacent properties',
+      'Reflected light from surfaces',
     ],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
       'Spill light (or obtrusive light) is light that falls outside the target area, potentially causing nuisance to neighbours or contributing to light pollution. Good design minimises spill through careful aiming and shielding.',
   },
@@ -144,20 +169,25 @@ const quizQuestions = [
     id: 7,
     question: 'What is facade lighting primarily designed to achieve?',
     options: [
-      'Security surveillance',
+      'Joseph Luft and Harrington Ingham',
+      'Temperature sensors and humidity sensors',
+      'Scalability and flexibility',
       'Architectural enhancement and identity',
-      'Energy reduction',
-      'Emergency evacuation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Facade lighting is primarily for architectural enhancement, highlighting building features and creating visual identity at night. It contributes to placemaking and wayfinding but must be designed to minimise light pollution.',
   },
   {
     id: 8,
     question: 'What minimum IP rating is typically required for external luminaires in the UK?',
-    options: ['IP20', 'IP44', 'IP54', 'IP65'],
-    correctAnswer: 3,
+    options: [
+      'IP65',
+      'IP54',
+      'IP20',
+      'IP44',
+    ],
+    correctAnswer: 0,
     explanation:
       'IP65 is typically required for external luminaires, providing protection against dust ingress and water jets from any direction. Locations with additional hazards (floods, pressure washing) may need IP66 or IP67.',
   },
@@ -166,10 +196,10 @@ const quizQuestions = [
     question:
       'How can external lighting be controlled to reduce energy consumption and light pollution?',
     options: [
-      'Use higher wattage luminaires',
+      'Only the epidermis (outer layer of skin)',
       'Photocell, time scheduling, and dimming after hours',
-      'Keep lights on 24 hours',
-      'Use uplighting only',
+      'At commissioning and after any system modifications',
+      'Linking a new habit to an existing habit as a trigger',
     ],
     correctAnswer: 1,
     explanation:
@@ -180,11 +210,11 @@ const quizQuestions = [
     question: 'What is the purpose of ILP Guidance Note 1 (GN01)?',
     options: [
       'Emergency lighting design',
+      'Interior office lighting',
       'The reduction of obtrusive light',
       'Sports lighting design',
-      'Interior office lighting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "ILP Guidance Note 01 'The Reduction of Obtrusive Light' provides comprehensive guidance on minimising light pollution from external lighting installations. It is widely referenced in planning conditions.",
   },

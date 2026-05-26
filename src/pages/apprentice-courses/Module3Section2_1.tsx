@@ -72,10 +72,10 @@ const quizQuestions = [
     id: 1,
     question: 'What is the primary reason for using cable containment?',
     options: [
-      'To make installation faster',
+      'The contract administrator or architect',
       'To protect cables from damage and maintain safety',
-      'To reduce cable cost',
-      'To avoid testing circuits',
+      'With specific, accurate technical descriptions',
+      'At both the control unit and outlet',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     id: 2,
     question: 'Which of the following is NOT a function of containment?',
     options: [
-      'Mechanical protection',
-      'Environmental protection',
-      'Increasing conductor size',
       'Organisation of cable runs',
+      'Mechanical protection',
+      'Increasing conductor size',
+      'Environmental protection',
     ],
     correctAnswer: 2,
     explanation:
@@ -107,19 +107,24 @@ const quizQuestions = [
     id: 4,
     question: 'Name one situation where containment is legally required.',
     options: [
-      'All domestic installations',
       'Public spaces and industrial environments',
-      'Only underground installations',
-      'Temporary installations only',
+      'A current source in parallel with a resistance',
+      'Buildings requiring an EPC under Part L',
+      'Anticipate future error and reduce overshoot',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Containment is legally required in public spaces and industrial environments where cables need protection from tampering, damage, or environmental hazards.',
   },
   {
     id: 5,
     question: 'Which material offers the highest mechanical protection in most installations?',
-    options: ['PVC', 'Steel', 'Aluminium foil', 'Rubber'],
+    options: [
+      'PVC',
+      'Steel',
+      'Rubber',
+      'Aluminium foil',
+    ],
     correctAnswer: 1,
     explanation:
       'Steel provides the highest mechanical protection due to its strength and durability, making it ideal for industrial and high-risk environments.',
@@ -128,12 +133,12 @@ const quizQuestions = [
     id: 6,
     question: 'Why does containment improve future maintenance?',
     options: [
+      'Review it to understand the installation history',
+      'To show the spatial relationship of all services and identify potential clashes',
       'It makes cables easier to locate and replace without damaging walls',
-      'It reduces circuit breaker ratings',
-      'It increases insulation resistance',
-      'It lowers voltage drop',
+      'To ensure safe working by identifying which circuits need to be isolated',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Containment systems allow easier access to cables for maintenance, replacement, and additions without damage to building structures.',
   },
@@ -141,20 +146,25 @@ const quizQuestions = [
     id: 7,
     question: 'Give one example of an environmental hazard that containment can protect against.',
     options: [
-      'Electromagnetic fields only',
+      'Overfilling and creating sharp bends',
+      'The ratio of true power to apparent power',
+      'The branch with lower resistance',
       'Moisture, dust, heat, or UV light',
-      'Low voltage only',
-      'Circuit overloads',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Containment protects against various environmental hazards including moisture, dust, heat, UV light, and other external influences.',
   },
   {
     id: 8,
     question: 'Which regulation sets requirements for cable containment in the UK?',
-    options: ['BS 7909', 'BS 7671 (IET Wiring Regulations)', 'BS 5839', 'BS 6701'],
-    correctAnswer: 1,
+    options: [
+      'BS 7671 (IET Wiring Regulations)',
+      'Chewing through cable insulation',
+      'Causes degradation and brittleness',
+      'Buildings requiring an EPC under Part L',
+    ],
+    correctAnswer: 0,
     explanation:
       'BS 7671 (IET Wiring Regulations) sets the requirements for cable containment and protection against external influences in UK electrical installations.',
   },

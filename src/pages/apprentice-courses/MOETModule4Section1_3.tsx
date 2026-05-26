@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'over-greasing',
     question: 'What is the primary risk of over-greasing an electric motor bearing?',
     options: [
-      'The motor will run faster than designed',
+      'All possible causes including connected loads, wiring faults, moisture ingress and the RCD itself',
+      'Relevant findings of risk assessment and control measures required',
       'Excess grease causes increased friction and heat, potentially leading to bearing failure',
-      'The grease will contaminate the motor windings',
-      'Over-greasing has no negative effects',
+      'Evacuating all occupants of a building at the same time upon alarm activation',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Over-greasing is one of the most common causes of premature bearing failure in electric motors. Excess grease creates churning resistance, generating additional heat that breaks down the lubricant and accelerates bearing wear. The correct quantity — typically calculated from the bearing size — must be applied using a calibrated grease gun.',
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'torque-checking',
     question: 'Why must electrical connections be re-torqued periodically?',
     options: [
-      'To make them easier to remove in future',
+      'Insulation resistance decreases as temperature increases — the hot motor has lower insulation resistance',
+      'Equipment ratings, demand factors, diversity factors, and total connected load',
       'Because thermal cycling causes connections to loosen over time, increasing resistance and creating hot spots',
-      'To change the colour of the terminals',
-      'Re-torquing is only needed during initial installation',
+      'The maximum possible efficiency of a heat engine operating between two temperatures, η = 1 - (Tc/Th)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Electrical connections expand and contract with heating and cooling cycles (thermal cycling). This gradually loosens the connection, increasing contact resistance. Higher resistance generates more heat, which accelerates loosening further — a dangerous positive feedback loop that can lead to overheating, arcing and fire.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'belt-tension',
     question: 'What happens if a V-belt driving a motor-pump combination is too tight?',
     options: [
-      'The pump will operate more efficiently',
+      'Understanding others — sensing others\\\\\\\' feelings and perspectives, and taking an active interest in their concerns',
+      'After the walk-around inspection but before elevating to work height, as part of the control testing sequence',
+      'Continuity, insulation resistance, polarity, earth fault loop impedance, RCD operation, and prospective fault current',
       'Excessive bearing load on both motor and driven equipment, leading to premature bearing failure',
-      'The belt will last longer',
-      'Nothing — tighter is always better',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'An over-tensioned belt places excessive radial load on the bearings of both the motor and driven equipment, significantly reducing bearing life. It also accelerates belt wear and increases energy consumption. Correct tension — typically checked with a tension gauge or deflection measurement — is essential for reliable operation.',
   },
@@ -56,10 +56,10 @@ const quizQuestions = [
     id: 1,
     question: 'The primary purpose of lubricating electric motor bearings is to:',
     options: [
-      'Make the motor run faster',
+      'Resistance at mid-point approximately equal to end-to-end values',
       'Reduce friction, dissipate heat, prevent corrosion and exclude contaminants',
-      'Increase the weight of the motor for stability',
-      'Make the bearings easier to remove',
+      'Coordinating aftercare activities and maintaining focus on performance outcomes',
+      'For all faults, including those found during routine inspections, regardless of severity',
     ],
     correctAnswer: 1,
     explanation:
@@ -70,10 +70,10 @@ const quizQuestions = [
     question:
       'A motor manufacturer recommends re-greasing a bearing every 4,000 operating hours. The motor runs 16 hours per day, 5 days per week. How often should the bearing be re-greased?',
     options: [
-      'Every 12 months approximately',
-      'Every 12 months exactly',
-      'Approximately every 10 months',
       'Every 6 months',
+      'Every 12 months approximately',
+      'Approximately every 10 months',
+      'Every 12 months exactly',
     ],
     correctAnswer: 2,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     question:
       'When cleaning electrical panel interiors, which of the following should NOT be used?',
     options: [
-      'An approved electrical contact cleaner spray',
-      'A vacuum cleaner with anti-static nozzle',
+      'They spend far more time on low-value activities than they realised',
+      'Strong encryption, regular updates, and network segmentation',
+      'UK legislation mandating fire safety including emergency lighting',
       'Water or water-based cleaning solutions on energised equipment',
-      'Clean, lint-free cloths',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Water and water-based solutions must never be used on energised electrical equipment due to the risk of electric shock and short circuit. Even on de-energised equipment, water can leave conductive residues and cause corrosion. Always use approved electrical contact cleaners, vacuum cleaners with anti-static nozzles, or clean dry cloths.',
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 4,
     question: 'Shaft alignment between a motor and driven equipment should be checked:',
     options: [
-      'Only during initial installation',
       'Regularly during PPM, as foundations can settle, vibration can shift alignment, and thermal growth changes the geometry',
-      'Only when the motor is replaced',
-      'Only if the operator complains about noise',
+      'Presuming that a material contains asbestos unless there is strong evidence that it does not',
+      'The casualty has agonal breathing, which is not effective breathing — begin CPR immediately and call 999',
+      'Their filters cannot trap asbestos fibres, so they exhaust contaminated air back into the environment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Shaft alignment should be checked periodically because foundations can settle or shift, vibration can move equipment, thermal expansion under operating conditions changes geometry, and coupling wear can mask misalignment. Misaligned shafts cause excessive bearing wear, seal failure, coupling damage and increased energy consumption.',
   },
@@ -110,10 +110,10 @@ const quizQuestions = [
     id: 5,
     question: 'The correct procedure for re-torquing busbar connections is:',
     options: [
-      'Tighten as much as possible using the longest available spanner',
+      "The tower must not be used until the clip is replaced with the correct manufacturer's component",
       "Use a calibrated torque wrench, apply the manufacturer's specified torque value, and mark the connection to confirm completion",
-      'Hand-tighten only to avoid damage',
-      'Use an impact driver for speed',
+      "Brown (line), blue (neutral), green-and-yellow (cpc) for single-phase; brown/black/grey for three-phase",
+      "Do not click the link — this is likely a phishing attempt. Contact the wholesaler directly using their known phone number or website",
     ],
     correctAnswer: 1,
     explanation:
@@ -123,12 +123,12 @@ const quizQuestions = [
     id: 6,
     question: 'Air filters in electrical panel ventilation systems should be cleaned or replaced:',
     options: [
-      'Only when the panel overheats',
+      'Completion of all inspection and testing, satisfactory results recorded',
+      'Slower skill development, repeated errors and disengagement — feedback is what turns experience into competence',
       'At regular intervals as part of PPM, with frequency adjusted based on environmental conditions',
-      "Once during the panel's lifetime",
-      'Only during the five-yearly EICR',
+      'No, it is not a legal requirement but is widely accepted as best practice and required by most principal contractors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Panel ventilation filters accumulate dust and debris, restricting airflow and causing internal temperatures to rise. In dusty environments (workshops, manufacturing), filters may need monthly cleaning. In cleaner environments (offices, data centres), quarterly may suffice. A blocked filter can raise internal panel temperatures by 10-20°C, significantly reducing the life of components.',
   },
@@ -137,12 +137,12 @@ const quizQuestions = [
     question:
       'Thermal paste (compound) is used between a power semiconductor and its heat sink to:',
     options: [
-      'Glue the component in place permanently',
+      'A systematic diagnostic method, safe working practices, correct use of instruments, and clear communication',
+      'To provide security for remedying defects discovered after completion',
+      'Design flow rates, achieved flow rates, test pressures and commissioning engineer details',
       'Fill microscopic air gaps, improving thermal conductivity between the component and the heat sink',
-      'Provide electrical insulation between the component and the heat sink',
-      'Prevent the component from vibrating',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Thermal paste fills the microscopic air gaps between the flat surfaces of the semiconductor device and the heat sink. Air is a poor thermal conductor; the paste (typically silicone-based with metal oxide fillers) is much better. Without thermal paste, the component runs hotter, reducing its life and potentially causing premature failure.',
   },
@@ -151,9 +151,9 @@ const quizQuestions = [
     question: 'When greasing a motor bearing, the motor should ideally be:',
     options: [
       'Running at full speed, so the grease is distributed immediately',
-      'Stationary and isolated, with grease applied slowly using a calibrated grease gun',
-      'Running at half speed',
-      'Under full load',
+      'Reducing current rating due to adverse conditions',
+      'Advance notification, coordination meetings, and progress updates',
+      'The sensor responds to movement throughout the intended coverage area',
     ],
     correctAnswer: 0,
     explanation:
@@ -163,10 +163,10 @@ const quizQuestions = [
     id: 9,
     question: 'Contactor contacts that show heavy pitting and blackening should be:',
     options: [
-      'Filed smooth and returned to service',
+      'Reputation damage, negative reviews, lost repeat work and increased complaint handling cost',
       'Assessed for replacement — silver or silver-alloy contacts should not be filed as this removes the contact material',
-      'Cleaned with sandpaper and oiled',
-      'Ignored unless the contactor fails to operate',
+      'An Insulated-Gate Bipolar Transistor — used in industrial inverters, EV chargers and VFDs to switch hundreds of volts at hundreds of amps.',
+      'Your supervisor straight away, then quarantine the item and complete a defect report',
     ],
     correctAnswer: 1,
     explanation:
@@ -176,12 +176,12 @@ const quizQuestions = [
     id: 10,
     question: 'Environmental considerations when disposing of used lubricants include:',
     options: [
-      'Used oil can be poured down the drain',
+      'The ability to resist or delay an immediate emotional urge in order to consider consequences and choose a more constructive response',
+      'A secondary coupler fitted next to a load-bearing right-angle coupler where the load exceeds the capacity of a single coupler',
       'Used lubricants are classified as hazardous waste and must be collected, stored and disposed of through a licensed waste carrier',
-      'Used grease can be placed in general waste bins',
-      'There are no regulations covering lubricant disposal',
+      'Ice can form on rungs, platforms and handholds creating extreme slip hazards, and cold reduces manual dexterity',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Used lubricating oils and greases are classified as hazardous waste under the Hazardous Waste Regulations. They must be collected in suitable containers, stored in designated areas with secondary containment, and disposed of through a licensed waste carrier. Duty of care requirements under the Environmental Protection Act 1990 apply to everyone in the waste chain.',
   },

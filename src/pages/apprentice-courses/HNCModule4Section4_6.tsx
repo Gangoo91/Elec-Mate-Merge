@@ -33,15 +33,25 @@ const quickCheckQuestions = [
   {
     id: 'led-efficacy',
     question: 'What is a typical efficacy for modern commercial LED luminaires?',
-    options: ['50 lm/W', '80 lm/W', '120-150 lm/W', '200 lm/W'],
-    correctIndex: 2,
+    options: [
+      '80 lm/W',
+      '50 lm/W',
+      '200 lm/W',
+      '120-150 lm/W',
+    ],
+    correctIndex: 3,
     explanation:
       'Modern commercial LED luminaires typically achieve 120-150 lumens per watt efficacy. This is a significant improvement over fluorescent (60-100 lm/W) and has driven the rapid adoption of LED technology in building services.',
   },
   {
     id: 'part-l-efficacy',
     question: 'What is the minimum luminaire efficacy required by Part L for general lighting?',
-    options: ['50 llm/W', '70 llm/W', '95 llm/W', '120 llm/W'],
+    options: [
+      '50 llm/W',
+      '70 llm/W',
+      '95 llm/W',
+      '120 llm/W',
+    ],
     correctIndex: 2,
     explanation:
       'Part L 2021 requires minimum 95 luminaire lumens per circuit-watt for general lighting in new buildings. This is an increase from the previous 60 llm/W requirement, reflecting improved LED technology.',
@@ -50,12 +60,12 @@ const quickCheckQuestions = [
     id: 'leni-definition',
     question: 'What does LENI measure in building performance?',
     options: [
-      'Luminaire efficiency',
+      'Maximum disconnection times for safety',
+      'Protective for safety, functional for operation',
+      'Usually significantly less than 100A due to diversity',
       'Annual lighting energy consumption per unit floor area',
-      'Light level uniformity',
-      'Lamp lumen maintenance',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'LENI (Lighting Energy Numeric Indicator) measures annual lighting energy consumption in kWh per square metre per year (kWh/m²/year). It enables comparison between buildings and verification of Part L compliance.',
   },
@@ -63,8 +73,13 @@ const quickCheckQuestions = [
     id: 'controls-savings',
     question:
       'What combined energy saving can typically be achieved with occupancy and daylight controls?',
-    options: ['10-20%', '30-40%', '50-70%', '80-90%'],
-    correctIndex: 2,
+    options: [
+      '80-90%',
+      '50-70%',
+      '10-20%',
+      '30-40%',
+    ],
+    correctIndex: 1,
     explanation:
       'Combined occupancy detection and daylight-linked dimming typically achieves 50-70% energy savings compared to manually controlled lighting. This assumes well-designed, properly commissioned controls in appropriate applications.',
   },
@@ -76,11 +91,11 @@ const quizQuestions = [
     question: 'What does L70 mean when specifying LED lamp life?',
     options: [
       '70,000 hours total life',
-      '70% of luminaires will still be working',
       'Output has reduced to 70% of initial',
+      '70% of luminaires will still be working',
       '70% power consumption',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'L70 is the rated life at which light output has depreciated to 70% of initial lumens. For example, L70 = 50,000 hours means the LED will produce 70% of its initial output after 50,000 hours of operation.',
   },
@@ -88,12 +103,12 @@ const quizQuestions = [
     id: 2,
     question: 'What is the formula for calculating LENI?',
     options: [
-      'LENI = Total power / Floor area',
+      'They must be CAT III or CAT IV rated with finger guards',
+      'To smooth out the pulsating DC into a near-steady DC voltage for the load.',
       'LENI = (Installed power × Annual hours × Controls factor) / Floor area',
-      'LENI = Lumens / Watts',
-      'LENI = Illuminance × Area × Hours',
+      'To continuously reassess risks as conditions change during the work',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'LENI = W × (tD × FD × FO) + (tN × FO) divided by floor area, where W is installed power, tD/tN are day/night hours, FD is daylight factor, and FO is occupancy factor. This accounts for controls savings.',
   },
@@ -101,20 +116,25 @@ const quizQuestions = [
     id: 3,
     question: 'What Part L requirement relates to lighting controls in spaces over 30m²?',
     options: [
-      'Time scheduling only',
+      'Comprehensive logging and diagnostic capabilities',
+      'Insulation monitoring device verification',
+      'Regular physical exercise and maintaining a routine',
       'Occupancy sensing and/or daylight dimming',
-      'Manual switching only',
-      'No specific requirement',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Part L requires presence/absence detection in office spaces over 30m². Additionally, daylight-linked dimming is required for luminaires within 3m of windows. These measures are credited in LENI calculations.',
   },
   {
     id: 4,
     question: 'What is the typical payback period for LED retrofit in a commercial building?',
-    options: ['1-2 years', '2-4 years', '5-7 years', '10+ years'],
-    correctAnswer: 1,
+    options: [
+      '2-4 years',
+      '1-2 years',
+      '5-7 years',
+      '10+ years',
+    ],
+    correctAnswer: 0,
     explanation:
       'LED retrofits typically achieve payback in 2-4 years through energy savings and reduced maintenance. Actual payback depends on operating hours, existing system efficiency, and electricity costs.',
   },
@@ -123,12 +143,12 @@ const quizQuestions = [
     question:
       'Why is colour rendering index (CRI) important when selecting energy efficient lighting?',
     options: [
-      'Higher CRI means higher efficacy',
-      'CRI affects energy consumption directly',
+      'Dimming artificial lights proportionally to daylight contribution',
       'Good CRI ensures visual quality despite lower illuminance',
-      'CRI determines lamp life',
+      'The speed of the rotating magnetic field',
+      'Continuity, insulation, polarity (dead), then Zs, RCD (live)',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Good CRI (Ra ≥ 80) maintains visual quality even when optimising for energy efficiency. Lower illuminance may be acceptable with good colour rendering. Specifying CRI prevents sacrificing visual quality for efficiency.',
   },
@@ -136,12 +156,12 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of constant light output (CLO) control?',
     options: [
-      'Maintaining colour temperature',
+      'Level 3 Diploma in Installing Electrotechnical Systems',
+      'To identify unsafe conditions that could make testing hazardous',
       'Compensating for lamp depreciation to save energy',
-      'Emergency lighting backup',
-      'Preventing flicker',
+      'Verify RCD operation time and trip current',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'CLO starts LEDs at reduced power when new, gradually increasing output as lumen depreciation occurs. This maintains consistent illuminance while saving energy over the lamp life (typically 10-15% saving).',
   },
@@ -149,12 +169,12 @@ const quizQuestions = [
     id: 7,
     question: "What does 'parasitic power' refer to in lighting systems?",
     options: [
+      'Cross-linked polyethylene - high-temperature insulation',
+      'Loose connections or corroded terminals',
+      'Hot spots indicating high resistance joints or overloading',
       'Power consumed by controls, sensors and standby',
-      'Power lost as heat in luminaires',
-      'Emergency lighting power',
-      'Motor power in automated blinds',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Parasitic power is consumed by controls, sensors, and luminaires in standby mode even when lights are off. LENI calculations include parasitic loads. Well-designed systems minimise parasitic consumption.',
   },
@@ -162,19 +182,24 @@ const quizQuestions = [
     id: 8,
     question: 'What approach does Part L recommend for demonstrating lighting compliance?',
     options: [
-      'Prescriptive power density only',
       'LENI calculation with target benchmarks',
       'Visual inspection only',
+      'Prescriptive power density only',
       'Manufacturer certification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Part L uses LENI to demonstrate compliance against benchmark values. The calculation accounts for installed power, operating hours, and control factors. The result must not exceed the target LENI for the building type.',
   },
   {
     id: 9,
     question: 'What is a typical LENI target for a new office building?',
-    options: ['10 kWh/m²/year', '25 kWh/m²/year', '50 kWh/m²/year', '100 kWh/m²/year'],
+    options: [
+      '10 kWh/m²/year',
+      '25 kWh/m²/year',
+      '50 kWh/m²/year',
+      '100 kWh/m²/year',
+    ],
     correctAnswer: 1,
     explanation:
       'Typical LENI targets for new offices are around 25 kWh/m²/year. This assumes modern LED luminaires, good controls, and reasonable operating hours. Actual values vary by building type and use pattern.',
@@ -183,10 +208,10 @@ const quizQuestions = [
     id: 10,
     question: 'What LED driver feature improves energy efficiency at reduced light levels?',
     options: [
-      'Emergency backup',
-      'DALI compatibility',
+      'Incorrect OR logic instead of AND/NOT logic',
+      'Meets user needs and is practical',
       'High power factor at all dim levels',
-      'Wireless connectivity',
+      '15-30 minutes, once or twice daily',
     ],
     correctAnswer: 2,
     explanation:

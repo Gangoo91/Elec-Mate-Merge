@@ -1,9 +1,11 @@
 import React, { Suspense } from 'react';
 import { EICFormProvider, useEICForm } from './eic/EICFormProvider';
 import { useEICTabs, EICTabValue } from '@/hooks/useEICTabs';
+import { useCertPrefill } from '@/hooks/useCertPrefill';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import EICFormHeader from './eic/EICFormHeader';
 import DuplicatedFromBanner from './certificates/DuplicatedFromBanner';
+import LastCertSuggestionCard from './certificates/LastCertSuggestionCard';
 import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
 import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
@@ -54,6 +56,21 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
 
   const handleTabChange = (value: string) => {
     setCurrentTab(value as EICTabValue);
+  };
+
+  // Last-cert prompt — soft suggestion to copy supply / earthing / BS amendment
+  // from the user's most recent EIC at the same address. User applies on tap.
+  const prefillAddress =
+    (formData.installationAddress as string) ||
+    (formData.clientAddress as string) ||
+    '';
+  const { suggestion: lastCertSuggestion, dismiss: dismissLastCert, buildPatch } =
+    useCertPrefill(prefillAddress, 'eic');
+
+  const handleApplyLastCert = () => {
+    const patch = buildPatch();
+    Object.entries(patch).forEach(([key, value]) => updateFormData(key, value));
+    dismissLastCert();
   };
 
   const handleToggleComplete = () => {
@@ -128,8 +145,19 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
         />
       )}
 
-      {/* Main Content — full-width mobile */}
-      <main className="py-4 pb-48 sm:px-4 sm:pb-8">
+      {/* Last cert at this address — soft suggestion to copy supply/earthing data forward */}
+      {lastCertSuggestion && (
+        <div className="px-4 pt-3">
+          <LastCertSuggestionCard
+            suggestion={lastCertSuggestion}
+            onApply={handleApplyLastCert}
+            onDismiss={dismissLastCert}
+          />
+        </div>
+      )}
+
+      {/* Main Content — full-width mobile. Pad bottom to clear the fixed nav bar. */}
+      <main className="py-4 pb-32 sm:px-4 sm:pb-28">
         <EICFormTabs
           currentTab={currentTab}
           onTabChange={handleTabChange}
@@ -143,6 +171,7 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
           onSaveDraft={handleManualSave}
           canGenerateCertificate={canGenerateCertificate()}
           onSyncOnTabChange={onTabChange}
+          onJumpToTab={(tab) => setCurrentTab(tab as EICTabValue)}
         />
       </main>
 

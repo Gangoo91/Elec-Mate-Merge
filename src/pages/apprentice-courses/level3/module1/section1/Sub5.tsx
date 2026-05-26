@@ -42,10 +42,10 @@ const checks = [
     question:
       "You strip a small commercial kitchen and the rubble includes broken tile, cement chasing waste, copper offcuts, an old DB and three fluorescent tubes. The site cleaner offers to take it 'to the yard' for £20. Under EPA 1990 s.34, what's wrong with that?",
     options: [
-      "Nothing — they're saving you a tip run.",
+      "Common parts (landlord supply, intake, distribution, common-area lighting, lift supplies, cleaner sockets) inspected fully. Flats sampled — typical 10-20% sample with the agreement of the freeholder and ideally the tenants — and the limitation clearly recorded that the EICR covers common parts in full and a defined sample of flats; individual flats not sampled retain their own EICR responsibility under the PRS Regulations or the leaseholder's responsibility.",
       "The waste duty of care under EPA 1990 s.34 requires that waste be transferred only to an authorised person (registered waste carrier with a waste carrier licence), accompanied by a Waste Transfer Note (WTN) describing the waste. The fluorescent tubes are hazardous waste (mercury) and require a separate Hazardous Waste Consignment Note. The DB is WEEE under the WEEE Regs 2013 with its own consignment requirements. 'The site cleaner with no licence' isn't authorised; the £20 deal is a duty-of-care breach for which the firm can be fined unlimited.",
-      "The rate is too high.",
-      "Only that the cleaner shouldn't be paid in cash.",
+      "Site induction with the principal contractor (CDM 2015 Reg 13). The induction covers the construction phase plan, site rules, welfare arrangements, emergency procedures, specific site hazards, and any pre-construction information from the principal designer. Until you've been inducted you're not signed in to the site H&S system and the principal contractor cannot lawfully let you work.",
+      "Test instruments drift over time — components age, shock and vibration cause small errors. A drifted instrument produces wrong test results that fail BS 7671 Chapter 61 verification. Annual calibration to a UKAS-traceable standard (with a calibration certificate) is the standard requirement. NICEIC, NAPIT and ELECSA all check for in-date calibration certificates at scheme audit; an out-of-date instrument used to demonstrate compliance invalidates the certificate it was used to produce.",
     ],
     correctIndex: 1,
     explanation:
@@ -56,12 +56,12 @@ const checks = [
     question:
       "You've removed an old commercial three-phase distribution board with metering equipment and surge protection. Under the WEEE Regulations 2013, what's the disposal route?",
     options: [
-      "Skip with the rest of the rubble.",
+      "Most LFP batteries are warrantied to retain at least 70–80 % of original capacity at 10 years (typically 6,000+ cycles). 75 % at 9 years is on or just below the warranty curve. The customer can either claim under warranty if still in coverage, replace the pack now, or carry on using the reduced capacity until economic payback drops below the cost of replacement. End-of-life packs go for proper UK lithium recycling under WEEE / battery regulations — they are not house-clearance waste.",
+      "Plain English at slow pace, supplemented by visual demonstration where appropriate, written translated handouts (HSE provides multilingual safety leaflets), use of a bilingual co-worker as informal interpreter, back-briefing to confirm understanding ('show me what you'd do if you saw a fire'), and provision of safety signage and PPE labels in the relevant languages where the workforce is consistently multilingual. The duty under MHSWR Reg 10 is for information to be 'comprehensible' — that's a statutory standard, not a courtesy.",
+      "Because a faulty proving-dead tester can show 'zero' on a live circuit — and you'd take a fatal shock. The function check confirms the tester responds to a known source. The proving-tester-on-known-source step is built into the JIB six-step (Sub 1.2) for exactly this reason. The Martindale GVD2 proving unit gives a portable known source; alternatively a known-live socket on a different circuit. Either way, the tester's response on a known source is the evidence the tester is working. Without that evidence, a 'zero' reading on the circuit you're about to work on means nothing.",
       "WEEE — Waste Electrical and Electronic Equipment. Must be segregated from general waste, transferred to an authorised treatment facility (AATF) via a registered carrier, and consigned with appropriate paperwork. The original producer (manufacturer / importer) of the equipment may have a take-back obligation; commercial WEEE often goes to a specialist recycler. Mixing WEEE with general waste loses the recyclable materials and breaches the WEEE Regs.",
-      "Domestic doorstep recycling.",
-      "Burning on site.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "WEEE Regs 2013 implement the EU WEEE Directive in UK law. Categories cover 'large equipment' (over 50cm) and 'small equipment' separately. Distribution boards, switchgear, control panels and consumer units all qualify. Segregation at source on site is the practical control; a labelled WEEE stillage in the firm's yard is the typical solution.",
   },
@@ -70,10 +70,10 @@ const checks = [
     question:
       "You spot a slow oil leak from a transformer at a customer's site that's draining into the surface-water drain heading for the river. What's the L3-level response?",
     options: [
-      "Mention it to the customer next time you're there.",
+      "Customer-facing protection — dust sheets and floor protection on the route from van to work area, conversation with the customer about which rooms will be no-go zones during the work, awareness of who else is in the property (children, pets, elderly relatives, vulnerable adults), agreed working hours, and the constant background of HASAWA s.3 duty to non-employees. None of that applies in a void property.",
       "Stop the discharge if safely possible (containment — drain blocker, absorbent boom), notify the Environment Agency 24/7 incident hotline (0800 80 70 60), notify the customer's site manager, document with photos and time-stamps. Pollution to controlled waters is an offence under the Environmental Permitting Regs 2016 / Water Resources Act 1991 with strict liability. Failure to report or to act once aware is itself an offence.",
-      "Take a photo for Instagram.",
-      "Wait until the next routine visit.",
+      "Specified injuries (RIDDOR Reg 4) are the most serious named injuries — fatalities, fractures other than to fingers/toes/thumbs, amputations, loss of sight, scalpings, serious burns, crush injuries, unconsciousness from electric shock, and so on. They must be reported as soon as possible and within 10 days. Over-7-day incapacitation (Reg 6) is when a worker is off normal work for more than 7 consecutive days (excluding accident day, including weekends) — must be reported within 15 days. Different categories, different timeframes, both reportable.",
+      "Safeguarding. Children are present during term time, which restricts when work can be done, requires DBS-checked operatives for any work where unsupervised contact with pupils is foreseeable, and adds rules around photography, conversation and movement around the building. Most major electrical work in schools is done during holidays for exactly this reason. The school's safeguarding lead is a key contact during prep.",
     ],
     correctIndex: 1,
     explanation:
@@ -86,10 +86,10 @@ const quizQuestions = [
     id: 1,
     question: "What does EPA 1990 s.34 require?",
     options: [
-      "Only that waste be put in a skip.",
+      "Carry out the remedial works within 28 days of receiving the report (or within a shorter period specified on the report), obtain written confirmation from a competent person that the works have been completed and the installation is now safe, and provide that confirmation to existing tenants within 28 days and to the local authority on request.",
+      "Safety Data Sheet — 16-section document supplied by the manufacturer / supplier covering identification, hazard ID, composition, first aid, fire fighting, accidental release, handling and storage, exposure controls and PPE, physical and chemical properties, stability and reactivity, toxicology, ecology, disposal, transport, regulation, other. The label gives headlines; the SDS gives the operational detail.",
       "A waste duty of care — anyone who produces, imports, keeps, stores, transports, treats or disposes of controlled waste must take all reasonable steps to: prevent unauthorised treatment / disposal; ensure waste is transferred only to an authorised person; ensure waste transfers are accompanied by a written description (Waste Transfer Note); and prevent escape of waste from their control.",
-      "Only that waste be sorted by colour.",
-      "Only that waste be removed within 24 hours.",
+      "Each calculation has a different worst case. Fault current worst case is HIGH voltage (more energy, more thermal stress on cable) → use Cmax. Zs worst case is LOW voltage (smaller driving voltage, smaller fault current, slower trip) → use Cmin. Each factor pushes the calculation in the conservative direction for that specific design check.",
     ],
     correctAnswer: 1,
     explanation:
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 2,
     question: "Which of these is hazardous waste under the Hazardous Waste Regs 2005?",
     options: [
-      "Cardboard packaging.",
+      "Insulation method (Class II / equivalent), DC isolator at array, polarity, string fuses, earthing arrangement (functional vs protective), and labels at supply intake (Reg 514)",
+      "The principal contractor must ensure that waste is managed in accordance with the waste hierarchy, that waste is properly segregated and stored on site, and that waste removal arrangements are in place",
+      "Consider replacing the oversized motors with correctly sized alternatives, or fitting VSDs to match motor speed to the actual load requirement, reducing energy consumption and improving the power factor",
       "Fluorescent tubes (mercury), batteries (lead/lithium/nickel), used solvents, used oil, asbestos waste, lead-paint waste, certain WEEE items containing hazardous substances, and many others on the European Waste Catalogue (EWC) hazardous list.",
-      "Ordinary paper.",
-      "Wood offcuts (untreated).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Hazardous waste must be segregated from general waste, consigned with a Hazardous Waste Consignment Note (separate from a normal WTN), and disposed of at a permitted hazardous-waste facility. Mixing hazardous with non-hazardous is itself an offence — it 'contaminates' the whole load.",
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: "What does WEEE 2013 cover?",
     options: [
-      "Only domestic appliances.",
+      "Fluorescent tubes (mercury-containing, EWC 20 01 21* — the asterisk denotes hazardous), oil-filled transformers and capacitors containing PCBs (EWC 16 02 09*), batteries containing lead, mercury or cadmium (EWC 16 06 01* and similar), asbestos-cement consumer unit backplates from older installations (EWC 17 06 05*), and waste oils. The asterisk in the EWC code is the marker for absolute hazardous waste.",
+      "A durable label complying with BS 951 stating \\\\\\\"Safety Electrical Connection — Do Not Remove\\\\\\\" shall be permanently fixed in a visible position at or near the point of connection of every earthing conductor to an earth electrode, every bonding conductor to extraneous-conductive-parts, and at the main earthing terminal where separated from the main switchgear.",
+      "Don't move tools, equipment, locks, voltage indicators or anything else. Don't restore power. Don't continue work. Photograph the scene from multiple angles. Identify witnesses and ask them to record their observations. Notify the firm's responsible person. The scene as it was is the evidence.",
       "All Waste Electrical and Electronic Equipment — distribution boards, consumer units, switchgear, control panels, lighting equipment (luminaires, drivers, lamps), small power equipment, cables containing electronic components. Producer take-back obligations on manufacturers/importers; user obligations on segregation, transfer to authorised treatment facilities (AATF) and consignment.",
-      "Only equipment over 50kg.",
-      "Only equipment imported from outside the UK.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Categories include 'large equipment' (≥50cm) and 'small equipment' separately. Commercial WEEE typically goes via a specialist recycler; domestic WEEE has retailer take-back routes (the 'DTS' — Distributor Take-back Scheme).",
   },
@@ -125,12 +125,12 @@ const quizQuestions = [
     id: 4,
     question: "What does the F-Gas Regulation cover?",
     options: [
-      "Petrol stations.",
       "Fluorinated greenhouse gases — refrigerants used in air conditioning, heat pumps and refrigeration equipment. Hydrofluorocarbons (HFCs) particularly. Phase-down quotas, mandatory leak-checking on equipment containing 5+ tonnes CO2e of F-Gas, certified personnel for installation/maintenance, and ban on certain F-Gases in new equipment from set dates.",
-      "Domestic gas cookers.",
-      "Only motor vehicle air conditioning.",
+      "BS 7671 Regulation 712.522 requires that DC cables within a building that cannot be isolated from the PV array in a fire are either fire-resistant (to BS 8434/BS 8519) or enclosed in fire-resistant conduit, because they will remain energised as long as daylight is present",
+      "When teams avoid conflict, important issues go unaddressed, decisions are made without genuine input (leading to lack of commitment), underlying tensions fester and eventually explode destructively, and the quality of decisions suffers because ideas are not challenged and refined through debate. Healthy teams have MORE open conflict, not less — but it is constructive, issue-focused conflict",
+      "Regulation 132.13 — the explicit requirement for design documentation. Plus Reg 514.9.1 which addresses the on-site distribution board diagram requirement (with the A4:2026 domestic exception). Plus Reg 644.1.1 which makes the EIC and supporting documentation conditional on defect rectification. Plus Section 514 series on identification and notices.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "F-Gas is increasingly in electrical territory because heat-pump installations are growing fast. Working with refrigerants requires F-Gas certification (Cat I-IV), even just to disturb the system. Most electricians don't hold F-Gas; they refer the work to F-Gas certified contractors.",
   },
@@ -138,10 +138,10 @@ const quizQuestions = [
     id: 5,
     question: "Under EPA 1990 s.33, what's an offence in addition to s.34's duty-of-care breach?",
     options: [
-      "Not paying for a skip.",
+      "Brief the customer on the C3 recommendations, explain that no immediate action is required, agree which improvements the customer plans to address and on what timescale, and confirm the next inspection date. Even Satisfactory reports merit a verbal handover so the C3 recommendations have a chance of being acted on rather than filed and forgotten.",
       "Depositing controlled waste, or knowingly permitting the deposit of controlled waste, in or on land without an environmental permit; treating, keeping or disposing of controlled waste without a permit; treating, keeping or disposing of controlled waste in a manner likely to cause pollution of the environment or harm to human health. Fly-tipping is the headline s.33 offence.",
-      "Driving over the speed limit on a site road.",
-      "Smoking on site.",
+      "It binds whoever is the duty-holder for the system at the time — most often the duty-holder under HASAWA who controls the premises (employer, dutyholder, landlord). The duty-holder discharges the maintenance obligation by arranging periodic inspection (an EICR) to a recommended frequency, acting on the resulting condition codes (C1 / C2 / FI), and keeping records. The electrician carrying out the EICR is the technical evidence the duty-holder is meeting Reg 4(2).",
+      "A structured plan that includes: self-assessment (identifying current EI strengths and gaps), specific goals (which competencies to develop), practice opportunities (real situations to apply new skills), feedback mechanisms (trusted people who will give honest observations), reflection practices (regular review of progress), and accountability (commitments to specific actions with review dates)",
     ],
     correctAnswer: 1,
     explanation:
@@ -151,12 +151,12 @@ const quizQuestions = [
     id: 6,
     question: "What's a Waste Transfer Note (WTN) and how long must it be kept?",
     options: [
-      "A receipt — keep for as long as you want.",
+      "Section 753 'Heating cables and embedded heating systems' covers electric heating cables embedded in floors, walls or ceilings, plus surface heating systems and de-icing / frost-prevention applications. The A4:2026 amendment completely revised Section 753 — extending its scope, retitling it, and adding new requirements relocated from Chapter 53 covering impact protection and installation of heating cables. Industrial heating systems complying with BS EN 60519, BS EN 62395 and BS EN 60079 are excluded from Section 753.",
+      "PV output is roughly proportional to the irradiance hitting the panel (W/m²). Cell efficiency does drop slightly as the cells heat up — typically 0.3-0.5% per °C above 25°C — but UK roofs rarely sit above 50°C and the irradiance variation between a sunny and cloudy day is far larger than the temperature derate. So total annual yield (kWh) is dominated by how much sunlight the array sees, not how warm it is.",
       "A document accompanying the transfer of controlled waste from the producer to the next holder. Must contain a description of the waste, the European Waste Catalogue (EWC) code, the SIC (Standard Industrial Classification) code of the producer's activity, the quantity, the carrier's licence details, the destination, and signatures of both parties. Kept for 2 years (3 years for Hazardous Waste Consignment Notes).",
-      "An invoice — keep for 7 years for VAT.",
-      "A delivery note.",
+      "MIET (Member of the Institution of Engineering and Technology) is the standard professional membership grade of the IET. It's a membership grade, not an Engineering Council registration — so you can be MIET without being EngTech/IEng/CEng. Most engineers aim for MIET as the membership tier alongside their professional registration. Grants access to IET technical resources, member events, online journals.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The WTN is the legal evidence that the waste duty of care was discharged on a particular transfer. Inspectors ask for the WTNs first when investigating a fly-tipping or environmental incident.",
   },
@@ -164,12 +164,12 @@ const quizQuestions = [
     id: 7,
     question: "Why must hazards to the environment from work activities be reported?",
     options: [
-      "They don't have to be.",
+      "A rotary cable stripper (Jokari Quadro, Knipex 16 95 02, BAHCO 4490) — sized to the SWA outer diameter, runs around the sheath cleanly and removes a length to expose the armour without scoring the inner cores. Stanley knives can do it but the risk of scoring the inner is high; rotary strippers are the standard. For the armour itself — separate tool (armour shears for smaller, angle grinder for bigger) covered in Sub 1.2.",
+      "Measured limit = 0.8 x 1.37 = 1.10 Omega. Table 41.3 values assume conductor at 70 deg C operating temperature; measured Zs is at ambient (typically 15-25 deg C). Cable resistance rises with temperature — about 20 percent from 20 deg C to 70 deg C for copper. The 0.8 multiplier corrects approximately for this. For full rigour use GN3 Appendix B per-degree coefficients, but the 0.8 rule of thumb is the standard site-practice correction.",
+      "Larger commercial / institutional sites where heat demand is constant and high — hospitals, hotels, leisure centres, large care homes, schools with swimming pools. Engine-based CHP at 5-50 kWe scale generates electricity locally (offsetting expensive day-rate import) and the waste heat displaces a boiler load. Sized correctly, the heat-led design ensures the heat is always useful (the unit is sized to follow the property's baseload heat demand). Domestic micro-CHP is essentially over in new installs but commercial CHP remains a niche but live technology.",
       "(1) Strict liability — pollution incidents are offences regardless of intent; (2) duty of care under EPA 1990 s.34 + the Polluter Pays principle; (3) MHSWR Reg 14 (employee duty to report shortcomings); (4) operator's environmental permit conditions; (5) reputational and commercial consequences of an undetected pollution event downstream; (6) personal liability under HASAWA s.7 if the environmental hazard also creates a worker safety hazard.",
-      "Only because the customer might complain.",
-      "Only because the carbon footprint must be measured.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Environmental reporting isn't just regulatory — it's legal protection for the firm and personal protection for the operative. The Environment Agency hotline (0800 80 70 60 in England, 24/7) is the formal route for water, land and air pollution incidents.",
   },
@@ -178,12 +178,12 @@ const quizQuestions = [
     question:
       "Good waste management practice on an electrical site looks like what?",
     options: [
-      "One skip for everything.",
       "Segregation at source — separate stillages or skips for general / metal / WEEE / hazardous / wood / cardboard. Authorised carriers only, with WTNs / HWCNs accompanying every transfer. WEEE to AATF via specialist recycler. Hazardous (fluorescent tubes, batteries, asbestos) consigned and quarantined. Spillage kit on site for refrigerants and oils. Documentation kept for the legal retention periods (2y WTN, 3y HWCN).",
-      "One skip and one apprentice with a hammer.",
-      "Burn it.",
+      "PASMA (Prefabricated Access Suppliers' and Manufacturers' Association) is the recognised training standard for assembling, dismantling and using mobile tower scaffolds. It's not a statutory licence in the way IPAF is for MEWPs, but PUWER 1998 Reg 9 requires anyone using or assembling work equipment to be adequately trained, and on construction sites the principal contractor's site rules typically require PASMA card-holders for tower assembly.",
+      "Code it on the EICR (C1 immediate danger / C2 potentially dangerous / C3 improvement recommended / FI further investigation). Inform the customer / dutyholder. Recommend remedial action with timescales appropriate to the code. C1 requires immediate action — make safe on the day. The EICR itself is the formal report; it goes to the dutyholder.",
+      "Understand the strategic context of maintenance (why different strategies exist for different assets), apply structured analytical techniques (RCA, FMEA, criticality analysis), contribute to continuous improvement, and articulate how maintenance effectiveness is measured and improved — demonstrating the knowledge, skills and behaviours expected of a competent maintenance technician",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Good waste management is just a documented version of common sense. The cost of segregating at source is minor; the cost of mixing hazardous into general (which contaminates the whole load and can result in a hazardous-waste fee for the entire skip plus enforcement action) is serious.",
   },

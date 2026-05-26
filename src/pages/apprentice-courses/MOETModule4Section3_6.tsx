@@ -15,12 +15,12 @@ const quickCheckQuestions = [
     question:
       'An intermittent fault that appears when ambient temperature rises but clears when the temperature drops is most likely caused by:',
     options: [
-      'A software error in the control system',
+      'The fault may not be present when you arrive to investigate, making it difficult to observe and measure',
+      'A board fixed at the edge of a scaffold platform to prevent materials and tools from falling off',
+      'For identification during maintenance, emergency response, and future modifications',
       'Thermal expansion causing a marginal connection to open, or insulation resistance dropping with temperature',
-      'The equipment being the wrong voltage rating',
-      'Incorrect fuse rating',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Temperature-dependent intermittent faults typically involve marginal connections where thermal expansion opens a barely-adequate joint, or insulation that is degraded to the point where its resistance drops below a critical threshold when warm. As the temperature drops, the connection remakes or the insulation resistance rises, and the fault disappears. These are classic symptoms of a dry joint or degraded insulation.',
   },
@@ -29,10 +29,10 @@ const quickCheckQuestions = [
     question:
       'An RCD trips repeatedly during damp weather but operates normally in dry conditions. The most likely cause is:',
     options: [
-      'The RCD is faulty and needs replacing',
+      'Different techniques detect different fault types, providing a more complete picture and higher diagnostic confidence',
       'Moisture ingress into the wiring, accessories or equipment causing earth leakage current to exceed the RCD threshold',
-      'The supply voltage is too high in damp weather',
-      'The circuit is overloaded only during damp weather',
+      'Equipment needed, inspection requirements, safe use procedures, and any specific limitations',
+      'To take such general fire precautions as will ensure, so far as is reasonably practicable, the safety of any relevant persons',
     ],
     correctIndex: 1,
     explanation:
@@ -43,12 +43,12 @@ const quickCheckQuestions = [
     question:
       'A machine fault that appears only when a nearby compressor is running suggests the cause may be:',
     options: [
-      'The compressor drawing too much current from the same supply',
       'Vibration from the compressor causing a marginal connection or component to make intermittent contact',
-      'The compressor producing excessive heat',
-      'An earth fault in the compressor',
+      'Members of the public could walk into the tower, attempt to climb it, or be struck by falling objects',
+      'It is substantially enclosed and residual vapours create a foreseeable risk of serious injury from flammable or toxic atmospheres',
+      'It significantly increases the wind loading and therefore more ties are required',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Vibration-induced intermittent faults are common in industrial environments. Machinery vibration can cause loose terminations to intermittently open and close, relay contacts to bounce, connectors to make poor contact, and cracked solder joints to break and remake. The correlation with the compressor operation is the diagnostic clue — the fault timing matches the vibration source.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     question:
       'A PLC input shows intermittent false signals that coincide with a nearby VSD starting a motor. The most likely cause is:',
     options: [
-      'The PLC programme has a bug',
+      'Questions shift the other person from defensive mode to thinking mode, re-engaging their rational brain',
+      'A mobile elevating work platform (MEWP) used to access high-level cable tray',
+      'Photometric performance criteria (light levels and duration)',
       'Electromagnetic interference (EMI) from the VSD coupling into the PLC input wiring',
-      'The motor has a winding fault',
-      'The PLC needs a firmware update',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'VSDs are significant sources of electromagnetic interference due to their high-frequency PWM switching. If the PLC input cables are not adequately screened, separated from power cables, or properly earthed, the electromagnetic noise can couple into the signal wiring and create false input signals. EMC mitigation includes screened cables, proper earthing of screens at one end, physical separation from power cables, and input filters.',
   },
@@ -73,10 +73,10 @@ const quizQuestions = [
     id: 1,
     question: 'The most challenging aspect of diagnosing intermittent faults is:',
     options: [
-      'They always occur at the same time every day',
+      'To provide a low-impedance fault current path so protective devices operate quickly to disconnect the supply',
       'The fault may not be present when you arrive to investigate, making it difficult to observe and measure',
-      'They only affect new equipment',
-      'They are always caused by software errors',
+      'Increasing excitation beyond the normal value causes the motor to operate at a leading power factor',
+      'Use professional discussion as an alternative evidence method, where the apprentice can demonstrate knowledge verbally',
     ],
     correctAnswer: 1,
     explanation:
@@ -86,12 +86,12 @@ const quizQuestions = [
     id: 2,
     question: 'A data logger is a useful tool for intermittent fault diagnosis because it can:',
     options: [
-      'Only measure voltage',
+      'A joint that appears mechanically intact but has high resistance due to poor metal-to-metal contact, oxidation or contamination',
+      'Energised continuously (or thermostatically controlled) to maintain the enclosure temperature above the dew point',
       'Continuously record electrical parameters over extended periods, capturing events that occur when no one is present',
-      'Repair the fault automatically',
-      'Only work when connected to a computer',
+      'The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Data loggers record voltage, current, power, temperature and other parameters over hours, days or weeks. They capture the exact conditions at the moment a fault occurs — even if it happens at 3 AM on a Sunday. This timestamped data can then be correlated with environmental conditions, operational patterns and other events to identify the fault trigger.',
   },
@@ -99,12 +99,12 @@ const quizQuestions = [
     id: 3,
     question: 'Condensation inside an electrical enclosure is most likely to occur when:',
     options: [
-      'The ambient temperature is constant',
+      'Overheating of neutral conductors, transformer overheating, capacitor failure and nuisance tripping of protective devices',
+      'Continuously record electrical parameters over extended periods, capturing events that occur when no one is present',
+      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
       'The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day',
-      'The enclosure is at maximum operating temperature',
-      'The enclosure is brand new',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Condensation forms when the temperature of a surface drops below the dew point of the surrounding air. This commonly occurs when enclosures cool down overnight after being warmed during the day by the equipment inside them or by ambient conditions. Anti-condensation heaters are fitted to enclosures in vulnerable locations to maintain the internal temperature above the dew point.',
   },
@@ -112,12 +112,12 @@ const quizQuestions = [
     id: 4,
     question: 'An IP65-rated enclosure should be protected against:',
     options: [
-      'Submersion in water',
       'Dust ingress (total protection) and water jets from any direction',
-      'Only light rain',
-      'Dust only, not water',
+      'Outriggers extending the effective base to at least 3m',
+      'Building services that must meet minimum efficiency standards when replaced',
+      'HVAC and lighting integration for occupancy simulation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'IP (Ingress Protection) ratings have two digits: the first for solids, the second for liquids. IP65 means: 6 = total protection against dust ingress; 5 = protection against water jets from any direction. If moisture is found inside an IP65 enclosure, check for damaged seals, incorrectly fitted cable glands, missing blanking plugs, or cracks in the enclosure — the IP rating has been compromised.',
   },
@@ -125,10 +125,10 @@ const quizQuestions = [
     id: 5,
     question: 'Harmonic distortion from non-linear loads such as VSDs and LED lighting can cause:',
     options: [
-      'No problems in any installation',
+      'Continuously record electrical parameters over extended periods, capturing events that occur when no one is present',
       'Overheating of neutral conductors, transformer overheating, capacitor failure and nuisance tripping of protective devices',
-      'Only cosmetic flickering of lights',
-      'Problems only in high voltage systems',
+      'A joint that appears mechanically intact but has high resistance due to poor metal-to-metal contact, oxidation or contamination',
+      'The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,12 +139,12 @@ const quizQuestions = [
     question:
       "When investigating an intermittent fault, the operator report states it happens 'about twice a week, usually on Monday mornings'. This timing pattern suggests:",
     options: [
-      'The fault is random and unpredictable',
+      'The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day',
+      'Large motor starting currents, heavy inductive loads switching, and supply network events affecting the local transformer',
       'A thermal or environmental trigger related to the weekend shutdown — cold start, condensation from temperature cycling, or equipment warming up from cold',
-      'The operator is causing the fault',
-      'The equipment needs a software update on Mondays',
+      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'A Monday morning pattern strongly suggests a thermal or environmental trigger. Equipment that is warm during the working week cools over the weekend. Monday morning start-up subjects cold equipment to thermal shock, and condensation may have formed during the temperature cycling. Reduced load over the weekend may also allow insulation resistance to recover, only to fail again under full load on Monday.',
   },
@@ -152,12 +152,12 @@ const quizQuestions = [
     id: 7,
     question: 'Cable route separation requirements in BS 7671 exist primarily to prevent:',
     options: [
-      'Untidy installation',
+      'The person must be earning a high salary for the work',
+      'The electrical pressure or force that pushes current',
+      'To confirm work is complete, the area is safe, and controls can be removed',
       'Electromagnetic interference between power cables and data/signal cables',
-      'Cables getting too warm',
-      'Confusion during maintenance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'BS 7671 Chapter 52 requires separation between power circuits and communication/data circuits to prevent electromagnetic interference. Power cables, especially those carrying distorted waveforms from VSDs, generate electromagnetic fields that can couple into nearby signal cables, causing data errors, false sensor readings and erratic control system behaviour. Physical separation, screening and crossed (not parallel) routing are the primary mitigation measures.',
   },
@@ -165,12 +165,12 @@ const quizQuestions = [
     id: 8,
     question: "A 'dry joint' in an electrical connection is characterised by:",
     options: [
-      'A joint that has no moisture present',
       'A joint that appears mechanically intact but has high resistance due to poor metal-to-metal contact, oxidation or contamination',
-      'A joint that was made without flux',
-      'A joint that is too tight',
+      'A thermal or environmental trigger related to the weekend shutdown — cold start, condensation from temperature cycling, or equipment warming up from cold',
+      'Continuously record electrical parameters over extended periods, capturing events that occur when no one is present',
+      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'A dry joint (or high-resistance joint) looks connected but has inadequate metal-to-metal contact. The high resistance causes localised heating under load (I²R losses), which can cause intermittent behaviour — the joint may work when cool but fail when hot as thermal expansion opens the marginal contact further. Dry joints are a leading cause of electrical fires and intermittent faults.',
   },
@@ -178,10 +178,10 @@ const quizQuestions = [
     id: 9,
     question: 'An anti-condensation heater in a motor control centre (MCC) should be:',
     options: [
-      'Switched off when the MCC is energised',
+      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
       'Energised continuously (or thermostatically controlled) to maintain the enclosure temperature above the dew point',
-      'Only used during summer months',
-      'Connected to the same supply as the motor it protects',
+      'Overheating of neutral conductors, transformer overheating, capacitor failure and nuisance tripping of protective devices',
+      'Continuously record electrical parameters over extended periods, capturing events that occur when no one is present',
     ],
     correctAnswer: 1,
     explanation:
@@ -191,12 +191,12 @@ const quizQuestions = [
     id: 10,
     question: 'Dust accumulation on electrical equipment can cause faults by:',
     options: [
-      'Making the equipment look untidy',
+      'The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day',
+      'Continuously record electrical parameters over extended periods, capturing events that occur when no one is present',
       'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
-      'Only affecting the aesthetic appearance',
-      'Increasing the insulation resistance',
+      'A thermal or environmental trigger related to the weekend shutdown — cold start, condensation from temperature cycling, or equipment warming up from cold',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Dust is a significant environmental hazard for electrical equipment. It acts as thermal insulation, trapping heat and causing components to overheat. When damp, dust becomes conductive and can create leakage paths between live parts and earth, or between phases. Conductive dust (carbon, metal filings) can bridge clearances between conductors, causing tracking or flashover. Regular cleaning is an essential preventive maintenance task.',
   },
@@ -204,12 +204,12 @@ const quizQuestions = [
     id: 11,
     question: 'To diagnose a fault that only occurs under heavy load, you would:',
     options: [
-      'Wait for the fault to occur naturally and hope to be nearby',
+      'A thermal or environmental trigger related to the weekend shutdown — cold start, condensation from temperature cycling, or equipment warming up from cold',
+      'Large motor starting currents, heavy inductive loads switching, and supply network events affecting the local transformer',
+      'The ambient temperature drops below the dew point of the air inside the enclosure, typically during evening cooling after a warm day',
       'Use data logging equipment to record electrical parameters during high-load periods, or arrange controlled load testing while monitoring the suspect circuit',
-      'Replace all components in the circuit',
-      'Reduce the load permanently to avoid the fault',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Load-dependent faults require investigation under the load conditions that trigger them. Data loggers can record continuously and capture the fault event automatically. Alternatively, if the process allows, arrange a controlled load test while monitoring voltage, current, temperature and other parameters at the suspect location. This focused approach is far more productive than waiting for a random occurrence.',
   },
@@ -217,12 +217,12 @@ const quizQuestions = [
     id: 12,
     question: 'Voltage sags (dips) on an industrial supply are commonly caused by:',
     options: [
-      'The electricity meter being incorrectly calibrated',
       'Large motor starting currents, heavy inductive loads switching, and supply network events affecting the local transformer',
-      'Using energy-efficient lighting',
-      'Having too many socket outlets on a circuit',
+      'A thermal or environmental trigger related to the weekend shutdown — cold start, condensation from temperature cycling, or equipment warming up from cold',
+      'Acting as thermal insulation (causing overheating), absorbing moisture (creating conductive paths), and bridging clearances between conductors',
+      'Overheating of neutral conductors, transformer overheating, capacitor failure and nuisance tripping of protective devices',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Voltage sags are short-duration reductions in supply voltage, typically caused by large current demands on the same supply network. DOL motor starts, electric arc furnaces, large welding equipment and heavy inductive load switching all cause voltage dips. These sags can cause VSD undervoltage trips, contactor dropout, and PLC resets if the equipment does not have adequate ride-through capability.',
   },

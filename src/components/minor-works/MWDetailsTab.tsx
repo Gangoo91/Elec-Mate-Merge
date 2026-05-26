@@ -202,14 +202,15 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
           const today = new Date().toISOString().split('T')[0];
           onUpdate('workDate', today);
           onUpdate('dateOfCompletion', today);
-          // Auto-set next inspection to 10 years from today
+          // Default next inspection to 5y — common for MW additions tied to next domestic EICR cycle.
+          // 1/3/5/10 year chips below let the sparky override.
           const nextInsp = new Date();
-          nextInsp.setFullYear(nextInsp.getFullYear() + 10);
+          nextInsp.setFullYear(nextInsp.getFullYear() + 5);
           onUpdate('nextInspectionDue', nextInsp.toISOString().split('T')[0]);
         }}
         className="w-full h-9 rounded-lg text-xs font-medium bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98]"
       >
-        Set dates (today + 10yr inspection)
+        Set dates (today + 5yr inspection)
       </button>
 
       <div className="grid grid-cols-2 gap-2 items-end">
@@ -218,8 +219,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
             type="date"
             value={(formData.workDate as string) || ''}
             onChange={(e) => onUpdate('workDate', e.target.value)}
-            className={cn(inputClass, 'text-xs')}
-            style={{ fontSize: '12px' }}
+            className={cn(inputClass, 'text-sm')}
           />
         </FormField>
         <FormField label="Completion">
@@ -227,8 +227,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
             type="date"
             value={(formData.dateOfCompletion as string) || ''}
             onChange={(e) => onUpdate('dateOfCompletion', e.target.value)}
-            className={cn(inputClass, 'text-xs')}
-            style={{ fontSize: '12px' }}
+            className={cn(inputClass, 'text-sm')}
           />
         </FormField>
       </div>
@@ -265,8 +264,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
           type="date"
           value={(formData.nextInspectionDue as string) || ''}
           onChange={(e) => onUpdate('nextInspectionDue', e.target.value)}
-          className={cn(inputClass, 'text-xs')}
-          style={{ fontSize: '12px' }}
+          className={cn(inputClass, 'text-sm')}
         />
       </FormField>
 
@@ -297,7 +295,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
                 }
               }}
               className={cn(
-                'h-9 rounded-lg font-medium transition-all touch-manipulation text-[9px] active:scale-[0.98]',
+                'h-10 rounded-lg font-medium transition-all touch-manipulation text-xs active:scale-[0.98] px-1',
                 formData.workType === wt.value
                   ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
                   : 'bg-white/[0.05] border border-white/[0.08] text-white'
@@ -318,32 +316,62 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
             className={inputClass}
           />
         </FormField>
-        <FormField label="Description *">
+        <FormField label="Description of Work *">
           <Input
             value={(formData.workDescription as string) || ''}
             onChange={(e) => onUpdate('workDescription', e.target.value)}
-            placeholder="Work carried out"
+            placeholder="e.g., Addition of socket outlet to kitchen circuit"
             className={inputClass}
           />
         </FormField>
       </div>
 
       <div className="grid grid-cols-2 gap-2 items-end">
-        <FormField label="Departures (Reg 120.3, 133.5)">
-          <Input
-            value={(formData.departuresFromBS7671 as string) || ''}
-            onChange={(e) => onUpdate('departuresFromBS7671', e.target.value)}
-            placeholder="None"
-            className={inputClass}
-          />
+        <FormField label="Departures">
+          <div className="flex gap-1.5">
+            <Input
+              value={(formData.departuresFromBS7671 as string) || ''}
+              onChange={(e) => onUpdate('departuresFromBS7671', e.target.value)}
+              placeholder="None"
+              className={cn(inputClass, 'flex-1')}
+            />
+            <button
+              type="button"
+              onClick={() => { haptic.light(); onUpdate('departuresFromBS7671', 'None'); }}
+              className={cn(
+                'h-11 px-3 rounded-lg text-[10px] font-semibold touch-manipulation active:scale-[0.97] transition-all shrink-0',
+                formData.departuresFromBS7671 === 'None'
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              None
+            </button>
+          </div>
+          <span className="text-[9px] text-white/50 mt-1 block">Reg 120.3, 133.1.2, 133.1.3, 133.5</span>
         </FormField>
-        <FormField label="Exceptions (Reg 411.3.3)">
-          <Input
-            value={(formData.permittedExceptions as string) || ''}
-            onChange={(e) => onUpdate('permittedExceptions', e.target.value)}
-            placeholder="None"
-            className={inputClass}
-          />
+        <FormField label="Exceptions">
+          <div className="flex gap-1.5">
+            <Input
+              value={(formData.permittedExceptions as string) || ''}
+              onChange={(e) => onUpdate('permittedExceptions', e.target.value)}
+              placeholder="None"
+              className={cn(inputClass, 'flex-1')}
+            />
+            <button
+              type="button"
+              onClick={() => { haptic.light(); onUpdate('permittedExceptions', 'None'); }}
+              className={cn(
+                'h-11 px-3 rounded-lg text-[10px] font-semibold touch-manipulation active:scale-[0.97] transition-all shrink-0',
+                formData.permittedExceptions === 'None'
+                  ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              None
+            </button>
+          </div>
+          <span className="text-[9px] text-white/50 mt-1 block">Reg 411.3.3</span>
         </FormField>
       </div>
 
@@ -363,16 +391,99 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
       </button>
 
       <FormField label="Comments on Existing Installation (Reg 644.1.2)">
-        <Input
-          value={(formData.commentsOnExistingInstallation as string) || ''}
-          onChange={(e) => onUpdate('commentsOnExistingInstallation', e.target.value)}
-          placeholder="Any comments or 'None'"
-          className={inputClass}
-        />
+        <div className="space-y-1.5">
+          <Textarea
+            value={(formData.commentsOnExistingInstallation as string) || ''}
+            onChange={(e) => onUpdate('commentsOnExistingInstallation', e.target.value)}
+            placeholder="Any comments on the existing installation"
+            className={textareaClass + ' min-h-[72px]'}
+            rows={3}
+          />
+          <button
+            type="button"
+            onClick={() => { haptic.light(); onUpdate('commentsOnExistingInstallation', 'None'); }}
+            className={cn(
+              'h-7 px-2.5 rounded-md text-[10px] font-semibold touch-manipulation active:scale-[0.97] transition-all',
+              formData.commentsOnExistingInstallation === 'None'
+                ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                : 'bg-white/[0.05] border border-white/[0.08] text-white'
+            )}
+          >
+            None
+          </button>
+        </div>
       </FormField>
 
       {/* Supply & Earthing */}
       <SectionTitle title="Supply & Earthing" />
+
+      {/* Quick-start presets — covers most UK installations */}
+      <div className="space-y-1.5">
+        <Label className="text-[10px] text-white/60 uppercase tracking-wider">
+          Quick start
+        </Label>
+        <div className="grid grid-cols-3 gap-1.5">
+          {[
+            {
+              key: 'mw-dom-tncs',
+              label: 'Domestic',
+              sub: '1ph 230V TN-C-S',
+              values: {
+                earthingArrangement: 'TN-C-S',
+                supplyVoltage: '230V',
+                supplyPhases: 'Single',
+              },
+            },
+            {
+              key: 'mw-com-tncs',
+              label: 'Commercial',
+              sub: '3ph 400V TN-C-S',
+              values: {
+                earthingArrangement: 'TN-C-S',
+                supplyVoltage: '400V',
+                supplyPhases: 'Three',
+              },
+            },
+            {
+              key: 'mw-tt-1ph',
+              label: 'TT supply',
+              sub: '1ph 230V electrode',
+              values: {
+                earthingArrangement: 'TT',
+                supplyVoltage: '230V',
+                supplyPhases: 'Single',
+              },
+            },
+          ].map((preset) => {
+            const isActive = Object.entries(preset.values).every(
+              ([field, value]) => formData[field] === value
+            );
+            return (
+              <button
+                key={preset.key}
+                type="button"
+                onClick={() => {
+                  haptic.light();
+                  Object.entries(preset.values).forEach(([field, value]) =>
+                    onUpdate(field, value)
+                  );
+                }}
+                className={cn(
+                  'h-12 rounded-lg touch-manipulation active:scale-[0.98] flex flex-col items-center justify-center gap-0.5 px-1 transition-all',
+                  isActive
+                    ? 'bg-elec-yellow/30 border-2 border-elec-yellow text-elec-yellow'
+                    : 'bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow'
+                )}
+              >
+                <span className="text-[11px] font-semibold leading-none">{preset.label}</span>
+                <span className="text-[9px] text-elec-yellow/70 leading-none text-center">
+                  {preset.sub}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
       <FormField label="Earthing Arrangement" required>
         <ToggleButtons
@@ -463,7 +574,15 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
               <button
                 key={item}
                 type="button"
-                onClick={() => { haptic.light(); onUpdate(fieldName, !isChecked); }}
+                onClick={() => {
+                  haptic.light();
+                  const next = !isChecked;
+                  onUpdate(fieldName, next);
+                  // When turning Other off, also clear the specify text so we don't leak stale state.
+                  if (item === 'Other' && !next && formData.bondingOtherSpecify) {
+                    onUpdate('bondingOtherSpecify', '');
+                  }
+                }}
                 className={cn(
                   'h-10 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] flex items-center justify-center gap-1',
                   isChecked
@@ -477,6 +596,14 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate }) => {
             );
           })}
         </div>
+        {formData.bondingOther && (
+          <Input
+            value={(formData.bondingOtherSpecify as string) || ''}
+            onChange={(e) => onUpdate('bondingOtherSpecify', e.target.value)}
+            placeholder="Specify other bonding (e.g. swimming pool, solar PV frame)"
+            className={cn(inputClass, 'mt-2')}
+          />
+        )}
       </FormField>
     </div>
   );

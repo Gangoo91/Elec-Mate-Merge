@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'coordination-meeting-purpose',
     question: 'What is the primary purpose of trade coordination meetings?',
     options: [
-      'To assign blame for delays',
+      'At standstill, slip = 1 and rotor impedance is at minimum',
       'To sequence work and resolve clashes before they occur on site',
-      'To reduce the number of workers required',
-      'To replace written method statements',
+      'Potentially dangerous - urgent remedial action required',
+      'Poor connections, oxidation, incorrect termination, or mechanical damage',
     ],
     correctIndex: 1,
     explanation:
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'occupied-premises-priority',
     question: 'When working in occupied premises, what should be the primary consideration?',
     options: [
-      'Speed of work completion',
+      'Wind speed, turbulence, obstacles, planning permission, and grid connection',
+      'Hydrostatic pressure transmitter mounted at the bottom of the tank',
+      'Installing a local exhaust ventilation system to capture dust at source',
       'Minimising disruption to building users and maintaining safety',
-      'Reducing material costs',
-      'Maximising the workforce on site',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'In occupied premises, minimising disruption to users whilst maintaining safety for both workers and occupants is paramount. This often requires out-of-hours work and careful phasing.',
   },
@@ -57,12 +57,12 @@ const quickCheckQuestions = [
     id: 'isolation-coordination',
     question: 'Who must authorise electrical isolations affecting client operations?',
     options: [
-      'Any electrician on site',
-      'The main contractor only',
+      "PEN fault detection and automatic disconnection",
       "The client's authorised person and the electrical supervisor",
-      'The building caretaker',
+      "Assist with evacuation, check areas are clear, liaise with fire brigade",
+      "Planned, appropriately supervised and carried out in a safe manner",
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       "Electrical isolations affecting client operations require dual authorisation from the client's authorised person (who understands operational impact) and the electrical supervisor (who confirms safe isolation).",
   },
@@ -70,12 +70,12 @@ const quickCheckQuestions = [
     id: 'live-services-work',
     question: 'Before working near live services, what documentation is essential?',
     options: [
-      'Only a verbal agreement',
       'A permit to work system and risk assessment',
-      'Just a method statement',
-      'An email confirmation',
+      'To reduce overwhelm and focus on the next step',
+      'Total path length (out and back)',
+      'Core losses become proportionally larger',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Working near live services requires a formal permit to work system combined with specific risk assessments. This documents the hazards, controls, and authorisations required.',
   },
@@ -87,10 +87,10 @@ const quizQuestions = [
     question:
       'What is the typical frequency of trade coordination meetings on a major building services project?',
     options: [
-      'Monthly',
+      'Three-phase mV/A/m values from tables',
       'Weekly during installation phases',
-      'Only at project start',
-      'Whenever problems occur',
+      'Using waste to generate energy',
+      'To prevent electric shock',
     ],
     correctAnswer: 1,
     explanation:
@@ -100,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'A sequencing agreement should include which of the following?',
     options: [
-      'Only start dates for each trade',
+      'Plan work during quietest periods, often nights or weekends',
+      'The design team, documented through an RFI or technical query',
       'Access dates, duration, completion dates, and dependencies',
-      'Just the final completion date',
-      'Penalty clauses only',
+      'A 3-6 week rolling schedule showing upcoming work sequences',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Effective sequencing agreements define access dates, work duration, completion dates, and dependencies between trades. This allows realistic programming and identifies potential conflicts.',
   },
@@ -114,12 +114,12 @@ const quizQuestions = [
     question:
       'When electrical work is required in an occupied hospital ward, what is the preferred approach?',
     options: [
-      'Work during normal hours and ask patients to leave',
+      'The interface matrix or responsibility matrix',
+      'Access dates, duration, completion dates, and dependencies',
+      'The design team, documented through an RFI or technical query',
       'Plan work during quietest periods, often nights or weekends',
-      'Close the ward permanently',
-      'Work at maximum speed during the day',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hospital work typically requires careful timing around patient needs, often during quieter night shifts or weekends, with close liaison with ward staff to minimise disruption to patient care.',
   },
@@ -128,9 +128,9 @@ const quizQuestions = [
     question: "What is a 'look-ahead programme' in interface coordination?",
     options: [
       'A 3-6 week rolling schedule showing upcoming work sequences',
-      'The original project programme',
-      'A report on completed work',
-      'The final handover schedule',
+      'Access dates, duration, completion dates, and dependencies',
+      'The design team, documented through an RFI or technical query',
+      'Plan work during quietest periods, often nights or weekends',
     ],
     correctAnswer: 0,
     explanation:
@@ -140,10 +140,10 @@ const quizQuestions = [
     id: 5,
     question: 'Client liaison protocols should establish which of the following?',
     options: [
-      'Only emergency contact numbers',
+      'Fire precautions, isolation confirmations, fire watch requirements, and data backup confirmation',
       'Single point of contact, communication frequency, escalation routes, and approval authorities',
-      "Just the project manager's details",
-      'A list of all workers on site',
+      'To confirm work areas, access routes, isolations, and any changes from the plan',
+      'Welfare facilities, emergency procedures, lone working, and client site rules',
     ],
     correctAnswer: 1,
     explanation:
@@ -155,11 +155,11 @@ const quizQuestions = [
       'When working in live retail premises, isolation requests should typically be submitted:',
     options: [
       'On the morning of the work',
-      '72 hours to one week in advance',
       'After the work is complete',
+      '72 hours to one week in advance',
       'Only verbally to the store manager',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Retail environments need advance notice (typically 72 hours to one week) for isolations to allow business continuity planning, stock protection, and customer communication if required.',
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: "What document defines the boundaries between different contractors' work scopes?",
     options: [
-      'The health and safety plan',
+      'Clearly identify amendments using project-specific text',
+      'Flexible connections and movement accommodation',
+      'Moisture resistance and mechanical protection',
       'The interface matrix or responsibility matrix',
-      'The building regulations',
-      'The insurance certificate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An interface matrix clearly defines work scope boundaries, showing which contractor is responsible for each element and the handover points between packages.',
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: 'Out-of-hours work permits should specifically address:',
     options: [
-      'Only the work to be done',
       'Welfare facilities, emergency procedures, lone working, and client site rules',
-      'Just the overtime rates',
-      'The weather forecast',
+      'The design team, documented through an RFI or technical query',
+      'To confirm work areas, access routes, isolations, and any changes from the plan',
+      'Fire precautions, isolation confirmations, fire watch requirements, and data backup confirmation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Out-of-hours permits must address reduced facilities (welfare, first aid), modified emergency procedures, lone working risks, site security, and any specific client requirements for unsupervised access.',
   },
@@ -193,10 +193,10 @@ const quizQuestions = [
     id: 9,
     question: "A 'hot works' permit near live data services should include:",
     options: [
-      'Only fire extinguisher provision',
+      'Welfare facilities, emergency procedures, lone working, and client site rules',
       'Fire precautions, isolation confirmations, fire watch requirements, and data backup confirmation',
-      'Just the start time',
-      "The worker's qualifications only",
+      'Whether parallel working is possible, what is required for safe handover, or alternative sequences',
+      'Single point of contact, communication frequency, escalation routes, and approval authorities',
     ],
     correctAnswer: 1,
     explanation:
@@ -207,12 +207,12 @@ const quizQuestions = [
     question:
       'When a clash is identified between electrical containment and ductwork, who should make the final decision on the resolution?',
     options: [
-      'Whichever contractor arrived first',
+      'Access dates, duration, completion dates, and dependencies',
+      'A 3-6 week rolling schedule showing upcoming work sequences',
       'The design team, documented through an RFI or technical query',
-      'The electrician installing the containment',
-      'The building owner',
+      'Plan work during quietest periods, often nights or weekends',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Design clashes should be resolved through formal processes (RFI - Request for Information) by the design team, ensuring the solution is properly documented and any contract implications addressed.',
   },
@@ -220,12 +220,12 @@ const quizQuestions = [
     id: 11,
     question: 'What is the purpose of a daily briefing in occupied premises?',
     options: [
-      'To replace the project programme',
+      'Access dates, duration, completion dates, and dependencies',
+      'Single point of contact, communication frequency, escalation routes, and approval authorities',
+      'Whether parallel working is possible, what is required for safe handover, or alternative sequences',
       'To confirm work areas, access routes, isolations, and any changes from the plan',
-      'To issue new contracts',
-      'To replace method statements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Daily briefings in occupied premises ensure all workers understand current work areas, permitted access routes, any isolations in effect, and changes from previous days - essential for safety and disruption management.',
   },
@@ -234,12 +234,12 @@ const quizQuestions = [
     question:
       'A mechanical contractor needs access to an area where you have not completed first fix. The coordination meeting should establish:',
     options: [
-      'That they must wait indefinitely',
       'Whether parallel working is possible, what is required for safe handover, or alternative sequences',
-      'That you will speed up your work',
-      'Nothing - it is not your problem',
+      'Fire precautions, isolation confirmations, fire watch requirements, and data backup confirmation',
+      'Single point of contact, communication frequency, escalation routes, and approval authorities',
+      'Welfare facilities, emergency procedures, lone working, and client site rules',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Coordination meetings should explore options including parallel working with clear demarcation, partial handover of completed sections, or programme adjustments that maintain overall project timescales.',
   },

@@ -6,10 +6,10 @@ export const quizQuestions: QuizQuestion[] = [
     question:
       'What is the primary standard that governs electrical inspection and testing in the UK?',
     options: [
-      'BS 6423',
+      'Electricity at Work Regulations 1989',
       'BS 7671 (IET Wiring Regulations)',
-      'BS 7909',
-      'Health and Safety at Work Act 1974',
+      'Voltage drop calculations',
+      'Electrical Installation Certificate (EIC)',
     ],
     correctAnswer: 1,
     explanation:
@@ -34,10 +34,10 @@ export const quizQuestions: QuizQuestion[] = [
     options: [
       'Periodic Inspection',
       'Condition Report',
-      'Initial Verification',
       'Maintenance Check',
+      'Initial Verification',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Initial Verification is carried out on new electrical installations before they are put into service. This ensures the installation complies with BS 7671 and is safe for use.',
   },
@@ -45,12 +45,12 @@ export const quizQuestions: QuizQuestion[] = [
     id: 4,
     question: 'Which of the following is NOT typically part of the testing sequence?',
     options: [
-      'Continuity of protective conductors',
-      'Insulation resistance measurements',
       'Voltage drop calculations',
+      'Insulation resistance measurements',
+      'Continuity of protective conductors',
       'Earth fault loop impedance',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Voltage drop calculations are typically performed during the design stage, not as part of the testing sequence. The other options are all standard tests performed during inspection and testing procedures.',
   },
@@ -58,12 +58,12 @@ export const quizQuestions: QuizQuestion[] = [
     id: 5,
     question: 'Who can carry out electrical inspection and testing?',
     options: [
-      'Anyone with basic electrical knowledge',
-      'Only qualified electricians',
+      'For high-risk work like confined spaces, hot work, electrical isolation',
       'Competent persons with appropriate knowledge, training and experience',
-      'Only those certified by a Competent Person Scheme',
+      'Temporarily reverses to remove ice from the outdoor coil',
+      'Fault current flowing through multiple protective devices',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Inspection and testing must be carried out by competent persons. Competency is defined as having the necessary knowledge, training, and experience to perform the work safely and accurately, not just formal qualifications.',
   },
@@ -71,8 +71,13 @@ export const quizQuestions: QuizQuestion[] = [
     id: 6,
     question:
       'According to BS 7671, what is the minimum insulation resistance value for circuits rated up to 500V?',
-    options: ['0.5 MΩ', '1 MΩ', '2 MΩ', '5 MΩ'],
-    correctAnswer: 1,
+    options: [
+      '5 MΩ',
+      '0.5 MΩ',
+      '1 MΩ',
+      '2 MΩ',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 7671 requires a minimum insulation resistance of 1 MΩ for circuits rated up to 500V. This ensures adequate insulation between live conductors and between live conductors and earth.',
   },
@@ -80,12 +85,12 @@ export const quizQuestions: QuizQuestion[] = [
     id: 7,
     question: 'What document must be issued following satisfactory initial verification?',
     options: [
-      'Electrical Installation Condition Report (EICR)',
-      'Electrical Installation Certificate (EIC)',
       'Periodic Inspection Report',
+      'Electrical Installation Condition Report (EICR)',
       'Minor Electrical Installation Works Certificate',
+      'Electrical Installation Certificate (EIC)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'An Electrical Installation Certificate (EIC) must be issued following satisfactory initial verification of a new installation or major alterations to an existing installation.',
   },
@@ -93,12 +98,12 @@ export const quizQuestions: QuizQuestion[] = [
     id: 8,
     question: 'Building Regulations Part P applies to electrical work in which type of buildings?',
     options: [
-      'All buildings',
-      'Commercial buildings only',
       'Dwellings only',
+      'Commercial buildings only',
+      'All buildings',
       'Industrial buildings only',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Building Regulations Part P specifically applies to electrical safety in dwellings (residential buildings). It covers new installations, alterations, and additions in domestic properties.',
   },
@@ -106,7 +111,12 @@ export const quizQuestions: QuizQuestion[] = [
     id: 9,
     question:
       'What is the maximum earth fault loop impedance (Zs) for a 32A Type B MCB according to BS 7671?',
-    options: ['1.44Ω', '1.37Ω', '2.3Ω', '0.87Ω'],
+    options: [
+      '0.87Ω',
+      '1.37Ω',
+      '2.3Ω',
+      '1.44Ω',
+    ],
     correctAnswer: 1,
     explanation:
       'For a 32A Type B MCB, the maximum earth fault loop impedance (Zs) is 1.37Ω. This ensures the protective device will operate within the required disconnection time in the event of an earth fault.',
@@ -114,8 +124,13 @@ export const quizQuestions: QuizQuestion[] = [
   {
     id: 10,
     question: 'Which regulation in the Electricity at Work Regulations 1989 deals with competency?',
-    options: ['Regulation 4', 'Regulation 12', 'Regulation 14', 'Regulation 16'],
-    correctAnswer: 3,
+    options: [
+      'Regulation 4',
+      'Regulation 12',
+      'Regulation 16',
+      'Regulation 14',
+    ],
+    correctAnswer: 2,
     explanation:
       'Regulation 16 of the Electricity at Work Regulations 1989 deals with competency, stating that no person shall be engaged in work which requires technical knowledge or experience unless they possess such knowledge or experience, or are under appropriate supervision.',
   },

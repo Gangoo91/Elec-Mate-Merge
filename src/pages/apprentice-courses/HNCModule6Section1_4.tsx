@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'air-permeability-definition',
     question: 'What is air permeability measured in according to UK Building Regulations?',
     options: [
-      'Pascals per hour',
+      'Investigate for variable connections or parallel paths',
+      'Work at any place where a person could fall and be injured',
+      'Building layout with positions of electrical equipment',
       'Cubic metres per hour per square metre at 50 Pascals (m³/h.m² @ 50Pa)',
-      'Air changes per hour (ACH)',
-      'Litres per second per square metre',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Air permeability in the UK is measured in m³/h.m² @ 50Pa - the volume of air passing through each square metre of envelope area per hour when a 50 Pascal pressure difference is applied across the building envelope.',
   },
@@ -44,12 +44,12 @@ const quickCheckQuestions = [
     id: 'blower-door-purpose',
     question: 'What is the primary purpose of a blower door test?',
     options: [
-      'To measure ventilation rates during normal operation',
+      'Produce a single scan pulse on the rising or falling edge of an input transition',
+      'Competent persons including supervisors, safety representatives, managers',
       'To pressurise the building to identify air leakage paths and measure overall airtightness',
-      'To test the mechanical ventilation system performance',
-      'To calculate heating load requirements',
+      'People naturally feel compelled to return favours, helpfulness, or generosity',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'A blower door test pressurises (or depressurises) the building to a standard pressure difference (typically 50Pa) to measure the overall air leakage rate and identify leakage paths in the building envelope.',
   },
@@ -57,10 +57,10 @@ const quickCheckQuestions = [
     id: 'attma-certification',
     question: 'What does ATTMA certification ensure?',
     options: [
-      'The building meets Part L requirements',
+      'Verifying cause and effect relationships with other systems',
       'The tester is qualified and uses calibrated equipment to recognised standards',
-      'The ventilation system is correctly installed',
-      'The insulation meets required U-values',
+      'Take reasonable care for yourself and others, and cooperate with the system',
+      'For non-urgent conflicts, wait 24 hours before responding to allow emotions to settle',
     ],
     correctIndex: 1,
     explanation:
@@ -71,10 +71,10 @@ const quickCheckQuestions = [
     question:
       'Which of these is typically the most significant source of air leakage in new buildings?',
     options: [
-      'Window frames',
+      'The rate at which work is done (or energy is transferred)',
       'Service penetrations through the air barrier',
-      'Roof junctions',
-      'Door seals',
+      'Multiple ground connections creating current flow',
+      'Quantity, quality, and compliance with specifications',
     ],
     correctIndex: 1,
     explanation:
@@ -86,8 +86,13 @@ const quizQuestions = [
   {
     id: 1,
     question: 'The Building Regulations Part L limiting air permeability for new dwellings is:',
-    options: ['3 m³/h.m² @ 50Pa', '5 m³/h.m² @ 50Pa', '8 m³/h.m² @ 50Pa', '10 m³/h.m² @ 50Pa'],
-    correctAnswer: 2,
+    options: [
+      '3 m³/h.m² @ 50Pa',
+      '8 m³/h.m² @ 50Pa',
+      '5 m³/h.m² @ 50Pa',
+      '10 m³/h.m² @ 50Pa',
+    ],
+    correctAnswer: 1,
     explanation:
       'Part L 2021 sets a limiting air permeability of 8 m³/h.m² @ 50Pa for new dwellings. However, notional dwelling specifications and many designs target much lower values (typically 3-5 m³/h.m²) to achieve energy performance requirements.',
   },
@@ -95,12 +100,12 @@ const quizQuestions = [
     id: 2,
     question: 'When should the first air permeability test ideally be conducted?',
     options: [
-      'After practical completion',
+      'Late installation of services after air barrier sealing is complete',
+      'Compromises system balance, reduces efficiency, and can cause draughts',
       'After the air barrier is complete but before internal finishes',
-      'After all MEP second fix is complete',
-      'During the warranty period',
+      'Proprietary airtight back boxes or membrane seals',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'The ideal timing is after the air barrier is complete but before internal finishes conceal it. This allows remedial work to be undertaken without costly disruption. A pre-test at this stage is best practice.',
   },
@@ -108,12 +113,12 @@ const quizQuestions = [
     id: 3,
     question: "In a blower door test, what does the 'n50' value represent?",
     options: [
-      'The number of tests required at 50Pa',
-      'Air changes per hour at 50 Pascals pressure difference',
       'The air permeability in m³/h.m²',
+      'The number of tests required at 50Pa',
       'The percentage of leakage through services',
+      'Air changes per hour at 50 Pascals pressure difference',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The n50 value represents air changes per hour (ACH) at 50 Pascals pressure difference. It is calculated by dividing the air leakage rate (m³/h) by the internal volume of the building.',
   },
@@ -121,8 +126,13 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the minimum test pressure required for a valid air permeability test under ATTMA TSL1?',
-    options: ['25 Pa', '50 Pa', '75 Pa', '100 Pa'],
-    correctAnswer: 1,
+    options: [
+      '50 Pa',
+      '25 Pa',
+      '75 Pa',
+      '100 Pa',
+    ],
+    correctAnswer: 0,
     explanation:
       'ATTMA TSL1 (Technical Standard L1) requires a minimum induced pressure of 50 Pa for the test to be valid. Tests are conducted at multiple pressure stages (typically 10-60 Pa) to establish the flow/pressure relationship.',
   },
@@ -131,10 +141,10 @@ const quizQuestions = [
     question:
       'Which sealing method is most appropriate for electrical back boxes penetrating the air barrier?',
     options: [
-      "Standard decorator's caulk",
+      'Use representative sample testing of similar construction zones',
       'Proprietary airtight back boxes or membrane seals',
-      'Expanding foam only',
-      'No sealing required as they are internal',
+      'Air changes per hour at 50 Pascals pressure difference',
+      'After the air barrier is complete but before internal finishes',
     ],
     correctAnswer: 1,
     explanation:
@@ -145,12 +155,12 @@ const quizQuestions = [
     question:
       'For large non-domestic buildings, what is an acceptable approach when testing air permeability?',
     options: [
-      'Test the entire building as a single zone',
+      'After the air barrier is complete but before internal finishes',
+      'Uses a rapid pressure pulse to minimise the effect of wind and temperature',
       'Use representative sample testing of similar construction zones',
-      'Only test after three years of occupation',
-      'Testing is not required for buildings over 5000m²',
+      'Air changes per hour at 50 Pascals pressure difference',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "For large buildings, representative sample testing of similar construction zones is acceptable under ATTMA TSL2. The samples must be representative of the building's construction types and the results applied to similar zones.",
   },
@@ -158,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: 'What effect does poor airtightness have on mechanical ventilation systems?',
     options: [
-      'No effect - they are separate systems',
-      'Improves ventilation by supplementing airflow',
+      'The energy calculation must be revised, potentially requiring compensating measures',
+      'Late installation of services after air barrier sealing is complete',
+      'Air changes per hour at 50 Pascals pressure difference',
       'Compromises system balance, reduces efficiency, and can cause draughts',
-      'Only affects heating, not ventilation',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "Poor airtightness compromises MVHR system performance by allowing uncontrolled infiltration that bypasses heat recovery, creates pressure imbalances, causes draughts, and reduces the system's energy efficiency and effectiveness.",
   },
@@ -172,12 +182,12 @@ const quizQuestions = [
     question:
       "The 'pulse method' for air permeability testing differs from blower door testing in that it:",
     options: [
-      'Uses higher pressures for more accurate results',
       'Uses a rapid pressure pulse to minimise the effect of wind and temperature',
-      'Can only be used on small buildings',
-      'Does not require calibrated equipment',
+      'The energy calculation must be revised, potentially requiring compensating measures',
+      'After the air barrier is complete but before internal finishes',
+      'Compromises system balance, reduces efficiency, and can cause draughts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The pulse method uses a rapid air compression/release to create a momentary pressure difference. This short duration (approximately 1.5 seconds) minimises the influence of wind and stack effects, making it suitable for testing in variable weather conditions.',
   },
@@ -185,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'Which MEP coordination issue most commonly causes air permeability test failures?',
     options: [
-      'Ductwork joints being too loose',
+      'The energy calculation must be revised, potentially requiring compensating measures',
       'Late installation of services after air barrier sealing is complete',
-      'Electrical cables being too large',
-      'Plumbing pipes being incorrectly sized',
+      'Proprietary airtight back boxes or membrane seals',
+      'Compromises system balance, reduces efficiency, and can cause draughts',
     ],
     correctAnswer: 1,
     explanation:
@@ -200,11 +210,11 @@ const quizQuestions = [
       'When using smoke pencils or theatrical smoke during a blower door test, what are you identifying?',
     options: [
       'Fire stopping adequacy',
+      'Thermal bridging locations',
       'Specific locations of air leakage paths',
       'Ventilation system commissioning data',
-      'Thermal bridging locations',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Smoke testing during pressurisation/depressurisation visually identifies specific air leakage paths. Smoke is drawn towards (depressurised) or pushed away from (pressurised) leakage points, enabling targeted remediation.',
   },
@@ -212,12 +222,12 @@ const quizQuestions = [
     id: 11,
     question: "The 'design air permeability' value used for energy calculations should be:",
     options: [
-      'The Part L limiting value',
+      'The energy calculation must be revised, potentially requiring compensating measures',
+      'Compromises system balance, reduces efficiency, and can cause draughts',
+      'Uses a rapid pressure pulse to minimise the effect of wind and temperature',
       'The tested value from a similar completed building or a reasonable target for the construction type',
-      'Always 3 m³/h.m² @ 50Pa',
-      'Not specified until the building is complete',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The design air permeability should be a realistic target based on the construction type and evidence from similar buildings. Overly optimistic values will require re-calculation if testing shows higher actual leakage.',
   },
@@ -226,12 +236,12 @@ const quizQuestions = [
     question:
       'What is the consequence if a completed building fails to meet its design air permeability target?',
     options: [
-      'The building cannot be occupied',
       'The energy calculation must be revised, potentially requiring compensating measures',
-      'A fine is automatically issued',
-      'The test can simply be repeated until it passes',
+      'The tested value from a similar completed building or a reasonable target for the construction type',
+      'Compromises system balance, reduces efficiency, and can cause draughts',
+      'After the air barrier is complete but before internal finishes',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'If the tested air permeability exceeds the design value, the SAP/SBEM energy calculation must be revised. This may result in non-compliance, requiring compensating measures such as improved insulation, more efficient heating systems, or remedial airtightness work.',
   },

@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'hea01-criteria',
     question: 'What does BREEAM Hea 01 (Visual Comfort) primarily assess?',
     options: [
-      'Emergency lighting provision',
       'Daylighting levels and glare control in occupied spaces',
-      'External lighting pollution',
-      'Security lighting coverage',
+      'Serious health hazard (CMR, sensitiser, STOT)',
+      'An upstream device clears a fault if the closer device fails',
+      'Format the cells as "Text" before entering the data',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Hea 01 Visual Comfort assesses daylighting provision, view out, and glare control to ensure occupied spaces receive adequate natural light whilst minimising visual discomfort from excessive brightness or reflections.',
   },
@@ -56,8 +56,13 @@ const quickCheckQuestions = [
   {
     id: 'thermal-comfort',
     question: 'Which standard does BREEAM Hea 05 reference for thermal comfort criteria?',
-    options: ['BS EN 15251 / BS EN 16798', 'BS 7671', 'CIBSE TM52', 'Building Regulations Part L'],
-    correctIndex: 0,
+    options: [
+      'Warehouse storing valuable goods',
+      'BS EN 15251 / BS EN 16798',
+      'A semantic or language barrier',
+      'Double or reinforced insulation',
+    ],
+    correctIndex: 1,
     explanation:
       'BREEAM Hea 05 Thermal Comfort references BS EN 15251 (now superseded by BS EN 16798) for comfort criteria, including operative temperature ranges and adaptive comfort approaches for naturally ventilated buildings.',
   },
@@ -66,12 +71,12 @@ const quickCheckQuestions = [
     question:
       'What acoustic parameter does BREEAM Hea 06 primarily address for office environments?',
     options: [
-      'Reverberation time only',
       'Sound insulation between spaces and ambient noise levels',
-      'External noise from traffic only',
-      'Plant room noise isolation only',
+      'Primary purpose - life vs property protection',
+      'Adjusting temperature before occupancy based on schedule',
+      'Other branches continue to work normally',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Hea 06 Acoustic Performance addresses both sound insulation between spaces (partitions, floors) and ambient noise levels from building services, ensuring appropriate conditions for the intended use of each space.',
   },
@@ -97,10 +102,10 @@ const quizQuestions = [
     question:
       'Under BREEAM Hea 02 (View Out), what percentage of floor area must have a view of the sky or landscape?',
     options: [
-      '50% of the net internal area',
-      '80% of the net internal area',
-      '95% of the net internal area',
       '100% of the net internal area',
+      '50% of the net internal area',
+      '95% of the net internal area',
+      '80% of the net internal area',
     ],
     correctAnswer: 2,
     explanation:
@@ -110,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is the purpose of glare control under BREEAM Hea 03?',
     options: [
-      'To reduce daylight entering the building',
+      'To assess occupant satisfaction and building performance after handover',
+      'VOC content below specified limits or certified low-emission products',
+      'The ratio of minimum to average illuminance',
       'To provide adjustable shading to prevent visual discomfort',
-      'To eliminate all natural light',
-      'To increase artificial lighting usage',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Hea 03 Glare Control requires adjustable shading or screening devices to prevent excessive brightness and visual discomfort while maintaining the benefits of daylighting and views.',
   },
@@ -123,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which pollutant concentration must be monitored for BREEAM Hea 04 credits?',
     options: [
-      'Ozone (O3)',
       'Carbon dioxide (CO2)',
+      'Ozone (O3)',
       'Nitrogen oxide (NOx)',
       'Sulphur dioxide (SO2)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'BREEAM Hea 04 requires CO2 monitoring with sensors linked to ventilation systems. CO2 levels indicate occupancy and ventilation effectiveness, with a typical target of maintaining levels below 1000 ppm.',
   },
@@ -136,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'What does BREEAM require regarding VOC emissions from internal finishes?',
     options: [
-      'No restrictions on VOC content',
+      'Adaptive comfort model allowing higher temperatures in summer',
       'VOC content below specified limits or certified low-emission products',
-      'Only natural materials permitted',
-      'Testing only after 12 months occupancy',
+      'To provide adjustable shading to prevent visual discomfort',
+      'To assess occupant satisfaction and building performance after handover',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,12 +155,12 @@ const quizQuestions = [
     question:
       'For naturally ventilated buildings, which thermal comfort approach does BREEAM accept?',
     options: [
-      'Fixed temperature setpoints only',
+      'VOC content below specified limits or certified low-emission products',
+      'To provide adjustable shading to prevent visual discomfort',
       'Adaptive comfort model allowing higher temperatures in summer',
-      'Mechanical cooling override required',
-      'No thermal comfort criteria apply',
+      'To assess occupant satisfaction and building performance after handover',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BREEAM accepts the adaptive comfort model (BS EN 15251 Category II) for naturally ventilated buildings, recognising that occupants tolerate higher temperatures when they have control and outdoor temperatures are elevated.',
   },
@@ -163,8 +168,13 @@ const quizQuestions = [
     id: 7,
     question:
       'What is the typical ambient noise criterion for open-plan offices under BREEAM Hea 06?',
-    options: ['NR 25', 'NR 35', 'NR 40', 'NR 45'],
-    correctAnswer: 2,
+    options: [
+      'NR 25',
+      'NR 35',
+      'NR 45',
+      'NR 40',
+    ],
+    correctAnswer: 3,
     explanation:
       'BREEAM typically specifies NR 40 as the maximum background noise level for open-plan offices from building services. Private offices require lower levels (NR 35), and libraries or lecture theatres require NR 30 or lower.',
   },
@@ -172,20 +182,25 @@ const quizQuestions = [
     id: 8,
     question: "What does the 'uniformity ratio' measure in BREEAM lighting assessments?",
     options: [
-      'The colour rendering index of lamps',
       'The ratio of minimum to average illuminance',
       'The number of luminaires per square metre',
+      'The colour rendering index of lamps',
       'The daylight factor at the perimeter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Uniformity ratio is the ratio of minimum illuminance to average illuminance across a task area. BREEAM requires a minimum uniformity of 0.4 for general lighting and 0.6 for task areas to ensure consistent light distribution.',
   },
   {
     id: 9,
     question: 'Which CIBSE document provides guidance on lighting quality referenced by BREEAM?',
-    options: ['CIBSE Guide A', 'CIBSE Guide B', 'CIBSE LG7 (SLL Lighting Guide 7)', 'CIBSE TM52'],
-    correctAnswer: 2,
+    options: [
+      '3 minutes (or 5 minutes per BS 7671)',
+      'CIBSE LG7 (SLL Lighting Guide 7)',
+      'Carefully to prevent damage',
+      'New installation certificate',
+    ],
+    correctAnswer: 1,
     explanation:
       'CIBSE LG7 (now SLL Lighting Guide 7 - Offices) provides detailed guidance on lighting quality for offices, including illuminance levels, uniformity, glare ratings, and colour rendering requirements referenced by BREEAM.',
   },
@@ -193,8 +208,13 @@ const quizQuestions = [
     id: 10,
     question:
       'What is the Unified Glare Rating (UGR) limit typically specified for office lighting?',
-    options: ['UGR < 16', 'UGR < 19', 'UGR < 22', 'UGR < 28'],
-    correctAnswer: 1,
+    options: [
+      'UGR < 16',
+      'UGR < 28',
+      'UGR < 19',
+      'UGR < 22',
+    ],
+    correctAnswer: 2,
     explanation:
       'BREEAM and lighting standards typically specify UGR < 19 for office environments. Lower values (UGR < 16) apply to detailed drawing work, while higher values (UGR < 22) may be acceptable for circulation areas.',
   },
@@ -203,12 +223,12 @@ const quizQuestions = [
     question:
       'What is the purpose of post-occupancy evaluation (POE) under BREEAM Health and Wellbeing?',
     options: [
-      'To verify construction quality only',
+      'To provide adjustable shading to prevent visual discomfort',
+      'VOC content below specified limits or certified low-emission products',
+      'Adaptive comfort model allowing higher temperatures in summer',
       'To assess occupant satisfaction and building performance after handover',
-      'To calculate energy consumption',
-      'To complete snagging lists',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Post-occupancy evaluation assesses actual occupant satisfaction with comfort conditions, identifies performance gaps between design intent and reality, and provides feedback for continuous improvement.',
   },
@@ -217,12 +237,12 @@ const quizQuestions = [
     question:
       'Under BREEAM, what fresh air rate applies to high-occupancy spaces like meeting rooms?',
     options: [
-      '8 litres per second per person',
-      '10 litres per second per person',
       '12 litres per second per person',
       'Based on CO2 demand control only',
+      '8 litres per second per person',
+      '10 litres per second per person',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'High-occupancy spaces like meeting rooms typically require 12 litres per second per person to maintain air quality during peak occupancy. CO2 demand control can modulate rates between minimum and design maximum.',
   },

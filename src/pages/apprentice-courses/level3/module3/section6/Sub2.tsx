@@ -37,16 +37,26 @@ const checks = [
   {
     id: 'l3-m3-6-2-mcb',
     question: 'A Type B MCB instantaneous trip range:',
-    options: ['1.13-1.45× rated', '3-5× rated', '5-10× rated', '10-20× rated'],
-    correctIndex: 1,
+    options: [
+      '3-5× rated',
+      '10-20× rated',
+      '1.13-1.45× rated',
+      '5-10× rated',
+    ],
+    correctIndex: 0,
     explanation:
       'BS EN 60898: Type B trips magnetically at 3-5× rated current. Type C: 5-10×. Type D: 10-20×. Type B for resistive loads (lights), C for motors and small inrush.',
   },
   {
     id: 'l3-m3-6-2-rcd',
     question: 'A 30 mA RCD must operate within:',
-    options: ['10 ms', '40 ms', '300 ms at 30 mA, 40 ms at 5×', 'Up to 5 s'],
-    correctIndex: 2,
+    options: [
+      'Secure connection and cleanliness',
+      'BS 1192 / AEC (UK) layer naming',
+      'All switches and the light fitting',
+      '300 ms at 30 mA, 40 ms at 5×',
+    ],
+    correctIndex: 3,
     explanation:
       'BS EN 61008-1 trip times: at I_Δn (30 mA) → ≤300 ms; at 5× I_Δn (150 mA) → ≤40 ms. Faster at higher currents.',
   },
@@ -54,10 +64,10 @@ const checks = [
     id: 'l3-m3-6-2-rcbo',
     question: 'An RCBO is:',
     options: [
-      'RCD only',
-      'MCB only',
+      'Where continuity is lost indicating the fault location',
+      'High-frequency components and specialised detection equipment',
       'Combined RCD + MCB in one device on a single circuit',
-      'Master switch',
+      'Mechanical support preventing cable pull from reaching the fibre',
     ],
     correctIndex: 2,
     explanation:
@@ -70,10 +80,10 @@ const quizQuestions = [
     id: 1,
     question: 'A BS 1361 cartridge fuse is used in:',
     options: [
-      'Modern consumer units',
+      'Lighter weight, easier installation and better ventilation',
       'Domestic supply cut-out (service fuse) and old-style fused boards',
-      'EV chargers only',
-      'Lightning protection',
+      'End-to-end tests complete, cross-connected tests show uniform readings',
+      'Clearly state the danger and urgency of repair',
     ],
     correctAnswer: 1,
     explanation:
@@ -83,35 +93,50 @@ const quizQuestions = [
     id: 2,
     question: 'BS 88 fuses are characterised as:',
     options: [
-      'Re-wireable',
+      'Charge their employer for safety equipment or training',
+      'Maximum input power before receiver saturates or is damaged',
       'High-rupturing-capacity (HRC) cartridge fuses for industrial use',
-      'Glass cartridge for vehicles',
-      'Domestic only',
+      'They display a fault via an LED indicator on the luminaire',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'BS 88 = HRC industrial fuses, ratings 2-1250 A, breaking capacity up to 80 kA. Used in commercial/industrial DBs and for motor protection.',
   },
   {
     id: 3,
     question: 'Type C MCB instantaneous trip:',
-    options: ['3-5× rated', '5-10× rated', '10-20× rated', '20× rated'],
-    correctAnswer: 1,
+    options: [
+      '10-20× rated',
+      '3-5× rated',
+      '20× rated',
+      '5-10× rated',
+    ],
+    correctAnswer: 3,
     explanation:
       'Type C: 5-10× rated current. Standard for motor circuits and inrush loads (LED transformers, switching PSUs).',
   },
   {
     id: 4,
     question: 'RCD types: which detects DC residual current?',
-    options: ['Type AC', 'Type A', 'Type B', 'Type F'],
-    correctAnswer: 2,
+    options: [
+      'Type B',
+      'Type A',
+      'Type AC',
+      'Type F',
+    ],
+    correctAnswer: 0,
     explanation:
       'Type AC: AC sinusoidal residual only. Type A: AC + pulsing DC. Type B: full DC + AC + high-frequency. Required for VFDs, EV chargers, modern PV inverters.',
   },
   {
     id: 5,
     question: 'Disconnection time for a 32 A circuit on TN system per BS 7671 §411.3.2:',
-    options: ['0.1 s', '0.4 s', '5 s', 'No limit'],
+    options: [
+      '0.1 s',
+      '0.4 s',
+      'No limit',
+      '5 s',
+    ],
     correctAnswer: 1,
     explanation:
       'For final circuits ≤32 A on TN systems: 0.4 s. For circuits >32 A and distribution circuits: 5 s.',
@@ -120,12 +145,12 @@ const quizQuestions = [
     id: 6,
     question: 'Re-wireable fuses (BS 3036) compared with cartridge fuses (BS 88):',
     options: [
-      'Same performance',
+      'Distributing electrical load across circuits',
+      'Fan motor heat added after coils does not affect supply temperature',
       'Lower breaking capacity, slower operation, less precise',
-      'Faster operation',
-      'Higher breaking capacity',
+      'Primary controller sets setpoint for secondary controller',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Re-wireable = wire melts when overloaded. Imprecise rating, can be re-wired with wrong gauge wire by user. BS 3036 use largely deprecated; cartridge or MCB is the standard now.',
   },
@@ -133,12 +158,12 @@ const quizQuestions = [
     id: 7,
     question: 'BS 7671 A4:2026 §411.3.3 RCD coverage:',
     options: [
-      'Optional',
+      'To verify protective conductor is present and connected at each point',
+      'Working on electrical systems that have been safely isolated from all sources of supply',
+      'The skill of being flexible with thoughts and feelings so that you can respond optimally to everyday situations',
       'Mandatory for socket-outlets ≤32 A, with limited risk-assessed exceptions outside dwellings',
-      'Only for outdoor circuits',
-      'Only for sockets in dwellings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       '§411.3.3 was revised at A4:2026 — applies to socket-outlets with rated current ≤32 A. Exception only for non-dwelling premises where a documented risk assessment determines RCD protection is not necessary.',
   },
@@ -146,12 +171,12 @@ const quizQuestions = [
     id: 8,
     question: 'AFDD requirement under BS 7671 A4:2026 §421.1.7:',
     options: [
-      'Mandatory in all final circuits',
       'Recommended (the regulation uses "recommending" wording); mandatory in HRRBs via Building Safety Act 2022',
-      'Mandatory in HMOs only',
-      'Not mentioned',
+      'Our beliefs formed at the top of the ladder influence which data we select at the bottom, reinforcing existing biases',
+      '8-hour Time Weighted Average (TWA) and 15-minute Short-Term Exposure Limit (STEL)',
+      'A percentage of each payment withheld by the main contractor until defects are resolved after practical completion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '§421.1.7 was introduced at A2:2022 and carried forward at A4:2026 — wording is "recommending" the installation of AFDDs. Mandatory status comes from the Building Safety Act 2022 framework for High-Risk Residential Buildings (HRRBs), not from BS 7671 itself.',
   },

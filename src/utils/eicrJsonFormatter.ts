@@ -410,7 +410,6 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       insulation_live_neutral: result.insulationLiveNeutral || 'N/A',
       insulation_live_earth: result.insulationLiveEarth || 'N/A',
       insulation_resistance: result.insulationResistance || 'N/A',
-      insulation_neutral_earth: result.insulationNeutralEarth || 'N/A',
       polarity: (() => {
         const v = result.polarity;
         if (!v || v === 'N/A') return 'N/A';
@@ -536,7 +535,6 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       insulation_live_neutral: result.insulationLiveNeutral || 'N/A',
       insulation_live_earth: result.insulationLiveEarth || 'N/A',
       insulation_resistance: result.insulationResistance || 'N/A',
-      insulation_neutral_earth: result.insulationNeutralEarth || 'N/A',
       polarity: (() => {
         const v = result.polarity;
         if (!v || v === 'N/A') return 'N/A';

@@ -13,16 +13,26 @@ const quickCheckQuestions = [
   {
     id: 'ac3-rating',
     question: 'What utilisation category is standard for motor starting and stopping contactors?',
-    options: ['AC-1', 'AC-2', 'AC-3', 'AC-4'],
-    correctIndex: 2,
+    options: [
+      'AC-3',
+      'AC-2',
+      'AC-1',
+      'AC-4',
+    ],
+    correctIndex: 0,
     explanation:
       'AC-3 is the standard utilisation category for starting and stopping squirrel-cage motors under normal conditions. It accounts for the high inrush current during starting (6-8 times FLC) and the lower current at breaking (motor running at speed). AC-4 is for more demanding applications such as inching (jogging) and reversing, where the contactor must break full locked-rotor current.',
   },
   {
     id: 'trip-class',
     question: 'What trip class is standard for most motor overload relay applications?',
-    options: ['Class 5', 'Class 10', 'Class 20', 'Class 30'],
-    correctIndex: 1,
+    options: [
+      'Class 30',
+      'Class 20',
+      'Class 5',
+      'Class 10',
+    ],
+    correctIndex: 3,
     explanation:
       'Class 10 is the standard trip class for most motor applications. It defines the maximum time the relay allows the motor to draw 7.2 times full-load current before tripping: 10 seconds. Higher classes (20, 30) are used for high-inertia loads that require extended acceleration times.',
   },
@@ -31,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'What safety feature prevents a motor from restarting automatically after a power failure?',
     options: [
-      'Overload relay',
+      'Record it and investigate further',
+      'Investment-grade audit (Level 3)',
       'No-volt release (contactor drop-out)',
-      'Thermal trip',
-      'Phase sequence relay',
+      'tan φ = √3(W1 - W2) / (W1 + W2)',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'No-volt release is the inherent safety feature of a contactor-based starter. When the supply fails, the contactor coil de-energises and the contactor drops out (opens). When power returns, the contactor remains open and the motor must be manually restarted by pressing the START button. This prevents unexpected motor operation.',
   },
@@ -45,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'What is the most likely cause if a motor continues to run even when the stop button is pressed?',
     options: [
-      'Overload relay failure',
+      'It has many free electrons that can move easily',
+      'Risk of damage, theft, or cluttered storage',
       'Contact welding on the main contactor',
-      'Broken start button',
-      'Low control voltage',
+      'A 22 mm copper incoming water service pipe',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Contact welding occurs when the main contacts fuse together due to excessive arcing, too many starts per hour, or undersized contacts. The motor continues to run regardless of the control circuit state because the power contacts cannot open. This is a serious safety issue requiring immediate isolation and contactor replacement.',
   },
@@ -60,15 +70,25 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What is the typical starting current for a DOL-started motor?',
-    options: ['1 to 2 times FLC', '3 to 4 times FLC', '6 to 8 times FLC', '12 to 15 times FLC'],
-    correctAnswer: 2,
+    options: [
+      '1 to 2 times FLC',
+      '6 to 8 times FLC',
+      '3 to 4 times FLC',
+      '12 to 15 times FLC',
+    ],
+    correctAnswer: 1,
     explanation:
       'DOL starting connects the motor directly to full voltage, drawing 6 to 8 times the full-load current during starting. This high starting current is why DOL is typically limited to smaller motors.',
   },
   {
     id: 2,
     question: 'What utilisation category is standard for motor starting contactors?',
-    options: ['AC-1', 'AC-2', 'AC-3', 'AC-4'],
+    options: [
+      'AC-4',
+      'AC-1',
+      'AC-3',
+      'AC-2',
+    ],
     correctAnswer: 2,
     explanation:
       'AC-3 is the standard for starting and stopping squirrel-cage motors. AC-1 is for non-inductive loads, AC-2 for slip-ring motors, AC-4 for inching and reversing.',
@@ -76,16 +96,26 @@ const quizQuestions = [
   {
     id: 3,
     question: 'What does a thermal overload relay use to detect overcurrent?',
-    options: ['Current transformers', 'Bimetallic strips', 'Hall effect sensors', 'Fuses'],
-    correctAnswer: 1,
+    options: [
+      'Hall effect sensors',
+      'Current transformers',
+      'Fuses',
+      'Bimetallic strips',
+    ],
+    correctAnswer: 3,
     explanation:
       'Thermal overloads use bimetallic strips (one per phase) that heat and bend when current flows through them. When the bending exceeds a set threshold, the trip mechanism is activated.',
   },
   {
     id: 4,
     question: 'What is the standard trip class for most motor applications?',
-    options: ['Class 5', 'Class 10', 'Class 20', 'Class 30'],
-    correctAnswer: 1,
+    options: [
+      'Class 10',
+      'Class 5',
+      'Class 20',
+      'Class 30',
+    ],
+    correctAnswer: 0,
     explanation:
       'Class 10 allows up to 10 seconds at 7.2 times FLC during starting. It is suitable for most normal-duty applications with standard inertia loads.',
   },
@@ -93,10 +123,10 @@ const quizQuestions = [
     id: 5,
     question: 'What is the purpose of the holding (seal-in) contact in a DOL control circuit?',
     options: [
-      'To protect against overcurrent',
+      'Excessive starting duty or undersized contacts',
       'To keep the coil energised after the start button is released',
-      'To interlock with other motors',
-      'To reduce starting current',
+      'Motor full-load current and AC-3 duty rating',
+      'Because electrical interlocking alone can fail if a contact welds',
     ],
     correctAnswer: 1,
     explanation:
@@ -105,8 +135,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What safety feature prevents automatic restart after power failure?',
-    options: ['Overload relay', 'No-volt release', 'Phase sequence relay', 'Timer'],
-    correctAnswer: 1,
+    options: [
+      'Overload relay',
+      'Phase sequence relay',
+      'No-volt release',
+      'Timer',
+    ],
+    correctAnswer: 2,
     explanation:
       'No-volt release causes the contactor to drop out when power fails. Manual restart is required when power returns, preventing unexpected motor operation.',
   },
@@ -114,12 +149,12 @@ const quizQuestions = [
     id: 7,
     question: 'What causes contactor chattering or buzzing?',
     options: [
-      'Motor overload',
+      'Plan what you need to say and structure it clearly',
+      'Missing or undersized protective conductor',
+      'Leading pf and possible voltage rise',
       'Low coil voltage or broken shading ring',
-      'High ambient temperature',
-      'Incorrect overload setting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Chattering is caused by low coil voltage, broken shading rings on AC coils, or contamination on magnet faces. The shading ring is a copper band that maintains holding force during AC zero-crossings.',
   },
@@ -127,12 +162,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why must forward/reverse interlocking use BOTH electrical and mechanical methods?',
     options: [
-      'To reduce cost',
       'Because electrical interlocking alone can fail if a contact welds',
-      'For aesthetic reasons',
-      'To increase starting torque',
+      'Motor protection is reduced, risking winding damage',
+      'To keep the coil energised after the start button is released',
+      'Excessive starting duty or undersized contacts',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Electrical interlocking can fail if an auxiliary contact welds. Mechanical interlocking provides a physical backup that prevents both contactors closing simultaneously regardless of electrical faults.',
   },
@@ -140,10 +175,10 @@ const quizQuestions = [
     id: 9,
     question: 'What happens if the overload relay is set significantly above the motor FLC?',
     options: [
-      'Motor runs faster',
+      'To keep the coil energised after the start button is released',
       'Motor protection is reduced, risking winding damage',
-      'Starting current is reduced',
-      'Energy efficiency improves',
+      'Because electrical interlocking alone can fail if a contact welds',
+      'Excessive starting duty or undersized contacts',
     ],
     correctAnswer: 1,
     explanation:
@@ -153,8 +188,13 @@ const quizQuestions = [
     id: 10,
     question:
       'What is the most likely cause of a motor that will not stop when the stop button is pressed?',
-    options: ['Blown coil', 'Welded main contacts', 'Open overload relay', 'Broken start button'],
-    correctAnswer: 1,
+    options: [
+      'Blown coil',
+      'Broken start button',
+      'Welded main contacts',
+      'Open overload relay',
+    ],
+    correctAnswer: 2,
     explanation:
       'Welded contacts prevent the contactor from opening. The motor continues to run regardless of the control circuit. The contactor must be replaced.',
   },
@@ -162,12 +202,12 @@ const quizQuestions = [
     id: 11,
     question: 'What causes main contact welding on a contactor?',
     options: [
-      'Low ambient temperature',
+      'The number of individual optical fibres in the cable',
+      'Verify operation under normal conditions',
+      'Self, colleagues, building occupants, public',
       'Excessive starting duty or undersized contacts',
-      'Clean magnet faces',
-      'Correct overload setting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Excessive starting current, too many starts per hour (exceeding the duty cycle), or undersized contacts can cause the contacts to fuse together (weld). Always select the correct AC-3 rated contactor.',
   },
@@ -175,12 +215,12 @@ const quizQuestions = [
     id: 12,
     question: 'What information determines the minimum contactor size for a DOL starter?',
     options: [
-      'Cable length',
       'Motor full-load current and AC-3 duty rating',
-      'Building size',
-      'Number of floors',
+      'Maximum cable occupancy percentage',
+      'Specific reference conditions including 30°C ambient',
+      'A complementary Adult-to-Adult transaction',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The contactor must have an AC-3 rating equal to or greater than the motor FLC, and must be suitable for the expected number of operations per hour and the supply voltage.',
   },

@@ -36,20 +36,25 @@ const quickCheckQuestions = [
     id: 'dra-definition',
     question: 'What is the primary purpose of a dynamic risk assessment?',
     options: [
-      'To replace written risk assessments',
       'To assess risks in real-time as conditions change',
-      'To document hazards after an incident',
-      'To satisfy HSE inspectors',
+      'Short circuit causing flashover and burns',
+      'Before any person enters or works in a confined space',
+      'Non-combustible material or metal enclosure',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Dynamic risk assessment is the continuous process of identifying and managing risks in real-time as work conditions change. It supplements, not replaces, formal written risk assessments.',
   },
   {
     id: 'slam-meaning',
     question: "What does the 'A' stand for in the SLAM technique?",
-    options: ['Act', 'Assess', 'Avoid', 'Alert'],
-    correctIndex: 1,
+    options: [
+      'Avoid',
+      'Alert',
+      'Assess',
+      'Act',
+    ],
+    correctIndex: 2,
     explanation:
       'SLAM stands for Stop, Look, Assess, Manage. The Assess stage involves evaluating the hazards identified and determining if work can proceed safely.',
   },
@@ -57,12 +62,12 @@ const quickCheckQuestions = [
     id: 'stop-work-authority',
     question: 'Who has the authority to stop work when an uncontrolled hazard is identified?',
     options: [
-      'Only site managers',
       'Only the principal contractor',
       'Any worker who identifies the hazard',
       'Only health and safety officers',
+      'Only site managers',
     ],
-    correctIndex: 2,
+    correctIndex: 1,
     explanation:
       'Under UK health and safety law, any worker has the right and duty to stop work if they identify an immediate danger that cannot be controlled. This is known as stop work authority.',
   },
@@ -70,10 +75,10 @@ const quickCheckQuestions = [
     id: 'take-5-timing',
     question: 'When should a Take 5 assessment typically be performed?',
     options: [
-      'Only at the start of a shift',
+      'Continuity, Insulation, Polarity, Earth loop, RCD, Functional',
       'Before starting each new task or when conditions change',
-      'Only after an incident occurs',
-      'Weekly as part of site meetings',
+      'Description, Feelings, Evaluation, Analysis, Conclusion, Action Plan',
+      'Direct loss and expense caused by relevant matters',
     ],
     correctIndex: 1,
     explanation:
@@ -100,10 +105,10 @@ const quizQuestions = [
     question:
       'An electrician arrives to work on a distribution board and discovers the area is flooded. What is the FIRST step in the SLAM technique?',
     options: [
-      'Look for alternative access routes',
-      'Assess the depth of the water',
-      'Stop work immediately',
       'Manage the situation by getting pumping equipment',
+      'Look for alternative access routes',
+      'Stop work immediately',
+      'Assess the depth of the water',
     ],
     correctAnswer: 2,
     explanation:
@@ -113,12 +118,12 @@ const quizQuestions = [
     id: 3,
     question: 'During a Take 5 assessment, which of the following should be considered?',
     options: [
-      'Only electrical hazards',
+      'Consistently delivering work that meets or exceeds standards',
+      'Ceiling tiles, partition walls, and fire protection panels',
+      'Just fits — but with virtually no headroom for additional cables or future modification',
       'All hazards including environmental, physical, and work activity risks',
-      'Only hazards listed in the method statement',
-      'Only hazards that have caused previous incidents',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Take 5 requires consideration of ALL hazards present, not just those in your trade area. This includes environmental conditions, other trades working nearby, and any changes since the original risk assessment was written.',
   },
@@ -127,12 +132,12 @@ const quizQuestions = [
     question:
       'When working in an occupied commercial building, which scenario would MOST likely require a dynamic risk assessment?',
     options: [
-      'The building manager provides a permit to work',
       'Fire alarm testing begins unexpectedly during your installation work',
-      'You are using the same tools as yesterday',
-      'The weather forecast predicts rain',
+      'False - essential for both small domestic and complex industrial systems',
+      'To demonstrate compliance during fire inspections and provide evidence for insurers',
+      'Adequate capacity, diversity factors, and future expansion',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Unexpected events like fire alarm testing create new conditions not covered in the original risk assessment. This requires real-time assessment of whether work can continue safely and what additional controls are needed.',
   },
@@ -141,12 +146,12 @@ const quizQuestions = [
     question:
       'What action should be taken if a dynamic risk assessment identifies a hazard that cannot be adequately controlled?',
     options: [
-      'Continue work while being extra careful',
       'Document the hazard and continue',
       'Stop work and report to the supervisor',
       'Ask another worker to take over the task',
+      'Continue work while being extra careful',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'If a hazard cannot be adequately controlled through the measures available, work must stop. Continuing would breach the duty to work safely. The situation should be reported so additional controls can be implemented.',
   },
@@ -168,12 +173,12 @@ const quizQuestions = [
     question:
       'During installation work in a hospital, a patient emergency is declared in an adjacent area. What is the appropriate response?',
     options: [
-      "Continue working as it doesn't directly affect your area",
+      'Fraud, disciplinary action, loss of employment, or prosecution',
+      'Over-reporting — it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s safer to raise issues than ignore them',
+      'A durable label or marking identifying its purpose',
       'Stop work, assess the situation, and follow emergency protocols',
-      'Speed up work to finish before any disruption',
-      'Leave the building immediately',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'In occupied buildings, especially critical facilities like hospitals, emergency situations require immediate dynamic assessment. You may need to stop work, move equipment, or provide clear access for emergency responders.',
   },
@@ -181,12 +186,12 @@ const quizQuestions = [
     id: 8,
     question: "What is the 'Look' phase of SLAM primarily concerned with?",
     options: [
-      'Looking at the method statement',
       'Observing the work environment and identifying hazards',
       'Checking that all workers are looking at their tasks',
+      'Looking at the method statement',
       'Looking for the supervisor to report',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Look phase involves actively observing your surroundings to identify all hazards present. This includes the physical environment, other activities, equipment, and any changes from expected conditions.',
   },
@@ -194,12 +199,12 @@ const quizQuestions = [
     id: 9,
     question: 'When should a dynamic risk assessment be documented?',
     options: [
-      'Never - they are informal assessments',
-      'Only if an incident occurs',
+      'Ensure compliance with safety legislation and best practices',
       'When significant hazards are identified or changes made to work methods',
-      'Only at the end of the working day',
+      'Very low resistance measurements like busbar joints',
+      'That there is no breakdown between conductors or to earth',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'While dynamic assessments are often informal mental processes, significant findings should be documented. This includes newly identified hazards, changes to work methods, and situations where work was stopped.',
   },
@@ -208,12 +213,12 @@ const quizQuestions = [
     question:
       'A building services engineer discovers that a supposedly isolated circuit is actually live during testing. According to dynamic risk assessment principles, what should happen FIRST?',
     options: [
-      'Complete the test carefully',
+      'To avoid interference and ensure accurate readings',
+      'To provide safety and visibility while awaiting rescue',
       'Stop work immediately and make the area safe',
-      'Report to the client',
-      'Check if the permit to work is valid',
+      'Overloading with heavy fittings',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Discovery of unexpected live equipment is a serious hazard requiring immediate work stoppage. The first priority is to stop and make the area safe, preventing exposure to the electrical hazard. Reporting and investigation follow.',
   },

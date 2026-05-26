@@ -35,9 +35,9 @@ const quickCheckQuestions = [
     id: 'duty-of-care',
     question: "What is the legal basis for an employer's duty of care to employees?",
     options: [
-      'It is only a moral obligation with no legal basis',
-      'Common law and statutory requirements under HASAWA 1974',
       'It only applies to large companies with over 50 employees',
+      'Common law and statutory requirements under HASAWA 1974',
+      'It is only a moral obligation with no legal basis',
       'It is optional for employers who provide PPE',
     ],
     correctIndex: 1,
@@ -48,12 +48,12 @@ const quickCheckQuestions = [
     id: 'negligence-elements',
     question: 'Which elements must be proven to establish negligence in a civil claim?',
     options: [
-      'Only that an accident occurred at work',
+      'Circuit has adequate capacity and existing protection is suitable',
+      'Danger present — risk of injury. Immediate remedial action required',
       'Duty of care existed, it was breached, and harm resulted from the breach',
-      'That the employer did not provide training',
-      'That the employee was following instructions',
+      'Irrigate the eye with clean water or sterile saline, flowing from the inner corner outward',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Civil negligence requires proving three elements: (1) a duty of care existed, (2) that duty was breached, and (3) the breach caused the harm suffered. The claimant must prove all three on the balance of probabilities.',
   },
@@ -61,8 +61,13 @@ const quickCheckQuestions = [
     id: 'cdda-disqualification',
     question:
       'Under the Company Directors Disqualification Act, what is the maximum disqualification period for health and safety offences?',
-    options: ['2 years', '5 years', '10 years', '15 years'],
-    correctIndex: 3,
+    options: [
+      '10 years',
+      '15 years',
+      '5 years',
+      '2 years',
+    ],
+    correctIndex: 1,
     explanation:
       'Under the Company Directors Disqualification Act 1986, directors convicted of indictable health and safety offences can be disqualified from acting as a company director for up to 15 years. This is in addition to any fine or imprisonment.',
   },
@@ -70,8 +75,13 @@ const quickCheckQuestions = [
     id: 'sentencing-guidelines',
     question:
       'Under the Health and Safety Sentencing Guidelines, what is the maximum fine for a large organisation causing death through gross negligence?',
-    options: ['£500,000', '£1 million', '£10 million', 'Unlimited'],
-    correctIndex: 3,
+    options: [
+      '£500,000',
+      'Unlimited',
+      '£10 million',
+      '£1 million',
+    ],
+    correctIndex: 1,
     explanation:
       "Since the 2016 Sentencing Guidelines, there is no upper limit on fines. Large organisations have faced fines exceeding £20 million for fatalities. Fines are calculated based on culpability, harm, and the organisation's turnover.",
   },
@@ -96,12 +106,12 @@ const quizQuestions = [
     question:
       "What does 'so far as is reasonably practicable' (SFAIRP) mean in health and safety law?",
     options: [
-      'All risks must be eliminated regardless of cost',
+      'Clearly and concisely summarise the purpose or action required',
+      'Verified against maximum values for the protective device',
       'Risk reduction measures are required unless grossly disproportionate to the risk',
-      'Only measures that cost nothing need be implemented',
-      'Employers can decide what they consider practical',
+      'Voltage can be easily changed with transformers for efficient transmission',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'SFAIRP means that the cost, time, and effort of risk reduction must be weighed against the risk. If the cost is grossly disproportionate to the risk reduction achieved, the measure may not be required. However, the balance favours safety - significant costs are acceptable for high risks.',
   },
@@ -109,12 +119,12 @@ const quizQuestions = [
     id: 3,
     question: 'Under Section 37 of HASAWA 1974, when can individual directors be prosecuted?',
     options: [
-      'Never - only companies can be prosecuted',
+      'Lie them flat, raise their legs, keep them warm, and call 999',
+      'Stepping down high voltage for measurement and protection circuits',
+      'Clinical depression is a diagnosable condition that significantly impairs daily functioning',
       'When an offence is committed with their consent, connivance, or through their neglect',
-      'Only if they are directly involved in the accident',
-      'Only if they hold a health and safety qualification',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Section 37 allows prosecution of directors, managers, or similar officers if a corporate offence was committed with their consent or connivance, or was attributable to their neglect. This personal liability cannot be transferred or insured against.',
   },
@@ -122,12 +132,12 @@ const quizQuestions = [
     id: 4,
     question: 'What is the standard of proof required in criminal health and safety prosecutions?',
     options: [
-      'Balance of probabilities',
       'Beyond reasonable doubt',
+      'Balance of probabilities',
       'Reasonable suspicion',
       'Absolute certainty',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Criminal prosecutions require proof 'beyond reasonable doubt' - the highest standard. The prosecution must prove the defendant's guilt to a criminal standard. Civil claims use the lower 'balance of probabilities' standard.",
   },
@@ -136,10 +146,10 @@ const quizQuestions = [
     question:
       'The Corporate Manslaughter and Corporate Homicide Act 2007 applies when death is caused by:',
     options: [
-      'Any workplace accident',
+      'It produces less smoke and no halogen gases when burned',
       'A gross breach of duty of care by senior management',
-      'Failure to provide PPE',
-      'Any breach of HASAWA',
+      'Mixing RCD-protected and non-protected neutrals',
+      'PROFINET, EtherNet/IP, or Modbus TCP/IP',
     ],
     correctAnswer: 1,
     explanation:
@@ -150,10 +160,10 @@ const quizQuestions = [
     question:
       'What is the relationship between civil and criminal proceedings following a workplace accident?',
     options: [
-      'Only one type of proceeding can occur',
-      'Criminal must conclude before civil can begin',
+      'Precise control via BMS integration and wider operating range',
+      'Materials with zero electrical resistance at low temperatures',
       'Both civil and criminal proceedings can run independently',
-      'Civil proceedings always take priority',
+      'At regular intervals as specified in regulations',
     ],
     correctAnswer: 2,
     explanation:
@@ -165,11 +175,11 @@ const quizQuestions = [
       'Under the Sentencing Guidelines, which factor would INCREASE culpability for a health and safety offence?',
     options: [
       'The offender cooperated with the investigation',
-      'Prior warnings from regulators about the risk that caused harm',
-      'Immediate remedial action was taken after the incident',
       'The offender reported the incident promptly',
+      'Immediate remedial action was taken after the incident',
+      'Prior warnings from regulators about the risk that caused harm',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Prior regulatory warnings about the specific risk that caused harm significantly increases culpability. It indicates the organisation knew of the risk and failed to act. Cooperation, remedial action, and prompt reporting are mitigating factors.',
   },
@@ -177,12 +187,12 @@ const quizQuestions = [
     id: 8,
     question: "What is 'vicarious liability' in the context of workplace safety?",
     options: [
-      'Liability only for actions authorised by management',
       'Employer liability for the negligent acts of employees committed in the course of employment',
-      'Liability for work done by contractors only',
-      'Personal liability of individual workers',
+      'Protection from damage, correct zones, and separation from other services',
+      'The amount of time a task can be delayed without affecting the project end date',
+      'Decline politely, explain you cannot energise without your supervisor present, and call them for guidance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Vicarious liability makes employers responsible for negligent acts of their employees committed during the course of employment. The employee may also be personally liable, but the employer is liable even if they were unaware of the employee's actions.",
   },
@@ -191,12 +201,12 @@ const quizQuestions = [
     question:
       'A building services engineer specifies electrical equipment they know is unsuitable for the environment. Who may be liable?',
     options: [
-      'Only the installing contractor',
-      'Only the client who approved it',
+      'Continuity, insulation resistance, polarity, and Zs values',
       'The engineer personally, their employer, and potentially the client',
-      'No one, as errors in design are not criminal offences',
+      'Tripping before prospective fault current reaches peak',
+      'Awareness of emergency lighting purpose, exit routes, and assembly points',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       "Multiple parties may face liability: the engineer personally under Section 7 HASAWA (employee duties) and potentially civil negligence; the employer vicariously for the engineer's work; and the client under CDM Regulations as principal designer or client. Design errors can constitute offences.",
   },
@@ -204,12 +214,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the Turnover Multiplier approach in the Sentencing Guidelines?',
     options: [
-      'A method to calculate the number of employees',
+      "Work in special locations or involving new circuits",
+      "To ensure materials arrive when needed and in correct quantities",
       "Using the organisation's annual turnover to scale fines appropriately",
-      'A calculation of insurance requirements',
-      'A way to determine prison sentences',
+      "The scaffold is incomplete or has use restrictions — check details on the tag",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "The Sentencing Guidelines use the organisation's turnover to ensure fines are proportionate and have equal economic impact regardless of company size. A fine representing a certain percentage of turnover has equivalent deterrent effect across organisations.",
   },

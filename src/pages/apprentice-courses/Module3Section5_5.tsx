@@ -15,7 +15,12 @@ const quizQuestions = [
   {
     id: 1,
     question: 'What IP rating is required for Zone 1 in a bathroom?',
-    options: ['IPX2', 'IPX4', 'IPX5', 'IP44'],
+    options: [
+      'IPX2',
+      'IPX4',
+      'IPX5',
+      'IP44',
+    ],
     correctAnswer: 1,
     explanation:
       'Zone 1 requires IPX4 minimum (IPX5 if subject to jet spray during cleaning). This protects against water splashing from any direction.',
@@ -23,7 +28,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Which type of voltage supply is permitted in Zone 0?',
-    options: ['230V AC', '110V AC', 'SELV max 12V AC or 30V DC', 'Any with RCD'],
+    options: [
+      'Hacksaw or metal cutting saw',
+      'Series and parallel arc faults',
+      'SELV max 12V AC or 30V DC',
+      'BS 7671 (IET Wiring Regulations)',
+    ],
     correctAnswer: 2,
     explanation:
       'Zone 0 (inside bath/shower) only permits SELV (Safety Extra-Low Voltage) with maximum 12V AC or 30V DC, sourced from outside the zones.',
@@ -52,16 +62,26 @@ const quizQuestions = [
   {
     id: 5,
     question: 'What minimum IP rating is recommended for outdoor sockets?',
-    options: ['IP44', 'IP54', 'IP65', 'IP20'],
-    correctAnswer: 2,
+    options: [
+      'IP54',
+      'IP65',
+      'IP20',
+      'IP44',
+    ],
+    correctAnswer: 1,
     explanation:
       'IP65 minimum is recommended for outdoor sockets to provide adequate protection against rain, dust, and environmental conditions.',
   },
   {
     id: 6,
     question: 'Which section of BS 7671 covers bathrooms?',
-    options: ['Section 409', 'Section 701', 'Section 711', 'Section 709'],
-    correctAnswer: 1,
+    options: [
+      'Section 409',
+      'Section 711',
+      'Section 701',
+      'Section 709',
+    ],
+    correctAnswer: 2,
     explanation:
       'BS 7671 Section 701 covers locations containing a bath or shower. Section 709 covers marinas and similar locations.',
   },
@@ -69,12 +89,12 @@ const quizQuestions = [
     id: 7,
     question: 'Give one example of mechanical protection for outdoor cables.',
     options: [
-      'Paint the cables',
+      'In escape routes and public buildings',
+      'As Low As Reasonably Practicable',
+      'They must be competent or supervised',
       'SWA (Steel Wire Armoured) cable',
-      'Plastic cable ties',
-      'Electrical tape wrapping',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'SWA cable provides excellent mechanical protection with its steel wire armour. Other options include conduit, trunking, or protective covers.',
   },
@@ -82,12 +102,12 @@ const quizQuestions = [
     id: 8,
     question: 'Why is equipotential bonding important in bathrooms?',
     options: [
-      'It makes water flow better',
       'It reduces voltage differences between conductive parts',
-      'It prevents condensation',
-      'It improves lighting quality',
+      'Where there is risk of head injury from falling objects or impact',
+      'The boom, chassis, turntable, platform floor, and guardrails',
+      'UK GDPR and the Data Protection Act 2018',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Equipotential bonding connects all accessible conductive parts to the same potential, reducing dangerous voltage differences that could cause electric shock.',
   },
@@ -98,8 +118,13 @@ const quickCheckQuestions = [
   {
     id: 'bathroom-zones',
     question: 'Which bathroom zone has the most stringent electrical requirements?',
-    options: ['Zone 0', 'Zone 1', 'Zone 2', 'Outside zones'],
-    correctIndex: 0,
+    options: [
+      'Zone 2',
+      'Zone 0',
+      'Outside zones',
+      'Zone 1',
+    ],
+    correctIndex: 1,
     explanation:
       'Zone 0 (inside bath/shower) has the strictest requirements - only SELV max 12V AC/30V DC with IPX7 rating is permitted.',
   },
@@ -108,11 +133,11 @@ const quickCheckQuestions = [
     question: 'Is RCD protection mandatory for outdoor socket circuits?',
     options: [
       "No, it's optional",
-      'Yes, 30mA maximum',
-      'Only for commercial',
       'Only if metal enclosure',
+      'Only for commercial',
+      'Yes, 30mA maximum',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Yes, BS 7671 requires RCD protection (≤30mA) for all outdoor socket outlets to provide additional protection against electric shock.',
   },
@@ -120,10 +145,10 @@ const quickCheckQuestions = [
     id: 'ip-rating',
     question: "What does the 'X' in IPX4 mean?",
     options: [
-      'Extra protection',
-      'Not applicable',
+      'P = sqrt(3) x V_L x I_L x cos(phi)',
+      'Danger present - immediate action required',
       'No solid object protection specified',
-      'Maximum rating',
+      'CPC connected to neutral bar',
     ],
     correctIndex: 2,
     explanation:

@@ -45,12 +45,12 @@ const checks = [
     question:
       'A customer in a 1960s detached house with single-glazed windows and uninsulated cavity walls asks about MVHR. What\'s the responsible answer?',
     options: [
-      'Fit it — MVHR works in any house.',
+      "The MFT (Megger MFT1741+, Kewtech KT64+) injects different test currents based on the RCD type. Type AC test: pure sinusoidal AC at I∆n. Type A test: pure sinusoidal AC AT I∆n PLUS pulsating DC at 1.4× I∆n (because Type A must detect both). Type F test: all of the above PLUS composite multi-frequency. Type B test: all of the above PLUS smooth DC at twice I∆n. Selecting the wrong type on the MFT may show 'pass' on a Type B device (because you're only testing the AC capability, not the DC) — false confidence. Modern MFTs auto-detect or have explicit type selection.",
+      "Directly — every tool in the cable-prep kit (auto strippers, ratchet crimpers, preset torque drivers, calibrated test instruments) exists to deliver consistent, repeatable, manufacturer-spec terminations. 'Good workmanship' is delivered through the tools as much as through the operative's skill. An apprentice using the right tool the right way produces 134.1.1-compliant work; using the wrong tool (knife strip, plier crimp, eyeballed torque) produces work that fails 134.1.1 even if it tests OK on the day.",
       "Not yet. MVHR only delivers net energy benefit in airtight, well-insulated buildings where controlled ventilation is the dominant air-change pathway. In a leaky 1960s house with single glazing, the building loses heat through uncontrolled air leakage faster than the MVHR can recover it from the extract air. The fan power consumed (typically 50-150 W continuous) outweighs the heat recovered. Fabric upgrades — insulation, glazing, draught-proofing, air permeability test below ~3 m³/h/m² @ 50 Pa — must come first. Then MVHR earns its keep.",
-      'Fit it but only run it in summer.',
-      'Open the windows instead.',
+      "Durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit, at the main isolation, at the inverter and at any DC isolators. The DNO emergency contacts. The PV system identification (kWp rating, inverter manufacturer/model). Required by BS 7671 Section 712, MCS MIS 3002 and the DNO's G98/G99 connection conditions. The signage protects future maintainers who may not realise there's a generator on the property.",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "MVHR is a recovery technology — it can only recover what's flowing through it. In a leaky building, the bulk of the air change happens through cracks in the envelope, not through the MVHR ducts, so most ventilation heat loss escapes the recovery exchanger entirely. SAP and SBEM credit MVHR with significant savings only at low air permeability. Fabric first, MVHR second — same logic as fabric first, heat pump second.",
   },
@@ -59,10 +59,10 @@ const checks = [
     question:
       'Why has micro-CHP largely disappeared from new UK domestic installs?',
     options: [
-      'It was banned for safety reasons.',
+      "Six questions in order. (1) WHAT exactly happens? (in customer's own words). (2) WHEN does it happen — time of day, day of week, season, weather, after specific activity? (3) WHERE in the property — single room, multiple rooms, only when specific accessories used? (4) HOW LONG has it been happening — first noticed when, getting worse / better / same? (5) WHAT have you tried — reset breakers, unplug appliances, anything else? (6) WHAT CHANGED recently — new appliance, building work, leak, anything? The answers narrow the fault hypothesis from infinity to a small set. Most apprentices skip the interview; the senior who built habits saves an hour per call-out by spending 5 minutes on it.",
       "The economic and carbon case has eroded. Micro-CHP burns gas to generate electricity locally and uses the waste heat for the wet system. It made sense when grid electricity was carbon-intensive (~500 gCO₂/kWh) and gas was cheap. As the grid has decarbonised (~200 gCO₂/kWh now), the relative carbon advantage of generating electricity locally from gas has shrunk. Heat pumps (driven by increasingly clean grid electricity) deliver lower running carbon per kWh of heat. Plus the Future Homes Standard effectively rules out fossil-fuel heat in new-build from 2025, taking the new-install market away from micro-CHP altogether.",
-      'It only worked in summer.',
-      'It needed a coal supply.',
+      "The mechanical operation of the device — the test button injects a small simulated residual current through an internal resistor that bypasses the load side, exercising the trip mechanism. It does NOT verify trip time or trip current accuracy. The instrument test (single AC at 1 x I delta n) is the verification of trip current and time. Both are part of the test set: instrument test for performance verification, manufacturer test button as a periodic functional check that the customer can perform between professional inspections.",
+      "Coordinate with the customer's IT contact BEFORE isolation. Standard procedure: (1) Identify the IT lead (in-house IT, MSP, on-call provider). (2) Brief them on the planned outage window. (3) IT performs graceful shutdown of servers / NAS / RAID arrays via OS or UPS interface — typically 5–15 minutes. (4) Confirm shutdown complete via UPS status / server console. (5) Then isolate. (6) After work: restore supply, IT verifies system boot, confirms application availability. Skipping the IT coordination = hard power-off = potential data corruption, RAID degradation, application downtime hours longer than the electrical work itself. UPS-protected systems may auto-shutdown gracefully but verify.",
     ],
     correctIndex: 1,
     explanation:
@@ -73,12 +73,12 @@ const checks = [
     question:
       'A customer wants to fit a 5 kW vertical-axis wind turbine on a pole in their suburban back garden. What\'s the honest assessment?',
     options: [
-      'Great idea — install it.',
+      "No, for several reasons. The refrigerant work requires F-Gas certification (criminal offence to do without). The Building Regulations Part L compliance pathway requires installation by an MCS-certified installer for the customer to claim Smart Export Guarantee or similar incentives. The Boiler Upgrade Scheme grant requires MCS sign-off. Manufacturer warranties typically require certified installation. The MCS install pack includes heat-loss calc, emitter sizing, SCOP estimate, electrical schedule, commissioning records — all required for the system to perform as designed. DIY heat-pump install is unsafe and uneconomic.",
+      "Directly — every tool in the cable-prep kit (auto strippers, ratchet crimpers, preset torque drivers, calibrated test instruments) exists to deliver consistent, repeatable, manufacturer-spec terminations. 'Good workmanship' is delivered through the tools as much as through the operative's skill. An apprentice using the right tool the right way produces 134.1.1-compliant work; using the wrong tool (knife strip, plier crimp, eyeballed torque) produces work that fails 134.1.1 even if it tests OK on the day.",
+      "The firm probably won't recover the cost of the additional work in court because there's no documented variation, no agreed price and no signed scope change. The half-day of labour, the additional materials, and the late completion of the job all sit on the firm's profit margin. If the customer's dispute escalates to the certification scheme (NICEIC, NAPIT, ELECSA) or to the local Trading Standards office, there's also reputational and scheme-membership risk. The variation should have been written, signed, and agreed before the work commenced.",
       "It will almost certainly disappoint. Domestic-scale wind turbines need clean laminar wind, which only happens at hub heights well clear of surrounding obstacles — typically 30+ m up in open rural settings. A suburban back garden sits in turbulent air shed by surrounding houses; the turbine spends most of its time below cut-in wind speed or cycling wildly. Real-world yield from sub-10 kW turbines in suburban settings has historically been a fraction of the manufacturer's wind-tunnel claim. Plus planning permission, noise / vibration objections from neighbours, and ongoing maintenance. The honest answer is that wind only works where the wind is — and a suburban back garden almost certainly isn't where the wind is.",
-      'Fit two of them and the yield will double.',
-      'Wind turbines work best at sea level only.',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Several high-profile small-wind installations from the 2008-2012 era posted yields well below the manufacturer's claim. The market for sub-10 kW domestic turbines has contracted accordingly. Where wind genuinely makes sense — open rural sites with tall masts and clean wind — the answer is professional siting plus a properly engineered installation, not an off-the-shelf back-garden unit. As an apprentice your role is to recognise the unrealistic site request and refer the customer to a wind specialist for an honest site assessment.",
   },
@@ -90,10 +90,10 @@ const quizQuestions = [
     question:
       'What\'s the operating principle of MVHR (mechanical ventilation with heat recovery)?',
     options: [
-      'A small heat pump heats incoming air.',
+      "Durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit / meter, at the main isolation, at the inverter and at the DC isolators. The Distribution Network Operator's emergency contacts. The PV system identification (kWp rating, inverter manufacturer/model). The signage requirements come from BS 7671 Section 712, MCS MIS 3002 and the DNO's G98/G99 connection conditions. A future maintainer who turns up to a 'normal' fault call must know there's a generator on the property.",
       "Stale warm extract air from kitchens, bathrooms and utility rooms is drawn through one side of a counter-flow heat exchanger. Cold fresh supply air for bedrooms and living rooms is drawn through the other side. 80-90% of the heat in the extract air transfers to the supply air through the exchanger plates, with no mixing of the two streams. Net effect: controlled ventilation with most of the ventilation heat loss recovered. The fan power consumed is small (typically 50-150 W continuous) compared to the heat recovered in airtight buildings.",
-      'A solar collector preheats supply air.',
-      'Outdoor air is sucked in by stack effect.',
+      "Refuse the unsafe instruction and raise the concern with the supervisor or higher. HASAWA s.7 puts the personal duty on the apprentice — a direct order from a senior is not a defence to a s.7 prosecution. The Employment Rights Act 1996 s.44 also gives the apprentice statutory protection from victimisation for raising H&S concerns. Document the refusal and the reason in writing (text, email, app note) at the time.",
+      "Politely tell the Site Manager you've been tasked by your own supervisor on a different priority, and offer to ask your supervisor to come over so the two managers can re-prioritise. You take instructions on the work face from your own contractor's chain (Site Supervisor → Project Engineer → Contracts Manager). The main contractor's Site Manager co-ordinates between contractors but does not give direct instructions to a sub-contractor's apprentice.",
     ],
     correctAnswer: 1,
     explanation:
@@ -104,12 +104,12 @@ const quizQuestions = [
     question:
       'What\'s the typical electrical interface for a domestic MVHR unit?',
     options: [
-      'A 32 A radial.',
+      "The employer's firm needs Competent Person Scheme registration (NICEIC / NAPIT / ELECSA) to self-certify the firm's notifiable domestic work. The apprentice carries: (a) a JIB Industrial Determination card showing their grade and apprenticeship year (issued through the apprenticeship); (b) ECS card for site access on most major commercial sites; (c) evidence of their college enrolment and progression. The apprentice does NOT need personal CPS membership — that's a contractor-level registration.",
+      "A self-sustaining exothermic chain reaction inside a Li-ion cell. Damage, overcharge, internal manufacturing defect or external heat triggers an internal short circuit, which generates heat, which decomposes the organic electrolyte, which generates more heat and flammable / toxic gas, which can ignite. Once the chain reaction has started in one cell the heat can propagate to neighbouring cells in the pack. The fire is intense, fast, and self-fuelling because the cell carries its own oxidiser within the cathode material.",
       "Dedicated 13 A or 16 A supply on a 6 A or 10 A MCB, in 1.5 mm² T&E to the unit location (utility room, loft, plant cupboard). Local DP isolator. Boost wiring from kitchens and bathrooms — sometimes via humidity sensors or PIR, sometimes via pull-cord switches in bathrooms or push-buttons in kitchens. Some units include a low-voltage commissioning interface (e.g. for installer-set air-flow rates). The unit's nameplate is typically 50-300 W on full load — modest demand. The bulk of the electrical work is the boost wiring network, not the unit supply.",
-      'A 100 A three-phase supply.',
-      'A 110 V CTE supply.',
+      "Every employee must (a) take reasonable care for the health and safety of themselves and others who may be affected by their acts or omissions at work, and (b) co-operate with the employer or any other person in the discharge of any duty placed on the employer or that other person under the relevant statutory provisions. 'Following orders' is not a defence — the personal duty stays with the employee regardless of what they were told to do.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "MVHR unit supply is straightforward. The complexity is in the room-by-room boost network and any commissioning sensors. The ducting and air-flow commissioning is the ventilation specialist's domain (Part F of the Building Regs); you wire the unit and the boost network. Cat5e/Cat6 increasingly common where the MVHR unit integrates with smart home / Home Energy Management systems.",
   },
@@ -118,12 +118,12 @@ const quizQuestions = [
     question:
       'Where does micro-CHP still make commercial sense?',
     options: [
-      'Every domestic property.',
+      "A 'pay when paid' clause says the main contractor only pays the sub-contractor when the main contractor has been paid by the client. These clauses are largely UNENFORCEABLE in UK construction contracts under the Housing Grants, Construction and Regeneration Act 1996 ('the Construction Act'), except in cases of upstream insolvency. So most 'pay when paid' clauses you see in sub-contracts can be challenged.",
+      "Battery hazards are different from AC hazards: (1) DC shock — once your hand is on a DC busbar, your muscles can't release because there's no zero-crossing — DC at 60 V upward is treated as a let-go hazard; (2) hydrogen gas — lead-acid cells gas during charge, hydrogen accumulates in poorly-ventilated rooms, explosive at 4% LEL — battery rooms have forced ventilation for this reason; (3) electrolyte — sulphuric acid contact with skin / eyes — face shield, acid-resistant gloves, eye-wash station; (4) thermal runaway — a damaged or shorted cell can catch fire, with toxic fumes; (5) short-circuit current — a 100 Ah lead-acid string can deliver 5–10 kA short-circuit, enough to weld a spanner.",
+      "Industrial LOTO is a multi-person, multi-lock system. Each operative working on a piece of plant fits their OWN lock to a hasp on the isolation device, so the supply cannot be re-energised until every individual lock has been removed by the operative who fitted it. Tags identify each operative and the work they're doing. It interfaces with plant operations because the same isolation can affect mechanical, hydraulic, pneumatic and electrical sources of stored energy. Domestic safe isolation is a single-operative procedure on a single circuit.",
       "Larger commercial / institutional sites where heat demand is constant and high — hospitals, hotels, leisure centres, large care homes, schools with swimming pools. Engine-based CHP at 5-50 kWe scale generates electricity locally (offsetting expensive day-rate import) and the waste heat displaces a boiler load. Sized correctly, the heat-led design ensures the heat is always useful (the unit is sized to follow the property's baseload heat demand). Domestic micro-CHP is essentially over in new installs but commercial CHP remains a niche but live technology.",
-      'Only on UK islands.',
-      'Only with hydrogen fuel.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Commercial CHP is a different conversation from domestic micro-CHP. The economics work because the site has a constant high-load heat demand (so the CHP runs at high capacity factor) and the electricity is consumed on-site (so the financial value of the generated electricity is the import-displacement rate, not the export rate). On a typical domestic install with intermittent low heat demand, those conditions don't hold and the CHP under-runs.",
   },
@@ -132,12 +132,12 @@ const quizQuestions = [
     question:
       'What\'s the regulatory framework for biomass heating in UK domestic properties?',
     options: [
-      'No regulation — burn what you like.',
       "Multiple frameworks: Building Regs Part J (combustion appliances, flues, ventilation); Clean Air Act (smoke control areas — many urban areas restrict what can be burned and require Defra-exempt appliances); Ecodesign Directive (new appliance emissions standards); MCS MIS 3004 / 3006 (installer competence and installation quality for solid biomass boilers and stoves). Plus the F-Gas-equivalent for any chiller / heat-pump component. Biomass is operationally heavier than gas or heat pumps because of fuel storage, ash handling and the regulatory layer on emissions.",
-      'Only the Highway Code.',
-      'Only Building Regs Part E.',
+      "Customer name and address; installer name and MCS certification number; install date; technology and rating (e.g. 5 kWp PV with 10 kWh battery); manufacturer and model details for the major components; performance estimate (annual generation kWh, SCOP, etc.); MCS Installation Standard reference (e.g. MIS 3002 v6.0); Workmanship Warranty period and what it covers; aftercare contact details. The certificate is the customer's proof of MCS-certified installation, used for BUS grant, SEG enrolment, manufacturer warranty registration and future house sale.",
+      "Because a ladder is a personal access platform that doesn't have a guardrail and depends on the user's three-point contact and footing for stability. It provides minimal collective protection. INDG401 and INDG402 (HSE guidance) limit ladder use to short-duration tasks (typically up to 30 minutes at one location), light work (one-handed work where reasonably practicable, with a free hand for grip) and where a higher control isn't reasonably practicable.",
+      "Directly. A correctly-sized stripper removes only the insulation, leaving the copper undamaged — full cross-section preserved, full current-carrying capacity, full mechanical strength. A knife strip nicks the copper, reducing the cross-section and creating a stress-riser fracture point. A few months of thermal cycling and the conductor breaks at the nick — high resistance, hot terminal, eventual failure on EICR or worse, on fire alarm. The stripping tool is part of the 526.1 chain.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Biomass had a boost from the Renewable Heat Incentive (RHI) which closed in 2022. New domestic biomass installs are now relatively rare — heat pumps have taken over the off-gas-grid retrofit market and air-quality regulation in urban areas has further squeezed it. Existing installs you may meet on commissioning or maintenance work; new installs are increasingly niche.",
   },
@@ -146,10 +146,10 @@ const quizQuestions = [
     question:
       'What\'s the difference between a domestic biomass boiler and a biomass stove?',
     options: [
-      'They\'re the same thing.',
+      "First-year MCS registration cost typically £600-1,000 application fee plus the Quality Management System certification (often via NICEIC or NAPIT MCS umbrella) at £400-700. Annual ongoing MCS fees similar. Plus the underlying PV training (AM2S or equivalent, £400-600) and potentially MCS-recognised installer course (£500-1,000). Total first-year investment for a sole trader entering PV is roughly £2,000-3,500.",
       "A boiler drives a wet heating system — pumps hot water around radiators / underfloor circuits and a hot-water cylinder. Typical output 10-50 kW, located in a utility room or outhouse, automatic fuel feed (auger from a hopper), automatic ignition, automatic ash handling. A stove is a room heater — radiates heat directly into the room it sits in, plus optional back-boiler for some hot water. Lower output (5-15 kW typical), manual loading (logs or pellets), no automatic ash removal. Different installation regulations, different MCS standards, different customer expectations.",
-      'Boilers are gas; stoves are biomass.',
-      'Boilers are smaller.',
+      "Most HASAWA offences are triable either way — the prosecution chooses Magistrates' (summary) or Crown (indictment). Magistrates' Court can impose unlimited fines on H&S offences (since 2015) and up to 6 months imprisonment. Crown Court can impose unlimited fines and up to 2 years imprisonment for individuals (longer for some related offences like Corporate Manslaughter — life). The Sentencing Council Definitive Guideline applies in both courts.",
+      "Pre-Construction Information is the H&S information that the Client (with help from the Principal Designer) provides to designers and contractors before they start on the project. It covers the site (location, existing structures, services, ground conditions), the project (description, programme, key dates, design assumptions), the relevant H&S information (asbestos surveys, condition reports, environmental risks) and the Client's H&S file from any previous works.",
     ],
     correctAnswer: 1,
     explanation:
@@ -160,12 +160,12 @@ const quizQuestions = [
     question:
       'What signage is required at the point of supply for a parallel-connected micro-wind installation?',
     options: [
-      'No signage — wind is exempt.',
+      "Generators (PV, wind, micro-CHP) put energy into the system that wasn't there before from the user's point of view. Demand-reduction tech (LED lighting, smart controls, MVHR, insulation) makes the existing energy do more useful work. From a carbon perspective the cheapest watt is the one you don't use — demand reduction usually has a shorter payback than generation. From a Building Regs perspective both count toward Part L compliance via the SAP / SBEM calculation.",
+      "Six standard items. (1) Bonding plaster (Knauf bonding or Thistle Bonding, 5 kg bag) — for filling small chases. (2) Filler (Polycell, Tetrion) — for very small holes and screw holes. (3) Plasterboard offcuts — for patching plasterboard holes. (4) Scrim tape — for plasterboard joins. (5) Fire-stop sealant (FireFly, Hilti CP series) — for cable penetrations through fire-rated walls. (6) Touch-up paint (white emulsion small tin, customer-supplied paint where possible) — for minor wall finishing where the customer is unlikely to repaint. Cost £40–60 for the kit; lasts months.",
       "Same as PV — durable warning signs notifying anyone working on the installation that there is a parallel generation source on site. Signs at the consumer unit, at the main isolation, at the inverter and at any DC isolators. Wind connections fall under the same ENA G98 (≤16 A per phase) or G99 (&gt;16 A per phase) framework as PV. The DNO needs to know the installation exists; the maintainer who turns up to a fault call needs to know there's a parallel generator.",
-      'A wind-direction arrow.',
-      'A tide chart.',
+      "To identify hazards, set out the controls, allocate responsibility, and provide a defensible record of the safe system of work. RAMS and risk assessments are statutory under MHSWR 1999 Reg 3. COSHH data sheets are statutory under COSHH 2002. Permits-to-work cover higher-risk activities. The fire muster and welfare info satisfy the Workplace (Health, Safety and Welfare) Regulations 1992. Together they convert legal duty into specific instructions.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "All parallel-connected generators in the UK now fall under G98 / G99 — PV, wind, micro-hydro, micro-CHP, battery storage. The signage and notification requirements are technology-agnostic. As an apprentice you should recognise that a wind install is fundamentally the same regulatory framework as a PV install on the electrical interface side, even though the physical install is very different.",
   },
@@ -174,12 +174,12 @@ const quizQuestions = [
     question:
       'A customer in a rural Scottish glen has a year-round stream with 30 m of head and 100 l/s flow. What\'s the realistic micro-hydro framing?',
     options: [
-      'No good — micro-hydro doesn\'t work in the UK.',
+      "Multiple frameworks: Building Regs Part J (combustion appliances, flues, ventilation); Clean Air Act (smoke control areas — many urban areas restrict what can be burned and require Defra-exempt appliances); Ecodesign Directive (new appliance emissions standards); MCS MIS 3004 / 3006 (installer competence and installation quality for solid biomass boilers and stoves). Plus the F-Gas-equivalent for any chiller / heat-pump component. Biomass is operationally heavier than gas or heat pumps because of fuel storage, ash handling and the regulatory layer on emissions.",
+      "A boiler drives a wet heating system — pumps hot water around radiators / underfloor circuits and a hot-water cylinder. Typical output 10-50 kW, located in a utility room or outhouse, automatic fuel feed (auger from a hopper), automatic ignition, automatic ash handling. A stove is a room heater — radiates heat directly into the room it sits in, plus optional back-boiler for some hot water. Lower output (5-15 kW typical), manual loading (logs or pellets), no automatic ash removal. Different installation regulations, different MCS standards, different customer expectations.",
+      "Plain English is writing or speaking that the intended audience can understand on first reading or hearing. Common standards include short sentences (15-20 words on average), common words rather than technical jargon, active voice rather than passive, one idea per sentence, and a reading age around 9-11 (that's not patronising — most UK adults read most comfortably at that level for safety-critical information). The Plain English Campaign provides guidance and the Crystal Mark accreditation. For safety briefings, RAMS summaries, customer-facing letters and apprentice-training material, plain English isn't 'dumbing down' — it's 'comprehensible' under MHSWR 1999 Reg 10.",
       "This is a strong micro-hydro site. With 30 m head and 100 l/s flow, theoretical hydraulic power is approximately ρ × g × h × Q = 1000 × 9.81 × 30 × 0.1 ≈ 29 kW. After turbine and generator efficiency (typically 70-85%) the realistic output is 20-25 kW continuous — significant baseload renewable energy. Practical issues: SEPA (Scottish equivalent of Environment Agency) abstraction licensing, fish-friendly intake design, civils for weir / intake / penstock / power-house, grid connection (G99 for an installation of this size), and the cost of a buried cable from the power-house to the property. The right site is rare; where it exists, micro-hydro outperforms PV and wind by a wide margin on capacity factor.",
-      'Cap the stream and put a paddling pool there instead.',
-      'Pumped storage only.',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Micro-hydro is genuinely site-specific. The product of head × flow gives the available hydraulic power. Where head and flow exist, hydro delivers consistent output with low intermittency (much higher capacity factor than wind or PV). The capital cost (turbine, civils, grid connection) is the headline barrier; the operational cost is low and the equipment life is long. MCS MIS 3008 covers small-hydro installation standards.",
   },
@@ -188,12 +188,12 @@ const quizQuestions = [
     question:
       'Why is MVHR almost a default on Future Homes Standard new-build?',
     options: [
-      'It\'s a planning rule unique to London.',
       "Because Future Homes Standard requires very low fabric U-values, very low air permeability, and Part F controlled ventilation. At those airtightness levels the building cannot rely on infiltration for air change — it needs deliberate mechanical ventilation. MVHR provides that mechanical ventilation while recovering 80-90% of the heat. SAP credits MVHR with significant carbon savings in airtight new-build, contributing materially to the Part L target rate. Fitting MEV (mechanical extract ventilation only, no recovery) instead loses the recovery benefit and harms the SAP score.",
-      'It looks modern.',
-      'It generates carbon credits.',
+      "Some MFTs have multiple Zs measurement ranges (e.g. low range 0-2 Omega, high range 0-200 Omega). If you\\\\\\\\'re testing a TT installation with expected Zs of 80-200 Omega and the meter is set to the low range, the reading will saturate or read inaccurately. GN3 wants you to consciously check the range matches the expected reading before pressing TEST — a failed test or wildly wrong reading wastes time and may damage the instrument if test current exceeds the range capacity.",
+      "Day-rate: customer pays an agreed daily (or hourly) rate for time spent plus materials at agreed markup. Risk on time-overrun sits with the customer. Fixed-price: you quote a single all-in price for the defined scope. Risk on time-overrun sits with you. Customers typically prefer fixed-price (predictable budget); contractors typically prefer day-rate (no overrun risk). Practical compromise: fixed-price for well-defined scopes, day-rate for variable or fault-finding work.",
+      "WAHR 2005 Reg 12 requires a tower used for working at height to be inspected before use after assembly, after any event likely to have affected it (high winds, impact, alteration), and at intervals not exceeding 7 days. The pre-use check covers stability (level base, outriggers deployed, brakes on), structural integrity (no missing components, all connectors locked), platform fully boarded with guardrails and toeboards, and a current inspection record (Form 91 / scaff tag). The user does the daily check; a more thorough inspection is by a competent person.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Future Homes Standard, expected to take fossil-fuel boilers off new-build from 2025, is the regulatory driver pushing all-electric ventilation and heating in new homes. MVHR fits the airtight building context and delivers the SAP credit. As the electrician on a Future Homes Standard new-build install you'll see MVHR as standard kit alongside heat pump and PV.",
   },

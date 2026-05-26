@@ -42,10 +42,10 @@ const checks = [
     question:
       'A 400 V three-phase distribution transformer feeds a row of houses. The single-phase 230 V supply at each house is derived by:',
     options: [
-      'Stepping the voltage down again with another transformer',
+      'To plan, manage, and coordinate health and safety during the construction phase',
       'Connecting one phase conductor and the neutral (line-to-neutral = 400 / √3 ≈ 230 V)',
-      'Using a rectifier and inverter',
-      'Connecting two phases together',
+      'Cherry-red colouration of the skin, along with headache and confusion',
+      'By promoting automation for lighting, HVAC, and shading systems',
     ],
     correctIndex: 1,
     explanation:
@@ -56,12 +56,12 @@ const checks = [
     question:
       'An electrician measures 248 V at a domestic socket using a calibrated meter. Is this within the statutory envelope set by ESQCR?',
     options: [
-      'No — anything over 240 V is a fault',
-      'No — the limit is 230 V exactly',
+      'Duties that must be complied with regardless of cost or practicability',
+      'Using an EV battery to power home appliances, acting as a home battery',
+      'Investigation → meeting → decision → right to be accompanied → right of appeal',
       'Yes — the legal envelope at the supply terminals is 230 V −6% / +10%, which gives 216 V to 253 V',
-      'Yes — but only on three-phase supplies',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'ESQCR Reg. 27 sets the supply envelope at the consumer’s terminals as 230 V nominal with −6% / +10% tolerance. That gives a legal range of 216 V to 253 V. 248 V is high but well within tolerance. Only readings outside that envelope would be a regulatory breach by the DNO.',
   },
@@ -70,12 +70,12 @@ const checks = [
     question:
       'The pole-mounted or pad-mounted distribution transformer that feeds your street typically steps down from:',
     options: [
-      '400 kV to 230 V',
       '11 kV to 400 V three-phase / 230 V single-phase',
-      '33 kV to 230 V',
-      '230 V to 12 V',
+      'By measuring actual work executed against bill rates',
+      'Dispose of properly according to waste regulations',
+      'It could not detect a broken neutral conductor',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'The standard UK street-level transformer is 11 kV / 400 V three-phase. Pole-mounted in rural areas, ground-mounted (pad-mount) or in a brick kiosk in towns. Typical capacity 200–800 kVA, feeding 50–200 properties. Above this is 33 kV at the primary substation; below it is your meter tails.',
   },
@@ -101,12 +101,12 @@ const quizQuestions = [
     question:
       'Why is the relationship between the 400 V three-phase line-to-line voltage and the 230 V single-phase line-to-neutral voltage equal to √3?',
     options: [
-      'Because it’s a regulatory choice',
+      'Automatic fault detection triggering maintenance work orders, condition monitoring data feeding into the CMMS, and coordinated maintenance scheduling',
+      'The inspector, based on installation type, environment, intensity of use, and the GN3 frequency table — recorded as the inspector\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s "reasonable and informed decision" with the rationale documented.',
       'Because in a balanced star (Y) connected three-phase system, the line-to-line voltage is the vector sum of two line-to-neutral voltages 120° apart, which works out as √3 × line-to-neutral',
-      'Because of the 50 Hz frequency',
-      'Because of transformer losses',
+      'Technicians are not trained on the importance of accurate data recording, or the failure code structure is too complex, too vague, or not aligned to actual failure modes — making it difficult or time-consuming to record meaningful information',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'It’s pure trigonometry. Two phasors of equal length at 120° to each other add (vectorially) to a phasor of length √3 times either of them. Line-to-line = √3 × line-to-neutral. So 400 / √3 = 230.94 ≈ 230, and 230 × √3 = 398.4 ≈ 400. The numbers are rounded for the nominal supply standard.',
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     question:
       'An electrician working in central London is more likely to deal with which DNO?',
     options: [
-      'Northern Powergrid',
       'SP Energy Networks',
-      'UK Power Networks',
+      'Northern Powergrid',
       'Western Power Distribution / National Grid Electricity Distribution',
+      'UK Power Networks',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'UK Power Networks owns and operates the distribution networks for London, the South East and the East of England. There are six DNO regions in GB: UK Power Networks (London/SE/East), SSEN (Scottish + Southern), SP Energy Networks (Central Scotland + Merseyside/N Wales), Northern Powergrid (Yorkshire/North East), Electricity North West (Greater Manchester/Cumbria), and National Grid Electricity Distribution (Midlands/SW/Wales — formerly WPD).',
   },
@@ -128,19 +128,24 @@ const quizQuestions = [
     id: 4,
     question: 'The DNO cut-out (the sealed fuse on the supply side of the meter) is owned by:',
     options: [
-      'The customer',
-      'The Meter Operator (MOP)',
       'The Distribution Network Operator (DNO)',
-      'The energy supplier (e.g. British Gas)',
+      'A percentage from 0% to 100%',
+      'Testing against a known reference standard',
+      'Tax, insurance, and business legal requirements',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'The cut-out is the DNO’s last bit of kit before the supply enters the customer’s installation. It contains the BS 1361 (or HRC) fuse that limits fault current entering the property. The seal is the DNO’s — never break it. The meter (downstream) is the MOP’s. Everything from the consumer side of the meter is the customer’s. Three different ownerships in a few centimetres of cable.',
   },
   {
     id: 5,
     question: 'In the UK, the typical declared single-phase nominal supply voltage is:',
-    options: ['240 V', '230 V', '220 V', '250 V'],
+    options: [
+      '240 V',
+      '230 V',
+      '250 V',
+      '220 V',
+    ],
     correctAnswer: 1,
     explanation:
       '230 V is the harmonised European nominal (BS 7671 and ESQCR both adopt it). The UK historically declared 240 V; mainland Europe declared 220 V. They were harmonised in 1995 to a single 230 V nominal with an asymmetric tolerance band (−6% / +10%) wide enough to cover both old standards. Most UK supplies still measure at 240–245 V because the original 240 V transformers are still in service.',
@@ -149,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: 'The reason ESQCR uses an ASYMMETRIC tolerance (−6% / +10%) rather than ±8% on the 230 V nominal is:',
     options: [
-      'To make the maths harder',
+      'A pre-use inspection sheet kept with the equipment — checks structural integrity, controls, fluids, signage; defects taken out of service',
+      'Express your views as opinions rather than disguised facts, using language like "I\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'m wondering..." or "It seems to me..."',
       'To accommodate the old UK 240 V supplies (which are 240/230 = 1.043, just under +5%) without requiring transformer replacement, while still covering the old continental 220 V (−4.3%)',
-      'To allow extra voltage drop on long radial circuits',
-      'For motor starting reasons',
+      'Make the relevant information available to anyone who is liable to disturb the asbestos-containing materials, including contractors and maintenance workers',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'It was a political fudge to harmonise UK and continental standards in 1995 without anyone having to physically retap their transformers. The −6% / +10% envelope on a 230 V nominal covers everything from 216 V (the old 220 V −2%) up to 253 V (the old 240 V +5.4%). Both legacy systems are legal under the new standard. It’s the only place in the regs where you can see the seam between the old and the new still showing.',
   },
@@ -164,11 +169,11 @@ const quizQuestions = [
       'A house has a 100 A BS 1361 cut-out fuse. The supply is single-phase 230 V. Maximum continuous load the cut-out will support without nuisance tripping?',
     options: [
       'About 10 kW',
-      'About 23 kW',
-      'About 46 kW',
       'About 100 kW',
+      'About 46 kW',
+      'About 23 kW',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'P = V × I = 230 × 100 = 23,000 W = 23 kW. That sets the upper bound of the load the property can sustain on a typical 100 A single-phase service. New EV chargers, heat pumps, induction hobs and electric showers can push close to this in winter — which is why DNOs are increasingly upgrading 60 A and 80 A services to 100 A or to three-phase 100 A per phase (~69 kW).',
   },
@@ -177,12 +182,12 @@ const quizQuestions = [
     question:
       'Where exactly does BS 7671 take over from ESQCR in the supply chain?',
     options: [
-      'At the grid supply point',
       'At the consumer side of the supply terminals (the output terminals of the meter / the consumer unit)',
-      'At the secondary substation',
-      'At the consumer’s electricity meter inlet',
+      'Clear description, safety implications, recommended actions, and timeframes',
+      'A quiet space with no notes, no phone, and a visible timer — simulating actual exam conditions',
+      'Maximum power is transferred when load resistance equals source resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ESQCR governs everything on the DNO side — service cable, cut-out, meter tails (meter operator side), the meter itself. BS 7671 takes over at the consumer side of the supply, typically the output terminals of the meter or the input to the consumer unit. The boundary is sometimes called the ‘origin of the installation’ in BS 7671 terminology.',
   },

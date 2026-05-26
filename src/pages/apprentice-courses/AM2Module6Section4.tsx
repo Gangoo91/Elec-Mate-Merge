@@ -60,20 +60,25 @@ const AM2Module6Section4 = () => {
       id: 'reading-questions',
       question: "What's the difference between 'minimum IR value' and 'recommended IR value'?",
       options: [
-        'They are the same value',
-        'Minimum is 0.5 MO, recommended is 1 MO',
+        'They melt at 120-180°C causing cables to collapse',
+        'Direct to the light fitting, bypassing switches',
+        'UK legislation mandating fire safety including emergency lighting',
         'Minimum is 1 MO (legal pass), recommended is best practice target',
-        'Recommended is always half the minimum',
       ],
-      correctIndex: 2,
+      correctIndex: 3,
       explanation:
         'Minimum is the legal pass mark (1 MO), recommended is the best practice target for good installations.',
     },
     {
       id: 'units-conversion',
       question: 'If an RCD trips in 0.28 s, should this be written as 280 ms or 0.28 ms?',
-      options: ['280 ms', '0.28 ms', 'Both are correct', 'Neither - use seconds only'],
-      correctIndex: 0,
+      options: [
+        'Neither - use seconds only',
+        '0.28 ms',
+        'Both are correct',
+        '280 ms',
+      ],
+      correctIndex: 3,
       explanation:
         '280 ms - candidates often lose marks by miswriting units. 0.28 s = 280 ms (multiply by 1000).',
     },
@@ -83,7 +88,12 @@ const AM2Module6Section4 = () => {
     {
       id: 1,
       question: "What's the biggest cause of lost marks in the knowledge test?",
-      options: ['Lack of knowledge', 'Misreading questions', 'Time pressure', 'Calculator errors'],
+      options: [
+        'Lack of knowledge',
+        'Misreading questions',
+        'Time pressure',
+        'Calculator errors',
+      ],
       correctAnswer: 1,
       explanation:
         "Misreading questions is the biggest cause - many fails come from not reading keywords like 'minimum/maximum' properly.",
@@ -92,12 +102,12 @@ const AM2Module6Section4 = () => {
       id: 2,
       question: 'Why should you underline or note keywords in a question?',
       options: [
-        'It looks professional',
+        "At the origin of the installation",
+        "Both a 6 kW reduction and 50% improvement",
         "To prevent misreading what's actually asked",
-        'It saves time',
-        'The examiner expects it',
+        "No, proper testing with measured currents is required",
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "Underlining keywords prevents misreading - many candidates answer what they think is asked rather than what's written.",
     },
@@ -105,19 +115,24 @@ const AM2Module6Section4 = () => {
       id: 3,
       question: 'What technique narrows your options if unsure?',
       options: [
-        'Guessing randomly',
-        'Process of elimination',
         'Asking for help',
+        'Guessing randomly',
         'Skipping the question',
+        'Process of elimination',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Process of elimination - crossing out obviously wrong answers gives you better odds and reduces panic.',
     },
     {
       id: 4,
       question: 'Which is correct: 0.28 s = 280 ms or 0.28 ms?',
-      options: ['280 ms', '0.28 ms', 'Both are correct', 'Neither'],
+      options: [
+        '280 ms',
+        '0.28 ms',
+        'Both are correct',
+        'Neither',
+      ],
       correctAnswer: 0,
       explanation:
         '280 ms is correct. To convert seconds to milliseconds, multiply by 1000: 0.28 x 1000 = 280 ms.',
@@ -135,27 +150,37 @@ const AM2Module6Section4 = () => {
       question: "What's the best strategy if faced with a difficult maths problem?",
       options: [
         'Spend 10 minutes working it out',
-        'Flag it and return later',
         'Give up and move on',
+        'Flag it and return later',
         'Guess immediately',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "Flag it and return later - don't waste time early. Come back fresh with remaining time.",
     },
     {
       id: 7,
       question: 'How many questions out of 40 can you afford to miss and still pass?',
-      options: ['5-8 questions', '10-12 questions', '12-14 questions', '15-20 questions'],
-      correctAnswer: 2,
+      options: [
+        '5-8 questions',
+        '10-12 questions',
+        '15-20 questions',
+        '12-14 questions',
+      ],
+      correctAnswer: 3,
       explanation:
         'Around 12-14 wrong questions (if 40 total), depending on pass mark - you need roughly 60-65% to pass.',
     },
     {
       id: 8,
       question: 'Give one example of a common unit mix-up.',
-      options: ['Volts and amps', 'kW and W', 'Ohms and siemens', 'Hz and kHz'],
-      correctAnswer: 1,
+      options: [
+        'kW and W',
+        'Ohms and siemens',
+        'Volts and amps',
+        'Hz and kHz',
+      ],
+      correctAnswer: 0,
       explanation:
         'kW and W is a common mix-up - forgetting to convert kilowatts to watts in power calculations costs marks.',
     },
@@ -164,11 +189,11 @@ const AM2Module6Section4 = () => {
       question: "What's the benefit of breaking the test into 'chunks' of 10?",
       options: [
         "It's required by exam rules",
-        'Makes time management easier',
-        'Reduces mental pressure',
         'Both B and C',
+        'Reduces mental pressure',
+        'Makes time management easier',
       ],
-      correctAnswer: 3,
+      correctAnswer: 1,
       explanation:
         "Both - breaking into chunks makes time management easier and reduces the mental pressure of a 'big' 90-minute test.",
     },
@@ -177,11 +202,11 @@ const AM2Module6Section4 = () => {
       question: 'What mindset should you have walking into the test?',
       options: [
         'Nervous but hopeful',
+        'Worried about time',
         'Calm and confident',
         'Anxious but prepared',
-        'Worried about time',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         "Calm and confident - anxiety costs marks. You're proving you can work accurately under pressure, just like on site.",
     },

@@ -16,7 +16,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'What does a circle with a cross usually represent?',
-    options: ['A socket outlet', 'A ceiling light', 'A switch', 'A distribution board'],
+    options: [
+      'A switch',
+      'A ceiling light',
+      'A distribution board',
+      'A socket outlet',
+    ],
     correctIndex: 1,
     explanation:
       'A circle with a cross is the standard BS symbol for a ceiling light or luminaire fitting.',
@@ -24,8 +29,13 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'What must always be checked for site-specific symbols?',
-    options: ['The scale', 'The legend', 'The date', 'The title'],
-    correctIndex: 1,
+    options: [
+      'The title',
+      'The date',
+      'The legend',
+      'The scale',
+    ],
+    correctIndex: 2,
     explanation:
       'The legend must always be checked as symbols may vary between drawings or projects, even when following BS standards.',
   },
@@ -33,12 +43,12 @@ const quickCheckQuestions = [
     id: 3,
     question: 'Why is scale important in installation drawings?',
     options: [
-      'To make drawings look professional',
+      'Estimate the order of magnitude with rounded numbers',
+      'Energy consumption over the system lifetime',
+      'In a safe, accessible location (physical or digital)',
       'To ensure accurate positioning of equipment',
-      'To save paper',
-      'To meet BS 7671 requirements',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Scale ensures accurate positioning when setting out work - knowing that 1:50 means 1 unit on drawing equals 50 units in real life is essential for correct installation.',
   },
@@ -52,7 +62,12 @@ const Module5Section1_2 = () => {
     {
       id: 1,
       question: 'What type of drawing shows the physical locations of sockets and lights?',
-      options: ['Circuit diagram', 'Layout drawing', 'Wiring diagram', 'Block diagram'],
+      options: [
+        'Circuit diagram',
+        'Layout drawing',
+        'Wiring diagram',
+        'Block diagram',
+      ],
       correctAnswer: 1,
       explanation:
         'Layout drawings show the physical positions of sockets, switches, luminaires, and containment systems within the building.',
@@ -62,12 +77,12 @@ const Module5Section1_2 = () => {
       question:
         'True or False: A schematic shows how components are physically placed in a building.',
       options: [
+        'True - but only for large installations',
         'True - it shows physical locations',
         'False - it shows how they are electrically connected',
-        'True - but only for large installations',
         'False - it shows cable routes only',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Schematics (circuit diagrams) show electrical connections between components, not their physical locations in the building.',
     },
@@ -75,27 +90,37 @@ const Module5Section1_2 = () => {
       id: 3,
       question: "What does '1:50' mean on a drawing?",
       options: [
-        '50 components per circuit',
+        'Followed up with written documentation',
+        'To comply with identification standards',
+        'Ensure tools are PAT tested and use RCD protection',
         '1 unit on the drawing equals 50 units in real life',
-        'Drawing revision 1 of 50',
-        '1 metre equals 50 centimetres',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         '1:50 scale means 1 unit of measurement on the drawing represents 50 units in reality (e.g., 1cm on drawing = 50cm on site).',
     },
     {
       id: 4,
       question: 'Which drawing type details cable cores and terminals?',
-      options: ['Layout drawing', 'Wiring diagram', 'Block diagram', 'Site plan'],
-      correctAnswer: 1,
+      options: [
+        'Wiring diagram',
+        'Layout drawing',
+        'Block diagram',
+        'Site plan',
+      ],
+      correctAnswer: 0,
       explanation:
         'Wiring diagrams provide detailed information about cable cores, terminals, and specific connection points.',
     },
     {
       id: 5,
       question: 'What does the double circle symbol usually represent?',
-      options: ['A ceiling light', 'A socket outlet', 'A switch', 'A junction box'],
+      options: [
+        'A ceiling light',
+        'A socket outlet',
+        'A junction box',
+        'A switch',
+      ],
       correctAnswer: 1,
       explanation: 'A double circle is the standard BS symbol for a socket outlet or power point.',
     },
@@ -103,12 +128,12 @@ const Module5Section1_2 = () => {
       id: 6,
       question: 'Why should the legend always be checked?',
       options: [
-        "It's a legal requirement",
+        'To establish true vertical reference lines',
+        'Different criteria - typically ≤0.05Ω for main bonding',
         'Because symbols may vary between drawings or projects',
-        'To find the drawing date',
-        'To check the scale',
+        'Installation has its own earth electrode',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Legends must be checked because symbols can vary between different projects or designers, even when following BS standards.',
     },
@@ -116,12 +141,12 @@ const Module5Section1_2 = () => {
       id: 7,
       question: 'What information might be found in circuit coding (e.g., L1, N, CPC)?',
       options: [
-        'Room numbers',
+        'Power exchanged between source and reactive components',
+        'At least every 14 months, or every 6 months for certain specified processes',
+        'Energy lost in repeatedly magnetising and demagnetising the core',
         'Identification of live, neutral, and protective conductors',
-        'Cable lengths',
-        'Installation dates',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation:
         'Circuit coding identifies different conductors: L1/L2/L3 (live), N (neutral), CPC (circuit protective conductor/earth).',
     },
@@ -129,12 +154,12 @@ const Module5Section1_2 = () => {
       id: 8,
       question: 'True or False: You can ignore dimensions on drawings if they look right on-site.',
       options: [
-        'True - visual estimation is sufficient',
         'False - always follow dimensions',
         'True - if approved by supervisor',
+        'True - visual estimation is sufficient',
         'False - only for major dimensions',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Dimensions must always be followed exactly - they ensure correct positioning, clearances, and compliance with regulations.',
     },
@@ -155,12 +180,12 @@ const Module5Section1_2 = () => {
       id: 10,
       question: 'Drawings and specifications must be used together. Why?',
       options: [
-        "It's company policy",
+        'Report the defect immediately, do not use the machine, and tag it out of service',
+        'Layered security with multiple sensor types and monitoring',
         'Because drawings show where to install, and specifications explain how',
-        'To increase project costs',
-        'Only for complex installations',
+        'Enter premises, examine, investigate, issue notices, prosecute',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Drawings show the location and layout, whilst specifications explain the methods, materials and standards - both are essential for complete information.',
     },

@@ -45,12 +45,12 @@ const checks = [
     question:
       "BS 7671 A4:2026 Reg 421.1.7 says about AFDDs:",
     options: [
-      "AFDDs shall be installed on every final circuit.",
+      "Maintenance effectiveness depends directly on the competence of the people performing the work — technicians need both technical skills (fault-finding, condition monitoring, repair techniques) and analytical skills (RCA, FMEA, data interpretation) to implement RCM effectively",
+      "No — both the metal back-box AND the metal socket faceplate are exposed-conductive-parts. Each must be connected to the CPC, normally via a fly-lead or via the fixing screws securing a metal faceplate to a metal back-box (provided that connection is verified by continuity test).",
+      "Immediately evacuate the area, do not attempt to disconnect or move the battery, call the fire service, notify the building occupant, and contact the manufacturer — swelling indicates internal cell failure that could lead to thermal runaway, fire and toxic gas release",
       "AFDDs are recommended for installation in AC final circuits of a fixed installation to mitigate the risk of fire arising from the effects of arc fault currents. The wording is advisory ('recommending'), not mandatory at the BS 7671 level — though specific occupancy types under the Building Safety Act 2022 and HRRB regime may make AFDDs effectively required.",
-      "AFDDs may not be installed on circuits with RCD protection.",
-      "AFDDs are only for industrial circuits.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Reg 421.1.7 is intentionally written with the word 'recommending' — advisory rather than mandatory. The competent designer reads this as 'AFDDs should be installed unless there is good reason not to', and a periodic inspection will not code a pre-A4 installation lacking AFDDs as C2. However, the Building Safety Act 2022 and the secondary legislation around higher-risk residential buildings (HRRBs — broadly buildings 18 m or seven storeys and above) effectively make AFDDs a requirement on those occupancy types. Houses in multiple occupation, care homes, and certain commercial environments increasingly specify AFDDs as part of insurer or client requirement, well ahead of any BS 7671 mandate.",
   },
@@ -59,12 +59,12 @@ const checks = [
     question:
       "AFDD product standard is:",
     options: [
-      "BS EN 60898.",
       "BS EN 62606 — sets the test requirements for AFDD detection of series and parallel arc faults, immunity to nuisance trip from normal load behaviour (motor starting, fluorescent flicker, switching transients), and integration with overcurrent and RCD protection in combined modules.",
-      "BS EN 61009-1.",
-      "BS 5839.",
+      "The DNO declared 0.35 ohm — design uses the worst-case declared figure (lower Ze means higher Zs at fault, which the design must still satisfy). The measured figure is for verification, not design.",
+      "Likelihood × Severity. Likelihood scale (1 rare → 5 almost certain). Severity scale (1 minor → 5 catastrophic). Multiplied gives a risk score; matrix categorises (low / medium / high / very high) and triggers control requirements. Many firms use 3x3 or 5x5 matrices.",
+      "Include a price variation clause in your quotation allowing adjustment for significant material price changes (e.g. copper, aluminium, key brands). Set a clear threshold (typical: changes over 5%) and define the calculation method. This protects both parties on long-running projects.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "BS EN 62606 is the product standard for AFDDs. It defines: arc fault detection performance for series faults (a single conductor with intermittent contact such as a damaged extension lead or a loose terminal) and parallel arcs (between live conductors or live and earth, often the precursor to a short-circuit fault); immunity tests against false trip from normal household / commercial load behaviour; the integration requirements for AFDD-only, AFDD+OPD and AFDD+RCBO devices; and marking and end-user information requirements. The L3 designer specifies AFDDs on the schedule by citing BS EN 62606 and the manufacturer / part number, exactly as for any other protective device.",
   },
@@ -73,12 +73,12 @@ const checks = [
     question:
       "An AFDD-RCBO module on a final circuit is fed from a 100 A BS 88-3 main switch and main fuse. A series arc fault in a long extension lead plugged into the protected circuit. Discrimination outcome:",
     options: [
-      "The BS 88-3 fuse operates first.",
       "The AFDD-RCBO operates on the arc-fault detection (the fault current may not be high enough to trip the OPD or the RCD), clearing the affected circuit only. The BS 88-3 fuse stays intact. This is exactly the scenario AFDDs are designed to detect — fault energy below conventional OPD / RCD thresholds but high enough to ignite cable insulation or appliance materials.",
-      "Both devices trip simultaneously.",
-      "Neither device trips.",
+      "Confirm: (1) clamp is on consumer side of the meter and on hard metal pipework before any branch; (2) within 600 mm of the meter outlet union where practicable; (3) pipe cleaned to bare metal under the clamp jaw; (4) jointing paste applied; (5) clamp screw torqued to manufacturer spec; (6) \\\"Safety Electrical Connection — Do Not Remove\\\" warning label fitted on the clamp body or conductor; (7) bonding conductor secure and labelled at the MET end.",
+      "Limited companies have separate legal personality — the company is liable for debts, not the individual director (subject to personal guarantees and director duties). Sole traders have unlimited personal liability — personal assets can be pursued for business debts.",
+      "Appendix 6 — model forms for certification and reporting. The appendices to BS 7671 also include Appendix 1 (British Standards referenced), Appendix 4 (cable current-carrying capacity tables), Appendix 12 (voltage drop), Appendix 15 (ring and radial circuit arrangements) and Appendix 17 (protective measures against environmental influences). Knowing the appendices by topic is half of installer navigation.",
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       "Series arc faults (loose connections, damaged flex, deteriorated terminals) often produce intermittent low-current arcing — a few amps, well below the OPD's overcurrent threshold and well below the RCD's residual threshold (because the arc is line-to-line, not line-to-earth). Conventional protection does not see them, but the local heating from the arc routinely starts fires. AFDDs detect the characteristic high-frequency signature of arcing in the load current and trip on it. The AFDD-RCBO clears the affected circuit; the BS 88-3 main fuse stays intact, the rest of the building keeps running. This is the engineering case for AFDDs — closing a known gap in conventional overcurrent / RCD protection.",
   },
@@ -89,10 +89,10 @@ const quizQuestions = [
     id: 1,
     question: "What does an AFDD detect that a conventional MCB / RCBO does not?",
     options: [
-      "Earth faults.",
+      "Main protective bonding equalises potential between extraneous-conductive-parts (gas, water, structure) and the MET. The earthing conductor connects the MET back to the source earth (PEN, sheath, or local electrode) so fault current can actually return to the source — without it, no current flows and no disconnection happens.",
       "Series arc faults (intermittent low-current arcing in damaged flex, loose terminals, deteriorated joints) and parallel arc faults (between live conductors or live-to-earth before they develop into a full short-circuit). These produce fault energies that ignite cable insulation but typically do not reach the OPD overload or RCD residual thresholds.",
-      "Overload currents.",
-      "High-PSCC short circuits.",
+      "If a standby or backup system exists and can maintain the required function when the primary system fails, the overall consequence of a single failure is reduced — but the backup system itself becomes critical and must be maintained to ensure it works when needed",
+      "Direct application to the Local Authority Building Control (LABC) office before the work starts, with a Building Notice or Full Plans application; LABC inspects and issues a completion certificate. Significantly more expensive and slower than CPS routes — most contractors register with a scheme for this reason.",
     ],
     correctAnswer: 1,
     explanation:
@@ -102,12 +102,12 @@ const quizQuestions = [
     id: 2,
     question: "BS 7671 Reg 421.1.7 wording on AFDDs is best described as:",
     options: [
-      "Mandatory installation on every final circuit.",
+      "That every employer appoint one or more competent persons to assist them in undertaking the measures needed to comply with the requirements and prohibitions imposed on them by the relevant statutory provisions. Often this is a designated H&S manager or external consultant.",
+      "Design out or reduce the need for work at height where reasonably practicable, and where it cannot be eliminated, provide information about remaining risks in the health and safety file for future duty holders",
       "Advisory ('recommending') the installation of AFDDs in AC final circuits of a fixed installation to mitigate fire risk arising from the effects of arc fault currents. Not a mandatory requirement at the BS 7671 level for general installations.",
-      "Prohibits AFDDs on circuits with RCDs.",
-      "Mandates AFDDs only on industrial sites.",
+      "The apprenticeship funding rules require a minimum of 20% off-the-job training, and the ESFA (Education and Skills Funding Agency) requires evidence that this has been met before the EPA can proceed",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Reg 421.1.7 uses the word 'recommending' deliberately — it is advisory. Competent designers read it as 'install unless there is a good reason not to'. A periodic inspection of an installation pre-dating A4 will not code the absence of AFDDs as C2 simply for absence; it might recommend C3 (improvement recommended). The hardening of this recommendation into a requirement comes via the Building Safety Act 2022 and HRRB-specific secondary legislation, plus insurer / occupancy-type requirements (HMO, care home, premium commercial).",
   },
@@ -115,12 +115,12 @@ const quizQuestions = [
     id: 3,
     question: "AFDD product standard is:",
     options: [
-      "BS EN 60898.",
-      "BS EN 61009-1.",
+      "Steel expands ~12 µm per m per °C; over 32 m a 30°C swing gives ~11 mm of expansion that has to be accommodated to prevent stress on the saddles and threaded joints.",
+      "Roles of employer/training provider/apprentice, off-the-job learning hours, end-point assessment plans and pay/conditions",
+      "They provide additional support, specialist rescue capability, medical assistance, and resources to supplement the on-site rescue team",
       "BS EN 62606 — sets test requirements for arc fault detection, immunity to nuisance trip, and integration with overcurrent / RCD protection in combined modules.",
-      "BS 7430.",
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "BS EN 62606 is the dedicated AFDD product standard. It specifies: detection performance (series and parallel arc), nuisance-trip immunity testing (motor starting transients, fluorescent flicker, switching surges), test conditions for combined AFDD-MCB and AFDD-RCBO modules, marking and end-user information. Always cite BS EN 62606 alongside the manufacturer / part number on the schedule, the same way you cite BS EN 60898 for an MCB.",
   },
@@ -128,12 +128,12 @@ const quizQuestions = [
     id: 4,
     question: "Which occupancy type currently has the strongest AFDD requirement (beyond Reg 421.1.7's general recommendation)?",
     options: [
-      "Single-dwelling owner-occupied house.",
       "Higher-risk residential buildings (HRRBs) under the Building Safety Act 2022 — broadly buildings 18 m or seven storeys and above with sleeping accommodation. Insurer requirements increasingly extend to HMOs, care homes, student accommodation and certain commercial use classes.",
-      "Industrial workshops.",
-      "Outdoor lighting circuits.",
+      "1–100 kW depending on the head (vertical drop) and the flow rate — at the small end, the same kind of single-phase grid-connected system as a PV install; at the larger end, three-phase and a full G99 application.",
+      "Aligned - reputation for compliance and quality wins repeat business. The HSE Public Register prosecutions / notices are a competitive disadvantage. Firms with clean records win frameworks; firms with poor records lose them.",
+      "A \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"skilled person (electrically)\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" as defined in BS 7671 Part 2 — typically evidenced by membership of a competent person scheme (NICEIC, NAPIT, ELECSA, Stroma) and current 2391/2394/2395 (or equivalent) inspection and testing qualification. The duty-holder is liable if they appoint someone not competent.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The Building Safety Act 2022 introduced a stricter regime for HRRBs (higher-risk residential buildings) — typically residential buildings 18 m or seven storeys and above. Designers on these buildings must demonstrate competence and produce a 'golden thread' of design documentation. AFDDs are widely treated by responsible designers as required on HRRB final circuits even though Reg 421.1.7 itself remains advisory. Insurer requirements push the same way for HMOs, care homes, hospices, and certain occupancy types where fire risk is elevated.",
   },
@@ -141,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: "Combined AFDD-RCBO modules are typically available with:",
     options: [
-      "Only Type B 6 A.",
+      "Unlimited fine and/or up to 2 years imprisonment for individuals; unlimited fine for companies. Sentencing follows the Definitive Guideline (HSE Sentencing Council, 2016) and turns on culpability, harm and turnover.",
       "Standard MCB ratings (6, 10, 16, 20, 25, 32, 40 A) with Type B or C overcurrent characteristic, combined with 30 mA Type A or Type AC residual current protection (Type B / F variants becoming available). Same form factor as a standard RCBO; same cascade and breaking-capacity specifications.",
-      "Only Type D 32 A.",
-      "Only without RCD function.",
+      "Explain that an EICR has minimum content requirements set by BS 7671 Part 6, GN3 and BPG4 — sampling can be agreed but the sampling itself must be representative and the limitations recorded in writing. Walk the customer through what an EICR can and cannot exclude. If they still want sub-minimum work, decline and document the refusal.",
+      "A connector that combines the Type 2 AC connector with two additional DC pins below it, enabling both AC charging (via the Type 2 portion) and DC rapid charging (via the DC pins) through a single vehicle inlet — supporting DC charging up to 350 kW",
     ],
     correctAnswer: 1,
     explanation:
@@ -154,12 +154,12 @@ const quizQuestions = [
     id: 6,
     question: "AFDDs are most useful on circuits where the dominant fire risk is:",
     options: [
-      "High-PSCC short circuits.",
+      "3-10 seconds, to avoid unnecessary starts during brief supply interruptions (voltage dips, transient faults) that are resolved by the DNO within seconds",
+      "The more precisely you can identify your emotion (e.g., distinguishing \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"frustrated\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" from \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"disappointed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\" from \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"overwhelmed\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"), the more effectively you can select the appropriate regulation strategy — because different emotions require different responses",
       "Series arc faults from damaged or aged flex, loose terminals, deteriorated terminations — typical of long-life installations with extensive socket-outlet use, in-wall cabling under furniture, and aged accessories.",
-      "Overload from continuous full-rated demand.",
-      "Earth faults to exposed-conductive-parts.",
+      "A notice served by the fire authority requiring the responsible person to notify them before making changes to the premises or its use that could increase fire risk or affect fire safety measures",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "AFDDs target the series and parallel arc fault that conventional protection misses. The risk profile that benefits most: long-life installations where flex and terminations age (sleeping accommodation, occupied spaces with high cable density), socket-outlet circuits with extension leads or worn appliances, accessory boxes with intermittent terminal contact. Less benefit on heavy-industrial circuits where short-circuit faults are caught quickly by OPD; less benefit on lighting circuits with simple fixed wiring and no flex.",
   },
@@ -167,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: "When specifying AFDDs on the schedule, the design row should record:",
     options: [
-      "Just 'AFDD'.",
+      "Allows EVs to discharge stored battery energy back to the grid or building during peak demand periods — effectively using the EV battery as a distributed energy storage resource, providing grid services and reducing electricity costs for the vehicle owner",
+      "Read the RAMS for the job before you start so you understand the planned controls. Attend the toolbox talks and sign the register. Operate within the scope of any permit-to-work — never extend the work beyond what the permit authorises. Flag anything you see on site that doesn't match the RAMS. HASAWA s.7 makes all of this a personal duty.",
+      "At minimum: power topology (cables, breakers, DBs); annotations (ratings, calc results); revision clouds and notes; legend and title block. Some designers add layers for fault current, voltage drop, disconnection time and sub-discipline (e.g. emergency lighting circuits, fire alarm circuits, IT critical) so layers can be turned on or off for clarity.",
       "Type (AFDD-RCBO combined or AFDD-OPD combined or standalone AFDD), rating (matched to circuit), trip characteristic (Type B / C), RCD class (where combined), product standard (BS EN 62606 plus BS EN 61009-1 or BS EN 60898 as applicable), and manufacturer / part number — same discipline as for any other protective device.",
-      "Only the manufacturer.",
-      "Only the trip rating.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "AFDDs are protective devices and the schedule discipline is the same as for any other device: type, rating, breaking capacity, trip characteristic, RCD class, product standard citations, manufacturer / part number. A vague 'AFDD' line is no better than a vague 'MCB' line. Specific spec lets the installer order the right part and the inspector verify the install matches the design. On HRRB or insurer-driven AFDD installations the schedule discipline is part of the compliance evidence.",
   },
@@ -180,12 +180,12 @@ const quizQuestions = [
     id: 8,
     question: "On a domestic CU upgrade in a typical owner-occupied house in 2026, the L3 designer's AFDD position is:",
     options: [
-      "Mandatory on every circuit per Reg 421.1.7.",
       "Recommended (per the wording of Reg 421.1.7) — discuss with the customer, present the cost vs benefit, and let them decide. Document the conversation. AFDDs are a sensible choice for the bedroom and lounge socket circuits in particular; less of a priority on shower, immersion, hob and dedicated EV circuits.",
-      "Always declined to keep the cost down.",
-      "Only on circuits with RCDs.",
+      "Charge-hand is a senior trade lead — typically an experienced Approved Electrician who runs a small gang of electricians and apprentices on a specific area of the work, reporting up to the Foreman. On a larger job there can be several Charge-hands under one Foreman, each leading a wing or a floor.",
+      "Code it on the EICR (C1 immediate danger / C2 potentially dangerous / C3 improvement recommended / FI further investigation). Inform the customer / dutyholder. Recommend remedial action with timescales appropriate to the code. C1 requires immediate action — make safe on the day. The EICR itself is the formal report; it goes to the dutyholder.",
+      "The four stages — concrete experience (having an emotional interaction), reflective observation (thinking about what happened and how you felt), abstract conceptualisation (identifying patterns and principles), and active experimentation (trying a new approach next time) — create a systematic method for learning from emotional experiences rather than repeating the same patterns",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Reg 421.1.7 is advisory in BS 7671 itself, so the L3 designer's job is to inform the customer and let them decide. Present the case for AFDDs on the circuits where the engineering benefit is strongest (sleeping-area socket circuits, lounge sockets, kitchen sockets where appliances are routinely plugged and unplugged), present the cost (each AFDD-RCBO module typically 3-5 x the cost of an equivalent RCBO), and let the customer choose. Document the conversation in the design pack — 'AFDDs offered, customer declined / accepted on circuits A B and C'. On HRRB or insurer-driven installations the conversation goes differently, but the documentation discipline is the same.",
   },

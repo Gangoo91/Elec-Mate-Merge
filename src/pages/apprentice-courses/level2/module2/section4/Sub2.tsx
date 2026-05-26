@@ -38,9 +38,9 @@ const checks = [
     id: 'series-current-rule',
     question: 'In a series circuit, the current through each component is…',
     options: [
-      'Different at every component',
-      'The same everywhere',
       'Highest at the supply',
+      'The same everywhere',
+      'Different at every component',
       'Zero in any unused component',
     ],
     correctIndex: 1,
@@ -50,16 +50,26 @@ const checks = [
   {
     id: 'voltage-divider-check',
     question: 'A 12 V supply across two equal resistors in series. What is the voltage across each?',
-    options: ['12 V each', '6 V each', '3 V each', '0 V each'],
-    correctIndex: 1,
+    options: [
+      '6 V each',
+      '3 V each',
+      '0 V each',
+      '12 V each',
+    ],
+    correctIndex: 0,
     explanation:
       'Equal resistors share the supply equally. Two equal Rs on 12 V means 6 V each. The voltages always add up to the supply.',
   },
   {
     id: 'kirchhoff-check',
     question: 'A circuit has a 24 V battery, R₁ takes 8 V, R₂ takes 10 V. What does R₃ take?',
-    options: ['2 V', '6 V', '14 V', '24 V'],
-    correctIndex: 1,
+    options: [
+      '2 V',
+      '14 V',
+      '6 V',
+      '24 V',
+    ],
+    correctIndex: 2,
     explanation:
       'Kirchhoff’s voltage law — the drops add up to the supply. 8 + 10 + R₃ = 24, so R₃ = 6 V.',
   },
@@ -68,10 +78,10 @@ const checks = [
     question:
       'On a string of festoon lights, the first three lamps work, the rest are dead. What’s the most likely fault?',
     options: [
-      'All the dead lamps have blown at once',
+      'To prevent the worker from reaching a position where a fall could occur',
       'A series break (open circuit) somewhere between lamp 3 and lamp 4',
-      'The supply has dropped to half voltage',
-      'The earth is disconnected',
+      'A power quality analyser or power factor meter',
+      'The current intended to flow under normal conditions',
     ],
     correctIndex: 1,
     explanation:
@@ -87,10 +97,10 @@ const quizQuestions = [
     question:
       'A 12 V battery feeds three resistors in series. The drops measure 2 V, 4 V and 6 V. What does Kirchhoff’s voltage law tell you?',
     options: [
-      'There is a fourth hidden drop you have missed',
+      'To verify the sensors respond to a known concentration of test gas',
       'The drops add to 12 V — the supply is fully accounted for, the readings are consistent',
-      'The battery must actually be 24 V',
-      'One of the resistors is faulty',
+      'Individual switches, connections, and lamp holders in the dead section',
+      'Review every question — both correct and incorrect — reading all explanations and noting weak areas',
     ],
     correctAnswer: 1,
     explanation:
@@ -99,7 +109,12 @@ const quizQuestions = [
   {
     id: 2,
     question: 'Three resistors in series: 100 Ω, 200 Ω, 300 Ω. Total resistance?',
-    options: ['100 Ω', '200 Ω', '600 Ω', '50 Ω'],
+    options: [
+      '50 Ω',
+      '100 Ω',
+      '600 Ω',
+      '200 Ω',
+    ],
     correctAnswer: 2,
     explanation: 'Series resistances add directly: 100 + 200 + 300 = 600 Ω.',
   },
@@ -107,19 +122,24 @@ const quizQuestions = [
     id: 3,
     question: 'Voltage across components in a series circuit divides…',
     options: [
-      'Equally regardless of resistance',
-      'In proportion to each resistance',
       'Inversely with resistance',
+      'Equally regardless of resistance',
       'It does not divide — each component sees full voltage',
+      'In proportion to each resistance',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The bigger the resistor, the bigger its share of the supply. Voltage divider rule: Vx = Vs × Rx ÷ Rt.',
   },
   {
     id: 4,
     question: 'A 12 V supply, R₁ = 100 Ω, R₂ = 200 Ω in series. What is V₁?',
-    options: ['4 V', '6 V', '8 V', '12 V'],
+    options: [
+      '4 V',
+      '6 V',
+      '8 V',
+      '12 V',
+    ],
     correctAnswer: 0,
     explanation:
       'V₁ = Vs × R₁ ÷ Rt = 12 × 100 ÷ 300 = 4 V. Check: V₂ would be 8 V, total 12 V. Adds up.',
@@ -128,12 +148,12 @@ const quizQuestions = [
     id: 5,
     question: 'One component in a series chain fails open circuit. What happens to the others?',
     options: [
-      'Only that one stops working',
       'Current doubles through the rest',
       'All components stop — single path is broken',
       'Voltage divides across the remaining ones',
+      'Only that one stops working',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Series = one path. Break the path anywhere and current stops everywhere. That is why old-style fairy lights all went out when one bulb blew.',
   },
@@ -153,8 +173,13 @@ const quizQuestions = [
   {
     id: 7,
     question: 'A 30 V supply across R₁ = 50 Ω and R₂ = 100 Ω in series. What is the current?',
-    options: ['0.1 A', '0.2 A', '0.3 A', '0.6 A'],
-    correctAnswer: 1,
+    options: [
+      '0.1 A',
+      '0.6 A',
+      '0.3 A',
+      '0.2 A',
+    ],
+    correctAnswer: 3,
     explanation:
       'Rt = 50 + 100 = 150 Ω. I = V ÷ R = 30 ÷ 150 = 0.2 A. That same 0.2 A flows through both resistors.',
   },
@@ -162,12 +187,12 @@ const quizQuestions = [
     id: 8,
     question: 'Where do you actually meet series wiring on a UK installation?',
     options: [
-      'Ring final socket circuit',
-      'Lighting circuit with multiple lamps in parallel',
       'A switch wired in line with a single load',
-      'A ring main',
+      'Degree or equivalent in electrical engineering',
+      'A goal focused on the end result you want to achieve',
+      'Before testing, with the installation isolated',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'A switch in series with the load it controls — that is the simplest series arrangement on every site. Sockets and most lighting are parallel.',
   },

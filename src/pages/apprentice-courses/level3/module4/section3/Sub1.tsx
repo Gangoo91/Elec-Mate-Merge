@@ -46,12 +46,12 @@ const checks = [
     question:
       "What's the meter signature of an OPEN CIRCUIT fault on a domestic radial?",
     options: [
-      "Low resistance.",
+      "BS 7671 EICR (Electrical Installation Condition Report) periodic inspection applies — typically every 5 years for domestic, every 5 years or change of tenancy for landlord properties under the Electrical Safety Standards in the Private Rented Sector (England) Regulations 2020. For PV specifically, BS 7671 Section 712 / IET Code of Practice for Grid Connected Solar Photovoltaic Systems recommends an annual visual inspection plus a more comprehensive periodic inspection every 5 years. The MCS-certified installer often offers an annual aftercare visit covering visual inspection, datalog review, performance verification. Aim: catch underperformance before it becomes invisible drift.",
+      "Three-step matrix: (1) Culpability — Very High / High / Medium / Low; (2) Harm — Category 1 (death/permanent), 2 (serious), 3 (minor) with adjustments for risk of higher harm or multiple persons; (3) Turnover band — Large (£50m+), Medium (£10-£50m), Small (£2-£10m), Micro (under £2m). Cell in the matrix gives a starting point and a range. Adjusted up for aggravating factors, down for mitigating.",
+      "Dedicated 13 A or 16 A supply on a 6 A or 10 A MCB, in 1.5 mm² T&E to the unit location (utility room, loft, plant cupboard). Local DP isolator. Boost wiring from kitchens and bathrooms — sometimes via humidity sensors or PIR, sometimes via pull-cord switches in bathrooms or push-buttons in kitchens. Some units include a low-voltage commissioning interface (e.g. for installer-set air-flow rates). The unit's nameplate is typically 50-300 W on full load — modest demand. The bulk of the electrical work is the boost wiring network, not the unit supply.",
       "Continuity reads OPEN (∞ Ω) on the affected conductor; IR reads infinity (no leakage path); EFLI reads OPEN (the loop is broken). The load doesn't operate (no current path). Customer symptom: 'the socket / light / appliance has stopped working'. Causes: broken conductor (cut, snapped at termination), failed terminal screw (loosened to no contact), failed component (broken switch, blown fuse, failed contactor). The classic L1 / L2 'why isn't this working?' fault — straightforward to diagnose, usually a localised termination or component issue.",
-      "RCD trips.",
-      "Smoke.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Open circuit is the simplest fault category — the current path is broken, the load doesn't work. R = ∞, V = 0 on the load side, EFLI = OPEN. Diagnosis is usually visual or with a continuity test from one end of the circuit to the other; the break is at the point continuity fails.",
   },
@@ -60,12 +60,12 @@ const checks = [
     question:
       "What's the meter signature of a SHORT CIRCUIT fault between L and N?",
     options: [
-      "Open circuit.",
+      "A statutory certificate issued by an F-Gas certification body that authorises a company to carry out installation, maintenance, repair, decommissioning or leak checking on stationary refrigeration, AC and heat pump equipment containing fluorinated greenhouse gases. The company must also employ enough F-Gas Category I (or equivalent) certified individuals to cover the work. Without the company certificate, the firm cannot legally carry out refrigerant work even if individual engineers are certified.",
+      "CDM 2015 Reg 13(1)(a) requires the principal contractor to plan, manage and monitor the construction phase. In practice this includes site sign-in / sign-out registers, attendance at toolbox talks, RAMS sign-on records, and any permit records. These records combine with the apprentice's own records to form a full picture of who was on site doing what when. The records are commonly required after any incident or in any later dispute.",
+      "Each product's commissioning depends on the others being in a known state. The battery commissioning needs the inverter live; the inverter needs the PV strings energised; the EV charger's load management needs the CT clamp reading correctly; the heat pump's smart controller needs network access to the HEMS; the HEMS needs all four products visible before it can configure dispatch logic. Doing them in the wrong order produces commissioning faults that are hard to diagnose because each individual product 'works' but the integrated behaviour fails. The MCS-certified designer should provide a commissioning sequence; the apprentice follows it.",
       "Continuity between L and N reads near zero (typically &lt;1 Ω, often a few hundred milliohms — the impedance of the supply cable + the bridging fault). The protective device trips immediately (an MCB on a domestic circuit will operate within 10 ms on a high-PSCC short). The user symptom: 'breaker tripped instantly when I plugged in / switched on'. Causes: insulation breakdown between L and N inside an appliance, a damaged cable where insulation has worn through and conductors touch, a cross-wired terminal at an accessory.",
-      "Slow trip.",
-      "No effect.",
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       "Short circuit causes the highest fault current the system will see — limited only by supply impedance + cable resistance. On a 6 kA PSCC supply with a few metres of cable, a phase-neutral short will draw 4–5 kA briefly. The MCB's magnetic trip operates in under 10 ms. The thermal damage to the cable / fault location can be significant; visual inspection often shows scorching or melted insulation at the fault point.",
   },
@@ -74,10 +74,10 @@ const checks = [
     question:
       "What distinguishes a HIGH-RESISTANCE JOINT (HRJ) from a clean termination, and why is it dangerous?",
     options: [
-      "No difference.",
+      "Yes. You've shared a customer's personal data (a photo of their property identified by context) with someone outside your firm without a lawful basis. That's a UK GDPR breach. It's also almost certainly a breach of your firm's confidentiality and social-media policy. Private channel doesn't matter — the duty travels with the data. The fix: photos for your supervisor and the firm's internal systems only; if you want to discuss bad installs with mates at other firms, do it in general terms with no identifying info or photos.",
       "An HRJ has higher contact resistance than a clean termination — typically 0.05–5 Ω vs &lt;0.001 Ω for a properly-tightened terminal. Causes: loose terminal screw, oxidised aluminium-to-copper contact, undersized crimp, conductor strand damage, scorched contact from previous fault. Danger: under load, the joint dissipates I²R heat. A 0.5 Ω HRJ carrying 20 A dissipates 200 W — enough to char the surrounding plastic, melt the cable insulation, ignite combustible material in the enclosure. HRJ is the leading cause of electrical fires in buildings (HSE / fire investigation data). Hard to diagnose because the joint reads OK on a multimeter — only thermal imaging or voltage drop under load reveals it.",
-      "Just a high reading.",
-      "Not a real fault.",
+      "Confirms the install is feasible and identifies the realistic scope. For PV: roof orientation, pitch, condition, shading, structural capacity, route from roof to inverter, route from inverter to consumer unit. For heat pumps: building heat-loss assessment, emitter survey, supply capacity, outdoor unit location, indoor cylinder space, smart controls feasibility. For EV charging: parking position, supply capacity, route to charge point, earthing arrangement (PME or TT). For MVHR: airtightness assessment, ductwork routes, unit location. Without a survey the install can't be designed; without the design the customer can't be quoted accurately. The MCS-certified installer normally completes the survey.",
+      "Maintained 3-hour emergency light fittings (BS 5266) charge from the lighting circuit and will stay lit on internal battery for 3 hours after isolation — that's expected. BUT the BMS / fire panel may flag a 'lighting circuit fail' alarm to the building manager (which they need to know is your work, not a real fault), and after 3 hours you've drained the battery — a fresh discharge requires 24 hours to recharge fully. So if you isolate for 4+ hours and a real power cut hits the next morning, the floor has no emergency light. L3 thinking: scope the work to under 3 hours OR coordinate with the M&E manager so they know the floor's emergency-light cover is reduced for the recharge window.",
     ],
     correctIndex: 1,
     explanation:
@@ -90,10 +90,10 @@ const quizQuestions = [
     id: 1,
     question: "Define each of the seven canonical fault types.",
     options: [
-      "All faults are the same.",
+      "It depends on competence and supervision. An L3 apprentice typically signs the Constructor panel under supervision (the work was done under the supervisor's oversight). The Inspector panel requires verification competence — the supervisor or a JIB Approved Electrician usually signs that for an apprentice's work. The Designer panel requires design competence, normally a fully-qualified electrician or engineer, not an apprentice. The C&G 2391 / 2394 / 2395 inspection-and-testing qualifications are the typical step that lets a qualified electrician sign Inspector. EAWR Reg 16 (competence) is the underlying duty — sign only what you are competent to sign.",
       "(1) OPEN CIRCUIT — current path broken, R = ∞. (2) SHORT CIRCUIT — direct connection between L–L, L–N, or live conductors that should be separate; very low resistance, very high current. (3) EARTH FAULT — current path between live conductor and earth (CPC, exposed metalwork, true ground); operates RCD if path is through CPC; may not operate RCD if return path is via parallel route. (4) HIGH-RESISTANCE JOINT (HRJ) — termination with elevated contact resistance; under load, dissipates I²R heat; fire risk. (5) INSULATION FAILURE — degraded insulation between conductors; high-resistance leakage path; precursor to short circuit or earth fault. (6) TRANSIENT VOLTAGE — brief over-voltage from lightning, switching, faults elsewhere; damages electronics. (7) EXCESS CURRENT — overload (sustained current above design) or fault (sudden high current); causes thermal damage to cables.",
-      "Only short circuit.",
-      "Only open circuit.",
+      "MCS MIS 3005 is the installer competence and product certification standard for heat pump installations (air-source, ground-source, water-source). It covers system design (heat-loss calculation methodology, emitter sizing, SCOP estimate), product selection (eligible MCS-certified equipment), installation quality (refrigerant work by F-Gas certified personnel, electrical work to BS 7671), commissioning (flow temperature setup, control validation), and customer handover. Required for the customer to claim Boiler Upgrade Scheme grants and demonstrate quality assurance. BS 7671 covers the electrical safety side; MIS 3005 covers the broader install quality and the design competence. Both apply to most UK domestic heat pump installs.",
+      "BS 7671 Section 712 (extensively revised in A4:2026) requires specific signage at the consumer unit (presence of PV generator), at the meter (alternative supply source), at the inverter (DC and AC isolation points) and at any external DC isolators. The EICR inspector verifies presence and legibility of each sign; missing or illegible signage is recorded as an observation (typically C3 — improvement recommended — unless the absence creates an immediate safety risk for maintainers, in which case C2). The Code Breakers schedule and the EICR Best Practice Guide give the typical coding choice. Inspector recommendations should call for the missing signage to be reinstated.",
     ],
     correctAnswer: 1,
     explanation:
@@ -103,12 +103,12 @@ const quizQuestions = [
     id: 2,
     question: "What protective device responds to which fault type?",
     options: [
-      "RCD covers everything.",
+      "A document prepared by the principal contractor before the construction phase starts, setting out the health and safety arrangements for the site (welfare, induction, site rules, hazard controls, emergency procedures, monitoring). Required for any project where there is more than one contractor; the depth of the plan scales with the project size and risk profile. Sub-contractors are entitled to relevant extracts on induction.",
+      "£150-300 per notifiable job — varies by Local Authority. Each notifiable Part P job (consumer unit replacement, new circuit in kitchen/bathroom, full rewire) requires either a Building Notice or full Building Regulations application before work, plus an LABC inspection during/after. Cost adds up fast for a busy domestic installer; CPS membership pays for itself in a handful of jobs.",
       "MCB / RCBO thermal element — overload (sustained excess current). MCB / RCBO magnetic element — short circuit and high-current fault. RCD / RCBO residual element — earth fault through CPC (residual current). AFDD — series and parallel arc faults (degraded contacts, arc tracking). SPD — transient over-voltage. Fuse (BS 88 HRC) — short circuit and overload (slower than MCB but higher breaking capacity, used at supply origins). Each device is designed for a specific fault type; using the wrong device leaves the corresponding fault uncovered.",
-      "Just one device.",
-      "Just MCB.",
+      "Shorter cycles than the standard for the parent property type because the elevated risk in special locations justifies more frequent inspection. EV charge points are commonly inspected annually by the EV-charging-equipment manufacturer's recommendation; swimming pools annually for plant room; agricultural premises every 3 years given the harsh environment; caravans and marinas have their own GN3 Chapter 66 frequencies.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Modern installations use a combination — MCB / RCBO for overload and short circuit, RCD for earth fault, AFDD for arc fault, SPD for transients. BS 7671 A4:2026 mandates AFDD on certain circuit types (high-occupancy dwellings) precisely because RCBO doesn't catch the arc fault category. Each device targets its fault type; together they form layered protection.",
   },
@@ -116,12 +116,12 @@ const quizQuestions = [
     id: 3,
     question: "What causes most insulation failures in domestic installations?",
     options: [
-      "Random.",
+      "Plain English is writing or speaking that the intended audience can understand on first reading or hearing. Common standards include short sentences (15-20 words on average), common words rather than technical jargon, active voice rather than passive, one idea per sentence, and a reading age around 9-11 (that's not patronising — most UK adults read most comfortably at that level for safety-critical information). The Plain English Campaign provides guidance and the Crystal Mark accreditation. For safety briefings, RAMS summaries, customer-facing letters and apprentice-training material, plain English isn't 'dumbing down' — it's 'comprehensible' under MHSWR 1999 Reg 10.",
+      "Lifting equipment used to lift persons (MEWPs, lift platforms, scaffolding hoists carrying personnel) requires thorough examination at 6-monthly intervals. Other lifting equipment (chain blocks, manual hoists, anchor points used for material lifting only) requires 12-monthly thorough examination, OR in accordance with an examination scheme drawn up by a competent person. Per LOLER 1998 Reg 9(3). The examination is by a competent person (typically an independent examiner) and a written report is provided. The current report must be available with the machine.",
+      "Because the heat-loss calc determines what flow temperature the system will run at, which in turn determines what size emitters (radiators / underfloor) the property needs. If the existing radiators are small (sized for 70-80°C flow from a gas boiler) and the heat-loss calc shows the property needs 8 kW design heat output, the radiators may need to grow to deliver 8 kW at 45°C flow. Emitter design is downstream of heat-loss calc. Skipping the calc and reusing existing radiators is the headline cause of disappointing UK heat-pump SCOP figures.",
       "Common causes (in approximate frequency order): (1) physical damage — nail / screw through cable during DIY, mouse damage in lofts, abrasion against sharp metalwork. (2) thermal damage — cable run alongside a heating pipe, conductors derated by enclosed installation method, prolonged overload heating. (3) moisture / contamination — water ingress into ceiling void, condensation in unheated buildings, salt-air corrosion in coastal properties. (4) UV degradation — exterior cables exposed to sunlight without UV protection. (5) ageing — polymer insulation breakdown after 30+ years (rubber-insulated cables from pre-1970s installations). (6) chemical attack — cables in contact with PVC pipes, certain adhesives, hydrocarbon spills.",
-      "Just water.",
-      "Just rodents.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Insulation failure has many causes but the headline is — protect the cable from its environment. Physical damage is the most common single cause. The IET wiring matters guidance and BS 7671 Section 522 (external influences) cover the cable selection that prevents premature insulation failure.",
   },
@@ -129,12 +129,12 @@ const quizQuestions = [
     id: 4,
     question: "What's a transient over-voltage, where do they come from, and what damages them?",
     options: [
-      "Permanent over-voltage.",
       "A transient is a brief (microseconds to milliseconds) over-voltage spike — typical magnitudes 1 kV to 6 kV (lightning-induced can reach 20 kV+). Sources: (1) lightning strikes (direct or induced from nearby strikes). (2) switching events — large inductive loads (motors, transformers) creating back-EMF spikes when switched off. (3) fault clearing — supply network faults causing brief over-voltages on the consumer's side. (4) capacitor switching on power-factor correction equipment. Damage: solid-state devices (LED drivers, electronic boards, computers) have peak-voltage tolerance below the transient magnitude. Single transient can fail an entire LED ceiling rose array. Protection: SPDs (Surge Protective Devices) under BS 7671 443.",
-      "Always lightning.",
-      "Never important.",
+      "PAS 2035 (Publicly Available Specification — Retrofitting dwellings for improved energy efficiency) is the standard that governs domestic energy efficiency retrofit projects. It requires a 'whole-house' approach — fabric assessment, ventilation strategy, moisture risk management, and any retrofit measures (including heat pump installation) must be coordinated by a Retrofit Coordinator and designed by a Retrofit Designer. Required for grant-funded retrofits (ECO4, Boiler Upgrade Scheme in some cases, local authority schemes). Helps avoid the failure mode where a heat pump is fitted to an uninsulated leaky house and posts a poor SCOP. The MCS-certified heat pump installer works within the PAS 2035 framework on grant-funded projects.",
+      "BS 7671 Part 6 643 requires verification testing of any circuit that has been worked on, regardless of how minor the work. The MWC test panel records: continuity of CPC and protective conductors, insulation resistance, polarity, R1+R2, Zs, RCD trip-time at I&Delta;n where RCD-protected. The L3 apprentice carries out the tests with the Megger MFT1741 (or equivalent) and records the readings on the certificate. The point is — if the work has affected the circuit electrically (and replacing a protective device certainly has), verification is mandatory. 'It looks fine' is not a substitute for measured test results.",
+      "R32 is the dominant refrigerant in current UK ASHP — moderate Global Warming Potential (GWP ~675), F-Gas regulated, mildly flammable (A2L category), efficient in vapour-compression. R290 (propane) is rapidly increasing in market share — natural refrigerant, very low GWP (~3), highly flammable (A3 category) requiring specific install practices (charge limits per BS EN 378, ventilation around outdoor unit, ignition source clearance). R454B is replacing R410A in some products as a lower-GWP step. R410A and R134a are older refrigerants being phased down under F-Gas. The L3 electrician does not handle refrigerant — that is F-Gas certified personnel — but should recognise the refrigerant on the unit nameplate because A3 (R290) units have additional spacing requirements at install (clearance from windows, vents, ignition sources).",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Transient over-voltages are the silent killer of modern electronics. BS 7671 A4:2026 strengthened the requirements for SPDs on most installations (Reg 443.4 — risk assessment driving SPD requirement). Most domestic installations now have a Type 2 SPD at the CU or main switch. Without one, a single lightning strike within a few miles can fail every electronic device in the property simultaneously.",
   },
@@ -142,10 +142,10 @@ const quizQuestions = [
     id: 5,
     question: "What's the difference between an OVERLOAD fault and a SHORT-CIRCUIT fault?",
     options: [
-      "Same thing.",
+      "Five categories. (1) THE DUTY HOLDER — the customer for domestic, the employer for commercial, the landlord for rented. They get the certificate and the verbal hand-back. (2) THE ORIGINAL DESIGNER if it's their installation and a design change has been made (informational courtesy). (3) BUILDING CONTROL via the competent-person scheme (NICEIC, NAPIT, ELECSA, STROMA) for notifiable work under Part P in England / Wales (slightly different in Scotland and Northern Ireland). (4) THE FIRM's INTERNAL JOB SYSTEM — job sheet update, photos, certificate copy filed. (5) THE NEXT PERIODIC INSPECTOR — implicit, served by leaving the certificate bundle (EICR + Schedule of Remedial Works + MWC) on file with the Duty Holder.",
       "OVERLOAD — sustained current above the cable / device design rating, typically 1.1× to 5× rated current. Caused by adding load beyond the circuit capacity (multiple appliances on one socket, kettle + toaster + microwave on one ring final at peak). Cleared by the THERMAL element of the MCB (slow trip, 30 seconds to several minutes depending on current). SHORT-CIRCUIT — sudden direct connection between live conductors, very low resistance, very high current (1000s of amps). Caused by insulation breakdown, damaged cables, internal appliance fault. Cleared by the MAGNETIC element of the MCB (instantaneous, &lt;10 ms). The MCB has both elements; both protect against different fault types.",
-      "Both same.",
-      "Only overload exists.",
+      "Direct correlation but not identical. BS 7671 thresholds tell you whether something meets the standard. EICR codes (C1 / C2 / C3 / FI) tell you the safety implication: C1 (Danger Present — immediate action), C2 (Potentially Dangerous — urgent action), C3 (Improvement Recommended — further work advised), FI (Further Investigation needed). A FAIL on Zs gives a C1 or C2 depending on actual safety implication. A borderline pass gives a C3. The MFT measurement is the data; the EICR coding is the safety judgment based on the data + context.",
+      "The portfolio captures: (1) WORK EVIDENCE — job sheets, certificates, photos of the work in progress and completed. (2) REFLECTION — written reflections on each significant piece of work, using a structured format (often Gibbs' or Kolb's reflective cycle) — what was the situation, what did you do, what was the result, what would you do differently. (3) WITNESS TESTIMONY — the supervisor / on-site mentor signs off that the work was witnessed and the standard was met. (4) UNIT MAPPING — each piece of evidence is mapped to the relevant 2365 unit and Assessment Criterion. The reflection is the 'learning' part — the portfolio doesn't just prove you DID the work, it proves you LEARNED from it. The L3 to L4 / Approved Electrician progression assesses the portfolio as much as the technical work.",
     ],
     correctAnswer: 1,
     explanation:
@@ -155,12 +155,12 @@ const quizQuestions = [
     id: 6,
     question: "What's a 'parallel arc' fault and how does an AFDD detect it?",
     options: [
-      "Same as short circuit.",
+      "(1) Symptoms — customer's words in quotes, timeline, conditions, what they've tried. (2) Hypothesis — what you think is wrong and why. (3) Test plan — which tests, in which order, what each will distinguish. (4) Test results — readings, with timestamps and instrument IDs. (5) Analysis — what the results confirm or refute, updated hypothesis if needed. (6) Fix plan — repair / replace decision, materials needed, expected duration. (7) Fix execution — what was done, post-fix retest readings, customer hand-back. The documentation creates the diagnostic narrative on the job sheet — defensible record of what was found and done.",
+      "The current transformer (CT) clamp fits around one of the property's main supply tails (typically the live), measuring the total current the property is drawing. The charge point uses that measurement to throttle or pause its own current draw so the property total never exceeds a configured limit (commonly the main-fuse rating). This is dynamic load management — it lets a 7.4 kW charger live behind a constrained main fuse without the cut-out tripping when the shower comes on. The apprentice's job is to install the CT clamp around the correct tail in the correct orientation per the manufacturer's instructions; wrong orientation gives the unit the wrong measurement and load management does not work.",
       "Parallel arc = arc between two conductors at different potential through degraded insulation or air gap. Examples: damaged cable with conductors close but not touching, scorched accessory terminal with carbon track between phase and earth. Current is high but intermittent and short-lived (the arc self-extinguishes briefly then re-strikes). MCB / RCBO doesn't see it (current pulses are too short for thermal element, too low for magnetic element). RCD doesn't see it if the arc is L–L or L–N (no residual). AFDD has signature analysis (high-frequency content of current waveform identifies the arc), trips on detected pattern. BS 7671 A4:2026 mandates AFDD on certain dwelling circuits.",
-      "Just normal current.",
-      "Doesn't exist.",
+      "Three categories. (1) Smart meter / utility meter failures — internal electronic failure (the meter itself stops measuring); diagnosis: voltage on the consumer side normal, customer reports billing issues; DNO call to replace meter. (2) Sub-metering installations (kWh meters at apartment level) — internal CT failure, terminal corrosion, comms link failure to BMS. (3) Specific instrument circuits in commercial buildings — temperature sensors, level sensors, flow meters; usually low-voltage SELV but with sensitive signal levels easily disrupted by EMI from nearby high-current cables. Diagnostic approach: substitute the suspect sensor with a known-good unit; if symptom moves, the sensor was at fault.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Parallel arc faults are the canonical case for AFDD. Pre-AFDD, these faults caused fires that no other protective device could prevent — the current was always within the breaker's rating. AFDD's signature analysis uses the high-frequency 'noise' on the current waveform (caused by the arc itself) to identify and trip. BS 7671 A4:2026 Reg 421.1.7 mandates AFDD on certain final circuits in higher-risk dwellings; full requirement progresses through the regulation cycle.",
   },
@@ -168,12 +168,12 @@ const quizQuestions = [
     id: 7,
     question: "What's an 'L–L' fault on a three-phase system and what does it look like on the meter?",
     options: [
-      "Doesn't happen.",
+      "ATEX zones (Zone 0 / 1 / 2 for gas, Zone 20 / 21 / 22 for dust) require all equipment in the zone — including test instruments — to be ATEX-rated for the zone. Standard kit: intrinsically-safe two-pole tester (Martindale VI-15800 or Megger DET14C with Ex marking), no mobile phones in zone, no battery tools without Ex rating, no smoking, no metal tools that could spark on contact with steel. The fault diagnosis approach is — bring everything to a non-zoned area where possible, isolate at the boundary, only work in-zone with intrinsically-safe instruments and a hot-work permit.",
+      "Personally bound under s.110 (helping someone else commit an unlawful act, e.g. participating in harassment) and as a witness who is duty-bound to co-operate with internal investigations. The apprentice's reputational and legal exposure grows if they participate in or condone discriminatory or harassing behaviour. The apprentice also has a route to RAISE concerns — internal complaints procedure, ACAS conciliation, Employment Tribunal claim — and is protected against victimisation under s.27 for raising them in good faith.",
+      "EI creates the psychological infrastructure for safety culture: self-awareness enables recognition of when fatigue or distraction creates risk, self-regulation prevents shortcuts under pressure, motivation sustains safety commitment even without supervision, empathy enables understanding of why others take risks (rather than just punishing them), and social skills create the communication culture where anyone can stop unsafe work without fear. Safety culture IS emotional culture",
       "L–L (phase-to-phase) fault is a direct connection between two phases of a three-phase supply (e.g. L1 and L2). Continuity between the phases reads near zero. Fault current is high (limited only by supply + cable impedance) — typically 5–10 kA on a typical commercial supply. Operates the magnetic element of the protective device on at least one of the affected phases. The unaffected phase remains live; loads connected line-to-neutral on the unaffected phase continue working. Common cause: insulation breakdown in three-phase cable or motor windings, accidental contact between phases at a terminal block.",
-      "Same as L-N.",
-      "No current.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "L–L faults are a three-phase-only category. The fault current is high but limited; the unaffected phase remains live (which can be confusing — 'half the loads still work'). Three-phase fault diagnosis requires understanding which loads are line-to-neutral (single-phase) vs line-to-line vs three-phase — the symptoms reveal the fault location.",
   },
@@ -181,12 +181,12 @@ const quizQuestions = [
     id: 8,
     question: "Which fault type causes the most harm to people, and which causes the most damage to property?",
     options: [
-      "Same one.",
       "PEOPLE: earth fault that's NOT cleared by a protective device — the operator touches metalwork that has risen to phase voltage, current flows through them to earth. Direct cause of most electrical shock fatalities. PROPERTY: high-resistance joint (HRJ) — generates I²R heat under load, ignites surrounding combustibles. Direct cause of most electrical fires. The two top fault categories on the HSE / Fire & Rescue statistics. RCD protects against the people-harm fault; AFDD + thermal monitoring protect against the property-harm fault. Both are required for full protection.",
-      "Only one harms.",
-      "All faults same.",
+      "Lighting is part of the workplace under HASAWA s.2(2)(d) and the Workplace (Health, Safety and Welfare) Regulations 1992 Reg 8. Inadequate task lighting in a confined area is a hazard in itself — it hides other hazards (trip risks, services, structural defects) and increases the chance of an error. The fix: bring temporary task lighting, set it up before tools come out, and record the temporary supply on the dynamic assessment.",
+      "A document prepared by the principal contractor before the construction phase starts, setting out the health and safety arrangements for the site (welfare, induction, site rules, hazard controls, emergency procedures, monitoring). Required for any project where there is more than one contractor; the depth of the plan scales with the project size and risk profile. Sub-contractors are entitled to relevant extracts on induction.",
+      "Gas Safe engineers carry out work on gas appliances and pipework — disconnection, reconnection, commissioning. On a kitchen rewire involving a gas hob the Gas Safe engineer disconnects before the electrical work starts and reconnects after. They're a separate trade, with a separate competence scheme (Gas Safe Register, replacing the old CORGI), and only Gas Safe registered engineers can lawfully work on gas under the Gas Safety (Installation and Use) Regulations 1998.",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "The HSE and FIA statistics are clear — earth faults kill people (when protection fails), HRJs burn buildings (when no detection exists). The L3 fault diagnostician needs to recognise both — the earth fault is more obvious (RCD trip, customer report), the HRJ is more dangerous because it's silent until it ignites.",
   },

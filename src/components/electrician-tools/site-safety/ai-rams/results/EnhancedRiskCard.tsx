@@ -95,9 +95,9 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
 
       <div
         className={cn(
-          'border-l-4 rounded-xl border border-white/5 transition-all duration-200 overflow-hidden',
+          'border-l-2 sm:rounded-2xl border border-white/[0.08] transition-colors overflow-hidden',
           riskColors.border,
-          isExpanded ? 'bg-white/[0.02]' : 'bg-transparent hover:bg-white/[0.02]'
+          'bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_13%)]'
         )}
       >
         {/* Collapsed Row - Native Mobile Design.
@@ -118,59 +118,53 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
           aria-expanded={isExpanded}
           className="w-full p-4 sm:p-5 flex flex-col gap-3 text-left min-h-[80px] touch-manipulation active:bg-white/[0.04] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/40"
         >
-          {/* Top Row: Number + Risk Badge */}
-          <div className="flex items-center justify-between w-full">
-            <div className="flex items-center gap-3">
-              {/* Risk Number Badge */}
-              <div
+          {/* Top Row: Number + Risk Pill — editorial */}
+          <div className="flex items-baseline justify-between w-full gap-3">
+            <div className="flex items-baseline gap-3 min-w-0">
+              {/* Editorial number — muted, consistent across all hazards */}
+              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums shrink-0 text-white/45">
+                H{String(index + 1).padStart(2, '0')}
+              </span>
+              {/* Risk level pill — compact */}
+              <span
                 className={cn(
-                  'w-11 h-11 rounded-xl flex items-center justify-center font-bold text-base shrink-0 shadow-lg',
+                  'inline-flex items-center gap-1.5 h-6 px-2 rounded-md text-[10.5px] font-semibold uppercase tracking-[0.12em] tabular-nums shrink-0',
                   riskColors.bg,
                   riskColors.text
                 )}
               >
-                H{index + 1}
-              </div>
-              {/* Risk Level Badge */}
-              <Badge
-                className={cn(
-                  riskColors.bg,
-                  riskColors.text,
-                  'border-0 text-xs font-semibold px-3 py-1'
-                )}
-              >
-                {riskRating <= 4
-                  ? 'Low'
-                  : riskRating <= 9
-                    ? 'Medium'
-                    : riskRating <= 16
-                      ? 'High'
-                      : 'Very High'}{' '}
-                ({isEditing ? riskRating : risk.riskRating})
-              </Badge>
+                <span>
+                  {riskRating <= 4
+                    ? 'Low'
+                    : riskRating <= 9
+                      ? 'Med'
+                      : riskRating <= 16
+                        ? 'High'
+                        : 'Critical'}
+                </span>
+                <span className="text-white/70">·</span>
+                <span>{isEditing ? riskRating : risk.riskRating}</span>
+              </span>
             </div>
 
-            {/* Right Controls */}
-            <div className="flex items-center gap-1 shrink-0">
+            {/* Right Controls — text-button for edit, chevron for expand */}
+            <div className="flex items-center gap-3 shrink-0">
               {editable && !isEditing && (
-                <Button
-                  variant="ghost"
-                  size="sm"
+                <button
+                  type="button"
                   onClick={handleEditClick}
-                  className="h-11 w-11 p-0 touch-manipulation rounded-xl hover:bg-white/10 active:bg-white/20"
+                  className="text-[12px] font-medium text-white/55 hover:text-elec-yellow transition-colors touch-manipulation"
                 >
-                  <Edit3 className="h-5 w-5 text-white" />
-                </Button>
+                  Edit
+                </button>
               )}
               {!isEditing && (
-                <div className="h-11 w-11 flex items-center justify-center">
-                  <ChevronDown
-                    className={cn(
-                      'h-5 w-5 text-white transition-transform duration-200',
-                      isExpanded && 'rotate-180'
-                    )}
-                  />
-                </div>
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 text-white/55 transition-transform duration-200',
+                    isExpanded && 'rotate-180'
+                  )}
+                />
               )}
             </div>
           </div>
@@ -187,10 +181,10 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
               />
             ) : (
               <>
-                <h4 className="font-semibold text-white text-base leading-snug line-clamp-2">
-                  {risk.hazard || 'Untitled Hazard'}
+                <h4 className="text-[16px] sm:text-[17px] font-semibold tracking-tight text-white leading-snug line-clamp-2">
+                  {risk.hazard || 'Untitled hazard'}
                 </h4>
-                <p className="text-sm text-white line-clamp-2 mt-1.5 leading-relaxed">
+                <p className="mt-1.5 text-[13px] text-white/65 line-clamp-2 leading-relaxed">
                   {risk.controls || 'No control measures specified'}
                 </p>
               </>
@@ -200,11 +194,11 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
 
         {/* Expanded Content */}
         {isExpanded && (
-          <div className="px-4 pb-4 space-y-4 border-t border-white/5 animate-slide-down">
+          <div className="px-4 sm:px-5 pb-5 space-y-6 border-t border-white/[0.06] animate-slide-down">
             {/* Risk Description */}
-            <div className="pt-4">
-              <label className="text-xs font-medium text-white uppercase tracking-wide text-left block">
-                Risk Description
+            <div className="pt-5">
+              <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 text-left block">
+                Risk description
               </label>
               {isEditing ? (
                 <Textarea
@@ -214,15 +208,16 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                   placeholder="Describe the risk"
                 />
               ) : (
-                <p className="mt-2 text-sm text-white leading-relaxed text-left">{risk.risk}</p>
+                <p className="mt-2 text-[13.5px] text-white/85 leading-relaxed text-left">
+                  {risk.risk}
+                </p>
               )}
             </div>
 
-            {/* Control Measures */}
-            <div className="p-4 rounded-xl bg-amber-500/5 border-l-4 border-amber-500">
-              <div className="flex items-center gap-2 mb-3">
-                <Shield className="h-5 w-5 text-amber-500" />
-                <span className="text-sm font-bold text-amber-500">Control Measures</span>
+            {/* Control Measures — editorial block, no icon */}
+            <div>
+              <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-3">
+                Control measures
               </div>
               {isEditing ? (
                 <Textarea
@@ -232,7 +227,7 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                   placeholder="List control measures"
                 />
               ) : (
-                <div className="text-sm text-white leading-relaxed space-y-3 text-left">
+                <div className="text-[13.5px] text-white/85 leading-relaxed space-y-3 text-left">
                   {(risk.controls || 'No control measures specified')
                     .split(
                       /(?=PRIMARY ACTION:|ELIMINATE:|SUBSTITUTE:|ENGINEER(?:ING)? CONTROLS?:|ADMINISTRATIVE CONTROLS?:|VERIFICATION:|COMPETENCY REQUIREMENT:|EQUIPMENT STANDARDS?:|REGULATION:|PPE:|TRAINING:|MONITORING:|EMERGENCY:)/gi
@@ -247,10 +242,239 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
               )}
             </div>
 
-            {/* Likelihood & Severity */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <label className="text-xs font-medium text-white">Likelihood</label>
+            {/* v2 rich detail — only when AI emitted v2 fields, read-only */}
+            {!isEditing && (() => {
+              const r: any = risk;
+              const hasV2 =
+                r.rationale ||
+                (Array.isArray(r.who_at_risk) && r.who_at_risk.length) ||
+                (Array.isArray(r.controlsStructured) && r.controlsStructured.length) ||
+                (Array.isArray(r.ppe_required) && r.ppe_required.length) ||
+                (Array.isArray(r.bs7671_cites) && r.bs7671_cites.length) ||
+                (Array.isArray(r.safety_cites) && r.safety_cites.length) ||
+                (Array.isArray(r.monitoring_checks) && r.monitoring_checks.length) ||
+                (Array.isArray(r.evidence_required) && r.evidence_required.length) ||
+                (Array.isArray(r.stop_work_triggers) && r.stop_work_triggers.length);
+              if (!hasV2) return null;
+
+              const tierLabel: Record<string, string> = {
+                eliminate: 'Eliminate',
+                substitute: 'Substitute',
+                engineer: 'Engineer',
+                admin: 'Administrative',
+                ppe: 'PPE',
+              };
+
+              const tieredControls: Array<{ tier: string; items: any[] }> = [];
+              if (Array.isArray(r.controlsStructured)) {
+                const byTier: Record<string, any[]> = {};
+                for (const c of r.controlsStructured) {
+                  const t = String(c.tier ?? 'admin').toLowerCase();
+                  (byTier[t] = byTier[t] ?? []).push(c);
+                }
+                for (const t of ['eliminate', 'substitute', 'engineer', 'admin', 'ppe']) {
+                  if (byTier[t]?.length) tieredControls.push({ tier: t, items: byTier[t] });
+                }
+              }
+
+              return (
+                <div className="space-y-5 pt-2">
+                  {r.rationale && (
+                    <div>
+                      <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                        Rationale
+                      </div>
+                      <p className="text-[13px] text-white/80 leading-relaxed">{r.rationale}</p>
+                    </div>
+                  )}
+
+                  {Array.isArray(r.who_at_risk) && r.who_at_risk.length > 0 && (
+                    <div>
+                      <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                        Who is at risk
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {r.who_at_risk.map((w: string, i: number) => (
+                          <span
+                            key={i}
+                            className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium bg-white/[0.05] border border-white/[0.10] text-white/80"
+                          >
+                            {w}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {tieredControls.length > 0 && (
+                    <div>
+                      <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-3">
+                        Controls by hierarchy
+                      </div>
+                      <div className="space-y-3">
+                        {tieredControls.map(({ tier, items }) => (
+                          <div key={tier}>
+                            <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-elec-yellow/80 mb-1.5">
+                              {tierLabel[tier] ?? tier}
+                            </div>
+                            <ul className="space-y-2">
+                              {items.map((c: any, i: number) => (
+                                <li
+                                  key={i}
+                                  className="text-[13px] leading-relaxed text-white/85 border-l-2 border-white/[0.08] pl-3"
+                                >
+                                  <div className="font-medium text-white">{c.control}</div>
+                                  {c.detail && (
+                                    <div className="mt-0.5 text-[12.5px] text-white/65">
+                                      {c.detail}
+                                    </div>
+                                  )}
+                                  {c.responsible_role && (
+                                    <div className="mt-1 text-[11px] uppercase tracking-[0.12em] text-white/50">
+                                      Owner · {c.responsible_role}
+                                    </div>
+                                  )}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {(Array.isArray(r.ppe_required) && r.ppe_required.length > 0) ||
+                  (Array.isArray(r.competence_required) && r.competence_required.length > 0) ? (
+                    <div className="grid sm:grid-cols-2 gap-5">
+                      {Array.isArray(r.ppe_required) && r.ppe_required.length > 0 && (
+                        <div>
+                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                            PPE required
+                          </div>
+                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                            {r.ppe_required.map((p: string, i: number) => (
+                              <li key={i} className="leading-relaxed">
+                                · {p}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {Array.isArray(r.competence_required) && r.competence_required.length > 0 && (
+                        <div>
+                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                            Competence
+                          </div>
+                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                            {r.competence_required.map((c: string, i: number) => (
+                              <li key={i} className="leading-relaxed">
+                                · {c}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  ) : null}
+
+                  {(Array.isArray(r.bs7671_cites) && r.bs7671_cites.length > 0) ||
+                  (Array.isArray(r.safety_cites) && r.safety_cites.length > 0) ? (
+                    <div className="grid sm:grid-cols-2 gap-5">
+                      {Array.isArray(r.bs7671_cites) && r.bs7671_cites.length > 0 && (
+                        <div>
+                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                            BS 7671 cites
+                          </div>
+                          <div className="flex flex-wrap gap-1.5">
+                            {r.bs7671_cites.map((c: string, i: number) => (
+                              <span
+                                key={i}
+                                className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow"
+                              >
+                                {c}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {Array.isArray(r.safety_cites) && r.safety_cites.length > 0 && (
+                        <div>
+                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                            HSE / CDM cites
+                          </div>
+                          <div className="flex flex-wrap gap-1.5">
+                            {r.safety_cites.map((c: string, i: number) => (
+                              <span
+                                key={i}
+                                className="inline-flex items-center h-6 px-2 rounded-md text-[11px] font-medium tabular-nums bg-white/[0.05] border border-white/[0.10] text-white/80"
+                              >
+                                {c}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ) : null}
+
+                  {(Array.isArray(r.monitoring_checks) && r.monitoring_checks.length > 0) ||
+                  (Array.isArray(r.evidence_required) && r.evidence_required.length > 0) ||
+                  (Array.isArray(r.stop_work_triggers) && r.stop_work_triggers.length > 0) ? (
+                    <div className="grid sm:grid-cols-3 gap-5">
+                      {Array.isArray(r.monitoring_checks) && r.monitoring_checks.length > 0 && (
+                        <div>
+                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                            Monitoring
+                          </div>
+                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                            {r.monitoring_checks.map((m: string, i: number) => (
+                              <li key={i} className="leading-relaxed">
+                                · {m}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {Array.isArray(r.evidence_required) && r.evidence_required.length > 0 && (
+                        <div>
+                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                            Evidence
+                          </div>
+                          <ul className="space-y-1.5 text-[12.5px] text-white/80">
+                            {r.evidence_required.map((m: string, i: number) => (
+                              <li key={i} className="leading-relaxed">
+                                · {m}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {Array.isArray(r.stop_work_triggers) && r.stop_work_triggers.length > 0 && (
+                        <div>
+                          <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55 mb-2">
+                            Stop work
+                          </div>
+                          <ul className="space-y-1.5 text-[12.5px] text-red-300">
+                            {r.stop_work_triggers.map((m: string, i: number) => (
+                              <li key={i} className="leading-relaxed">
+                                · {m}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </div>
+                  ) : null}
+                </div>
+              );
+            })()}
+
+            {/* Likelihood & Severity — editorial pip rows */}
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+                  Likelihood
+                </label>
                 {isEditing ? (
                   <div className="mt-3 space-y-2">
                     <Slider
@@ -270,17 +494,21 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                       <div
                         key={i}
                         className={cn(
-                          'w-2 h-2 rounded-full',
-                          i < risk.likelihood ? 'bg-elec-yellow' : 'bg-white/20'
+                          'h-1.5 flex-1 rounded-full',
+                          i < risk.likelihood ? 'bg-elec-yellow' : 'bg-white/10'
                         )}
                       />
                     ))}
-                    <span className="ml-2 text-sm font-bold text-white">{risk.likelihood}/5</span>
+                    <span className="ml-2 text-[13px] font-semibold tabular-nums text-white">
+                      {risk.likelihood}/5
+                    </span>
                   </div>
                 )}
               </div>
-              <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.08]">
-                <label className="text-xs font-medium text-white">Severity</label>
+              <div>
+                <label className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+                  Severity
+                </label>
                 {isEditing ? (
                   <div className="mt-3 space-y-2">
                     <Slider
@@ -300,21 +528,23 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                       <div
                         key={i}
                         className={cn(
-                          'w-2 h-2 rounded-full',
-                          i < risk.severity ? 'bg-red-500' : 'bg-white/20'
+                          'h-1.5 flex-1 rounded-full',
+                          i < risk.severity ? 'bg-red-400' : 'bg-white/10'
                         )}
                       />
                     ))}
-                    <span className="ml-2 text-sm font-bold text-white">{risk.severity}/5</span>
+                    <span className="ml-2 text-[13px] font-semibold tabular-nums text-white">
+                      {risk.severity}/5
+                    </span>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Residual Risk */}
-            <div className="p-3 rounded-xl bg-green-500/5 border border-green-500/20 flex items-center justify-between">
-              <span className="text-sm font-medium text-green-400">
-                Residual Risk After Controls
+            {/* Residual Risk — editorial row */}
+            <div className="flex items-baseline justify-between gap-3 pt-4 border-t border-white/[0.06]">
+              <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/55">
+                Residual after controls
               </span>
               {isEditing ? (
                 <Input
@@ -328,9 +558,9 @@ export const EnhancedRiskCard: React.FC<EnhancedRiskCardProps> = ({
                   max={25}
                 />
               ) : (
-                <Badge className="bg-green-500/10 text-green-400 border-green-500/20">
+                <span className="text-[16px] font-semibold tabular-nums text-emerald-400">
                   {risk.residualRisk}
-                </Badge>
+                </span>
               )}
             </div>
 

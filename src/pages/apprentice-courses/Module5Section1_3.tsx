@@ -15,7 +15,12 @@ const quickCheckQuestions = [
   {
     id: 1,
     question: 'What does a circle with a cross usually represent?',
-    options: ['A socket outlet', 'A ceiling light', 'A switch', 'A distribution board'],
+    options: [
+      'A switch',
+      'A ceiling light',
+      'A distribution board',
+      'A socket outlet',
+    ],
     correctIndex: 1,
     explanation:
       'A circle with a cross is the standard BS symbol for a ceiling light or luminaire fitting.',
@@ -23,16 +28,26 @@ const quickCheckQuestions = [
   {
     id: 2,
     question: 'What must always be checked for site-specific symbols?',
-    options: ['The scale', 'The legend', 'The date', 'The title'],
-    correctIndex: 1,
+    options: [
+      'The title',
+      'The date',
+      'The legend',
+      'The scale',
+    ],
+    correctIndex: 2,
     explanation:
       'The legend must always be checked as symbols may vary between drawings or projects, even when following BS standards.',
   },
   {
     id: 3,
     question: 'Which regulation defines UK electrical symbols?',
-    options: ['BS 7909', 'BS 5839', 'BS 7671', 'BS 6351'],
-    correctIndex: 2,
+    options: [
+      'BS 6351',
+      'BS 7909',
+      'BS 5839',
+      'BS 7671',
+    ],
+    correctIndex: 3,
     explanation:
       'BS 7671 (IET Wiring Regulations) defines the standard electrical symbols used in the UK.',
   },
@@ -59,15 +74,25 @@ const Module5Section1_3 = () => {
     {
       id: 2,
       question: 'What does a circle with a cross represent?',
-      options: ['A socket outlet', 'A ceiling light', 'A switch', 'A junction box'],
-      correctAnswer: 1,
+      options: [
+        'A switch',
+        'A socket outlet',
+        'A ceiling light',
+        'A junction box',
+      ],
+      correctAnswer: 2,
       explanation: 'A circle with a cross is the standard symbol for a ceiling light or luminaire.',
     },
     {
       id: 3,
       question: 'Which regulation defines UK electrical symbols?',
-      options: ['BS 7909', 'BS 5839', 'BS 7671', 'BS 6351'],
-      correctAnswer: 2,
+      options: [
+        'BS 5839',
+        'BS 7909',
+        'BS 6351',
+        'BS 7671',
+      ],
+      correctAnswer: 3,
       explanation:
         'BS 7671 (IET Wiring Regulations) defines the standard electrical symbols used in the UK.',
     },
@@ -82,7 +107,12 @@ const Module5Section1_3 = () => {
     {
       id: 5,
       question: "What does 'S' in a square usually mean?",
-      options: ['Socket', 'Switch', 'Supply', 'Safety device'],
+      options: [
+        'Socket',
+        'Switch',
+        'Safety device',
+        'Supply',
+      ],
       correctAnswer: 1,
       explanation: "'S' in a square is the standard symbol for a switch.",
     },
@@ -90,12 +120,12 @@ const Module5Section1_3 = () => {
       id: 6,
       question: 'Why must the legend always be checked?',
       options: [
-        "It's a legal requirement",
+        'Before any testing or energising',
+        'DC does not produce a changing magnetic flux',
         'Symbols may differ between projects',
-        'To waste time',
-        "It's not necessary",
+        'A messaging protocol for IoT devices',
       ],
-      correctAnswer: 1,
+      correctAnswer: 2,
       explanation:
         'Symbols may vary between projects or include site-specific variations, making the legend essential for accurate interpretation.',
     },
@@ -103,32 +133,37 @@ const Module5Section1_3 = () => {
       id: 7,
       question: 'Give one example of a power symbol.',
       options: [
-        'Circle with cross',
+        'To facilitate maintenance and testing',
+        'On all circuits before energising',
+        'Regulation 526.1 and 526.5',
         'Double circle for socket outlet',
-        'S in a square',
-        'Single line',
       ],
-      correctAnswer: 1,
+      correctAnswer: 3,
       explanation: 'A double circle represents a socket outlet, which is a power symbol.',
     },
     {
       id: 8,
       question: 'What happens if a symbol is misinterpreted?',
       options: [
-        'Nothing serious',
         'Wrong installation, delays, and rework',
-        'The drawing is automatically updated',
-        'Other trades will fix it',
+        'The transformer, push, or bell unit',
+        'Provide mechanical retention and earth continuity',
+        'Electrical safety in all workplaces',
       ],
-      correctAnswer: 1,
+      correctAnswer: 0,
       explanation:
         'Misinterpreting symbols leads to incorrect installations, causing delays, waste, and requiring costly rework.',
     },
     {
       id: 9,
       question: 'Which category of symbols represents trunking or conduit?',
-      options: ['Lighting', 'Power', 'Containment', 'Switches'],
-      correctAnswer: 2,
+      options: [
+        'Lighting',
+        'Containment',
+        'Power',
+        'Switches',
+      ],
+      correctAnswer: 1,
       explanation:
         'Containment symbols represent trunking, conduit, and other cable management systems.',
     },
@@ -136,10 +171,10 @@ const Module5Section1_3 = () => {
       id: 10,
       question: "Who should you ask if you don't recognise a symbol?",
       options: [
-        'Another apprentice',
-        'The client',
+        'Report it to your supervisor/foreman',
+        'It calculates fault current: If = U₀/Zs',
         'The supervisor or site manager',
-        'Nobody, just guess',
+        'The perimeter-to-area ratio',
       ],
       correctAnswer: 2,
       explanation:

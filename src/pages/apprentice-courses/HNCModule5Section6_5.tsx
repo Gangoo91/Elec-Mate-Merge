@@ -31,10 +31,10 @@ const quickCheckQuestions = [
     id: 'swmp-purpose',
     question: 'What is the primary purpose of a Site Waste Management Plan (SWMP)?',
     options: [
-      'To reduce material costs',
+      'Average performance over a heating season',
       'To plan and monitor waste management throughout a project',
-      'To comply with fire regulations',
-      'To calculate carbon emissions',
+      'Too frequent creates data overload; too slow misses important events',
+      'Heat generation, voltage drop, and potential fire risk',
     ],
     correctIndex: 1,
     explanation:
@@ -46,10 +46,10 @@ const quickCheckQuestions = [
     options: [
       'Recycle, Reduce, Reuse, Dispose',
       'Dispose, Recover, Recycle, Reduce',
-      'Prevention, Reuse, Recycle, Recovery, Disposal',
       'Recovery, Recycle, Prevention, Disposal',
+      'Prevention, Reuse, Recycle, Recovery, Disposal',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'The waste hierarchy prioritises: Prevention (most preferred), then Reuse, Recycle, Recovery (energy), and finally Disposal (least preferred). This maximises resource efficiency and minimises environmental impact.',
   },
@@ -59,11 +59,11 @@ const quickCheckQuestions = [
       'Under the Control of Pollution Act 1974, local authorities can impose noise limits through which mechanism?',
     options: [
       'Environmental Permit',
-      'Section 61 consent',
-      'Building Regulations Part E',
       'RIDDOR notification',
+      'Building Regulations Part E',
+      'Section 61 consent',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Section 61 of the Control of Pollution Act 1974 allows contractors to apply for prior consent for construction works. Local authorities can specify noise limits, permitted hours, and required control measures.',
   },
@@ -71,10 +71,10 @@ const quickCheckQuestions = [
     id: 'environmental-permit',
     question: 'When is an environmental permit typically required for building services work?',
     options: [
-      'For all construction projects',
+      'The equipment operates correctly under normal conditions',
       'When working near watercourses or installing certain equipment',
-      'Only for residential properties',
-      'When using power tools',
+      'The consumer\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\u2019s incoming neutral conductor',
+      'Appliances may not be safely isolated by their switches',
     ],
     correctIndex: 1,
     explanation:
@@ -99,8 +99,13 @@ const quizQuestions = [
   {
     id: 2,
     question: 'What documentation must accompany hazardous waste when removed from site?',
-    options: ['Risk assessment only', 'Consignment note', 'Method statement', 'Site diary entry'],
-    correctAnswer: 1,
+    options: [
+      'Method statement',
+      'Risk assessment only',
+      'Consignment note',
+      'Site diary entry',
+    ],
+    correctAnswer: 2,
     explanation:
       'Hazardous waste must be accompanied by a consignment note containing details of the waste type, quantity, carrier details, and destination. These records must be kept for a minimum of 3 years.',
   },
@@ -108,8 +113,13 @@ const quizQuestions = [
     id: 3,
     question:
       'At what noise level (LAeq) should hearing protection zones be established on construction sites?',
-    options: ['70 dB(A)', '80 dB(A)', '85 dB(A)', '90 dB(A)'],
-    correctAnswer: 2,
+    options: [
+      '80 dB(A)',
+      '70 dB(A)',
+      '90 dB(A)',
+      '85 dB(A)',
+    ],
+    correctAnswer: 3,
     explanation:
       'Under the Control of Noise at Work Regulations 2005, when daily exposure reaches 85 dB(A), hearing protection zones must be established, PPE is mandatory, and health surveillance is required.',
   },
@@ -117,12 +127,12 @@ const quizQuestions = [
     id: 4,
     question: 'Which document forms the basis of ISO 14001 environmental management?',
     options: [
-      'Site induction form',
       'Environmental Policy',
+      'Site induction form',
       'Health and Safety Plan',
       'Quality Control Plan',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'ISO 14001 requires a documented Environmental Policy as the foundation of the Environmental Management System (EMS). This policy commits the organisation to compliance, pollution prevention, and continual improvement.',
   },
@@ -131,12 +141,12 @@ const quizQuestions = [
     question:
       'What is the maximum permitted working time for noisy construction activities under typical Section 61 consent?',
     options: [
-      '24 hours any day',
-      '08:00-18:00 Monday to Friday only',
+      'Mechanical contact + sparking at the commutator surface',
       '07:30-18:00 weekdays, 08:00-13:00 Saturdays',
-      '06:00-22:00 any day',
+      'kWh consumption correlated with occupancy patterns',
+      'Management commitment and leadership behaviour',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Typical Section 61 consents permit noisy works 07:30-18:00 Monday to Friday and 08:00-13:00 on Saturdays. No noisy works on Sundays or Bank Holidays. Times may vary by local authority.',
   },
@@ -146,11 +156,11 @@ const quizQuestions = [
       "Under the waste hierarchy, what does 'recovery' typically mean in building services?",
     options: [
       'Finding lost materials',
-      'Using waste to generate energy',
       'Returning materials to suppliers',
+      'Using waste to generate energy',
       'Documenting waste quantities',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Recovery in the waste hierarchy refers to extracting value from waste, typically through energy recovery (incineration with energy capture). This is preferred over landfill disposal but is below recycling in the hierarchy.',
   },
@@ -159,12 +169,12 @@ const quizQuestions = [
     question:
       'What is the primary purpose of dust suppression using water misting on construction sites?',
     options: [
-      'To cool workers in hot weather',
+      'When waste is transferred from one party to another',
+      'Stop the source, contain the spill, report to the Environment Agency',
+      '07:30-18:00 weekdays, 08:00-13:00 Saturdays',
       'To capture airborne particles and prevent them spreading',
-      'To reduce fire risk',
-      'To clean equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Water misting captures airborne dust particles, causing them to settle rather than spread across the site or beyond site boundaries. This protects workers, neighbours, and the environment from harmful particulates.',
   },
@@ -172,12 +182,12 @@ const quizQuestions = [
     id: 8,
     question: 'Which waste streams require segregation on a building services site?',
     options: [
-      'Only hazardous waste',
       'Metals, wood, plastics, hazardous, and general waste',
-      'Only cable and copper',
-      'Packaging materials only',
+      '07:30-18:00 weekdays, 08:00-13:00 Saturdays',
+      'Assessment and appropriate storage, handling and disposal',
+      'To capture airborne particles and prevent them spreading',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Effective waste management requires segregating multiple streams: metals (copper, steel, aluminium), wood, plastics, hazardous waste (fluorescent tubes, batteries, oils), and general waste. This maximises recycling and reduces disposal costs.',
   },
@@ -185,10 +195,10 @@ const quizQuestions = [
     id: 9,
     question: 'What does COSHH require regarding substances that could cause environmental harm?',
     options: [
-      'Disposal in general waste',
+      'When waste is transferred from one party to another',
       'Assessment and appropriate storage, handling and disposal',
-      'Use only outdoors',
-      'No specific requirements',
+      'Stop the source, contain the spill, report to the Environment Agency',
+      'Metals, wood, plastics, hazardous, and general waste',
     ],
     correctAnswer: 1,
     explanation:
@@ -198,12 +208,12 @@ const quizQuestions = [
     id: 10,
     question: 'What is the purpose of an Environmental Aspects Register in ISO 14001?',
     options: [
-      'To list all employees with environmental training',
+      'Coordinating aftercare activities and maintaining focus on performance outcomes',
+      'Because everyone starts from a different point and has different circumstances',
       'To identify activities that interact with the environment and assess their significance',
-      'To record permit numbers',
-      'To document recycling targets',
+      'Unintended contact between line and neutral or line-to-line conductors',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'An Environmental Aspects Register identifies all activities, products and services that can interact with the environment (aspects), evaluates their potential impacts, and determines their significance. This drives the setting of objectives and targets.',
   },
@@ -211,12 +221,12 @@ const quizQuestions = [
     id: 11,
     question: 'When must a waste transfer note be provided?',
     options: [
-      'Only for hazardous waste',
+      'Metals, wood, plastics, hazardous, and general waste',
+      '07:30-18:00 weekdays, 08:00-13:00 Saturdays',
+      'To capture airborne particles and prevent them spreading',
       'When waste is transferred from one party to another',
-      'Only for waste going to landfill',
-      'Only for waste over 1 tonne',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A waste transfer note must accompany all controlled waste when transferred between parties. It must describe the waste, state SIC codes, and be signed by both parties. Notes must be retained for 2 years (3 years for hazardous waste consignment notes).',
   },
@@ -224,12 +234,12 @@ const quizQuestions = [
     id: 12,
     question: 'What action should be taken if a pollution incident occurs on site?',
     options: [
-      'Continue working and report at the end of the day',
       'Stop the source, contain the spill, report to the Environment Agency',
-      'Cover with soil and leave',
-      'Inform the client only',
+      'When waste is transferred from one party to another',
+      'To identify activities that interact with the environment and assess their significance',
+      'To capture airborne particles and prevent them spreading',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'For pollution incidents: immediately stop the source, contain the spill using spill kits/absorbents, prevent entry to drains/watercourses, and report to the Environment Agency incident hotline (0800 807060). Document all actions taken.',
   },

@@ -28,11 +28,11 @@ const quickCheckQuestions = [
     question: 'What does a PIR (Passive Infrared) sensor detect?',
     options: [
       'Movement through air pressure changes',
-      'Changes in infrared radiation from moving warm bodies',
       'Sound waves from occupant movement',
+      'Changes in infrared radiation from moving warm bodies',
       'Electromagnetic field disturbances',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'PIR sensors detect changes in infrared radiation caused by warm bodies moving across their field of view. They are passive because they do not emit any signal - they only receive infrared energy from their surroundings.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'microwave-vs-pir',
     question: 'What is the main advantage of microwave sensors over PIR sensors?',
     options: [
-      'Lower cost and simpler installation',
       'Detection through lightweight partitions and glass',
-      'Better performance in high-temperature environments',
       'Longer detection range outdoors',
+      'Lower cost and simpler installation',
+      'Better performance in high-temperature environments',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Microwave sensors emit high-frequency radio waves that can penetrate lightweight materials such as glass, thin partitions, and some building materials, enabling detection through obstacles where PIR would fail.',
   },
@@ -54,11 +54,11 @@ const quickCheckQuestions = [
     question: 'What is the purpose of hold-off (delay) time in occupancy sensors?',
     options: [
       'To allow the sensor to warm up before operation',
-      'To keep lights on for a set period after last detected movement',
       'To prevent false triggering during sensor calibration',
+      'To keep lights on for a set period after last detected movement',
       'To synchronise multiple sensors on a circuit',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Hold-off or delay time keeps the lighting on for a predetermined period after the last detected movement. This prevents lights cycling off when occupants are stationary and ensures comfortable operation without frequent switching.',
   },
@@ -67,11 +67,11 @@ const quickCheckQuestions = [
     question: 'What distinguishes absence detection from presence detection?',
     options: [
       'Absence detection uses ultrasonic technology only',
-      'Absence detection requires manual switch-on but automatic switch-off',
       'Absence detection has longer hold-off times',
+      'Absence detection requires manual switch-on but automatic switch-off',
       'Absence detection works only in corridors',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Absence detection (also called vacancy sensing) requires the occupant to manually switch lights on, but automatically switches them off when the space becomes unoccupied. This is more energy-efficient than full presence detection which switches on automatically.',
   },
@@ -95,12 +95,12 @@ const quizQuestions = [
     id: 2,
     question: 'The typical detection range for a ceiling-mounted PIR sensor at 2.8m height is:',
     options: [
+      '8-12 metres diameter',
       '2-3 metres diameter',
       '4-6 metres diameter',
-      '8-12 metres diameter',
       '15-20 metres diameter',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Ceiling-mounted PIR sensors typically provide 4-6 metre diameter coverage at standard ceiling heights (2.4-3m). The detection pattern is generally conical, widening with distance from the sensor.',
   },
@@ -108,16 +108,26 @@ const quizQuestions = [
     id: 3,
     question:
       'Which sensor technology is most suitable for a toilet cubicle where the occupant may be stationary for extended periods?',
-    options: ['Standard PIR', 'Microwave', 'Ultrasonic', 'Photocell'],
-    correctAnswer: 2,
+    options: [
+      'Microwave',
+      'Standard PIR',
+      'Photocell',
+      'Ultrasonic',
+    ],
+    correctAnswer: 3,
     explanation:
       'Ultrasonic sensors detect very minor movements including breathing by measuring Doppler shift in reflected sound waves. This makes them ideal for spaces where occupants are stationary, such as toilet cubicles.',
   },
   {
     id: 4,
     question: 'What is the recommended hold-off time for corridor lighting with occupancy sensing?',
-    options: ['5-10 seconds', '30-60 seconds', '5-10 minutes', '15-20 minutes'],
-    correctAnswer: 1,
+    options: [
+      '30-60 seconds',
+      '5-10 seconds',
+      '5-10 minutes',
+      '15-20 minutes',
+    ],
+    correctAnswer: 0,
     explanation:
       'Corridors typically use 30-60 second hold-off times. This allows time for people to pass through while minimising energy waste. Shorter times risk lights switching off while people are still present; longer times waste energy.',
   },
@@ -127,8 +137,8 @@ const quizQuestions = [
     options: [
       'Centre of an open-plan office ceiling',
       'Facing a window with direct sunlight',
-      'Above the entry door to a meeting room',
       'At the end of a corridor',
+      'Above the entry door to a meeting room',
     ],
     correctAnswer: 1,
     explanation:
@@ -139,12 +149,12 @@ const quizQuestions = [
     question:
       'A dual-technology sensor combines PIR with microwave detection. What is the primary benefit?',
     options: [
-      'Increased detection range',
+      'Multiple sensors with overlapping detection zones',
+      'It provides higher energy savings by requiring manual switch-on',
       'Reduced false triggering - both technologies must detect movement',
-      'Lower installation cost',
-      'Simplified commissioning process',
+      'The sensor responds to movement throughout the intended coverage area',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Dual-technology sensors require both PIR AND microwave to detect movement before triggering, significantly reducing false activations. This is valuable in challenging environments where single-technology sensors may false trigger.',
   },
@@ -153,20 +163,25 @@ const quizQuestions = [
     question:
       'For open-plan offices greater than 100m², which sensor arrangement is most appropriate?',
     options: [
-      'Single high-sensitivity PIR sensor centrally located',
+      'Facing a window with direct sunlight',
+      'Decrease sensitivity and consider relocating the sensor',
+      'It provides higher energy savings by requiring manual switch-on',
       'Multiple sensors with overlapping detection zones',
-      'One microwave sensor per 50m²',
-      'Ultrasonic sensors only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Large open-plan areas require multiple sensors with overlapping detection zones to ensure complete coverage. Single sensors cannot adequately cover large areas, and gaps in detection lead to lights switching off while spaces are occupied.',
   },
   {
     id: 8,
     question: 'What is the typical operating frequency range for ultrasonic occupancy sensors?',
-    options: ['500 Hz - 2 kHz', '25 kHz - 40 kHz', '100 kHz - 200 kHz', '2.4 GHz - 5.8 GHz'],
-    correctAnswer: 1,
+    options: [
+      '25 kHz - 40 kHz',
+      '100 kHz - 200 kHz',
+      '500 Hz - 2 kHz',
+      '2.4 GHz - 5.8 GHz',
+    ],
+    correctAnswer: 0,
     explanation:
       'Ultrasonic sensors typically operate at 25-40 kHz, above the human hearing range (typically up to 20 kHz). This frequency provides good detection sensitivity without causing audible noise for occupants.',
   },
@@ -175,10 +190,10 @@ const quizQuestions = [
     question:
       'According to Building Regulations Part L, absence detection is preferred over presence detection because:',
     options: [
-      'It uses cheaper sensor technology',
+      'The sensor responds to movement throughout the intended coverage area',
       'It provides higher energy savings by requiring manual switch-on',
-      'It is easier to install and commission',
-      'It works better in daylight conditions',
+      'Multiple sensors with overlapping detection zones',
+      'Near thin partition walls where detection could extend beyond the room',
     ],
     correctAnswer: 1,
     explanation:
@@ -188,12 +203,12 @@ const quizQuestions = [
     id: 10,
     question: 'When commissioning occupancy sensors, the walk test should verify:',
     options: [
+      'Near thin partition walls where detection could extend beyond the room',
+      'Reduced false triggering - both technologies must detect movement',
       'The sensor responds to movement throughout the intended coverage area',
-      'The sensor maximum range exceeds 20 metres',
-      'The sensor triggers from adjacent rooms',
-      'The hold-off time is set to minimum',
+      'It provides higher energy savings by requiring manual switch-on',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       'Walk testing verifies that the sensor detects movement throughout the entire intended coverage area and does not have blind spots. The tester walks the space boundaries while observing sensor response to ensure complete coverage.',
   },
@@ -201,12 +216,12 @@ const quizQuestions = [
     id: 11,
     question: 'Microwave sensors operating at 5.8 GHz should not be installed:',
     options: [
-      'In rooms with suspended ceilings',
+      'Reduced false triggering - both technologies must detect movement',
+      'Decrease sensitivity and consider relocating the sensor',
+      'The sensor responds to movement throughout the intended coverage area',
       'Near thin partition walls where detection could extend beyond the room',
-      'In areas with fluorescent lighting',
-      'Above 3 metres height',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Microwave signals penetrate lightweight materials including plasterboard partitions, meaning sensors can detect movement in adjacent spaces causing unwanted triggering. Position microwave sensors away from thin partitions or use PIR in such locations.',
   },
@@ -215,12 +230,12 @@ const quizQuestions = [
     question:
       'What sensitivity adjustment should be made if a PIR sensor false triggers from HVAC airflow?',
     options: [
-      'Increase sensitivity to override the interference',
       'Decrease sensitivity and consider relocating the sensor',
-      'Change to a microwave sensor',
-      'Increase hold-off time',
+      'The sensor responds to movement throughout the intended coverage area',
+      'Reduced false triggering - both technologies must detect movement',
+      'Multiple sensors with overlapping detection zones',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Reducing sensitivity can help filter out minor temperature fluctuations from HVAC airflow. However, relocation away from air vents is often the better solution. Increasing hold-off time masks the problem but does not solve the false triggering issue.',
   },

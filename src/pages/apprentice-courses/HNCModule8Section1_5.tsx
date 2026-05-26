@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'weather-compensation',
     question: 'What does a weather compensator adjust based on outdoor temperature?',
     options: [
-      'Room thermostat setpoint',
       'Boiler flow temperature',
-      'Pump speed only',
+      'Room thermostat setpoint',
       'Hot water cylinder temperature',
+      'Pump speed only',
     ],
-    correctIndex: 1,
+    correctIndex: 0,
     explanation:
       'Weather compensation adjusts the boiler flow temperature based on outdoor temperature. As it gets colder outside, the flow temperature increases; as it gets warmer, the flow temperature decreases. This reduces cycling and improves efficiency.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'optimum-start',
     question: 'What is the primary purpose of optimum start control?',
     options: [
-      'To reduce boiler cycling',
+      'Achieve discrimination with downstream RCDs',
+      'Efficiency levels achieved with automation (A to D)',
+      'Different power factors affecting total current',
       'To ensure the building reaches setpoint at occupancy time',
-      'To maximise boiler efficiency',
-      'To reduce hot water temperature',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Optimum start calculates the latest time to start the heating system so the building reaches the desired temperature exactly when occupancy begins, saving energy by avoiding unnecessary pre-heating.',
   },
@@ -54,12 +54,12 @@ const quickCheckQuestions = [
     question:
       'Which of the following is a requirement of the Boiler Plus legislation for combi boilers?',
     options: [
-      'Minimum 90% efficiency',
+      'Without slip, there would be no relative motion between rotor and field, so no induced current',
+      'To allow safe isolation for maintenance and emergencies',
+      'VOC content below specified limits or certified low-emission products',
       'Weather compensation OR load compensation OR smart thermostat with automation',
-      'Mandatory BMS connection',
-      'Zone control on all systems',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Boiler Plus (England, from April 2018) requires combi boilers to have one of: weather compensation, load compensation, flue gas heat recovery, or a smart thermostat with automation and optimisation.',
   },
@@ -67,10 +67,10 @@ const quickCheckQuestions = [
     id: 'opentherm',
     question: 'What advantage does OpenTherm communication provide over on/off control?',
     options: [
-      'Faster boiler ignition',
+      'A visible bend, crack, dent or missing locking mechanism',
       'Modulating control allowing variable boiler output',
-      'Higher flow temperatures',
-      'Reduced maintenance requirements',
+      'Reassess escape route lighting coverage',
+      'Insulation damage and conductor contact',
     ],
     correctIndex: 1,
     explanation:
@@ -83,10 +83,10 @@ const quizQuestions = [
     id: 1,
     question: 'A heating curve relates outdoor temperature to:',
     options: [
-      'Boiler cycling rate',
+      'Open loop control without feedback',
       'Boiler flow temperature setpoint',
-      'Room temperature setpoint',
-      'Hot water demand',
+      'The MEP coordinator or BIM manager',
+      'Terminal loosening and overheating',
     ],
     correctAnswer: 1,
     explanation:
@@ -96,12 +96,12 @@ const quizQuestions = [
     id: 2,
     question: 'What factors does an optimum start controller typically consider?',
     options: [
-      'Outdoor temperature and building thermal mass only',
+      'To prevent the boiler from firing when there is no demand',
+      'Learning occupant behaviour and adjusting schedules automatically',
       'Indoor temperature, outdoor temperature, and historical data',
-      'Boiler size and radiator output only',
-      'Fuel cost and time of day',
+      '5-10 degrees Celsius below occupied setpoint',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Modern optimum start controllers use indoor temperature, outdoor temperature, and historical data about how the building responds to heating to calculate the optimal start time.',
   },
@@ -110,12 +110,12 @@ const quizQuestions = [
     question:
       'According to Building Regulations Part L, what is required for new heating systems in dwellings?',
     options: [
+      'One cable in, one out, no branches',
+      'Fixed equipment with exposed metalwork',
+      'Building Energy Management System',
       'Zone control with at least 2 zones',
-      'BMS integration',
-      'Condensing boilers only',
-      'Underfloor heating in all rooms',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Part L requires new and replacement heating systems to have independent time and temperature control of space heating and hot water, with zoning typically requiring at least 2 zones (living areas and bedrooms).',
   },
@@ -124,9 +124,9 @@ const quizQuestions = [
     question: 'What is load compensation in heating controls?',
     options: [
       'Adjusting flow temperature based on difference between room and setpoint temperature',
-      'Balancing the heating load across zones',
-      'Compensating for electrical load on the system',
-      'Adjusting for hot water demand',
+      'Indoor temperature, outdoor temperature, and historical data',
+      'Learning occupant behaviour and adjusting schedules automatically',
+      'The controller adapts its algorithms based on building response history',
     ],
     correctAnswer: 0,
     explanation:
@@ -138,8 +138,8 @@ const quizQuestions = [
     options: [
       'Time control of heating',
       'Individual room temperature control',
-      'Boiler interlock function',
       'Weather compensation',
+      'Boiler interlock function',
     ],
     correctAnswer: 1,
     explanation:
@@ -149,20 +149,25 @@ const quizQuestions = [
     id: 6,
     question: 'What is the purpose of boiler interlock in a heating system?',
     options: [
-      'To prevent the boiler from firing when there is no demand',
-      'To lock out the boiler during maintenance',
       'To prevent simultaneous heating and hot water',
+      'To lock out the boiler during maintenance',
+      'To prevent the boiler from firing when there is no demand',
       'To limit maximum flow temperature',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
       "Boiler interlock ensures the boiler and pump only operate when there is a genuine heat demand. It's achieved by wiring controls so the boiler cannot fire unless a room thermostat, programmer, or zone valve calls for heat.",
   },
   {
     id: 7,
     question: 'Which BMS protocol uses a twisted pair cable for communication?',
-    options: ['BACnet/IP', 'Modbus TCP', 'BACnet MS/TP', 'LonWorks IP'],
-    correctAnswer: 2,
+    options: [
+      'BACnet/IP',
+      'Modbus TCP',
+      'LonWorks IP',
+      'BACnet MS/TP',
+    ],
+    correctAnswer: 3,
     explanation:
       'BACnet MS/TP (Master-Slave/Token-Passing) uses RS-485 twisted pair cabling. BACnet/IP and Modbus TCP use Ethernet infrastructure, while LonWorks can use various media.',
   },
@@ -170,12 +175,12 @@ const quizQuestions = [
     id: 8,
     question: 'What is the typical setback temperature reduction for optimum stop control?',
     options: [
-      '1-2 degrees Celsius below occupied setpoint',
       '5-10 degrees Celsius below occupied setpoint',
       'Down to 10 degrees Celsius minimum',
+      '1-2 degrees Celsius below occupied setpoint',
       'No setback - heating stops completely',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Optimum stop typically allows the temperature to drift down 5-10 degrees Celsius to an unoccupied setpoint. The building thermal mass maintains reasonable temperatures while saving energy.',
   },
@@ -183,10 +188,10 @@ const quizQuestions = [
     id: 9,
     question: 'Smart heating controls with automation and optimisation must be capable of:',
     options: [
-      'Manual programming only',
+      'That zone\\\\\\\\\\\\\\\'s valve closes but other zones continue',
       'Learning occupant behaviour and adjusting schedules automatically',
-      'Controlling hot water only',
-      'Fixed time schedules with no adaptation',
+      'Indoor temperature, outdoor temperature, and historical data',
+      'To prevent the boiler from firing when there is no demand',
     ],
     correctAnswer: 1,
     explanation:
@@ -197,11 +202,11 @@ const quizQuestions = [
     question: 'In a zoned heating system, what happens when one zone reaches setpoint?',
     options: [
       'The boiler turns off completely',
+      'The pump stops for that zone only',
       "That zone's valve closes but other zones continue",
       'All zones reduce to setback temperature',
-      'The pump stops for that zone only',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'In a properly designed zoned system, when one zone reaches setpoint, its zone valve closes but other zones continue to receive heat if needed. The boiler only stops when all zones are satisfied.',
   },
@@ -209,20 +214,25 @@ const quizQuestions = [
     id: 11,
     question: 'What is the typical heating curve gradient for a well-insulated modern building?',
     options: [
-      '0.5 (shallow curve)',
+      '2.5-3.0 (very steep curve)',
       '1.0 (moderate curve)',
       '1.5-2.0 (steep curve)',
-      '2.5-3.0 (very steep curve)',
+      '0.5 (shallow curve)',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Well-insulated buildings require lower flow temperatures and have shallower heating curves (0.5-0.8). Poorly insulated buildings need steeper curves (1.5-2.0) to deliver more heat at low outdoor temperatures.',
   },
   {
     id: 12,
     question: 'Which organisation developed the OpenTherm communication protocol?',
-    options: ['ASHRAE', 'CIBSE', 'OpenTherm Association', 'British Standards Institution'],
-    correctAnswer: 2,
+    options: [
+      'OpenTherm Association',
+      'British Standards Institution',
+      'ASHRAE',
+      'CIBSE',
+    ],
+    correctAnswer: 0,
     explanation:
       "The OpenTherm protocol was developed by the OpenTherm Association, a consortium of heating equipment manufacturers. It's an open standard for communication between thermostats and boilers.",
   },
@@ -230,10 +240,10 @@ const quizQuestions = [
     id: 13,
     question: "What is 'self-learning' in optimum start controllers?",
     options: [
-      'The controller automatically updates its firmware',
-      'The controller adapts its algorithms based on building response history',
       'The controller learns occupant preferences for temperature',
+      'The controller adapts its algorithms based on building response history',
       'The controller connects to weather forecasts',
+      'The controller automatically updates its firmware',
     ],
     correctAnswer: 1,
     explanation:
@@ -243,12 +253,12 @@ const quizQuestions = [
     id: 14,
     question: 'Under Part L, what minimum control is required for hot water systems?',
     options: [
-      'Manual on/off only',
+      'Learning occupant behaviour and adjusting schedules automatically',
+      'Indoor temperature, outdoor temperature, and historical data',
       'Cylinder thermostat and programmer with independent timing',
-      'Thermostatic mixing valve only',
-      'No specific requirement',
+      'To prevent the boiler from firing when there is no demand',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Part L requires hot water systems to have a cylinder thermostat (typically set at 60 degrees Celsius for Legionella control) and a programmer allowing independent timing of heating and hot water.',
   },

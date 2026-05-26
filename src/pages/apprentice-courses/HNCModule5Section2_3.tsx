@@ -31,12 +31,12 @@ const quickCheckQuestions = [
     id: 'nec-option-a',
     question: 'What type of contract is NEC4 ECC Option A?',
     options: [
-      'Cost reimbursable',
-      'Target cost',
+      'Increased equipment purchase costs',
+      'Protection against indirect contact',
+      'False sensor readings and system malfunction',
       'Priced contract with activity schedule',
-      'Management contract',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Option A is a priced contract with activity schedule. The Contractor is paid the lump sum prices for completed activities, bearing the risk of their price estimates.',
   },
@@ -44,10 +44,10 @@ const quickCheckQuestions = [
     id: 'early-warning',
     question: 'What is the purpose of an early warning under NEC4?',
     options: [
-      'To claim additional payment',
+      'Statement of intent, organisation, and arrangements',
       'To notify potential problems before they occur',
-      'To terminate the contract',
-      'To request design changes',
+      'Static friction preventing smooth valve movement',
+      'Resistance increases as temperature rises',
     ],
     correctIndex: 1,
     explanation:
@@ -57,20 +57,25 @@ const quickCheckQuestions = [
     id: 'compensation-event',
     question: 'A compensation event under NEC4 typically results in:',
     options: [
-      'Contractor termination',
+      'Panels, inverter, isolators',
+      'All environmental factors',
       'Assessment of time and cost impact',
-      'Automatic extension of 2 weeks',
-      'Reduction in scope',
+      'Technical, customer, and business challenges',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Compensation events are assessed to determine their impact on Defined Cost and time. The Prices and Completion Date are adjusted accordingly.',
   },
   {
     id: 'programme-acceptance',
     question: 'Under NEC4, the Project Manager must accept or reject a programme within:',
-    options: ['1 week', '2 weeks', '4 weeks', '6 weeks'],
-    correctIndex: 1,
+    options: [
+      '1 week',
+      '6 weeks',
+      '4 weeks',
+      '2 weeks',
+    ],
+    correctIndex: 3,
     explanation:
       'The Project Manager has two weeks to accept or notify reasons for non-acceptance of a submitted programme. Silence does not constitute acceptance.',
   },
@@ -82,11 +87,11 @@ const quizQuestions = [
     question: 'Which NEC4 ECC option places most cost risk on the Employer?',
     options: [
       'Option A - Priced contract with activity schedule',
-      'Option B - Priced contract with bill of quantities',
       'Option E - Cost reimbursable contract',
+      'Option B - Priced contract with bill of quantities',
       'Option F - Management contract',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Option E (cost reimbursable) places most risk on the Employer as they pay all Defined Costs plus the Fee. The Contractor has limited incentive to control costs.',
   },
@@ -94,10 +99,10 @@ const quizQuestions = [
     id: 2,
     question: 'Under NEC4, who may raise an early warning?',
     options: [
-      'Only the Project Manager',
-      'Only the Contractor',
+      'Savings are shared between Employer and Contractor',
+      'Maintained and reviewed at risk reduction meetings',
       'Either the Project Manager or Contractor',
-      'Only the Supervisor',
+      'Option C - Target cost with activity schedule',
     ],
     correctAnswer: 2,
     explanation:
@@ -107,12 +112,12 @@ const quizQuestions = [
     id: 3,
     question: 'What happens if the Contractor does not notify a compensation event within 8 weeks?',
     options: [
-      'The event is automatically accepted',
+      'The cost of components of work as defined in the contract',
+      'Savings are shared between Employer and Contractor',
+      'Option C - Target cost with activity schedule',
       'The Contractor loses their right to additional time and money',
-      'The Project Manager must decide within 1 week',
-      'The matter goes to adjudication',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'The Contractor must notify compensation events within 8 weeks of becoming aware. Failure to do so is a time bar - they lose entitlement to additional time and money.',
   },
@@ -120,20 +125,25 @@ const quizQuestions = [
     id: 4,
     question: 'In NEC4, what is the Accepted Programme used for?',
     options: [
-      'Only for monitoring progress',
       'Assessing compensation events, monitoring progress, and managing float',
-      'Determining liquidated damages only',
-      'Identifying defects',
+      'Maintained and reviewed at risk reduction meetings',
+      'The Contractor loses their right to additional time and money',
+      'Enter the matter on the early warning register and call a risk reduction meeting',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The Accepted Programme is a key contract document used for assessing compensation events, monitoring progress, identifying float, and managing time risk.',
   },
   {
     id: 5,
     question: 'Which X clause deals with limitation of liability?',
-    options: ['X2', 'X13', 'X18', 'X20'],
-    correctAnswer: 2,
+    options: [
+      'X13',
+      'X18',
+      'X20',
+      'X2',
+    ],
+    correctAnswer: 1,
     explanation:
       "X18 (Limitation of liability) allows parties to cap the Contractor's total liability and exclude liability for indirect/consequential losses.",
   },
@@ -141,10 +151,10 @@ const quizQuestions = [
     id: 6,
     question: 'Under Option C (target cost), what happens if outturn cost is below the target?',
     options: [
-      'Employer keeps all savings',
-      'Contractor keeps all savings',
+      'Option C - Target cost with activity schedule',
+      'The Contractor loses their right to additional time and money',
       'Savings are shared between Employer and Contractor',
-      'The target is retrospectively reduced',
+      'Either the Project Manager or Contractor',
     ],
     correctAnswer: 2,
     explanation:
@@ -154,8 +164,13 @@ const quizQuestions = [
     id: 7,
     question:
       'A building services subcontractor on an NEC4 project receives an instruction to install additional lighting. This is likely a:',
-    options: ['Defect', 'Early warning matter', 'Compensation event', 'Termination event'],
-    correctAnswer: 2,
+    options: [
+      'Defect',
+      'Early warning matter',
+      'Termination event',
+      'Compensation event',
+    ],
+    correctAnswer: 3,
     explanation:
       'An instruction to change the Works Information (Scope under NEC4) is a compensation event under clause 60.1(1). The subcontractor is entitled to time and cost assessment.',
   },
@@ -163,12 +178,12 @@ const quizQuestions = [
     id: 8,
     question: "What is 'Defined Cost' under NEC4?",
     options: [
-      'The tender sum',
       'The cost of components of work as defined in the contract',
-      "The employer's budget",
-      'The market rate for work',
+      'Option C - Target cost with activity schedule',
+      'Maintained and reviewed at risk reduction meetings',
+      'Either the Project Manager or Contractor',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Defined Cost is the cost of the components of work calculated using the Shorter Schedule of Cost Components (Options A/B) or full Schedule (Options C/D/E).',
   },
@@ -176,10 +191,10 @@ const quizQuestions = [
     id: 9,
     question: 'The early warning register under NEC4 should be:',
     options: [
-      'Kept confidential by the Project Manager',
+      'The Contractor loses their right to additional time and money',
       'Maintained and reviewed at risk reduction meetings',
-      'Only updated at project completion',
-      'Submitted to the Employer monthly',
+      'Either the Project Manager or Contractor',
+      'Option C - Target cost with activity schedule',
     ],
     correctAnswer: 1,
     explanation:
@@ -190,11 +205,11 @@ const quizQuestions = [
     question: 'Under NEC4, terminal float belongs to:',
     options: [
       'The Employer',
+      'The Project Manager to allocate',
       'The Contractor',
       'Neither - it is shared equally',
-      'The Project Manager to allocate',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       "Terminal float (time between planned Completion and the Completion Date) belongs to the Contractor. Compensation events do not consume Contractor's float.",
   },
@@ -205,10 +220,10 @@ const quizQuestions = [
     options: [
       'Option A - Activity schedule',
       'Option B - Bill of quantities',
-      'Option C - Target cost with activity schedule',
       'Option F - Management contract',
+      'Option C - Target cost with activity schedule',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       'Option C is ideal for complex projects with evolving design. The target provides cost certainty while allowing flexibility, and the pain/gain share incentivises collaboration.',
   },
@@ -217,12 +232,12 @@ const quizQuestions = [
     question:
       'A mechanical contractor gives early warning that a chiller delivery will be delayed by the manufacturer. The Project Manager should:',
     options: [
-      'Issue a termination certificate',
-      'Instruct acceleration',
       'Enter the matter on the early warning register and call a risk reduction meeting',
-      'Immediately assess a compensation event',
+      'The cost of components of work as defined in the contract',
+      'Assessing compensation events, monitoring progress, and managing float',
+      'The Contractor loses their right to additional time and money',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'Early warnings require collaborative action. The matter should be registered and discussed at a risk reduction meeting to identify mitigation measures.',
   },

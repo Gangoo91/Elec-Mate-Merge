@@ -14,10 +14,10 @@ const quickCheckQuestions = [
     id: 'initiative-meaning',
     question: "What does 'showing initiative' mean in the context of engineering maintenance?",
     options: [
-      'Doing whatever you want without asking',
+      'A culture in which near-misses are reported, analysed, learned from and used to improve the system. Typically supported by no-blame reporting, structured analysis (e.g. 5-whys), feedback to the team, and visible changes in practice. Heinrich\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s pyramid frames near-misses as the leading indicator of major incidents.',
       'Identifying potential problems or improvements proactively and taking appropriate action — such as reporting hazards, suggesting efficiency improvements, or addressing issues before they become critical — while working within your level of authority',
-      'Only doing what you are specifically told to do',
-      'Working faster than everyone else',
+      'The arrangements for ensuring there are suitable welfare facilities, the site rules (if any), and any specific measures concerning work falling within Schedule 3 (high-risk work such as work near or over water, involving diving, in a caisson, involving explosives, etc.)',
+      'Evacuate and seal the area, stop all work, notify the duty holder and HSE if appropriate, arrange licensed clean-up, retain workers\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' clothing for assessment, log near miss and review',
     ],
     correctIndex: 1,
     explanation:
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'problem-approach',
     question: 'When faced with an unfamiliar fault on a piece of equipment, the best approach is:',
     options: [
-      'Keep trying random things until something works',
+      'It contains gypsum which, when landfilled with biodegradable waste, can produce toxic hydrogen sulphide gas, so it must be segregated and sent to specialist facilities',
+      'Death OR physical or mental impairment resulting in lifelong dependency on third party care for basic needs OR significantly reduced life expectancy.',
+      'The adiabatic equation: S = sqrt(I squared t) / k, where S is cross-sectional area, I is fault current, t is disconnection time and k is a material constant',
       'Apply a structured diagnostic approach: gather information about the symptoms, consult technical documentation, form a hypothesis, test it methodically, and escalate if the fault is beyond your competence',
-      'Immediately call the manufacturer',
-      'Tell your supervisor you cannot fix it and move on',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Structured problem-solving is a core engineering skill. Even when facing an unfamiliar fault, applying a systematic approach — information gathering, documentation review, hypothesis formation, methodical testing — is far more effective than trial and error. Knowing when to escalate is also a sign of professional maturity, not weakness.',
   },
@@ -41,12 +41,12 @@ const quickCheckQuestions = [
     question:
       'When should you escalate a problem to your supervisor rather than attempting to solve it yourself?',
     options: [
-      'Never — always try to solve it yourself',
+      'Model inclusive language; identify and accommodate reasonable adjustments where colleagues need them; ensure PEEPs are in place where required; intervene against discriminatory behaviour; document; escalate persistent issues.',
+      'Stop work, leave tools, follow the planned escape route (identified during your dynamic risk assessment on arrival) to the muster point, ensure non-employees evacuate with you, await account-for and the all-clear from the responsible person.',
+      'Arguing for the higher controls before defaulting to PPE. The L3 supervisor pushes back on "just give them masks" and asks "what engineering controls have we considered?". Documents the hierarchy reasoning. Inverts only when genuinely no higher control is reasonably practicable.',
       'When the problem is beyond your current competence, involves safety risks you are not authorised to manage, requires specialist equipment or knowledge you do not have, or could have significant consequences if handled incorrectly',
-      'Only when your supervisor asks',
-      'Always — never try to solve problems independently',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Knowing when to escalate is a professional skill, not a sign of weakness. You should escalate when: the work is beyond your competence level, there are safety implications you cannot manage, specialist knowledge or equipment is needed, or the consequences of getting it wrong are significant. The assessor values appropriate escalation as evidence of professional judgement.',
   },
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'What is the main advantage of root cause analysis over simply fixing the immediate symptom?',
     options: [
-      'Root cause analysis is faster',
+      'Where the employer employs five or more persons, the significant findings of the fire risk assessment must be recorded, including the fire safety measures in place and any groups of persons identified as being especially at risk',
+      'Oversized equipment, poor power factor, lighting left on in unoccupied areas, worn drive belts, air leaks, and equipment running outside its optimal parameters',
       'Root cause analysis identifies and addresses the underlying reason for a problem, preventing it from recurring — whereas symptom treatment only fixes the immediate effect and the same fault is likely to happen again',
-      'There is no advantage — just fix the symptom',
-      'Root cause analysis is only for senior engineers',
+      'Type B is the default per Reg 712.531.3.5.1, unless (a) the inverter provides at least simple separation between AC and DC sides, (b) the installation places a transformer between inverter and RCD, or (c) the inverter manufacturer explicitly states Type B is not required.',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Symptom treatment fixes today's problem but leaves the underlying cause in place. Root cause analysis asks 'why did this happen?' and addresses the fundamental issue. For example, replacing a tripped breaker fixes the immediate fault, but investigating why it tripped (loose connection causing overheating) prevents recurrence. The EPA assessor values evidence that you think beyond the immediate fix.",
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     id: 1,
     question: 'Showing initiative in the workplace might include:',
     options: [
-      'Ignoring problems that are not your responsibility',
+      'The formal checkpoint between on-programme learning and end-point assessment, where pre-requisites are verified and the apprentice is confirmed as ready to be assessed independently by the EPAO',
       'Identifying a recurring fault pattern and reporting it to your supervisor with a suggestion for a permanent solution, or noticing a safety hazard and taking immediate appropriate action',
-      'Only doing tasks that are on your job description',
-      'Working overtime without being asked',
+      'BS 7671 provides one means of complying with the EAWR, but compliance with BS 7671 does not guarantee compliance with the EAWR in all circumstances',
+      'It is denser than air and accumulates at low levels, is an asphyxiant that displaces oxygen, and at higher concentrations acts as a direct toxin affecting the central nervous system',
     ],
     correctAnswer: 1,
     explanation:
@@ -85,12 +85,12 @@ const quizQuestions = [
     question:
       'A structured problem-solving approach for maintenance fault diagnosis typically follows:',
     options: [
-      'No particular order',
+      'Repeatedly asking \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' to drill down from the surface symptom to the underlying root cause — typically asking five times uncovers the true cause that needs addressing',
+      'Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions',
       'Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process',
-      'Fix it and move on',
-      'Call the manufacturer immediately',
+      'Document your observation and suggestion, discuss it with your supervisor or team, and follow your organisation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s process for suggesting improvements',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Structured problem-solving follows a logical sequence: understand the problem (what are the symptoms? when did they start?), gather information (documentation, operating history), identify possible causes (most likely first), test systematically (one variable at a time), fix and verify, then document. This approach is more efficient and reliable than random troubleshooting.',
   },
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 3,
     question: 'Root cause analysis differs from symptom treatment in that:',
     options: [
-      'They are the same thing',
+      'Visually organise potential causes of a problem into categories (such as people, methods, machines, materials, environment and measurement), helping ensure all possible contributing factors are considered systematically',
+      'Evidence in your portfolio of problems you identified and solved, your diagnostic approach, improvements you suggested, and proactive actions you took — discussed in detail during the professional discussion and demonstrated during the practical observation',
+      'Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions',
       'Root cause analysis identifies and addresses the underlying reason for a problem, preventing recurrence, while symptom treatment only addresses the immediate effect without preventing it from happening again',
-      'Root cause analysis takes too long',
-      'Symptom treatment is always better',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Symptom treatment fixes the immediate issue (e.g., resetting a tripped breaker) but does not prevent recurrence. Root cause analysis asks 'why did this happen?' and addresses the underlying cause (e.g., the breaker tripped because of a loose connection causing overheating). The EPA assessor values evidence of root cause thinking.",
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 4,
     question: 'When you identify a potential improvement to a maintenance procedure, you should:',
     options: [
-      'Implement it immediately without telling anyone',
       "Document your observation and suggestion, discuss it with your supervisor or team, and follow your organisation's process for suggesting improvements",
-      'Ignore it — procedures exist for a reason',
-      'Only mention it if specifically asked',
+      "Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions",
+      "Repeatedly asking 'why?' to drill down from the surface symptom to the underlying root cause — typically asking five times uncovers the true cause that needs addressing",
+      "Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team's collective problem-solving effort",
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Suggesting improvements demonstrates initiative and continuous improvement — both key EPA behaviours. However, changes to procedures must go through proper channels for safety and quality reasons. Document your observation, explain the benefit, and discuss it with your supervisor. If implemented, this becomes excellent portfolio evidence.',
   },
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 5,
     question: 'Creative problem-solving in maintenance might involve:',
     options: [
-      'Ignoring the problem',
+      'Visually organise potential causes of a problem into categories (such as people, methods, machines, materials, environment and measurement), helping ensure all possible contributing factors are considered systematically',
       'Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions',
-      'Only using methods you have been specifically trained on',
-      'Waiting for someone else to solve it',
+      'Root cause analysis identifies and addresses the underlying reason for a problem, preventing recurrence, while symptom treatment only addresses the immediate effect without preventing it from happening again',
+      'Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s collective problem-solving effort',
     ],
     correctAnswer: 1,
     explanation:
@@ -137,12 +137,12 @@ const quizQuestions = [
     id: 6,
     question: 'When documenting a problem you solved for your portfolio, you should describe:',
     options: [
-      'Only the solution',
+      'Reassess your diagnosis, consider what the failed attempt tells you about the problem, adjust your hypothesis, and try a different approach systematically — while knowing when to seek help',
+      'Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s collective problem-solving effort',
       'The problem and its impact, your diagnostic approach, the options you considered, why you chose the solution you did, how you implemented it, and the outcome — including any follow-up actions',
-      'Only that you fixed it',
-      'Nothing — problem-solving does not need documenting',
+      'Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Documenting the complete problem-solving journey is much more valuable than just recording the outcome. The assessor wants to see your thinking process: how you identified the problem, what diagnostic steps you took, what options you considered (and why you rejected some), how you implemented the solution, and what you learned.',
   },
@@ -150,12 +150,12 @@ const quizQuestions = [
     id: 7,
     question: 'If your first attempt at solving a problem does not work, you should:',
     options: [
-      'Give up and escalate immediately',
+      'Repeatedly asking \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'why?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\' to drill down from the surface symptom to the underlying root cause — typically asking five times uncovers the true cause that needs addressing',
+      'Developing a temporary workaround to keep equipment running safely while a permanent solution is sourced, or adapting a standard approach to suit unusual site conditions',
+      'Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process',
       'Reassess your diagnosis, consider what the failed attempt tells you about the problem, adjust your hypothesis, and try a different approach systematically — while knowing when to seek help',
-      'Keep trying the same thing repeatedly',
-      'Blame the equipment',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'A failed attempt is not wasted — it provides information. If your first hypothesis was wrong, ask what the failed test tells you: which causes can you now eliminate? What new possibilities does it suggest? Adjust your approach systematically. However, if you are repeatedly unsuccessful or the situation is becoming risky, seeking help is the professional response.',
   },
@@ -163,12 +163,12 @@ const quizQuestions = [
     id: 8,
     question: 'Taking initiative as an apprentice means:',
     options: [
-      'Acting independently on everything',
       'Being proactive within your level of authority — asking questions, volunteering for learning opportunities, suggesting improvements, and taking appropriate action when you identify issues — while recognising when to seek guidance',
-      'Waiting to be told what to do at all times',
-      'Only showing initiative during the EPA',
+      'Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process',
+      'Reassess your diagnosis, consider what the failed attempt tells you about the problem, adjust your hypothesis, and try a different approach systematically — while knowing when to seek help',
+      'Evidence in your portfolio of problems you identified and solved, your diagnostic approach, improvements you suggested, and proactive actions you took — discussed in detail during the professional discussion and demonstrated during the practical observation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Initiative as an apprentice is about being engaged and proactive within appropriate boundaries. Ask questions to deepen understanding, volunteer for tasks that develop your skills, suggest improvements when you see opportunities, and take action on issues within your competence. Recognise that your authority level increases as your competence grows.',
   },
@@ -176,10 +176,10 @@ const quizQuestions = [
     id: 9,
     question: "The '5 Whys' technique for root cause analysis involves:",
     options: [
-      'Asking five different people their opinion',
+      "Root cause analysis identifies and addresses the underlying reason for a problem, preventing recurrence, while symptom treatment only addresses the immediate effect without preventing it from happening again",
       "Repeatedly asking 'why?' to drill down from the surface symptom to the underlying root cause — typically asking five times uncovers the true cause that needs addressing",
-      'Waiting five minutes before starting work',
-      'Checking five different components',
+      "Reassess your diagnosis, consider what the failed attempt tells you about the problem, adjust your hypothesis, and try a different approach systematically — while knowing when to seek help",
+      "Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team's collective problem-solving effort",
     ],
     correctAnswer: 1,
     explanation:
@@ -189,12 +189,12 @@ const quizQuestions = [
     id: 10,
     question: 'During the EPA, initiative and problem-solving are assessed through:',
     options: [
-      'A written problem-solving test',
+      'Root cause analysis identifies and addresses the underlying reason for a problem, preventing recurrence, while symptom treatment only addresses the immediate effect without preventing it from happening again',
+      'Reassess your diagnosis, consider what the failed attempt tells you about the problem, adjust your hypothesis, and try a different approach systematically — while knowing when to seek help',
       'Evidence in your portfolio of problems you identified and solved, your diagnostic approach, improvements you suggested, and proactive actions you took — discussed in detail during the professional discussion and demonstrated during the practical observation',
-      'They are not assessed',
-      'A group exercise',
+      'Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s collective problem-solving effort',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Initiative and problem-solving are assessed across all EPA components: your portfolio should contain evidence of diagnostic work and improvement suggestions, the practical observation tests your ability to work methodically and solve problems in real time, and the professional discussion explores your problem-solving approach in depth.',
   },
@@ -203,12 +203,12 @@ const quizQuestions = [
     question:
       'When working as part of a team to solve a complex problem, showing initiative means:',
     options: [
-      'Taking over and doing everything yourself',
+      "Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process",
+      "Root cause analysis identifies and addresses the underlying reason for a problem, preventing recurrence, while symptom treatment only addresses the immediate effect without preventing it from happening again",
+      "The problem and its impact, your diagnostic approach, the options you considered, why you chose the solution you did, how you implemented it, and the outcome — including any follow-up actions",
       "Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team's collective problem-solving effort",
-      'Staying quiet and letting others solve it',
-      'Only working on the parts you are comfortable with',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Team problem-solving requires collaborative initiative: contributing your perspective (you may notice something others miss), sharing relevant knowledge from your training or experience, asking questions that help clarify the problem, and taking on tasks that play to your strengths. Good teamwork and individual initiative are not opposites — they reinforce each other.',
   },
@@ -216,12 +216,12 @@ const quizQuestions = [
     id: 12,
     question: 'A fishbone (Ishikawa) diagram is used in problem-solving to:',
     options: [
-      'Draw pictures of fish',
       'Visually organise potential causes of a problem into categories (such as people, methods, machines, materials, environment and measurement), helping ensure all possible contributing factors are considered systematically',
-      'Track the time taken to solve problems',
-      'Document the final solution only',
+      'Define the problem, gather information, identify possible causes, test each hypothesis systematically, implement the solution, verify the fix, and document the process',
+      'Evidence in your portfolio of problems you identified and solved, your diagnostic approach, improvements you suggested, and proactive actions you took — discussed in detail during the professional discussion and demonstrated during the practical observation',
+      'Contributing ideas, sharing relevant knowledge, asking constructive questions, volunteering for tasks within your competence, and supporting the team\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s collective problem-solving effort',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'The fishbone diagram is a structured brainstorming tool. By categorising potential causes, it ensures you consider all possible contributing factors rather than fixating on the first theory. Categories like people, methods, machines, materials, environment and measurement provide a framework for systematic investigation. It is a valuable tool to reference in your EPA portfolio.',
   },

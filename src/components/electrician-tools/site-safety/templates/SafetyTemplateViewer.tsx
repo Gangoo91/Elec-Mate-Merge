@@ -15,6 +15,7 @@ import { useAdoptTemplate, type SafetyTemplate } from '@/hooks/useSafetyTemplate
 import { getTemplateStats } from '@/utils/safety-template-renderer';
 import type { DocumentSection } from '@/types/safety-template';
 import { SectionRenderer } from './sections/SectionRenderer';
+import { SafetyTemplateV2Renderer } from './SafetyTemplateV2Renderer';
 
 interface SafetyTemplateViewerProps {
   template: SafetyTemplate;
@@ -38,6 +39,10 @@ const SECTION_ICONS: Record<DocumentSection['type'], string> = {
 export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemplateViewerProps) {
   const adoptMutation = useAdoptTemplate();
   const sc = template.structured_content;
+  // Prefer v2 (AI-regenerated full-depth content) when present.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const v2: any = (template as any).structured_content_v2;
+  const hasV2 = !!v2 && (template.version >= 2 || Array.isArray(v2.hazards));
   const stats = getTemplateStats(sc);
 
   // Field values for adopt form — initialise from template fields
@@ -76,8 +81,10 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
   };
 
   const handleAdopt = () => {
-    if (sc) {
-      // Structured path
+    if (sc || hasV2) {
+      // Structured path (carries v2 through when present so the upgraded
+      // content survives adoption — viewer + editor + PDF will all
+      // prefer the v2 payload).
       adoptMutation.mutate(
         {
           templateId: template.id,
@@ -86,6 +93,7 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
           companyName: fieldValues.company_name || undefined,
           siteAddress: fieldValues.site_address || undefined,
           structuredContent: sc,
+          structuredContentV2: hasV2 ? v2 : null,
           fieldValues,
         },
         { onSuccess: onBack }
@@ -171,8 +179,10 @@ export function SafetyTemplateViewer({ template, onBack, isAdopted }: SafetyTemp
           </div>
         )}
 
-        {/* Content: Structured sections or legacy HTML */}
-        {sc ? (
+        {/* Content: v2 (full-depth AI) > v1 structured > legacy HTML */}
+        {hasV2 ? (
+          <SafetyTemplateV2Renderer v2={v2} />
+        ) : sc ? (
           <div className="space-y-2">
             {sc.sections.map((section, i) => {
               const isOpen = expandedSections.has(i);

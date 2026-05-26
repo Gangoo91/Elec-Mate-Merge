@@ -14,12 +14,12 @@ const quickCheckQuestions = [
     id: 'doc-purpose',
     question: 'Why is accurate test documentation essential in electrical maintenance?',
     options: [
-      'It is only needed to satisfy paperwork requirements',
+      "Covering at least equivalent to the insulation of a single-core non-sheathed cable, voltage rating at least 450/750 V — except where it forms part of a multicore cable or is run inside a metal enclosure used as the protective conductor.",
+      "Explain the hazard in terms they understand, describe what you are doing to keep them safe, provide an alternative route, and estimate when access will be restored",
       "It provides a permanent record of the installation's condition, enables comparison between inspections, demonstrates compliance with regulations, and provides evidence of due diligence",
-      'It is only needed for new installations',
-      'It is optional for maintenance work',
+      "The photovoltaic effect — semiconductor materials (typically crystalline silicon) generate a direct current (DC) when exposed to sunlight, as photons transfer energy to electrons in the material",
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       "Accurate test documentation serves multiple critical purposes: it provides a baseline record of the installation's condition for future comparison, demonstrates compliance with BS 7671 and the Electricity at Work Regulations 1989, provides evidence of due diligence in the event of an incident, and enables condition-based maintenance decisions based on trending data.",
   },
@@ -27,12 +27,12 @@ const quickCheckQuestions = [
     id: 'doc-actual-values',
     question: 'When recording test results, what is the correct approach?',
     options: [
-      'Round values to the nearest whole number for simplicity',
-      "Record 'pass' or 'fail' only",
+      'The temperature above the boiling point of the refrigerant in its gaseous state leaving the evaporator',
+      'Entry is prohibited — the space must be ventilated and retested before entry is considered',
+      'Use plain English, short sentences, visual aids and check understanding by asking them to summarise back',
       'Always record the actual measured value, not a rounded or adjusted figure — if the reading is 127 MΩ, record 127 MΩ',
-      'Only record values that fail the acceptance criteria',
     ],
-    correctIndex: 2,
+    correctIndex: 3,
     explanation:
       'Always record the actual measured value, not a rounded or adjusted figure. If the insulation resistance reading is 127 MΩ, record 127 MΩ — not ">1 MΩ" or "pass". Actual values enable meaningful comparison between inspections and provide the data needed for condition-based maintenance decisions.',
   },
@@ -40,12 +40,12 @@ const quickCheckQuestions = [
     id: 'doc-eicr',
     question: 'What is the purpose of an Electrical Installation Condition Report (EICR)?',
     options: [
-      'To certify a new electrical installation',
+      'Circuit reference, conductor sizes, protective device details, R1+R2 (or Rn for ring) and R2 values, IR readings, polarity confirmation, Zs, and RCD operating time where applicable',
+      'IET GN1 Section 7 — broader installation categories with worked examples for offices, retail, hospitality, education, healthcare and industrial.',
+      'A document provided by the manufacturer or supplier giving detailed information about a substance\\\\\\\\\\\\\\\'s hazards, safe handling, storage, and emergency measures',
       'To record the condition of an existing installation, identify deficiencies, and classify them by severity using coding (C1, C2, C3, FI) to indicate the urgency of remedial action required',
-      'To provide a warranty for electrical equipment',
-      'To replace the need for periodic testing',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'An EICR records the condition of an existing electrical installation at the time of inspection. It identifies any deficiencies and classifies them using the standard coding system: C1 (danger present — requires immediate action), C2 (potentially dangerous — urgent remedial action required), C3 (improvement recommended), and FI (further investigation required). The EICR enables the duty holder to make informed decisions about remedial work.',
   },
@@ -71,10 +71,10 @@ const quizQuestions = [
     question:
       'Which document is issued following the periodic inspection of an existing electrical installation?',
     options: [
-      'An Electrical Installation Certificate (EIC)',
-      'A Minor Electrical Installation Works Certificate (MEIWC)',
-      'An Electrical Installation Condition Report (EICR)',
       'A Building Regulations Compliance Certificate',
+      'An Electrical Installation Certificate (EIC)',
+      'An Electrical Installation Condition Report (EICR)',
+      'A Minor Electrical Installation Works Certificate (MEIWC)',
     ],
     correctAnswer: 2,
     explanation:
@@ -84,12 +84,12 @@ const quizQuestions = [
     id: 3,
     question: 'The observation code C1 on an EICR indicates:',
     options: [
-      'The installation is satisfactory',
       'Improvement is recommended but not required',
-      'Danger present — risk of injury. Immediate remedial action required',
+      'The installation is satisfactory',
       'Further investigation is required before a classification can be given',
+      'Danger present — risk of injury. Immediate remedial action required',
     ],
-    correctAnswer: 2,
+    correctAnswer: 3,
     explanation:
       "C1 indicates 'Danger present' — there is an immediate risk of injury and the deficiency requires urgent remedial action. The person responsible for the installation should be informed immediately and the danger should be made safe if possible. C1 observations represent the most serious classification and may require immediate isolation of the affected circuit.",
   },
@@ -97,12 +97,12 @@ const quizQuestions = [
     id: 4,
     question: 'A calibrated test instrument means:',
     options: [
-      'The instrument is brand new',
       'The instrument has been verified against traceable reference standards within a defined period, and a calibration certificate has been issued confirming its accuracy is within acceptable limits',
-      'The instrument has been purchased from an approved supplier',
-      'The instrument has a valid PAT test label',
+      'Calibration procedures, records, reference standard certificates, OOT investigations, interval reviews, training records, and equipment lists',
+      'Income protection pays regular monthly income for ongoing inability to work; critical illness pays a lump sum for specific diagnosed conditions',
+      'The pulley is securely anchored, the rope is rated for the load weight, the area below is barriered off, and a banksman directs the operation',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       "Calibration is the process of verifying an instrument's accuracy against traceable reference standards (traceable to national standards). A calibration certificate confirms the instrument reads within acceptable limits of accuracy. Test results obtained with uncalibrated instruments may be unreliable and could be challenged in legal proceedings. Most test instruments require annual calibration.",
   },
@@ -111,10 +111,10 @@ const quizQuestions = [
     question:
       'When a test result is at or near the minimum acceptable value specified in BS 7671, the technician should:',
     options: [
-      'Record the value as a pass and move on',
+      'Use the no-trip / 15mA / lower-current loop test mode (modern MFTs have this), accepting slightly reduced accuracy in exchange for non-tripping',
       'Record the actual value, flag it as marginal, investigate the possible cause, and consider recommending remedial action — a value near the limit today may deteriorate to a fail before the next inspection',
-      'Round the value up to make it clearly pass',
-      'Repeat the test until a better value is obtained',
+      'Treat as hazardous waste, store in suitable rigid containers protected from breakage, transfer to a permitted facility under a Hazardous Waste Consignment Note, retain records for 3 years',
+      'Every load in the building: its power rating, priority category, current supply arrangement, and whether its supply and backup provision match its actual criticality',
     ],
     correctAnswer: 1,
     explanation:
@@ -124,10 +124,10 @@ const quizQuestions = [
     id: 6,
     question: 'Test records should be retained for:',
     options: [
-      'One year only',
-      'Until the next inspection',
+      "Because unrecognised stress impairs concentration, judgement, and reaction time, increasing the risk of accidents in a high-hazard environment",
+      "Consistently arriving when promised, completing work on time, and following through on every commitment — large and small",
       "The lifetime of the installation — previous test records enable trend analysis and provide a complete history of the installation's condition over time",
-      'Six months',
+      "Until the next inspection or until the tower is dismantled, whichever is later; on construction sites at least 3 months",
     ],
     correctAnswer: 2,
     explanation:

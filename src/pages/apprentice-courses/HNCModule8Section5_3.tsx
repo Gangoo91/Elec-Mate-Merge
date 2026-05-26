@@ -28,12 +28,12 @@ const quickCheckQuestions = [
     question:
       'What is the primary difference between a linear valve actuator and a rotary valve actuator?',
     options: [
-      'Linear actuators are more expensive',
+      'Increasing excitation beyond the normal value causes the motor to operate at a leading power factor',
+      'Identify environmental aspects and impacts of their activities, products and services, and determine which are significant under defined criteria',
       'Linear actuators produce straight-line motion for globe valves, rotary actuators produce rotation for ball/butterfly valves',
-      'Rotary actuators cannot be used for modulating control',
-      'Linear actuators only work with on/off control',
+      'Scope 2 covers indirect emissions from purchased energy (electricity, heat, steam); Scope 3 covers all other indirect emissions in the value chain',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Linear actuators produce straight-line (up/down) motion suited for globe and gate valves where the stem moves linearly. Rotary actuators produce rotational motion (typically 90°) suited for ball and butterfly valves where the disc or ball rotates to control flow.',
   },
@@ -41,10 +41,10 @@ const quickCheckQuestions = [
     id: 'spring-return-purpose',
     question: 'What is the primary purpose of a spring return mechanism in a valve actuator?',
     options: [
-      'To increase the actuator speed',
-      'To reduce power consumption during normal operation',
+      'To give practical guidance on complying with legal duties',
+      'Different criteria - typically ≤0.05Ω for main bonding',
       'To return the valve to a safe fail position on power loss or signal failure',
-      'To provide modulating control capability',
+      'For stranded conductors or where vibration is present',
     ],
     correctIndex: 2,
     explanation:
@@ -55,12 +55,12 @@ const quickCheckQuestions = [
     question:
       'What is the key advantage of using a 2-10V control signal instead of 0-10V for modulating actuators?',
     options: [
-      '2-10V signals are more accurate',
+      'High temperatures require heat-resistant cables and equipment',
+      'Each phase has equal impedance with the same phase angle',
+      'Absolute duties must be complied with; qualified duties are subject to \\\\\\\\\\\\\\\'reasonably practicable\\\\\\\\\\\\\\\'',
       '2-10V allows detection of cable faults since 0V indicates a broken connection',
-      '2-10V actuators are cheaper',
-      '2-10V provides faster response times',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'With a 2-10V signal, the minimum valid control signal is 2V rather than 0V. If the signal drops to 0V, the BMS can detect this as a cable break or fault rather than a valid minimum position command. This provides important fault detection capability for critical applications.',
   },
@@ -68,10 +68,10 @@ const quickCheckQuestions = [
     id: 'damper-torque',
     question: 'When sizing a damper actuator, what is the most critical parameter to calculate?',
     options: [
-      'The voltage supply available',
+      'How accessories connect to distribution boards',
       'The required torque based on damper area and static pressure',
-      'The colour of the actuator housing',
-      "The manufacturer's warranty period",
+      'Measuring electrical characteristics using instruments',
+      'Safety – so circuits can be identified and isolated quickly',
     ],
     correctIndex: 1,
     explanation:
@@ -85,10 +85,10 @@ const quizQuestions = [
     question:
       'A 2-port modulating valve actuator is specified as 0-10V with 4mm stroke. What does the stroke measurement indicate?',
     options: [
-      'The diameter of the actuator output shaft',
+      'Wrapping around a person whose clothing is on fire or smothering small fires',
       'The linear travel distance of the valve stem from fully closed to fully open',
-      'The maximum cable length for the control signal',
-      'The response time in seconds',
+      'The maximum fault current the device can safely interrupt',
+      'Measuring electrical characteristics using instruments',
     ],
     correctAnswer: 1,
     explanation:
@@ -98,12 +98,12 @@ const quizQuestions = [
     id: 2,
     question: 'What type of valve actuator motion is required for a butterfly valve?',
     options: [
-      'Linear motion',
+      '0-10V DC or 2-10V DC analogue',
+      'The valve opens completely',
       'Rotary motion (typically 90°)',
-      'Reciprocating motion',
-      'Helical motion',
+      '10Nm (25% above calculated)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Butterfly valves use a rotating disc to control flow, requiring 90° rotation from fully closed to fully open. A rotary actuator is therefore required to operate butterfly valves, unlike globe valves which require linear actuators.',
   },
@@ -111,12 +111,12 @@ const quizQuestions = [
     id: 3,
     question: "An actuator datasheet specifies 'running time 120 seconds'. What does this mean?",
     options: [
-      'The actuator warranty is 120 seconds',
+      'Simpler wiring using open/close signals without position feedback',
+      'Consistent running time regardless of load, but no intermediate positioning',
+      'Safety considerations - 24V is SELV (Safety Extra-Low Voltage), reducing electric shock risk',
       'The time for the actuator to travel from fully closed to fully open (or vice versa)',
-      'The actuator can only operate for 120 seconds continuously',
-      'The minimum control signal pulse width required',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Running time (or stroke time) is the time taken for the actuator to complete its full travel range. A 120-second running time is typical for HVAC modulating actuators, providing smooth control without rapid hunting.',
   },
@@ -124,8 +124,13 @@ const quizQuestions = [
     id: 4,
     question:
       'What is the typical control signal range for a modulating damper actuator in a BMS system?',
-    options: ['24V AC on/off', '0-10V DC or 2-10V DC analogue', '4-20mA only', 'PWM at 1kHz'],
-    correctAnswer: 1,
+    options: [
+      '0-10V DC or 2-10V DC analogue',
+      '10Nm (25% above calculated)',
+      'Rotary motion (typically 90°)',
+      'Spring return, normally open',
+    ],
+    correctAnswer: 0,
     explanation:
       'Modulating damper actuators in BMS applications typically use 0-10V DC or 2-10V DC analogue control signals. The voltage corresponds proportionally to the damper position (e.g., 0V = 0% open, 10V = 100% open).',
   },
@@ -136,8 +141,8 @@ const quizQuestions = [
     options: [
       'The valve closes completely',
       'The valve opens completely',
-      'The valve remains in its last position',
       'The valve moves to 50% position',
+      'The valve remains in its last position',
     ],
     correctAnswer: 1,
     explanation:
@@ -162,12 +167,12 @@ const quizQuestions = [
     question:
       'What is the primary advantage of a three-point floating control signal over analogue 0-10V?',
     options: [
-      'More precise positioning',
+      'To ensure the actuator body does not rotate, potentially damaging wiring or pipework',
+      'Consistent running time regardless of load, but no intermediate positioning',
+      'The time for the actuator to travel from fully closed to fully open (or vice versa)',
       'Simpler wiring using open/close signals without position feedback',
-      'Faster response time',
-      'Lower power consumption',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       'Three-point floating control uses simple open/close/stop signals rather than analogue voltage, requiring only relay outputs from the controller. This is simpler and cheaper for basic applications where precise positioning is not critical.',
   },
@@ -176,12 +181,12 @@ const quizQuestions = [
     question:
       'A BMS specification requires fail-safe heating. Which actuator configuration should be specified for the LTHW flow valve?',
     options: [
-      'Non-spring return, normally closed',
-      'Spring return, normally closed',
       'Spring return, normally open',
       'Non-spring return, normally open',
+      'Non-spring return, normally closed',
+      'Spring return, normally closed',
     ],
-    correctAnswer: 2,
+    correctAnswer: 0,
     explanation:
       'For fail-safe heating, the valve must open on power failure to maintain heat. A spring return normally open (NO) actuator ensures the heating valve opens if power or control signal is lost, preventing freeze conditions.',
   },
@@ -189,10 +194,10 @@ const quizQuestions = [
     id: 9,
     question: 'What is the purpose of the anti-rotation feature on a linear valve actuator?',
     options: [
-      'To prevent theft of the actuator',
+      'Consistent running time regardless of load, but no intermediate positioning',
       'To ensure the actuator body does not rotate, potentially damaging wiring or pipework',
-      'To increase the actuator torque output',
-      'To reduce the running time',
+      'Simpler wiring using open/close signals without position feedback',
+      'The time for the actuator to travel from fully closed to fully open (or vice versa)',
     ],
     correctAnswer: 1,
     explanation:
@@ -202,8 +207,13 @@ const quizQuestions = [
     id: 10,
     question:
       'A modulating actuator with position feedback provides a 2-10V signal back to the BMS. The BMS reads 6V. What position is the actuator indicating?',
-    options: ['60% open', '50% open', '40% open', '75% open'],
-    correctAnswer: 1,
+    options: [
+      '60% open',
+      '75% open',
+      '50% open',
+      '40% open',
+    ],
+    correctAnswer: 2,
     explanation:
       'For a 2-10V position feedback signal: 2V = 0% (closed), 10V = 100% (open). The range is 8V. At 6V, the position is (6-2)/(10-2) × 100% = 4/8 × 100% = 50% open.',
   },
@@ -211,8 +221,13 @@ const quizQuestions = [
     id: 11,
     question:
       'What is the typical torque requirement per square metre of damper area for low-pressure air handling systems?',
-    options: ['1-2 Nm/m²', '4-8 Nm/m²', '15-20 Nm/m²', '50-100 Nm/m²'],
-    correctAnswer: 1,
+    options: [
+      '1-2 Nm/m²',
+      '50-100 Nm/m²',
+      '15-20 Nm/m²',
+      '4-8 Nm/m²',
+    ],
+    correctAnswer: 3,
     explanation:
       'For low-pressure ductwork systems (up to 500Pa), the typical torque requirement is 4-8 Nm per square metre of damper area. Higher pressure systems require greater torque, and fire/smoke dampers may require 15+ Nm/m² due to higher friction.',
   },
@@ -221,12 +236,12 @@ const quizQuestions = [
     question:
       'Why might a 24V AC actuator be preferred over a 230V AC actuator for HVAC applications?',
     options: [
-      '24V actuators are more powerful',
       'Safety considerations - 24V is SELV (Safety Extra-Low Voltage), reducing electric shock risk',
-      '24V actuators are always faster',
-      '230V actuators cannot be used with BMS systems',
+      'The maximum differential pressure against which the actuator can fully close the valve',
+      'The time for the actuator to travel from fully closed to fully open (or vice versa)',
+      'Consistent running time regardless of load, but no intermediate positioning',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       '24V AC is a SELV (Safety Extra-Low Voltage) supply, significantly reducing electric shock risk during installation and maintenance. This is particularly important for actuators in accessible locations or where non-electrical personnel may work nearby.',
   },
@@ -235,10 +250,10 @@ const quizQuestions = [
     question:
       "An on/off valve actuator is described as having 'synchronous motor' operation. What characteristic does this provide?",
     options: [
-      'Variable speed control',
+      'To ensure the actuator body does not rotate, potentially damaging wiring or pipework',
       'Consistent running time regardless of load, but no intermediate positioning',
-      'Instant open/close operation',
-      'Built-in position feedback',
+      'The maximum differential pressure against which the actuator can fully close the valve',
+      'Simpler wiring using open/close signals without position feedback',
     ],
     correctAnswer: 1,
     explanation:
@@ -248,12 +263,12 @@ const quizQuestions = [
     id: 14,
     question: "What does 'close-off pressure rating' indicate for a valve actuator combination?",
     options: [
-      'The maximum system static pressure',
+      'Safety considerations - 24V is SELV (Safety Extra-Low Voltage), reducing electric shock risk',
+      'Consistent running time regardless of load, but no intermediate positioning',
       'The maximum differential pressure against which the actuator can fully close the valve',
-      'The pressure at which the valve leaks',
-      'The actuator housing pressure rating',
+      'Simpler wiring using open/close signals without position feedback',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'Close-off pressure rating is the maximum differential pressure across the valve against which the actuator can achieve tight shut-off. Exceeding this rating means the actuator cannot fully close the valve, leading to leakage and poor control.',
   },

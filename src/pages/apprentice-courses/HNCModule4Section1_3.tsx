@@ -33,12 +33,12 @@ const quickCheckQuestions = [
     id: 'pf-definition',
     question: 'Power factor is the ratio of:',
     options: [
-      'Voltage to current',
+      'BS EN 60309-2 (commando/CEE) socket',
+      'Up to 90% or higher heat recovery',
+      'DC does not produce a changing magnetic flux',
       'Real power (kW) to apparent power (kVA)',
-      'Current to voltage',
-      'Reactive power to real power',
     ],
-    correctIndex: 1,
+    correctIndex: 3,
     explanation:
       'Power factor = kW/kVA = cos φ. It represents how effectively electrical power is being converted to useful work output.',
   },
@@ -46,12 +46,12 @@ const quickCheckQuestions = [
     id: 'low-pf-effect',
     question: 'A low power factor (e.g., 0.7) means:',
     options: [
-      'Higher real power consumption',
-      'Lower current for the same kW load',
       'Higher current for the same kW load',
+      'Lower current for the same kW load',
+      'Higher real power consumption',
       'Better energy efficiency',
     ],
-    correctIndex: 2,
+    correctIndex: 0,
     explanation:
       'Low power factor means higher current flows for the same real power (kW). This increases cable losses, requires larger infrastructure, and may incur DNO penalties.',
   },
@@ -60,19 +60,24 @@ const quickCheckQuestions = [
     question: 'Power factor correction capacitors work by:',
     options: [
       'Reducing real power consumption',
-      'Supplying reactive power locally',
       'Increasing supply voltage',
+      'Supplying reactive power locally',
       'Reducing harmonic distortion',
     ],
-    correctIndex: 1,
+    correctIndex: 2,
     explanation:
       'Capacitors supply leading reactive power (kVAr) locally, offsetting the lagging reactive power drawn by inductive loads like motors, reducing the reactive power drawn from supply.',
   },
   {
     id: 'dno-requirement',
     question: 'UK DNOs typically require power factor to be at least:',
-    options: ['0.70', '0.80', '0.85', '0.95'],
-    correctIndex: 3,
+    options: [
+      '0.70',
+      '0.80',
+      '0.95',
+      '0.85',
+    ],
+    correctIndex: 2,
     explanation:
       'UK DNOs require power factor of 0.95 or better at the point of supply. Failure to meet this may result in reactive power charges or requirement to install correction.',
   },
@@ -83,19 +88,24 @@ const quizQuestions = [
     id: 1,
     question: 'What causes a lagging power factor in building services?',
     options: [
-      'Resistive heating loads',
-      'LED lighting with PFC',
+      'The test current passes through earth causing imbalance',
       'Inductive loads such as motors and transformers',
-      'Oversized cables',
+      'Measure end-to-end resistance of each conductor (L, N, E)',
+      'Enabling - provides framework for regulations',
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation:
       'Inductive loads (motors, transformers, fluorescent ballasts) draw lagging reactive current, causing a lagging power factor. The magnetic fields require reactive power to establish.',
   },
   {
     id: 2,
     question: 'A building draws 200kW at 0.8 power factor. What is the apparent power (kVA)?',
-    options: ['160 kVA', '200 kVA', '250 kVA', '280 kVA'],
+    options: [
+      '280 kVA',
+      '160 kVA',
+      '250 kVA',
+      '200 kVA',
+    ],
     correctAnswer: 2,
     explanation:
       'kVA = kW ÷ power factor = 200 ÷ 0.8 = 250 kVA. The building requires 250 kVA supply capacity despite only using 200kW.',
@@ -104,12 +114,12 @@ const quizQuestions = [
     id: 3,
     question: 'What is reactive power?',
     options: [
-      'Power lost as heat in cables',
+      'Measure multiple parameters: V, I, kW, kVA, kVAr, PF, harmonics',
+      'To take reasonable care of themselves and others affected by their actions',
+      'To capture system performance data over time for analysis and verification',
       'Power that oscillates between source and load without doing work',
-      'Power used by emergency systems',
-      'Power from renewable sources',
     ],
-    correctAnswer: 1,
+    correctAnswer: 3,
     explanation:
       "Reactive power (kVAr) is power that oscillates between the source and the reactive components (inductors, capacitors) in the load. It doesn't perform useful work but still loads the supply.",
   },
@@ -117,8 +127,13 @@ const quizQuestions = [
     id: 4,
     question:
       'If power factor improves from 0.8 to 0.95, the current drawn (for same kW) reduces by:',
-    options: ['About 5%', 'About 10%', 'About 16%', 'About 25%'],
-    correctAnswer: 2,
+    options: [
+      'About 16%',
+      'About 10%',
+      'About 5%',
+      'About 25%',
+    ],
+    correctAnswer: 0,
     explanation:
       'Current ratio = pf1/pf2 = 0.8/0.95 = 0.84, so current reduces to 84% of original. This is a 16% reduction in current for the same real power.',
   },
@@ -126,10 +141,10 @@ const quizQuestions = [
     id: 5,
     question: 'Where should power factor correction capacitors ideally be installed?',
     options: [
-      'Only at the main incomer',
+      'To prevent insulation damage on sharp edges',
       'As close to the inductive loads as practical',
-      'In the substation only',
-      'After the energy meter',
+      '24 hours maximum as per BS 5266-1',
+      'An ID card confirming qualifications and competence',
     ],
     correctAnswer: 1,
     explanation:
@@ -138,8 +153,13 @@ const quizQuestions = [
   {
     id: 6,
     question: 'What is the power factor triangle relationship?',
-    options: ['kVA² = kW² + kVAr²', 'kW² = kVA² + kVAr²', 'kVAr² = kW² + kVA²', 'kW = kVA × kVAr'],
-    correctAnswer: 0,
+    options: [
+      'kVAr² = kW² + kVA²',
+      'kW² = kVA² + kVAr²',
+      'kVA² = kW² + kVAr²',
+      'kW = kVA × kVAr',
+    ],
+    correctAnswer: 2,
     explanation:
       'The power triangle shows: kVA² = kW² + kVAr². Apparent power (kVA) is the vector sum of real power (kW) and reactive power (kVAr).',
   },
@@ -147,12 +167,12 @@ const quizQuestions = [
     id: 7,
     question: 'Why might automatic power factor correction be needed?',
     options: [
+      'Power stored and returned by inductors and capacitors',
+      'Kinetic (water) → mechanical (turbine/generator) → electrical',
+      'Verify the generator is isolated and cannot start automatically',
       'To handle variable loads that change power factor',
-      'To increase energy consumption',
-      'To reduce supply voltage',
-      'To increase harmonic content',
     ],
-    correctAnswer: 0,
+    correctAnswer: 3,
     explanation:
       'Automatic PFC systems switch capacitor banks in and out as load varies, maintaining target power factor. Fixed correction can lead to over-correction (leading pf) at low loads.',
   },
@@ -160,19 +180,24 @@ const quizQuestions = [
     id: 8,
     question: 'What is the effect of over-correction (power factor > 1.0 leading)?',
     options: [
-      'Improved efficiency',
       'Voltage rise at the point of connection',
-      'Reduced cable losses',
-      'Lower DNO charges',
+      'Load requirements and current demand',
+      'They can lock clients into using a single vendor',
+      'The condenser outlet (liquid line)',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
       'Over-correction creates leading power factor which can cause voltage rise, potentially exceeding supply voltage limits. This can damage equipment and is penalised by some DNOs.',
   },
   {
     id: 9,
     question: 'A motor draws 50kW at 0.75 pf lagging. What kVAr correction brings this to 0.95 pf?',
-    options: ['22 kVAr', '28 kVAr', '33 kVAr', '44 kVAr'],
+    options: [
+      '22 kVAr',
+      '28 kVAr',
+      '33 kVAr',
+      '44 kVAr',
+    ],
     correctAnswer: 1,
     explanation:
       'At 0.75 pf: kVAr = 50 × tan(cos⁻¹0.75) = 50 × 0.882 = 44.1 kVAr. At 0.95 pf: kVAr = 50 × tan(cos⁻¹0.95) = 50 × 0.329 = 16.4 kVAr. Correction needed = 44.1 - 16.4 = 27.7 ≈ 28 kVAr',
@@ -182,11 +207,11 @@ const quizQuestions = [
     question: 'Why is power factor particularly important for DNO supply capacity?',
     options: [
       'It affects the colour of supply cables',
+      'It affects the supply frequency',
       'DNO transformers and cables are rated in kVA, not kW',
       'It determines the electricity tariff rate',
-      'It affects the supply frequency',
     ],
-    correctAnswer: 1,
+    correctAnswer: 2,
     explanation:
       'DNO infrastructure (transformers, cables) is rated by current-carrying capacity, which relates to kVA not kW. Poor power factor uses more of this capacity for the same useful power.',
   },
