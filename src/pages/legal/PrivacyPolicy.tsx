@@ -357,9 +357,25 @@ const PrivacyPolicy = () => {
                       </td>
                       <td className="py-2 px-3">USA (DPA in place)</td>
                     </tr>
-                    <tr>
+                    <tr className="border-b border-white/5">
                       <td className="py-2 px-3">RevenueCat</td>
                       <td className="py-2 px-3">Subscription management</td>
+                      <td className="py-2 px-3">USA (DPA in place)</td>
+                    </tr>
+                    <tr className="border-b border-white/5">
+                      <td className="py-2 px-3">Meta</td>
+                      <td className="py-2 px-3">
+                        Ad measurement &amp; remarketing (Pixel + Conversions API, marketing-cookie
+                        consent only)
+                      </td>
+                      <td className="py-2 px-3">USA (DPA in place)</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 px-3">Instantly (Leadsy/Vector)</td>
+                      <td className="py-2 px-3">
+                        Company-level visitor identification via reverse-IP lookup (B2B sales
+                        outreach, marketing-cookie consent only)
+                      </td>
                       <td className="py-2 px-3">USA (DPA in place)</td>
                     </tr>
                   </tbody>

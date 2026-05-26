@@ -18,6 +18,12 @@ import { storageGetSync, storageGetJSONSync } from '@/utils/storage';
 const META_PIXEL_ID = import.meta.env.VITE_META_PIXEL_ID as string | undefined;
 const GOOGLE_ADS_ID = import.meta.env.VITE_GOOGLE_ADS_ID as string | undefined;
 const GA4_MEASUREMENT_ID = import.meta.env.VITE_GA4_MEASUREMENT_ID as string | undefined;
+// Instantly Vector (leadsy.ai) — company-reveal visitor identification.
+// Reverse-DNS lookup turns visitor IPs into the companies they work at, so
+// the outbound team can see which UK contractors are browsing the site.
+// PID is not secret (it's served in the script tag in every visitor's HTML)
+// so we hardcode the prod value here — no env var dance.
+const VECTOR_PID = 's71vdG1yUMH7KCaD';
 
 const COOKIE_CONSENT_KEY = 'elec-mate-cookie-consent';
 const COOKIE_PREFERENCES_KEY = 'elec-mate-cookie-preferences';
@@ -33,6 +39,7 @@ declare global {
 
 let metaPixelLoaded = false;
 let gtagLoaded = false;
+let vectorLoaded = false;
 let consentDefaultSet = false;
 
 /**
@@ -159,6 +166,25 @@ function loadGtag(): void {
   console.log('[marketing-pixels] gtag loaded', { GA4_MEASUREMENT_ID, GOOGLE_ADS_ID });
 }
 
+function loadVector(): void {
+  if (vectorLoaded) return;
+  if (typeof window === 'undefined') return;
+
+  // Instantly Vector — drop the <script> dynamically so it's only loaded
+  // when marketing consent has been given. Once present it self-initialises
+  // on script.onload (no extra fbq-style init call needed).
+  const script = document.createElement('script');
+  script.id = 'vtag-ai-js';
+  script.async = true;
+  script.src = 'https://r2.leadsy.ai/tag.js';
+  script.dataset.pid = VECTOR_PID;
+  script.dataset.version = '062024';
+  document.head.appendChild(script);
+
+  vectorLoaded = true;
+  console.log('[marketing-pixels] Vector (Instantly) loaded', VECTOR_PID);
+}
+
 /**
  * Initialise marketing pixels if consent is granted. Safe to call repeatedly.
  */
@@ -166,6 +192,7 @@ export function initMarketingPixels(): void {
   if (!hasMarketingConsent()) return;
   loadMetaPixel();
   loadGtag();
+  loadVector();
 }
 
 /**
@@ -184,6 +211,13 @@ export function shutdownMarketingPixels(): void {
       ad_user_data: 'denied',
       ad_personalization: 'denied',
     });
+  }
+  if (vectorLoaded) {
+    // Vector has no JS-callable opt-out — remove the script tag so future
+    // page loads won't re-init it; the current session keeps whatever it's
+    // already buffered (no continuous tracking from this point regardless).
+    document.getElementById('vtag-ai-js')?.remove();
+    vectorLoaded = false;
   }
 }
 
