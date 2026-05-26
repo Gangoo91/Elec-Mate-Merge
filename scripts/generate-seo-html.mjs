@@ -353,6 +353,24 @@ function injectExtraSchemas(html, schemas) {
  * Quiz schema with sample questions still renders client-side via Helmet
  * because pulling them in JS would mean parsing TypeScript banks here.
  */
+// Map of base exam slug → display title, used for the parent-exam crumb
+// on topic pages. Kept inline rather than importing from the TS catalog
+// to keep this script dependency-free at runtime.
+const MOCK_EXAM_TITLE_BY_SLUG = {
+  'am2-online-knowledge-test': 'AM2 Online Knowledge Test',
+  '2391-inspection-testing': 'C&G 2391 Inspection & Testing',
+  'asbestos-awareness': 'Asbestos Awareness',
+  'confined-spaces': 'Confined Spaces',
+  'coshh': 'COSHH',
+  'cscs-card': 'CSCS Card HS&E Test',
+  'fire-safety': 'Fire Safety',
+  'first-aid': 'First Aid at Work',
+  'ipaf': 'IPAF MEWP Operator',
+  'manual-handling': 'Manual Handling',
+  'pasma': 'PASMA Towers for Users',
+  'working-at-height': 'Working at Height',
+};
+
 function buildMockExamSchemas({ url, title, description, slug, isHub }) {
   const schemas = [];
   // LearningResource — the headline schema for a free educational resource
@@ -384,14 +402,29 @@ function buildMockExamSchemas({ url, title, description, slug, isHub }) {
       ],
     });
   } else {
+    // Topic landings have a 4-level crumb (Home → Mock Exams → Exam → Topic).
+    const slugParts = slug.split('/');
+    const isTopic = slugParts.length === 2;
+    const parentExamTitle = isTopic ? MOCK_EXAM_TITLE_BY_SLUG[slugParts[0]] : null;
+    const itemListElement = [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
+      { '@type': 'ListItem', position: 2, name: 'Mock Exams', item: `${BASE_URL}/mock-exams` },
+    ];
+    if (isTopic && parentExamTitle) {
+      itemListElement.push({
+        '@type': 'ListItem',
+        position: 3,
+        name: parentExamTitle,
+        item: `${BASE_URL}/mock-exams/${slugParts[0]}`,
+      });
+      itemListElement.push({ '@type': 'ListItem', position: 4, name: title, item: url });
+    } else {
+      itemListElement.push({ '@type': 'ListItem', position: 3, name: title, item: url });
+    }
     schemas.push({
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: BASE_URL },
-        { '@type': 'ListItem', position: 2, name: 'Mock Exams', item: `${BASE_URL}/mock-exams` },
-        { '@type': 'ListItem', position: 3, name: title, item: url },
-      ],
+      itemListElement,
     });
   }
   // FAQPage — basic, exam-format Q&As reusable across every page
@@ -439,20 +472,87 @@ function buildMockExamSchemas({ url, title, description, slug, isHub }) {
 }
 
 // ---------------------------------------------------------------------------
+// 5b. Expand the dynamic topic route /mock-exams/:examSlug/:topicSlug.
+//     Without this the prerender would try to write a literal
+//     `:examSlug/:topicSlug` directory. Each concrete (exam, topic) pair
+//     generates its own static HTML with topic-specific title +
+//     description + canonical, so Google indexes ~67 long-tail landings.
+// ---------------------------------------------------------------------------
+
+// Banks that participate in topic landings — mirrors src/components/seo/
+// mockExamTopicRegistry.ts. Update both files together when adding new
+// topic-enabled exams.
+const TOPIC_REGISTRY = [
+  { examSlug: 'am2-online-knowledge-test', shortName: 'AM2 Online Knowledge Test', subject: 'AM2 questions', bankFile: 'src/data/apprentice-courses/am2/questionBank.ts', questionsPerExam: 15, timeLimit: 25 },
+  { examSlug: '2391-inspection-testing', shortName: 'C&G 2391 Inspection & Testing', subject: 'inspection and testing questions', bankFile: 'src/data/upskilling/inspectionTestingMockExamData.ts', questionsPerExam: 20, timeLimit: 25 },
+  { examSlug: 'asbestos-awareness', shortName: 'Asbestos Awareness', subject: 'asbestos awareness questions', bankFile: 'src/data/general-upskilling/asbestosMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
+  { examSlug: 'confined-spaces', shortName: 'Confined Spaces', subject: 'confined spaces questions', bankFile: 'src/data/general-upskilling/confinedSpacesMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
+  { examSlug: 'coshh', shortName: 'COSHH', subject: 'COSHH questions', bankFile: 'src/data/general-upskilling/coshhMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
+  { examSlug: 'cscs-card', shortName: 'CSCS Card HS&E Test', subject: 'CSCS test questions', bankFile: 'src/data/general-upskilling/cscsCardMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
+  { examSlug: 'fire-safety', shortName: 'Fire Safety', subject: 'fire safety questions', bankFile: 'src/data/general-upskilling/fireSafetyMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
+  { examSlug: 'first-aid', shortName: 'First Aid at Work', subject: 'first aid questions', bankFile: 'src/data/general-upskilling/firstAidMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
+  { examSlug: 'ipaf', shortName: 'IPAF MEWP Operator', subject: 'IPAF questions', bankFile: 'src/data/general-upskilling/ipafMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
+  { examSlug: 'manual-handling', shortName: 'Manual Handling', subject: 'manual handling questions', bankFile: 'src/data/general-upskilling/manualHandlingMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
+  { examSlug: 'pasma', shortName: 'PASMA Towers for Users', subject: 'PASMA questions', bankFile: 'src/data/general-upskilling/pasmaMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
+  { examSlug: 'working-at-height', shortName: 'Working at Height', subject: 'working at height questions', bankFile: 'src/data/general-upskilling/workingAtHeightMockExamData.ts', questionsPerExam: 15, timeLimit: 20 },
+];
+
+function categoryToSlug(c) {
+  return c.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+// Filter out the dynamic topic route from the main loop, then build
+// concrete entries for every (exam, topic) pair instead.
+const dynamicTopicRouteIdx = routeEntries.findIndex(
+  (r) => r.path === '/mock-exams/:examSlug/:topicSlug'
+);
+if (dynamicTopicRouteIdx >= 0) routeEntries.splice(dynamicTopicRouteIdx, 1);
+
+let topicCount = 0;
+for (const entry of TOPIC_REGISTRY) {
+  const bankPath = join(ROOT, entry.bankFile);
+  if (!existsSync(bankPath)) continue;
+  const bankSrc = readFileSync(bankPath, 'utf-8');
+  // Count per-category from category: 'X' literals.
+  const counts = new Map();
+  for (const m of bankSrc.matchAll(/category\s*:\s*['"`]([^'"`]+)['"`]/g)) {
+    counts.set(m[1], (counts.get(m[1]) ?? 0) + 1);
+  }
+  for (const [category, qCount] of counts) {
+    if (qCount < 5) continue; // matches resolveTopicPage() guard
+    const slug = categoryToSlug(category);
+    const questionsPerExam = Math.min(entry.questionsPerExam, qCount);
+    const title = `${category} — ${entry.shortName} Mock Exam 2026`;
+    const description = `Practice ${qCount} ${entry.subject} focused on ${category}. Free mock exam, ${questionsPerExam} random questions, ${entry.timeLimit}-minute timer, instant results + explanations. No sign-up.`;
+    routeEntries.push({
+      path: `${MOCK_EXAM_PREFIX}/${entry.examSlug}/${slug}`,
+      componentName: '__TOPIC__',
+      __topicMeta: { title, description, examSlug: entry.examSlug, topicSlug: slug, category },
+    });
+    topicCount++;
+  }
+}
+console.log(`Expanded ${topicCount} topic landings from ${TOPIC_REGISTRY.length} exams`);
+
+// ---------------------------------------------------------------------------
 // 6. Main — iterate routes, extract metadata, write files
 // ---------------------------------------------------------------------------
 let generated = 0;
 let skipped = 0;
 let fallback = 0;
 
-for (const { path: routePath, componentName } of routeEntries) {
+for (const { path: routePath, componentName, __topicMeta } of routeEntries) {
   // Resolve source file
   const sourceFile = importMap.get(componentName) || fileMap.get(componentName);
 
   let title = null;
   let description = null;
 
-  if (sourceFile) {
+  // Dynamic topic landings come with pre-built meta — no file to parse.
+  if (__topicMeta) {
+    title = __topicMeta.title;
+    description = __topicMeta.description;
+  } else if (sourceFile) {
     const meta = extractMetadata(sourceFile);
     if (meta) {
       title = meta.title;

@@ -77,6 +77,9 @@ const L3CareerDevelopmentMockExamPage = lazy(
   () => import('@/pages/mock-exams/L3CareerDevelopmentMockExamPage')
 );
 
+// Dynamic topic landings — /mock-exams/:examSlug/:topicSlug
+const MockExamTopicPage = lazy(() => import('@/pages/mock-exams/MockExamTopicPage'));
+
 const wrap = (El: React.ComponentType) => (
   <LazyRoute>
     <El />
@@ -128,6 +131,12 @@ const MockExamRoutes = () => (
     <Route path="level-3-inspection-testing" element={wrap(L3InspectionTestingMockExamPage)} />
     <Route path="level-3-systems-design" element={wrap(L3SystemsDesignMockExamPage)} />
     <Route path="level-3-career-development" element={wrap(L3CareerDevelopmentMockExamPage)} />
+
+    {/* Dynamic topic landings — resolved at runtime against the topic
+        registry. Falls back to /mock-exams/<exam> if the topic slug
+        doesn't match a known category. Must come LAST so it doesn't
+        shadow the static routes above. */}
+    <Route path=":examSlug/:topicSlug" element={wrap(MockExamTopicPage)} />
   </Routes>
 );
 

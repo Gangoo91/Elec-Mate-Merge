@@ -142,6 +142,7 @@ Allow: /sitemap-training.xml
 Allow: /sitemap-pages.xml
 Allow: /sitemap-compare.xml
 Allow: /sitemap-images.xml
+Allow: /sitemap-mock-exams.xml
 
 # ==========================================================
 # AI SEARCH & LLM CRAWLERS

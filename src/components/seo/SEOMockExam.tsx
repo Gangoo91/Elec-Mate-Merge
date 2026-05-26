@@ -1,22 +1,26 @@
 /**
  * SEOMockExam — public, SEO-friendly mock exam component.
  *
- * Differs from the in-app StandardMockExam: no auth dependency, simpler UI,
- * renders sample questions in the initial HTML so Googlebot indexes the
- * actual question content, and emits LearningResource + Quiz JSON-LD.
+ * Three states sharing one tight surface:
+ *   1. PRE-START  — what crawlers index + what visitors see first.
+ *                   No nested H1/eyebrow chrome — the H1 lives on the
+ *                   wrapper page (<PublicMockExamPage>). This component
+ *                   contributes: stats line, Start button, sample
+ *                   questions (as <details> so they're indexable but
+ *                   don't dominate the viewport).
+ *   2. ACTIVE     — minimal progress bar + question + options.
+ *   3. RESULTS    — score card, weak areas, per-topic breakdown, retake,
+ *                   then the "Come to Elec-Mate" conversion block.
  *
- * Soft-gate philosophy: the full exam is free and unauthenticated; full
- * explanations show on submit; the sign-up CTA at the bottom is a nudge,
- * not a paywall. This maximises share-ability and dwell time (both SEO
- * positive) at the cost of some conversion friction.
+ * Mobile-flat per CLAUDE.md memory rule: no card chrome below sm:, edge-
+ * to-edge via px-4 on the page wrapper.
  *
- * Takes any question array shaped { id, question, options, correctAnswer,
- * explanation? } — works across StandardMockQuestion, QuizQuestion, AM2Question,
- * Level 2/3 QuestionBank rows without adapters.
+ * Phase 1 option shuffle is wired here — per-attempt salt so retakes
+ * feel fresh; fixed salt for the SSR sample questions so crawl HTML is
+ * consistent across crawls.
  */
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Clock,
   CheckCircle2,
@@ -24,11 +28,13 @@ import {
   RotateCcw,
   Play,
   Award,
-  BookOpen,
   AlertTriangle,
   Target,
-  TrendingUp,
+  ChevronRight,
+  Flag,
 } from 'lucide-react';
+import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface SEOMockExamQuestion {
   id: number | string;
@@ -42,10 +48,9 @@ export interface SEOMockExamQuestion {
 }
 
 interface SEOMockExamProps {
-  /** Page-level: shown in the LearningResource schema + above-the-fold heading. */
+  /** Plain exam name — only used inside aria-labels + the conversion block;
+   * NOT rendered as a heading (H1 lives on the wrapper page). */
   examName: string;
-  /** Short description for schema + the intro paragraph the user reads. */
-  examDescription: string;
   /** The full question bank — must contain at least `questionsPerExam` entries. */
   questionBank: SEOMockExamQuestion[];
   /** How many questions the user gets per attempt. Default 25. */
@@ -54,9 +59,7 @@ interface SEOMockExamProps {
   timeLimitMinutes?: number;
   /** Pass threshold (%). Default 70. */
   passThreshold?: number;
-  /** Canonical URL — used in schema + share links. */
-  canonicalUrl: string;
-  /** Sign-up CTA target (e.g. /auth/signup?ref=mock-exam-first-aid). */
+  /** Sign-up CTA shown in the conversion block AFTER results. */
   signupCta?: { label: string; href: string; subline?: string };
 }
 
@@ -71,14 +74,13 @@ function shuffle<T>(arr: T[]): T[] {
 
 export function SEOMockExam({
   examName,
-  examDescription,
   questionBank,
   questionsPerExam = 25,
   timeLimitMinutes = 30,
   passThreshold = 70,
-  canonicalUrl,
   signupCta,
 }: SEOMockExamProps) {
+  const location = useLocation();
   const [started, setStarted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [questions, setQuestions] = useState<SEOMockExamQuestion[]>([]);
@@ -89,15 +91,18 @@ export function SEOMockExam({
   const [startedAt, setStartedAt] = useState<number | null>(null);
   const [finishedAt, setFinishedAt] = useState<number | null>(null);
 
-  // Stable sample of first 5 questions rendered server-side for SEO.
-  // Picks deterministically so HTML is consistent across crawls.
+  // 3 sample questions rendered server-side for SEO. Picked deterministically
+  // and shuffled with a fixed salt so crawl HTML is identical between crawls.
   const sampleQuestions = useMemo(
-    () => questionBank.slice(0, Math.min(5, questionBank.length)),
+    () => shuffleAllQuestionOptions(questionBank.slice(0, Math.min(3, questionBank.length)), 0),
     [questionBank]
   );
 
   const start = useCallback(() => {
-    const picked = shuffle(questionBank).slice(0, questionsPerExam);
+    const picked = shuffleAllQuestionOptions(
+      shuffle(questionBank).slice(0, questionsPerExam),
+      createShuffleSalt()
+    );
     setQuestions(picked);
     setAnswers(new Array(picked.length).fill(null));
     setCurrent(0);
@@ -107,15 +112,59 @@ export function SEOMockExam({
     setAttempt((n) => n + 1);
     setStartedAt(Date.now());
     setFinishedAt(null);
+    // Scroll the exam into view so the user lands at the first question
+    // rather than scrolling back to the now-hidden hero.
+    requestAnimationFrame(() => {
+      document.getElementById('mock-exam')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
   }, [questionBank, questionsPerExam, timeLimitMinutes]);
 
   const submit = useCallback(() => {
     setSubmitted(true);
     setStarted(false);
-    setFinishedAt(Date.now());
-  }, []);
+    const finished = Date.now();
+    setFinishedAt(finished);
 
-  // Timer
+    // Anonymous attempt logging — fire-and-forget, never blocks UI. Used
+    // to surface social-proof stats ("X attempts this week") on these
+    // landing pages once we have meaningful volume. RLS enforces sane
+    // bounds; here we additionally gate sub-30-second attempts so
+    // misclicks + obvious bots don't pollute the dataset.
+    if (typeof window === 'undefined' || !startedAt) return;
+    const timeSec = Math.round((finished - startedAt) / 1000);
+    if (timeSec < 30 || questions.length === 0) return;
+    const finalCorrect = questions.reduce(
+      (n, q, i) => (answers[i] !== null && answers[i] === q.correctAnswer ? n + 1 : n),
+      0
+    );
+    const finalPct = Math.round((finalCorrect / questions.length) * 100);
+    // Path is /mock-exams/<exam>[/<topic>]
+    const parts = location.pathname.split('/').filter(Boolean);
+    const examSlug = parts[1];
+    const topicSlug = parts[2] ?? null;
+    if (!examSlug) return;
+    const payload = {
+      exam_slug: examSlug,
+      topic_slug: topicSlug,
+      score: finalCorrect,
+      total_questions: questions.length,
+      percentage: finalPct,
+      time_taken_seconds: timeSec,
+      passed: finalPct >= passThreshold,
+      user_agent_hint: navigator.userAgent?.slice(0, 500) ?? null,
+      referrer: document.referrer?.slice(0, 1000) || null,
+    };
+    void supabase
+      .from('seo_mock_attempts')
+      .insert(payload)
+      .then(({ error }) => {
+        if (error && import.meta.env.DEV) {
+          // Don't surface to users — silent. Dev-only console for visibility.
+          console.warn('[seo_mock_attempts insert failed]', error.message);
+        }
+      });
+  }, [startedAt, questions, answers, passThreshold, location.pathname]);
+
   useEffect(() => {
     if (!started || submitted) return;
     if (secondsLeft <= 0) {
@@ -136,10 +185,8 @@ export function SEOMockExam({
   );
   const percent = questions.length > 0 ? Math.round((correctCount / questions.length) * 100) : 0;
   const passed = percent >= passThreshold;
+  const passMarkAbs = Math.ceil((questionsPerExam * passThreshold) / 100);
 
-  // Per-category breakdown — group answered questions by `category` or `topic`,
-  // count correct / total per group. Skip if neither field exists across the
-  // exam (e.g. L2 module 1 uses a plain Question shape with no taxonomy).
   const categoryBreakdown = useMemo(() => {
     const bucketKey = (q: SEOMockExamQuestion) => q.category || q.topic || '';
     const buckets = new Map<string, { correct: number; total: number }>();
@@ -164,13 +211,11 @@ export function SEOMockExam({
       .sort((a, b) => a.percent - b.percent);
   }, [questions, answers]);
 
-  // Topics scored < 60% are flagged as "weak" — actionable feedback.
   const weakAreas = useMemo(
     () => categoryBreakdown.filter((c) => c.total >= 2 && c.percent < 60),
     [categoryBreakdown]
   );
 
-  // Time taken (only meaningful after submit).
   const timeTakenSec = startedAt && finishedAt ? Math.round((finishedAt - startedAt) / 1000) : 0;
   const formatDuration = (s: number) => {
     const mm = Math.floor(s / 60);
@@ -178,143 +223,124 @@ export function SEOMockExam({
     return `${mm}m ${String(ss).padStart(2, '0')}s`;
   };
 
-  // ----- JSON-LD: LearningResource + Quiz (rich snippet hints) -----
-  const schemas = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'LearningResource',
-      name: examName,
-      description: examDescription,
-      url: canonicalUrl,
-      educationalLevel: 'professional',
-      learningResourceType: 'Quiz',
-      teaches: examName,
-      isAccessibleForFree: true,
-      inLanguage: 'en-GB',
-      provider: {
-        '@type': 'Organization',
-        name: 'Elec-Mate',
-        url: 'https://www.elec-mate.com',
-      },
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Quiz',
-      name: examName,
-      about: examDescription,
-      educationalAlignment: { '@type': 'AlignmentObject', alignmentType: 'assesses' },
-      hasPart: sampleQuestions.map((q) => ({
-        '@type': 'Question',
-        name: q.question,
-        suggestedAnswer: q.options.map((opt, i) => ({
-          '@type': 'Answer',
-          text: opt,
-          ...(i === q.correctAnswer ? { acceptedAnswer: true } : {}),
-        })),
-        acceptedAnswer: {
-          '@type': 'Answer',
-          text: q.options[q.correctAnswer],
-          ...(q.explanation ? { encodingFormat: 'text/plain', text: q.explanation } : {}),
-        },
-      })),
-    },
-  ];
+  const answeredCount = answers.filter((a) => a !== null).length;
+  const progressPct = questions.length > 0 ? (answeredCount / questions.length) * 100 : 0;
 
   return (
     <>
-      <Helmet>
-        {schemas.map((s, i) => (
-          <script key={`seo-mock-schema-${i}`} type="application/ld+json">
-            {JSON.stringify(s)}
-          </script>
-        ))}
-      </Helmet>
-
-      {/* PRE-START — intro + sample questions (visible to crawlers + first-time visitors). */}
+      {/* PRE-START — stats line + CTA + sample questions */}
       {!started && !submitted && (
-        <div className="space-y-6">
-          <div className="rounded-2xl bg-gradient-to-br from-yellow-500/[0.08] to-transparent border border-yellow-500/20 p-6 sm:p-8">
-            <div className="flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-yellow-400 mb-3">
-              <BookOpen className="w-4 h-4" />
-              Free mock exam
+        <div className="space-y-8">
+          {/* Stats line — one row, no card chrome */}
+          <dl
+            aria-label="Exam at a glance"
+            className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-white/75"
+          >
+            <div className="inline-flex items-baseline gap-1.5">
+              <dt className="sr-only">Questions</dt>
+              <dd className="font-semibold text-white tabular-nums">{questionsPerExam}</dd>
+              <span>questions</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white leading-tight">{examName}</h2>
-            <p className="mt-3 text-white/80 leading-relaxed">{examDescription}</p>
-            <ul className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm text-white/85">
-              <li className="rounded-xl bg-white/[0.04] border border-white/10 p-3">
-                <div className="text-yellow-400 font-bold text-lg">{questionsPerExam}</div>
-                <div className="text-white/65 text-xs uppercase tracking-wider">questions</div>
-              </li>
-              <li className="rounded-xl bg-white/[0.04] border border-white/10 p-3">
-                <div className="text-yellow-400 font-bold text-lg">{timeLimitMinutes} min</div>
-                <div className="text-white/65 text-xs uppercase tracking-wider">time limit</div>
-              </li>
-              <li className="rounded-xl bg-white/[0.04] border border-white/10 p-3">
-                <div className="text-yellow-400 font-bold text-lg">{passThreshold}%</div>
-                <div className="text-white/65 text-xs uppercase tracking-wider">to pass</div>
-              </li>
-              <li className="rounded-xl bg-white/[0.04] border border-white/10 p-3">
-                <div className="text-yellow-400 font-bold text-lg">{questionBank.length}</div>
-                <div className="text-white/65 text-xs uppercase tracking-wider">question bank</div>
-              </li>
-            </ul>
+            <span aria-hidden className="text-white/25">
+              ·
+            </span>
+            <div className="inline-flex items-baseline gap-1.5">
+              <dt className="sr-only">Time limit</dt>
+              <dd className="font-semibold text-white tabular-nums">{timeLimitMinutes}</dd>
+              <span>min</span>
+            </div>
+            <span aria-hidden className="text-white/25">
+              ·
+            </span>
+            <div className="inline-flex items-baseline gap-1.5">
+              <dt className="sr-only">Pass mark</dt>
+              <dd className="font-semibold text-white tabular-nums">{passThreshold}%</dd>
+              <span>
+                to pass{' '}
+                <span className="text-white/55">
+                  ({passMarkAbs}/{questionsPerExam})
+                </span>
+              </span>
+            </div>
+            <span aria-hidden className="text-white/25">
+              ·
+            </span>
+            <div className="inline-flex items-baseline gap-1.5">
+              <dt className="sr-only">Bank size</dt>
+              <dd className="font-semibold text-white tabular-nums">{questionBank.length}</dd>
+              <span>question bank</span>
+            </div>
+          </dl>
+
+          {/* The CTA. The whole page's job. */}
+          <div>
             <button
               type="button"
               onClick={start}
-              className="mt-6 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-base touch-manipulation transition-colors"
+              className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 h-14 px-7 rounded-2xl bg-yellow-500 hover:bg-yellow-400 active:scale-[0.99] text-black font-bold text-base sm:text-[17px] touch-manipulation transition-all shadow-lg shadow-yellow-500/20"
+              aria-label={`Start ${examName}`}
             >
               <Play className="w-5 h-5" />
               Start the mock exam
+              <ChevronRight className="w-5 h-5 -mr-1 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
             </button>
-            <p className="mt-3 text-white/55 text-xs">
-              Free, no sign-up needed. Questions randomly selected on each attempt. Your answers
-              stay in your browser.
+            <p className="mt-3 text-[13px] text-white/55">
+              Free · no sign-up · timer can be ignored · retake as many times as you want
             </p>
           </div>
 
-          {/* SAMPLE QUESTIONS — visible to crawlers; gives Google real exam content to index. */}
-          <section aria-labelledby="sample-q-heading">
+          {/* Sample questions — collapsed by default. <details> is native,
+              indexed by Google when expanded HTML is in the source. Two-
+              column grid on lg:+ so the section doesn't run as a thin
+              ribbon on desktop monitors. */}
+          <section aria-labelledby="sample-q-heading" className="pt-2">
             <h2
               id="sample-q-heading"
-              className="text-xl sm:text-2xl font-bold text-white mb-4 mt-8"
+              className="text-[13px] font-semibold uppercase tracking-[0.18em] text-yellow-400 mb-4"
             >
-              Sample questions from this mock exam
+              Sample questions
             </h2>
-            <p className="text-white/65 text-sm mb-6">
-              Here are 5 example questions from the bank. The full mock exam picks{' '}
-              {questionsPerExam} at random from {questionBank.length} questions each time you start.
-            </p>
-            <ol className="space-y-6">
+            <ol className="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-3">
               {sampleQuestions.map((q, idx) => (
-                <li key={q.id} className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-                  <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-yellow-400 mb-2">
-                    Question {idx + 1}
-                    {q.topic ? ` · ${q.topic}` : ''}
-                  </div>
-                  <p className="text-white font-semibold leading-relaxed">{q.question}</p>
-                  <ul className="mt-3 space-y-2">
-                    {q.options.map((opt, i) => (
-                      <li
-                        key={i}
-                        className={`rounded-lg px-3 py-2 text-sm ${
-                          i === q.correctAnswer
-                            ? 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-200'
-                            : 'bg-white/[0.03] border border-white/[0.06] text-white/80'
-                        }`}
-                      >
-                        <span className="font-medium mr-2">{String.fromCharCode(65 + i)}.</span>
-                        {opt}
-                        {i === q.correctAnswer && (
-                          <CheckCircle2 className="w-4 h-4 inline ml-2 text-emerald-300" />
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                  {q.explanation && (
-                    <p className="mt-3 text-sm text-white/70 italic">
-                      <strong className="not-italic text-white/85">Why:</strong> {q.explanation}
-                    </p>
-                  )}
+                <li key={q.id}>
+                  <details className="group h-full rounded-xl bg-white/[0.03] border border-white/[0.08] open:bg-white/[0.05]">
+                    <summary className="cursor-pointer list-none px-4 py-3 sm:px-5 sm:py-4 flex items-start gap-3 touch-manipulation">
+                      <span className="text-[11px] font-semibold text-yellow-400/85 tabular-nums shrink-0 mt-0.5">
+                        {String(idx + 1).padStart(2, '0')}
+                      </span>
+                      <span className="text-white text-[14.5px] leading-snug flex-1">
+                        {q.question}
+                      </span>
+                      <ChevronRight className="w-4 h-4 text-white/40 shrink-0 mt-0.5 group-open:rotate-90 transition-transform" />
+                    </summary>
+                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 pl-[3.25rem] sm:pl-[3.5rem]">
+                      <ul className="space-y-1.5 mt-1">
+                        {q.options.map((opt, i) => (
+                          <li
+                            key={i}
+                            className={`text-[13.5px] leading-snug px-3 py-2 rounded-lg ${
+                              i === q.correctAnswer
+                                ? 'bg-emerald-500/10 text-emerald-200 border border-emerald-500/30'
+                                : 'bg-white/[0.02] text-white/70 border border-white/[0.05]'
+                            }`}
+                          >
+                            <span className="font-medium mr-2 text-white/55">
+                              {String.fromCharCode(65 + i)}.
+                            </span>
+                            {opt}
+                            {i === q.correctAnswer && (
+                              <CheckCircle2 className="w-3.5 h-3.5 inline ml-1.5 -mt-0.5 text-emerald-300" />
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                      {q.explanation && (
+                        <p className="mt-3 text-[13px] text-white/65 leading-relaxed">
+                          <span className="font-semibold text-white/80">Why:</span> {q.explanation}
+                        </p>
+                      )}
+                    </div>
+                  </details>
                 </li>
               ))}
             </ol>
@@ -322,33 +348,57 @@ export function SEOMockExam({
         </div>
       )}
 
-      {/* IN-EXAM */}
+      {/* ACTIVE EXAM — mobile-flat, desktop two-column with sidebar.
+          Desktop sidebar (lg:+) shows timer + question grid so the user
+          can hop between questions without scrolling, matching the
+          in-app StandardMockExam pattern. */}
       {started && questions.length > 0 && (
-        <div className="space-y-4">
-          <div className="sticky top-2 z-10 rounded-xl bg-elec-dark/95 backdrop-blur border border-white/15 p-3 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2 text-white/80 text-sm">
-              <Clock className="w-4 h-4 text-yellow-400" />
-              <span className="tabular-nums font-semibold">
-                {Math.floor(secondsLeft / 60)}:{String(secondsLeft % 60).padStart(2, '0')}
-              </span>
+        <div id="mock-exam" className="lg:grid lg:grid-cols-[1fr_18rem] lg:gap-8">
+          {/* Mobile sticky header — hidden on lg:+ where the sidebar takes over */}
+          <div className="lg:hidden sticky top-[4.5rem] z-10 -mx-4 sm:mx-0 bg-[#0a0a0a]/95 backdrop-blur-md border-b border-white/10 sm:border sm:rounded-xl sm:border-white/15 mb-4">
+            <div className="px-4 sm:px-4 py-2.5 flex items-center justify-between gap-3 text-[13px]">
+              <div className="flex items-center gap-2 text-white/80">
+                <Clock className="w-3.5 h-3.5 text-yellow-400" />
+                <span className="tabular-nums font-semibold">
+                  {Math.floor(secondsLeft / 60)}:{String(secondsLeft % 60).padStart(2, '0')}
+                </span>
+              </div>
+              <div className="text-white/65 tabular-nums">
+                {current + 1} <span className="text-white/35">/ {questions.length}</span>
+              </div>
+              <button
+                type="button"
+                onClick={submit}
+                className="text-[12.5px] font-medium text-yellow-400 hover:text-yellow-300 touch-manipulation"
+              >
+                Submit early
+              </button>
             </div>
-            <div className="text-white/65 text-sm tabular-nums">
-              Question {current + 1} of {questions.length}
+            <div className="h-0.5 bg-white/10 sm:rounded-b-xl overflow-hidden">
+              <div
+                className="h-full bg-yellow-400 transition-all duration-300"
+                style={{ width: `${progressPct}%` }}
+              />
             </div>
-            <button
-              type="button"
-              onClick={submit}
-              className="text-xs font-medium text-yellow-400 hover:text-yellow-300"
-            >
-              Submit early
-            </button>
           </div>
 
-          <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5">
-            <p className="text-white font-semibold leading-relaxed">
+          {/* Question column */}
+          <div className="lg:rounded-2xl lg:bg-white/[0.02] lg:border lg:border-white/[0.06] lg:p-8">
+            <div className="hidden lg:flex items-center justify-between mb-6 pb-5 border-b border-white/[0.06]">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-yellow-400">
+                  Question {current + 1} of {questions.length}
+                </p>
+                <h2 className="sr-only">Question {current + 1}</h2>
+              </div>
+              <div className="text-[12.5px] text-white/65 tabular-nums">
+                {answeredCount} answered
+              </div>
+            </div>
+            <p className="text-white text-[16px] sm:text-[17px] lg:text-[19px] font-semibold leading-relaxed">
               {questions[current].question}
             </p>
-            <ul className="mt-4 space-y-2">
+            <ul className="mt-5 lg:mt-7 space-y-2.5 lg:space-y-3">
               {questions[current].options.map((opt, i) => (
                 <li key={i}>
                   <button
@@ -358,145 +408,210 @@ export function SEOMockExam({
                       a[current] = i;
                       setAnswers(a);
                     }}
-                    className={`w-full text-left rounded-lg px-3 py-3 text-sm transition-colors touch-manipulation ${
+                    className={`group w-full text-left rounded-xl px-4 py-3.5 lg:px-5 lg:py-4 min-h-[56px] lg:min-h-[64px] flex items-start gap-3 lg:gap-4 transition-colors touch-manipulation active:scale-[0.99] ${
                       answers[current] === i
-                        ? 'bg-yellow-500/15 border border-yellow-500/40 text-white'
-                        : 'bg-white/[0.03] border border-white/[0.06] text-white/85 hover:bg-white/[0.06]'
+                        ? 'bg-yellow-500/15 ring-1 ring-yellow-500/50 text-white'
+                        : 'bg-white/[0.03] border border-white/[0.08] text-white/85 hover:bg-white/[0.06] hover:border-white/[0.15]'
                     }`}
                   >
-                    <span className="font-medium mr-2">{String.fromCharCode(65 + i)}.</span>
-                    {opt}
+                    <span
+                      className={`shrink-0 inline-flex items-center justify-center h-7 w-7 lg:h-8 lg:w-8 rounded-lg text-[12px] lg:text-[13px] font-bold transition-colors ${
+                        answers[current] === i
+                          ? 'bg-yellow-500 text-black'
+                          : 'bg-white/[0.06] text-white/70 group-hover:text-white'
+                      }`}
+                    >
+                      {String.fromCharCode(65 + i)}
+                    </span>
+                    <span className="text-[14.5px] sm:text-[15px] lg:text-[16px] leading-snug pt-0.5">
+                      {opt}
+                    </span>
                   </button>
                 </li>
               ))}
             </ul>
-          </div>
 
-          <div className="flex items-center justify-between gap-3">
-            <button
-              type="button"
-              onClick={() => setCurrent((c) => Math.max(0, c - 1))}
-              disabled={current === 0}
-              className="h-11 px-4 rounded-xl border border-white/15 text-white/85 hover:bg-white/[0.06] disabled:opacity-40 touch-manipulation"
-            >
-              ← Previous
-            </button>
-            {current < questions.length - 1 ? (
+            <div className="flex items-center justify-between gap-3 mt-6 lg:mt-8 lg:pt-6 lg:border-t lg:border-white/[0.06]">
               <button
                 type="button"
-                onClick={() => setCurrent((c) => Math.min(questions.length - 1, c + 1))}
-                className="h-11 px-5 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-semibold touch-manipulation"
+                onClick={() => setCurrent((c) => Math.max(0, c - 1))}
+                disabled={current === 0}
+                className="h-11 lg:h-12 px-4 lg:px-5 rounded-xl border border-white/15 text-white/80 hover:bg-white/[0.05] disabled:opacity-30 disabled:pointer-events-none touch-manipulation text-[14px] lg:text-[15px]"
               >
-                Next →
+                ← Previous
               </button>
-            ) : (
+              {current < questions.length - 1 ? (
+                <button
+                  type="button"
+                  onClick={() => setCurrent((c) => Math.min(questions.length - 1, c + 1))}
+                  className="h-11 lg:h-12 px-5 lg:px-6 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-semibold touch-manipulation text-[14px] lg:text-[15px]"
+                >
+                  Next →
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={submit}
+                  className="h-11 lg:h-12 px-5 lg:px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold touch-manipulation text-[14px] lg:text-[15px]"
+                >
+                  Submit answers
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Desktop sidebar — timer, progress, question grid, submit */}
+          <aside className="hidden lg:block sticky top-[5rem] self-start space-y-4">
+            <div className="rounded-2xl bg-gradient-to-br from-yellow-500/[0.08] to-transparent border border-yellow-500/30 p-5">
+              <div className="flex items-center gap-2 mb-2">
+                <Clock className="w-4 h-4 text-yellow-400" />
+                <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-yellow-400">
+                  Time remaining
+                </span>
+              </div>
+              <div
+                className={`font-mono text-3xl font-bold tabular-nums leading-none ${
+                  secondsLeft < 300 ? 'text-red-400 animate-pulse' : 'text-white'
+                }`}
+              >
+                {Math.floor(secondsLeft / 60)}:{String(secondsLeft % 60).padStart(2, '0')}
+              </div>
+              <div className="mt-3 h-1.5 bg-white/[0.08] rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-yellow-400 transition-all duration-300"
+                  style={{ width: `${progressPct}%` }}
+                />
+              </div>
+              <p className="mt-2 text-[12px] text-white/65 tabular-nums">
+                {answeredCount} / {questions.length} answered
+              </p>
+            </div>
+
+            <div className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/65 mb-3">
+                Questions
+              </p>
+              <div className="grid grid-cols-5 gap-1.5">
+                {questions.map((_, i) => {
+                  const answered = answers[i] !== null;
+                  const isCurrent = i === current;
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setCurrent(i)}
+                      className={`h-9 rounded-lg text-[12px] font-semibold tabular-nums transition-colors touch-manipulation ${
+                        isCurrent
+                          ? 'bg-yellow-500 text-black shadow-lg shadow-yellow-500/30 scale-105'
+                          : answered
+                            ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25'
+                            : 'bg-white/[0.04] text-white/55 border border-white/[0.06] hover:bg-white/[0.08]'
+                      }`}
+                      aria-label={`Go to question ${i + 1}${answered ? ' (answered)' : ''}`}
+                    >
+                      {i + 1}
+                    </button>
+                  );
+                })}
+              </div>
               <button
                 type="button"
                 onClick={submit}
-                className="h-11 px-5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold touch-manipulation"
+                className="mt-4 w-full h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/25 text-[13px] font-semibold touch-manipulation"
               >
-                Submit answers
+                Submit early
               </button>
-            )}
-          </div>
+            </div>
+          </aside>
         </div>
       )}
 
-      {/* RESULTS */}
+      {/* RESULTS — score + breakdown + conversion */}
       {submitted && (
-        <div className="space-y-6">
+        <div className="space-y-8">
+          {/* Score card */}
           <div
-            className={`rounded-2xl border p-6 sm:p-8 ${
+            className={`rounded-2xl border p-5 sm:p-7 ${
               passed
-                ? 'bg-emerald-500/10 border-emerald-500/30'
-                : 'bg-orange-500/10 border-orange-500/30'
+                ? 'bg-emerald-500/[0.08] border-emerald-500/30'
+                : 'bg-orange-500/[0.08] border-orange-500/30'
             }`}
+            role="status"
+            aria-live="polite"
           >
-            <div className="flex items-center gap-3 mb-3">
+            <div className="flex items-start gap-3">
               {passed ? (
-                <Award className="w-8 h-8 text-emerald-400" />
+                <Award className="w-7 h-7 text-emerald-400 shrink-0 mt-0.5" />
               ) : (
-                <RotateCcw className="w-8 h-8 text-orange-400" />
+                <RotateCcw className="w-7 h-7 text-orange-400 shrink-0 mt-0.5" />
               )}
-              <h2 className="text-2xl sm:text-3xl font-bold text-white">
-                {passed ? 'Pass' : 'Not yet'} — {percent}%
-              </h2>
-            </div>
-            <p className="text-white/85 leading-relaxed">
-              You got <strong>{correctCount}</strong> out of {questions.length} correct. Pass
-              threshold for this exam is {passThreshold}%.
-            </p>
-            <div className="mt-4 grid grid-cols-3 gap-3 sm:max-w-md">
-              <div className="rounded-xl bg-white/[0.04] border border-white/10 p-3">
-                <div className="text-xl font-bold text-white tabular-nums">{percent}%</div>
-                <div className="text-[10px] uppercase tracking-wider text-white/65">score</div>
-              </div>
-              <div className="rounded-xl bg-white/[0.04] border border-white/10 p-3">
-                <div className="text-xl font-bold text-white tabular-nums">
-                  {correctCount}/{questions.length}
-                </div>
-                <div className="text-[10px] uppercase tracking-wider text-white/65">correct</div>
-              </div>
-              <div className="rounded-xl bg-white/[0.04] border border-white/10 p-3">
-                <div className="text-xl font-bold text-white tabular-nums">
-                  {formatDuration(timeTakenSec)}
-                </div>
-                <div className="text-[10px] uppercase tracking-wider text-white/65">time</div>
-              </div>
-            </div>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={start}
-                className="h-11 px-5 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-semibold touch-manipulation"
-              >
-                <RotateCcw className="w-4 h-4 inline mr-2" />
-                Try again with fresh questions
-              </button>
-              {signupCta && (
-                <Link
-                  to={signupCta.href}
-                  className="h-11 px-5 rounded-xl border border-yellow-500/40 hover:bg-yellow-500/10 text-yellow-400 font-semibold inline-flex items-center touch-manipulation"
+              <div className="min-w-0">
+                <p
+                  className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${
+                    passed ? 'text-emerald-300' : 'text-orange-300'
+                  }`}
                 >
-                  {signupCta.label}
-                </Link>
-              )}
+                  {passed ? 'Pass' : 'Not yet'}
+                </p>
+                <p className="text-3xl sm:text-4xl font-bold text-white tabular-nums leading-none mt-1">
+                  {percent}%
+                </p>
+                <p className="mt-2 text-[14px] text-white/80 leading-relaxed">
+                  {correctCount} of {questions.length} correct · {formatDuration(timeTakenSec)} ·
+                  pass mark {passThreshold}%
+                </p>
+              </div>
             </div>
-            {signupCta?.subline && (
-              <p className="mt-2 text-white/55 text-xs">{signupCta.subline}</p>
-            )}
+            <button
+              type="button"
+              onClick={start}
+              className="mt-5 inline-flex items-center justify-center gap-2 h-11 px-5 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-semibold touch-manipulation text-[14px]"
+            >
+              <RotateCcw className="w-4 h-4" />
+              Try again with fresh questions
+            </button>
           </div>
 
-          {/* Weak-areas callout — actionable feedback. Only shown if there are
-              categories scored < 60% with at least 2 questions in the set. */}
+          {/* Weak areas — only if there are sub-60% topics with ≥2 Qs */}
           {weakAreas.length > 0 && (
-            <div className="rounded-2xl bg-orange-500/[0.08] border border-orange-500/30 p-5 sm:p-6">
-              <h3 className="text-white font-bold flex items-center gap-2 mb-3">
-                <AlertTriangle className="w-5 h-5 text-orange-400" />
-                Topics to revise before your next attempt
-              </h3>
-              <ul className="space-y-2">
+            <section
+              aria-labelledby="weak-heading"
+              className="rounded-2xl bg-orange-500/[0.05] border border-orange-500/20 p-5 sm:p-6"
+            >
+              <h2
+                id="weak-heading"
+                className="text-white font-semibold flex items-center gap-2 text-[15px]"
+              >
+                <AlertTriangle className="w-4 h-4 text-orange-400" />
+                Topics to revise
+              </h2>
+              <ul className="mt-3 space-y-2">
                 {weakAreas.map((c) => (
-                  <li key={c.name} className="flex items-center justify-between gap-3">
-                    <span className="text-white/85 text-sm">{c.name}</span>
-                    <span className="text-orange-300 text-sm font-semibold tabular-nums">
+                  <li key={c.name} className="flex items-center justify-between gap-3 text-[14px]">
+                    <span className="text-white/85">{c.name}</span>
+                    <span className="text-orange-300 tabular-nums font-medium shrink-0">
                       {c.correct}/{c.total} · {c.percent}%
                     </span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </section>
           )}
 
-          {/* Per-category breakdown — visible bar-chart style. Skipped only if
-              question bank has neither `category` nor `topic` fields. */}
+          {/* Per-topic breakdown */}
           {categoryBreakdown.length > 0 && (
-            <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 sm:p-6">
-              <h3 className="text-white font-bold flex items-center gap-2 mb-4">
-                <Target className="w-5 h-5 text-yellow-400" />
+            <section
+              aria-labelledby="breakdown-heading"
+              className="rounded-2xl bg-white/[0.03] border border-white/[0.08] p-5 sm:p-6"
+            >
+              <h2
+                id="breakdown-heading"
+                className="text-white font-semibold flex items-center gap-2 text-[15px]"
+              >
+                <Target className="w-4 h-4 text-yellow-400" />
                 Score by topic
-              </h3>
-              <ul className="space-y-3">
+              </h2>
+              <ul className="mt-4 space-y-3">
                 {categoryBreakdown.map((c) => {
                   const tone =
                     c.percent >= passThreshold
@@ -506,105 +621,143 @@ export function SEOMockExam({
                         : 'bg-orange-500';
                   return (
                     <li key={c.name}>
-                      <div className="flex items-center justify-between text-sm mb-1.5">
+                      <div className="flex items-center justify-between text-[13.5px] mb-1.5">
                         <span className="text-white/85">{c.name}</span>
-                        <span className="text-white/65 tabular-nums">
+                        <span className="text-white/55 tabular-nums">
                           {c.correct}/{c.total} · {c.percent}%
                         </span>
                       </div>
-                      <div className="h-1.5 rounded-full bg-white/[0.08] overflow-hidden">
+                      <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
                         <div className={`h-full ${tone}`} style={{ width: `${c.percent}%` }} />
                       </div>
                     </li>
                   );
                 })}
               </ul>
-              {passed && (
-                <p className="mt-4 text-emerald-300/85 text-sm flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4" />
-                  Pass mark hit. Re-take for a different set of questions to confirm consistency.
-                </p>
-              )}
-            </div>
+            </section>
           )}
 
+          {/* Review — collapsed details so the page doesn't blow up below */}
           <section aria-labelledby="review-heading">
-            <h2 id="review-heading" className="text-xl sm:text-2xl font-bold text-white mb-4">
+            <h2
+              id="review-heading"
+              className="text-[13px] font-semibold uppercase tracking-[0.18em] text-yellow-400 mb-3"
+            >
               Review your answers
             </h2>
-            <ol className="space-y-4">
+            <ol className="space-y-2">
               {questions.map((q, idx) => {
                 const userAnswer = answers[idx];
                 const isCorrect = userAnswer === q.correctAnswer;
                 return (
-                  <li
-                    key={`${attempt}-${q.id}`}
-                    className={`rounded-2xl border p-5 ${
-                      userAnswer === null
-                        ? 'bg-white/[0.04] border-white/10'
-                        : isCorrect
-                          ? 'bg-emerald-500/[0.06] border-emerald-500/20'
-                          : 'bg-red-500/[0.06] border-red-500/20'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider mb-2">
-                      <span className="text-white/55">Q{idx + 1}</span>
-                      {userAnswer === null ? (
-                        <span className="text-white/65">Skipped</span>
-                      ) : isCorrect ? (
-                        <span className="text-emerald-300 flex items-center gap-1">
-                          <CheckCircle2 className="w-3.5 h-3.5" />
-                          Correct
+                  <li key={`${attempt}-${q.id}`}>
+                    <details
+                      className={`group rounded-xl border ${
+                        userAnswer === null
+                          ? 'bg-white/[0.03] border-white/[0.08]'
+                          : isCorrect
+                            ? 'bg-emerald-500/[0.05] border-emerald-500/20'
+                            : 'bg-red-500/[0.05] border-red-500/20'
+                      }`}
+                    >
+                      <summary className="cursor-pointer list-none px-4 py-3 sm:px-5 sm:py-3.5 flex items-start gap-3 touch-manipulation">
+                        <span className="text-[11px] font-semibold text-white/45 tabular-nums shrink-0 mt-0.5">
+                          {String(idx + 1).padStart(2, '0')}
                         </span>
-                      ) : (
-                        <span className="text-red-300 flex items-center gap-1">
-                          <XCircle className="w-3.5 h-3.5" />
-                          Incorrect
+                        {userAnswer === null ? (
+                          <span className="text-[11px] font-semibold text-white/55 shrink-0 mt-0.5">
+                            Skipped
+                          </span>
+                        ) : isCorrect ? (
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                        ) : (
+                          <XCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                        )}
+                        <span className="text-white text-[14px] leading-snug flex-1">
+                          {q.question}
                         </span>
-                      )}
-                    </div>
-                    <p className="text-white font-semibold leading-relaxed">{q.question}</p>
-                    <ul className="mt-3 space-y-1.5 text-sm">
-                      {q.options.map((opt, i) => {
-                        const isUserPick = userAnswer === i;
-                        const isCorrectOpt = i === q.correctAnswer;
-                        return (
-                          <li
-                            key={i}
-                            className={`rounded-lg px-3 py-2 ${
-                              isCorrectOpt
-                                ? 'bg-emerald-500/10 text-emerald-200 border border-emerald-500/30'
-                                : isUserPick
-                                  ? 'bg-red-500/10 text-red-200 border border-red-500/30'
-                                  : 'bg-white/[0.03] text-white/65 border border-white/[0.05]'
-                            }`}
-                          >
-                            <span className="font-medium mr-2">{String.fromCharCode(65 + i)}.</span>
-                            {opt}
-                            {isCorrectOpt && (
-                              <span className="ml-2 text-emerald-300 text-xs font-medium">
-                                ← correct
-                              </span>
-                            )}
-                            {isUserPick && !isCorrectOpt && (
-                              <span className="ml-2 text-red-300 text-xs font-medium">
-                                ← your answer
-                              </span>
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                    {q.explanation && (
-                      <p className="mt-3 text-sm text-white/70 italic">
-                        <strong className="not-italic text-white/85">Why:</strong> {q.explanation}
-                      </p>
-                    )}
+                        <ChevronRight className="w-4 h-4 text-white/40 shrink-0 mt-0.5 group-open:rotate-90 transition-transform" />
+                      </summary>
+                      <div className="px-4 pb-4 sm:px-5 sm:pb-5 pl-[3.25rem] sm:pl-[3.5rem]">
+                        <ul className="space-y-1.5 mt-1">
+                          {q.options.map((opt, i) => {
+                            const isUserPick = userAnswer === i;
+                            const isCorrectOpt = i === q.correctAnswer;
+                            return (
+                              <li
+                                key={i}
+                                className={`text-[13px] leading-snug px-3 py-2 rounded-lg ${
+                                  isCorrectOpt
+                                    ? 'bg-emerald-500/10 text-emerald-200 border border-emerald-500/30'
+                                    : isUserPick
+                                      ? 'bg-red-500/10 text-red-200 border border-red-500/30'
+                                      : 'bg-white/[0.02] text-white/60 border border-white/[0.05]'
+                                }`}
+                              >
+                                <span className="font-medium mr-2 text-white/55">
+                                  {String.fromCharCode(65 + i)}.
+                                </span>
+                                {opt}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                        {q.explanation && (
+                          <p className="mt-3 text-[13px] text-white/65 leading-relaxed">
+                            <span className="font-semibold text-white/80">Why:</span>{' '}
+                            {q.explanation}
+                          </p>
+                        )}
+                      </div>
+                    </details>
                   </li>
                 );
               })}
             </ol>
           </section>
+
+          {/* Conversion — "Like what you see? Come to Elec-Mate." */}
+          {signupCta && (
+            <section
+              aria-labelledby="convert-heading"
+              className="rounded-2xl bg-gradient-to-br from-yellow-500/[0.08] via-yellow-500/[0.04] to-transparent border border-yellow-500/25 p-5 sm:p-7"
+            >
+              <h2
+                id="convert-heading"
+                className="text-white text-[18px] sm:text-[20px] font-bold leading-tight"
+              >
+                Like what you see? The full app goes further.
+              </h2>
+              <ul className="mt-4 space-y-2.5 text-[14px] text-white/85">
+                <li className="flex items-start gap-2.5">
+                  <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
+                  <span>Full question bank, not just the rotation you see here</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
+                  <span>AI explanation on every wrong answer, grounded in BS 7671</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
+                  <span>Progress tracking across attempts + weak-topic deep dives</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="text-yellow-400 mt-0.5 shrink-0">→</span>
+                  <span>AM2 practical simulator + every cert you need on site</span>
+                </li>
+              </ul>
+              <Link
+                to={signupCta.href}
+                className="mt-6 inline-flex items-center justify-center gap-2 h-12 px-6 rounded-xl bg-yellow-500 hover:bg-yellow-400 text-black font-bold text-[15px] touch-manipulation"
+              >
+                {signupCta.label}
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+              {signupCta.subline && (
+                <p className="mt-3 text-[12.5px] text-white/55">{signupCta.subline}</p>
+              )}
+            </section>
+          )}
         </div>
       )}
     </>
