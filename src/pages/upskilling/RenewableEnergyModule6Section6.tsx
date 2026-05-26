@@ -251,7 +251,7 @@ export default function RenewableEnergyModule6Section6() {
           <ConceptBlock
             title="Type 2 — the UK / EU AC EV connector"
             plainEnglish="Type 2 is the universal UK / EU AC EV charging connector. 7-pin design: 3 phases + Neutral + PE + CP (Control Pilot) + PP (Proximity Pilot). Single-phase uses only L1 + N; three-phase uses L1, L2, L3 + N. Same physical connector covers both. Defined by BS EN IEC 62196-2:2022."
-            onSite="Every UK 2025-26 EV ships with a Type 2 vehicle inlet (sometimes called the "Mennekes" connector after the original designer). Every UK Mode 3 wallbox provides a Type 2 socket (untethered) or tethered Type 2 cable. The connector standard guarantees interchangeability across vehicle / wallbox / cable brands."
+            onSite="Every UK 2025-26 EV ships with a Type 2 vehicle inlet (sometimes called the “Mennekes” connector after the original designer). Every UK Mode 3 wallbox provides a Type 2 socket (untethered) or tethered Type 2 cable. The connector standard guarantees interchangeability across vehicle / wallbox / cable brands."
           >
             <p>Type 2 connector details:</p>
             <ul className="list-disc pl-5 space-y-1.5 text-[13.5px] text-white/85 leading-relaxed">

@@ -566,7 +566,7 @@ export default function RenewableEnergyModule6Section4() {
 
           <CommonMistake
             title="Sizing the EV cable for 32 A intermittent instead of 32 A continuous"
-            whatHappens="Installer pulls a 2.5 mm² T+E thinking "the wallbox draws 32 A, but typical UK domestic load is intermittent — 2.5 mm² handles up to 27 A clipped direct so we’re close". The cable runs at sustained 32 A during a charge cycle. Cable thermal rating exceeded; cable insulation degrades; over time, the cable’s insulation breaks down. Could lead to thermal damage or fault."
+            whatHappens="Installer pulls a 2.5 mm² T+E thinking “the wallbox draws 32 A, but typical UK domestic load is intermittent — 2.5 mm² handles up to 27 A clipped direct so we’re close”. The cable runs at sustained 32 A during a charge cycle. Cable thermal rating exceeded; cable insulation degrades; over time, the cable’s insulation breaks down. Could lead to thermal damage or fault."
             doInstead="EV charge cycle = SUSTAINED 32 A for hours. Not intermittent. Cable must be sized per Appendix 4 with the FULL 32 A continuous current as Iz target. 2.5 mm² is too small. 6 mm² (clipped direct) is the typical answer; 10 mm² where grouping or long runs derate the 6 mm² below 32 A. Cert evidence bundle records the cable calc — clearly show the continuous load assumption."
           />
 

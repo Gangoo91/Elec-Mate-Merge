@@ -551,7 +551,7 @@ export default function RenewableEnergyModule6Section8() {
 
           <CommonMistake
             title="Skipping the OPDD / RDC-DD self-tests at commissioning"
-            whatHappens="Installer commissions a new wallbox install but skips the manufacturer-specific OPDD + RDC-DD self-tests — "the manufacturer’s factory test means they’re working". Year-5 EICR finds the OPDD has been failing for an unknown duration (started failing perhaps 2 years ago after a firmware update). Customer has been exposed to the lost-PEN hazard without OPDD coverage during that period. C1 / C2 EICR finding + cert evidence bundle integrity questioned (no baseline to compare against)."
+            whatHappens="Installer commissions a new wallbox install but skips the manufacturer-specific OPDD + RDC-DD self-tests — “the manufacturer’s factory test means they’re working”. Year-5 EICR finds the OPDD has been failing for an unknown duration (started failing perhaps 2 years ago after a firmware update). Customer has been exposed to the lost-PEN hazard without OPDD coverage during that period. C1 / C2 EICR finding + cert evidence bundle integrity questioned (no baseline to compare against)."
             doInstead="Run the OPDD + RDC-DD self-tests at commissioning AND record the results in the cert evidence bundle. The 5-10 minutes of testing time is essential for: (1) confirming the manufacturer-claimed function actually works on this specific unit; (2) establishing the baseline for future EICR comparison; (3) catching factory defects before customer takes ownership. Same principle as baseline capacity testing for BESS (Section 5.8). Cert evidence bundle records the test result with date + instrument used."
           />
 

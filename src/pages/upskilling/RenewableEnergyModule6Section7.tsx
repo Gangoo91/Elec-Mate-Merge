@@ -321,7 +321,7 @@ export default function RenewableEnergyModule6Section7() {
 
           <ConceptBlock
             title="Octopus Intelligent Go — the EV-focused tariff"
-            plainEnglish="Octopus Intelligent Go is the UK 2025-26 dominant EV-tariff (verified at install time — tariffs change). Cheap rate ~7p/kWh between 23:30 and 05:30 (6 hours); standard rate ~27p/kWh outside that window. The "Intelligent" feature: Octopus integrates with the customer’s vehicle or wallbox to automatically schedule charging within the cheap window."
+            plainEnglish="Octopus Intelligent Go is the UK 2025-26 dominant EV-tariff (verified at install time — tariffs change). Cheap rate ~7p/kWh between 23:30 and 05:30 (6 hours); standard rate ~27p/kWh outside that window. The “Intelligent” feature: Octopus integrates with the customer’s vehicle or wallbox to automatically schedule charging within the cheap window."
             onSite="Customer plugs in at 18:00; Octopus + the vehicle / wallbox coordinate to start charging at 23:30 (after the randomised delay). By 05:30, the vehicle is fully charged at 7p/kWh. Tariff savings for typical UK 50 km/day driver: ~£300-£600/year vs flat-rate import. Cert evidence bundle records the tariff in the customer handover pack."
           >
             <p>Intelligent Go install considerations:</p>
