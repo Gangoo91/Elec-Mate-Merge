@@ -26,6 +26,9 @@ const settingsSchema = z.object({
     .optional(),
   // ELE-975 — customer signature box on PDF (opt-in)
   showSignatureBox: z.boolean().optional(),
+  // Bake category markup into displayed item totals on the customer-facing
+  // quote + PDF, hide the explicit markup line.
+  hideMarkupFromCustomer: z.boolean().optional(),
 });
 
 interface QuoteSettingsStepProps {
@@ -315,6 +318,36 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                 )}
               />
             ))}
+          </div>
+
+          {/* Customer-facing presentation toggle — bake markup into line
+              totals so the customer doesn't see a "+X% markup" row. The
+              app's own quote view (QuoteDetailView) still shows the
+              breakdown so you can see your margin. */}
+          <div className="mt-5 flex items-center justify-between py-3 border-t border-white/[0.08]">
+            <div className="pr-3">
+              <p className="text-[14px] font-medium text-white">Hide markup from customer</p>
+              <p className="text-[12px] text-white/70 mt-0.5">
+                Bake the per-category markup into the displayed line prices on the customer's
+                quote and PDF. They see one price per line, no separate markup row. You still
+                see the breakdown in the app.
+              </p>
+            </div>
+            <FormField
+              control={form.control}
+              name="hideMarkupFromCustomer"
+              render={({ field }) => (
+                <FormItem className="p-0 m-0 space-y-0">
+                  <FormControl>
+                    <Switch
+                      checked={field.value === true}
+                      onCheckedChange={field.onChange}
+                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
           </div>
         </div>
       </div>

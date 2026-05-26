@@ -106,6 +106,39 @@ interface ComputeOptions {
   applyOverheadAndProfit?: boolean;
 }
 
+/**
+ * Returns items with per-category markup absorbed into their unit / total
+ * prices when `absorbCategoryAdjustments` is true. Used by customer-facing
+ * surfaces (PublicQuoteView, PDF payload) when the electrician has opted
+ * in via `settings.hideMarkupFromCustomer` — the markup line is hidden in
+ * the totals block and instead baked into the line items so the subtotal
+ * still reconciles to the sum of displayed items.
+ *
+ * Per-item adjustments (`itemAdjustmentPercent`) are already baked into
+ * `getItemAdjustedTotal` and are left visible on the line — those are
+ * typically transparent labels (evening rate etc.) that the customer
+ * expects to see. Only per-category markup is hidden here.
+ */
+export function getDisplayItems(
+  items: QuoteItem[],
+  settings: QuoteSettings | null | undefined,
+  opts: { absorbCategoryAdjustments?: boolean } = {}
+): QuoteItem[] {
+  if (!opts.absorbCategoryAdjustments) return items;
+  const adjustments = settings?.categoryAdjustments;
+  if (!adjustments) return items;
+  return items.map((item) => {
+    const pct = getCategoryAdjustmentPercent(categoryKey(item), settings);
+    if (pct === 0) return item;
+    const multiplier = 1 + pct / 100;
+    const baseQty = item.quantity || 0;
+    const itemAdjusted = getItemAdjustedTotal(item);
+    const newTotal = round2(itemAdjusted * multiplier);
+    const newUnit = baseQty > 0 ? round2(newTotal / baseQty) : item.unitPrice;
+    return { ...item, unitPrice: newUnit, totalPrice: newTotal };
+  });
+}
+
 export function computeQuoteTotals(
   items: QuoteItem[],
   settings: QuoteSettings | null | undefined,

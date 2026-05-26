@@ -121,6 +121,21 @@ export function initSentry() {
         // Old Safari/WebView (<17.4) lacks AbortSignal.timeout. Supabase
         // auth-helpers now feature-detects, so this is historical noise.
         /AbortSignal\.timeout is not a function/i,
+
+        // iOS WKWebView drops its IndexedDB handle after long backgrounding /
+        // OS storage pressure. Surfaces as a transient unhandled rejection
+        // that resolves on the user's next interaction. Not fixable from JS —
+        // the WebKit IDB connection is already gone. Sentry: JAVASCRIPT-REACT-5W.
+        /Connection to Indexed Database server lost/i,
+
+        // Chrome / Google Translate races with React reconciliation: the
+        // translator replaces text nodes mid-render, then React can't find
+        // the node it expected to remove. Fired from /guides pages with
+        // non-English browser locales. Not fixable in app code without
+        // gating every guide container behind translate="no", which would
+        // break the SEO/translation usefulness of those pages.
+        // Sentry: JAVASCRIPT-REACT-A4, JAVASCRIPT-REACT-AE.
+        /Failed to execute 'removeChild' on 'Node'/i,
       ],
 
       // NOTE: We DO NOT ignore these anymore (they were filtered before):
@@ -150,9 +165,12 @@ export function initSentry() {
           if ((error as Error).name === 'AuthApiError') return null;
         }
 
-        // Downgrade network errors to 'warning' — still report but don't alert
+        // Downgrade network errors to 'warning' — still report but don't alert.
+        // AbortError covers the Supabase 30s signal timeout (client.ts:43) —
+        // transient mobile-network or slow-query event, not a server bug.
+        // Sentry: JAVASCRIPT-REACT-58.
         const message = event.exception?.values?.[0]?.value || '';
-        if (/Failed to fetch|NetworkError|fetch failed|net::ERR_/i.test(message)) {
+        if (/Failed to fetch|NetworkError|fetch failed|net::ERR_|AbortError.*(Fetch is aborted|signal timed out)|TimeoutError: signal timed out/i.test(message)) {
           event.level = 'warning';
           event.tags = { ...event.tags, category: 'network' };
         }

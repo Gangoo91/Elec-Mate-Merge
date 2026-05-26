@@ -89,6 +89,13 @@ export interface QuoteSettings {
   // off (opt-in). When the quote has been accepted, the captured signature
   // image is rendered; otherwise blank signature/date lines.
   showSignatureBox?: boolean;
+  // Customer-facing presentation toggle. When true, per-category markups
+  // (categoryAdjustments) are absorbed into the displayed unit/line totals
+  // on the public quote view and PDF, and the explicit "X markup (+Y%)"
+  // line is hidden. Internal views (QuoteDetailView, settings) still show
+  // the breakdown so the electrician can see their margin. Opt-in;
+  // default false preserves existing behaviour.
+  hideMarkupFromCustomer?: boolean;
 }
 
 export interface Quote {

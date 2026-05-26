@@ -98,7 +98,12 @@ function StudyCentreTracker() {
       if (prevCourse && prevSection) {
         const timeOnPage = Date.now() - pageEntryRef.current;
         if (timeOnPage > 10000) {
-          recordProgress(prevCourse, prevSection, 100, true);
+          // recordProgress is mutateAsync — rejects on Supabase timeout. Without
+          // .catch() the rejection bubbles to window.onunhandledrejection and
+          // Sentry captures it as a PostgrestError-shaped UnhandledRejection.
+          recordProgress(prevCourse, prevSection, 100, true).catch((err) => {
+            console.warn('[StudyCentreTracker] auto-complete failed:', err);
+          });
           // Award XP for completing a section (also updates streak via logActivity)
           logActivity({
             activityType: 'study_module' as any,
@@ -113,7 +118,9 @@ function StudyCentreTracker() {
     // This prevents "Continue where you left off" from pointing to a course index
     if (courseKey && sectionKey) {
       const timer = setTimeout(() => {
-        recordProgress(courseKey, sectionKey, 50);
+        recordProgress(courseKey, sectionKey, 50).catch((err) => {
+          console.warn('[StudyCentreTracker] record-progress failed:', err);
+        });
       }, 1000); // 1s delay to avoid recording bounces
 
       // Update last study location — only for actual content pages

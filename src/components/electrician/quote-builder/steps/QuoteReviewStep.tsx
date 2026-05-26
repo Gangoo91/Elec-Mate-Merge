@@ -92,7 +92,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
                 <div key={item.id} className="flex justify-between text-[12px]">
                   <span className="text-white truncate flex-1 mr-3">{item.description}</span>
                   <span className="text-white flex-shrink-0 tabular-nums">
-                    {item.quantity} × £{item.unitPrice.toFixed(2)} = £{item.totalPrice.toFixed(2)}
+                    {item.quantity} × £{(item.unitPrice ?? 0).toFixed(2)} = £{(item.totalPrice ?? 0).toFixed(2)}
                   </span>
                 </div>
               ))}

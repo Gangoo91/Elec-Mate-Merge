@@ -147,11 +147,25 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (invoiceError) {
       console.error('❌ Database error fetching invoice:', invoiceError);
-      throw new Error('Could not find this invoice. It may have been deleted.');
+      // Expected user state (invoice deleted) — return 404 so the client toasts
+      // without Sentry capture. Sentry: REACT-1T.
+      return new Response(
+        JSON.stringify({
+          error: 'invoice_not_found',
+          message: 'Could not find this invoice. It may have been deleted.',
+        }),
+        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     if (!invoice) {
-      throw new Error('Invoice not found or you do not have permission to access it.');
+      return new Response(
+        JSON.stringify({
+          error: 'invoice_not_found',
+          message: 'Invoice not found or you do not have permission to access it.',
+        }),
+        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     const invoiceNumber = invoice.invoice_number || `INV-${invoiceId.substring(0, 8)}`;
@@ -200,8 +214,13 @@ const handler = async (req: Request): Promise<Response> => {
     if (!isValidEmail(clientEmail)) {
       console.error('❌ Invalid client email:', clientEmail);
       console.error('❌ Client data:', JSON.stringify(clientData).substring(0, 300));
-      throw new Error(
-        `Invalid client email address: "${clientEmail || 'missing'}". Please update the client record with a valid email.`
+      // Expected user-data state, not a server error — return 400. Sentry: REACT-1T.
+      return new Response(
+        JSON.stringify({
+          error: 'invalid_client_email',
+          message: `Invalid client email address: "${clientEmail || 'missing'}". Please update the client record with a valid email.`,
+        }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 

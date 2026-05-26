@@ -36,7 +36,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import SignaturePad from '@/components/forms/SignaturePad';
 import { diffQuoteItems, formatDeltaCurrency, QuoteDiff } from '@/utils/quote-diff';
-import { buildCategoryBreakdowns } from '@/utils/quote-calculations';
+import { buildCategoryBreakdowns, getDisplayItems } from '@/utils/quote-calculations';
 import { cn } from '@/lib/utils';
 
 // Brand defaults match the shared email design system fallbacks.
@@ -484,7 +484,16 @@ const PublicQuoteView = () => {
   const isDepositPaid = !!depositInvoice?.paidAt;
   const bookedSlotStart =
     (quote as { booked_slot_start?: string | Date | null }).booked_slot_start || null;
-  const groupedItems = groupItemsByCategory(quote.items || []);
+  // When the electrician has opted to hide their per-category markup from
+  // the customer (settings.hideMarkupFromCustomer), bake it into each
+  // item's displayed unit/total price so the customer-visible sum still
+  // reconciles to the subtotal. The "X markup (+Y%)" totals row is also
+  // suppressed below.
+  const hideMarkup = quote.settings?.hideMarkupFromCustomer === true;
+  const displayItems = getDisplayItems(quote.items || [], quote.settings, {
+    absorbCategoryAdjustments: hideMarkup,
+  });
+  const groupedItems = groupItemsByCategory(displayItems);
   const brandHex = brand.primaryColor;
   const expiryStr = quote.expiryDate.toLocaleDateString('en-GB', {
     day: 'numeric',
@@ -884,8 +893,10 @@ const PublicQuoteView = () => {
                 <span>Subtotal</span>
                 <span className="tabular-nums">{formatCurrency(quote.subtotal)}</span>
               </div>
-              {/* ELE-891 / ELE-973 — per-category adjustment lines with live £ delta */}
-              {categoryBreakdowns
+              {/* ELE-891 / ELE-973 — per-category adjustment lines with live £ delta.
+                  Hidden when the electrician has opted to bake markup into the line
+                  items via settings.hideMarkupFromCustomer. */}
+              {!hideMarkup && categoryBreakdowns
                 .filter((b) => b.categoryAdjustmentDelta !== 0)
                 .map((b) => {
                   const isMarkup = b.categoryAdjustmentDelta > 0;

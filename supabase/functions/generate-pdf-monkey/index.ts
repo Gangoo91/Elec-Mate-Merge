@@ -648,6 +648,26 @@ serve(async (req) => {
         };
       });
 
+      // Customer-facing markup-absorption — same toggle as the quote flow.
+      // When the electrician has opted to hide their per-category markup,
+      // bake it into each line's unit/total price BEFORE processedItems
+      // and categoryTotals are built so the customer sees one combined
+      // price per line and the subtotal reconciles. The category-adjustment
+      // totals lines are short-circuited to empty further down.
+      const invHideMarkupFromCustomer =
+        freshQuote?.settings?.hideMarkupFromCustomer === true;
+      if (invHideMarkupFromCustomer) {
+        const adj = freshQuote?.settings?.categoryAdjustments || {};
+        for (const it of adjustedRawItems) {
+          const pct = typeof adj[it.category] === 'number' ? adj[it.category] : 0;
+          if (pct !== 0) {
+            const multiplier = 1 + pct / 100;
+            it.unitPrice = Math.round(it.unitPrice * multiplier * 100) / 100;
+            it.totalPrice = Math.round(it.totalPrice * multiplier * 100) / 100;
+          }
+        }
+      }
+
       if (showSummaryView) {
         // Summary view: Group items by category (uses item-adjusted totals)
         const categoryTotals: Record<string, number> = {};
@@ -833,10 +853,15 @@ serve(async (req) => {
         (sum, it) => sum + it.totalPrice,
         0
       );
-      const invCategoryAdjustments = buildCategoryAdjustments(
-        adjustedRawItems.map((i) => ({ category: i.category, effectiveTotal: i.totalPrice })),
-        settings
-      );
+      // When hideMarkupFromCustomer is on, the markup is already baked
+      // into adjustedRawItems above — skip the explicit category-adjustment
+      // lines so the template doesn't render them AND we don't double-count.
+      const invCategoryAdjustments = invHideMarkupFromCustomer
+        ? []
+        : buildCategoryAdjustments(
+            adjustedRawItems.map((i) => ({ category: i.category, effectiveTotal: i.totalPrice })),
+            settings
+          );
       const invCategoryAdjustmentDelta = invCategoryAdjustments.reduce(
         (sum, c) => sum + c.delta,
         0
@@ -1095,12 +1120,6 @@ serve(async (req) => {
         };
       });
 
-      // Group items by category for template
-      const labourItems = transformedItems.filter((item: any) => item.category === 'labour');
-      const materialItems = transformedItems.filter((item: any) => item.category === 'materials');
-      const equipmentItems = transformedItems.filter((item: any) => item.category === 'equipment');
-      const manualItems = transformedItems.filter((item: any) => item.category === 'manual');
-
       // Item-adjusted subtotal (before per-category)
       const itemAdjustedSubtotal = transformedItems.reduce(
         (sum: number, item: any) => sum + (item.totalPrice || 0),
@@ -1108,7 +1127,7 @@ serve(async (req) => {
       );
 
       // ELE-891 — per-category adjustments
-      const categoryAdjustmentLines = buildCategoryAdjustments(
+      let categoryAdjustmentLines = buildCategoryAdjustments(
         transformedItems.map((i: any) => ({ category: i.category, effectiveTotal: i.totalPrice })),
         quoteSettings
       );
@@ -1117,6 +1136,32 @@ serve(async (req) => {
         0
       );
       const itemsSubtotal = itemAdjustedSubtotal + categoryAdjustmentDelta;
+
+      // Customer-facing markup-absorption (settings.hideMarkupFromCustomer).
+      // When the electrician opted to hide their per-category markup, bake
+      // it into each item's unit/total price and suppress the explicit
+      // "X markup (+Y%)" lines on the PDF. The subtotal stays at
+      // itemsSubtotal — which already equals the post-scale items sum, so
+      // it still reconciles to the lines the customer sees.
+      const hideMarkupFromCustomer = quoteSettings?.hideMarkupFromCustomer === true;
+      if (hideMarkupFromCustomer) {
+        const adj = quoteSettings?.categoryAdjustments || {};
+        for (const item of transformedItems as any[]) {
+          const pct = typeof adj[item.category] === 'number' ? adj[item.category] : 0;
+          if (pct !== 0) {
+            const multiplier = 1 + pct / 100;
+            item.unitPrice = Math.round(item.unitPrice * multiplier * 100) / 100;
+            item.totalPrice = Math.round(item.totalPrice * multiplier * 100) / 100;
+          }
+        }
+        categoryAdjustmentLines = [];
+      }
+
+      // Group items by category for template (after any markup absorption)
+      const labourItems = transformedItems.filter((item: any) => item.category === 'labour');
+      const materialItems = transformedItems.filter((item: any) => item.category === 'materials');
+      const equipmentItems = transformedItems.filter((item: any) => item.category === 'equipment');
+      const manualItems = transformedItems.filter((item: any) => item.category === 'manual');
 
       const overhead = itemsSubtotal * ((quoteSettings.overheadPercentage || 0) / 100);
       const profit = (itemsSubtotal + overhead) * ((quoteSettings.profitMargin || 0) / 100);

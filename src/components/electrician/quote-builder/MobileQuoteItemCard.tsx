@@ -61,7 +61,7 @@ export const MobileQuoteItemCard = ({
           </div>
           <div>
             <p className="text-xs text-white">Total</p>
-            <p className="font-bold text-primary text-lg">£{item.totalPrice.toFixed(2)}</p>
+            <p className="font-bold text-primary text-lg">£{(item.totalPrice ?? 0).toFixed(2)}</p>
           </div>
         </div>
 

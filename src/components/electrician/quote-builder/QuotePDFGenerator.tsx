@@ -289,8 +289,8 @@ export const generateQuotePDF = async (quote: Partial<Quote>, companyProfile?: C
       return [
         descriptionWithAdjustment,
         item.quantity.toString(),
-        `£${item.unitPrice.toFixed(2)}`,
-        `£${item.totalPrice.toFixed(2)}`,
+        `£${(item.unitPrice ?? 0).toFixed(2)}`,
+        `£${(item.totalPrice ?? 0).toFixed(2)}`,
       ];
     }) || [];
 

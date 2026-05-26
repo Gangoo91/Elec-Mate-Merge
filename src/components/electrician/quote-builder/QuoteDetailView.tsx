@@ -492,10 +492,10 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                         {/* Mobile: Show qty and prices below description */}
                         <div className="flex items-center justify-between sm:hidden text-white text-xs">
                           <span>
-                            Qty: {item.quantity} × £{item.unitPrice.toFixed(2)}
+                            Qty: {item.quantity} × £{(item.unitPrice ?? 0).toFixed(2)}
                           </span>
                           <span className="font-semibold text-elec-yellow">
-                            £{item.totalPrice.toFixed(2)}
+                            £{(item.totalPrice ?? 0).toFixed(2)}
                           </span>
                         </div>
                       </div>
@@ -505,10 +505,10 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                         {item.quantity}
                       </div>
                       <div className="hidden sm:block sm:col-span-2 text-right text-white">
-                        £{item.unitPrice.toFixed(2)}
+                        £{(item.unitPrice ?? 0).toFixed(2)}
                       </div>
                       <div className="hidden sm:block sm:col-span-3 text-right font-semibold text-white">
-                        £{item.totalPrice.toFixed(2)}
+                        £{(item.totalPrice ?? 0).toFixed(2)}
                       </div>
                     </div>
                   ))}

@@ -117,7 +117,15 @@ serve(async (req) => {
       .single();
 
     if (!profile?.stripe_account_id || profile.stripe_account_status !== 'active') {
-      throw new Error('Stripe Connect account not active. Please complete onboarding first.');
+      // Expected user state, not a server error — return 400 so the client can
+      // toast without bubbling through captureException. Sentry: REACT-AC.
+      return new Response(
+        JSON.stringify({
+          error: 'stripe_not_connected',
+          message: 'Stripe Connect account not active. Please complete onboarding first.',
+        }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
     }
 
     // Initialize Stripe
