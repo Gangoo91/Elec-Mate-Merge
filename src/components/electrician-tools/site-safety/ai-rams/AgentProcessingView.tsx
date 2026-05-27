@@ -11,7 +11,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Eyebrow } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
@@ -42,30 +42,45 @@ interface AgentProcessingViewProps {
   installerAgentStatus?: string;
 }
 
-/** Known partial stages, in display order. */
-const PARTIAL_STAGES = [
-  { key: 'rag', label: 'Grounded' },
-  { key: 'hazards', label: 'Hazards' },
-  { key: 'ppe', label: 'PPE' },
-  { key: 'emergency', label: 'Emergency' },
-  { key: 'steps', label: 'Steps' },
-  { key: 'tools', label: 'Tools' },
-  { key: 'materials', label: 'Materials' },
-  { key: 'tips', label: 'Tips' },
-  { key: 'mistakes', label: 'Mistakes' },
-  { key: 'finalise', label: 'Finalised' },
+/**
+ * Editorial timeline rows. Each row maps to one or more rams_partials
+ * stages and resolves to one of three states:
+ *   - done      → a "completing" partial has landed
+ *   - live      → the previous row is done but this row's hasn't yet
+ *   - pending   → not started
+ *
+ * The dual-agent (Health & Safety + Method Statement) split has been
+ * collapsed: each agent is a single ~30-60s OpenAI call with no mid-call
+ * progress signal, so showing per-agent inner bars made one side look
+ * frozen at 0% while the overall progress climbed. The timeline below
+ * shows what's ACTUALLY happening, in order, with the real counts.
+ */
+const TIMELINE = [
+  {
+    key: 'sources',
+    label: 'Reading the brief',
+    sub: 'Pulling in BS 7671, HSE codes and procedural patterns.',
+    completedBy: 'rag',
+  },
+  {
+    key: 'hazards',
+    label: 'Drafting the hazard register',
+    sub: 'Identifying hazards, scoring risk, specifying control measures.',
+    completedBy: 'hazards',
+  },
+  {
+    key: 'method',
+    label: 'Drafting the method statement',
+    sub: 'Building the step-by-step installation procedure.',
+    completedBy: 'steps',
+  },
+  {
+    key: 'finalise',
+    label: 'Final touches',
+    sub: 'PPE, emergency, tools, materials and sign-off.',
+    completedBy: 'finalise',
+  },
 ] as const;
-
-const AGENT_META: Record<string, { label: string; description: string }> = {
-  'health-safety': {
-    label: 'Health & Safety',
-    description: 'Identifying hazards, scoring risk, specifying control measures.',
-  },
-  installer: {
-    label: 'Method Statement',
-    description: 'Building the step-by-step installation procedure.',
-  },
-};
 
 const formatTime = (seconds: number): string => {
   const mins = Math.floor(seconds / 60);
@@ -186,34 +201,32 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
       <div className="space-y-7 sm:space-y-10">
         {/* HERO */}
         <section className="space-y-3">
-          <Eyebrow>{isComplete ? 'RAMS GENERATED' : 'STREAMING RAMS'}</Eyebrow>
+          <Eyebrow>{isComplete ? 'RAMS GENERATED' : 'GENERATING'}</Eyebrow>
           <h2 className="text-[26px] sm:text-[32px] lg:text-[36px] font-semibold tracking-tight leading-[1.05] text-white">
-            <span className="text-elec-yellow">{displayProgress}%</span>{' '}
-            <span className="text-white">{isComplete ? 'complete.' : 'generated.'}</span>
+            <span className="text-elec-yellow tabular-nums">{displayProgress}%</span>{' '}
+            <span className="text-white">{isComplete ? 'complete.' : 'and counting.'}</span>
           </h2>
           <p className="text-[14px] sm:text-[15px] leading-relaxed text-white/85 max-w-2xl">
-            {currentStep ||
-              (isComplete
-                ? 'Your risk assessment and method statement are ready for review.'
-                : 'Two specialists are reading the brief, identifying hazards and building the method statement.')}
+            {isComplete
+              ? 'Your risk assessment and method statement are ready for review.'
+              : (() => {
+                  // Pick the copy from the timeline row currently live, so the
+                  // status sentence tracks what's actually happening.
+                  const liveIdx = TIMELINE.findIndex(
+                    (r) => !partials.has(r.completedBy)
+                  );
+                  if (liveIdx === -1) return TIMELINE[TIMELINE.length - 1].sub;
+                  return TIMELINE[liveIdx].sub;
+                })()}
           </p>
         </section>
 
-        {/* Live progress */}
+        {/* Live progress bar */}
         <section className="space-y-2">
-          <div className="flex items-baseline justify-between gap-4">
-            <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
-              Pipeline
-            </span>
-            <span className="text-[24px] sm:text-[28px] font-semibold tabular-nums text-white">
-              {displayProgress}
-              <span className="text-white/60">%</span>
-            </span>
-          </div>
-          <div className="relative h-px bg-white/[0.06] overflow-hidden">
+          <div className="relative h-1 bg-white/[0.06] overflow-hidden rounded-full">
             <motion.div
               className={cn(
-                'absolute inset-y-0 left-0',
+                'absolute inset-y-0 left-0 rounded-full',
                 isComplete ? 'bg-emerald-400' : 'bg-elec-yellow'
               )}
               animate={{ width: `${Math.max(displayProgress, 2)}%` }}
@@ -226,188 +239,142 @@ export const AgentProcessingView: React.FC<AgentProcessingViewProps> = ({
             </span>
             {!isComplete && estimatedTimeRemaining > 0 && (
               <span className="text-[11px] text-white/60 tabular-nums">
-                ~{formatTime(estimatedTimeRemaining)} remaining
+                ~{formatTime(estimatedTimeRemaining)} to go
               </span>
             )}
           </div>
         </section>
 
-        {/* Live numbers strip — driven by rams_partials realtime channel.
-            Hazards / steps counts fill in as each agent finishes its pass;
-            facets count appears once RAG completes. Escapes the
-            orchestrator's mobile padding for edge-to-edge hairlines. */}
+        {/* Live numbers strip — only shows real counts as they arrive.
+            No fake "Risk assessment 0%" stand-ins (which made one side
+            look frozen). Escapes the orchestrator's mobile padding for
+            edge-to-edge hairlines. */}
         <section className="-mx-4 sm:mx-0 grid grid-cols-3 gap-px bg-black sm:border sm:border-white/[0.08] sm:rounded-2xl sm:overflow-hidden border-y border-white/[0.06]">
           <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-6 sm:py-5">
             <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
-              {liveHazardCount > 0 ? 'Hazards' : 'Risk assessment'}
+              Hazards
             </div>
-            <div className="mt-1 text-[15px] sm:text-[17px] font-semibold tabular-nums text-elec-yellow">
-              {liveHazardCount > 0 ? liveHazardCount : `${hsAgentProgress}%`}
-            </div>
-          </div>
-          <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-6 sm:py-5">
-            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
-              {liveStepCount > 0 ? 'Steps' : 'Method statement'}
-            </div>
-            <div className="mt-1 text-[15px] sm:text-[17px] font-semibold tabular-nums text-white">
-              {liveStepCount > 0 ? liveStepCount : `${installerAgentProgress}%`}
+            <div className="mt-1 text-[17px] sm:text-[20px] font-semibold tabular-nums text-elec-yellow">
+              {liveHazardCount > 0 ? liveHazardCount : '—'}
             </div>
           </div>
           <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-6 sm:py-5">
             <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
-              {liveRagFacets > 0 ? 'Grounded by' : 'Elapsed'}
+              Steps
             </div>
-            <div className="mt-1 text-[15px] sm:text-[17px] font-semibold tabular-nums text-white">
-              {liveRagFacets > 0 ? liveRagFacets : formatTime(liveElapsed)}
+            <div className="mt-1 text-[17px] sm:text-[20px] font-semibold tabular-nums text-white">
+              {liveStepCount > 0 ? liveStepCount : '—'}
+            </div>
+          </div>
+          <div className="bg-[hsl(0_0%_10%)] px-4 py-4 sm:px-6 sm:py-5">
+            <div className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/60">
+              Sources
+            </div>
+            <div className="mt-1 text-[17px] sm:text-[20px] font-semibold tabular-nums text-white/85">
+              {liveRagFacets > 0 ? liveRagFacets : '—'}
             </div>
           </div>
         </section>
 
-        {/* Live feed — each rams_partials row lights up a chip as the
-            pipeline progresses. Mirrors CostEstimateStream's live materials
-            list but compact since RAMS partials are summaries not items. */}
-        {partials.size > 0 && (
-          <section className="space-y-3">
-            <div className="flex items-baseline justify-between gap-3">
-              <Eyebrow>LIVE FEED</Eyebrow>
-              <span className="text-[11px] text-white/60 tabular-nums">
-                {partials.size} of {PARTIAL_STAGES.length}
-              </span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <AnimatePresence>
-                {PARTIAL_STAGES.filter((s) => partials.has(s.key)).map((s) => {
-                  const payload = partials.get(s.key) ?? {};
-                  const detail =
-                    s.key === 'hazards'
-                      ? `${payload.count ?? 0}`
-                      : s.key === 'steps'
-                        ? `${payload.count ?? 0}`
-                        : s.key === 'rag'
-                          ? `${(payload.bs7671FacetCount ?? 0) + (payload.safetyFacetCount ?? 0) + (payload.practicalCount ?? 0)}`
-                          : s.key === 'ppe' || s.key === 'emergency' || s.key === 'tools' || s.key === 'materials' || s.key === 'tips' || s.key === 'mistakes'
-                            ? `${payload.count ?? 0}`
-                            : null;
-                  return (
-                    <motion.div
-                      key={s.key}
-                      initial={{ opacity: 0, y: 4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="inline-flex items-center gap-2 h-8 px-3 rounded-xl bg-[hsl(0_0%_10%)] border border-emerald-500/30 text-[11.5px]"
-                    >
-                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                      <span className="font-medium text-white">{s.label}</span>
-                      {detail !== null && (
-                        <span className="text-emerald-400 tabular-nums">{detail}</span>
-                      )}
-                    </motion.div>
-                  );
-                })}
-              </AnimatePresence>
-            </div>
-          </section>
-        )}
-
-        {/* Stage cards — Done / Live / Queued */}
+        {/* Timeline — every row resolves to done / live / pending based on
+            which rams_partials have arrived. No per-agent inner bars, no
+            "Queued" placeholders that look frozen. */}
         <section className="space-y-4">
           <div className="flex items-baseline justify-between gap-3">
-            <Eyebrow>STAGES</Eyebrow>
+            <Eyebrow>TIMELINE</Eyebrow>
             <span className="text-[11px] text-white/60 tabular-nums">
-              {agentSteps.filter((s) => s.status === 'complete').length} of {agentSteps.length}
+              {TIMELINE.filter((r) => partials.has(r.completedBy)).length} of {TIMELINE.length}
             </span>
           </div>
-          <div className="space-y-3">
-            {agentSteps.map((agent, idx) => {
-              const meta = AGENT_META[agent.name] ?? {
-                label: agent.name,
-                description: '',
-              };
-              const realProgress =
-                agent.name === 'health-safety' ? hsAgentProgress : installerAgentProgress;
-              const isStageComplete = agent.status === 'complete';
-              const isActive = agent.status === 'processing';
-              const isPending = agent.status === 'pending';
+          <ol className="space-y-2">
+            {TIMELINE.map((row, idx) => {
+              const isDone = partials.has(row.completedBy);
+              const firstUndoneIdx = TIMELINE.findIndex(
+                (r) => !partials.has(r.completedBy)
+              );
+              const isLive = !isDone && idx === firstUndoneIdx && !isComplete;
+              const payload = partials.get(row.completedBy) ?? {};
+              let detail: string | null = null;
+              if (row.key === 'sources') {
+                const n =
+                  (payload.bs7671FacetCount ?? 0) +
+                  (payload.safetyFacetCount ?? 0) +
+                  (payload.practicalCount ?? 0);
+                if (n > 0) detail = `${n} sources`;
+              } else if (row.key === 'hazards' && payload.count) {
+                detail = `${payload.count} hazards`;
+              } else if (row.key === 'method' && payload.count) {
+                detail = `${payload.count} steps`;
+              } else if (row.key === 'finalise' && (payload.elapsedSeconds ?? 0) > 0) {
+                detail = `${payload.elapsedSeconds}s total`;
+              }
 
               return (
-                <div
-                  key={agent.name}
+                <li
+                  key={row.key}
                   className={cn(
-                    'bg-[hsl(0_0%_10%)] border rounded-2xl p-4 sm:p-5 transition-colors',
-                    isStageComplete
-                      ? 'border-emerald-500/30'
-                      : isActive
-                        ? 'border-elec-yellow/40'
-                        : 'border-white/[0.08] opacity-60'
+                    'flex items-start gap-3 py-3 px-3 sm:px-4 rounded-xl border transition-colors',
+                    isDone
+                      ? 'border-emerald-500/25 bg-[hsl(0_0%_10%)]'
+                      : isLive
+                        ? 'border-elec-yellow/35 bg-[hsl(0_0%_11%)]'
+                        : 'border-white/[0.06] bg-[hsl(0_0%_9%)]'
                   )}
                 >
-                  <div className="flex items-baseline gap-3">
-                    <span
-                      className={cn(
-                        'text-[10.5px] font-semibold uppercase tracking-[0.18em] tabular-nums shrink-0',
-                        isStageComplete
-                          ? 'text-emerald-400'
-                          : isActive
-                            ? 'text-elec-yellow'
-                            : 'text-white/40'
-                      )}
-                    >
-                      {String(idx + 1).padStart(2, '0')}
-                    </span>
-                    <div className="flex-1 min-w-0">
+                  {/* Status dot — done = filled emerald; live = pulsing yellow; pending = hollow */}
+                  <div className="pt-1 shrink-0">
+                    {isDone ? (
+                      <span className="inline-block h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                    ) : isLive ? (
+                      <span className="relative inline-flex h-2.5 w-2.5 items-center justify-center">
+                        <span className="absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-75 animate-ping" />
+                        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-elec-yellow" />
+                      </span>
+                    ) : (
+                      <span className="inline-block h-2.5 w-2.5 rounded-full border border-white/25" />
+                    )}
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline justify-between gap-3">
                       <div
                         className={cn(
-                          'text-[14.5px] font-semibold tracking-tight flex items-center gap-2',
-                          isStageComplete
-                            ? 'text-emerald-400'
-                            : isActive
+                          'text-[14px] sm:text-[14.5px] font-semibold tracking-tight',
+                          isDone
+                            ? 'text-white'
+                            : isLive
                               ? 'text-elec-yellow'
-                              : 'text-white/70'
+                              : 'text-white/55'
                         )}
                       >
-                        <span>{meta.label}</span>
-                        {isActive && (
-                          <span className="inline-block h-2 w-2 rounded-full bg-elec-yellow animate-pulse" />
+                        {row.label}
+                      </div>
+                      <span
+                        className={cn(
+                          'text-[10.5px] font-semibold uppercase tracking-[0.18em] shrink-0 tabular-nums',
+                          isDone
+                            ? 'text-emerald-400'
+                            : isLive
+                              ? 'text-elec-yellow'
+                              : 'text-white/30'
                         )}
-                      </div>
-                      <div className="mt-1 text-[12.5px] leading-snug text-white/65">
-                        {agent.currentStep || meta.description}
-                      </div>
-                      {/* Per-agent progress bar — only when active */}
-                      {isActive && realProgress > 0 && (
-                        <div className="mt-3 h-px bg-white/[0.06] overflow-hidden">
-                          <motion.div
-                            className="h-full bg-elec-yellow"
-                            animate={{ width: `${realProgress}%` }}
-                            transition={{ duration: 0.4, ease: 'easeOut' }}
-                          />
-                        </div>
-                      )}
+                      >
+                        {isDone ? (detail ?? 'Done') : isLive ? 'Live' : 'Next'}
+                      </span>
                     </div>
-                    <span
+                    <div
                       className={cn(
-                        'text-[10.5px] uppercase tracking-[0.18em] font-semibold shrink-0 tabular-nums',
-                        isStageComplete
-                          ? 'text-emerald-400'
-                          : isActive
-                            ? 'text-elec-yellow'
-                            : 'text-white/30'
+                        'mt-0.5 text-[12.5px] leading-relaxed',
+                        isLive ? 'text-white/75' : 'text-white/55'
                       )}
                     >
-                      {isStageComplete
-                        ? 'Done'
-                        : isActive
-                          ? `${realProgress}%`
-                          : isPending
-                            ? 'Queued'
-                            : ''}
-                    </span>
+                      {row.sub}
+                    </div>
                   </div>
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ol>
         </section>
 
         {/* Cancel — discrete, below the fold */}

@@ -159,6 +159,18 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     setFormattedJsonPreview('');
   }, [formData]);
 
+  // Auto-untick "No remedial action required" if any C1/C2 observations exist.
+  // The two states are contradictory — by definition C1/C2 demand action.
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const obs: any[] = formData.defectObservations || [];
+    const hasBlocking = obs.some((d) => d.defectCode === 'C1' || d.defectCode === 'C2');
+    if (hasBlocking && formData.noRemedialAction) {
+      onUpdate('noRemedialAction', false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData.defectObservations, formData.noRemedialAction]);
+
   // Load formatted JSON when collapsible is opened
   const handleToggleJsonPreview = async (isOpen: boolean) => {
     setIsJsonOpen(isOpen);
@@ -796,8 +808,21 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     );
   };
 
-  // Allow PDF generation without strict field validation
+  // Gate PDF generation on the truly cert-breaking fields — sparky shouldn't
+  // hit Generate and get an empty PDF. The validation panel above the tabs
+  // already lists everything else.
   const isFormComplete = () => {
+    if (!formData.clientName?.trim()) return false;
+    if (!formData.installationAddress?.trim()) return false;
+    if (!formData.inspectorName?.trim()) return false;
+    if (!formData.inspectorSignature?.trim()) return false;
+    if (!formData.overallAssessment) return false;
+    // C1 present → overall cannot be satisfactory
+    const hasC1 = (formData.defectObservations || []).some(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (d: any) => d.defectCode === 'C1'
+    );
+    if (hasC1 && formData.overallAssessment === 'satisfactory') return false;
     return true;
   };
 
@@ -820,78 +845,80 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="px-4 py-3 space-y-4">
-              <div className="grid grid-cols-2 gap-3 items-end">
-                <div>
-                  <label className="text-xs text-white block mb-1">Design Standard</label>
-                  <Select
-                    value={formData.designStandard || ''}
-                    onValueChange={(value) => {
-                      haptic.light();
-                      onUpdate('designStandard', value);
-                    }}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100]">
-                      <SelectItem value="BS7671">BS 7671</SelectItem>
-                      <SelectItem value="Other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <label className="text-xs text-white block mb-1">Part P Compliance</label>
-                  <Select
-                    value={formData.partPCompliance || ''}
-                    onValueChange={(value) => {
-                      haptic.light();
-                      onUpdate('partPCompliance', value);
-                    }}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100]">
-                      <SelectItem value="compliant">Compliant</SelectItem>
-                      <SelectItem value="not-applicable">Not Applicable</SelectItem>
-                      <SelectItem value="non-notifiable">Non-notifiable</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div>
+                <label className="text-xs text-white block mb-1">Design Standard</label>
+                <Select
+                  value={formData.designStandard || ''}
+                  onValueChange={(value) => {
+                    haptic.light();
+                    onUpdate('designStandard', value);
+                  }}
+                >
+                  <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08]">
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent className="z-[100]">
+                    <SelectItem value="BS7671">BS 7671</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-              <div className="space-y-2">
-                <label className="text-xs text-white block">Complies With</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      onUpdate('bs7671Compliance', !formData.bs7671Compliance);
-                    }}
-                    className={cn(
-                      'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98]',
-                      formData.bs7671Compliance
-                        ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                    )}
-                  >
-                    BS 7671
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      onUpdate('buildingRegsCompliance', !formData.buildingRegsCompliance);
-                    }}
-                    className={cn(
-                      'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98]',
-                      formData.buildingRegsCompliance
-                        ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                    )}
-                  >
-                    Building Regs
-                  </button>
+              {/* BS 7671 + Building Regs — 3-state (Yes / No / N/A).
+                  Building Regs is often N/A on a condition report. */}
+              <div className="space-y-3">
+                <div className="space-y-1.5">
+                  <label className="text-xs text-white block">BS 7671 Compliance</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { value: 'yes', label: 'Yes', activeClass: 'bg-green-500/20 border-green-500/40 text-green-400' },
+                      { value: 'no', label: 'No', activeClass: 'bg-red-500/20 border-red-500/40 text-red-400' },
+                      { value: 'na', label: 'N/A', activeClass: 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow' },
+                    ].map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => {
+                          haptic.light();
+                          onUpdate('bs7671Compliance', formData.bs7671Compliance === opt.value ? '' : opt.value);
+                        }}
+                        className={cn(
+                          'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] border',
+                          formData.bs7671Compliance === opt.value
+                            ? opt.activeClass
+                            : 'bg-white/[0.05] text-white border-white/[0.08]'
+                        )}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs text-white block">Building Regs Compliance</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { value: 'yes', label: 'Yes', activeClass: 'bg-green-500/20 border-green-500/40 text-green-400' },
+                      { value: 'no', label: 'No', activeClass: 'bg-red-500/20 border-red-500/40 text-red-400' },
+                      { value: 'na', label: 'N/A', activeClass: 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow' },
+                    ].map((opt) => (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => {
+                          haptic.light();
+                          onUpdate('buildingRegsCompliance', formData.buildingRegsCompliance === opt.value ? '' : opt.value);
+                        }}
+                        className={cn(
+                          'h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] border',
+                          formData.buildingRegsCompliance === opt.value
+                            ? opt.activeClass
+                            : 'bg-white/[0.05] text-white border-white/[0.08]'
+                        )}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -971,25 +998,46 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
                 </div>
               </div>
 
-              {/* No Remedial Action Required */}
-              <button
-                type="button"
-                onClick={() => {
-                  haptic.light();
-                  onUpdate('noRemedialAction', !formData.noRemedialAction);
-                }}
-                className={cn(
-                  'w-full h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2',
-                  formData.noRemedialAction
-                    ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                )}
-              >
-                {formData.noRemedialAction && <Check className="h-3.5 w-3.5" />}
-                <div className="text-center">
-                  <span>No remedial action required</span>
-                </div>
-              </button>
+              {/* No Remedial Action Required — disabled when any C1/C2 observations exist,
+                  because by definition those require remedial action. */}
+              {(() => {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                const obs: any[] = formData.defectObservations || [];
+                const blockingCount = obs.filter(
+                  (d) => d.defectCode === 'C1' || d.defectCode === 'C2'
+                ).length;
+                const blocked = blockingCount > 0;
+                return (
+                  <div className="space-y-1.5">
+                    <button
+                      type="button"
+                      disabled={blocked}
+                      onClick={() => {
+                        if (blocked) return;
+                        haptic.light();
+                        onUpdate('noRemedialAction', !formData.noRemedialAction);
+                      }}
+                      className={cn(
+                        'w-full h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation flex items-center justify-center gap-2',
+                        !blocked && 'active:scale-[0.98]',
+                        blocked
+                          ? 'bg-white/[0.03] border border-white/[0.06] text-white/40 cursor-not-allowed'
+                          : formData.noRemedialAction
+                            ? 'bg-green-500/20 border border-green-500/40 text-green-400'
+                            : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                      )}
+                    >
+                      {formData.noRemedialAction && !blocked && <Check className="h-3.5 w-3.5" />}
+                      <span>No remedial action required</span>
+                    </button>
+                    {blocked && (
+                      <span className="text-[10px] text-amber-400 block">
+                        Blocked: {blockingCount} C1/C2 observation{blockingCount === 1 ? '' : 's'} require action
+                      </span>
+                    )}
+                  </div>
+                );
+              })()}
 
               {/* General Condition (Section E — BS 7671:2018+A4:2026) */}
               <div className="space-y-2">
@@ -1037,24 +1085,34 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           <Button
             onClick={() => {
               haptic.light();
+              const today = new Date().toISOString().split('T')[0];
+              // Inspected By
               onUpdate('inspectedByName', formData.inspectorName);
               onUpdate('inspectedBySignature', formData.inspectorSignature);
               onUpdate('inspectedByForOnBehalfOf', formData.companyName);
               onUpdate('inspectedByPosition', 'Inspector');
               onUpdate('inspectedByAddress', formData.companyAddress);
-              onUpdate('inspectedByDate', formData.inspectionDate || new Date().toISOString().split('T')[0]);
+              onUpdate('inspectedByDate', formData.inspectionDate || today);
               onUpdate('inspectedByCpScheme', formData.registrationScheme);
+              // Report Authorised By — same person on solo jobs (most common)
+              onUpdate('reportAuthorisedByName', formData.inspectorName);
+              onUpdate('reportAuthorisedBySignature', formData.inspectorSignature);
+              onUpdate('reportAuthorisedByForOnBehalfOf', formData.companyName);
+              onUpdate('reportAuthorisedByPosition', 'Inspector');
+              onUpdate('reportAuthorisedByAddress', formData.companyAddress);
+              onUpdate('reportAuthorisedByDate', formData.inspectionDate || today);
+              onUpdate('reportAuthorisedByMembershipNo', formData.registrationNumber);
               haptic.success();
               toast({
                 title: 'Details copied',
-                description: "Inspector details copied to 'Inspected By' section",
+                description: 'Inspector details copied to both signatory sections',
               });
             }}
             className="w-full h-11 touch-manipulation text-sm rounded-lg bg-blue-500/20 border-blue-500/30 text-blue-300 hover:bg-blue-500/30 active:scale-[0.98]"
             variant="outline"
           >
             <User className="h-4 w-4 mr-2" />
-            Copy from Inspector Details
+            Copy from Inspector Details (both signatories)
           </Button>
         </div>
 

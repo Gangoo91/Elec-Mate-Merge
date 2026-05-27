@@ -812,34 +812,32 @@ const DiagramBuilderPage = () => {
           >
             <ArrowLeft className="h-4 w-4" />
           </Button>
-          <div className="hidden sm:flex items-center gap-2 min-w-0">
-            <h1 className="text-sm font-semibold text-white truncate">Room Planner</h1>
-            {(() => {
-              if (canvasObjects.length === 0 && !lastSavedAt) return null;
-              const diffSec = lastSavedAt
-                ? Math.max(0, Math.floor((Date.now() - lastSavedAt.getTime()) / 1000))
-                : null;
-              const label = isDirty
-                ? 'Saving…'
-                : diffSec === null
-                  ? null
-                  : diffSec < 5
-                    ? 'Saved'
-                    : diffSec < 60
-                      ? `Saved ${diffSec}s ago`
-                      : `Saved ${Math.floor(diffSec / 60)}m ago`;
-              if (!label) return null;
-              const dotColour = isDirty ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400';
-              // Reference the tick state so React knows to re-render this branch.
-              void savedAgoTick;
-              return (
-                <span className="hidden md:flex items-center gap-1.5 text-[11px] text-white/60">
-                  <span className={`h-1.5 w-1.5 rounded-full ${dotColour}`} />
-                  {label}
-                </span>
-              );
-            })()}
-          </div>
+          <h1 className="hidden sm:block text-sm font-semibold text-white truncate">Room Planner</h1>
+          {(() => {
+            if (canvasObjects.length === 0 && !lastSavedAt) return null;
+            const diffSec = lastSavedAt
+              ? Math.max(0, Math.floor((Date.now() - lastSavedAt.getTime()) / 1000))
+              : null;
+            const label = isDirty
+              ? 'Saving…'
+              : diffSec === null
+                ? null
+                : diffSec < 5
+                  ? 'Saved'
+                  : diffSec < 60
+                    ? `Saved ${diffSec}s ago`
+                    : `Saved ${Math.floor(diffSec / 60)}m ago`;
+            if (!label) return null;
+            const dotColour = isDirty ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400';
+            // Reference the tick state so React knows to re-render this branch.
+            void savedAgoTick;
+            return (
+              <span className="flex items-center gap-1.5 text-[11px] text-white/70 px-2 py-1 rounded-md bg-white/5">
+                <span className={`h-1.5 w-1.5 rounded-full ${dotColour}`} />
+                <span className="whitespace-nowrap">{label}</span>
+              </span>
+            );
+          })()}
         </div>
 
         <div className="flex items-center gap-1.5">
@@ -889,24 +887,27 @@ const DiagramBuilderPage = () => {
             Save Room
           </Button>
 
-          {/* Export — visible when rooms saved */}
-          {rooms.length > 0 && (
-            <Button
-              onClick={() => {
-                if (canvasObjects.length > 0 && !rooms.find(r => r.id === activeRoomId)) {
-                  toast({ title: 'Save this room first', description: 'Tap Save before exporting' });
-                  return;
-                }
-                setExportReviewOpen(true);
-              }}
-              aria-label="Export PDF"
-              variant="ghost"
-              className="h-9 px-3 text-white hover:bg-white/10 text-xs font-medium touch-manipulation rounded-lg border border-white/10"
-            >
-              <Download className="h-3.5 w-3.5 mr-1" />
-              Export PDF
-            </Button>
-          )}
+          {/* Export — always visible on tablet+. Guides the user to save
+              first if they haven't. Mobile sees this in the overflow menu. */}
+          <Button
+            onClick={() => {
+              if (rooms.length === 0 && canvasObjects.length === 0) {
+                toast({ title: 'Nothing to export', description: 'Draw a room or place symbols first' });
+                return;
+              }
+              if (canvasObjects.length > 0 && !rooms.find(r => r.id === activeRoomId)) {
+                toast({ title: 'Save this room first', description: 'Tap Save Room before exporting' });
+                return;
+              }
+              setExportReviewOpen(true);
+            }}
+            aria-label="Export PDF"
+            variant="ghost"
+            className="hidden sm:flex h-9 px-3 text-white hover:bg-white/10 text-xs font-medium touch-manipulation rounded-lg border border-white/10"
+          >
+            <Download className="h-3.5 w-3.5 mr-1" />
+            Export PDF
+          </Button>
 
           {/* Overflow menu — rotate, delete, and other options */}
           <DropdownMenu>
@@ -921,24 +922,24 @@ const DiagramBuilderPage = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-elec-card border-white/10 min-w-[180px]">
               {/* Export PDF — mobile only (tablet+ shows the visible button) */}
-              {rooms.length > 0 && (
-                <>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      if (canvasObjects.length > 0 && !rooms.find(r => r.id === activeRoomId)) {
-                        toast({ title: 'Save this room first', description: 'Tap Save before exporting' });
-                        return;
-                      }
-                      setExportReviewOpen(true);
-                    }}
-                    className="sm:hidden text-white hover:bg-white/10 touch-manipulation"
-                  >
-                    <Download className="h-4 w-4 mr-2" />
-                    Export PDF
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator className="sm:hidden bg-white/10" />
-                </>
-              )}
+              <DropdownMenuItem
+                onClick={() => {
+                  if (rooms.length === 0 && canvasObjects.length === 0) {
+                    toast({ title: 'Nothing to export', description: 'Draw a room or place symbols first' });
+                    return;
+                  }
+                  if (canvasObjects.length > 0 && !rooms.find(r => r.id === activeRoomId)) {
+                    toast({ title: 'Save this room first', description: 'Tap Save Room before exporting' });
+                    return;
+                  }
+                  setExportReviewOpen(true);
+                }}
+                className="sm:hidden text-white hover:bg-white/10 touch-manipulation"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Export PDF
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="sm:hidden bg-white/10" />
               <DropdownMenuItem
                 onClick={() => { canvasRef.current?.handleRotate?.(); haptic.light(); }}
                 className="text-white hover:bg-white/10 touch-manipulation"

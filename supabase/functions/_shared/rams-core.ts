@@ -38,7 +38,76 @@ import {
 } from './rag-practical-work.ts';
 
 const MODEL = 'gpt-5.4-mini-2026-03-17';
-const MAX_COMPLETION_TOKENS = 24000;
+const MAX_COMPLETION_TOKENS = 32000;
+
+/**
+ * Best-effort JSON repair for OpenAI responses that hit the token cap
+ * mid-output. Closes any open arrays and objects, strips a trailing comma,
+ * and returns a parseable string. If the original is already valid, it's
+ * returned untouched. Callers fall through to `JSON.parse(text)` first;
+ * only on failure do they try this.
+ */
+function repairTruncatedJson(text: string): string {
+  let s = String(text ?? '').trim();
+  if (!s) return s;
+
+  // Strip a code-fence wrapper if present.
+  if (s.startsWith('```')) {
+    s = s.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/i, '');
+  }
+
+  // Walk the string, tracking open braces/brackets that aren't inside strings.
+  const stack: string[] = [];
+  let inStr = false;
+  let escape = false;
+  let lastSafe = -1;
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+    if (escape) {
+      escape = false;
+      continue;
+    }
+    if (c === '\\') {
+      escape = true;
+      continue;
+    }
+    if (c === '"') {
+      inStr = !inStr;
+      continue;
+    }
+    if (inStr) continue;
+    if (c === '{' || c === '[') stack.push(c);
+    else if (c === '}' || c === ']') stack.pop();
+    if (!inStr && stack.length > 0) lastSafe = i;
+  }
+
+  // If we ended inside a string, drop everything from the unclosed quote.
+  if (inStr) {
+    const lastQuote = s.lastIndexOf('"', lastSafe);
+    if (lastQuote > 0) s = s.slice(0, lastQuote);
+  }
+
+  // Strip a trailing comma or partial key/value.
+  s = s.replace(/,\s*$/, '');
+  s = s.replace(/:\s*$/, ': null');
+
+  // Close any open brackets in LIFO order.
+  while (stack.length) {
+    const open = stack.pop();
+    s += open === '{' ? '}' : ']';
+  }
+
+  return s;
+}
+
+function parseLenient(text: string): any {
+  try {
+    return JSON.parse(text);
+  } catch {
+    const repaired = repairTruncatedJson(text);
+    return JSON.parse(repaired);
+  }
+}
 
 type WorkType = 'domestic' | 'commercial' | 'industrial';
 
@@ -71,7 +140,7 @@ export async function runRAMSGeneration(
     await updateJob(supabase, jobId, {
       status: 'processing',
       progress: 8,
-      current_step: 'Grounding against BS 7671 and HSE',
+      current_step: 'Reading the brief',
       started_at: new Date().toISOString(),
       hs_agent_status: 'pending',
       installer_agent_status: 'pending',
@@ -105,7 +174,7 @@ export async function runRAMSGeneration(
 
     await updateJob(supabase, jobId, {
       progress: 20,
-      current_step: 'Generating hazards and method statement',
+      current_step: 'Drafting hazards and method statement',
       hs_agent_status: 'processing',
       installer_agent_status: 'processing',
     });
@@ -435,11 +504,22 @@ Hard rules:
 
   const j = await response.json();
   const text = j?.choices?.[0]?.message?.content ?? '';
+  const finishReason = j?.choices?.[0]?.finish_reason;
   let parsed: any;
   try {
-    parsed = JSON.parse(text);
+    parsed = parseLenient(text);
+    if (finishReason === 'length') {
+      console.warn('[rams-core] H&S response truncated — used JSON repair to recover.');
+    }
   } catch (err) {
-    console.error('[rams-core] H&S parse failed:', err, text.slice(0, 400));
+    console.error(
+      '[rams-core] H&S parse failed:',
+      err,
+      'finish_reason:',
+      finishReason,
+      'text:',
+      text.slice(0, 400)
+    );
     throw new Error('H&S agent returned malformed JSON');
   }
 
@@ -673,11 +753,22 @@ Hard rules:
 
   const j = await response.json();
   const text = j?.choices?.[0]?.message?.content ?? '';
+  const finishReason = j?.choices?.[0]?.finish_reason;
   let parsed: any;
   try {
-    parsed = JSON.parse(text);
+    parsed = parseLenient(text);
+    if (finishReason === 'length') {
+      console.warn('[rams-core] Method response truncated — used JSON repair to recover.');
+    }
   } catch (err) {
-    console.error('[rams-core] Method parse failed:', err, text.slice(0, 400));
+    console.error(
+      '[rams-core] Method parse failed:',
+      err,
+      'finish_reason:',
+      finishReason,
+      'text:',
+      text.slice(0, 400)
+    );
     throw new Error('Method agent returned malformed JSON');
   }
 

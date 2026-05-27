@@ -499,21 +499,21 @@ const ProjectDetailPage = () => {
       fetch: fetchUnlinkedCircuitDesigns,
       link: linkCircuitDesign,
       createLabel: 'New circuit design',
-      createUrl: '/electrician-tools/circuit-designer',
+      createUrl: '/electrician/circuit-designer',
     },
     costEstimate: {
       title: 'Link Cost Estimate',
       fetch: fetchUnlinkedCostEstimates,
       link: linkCostEstimate,
       createLabel: 'New cost estimate',
-      createUrl: '/electrician-tools/cost-engineer',
+      createUrl: '/electrician/cost-engineer',
     },
     floorPlan: {
       title: 'Link Floor Plan',
       fetch: fetchUnlinkedFloorPlans,
       link: linkFloorPlan,
       createLabel: 'Create new floor plan',
-      createUrl: '/electrician-tools/room-planner',
+      createUrl: '/electrician/business/room-planner',
     },
   };
 
@@ -1395,7 +1395,7 @@ const ProjectDetailPage = () => {
                   <button
                     key={cd.id}
                     type="button"
-                    onClick={() => navigate('/electrician-tools/circuit-designer')}
+                    onClick={() => navigate('/electrician/circuit-designer')}
                     className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                   >
                     <div className="min-w-0 text-left">
@@ -1469,7 +1469,7 @@ const ProjectDetailPage = () => {
                   <button
                     key={ce.id}
                     type="button"
-                    onClick={() => navigate('/electrician-tools/cost-engineer')}
+                    onClick={() => navigate('/electrician/cost-engineer')}
                     className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                   >
                     <div className="min-w-0 text-left">
@@ -1541,7 +1541,7 @@ const ProjectDetailPage = () => {
                   <button
                     key={fp.id}
                     type="button"
-                    onClick={() => navigate('/electrician-tools/room-planner')}
+                    onClick={() => navigate('/electrician/business/room-planner')}
                     className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] transition-colors"
                   >
                     <div className="min-w-0 text-left">
